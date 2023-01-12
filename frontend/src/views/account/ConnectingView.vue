@@ -134,9 +134,8 @@
                             <router-link
                                 class="connecting__question_text main__link main__link-underline"
                                 to="/faqview"
-                                >Подробнее про подключение устройств в
-                                FAQ</router-link
-                            >
+                                >Подробнее про подключение устройств в FAQ
+                            </router-link>
                         </div>
                     </div>
                 </div>
@@ -200,6 +199,7 @@ export default {
         display: flex;
         align-items: center;
         margin-top: 29px;
+
         &_wrap {
             width: 44px;
             height: 44px;
@@ -210,6 +210,7 @@ export default {
             background-repeat: no-repeat;
             background-position: center;
         }
+
         &_title {
             font-weight: 700;
             font-size: 18px;
@@ -217,15 +218,18 @@ export default {
             color: #000000;
             margin-bottom: 8px;
         }
+
         &_text {
             font-weight: 400;
             line-height: 21px;
         }
     }
+
     // .connecting__wrapper
     &__wrapper {
         width: 100%;
     }
+
     // .connecting__wrap
     &__wrap {
         width: 100%;
@@ -234,6 +238,7 @@ export default {
         padding: 32px;
         margin-top: 16px;
     }
+
     // .connecting__block
     &__block {
         margin-bottom: 20px;
@@ -241,6 +246,7 @@ export default {
         flex-direction: column;
         max-width: 613px;
     }
+
     // .connecting__row
     &__row {
         display: inline-flex;
@@ -250,15 +256,18 @@ export default {
         line-height: 18px;
         font-weight: 400;
         color: rgba(0, 0, 0, 0.62);
+
         &-copy {
             position: relative;
             margin-top: 20px;
         }
+
         span {
             margin: 0 3px;
             font-weight: 700;
         }
     }
+
     // .connecting__block-copy
     &__block-copy {
         max-width: 489px;
@@ -284,6 +293,7 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
+
         &-copy {
             width: 24px;
             height: 24px;
@@ -293,10 +303,12 @@ export default {
             top: 50%;
             transform: translateY(-50%);
         }
+
         &::placeholder {
             color: rgba(0, 0, 52, 0.62);
         }
     }
+
     &__select {
         margin-left: auto;
         max-width: 158px !important;

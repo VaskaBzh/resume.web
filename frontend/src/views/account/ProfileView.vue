@@ -18,6 +18,7 @@ export default {
 <style lang="scss">
 .account {
     margin-top: 32px;
+
     &__container {
         display: flex;
         justify-content: space-between;

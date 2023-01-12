@@ -6,6 +6,7 @@
                     Кошельки
                 </router-link>
             </main-title>
+
             <div class="history__filter">
                 <div class="history__filter_block">
                     <div class="history__filter_label">Кошелек</div>

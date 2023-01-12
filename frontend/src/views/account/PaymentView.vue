@@ -9,6 +9,7 @@
                         <span>{{ this.bitcoins }}</span> BTC
                     </div>
                 </div>
+
                 <div class="payment__filter_block">
                     <div class="payment__filter_label">Дата</div>
                     <Datepicker

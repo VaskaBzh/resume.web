@@ -9,6 +9,7 @@
                         <span>{{ this.bitcoins }}</span> BTC
                     </div>
                 </div>
+
                 <div class="accruals__filter_block accruals__filter_block-type">
                     <div class="accruals__filter_label">Тип начислений</div>
                     <main-select
@@ -175,6 +176,7 @@ export default {
                         BTC: 0,
                         complexity: "",
                     },
+
                     {
                         date: "29.11.2022",
                         type: "FPPS+ начисление",
@@ -777,6 +779,7 @@ export default {
                         BTC: 0,
                         complexity: "",
                     },
+
                     {
                         date: "29.11.2022",
                         type: "FPPS+ начисление",
