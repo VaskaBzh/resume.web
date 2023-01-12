@@ -5,9 +5,8 @@
             <span v-if="this.columns.time"> {{ this.columns.time }}</span>
         </td>
         <td>
-            <img :src="require(`@/assets/img/${this.columns.img}`)" />{{
-                this.columns.wallet
-            }}
+            <img :src="require(`@/assets/img/${this.columns.img}`)" alt="" />
+            {{ this.columns.wallet }}
         </td>
         <td>{{ this.columns.type }}</td>
         <td>{{ this.BTCVal }} BTC</td>
@@ -16,6 +15,7 @@
     <tr class="row-accruals" v-else-if="columns.type">
         <td>
             {{ this.columns.date }}
+
             <span v-if="this.columns.time"> {{ this.columns.time }}</span>
         </td>
         <td>{{ this.columns.type }}</td>
@@ -83,35 +83,43 @@ td {
     display: inline-flex;
     align-items: center;
 }
+
 .row-payment {
     td {
         max-width: 224px;
+
         &:last-child {
             max-width: 365px;
             margin-left: auto;
         }
+
         span {
             margin-left: 5px;
             color: rgba(#000034, 0.64);
         }
     }
 }
+
 .row-history {
     td {
         max-width: 273px;
         width: 100%;
+
         &:first-child {
             max-width: 245px;
         }
+
         &:nth-child(3) {
             max-width: 295px;
         }
+
         &:last-child {
             min-width: 120px;
             text-align: left;
             width: auto;
             margin-left: auto;
         }
+
         img {
             margin-right: 12px;
             width: 24px;
@@ -120,6 +128,7 @@ td {
         }
     }
 }
+
 .row-ref {
     td {
         span {
@@ -127,23 +136,28 @@ td {
             font-weight: 400;
             margin-left: 5px;
         }
+
         &:last-child {
             min-width: 135px;
             width: auto;
         }
     }
+
     &-list {
         td {
             max-width: 290px;
             width: 100%;
+
             &:first-child {
                 max-width: 338px;
             }
+
             span {
                 color: #0000009e;
                 font-weight: 400;
                 margin-left: 5px;
             }
+
             &:last-child {
                 min-width: 166px;
                 width: auto;
@@ -152,12 +166,15 @@ td {
         }
     }
 }
+
 .row-accruals {
     td {
         max-width: 135px;
+
         &:nth-child(2) {
             max-width: 252px;
             cursor: pointer;
+
             &::after {
                 content: "!";
                 line-height: 7px;
@@ -174,13 +191,16 @@ td {
                 margin: auto 0 auto 6px;
             }
         }
+
         &:nth-child(3) {
             max-width: 172px;
         }
+
         &:last-child {
             max-width: 150px;
             text-align: right;
         }
+
         &:first-child {
             max-width: 156px;
         }

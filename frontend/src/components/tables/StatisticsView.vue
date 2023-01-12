@@ -131,6 +131,7 @@ export default {
             background-color: transparent;
             border-radius: unset;
         }
+
         & table {
             width: 100%;
             border-collapse: unset;

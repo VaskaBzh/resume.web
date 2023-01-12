@@ -49,6 +49,7 @@ export default {
         top: 50%;
         transform: translateY(-50%);
     }
+
     td {
         max-width: 165px;
         width: 100%;

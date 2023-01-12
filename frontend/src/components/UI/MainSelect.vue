@@ -191,6 +191,7 @@ export default {
                     border-radius: 0 0 21px 21px;
                     max-height: calc(40px * 5);
                 }
+
                 &_option {
                     color: #000034;
                     font-weight: 500;

@@ -79,6 +79,7 @@ export default {
         height: 63px;
         top: 50%;
         right: 10px;
+
         transition: all 0.3s ease 0s;
         transform: translate(0, -50%);
     }

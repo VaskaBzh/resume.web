@@ -167,6 +167,7 @@ export default {};
     border-radius: 16px;
     padding: 0 16px;
     background-color: rgba(255, 255, 255, 0.29);
+
     margin-right: 30px;
     max-height: calc(60px * 8);
     &__tab {

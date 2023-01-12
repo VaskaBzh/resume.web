@@ -2,11 +2,12 @@
     <div class="login">
         <div class="login__container" v-if="!this.isReg">
             <main-title tag="h2" titleName="Вход"></main-title>
+
             <form action="#" class="login__form">
                 <div class="login__form_row">
                     <label for="tel" class="login__form_label"
-                        >Номер Телефона</label
-                    >
+                        >Номер Телефона
+                    </label>
                     <input
                         type="tel"
                         class="login__form_input"
@@ -37,9 +38,9 @@
             <main-title tag="h2" titleName="Регистрация"></main-title>
             <form action="#" class="login__form">
                 <div class="login__form_row">
-                    <label for="tel" class="login__form_label"
-                        >Номер Телефона</label
-                    >
+                    <label for="tel" class="login__form_label">
+                        Номер Телефона
+                    </label>
                     <input
                         type="tel"
                         class="login__form_input"
@@ -55,9 +56,9 @@
                     />
                 </div>
                 <div class="login__form_row">
-                    <label for="pas" class="login__form_label"
-                        >Повторите пароль</label
-                    >
+                    <label for="pas" class="login__form_label">
+                        Повторите пароль
+                    </label>
                     <input
                         type="password"
                         class="login__form_input"
@@ -116,6 +117,7 @@ export default {
         &_link {
             width: 100%;
         }
+
         &_link {
             display: inline-flex;
             justify-content: center;

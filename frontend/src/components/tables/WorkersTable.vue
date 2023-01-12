@@ -66,6 +66,7 @@ export default {
             margin: 16px 0;
             border-radius: 0;
             padding: 0 16px;
+
             th {
                 color: rgba(0, 0, 0, 0.62);
                 font-weight: 400;

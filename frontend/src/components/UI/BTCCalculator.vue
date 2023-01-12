@@ -2,8 +2,8 @@
     <div class="BTC__block">
         <span class="BTC__title">{{ title }}</span>
         <div class="BTC__value">
-            <span>{{ BTC }} BTC</span><span>{{ dollarCalc }} $</span
-            ><span>{{ rubleCalc }} ₽</span>
+            <span>{{ BTC }} BTC</span><span>{{ dollarCalc }} $</span>
+            <span>{{ rubleCalc }} ₽</span>
         </div>
     </div>
 </template>
@@ -72,6 +72,7 @@ export default {
                     content: none;
                 }
             }
+
             &:last-child {
                 margin-right: 0;
             }
