@@ -150,7 +150,7 @@ export default {
         &.open {
             & .select_title {
                 pointer-events: none;
-                border-radius: 10px 10px 0 0;
+                //border-radius: 10px 10px 0 0;
                 position: absolute;
                 top: 0;
                 left: 0;
@@ -265,6 +265,7 @@ export default {
         padding: 0 20px;
         position: relative;
         transition: all 0.3s ease 0s, pointer-events 0s;
+        z-index: 3;
         &:hover {
             border: 1px solid rgba(0, 0, 0, 0.32);
         }

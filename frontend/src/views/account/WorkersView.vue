@@ -185,6 +185,7 @@ export default {
             font-size: 18px;
             line-height: 26px;
             color: #000034;
+            z-index: 2;
         }
     }
 }
