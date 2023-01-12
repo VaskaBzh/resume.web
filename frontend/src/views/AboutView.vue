@@ -1,19 +1,19 @@
 <template>
-  <div class="about">
-    <div class="about__container">
-      <div class="about__main">
-        <main-title tag="h1" class="about__title">
-          This is an about page
-        </main-title>
-      </div>
+    <div class="about">
+        <div class="about__container">
+            <div class="about__main">
+                <main-title tag="h1" class="about__title">
+                    This is an about page
+                </main-title>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <script>
 export default {
-  mounted() {
-    document.title = "О Нас";
-  },
+    mounted() {
+        document.title = "О Нас";
+    },
 };
 </script>

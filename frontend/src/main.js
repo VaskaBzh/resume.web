@@ -12,11 +12,10 @@ import store from "./store";
 
 const app = createApp(App);
 components.forEach((component) => {
-  app.component(component.name, component);
+    app.component(component.name, component);
 });
-app
-  .directive("scroll", scrollAnimation)
-  .directive("value-scroll", scrollValueAnimation)
-  .use(store)
-  .use(router)
-  .mount("#app");
+app.directive("scroll", scrollAnimation)
+    .directive("value-scroll", scrollValueAnimation)
+    .use(store)
+    .use(router)
+    .mount("#app");
