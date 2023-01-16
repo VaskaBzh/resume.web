@@ -11,7 +11,7 @@
         <router-link
             v-if="viewportWidth >= 991.98"
             class="nav__button"
-            to="loginReg"
+            to="registration"
         >
             Личный кабинет
         </router-link>

@@ -38,9 +38,14 @@ const routes = [
         component: () => import("../views/account/HistoryWalletsView.vue"),
     },
     {
-        path: "/loginReg",
-        name: "loginReg",
-        component: () => import("../views/LoginRegistration.vue"),
+        path: "/registration",
+        name: "registration",
+        component: () => import("../views/Registration.vue"),
+    },
+    {
+        path: "/login",
+        name: "login",
+        component: () => import("../views/Login.vue"),
     },
     {
         path: "/profile",

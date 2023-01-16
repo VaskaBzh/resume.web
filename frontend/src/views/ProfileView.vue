@@ -8,6 +8,7 @@
 </template>
 <script>
 import NavTabs from "@/components/navs/NavTabs";
+// import { onMounted } from "vue";
 
 export default {
     components: {
