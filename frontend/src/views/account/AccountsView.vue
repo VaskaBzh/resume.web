@@ -39,7 +39,7 @@
 
 <script>
 import AccountProfile from "@/components/account/AccountProfile";
-import { onMounted } from "vue";
+// import { onMounted } from "vue";
 
 export default {
     components: {
@@ -71,14 +71,6 @@ export default {
     },
     mounted() {
         document.title = "Аккаунты";
-    },
-    setup() {
-        onMounted(async () => {
-            await fetch("http://localhost:8000/api/user", {
-                headers: { "Content-Type": "application/json" },
-                credentials: "include",
-            });
-        });
     },
 };
 </script>

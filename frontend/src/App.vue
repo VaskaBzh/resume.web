@@ -45,6 +45,7 @@
 <script>
 import NavLinks from "@/components/navs/NavLinks";
 import FooterComponent from "@/components/FooterComponent";
+import { onMounted } from "vue";
 
 export default {
     components: {
@@ -81,6 +82,14 @@ export default {
                 document.querySelector(".nav__links_con").classList.add("open");
             }
         },
+    },
+    setup() {
+        onMounted(async () => {
+            await fetch("http://localhost:8000/api/user", {
+                headers: { "Content-Type": "application/json" },
+                credentials: "include",
+            });
+        });
     },
 };
 </script>
