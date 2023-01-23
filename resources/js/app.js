@@ -1,26 +1,21 @@
-import "./bootstrap";
+import { createApp, h } from "vue";
+import { createInertiaApp } from "@inertiajs/vue3";
 
-// import { createApp } from "vue/dist/vue.esm-bundler.js";
-// import Home from "./components/Home.vue";
-//
-// const app = createApp({});
-//
-// app.component("component-home", Home);
-// app.mount("#app");
-//
-// // import App from "./App.vue";
-// // import components from "@/components/UI/";
-// // import scrollAnimation from "@/components/directives/scrollAnimation.vue";
-// // import scrollValueAnimation from "@/components/directives/scrollvalueAnimation.vue";
-// // import router from "./router";
-// // import store from "./store";
-// //
-// // const app = createApp(App);
-// // components.forEach((component) => {
-// //     app.component(component.name, component);
-// // });
-// // app.directive("scroll", scrollAnimation)
-// //     .directive("value-scroll", scrollValueAnimation)
-// //     .use(store)
-// //     .use(router)
-// //     .mount("#app");
+import Layout from "./Shared/LayoutView.vue";
+
+createInertiaApp({
+    resolve: (name) => {
+        const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
+        const page = pages[`./Pages/${name}.vue`].default;
+        page.layout = Layout;
+
+        return page;
+    },
+    title: (title) => `${title}`,
+    setup({ el, App, props, plugin }) {
+        createApp({ render: () => h(App, props) })
+            .use(plugin)
+            .mixin({ methods: { route: window.route } })
+            .mount(el);
+    },
+});

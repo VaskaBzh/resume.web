@@ -1,230 +1,230 @@
-/*@font-face {*/
-/*    font-family: Ubuntu;*/
-/*    font-display: swap;*/
-/*    src: url("../js/assets/fonts/Ubuntu-Regular.woff2") format("woff2"), url("../js/assets/fonts/Ubuntu-Regular.woff") format("woff");*/
-/*    font-weight: 400;*/
-/*    font-style: normal;*/
-/*}*/
-/*@font-face {*/
-/*    font-family: Ubuntu;*/
-/*    font-display: swap;*/
-/*    src: url("../js/assets/fonts/Ubuntu-Medium.woff2") format("woff2"), url("../js/assets/fonts/Ubuntu-Medium.woff") format("woff");*/
-/*    font-weight: 500;*/
-/*    font-style: normal;*/
-/*}*/
-/*@font-face {*/
-/*    font-family: Ubuntu;*/
-/*    font-display: swap;*/
-/*    src: url("../js/assets/fonts/Ubuntu-Light.woff2") format("woff2"), url("../js/assets/fonts/Ubuntu-Light.woff") format("woff");*/
-/*    font-weight: 300;*/
-/*    font-style: normal;*/
-/*}*/
-/*@font-face {*/
-/*    font-family: AmpleSoftPro;*/
-/*    font-display: swap;*/
-/*    src: url("../js/assets/fonts/AmpleSoftPro-Bold.woff2") format("woff2"), url("../js/assets/fonts/AmpleSoftPro-Bold.woff") format("woff");*/
-/*    font-weight: 700;*/
-/*    font-style: normal;*/
-/*}*/
-/*@font-face {*/
-/*    font-family: AmpleSoftPro;*/
-/*    font-display: swap;*/
-/*    src: url("../js/assets/fonts/AmpleSoftPro-Medium.woff2") format("woff2"), url("../js/assets/fonts/AmpleSoftPro-Medium.woff") format("woff");*/
-/*    font-weight: 500;*/
-/*    font-style: normal;*/
-/*}*/
-/*@font-face {*/
-/*    font-family: AmpleSoftPro;*/
-/*    font-display: swap;*/
-/*    src: url("../js/assets/fonts/AmpleSoftPro-Regular.woff2") format("woff2"), url("../js/assets/fonts/AmpleSoftPro-Regular.woff") format("woff");*/
-/*    font-weight: 400;*/
-/*    font-style: normal;*/
-/*}*/
-/** {*/
-/*    padding: 0px;*/
-/*    margin: 0px;*/
-/*    border: 0px;*/
-/*}*/
-/**, *:before, *:after {*/
-/*    box-sizing: border-box;*/
-/*}*/
-/*html, body {*/
-/*    height: 100%;*/
-/*    min-width: 320px;*/
-/*    overflow-x: hidden;*/
-/*}*/
-/*body {*/
-/*    color: #331a38;*/
-/*    line-height: 1;*/
-/*    font-family: Ubuntu;*/
-/*    font-size: 14px;*/
-/*    -ms-text-size-adjust: 100%;*/
-/*    -moz-text-size-adjust: 100%;*/
-/*    -webkit-text-size-adjust: 100%;*/
-/*    -webkit-font-smoothing: antialiased;*/
-/*    -moz-osx-font-smoothing: grayscale;*/
-/*}*/
-/*input, button, textarea {*/
-/*    font-family: Ubuntu;*/
-/*    font-size: inherit;*/
-/*}*/
-/*button {*/
-/*    cursor: pointer;*/
-/*    color: inherit;*/
-/*    background-color: inherit;*/
-/*}*/
-/*a {*/
-/*    color: inherit;*/
-/*}*/
-/*a:link, a:visited {*/
-/*    text-decoration: none;*/
-/*}*/
-/*a:hover {*/
-/*    text-decoration: none;*/
-/*}*/
-/*ul li {*/
-/*    list-style: none;*/
-/*}*/
-/*img {*/
-/*    vertical-align: top;*/
-/*}*/
-/*h1, h2, h3, h4, h5, h6 {*/
-/*    font-weight: inherit;*/
-/*    font-size: inherit;*/
-/*}*/
-/*[class*="__container"] {*/
-/*    margin: 0 auto;*/
-/*    max-width: 1240px;*/
-/*    box-sizing: content-box;*/
-/*}*/
-/*@media (max-width: 1270px) {*/
-/*    [class*="__container"] {*/
-/*        max-width: 970px;*/
-/*    }*/
-/*}*/
-/*@media (max-width: 991.98px) {*/
-/*    [class*="__container"] {*/
-/*        max-width: 750px;*/
-/*    }*/
-/*}*/
-/*@media (max-width: 767.98px) {*/
-/*    [class*="__container"] {*/
-/*        max-width: none;*/
-/*        padding: 0 30px;*/
-/*    }*/
-/*}*/
-/*.main__text {*/
-/*    font-style: normal;*/
-/*    font-weight: 300;*/
-/*    font-size: 21px;*/
-/*    line-height: 163.6%;*/
-/*    color: #000000;*/
-/*}*/
-/*.main__link {*/
-/*    color: #3f7bdd !important;*/
-/*    line-height: 26px;*/
-/*    font-size: 18px;*/
-/*    font-weight: 500;*/
-/*    cursor: pointer;*/
-/*}*/
-/*.main__link-underline {*/
-/*    text-decoration: underline !important;*/
-/*}*/
-/*.dp__input_wrap input {*/
-/*    font-family: Ubuntu;*/
-/*    width: 100%;*/
-/*    height: 48px;*/
-/*    padding: 12px 16px;*/
-/*    background: #ffffff;*/
-/*    border: 1px solid #d6d6d6;*/
-/*    border-radius: 13px;*/
-/*    outline: none;*/
-/*    font-weight: 500;*/
-/*    font-size: 18px;*/
-/*    line-height: 26px;*/
-/*    color: #000034;*/
-/*}*/
-/*.dp__input_wrap input::placeholder {*/
-/*    font-family: Ubuntu;*/
-/*    font-weight: 500;*/
-/*    font-size: 18px;*/
-/*    line-height: 26px;*/
-/*    color: #000034;*/
-/*}*/
-/*.dp__input_wrap span {*/
-/*    left: auto;*/
-/*    right: 12px;*/
-/*}*/
-/*.dp__clear_icon {*/
-/*    right: 24px !important;*/
-/*}*/
-/*#myChart {*/
-/*    cursor: pointer;*/
-/*}*/
-/*.left--100-before-enter {*/
-/*    transform: translate(-100%, 0);*/
-/*    opacity: 0;*/
-/*}*/
-/*.left--100-enter {*/
-/*    transform: translate(0, 0);*/
-/*    opacity: 1;*/
-/*}*/
-/*.left-before-enter {*/
-/*    transform: translate(-100px, 0);*/
-/*    opacity: 0;*/
-/*}*/
-/*.left-enter {*/
-/*    transform: translate(0, 0);*/
-/*    opacity: 1;*/
-/*}*/
-/*.right--100-before-enter {*/
-/*    transform: translate(100%, 0);*/
-/*    opacity: 0;*/
-/*}*/
-/*.right--100-enter {*/
-/*    opacity: 1;*/
-/*}*/
-/*.right-before-enter {*/
-/*    transform: translate(100px, 0);*/
-/*    opacity: 0;*/
-/*}*/
-/*.right-enter {*/
-/*    transform: translate(0, 0);*/
-/*    opacity: 1;*/
-/*}*/
-/*.top-before-enter {*/
-/*    transform: translate(0, 100px);*/
-/*}*/
-/*.top-enter {*/
-/*    transform: translate(0, 0);*/
-/*}*/
-/*.bottom-before-enter {*/
-/*    transform: translate(0, -100px);*/
-/*}*/
-/*.bottom-enter {*/
-/*    transform: translate(0, 0);*/
-/*}*/
-/*.transition {*/
-/*    transition: transform 1.5s ease, opacity 1.5s ease;*/
-/*}*/
-/*.delay {*/
-/*    transition-delay: 0.1s !important;*/
-/*}*/
-/*.delay--md {*/
-/*    transition-delay: 0.4s !important;*/
-/*}*/
-/*.delay--lg {*/
-/*    transition-delay: 0.7s !important;*/
-/*}*/
-/*.important {*/
-/*    transition: transform 1.5s, opacity 1.5s, background 0.3s ease 0s !important;*/
-/*}*/
-/*.important--delay {*/
-/*    transition: transform 1.5s ease 0.1s, opacity 1.5s ease 0.1s, background 0.3s ease 0s !important;*/
-/*}*/
-/*.important--delay--md {*/
-/*    transition: transform 1.5s ease 0.4s, opacity 1.5s ease 0.4s, background 0.3s ease 0s !important;*/
-/*}*/
-/*.important--delay--lg {*/
-/*    transition: transform 1.5s ease 0.7s, opacity 1.5s ease 0.7s, background 0.3s ease 0s !important;*/
-/*}*/
+@font-face {
+    font-family: Ubuntu;
+    font-display: swap;
+    src: url("../js/assets/fonts/Ubuntu-Regular.woff2") format("woff2"), url("../js/assets/fonts/Ubuntu-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+@font-face {
+    font-family: Ubuntu;
+    font-display: swap;
+    src: url("../js/assets/fonts/Ubuntu-Medium.woff2") format("woff2"), url("../js/assets/fonts/Ubuntu-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: Ubuntu;
+    font-display: swap;
+    src: url("../js/assets/fonts/Ubuntu-Light.woff2") format("woff2"), url("../js/assets/fonts/Ubuntu-Light.woff") format("woff");
+    font-weight: 300;
+    font-style: normal;
+}
+@font-face {
+    font-family: AmpleSoftPro;
+    font-display: swap;
+    src: url("../js/assets/fonts/AmpleSoftPro-Bold.woff2") format("woff2"), url("../js/assets/fonts/AmpleSoftPro-Bold.woff") format("woff");
+    font-weight: 700;
+    font-style: normal;
+}
+@font-face {
+    font-family: AmpleSoftPro;
+    font-display: swap;
+    src: url("../js/assets/fonts/AmpleSoftPro-Medium.woff2") format("woff2"), url("../js/assets/fonts/AmpleSoftPro-Medium.woff") format("woff");
+    font-weight: 500;
+    font-style: normal;
+}
+@font-face {
+    font-family: AmpleSoftPro;
+    font-display: swap;
+    src: url("../js/assets/fonts/AmpleSoftPro-Regular.woff2") format("woff2"), url("../js/assets/fonts/AmpleSoftPro-Regular.woff") format("woff");
+    font-weight: 400;
+    font-style: normal;
+}
+* {
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+}
+*, *:before, *:after {
+    box-sizing: border-box;
+}
+html, body {
+    height: 100%;
+    min-width: 320px;
+    overflow-x: hidden;
+}
+body {
+    color: #331a38;
+    line-height: 1;
+    font-family: Ubuntu;
+    font-size: 14px;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+input, button, textarea {
+    font-family: Ubuntu;
+    font-size: inherit;
+}
+button {
+    cursor: pointer;
+    color: inherit;
+    background-color: inherit;
+}
+a {
+    color: inherit;
+}
+a:link, a:visited {
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: none;
+}
+ul li {
+    list-style: none;
+}
+img {
+    vertical-align: top;
+}
+h1, h2, h3, h4, h5, h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+[class*="__container"] {
+    margin: 0 auto;
+    max-width: 1240px;
+    box-sizing: content-box;
+}
+@media (max-width: 1270px) {
+    [class*="__container"] {
+        max-width: 970px;
+    }
+}
+@media (max-width: 991.98px) {
+    [class*="__container"] {
+        max-width: 750px;
+    }
+}
+@media (max-width: 767.98px) {
+    [class*="__container"] {
+        max-width: none;
+        padding: 0 30px;
+    }
+}
+.main__text {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 163.6%;
+    color: #000000;
+}
+.main__link {
+    color: #3f7bdd !important;
+    line-height: 26px;
+    font-size: 18px;
+    font-weight: 500;
+    cursor: pointer;
+}
+.main__link-underline {
+    text-decoration: underline !important;
+}
+.dp__input_wrap input {
+    font-family: Ubuntu;
+    width: 100%;
+    height: 48px;
+    padding: 12px 16px;
+    background: #ffffff;
+    border: 1px solid #d6d6d6;
+    border-radius: 13px;
+    outline: none;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    color: #000034;
+}
+.dp__input_wrap input::placeholder {
+    font-family: Ubuntu;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 26px;
+    color: #000034;
+}
+.dp__input_wrap span {
+    left: auto;
+    right: 12px;
+}
+.dp__clear_icon {
+    right: 24px !important;
+}
+#myChart {
+    cursor: pointer;
+}
+.left--100-before-enter {
+    transform: translate(-100%, 0);
+    opacity: 0;
+}
+.left--100-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+.left-before-enter {
+    transform: translate(-100px, 0);
+    opacity: 0;
+}
+.left-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+.right--100-before-enter {
+    transform: translate(100%, 0);
+    opacity: 0;
+}
+.right--100-enter {
+    opacity: 1;
+}
+.right-before-enter {
+    transform: translate(100px, 0);
+    opacity: 0;
+}
+.right-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+.top-before-enter {
+    transform: translate(0, 100px);
+}
+.top-enter {
+    transform: translate(0, 0);
+}
+.bottom-before-enter {
+    transform: translate(0, -100px);
+}
+.bottom-enter {
+    transform: translate(0, 0);
+}
+.transition {
+    transition: transform 1.5s ease, opacity 1.5s ease;
+}
+.delay {
+    transition-delay: 0.1s !important;
+}
+.delay--md {
+    transition-delay: 0.4s !important;
+}
+.delay--lg {
+    transition-delay: 0.7s !important;
+}
+.important {
+    transition: transform 1.5s, opacity 1.5s, background 0.3s ease 0s !important;
+}
+.important--delay {
+    transition: transform 1.5s ease 0.1s, opacity 1.5s ease 0.1s, background 0.3s ease 0s !important;
+}
+.important--delay--md {
+    transition: transform 1.5s ease 0.4s, opacity 1.5s ease 0.4s, background 0.3s ease 0s !important;
+}
+.important--delay--lg {
+    transition: transform 1.5s ease 0.7s, opacity 1.5s ease 0.7s, background 0.3s ease 0s !important;
+}
