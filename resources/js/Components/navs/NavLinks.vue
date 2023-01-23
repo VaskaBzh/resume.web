@@ -15,8 +15,20 @@
             >
                 Сложность
             </Link>
-            <Link class="nav__link">FAG</Link>
-            <Link class="nav__link">О нас</Link>
+            <Link
+                :href="route('help')"
+                class="nav__link"
+                :class="{ active: $page.url === '/help' }"
+            >
+                FAG
+            </Link>
+            <Link
+                :href="route('about')"
+                class="nav__link"
+                :class="{ active: $page.url === '/about' }"
+            >
+                О нас
+            </Link>
         </div>
     </div>
 </template>

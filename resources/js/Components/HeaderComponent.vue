@@ -8,7 +8,8 @@
             />
         </Link>
 
-        <nav-links @click="burgerAction" />
+        <nav-links />
+        <!--        <nav-links @click="burgerAction" />-->
         <!--        <router-link-->
         <!--            v-if="viewportWidth >= 991.98"-->
         <!--            class="nav__button"-->
@@ -16,31 +17,27 @@
         <!--        >-->
         <!--            Личный кабинет-->
         <!--        </router-link>-->
-        <!-- <a v-if="viewportWidth >= 991.98" href="#" class="nav__button">
-          Личный кабинет
-        </a> -->
-        <!--        <div v-else class="nav__buttons_mobile">-->
-        <!--            <a class="nav__button_mobile" href="#"-->
-        <!--                ><img src="../assets/img/user.svg" alt="" />-->
-        <!--            </a>-->
-        <!--            <div-->
-        <!--                @click="burgerAction"-->
-        <!--                v-if="viewportWidth < 767.98"-->
-        <!--                class="nav__burger"-->
-        <!--                :class="{ active: is_clicked }"-->
-        <!--            >-->
-        <!--                <div class="nav__burger_con">-->
-        <!--                    <span></span>-->
-        <!--                    <span></span>-->
-        <!--                    <span></span>-->
-        <!--                </div>-->
-        <!--            </div>-->
-        <!--        </div>-->
+        <Link v-if="viewportWidth >= 991.98" class="nav__button">
+            Личный кабинет
+        </Link>
+        <div v-else class="nav__buttons_mobile">
+            <router-link to="loginReg" class="nav__button_mobile"
+            ><img src="../assets/img/user.svg" alt="" />
+            </router-link>
+            <div
+                @click="burgerAction"
+                v-if="viewportWidth < 767.98"
+                class="nav__burger"
+                :class="{ active: is_clicked }"
+            >
+                <div class="nav__burger_con">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
     </nav>
-    <!--    <div class="page">-->
-    <!--        <router-view />-->
-    <!--    </div>-->
-    <!--    <footer-component />-->
 </template>
 
 <script>
@@ -51,7 +48,6 @@ export default {
     components: {
         Link,
         NavLinks,
-        // FooterComponent,
     },
     data() {
         return {
@@ -87,7 +83,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #app {
     display: flex;
     flex-direction: column;
