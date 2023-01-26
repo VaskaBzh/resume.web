@@ -11,6 +11,7 @@
                     >
                         Зарабатывайте на майнинге вместе с allbtc pool
                     </main-title>
+
                     <div class="home__span" v-scroll="'left delay--md'">
                         Высокий доход. Надежность. Эффективность.
                     </div>
@@ -179,6 +180,7 @@ import PullStaticView from "@/Components/technical/PullStaticView.vue";
 import CollectivePlatformView from "@/components/technical/CollectivePlatformView.vue";
 import AboutPanelView from "@/components/technical/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/MiningInfoView.vue";
+
 export default {
     components: {
         MiningInfoView,

@@ -17,13 +17,20 @@
         <!--        >-->
         <!--            Личный кабинет-->
         <!--        </router-link>-->
-        <Link v-if="viewportWidth >= 991.98" class="nav__button">
+        <div
+            v-if="viewportWidth >= 991.98"
+            class="nav__button"
+            data-popup="#popup-create"
+        >
             Личный кабинет
-        </Link>
+        </div>
         <div v-else class="nav__buttons_mobile">
-            <router-link to="loginReg" class="nav__button_mobile"
-            ><img src="../assets/img/user.svg" alt="" />
-            </router-link>
+            <!--            <router-link to="loginReg" class="nav__button_mobile"-->
+            <!--                ><img src="../assets/img/user.svg" alt="" />-->
+            <!--            </router-link>-->
+            <div class="nav__button_mobile" data-popup="#popup-create">
+                <img src="../assets/img/user.svg" alt="" />
+            </div>
             <div
                 @click="burgerAction"
                 v-if="viewportWidth < 767.98"
@@ -38,14 +45,88 @@
             </div>
         </div>
     </nav>
+    <popup-view id="popup-create">
+        <main-title tag="h3" title-name="Создать аккаунт Allbtc" />
+        <form @submit.prevent="store" class="popup__form">
+            <div v-if="form.errors.email" class="error" style="color: red">
+                вы еблан
+            </div>
+            <input
+                v-model="form.email"
+                type="text"
+                class="popup__input"
+                :class="{ 'border-red': form.errors.email }"
+                placeholder="Введите ваш Email"
+            />
+            <blue-button>
+                <button type="submit" class="all-link">Дальше</button>
+            </blue-button>
+            <div class="popup__text">
+                Уже есть аккаунт?
+                <span class="main__link" data-popup="#popup-login">
+                    Войти
+                </span>
+            </div>
+        </form>
+    </popup-view>
+    <popup-view id="popup-login">
+        <main-title tag="h3" title-name="Войти в аккаунт Allbtc"></main-title>
+        <form action="#" class="popup__form">
+            <input
+                type="email"
+                class="popup__input"
+                placeholder="Введите ваш Email или логин"
+            />
+            <input
+                type="password"
+                class="popup__input"
+                placeholder="Введите пароль"
+            />
+            <blue-button>
+                <button class="all-link">Войти</button>
+            </blue-button>
+            <div class="popup__text">
+                Нет аккаунта?
+                <span class="main__link">Зарегистрироваться</span>
+            </div>
+        </form>
+    </popup-view>
+    <popup-view id="popup-mail">
+        <main-title tag="h3" title-name="Войти в аккаунт Allbtc"></main-title>
+        <form action="#" class="popup__form">
+            <input
+                type="email"
+                class="popup__input"
+                placeholder="Введите ваш Email или логин"
+            />
+            <input
+                type="password"
+                class="popup__input"
+                placeholder="Введите пароль"
+            />
+            <blue-button>
+                <button class="all-link">Войти</button>
+            </blue-button>
+            <div class="popup__text">
+                Нет аккаунта?
+                <span class="main__link">Зарегистрироваться</span>
+            </div>
+        </form>
+    </popup-view>
 </template>
 
 <script>
-import { Link } from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import NavLinks from "@/components/navs/NavLinks.vue";
+import PopupView from "@/Shared/PopupView.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
+import BlueButton from "@/Components/UI/BlueButton.vue";
 
 export default {
     components: {
+        BlueButton,
+        MainTitle,
+        PopupView,
         Link,
         NavLinks,
     },
@@ -58,6 +139,19 @@ export default {
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
+    },
+    setup() {
+        const form = useForm({
+            email: null,
+        });
+        function store() {
+            form.post(route("users.create"));
+        }
+
+        return {
+            form,
+            store,
+        };
     },
     methods: {
         handleResize() {
@@ -99,18 +193,21 @@ export default {
     );
     width: 100vw;
 }
+
 .all-link {
     width: 100%;
     height: 100%;
     padding: 14px 40px;
     display: block;
 }
+
 .page {
     flex: 1 1 auto;
     @media (max-width: 767.98px) {
         margin-top: 80px;
     }
 }
+
 .nav__logo {
     max-width: 170px;
     @media (max-width: 767.98px) {
@@ -121,6 +218,7 @@ export default {
         max-width: 138px;
     }
 }
+
 nav.nav__container {
     position: relative;
     z-index: 100;
@@ -163,12 +261,14 @@ nav.nav__container {
         }
     }
 }
+
 .nav__buttons_mobile {
     display: flex;
     align-items: center;
     gap: 10px;
     position: relative;
     z-index: 100;
+
     & .nav__burger {
         background: #4182ec;
         border-radius: 5px;
@@ -176,10 +276,12 @@ nav.nav__container {
         height: 45px;
         gap: 4px;
         transition: all 0.3s ease 0s;
+
         &:active {
             background: #305ea8;
             box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
         }
+
         &_con {
             margin: 0 auto;
             height: 100%;
@@ -191,6 +293,7 @@ nav.nav__container {
             width: 18px;
             overflow: hidden;
         }
+
         & span {
             display: block;
             width: 18px;
@@ -201,8 +304,10 @@ nav.nav__container {
             position: relative;
             right: 0;
             transition: all 0.3s ease 0.3s;
+
             &:nth-child(2) {
                 transition: all 0.3s ease 0s;
+
                 &::before {
                     transition: all 0.3s ease 0s;
                     content: "";
@@ -213,20 +318,24 @@ nav.nav__container {
                 }
             }
         }
+
         &.active {
             & span {
                 &:nth-child(1) {
                     transition: all 0.3s ease 0s;
                     right: 100%;
                 }
+
                 &:nth-child(2) {
                     transition: all 0.3s ease 0.3s;
                     transform: rotate(45deg);
+
                     &::before {
                         transition: all 0.3s ease 0.3s;
                         transform: rotate(-90deg);
                     }
                 }
+
                 &:nth-child(3) {
                     transition: all 0.3s ease 0s;
                     right: -100%;
@@ -235,6 +344,7 @@ nav.nav__container {
         }
     }
 }
+
 .nav__button {
     font-style: normal;
     font-weight: 400;
@@ -246,11 +356,13 @@ nav.nav__container {
     padding: 11px 36px;
     white-space: nowrap;
     transition: all 0.3s ease 0s;
+    cursor: pointer;
     @media (any-hover: hover) {
         &:hover {
             background: rgba(194, 213, 242);
         }
     }
+
     &_mobile {
         background: rgba(194, 213, 242, 0.61);
         border-radius: 5px;
@@ -268,8 +380,10 @@ nav.nav__container {
         }
     }
 }
+
 .swiper {
     padding-bottom: 48px !important;
+
     .swiper-pagination {
         .swiper-pagination-bullet {
             position: relative;
@@ -279,6 +393,7 @@ nav.nav__container {
             opacity: 1;
             background: transparent;
             border-radius: 3px;
+
             &::before {
                 content: "";
                 position: absolute;
@@ -289,6 +404,7 @@ nav.nav__container {
                 left: 50%;
                 transform: translate(-50%, -50%);
             }
+
             &::after {
                 content: "";
                 position: absolute;
@@ -302,6 +418,7 @@ nav.nav__container {
                 opacity: 0;
                 visibility: hidden;
             }
+
             &.swiper-pagination-bullet-active {
                 &::after {
                     opacity: 1;

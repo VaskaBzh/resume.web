@@ -110,7 +110,12 @@ h1, h2, h3, h4, h5, h6 {
 @media (max-width: 767.98px) {
     [class*="__container"] {
         max-width: none;
-        padding: 0 30px;
+        padding: 0 15px;
+    }
+}
+@media (max-width: 479.98px) {
+    [class*="__container"] {
+        padding: 0 20px;
     }
 }
 .main__text {
@@ -129,9 +134,42 @@ h1, h2, h3, h4, h5, h6 {
 }
 .main__link-underline {
     text-decoration: underline !important;
+    transition: all 0.3s ease 0s;
+}
+.main__link-underline:hover {
+    text-decoration: none !important;
+}
+@media (max-width: 767.98px) {
+    .main__link {
+        font-size: 14px;
+        line-height: 20px;
+    }
+}
+@media (max-width: 1270px) {
+    .account__container {
+        padding-top: 72px;
+        position: relative;
+        flex-direction: column;
+    }
+}
+@media (max-width: 991.98px) {
+    .account__container {
+        padding-top: 60px;
+    }
+}
+@media (max-width: 767.98px) {
+    .dp__clear_icon {
+        top: -50% !important;
+        right: calc(-1rem + 5px) !important;
+    }
+}
+@media (max-width: 479.98px) {
+    .dp__clear_icon {
+        right: calc(-1rem + 2px) !important;
+    }
 }
 .dp__input_wrap input {
-    font-family: Ubuntu;
+    font-family: Ubuntu, serif;
     width: 100%;
     height: 48px;
     padding: 12px 16px;
@@ -143,24 +181,45 @@ h1, h2, h3, h4, h5, h6 {
     font-size: 18px;
     line-height: 26px;
     color: #000034;
+    caret-color: #000034;
+}
+@media (max-width: 479.98px) {
+    .dp__input_wrap input {
+        height: 28px;
+        padding: 5px 10px;
+        font-size: 12px;
+        line-height: 17px;
+        border-radius: 8px;
+    }
 }
 .dp__input_wrap input::placeholder {
-    font-family: Ubuntu;
+    font-family: Ubuntu, serif;
     font-weight: 500;
     font-size: 18px;
     line-height: 26px;
     color: #000034;
+    opacity: 1;
+}
+@media (max-width: 479.98px) {
+    .dp__input_wrap input::placeholder {
+        font-size: 12px;
+        line-height: 17px;
+    }
 }
 .dp__input_wrap span {
     left: auto;
     right: 12px;
 }
-.dp__clear_icon {
-    right: 24px !important;
+@media (max-width: 479.98px) {
+    .dp__input_wrap span svg {
+        width: 16px !important;
+        height: 16px !important;
+    }
 }
 #myChart {
     cursor: pointer;
 }
+
 .left--100-before-enter {
     transform: translate(-100%, 0);
     opacity: 0;
@@ -174,6 +233,15 @@ h1, h2, h3, h4, h5, h6 {
     opacity: 0;
 }
 .left-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+}
+.left--page-before-enter {
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+    transform: translate(-30px, 0);
+    opacity: 0;
+}
+.left--page-enter {
     transform: translate(0, 0);
     opacity: 1;
 }
@@ -204,8 +272,20 @@ h1, h2, h3, h4, h5, h6 {
 .bottom-enter {
     transform: translate(0, 0);
 }
+.bottom--page-before-enter {
+    transition: transform 0.3s ease, opacity 0.3s ease !important;
+    transform: translate(0, -100px);
+    opacity: 0;
+}
+.bottom--page-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+}
 .transition {
     transition: transform 1.5s ease, opacity 1.5s ease;
+}
+.transition--fast {
+    transition: transform 0.3s ease, opacity 0.3s ease;
 }
 .delay {
     transition-delay: 0.1s !important;
