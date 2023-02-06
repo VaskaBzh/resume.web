@@ -1,0 +1,72 @@
+.contacts {
+  display: flex;
+  align-items: center;
+  gap: 60px;
+  @media (max-width: $pc) {
+    width: 100%;
+    justify-content: space-between;
+  }
+  @media (max-width: $tablet) {
+    gap: 30px;
+  }
+  @media (max-width: $mobile) {
+    flex-wrap: wrap;
+  }
+  @media (max-width: $mobileSmall) {
+    display: block;
+    width: fit-content;
+  }
+  &_item {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    & a,
+    & span {
+      text-align: left;
+      font-style: normal;
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 148.1%;
+      color: #000034;
+      max-width: 200px;
+      @media (max-width: $mobile) {
+        max-width: 260px;
+      }
+      @media (any-hover: hover) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      &:active {
+        text-decoration: underline;
+      }
+    }
+    @media (max-width: $mobileSmall) {
+      &:not(:last-child) {
+        margin-bottom: 15px;
+      }
+    }
+  }
+  &-burger {
+    gap: 10px;
+    align-items: flex-start;
+    .contacts {
+      &_item {
+        gap: 10px;
+        color: #818C99;
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 18px;
+        padding-left: 10px;
+        max-height: 31px;
+        svg {
+          fill: #818C99;
+          min-width: 12px;
+          min-height: 12px;
+          max-width: 16px;
+          max-height: 16px;
+        }
+      }
+    }
+  }
+}

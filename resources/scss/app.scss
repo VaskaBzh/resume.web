@@ -1,0 +1,423 @@
+//========================================================================================================================================================
+// импорты шрифтов
+@import "./fonts";
+
+//========================================================================================================================================================
+// импорты констант
+@import "./consts";
+
+//========================================================================================================================================================
+// импорты кастомных стилей animation
+@import "./animation/scrollAnimation";
+@import "./animation/popupAnimation";
+
+//========================================================================================================================================================
+// импорты кастомных стилей blocks
+@import "./blocks/wrap";
+@import "./blocks/page";
+@import "./blocks/legend";
+
+//========================================================================================================================================================
+// импорты кастомных стилей templates
+@import "./templates/socials";
+@import "./templates/contacts";
+@import "./templates/quote";
+@import "./templates/popup";
+@import "./templates/line";
+@import "./templates/datePicker";
+@import "./templates/input";
+@import "./templates/form";
+@import "./templates/copy";
+
+//========================================================================================================================================================
+// Обнуляющие стили
+
+* {
+    padding: 0;
+    margin: 0;
+    border: 0;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+:focus,
+:active {
+    // outline: none;
+}
+
+a:focus,
+a:active {
+    // outline: none;
+}
+
+html,
+body {
+    height: 100%;
+    min-width: $minWidth;
+    overflow-x: hidden;
+}
+
+body {
+    color: $mainColor;
+    line-height: 1;
+    font-family: $fontFamily;
+    font-size: $fontSize;
+    //text-rendering: optimizeLegibility;
+    -ms-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+input,
+button,
+textarea {
+    font-family: $fontFamily;
+    font-size: inherit;
+}
+
+button {
+    cursor: pointer;
+    color: inherit;
+    background-color: inherit;
+}
+
+a {
+    color: inherit;
+}
+
+a:link,
+a:visited {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+ul li {
+    list-style: none;
+}
+
+img {
+    vertical-align: top;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: inherit;
+    font-size: inherit;
+}
+
+//========================================================================================================================================================
+
+@if ($responsiveType==1) {
+    // Отзывчивая
+    [class*="__container"] {
+        @if ($maxWidthContainer>0) {
+            max-width: $maxWidthContainer;
+            box-sizing: content-box;
+            margin: 0 auto;
+        }
+        @if ($containerPadding>0) {
+            padding: 0 $containerPadding / 2 + px;
+        }
+    }
+} @else {
+    // По брейк-поинтам
+    [class*="__container"] {
+        margin: 0 auto;
+        @if ($maxWidthContainer>0) {
+            max-width: $maxWidthContainer;
+            box-sizing: content-box;
+        } @else {
+            @if ($containerPadding>0) {
+                padding: 0 calc($containerPadding / 2) + px;
+            }
+        }
+        @media (max-width: $pc) {
+            max-width: 970px;
+        }
+        @media (max-width: $tablet) {
+            max-width: 750px;
+        }
+        @media (max-width: $mobile) {
+            max-width: none;
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding: 0 calc($containerPadding / 2) + px;
+            }
+        }
+        @media (max-width: $mobileSmall) {
+            @if ($containerPadding>0 and $maxWidthContainer>0) {
+                padding: 0 calc($containerPadding / 2) + 5 + px;
+            }
+        }
+    }
+}
+
+//========================================================================================================================================================
+// Кастомные стили
+.main {
+    // .main__text
+    &__text {
+        font-style: normal;
+        font-weight: 300;
+        font-size: 21px;
+        line-height: 163.6%;
+        color: #000000;
+    }
+
+    // .main__subtitle
+    &__subtitle {
+        color: #000034;
+        font-family: AmpleSoftPro, serif;
+        font-weight: 700;
+        @media (max-width: $mobile) {
+            font-size: 24px;
+            line-height: 30px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 21px;
+            line-height: 26px;
+        }
+    }
+
+    // .main__nickname
+    &__nickname {
+        font-family: AmpleSoftPro, serif;
+        font-weight: 700;
+        color: #000034;
+        font-size: 24px;
+        line-height: 30px;
+        @media (max-width: $mobile) {
+            font-size: 20px;
+            line-height: 26px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 16px;
+            line-height: 26px;
+        }
+    }
+
+    // .main__number
+    &__number {
+        font-weight: 500 !important;
+        color: #000034 !important;
+        font-size: 18px !important;
+        line-height: 26px !important;
+        @media (max-width: $mobile) {
+            font-size: 16px !important;
+            line-height: 18px !important;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 12px !important;
+            line-height: 14px !important;
+        }
+
+        span {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 23px;
+            color: #0000009e;
+            @media (max-width: 479.98px) {
+                color: #000034;
+                font-weight: 500;
+            }
+            @media (max-width: 320.98px) {
+                font-size: 12px;
+                line-height: 17px;
+            }
+        }
+
+        &-lg {
+            color: rgba(#000034, 0.62);
+            font-style: normal;
+            font-weight: 500;
+            font-size: 28px;
+            line-height: 40px;
+
+            span {
+                font-weight: 700;
+                color: #000034;
+            }
+
+            @media (max-width: 991.98px) {
+                font-size: 21px;
+                line-height: 30px;
+                color: #000034;
+            }
+        }
+    }
+
+    // .main__name
+    &__name {
+        font-weight: 400;
+        color: #818c99;
+        font-size: 16px;
+        line-height: 23px;
+        @media (max-width: $mobile) {
+            line-height: 18px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 12px;
+            line-height: 14px;
+        }
+    }
+
+    // .main__label
+    &__label {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 23px;
+        color: rgba(0, 0, 0, 0.62);
+        @media (max-width: 479.98px) {
+            font-size: 14px;
+            line-height: 16px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 12px;
+            line-height: 14px;
+        }
+
+        &-select {
+            color: #000034;
+        }
+
+        &-check {
+            font-size: 16px;
+            line-height: 23px;
+            color: #3f7bbd;
+            position: relative;
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+            @media (max-width: 479.98px) {
+                font-size: 14px;
+                line-height: 16px;
+            }
+            @media (max-width: $mobileExtraSmall) {
+                font-size: 12px;
+                line-height: 14px;
+            }
+
+            &.checked {
+                &:before {
+                    background-color: #3f7bdd;
+                }
+
+                &:after {
+                    opacity: 1;
+                }
+            }
+
+            &:before {
+                content: "";
+                width: 24px;
+                height: 24px;
+                background: rgba(194, 213, 242, 0.61);
+                border-radius: 8px;
+                margin-right: 8px;
+                transition: all 0.3s ease 0s;
+                @media (max-width: 767.98px) {
+                    width: 20px;
+                    height: 20px;
+                    border-radius: 5px;
+                }
+            }
+
+            &:after {
+                content: url("../js/assets/img/Check.svg");
+                position: absolute;
+                top: 50%;
+                left: 4px;
+                transform: translate(0, -50%);
+                width: 16px;
+                height: 16px;
+                opacity: 0;
+                transition: all 0.3s ease;
+                @media (max-width: 767.98px) {
+                    left: 2px;
+                }
+            }
+        }
+    }
+
+    // .main_select
+    &_select {
+        color: #000034;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 181.1%;
+        @media (max-width: $mobileSmall) {
+            font-size: 14px;
+            line-height: 16px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 12px;
+            line-height: 14px;
+        }
+    }
+
+    // .main__link
+    &__link {
+        color: #3f7bdd !important;
+        line-height: 26px;
+        font-size: 18px;
+        font-weight: 500;
+        cursor: pointer;
+        // .main__link-underline
+        &-underline {
+            text-decoration: underline !important;
+            transition: all 0.3s ease 0s;
+
+            &:hover {
+                text-decoration: none !important;
+            }
+        }
+
+        @media (max-width: $mobile) {
+            font-size: 16px;
+            line-height: 22px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+}
+
+// Кастомные стили (адаптация)
+@media (max-width: $pc) {
+    .account {
+        &__container {
+            padding-top: 72px;
+            position: relative;
+            flex-direction: column;
+        }
+    }
+}
+
+@media (max-width: $tablet) {
+    .account {
+        &__container {
+            padding-top: 60px;
+        }
+    }
+}
+
+// Кастомные стили графиков
+#myChart {
+    cursor: pointer;
+}
+
+//========================================================================================================================================================

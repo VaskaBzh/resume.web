@@ -1,0 +1,83 @@
+// Кастомные стили для анимаций
+.left {
+  &--100 {
+    &-before-enter {
+      transform: translate(-100%, 0);
+      opacity: 0;
+    }
+    &-enter {
+      transform: translate(0, 0);
+      opacity: 1;
+    }
+  }
+  &-before-enter {
+    transform: translate(-100px, 0);
+    opacity: 0;
+  }
+  &-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+.right {
+  &--100 {
+    &-before-enter {
+      transform: translate(100%, 0);
+      opacity: 0;
+    }
+    &-enter {
+      opacity: 1;
+    }
+  }
+  &-before-enter {
+    transform: translate(100px, 0);
+    opacity: 0;
+  }
+  &-enter {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+.top {
+  &-before-enter {
+    transform: translate(0, 100px);
+  }
+  &-enter {
+    transform: translate(0, 0);
+  }
+}
+.bottom {
+  &-before-enter {
+    transform: translate(0, -100px);
+  }
+  &-enter {
+    transform: translate(0, 0);
+  }
+}
+.transition {
+  transition: transform $transition ease, opacity $transition ease;
+  &--fast {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+}
+.delay {
+  transition-delay: .1s!important;
+  &--md {
+    transition-delay: .4s!important;
+  }
+  &--lg {
+    transition-delay: .7s!important;
+  }
+}
+.important {
+  transition: transform $transition, opacity $transition, background .3s ease 0s!important;
+  &--delay {
+    transition: transform $transition ease .1s, opacity $transition ease .1s, background .3s ease 0s!important;
+    &--md {
+      transition: transform $transition ease .4s, opacity $transition ease .4s, background .3s ease 0s!important;
+    }
+    &--lg {
+      transition: transform $transition ease .7s, opacity $transition ease .7s, background .3s ease 0s!important;
+    }
+  }
+}

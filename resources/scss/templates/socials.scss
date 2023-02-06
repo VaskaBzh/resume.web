@@ -1,0 +1,60 @@
+.socials {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  &_link {
+    background: linear-gradient(137.86deg, rgba(255, 255, 255, 0.7) 15.41%, #F7F2F2 90.59%);
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease 0.3s;
+    position: relative;
+    &.teleg {
+      svg {
+        margin-left: -2px;
+      }
+    }
+    &:after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      transition: all 0.3s ease 0s;
+      background: linear-gradient(137.86deg, #3F66B6 15.41%, #3F66B6 90.59%);
+    }
+    & svg {
+      fill: #3f7bdd;
+      transition: all 0.3s ease 0s;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+    }
+    @media (any-hover: hover) {
+      &:hover {
+        &:after {
+          opacity: 1;
+        }
+        & svg {
+          fill: #fff;
+        }
+      }
+    }
+    &:active {
+      &:after {
+        opacity: 1;
+      }
+      & svg {
+        fill: #fff;
+      }
+    }
+  }
+}

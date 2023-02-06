@@ -6,7 +6,7 @@
     <link rel="icon" href="/favicon.ico">
 
     @routes
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @vite([ "resources/scss/app.scss", "resources/js/app.js" ])
     @inertiaHead
 </head>
 <body>

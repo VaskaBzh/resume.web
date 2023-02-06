@@ -1,0 +1,95 @@
+// Кастомные стили для легенды
+.legend {
+  display: flex;
+  justify-content: flex-end;
+  gap: 48px;
+  &-block {
+    @media (max-width: $mobile) {
+      .statistic__legend_elem {
+        &-all {
+          font-size: 16px;
+          line-height: 23px;
+          color: #000034;
+        }
+      }
+    }
+  }
+  @media (max-width: $tablet) {
+    gap: 20px;
+  }
+  @media (max-width: $mobile) {
+    width: 100%;
+    justify-content: flex-start;
+    align-items: center;
+    height: 28px;
+    gap: 8px;
+  }
+  &_elem {
+    display: inline-flex;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.62);
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 23px;
+    gap: 16px;
+    @media (max-width: $mobile) {
+      color: #fff;
+      position: relative;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      justify-content: center;
+      font-weight: 500;
+      font-size: 14px;
+    }
+    &:last-child {
+      @media (max-width: $mobile) {
+        font-weight: 400;
+        margin-left: calc(20px - 8px);
+        width: auto;
+      }
+    }
+    &::before {
+      content: "";
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      @media (max-width: $mobile) {
+        content: none;
+      }
+    }
+    &-active {
+      @media (max-width: $mobile) {
+        background-color: #13d60e;
+      }
+      &::before {
+        background-color: #13d60e;
+      }
+    }
+    &-unstable {
+      @media (max-width: $mobile) {
+        background-color: #e9c058;
+      }
+      &::before {
+        background-color: #e9c058;
+      }
+    }
+    &-unactive {
+      @media (max-width: $mobile) {
+        background-color: #ff0000;
+      }
+      &::before {
+        background-color: #ff0000;
+      }
+    }
+    &-all {
+      @media (max-width: $mobile) {
+        color: #818c99;
+        white-space: nowrap;
+      }
+      &::before {
+        content: none;
+      }
+    }
+  }
+}
