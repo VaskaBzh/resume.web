@@ -8,7 +8,7 @@
             />
         </Link>
 
-        <nav-links />
+        <nav-links :is_auth="is_auth" />
         <!--        <nav-links @click="burgerAction" />-->
         <!--        <router-link-->
         <!--            v-if="viewportWidth >= 991.98"-->
@@ -18,17 +18,28 @@
         <!--            Личный кабинет-->
         <!--        </router-link>-->
         <div
-            v-if="viewportWidth >= 991.98"
+            v-if="viewportWidth >= 991.98 && !is_auth"
             class="nav__button"
-            data-popup="#popup-create"
+            data-popup="#login"
         >
             Личный кабинет
         </div>
-        <div v-else class="nav__buttons_mobile">
+        <Link
+            :href="route('logout')"
+            v-if="viewportWidth >= 991.98 && is_auth"
+            class="nav__button"
+        >
+            Выйти
+        </Link>
+
+        <div
+            v-else-if="viewportWidth < 991.98 && !is_auth"
+            class="nav__buttons_mobile"
+        >
             <!--            <router-link to="loginReg" class="nav__button_mobile"-->
             <!--                ><img src="../assets/img/user.svg" alt="" />-->
             <!--            </router-link>-->
-            <div class="nav__button_mobile" data-popup="#popup-create">
+            <div class="nav__button_mobile" data-popup="#login">
                 <img src="../assets/img/user.svg" alt="" />
             </div>
             <div
@@ -45,21 +56,27 @@
             </div>
         </div>
     </nav>
-    <popup-view id="popup-create">
+    <popup-view id="register">
         <main-title tag="h3" title-name="Создать аккаунт Allbtc" />
-        <form @submit.prevent="store" class="popup__form">
+        <div class="popup__form">
             <div v-if="form.errors.email" class="error" style="color: red">
-                вы еблан
+                E-mail неверный
             </div>
             <input
                 v-model="form.email"
-                type="text"
+                type="email"
                 class="popup__input"
                 :class="{ 'border-red': form.errors.email }"
                 placeholder="Введите ваш Email"
             />
             <blue-button>
-                <button type="submit" class="all-link">Дальше</button>
+                <button
+                    data-popup="#verification"
+                    type="button"
+                    class="all-link"
+                >
+                    Дальше
+                </button>
             </blue-button>
             <div class="popup__text">
                 Уже есть аккаунт?
@@ -67,45 +84,51 @@
                     Войти
                 </span>
             </div>
-        </form>
+        </div>
     </popup-view>
-    <popup-view id="popup-login">
-        <main-title tag="h3" title-name="Войти в аккаунт Allbtc"></main-title>
-        <form action="#" class="popup__form">
-            <input
-                type="email"
-                class="popup__input"
-                placeholder="Введите ваш Email или логин"
-            />
-            <input
-                type="password"
-                class="popup__input"
-                placeholder="Введите пароль"
-            />
-            <blue-button>
-                <button class="all-link">Войти</button>
-            </blue-button>
+
+    <popup-view id="verification">
+        <main-title tag="h3" title-name="Создать аккаунт Allbtc"></main-title>
+        <div class="popup__form">
             <div class="popup__text">
-                Нет аккаунта?
-                <span class="main__link">Зарегистрироваться</span>
+                Мы отправили проверочный код на ваш электронный адрес
             </div>
-        </form>
+            <input type="text" class="popup__input" placeholder="Введите код" />
+            <div class="popup__buttons">
+                <blue-button class="back">
+                    <button class="all-link">Назад</button>
+                </blue-button>
+                <blue-button>
+                    <button class="all-link">Дальше</button>
+                </blue-button>
+            </div>
+            <div class="popup__text">
+                Код не пришёл?
+                <span class="main__link">Отправить повторно</span>
+            </div>
+        </div>
     </popup-view>
-    <popup-view id="popup-mail">
+
+    <popup-view id="login">
         <main-title tag="h3" title-name="Войти в аккаунт Allbtc"></main-title>
-        <form action="#" class="popup__form">
+        <form @submit.prevent="submit" class="popup__form">
             <input
+                v-model="form.email"
+                required
+                autofocus
                 type="email"
                 class="popup__input"
                 placeholder="Введите ваш Email или логин"
             />
             <input
+                v-model="form.password"
+                required
                 type="password"
                 class="popup__input"
                 placeholder="Введите пароль"
             />
             <blue-button>
-                <button class="all-link">Войти</button>
+                <button type="submit" class="all-link">Войти</button>
             </blue-button>
             <div class="popup__text">
                 Нет аккаунта?
@@ -117,16 +140,16 @@
 
 <script>
 import { Link, useForm } from "@inertiajs/vue3";
-import NavLinks from "@/components/navs/NavLinks.vue";
-import PopupView from "@/Shared/PopupView.vue";
+import NavLinks from "@/Components/navs/NavLinks.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
+import PopupView from "@/Components/technical/PopupView.vue";
 
 export default {
     components: {
+        PopupView,
         BlueButton,
         MainTitle,
-        PopupView,
         Link,
         NavLinks,
     },
@@ -136,21 +159,32 @@ export default {
             viewportWidth: 0,
         };
     },
+    props: {
+        is_auth: {
+            type: Boolean,
+            default: false,
+        },
+    },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
     setup() {
         const form = useForm({
-            email: null,
+            email: "",
+            password: "",
+            remember: false,
         });
-        function store() {
-            form.post(route("users.create"));
-        }
+        const submit = () => {
+            // eslint-disable-next-line no-undef
+            form.post(route("login_process"), {
+                onFinish: () => form.reset("password"),
+            });
+        };
 
         return {
             form,
-            store,
+            submit,
         };
     },
     methods: {

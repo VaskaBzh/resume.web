@@ -1,5 +1,5 @@
 <template>
-    <header-component />
+    <header-component :is_auth="auth_user" />
     <div class="page">
         <slot></slot>
     </div>
@@ -11,6 +11,13 @@ import FooterComponent from "@/Components/FooterComponent.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
 
 export default {
+    props: {
+        auth_user: {
+            type: Boolean,
+            default: false,
+        },
+    },
+
     components: { HeaderComponent, FooterComponent },
 };
 </script>
@@ -22,6 +29,7 @@ export default {
         margin-top: 80px;
     }
 }
+
 #app {
     display: flex;
     flex-direction: column;

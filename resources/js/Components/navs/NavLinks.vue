@@ -1,6 +1,6 @@
 <template>
     <div class="nav__links_con">
-        <div class="nav__links">
+        <div v-if="!is_auth" class="nav__links">
             <Link
                 :href="route('home')"
                 class="nav__link"
@@ -11,7 +11,7 @@
             <Link
                 :href="route('complexity')"
                 class="nav__link"
-                :class="{ active: $page.url === '/complexity' }"
+                :class="{ active: $page.url.startsWith('/complexity') }"
             >
                 Сложность
             </Link>
@@ -20,7 +20,7 @@
                 class="nav__link"
                 :class="{ active: $page.url === '/help' }"
             >
-                FAG
+                FAQ
             </Link>
             <Link
                 :href="route('about')"
@@ -28,6 +28,36 @@
                 :class="{ active: $page.url === '/about' }"
             >
                 О нас
+            </Link>
+        </div>
+        <div v-else class="nav__links">
+            <Link
+                :href="route('accounts')"
+                class="nav__link non-before"
+                :class="{ active: $page.url.startsWith('/profile') }"
+            >
+                Майнинг
+            </Link>
+            <Link
+                :href="route('wallets')"
+                class="nav__link non-before"
+                :class="{ active: $page.url === '/wallets' }"
+            >
+                Кошельки
+            </Link>
+            <Link
+                :href="route('ref_page')"
+                class="nav__link non-before"
+                :class="{ active: $page.url === '/ref-page' }"
+            >
+                Реферальная программа
+            </Link>
+            <Link
+                :href="route('help')"
+                class="nav__link non-before"
+                :class="{ active: $page.url === '/help' }"
+            >
+                FAQ
             </Link>
         </div>
     </div>
@@ -39,6 +69,12 @@ import { Link } from "@inertiajs/vue3";
 export default {
     components: {
         Link,
+    },
+    props: {
+        is_auth: {
+            type: Boolean,
+            default: false,
+        },
     },
 };
 </script>
@@ -105,6 +141,12 @@ export default {
 
         &::before {
             background: rgba(65, 130, 236, 0.52);
+        }
+    }
+
+    &.non-before {
+        &::before {
+            display: none;
         }
     }
 

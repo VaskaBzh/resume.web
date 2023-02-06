@@ -34,7 +34,7 @@
 
 <script>
 import Chart from "chart.js/auto";
-import MainTitle from "@/components/UI/MainTitle.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 export default {
     props: {
         graphs: {

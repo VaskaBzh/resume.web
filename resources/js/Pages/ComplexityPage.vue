@@ -25,9 +25,9 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
-import MainChart from "@/components/charts/MainChart.vue";
-import StatisticsTable from "@/components/tables/StatisticsTable.vue";
-import MainTitle from "@/components/UI/MainTitle.vue";
+import MainChart from "@/Components/charts/MainChart.vue";
+import StatisticsTable from "@/Components/tables/StatisticsTable.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
     components: {

@@ -9,7 +9,7 @@ createInertiaApp({
     resolve: (name) => {
         const pages = import.meta.glob("./Pages/**/*.vue", { eager: true });
         const page = pages[`./Pages/${name}.vue`].default;
-        page.layout = Layout;
+        page.layout = page.layout || Layout;
 
         return page;
     },
@@ -21,5 +21,19 @@ createInertiaApp({
             .directive("scroll", scrollAnimation)
             .directive("value-scroll", scrollValueAnimation)
             .mount(el);
+    },
+    progress: {
+        // The delay after which the progress bar will appear
+        // during navigation, in milliseconds.
+        delay: 250,
+
+        // The color of the progress bar.
+        color: "#29d",
+
+        // Whether to include the default NProgress styles.
+        includeCSS: true,
+
+        // Whether the NProgress spinner will be shown.
+        showSpinner: true,
     },
 });

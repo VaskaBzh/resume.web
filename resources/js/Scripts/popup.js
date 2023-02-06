@@ -1,29 +1,3 @@
-let isMobile = {
-    Android: function () {
-        return navigator.userAgent.match(/Android/i);
-    },
-    BlackBerry: function () {
-        return navigator.userAgent.match(/BlackBerry/i);
-    },
-    iOS: function () {
-        return navigator.userAgent.match(/iPhone|iPad|iPod/i);
-    },
-    Opera: function () {
-        return navigator.userAgent.match(/Opera Mini/i);
-    },
-    Windows: function () {
-        return navigator.userAgent.match(/IEMobile/i);
-    },
-    any: function () {
-        return (
-            isMobile.Android() ||
-            isMobile.BlackBerry() ||
-            isMobile.iOS() ||
-            isMobile.Opera() ||
-            isMobile.Windows()
-        );
-    },
-};
 const flsModules = {};
 let bodyLockStatus = true;
 let bodyUnlock = (delay = 500) => {
@@ -177,7 +151,7 @@ class Popup {
     eventsPopup() {
         // Клик на всем документе
         document.addEventListener(
-            "click",
+            "mousedown",
             function (e) {
                 // Клик по кнопке "открыть"
                 const buttonOpen = e.target.closest(
@@ -350,9 +324,31 @@ class Popup {
                     })
                 );
 
+                if (
+                    this.targetOpen.element
+                        .querySelector(".popup__content")
+                        .classList.contains("opened") ||
+                    this.targetOpen.element
+                        .querySelector(".popup__content")
+                        .classList.contains(this.options.classes.popupActive)
+                ) {
+                    this.targetOpen.element
+                        .querySelector(".popup__content")
+                        .classList.remove("opened");
+                    this.targetOpen.element.classList.remove(
+                        this.options.classes.popupActive
+                    );
+                }
+
                 this.targetOpen.element.classList.add(
                     this.options.classes.popupActive
                 );
+                setTimeout(() => {
+                    this.targetOpen.element
+                        .querySelector(".popup__content")
+                        .classList.add("opened");
+                }, 300);
+
                 document.documentElement.classList.add(
                     this.options.classes.bodyActive
                 );
@@ -427,9 +423,14 @@ class Popup {
                     `[${this.options.youtubePlaceAttribute}]`
                 ).innerHTML = "";
         }
+
+        this.previousOpen.element
+            .querySelector(".popup__content")
+            .classList.remove("opened");
         this.previousOpen.element.classList.remove(
             this.options.classes.popupActive
         );
+
         // aria-hidden
         this.previousOpen.element.setAttribute("aria-hidden", "true");
         if (!this._reopen) {

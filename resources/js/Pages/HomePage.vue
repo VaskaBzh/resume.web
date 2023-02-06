@@ -177,8 +177,8 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import CalculatorView from "@/Components/technical/CalculatorView.vue";
 import PullStaticView from "@/Components/technical/PullStaticView.vue";
-import CollectivePlatformView from "@/components/technical/CollectivePlatformView.vue";
-import AboutPanelView from "@/components/technical/AboutPanelView.vue";
+import CollectivePlatformView from "@/Components/technical/CollectivePlatformView.vue";
+import AboutPanelView from "@/Components/technical/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/MiningInfoView.vue";
 
 export default {

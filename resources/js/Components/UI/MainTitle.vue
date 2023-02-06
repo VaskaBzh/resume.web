@@ -1,13 +1,13 @@
 <template>
-    <h1 v-if="this.tag == 'h1'" class="title">
+    <h1 v-if="this.tag === 'h1'" class="title">
         {{ this.titleName }}
         <slot></slot>
     </h1>
-    <h2 v-else-if="this.tag == 'h2'" class="title">
+    <h2 v-else-if="this.tag === 'h2'" class="title">
         {{ this.titleName }}
         <slot></slot>
     </h2>
-    <h3 v-else-if="this.tag == 'h3'" class="title">
+    <h3 v-else-if="this.tag === 'h3'" class="title">
         {{ this.titleName }}
         <slot></slot>
     </h3>
