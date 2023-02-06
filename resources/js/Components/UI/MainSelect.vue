@@ -185,7 +185,7 @@ $height: 48px;
                     height: 40px;
                     padding: 0 10px;
                     &::after {
-                        background-image: url("../../assets/img/arrow-down-icon-dark.svg");
+                        background-image: url("../../../assets/img/arrow-down-icon-dark.svg");
                         height: 15px;
                         width: 15px;
                     }
@@ -300,7 +300,7 @@ $height: 48px;
         }
         &::after {
             content: "";
-            background-image: url("../../assets/img/arrow-down-icon-blue.svg");
+            background-image: url("../../../assets/img/arrow-down-icon-blue.svg");
             background-position: center;
             background-size: contain;
             background-repeat: no-repeat;
@@ -403,7 +403,7 @@ $height: 48px;
             &::after {
                 width: 24px;
                 height: 24px;
-                background-image: url("../../assets/img/arrow-down-icon-black.svg");
+                background-image: url("../../../assets/img/arrow-down-icon-black.svg");
             }
         }
     }

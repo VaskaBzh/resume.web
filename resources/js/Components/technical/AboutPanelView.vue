@@ -13,7 +13,7 @@
                 </div>
                 <img
                     v-if="viewportWidth >= 991.98"
-                    src="../../assets/img/about-panel-img.png"
+                    src="../../../assets/img/about-panel-img.png"
                     alt=""
                     class="panel-am__image"
                     v-scroll="'left'"
@@ -21,7 +21,7 @@
 
                 <img
                     v-else
-                    src="../../assets/img/about-panel-img-mob.png"
+                    src="../../../assets/img/about-panel-img-mob.png"
                     alt=""
                     class="panel-am__image"
                     v-scroll="'left'"
@@ -52,7 +52,7 @@ export default {
 
 <style lang="scss" scoped>
 .about-panel {
-    background-image: url("../../assets/img/about-panel-bg.png");
+    background-image: url("../../../assets/img/about-panel-bg.png");
     background-position: center 30%;
     background-size: contain;
     background-repeat: no-repeat;

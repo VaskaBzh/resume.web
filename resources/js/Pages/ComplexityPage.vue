@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="complexity__image">
-                    <img src="../assets/img/compl-main-img.png" alt="" />
+                    <img src="../../assets/img/compl-main-img.png" alt="" />
                 </div>
             </div>
             <MainChart :graphs="graphs" />

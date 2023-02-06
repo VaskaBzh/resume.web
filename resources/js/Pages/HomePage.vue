@@ -24,34 +24,34 @@
                 <div v-if="viewportWidth >= 991.98" class="home__background">
                     <img
                         class="home__background_image home__background_1"
-                        src="../assets/img/main_an_img_1.png"
+                        src="../../assets/img/main_an_img_1.png"
                         alt=""
                     />
                     <img
                         class="home__background_image home__background_2"
-                        src="../assets/img/main_an_img_2.png"
+                        src="../../assets/img/main_an_img_2.png"
                         alt=""
                     />
                     <img
                         class="home__background_image home__background_3"
-                        src="../assets/img/main_an_img_3.png"
+                        src="../../assets/img/main_an_img_3.png"
                         alt=""
                     />
                     <img
                         class="home__background_image home__background_4"
-                        src="../assets/img/main_an_img_4.png"
+                        src="../../assets/img/main_an_img_4.png"
                         alt=""
                     />
                     <img
                         class="home__background_image home__background_5"
-                        src="../assets/img/main_an_img_5.png"
+                        src="../../assets/img/main_an_img_5.png"
                         alt=""
                     />
                 </div>
                 <div v-else class="home__background">
                     <img
                         class="home__background_image"
-                        src="../assets/img/main_an_img_full.png"
+                        src="../../assets/img/main_an_img_full.png"
                         alt=""
                     />
                 </div>
@@ -63,7 +63,7 @@
                             <a href="#" class="all-link">Начать майнинг</a>
                         </blue-button>
                         <img
-                            src="../assets/img/graph.png"
+                            src="../../assets/img/graph.png"
                             alt=""
                             class="home-im__image"
                         />
@@ -355,10 +355,8 @@ export default {
                 position: absolute;
                 width: 36px;
                 height: 36px;
-                background: url("../assets/img/propeller.svg");
-                background-position: center;
                 background-size: cover;
-                background-repeat: no-repeat;
+                background: url("../../assets/img/propeller.svg") no-repeat center;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
@@ -567,7 +565,7 @@ export default {
         margin-bottom: 17px;
         &::before {
             content: "";
-            background-image: url("../assets/img/bitcoin.png");
+            background-image: url("../../assets/img/bitcoin.png");
             position: absolute;
             width: 500px;
             background-position: center;
@@ -678,7 +676,7 @@ export default {
             position: absolute;
             width: 51px;
             height: 51px;
-            background-image: url("../assets/img/orange-propeller-icon.svg");
+            background-image: url("../../assets/img/orange-propeller-icon.svg");
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
@@ -856,7 +854,7 @@ export default {
             &::before {
                 content: "";
                 position: absolute;
-                background-image: url("../assets/img/coins.png");
+                background-image: url("../../assets/img/coins.png");
                 background-position: center;
                 background-size: contain;
                 background-repeat: no-repeat;
@@ -881,7 +879,7 @@ export default {
             &::before {
                 content: "";
                 position: absolute;
-                background-image: url("../assets/img/asic.png");
+                background-image: url("../../assets/img/asic.png");
                 background-position: center;
                 background-size: contain;
                 background-repeat: no-repeat;

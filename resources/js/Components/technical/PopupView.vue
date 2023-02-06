@@ -4,7 +4,7 @@
             <div class="popup__content">
                 <img
                     class="popup__content_logo"
-                    src="../../assets/img/logo_high_quality.png"
+                    src="../../../assets/img/logo_high_quality.png"
                     alt="logo"
                 />
                 <div class="popup__content_block">

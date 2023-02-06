@@ -12,7 +12,7 @@
                             placeholder="Search..." />
                         <button class="faq__button" type="button">
                             <img
-                                src="../assets/img/search-icon.svg"
+                                src="../../assets/img/search-icon.svg"
                                 alt=""
                             /></button
                     ></label>

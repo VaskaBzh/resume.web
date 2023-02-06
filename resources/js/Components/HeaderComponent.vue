@@ -3,7 +3,7 @@
         <Link :href="route('home')">
             <img
                 class="nav__logo headder"
-                src="../assets/img/logo_high_quality.png"
+                src="../../assets/img/logo_high_quality.png"
                 alt="logo"
             />
         </Link>
@@ -37,10 +37,10 @@
             class="nav__buttons_mobile"
         >
             <!--            <router-link to="loginReg" class="nav__button_mobile"-->
-            <!--                ><img src="../assets/img/user.svg" alt="" />-->
+            <!--                ><img src="../../assets/img/user.svg" alt="" />-->
             <!--            </router-link>-->
             <div class="nav__button_mobile" data-popup="#login">
-                <img src="../assets/img/user.svg" alt="" />
+                <img src="../../assets/img/user.svg" alt="" />
             </div>
             <div
                 @click="burgerAction"
