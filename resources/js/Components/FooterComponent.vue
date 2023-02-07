@@ -6,7 +6,7 @@
                     <a href="/">
                         <img
                             class="nav__logo"
-                            src="@/assets/img/logo_high_quality.png"
+                            src="../../assets/img/logo_high_quality.png"
                             alt="logo"
                         />
                     </a>

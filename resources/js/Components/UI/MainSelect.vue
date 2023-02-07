@@ -1,40 +1,9 @@
 <template>
-    <div
-        v-if="selectType == 'mini'"
-        class="select_con select_con-mini"
-        :class="{ open: select_is_open }"
-    >
-        <div
-            @click="this.select_is_open = !this.select_is_open"
-            class="select_title"
-        >
-            <img :src="this.baseImg" />
-            {{ this.baseOption }}
-        </div>
-        <div class="select_options">
-            <div
-                v-for="(option, i) in this.options"
-                :key="option.value"
-                class="select_option"
-            >
-                <p @click="selectOptions(option.title, option.img)">
-                    <img :src="this.optionsImgs[i]" />
-                    {{ option.title }}
-                </p>
-            </div>
-        </div>
-    </div>
-    <div
-        v-else-if="selectType == 'large'"
-        class="select_con select_con-large"
-        :class="{ open: select_is_open }"
-    >
-        <div
-            @click="this.select_is_open = !this.select_is_open"
-            class="select_title"
-        >
-            <!--            <img :src="this.baseImg" />-->
+    <div ref="select" class="select_con" :class="{ open: select_is_open }">
+        <div @click="this.openSelect" class="select_title main_select">
+            <img :src="this.baseImg" v-if="this.options[0].img" />
             <svg
+                v-if="selectType === 'large'"
                 xmlns="http://www.w3.org/2000/svg"
                 width="33"
                 height="33"
@@ -57,31 +26,25 @@
         </div>
         <div class="select_options">
             <div
-                v-for="option in this.options"
+                v-for="(option, i) in this.options"
                 :key="option.value"
                 class="select_option"
             >
-                <p @click="selectOptions(option.title, option.img)">
-                    <!--                    <img :src="this.optionsImgs[i]" />-->
+                <p
+                    v-if="this.options[0].img"
+                    class="main_select"
+                    @click="selectOptions(option.title, option.img)"
+                >
+                    <img :src="this.optionsImgs[i]" />
                     {{ option.title }}
                 </p>
-            </div>
-        </div>
-    </div>
-    <div v-else class="select_con" :class="{ open: select_is_open }">
-        <div
-            @click="this.select_is_open = !this.select_is_open"
-            class="select_title"
-        >
-            {{ this.baseOption }}
-        </div>
-        <div class="select_options">
-            <div
-                v-for="option in this.options"
-                :key="option.value"
-                class="select_option"
-            >
-                <p @click="selectOption(option.title)">{{ option.title }}</p>
+                <p
+                    v-else
+                    class="main_select"
+                    @click="selectOptions(option.title)"
+                >
+                    {{ option.title }}
+                </p>
             </div>
         </div>
     </div>
@@ -101,13 +64,17 @@ export default {
             select_is_open: false,
             baseOption: "",
             baseImg: "",
+            height: 0,
         };
     },
     computed: {
         optionsImgs() {
             let obj = [];
             for (let i = 0; i < this.options.length; i++) {
-                // obj.push(require(`@/assets/img/${this.options[i].img}`));
+                obj.push(
+                    "http://127.0.0.1:5173" +
+                        `/resources/assets/img/${this.options[i].img}`
+                );
             }
             return obj;
         },
@@ -116,20 +83,81 @@ export default {
         selectOption(option) {
             this.baseOption = option;
         },
-        selectOptions(optionTitle) {
+        selectOptions(optionTitle, optionImg) {
             this.baseOption = optionTitle;
-            // this.baseImg = require(`@/assets/img/${optionImg}`);
+            this.baseImg =
+                "http://127.0.0.1:5173" + `/resources/assets/img/${optionImg}`;
         },
         hideSelect() {
-            this.select_is_open = false;
+            if (this.select_is_open === true) {
+                this.select_is_open = false;
+                this.$refs.select
+                    .querySelector(".select_options")
+                    .removeAttribute("style");
+                this.$refs.select
+                    .querySelector(".select_title")
+                    .removeAttribute("style");
+                setTimeout(() => {
+                    this.handleScroll();
+                }, 150);
+            }
+        },
+        openSelect() {
+            this.select_is_open = true;
+            this.$refs.select.querySelector(
+                ".select_options"
+            ).style.zIndex = 10;
+            this.$refs.select.querySelector(".select_title").style.zIndex = 11;
+            this.locker(true);
+        },
+        handleScroll() {
+            setTimeout(() => {
+                if (
+                    this.$refs.select.getBoundingClientRect().bottom >
+                        window.innerHeight - this.height &&
+                    this.select_is_open === false
+                ) {
+                    this.$refs.select
+                        .querySelector(".select_options")
+                        .classList.add("select_options-reverse");
+                } else if (this.select_is_open === false) {
+                    this.$refs.select
+                        .querySelector(".select_options")
+                        .classList.remove("select_options-reverse");
+                }
+            }, 150);
+            setTimeout(() => {
+                this.locker(false);
+            }, 300);
+        },
+        locker(bool) {
+            if (bool === true) {
+                document.querySelector("body").classList.add("lock-select");
+            } else {
+                document.querySelector("body").classList.remove("lock-select");
+            }
         },
     },
     mounted() {
+        this.$refs.select
+            .querySelectorAll(".select_option")
+            .forEach((option) => {
+                this.height += option.offsetHeight;
+            });
         document.addEventListener("click", this.hideSelect.bind(this), true);
+        document.addEventListener("keydown", (e) => {
+            if (e.keyCode === 27) {
+                this.hideSelect();
+            }
+        });
         this.baseOption = this.options[0].title;
         if (this.options[0].img) {
-            // this.baseImg = require(`@/assets/img/${this.options[0].img}`);
+            this.baseImg =
+                "http://127.0.0.1:5173" +
+                `/resources/assets/img/${this.options[0].img}`;
         }
+        this.handleScroll();
+        document.addEventListener("wheel", this.handleScroll);
     },
 };
 </script>
@@ -137,6 +165,52 @@ export default {
 $miniHeight: 40px;
 $largeHeight: 61px;
 $height: 48px;
+$adaptMiniHeight: 38px;
+$adaptLargeHeight: 61px;
+$adaptHeight: 34px;
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(-360deg);
+    }
+}
+@keyframes arrowOpen {
+    0% {
+        transform: rotate(0);
+    }
+    50% {
+        transform: rotate(30deg);
+    }
+    100% {
+        transform: rotate(-180deg);
+    }
+}
+@keyframes arrowClose {
+    0% {
+        transform: rotate(-180deg);
+    }
+    100% {
+        transform: rotate(0);
+    }
+}
+
+.lock-select {
+    .select {
+        &_title {
+            &:after {
+                animation: none;
+                transform: rotate(-180deg);
+            }
+        }
+        &_title,
+        &_options {
+            transition-delay: 0s;
+        }
+    }
+}
 
 .select {
     // .select_con
@@ -145,7 +219,13 @@ $height: 48px;
         max-width: 320px;
         width: 100%;
         cursor: pointer;
-        height: $height;
+        height: 48px;
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+        }
+        @media (max-width: 767.98px) {
+            height: $adaptHeight;
+        }
         img {
             width: 20px;
             height: 20px;
@@ -153,97 +233,144 @@ $height: 48px;
             margin: auto 8px auto 0;
         }
         &.open {
-            & .select_title {
-                pointer-events: none;
-                //border-radius: 10px 10px 0 0;
-                position: absolute;
-                top: 0;
-                left: 0;
-                @media (min-width: 991.98px) {
-                    transform: scale(1.05);
-                }
-                &::after {
-                    transform: rotate(-180deg);
-                }
-            }
-            & .select_options {
-                top: 100%;
-                pointer-events: all;
-                opacity: 1;
-                visibility: visible;
-                @media (min-width: 991.98px) {
-                    transform: scale(1.05) translateY(2.5%);
-                }
-            }
-        }
-        &-mini {
-            .select {
+            & .select {
                 &_title {
-                    border-radius: 21px;
-                    font-weight: 500;
-                    color: #000034;
-                    height: 40px;
-                    padding: 0 10px;
+                    pointer-events: none;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    border: 1px solid #4182ec;
+                    @media (min-width: 991.98px) {
+                        transform: scale(1.05);
+                    }
                     &::after {
-                        background-image: url("../../../assets/img/arrow-down-icon-dark.svg");
-                        height: 15px;
-                        width: 15px;
-                    }
-                    @media (max-width: 767.98px) {
-                        border: 0.5px solid rgba(0, 0, 0, 0.08);
-                        border-radius: 8px;
-                        height: 28px;
-                    }
-                    @media (max-width: 479.98px) {
-                        font-size: 10px;
-                        line-height: 11px;
+                        transform: rotate(-180deg);
                     }
                 }
                 &_options {
-                    border-radius: 0 0 21px 21px;
-                    padding-top: calc($miniHeight / 3);
-                    margin-top: calc($miniHeight / -3);
-                    max-height: calc($miniHeight * 5 - $miniHeight / 3);
-                    @media (max-width: 767.98px) {
-                        border: 0.5px solid rgba(0, 0, 0, 0.08);
-                        border-radius: 8px;
-                        padding-top: calc(28px / 3);
-                        margin-top: calc(28px / -3);
-                        max-height: calc(28px * 5 - 28px / 3);
-                    }
-                }
-
-                &_option {
-                    color: #000034;
-                    font-weight: 500;
-                    height: $miniHeight;
-                    padding: 0 10px;
-                    p {
-                        height: $miniHeight;
-                    }
-                    @media (max-width: 767.98px) {
-                        height: 28px;
-                    }
+                    pointer-events: all;
+                    opacity: 1;
+                    visibility: visible;
+                    transform: translateY(0);
+                    padding-top: calc($height / 3);
+                    margin-top: calc($height / -4);
+                    max-height: calc($height * 5 + $height / 3 + 10px);
                     @media (max-width: 479.98px) {
-                        font-size: 10px;
-                        line-height: 11px;
+                        padding-top: calc($adaptHeight / 3);
+                        margin-top: calc($adaptHeight / -4);
+                        max-height: calc(
+                            $adaptHeight * 5 + $adaptHeight / 3 + 10px
+                        );
+                    }
+                    &-reverse {
+                        padding-top: 0 !important;
+                        margin-top: 0 !important;
+                        padding-bottom: calc($height / 3) !important;
+                        margin-bottom: calc($height / -4) !important;
+                        bottom: 100% !important;
+                        top: auto !important;
+                        @media (max-width: 479.98px) {
+                            bottom: 100% !important;
+                            top: auto !important;
+                            padding-top: 0 !important;
+                            margin-top: 0 !important;
+                            padding-bottom: calc($adaptHeight / 3) !important;
+                            margin-bottom: calc($adaptHeight / -4) !important;
+                        }
+                    }
+                    &_option {
+                        height: $height !important;
+                        p {
+                            height: $height !important;
+                        }
+                        @media (max-width: 479.98px) {
+                            height: $adaptHeight !important;
+                            p {
+                                height: $adaptHeight !important;
+                            }
+                        }
+                    }
+                    @media (min-width: 991.98px) {
+                        transform: scale(1.05) translateY(0);
                     }
                 }
             }
-            //&.open {
-            //  .select {
-            //    &_options {
-            //    }
-            //  }
-            //}
         }
-        &-large {
-            height: 61px;
+        &.mini {
+            .select_option {
+                height: $miniHeight !important;
+                p {
+                    height: $miniHeight !important;
+                }
+                @media (max-width: 479.98px) {
+                    height: $adaptMiniHeight !important;
+                    p {
+                        height: $adaptMiniHeight !important;
+                    }
+                }
+            }
+            &.open {
+                .select {
+                    &_options {
+                        padding-top: calc($miniHeight / 3);
+                        margin-top: calc($miniHeight / -4);
+                        max-height: calc(
+                            $miniHeight * 5 + $miniHeight / 3 + 10px
+                        );
+                        @media (max-width: 479.98px) {
+                            padding-top: calc($adaptMiniHeight / 3);
+                            margin-top: calc($adaptMiniHeight / -4);
+                            max-height: calc(
+                                $adaptMiniHeight * 5 + $adaptMiniHeight / 3 +
+                                    10px
+                            );
+                        }
+                        &-reverse {
+                            padding-top: 0 !important;
+                            margin-top: 0 !important;
+                            padding-bottom: calc($miniHeight / 3) !important;
+                            margin-bottom: calc($miniHeight / -4) !important;
+                            bottom: 100% !important;
+                            top: auto !important;
+                            @media (max-width: 479.98px) {
+                                bottom: 100% !important;
+                                top: auto !important;
+                                padding-top: 0 !important;
+                                margin-top: 0 !important;
+                                padding-bottom: calc(
+                                    $adaptMiniHeight / 3
+                                ) !important;
+                                margin-bottom: calc(
+                                    $adaptMiniHeight / -4
+                                ) !important;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        &.large {
+            height: $largeHeight;
             .select {
                 &_title {
+                    @media (max-width: 479.98px) {
+                        height: $adaptLargeHeight;
+                    }
                     img {
                         width: 33px;
                         height: 33px;
+                    }
+                }
+                &_option {
+                    height: $largeHeight !important;
+                    p {
+                        height: $largeHeight !important;
+                    }
+                    @media (max-width: 479.98px) {
+                        height: $adaptLargeHeight !important;
+                        p {
+                            height: $adaptLargeHeight !important;
+                        }
                     }
                 }
             }
@@ -251,13 +378,37 @@ $height: 48px;
                 .select {
                     &_options {
                         padding-top: calc($largeHeight / 3);
-                        margin-top: calc($largeHeight / -3);
-                        max-height: calc($largeHeight * 5 - $largeHeight / 3);
-                    }
-                    &_option {
-                        height: $largeHeight;
-                        p {
-                            height: $largeHeight;
+                        margin-top: calc($largeHeight / -4);
+                        max-height: calc(
+                            $largeHeight * 5 + $largeHeight / 3 + 10px
+                        );
+                        @media (max-width: 479.98px) {
+                            padding-top: calc($adaptLargeHeight / 3);
+                            margin-top: calc($adaptLargeHeight / -4);
+                            max-height: calc(
+                                $adaptLargeHeight * 5 + $adaptLargeHeight / 3 +
+                                    10px
+                            );
+                        }
+                        &-reverse {
+                            padding-top: 0 !important;
+                            margin-top: 0 !important;
+                            padding-bottom: calc($largeHeight / 3) !important;
+                            margin-bottom: calc($largeHeight / -4) !important;
+                            bottom: 100% !important;
+                            top: auto !important;
+                            @media (max-width: 479.98px) {
+                                bottom: 100% !important;
+                                top: auto !important;
+                                padding-top: 0 !important;
+                                margin-top: 0 !important;
+                                padding-bottom: calc(
+                                    $adaptLargeHeight / 3
+                                ) !important;
+                                margin-bottom: calc(
+                                    $adaptLargeHeight / -4
+                                ) !important;
+                            }
                         }
                     }
                 }
@@ -275,13 +426,9 @@ $height: 48px;
         }
         cursor: pointer;
         background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.16);
-        border-radius: 10px;
+        border: 1px solid #d6d6d6;
+        border-radius: 12px;
         font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 181.1%;
-        color: #000000;
         height: 100%;
         width: 100%;
         display: flex;
@@ -292,11 +439,19 @@ $height: 48px;
         transition: all 0.3s ease 0s, pointer-events 0s;
         z-index: 3;
         &:hover {
-            border: 1px solid rgba(0, 0, 0, 0.32);
+            border-color: #c2d5f2;
+        }
+        &:active,
+        &:focus {
+            border-color: #4182ec;
         }
         @media (max-width: 991.98px) {
-            padding: 14px 20px;
+            padding: 0 20px;
             width: 100%;
+        }
+        @media (max-width: 479.98px) {
+            height: $adaptHeight;
+            border: 0.5px solid rgba(0, 0, 0, 0.08);
         }
         &::after {
             content: "";
@@ -312,22 +467,30 @@ $height: 48px;
     }
     // .select_options
     &_options {
-        border-radius: 0 0 10px 10px;
+        top: 100%;
+        bottom: auto;
+        border-radius: 0 0 12px 12px;
         overflow-y: scroll;
         overflow-x: hidden;
         pointer-events: none;
         position: absolute;
         z-index: 2;
         background: #ffffff;
+        max-height: 0;
         border: 1px solid rgba(0, 0, 0, 0.16);
         width: 100%;
         opacity: 0;
         visibility: hidden;
-        top: 0;
-        transition: all 0.3s ease 0s, pointer-events 0s 0.3s;
+        transition: all 0.3s ease 0s;
         padding-top: calc($height / 3);
-        margin-top: calc($height / -3);
-        max-height: calc($height * 5 - $height / 3);
+        margin-top: calc($height / -2);
+        transform: translateY(calc($height / -3));
+        &-reverse {
+            top: auto;
+            bottom: 100%;
+            border-radius: 12px 12px 0 0;
+            transform: translateY(calc($height / 3));
+        }
         &::-webkit-scrollbar {
             width: 0;
         }
@@ -336,20 +499,22 @@ $height: 48px;
     &_option {
         cursor: pointer;
         font-style: normal;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 181.1%;
-        color: #000000;
         display: flex;
         flex-direction: column;
         padding: 0 20px;
-        height: 48px;
+        height: $height;
+        @media (max-width: 479.98px) {
+            height: $adaptHeight;
+        }
         & p {
-            height: 48px;
+            height: $height;
             display: inline-flex;
             justify-content: flex-start;
             align-items: center;
-            line-height: 25.76px;
+            transition: all 0.3s ease 0s;
+            @media (max-width: 479.98px) {
+                height: $adaptHeight;
+            }
         }
         &:not(:last-child) {
             &::after {
@@ -362,8 +527,10 @@ $height: 48px;
         transition: all 0.3s ease 0s;
         &:hover,
         &:active {
-            color: #fff !important;
             background: #3f7bdd;
+            p {
+                color: #fff !important;
+            }
         }
     }
 }
@@ -384,22 +551,14 @@ $height: 48px;
 .history__filter_select {
     .select_title,
     .select_option {
-        font-weight: 500;
-        font-size: 18px;
-        color: #000034;
         @media (max-width: 479.98px) {
-            font-size: 12px;
-            line-height: 17px;
-            padding: 5px 10px;
+            padding: 0 10px;
             white-space: nowrap;
-            height: 28px;
         }
     }
     @media (max-width: 479.98px) {
         .select_title,
         .select_options {
-            border: 0.5px solid rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
             &::after {
                 width: 24px;
                 height: 24px;

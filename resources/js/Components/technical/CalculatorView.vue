@@ -14,18 +14,18 @@
             <div class="calculator__form">
                 <input
                     type="text"
-                    class="calculator__input"
+                    class="calculator__input input"
                     placeholder="Ваш хэшрейт TH/s"
                     v-scroll="'left delay--md'"
                 />
 
                 <main-select
-                    v-scroll="'left delay'"
+                    v-scroll="'left'"
                     :options="calculatorOptions"
-                    selectType="large"
+                    class="large"
                 >
                 </main-select>
-                <blue-button v-scroll="'left'">
+                <blue-button class="big" v-scroll="'left'">
                     <a href="#" class="all-link">Начать майнинг</a>
                 </blue-button>
             </div>
@@ -70,7 +70,7 @@ export default {
     }
     // .calculator__title
     &__title {
-        font-family: "AmpleSoftPro";
+        font-family: AmpleSoftPro, serif;
         font-style: normal;
         font-weight: 500;
         font-size: 53px;
@@ -105,6 +105,9 @@ export default {
         display: flex;
         margin-top: 40px;
         gap: 26px;
+        @media (min-width: 991.98px) {
+            max-height: 61px;
+        }
         @media (max-width: 991.98px) {
             margin-top: 26px;
             flex-direction: column;
@@ -122,14 +125,15 @@ export default {
     // .calculator__input
     &__input {
         background: #ffffff;
-        border: 1px solid rgba(0, 0, 0, 0.16);
         border-radius: 10px;
-        font-style: normal;
-        font-weight: 300;
-        font-size: 18px;
-        line-height: 181.1%;
-        color: rgba(0, 0, 0, 0.72);
-        padding: 14px 30px;
+        padding: 0 30px;
+        max-width: 299px;
+        min-height: 61px;
+        transition: border-color 0.3s ease 0s, transform 1.5s ease 0.4s,
+            opacity 1.5s ease 0.4s !important;
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+        }
     }
 }
 

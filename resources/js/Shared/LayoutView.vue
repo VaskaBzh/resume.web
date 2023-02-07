@@ -1,7 +1,9 @@
 <template>
     <header-component :is_auth="auth_user" />
     <div class="page">
-        <slot></slot>
+        <div class="observer_block">
+            <slot></slot>
+        </div>
     </div>
     <footer-component />
 </template>

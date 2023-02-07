@@ -7,18 +7,17 @@
                     <main-title
                         tag="h1"
                         class="home__title"
-                        v-scroll="'left delay--lg'"
+                        v-scroll="'left delay--md'"
                     >
                         Зарабатывайте на майнинге вместе с allbtc pool
                     </main-title>
-
-                    <div class="home__span" v-scroll="'left delay--md'">
+                    <div class="home__span" v-scroll="'left'">
                         Высокий доход. Надежность. Эффективность.
                     </div>
-                    <a href="#" class="home__button" v-scroll="'left'">
+                    <blue-button class="home__button" v-scroll="'left'">
                         Начать майнинг
-                        <div class="home__button_propeller"></div
-                    ></a>
+                        <div class="home__button_propeller"></div>
+                    </blue-button>
                 </div>
 
                 <div v-if="viewportWidth >= 991.98" class="home__background">
@@ -59,7 +58,7 @@
             <div class="home__info">
                 <div class="home__info_main home-im bagr-t">
                     <div class="home-im__main" v-scroll="'left'">
-                        <blue-button v-if="viewportWidth < 991.98">
+                        <blue-button class="big" v-if="viewportWidth < 991.98">
                             <a href="#" class="all-link">Начать майнинг</a>
                         </blue-button>
                         <img
@@ -73,7 +72,12 @@
                                 <li class="home-im__content_item">
                                     <p class="item_span">Сложность сети</p>
                                     <div class="item_info bgb">
-                                        32,136,448,326,378<span>+32.05 T</span>
+                                        <span v-value-scroll>{{
+                                            this.BTCDifficulty.toLocaleString(
+                                                "en-EN"
+                                            )
+                                        }}</span
+                                        ><span>+32.05 T</span>
                                     </div>
                                 </li>
                                 <li class="home-im__content_item">
@@ -81,9 +85,12 @@
                                         Ожидаемая следующая сложность
                                     </p>
                                     <div class="item_info bgb">
-                                        32,136,448,326,378<span
-                                            >+0.28% / 32.14 T</span
-                                        >
+                                        <span v-value-scroll>{{
+                                            this.BTCDifficulty.toLocaleString(
+                                                "en-EN"
+                                            )
+                                        }}</span
+                                        ><span>+0.28% / 32.14 T</span>
                                     </div>
                                 </li>
                             </ul>
@@ -94,7 +101,10 @@
                                 </p>
                                 <div class="item_info">8 Дней 7 Часов</div>
                             </div>
-                            <blue-button v-if="viewportWidth >= 991.98">
+                            <blue-button
+                                class="big"
+                                v-if="viewportWidth >= 991.98"
+                            >
                                 <a href="#" class="all-link">Начать майнинг</a>
                             </blue-button>
                         </div>
@@ -180,6 +190,7 @@ import PullStaticView from "@/Components/technical/PullStaticView.vue";
 import CollectivePlatformView from "@/Components/technical/CollectivePlatformView.vue";
 import AboutPanelView from "@/Components/technical/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/MiningInfoView.vue";
+import axios from "axios";
 
 export default {
     components: {
@@ -195,6 +206,7 @@ export default {
     data() {
         return {
             viewportWidth: 0,
+            BTCDifficulty: "",
         };
     },
     created() {
@@ -205,6 +217,14 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+    },
+    mounted() {
+        document.title = "Главная";
+        axios
+            .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
+            .then((response) => {
+                this.BTCDifficulty = response.data[0].difficulty;
+            });
     },
 };
 </script>
@@ -277,24 +297,12 @@ export default {
     }
     // .home__button
     &__button {
-        display: flex;
-        justify-content: center;
-        align-items: center;
         gap: 36px;
         width: 347px;
         height: 85px;
-        align-items: center;
-        font-style: normal;
-        font-weight: 500;
         font-size: 22px;
-        line-height: 107.6%;
-        color: #ffffff;
-        background: linear-gradient(84.14deg, #3f7bdd 8.75%, #4282ec 92.01%);
-
-        border-radius: 10px;
-        position: relative;
         z-index: 5;
-        transition: all 0.3s ease 0s;
+        margin: 0;
         @media (any-hover: hover) {
             &:hover {
                 box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -355,8 +363,10 @@ export default {
                 position: absolute;
                 width: 36px;
                 height: 36px;
+                background: url("../../assets/img/propeller.svg");
+                background-position: center;
                 background-size: cover;
-                background: url("../../assets/img/propeller.svg") no-repeat center;
+                background-repeat: no-repeat;
                 top: 50%;
                 left: 50%;
                 transform: translate(-50%, -50%);
@@ -563,6 +573,10 @@ export default {
         gap: 100px;
         justify-content: space-between;
         margin-bottom: 17px;
+        .blue-button {
+            min-width: 222px;
+            margin-bottom: 0;
+        }
         &::before {
             content: "";
             background-image: url("../../assets/img/bitcoin.png");
@@ -635,6 +649,13 @@ export default {
         flex-direction: column;
         gap: 12px;
         flex: 0 1 50%;
+        .blue-button {
+            min-width: 222px;
+            margin-bottom: 0;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 20px;
+        }
         @media (max-width: 1270px) {
             //flex: 1 1 auto;
         }
@@ -663,7 +684,7 @@ export default {
     }
     // .home-im__title
     &__title {
-        font-family: AmpleSoftPro;
+        font-family: AmpleSoftPro, serif;
         font-style: normal;
         font-weight: 500;
         font-size: 64.4231px;
@@ -730,7 +751,7 @@ export default {
     }
     // .item_info
     &_info {
-        font-family: AmpleSoftPro;
+        font-family: AmpleSoftPro, serif;
         font-style: normal;
         font-weight: 500;
         font-size: 22px;
@@ -748,11 +769,16 @@ export default {
             }
         }
         & span {
-            color: #e9c058;
+            &:last-child {
+                color: #e9c058;
+            }
         }
         &.bgb {
             position: relative;
             width: fit-content;
+            @media (min-width: 1271px) {
+                min-width: 85%;
+            }
             &::before {
                 content: "";
                 position: absolute;

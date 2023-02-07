@@ -13,14 +13,15 @@ class AuthController extends Controller
             "password" => ["required"],
         ]);
 
-        if (auth("web")->attempt($data)) {
-            return redirect()->route("profile");
+        if (!auth("web")->attempt($data)) {
+            return back()->withErrors(
+                ["email" => "Неверный логин или пароль"]
+            );
         }
 
-        return redirect(route("login"))->withErrors(
-            ["email" => "Пользователь не найден, либо данные введены не правильно"]
-        );
+        return redirect()->route("profile");
     }
+
     public function logout()
     {
         auth("web")->logout();
