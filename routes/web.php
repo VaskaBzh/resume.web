@@ -29,6 +29,9 @@ Route::middleware('guest:web')->group(function () {
         ->name('login');
     Route::post('/login_process', [AuthController::class, 'login'])
         ->name('login_process');
+
+    Route::redirect('/email', "/#email")->name('email');
+    Route::post("email_process", [AuthController::class, "validation_email"])->name('email_process');
 });
 
 Route::middleware('auth:web')->group(function () {
@@ -51,5 +54,11 @@ Route::middleware('auth:web')->group(function () {
 
     });
 });
+
+//Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+//    $request->fulfill();
+//
+//    return redirect('/home');
+//})->middleware(['auth', 'signed'])->name('verification.verify');
 
 //require __DIR__.'/auth.php';
