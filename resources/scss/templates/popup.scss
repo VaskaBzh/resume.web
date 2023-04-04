@@ -1,176 +1,262 @@
 // Кастомные стили popup
 body::after {
-  content: "";
-  background-color: rgba(0, 0, 0, 0.5);
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  opacity: 0;
-  transition: opacity 0.5s ease 0s;
-  pointer-events: none;
-  z-index: 149;
+    content: "";
+    background-color: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.5s ease 0s;
+    pointer-events: none;
+    z-index: 149;
 }
 .lock {
-  body::after {
-    opacity: 1;
-  }
-  .popup__content {
-    animation: backMainAnimation forwards 0.3s ease 0s;
-  }
+    body::after {
+        opacity: 1;
+    }
+
+    .popup__content {
+        animation: backMainAnimation forwards 0.3s ease 0s;
+        &-graph {
+            animation: backMainAnimationGraph forwards 0.3s ease 0s;
+        }
+        &-сonnect {
+            animation: backMainAnimationConnect forwards 0.3s ease 0s;
+        }
+    }
 }
 .popup {
-  cursor: pointer;
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-  padding: 30px 10px;
-  transition: visibility 0.5s ease 0s;
-  visibility: hidden;
-  pointer-events: none;
-  &-show body::after {
-    opacity: 1 !important;
-  }
-  &_show {
-    z-index: 150;
-    visibility: visible;
-    overflow: auto;
-    pointer-events: auto;
-    .popup__content {
-      visibility: visible;
-      opacity: 1;
-      transform: translateY(200px);
-      animation: mainAnimation forwards 0.8s ease 0.5s !important;
-      &_logo {
-        animation: logoAnimation forwards 0.5s ease 0.5s;
-        opacity: 1;
-      }
-    }
-  }
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100%;
-    flex: 1 1 auto;
-    width: 100%;
-    justify-content: center;
-  }
-  &__content {
-    cursor: default;
+    cursor: pointer;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    padding: 30px 10px;
+    transition: visibility 0.5s ease 0s;
     visibility: hidden;
-    background-color: #fff;
-    padding: 40px;
-    min-width: 255px;
-    min-height: 120px;
-    max-height: 120px;
-    max-width: 255px;
-    width: 100%;
-    border-radius: 21px;
-    position: relative;
-    opacity: 0;
-    transform: translateY(400px);
-    transition: all 0.5s ease 0s;
-    @media (max-width: $mobileSmall) {
-      transform: translateY(200px);
-      min-width: 120px;
-      min-height: 120px;
-      max-height: 120px;
-      max-width: 120px;
+    pointer-events: none;
+    &-show body::after {
+        opacity: 1 !important;
     }
-    &_logo {
-      max-width: 170px;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      margin: auto;
-      transition: all 0.8s ease 0s;
+    &_show {
+        z-index: 150;
+        visibility: visible;
+        overflow: auto;
+        pointer-events: auto;
+        .popup__content {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(200px);
+            animation: mainAnimation forwards 0.8s ease 0.5s !important;
+            &-graph {
+                animation: mainAnimationGraph forwards 0.8s ease 0.5s !important;
+            }
+            &-connect {
+                animation: mainAnimationConnect forwards 0.8s ease 0.5s !important;
+            }
+            &_logo {
+                animation: logoAnimation forwards 0.5s ease 0.5s;
+                opacity: 1;
+            }
+        }
     }
-    &.opened {
-      .popup__content_block {
-        animation: wrapperAnimation forwards 0.4s ease 0.5s;
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100%;
+        flex: 1 1 auto;
         width: 100%;
-        .popup__close {
-          animation: opacity forwards 0.3s ease 0.5s;
-        }
-        .form {
-          animation: contentAnimation forwards 0.3s ease 0.7s;
-          &_message {
-            animation: opacity forwards 0.3s ease 1s;
-          }
-        }
-      }
+        justify-content: center;
     }
-    &_block {
-      padding-left: 5px;
-      transition: all 0.8s ease 0s;
-
-      .popup__close {
-        opacity: 0;
-        transition: all 0.5s ease 1.5s;
-      }
-      .form {
+    &_slide {
+        height: fit-content !important;
+    }
+    &__slider {
+        overflow: visible !important;
         opacity: 0;
         transition: all 0.5s ease 0s;
-      }
+        .swiper-wrapper {
+            transition: all 0.3s ease 0s;
+        }
+        .form {
+            animation: none !important;
+            opacity: 1 !important;
+            width: 100% !important;
+            overflow-x: hidden;
+        }
+        .swiper-horizontal > .swiper-pagination-bullets,
+        .swiper-pagination-bullets.swiper-pagination-horizontal {
+            bottom: auto !important;
+            top: -27px !important;
+            @media (max-width: $mobileSmall) {
+                top: -15px !important;
+            }
+            .swiper-pagination-bullet {
+                height: 5px;
+                width: 5px;
+                border-radius: 5px;
+                background: linear-gradient(
+                    84.14deg,
+                    #3f7bdd 8.75%,
+                    #4282ec 92.01%
+                );
+                transition: all 0.3s ease 0s;
+                position: relative;
+                &:before,
+                &:after {
+                    content: none;
+                }
+                &-active {
+                    width: 20px;
+                }
+            }
+        }
     }
-    @media (max-width: $mobileSmall) {
-      padding: 20px;
-      min-width: 210px;
-      max-width: 210px;
-      min-height: 100px;
-      max-height: 100px;
-    }
-    .lock & {
-      visibility: visible;
-    }
-  }
-  &__close {
-    width: 24px;
-    height: 24px;
-    position: absolute;
-    top: 40px;
-    right: 40px;
-    fill: #000;
-    z-index: 10;
-    outline: none;
-    @media (max-width: $mobileSmall) {
-      top: 20px;
-      right: 20px;
-    }
-  }
-  &__text {
-    font-size: 18px;
-    line-height: 26px;
-    color: #595A5C;
-    @media (max-width: $mobile) {
-      font-size: 14px;
-      line-height: 20px;
-    }
-  }
-  .blue-button {
-    width: 100% !important;
-    @media (max-width: $mobileSmall) {
-      height: 40px;
-      .all-link {
-        font-size: 14px;
-        line-height: 20px;
-      }
-    }
-    &.back {
-      background: #DAE6F7 !important;
-      padding: 0;
-      .all-link {
-        border-radius: 12px !important;
+    &__content {
+        cursor: default;
+        visibility: hidden;
+        background-color: #fff;
+        padding: 0 40px;
+        min-width: 255px;
+        min-height: 120px;
+        max-height: 120px;
+        max-width: 255px;
         width: 100%;
-        height: 100%;
-        padding: 0 20px;
-      }
+        border-radius: 21px;
+        position: relative;
+        opacity: 0;
+        transform: translateY(400px);
+        transition: all 0.5s ease 0s;
+        @media (max-width: $mobileSmall) {
+            transform: translateY(200px);
+            min-width: 120px;
+            min-height: 120px;
+            max-height: 120px;
+            max-width: 120px;
+        }
+        &_logo {
+            max-width: 170px;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            opacity: 0;
+            transform: translate(-50%, -50%);
+            margin: auto;
+            transition: all 0.8s ease 0s;
+        }
+        .graph {
+            width: 100%;
+            opacity: 0;
+            margin: 0 !important;
+
+            &__main {
+                padding: 0 !important;
+                width: 100% !important;
+                margin: 0 !important;
+            }
+            &__graph,
+            &__list,
+            &__item,
+            &__con {
+                width: 100%;
+            }
+        }
+        &.opened {
+            .graph {
+                animation: contentAnimation forwards 1.3s ease 0.8s !important;
+            }
+            .popup__content_block {
+                animation: wrapperAnimation forwards 0.4s ease 0.5s;
+                width: 100%;
+                .popup__close {
+                    animation: opacity forwards 0.3s ease 0.5s;
+                }
+                .form {
+                    animation: contentAnimation forwards 0.3s ease 0.7s;
+                    &_message {
+                        animation: opacity forwards 0.3s ease 0s;
+                    }
+                }
+                .swiper {
+                    animation: contentAnimation forwards 0.3s ease 0.7s;
+                }
+            }
+        }
+        &_block {
+            transition: all 0.8s ease 0s;
+            overflow-x: hidden;
+            overflow-y: hidden;
+            padding: 40px 0;
+            @media (max-width: $mobileSmall) {
+                padding: 20px 0;
+            }
+
+            .popup__close {
+                opacity: 0;
+                transition: all 0.5s ease 1.5s;
+            }
+            .form {
+                padding-left: 5px;
+                opacity: 0;
+                transition: all 0.5s ease 0s;
+                .form {
+                    padding-left: 0;
+                }
+            }
+        }
+        @media (max-width: $mobileSmall) {
+            padding: 0 20px;
+            min-width: 210px;
+            max-width: 210px;
+            min-height: 100px;
+            max-height: 100px;
+        }
+        .lock & {
+            visibility: visible;
+        }
     }
-  }
+    &__close {
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: 40px;
+        right: 40px;
+        fill: #000;
+        z-index: 10;
+        outline: none;
+        @media (max-width: $mobileSmall) {
+            top: 20px;
+            right: 20px;
+        }
+    }
+    &__text {
+        font-size: 18px;
+        line-height: 26px;
+        color: #595a5c;
+        @media (max-width: $mobile) {
+            font-size: 14px;
+            line-height: 20px;
+        }
+    }
+    .blue-button {
+        width: 100% !important;
+        @media (max-width: $mobileSmall) {
+            height: 40px;
+            .all-link {
+                font-size: 14px;
+                line-height: 20px;
+            }
+        }
+        &.back {
+            background: #dae6f7 !important;
+            padding: 0;
+            .all-link {
+                border-radius: 12px !important;
+            }
+        }
+    }
 }

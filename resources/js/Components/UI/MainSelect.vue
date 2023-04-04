@@ -33,15 +33,17 @@
                 <p
                     v-if="this.options[0].img"
                     class="main_select"
-                    @click="selectOptions(option.title, option.img)"
+                    @click="
+                        selectOptions(option.title, option.img, option.value)
+                    "
                 >
-                    <img :src="this.optionsImgs[i]" />
+                    <!--                    <img :src="this.optionsImgs[i]" />-->
                     {{ option.title }}
                 </p>
                 <p
                     v-else
                     class="main_select"
-                    @click="selectOptions(option.title)"
+                    @click="selectOptions(option.title, option.value)"
                 >
                     {{ option.title }}
                 </p>
@@ -80,13 +82,11 @@ export default {
         },
     },
     methods: {
-        selectOption(option) {
-            this.baseOption = option;
-        },
-        selectOptions(optionTitle, optionImg) {
+        selectOptions(optionTitle, optionImg, optionValue) {
             this.baseOption = optionTitle;
             this.baseImg =
                 "http://127.0.0.1:5173" + `/resources/assets/img/${optionImg}`;
+            this.$emit("getCoin", optionValue);
         },
         hideSelect() {
             if (this.select_is_open === true) {
@@ -100,6 +100,15 @@ export default {
                 setTimeout(() => {
                     this.handleScroll();
                 }, 150);
+                if (document.querySelector(".select_con.mini.autoheight")) {
+                    this.$refs.select.removeAttribute("style");
+                    document
+                        .querySelector(".select_title")
+                        .removeAttribute("style");
+                    document
+                        .querySelector(".select_options")
+                        .removeAttribute("style");
+                }
             }
         },
         openSelect() {
@@ -159,6 +168,15 @@ export default {
         this.handleScroll();
         document.addEventListener("wheel", this.handleScroll);
     },
+    unmounted() {
+        document.removeEventListener("click", this.hideSelect.bind(this), true);
+        document.removeEventListener("keydown", (e) => {
+            if (e.keyCode === 27) {
+                this.hideSelect();
+            }
+        });
+        document.removeEventListener("wheel", this.handleScroll);
+    },
 };
 </script>
 <style lang="scss" scoped>
@@ -199,12 +217,6 @@ $adaptHeight: 34px;
 
 .lock-select {
     .select {
-        &_title {
-            &:after {
-                animation: none;
-                transform: rotate(-180deg);
-            }
-        }
         &_title,
         &_options {
             transition-delay: 0s;
@@ -220,6 +232,7 @@ $adaptHeight: 34px;
         width: 100%;
         cursor: pointer;
         height: 48px;
+        transition: all 0.3s ease 0s;
         @media (max-width: 991.98px) {
             max-width: 100%;
         }
@@ -244,7 +257,8 @@ $adaptHeight: 34px;
                         transform: scale(1.05);
                     }
                     &::after {
-                        transform: rotate(-180deg);
+                        animation: arrowOpen 0.8s ease forwards 0s;
+                        //transform: rotate(-180deg);
                     }
                 }
                 &_options {
@@ -436,7 +450,7 @@ $adaptHeight: 34px;
         justify-content: flex-start;
         padding: 0 20px;
         position: relative;
-        transition: all 0.3s ease 0s, pointer-events 0s;
+        transition: all 0.5s ease 0s, pointer-events 0s;
         z-index: 3;
         &:hover {
             border-color: #c2d5f2;
@@ -461,8 +475,9 @@ $adaptHeight: 34px;
             background-repeat: no-repeat;
             width: 18px;
             height: 18px;
-            transition: all 0.3s ease 0s;
+            transition: all 0.5s ease 0s;
             margin-left: auto;
+            animation: arrowClose 0.5s ease forwards 0s;
         }
     }
     // .select_options
@@ -481,7 +496,7 @@ $adaptHeight: 34px;
         width: 100%;
         opacity: 0;
         visibility: hidden;
-        transition: all 0.3s ease 0s;
+        transition: all 0.5s ease 0s;
         padding-top: calc($height / 3);
         margin-top: calc($height / -2);
         transform: translateY(calc($height / -3));

@@ -21,7 +21,7 @@
 
                 <img
                     v-else
-                    src="../../../assets/img/about-panel-img-mob.png"
+                    src="../../../assets/img/about-panel-img.png"
                     alt=""
                     class="panel-am__image"
                     v-scroll="'left'"

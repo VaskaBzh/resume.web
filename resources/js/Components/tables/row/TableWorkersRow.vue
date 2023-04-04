@@ -1,29 +1,35 @@
-<template>
+<template ref="row">
     <tr v-if="this.viewportWidth > 991.98" ref="tr" class="row-workers">
-        <td class="main__number">{{ this.columns.hash }}</td>
+        <td class="main__number">
+            {{ this.columns.hash }}
+        </td>
         <td class="main__number">{{ this.hashRate }} TH/s</td>
-        <td class="main__number">{{ this.hashAvarage }} TH/s</td>
+        <!--        <td class="main__number">{{ this.hashAvarage }} TH/s</td>-->
         <td class="main__number">{{ this.hashAvarage24 }} TH/s</td>
         <td class="main__number">{{ this.rejectRate }} %</td>
     </tr>
     <tr v-else-if="this.visualType === 'table'" class="row-workers">
         <td class="main__number">
-            <div :class="this.columns.hashClass">{{ this.columns.hash }}</div>
+            <div :class="this.columns.hashClass">1</div>
+            {{ this.columns.hash }}
         </td>
         <td class="main__number">{{ this.hashRate }} TH/s</td>
-        <td class="main__number">{{ this.hashAvarage }} TH/s</td>
+        <td class="main__number">{{ this.hashAvarage24 }} TH/s</td>
         <td class="main__number">{{ this.rejectRate }} %</td>
     </tr>
     <div v-else class="block-workers">
         <span class="main__number">
-            <span :class="this.columns.hashClass">{{ this.columns.hash }}</span>
+            <span :class="this.columns.hashClass">1</span>
+            {{ this.columns.hash }}
         </span>
         <span class="main__number">{{ this.hashRate }} TH/s</span>
-        <span class="main__number">{{ this.hashAvarage }} TH/s</span>
+        <span class="main__number">{{ this.hashAvarage24 }} TH/s</span>
         <span class="main__number">{{ this.rejectRate }} %</span>
     </div>
 </template>
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "table-workers-row",
     props: {
@@ -40,12 +46,13 @@ export default {
         };
     },
     computed: {
+        ...mapGetters(["allHash"]),
         hashRate() {
             return Number(this.columnsArr.hashRate).toFixed(2);
         },
-        hashAvarage() {
-            return Number(this.columnsArr.hashAvarage).toFixed(2);
-        },
+        // hashAvarage() {
+        // return Number(this.columnsArr.hashAvarage).toFixed(2);
+        // },
         hashAvarage24() {
             return Number(this.columnsArr.hashAvarage24).toFixed(2);
         },
@@ -70,13 +77,23 @@ export default {
         text-align: right;
         height: 17px;
         &:first-child {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            color: #fff;
+            span {
+                min-width: 16px;
+                max-width: 16px;
+                height: 16px;
+                border-radius: 50%;
+                color: #fff;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+            }
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            gap: 8px;
+            width: 100%;
+            text-overflow: ellipsis;
+            text-align: right;
         }
     }
     .active {
@@ -85,11 +102,19 @@ export default {
     .unstable {
         background-color: #e9c058 !important;
     }
-    .unactive {
+    .inactive {
         background-color: #ff0000 !important;
     }
 }
 .row-workers {
+    cursor: pointer;
+    @media (min-width: 767.98px) {
+        &:hover {
+            td:first-child {
+                text-decoration-color: #000034;
+            }
+        }
+    }
     td {
         white-space: nowrap;
         background: #ffffff;
@@ -98,6 +123,10 @@ export default {
             padding-left: 36px;
             position: relative;
             border-radius: 21px 0 0 21px;
+            cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: transparent;
+            transition: all 0.3s ease 0s;
             &::before {
                 content: "";
                 position: absolute;
@@ -163,7 +192,7 @@ export default {
         background-color: #e9c058 !important;
     }
 }
-.unactive {
+.inactive {
     td::before {
         background-color: #ff0000 !important;
     }

@@ -28,6 +28,7 @@ import { Head } from "@inertiajs/vue3";
 import MainChart from "@/Components/charts/MainChart.vue";
 import StatisticsTable from "@/Components/tables/StatisticsTable.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
+import { mapGetters } from "vuex";
 
 export default {
     components: {
@@ -36,9 +37,59 @@ export default {
         StatisticsTable,
         Head,
     },
-    data() {
-        return {
-            graphs: [
+    computed: {
+        ...mapGetters(["btcInfo"]),
+        changeDiff() {
+            let string = "...";
+            if (this.btcInfo.btc) {
+                string = `(${this.btcInfo.btc.diff_change})`;
+                string += ` /  ${(
+                    (Number(this.btcInfo.btc.nextDiff) -
+                        Number(this.btcInfo.btc.diff)) /
+                    1000000000000
+                ).toFixed(2)} T`;
+            }
+            return string;
+        },
+        network() {
+            let string = "...";
+            if (this.btcInfo.btc) {
+                string = this.btcInfo.btc.network.toFixed(2);
+                string += ` ${this.btcInfo.btc.networkUnit}H/s`;
+            }
+            return string;
+        },
+        diff() {
+            let string = "...";
+            if (this.btcInfo.btc) {
+                string = this.btcInfo.btc.diff;
+            }
+            return string;
+        },
+        nextDiff() {
+            let string = "...";
+            if (this.btcInfo.btc) {
+                string = this.btcInfo.btc.nextDiff;
+            }
+            return string;
+        },
+        time() {
+            let string = "...";
+            if (this.btcInfo.btc) {
+                this.btcInfo.btc.time % 24 !== 0
+                    ? (string = `${String(this.btcInfo.btc.time / 24).substr(
+                          0,
+                          1
+                      )} Дни ${this.btcInfo.btc.time % 24} Часы`)
+                    : (string = `${String(this.btcInfo.btc.time / 24).substr(
+                          0,
+                          1
+                      )} Дни`);
+            }
+            return string;
+        },
+        graphs() {
+            return [
                 {
                     id: 1,
                     title: "Сложность",
@@ -47,13 +98,12 @@ export default {
                         {
                             id: 11,
                             title: "Хэшрейт",
-                            text: "201.67 EH/s",
+                            text: this.network,
                         },
                         {
                             id: 12,
                             title: "Сложность",
-                            text: "28,174,668,481,289",
-                            span: "28.17 T",
+                            text: this.diff,
                         },
                     ],
                 },
@@ -65,20 +115,23 @@ export default {
                         {
                             id: 21,
                             title: "Ожидаемая следующая сложность",
-                            text: "28,452,668,782,523",
-                            span: "(+0.99%) 28.45 T",
+                            text: this.nextDiff,
+                            span: this.changeDiff,
                         },
                         {
                             id: 22,
                             title: "Дата следующей сложности",
-                            text: "1 Дни 1 Часы",
+                            text: this.time,
                         },
                     ],
                 },
-            ],
+            ];
+        },
+    },
+    data() {
+        return {
             table: {
                 titles: [
-                    "Высота блока",
                     "Время блока",
                     "Сложность",
                     "Изменение",
@@ -89,7 +142,6 @@ export default {
                 rows: [
                     {
                         id: 1000,
-                        height: "747,936",
                         time: "2022-08-04 17:54:43",
                         complexity: {
                             main: "28,174,668,481,289 - ",
@@ -102,7 +154,6 @@ export default {
                     },
                     {
                         id: 1001,
-                        height: "747,936",
                         time: "2022-08-04 17:54:43",
                         complexity: {
                             main: "28,174,668,481,289 - ",
@@ -115,7 +166,6 @@ export default {
                     },
                     {
                         id: 1002,
-                        height: "747,936",
                         time: "2022-08-04 17:54:43",
                         complexity: {
                             main: "28,174,668,481,289 - ",
@@ -128,7 +178,6 @@ export default {
                     },
                     {
                         id: 1003,
-                        height: "747,936",
                         time: "2022-08-04 17:54:43",
                         complexity: {
                             main: "28,174,668,481,289 - ",
@@ -141,7 +190,6 @@ export default {
                     },
                     {
                         id: 1004,
-                        height: "747,936",
                         time: "2022-08-04 17:54:43",
                         complexity: {
                             main: "28,174,668,481,289 - ",
@@ -154,7 +202,6 @@ export default {
                     },
                     {
                         id: 1005,
-                        height: "747,936",
                         time: "2022-08-04 17:54:43",
                         complexity: {
                             main: "28,174,668,481,289 - ",

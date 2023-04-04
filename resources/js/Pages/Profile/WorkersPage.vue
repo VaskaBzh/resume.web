@@ -1,5 +1,6 @@
 <template>
     <Head title="Воркеры" />
+    <div class="hidden">{{ this.allAccounts }}</div>
     <div class="workers">
         <div class="workers__wrapper">
             <main-title tag="h2" enter-class="workers__title">
@@ -7,14 +8,14 @@
             </main-title>
             <div class="workers__filter">
                 <div class="workers__filter_wrapper">
-                    <div class="workers__filter_block">
-                        <div class="workers__filter_label">Отображение</div>
-                        <main-select
-                            class="workers__select"
-                            :options="workersOptions"
-                        >
-                        </main-select>
-                    </div>
+                    <!--                    <div class="workers__filter_block">-->
+                    <!--                        <div class="workers__filter_label">Отображение</div>-->
+                    <!--                        <main-select-->
+                    <!--                            class="workers__select"-->
+                    <!--                            :options="workersOptions"-->
+                    <!--                        >-->
+                    <!--                        </main-select>-->
+                    <!--                    </div>-->
                     <div class="workers__filter_block">
                         <div class="workers__filter_label">Статус</div>
                         <main-select
@@ -24,7 +25,7 @@
                         </main-select>
                     </div>
                 </div>
-                <span class="workers__button">
+                <span class="workers__button" data-popup="#connect">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="21"
@@ -45,7 +46,98 @@
                     </svg>
                 </span>
             </div>
-            <wrap-table :table="this.table" type="Воркеры" />
+            <wrap-table
+                :table="this.table"
+                :key="Object.values(this.allAccounts).length"
+                type="Воркеры"
+                :wait="this.allAccounts"
+            />
+            <popup-view id="connect" typePopup="connect">
+                <form class="form form-popup popup__form">
+                    <main-title
+                        tag="h2"
+                        titleName="Подключиться к allbtc pool"
+                    ></main-title>
+                    <div class="connecting__block">
+                        <div class="connecting__row">
+                            1. Настройте ваше устройство согласно представленным
+                            ниже данным:
+                        </div>
+                        <div class="connecting__row connecting__row-copy">
+                            Address:
+                            <div
+                                class="connecting__block-copy copy"
+                                ref="linkAddress"
+                            >
+                                {{ this.linkAddress }}
+                                <svg
+                                    class="copy-button"
+                                    @click="this.copyLink(1)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
+                                        stroke-width="2"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="connecting__row connecting__row-copy">
+                            Address 1:
+                            <div
+                                class="connecting__block-copy copy"
+                                ref="linkAddress1"
+                            >
+                                {{ this.linkAddress1 }}
+                                <svg
+                                    class="copy-button"
+                                    @click="this.copyLink(2)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
+                                        stroke-width="2"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="connecting__row connecting__row-copy">
+                            Address 2:
+                            <div
+                                class="connecting__block-copy copy"
+                                ref="linkAddress2"
+                            >
+                                {{ this.linkAddress2 }}
+                                <svg
+                                    class="copy-button"
+                                    @click="this.copyLink(3)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
+                                        stroke-width="2"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </popup-view>
         </div>
     </div>
 </template>
@@ -54,70 +146,47 @@ import { Head } from "@inertiajs/vue3";
 import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
+import PopupView from "@/Components/technical/PopupView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
+import { mapGetters } from "vuex";
 
 export default {
-    components: { WrapTable, MainTitle, MainSelect, Head },
+    components: { WrapTable, MainTitle, MainSelect, Head, PopupView },
     layout: profileLayoutView,
     data() {
         return {
+            workersActive: 0,
+            workersInActive: 0,
+            workersDead: 0,
             viewportWidth: 0,
+            linkAddress: "btc.all-btc.com:4444",
+            linkAddress1: "btc.all-btc.com:3333",
+            linkAddress2: "btc.all-btc.com:2222",
             table: {
                 titles: [
                     "Имя воркера",
                     "Текущий",
-                    "Ср.хешрейт /1ч",
+                    // "Ср.хешрейт /1ч",
                     "Ср.хешрейт /24ч",
                     "Частота отказов /24ч",
                 ],
                 shortTitles: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
-                rows: [
-                    {
-                        hashClass: "active",
-                        hash: 1,
-                        hashRate: 171.7,
-                        hashAvarage: 171.7,
-                        hashAvarage24: 171.7,
-                        rejectRate: 0.16,
-                    },
-                    {
-                        hashClass: "unstable",
-                        hash: 4,
-                        hashRate: 171.7,
-                        hashAvarage: 171.7,
-                        hashAvarage24: 171.7,
-                        rejectRate: 0.16,
-                    },
-                    {
-                        hashClass: "unactive",
-                        hash: 8,
-                        hashRate: 171.7,
-                        hashAvarage: 171.7,
-                        hashAvarage24: 171.7,
-                        rejectRate: 0.16,
-                    },
-                ],
+                rows: [],
                 mainRow: {
                     hash: "Общий хешрейт",
-                    hashRate: 171.7,
-                    hashAvarage: 171.7,
-                    hashAvarage24: 171.7,
+                    hashRate: 0,
+                    // hashAvarage: 0,
+                    hashAvarage24: 0,
                     rejectRate: 0,
                 },
                 mainShortRow: {
                     hash: "Общий",
-                    hashRate: 171.7,
-                    hashAvarage: 171.7,
-                    hashAvarage24: 171.7,
+                    hashRate: 0,
+                    // hashAvarage: 0,
+                    hashAvarage24: 0,
                     rejectRate: 0,
                 },
             },
-            workersOptions: [
-                { title: "По одиночке", value: 1 },
-                { title: "Bitcoin Cash", value: 2 },
-                { title: "Litecoin", value: 3 },
-                { title: "Dash", value: 4 },
-            ],
             statuses: [
                 { title: "Все", value: 1 },
                 { title: "Активные", value: 2 },
@@ -127,22 +196,90 @@ export default {
         };
     },
     methods: {
+        copyLink(i) {
+            if (i === 1) {
+                navigator.clipboard.writeText(this.linkAddress);
+                this.$refs.linkAddress.classList.add("active");
+                setTimeout(() => {
+                    this.$refs.linkAddress.classList.remove("active");
+                }, 1000);
+            } else if (i === 2) {
+                navigator.clipboard.writeText(this.linkAddress1);
+                this.$refs.linkAddress1.classList.add("active");
+                setTimeout(() => {
+                    this.$refs.linkAddress1.classList.remove("active");
+                }, 1000);
+            } else if (i === 3) {
+                navigator.clipboard.writeText(this.linkAddress2);
+                this.$refs.linkAddress2.classList.add("active");
+                setTimeout(() => {
+                    this.$refs.linkAddress2.classList.remove("active");
+                }, 1000);
+            }
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        getWorker() {
+            this.table.rows.length = 0;
+            if (this.allHash[this.getActive]) {
+                let workersRowModel = {
+                    hashClass:
+                        this.allHash[this.getActive].status.toLowerCase(),
+                    hash: this.allHash[this.getActive].name,
+                    hashRate: this.allHash[this.getActive].shares1m,
+                    // hashAvarage: this.allHash[this.getActive].shares1h,
+                    hashAvarage24: this.allHash[this.getActive].shares1d,
+                    rejectRate: this.allHash[this.getActive].persent,
+                    graphId: this.allHash[this.getActive].workerId,
+                };
+                this.table.rows.push(workersRowModel);
+            }
+            if (this.allAccounts[this.getActive]) {
+                this.table.mainRow.hashRate =
+                    this.allAccounts[this.getActive].shares1m;
+                // this.table.mainRow.hashAvarage = acc.shares1h;
+                this.table.mainRow.hashAvarage24 =
+                    this.allAccounts[this.getActive].shares1d;
+                this.table.mainRow.rejectRate =
+                    this.allAccounts[this.getActive].rejectRate;
+                this.table.mainShortRow.hashRate =
+                    this.allAccounts[this.getActive].shares1m;
+                // this.table.mainShortRow.hashAvarage = acc.shares1h;
+                this.table.mainShortRow.hashAvarage24 =
+                    this.allAccounts[this.getActive].shares1d;
+                this.table.mainShortRow.rejectRate =
+                    this.allAccounts[this.getActive].rejectRate;
+            }
+        },
+    },
+    computed: {
+        ...mapGetters([
+            "getActive",
+            "allAccounts",
+            "allHash",
+            "allHistoryMiner",
+        ]),
+    },
+    updated() {
+        this.getWorker();
+    },
+    mounted() {
+        document.title = "Воркеры";
+        this.getWorker();
     },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
-    },
-    mounted() {
-        document.title = "Воркеры";
     },
 };
 </script>
 <style lang="scss" scoped>
 .workers {
     width: 100%;
+    @media (min-width: 1271px) {
+        padding-left: 330px;
+    }
     &__button {
         width: 60px;
         height: 44px;

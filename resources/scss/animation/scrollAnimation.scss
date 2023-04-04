@@ -1,4 +1,12 @@
 // Кастомные стили для анимаций
+.opacity {
+    &-before-enter {
+        opacity: 0;
+    }
+    &-enter {
+        opacity: 1;
+    }
+}
 .left {
   &--100 {
     &-before-enter {
@@ -53,6 +61,14 @@
   &-enter {
     transform: translate(0, 0);
   }
+}
+.scaleY {
+    &-before-enter {
+        transform: scaleY(0);
+    }
+    &-enter {
+        transform: scaleY(1);
+    }
 }
 .transition {
   transition: transform $transition ease, opacity $transition ease;

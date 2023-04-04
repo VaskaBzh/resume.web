@@ -39,7 +39,7 @@
         </div>
         <span class="BTC__title main__name">{{ title }}</span>
         <div class="BTC__value main__number">
-            <span class="main__number">{{ BTC }} BTC</span
+            <span class="main__number">{{ value }} BTC</span
             ><span>{{ dollarCalc.toFixed(2) }} $</span>
             <span>{{ rubleCalc.toFixed(2) }} ₽</span>
         </div>
@@ -50,8 +50,8 @@ import axios from "axios";
 export default {
     props: {
         BTC: {
-            type: String,
-            default: "0.00000000",
+            type: Number,
+            default: 0,
         },
         title: String,
         icon: Number,
@@ -62,27 +62,44 @@ export default {
             rubleCalc: 0,
         };
     },
-    mounted() {
-        axios
-            .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
-            .then(
-                (response) =>
-                    (this.dollarCalc = this.BTC * response.data[0].price)
-            );
-        setTimeout(() => {
+    computed: {
+        value() {
+            let val = 0;
+            if (this.BTC) {
+                val = this.BTC;
+            }
+            return Number(val).toFixed(8);
+        },
+    },
+    methods: {
+        calculator() {
             axios
-                .get("https://www.cbr-xml-daily.ru/latest.js")
+                .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
                 .then(
                     (response) =>
-                        (this.rubleCalc =
-                            this.dollarCalc / response.data.rates.USD)
+                        (this.dollarCalc = this.BTC * response.data[0].price)
                 );
-        }, 200);
+            setTimeout(() => {
+                axios
+                    .get("https://www.cbr-xml-daily.ru/latest.js")
+                    .then(
+                        (response) =>
+                            (this.rubleCalc =
+                                this.dollarCalc / response.data.rates.USD)
+                    );
+            }, 200);
+        },
+    },
+    mounted() {
+        this.calculator();
+    },
+    updated() {
+        this.calculator();
     },
     name: "btc-calculator",
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
 .BTC {
     &__block {
         display: flex;
@@ -112,15 +129,18 @@ export default {
             padding: 10px 10px 10px 56px;
             min-height: 73px;
         }
+
         &:last-child {
             margin-bottom: 0;
         }
     }
+
     &__title {
         @media (max-width: 479.98px) {
             margin-bottom: 2px;
         }
     }
+
     &__icon {
         display: none;
         @media (max-width: 991.98px) {
@@ -144,6 +164,7 @@ export default {
             height: 36px;
             width: 36px;
         }
+
         svg {
             fill: #818c99;
             max-width: 32px;
@@ -154,6 +175,7 @@ export default {
             }
         }
     }
+
     &__value {
         display: inline-flex;
         align-items: center;
@@ -166,18 +188,26 @@ export default {
         @media (max-width: 479.98px) {
             text-align: left;
             justify-content: flex-start;
+            gap: 0 5px;
         }
+
         span {
             white-space: nowrap;
             display: inline-flex;
             gap: 5px;
+            @media (max-width: 479.98px) {
+                gap: 0 5px;
+            }
+
             &::before {
                 content: "≈";
             }
+
             &:first-child {
                 @media (max-width: 479.98px) {
                     width: 100%;
                 }
+
                 &::before {
                     content: none;
                 }

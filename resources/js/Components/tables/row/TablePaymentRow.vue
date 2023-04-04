@@ -1,5 +1,6 @@
 <template>
     <div
+        v-scroll="'opacity'"
         class="block block-payment"
         v-if="this.visualType === 'block' && columns.link"
     >
@@ -11,12 +12,18 @@
             {{ this.columns.link }}
         </span>
     </div>
-    <tr class="row-history" v-else-if="columns.status">
+    <tr v-scroll="'opacity'" class="row-history" v-else-if="columns.status">
         <td class="main__number">
             {{ this.columns.date }}
         </td>
         <td class="main__number">
-            <img :src="require(`@/assets/img/${this.columns.img}`)" alt="" />
+            <img
+                :src="
+                    'http://127.0.0.1:5173' +
+                    `/resources/assets/img/${this.columns.img}`
+                "
+                alt=""
+            />
             {{ this.columns.wallet }}
         </td>
         <td class="main__number">
@@ -26,7 +33,10 @@
                     v-if="this.viewportWidth < 767.98"
                 >
                     <img
-                        :src="require(`@/assets/img/img-icon-${this.type}.svg`)"
+                        :src="
+                            'http://127.0.0.1:5173' +
+                            `/resources/assets/img/${this.type}`
+                        "
                         :alt="this.type"
                     />
                 </div>
@@ -42,7 +52,8 @@
                 >
                     <img
                         :src="
-                            require(`@/assets/img/img-icon-${this.status}.svg`)
+                            'http://127.0.0.1:5173' +
+                            `/resources/assets/img/${this.status}`
                         "
                         :alt="this.type"
                     />
@@ -51,28 +62,34 @@
             </div>
         </td>
     </tr>
-    <tr class="row-accruals" v-else-if="columns.type">
+    <tr v-scroll="'opacity'" class="row-accruals" v-else-if="columns.mode">
         <td class="main__number">
             {{ this.columns.date }}
         </td>
-        <td class="main__number">{{ this.type }}</td>
-        <td class="main__number">{{ this.columns.hash }} TH/s</td>
+        <td class="main__number">{{ this.columns.mode }}</td>
+        <td class="main__number">
+            {{ this.columns.hash }} {{ this.columns.unit }}H/s
+        </td>
         <td class="main__number">{{ this.BTCVal }} BTC</td>
         <td class="main__number" v-if="this.viewportWidth > 991.98">
-            {{ this.columns.complexity }}
+            {{ Number(this.columns.diff).toFixed(2) }}
         </td>
     </tr>
-    <tr class="row-payment" v-else-if="columns.link">
+    <tr v-scroll="'opacity'" class="row-payment" v-else-if="columns.link">
         <td class="main__number">
             {{ this.columns.date }}
         </td>
-        <td class="main__number">{{ this.BTCVal }} BTC</td>
-        <td ref="link" @click="this.copy" class="main__link">
-            {{ this.columns.link }}
+        <!--        <td class="main__number">{{ this.columns.percent }} %</td>-->
+        <td class="main__number">{{ this.columns.earn }} BTC</td>
+        <td class="main__number">
+            <span :class="this.columns.infoClass">{{ this.columns.info }}</span>
         </td>
+        <!--        <td ref="link" @click="this.copy" class="main__link">-->
+        <!--            {{ this.columns.link }}-->
+        <!--        </td>-->
     </tr>
-    <tr class="row-ref-list" v-else-if="columns.email">
-        <td class="main__number">{ this.columns.email }}</td>
+    <tr v-scroll="'opacity'" class="row-ref-list" v-else-if="columns.email">
+        <td class="main__number">{{ this.columns.email }}</td>
         <td class="main__number">{{ this.columns.hash }} TH/s</td>
         <td class="main__number" v-if="this.viewportWidth > 991.98">
             {{ this.columns.middleHash }} TH/s
@@ -81,7 +98,7 @@
             {{ this.columns.date }}
         </td>
     </tr>
-    <tr class="row-ref" v-else>
+    <tr v-scroll="'opacity'" class="row-ref" v-else>
         <td class="main__number">
             {{ this.columns.date }}
         </td>
@@ -108,7 +125,7 @@ export default {
     },
     computed: {
         BTCVal() {
-            return Number(this.columnsArr.BTC).toFixed(8);
+            return Number(this.columnsArr.earn).toFixed(8);
         },
     },
     methods: {
@@ -124,10 +141,10 @@ export default {
                     this.type = this.type.split(" ").splice(0, 1)[0];
                 } else if (this.columns.status) {
                     if (this.type === "Поступление") {
-                        this.type = "enter";
+                        this.type = "img-icon-enter.svg";
                     }
                     if (this.status === "Успешно") {
-                        this.status = "accept";
+                        this.status = "img-icon-accept.svg";
                     }
                 }
             }
@@ -246,6 +263,28 @@ td {
                 text-align: right;
                 text-overflow: clip;
                 overflow: visible;
+            }
+            span {
+                display: flex;
+                gap: 10px;
+                align-items: center;
+                justify-content: flex-end;
+                font-weight: 500 !important;
+                color: #000034 !important;
+                font-size: 18px !important;
+                line-height: 26px !important;
+                &:before {
+                    content: "";
+                    position: relative;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+                }
+                &.pending {
+                    &:before {
+                        background: #e9c058;
+                    }
+                }
             }
         }
     }

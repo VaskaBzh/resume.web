@@ -1,6 +1,10 @@
 <template>
-    <div class="nav-tabs">
-        <Link :href="route('accounts')" class="nav-tabs__tab">
+    <div class="nav-tabs" ref="tabs">
+        <Link
+            :href="route('accounts')"
+            :class="{ 'router-link-active': $page.url === '/profile/accounts' }"
+            class="nav-tabs__tab"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -15,7 +19,13 @@
 
             Аккаунты
         </Link>
-        <Link :href="route('statistic')" class="nav-tabs__tab">
+        <Link
+            :href="route('statistic')"
+            :class="{
+                'router-link-active': $page.url === '/profile/statistic',
+            }"
+            class="nav-tabs__tab"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -30,7 +40,11 @@
 
             Статистика
         </Link>
-        <Link :href="route('workers')" class="nav-tabs__tab">
+        <Link
+            :href="route('workers')"
+            :class="{ 'router-link-active': $page.url === '/profile/workers' }"
+            class="nav-tabs__tab"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -45,7 +59,11 @@
 
             Воркеры
         </Link>
-        <Link :href="route('payment')" class="nav-tabs__tab">
+        <Link
+            :href="route('payment')"
+            :class="{ 'router-link-active': $page.url === '/profile/payment' }"
+            class="nav-tabs__tab"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -59,7 +77,11 @@
             </svg>
             Выплаты
         </Link>
-        <Link :href="route('accruals')" class="nav-tabs__tab">
+        <Link
+            :href="route('accruals')"
+            :class="{ 'router-link-active': $page.url === '/profile/accruals' }"
+            class="nav-tabs__tab"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -89,7 +111,13 @@
 
         <!--            Реферальная программа-->
         <!--        </Link>-->
-        <Link :href="route('connecting')" class="nav-tabs__tab">
+        <Link
+            :href="route('connecting')"
+            :class="{
+                'router-link-active': $page.url === '/profile/connecting',
+            }"
+            class="nav-tabs__tab"
+        >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
@@ -123,14 +151,41 @@
 </template>
 <script>
 import { Link, router } from "@inertiajs/vue3";
+
+const animationObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+            document.querySelector(".nav-tabs").classList.remove("fixed");
+        } else {
+            document.querySelector(".nav-tabs").classList.add("fixed");
+        }
+    });
+});
 export default {
+    components: {
+        Link,
+    },
     methods: {
         router() {
             return router;
         },
+        handleScroll(attr) {
+            if (attr !== "stop") {
+                animationObserver.observe(
+                    document.querySelector(".nav__container")
+                );
+            } else {
+                animationObserver.unobserve(
+                    document.querySelector(".nav__container")
+                );
+            }
+        },
     },
-    components: {
-        Link,
+    mounted() {
+        this.handleScroll();
+    },
+    beforeUnmount() {
+        this.handleScroll("stop");
     },
 };
 </script>
@@ -143,19 +198,20 @@ export default {
     border-radius: 21px;
     background-color: rgba(255, 255, 255, 0.29);
     margin-right: 30px;
-    //max-height: calc(60px * 8);
+    max-height: calc(60px * 8);
     height: fit-content;
     transition: all 0.3s ease 0s;
     @media (min-width: 1271px) {
         overflow: hidden;
         border: 0.5px solid #fdfefe;
-        //position: fixed;
-        //top: 132px;
+        position: fixed;
+        top: 132px;
         transform: translateY(0);
     }
+
     &.fixed {
         @media (min-width: 1271px) {
-            //transform: translateY(-92px);
+            transform: translateY(-92px);
         }
     }
     @media (max-width: 1270px) {

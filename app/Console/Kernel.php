@@ -2,11 +2,17 @@
 
 namespace App\Console;
 
+use App\Jobs\HourlyHashesUpdate;
+use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
 class Kernel extends ConsoleKernel
 {
+    protected $commands = [
+        // ...
+        Commands\UpdateAccrualsCommand::class,
+    ];
     /**
      * Define the application's command schedule.
      *
@@ -15,6 +21,9 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('update:accruals')->dailyAt('5:00');
+        $schedule->job(new HourlyHashesUpdate())->hourly();
+        $schedule->job(new UpdateWorkersHashesJob())->hourly();
         // $schedule->command('inspire')->hourly();
     }
 

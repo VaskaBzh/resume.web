@@ -133,11 +133,9 @@
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
                         <img src="../../assets/img/mail-icon.svg" alt="" />
-                        <a href="mailto:mail@mail.com">mail@mail.com</a>
-                    </li>
-                    <li class="footer__contacts_item contacts_item">
-                        <img src="../../assets/img/tel-icon.svg" alt="" />
-                        <a href="tel:+97142285285">+971 4 228 52 85</a>
+                        <a href="mailto:support@all-btc.com"
+                            >support@all-btc.com</a
+                        >
                     </li>
                     <li class="footer__contacts_item contacts_item">
                         <img src="../../assets/img/location-icon.svg" alt="" />
@@ -148,10 +146,25 @@
                     </li>
                 </ul>
             </div>
-            <div class="footer__quote quote">© 2022 Allbtc Pool</div>
+            <div class="footer__quote quote">
+                © 2022 Allbtc Pool
+                <a :href="this.pdf">Конфиденциальность</a>
+            </div>
         </div>
     </footer>
 </template>
+
+<script>
+import pdf from "@/../assets/files/policy.pdf";
+export default {
+    name: "footer-component",
+    data() {
+        return {
+            pdf,
+        };
+    },
+};
+</script>
 
 <style lang="scss" scoped>
 .footer {

@@ -1,91 +1,76 @@
 <template>
     <Head title="Начисления" />
+    <div class="hidden" v-if="this.allHistoryForDays[this.getActive]">
+        {{ this.allHistoryForDays }}
+    </div>
     <div class="accruals">
         <div class="accruals__wrapper">
             <main-title tag="h2" titleName="Начисления"></main-title>
             <div class="accruals__filter">
                 <div class="accruals__filter_block">
-                    <div class="accruals__filter_label">Сумма всех выплат</div>
-                    <div class="accruals__filter_sum">
-                        <span>{{ this.bitcoins }}</span> BTC
+                    <div class="main__label">Сумма всех начислений</div>
+                    <div
+                        class="main-number main__number-lg"
+                        v-if="this.FullEarn[this.getActive]"
+                    >
+                        <span>{{ this.FullEarn[this.getActive] }}</span> BTC
+                    </div>
+                    <div class="main-number main__number-lg" v-else>
+                        <span>0.00000000</span> BTC
                     </div>
                 </div>
 
-                <div class="accruals__filter_block accruals__filter_block-type">
-                    <div class="accruals__filter_label">Тип начислений</div>
-                    <main-select
-                        class="accruals__select"
-                        :options="types"
-                    ></main-select>
-                </div>
+                <!--                <div class="accruals__filter_block accruals__filter_block-type">-->
+                <!--                    <div class="accruals__filter_label">Тип начислений</div>-->
+                <!--                    <main-select-->
+                <!--                        class="accruals__select"-->
+                <!--                        :options="types"-->
+                <!--                    ></main-select>-->
+                <!--                </div>-->
                 <div class="accruals__filter_block">
                     <div class="accruals__filter_label">Дата</div>
-                    <!--                    <Datepicker-->
-                    <!--                        v-model="date"-->
-                    <!--                        range-->
-                    <!--                        placeholder="За все время"-->
-                    <!--                        auto-apply-->
-                    <!--                        locale="ru"-->
-                    <!--                        position="center"-->
-                    <!--                        :hide-navigation="['time']"-->
-                    <!--                        :enable-time-picker="false"-->
-                    <!--                        @update:modelValue="this.iconRemover"-->
-                    <!--                    >-->
-                    <!--                        <template #input-icon>-->
-                    <!--                            <svg-->
-                    <!--                                ref="icon"-->
-                    <!--                                xmlns="http://www.w3.org/2000/svg"-->
-                    <!--                                width="24"-->
-                    <!--                                height="24"-->
-                    <!--                                viewBox="0 0 24 24"-->
-                    <!--                                fill="none"-->
-                    <!--                            >-->
-                    <!--                                <path-->
-                    <!--                                    d="M3 10H21M7 3V5M17 3V5M6.2 21H17.8C18.9201 21 19.4802 21 19.908 20.782C20.2843 20.5903 20.5903 20.2843 20.782 19.908C21 19.4802 21 18.9201 21 17.8V8.2C21 7.07989 21 6.51984 20.782 6.09202C20.5903 5.71569 20.2843 5.40973 19.908 5.21799C19.4802 5 18.9201 5 17.8 5H6.2C5.0799 5 4.51984 5 4.09202 5.21799C3.71569 5.40973 3.40973 5.71569 3.21799 6.09202C3 6.51984 3 7.07989 3 8.2V17.8C3 18.9201 3 19.4802 3.21799 19.908C3.40973 20.2843 3.71569 20.5903 4.09202 20.782C4.51984 21 5.07989 21 6.2 21Z"-->
-                    <!--                                    stroke="#000034"-->
-                    <!--                                    stroke-opacity="0.62"-->
-                    <!--                                    stroke-width="2"-->
-                    <!--                                    stroke-linecap="round"-->
-                    <!--                                    stroke-linejoin="round"-->
-                    <!--                                />-->
-                    <!--                            </svg>-->
-                    <!--                        </template>-->
-                    <!--                    </Datepicker>-->
+                    <main-date placeholder="За все время"></main-date>
                 </div>
-                <blue-button class="accruals__button">
-                    <a href="">Выгрузить</a></blue-button
+                <blue-button class="accruals__button small"
+                    >Выгрузить</blue-button
                 >
             </div>
-            <main-slider :table="this.accrualsInfo"></main-slider>
+            <main-slider
+                :key="this.allHistoryForDays[this.getActive]"
+                :table="this.accrualsInfo"
+                :wait="this.allHistoryForDays[this.getActive]"
+            ></main-slider>
         </div>
     </div>
 </template>
 <script>
 import { Head } from "@inertiajs/vue3";
 import MainSlider from "@/Components/account/MainSlider.vue";
-// import Datepicker from "@vuepic/vue-datepicker";
-import MainSelect from "@/Components/UI/MainSelect.vue";
+import MainDate from "@/Components/UI/MainDate.vue";
+// import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
+import { mapGetters } from "vuex";
 
 export default {
     components: {
         BlueButton,
         MainTitle,
-        MainSelect,
+        // MainSelect,
         MainSlider,
-        // Datepicker,
+        MainDate,
         Head,
     },
     layout: profileLayoutView,
     data() {
         return {
+            history: {},
             date: {},
-            types: [
-                { title: "Любой", value: 1 },
-                { title: "FPPS+ начисление", value: 2 },
-            ],
+            // types: [
+            //     { title: "Любой", value: 1 },
+            //     { title: "FPPS+ начисление", value: 2 },
+            // ],
             accrualsInfo: {
                 titles: [
                     "Дата",
@@ -95,1632 +80,72 @@ export default {
                     "Сложность",
                 ],
                 shortTitles: ["Дата", "Тип", "Ср. хешрейт", "Доходы"],
-                rows: [
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                    {
-                        date: "29.11.2022",
-                        time: "15:10:45",
-                        type: "FPPS+ начисление",
-                        hash: "164.78",
-                        BTC: 0,
-                        complexity: "",
-                    },
-                ],
+                rows: [],
             },
         };
     },
     computed: {
-        bitcoins() {
-            let sum = 0;
-            return sum.toFixed(8);
-        },
+        ...mapGetters(["getActive", "allHistoryForDays", "FullEarn"]),
     },
     methods: {
         iconRemover() {
             this.$refs.icon.style.display = "none";
         },
+        async getEarn() {
+            this.accrualsInfo.rows = [];
+            if (this.allHistoryForDays[this.getActive]) {
+                this.allHistoryForDays[this.getActive].forEach((el, i) => {
+                    let date = new Date(el[0] * 1000);
+                    let accModel = {
+                        date: `${date.getFullYear()}.${
+                            String(date.getMonth()).length < 2
+                                ? "0" + date.getMonth()
+                                : date.getMonth()
+                        }.${
+                            String(date.getDay()).length < 2
+                                ? "0" + date.getDay()
+                                : date.getDay()
+                        }`,
+                        time: el[0],
+                        mode: `FPPS+ Начисление`,
+                        hash: Number(el[1]).toFixed(2),
+                        unit: el[2],
+                        earn: el[3],
+                        diff: (el[3] / 1000000000000).toFixed(2),
+                    };
+                    if (!isNaN(el[3]) && Number(el[3]) !== 0) {
+                        this.accrualsInfo.rows.push(accModel);
+                    }
+                });
+            }
+        },
+    },
+    // async created() {
+    //     // await this.$store.dispatch("getAccounts");
+    //     if (localStorage.active) {
+    //         this.activeIndex = JSON.parse(localStorage.active);
+    //     }
+    //
+    //     this.getEarn();
+    // },
+    async created() {
+        await this.getEarn();
     },
     mounted() {
         document.title = "Начисления";
+    },
+    async updated() {
+        await this.getEarn();
     },
 };
 </script>
 <style lang="scss" scoped>
 .accruals {
     width: 100%;
+
+    @media (min-width: 1271px) {
+        padding-left: 330px;
+    }
 
     .title {
         margin-bottom: 16px;
@@ -1735,7 +160,7 @@ export default {
             max-width: 100%;
         }
         @media (max-width: 479.98px) {
-            height: 28px;
+            height: 34px;
         }
 
         .select_title {
@@ -1774,15 +199,19 @@ export default {
             max-width: 270px;
             width: 100%;
             margin-right: 16px;
+            gap: 8px;
             @media (max-width: 991.98px) {
                 max-width: 100% !important;
                 margin: 0;
+                gap: 6px;
             }
 
             &:first-child {
                 margin-right: auto;
                 width: auto;
                 min-height: 79px;
+                justify-content: space-between;
+                gap: 0;
                 @media (max-width: 991.98px) {
                     background: #ffffff;
                     border: 0.5px solid rgba(0, 0, 0, 0.08);
@@ -1819,65 +248,16 @@ export default {
                 max-width: 220px;
             }
         }
-
-        &_label {
-            margin-bottom: 8px;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 23px;
-            color: rgba(0, 0, 0, 0.62);
-            @media (max-width: 991.98px) {
-                margin-bottom: 0;
-            }
-            @media (max-width: 767.98px) {
-                font-size: 14px;
-                line-height: 20px;
-                margin-bottom: 6px;
-            }
-        }
-
-        &_sum {
-            color: rgba(#000034, 0.62);
-            font-style: normal;
-            font-weight: 500;
-            font-size: 28px;
-            line-height: 40px;
-
-            span {
-                font-weight: 700;
-                color: #000034;
-            }
-
-            @media (max-width: 991.98px) {
-                font-size: 21px;
-                line-height: 30px;
-                color: #000034;
-            }
-        }
     }
 
     &__button {
-        padding: 11px 24px;
-        border-radius: 13px;
-        font-size: 18px;
-        max-width: 141px;
-        width: 100%;
-        height: 48px;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
+        min-width: 141px;
         @media (max-width: 991.98px) {
-            max-width: 100%;
+            min-width: 100%;
         }
         @media (max-width: 767.98px) {
             grid-column-start: 1;
             grid-column-end: 3;
-        }
-        @media (max-width: 479.98px) {
-            font-size: 12px;
-            line-height: 17px;
-            height: 28px;
-            border-radius: 8px;
         }
     }
 }

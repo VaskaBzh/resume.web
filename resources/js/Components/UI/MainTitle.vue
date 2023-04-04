@@ -28,9 +28,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .title {
-    font-family: AmpleSoftPro;
+    font-family: AmpleSoftPro, serif;
     font-style: normal;
 }
+
 h1 {
     color: #000034;
     font-weight: 500;
@@ -46,17 +47,22 @@ h1 {
         line-height: 38px;
     }
 }
+
 h2 {
     font-weight: 700;
     font-size: 40px;
     line-height: 50px;
     color: #000000;
+    @media (max-width: 991.89px) {
+        font-size: 34px;
+    }
     @media (max-width: 479.89px) {
         font-size: 24px;
         line-height: 30px;
         color: #000034;
     }
 }
+
 h3 {
     font-weight: 700;
     font-size: 24px;
@@ -68,7 +74,7 @@ h3 {
     }
     @media (max-width: 767.98px) {
         position: relative;
-        margin-bottom: 40px !important;
+        margin-bottom: 40px;
         &:after {
             content: "";
             height: 1px;
