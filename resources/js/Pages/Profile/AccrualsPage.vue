@@ -38,7 +38,7 @@
             <main-slider
                 :key="this.allHistoryForDays[this.getActive]"
                 :table="this.accrualsInfo"
-                :wait="this.allHistoryForDays[this.getActive]"
+                :wait="this.allHistoryForDays"
             ></main-slider>
         </div>
     </div>

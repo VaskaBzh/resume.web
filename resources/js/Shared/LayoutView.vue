@@ -1,6 +1,5 @@
 <template>
     <header-component :errors="errors" :is_auth="auth_user" />
-    <div class="hidden">{{ this.allAccounts }}</div>
     <div class="page">
         <blue-button class="feedback">
             <a class="all-link" href="mailto:support@all-btc.com"
@@ -57,6 +56,11 @@ export default {
             type: Object,
         },
     },
+    data() {
+        return {
+            interval: null,
+        };
+    },
     components: { BlueButton, HeaderComponent, FooterComponent },
     computed: {
         allAccounts() {
@@ -69,10 +73,20 @@ export default {
             this.$store.dispatch("getInfo");
             await this.$store.dispatch("getAccounts");
         }
+        if (this.auth_user) {
+            this.interval = setInterval(() => {
+                this.$store.dispatch("getAccounts");
+            }, 60000);
+        }
     },
     async updated() {
         if (!this.auth_user) {
             this.$store.commit("destroy_force");
+        }
+    },
+    unmounted() {
+        if (this.interval) {
+            clearInterval(this.interval);
         }
     },
 };

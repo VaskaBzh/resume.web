@@ -1,5 +1,4 @@
 <template>
-    <div class="hidden">{{ this.FullEarn }}{{ this.earnSum }}</div>
     <nav class="nav__container">
         <Link :href="route('home')">
             <img
@@ -611,6 +610,7 @@ export default defineComponent({
                 email: new_account_input.email,
             });
             let val = false;
+            message.value = "";
             // eslint-disable-next-line no-undef
             await instance.post(route("user_get"), email).then((res) => {
                 res.data !== "" ? (val = true) : (val = false);
@@ -719,11 +719,9 @@ export default defineComponent({
             if (this.errors) {
                 obj = this.errors;
             }
-            Object.keys(this.frontErrs).map((key) => {
-                Vue.set(obj, key, this.frontErrs[key]);
-            });
+            const target = Object.assign(obj, this.frontErrs);
 
-            return obj;
+            return target;
         },
     },
     methods: {
@@ -753,9 +751,9 @@ export default defineComponent({
             this.swiper = swiper;
         },
         allErrors_destroyer() {
-            this.allErrors["login"] = "";
             this.allErrors["email"] = "";
             this.allErrors["regError"] = "";
+            this.allErrors["name"] = "";
             this.frontErrs = {
                 name: "",
                 code: "",

@@ -23,28 +23,7 @@ class LoginController extends Controller
     |
     */
 
-//    public function login(Request $request)
-//    {
-//        $this->validateLogin($request);
 //
-//        // Get user by email
-//        $user = User::where('email', $request->email)->first();
-//        // Check if the user exists and the email is verified
-//        if ($user && $user->hasVerifiedEmail()) {
-//            if ($this->attemptLogin($request)) {
-//                return $this->sendLoginResponse($request);
-//            } else {
-//                return $this->sendFailedLoginResponse($request);
-//            }
-//        } else {
-//            // Email not verified
-////            throw ValidationException::withMessages([
-////                'email' => ['email не подтвержден.'],
-////            ]);
-//            abort(500, 'Почта не подтверждена');
-////            return Redirect::back()->with('error', 'Подтвердите почту');
-//        }
-//    }
 
     use AuthenticatesUsers;
 

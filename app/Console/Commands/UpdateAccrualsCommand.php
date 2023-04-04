@@ -49,7 +49,7 @@ class UpdateAccrualsCommand extends Command
             $response_json = file_get_contents($req_url, false, $context);
             if (false !== $response_json) {
                 try {
-                    $accrual = $sub->accruals->where("group_id", $sub->group_id)->first();
+                    $accrual = $sub->accruals->first();
                     $responseEncode = json_decode($response);
                     $responseData = json_decode($response_json);
                     $result = [];
@@ -100,11 +100,5 @@ class UpdateAccrualsCommand extends Command
                 $this->error('Error fetching data for user: ' . $sub->id);
             }
         }
-
-        // Обновление базы начислений
-//           if (!empty($tickers)) {
-//               $accrual->tickers = $tickers;
-//               $accrual->save();
-//           }
     }
 }

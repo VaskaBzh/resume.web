@@ -99,6 +99,9 @@
             height: 22px;
             stroke: #000034 !important;
         }
+        @media (max-width: $mobileSmall) {
+            right: 7px;
+        }
         @media (max-width: $mobileExtraSmall) {
             width: 18px;
             height: 18px;

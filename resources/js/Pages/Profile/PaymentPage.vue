@@ -25,7 +25,7 @@
             </div>
             <main-slider
                 :table="this.paymentInfo"
-                :wait="this.allHistoryForDays[this.getActive]"
+                :wait="this.allHistoryForDays"
             ></main-slider>
             <popup-view id="payment">
                 <form

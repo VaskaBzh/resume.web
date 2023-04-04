@@ -223,6 +223,7 @@ export default {
         getWorker() {
             this.table.rows.length = 0;
             if (this.allHash[this.getActive]) {
+                console.log(this.allHash);
                 let workersRowModel = {
                     hashClass:
                         this.allHash[this.getActive].status.toLowerCase(),

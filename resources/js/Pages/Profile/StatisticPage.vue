@@ -96,7 +96,7 @@
             </div>
             <wrap-table
                 :table="this.tables.payment"
-                :wait="this.allHistoryForDays[this.getActive]"
+                :wait="this.allHistoryForDays"
                 link="payment"
                 linkText="выплат"
                 title="Выплаты"
@@ -312,6 +312,9 @@ export default {
     }
     width: 100%;
     .wrap {
+        .title {
+            width: 100%;
+        }
         &-no-padding {
             display: grid;
             grid-template-columns: 600px auto;
@@ -386,6 +389,9 @@ export default {
             &-graph {
                 grid-column-start: 1;
                 grid-column-end: 3;
+                @media (max-width: 778.98px) {
+                    grid-column-end: 2;
+                }
             }
         }
         &_list {

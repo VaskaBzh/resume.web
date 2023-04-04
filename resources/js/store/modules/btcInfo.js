@@ -7,7 +7,7 @@ export default {
             let sum = 0;
             if (Object.values(state.historyForDays).length > 0) {
                 Object.values(state.historyForDays).forEach((data) => {
-                    if (Object.values(data)) {
+                    if (data) {
                         Object.values(data).forEach((el) => {
                             sum += Number(el[3]) * 3.5 * 1.75;
                         });
@@ -15,18 +15,6 @@ export default {
                         accruals.accruals = Number(sum.toFixed(8));
 
                         this.dispatch("getWallets", accruals);
-                        // checkFive: 0,
-                        //     valid: true,
-                        //     active: -1,
-                        //     accounts: {},
-                        // hash: {},
-                        // history: {},
-                        // historyMiners: {},
-                        // historyForDays: {},
-                        // updateId: 0,
-                        //     fullEarn: {},
-                        // validate: false,
-                        //     groupName: "",
                         commit("setAllEarn", {
                             key: group.group_id,
                             sum: sum,
@@ -42,6 +30,7 @@ export default {
                 .get("/accountsAll")
                 .then(async (response) => {
                     let arr;
+                    let groups = [];
                     state.checkFive = state.checkFive + 1;
                     // eslint-disable-next-line no-undef
                     await axios
@@ -53,16 +42,17 @@ export default {
                                     const i =
                                         response.data.data.list.indexOf(el);
                                     if (i === 1) {
-                                        // await this.dispatch("workerChecker", {
-                                        //     arr: arr,
-                                        //     el: el,
-                                        // });
+                                        await this.dispatch("workerChecker", {
+                                            arr: arr,
+                                            el: el,
+                                        });
                                     } else if (i > 1) {
                                         await this.dispatch("getAccGroup", {
                                             arr: arr,
                                             el: el,
                                             i: i,
                                             response: response,
+                                            groups: groups,
                                         });
                                     }
                                 }
@@ -80,15 +70,15 @@ export default {
                         })
                         .catch((err) => {
                             console.log(err);
-                            if (state.checkFive <= 5) {
-                                this.dispatch("getAccounts");
-                            } else {
-                                state.checkFive = 0;
-                            }
                         });
                 })
                 .catch((err) => {
                     console.log(err);
+                    if (state.checkFive <= 5) {
+                        this.dispatch("getAccounts");
+                    } else {
+                        state.checkFive = 0;
+                    }
                 });
         },
         async workerChecker({ commit }, data) {
@@ -135,7 +125,7 @@ export default {
                         unit: data.el.shares_unit,
                     };
                     if (data.el.name == state.groupName) {
-                        this.dispatch("updateGroup", data.el);
+                        data.groups.push(data.el);
                     }
                     this.dispatch("getHash", {
                         groupId: data.el.gid,
@@ -143,10 +133,14 @@ export default {
                         el: data.el,
                         response: data.response,
                     });
-                } else if (
-                    data.i === data.response.data.data.list.length - 1 &&
-                    !state.validate
-                ) {
+                }
+                if (data.i === data.response.data.data.list.length - 1) {
+                    data.groups.forEach(async (el, i) => {
+                        await this.dispatch("updateGroup", el);
+                        if (i === data.groups.length - 1) {
+                            this.dispatch("getAccounts");
+                        }
+                    });
                     // window.location.reload();
                     // this.dispatch("reloader", data.arr);
                 }
@@ -177,7 +171,6 @@ export default {
                 )
                 .then(async (res) => {
                     await axios.post("/worker_create", updateData);
-                    window.location.reload();
                 });
         },
         async getHash({ state, commit }, data) {
