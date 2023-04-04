@@ -8,119 +8,26 @@
             </main-title>
             <div class="wallets__wrap">
                 <div class="wallets__row wallets__row-balance">
-                    <div class="wallets__column">
-                        <span class="wallets__subtitle">Суммарный баланс:</span>
-                        <span class="wallets__value">
-                            <span>{{
-                                Number(this.walletsCash).toFixed(8)
-                            }}</span>
-                            BTC</span
-                        >
-                    </div>
-                    <div class="wallets__buttons">
-                        <blue-button class="wallets__button">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <path
-                                    d="M16.5156 9.34814H21.0156V4.84814"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-
-                                <path
-                                    d="M6.16602 6.16637C6.9321 5.40029 7.84157 4.7926 8.84251 4.37799C9.84344 3.96339 10.9162 3.75 11.9996 3.75C13.0831 3.75 14.1558 3.96339 15.1568 4.37799C16.1577 4.7926 17.0672 5.40029 17.8333 6.16637L21.0153 9.34835"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M7.48438 14.6519H2.98438V19.1519"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M17.8336 17.8338C17.0675 18.5999 16.1581 19.2076 15.1571 19.6222C14.1562 20.0368 13.0834 20.2502 12 20.2502C10.9166 20.2502 9.84378 20.0368 8.84285 19.6222C7.84191 19.2076 6.93244 18.5999 6.16635 17.8338L2.98438 14.6519"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-                            Обменять
-                        </blue-button>
-                        <blue-button class="wallets__button">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <path
-                                    d="M8.0625 7.68457L12 3.74707L15.9375 7.68457"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M12 14.25V3.75"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M21 12.75V19.5C21 19.6989 20.921 19.8897 20.7803 20.0303C20.6397 20.171 20.4489 20.25 20.25 20.25H3.75C3.55109 20.25 3.36032 20.171 3.21967 20.0303C3.07902 19.8897 3 19.6989 3 19.5V12.75"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-                            Вывести
-                        </blue-button>
-                        <blue-button class="wallets__button">
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                            >
-                                <path
-                                    d="M8.0625 10.3125L12 14.25L15.9375 10.3125"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M12 3.74707V14.2471"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                                <path
-                                    d="M21 12.75V19.5C21 19.6989 20.921 19.8897 20.7803 20.0303C20.6397 20.171 20.4489 20.25 20.25 20.25H3.75C3.55109 20.25 3.36032 20.171 3.21967 20.0303C3.07902 19.8897 3 19.6989 3 19.5V12.75"
-                                    stroke-width="2"
-                                    stroke-linecap="round"
-                                    stroke-linejoin="round"
-                                />
-                            </svg>
-                            Пополнить
-                        </blue-button>
-                    </div>
+                    <h3 class="wallets__title">Обзор:</h3>
                 </div>
                 <div class="wallets__row">
                     <div class="wallets__block">
                         <div class="wallets__column">
-                            <span class="wallets__subtitle">На кошельках:</span>
+                            <span class="wallets__subtitle">Оплачено:</span>
                             <span class="wallets__value"
-                                ><span>
-                                    {{ Number(this.walletsCash).toFixed(8) }}
+                                ><span> 0.00000000 </span>
+                                BTC
+                            </span>
+                        </div>
+                    </div>
+                    <div class="wallets__block">
+                        <div class="wallets__column">
+                            <span class="wallets__subtitle">
+                                Неоплаченно:
+                            </span>
+                            <span class="wallets__value">
+                                <span>
+                                    {{ this.allEarn }}
                                 </span>
                                 BTC
                             </span>
@@ -129,26 +36,13 @@
                     <div class="wallets__block">
                         <div class="wallets__column">
                             <span class="wallets__subtitle">
-                                Счет майнинга:
+                                Верашний доход:
                             </span>
                             <span class="wallets__value">
                                 <span>
-                                    {{ Number(this.miningCash).toFixed(2) }}
+                                    {{ this.yesterdayProfit }}
                                 </span>
-                                %
-                            </span>
-                        </div>
-                    </div>
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">
-                                В ожидании выплаты
-                            </span>
-                            <span class="wallets__value">
-                                <span>
-                                    {{ Number(this.waitingCash).toFixed(2) }}
-                                </span>
-                                %
+                                BTC
                             </span>
                         </div>
                     </div>
@@ -225,13 +119,33 @@ import Vue from "lodash";
 export default {
     components: { MainCheckbox, BlueButton, MainTitle },
     computed: {
-        ...mapGetters(["FullEarn", "allAccounts"]),
+        ...mapGetters(["FullEarn", "allAccounts", "allHistoryForDays"]),
         waitingCash() {
             return 100;
         },
         // eslint-disable-next-line vue/return-in-computed-property
         bool() {
             return this.wallets.length > 0;
+        },
+        allEarn() {
+            let sum = 0;
+            if (this.FullEarn) {
+                Object.values(this.FullEarn).forEach((acc) => {
+                    sum += Number(acc);
+                });
+            }
+            return sum.toFixed(8);
+        },
+        yesterdayProfit() {
+            let sum = 0;
+            if (this.allHistoryForDays) {
+                Object.values(this.allHistoryForDays).forEach((acc) => {
+                    if (acc[1]) {
+                        sum += Number(acc[1][3]);
+                    }
+                });
+            }
+            return sum.toFixed(8);
         },
         walletsCash() {
             let sum = 0;
@@ -745,10 +659,15 @@ export default {
         &-balance {
             gap: 0;
             justify-content: space-between;
-            margin-bottom: 32px;
+            margin-bottom: 16px;
+            h3 {
+                margin-bottom: 0;
+                @media (max-width: 767.98px) {
+                    margin-bottom: 30px !important;
+                }
+            }
             @media (max-width: 767.98px) {
                 background-color: transparent;
-                margin-bottom: 26px;
                 padding: 0;
                 border: none;
                 .wallets__column {

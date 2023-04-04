@@ -60,14 +60,14 @@ class UpdateAccrualsCommand extends Command
                                     $carry["shares_1d"] = floatval($value);
                                 }
                             }
-                            return $carry["shares_1d"];}, []);
+                            return $carry;}, ['shares_1d' => ''])['shares_1d'];
                         $unit = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_unit") {
                                     $carry["shares_unit"] = $value;
                                 }
                             }
-                            return $carry["shares_unit"];}, []);
+                            return $carry;}, ['shares_unit' => ''])['shares_unit'];
                     } else {
                         $share = 0;
                         $unit = "T";
@@ -77,6 +77,7 @@ class UpdateAccrualsCommand extends Command
                     } else {
                         $earn = 0;
                     }
+                    $this->info($response_json);
                     $result[] = [
                         time(),
                         number_format($share, 2, ".", ""),

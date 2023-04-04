@@ -516,30 +516,6 @@ export default defineComponent({
                     message.value = error.response.data.message;
                 });
         };
-        // const submit = async () => {
-        //     const csrfToken = document
-        //         .querySelector('meta[name="csrf-token"]')
-        //         .getAttribute("content");
-        //     // Регистрация аккаунта
-        //     await fetch("/login", {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "X-CSRF-TOKEN": csrfToken,
-        //         },
-        //         body: JSON.stringify({
-        //             email: form.email,
-        //             password: form.password,
-        //         }),
-        //     }).then((res) => {
-        //         if (res.ok) {
-        //             form.password = "";
-        //         } else {
-        //             // Обработка ошибки регистрации
-        //             message.value = "Подтвердите почту";
-        //         }
-        //     });
-        // };
         const logout = async () => {
             axios
                 .post("/logout", {
@@ -547,34 +523,10 @@ export default defineComponent({
                     password: form.password,
                     remember: false,
                 })
-                .then((response) => {
-                    router.visit("/");
-                })
                 .catch((error) => {
-                    router.visit("/");
                     console.log(error.response);
                 });
         };
-
-        // const logout = async () => {
-        //     const csrfToken = document
-        //         .querySelector('meta[name="csrf-token"]')
-        //         .getAttribute("content");
-        //     // Регистрация аккаунта
-        //     await fetch(route("logout"), {
-        //         method: "POST",
-        //         headers: {
-        //             "Content-Type": "application/json",
-        //             "X-CSRF-TOKEN": csrfToken,
-        //         },
-        //         body: JSON.stringify({
-        //             email: form.email,
-        //             password: form.password,
-        //             remember: false,
-        //         }),
-        //     });
-        // };
-        //
         const instance = axios.create({
             baseURL: "https://pool.api.btc.com/v1",
             headers: { "Content-Type": "application/json; charset=utf-8" },
@@ -594,10 +546,6 @@ export default defineComponent({
                     data.user_id = id;
                     // eslint-disable-next-line no-undef
                     await axios.put(route("sub_create"), data);
-                    // eslint-disable-next-line no-undef
-                    // await axios.put(route("accrual_create"), data);
-                    // eslint-disable-next-line no-undef
-                    // await axios.put(route("hash_create"), data);
                     router.visit("/profile/accounts");
                 })
                 .catch((err) => {

@@ -223,18 +223,18 @@ export default {
         getWorker() {
             this.table.rows.length = 0;
             if (this.allHash[this.getActive]) {
-                console.log(this.allHash);
-                let workersRowModel = {
-                    hashClass:
-                        this.allHash[this.getActive].status.toLowerCase(),
-                    hash: this.allHash[this.getActive].name,
-                    hashRate: this.allHash[this.getActive].shares1m,
-                    // hashAvarage: this.allHash[this.getActive].shares1h,
-                    hashAvarage24: this.allHash[this.getActive].shares1d,
-                    rejectRate: this.allHash[this.getActive].persent,
-                    graphId: this.allHash[this.getActive].workerId,
-                };
-                this.table.rows.push(workersRowModel);
+                Object.values(this.allHash[this.getActive]).forEach((el) => {
+                    let workersRowModel = {
+                        hashClass: el.status.toLowerCase(),
+                        hash: el.name,
+                        hashRate: el.shares1m,
+                        // hashAvarage: el.shares1h,
+                        hashAvarage24: el.shares1d,
+                        rejectRate: el.persent,
+                        graphId: el.workerId,
+                    };
+                    this.table.rows.push(workersRowModel);
+                });
             }
             if (this.allAccounts[this.getActive]) {
                 this.table.mainRow.hashRate =

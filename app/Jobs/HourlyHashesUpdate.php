@@ -60,14 +60,14 @@ class HourlyHashesUpdate implements ShouldQueue
                                     $carry["shares_1m"] = floatval($value);
                                 }
                             }
-                        return $carry["shares_1m"];}, []);
+                        return $carry;}, ['shares_1m' => 0])['shares_1m'];
                         $unit = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_unit") {
                                     $carry["shares_unit"] = $value;
                                 }
                             }
-                            return $carry["shares_unit"];}, []);
+                            return $carry;}, ['shares_unit' => ''])['shares_unit'];
                     } else {
                         $share = 0;
                         $unit = "T";

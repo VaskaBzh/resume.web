@@ -127,6 +127,10 @@ export default {
                     if (data.el.name == state.groupName) {
                         data.groups.push(data.el);
                     }
+                    commit("setHash", {
+                        hash: {},
+                        key: accountModel.id,
+                    });
                     this.dispatch("getHash", {
                         groupId: data.el.gid,
                         accountModel: accountModel,
@@ -219,7 +223,8 @@ export default {
                             });
                             await commit("updateHash", {
                                 hash: hashModel,
-                                key: data.accountModel.id,
+                                key: worker.worker_id,
+                                i: data.accountModel.id,
                             });
                             data.accountModel.shares1h +=
                                 data.accountModel.shares1h +=
@@ -337,8 +342,11 @@ export default {
             Vue.set(state.accounts, data.account.id, data.account);
             state.active = data.account.id;
         },
-        updateHash(state, data) {
+        setHash(state, data) {
             Vue.set(state.hash, data.key, data.hash);
+        },
+        updateHash(state, data) {
+            Vue.set(state.hash[data.i], data.key, data.hash);
         },
         setAllEarn(state, data) {
             Vue.set(state.fullEarn, data.key, Number(data.sum).toFixed(8));

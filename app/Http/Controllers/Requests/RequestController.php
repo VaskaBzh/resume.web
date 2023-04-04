@@ -5,9 +5,20 @@ namespace App\Http\Controllers\Requests;
 use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 
 class RequestController extends Controller
 {
+    public function getDifficultyData()
+    {
+        $response = Http::get('https://api.blockchain.info/charts/difficulty?format=json&timespan=all');
+
+        if ($response->successful()) {
+            return $response->json();
+        }
+
+        return response()->json(['error' => 'Failed to fetch data'], 500);
+    }
     public function accountsAll()
     {
         // Create a stream

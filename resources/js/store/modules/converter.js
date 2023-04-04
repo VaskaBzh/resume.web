@@ -20,13 +20,12 @@ export default {
                 });
         },
         async getConverter({ commit, state }) {
-            // axios
-            //     .get(
-            //         'https://api.coingecko.com/api/v3/coins/bitcoin/ohlc?vs_currency=usd&days=30'
-            //     )
-            //     .then((res) => {
-            //         console.log(res);
-            //     });
+            axios
+                .get("/difficulty")
+                .then((res) => {
+                    commit(`updateHistory`, res.data.values);
+                })
+                .catch((err) => console.log(err));
             axios
                 .get("https://pool.api.btc.com/v1/pool/status/")
                 .then(async (response) => {
@@ -67,30 +66,26 @@ export default {
                         }
                     });
                 });
-            // axios
-            //     .get(
-            //         `https://explorer.api.btc.com/stats/insight/difficulty?app_a=S2Q4QUljMHEwNzNoMAI5XdXXMAgwqxia4P8VScnvddXEG5EguXvUEXk4ccTC&app_b=Kd8AIc0q073h0&nonce=DJI22151IXIC7512&timestamp=${(
-            //             new Date().getTime() / 1000
-            //         ).toFixed(
-            //             0
-            //         )}&mode=year&coins=btc&sign=sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N`
-            //     )
-            //     .then((res) => {
-            //         console.log(res);
-            //     });
         },
     },
     mutations: {
         updateInfo(state, data) {
             Vue.set(state.convertInfo, data.key, data.item);
         },
+        updateHistory(state, data) {
+            state.history = data;
+        },
     },
     state: {
         convertInfo: {},
+        history: [],
     },
     getters: {
         btcInfo(state) {
             return state.convertInfo;
+        },
+        btcHistory(state) {
+            return state.history;
         },
     },
 };

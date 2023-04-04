@@ -41,8 +41,10 @@ class Worker extends Model
         });
 
         static::created(function (Worker $worker) {
-            $controller = new HashController();
-            $controller->firstTickers($worker);
+            if (!Hash::all()->where('group_id', $worker->group_id)) {
+                $controller = new HashController();
+                $controller->firstTickers($worker);
+            }
         });
     }
 }

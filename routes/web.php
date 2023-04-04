@@ -62,8 +62,7 @@ Route::controller(RequestController::class)
         Route::get('/accountsAll', 'accountsAll')->name('accountsAll');
         Route::put('/worker', 'worker')->name('worker');
         Route::post('/worker_update', 'worker_update')->name('worker_update');
-        Route::get('/earn_list', 'earn_list')->name('earn_list');
-        Route::put('/history', 'history')->name('history');
+        Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
 
 Route::middleware('auth')->group(function () {

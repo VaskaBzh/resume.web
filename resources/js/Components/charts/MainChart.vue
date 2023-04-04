@@ -24,8 +24,8 @@
                                     {{ aboutItem.title }}
                                 </div>
                                 <div class="graph-ia__item_text">
-                                    {{ aboutItem.text
-                                    }}<span>{{ aboutItem.span }}</span>
+                                    <span>{{ aboutItem.text }}</span>
+                                    <span>{{ aboutItem.span }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -252,9 +252,11 @@ export default {
             }
 
             & span {
-                font-family: "AmpleSoftPro";
-                color: #e9c058;
-                white-space: nowrap;
+                &:last-child {
+                    font-family: "AmpleSoftPro";
+                    color: #e9c058;
+                    white-space: nowrap;
+                }
             }
         }
     }

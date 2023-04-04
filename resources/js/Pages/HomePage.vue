@@ -97,7 +97,9 @@
                                 <li class="home-im__content_item">
                                     <p class="item_span">Мощность сети</p>
                                     <div class="item_info bgb">
-                                        <span v-if="this.btcInfo.btc"
+                                        <span
+                                            v-value-scroll
+                                            v-if="this.btcInfo.btc"
                                             >{{
                                                 this.btcInfo.btc.network.toFixed(
                                                     2
@@ -117,10 +119,12 @@
                                     </p>
                                     <div class="item_info bgb">
                                         <span
-                                            v-if="this.btcInfo.btc"
                                             v-value-scroll
+                                            v-if="this.btcInfo.btc"
                                             >{{
-                                                this.btcInfo.btc.nextDiff
+                                                this.btcInfo.btc.nextDiff.toLocaleString(
+                                                    "en-US"
+                                                )
                                             }}</span
                                         >
                                         <span v-else>...</span>
@@ -263,7 +267,7 @@
                         >
                             <div class="home-inri__image asic"></div>
                             <div class="home-inri__content">
-                                <h4 class="home-inri__title">FPPS</h4>
+                                <h4 class="home-inri__title">FPPS+</h4>
                                 <div class="home-inri__text">
                                     Метод вознаграждения за майнинг с наивысшей
                                     доходностью
