@@ -1,14 +1,20 @@
 <template>
     <div class="slider">
         <wrap-table
+            ref="list"
             :table="this.table"
             :first="firstRow"
+            :wait="this.wait"
             :rowsVal="rows"
         ></wrap-table>
-        <div class="slider__nav">
+        <div class="slider__nav" v-if="this.table.rows">
+            <span class="slider__nav_info" v-if="this.pages === 0">
+                0 из
+                {{ this.table.rows.length }}
+            </span>
             <span
                 class="slider__nav_info"
-                v-if="this.rows > this.table.rows.length"
+                v-else-if="this.rows > this.table.rows.length"
             >
                 {{ this.startRow }}-{{ this.table.rows.length }} из
                 {{ this.table.rows.length }}
@@ -35,7 +41,10 @@
                         />
                     </svg>
                 </button>
-                <div class="slider__slides" v-if="this.pages <= 8">
+                <div class="slider__slides" v-if="this.pages === 0">
+                    <span>...</span>
+                </div>
+                <div class="slider__slides" v-else-if="this.pages <= 8">
                     <a
                         ref="page"
                         v-for="(page, index) in this.pages"
@@ -98,15 +107,22 @@ export default {
     components: { WrapTable },
     props: {
         table: Object,
+        wait: Object,
     },
     data() {
         return {
+            viewportWidth: 0,
             firstRow: 0,
             rows: 10,
             slides: 1,
             slide: 1,
             firstPages: [1, 2, 3, 4, 5],
+            key: 0,
         };
+    },
+    created() {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
     },
     computed: {
         startRow() {
@@ -149,6 +165,9 @@ export default {
         },
     },
     methods: {
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
+        },
         slider(event, skip) {
             if (
                 event &&
@@ -214,22 +233,127 @@ export default {
             }
         },
         slideNumber() {
-            setTimeout(() => {
-                for (let i = 0; i < this.$refs.page.length; i++) {
-                    if (
-                        this.$refs.page[i].innerText ===
-                        String(this.rows).slice(0, -1)
-                    ) {
-                        this.$refs.page[i].classList.add("active");
-                    } else {
-                        this.$refs.page[i].classList.remove("active");
+            if (this.$refs.page) {
+                setTimeout(() => {
+                    for (let i = 0; i < this.$refs.page.length; i++) {
+                        if (
+                            this.$refs.page[i].innerText ===
+                            String(this.rows).slice(0, -1)
+                        ) {
+                            this.$refs.page[i].classList.add("active");
+                        } else {
+                            this.$refs.page[i].classList.remove("active");
+                        }
                     }
-                }
-            }, 10);
+                }, 10);
+            }
         },
+        // autoHeight() {
+        //     if (
+        //         this.viewportWidth > 798.98 &&
+        //         document.querySelector(".wrap").querySelector("thead")
+        //     ) {
+        //         if (this.rows <= this.table.rows.length) {
+        //             document.querySelector(".wrap").style.height =
+        //                 48 +
+        //                 24 +
+        //                 document.querySelector(".wrap").querySelector("thead")
+        //                     .offsetHeight +
+        //                 8 * (this.rows - this.firstRow) -
+        //                 1 +
+        //                 document.querySelector(".wrap").querySelector("tr")
+        //                     .offsetHeight *
+        //                     2 *
+        //                     (this.rows - this.firstRow) +
+        //                 "px";
+        //         } else {
+        //             let lg = this.table.rows.length;
+        //             document.querySelector(".wrap").style.height =
+        //                 28 +
+        //                 18 +
+        //                 document.querySelector(".wrap").querySelector("thead")
+        //                     .offsetHeight +
+        //                 8 * (this.rows - this.firstRow) -
+        //                 1 +
+        //                 document.querySelector(".wrap").querySelector("tr")
+        //                     .offsetHeight *
+        //                     2 *
+        //                     (lg - this.firstRow) +
+        //                 "px";
+        //         }
+        //     } else {
+        //         document.querySelector(".wrap").removeAttribute("style");
+        //     }
+        //     //     if (document.querySelector(".wrap").querySelector("thead")) {
+        //     //     if (this.rows <= this.table.rows.length) {
+        //     //         document.querySelector(".wrap").style.height =
+        //     //             28 +
+        //     //             document.querySelector(".wrap").querySelector("thead")
+        //     //                 .offsetHeight +
+        //     //             10 * (this.rows - this.firstRow) -
+        //     //             1 +
+        //     //             document.querySelector(".wrap").querySelector("tr")
+        //     //                 .offsetHeight *
+        //     //                 2 *
+        //     //                 (this.rows - this.firstRow) +
+        //     //             "px";
+        //     //     } else {
+        //     //         let lg = this.table.rows.length;
+        //     //         document.querySelector(".wrap").style.height =
+        //     //             28 +
+        //     //             document.querySelector(".wrap").querySelector("thead")
+        //     //                 .offsetHeight +
+        //     //             10 * (this.rows - this.firstRow) -
+        //     //             1 +
+        //     //             document.querySelector(".wrap").querySelector("tr")
+        //     //                 .offsetHeight *
+        //     //                 2 *
+        //     //                 (lg - this.firstRow - 1) +
+        //     //             "px";
+        //     //     }
+        //     // }
+        // },
     },
     mounted() {
-        this.slideNumber();
+        // if (document.querySelector("tr")) {
+        //     setTimeout(this.slideNumber, 100);
+        //     document.querySelector(".wrap").style.height =
+        //         48 +
+        //         24 +
+        //         document.querySelector(".wrap").querySelector("thead")
+        //             .offsetHeight +
+        //         8 * (this.rows - this.firstRow) -
+        //         1 +
+        //         document.querySelector(".wrap").querySelector("tr")
+        //             .offsetHeight *
+        //             0.001 *
+        //             (this.rows - this.firstRow) -
+        //         118 +
+        //         "px";
+        //     this.autoHeight();
+        // }
+    },
+    updated() {
+        // if (
+        //     document.querySelector("tr") &&
+        //     document.querySelector(".wrap").querySelector("thead")
+        // ) {
+        //     setTimeout(this.slideNumber, 100);
+        //     document.querySelector(".wrap").style.height =
+        //         48 +
+        //         48 +
+        //         document.querySelector(".wrap").querySelector("thead")
+        //             .offsetHeight +
+        //         8 * (this.rows - this.firstRow) -
+        //         1 +
+        //         document.querySelector(".wrap").querySelector("tr")
+        //             .offsetHeight *
+        //             0.001 *
+        //             (this.rows - this.firstRow) -
+        //         118 +
+        //         "px";
+        //     this.autoHeight();
+        // }
     },
 };
 </script>
@@ -347,7 +471,7 @@ export default {
         @media (max-width: 479.98px) {
             max-width: 100%;
             justify-content: space-between;
-            gap: 16px;
+            gap: 12px;
         }
         &-full {
             @media (max-width: 479.98px) {
@@ -361,6 +485,8 @@ export default {
             color: #331a38;
             transition: all 0.3s ease;
             cursor: pointer;
+            text-decoration: underline;
+            text-decoration-color: transparent;
             @media (max-width: 479.98px) {
                 font-size: 14px;
                 line-height: 17px;
@@ -368,7 +494,7 @@ export default {
         }
         .active {
             color: #4182ec;
-            text-decoration: underline;
+            text-decoration-color: #4182ec;
         }
     }
 }

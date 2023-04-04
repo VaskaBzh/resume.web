@@ -2,6 +2,7 @@ import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 
 import Layout from "./Shared/LayoutView.vue";
+import store from "./store/index.js";
 import scrollAnimation from "@/Components/animations/scrollAnimation.vue";
 import scrollValueAnimation from "@/Components/animations/scrollValueAnimation.vue";
 
@@ -17,6 +18,7 @@ createInertiaApp({
     setup({ el, App, props, plugin }) {
         createApp({ render: () => h(App, props) })
             .use(plugin)
+            .use(store)
             .mixin({ methods: { route: window.route } })
             .directive("scroll", scrollAnimation)
             .directive("value-scroll", scrollValueAnimation)

@@ -1,4 +1,5 @@
 <template>
+    <div class="hidden">{{ this.boolFalse }}{{ this.allHistoryForDays }}</div>
     <div class="wrap wrap-no-padding">
         <div class="wrap_head">
             <main-title tag="h3" v-if="this.title"
@@ -15,7 +16,7 @@
                     Активные: {{ this.active }}
                 </div>
                 <div class="legend_elem legend_elem-unstable">
-                    Ы Нестабильные: {{ this.unstable }}
+                    Нестабильные: {{ this.unstable }}
                 </div>
                 <div class="legend_elem legend_elem-unActive">
                     Неактивные: {{ this.unActive }}
@@ -45,20 +46,35 @@
                 </div>
             </div>
         </div>
+        <div class="no-info" v-if="this.bool">
+            <div class="propeller"></div>
+        </div>
+        <div class="no-info" v-else-if="this.boolFalse">
+            <img src="../../../assets/img/img_no-info.png" alt="no_info" />
+            <span>Нет данных</span>
+        </div>
         <div
             class="wrap-overflow wrap-overflow-scrollY"
-            v-if="
+            v-else-if="
                 (this.title === 'Воркеры' && this.visualType === 'block') ||
                 (this.type === 'Воркеры' && this.visualType === 'block')
             "
         >
-            <workers-table :table="this.table" :visualType="this.visualType" />
+            <workers-table
+                :table="this.table"
+                :visualType="this.visualType"
+                @graph_render="this.graphRender"
+            />
         </div>
         <div
             class="wrap-overflow"
             v-else-if="this.title === 'Воркеры' || this.type === 'Воркеры'"
         >
-            <workers-table :table="this.table" :visualType="this.visualType" />
+            <workers-table
+                :table="this.table"
+                :visualType="this.visualType"
+                @graph_render="this.graphRender"
+            />
         </div>
         <div
             class="wrap-overflow wrap-overflow-scrollY"
@@ -79,72 +95,130 @@
                 :rows-val="this.rowsVal"
             />
         </div>
-        <div class="wrap-overflow" v-else-if="this.visualType === 'block'">
+        <div
+            class="wrap-overflow wrap-overflow-scrollY"
+            v-else-if="this.visualType === 'block'"
+        >
             <payment-table :table="this.table" :visualType="this.visualType" />
         </div>
-        <div class="wrap-overflow wrap-overflow-scrollY" v-else>
+        <div class="wrap-overflow" v-else>
             <payment-table :table="this.table" :visualType="this.visualType" />
         </div>
-        <Link class="main__link" v-if="this.link" :to="`/${this.link}`">
+        <Link
+            class="main__link"
+            v-if="!this.table.rows"
+            :href="route(`${this.link}`)"
+        >
+        </Link>
+        <Link
+            class="main__link"
+            v-else-if="this.link"
+            :href="route(`${this.link}`)"
+        >
             Расширенная страница {{ this.linkText }}
         </Link>
     </div>
 </template>
 <script>
+import { Link, router } from "@inertiajs/vue3";
 import PaymentTable from "@/Components/tables/PaymentTable.vue";
+import MainTitle from "@/components/UI/MainTitle.vue";
 import WorkersTable from "@/Components/tables/WorkersTable.vue";
+import { mapGetters } from "vuex";
 
 export default {
-    components: { WorkersTable, PaymentTable },
+    emits: ["graph_render"],
+    components: { WorkersTable, MainTitle, PaymentTable, Link },
     props: {
         table: Object,
         legend: Boolean,
+        legendVal: Array,
         title: String,
         type: String,
         link: String,
         linkText: String,
         first: Number,
         rowsVal: Number,
+        wait: Object,
     },
     data() {
         return {
             visualType: "table",
             viewportWidth: 0,
+            index: localStorage.active,
+            accounts: [],
         };
     },
     computed: {
+        ...mapGetters(["allHistoryForDays"]),
+        bool() {
+            if (!this.boolFalse) {
+                return this.table.rows.length === 0;
+            }
+            return false;
+        },
+        boolFalse() {
+            if (
+                this.table.rows.length === 0 &&
+                this.wait &&
+                Object.keys(this.wait).length
+            ) {
+                return Object.keys(this.wait).length > 0;
+            }
+            return false;
+        },
         active() {
             let val = 0;
-            for (let i = 0; i < this.table.rows.length; i++) {
-                if (this.table.rows[i].hashClass === "active") {
-                    val = this.table.rows[i].hash;
-                }
+            if (this.legendVal.length > 0) {
+                this.accounts.forEach((acc) => {
+                    if (acc.indexWorker == this.index) {
+                        val = acc.workersActive;
+                    }
+                });
             }
             return val;
         },
         unActive() {
             let val = 0;
-            for (let i = 0; i < this.table.rows.length; i++) {
-                if (this.table.rows[i].hashClass === "unactive") {
-                    val = this.table.rows[i].hash;
-                }
+            if (this.legendVal.length > 0) {
+                this.accounts.forEach((acc) => {
+                    if (acc.indexWorker == this.index) {
+                        val = acc.workersInActive;
+                    }
+                });
             }
             return val;
         },
         unstable() {
             let val = 0;
-            for (let i = 0; i < this.table.rows.length; i++) {
-                if (this.table.rows[i].hashClass === "unstable") {
-                    val = this.table.rows[i].hash;
-                }
+            if (this.legendVal.length > 0) {
+                this.accounts.forEach((acc) => {
+                    if (acc.indexWorker == this.index) {
+                        val = acc.workersDead;
+                    }
+                });
             }
             return val;
         },
         all() {
-            return this.active + this.unActive + this.unstable;
+            let val = 0;
+            if (this.legendVal.length > 0) {
+                this.accounts.forEach((acc) => {
+                    if (acc.indexWorker == this.index) {
+                        val = acc.workersAll;
+                    }
+                });
+            }
+            return val;
         },
     },
     methods: {
+        graphRender(key) {
+            this.$emit("graph_render", key);
+        },
+        router() {
+            return router;
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
@@ -172,4 +246,11 @@ export default {
     },
 };
 </script>
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.wrap {
+    transition: all 0.3s ease 0s;
+    .no-info {
+        margin-top: 12px;
+    }
+}
+</style>

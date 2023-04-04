@@ -20,8 +20,8 @@ export default {
     props: {
         titleFirst: String,
         titleSecond: String,
-        BTCValueFirst: String,
-        BTCValueSecond: String,
+        BTCValueFirst: Number,
+        BTCValueSecond: Number,
         iconFirst: Number,
         iconSecond: Number,
     },

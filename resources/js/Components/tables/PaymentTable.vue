@@ -66,7 +66,7 @@
             />
         </div>
     </div>
-    <table class="table" v-else>
+    <table class="table" v-else-if="this.table.rows">
         <thead class="history__thead" v-if="this.table.rows[0].img">
             <tr v-if="this.viewportWidth > 991.98">
                 <th v-for="(title, i) in this.table.titles" :key="i">
@@ -121,7 +121,13 @@
                 </th>
             </tr>
         </thead>
-        <tbody v-if="this.rowsVal !== 0">
+        <tbody v-if="!this.table.rows">
+            <div class="no-info">
+                <img src="../../../assets/img/img_no-info.png" alt="no_info" />
+                <span>Нет данных</span>
+            </div>
+        </tbody>
+        <tbody v-else-if="this.rowsVal !== 0">
             <table-payment-row
                 v-for="(row, i) in this.showRows"
                 :columns="row"

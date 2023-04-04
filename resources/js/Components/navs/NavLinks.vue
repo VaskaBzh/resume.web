@@ -15,20 +15,20 @@
             >
                 Сложность
             </Link>
-            <Link
-                :href="route('help')"
-                class="nav__link"
-                :class="{ active: $page.url === '/help' }"
-            >
-                FAQ
-            </Link>
-            <Link
-                :href="route('about')"
-                class="nav__link"
-                :class="{ active: $page.url === '/about' }"
-            >
-                О нас
-            </Link>
+            <!--            <Link-->
+            <!--                :href="route('help')"-->
+            <!--                class="nav__link"-->
+            <!--                :class="{ active: $page.url === '/help' }"-->
+            <!--            >-->
+            <!--                FAQ-->
+            <!--            </Link>-->
+            <!--            <Link-->
+            <!--                :href="route('about')"-->
+            <!--                class="nav__link"-->
+            <!--                :class="{ active: $page.url === '/about' }"-->
+            <!--            >-->
+            <!--                О нас-->
+            <!--            </Link>-->
         </div>
         <div v-else class="nav__links">
             <Link
@@ -45,20 +45,20 @@
             >
                 Кошельки
             </Link>
-            <Link
-                :href="route('ref_page')"
-                class="nav__link non-before"
-                :class="{ active: $page.url === '/ref-page' }"
-            >
-                Реферальная программа
-            </Link>
-            <Link
-                :href="route('help')"
-                class="nav__link non-before"
-                :class="{ active: $page.url === '/help' }"
-            >
-                FAQ
-            </Link>
+            <!--            <Link-->
+            <!--                :href="route('ref_page')"-->
+            <!--                class="nav__link non-before"-->
+            <!--                :class="{ active: $page.url === '/ref-page' }"-->
+            <!--            >-->
+            <!--                Реферальная программа-->
+            <!--            </Link>-->
+            <!--            <Link-->
+            <!--                :href="route('help')"-->
+            <!--                class="nav__link non-before"-->
+            <!--                :class="{ active: $page.url === '/help' }"-->
+            <!--            >-->
+            <!--                FAQ-->
+            <!--            </Link>-->
         </div>
     </div>
 </template>
@@ -82,8 +82,8 @@ export default {
 <style lang="scss" scoped>
 .nav__links {
     display: flex;
-    justify-content: space-between;
     width: 100%;
+    gap: 100px;
     @media (max-width: 767.98px) {
         padding: 150px 64px 38px;
         flex-direction: column;

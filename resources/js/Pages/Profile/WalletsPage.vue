@@ -2,16 +2,18 @@
     <div class="wallets">
         <div class="wallets__container">
             <main-title tag="h2" titleName="Мои кошельки">
-                <blue-button class="wallets__button wallets__button-history">
-                    <router-link to="/history"> История </router-link>
-                </blue-button>
+                <!--                <blue-button class="wallets__button wallets__button-history">-->
+                <!--                    <Link :href="route('history')"> История </Link>-->
+                <!--                </blue-button>-->
             </main-title>
             <div class="wallets__wrap">
                 <div class="wallets__row wallets__row-balance">
                     <div class="wallets__column">
                         <span class="wallets__subtitle">Суммарный баланс:</span>
                         <span class="wallets__value">
-                            <span>{{ Number(this.fullCash).toFixed(8) }}</span>
+                            <span>{{
+                                Number(this.walletsCash).toFixed(8)
+                            }}</span>
                             BTC</span
                         >
                     </div>
@@ -162,7 +164,15 @@
                         Скрыть с нулевым балансом
                     </main-checkbox>
                 </h3>
-                <div ref="list" class="wallets__list" v-if="!this.isChecked">
+                <div
+                    class="no-info"
+                    v-scroll="'opacity'"
+                    ref="noInfo"
+                    v-if="!this.bool"
+                >
+                    <div class="propeller"></div>
+                </div>
+                <div ref="list" class="wallets__list" v-else>
                     <div
                         class="wallets__block wallets__block-wallet"
                         v-for="(wallet, i) in this.wallets"
@@ -170,7 +180,12 @@
                         v-scroll="'top'"
                     >
                         <div class="wallets__block_name">
-                            <!--                            <img :src="require(`@/assets/img/${wallet.img}`)" />-->
+                            <!--                            <img-->
+                            <!--                                :src="-->
+                            <!--                                    'http://127.0.0.1:5173' +-->
+                            <!--                                    `/resources/assets/img/${wallet.img}`-->
+                            <!--                                "-->
+                            <!--                            />-->
                             <span>{{ wallet.name }}</span>
                             <div class="wallets__block_doths">
                                 <div></div>
@@ -183,34 +198,15 @@
                             {{ wallet.shortName }}
                         </div>
                         <div class="wallets__block_convert">
-                            ≈ {{ (wallet.value * dollar).toFixed(2) }} $ ≈
-                            {{ ((wallet.value * dollar) / ruble).toFixed(2) }} ₽
-                        </div>
-                    </div>
-                </div>
-                <div ref="lowList" class="wallets__list" v-else>
-                    <div
-                        class="wallets__block wallets__block-wallet"
-                        v-for="(wallet, i) in this.unEmptyWallets"
-                        :key="i"
-                        v-scroll="'top'"
-                    >
-                        <div class="wallets__block_name">
-                            <img :src="require(`@/assets/img/${wallet.img}`)" />
-                            <span>{{ wallet.name }}</span>
-                            <div class="wallets__block_doths">
-                                <div></div>
-                                <div></div>
-                                <div></div>
-                            </div>
-                        </div>
-                        <div class="wallets__block_value">
-                            <span>{{ wallet.value }}</span>
-                            {{ wallet.shortName }}
-                        </div>
-                        <div class="wallets__block_convert">
-                            ≈ {{ (wallet.value * dollar).toFixed(2) }} $ ≈
-                            {{ ((wallet.value * dollar) / ruble).toFixed(2) }} ₽
+                            ≈
+                            <span>{{
+                                (wallet.value * dollar).toFixed(2)
+                            }}</span>
+                            $ ≈
+                            <span>{{
+                                ((wallet.value * dollar) / ruble).toFixed(2)
+                            }}</span>
+                            ₽
                         </div>
                     </div>
                 </div>
@@ -223,206 +219,74 @@ import axios from "axios";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
+import { mapGetters } from "vuex";
+import Vue from "lodash";
 
 export default {
     components: { MainCheckbox, BlueButton, MainTitle },
-    data() {
-        return {
-            walletsCash: 0,
-            miningCash: 0,
-            waitingCash: 0,
-            isChecked: false,
-            viewportWidth: 0,
-            ruble: 0,
-            dollar: 0,
-            wallets: [
-                {
-                    img: "dash_img.png",
-                    name: "Dash",
-                    shortName: "DASH",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "doge_img.png",
-                    name: "Dogecoin",
-                    shortName: "DOGE",
-                    value: 1,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "etc_img.png",
-                    name: "Ethereum Classic",
-                    shortName: "ETC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "eth_img.png",
-                    name: "Ethereum",
-                    shortName: "BCH",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin-cash_img.png",
-                    name: "Bitcoin Cash",
-                    shortName: "BCH",
-                    value: 23.7,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "bitcoin_img.png",
-                    name: "Bitcoin",
-                    shortName: "BTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "litecoin_img.png",
-                    name: "Litecoin",
-                    shortName: "LTC",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-                {
-                    img: "usdt_img.png",
-                    name: "USDT",
-                    shortName: "USDT",
-                    value: 0,
-                    dollarValue: 0,
-                    rubleValue: 0,
-                },
-            ],
-        };
-    },
     computed: {
-        fullCash() {
-            return this.walletsCash + this.miningCash + this.waitingCash;
+        ...mapGetters(["FullEarn", "allAccounts"]),
+        waitingCash() {
+            return 100;
         },
-        unEmptyWallets() {
+        // eslint-disable-next-line vue/return-in-computed-property
+        bool() {
+            return this.wallets.length > 0;
+        },
+        walletsCash() {
+            let sum = 0;
+            if (Object.values(this.FullEarn).length > 0) {
+                Object.values(this.FullEarn).forEach((el) => {
+                    sum += Number(el);
+                });
+            }
+            return sum;
+        },
+        wallets() {
             let arr = [];
-            for (let i = 0; i < this.wallets.length; i++) {
-                if (this.wallets[i].value !== 0) {
-                    arr.push(this.wallets[i]);
+            if (Object.values(this.allAccounts)) {
+                if (this.isChecked) {
+                    Object.values(this.allAccounts).forEach((acc, i) => {
+                        let val = 0;
+                        if (this.FullEarn[i]) {
+                            val = this.FullEarn[i];
+                        }
+                        if (val > 0) {
+                            let walletModel = {
+                                img: "bitcoin_img.png",
+                                name: acc.name,
+                                shortName: "BTC",
+                                value: val.toFixed(8),
+                                dollarValue: 0,
+                                rubleValue: 0,
+                            };
+                            Vue.set(arr, i, walletModel);
+                        }
+                    });
+                } else {
+                    Object.values(this.allAccounts).forEach((acc, i) => {
+                        let val = 0;
+                        if (this.FullEarn[i]) {
+                            val = this.FullEarn[i];
+                        }
+                        let walletModel = {
+                            img: "bitcoin_img.png",
+                            name: acc.name,
+                            shortName: "BTC",
+                            value: val.toFixed(8),
+                            dollarValue: 0,
+                            rubleValue: 0,
+                        };
+                        Vue.set(arr, i, walletModel);
+                    });
                 }
             }
             return arr;
         },
     },
-    methods: {
-        checkboxer(is_checked) {
-            this.isChecked = is_checked;
-            if (this.viewportWidth > 1270) {
-                if (is_checked) {
-                    setTimeout(() => {
-                        this.$refs.wallets.style.height =
-                            48 + 46 + this.$refs.lowList.offsetHeight + "px";
-                    }, 1);
-                } else {
-                    setTimeout(() => {
-                        this.$refs.wallets.style.height =
-                            48 + 46 + this.$refs.list.offsetHeight + "px";
-                    }, 1);
-                }
-            } else {
-                if (is_checked) {
-                    setTimeout(() => {
-                        this.$refs.wallets.style.height =
-                            40 + 114 + this.$refs.lowList.offsetHeight + "px";
-                    }, 1);
-                } else {
-                    setTimeout(() => {
-                        this.$refs.wallets.style.height =
-                            40 + 114 + this.$refs.list.offsetHeight + "px";
-                    }, 1);
-                }
-            }
-        },
-        handleResize() {
-            this.viewportWidth = window.innerWidth;
-        },
-    },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
-    },
-    mounted() {
-        document.title = "Кошельки";
-        if (this.viewportWidth > 1270) {
-            this.$refs.wallets.style.height =
-                48 + 46 + this.$refs.list.offsetHeight / 2 + "px";
-            this.$refs.wallets.style.height =
-                48 + 46 + this.$refs.list.offsetHeight + "px";
-        } else {
-            this.$refs.wallets.style.height =
-                40 + 114 + this.$refs.list.offsetHeight / 2 + "px";
-            this.$refs.wallets.style.height =
-                40 + 114 + this.$refs.list.offsetHeight + "px";
-        }
         axios
             .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
             .then((response) => (this.dollar = response.data[0].price));
@@ -432,6 +296,57 @@ export default {
                 .then((response) => (this.ruble = response.data.rates.USD));
         }, 100);
     },
+    data() {
+        return {
+            miningCash: 0,
+            isChecked: false,
+            viewportWidth: 0,
+            ruble: 0,
+            dollar: 0,
+        };
+    },
+    methods: {
+        checkboxer(is_checked) {
+            this.isChecked = is_checked;
+            setTimeout(() => {
+                if (this.$refs.list) {
+                    if (this.viewportWidth > 768) {
+                        setTimeout(() => {
+                            this.$refs.wallets.style.height =
+                                48 + 46 + this.$refs.list.offsetHeight + "px";
+                        }, 1);
+                    } else {
+                        setTimeout(() => {
+                            this.$refs.wallets.style.height =
+                                40 + 114 + this.$refs.list.offsetHeight + "px";
+                        }, 1);
+                    }
+                } else {
+                    if (this.viewportWidth > 768) {
+                        setTimeout(() => {
+                            this.$refs.wallets.style.height =
+                                48 + 46 + this.$refs.noInfo.offsetHeight + "px";
+                        }, 1);
+                    } else {
+                        setTimeout(() => {
+                            this.$refs.wallets.style.height =
+                                40 +
+                                114 +
+                                this.$refs.noInfo.offsetHeight +
+                                "px";
+                        }, 1);
+                    }
+                }
+            }, 100);
+        },
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
+        },
+    },
+    mounted() {
+        document.title = "Кошельки";
+    },
+    props: ["errors", "message", "user", "auth_user"],
 };
 </script>
 <style lang="scss" scoped>
@@ -466,6 +381,7 @@ export default {
             }
         }
     }
+
     // .wallets__filter
     &__filter {
         line-height: 23px;
@@ -480,6 +396,7 @@ export default {
             width: 100%;
         }
     }
+
     .title {
         margin: 49px 0 24px;
         display: flex;
@@ -487,12 +404,12 @@ export default {
         align-items: center;
         justify-content: space-between;
     }
+
     &__list {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
         transition: all 0.3s ease 0s;
-        height: fit-content;
         @media (max-width: 991.98px) {
             grid-template-columns: repeat(3, 1fr);
         }
@@ -508,12 +425,14 @@ export default {
             grid-template-columns: repeat(1, 1fr);
         }
     }
+
     // .wallets__block
     &__block {
         padding: 16px;
         background-color: #fff;
         border-radius: 13px;
         width: 100%;
+
         &-wallet {
             width: 100%;
             padding: 12px 0;
@@ -521,15 +440,18 @@ export default {
             @media (max-width: 767.98px) {
                 padding: 14px 0;
             }
+
             &.top {
                 &-before-enter {
                     opacity: 0;
                 }
+
                 &-enter {
                     opacity: 1;
                 }
             }
         }
+
         &_name {
             width: 100%;
             display: inline-flex;
@@ -539,6 +461,7 @@ export default {
             @media (max-width: 767.98px) {
                 padding: 0 10px 10px;
             }
+
             img {
                 margin-right: 16px;
                 width: 24px;
@@ -548,6 +471,7 @@ export default {
                     margin-right: 6px;
                 }
             }
+
             span {
                 font-weight: 500;
                 font-size: 18px;
@@ -559,6 +483,7 @@ export default {
                 }
             }
         }
+
         &_doths {
             margin-left: auto;
             display: flex;
@@ -571,11 +496,13 @@ export default {
                 width: 20px;
                 gap: 2.5px;
             }
+
             &:hover {
                 div {
                     background-color: #3f7bdd;
                 }
             }
+
             div {
                 width: 4px;
                 height: 4px;
@@ -584,6 +511,7 @@ export default {
                 transition: all 0.3s ease;
             }
         }
+
         &_value {
             padding: 16px 16px 0;
             margin-bottom: 8px;
@@ -603,11 +531,13 @@ export default {
                     font-weight: 500;
                 }
             }
+
             span {
                 font-weight: 700;
                 color: #000034;
             }
         }
+
         &_convert {
             padding: 0 16px;
             font-weight: 400;
@@ -618,12 +548,14 @@ export default {
                 color: #000034;
             }
         }
+
         .wallets__subtitle {
             font-weight: 400;
             font-size: 16px;
             line-height: 23px;
         }
     }
+
     // .wallets__button
     &__button {
         color: #68809d;
@@ -655,9 +587,11 @@ export default {
             line-height: 14px;
             padding: 0;
         }
+
         &:first-child {
             margin-left: 0;
         }
+
         svg {
             stroke: #68809d;
             transition: all 0.3s ease;
@@ -671,6 +605,7 @@ export default {
                 margin: 0;
             }
         }
+
         &::before {
             z-index: -1;
             content: "";
@@ -686,10 +621,12 @@ export default {
                 background: #fff;
             }
         }
+
         @media (any-hover: hover) {
             &:hover {
                 background-color: #4182ec;
                 color: #fff;
+
                 &:before {
                     background: linear-gradient(
                         84.14deg,
@@ -697,6 +634,7 @@ export default {
                         rgba(66, 130, 236, 0.27) 92.01%
                     );
                 }
+
                 svg {
                     stroke: #fff;
                 }
@@ -709,6 +647,7 @@ export default {
             background-color: #4182ec;
             min-width: 210px;
             padding: 0;
+
             &:before {
                 background: linear-gradient(
                     84.14deg,
@@ -716,6 +655,7 @@ export default {
                     rgba(66, 130, 236, 0.27) 92.01%
                 );
             }
+
             a {
                 width: 100%;
                 height: 100%;
@@ -723,6 +663,7 @@ export default {
                 align-items: center;
                 justify-content: center;
             }
+
             @media (min-width: 767.98px) {
                 font-size: 20px;
                 line-height: 28px;
@@ -737,12 +678,14 @@ export default {
             }
             @media (max-width: 479.98px) {
                 min-height: 28px;
-                min-width: 0;
+                height: auto;
                 font-size: 14px;
                 line-height: 20px;
+                min-width: 90px;
             }
         }
     }
+
     // .wallets__wrap
     &__wrap {
         margin-bottom: 40px;
@@ -761,12 +704,14 @@ export default {
             margin: 0 -20px 20px;
             width: calc(100% + 40px);
         }
+
         &:last-child {
             margin-bottom: 0;
             overflow-y: hidden;
             transition: all 0.3s ease;
         }
     }
+
     // .wallets__row
     &__row {
         width: 100%;
@@ -785,9 +730,11 @@ export default {
                 padding: 10px 0 10px;
                 border-top: 1px solid #d7d8d9;
                 border-radius: 0;
+
                 &:last-child {
                     padding: 10px 0 0;
                 }
+
                 &:first-child {
                     border-top: none;
                     padding: 0 0 10px;
@@ -825,6 +772,7 @@ export default {
             }
         }
     }
+
     // .wallets__column
     &__column {
         display: flex;
@@ -840,6 +788,7 @@ export default {
             align-items: flex-start;
         }
     }
+
     // .wallets__subtitle
     &__subtitle {
         font-weight: 500;
@@ -854,6 +803,7 @@ export default {
             font-weight: 400;
         }
     }
+
     // .wallets__value
     &__value {
         color: #000034;
@@ -868,10 +818,12 @@ export default {
         @media (max-width: 479.98px) {
             margin-left: 0;
         }
+
         span {
             font-weight: 700;
         }
     }
+
     // .wallets__buttons
     &__buttons {
         display: flex;

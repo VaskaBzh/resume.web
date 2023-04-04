@@ -1,0 +1,27 @@
+.propeller {
+    width: 118px;
+    height: 118px;
+    position: relative;
+
+    &::before {
+        content: "";
+        position: absolute;
+        width: 118px;
+        height: 118px;
+        background-image: url("/resources/assets/img/4k.gif");
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+    @media (max-width: 767.98px) {
+        width: 100px;
+        height: 100px;
+        &::before {
+            width: 100px;
+            height: 100px;
+        }
+    }
+}

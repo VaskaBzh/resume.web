@@ -12,9 +12,18 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 export default {
     components: { MainTitle, Head },
     layout: profile,
+    data() {
+        return {};
+    },
     mounted() {
         document.querySelector("html").classList.remove("popup-show", "lock");
     },
 };
 </script>
-<style lang="scss"></style>
+<style lang="scss" scoped>
+.title {
+    @media (min-width: 1271px) {
+        padding-left: 330px;
+    }
+}
+</style>

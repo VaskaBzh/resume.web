@@ -1,98 +1,148 @@
 .form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 16px;
-  position: relative;
-  &-popup {
-    gap: 24px;
-    @media (max-width: $mobileSmall) {
-      gap: 20px;
-    }
-    .form {
-      overflow: visible;
-      &_link {
-        @media (max-width: $mobileSmall) {
-          font-size: 16px;
-          line-height: 22px;
-        }
-      }
-      &_button {
-        font-size: 20px;
-        line-height: 28px;
-        width: 100%;
-        text-align: center;
-        min-height: 51px;
-        @media (max-width: $mobileSmall) {
-          min-height: 48px;
-          font-weight: 700;
-          font-size: 14px;
-          line-height: 20px;
-        }
-      }
-    }
-  }
-  h3 {
-    color: #000000 !important;
-    @media (max-width: $mobile) {
-      margin-bottom: 0 !important;
-      &:after {
-        content: none !important;
-      }
-    }
-  }
-  &_link {
-    color: #4182EC;
-    font-weight: 400;
-    @media (max-width: $mobile) {
-      font-size: 14px;
-      line-height: 20px;
-    }
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-  &_message {
-    padding: 16px 10px;
-    width: 412px;
-    height: 58px;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    background: #FFFFFF;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
-    border-radius: 21px;
-    position: absolute;
-    left: -45px;
-    top: -120px;
-    opacity: 0;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 26px;
-    color: rgba(0, 0, 0, 0.62);
-    @media (max-width: $mobileSmall) {
-      width: 330px;
-      font-size: 14px;
-      line-height: 17px;
-      left: -25px;
-      height: 48px;
-      top: -80px;
-    }
-    @media (max-width: $mobileExtraSmall) {
-      width: 310px;
-    }
-    svg {
-      fill: #FF0000;
-    }
-  }
-  &__buttons {
+    flex-direction: column;
     width: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 14px;
-    @media (max-width: $mobileSmall) {
-      gap: 10px;
+    gap: 16px;
+    position: relative;
+    [type="number"] {
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
     }
-   }
+    &-popup {
+        gap: 24px;
+        @media (max-width: $mobileSmall) {
+            gap: 20px;
+        }
+        .form {
+            overflow: visible;
+            &_link {
+                @media (max-width: $mobileSmall) {
+                    font-size: 16px;
+                    line-height: 22px;
+                }
+            }
+            &_button {
+                font-size: 20px;
+                line-height: 28px;
+                width: 100%;
+                text-align: center;
+                min-height: 51px;
+                @media (max-width: $mobileSmall) {
+                    min-height: 48px;
+                    font-weight: 700;
+                    font-size: 14px;
+                    line-height: 20px;
+                }
+            }
+        }
+    }
+    h3 {
+        color: #000000 !important;
+        @media (max-width: $mobile) {
+            margin-bottom: 0 !important;
+            &:after {
+                content: none !important;
+            }
+        }
+    }
+    &_link {
+        color: #4182ec;
+        font-weight: 400;
+        @media (max-width: $mobile) {
+            font-size: 14px;
+            line-height: 20px;
+        }
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+    &_wrapper-message {
+        position: absolute;
+        left: 0;
+        top: -80px;
+        width: 412px;
+        height: 58px;
+        .form_message {
+            position: relative;
+            left: 0;
+            top: 0;
+        }
+    }
+    &_message {
+        padding: 16px 10px;
+        width: 412px;
+        height: 58px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        background: #ffffff;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+        border-radius: 21px;
+        position: absolute;
+        left: 0px;
+        top: -120px;
+        opacity: 0;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 26px;
+        color: rgba(0, 0, 0, 0.62);
+        @media (max-width: $mobileSmall) {
+            width: 330px;
+            font-size: 14px;
+            line-height: 17px;
+            left: 0px;
+            height: 48px;
+            top: -80px;
+        }
+        @media (max-width: $mobileExtraSmall) {
+            width: 310px;
+        }
+        svg {
+            fill: #ff0000;
+        }
+    }
+    &_row {
+        position: relative;
+        svg {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            fill: #000034;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+        }
+        .slash {
+            position: absolute;
+            right: 15px;
+            top: 34%;
+            transform: translateY(-50%) rotate(-45deg);
+            transform-origin: top right;
+            height: 3px;
+            width: 0;
+            text-align: right;
+            background-color: #e9edf3;
+            border-top: 1px solid #000034;
+            transition: all 0.3s ease 0s;
+            cursor: pointer;
+        }
+    }
+    &__buttons {
+        width: 100%;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 14px;
+        @media (max-width: $mobileSmall) {
+            gap: 10px;
+        }
+        .all-link {
+            padding: 0 !important;
+        }
+    }
 }

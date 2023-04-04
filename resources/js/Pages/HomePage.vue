@@ -14,9 +14,21 @@
                     <div class="home__span" v-scroll="'left'">
                         Высокий доход. Надежность. Эффективность.
                     </div>
-                    <blue-button class="home__button" v-scroll="'left'">
-                        Начать майнинг
-                        <div class="home__button_propeller"></div>
+                    <blue-button
+                        class="home__button"
+                        v-if="this.auth_user"
+                        v-scroll="'left'"
+                    >
+                        <Link :href="route('accounts')" class="all-link"
+                            >Начать майнинг
+                            <div class="home__button_propeller"></div
+                        ></Link>
+                    </blue-button>
+                    <blue-button class="home__button" v-else v-scroll="'left'">
+                        <a href="#" data-popup="#auth" class="all-link"
+                            >Начать майнинг
+                            <div class="home__button_propeller"></div
+                        ></a>
                     </blue-button>
                 </div>
 
@@ -58,8 +70,21 @@
             <div class="home__info">
                 <div class="home__info_main home-im bagr-t">
                     <div class="home-im__main" v-scroll="'left'">
-                        <blue-button class="big" v-if="viewportWidth < 991.98">
-                            <a href="#" class="all-link">Начать майнинг</a>
+                        <blue-button
+                            class="big"
+                            v-if="viewportWidth < 991.98 && this.auth_user"
+                        >
+                            <Link :href="route('accounts')" class="all-link"
+                                >Начать майнинг</Link
+                            >
+                        </blue-button>
+                        <blue-button
+                            class="big"
+                            v-else-if="viewportWidth < 991.98"
+                        >
+                            <a href="#" data-popup="#auth" class="all-link"
+                                >Начать майнинг</a
+                            >
                         </blue-button>
                         <img
                             src="../../assets/img/graph.png"
@@ -70,14 +95,20 @@
                             <h2 class="home-im__title">Bitcoin</h2>
                             <ul class="home-im__content_list">
                                 <li class="home-im__content_item">
-                                    <p class="item_span">Сложность сети</p>
+                                    <p class="item_span">Мощность сети</p>
                                     <div class="item_info bgb">
-                                        <span v-value-scroll>{{
-                                            this.BTCDifficulty.toLocaleString(
-                                                "en-EN"
-                                            )
-                                        }}</span
-                                        ><span>+32.05 T</span>
+                                        <span v-if="this.btcInfo.btc"
+                                            >{{
+                                                this.btcInfo.btc.network.toFixed(
+                                                    2
+                                                )
+                                            }}
+                                            {{
+                                                this.btcInfo.btc.networkUnit
+                                            }}H/s</span
+                                        >
+                                        <span v-else> ...</span>
+                                        <span></span>
                                     </div>
                                 </li>
                                 <li class="home-im__content_item">
@@ -85,12 +116,33 @@
                                         Ожидаемая следующая сложность
                                     </p>
                                     <div class="item_info bgb">
-                                        <span v-value-scroll>{{
-                                            this.BTCDifficulty.toLocaleString(
-                                                "en-EN"
-                                            )
-                                        }}</span
-                                        ><span>+0.28% / 32.14 T</span>
+                                        <span
+                                            v-if="this.btcInfo.btc"
+                                            v-value-scroll
+                                            >{{
+                                                this.btcInfo.btc.nextDiff
+                                            }}</span
+                                        >
+                                        <span v-else>...</span>
+                                        <span v-if="this.btcInfo.btc"
+                                            >{{ this.btcInfo.btc.diff_change }}
+                                            /
+                                            {{
+                                                (
+                                                    (Number(
+                                                        this.btcInfo.btc
+                                                            .nextDiff
+                                                    ) -
+                                                        Number(
+                                                            this.btcInfo.btc
+                                                                .diff
+                                                        )) /
+                                                    1000000000000
+                                                ).toFixed(2)
+                                            }}
+                                            T</span
+                                        >
+                                        <span v-else>... / ...</span>
                                     </div>
                                 </li>
                             </ul>
@@ -99,13 +151,54 @@
                                 <p class="item_span">
                                     Дата следующей сложности
                                 </p>
-                                <div class="item_info">8 Дней 7 Часов</div>
+                                <div
+                                    class="item_info item_info__block"
+                                    v-if="this.btcInfo.btc"
+                                >
+                                    <span
+                                        class="item_info_text"
+                                        v-if="
+                                            String(
+                                                this.btcInfo.btc.time / 24
+                                            ).substr(0, 1) !== '0'
+                                        "
+                                        >{{
+                                            String(
+                                                this.btcInfo.btc.time / 24
+                                            ).substr(0, 1)
+                                        }}
+                                        Дней</span
+                                    >
+                                    <span
+                                        class="item_info_text"
+                                        v-if="this.btcInfo.btc.time % 24 !== 0"
+                                        >{{
+                                            this.btcInfo.btc.time % 24
+                                        }}
+                                        Часов</span
+                                    >
+                                </div>
+                                <div class="item_info" v-else>
+                                    ... Дней ... Часов
+                                </div>
                             </div>
                             <blue-button
                                 class="big"
-                                v-if="viewportWidth >= 991.98"
+                                v-if="viewportWidth >= 991.98 && this.auth_user"
                             >
-                                <a href="#" class="all-link">Начать майнинг</a>
+                                <Link :href="route('accounts')" class="all-link"
+                                    >Начать майнинг</Link
+                                >
+                            </blue-button>
+                            <blue-button
+                                class="big"
+                                v-else-if="
+                                    viewportWidth >= 991.98 && !this.auth_user
+                                "
+                            >
+                                <a href="#" data-popup="#auth" class="all-link"
+                                    >Начать майнинг</a
+                                >
                             </blue-button>
                         </div>
                     </div>
@@ -123,7 +216,30 @@
                                     Без минимальной суммы за исключением ETH и
                                     ETC
                                 </div>
-                                <a href="#" class="home-inri__link"
+                                <Link
+                                    :href="route('accounts')"
+                                    v-if="this.auth_user"
+                                    class="home-inri__link"
+                                    >Начать получать выплаты<svg
+                                        width="14"
+                                        height="14"
+                                        viewBox="0 0 14 14"
+                                        fill="none"
+                                        xmlns="http://www.w3.org/2000/svg"
+                                    >
+                                        <path
+                                            fill-rule="evenodd"
+                                            clip-rule="evenodd"
+                                            d="M4.83882 3.08785C5.06663 2.86004 5.43598 2.86004 5.66378 3.08785L9.16378 6.58785C9.39159 6.81565 9.39159 7.185 9.16378 7.4128L5.66378 10.9128C5.43598 11.1406 5.06663 11.1406 4.83882 10.9128C4.61102 10.685 4.61102 10.3157 4.83882 10.0878L7.92634 7.00033L4.83882 3.9128C4.61102 3.685 4.61102 3.31565 4.83882 3.08785Z"
+                                            fill="white"
+                                        />
+                                    </svg>
+                                </Link>
+                                <a
+                                    href="#"
+                                    v-else
+                                    data-popup="#auth"
+                                    class="home-inri__link"
                                     >Начать получать выплаты<svg
                                         width="14"
                                         height="14"
@@ -175,43 +291,46 @@
             </div>
         </div>
     </div>
-    <calculator-view />
-    <pull-static-view />
     <collective-platform-view />
     <about-panel-view />
-    <mining-info-view />
+    <mining-info-view :auth_user="this.auth_user" />
 </template>
 <script>
-import { Head } from "@inertiajs/vue3";
+import { Head, Link } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import CalculatorView from "@/Components/technical/CalculatorView.vue";
-import PullStaticView from "@/Components/technical/PullStaticView.vue";
 import CollectivePlatformView from "@/Components/technical/CollectivePlatformView.vue";
 import AboutPanelView from "@/Components/technical/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/MiningInfoView.vue";
-import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
+    props: {
+        auth_user: {
+            type: Boolean,
+            default: false,
+        },
+    },
     components: {
         MiningInfoView,
         AboutPanelView,
         CollectivePlatformView,
-        PullStaticView,
-        CalculatorView,
         BlueButton,
         MainTitle,
         Head,
+        Link,
     },
     data() {
         return {
             viewportWidth: 0,
-            BTCDifficulty: "",
         };
     },
-    created() {
+    created: function () {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
+    },
+    computed: {
+        ...mapGetters(["btcInfo"]),
     },
     methods: {
         handleResize() {
@@ -220,11 +339,6 @@ export default {
     },
     mounted() {
         document.title = "Главная";
-        axios
-            .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
-            .then((response) => {
-                this.BTCDifficulty = response.data[0].difficulty;
-            });
     },
 };
 </script>
@@ -300,9 +414,20 @@ export default {
         gap: 36px;
         width: 347px;
         height: 85px;
-        font-size: 22px;
         z-index: 5;
         margin: 0;
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 107.6%;
+            color: #ffffff;
+            padding: 0 20px;
+            gap: 36px;
+        }
         @media (any-hover: hover) {
             &:hover {
                 box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -332,6 +457,9 @@ export default {
         }
         @media (max-width: 479.98px) {
             height: 65px;
+            .all-link {
+                gap: 12px;
+            }
         }
         &::before {
             content: "";
@@ -408,10 +536,12 @@ export default {
         @media (max-width: 1270px) {
             top: -7em;
             left: -5em;
+            margin: 0 -15px 15px;
             transform: scale(0.7);
         }
         @media (max-width: 991.98px) {
             transform: scale(1);
+            width: calc(100% + 30px);
             top: unset;
             left: unset;
         }
@@ -420,11 +550,14 @@ export default {
             position: absolute;
             @media (max-width: 991.98px) {
                 position: relative;
-                max-width: 722px;
+                width: 100%;
                 object-fit: cover;
                 object-position: center;
                 left: 50%;
                 transform: translate(-50%, 2%);
+            }
+            @media (max-width: 767.98px) {
+                width: 160%;
             }
         }
         // .home__background_1
@@ -437,10 +570,6 @@ export default {
                 animation-duration: 1.7s;
                 animation-timing-function: ease;
                 animation-fill-mode: forwards;
-            }
-            @media (max-width: 1270px) {
-                left: 0;
-                top: 0;
             }
         }
         // .home__background_2
@@ -455,8 +584,7 @@ export default {
                 animation-fill-mode: forwards;
             }
             @media (max-width: 1270px) {
-                top: 30em;
-                right: -15em;
+                display: none;
             }
         }
         // .home__background_3
@@ -471,8 +599,7 @@ export default {
                 animation-fill-mode: forwards;
             }
             @media (max-width: 1270px) {
-                top: 43em;
-                right: -33em;
+                display: none;
             }
         }
         // .home__background_4
@@ -487,8 +614,7 @@ export default {
                 animation-fill-mode: forwards;
             }
             @media (max-width: 1270px) {
-                top: 46em;
-                right: -14em;
+                display: none;
             }
         }
         // .home__background_5
@@ -498,6 +624,9 @@ export default {
             will-change: transform;
             animation: keyshow5 1.7s ease forwards,
                 imag5 12s 1.7s infinite linear;
+            @media (max-width: 1270px) {
+                display: none;
+            }
         }
         @keyframes imag5 {
             0% {
@@ -652,9 +781,6 @@ export default {
         .blue-button {
             min-width: 222px;
             margin-bottom: 0;
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 20px;
         }
         @media (max-width: 1270px) {
             //flex: 1 1 auto;
@@ -715,8 +841,7 @@ export default {
                 height: 37px;
             }
         }
-        &::after {
-            content: "228.17 EH/s";
+        span {
             position: relative;
             font-style: normal;
             font-weight: 300;
@@ -768,10 +893,16 @@ export default {
                 align-items: center;
             }
         }
+        &__block {
+            column-gap: 10px;
+        }
         & span {
             &:last-child {
                 color: #e9c058;
             }
+        }
+        &_text {
+            color: #000034 !important;
         }
         &.bgb {
             position: relative;
@@ -940,7 +1071,7 @@ export default {
 
     // .home-inri__title
     &__title {
-        font-family: "AmpleSoftPro";
+        font-family: "AmpleSoftPro", serif;
         font-style: normal;
         font-weight: 500;
         font-size: 31px;

@@ -45,73 +45,77 @@ export default {
             required: true,
         },
     },
+    methods: {
+        graphInit() {
+            const graphsList = this.graphs;
+            for (let i = 0; i < graphsList.length; i++) {
+                const ctr = document.querySelectorAll("#myChart");
+                const ctx = ctr[i].getContext("2d");
 
-    mounted() {
-        const graphsList = this.graphs;
-        for (let i = 0; i < graphsList.length; i++) {
-            const ctr = document.querySelectorAll("#myChart");
-            const ctx = ctr[i].getContext("2d");
+                const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
+                gradientBg.addColorStop(0, "rgba(63,123,221,1)");
+                gradientBg.addColorStop(1, "rgba(255,255,255,0)");
 
-            const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
-            gradientBg.addColorStop(0, "rgba(63,123,221,1)");
-            gradientBg.addColorStop(1, "rgba(255,255,255,0)");
-
-            new Chart(ctx, {
-                type: "line",
-                data: {
-                    labels: [
-                        "2010",
-                        "2012",
-                        "2014",
-                        "2016",
-                        "2018",
-                        "2020",
-                        "2022",
-                    ],
-                    datasets: [
-                        {
-                            label: graphsList[i].title,
-                            data: graphsList[i].values,
-                            borderColor: "#3f7bdd",
-                            backgroundColor: gradientBg,
-                            tension: 0.4,
-                            radius: 0,
-                        },
-                    ],
-                },
-                options: {
-                    fill: true,
-                    scales: {
-                        y: {
-                            beginAtZero: true,
-                            grid: {
-                                z: 2,
+                new Chart(ctx, {
+                    type: "line",
+                    data: {
+                        labels: [
+                            "2010",
+                            "2012",
+                            "2014",
+                            "2016",
+                            "2018",
+                            "2020",
+                            "2022",
+                        ],
+                        datasets: [
+                            {
+                                label: graphsList[i].title,
+                                data: graphsList[i].values,
+                                borderColor: "#3f7bdd",
+                                backgroundColor: gradientBg,
+                                tension: 0.4,
+                                radius: 0,
+                            },
+                        ],
+                    },
+                    options: {
+                        fill: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true,
+                                grid: {
+                                    z: 2,
+                                },
+                            },
+                            x: {
+                                grid: {
+                                    display: false,
+                                },
                             },
                         },
-                        x: {
-                            grid: {
+                        plugins: {
+                            tooltip: {
+                                mode: "index",
+                                intersect: false,
+                            },
+                            legend: {
+                                // position: "left",
+                                // onClick: false,
                                 display: false,
                             },
                         },
-                    },
-                    plugins: {
-                        tooltip: {
-                            mode: "index",
+                        hover: {
+                            mode: "nearest",
                             intersect: false,
                         },
-                        legend: {
-                            // position: "left",
-                            // onClick: false,
-                            display: false,
-                        },
                     },
-                    hover: {
-                        mode: "nearest",
-                        intersect: false,
-                    },
-                },
-            });
-        }
+                });
+            }
+        },
+    },
+    mounted() {
+        this.graphInit();
     },
 };
 </script>

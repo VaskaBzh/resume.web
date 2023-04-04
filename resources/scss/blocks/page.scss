@@ -1,6 +1,21 @@
 .page {
-  flex: 1 1 auto;
-  @media (max-width: 767.98px) {
-    margin-top: 80px;
-  }
+    flex: 1 1 auto;
+    position: relative;
+    @media (min-width: 1271px) {
+        margin-top: 101px;
+    }
+    @media (max-width: 767.98px) {
+        margin-top: 80px;
+    }
+    .observer_block {
+        @media (min-width: 1271px) {
+            position: absolute;
+            top: -80px;
+            left: 0;
+            opacity: 0;
+        }
+        @media (max-width: 1270px) {
+            display: none;
+        }
+    }
 }

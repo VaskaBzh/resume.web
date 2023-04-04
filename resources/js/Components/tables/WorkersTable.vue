@@ -13,20 +13,20 @@
             <div class="table-block_column">
                 <span>
                     <span class="legend_elem legend_elem-active">
-                        {{ this.active }}
+                        {{ this.workers.active }}
                     </span>
                     <span class="legend_elem legend_elem-unstable">
-                        {{ this.unstable }}
+                        {{ this.workers.unStable }}
                     </span>
-                    <span class="legend_elem legend_elem-unactive">
-                        {{ this.unactive }}
+                    <span class="legend_elem legend_elem-unActive">
+                        {{ this.workers.inActive }}
                     </span>
                     <span class="main__number legend_elem legend_elem-all">
-                        Все: {{ this.all }}
+                        Все: {{ this.workers.all }}
                     </span>
                 </span>
                 <span class="main__number">{{ this.hashRate }} TH/s</span>
-                <span class="main__number">{{ this.hashAvarage }} TH/s</span>
+                <span class="main__number">{{ this.hashAvarage24 }} TH/s</span>
                 <span class="main__number">{{ this.rejectRate }} %</span>
             </div>
         </div>
@@ -49,11 +49,12 @@
                 :visualType="this.visualType"
                 :columns="row"
                 :key="i"
+                @click="this.indexChanger(row.graphId)"
                 :class="row.hashClass"
             />
         </div>
     </div>
-    <table class="table" v-else>
+    <table ref="table" class="table" v-else>
         <thead>
             <tr v-if="this.viewportWidth > 991.98">
                 <th
@@ -82,7 +83,6 @@
             >
                 <td class="main__number">{{ this.mainRow.hash }}</td>
                 <td class="main__number">{{ this.hashRate }} TH/s</td>
-                <td class="main__number">{{ this.hashAvarage }} TH/s</td>
                 <td class="main__number">{{ this.hashAvarage24 }} TH/s</td>
                 <td class="main__number">{{ this.rejectRate }} %</td>
             </tr>
@@ -95,42 +95,50 @@
             >
                 <td class="main__number">{{ this.mainRow.hash }}</td>
                 <td class="main__number">{{ this.hashRate }} TH/s</td>
-                <td class="main__number">{{ this.hashAvarage }} TH/s</td>
                 <td class="main__number">{{ this.rejectRate }} %</td>
             </tr>
             <tr v-else class="row-main" :key="mainRow">
                 <td>
                     <div class="row-main_elem row-main_elem-active">
-                        {{ this.active }}
+                        {{ this.workers.active }}
                     </div>
                     <div class="row-main_elem row-main_elem-unstable">
-                        {{ this.unstable }}
+                        {{ this.workers.unStable }}
                     </div>
-                    <div class="row-main_elem row-main_elem-unactive">
-                        {{ this.unactive }}
+                    <div class="row-main_elem row-main_elem-unActive">
+                        {{ this.workers.inActive }}
                     </div>
                     <div class="main__number row-main_elem row-main_elem-all">
-                        Все: {{ this.all }}
+                        Все: {{ this.workers.all }}
                     </div>
                 </td>
                 <td class="main__number">{{ this.hashRate }} TH/s</td>
-                <td class="main__number">{{ this.hashAvarage }} TH/s</td>
+                <td class="main__number">{{ this.hashAvarage24 }} TH/s</td>
                 <td class="main__number">{{ this.rejectRate }} %</td>
             </tr>
             <table-workers-row
-                v-for="(row, i) in this.table.rows"
+                v-for="(row, i) in rows"
                 :columns="row"
                 :key="i"
                 :class="row.hashClass"
+                @click="this.indexChanger(row.graphId)"
             />
         </tbody>
+        <statistic-chart
+            v-if="this.indexWorker !== -1"
+            :graphs="graphs"
+            class="no-title paddings"
+            :key="this.graphs[0].values[this.graphs[0].values.length - 1]"
+        />
     </table>
 </template>
 <script>
 import TableWorkersRow from "@/Components/tables/row/TableWorkersRow.vue";
+import StatisticChart from "@/Components/charts/StatisticChart.vue";
+import { mapGetters } from "vuex";
 
 export default {
-    components: { TableWorkersRow },
+    components: { TableWorkersRow, StatisticChart },
     props: {
         table: Object,
         visualType: {
@@ -141,45 +149,39 @@ export default {
     data() {
         return {
             viewportWidth: 0,
+            rows: this.table.rows,
             mainRow: this.table.mainRow,
+            mainTable: this.table,
+            indexWorker: -1,
+            graphs: [
+                {
+                    id: 1,
+                    title: ["Хешрейт", "Время"],
+                    values: [],
+                },
+            ],
         };
     },
     computed: {
-        active() {
-            let val = 0;
-            for (let i = 0; i < this.table.rows.length; i++) {
-                if (this.table.rows[i].hashClass === "active") {
-                    val = this.table.rows[i].hash;
-                }
+        ...mapGetters(["allHistoryMiner", "getActive"]),
+        workers() {
+            let workers = {
+                active: 0,
+                unStable: 0,
+                inActive: 0,
+                all: 0,
+            };
+            if (this.allAccounts[this.getActive]) {
+                workers.active = this.allAccounts[this.getActive].workersActive;
+                workers.unStable = this.allAccounts[this.getActive].workersDead;
+                workers.inActive =
+                    this.allAccounts[this.getActive].workersInActive;
+                workers.all = this.allAccounts[this.getActive].workersAll;
             }
-            return val;
-        },
-        unactive() {
-            let val = 0;
-            for (let i = 0; i < this.table.rows.length; i++) {
-                if (this.table.rows[i].hashClass === "unactive") {
-                    val = this.table.rows[i].hash;
-                }
-            }
-            return val;
-        },
-        unstable() {
-            let val = 0;
-            for (let i = 0; i < this.table.rows.length; i++) {
-                if (this.table.rows[i].hashClass === "unstable") {
-                    val = this.table.rows[i].hash;
-                }
-            }
-            return val;
-        },
-        all() {
-            return this.active + this.unactive + this.unstable;
+            return workers;
         },
         hashRate() {
             return Number(this.mainRow.hashRate).toFixed(2);
-        },
-        hashAvarage() {
-            return Number(this.mainRow.hashAvarage).toFixed(2);
         },
         hashAvarage24() {
             return Number(this.mainRow.hashAvarage24).toFixed(2);
@@ -187,24 +189,106 @@ export default {
         rejectRate() {
             return Number(this.mainRow.rejectRate).toFixed(2);
         },
+        ...mapGetters(["allHistory", "allAccounts"]),
     },
     methods: {
         handleResize() {
             this.viewportWidth = window.innerWidth;
+        },
+        closeGraph(e) {
+            if (
+                !e.target.closest(".graph") &&
+                !e.target.closest(".row-workers")
+            ) {
+                if (this.indexWorker !== -1) {
+                    this.indexWorker = -1;
+                    this.$refs.table.classList.remove("padding");
+                }
+            }
+        },
+        indexChanger(key) {
+            setTimeout(() => {
+                if (this.indexWorker !== key) {
+                    this.indexWorker = key;
+                    this.$refs.table.classList.add("padding");
+                    this.renderChart(key);
+                }
+            }, 10);
+        },
+        renderChart(index) {
+            let history;
+            if (this.allHistoryMiner && this.allHistoryMiner[index]) {
+                history = this.allHistoryMiner[index];
+            }
+            this.graphs[0].values = [];
+
+            for (let i = 1; i <= 25; i++) {
+                if (history) {
+                    let timeStamp = history[history.length - i];
+                    if (timeStamp) {
+                        this.graphs[0].values.unshift(
+                            Number(timeStamp[0]).toFixed(0)
+                        );
+                    } else {
+                        this.graphs[0].values.unshift(String(0));
+                    }
+                } else {
+                    this.graphs[0].values.unshift(String(0));
+                }
+            }
         },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
+    mounted() {
+        document.addEventListener("mousedown", this.closeGraph);
+    },
+    unmounted() {
+        document.removeEventListener("mousedown", this.closeGraph);
+    },
 };
 </script>
 <style lang="scss" scoped>
+@keyframes opacity {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
 .table {
     width: 100%;
     border-spacing: 0 8px;
     text-indent: 0;
     border-collapse: separate;
+    position: relative;
+    transition: all 0.3s ease 10ms;
+    &.padding {
+        padding: 0 0 447px;
+        @media (max-width: 550.98px) {
+            padding: 0 0 380px;
+        }
+        @media (max-width: 479.98px) {
+            padding: 0 0 340px;
+        }
+        @media (max-width: 415.98px) {
+            padding: 0 0 300px;
+        }
+        @media (max-width: 320.98px) {
+            padding: 0 0 256px;
+        }
+    }
+    .graph {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        min-height: auto;
+        animation: opacity 1.3s ease 0s;
+    }
     @media (max-width: 767.98px) {
         overflow-x: scroll;
         width: 120%;
@@ -220,6 +304,7 @@ export default {
             width: 100%;
             display: flex;
             justify-content: space-between;
+            gap: 8px;
         }
         &_column {
             display: flex;
@@ -261,7 +346,7 @@ export default {
         td {
             white-space: nowrap;
             &:first-child {
-                padding-left: 16px;
+                padding-left: 10px;
                 @media (max-width: 767.98px) {
                     padding: 0 10px 0 0;
                 }
@@ -356,7 +441,7 @@ export default {
                 &-unstable {
                     background: #f7931a;
                 }
-                &-unactive {
+                &-unActive {
                     background: #ff0000;
                 }
             }
@@ -367,7 +452,9 @@ export default {
                 border: none;
             }
             td {
-                background-color: #fff;
+                @media (max-width: 991.98px) {
+                    background-color: #fff;
+                }
                 &:first-child {
                     border-radius: 12px 0 0 12px;
                     padding: 9px 10px;

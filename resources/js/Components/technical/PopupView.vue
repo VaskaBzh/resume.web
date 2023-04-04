@@ -1,7 +1,13 @@
 <template>
     <div aria-hidden="true" class="popup">
         <div class="popup__wrapper">
-            <div class="popup__content">
+            <div
+                :class="
+                    this.typePopup === 'form'
+                        ? 'popup__content'
+                        : `popup__content popup__content-${this.typePopup}`
+                "
+            >
                 <img
                     class="popup__content_logo"
                     src="../../../assets/img/logo_high_quality.png"
@@ -26,5 +32,12 @@
 </template>
 <script>
 import "../../Scripts/popup";
-export default {};
+export default {
+    props: {
+        typePopup: {
+            type: String,
+            default: "form",
+        },
+    },
+};
 </script>

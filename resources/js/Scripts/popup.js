@@ -149,9 +149,9 @@ class Popup {
         this.eventsPopup();
     }
     eventsPopup() {
-        // Клик на всем документе
+        // Клик на всем документе (для graph)
         document.addEventListener(
-            "mousedown",
+            "click",
             function (e) {
                 // Клик по кнопке "открыть"
                 const buttonOpen = e.target.closest(
@@ -179,16 +179,36 @@ class Popup {
 
                     return;
                 }
+            }.bind(this)
+        );
+        // Клик на всем документе
+        document.addEventListener(
+            "click",
+            function (e) {
+                // Закрытие на пустом месте (popup__wrapper) и кнопки закрытия (popup__close) для закрытия
+                const buttonClose = e.target.closest(
+                    `[${this.options.attributeCloseButton}]`
+                );
+                if (buttonClose && this.isOpen) {
+                    e.preventDefault();
+                    this.close();
+                    return;
+                }
+            }.bind(this)
+        );
+        // Клик на всем документе
+        document.addEventListener(
+            "mousedown",
+            function (e) {
                 // Закрытие на пустом месте (popup__wrapper) и кнопки закрытия (popup__close) для закрытия
                 const buttonClose = e.target.closest(
                     `[${this.options.attributeCloseButton}]`
                 );
                 if (
-                    buttonClose ||
-                    (!e.target.closest(
+                    !e.target.closest(
                         `.${this.options.classes.popupContent}`
                     ) &&
-                        this.isOpen)
+                    this.isOpen
                 ) {
                     e.preventDefault();
                     this.close();
@@ -437,7 +457,7 @@ class Popup {
             document.documentElement.classList.remove(
                 this.options.classes.bodyActive
             );
-            !this.bodyLock ? bodyUnlock() : null;
+            bodyUnlock();
             this.isOpen = false;
         }
         // Очищение адресной строки
@@ -472,9 +492,10 @@ class Popup {
         }
     }
     _openToHash() {
-        let classInHash = document.querySelector(
-            `.${window.location.hash.replace("#", "")}`
-        )
+        // custom
+        let classInHash = document.querySelector(`#login`)
+            ? `#login`
+            : `#email`
             ? `.${window.location.hash.replace("#", "")}`
             : document.querySelector(`${window.location.hash}`)
             ? `${window.location.hash}`

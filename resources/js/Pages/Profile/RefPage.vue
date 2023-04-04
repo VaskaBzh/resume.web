@@ -74,10 +74,10 @@
                             Зарабатывайте до <span>0,5%</span> с майнинга
                             приглашенных пользователей
                         </p>
-                        <!--                        <router-link-->
-                        <!--                            class="main__link main__link-underline"-->
-                        <!--                            to="/faqview"-->
-                        <!--                            >Подбробнее в FAQ</router-link-->
+                        <Link
+                            class="main__link main__link-underline"
+                            :href="route('help')"
+                            >Подбробнее в FAQ</Link
                         >
                     </div>
                 </div>
@@ -319,9 +319,10 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainDate from "@/Components/UI/MainDate.vue";
 import MainSlider from "@/Components/account/MainSlider.vue";
+import { Link, router } from "@inertiajs/vue3";
 
 export default {
-    components: { MainSlider, MainDate, BlueButton, MainTitle },
+    components: { MainSlider, MainDate, BlueButton, MainTitle, Link },
     data() {
         return {
             date: {},
@@ -1392,6 +1393,9 @@ export default {
         };
     },
     methods: {
+        router() {
+            return router;
+        },
         copy() {
             navigator.clipboard.writeText(this.link);
             this.$refs.copy.classList.add("active");
@@ -1506,6 +1510,10 @@ export default {
     &__link-copy {
         @media (max-width: 767.98px) {
             transform: translateY(-50%);
+            svg {
+                width: 18px;
+                height: 18px;
+            }
         }
         @media (max-width: 479.98px) {
             transform: translateY(-58%);
@@ -1665,7 +1673,8 @@ export default {
         flex-direction: column;
         &-back {
             background: rgba(255, 255, 255, 0.29)
-                url("../../../assets/img/ref_img_back.png") no-repeat right center;
+                url("../../../assets/img/ref_img_back.png") no-repeat right
+                center;
             @media (max-width: 1270px) {
                 order: -1;
             }

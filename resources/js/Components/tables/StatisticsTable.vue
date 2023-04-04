@@ -18,9 +18,6 @@
                     :key="row.id"
                     :data-index="i"
                 >
-                    <td class="statistics__height">
-                        <a href="#">{{ row.height }}</a>
-                    </td>
                     <td class="statistics__text">{{ row.time }}</td>
                     <td class="statistics__text statistics__complexity">
                         {{ row.complexity.main }}

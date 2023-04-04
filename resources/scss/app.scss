@@ -10,12 +10,14 @@
 // импорты кастомных стилей animation
 @import "./animation/scrollAnimation";
 @import "./animation/popupAnimation";
+@import "./animation/preloader";
 
 //========================================================================================================================================================
 // импорты кастомных стилей blocks
 @import "./blocks/wrap";
 @import "./blocks/page";
 @import "./blocks/legend";
+@import "./blocks/swiper";
 
 //========================================================================================================================================================
 // импорты кастомных стилей templates
@@ -28,6 +30,8 @@
 @import "./templates/input";
 @import "./templates/form";
 @import "./templates/copy";
+@import "./templates/no-info";
+@import "./templates/propeller";
 
 //========================================================================================================================================================
 // Обнуляющие стили
@@ -165,6 +169,15 @@ h6 {
 }
 
 //========================================================================================================================================================
+.invisible {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 0;
+    height: 0;
+    visibility: hidden;
+    opacity: 0;
+}
 // Кастомные стили
 .main {
     // .main__text
@@ -336,7 +349,7 @@ h6 {
             }
 
             &:after {
-                content: url("../js/assets/img/Check.svg");
+                content: url("../assets/img/Check.svg");
                 position: absolute;
                 top: 50%;
                 left: 4px;
@@ -416,8 +429,63 @@ h6 {
 }
 
 // Кастомные стили графиков
+.graph {
+    &.no-title {
+        min-height: 100%;
+        min-width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        .graph {
+            &__main {
+                padding: 0px;
+                min-height: 100%;
+                min-width: 100%;
+            }
+            &__head {
+                display: none;
+                //justify-content: flex-end;
+            }
+            &__item {
+                padding: 0;
+            }
+        }
+        //.title {
+        //    display: none;
+        //}
+    }
+    &.paddings {
+        min-height: auto;
+        .graph {
+            &__item {
+                padding: 28px 36px 33px;
+            }
+        }
+    }
+}
 #myChart {
     cursor: pointer;
+}
+
+// Ссылки в кнопках
+.all-link {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+// Временный блок ререндера
+.hidden {
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+    z-index: -1;
+    visibility: hidden;
 }
 
 //========================================================================================================================================================
