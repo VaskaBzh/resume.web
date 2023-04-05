@@ -72,7 +72,7 @@
         </td>
         <td class="main__number">{{ this.BTCVal }} BTC</td>
         <td class="main__number" v-if="this.viewportWidth > 991.98">
-            {{ Number(this.columns.diff).toFixed(2) }}
+            {{ Number(this.columns.diff).toFixed(2) }} T
         </td>
     </tr>
     <tr v-scroll="'opacity'" class="row-payment" v-else-if="columns.link">

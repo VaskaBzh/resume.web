@@ -81,7 +81,10 @@ export default {
     },
     async updated() {
         if (!this.auth_user) {
-            this.$store.commit("destroy_force");
+            this.$store.dispatch("destroyer");
+            if (this.interval) {
+                clearInterval(this.interval);
+            }
         }
     },
     unmounted() {

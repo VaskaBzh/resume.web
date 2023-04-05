@@ -68,7 +68,7 @@ export default {
     },
     unmounted() {
         if (!this.auth_user) {
-            this.$store.commit("destroy_force");
+            this.$store.dispatch("destroyer");
         }
         clearInterval(this.interval);
     },

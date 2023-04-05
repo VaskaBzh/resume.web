@@ -3,6 +3,9 @@ import Vue from "lodash";
 
 export default {
     actions: {
+        destroyer({ commit }) {
+            commit("destroy");
+        },
         getAllEarn({ commit, state }, group) {
             let sum = 0;
             if (Object.values(state.historyForDays).length > 0) {
@@ -70,6 +73,11 @@ export default {
                         })
                         .catch((err) => {
                             console.log(err);
+                            if (state.checkFive <= 5) {
+                                this.dispatch("getAccounts");
+                            } else {
+                                state.checkFive = 0;
+                            }
                         });
                 })
                 .catch((err) => {
@@ -93,6 +101,7 @@ export default {
                     Object.values(data.arr).forEach((group) => {
                         workers.data.data.data.forEach((worker) => {
                             if (workerChecker(worker.worker_name, group.sub)) {
+                                // разобраться с возможным багом
                                 if (wordsLength < group.sub.length) {
                                     wordsLength = group.sub.length;
                                     commit("updateGroupName", group.sub);
@@ -101,7 +110,8 @@ export default {
                             }
                         });
                     });
-                });
+                })
+                .catch((err) => this.dispatch("getAccounts"));
         },
         async getAccGroup({ commit, state }, data) {
             await Object.values(data.arr).forEach((group) => {
@@ -125,7 +135,7 @@ export default {
                         unit: data.el.shares_unit,
                     };
                     if (data.el.name == state.groupName) {
-                        data.groups.push(data.el);
+                        this.dispatch("updateGroup", data.el);
                     }
                     commit("setHash", {
                         hash: {},
@@ -138,24 +148,13 @@ export default {
                         response: data.response,
                     });
                 }
-                if (data.i === data.response.data.data.list.length - 1) {
-                    data.groups.forEach(async (el, i) => {
-                        await this.dispatch("updateGroup", el);
-                        if (i === data.groups.length - 1) {
-                            this.dispatch("getAccounts");
-                        }
-                    });
-                    // window.location.reload();
-                    // this.dispatch("reloader", data.arr);
-                }
+                // if (data.i === data.response.data.data.list.length - 1) {
+                // window.location.reload();
+                // this.dispatch("reloader", data.arr);
+                // }
             });
         },
-        async updateGroup({ state, commit }, data) {
-            let updateData = {
-                puid: "781195",
-                group_id: String(data.gid),
-                worker_id: String(state.updateId),
-            };
+        updateGroup({ state, commit }, data) {
             let instance = axios.create({
                 baseURL: "https://pool.api.btc.com/v1",
                 headers: {
@@ -168,14 +167,25 @@ export default {
                     Accept: "application/json",
                 },
             });
-            await instance
+            // Object.values(state.updateId).forEach(async (id, i) => {
+            let updateData = {
+                puid: "781195",
+                group_id: String(data.gid),
+                worker_id: String(state.updateId),
+            };
+            instance
                 .post(
                     `/worker/update?group=${data.gid}&puid=781195`,
                     updateData
                 )
                 .then(async (res) => {
                     await axios.post("/worker_create", updateData);
+                    this.dispatch("getAccounts");
                 });
+            // if (i === Object.values(state.updateId).length - 1) {
+            //     this.dispatch("getAccounts");
+            // }
+            // });
         },
         async getHash({ state, commit }, data) {
             await axios
@@ -300,7 +310,7 @@ export default {
             state.history = {};
             state.historyMiners = {};
             state.earn = {};
-            state.updateId = 0;
+            state.updateId = {};
             state.validate = false;
             state.groupName = "";
         },
@@ -355,6 +365,7 @@ export default {
         fullEarn: {},
         validate: false,
         groupName: "",
+        i: -1,
     },
     getters: {
         allHistoryMiner(state) {

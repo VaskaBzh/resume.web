@@ -54,13 +54,15 @@ class HourlyHashesUpdate implements ShouldQueue
                     $responseData = json_decode($response_json);
                     $result = [];
                     if ($responseData->data->data) {
+                        $share = 0;
                         $share = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
-                                if ($key == "shares_1m") {
-                                    $carry["shares_1m"] = floatval($value);
+                                if ($key == "shares_1d") {
+                                    $carry += floatval($value);
                                 }
                             }
-                        return $carry;}, ['shares_1m' => 0])['shares_1m'];
+                            return $carry;
+                        }, $share);
                         $unit = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_unit") {
