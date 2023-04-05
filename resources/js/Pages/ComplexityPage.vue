@@ -38,7 +38,7 @@ export default {
         Head,
     },
     computed: {
-        ...mapGetters(["btcInfo"]),
+        ...mapGetters(["btcInfo", "btcHistory"]),
         changeDiff() {
             let string = "...";
             if (this.btcInfo.btc) {
@@ -108,9 +108,6 @@ export default {
                     ],
                 },
                 {
-                    id: 2,
-                    title: "Сложность (Шкала)",
-                    values: [0, 0.9, 3, 7, 4, 9, 8, 16],
                     about: [
                         {
                             id: 21,
@@ -215,6 +212,10 @@ export default {
                 ],
             },
         };
+    },
+    mounted() {
+        console.log(this.btcHistory);
+        console.log(new Date(1230940800000));
     },
 };
 </script>

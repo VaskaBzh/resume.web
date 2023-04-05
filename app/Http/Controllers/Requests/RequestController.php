@@ -11,7 +11,7 @@ class RequestController extends Controller
 {
     public function getDifficultyData()
     {
-        $response = Http::get('https://api.blockchain.info/charts/difficulty?format=json&timespan=all');
+        $response = Http::get('https://pool.api.btc.com/v1/blocks');
 
         if ($response->successful()) {
             return $response->json();
