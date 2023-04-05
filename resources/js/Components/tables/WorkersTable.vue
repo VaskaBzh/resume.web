@@ -117,6 +117,7 @@
                 <td class="main__number">{{ this.rejectRate }} %</td>
             </tr>
             <table-workers-row
+                data-popup="#seeChart"
                 v-for="(row, i) in rows"
                 :columns="row"
                 :key="i"
@@ -124,21 +125,23 @@
                 @click="this.indexChanger(row.graphId)"
             />
         </tbody>
-        <statistic-chart
-            v-if="this.indexWorker !== -1"
-            :graphs="graphs"
-            class="no-title paddings"
-            :key="this.graphs[0].values[this.graphs[0].values.length - 1]"
-        />
+        <popup-view id="seeChart" typePopup="graph">
+            <statistic-chart
+                v-if="this.indexWorker !== -1"
+                :graphs="graphs"
+                :key="this.graphs[0].values[this.graphs[0].values.length - 1]"
+            />
+        </popup-view>
     </table>
 </template>
 <script>
 import TableWorkersRow from "@/Components/tables/row/TableWorkersRow.vue";
 import StatisticChart from "@/Components/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
+import PopupView from "@/Components/technical/PopupView.vue";
 
 export default {
-    components: { TableWorkersRow, StatisticChart },
+    components: { PopupView, TableWorkersRow, StatisticChart },
     props: {
         table: Object,
         visualType: {
@@ -195,22 +198,10 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        closeGraph(e) {
-            if (
-                !e.target.closest(".graph") &&
-                !e.target.closest(".row-workers")
-            ) {
-                if (this.indexWorker !== -1) {
-                    this.indexWorker = -1;
-                    this.$refs.table.classList.remove("padding");
-                }
-            }
-        },
         indexChanger(key) {
             setTimeout(() => {
                 if (this.indexWorker !== key) {
                     this.indexWorker = key;
-                    this.$refs.table.classList.add("padding");
                     this.renderChart(key);
                 }
             }, 10);
@@ -266,25 +257,7 @@ export default {
     border-collapse: separate;
     position: relative;
     transition: all 0.3s ease 10ms;
-    &.padding {
-        padding: 0 0 447px;
-        @media (max-width: 550.98px) {
-            padding: 0 0 380px;
-        }
-        @media (max-width: 479.98px) {
-            padding: 0 0 340px;
-        }
-        @media (max-width: 415.98px) {
-            padding: 0 0 300px;
-        }
-        @media (max-width: 320.98px) {
-            padding: 0 0 256px;
-        }
-    }
     .graph {
-        position: absolute;
-        bottom: 0;
-        left: 0;
         width: 100%;
         min-height: auto;
         animation: opacity 1.3s ease 0s;

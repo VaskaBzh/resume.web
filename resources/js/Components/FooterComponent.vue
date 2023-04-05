@@ -139,10 +139,8 @@
                     </li>
                     <li class="footer__contacts_item contacts_item">
                         <img src="../../assets/img/location-icon.svg" alt="" />
-                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA"
-                            >ВDubai Silicon Oasis, DDP, Building A2, Dubai,
-                            United Arab Emirates</a
-                        >
+                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA">ВDubai Silicon Oasis, DDP, Building A2, Dubai,
+                            United Arab Emirates</a>
                     </li>
                 </ul>
             </div>
