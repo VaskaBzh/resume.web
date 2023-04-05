@@ -291,7 +291,7 @@ export default {
         },
     },
     mutations: {
-        destroy_force(state, commit) {
+        destroy(state) {
             state.historyForDays = {};
             state.valid = true;
             state.active = -1;
@@ -299,16 +299,6 @@ export default {
             state.hash = {};
             state.history = {};
             state.historyMiners = {};
-            state.earn = {};
-            state.updateId = 0;
-            state.validate = false;
-            state.groupName = "";
-        },
-        destroy(state) {
-            state.valid = true;
-            state.active = -1;
-            state.accounts = {};
-            state.hash = {};
             state.earn = {};
             state.updateId = 0;
             state.validate = false;

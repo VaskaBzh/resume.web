@@ -54,13 +54,15 @@ class UpdateAccrualsCommand extends Command
                     $responseData = json_decode($response_json);
                     $result = [];
                     if ($responseData->data->data) {
+                        $share = 0;
                         $share = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_1d") {
-                                    $carry["shares_1d"] = floatval($value);
+                                    $carry += floatval($value);
                                 }
                             }
-                            return $carry;}, ['shares_1d' => ''])['shares_1d'];
+                            return $carry;
+                        }, $share);
                         $unit = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_unit") {
@@ -77,7 +79,6 @@ class UpdateAccrualsCommand extends Command
                     } else {
                         $earn = 0;
                     }
-                    $this->info($response_json);
                     $result[] = [
                         time(),
                         number_format($share, 2, ".", ""),
@@ -87,7 +88,7 @@ class UpdateAccrualsCommand extends Command
                     ];
                     if ($accrual->tickers != "" || $accrual->tickers != null) {
                         if (isset($accrual->tickers)) {
-                            $result = array_merge(json_decode($accrual->tickers), $result);
+                            $result = array_merge($result, json_decode($accrual->tickers));
                         }
                     }
                     $accrual->tickers = $result;

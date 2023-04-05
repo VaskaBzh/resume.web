@@ -19,14 +19,14 @@
                                 class="settings__input input input-no-bg"
                             />
                         </div>
-                        <div class="settings__row">
-                            <span
-                                ref="checkbox"
-                                @click="this.checker"
-                                class="settings__label main__label main__label-check"
-                                >Использовать кошелек Allbtc</span
-                            >
-                        </div>
+                        <!--                        <div class="settings__row">-->
+                        <!--                            <span-->
+                        <!--                                ref="checkbox"-->
+                        <!--                                @click="this.checker"-->
+                        <!--                                class="settings__label main__label main__label-check"-->
+                        <!--                                >Использовать кошелек Allbtc</span-->
+                        <!--                            >-->
+                        <!--                        </div>-->
                     </div>
                     <div class="settings__block">
                         <div class="settings__row">
@@ -90,34 +90,45 @@
                     </blue-button>
                 </form>
             </div>
-            <div class="settings__wrap wrap">
-                <main-title
-                    class="title-notification"
-                    tag="h3"
-                    title-name="Уведомления"
-                ></main-title>
-                <main-checkbox
-                    v-for="checkbox in this.checkboxes"
-                    :key="checkbox.value"
-                    :is_checked="checkbox.isChecked"
-                    class="settings__checkbox"
-                >
-                    {{ checkbox.title }}
-                </main-checkbox>
-            </div>
+            <!--            <div class="settings__wrap wrap">-->
+            <!--                <main-title-->
+            <!--                    class="title-notification"-->
+            <!--                    tag="h3"-->
+            <!--                    title-name="Уведомления"-->
+            <!--                ></main-title>-->
+            <!--                <main-checkbox-->
+            <!--                    v-for="checkbox in this.checkboxes"-->
+            <!--                    :key="checkbox.value"-->
+            <!--                    :is_checked="checkbox.isChecked"-->
+            <!--                    class="settings__checkbox"-->
+            <!--                >-->
+            <!--                    {{ checkbox.title }}-->
+            <!--                </main-checkbox>-->
+            <!--            </div>-->
         </div>
     </div>
 </template>
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
+import { useForm } from "@inertiajs/vue3";
+// import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 
 export default {
     components: {
         MainTitle,
         BlueButton,
-        MainCheckbox,
+        // MainCheckbox,
+    },
+    setup() {
+        let resetForm = useForm({
+            password: "",
+            password_confirmation: "",
+        });
+
+        return {
+            resetForm,
+        };
     },
     data() {
         return {
@@ -164,7 +175,7 @@ export default {
     }
 
     &__wrap {
-        @media (min-width: 767.98px) {
+        @media (min-width: 991.98px) {
             flex-direction: row;
             flex-wrap: nowrap;
         }
@@ -174,17 +185,18 @@ export default {
             @media (max-width: 1270px) {
                 padding: 20px;
             }
-            @media (max-width: 767.98px) {
+            @media (max-width: 991.98px) {
                 background-color: transparent;
                 padding: 0 !important;
                 width: 100% !important;
                 margin: 0 0 20px !important;
                 gap: 20px;
                 flex-direction: column;
+                overflow: visible;
             }
 
             .settings__column {
-                @media (max-width: 767.98px) {
+                @media (max-width: 991.98px) {
                     background: rgba(255, 255, 255, 0.3);
                     border: 0.5px solid rgba(0, 0, 0, 0.08);
                     border-radius: 12px;
@@ -216,16 +228,16 @@ export default {
             }
         }
 
-        &:last-child {
-            margin-bottom: 0;
-            gap: 24px 30px;
-            flex-wrap: wrap;
-            @media (max-width: 767.98px) {
-                gap: 6px;
-                flex-direction: column;
-                flex-wrap: nowrap;
-            }
-        }
+        //&:last-child {
+        //    margin-bottom: 0;
+        //    gap: 24px 30px;
+        //    flex-wrap: wrap;
+        //    @media (max-width: 767.98px) {
+        //        gap: 6px;
+        //        flex-direction: column;
+        //        flex-wrap: nowrap;
+        //    }
+        //}
     }
 
     &__column {

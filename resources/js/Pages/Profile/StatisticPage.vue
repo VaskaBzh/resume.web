@@ -281,18 +281,11 @@ export default {
     },
     mounted() {
         document.title = "Статистика";
-        this.interval = setInterval(this.renderChart, 15000);
-        setInterval(() => {
-            this.graphs[0].values = [];
-        }, 14999);
         if (this.allHistory[this.getActive]) {
             if (Object.values(this.allHistory[this.getActive])) {
                 this.renderChart();
             }
         }
-    },
-    unmounted() {
-        clearInterval(this.interval);
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
