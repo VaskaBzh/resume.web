@@ -1,11 +1,11 @@
 <template>
     <div class="graph">
-        <div class="graph__main">
+        <div class="wrap">
             <div class="graph__list">
                 <div
                     v-for="graph in graphs"
                     :key="graph.id"
-                    class="graph__item"
+                    class="graph__item wrap__block"
                 >
                     <div class="graph__con">
                         <div class="graph__title">{{ graph.title }}</div>
@@ -16,7 +16,7 @@
                     <div class="graph__item_about graph-ia">
                         <ul class="graph-ia__list">
                             <li
-                                v-for="aboutItem in graph.about"
+                                v-for="(aboutItem, i) in graph.about"
                                 :key="aboutItem.id"
                                 class="graph-ia__item"
                             >
@@ -24,8 +24,8 @@
                                     {{ aboutItem.title }}
                                 </div>
                                 <div class="graph-ia__item_text">
-                                    <span>{{ aboutItem.text }}</span>
-                                    <span>{{ aboutItem.span }}</span>
+                                    <span>{{ this.text[aboutItem.id] }}</span>
+                                    <span>{{ this.span[aboutItem.id] }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -38,11 +38,50 @@
 
 <script>
 import Chart from "chart.js/auto";
+import Vue from "lodash";
 export default {
     props: {
         graphs: {
             type: Array,
             required: true,
+        },
+    },
+    data() {
+        return {
+            graph: null,
+        };
+    },
+    watch: {
+        graphs() {
+            if (this.graphs[0].values[0]) {
+                if (this.graph === null) {
+                    this.graphInit();
+                }
+            }
+        },
+    },
+    computed: {
+        text() {
+            let str = {};
+            this.graphs.forEach((graph) => {
+                graph.about.forEach((el) => {
+                    el.text
+                        ? Vue.set(str, el.id, el.text)
+                        : Vue.set(str, el.id, "");
+                });
+            });
+            return str;
+        },
+        span() {
+            let str = {};
+            this.graphs.forEach((graph) => {
+                graph.about.forEach((el) => {
+                    el.span
+                        ? Vue.set(str, el.id, el.span)
+                        : Vue.set(str, el.id, "");
+                });
+            });
+            return str;
         },
     },
     methods: {
@@ -57,18 +96,10 @@ export default {
                     gradientBg.addColorStop(0, "rgba(63,123,221,1)");
                     gradientBg.addColorStop(1, "rgba(255,255,255,0)");
 
-                    new Chart(ctx, {
+                    this.graph = new Chart(ctx, {
                         type: "line",
                         data: {
-                            labels: [
-                                "2010",
-                                "2012",
-                                "2014",
-                                "2016",
-                                "2018",
-                                "2020",
-                                "2022",
-                            ],
+                            labels: graphsList[i].dates,
                             datasets: [
                                 {
                                     label: graphsList[i].title,
@@ -87,6 +118,11 @@ export default {
                                     beginAtZero: true,
                                     grid: {
                                         z: 2,
+                                    },
+                                    ticks: {
+                                        callback: function (value) {
+                                            return value / 1000000000000 + "T";
+                                        },
                                     },
                                 },
                                 x: {
@@ -117,7 +153,9 @@ export default {
         },
     },
     mounted() {
-        this.graphInit();
+        if (this.graphs[0].values[0]) {
+            this.graphInit();
+        }
     },
 };
 </script>
@@ -126,6 +164,27 @@ export default {
 #myChart {
     @media (max-width: 479.98px) {
         width: 240px;
+    }
+}
+.wrap {
+    &__block {
+        width: 100%;
+        @media (max-width: 767.98px) {
+            padding: 15px;
+            &-graph {
+                order: 3;
+                padding: 24px !important;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                .propeller {
+                    margin: auto auto auto auto !important;
+                }
+            }
+        }
+        @media (max-width: 479.98px) {
+            min-height: 100px;
+        }
     }
 }
 .graph {
@@ -147,7 +206,7 @@ export default {
         display: flex;
         align-items: center;
         @media (max-width: 767.98px) {
-            padding: 15px 9px;
+            padding: 15px 30px 15px 9px;
         }
         @media (max-width: 479.98px) {
         }
@@ -171,6 +230,7 @@ export default {
     }
     // .graph__list
     &__list {
+        width: 100%;
         display: flex;
         gap: 17px;
         @media (max-width: 991.98px) {
@@ -189,6 +249,7 @@ export default {
 
         @media (max-width: 767.98px) {
             padding: 0;
+            flex: auto;
         }
         @media (max-width: 479.98px) {
             border-radius: 10px;

@@ -314,9 +314,11 @@ export default {
             gap: 12px 32px;
             grid-template-rows: repeat(2, auto);
             @media (max-width: 998.98px) {
-                grid-template-columns: 100%;
                 overflow: hidden;
-                grid-template-rows: repeat(3, auto);
+                grid-template-columns: 65% auto;
+            }
+            @media (max-width: 767.98x) {
+                grid-template-columns: 10%;
             }
             .title {
                 @media (min-width: 767.98px) {

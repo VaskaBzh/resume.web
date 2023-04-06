@@ -21,9 +21,8 @@ export default {
         },
         async getConverter({ commit, state }) {
             axios
-                .get("https://pool.api.btc.com/v1/blocks?page=1&page_size=100")
+                .get("/difficulty")
                 .then((res) => {
-                    console.log(res);
                     commit(`updateHistory`, res.data.values);
                 })
                 .catch((err) => console.log(err));

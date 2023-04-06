@@ -1,4 +1,5 @@
 <template>
+    <div class="hidden">{{ this.time }}</div>
     <Head title="Сложность сети" />
     <div class="complexity">
         <div class="complexity__container">
@@ -18,7 +19,6 @@
                 </div>
             </div>
             <MainChart :graphs="graphs" />
-            <statistics-table :table="table" />
         </div>
     </div>
 </template>
@@ -26,7 +26,6 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import MainChart from "@/Components/charts/MainChart.vue";
-import StatisticsTable from "@/Components/tables/StatisticsTable.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 
@@ -34,7 +33,6 @@ export default {
     components: {
         MainTitle,
         MainChart,
-        StatisticsTable,
         Head,
     },
     computed: {
@@ -89,11 +87,12 @@ export default {
             return string;
         },
         graphs() {
-            return [
+            let arr = [
                 {
                     id: 1,
                     title: "Сложность",
-                    values: [48, 30, 50, 48, 56, 57, 40],
+                    values: [],
+                    dates: [],
                     about: [
                         {
                             id: 11,
@@ -123,99 +122,14 @@ export default {
                     ],
                 },
             ];
+            Object.values(this.btcHistory).forEach((el) => {
+                arr[0].values.push(el["y"]);
+                arr[0].dates.push(
+                    new Date(el["x"].toFixed(0) * 1000).getFullYear()
+                );
+            });
+            return arr;
         },
-    },
-    data() {
-        return {
-            table: {
-                titles: [
-                    "Время блока",
-                    "Сложность",
-                    "Изменение",
-                    "Bits",
-                    "В среднем на блок",
-                    "Средний хэшрейт",
-                ],
-                rows: [
-                    {
-                        id: 1000,
-                        time: "2022-08-04 17:54:43",
-                        complexity: {
-                            main: "28,174,668,481,289 - ",
-                            span: "28.17 T",
-                        },
-                        change: "+ 1.74 %",
-                        bits: "0x1709fd7e",
-                        average: "09 мин 50 с",
-                        hashrate: "201.43 EH/s",
-                    },
-                    {
-                        id: 1001,
-                        time: "2022-08-04 17:54:43",
-                        complexity: {
-                            main: "28,174,668,481,289 - ",
-                            span: "28.17 T",
-                        },
-                        change: "+ 1.74 %",
-                        bits: "0x1709fd7e",
-                        average: "09 мин 50 с",
-                        hashrate: "201.43 EH/s",
-                    },
-                    {
-                        id: 1002,
-                        time: "2022-08-04 17:54:43",
-                        complexity: {
-                            main: "28,174,668,481,289 - ",
-                            span: "28.17 T",
-                        },
-                        change: "+ 1.74 %",
-                        bits: "0x1709fd7e",
-                        average: "09 мин 50 с",
-                        hashrate: "201.43 EH/s",
-                    },
-                    {
-                        id: 1003,
-                        time: "2022-08-04 17:54:43",
-                        complexity: {
-                            main: "28,174,668,481,289 - ",
-                            span: "28.17 T",
-                        },
-                        change: "+ 1.74 %",
-                        bits: "0x1709fd7e",
-                        average: "09 мин 50 с",
-                        hashrate: "201.43 EH/s",
-                    },
-                    {
-                        id: 1004,
-                        time: "2022-08-04 17:54:43",
-                        complexity: {
-                            main: "28,174,668,481,289 - ",
-                            span: "28.17 T",
-                        },
-                        change: "+ 1.74 %",
-                        bits: "0x1709fd7e",
-                        average: "09 мин 50 с",
-                        hashrate: "201.43 EH/s",
-                    },
-                    {
-                        id: 1005,
-                        time: "2022-08-04 17:54:43",
-                        complexity: {
-                            main: "28,174,668,481,289 - ",
-                            span: "28.17 T",
-                        },
-                        change: "+ 1.74 %",
-                        bits: "0x1709fd7e",
-                        average: "09 мин 50 с",
-                        hashrate: "201.43 EH/s",
-                    },
-                ],
-            },
-        };
-    },
-    mounted() {
-        console.log(this.btcHistory);
-        console.log(new Date(1230940800000));
     },
 };
 </script>

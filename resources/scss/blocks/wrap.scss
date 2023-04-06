@@ -59,6 +59,21 @@
     &:last-child {
         margin-bottom: 0;
     }
+    &__block {
+        &-graph {
+            @media (max-width: 998.98px) {
+                .graph {
+                    &__main {
+                        display: flex;
+                        align-items: center;
+                    }
+                    &__list {
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
     &_title {
         margin-bottom: 12px;
         width: 100%;
