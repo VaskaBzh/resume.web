@@ -110,7 +110,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/wallet_process', 'visual')->name('wallet_process');
     });
     Route::controller(PaymentController::class)->group(function () {
-        Route::get('/see_balance', 'getBalance')->name('see_balance');
-        Route::post('/send_payment', 'sendPayment')->name('send_payment');
+//        Route::get('/see_balance', 'getBalance')->name('see_balance');
+        Route::post('/send_payment', 'payout')->name('send_payment');
     });
 });

@@ -97,15 +97,15 @@ export default {
                 this.allHistoryForDays[this.getActive].forEach((el, i) => {
                     let date = new Date(el[0] * 1000);
                     let accModel = {
-                        date: `${date.getFullYear()}.${
-                            String(date.getMonth()).length < 2
-                                ? "0" + date.getMonth()
-                                : date.getMonth()
+                        date: `${
+                            String(date.getUTCDate()).length < 2
+                                ? "0" + date.getUTCDate()
+                                : date.getUTCDate()
                         }.${
-                            String(date.getDay()).length < 2
-                                ? "0" + date.getDay()
-                                : date.getDay()
-                        }`,
+                            String(date.getUTCMonth() + 1).length < 2
+                                ? "0" + (date.getUTCMonth() + 1)
+                                : date.getUTCMonth() + 1
+                        }.${date.getUTCFullYear()}`,
                         time: el[0],
                         mode: `FPPS+ Начисление`,
                         hash: Number(el[1]).toFixed(2),
