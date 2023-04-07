@@ -1,58 +1,66 @@
 <?php
 
-namespace App\Http\Controllers\Payments;
+namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
-use App\Models\Sub;
-use App\Models\Transaction;
 use Illuminate\Http\Request;
-use Denpa\Bitcoin\Client as BitcoinClient;
+use App\Models\Transaction;
+use Illuminate\Support\Facades\Http;
 
-class PaymentController extends Controller
+class WithdrawalController extends Controller
 {
-    /**
-     * Handle the payout process.
-     *
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function payout(Request $request)
+    public function withdraw(Request $request)
     {
-        $bitcoin = new BitcoinClient([
-            'scheme'        => 'http',
-            'host'          => '92.205.163.43',
-            'port'          => 8332,
-            'user'          => 'bituser',
-            'password'      => '111',
-            'ca'            => null,
-            'preserve_case' => false,
-        ]);
+        $user = auth()->user();
+        $wallet = $request->input('wallet');
+        $percentage = $request->input('percentage');
+        $minWithdrawalAmount = 0.0001; // Замените на ваше минимальное значение для вывода
 
-        $fromAddress = "bc1qhntf7tus7tuc07vh629fd8y96jhdysflnzujsl";
-        $toAddress = $request->input('to_address');
-        $amount = $request->input('amount');
+        // Рассчитываем сумму для вывода
+        $withdrawalAmount = $user->balance * ($percentage / 100);
 
-//        $unspentOutputs = $bitcoin->getbalance();
-        $balance = json_decode($bitcoin->getbalance());
+        // Проверяем, достаточно ли средств для вывода
+        if ($user->balance >= $minWithdrawalAmount) {
+            $transaction = new Transaction([
+                'user_id' => $user->id,
+                'wallet' => $wallet,
+                'amount' => $withdrawalAmount,
+                'status' => 'выплачено',
+                'timestamp' => now(),
+            ]);
 
-        if ($balance < $amount) {
-            return response()->json(['error' => 'Insufficient balance.']);
+            // Осуществляем выплату через протокол RPC
+            $response = Http::withBasicAuth('your_rpc_username', 'your_rpc_password')
+                ->post('http://92.205.163.43:8332', [
+                    'jsonrpc' => '1.0',
+                    'id' => 'withdrawal',
+                    'method' => 'sendtoaddress',
+                    'params' => [$wallet, $withdrawalAmount],
+                ]);
+
+            if ($response->successful()) {
+                $transaction->txid = $response->json()['result'];
+                $transaction->save();
+
+                // Обновляем баланс пользователя
+                $user->balance -= $withdrawalAmount;
+                $user->save();
+
+                return response()->json(['message' => 'Выплата успешно выполнена.']);
+            } else {
+                return response()->json(['message' => 'Произошла ошибка при выполнении выплаты.']);
+            }
+        } else {
+            // Создаем запись транзакции со статусом "в ожидании"
+            $transaction = new Transaction([
+                'user_id' => $user->id,
+                'wallet' => $wallet,
+                'amount' => $withdrawalAmount,
+                'status' => 'в ожидании',
+                'timestamp' => now(),
+            ]);
+            $transaction->save();
+
+            return response()->json(['message' => 'Недостаточно средств для вывода. Запрос на вывод отправлен и будет обработан, когда накопится минимальная сумма.']);
         }
-
-        // Send the funds
-        $txid = $bitcoin->sendtoaddress($toAddress, $amount);
-
-//        $transaction = new Transaction([
-//            'sub_id' => Auth::user()->group_id,
-//            'amount' => $request->input("amount"),
-//            'wallet_address' => $request->input("address"),
-////                   'txid' => $txid,
-//            'status' => 'Выплачено'
-//        ]);
-//        dump($txid);
-//        $transaction->save();
-
-        dd($txid);
-
-        return response()->json(['success' => true, 'txid' => $txid]);
     }
 }
