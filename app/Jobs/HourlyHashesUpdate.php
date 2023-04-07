@@ -57,7 +57,7 @@ class HourlyHashesUpdate implements ShouldQueue
                         $share = 0;
                         $share = array_reduce($responseData->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
-                                if ($key == "shares_1d") {
+                                if ($key == "shares_1m") {
                                     $carry += floatval($value);
                                 }
                             }
@@ -76,6 +76,7 @@ class HourlyHashesUpdate implements ShouldQueue
                     }
 
                     $result[] = [
+                        time(),
                         number_format($share, 2, ".", ""),
                         $unit
                     ];

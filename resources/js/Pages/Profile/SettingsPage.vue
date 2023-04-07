@@ -46,7 +46,7 @@
                         <button class="all-link">Сохранить изменения</button>
                     </blue-button>
                 </form>
-                <form action="#" class="settings__column">
+                <form @submit.prevent="reset" class="settings__column">
                     <main-title tag="h3" title-name="Смена пароля"></main-title>
                     <div class="settings__block">
                         <div class="settings__row">
@@ -54,6 +54,7 @@
                                 >Введите старый пароль</label
                             >
                             <input
+                                v-model="resetForm.old_password"
                                 type="password"
                                 name="old"
                                 id="old"
@@ -65,6 +66,7 @@
                                 >Введите новый пароль</label
                             >
                             <input
+                                v-model="resetForm.password"
                                 type="password"
                                 name="new"
                                 id="new"
@@ -78,6 +80,7 @@
                                 >Подтвердите пароль</label
                             >
                             <input
+                                v-model="resetForm.password_confirmation"
                                 type="password"
                                 name="accept"
                                 id="accept"
@@ -85,7 +88,7 @@
                             />
                         </div>
                     </div>
-                    <blue-button>
+                    <blue-button type="submit">
                         <button class="all-link">Изменить пароль</button>
                     </blue-button>
                 </form>
@@ -112,6 +115,7 @@
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { useForm } from "@inertiajs/vue3";
+import axios from "axios";
 // import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 
 export default {
@@ -122,12 +126,23 @@ export default {
     },
     setup() {
         let resetForm = useForm({
+            old_password: "",
             password: "",
             password_confirmation: "",
         });
 
+        let reset = () => {
+            axios
+                .post("/password/reset", resetForm)
+                .then((res) => {
+                    console.log(res);
+                })
+                .catch((err) => console.log(err));
+        };
+
         return {
             resetForm,
+            reset,
         };
     },
     data() {
@@ -161,7 +176,7 @@ export default {
     },
     mounted() {
         document.title = "Настройки";
-        this.$refs.checkbox.classList.add("checked");
+        // this.$refs.checkbox.classList.add("checked");
     },
 };
 </script>

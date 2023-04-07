@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Accuals\AccrualController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Hashes\HashController;
 use App\Http\Controllers\IndexController;
@@ -81,7 +82,10 @@ Route::middleware('auth')->group(function () {
             Route::get('/accruals', 'accruals')->name('accruals');
             Route::get('/connecting', 'connecting')->name('connecting');
         });
+    });
 
+    Route::controller(ResetPasswordController::class)->group(function () {
+       Route::post('/password/reset', 'changePassword');
     });
 
     Route::controller(WorkerController::class)->group(function () {

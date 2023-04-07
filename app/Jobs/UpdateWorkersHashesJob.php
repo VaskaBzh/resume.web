@@ -62,7 +62,7 @@ class UpdateWorkersHashesJob implements ShouldQueue
                         }
                     }
 
-                    $result[] = [$shares, $unit];
+                    $result[] = [time(), $shares, $unit];
 
                     $worker->tickers = $result;
                     $worker->save();

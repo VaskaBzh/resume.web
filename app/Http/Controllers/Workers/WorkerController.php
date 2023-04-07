@@ -60,7 +60,11 @@ class WorkerController extends Controller
                     }
                 }
 
-                $result[] = [number_format($shares, 2, ".", ""), $unit];
+                $result[] = [
+                    time(),
+                    number_format($shares, 2, ".", ""),
+                    $unit
+                ];
 
                 $worker->tickers = $result;
                 $worker->save();

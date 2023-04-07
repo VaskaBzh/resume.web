@@ -1,6 +1,5 @@
 <template>
     <Head title="Статистика" />
-    <div class="hidden">{{ this.allHistory }}</div>
     <div class="statistic">
         <div class="statistic__wrapper">
             <main-title tag="h2" class="statistic__title">
@@ -255,10 +254,10 @@ export default {
             ) {
                 history = Object.values(this.allHistory[this.getActive]).map(
                     (el) => {
-                        if (el[1] === "T") {
-                            return el[0];
+                        if (el[2] === "T") {
+                            return el[1];
                         } else {
-                            return Number(el[0]) * 1000;
+                            return Number(el[1]) * 1000;
                         }
                     }
                 );

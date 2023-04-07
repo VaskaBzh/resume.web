@@ -1,6 +1,5 @@
 <template>
     <Head title="Воркеры" />
-    <div class="hidden">{{ this.allAccounts }}</div>
     <div class="workers">
         <div class="workers__wrapper">
             <main-title tag="h2" enter-class="workers__title">

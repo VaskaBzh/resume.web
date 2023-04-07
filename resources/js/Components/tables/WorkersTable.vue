@@ -77,24 +77,13 @@
         </thead>
         <tbody>
             <tr
-                v-if="this.viewportWidth > 991.98"
+                v-if="this.viewportWidth > 767.98"
                 class="row-main"
                 :key="mainRow"
             >
                 <td class="main__number">{{ this.mainRow.hash }}</td>
                 <td class="main__number">{{ this.hashRate }} TH/s</td>
                 <td class="main__number">{{ this.hashAvarage24 }} TH/s</td>
-                <td class="main__number">{{ this.rejectRate }} %</td>
-            </tr>
-            <tr
-                v-else-if="
-                    this.viewportWidth < 991.98 && this.viewportWidth > 767.98
-                "
-                class="row-main"
-                :key="mainRow"
-            >
-                <td class="main__number">{{ this.mainRow.hash }}</td>
-                <td class="main__number">{{ this.hashRate }} TH/s</td>
                 <td class="main__number">{{ this.rejectRate }} %</td>
             </tr>
             <tr v-else class="row-main" :key="mainRow">
@@ -210,6 +199,7 @@ export default {
             let history;
             if (this.allHistoryMiner && this.allHistoryMiner[index]) {
                 history = this.allHistoryMiner[index];
+                console.log(history);
             }
             this.graphs[0].values = [];
 
@@ -218,7 +208,7 @@ export default {
                     let timeStamp = history[history.length - i];
                     if (timeStamp) {
                         this.graphs[0].values.unshift(
-                            Number(timeStamp[0]).toFixed(0)
+                            Number(timeStamp[1]).toFixed(0)
                         );
                     } else {
                         this.graphs[0].values.unshift(String(0));
@@ -260,7 +250,6 @@ export default {
     .graph {
         width: 100%;
         min-height: auto;
-        animation: opacity 1.3s ease 0s;
     }
     @media (max-width: 767.98px) {
         overflow-x: scroll;

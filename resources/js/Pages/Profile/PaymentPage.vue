@@ -136,44 +136,46 @@ export default {
             if (this.FullEarn) {
                 if (this.FullEarn[this.getActive] > 0) {
                     let date = new Date();
-                    if (this.paymentInfo.rows.length > 0) {
-                        if (
-                            this.paymentInfo.rows[
-                                this.paymentInfo.rows.length - 1
-                            ].date
-                                .split("-")
-                                .reverse()
-                                .join(".") !== date.toLocaleDateString("eu-US")
-                        ) {
-                            let db = {
-                                user_id: this.user.id,
-                                amount: (
-                                    (Number(this.earn - this.allPayment) /
-                                        100) *
-                                    Number(this.amount.replace("%", ""))
-                                ).toFixed(8),
-                                // percent: this.amount,
-                                wallet_address: this.form.wallet,
-                            };
-                            // this.$store.dispatch("postInfo", db);
-                        }
-                    } else {
-                        let db = {
-                            user_id: this.user.id,
-                            // this.FullEarn[this.getActive] - this.allPayment
-                            amount:
-                                this.FullEarn[this.getActive] -
-                                this.allPayment *
-                                    100 *
-                                    Number(
-                                        this.amount.replace("%", "")
-                                    ).toFixed(8),
-                            percent: this.amount,
-                            address: this.form.wallet,
-                        };
-                        axios.post("/send_payment", db);
-                        // this.$store.dispatch("postInfo", db);
-                    }
+                    // if (this.paymentInfo.rows.length > 0) {
+                    //     if (
+                    //         this.paymentInfo.rows[
+                    //             this.paymentInfo.rows.length - 1
+                    //         ].date
+                    //             .split("-")
+                    //             .reverse()
+                    //             .join(".") !== date.toLocaleDateString("eu-US")
+                    //     ) {
+                    //         let db = {
+                    //             user_id: this.user.id,
+                    //             amount: (
+                    //                 (Number(
+                    //                     this.FullEarn[this.getActive] -
+                    //                         this.allPayment
+                    //                 ) /
+                    //                     100) *
+                    //                 Number(this.amount.replace("%", ""))
+                    //             ).toFixed(8),
+                    //             percent: this.amount,
+                    //             address: this.form.wallet,
+                    //         };
+                    //         // this.$store.dispatch("postInfo", db);
+                    //     }
+                    // } else {
+                    let db = {
+                        user_id: this.user.id,
+                        amount: (
+                            (Number(
+                                this.FullEarn[this.getActive] - this.allPayment
+                            ) /
+                                100) *
+                            Number(this.amount.replace("%", ""))
+                        ).toFixed(8),
+                        percent: this.amount,
+                        address: this.form.wallet,
+                    };
+                    axios.post("/send_payment", db);
+                    // this.$store.dispatch("postInfo", db);
+                    // }
                 }
             }
         },

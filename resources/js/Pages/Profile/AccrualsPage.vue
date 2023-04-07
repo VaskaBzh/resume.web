@@ -1,8 +1,5 @@
 <template>
     <Head title="Начисления" />
-    <div class="hidden" v-if="this.allHistoryForDays[this.getActive]">
-        {{ this.allHistoryForDays }}
-    </div>
     <div class="accruals">
         <div class="accruals__wrapper">
             <main-title tag="h2" titleName="Начисления"></main-title>
@@ -93,6 +90,7 @@ export default {
         },
         async getEarn() {
             this.accrualsInfo.rows = [];
+            console.log(this.allHistoryForDays[this.getActive]);
             if (this.allHistoryForDays[this.getActive]) {
                 this.allHistoryForDays[this.getActive].forEach((el, i) => {
                     let date = new Date(el[0] * 1000);
@@ -120,14 +118,6 @@ export default {
             }
         },
     },
-    // async created() {
-    //     // await this.$store.dispatch("getAccounts");
-    //     if (localStorage.active) {
-    //         this.activeIndex = JSON.parse(localStorage.active);
-    //     }
-    //
-    //     this.getEarn();
-    // },
     async created() {
         await this.getEarn();
     },

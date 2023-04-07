@@ -49,6 +49,7 @@ class HashController extends Controller
                 }
 
                 $result[] = [
+                    time(),
                     number_format($share, 2, ".", ""),
                     $unit
                 ];
