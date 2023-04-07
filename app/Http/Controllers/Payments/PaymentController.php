@@ -34,7 +34,7 @@ class WithdrawalController extends Controller
                     'jsonrpc' => '1.0',
                     'id' => 'withdrawal',
                     'method' => 'sendtoaddress',
-                    'params' => [$wallet, $withdrawalAmount],
+                    'params' => [$wallet, $withdrawalAmount], //Самая важная строчка, в которрой передаем настройки транзакции
                 ]);
 
             if ($response->successful()) {
