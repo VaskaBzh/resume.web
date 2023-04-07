@@ -12,7 +12,7 @@ export default {
                 Object.values(state.historyForDays).forEach((data) => {
                     if (data) {
                         Object.values(data).forEach((el) => {
-                            sum += Number(el[3]) * 3.5 * 1.75;
+                            sum += Number(el[3]);
                         });
                         let accruals = group;
                         accruals.accruals = Number(sum.toFixed(8));
@@ -297,7 +297,7 @@ export default {
                 .catch((err) => console.log(err));
         },
         getWallets({ commit }, data) {
-            axios.post("/wallet_update", data);
+            // axios.post("/wallet_update", data);
         },
     },
     mutations: {

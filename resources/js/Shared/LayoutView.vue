@@ -70,7 +70,6 @@ export default {
     async created() {
         await this.$store.dispatch("getConverter");
         if (this.auth_user && this.$store.getters.getValid) {
-            this.$store.dispatch("getInfo");
             await this.$store.dispatch("getAccounts");
         }
         if (this.auth_user) {
@@ -88,6 +87,9 @@ export default {
         }
     },
     unmounted() {
+        if (!this.auth_user) {
+            this.$store.dispatch("destroyer");
+        }
         if (this.interval) {
             clearInterval(this.interval);
         }

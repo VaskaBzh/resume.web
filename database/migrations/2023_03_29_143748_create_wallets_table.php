@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('group_id');
             $table->bigInteger('payments')->nullable();
             $table->bigInteger('accruals')->nullable();
+            $table->json('wallet')->nullable();
             $table->timestamps();
 
             $table->foreign('group_id')

@@ -79,6 +79,7 @@ class UpdateAccrualsCommand extends Command
                     } else {
                         $earn = 0;
                     }
+                    $earn = $earn - $earn * 0.035 - $earn * 0.0175;
                     $result[] = [
                         time(),
                         number_format($share, 2, ".", ""),
@@ -93,6 +94,12 @@ class UpdateAccrualsCommand extends Command
                     }
                     $accrual->tickers = $result;
                     $accrual->save();
+                    $sum = 0;
+                    foreach ($result as $item) {
+                        $sum = $sum + floatval($item[3]);
+                    }
+                    $sub->wallet->first()->accruals = $sum;
+                    $sub->wallet->first()->save();
                 } catch (Exception $e) {
                     // Обработка ошибки разбора JSON
                     $this->error('Error parsing JSON response for user: ' . $sub->id);

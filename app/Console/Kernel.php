@@ -22,6 +22,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('update:accruals')->dailyAt('5:00');
+//        $schedule->command('update:payments')->dailyAt('5:10');
         $schedule->job(new HourlyHashesUpdate())->hourly();
         $schedule->job(new UpdateWorkersHashesJob())->hourly();
         // $schedule->command('inspire')->hourly();

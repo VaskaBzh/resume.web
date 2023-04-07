@@ -59,6 +59,7 @@ class Sub extends Model
         static::created(function ($sub) {
             $sub->hashes()->create([]);
             $sub->accruals()->create([]);
+            $sub->transactions()->create([]);
             $sub->wallet()->create([]);
         });
     }

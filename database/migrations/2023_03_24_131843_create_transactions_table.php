@@ -16,10 +16,12 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('sub_id');
-            $table->string('wallet_address');
-            $table->decimal('amount', 16, 8);
+            $table->json('tickers')->nullable();
+//            $table->string('wallet_address');
+//            $table->decimal('amount', 16, 8);
 //            $table->string('percent');
-            $table->enum('status', ['pending', 'approved', 'rejected', 'completed']);
+//            $table->string('txid');
+//            $table->enum('status', ['pending', 'approved', 'rejected', 'completed']);
             $table->timestamps();
 
             $table->foreign('sub_id')

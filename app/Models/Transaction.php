@@ -17,6 +17,8 @@ class Transaction extends Model
         'wallet_address',
         'amount',
         'status',
+        'percent',
+        'txid',
         'date',
         'sub_id',
     ];

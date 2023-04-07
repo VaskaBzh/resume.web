@@ -1,6 +1,6 @@
 <template>
     <Head title="Выплаты" />
-    <div class="hidden">{{ this.getTable }}</div>
+    <div class="hidden">{{ this.allAccounts }}</div>
     <div class="payment">
         <div class="payment__wrapper">
             <main-title tag="h2" titleName="Выплаты"></main-title>
@@ -25,7 +25,7 @@
             </div>
             <main-slider
                 :table="this.paymentInfo"
-                :wait="this.allHistoryForDays"
+                :wait="this.getTable"
             ></main-slider>
             <popup-view id="payment">
                 <form
@@ -87,7 +87,14 @@ export default {
         return {
             date: {},
             paymentInfo: {
-                titles: ["Дата", "Сумма", "Статус"],
+                titles: [
+                    "Дата",
+                    "Доля вывода",
+                    "Сумма",
+                    // "Кошелек",
+                    // "Транзакция",
+                    "Статус",
+                ],
                 rows: [],
             },
             amount: "",
@@ -114,6 +121,7 @@ export default {
     computed: {
         ...mapGetters([
             "FullEarn",
+            "allAccounts",
             "getActive",
             "getTable",
             "allHistoryForDays",
@@ -135,7 +143,7 @@ export default {
         getPayment() {
             if (this.FullEarn) {
                 if (this.FullEarn[this.getActive] > 0) {
-                    let date = new Date();
+                    // let date = new Date();
                     // if (this.paymentInfo.rows.length > 0) {
                     //     if (
                     //         this.paymentInfo.rows[
@@ -162,7 +170,7 @@ export default {
                     //     }
                     // } else {
                     let db = {
-                        user_id: this.user.id,
+                        group_id: this.allAccounts[this.getActive].id,
                         amount: (
                             (Number(
                                 this.FullEarn[this.getActive] - this.allPayment
@@ -185,8 +193,9 @@ export default {
                 let paymentModel = {
                     date: row.date,
                     link: row.address,
+                    transaction: row.transaction,
                     earn: row.amount,
-                    // percent: row.percent,
+                    percent: row.percent,
                     info: row.info,
                     infoClass: row.infoClass,
                 };
@@ -195,39 +204,24 @@ export default {
             });
         },
     },
-    updated() {
-        if (this.getTable.length > 0) {
+    beforeUpdate() {
+        if (this.allAccounts[this.getActive]) {
+            this.$store.dispatch("getInfo", this.allAccounts[this.getActive]);
+        }
+        if (this.getTable) {
             this.pushRows();
+        }
+    },
+    created() {
+        if (this.allAccounts[this.getActive]) {
+            this.$store.dispatch("getInfo", this.allAccounts[this.getActive]);
         }
     },
     mounted() {
         document.title = "Выплаты";
-        if (this.getTable.length > 0) {
+        if (this.getTable) {
             this.pushRows();
         }
-        // axios
-        //     .get("/see_balance")
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
-        // let instance = axios.create({
-        //     baseURL: "https://pool.api.btc.com/v1",
-        //     headers: {
-        //         "Content-Type": "application/json; charset=utf-8",
-        //         Authorization: "sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N",
-        //     },
-        // });
-        // instance
-        //     .get("/worker/stats")
-        //     .then((res) => {
-        //         console.log(res);
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
     },
 };
 </script>

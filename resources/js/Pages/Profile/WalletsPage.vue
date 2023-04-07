@@ -140,7 +140,7 @@ export default {
             let sum = 0;
             if (this.allHistoryForDays) {
                 Object.values(this.allHistoryForDays).forEach((acc) => {
-                    if (acc) {
+                    if (acc[1]) {
                         sum += Number(acc[1][3]);
                     }
                 });

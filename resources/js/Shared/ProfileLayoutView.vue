@@ -59,12 +59,13 @@ export default {
     async created() {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getConverter");
-            this.$store.dispatch("getInfo");
             await this.$store.dispatch("getAccounts");
         }
         this.interval = setInterval(() => {
             this.$store.dispatch("getAccounts");
         }, 60000);
+    },
+    updated() {
     },
     unmounted() {
         if (!this.auth_user) {

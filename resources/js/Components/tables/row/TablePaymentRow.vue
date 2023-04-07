@@ -79,14 +79,15 @@
         <td class="main__number">
             {{ this.columns.date }}
         </td>
-        <!--        <td class="main__number">{{ this.columns.percent }} %</td>-->
+        <td class="main__number">{{ this.columns.percent }}</td>
         <td class="main__number">{{ this.columns.earn }} BTC</td>
+        <!--        <td class="main__number main__link">{{ this.columns.link }}</td>-->
+        <!--        <td ref="link" @click="this.copy" class="main__link">-->
+        <!--            {{ this.columns.transaction }}-->
+        <!--        </td>-->
         <td class="main__number">
             <span :class="this.columns.infoClass">{{ this.columns.info }}</span>
         </td>
-        <!--        <td ref="link" @click="this.copy" class="main__link">-->
-        <!--            {{ this.columns.link }}-->
-        <!--        </td>-->
     </tr>
     <tr v-scroll="'opacity'" class="row-ref-list" v-else-if="columns.email">
         <td class="main__number">{{ this.columns.email }}</td>
@@ -217,6 +218,9 @@ td {
             border-radius: 0 12px 12px 0;
             padding-right: 10px;
         }
+    }
+    .main__link {
+        max-width: 150px;
     }
     span {
         margin-left: 5px;

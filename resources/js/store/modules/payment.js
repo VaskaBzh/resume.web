@@ -3,25 +3,31 @@ import Vue from "lodash";
 
 export default {
     actions: {
-        postInfo({ commit, state }, data) {
-            console.log(data);
-            axios.post("/set_payment", data).then((res) => console.log(res));
-        },
-        async getInfo({ commit, state }) {
-            axios.get("/render_payment").then((res) => {
-                res.data.data.forEach((row, i) => {
+        async getInfo({ commit, state }, data) {
+            axios.post("/see_balance", data).then((res) => {
+                JSON.parse(res.data.tickers).forEach((el, i) => {
+                    let date = new Date(el[0] * 1000);
                     let rowModel = {
-                        date: row.created_at.substr(0, 10),
-                        amount: row.amount,
-                        percent: row.percent,
-                        address: row.wallet_address,
+                        date: `${
+                            String(date.getUTCDate()).length < 2
+                                ? "0" + date.getUTCDate()
+                                : date.getUTCDate()
+                        }.${
+                            String(date.getUTCMonth() + 1).length < 2
+                                ? "0" + (date.getUTCMonth() + 1)
+                                : date.getUTCMonth() + 1
+                        }.${date.getUTCFullYear()}`,
+                        amount: el[2],
+                        percent: el[4],
+                        address: el[1],
+                        transaction: el[3],
                         info:
-                            row.status === "pending"
+                            el[5] === "pending"
                                 ? "В обработке"
-                                : row.status === "completed"
+                                : el[5] === "completed"
                                 ? "Оплачено"
                                 : "Отклонено",
-                        infoClass: row.status,
+                        infoClass: el[5],
                     };
                     commit("updateTable", {
                         item: rowModel,

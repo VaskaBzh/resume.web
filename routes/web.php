@@ -97,7 +97,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(TransactionController::class)->group(function () {
         Route::post("/set_payment", "store")->name('set_payment');
-        Route::get("/render_payment", "render")->name('render_payment');
+//        Route::get("/render_payment", "render")->name('render_payment');
     });
     Route::controller(SubController::class)->group(function () {
         Route::get('/sub_process', 'visual')->name('sub_process');
@@ -114,7 +114,7 @@ Route::middleware('auth')->group(function () {
         Route::put('/wallet_process', 'visual')->name('wallet_process');
     });
     Route::controller(PaymentController::class)->group(function () {
-//        Route::get('/see_balance', 'getBalance')->name('see_balance');
+        Route::post('/see_balance', 'getBalance')->name('see_balance');
         Route::post('/send_payment', 'payout')->name('send_payment');
     });
 });
