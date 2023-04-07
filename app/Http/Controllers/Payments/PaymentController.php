@@ -25,20 +25,21 @@ class PaymentController extends Controller
             $wallet = $sub->wallet->first();
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-            $walletPassword = env('WALLET_PASSWORD');
-
-            // Разблокируйте кошелек перед выполнением выплаты
-            $unlockResponse = Http::withBasicAuth('your_rpc_username', 'your_rpc_password')
-            ->post('http://92.205.163.43:8332', [
-                'jsonrpc' => '1.0',
-                'id' => 'unlock_wallet',
-                'method' => 'walletpassphrase',
-                'params' => [$walletPassword, 60], // Разблокировать на 60 секунд
-            ]);
-
-            if (!$unlockResponse->successful()) {
-                // Обработка ошибки разблокировки кошелька
-            }
+//            $walletPassword = env('WALLET_PASSWORD');
+//
+//            // Разблокируйте кошелек перед выполнением выплаты
+//            $unlockResponse = Http::withBasicAuth('your_rpc_username', 'your_rpc_password')
+//            ->post('http://92.205.163.43:8332', [
+//                'jsonrpc' => '1.0',
+//                'id' => 'unlock_wallet',
+//                'method' => 'walletpassphrase',
+//                'params' => [$walletPassword, 60], // Разблокировать на 60 секунд
+//            ]);
+//
+//            if (!$unlockResponse->successful()) {
+//                // Обработка ошибки разблокировки кошелька
+////                return response()->json(['message' => 'Не разблокировано.']);
+//            }
 ////////////////////////////////////////////////////////////////////////////////////////////////////
             // Осуществляем выплату через протокол RPC
             $response = Http::withBasicAuth('bituser', '111')

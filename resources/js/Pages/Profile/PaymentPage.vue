@@ -130,7 +130,9 @@ export default {
             let val = 0;
             if (this.paymentInfo.rows.length > 0) {
                 this.paymentInfo.rows.forEach((el) => {
-                    val += Number(el.earn);
+                    if (el.infoClass === "completed") {
+                        val += Number(el.earn);
+                    }
                 });
             }
             return val.toFixed(8);

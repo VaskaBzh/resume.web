@@ -284,9 +284,14 @@ td {
                     height: 10px;
                     border-radius: 50%;
                 }
-                &.pending {
+                &.completed {
                     &:before {
-                        background: #e9c058;
+                        background: #13d60e;
+                    }
+                }
+                &.rejected {
+                    &:before {
+                        background: #ff0000;
                     }
                 }
             }
