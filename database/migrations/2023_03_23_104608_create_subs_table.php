@@ -18,6 +18,9 @@ return new class extends Migration
             $table->unsignedBigInteger('user_id');
             $table->bigInteger("group_id")->unique();
             $table->string("sub");
+            $table->bigInteger('payments')->nullable();
+            $table->bigInteger('unPayments')->nullable();
+            $table->bigInteger('accruals')->nullable();;
             $table->timestamps();
 
             $table->foreign('user_id')

@@ -60,6 +60,7 @@ export default {
         Head,
     },
     layout: profileLayoutView,
+    props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
             history: {},
@@ -90,9 +91,9 @@ export default {
         },
         async getEarn() {
             this.accrualsInfo.rows = [];
-            console.log(this.allHistoryForDays[this.getActive]);
             if (this.allHistoryForDays[this.getActive]) {
                 this.allHistoryForDays[this.getActive].forEach((el, i) => {
+                    console.log(el);
                     let date = new Date(el[0] * 1000);
                     let accModel = {
                         date: `${
@@ -106,12 +107,12 @@ export default {
                         }.${date.getUTCFullYear()}`,
                         time: el[0],
                         mode: `FPPS+ Начисление`,
-                        hash: Number(el[1]).toFixed(2),
-                        unit: el[2],
-                        earn: el[3],
-                        diff: (el[4] / 1000000000000).toFixed(2),
+                        hash: Number(el["hash"]).toFixed(2),
+                        unit: el["unit"],
+                        earn: el["amount"],
+                        diff: (el["diff"] / 1000000000000).toFixed(2),
                     };
-                    if (!isNaN(el[3]) && Number(el[3]) !== 0) {
+                    if (!isNaN(el["amount"]) && Number(el["amount"]) !== 0) {
                         this.accrualsInfo.rows.push(accModel);
                     }
                 });

@@ -11,7 +11,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         // ...
-        Commands\UpdateAccrualsCommand::class,
+        Commands\UpdateIncomesCommand::class,
     ];
     /**
      * Define the application's command schedule.
@@ -21,7 +21,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('update:accruals')->dailyAt('5:00');
+        $schedule->command('update:incomes')->dailyAt('5:00');
 //        $schedule->command('update:payments')->dailyAt('5:10');
         $schedule->job(new HourlyHashesUpdate())->hourly();
         $schedule->job(new UpdateWorkersHashesJob())->hourly();

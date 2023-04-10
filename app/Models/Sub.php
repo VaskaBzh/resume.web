@@ -15,6 +15,9 @@ class Sub extends Model
         'user_id',
         'group_id',
         'sub',
+        'payments',
+        'unPayments',
+        'accruals',
     ];
 
     public function user()
@@ -32,17 +35,12 @@ class Sub extends Model
         return $this->hasMany(Hash::class, 'group_id', 'group_id');
     }
 
-    public function accruals()
+    public function incomes()
     {
-        return $this->hasMany(Accrual::class, 'group_id', 'group_id');
+        return $this->hasMany(Income::class, 'group_id', 'group_id');
     }
 
-    public function transactions()
-    {
-        return $this->hasMany(Transaction::class, "sub_id");
-    }
-
-    public function wallet()
+    public function wallets()
     {
         return $this->hasMany(Wallet::class, 'group_id', 'group_id');
     }
@@ -57,10 +55,7 @@ class Sub extends Model
         parent::boot();
 
         static::created(function ($sub) {
-            $sub->hashes()->create([]);
-            $sub->accruals()->create([]);
-            $sub->transactions()->create([]);
-            $sub->wallet()->create([]);
+            $sub->wallets()->create([]);
         });
     }
 }

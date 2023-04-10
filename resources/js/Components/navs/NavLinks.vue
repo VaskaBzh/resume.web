@@ -45,6 +45,13 @@
             >
                 Кошельки
             </Link>
+            <Link
+                :href="route('income')"
+                class="nav__link non-before"
+                :class="{ active: $page.url === '/income' }"
+            >
+                Доходы
+            </Link>
             <!--            <Link-->
             <!--                :href="route('ref_page')"-->
             <!--                class="nav__link non-before"-->

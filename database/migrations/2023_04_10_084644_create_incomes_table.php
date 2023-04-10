@@ -13,10 +13,19 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('accruals', function (Blueprint $table) {
+        Schema::create('incomes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('group_id');
-            $table->json('tickers')->nullable();
+            $table->unsignedBigInteger('group_id');
+            $table->float('percent')->nullable();
+            $table->string('txid')->nullable();
+            $table->string('wallet')->nullable();
+            $table->float('payment')->nullable();
+            $table->float('amount');
+            $table->string('unit');
+            $table->string('status');
+            $table->string('message')->nullable();
+            $table->float('hash');
+            $table->bigInteger('diff');
             $table->timestamps();
 
             $table->foreign('group_id')
@@ -33,6 +42,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('accruals');
+        Schema::dropIfExists('incomes');
     }
 };

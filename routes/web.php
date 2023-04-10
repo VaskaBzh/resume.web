@@ -1,15 +1,14 @@
 <?php
 
-use App\Http\Controllers\Accuals\AccrualController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Hashes\HashController;
+use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\Subs\SubController;
-use App\Http\Controllers\Transactions\TransactionController;
 use App\Http\Controllers\Wallets\WalletController;
 use App\Http\Controllers\Workers\WorkerController;
 use Illuminate\Support\Facades\Route;
@@ -71,15 +70,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::redirect('/profile', '/profile/accounts');
         Route::get('/wallets', 'wallets')->name('wallets');
-//        Route::get('/history', 'history')->name('history');
+        Route::get('/income', 'income')->name('income');
 //        Route::get('/ref-page', 'ref_page')->name('ref_page');
         Route::get('/settings', 'settings')->name('settings');
         Route::prefix('/profile')->group(function () {
             Route::get('/accounts', 'accounts')->name('accounts');
             Route::get('/statistic', 'statistic')->name('statistic');
             Route::get('/workers', 'workers')->name('workers');
-            Route::get('/payment', 'payment')->name('payment');
-            Route::get('/accruals', 'accruals')->name('accruals');
+//            Route::get('/payment', 'payment')->name('payment');
+//            Route::get('/accruals', 'accruals')->name('accruals');
             Route::get('/connecting', 'connecting')->name('connecting');
         });
     });
@@ -95,26 +94,16 @@ Route::middleware('auth')->group(function () {
     Route::controller(HashController::class)->group(function () {
         Route::put('/hash_process', 'visual')->name('hash_process');
     });
-    Route::controller(TransactionController::class)->group(function () {
-        Route::post("/set_payment", "store")->name('set_payment');
-//        Route::get("/render_payment", "render")->name('render_payment');
-    });
     Route::controller(SubController::class)->group(function () {
         Route::get('/sub_process', 'visual')->name('sub_process');
         Route::get('/sub_strong_delete', 'delete')->name('sub_strong_delete');
         Route::put('/sub_delete', 'remove')->name('sub_delete');
     });
-    Route::controller(AccrualController::class)->group(function () {
-        Route::put('/accrual_create', 'create')->name('accrual_create');
-        Route::put('/accrual_update', 'update')->name('accrual_update');
-        Route::put('/accrual_process', 'visual')->name('accrual_process');
+    Route::controller(IncomeController::class)->group(function () {
+        Route::put('/income_process', 'visual')->name('income_process');
     });
     Route::controller(WalletController::class)->group(function () {
         Route::post('/wallet_update', 'update')->name('wallet_update');
         Route::put('/wallet_process', 'visual')->name('wallet_process');
-    });
-    Route::controller(PaymentController::class)->group(function () {
-        Route::post('/see_balance', 'getBalance')->name('see_balance');
-        Route::post('/send_payment', 'payout')->name('send_payment');
     });
 });

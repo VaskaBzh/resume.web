@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('wallets', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('group_id');
-            $table->bigInteger('payments')->nullable();
-            $table->bigInteger('accruals')->nullable();
-            $table->json('wallet')->nullable();
+            $table->unsignedBigInteger('group_id');
+            $table->integer('percent')->nullable();
+            $table->float('minWithdrawal')->nullable();
+            $table->string('wallet')->nullable();
             $table->timestamps();
 
             $table->foreign('group_id')

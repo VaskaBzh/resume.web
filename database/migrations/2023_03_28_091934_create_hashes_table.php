@@ -15,8 +15,9 @@ return new class extends Migration
     {
         Schema::create('hashes', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('group_id');
-            $table->json('tickers')->nullable();
+            $table->unsignedBigInteger('group_id');
+            $table->float('hash');
+            $table->string('unit');
             $table->timestamps();
 
             $table->foreign('group_id')

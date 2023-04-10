@@ -15,9 +15,10 @@ return new class extends Migration
     {
         Schema::create('workers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('group_id');
+            $table->unsignedBigInteger('group_id');
             $table->string('worker_id');
-            $table->json('tickers')->nullable();
+            $table->float('hash');
+            $table->string('unit');
             $table->timestamps();
 
             $table->foreign('group_id')

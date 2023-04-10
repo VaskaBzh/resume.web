@@ -8,11 +8,11 @@ export default {
         },
         getAllEarn({ commit, state }, group) {
             let sum = 0;
-            if (Object.values(state.historyForDays).length > 0) {
-                Object.values(state.historyForDays).forEach((data) => {
+            if (Object.values(state.incomeHistory).length > 0) {
+                Object.values(state.incomeHistory).forEach((data) => {
                     if (data) {
                         Object.values(data).forEach((el) => {
-                            sum += Number(el[3]);
+                            sum += Number(el["amount"]);
                         });
                         let accruals = group;
                         accruals.accruals = Number(sum.toFixed(8));
@@ -65,7 +65,7 @@ export default {
                                     group_with_length.length = arr.length;
                                     this.dispatch("getHistoryHash", group);
                                     this.dispatch(
-                                        "getHistoryForDays",
+                                        "getincomeHistory",
                                         group_with_length
                                     );
                                 });
@@ -262,8 +262,8 @@ export default {
                 .then((res) => {
                     if (res.data) {
                         commit("updateHistoryMiners", {
-                            historyItem: JSON.parse(res.data.tickers),
-                            key: res.data.worker_id,
+                            historyItem: Object.values(res.data),
+                            key: data.worker_id,
                         });
                     }
                 })
@@ -275,20 +275,20 @@ export default {
                 .then((res) => {
                     if (res.data.length > 0) {
                         commit("updateHistory", {
-                            historyItem: JSON.parse(res.data[0].tickers),
+                            historyItem: Object.values(res.data),
                             key: data.group_id,
                         });
                     }
                 })
                 .catch((err) => console.log(err));
         },
-        getHistoryForDays({ commit }, data) {
+        getincomeHistory({ commit }, data) {
             axios
-                .put("/accrual_process", data)
+                .put("/income_process", data)
                 .then((res) => {
                     if (res.data.length > 0) {
-                        commit("updateHistoryForDays", {
-                            historyItem: JSON.parse(res.data[0].tickers),
+                        commit("updateincomeHistory", {
+                            historyItem: Object.values(res.data),
                             key: data.group_id,
                         });
                         this.dispatch("getAllEarn", data);
@@ -302,7 +302,7 @@ export default {
     },
     mutations: {
         destroy(state) {
-            state.historyForDays = {};
+            state.incomeHistory = {};
             state.valid = true;
             state.active = -1;
             state.accounts = {};
@@ -332,8 +332,8 @@ export default {
         updateHistory(state, data) {
             Vue.set(state.history, data.key, data.historyItem);
         },
-        updateHistoryForDays(state, data) {
-            Vue.set(state.historyForDays, data.key, data.historyItem);
+        updateincomeHistory(state, data) {
+            Vue.set(state.incomeHistory, data.key, data.historyItem);
         },
         setEarn(state, earn) {
             state.earn = earn;
@@ -360,7 +360,7 @@ export default {
         hash: {},
         history: {},
         historyMiners: {},
-        historyForDays: {},
+        incomeHistory: {},
         updateId: 0,
         fullEarn: {},
         validate: false,
@@ -374,8 +374,8 @@ export default {
         allHistory(state) {
             return state.history;
         },
-        allHistoryForDays(state) {
-            return state.historyForDays;
+        allIncomeHistory(state) {
+            return state.incomeHistory;
         },
         allHash(state) {
             return state.hash;

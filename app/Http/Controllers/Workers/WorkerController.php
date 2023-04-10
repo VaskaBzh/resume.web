@@ -20,8 +20,11 @@ class WorkerController extends Controller
         ]);
 
         $newWorker = new Worker([
+            'group_id' => $request->input('group_id'),
             'worker_id' => $request->input('worker_id')
         ]);
+
+        $this->firstHash($newWorker);
 
         $sub = Sub::all()->where('group_id', $request->input('group_id'))->first();
 
@@ -34,7 +37,7 @@ class WorkerController extends Controller
             'message' => 'Воркер создан',
         ], 201);
     }
-    public  function firstTickers(Worker $worker)
+    public  function firstHash($worker)
     {
         $opts = array(
             "http" => array(
@@ -50,7 +53,6 @@ class WorkerController extends Controller
             try {
                 $shares = 0;
                 $unit = "T";
-                $result = [];
                 $responseData = json_decode($response_json, true);
                 foreach ($responseData['data']['data'] as $item) {
                     if ($item['worker_id'] == $worker->worker_id) {
@@ -60,13 +62,8 @@ class WorkerController extends Controller
                     }
                 }
 
-                $result[] = [
-                    time(),
-                    number_format($shares, 2, ".", ""),
-                    $unit
-                ];
-
-                $worker->tickers = $result;
+                $worker->hash = $shares;
+                $worker->unit = $unit;
                 $worker->save();
             } catch (Exception $e) {
                 // Обработка ошибки разбора JSON
@@ -82,6 +79,6 @@ class WorkerController extends Controller
             'worker_id' => 'required',
         ]);
 
-        return Worker::all()->where('worker_id', $request->input('worker_id'))->first();
+        return Worker::all()->where('worker_id', $request->input('worker_id'));
     }
 }

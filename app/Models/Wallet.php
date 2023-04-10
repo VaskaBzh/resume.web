@@ -15,8 +15,9 @@ class Wallet extends Model
     // Защищенные поля, которые могут быть массово присвоены
     protected $fillable = [
         'group_id',
-        'payments',
-        'accruals',
+        'minWithdrawal',
+        'wallet',
+        'percent',
     ];
 
     public function sub()

@@ -65,20 +65,20 @@ class IndexController extends Controller
         ]);
     }
 
-    public function payment()
-    {
-        return Inertia::render('Profile/PaymentPage', [
-            'auth_user' => Auth::check(),
-            'user' => Auth::user(),
-        ]);
-    }
+//    public function payment()
+//    {
+//        return Inertia::render('Profile/PaymentPage', [
+//            'auth_user' => Auth::check(),
+//            'user' => Auth::user(),
+//        ]);
+//    }
 
-    public function accruals()
-    {
-        return Inertia::render('Profile/AccrualsPage', [
-            'auth_user' => Auth::check(),
-        ]);
-    }
+//    public function accruals()
+//    {
+//        return Inertia::render('Profile/AccrualsPage', [
+//            'auth_user' => Auth::check(),
+//        ]);
+//    }
 
     public function connecting()
     {
@@ -94,12 +94,12 @@ class IndexController extends Controller
         ]);
     }
 
-//    public function history()
-//    {
-//        return Inertia::render('Profile/HistoryPage', [
-//            'auth_user' => Auth::check(),
-//        ]);
-//    }
+    public function Income()
+    {
+        return Inertia::render('Profile/IncomePage', [
+            'auth_user' => Auth::check(),
+        ]);
+    }
 
 //    public function ref_page()
 //    {

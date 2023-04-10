@@ -1,3 +1,4 @@
 [05-Apr-2023 11:48:43 UTC] PHP Fatal error:  Can't use function return value in write context in D:\Pirip\allbtc_main\app\Console\Commands\UpdateAccrualsCommand.php on line 60
 [05-Apr-2023 11:49:17 UTC] PHP Fatal error:  Can't use function return value in write context in D:\Pirip\allbtc_main\app\Console\Commands\UpdateAccrualsCommand.php on line 60
 [05-Apr-2023 11:49:46 UTC] PHP Fatal error:  Can't use function return value in write context in D:\Pirip\allbtc_main\app\Console\Commands\UpdateAccrualsCommand.php on line 60
+[10-Apr-2023 12:06:53 UTC] PHP Fatal error:  Allowed memory size of 134217728 bytes exhausted (tried to allocate 56627200 bytes) in D:\Pirip\allbtc_main\app\Console\Commands\UpdateIncomesCommand.php on line 138

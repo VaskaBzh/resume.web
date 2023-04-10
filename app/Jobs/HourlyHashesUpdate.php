@@ -2,12 +2,9 @@
 
 namespace App\Jobs;
 
-use App\Models\Hash;
 use App\Models\Sub;
-use App\Models\User;
 use Exception;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -50,9 +47,7 @@ class HourlyHashesUpdate implements ShouldQueue
             $response_json = file_get_contents($req_url, false, $context);
             if (false !== $response_json) {
                 try {
-                    $hash = $sub->hashes->where("group_id", $sub->group_id)->first();
                     $responseData = json_decode($response_json);
-                    $result = [];
                     if ($responseData->data->data) {
                         $share = 0;
                         $share = array_reduce($responseData->data->data, function ($carry, $item) {
@@ -75,18 +70,11 @@ class HourlyHashesUpdate implements ShouldQueue
                         $unit = "T";
                     }
 
-                    $result[] = [
-                        time(),
-                        number_format($share, 2, ".", ""),
-                        $unit
-                    ];
-                    if ($hash->tickers != "" || $hash->tickers != null) {
-                        if (isset($hash->tickers)) {
-                            $result = array_merge(json_decode($hash->tickers), $result);
-                        }
-                    }
-                    $hash->tickers = $result;
-                    $hash->save();
+                    $sub->hashes()->create([
+                        'group_id' => $sub->group_id,
+                        'hash' => number_format($share, 2, ".", ""),
+                        'unit' => $unit,
+                    ]);
                 } catch (Exception $e) {
                     // Обработка ошибки разбора JSON
                     $this->release(10);

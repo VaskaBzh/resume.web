@@ -199,7 +199,6 @@ export default {
             let history;
             if (this.allHistoryMiner && this.allHistoryMiner[index]) {
                 history = this.allHistoryMiner[index];
-                console.log(history);
             }
             this.graphs[0].values = [];
 
@@ -208,7 +207,7 @@ export default {
                     let timeStamp = history[history.length - i];
                     if (timeStamp) {
                         this.graphs[0].values.unshift(
-                            Number(timeStamp[1]).toFixed(0)
+                            Number(Object.values(timeStamp)[3]).toFixed(0)
                         );
                     } else {
                         this.graphs[0].values.unshift(String(0));

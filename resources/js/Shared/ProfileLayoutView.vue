@@ -12,7 +12,7 @@
                 <nav-tabs ref="tabs" />
                 <slot
                     class="padding"
-                    :histotyForDays="this.allHistoryForDays"
+                    :histotyForDays="this.allIncomeHistory"
                     :histoty="this.allHistory"
                     :accounts="this.allAccounts"
                     :hash="this.allHash"
@@ -49,7 +49,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            "allHistoryForDays",
+            "allIncomeHistory",
             "allAccounts",
             "allHistory",
             "allHash",

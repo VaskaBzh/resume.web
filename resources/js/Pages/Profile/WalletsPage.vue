@@ -2,9 +2,9 @@
     <div class="wallets">
         <div class="wallets__container">
             <main-title tag="h2" titleName="Мои кошельки">
-                <!--                <blue-button class="wallets__button wallets__button-history">-->
-                <!--                    <Link :href="route('history')"> История </Link>-->
-                <!--                </blue-button>-->
+                <blue-button class="wallets__button wallets__button-history">
+                    <Link :href="route('income')"> Доходы </Link>
+                </blue-button>
             </main-title>
             <div class="wallets__wrap">
                 <div class="wallets__row wallets__row-balance">
@@ -115,21 +115,18 @@ import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
+import { Link } from "@inertiajs/vue3";
 
 export default {
-    components: { MainCheckbox, BlueButton, MainTitle },
+    components: { MainCheckbox, BlueButton, MainTitle, Link },
     computed: {
         ...mapGetters(["FullEarn", "allAccounts", "allHistoryForDays"]),
-        waitingCash() {
-            return 100;
-        },
-        // eslint-disable-next-line vue/return-in-computed-property
         bool() {
             return this.wallets.length > 0;
         },
         allEarn() {
             let sum = 0;
-            if (this.FullEarn) {
+            if (this.FullEarn && Object.values(this.FullEarn).length > 0) {
                 Object.values(this.FullEarn).forEach((acc) => {
                     sum += Number(acc);
                 });
@@ -138,7 +135,10 @@ export default {
         },
         yesterdayProfit() {
             let sum = 0;
-            if (this.allHistoryForDays) {
+            if (
+                this.allHistoryForDays &&
+                Object.values(this.allHistoryForDays).length > 0
+            ) {
                 Object.values(this.allHistoryForDays).forEach((acc) => {
                     if (acc[1]) {
                         sum += Number(acc[1][3]);
@@ -149,7 +149,7 @@ export default {
         },
         walletsCash() {
             let sum = 0;
-            if (Object.values(this.FullEarn).length > 0) {
+            if (this.FullEarn && Object.values(this.FullEarn).length > 0) {
                 Object.values(this.FullEarn).forEach((el) => {
                     sum += Number(el);
                 });
@@ -158,7 +158,10 @@ export default {
         },
         wallets() {
             let arr = [];
-            if (Object.values(this.allAccounts)) {
+            if (
+                this.allAccounts &&
+                Object.values(this.allAccounts).length > 0
+            ) {
                 if (this.isChecked) {
                     Object.values(this.allAccounts).forEach((acc, i) => {
                         let val = 0;

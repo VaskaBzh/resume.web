@@ -5,15 +5,26 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Accrual extends Model
+class Income extends Model
 {
     use HasFactory;
 
-    protected $table = 'accruals';
+    protected $table = 'incomes';
+
+    protected $guarded = [];
 
     protected $fillable = [
         'group_id',
-        'tickers',
+        'wallet',
+        'amount',
+        'payment',
+        'percent',
+        'diff',
+        'unit',
+        'hash',
+        'status',
+        'message',
+        'txid',
     ];
 
     public function sub()

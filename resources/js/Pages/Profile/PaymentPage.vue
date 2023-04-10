@@ -206,24 +206,24 @@ export default {
             });
         },
     },
-    beforeUpdate() {
-        if (this.allAccounts[this.getActive]) {
-            this.$store.dispatch("getInfo", this.allAccounts[this.getActive]);
-        }
-        if (this.getTable) {
-            this.pushRows();
-        }
-    },
-    created() {
-        if (this.allAccounts[this.getActive]) {
-            this.$store.dispatch("getInfo", this.allAccounts[this.getActive]);
-        }
-    },
+    // beforeUpdate() {
+    //     if (this.allAccounts[this.getActive]) {
+    //         this.$store.dispatch("getInfo", this.allAccounts[this.getActive]);
+    //     }
+    //     if (this.getTable) {
+    //         this.pushRows();
+    //     }
+    // },
+    // created() {
+    //     if (this.allAccounts[this.getActive]) {
+    //         this.$store.dispatch("getInfo", this.allAccounts[this.getActive]);
+    //     }
+    // },
     mounted() {
         document.title = "Выплаты";
-        if (this.getTable) {
-            this.pushRows();
-        }
+        // if (this.getTable) {
+        //     this.pushRows();
+        // }
     },
 };
 </script>

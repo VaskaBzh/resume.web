@@ -1,5 +1,5 @@
 <template>
-    <div class="hidden">{{ this.boolFalse }}{{ this.allHistoryForDays }}</div>
+    <div class="hidden">{{ this.boolFalse }}{{ this.allIncomeHistory }}</div>
     <div class="wrap wrap-no-padding">
         <div class="wrap_head">
             <main-title tag="h3" v-if="this.title"
@@ -150,7 +150,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["allHistoryForDays"]),
+        ...mapGetters(["allIncomeHistory"]),
         bool() {
             if (!this.boolFalse) {
                 return this.table.rows.length === 0;

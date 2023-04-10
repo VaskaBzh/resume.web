@@ -94,7 +94,6 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["allHistoryForDays"]),
         todayProfit() {
             if (isNaN(this.profit[this.accountInfo.id])) {
                 return "0.00000000";

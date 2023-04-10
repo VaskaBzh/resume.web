@@ -16,6 +16,16 @@
             line-height: 20px;
         }
     }
+    &-no-overflow {
+        @media (min-width: 991.98px) {
+            .wrap {
+                overflow: visible;
+                &-overflow {
+                    overflow: visible;
+                }
+            }
+        }
+    }
     &-no-padding {
         @media (max-width: $mobile) {
             padding: 20px 0 20px 0 !important;

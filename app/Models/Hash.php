@@ -15,7 +15,8 @@ class Hash extends Model
 
     protected $fillable = [
         'group_id',
-        'tickers',
+        'hash',
+        'unit',
     ];
     public function sub()
     {

@@ -18,7 +18,8 @@ class Worker extends Model
     protected $fillable = [
         'worker_id',
         'group_id',
-        'tickers',
+        'hash',
+        'unit',
     ];
 
     public function sub()
@@ -36,14 +37,13 @@ class Worker extends Model
         parent::boot();
 
         static::created(function (Worker $worker) {
-            $controller = new WorkerController();
-            $controller->firstTickers($worker);
-        });
-
-        static::created(function (Worker $worker) {
-            if (!Hash::all()->where('group_id', $worker->group_id)->first()->tickers) {
-                $controller = new HashController();
-                $controller->firstTickers($worker);
+            if (!Hash::all()->where('group_id', $worker->group_id)->first()) {
+                $sub = Sub::all()->where('group_id', $worker->group_id)->first();
+                $sub->hashes()->create([
+                    'group_id' => $worker->group_id,
+                    'unit' => $worker->unit,
+                    'hash' => $worker->hash,
+                ]);
             }
         });
     }

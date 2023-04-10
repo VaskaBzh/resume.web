@@ -93,13 +93,13 @@
                     />
                 </div>
             </div>
-            <wrap-table
-                :table="this.tables.payment"
-                :wait="this.allHistoryForDays"
-                link="payment"
-                linkText="выплат"
-                title="Выплаты"
-            />
+            <!--            <wrap-table-->
+            <!--                :table="this.tables.payment"-->
+            <!--                :wait="this.allIncomeHistory"-->
+            <!--                link="payment"-->
+            <!--                linkText="выплат"-->
+            <!--                title="Выплаты"-->
+            <!--            />-->
         </div>
     </div>
 </template>
@@ -204,15 +204,15 @@ export default {
         },
         yesterdayEarn() {
             let val = 0;
-            if (this.allHistoryForDays[this.getActive]) {
+            if (this.allIncomeHistory[this.getActive]) {
                 if (
-                    Object.values(this.allHistoryForDays[this.getActive]) &&
-                    Object.values(this.allHistoryForDays[this.getActive])[1]
+                    Object.values(this.allIncomeHistory[this.getActive]) &&
+                    Object.values(this.allIncomeHistory[this.getActive])[1]
                 ) {
                     val = Number(
-                        Object.values(
-                            this.allHistoryForDays[this.getActive]
-                        )[1][3]
+                        Object.values(this.allIncomeHistory[this.getActive])[1][
+                            "amount"
+                        ]
                     );
                 }
             }
@@ -228,7 +228,7 @@ export default {
             "allAccounts",
             "allHistory",
             "allHash",
-            "allHistoryForDays",
+            "allIncomeHistory",
             "btcInfo",
         ]),
     },
@@ -254,10 +254,10 @@ export default {
             ) {
                 history = Object.values(this.allHistory[this.getActive]).map(
                     (el) => {
-                        if (el[2] === "T") {
-                            return el[1];
+                        if (el["unit"] === "T") {
+                            return el["hash"];
                         } else {
-                            return Number(el[1]) * 1000;
+                            return Number(el["hash"]) * 1000;
                         }
                     }
                 );
@@ -316,8 +316,8 @@ export default {
                 overflow: hidden;
                 grid-template-columns: 65% auto;
             }
-            @media (max-width: 767.98x) {
-                grid-template-columns: 10%;
+            @media (max-width: 767.98px) {
+                grid-template-columns: 100%;
             }
             .title {
                 @media (min-width: 767.98px) {

@@ -12,81 +12,42 @@
             {{ this.columns.link }}
         </span>
     </div>
-    <tr v-scroll="'opacity'" class="row-history" v-else-if="columns.status">
+    <tr v-scroll="'opacity'" class="row-income" v-else-if="columns.status">
         <td class="main__number">
             {{ this.columns.date }}
         </td>
+        <!--        <td class="main__number">-->
+        <!--            {{ this.columns.wallet }}-->
+        <!--        </td>-->
         <td class="main__number">
-            <img
-                :src="
-                    'http://127.0.0.1:5173' +
-                    `/resources/assets/img/${this.columns.img}`
-                "
-                alt=""
-            />
-            {{ this.columns.wallet }}
+            <div>FPPS+ начисления</div>
         </td>
+        <td class="main__number">{{ this.columns.percent }} %</td>
         <td class="main__number">
-            <div>
-                <div
-                    class="row-history_wrap"
-                    v-if="this.viewportWidth < 767.98"
-                >
-                    <img
-                        :src="
-                            'http://127.0.0.1:5173' +
-                            `/resources/assets/img/${this.type}`
-                        "
-                        :alt="this.type"
-                    />
-                </div>
-                {{ this.columns.type }}
-            </div>
-        </td>
-        <td class="main__number">{{ this.BTCVal }} BTC</td>
-        <td class="main__number">
-            <div>
-                <div
-                    class="row-history_wrap"
-                    v-if="this.viewportWidth < 767.98"
-                >
-                    <img
-                        :src="
-                            'http://127.0.0.1:5173' +
-                            `/resources/assets/img/${this.status}`
-                        "
-                        :alt="this.type"
-                    />
-                </div>
-                {{ this.columns.status }}
-            </div>
-        </td>
-    </tr>
-    <tr v-scroll="'opacity'" class="row-accruals" v-else-if="columns.mode">
-        <td class="main__number">
-            {{ this.columns.date }}
-        </td>
-        <td class="main__number">{{ this.columns.mode }}</td>
-        <td class="main__number">
-            {{ this.columns.hash }} {{ this.columns.unit }}H/s
+            {{ this.columns.hash }} {{ this.columns.unit }}
         </td>
         <td class="main__number">{{ this.BTCVal }} BTC</td>
         <td class="main__number" v-if="this.viewportWidth > 991.98">
-            {{ Number(this.columns.diff).toFixed(2) }} T
+            {{ Number(this.columns.diff / 1000000000000).toFixed(2) }} T
         </td>
-    </tr>
-    <tr v-scroll="'opacity'" class="row-payment" v-else-if="columns.link">
-        <td class="main__number">
-            {{ this.columns.date }}
+        <td class="main__number" v-if="this.viewportWidth <= 991.98">
+            {{ this.columns.message }}
         </td>
-        <td class="main__number">{{ this.columns.percent }}</td>
-        <td class="main__number">{{ this.columns.earn }} BTC</td>
-        <!--        <td class="main__number main__link">{{ this.columns.link }}</td>-->
-        <!--        <td ref="link" @click="this.copy" class="main__link">-->
-        <!--            {{ this.columns.transaction }}-->
-        <!--        </td>-->
-        <td class="main__number">
-            <span :class="this.columns.infoClass">{{ this.columns.info }}</span>
+        <td class="main__number main__number-status">
+            <div v-if="this.viewportWidth > 991.98">
+                {{ this.columns.message }}
+            </div>
+            <span
+                :class="this.columns.status"
+                v-if="this.viewportWidth > 991.98"
+            >
+                {{
+                    this.columns.status === "rejected"
+                        ? "Отклонено"
+                        : "Выполнено"
+                }}
+            </span>
+            <span :class="this.columns.status" v-else></span>
         </td>
     </tr>
     <tr v-scroll="'opacity'" class="row-ref-list" v-else-if="columns.email">
@@ -238,73 +199,7 @@ td {
         }
     }
 }
-.block-payment {
-    span {
-        &:last-child {
-            margin: 0;
-            padding: 0;
-            max-width: 136px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            @media (max-width: 320.98px) {
-                max-width: 101px;
-            }
-        }
-    }
-}
-.row-payment {
-    position: relative;
-    td {
-        &:last-child {
-            @media (max-width: 991.98px) {
-                text-align: left;
-                max-width: 200px;
-                overflow-x: hidden;
-                text-overflow: ellipsis;
-            }
-            @media (max-width: 767.98px) {
-                max-width: 100%;
-                text-align: right;
-                text-overflow: clip;
-                overflow: visible;
-            }
-            span {
-                display: flex;
-                gap: 10px;
-                align-items: center;
-                justify-content: flex-end;
-                font-weight: 500 !important;
-                color: #000034 !important;
-                font-size: 18px !important;
-                line-height: 26px !important;
-                &:before {
-                    content: "";
-                    position: relative;
-                    width: 10px;
-                    height: 10px;
-                    border-radius: 50%;
-                }
-                &.completed {
-                    &:before {
-                        background: #13d60e;
-                    }
-                }
-                &.rejected {
-                    &:before {
-                        background: #ff0000;
-                    }
-                }
-            }
-        }
-    }
-    span {
-        margin-left: 5px;
-        @media (max-width: 767.98px) {
-            margin: 0;
-        }
-    }
-}
-.row-history {
+.row-income {
     &_wrap {
         display: inline-flex;
         width: 20px;
@@ -330,41 +225,111 @@ td {
         }
     }
     td {
+        &.main__number-status {
+            position: relative;
+            cursor: pointer;
+            &:hover {
+                div {
+                    overflow: visible;
+                    opacity: 1;
+                    z-index: 12;
+                    &:after {
+                        overflow: visible;
+                        opacity: 1;
+                    }
+                }
+            }
+            div {
+                overflow: hidden;
+                opacity: 0;
+                z-index: -1;
+                transition: all 0.3s ease 0s;
+                position: absolute;
+                max-width: 200%;
+                bottom: 100%;
+                right: 0;
+                padding: 6px 12px;
+                border-radius: 12px;
+                background-color: rgba(#000, 0.5);
+                color: #fff;
+                white-space: break-spaces;
+                &:after {
+                    overflow: hidden;
+                    opacity: 0;
+                    transition: all 0.3s ease 0s;
+                    position: absolute;
+                    content: url("data:image/svg+xml,%3Csvg width='30' height='15' viewBox='0 0 30 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.85791 0H15H29.1422L15 14.1421L0.85791 0Z' fill='black' fill-opacity='0.5'/%3E%3C/svg%3E%0A");
+                    width: 20px;
+                    height: 20px;
+                    top: calc(100% - 5px);
+                    left: 50%;
+                    z-index: 10;
+                    transform: translateX(-50%);
+                }
+            }
+        }
         &:last-child {
             text-align: left;
         }
-        &:nth-child(2) {
-            position: relative;
-            @media (min-width: 767.98px) {
-                padding-left: 28px;
+        span {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            justify-content: flex-end;
+            font-weight: 500 !important;
+            color: #000034 !important;
+            font-size: 18px !important;
+            line-height: 26px !important;
+            &:before {
+                content: "";
+                position: relative;
+                width: 10px;
+                height: 10px;
+                border-radius: 50%;
             }
-            @media (max-width: 479.98px) {
-                padding-left: 18px;
-            }
-            @media (max-width: 320.98px) {
-                padding-left: 0;
-            }
-            img {
-                @media (min-width: 767.98px) {
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
+            &.completed {
+                &:before {
+                    background: #13d60e;
                 }
-                @media (max-width: 479.98px) {
-                    position: absolute;
-                    left: 0;
-                    top: 50%;
-                    transform: translateY(-50%);
-                }
-                @media (max-width: 320.98px) {
-                    position: relative;
-                    transform: none;
-                    left: auto;
-                    top: auto;
+            }
+            &.rejected {
+                &:before {
+                    background: #ff0000;
                 }
             }
         }
+        //&:nth-child(2) {
+        //    position: relative;
+        //    @media (min-width: 767.98px) {
+        //        padding-left: 28px;
+        //    }
+        //    @media (max-width: 479.98px) {
+        //        padding-left: 18px;
+        //    }
+        //    @media (max-width: 320.98px) {
+        //        padding-left: 0;
+        //    }
+        //    img {
+        //        @media (min-width: 767.98px) {
+        //            position: absolute;
+        //            left: 0;
+        //            top: 50%;
+        //            transform: translateY(-50%);
+        //        }
+        //        @media (max-width: 479.98px) {
+        //            position: absolute;
+        //            left: 0;
+        //            top: 50%;
+        //            transform: translateY(-50%);
+        //        }
+        //        @media (max-width: 320.98px) {
+        //            position: relative;
+        //            transform: none;
+        //            left: auto;
+        //            top: auto;
+        //        }
+        //    }
+        //}
     }
 }
 
@@ -374,39 +339,6 @@ td {
             &:last-child {
                 text-align: right;
             }
-        }
-    }
-}
-
-.row-accruals {
-    td {
-        &:nth-child(2) {
-            cursor: pointer;
-            position: relative;
-            &::after {
-                content: "!";
-                line-height: 7px;
-                font-size: 10px;
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                background-color: #99b7e8;
-                display: inline-flex;
-                align-items: center;
-                justify-content: center;
-                color: #fff;
-                position: absolute;
-                top: 43%;
-                transform: rotate(180deg);
-                margin-left: 6px;
-                @media (max-width: 767.98px) {
-                    content: none;
-                }
-            }
-        }
-
-        &:last-child {
-            text-align: right;
         }
     }
 }

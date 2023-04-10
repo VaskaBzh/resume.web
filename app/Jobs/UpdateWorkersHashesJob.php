@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\Sub;
 use App\Models\Worker;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -45,7 +46,6 @@ class UpdateWorkersHashesJob implements ShouldQueue
             $response_json = file_get_contents($req_url, false, $context);
             $shares = 0;
             $unit = "T";
-            $result = [];
             if(false !== $response_json) {
                 try {
                     $responseData = json_decode($response_json, true);
@@ -56,16 +56,14 @@ class UpdateWorkersHashesJob implements ShouldQueue
                             break;
                         }
                     }
-                    if ($worker->tickers != "" || $worker->tickers != null) {
-                        if (isset($worker->tickers)) {
-                            $result = array_merge(json_decode($worker->tickers), $result);
-                        }
-                    }
 
-                    $result[] = [time(), $shares, $unit];
-
-                    $worker->tickers = $result;
-                    $worker->save();
+                    $sub = Sub::where('group_id', $worker->group_id)->first();
+                    $sub->workers()->create([
+                        'group_id' => $worker->group_id,
+                        'worker_id' => $worker->worker_id,
+                        'hash' => $shares,
+                        'unit' => $unit,
+                    ]);
                 } catch(Exception $e) {
                     // Handle JSON parse error...
                     $this->release(10);
