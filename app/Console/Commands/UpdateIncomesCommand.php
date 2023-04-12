@@ -107,35 +107,54 @@ class UpdateIncomesCommand extends Command
                             $income["percent"] = $wallet->percent;
                             $balance = $earn * ($wallet->percent / 100);
                             $income["payment"] = $balance;
-                            if ($balance >= $wallet->minWithdrawal) {
-                                $response = Http::withBasicAuth('bituser', '111')
+                            if ($balance >= 0) {
+//                            if ($balance >= $wallet->minWithdrawal) {
+                                $unlock = Http::withBasicAuth('bituser', '111')
                                     ->post('http://92.205.163.43:8332', [
                                         'jsonrpc' => '1.0',
-                                        'id' => 'withdrawal',
-                                        'method' => 'sendtoaddress',
-                                        'params' => [$wallet->wallet, $balance], //Самая важная строчка, в которрой передаем настройки транзакции
+                                        'id' => 'unlock',
+                                        'method' => 'walletpassphrase',
+                                        'params' => ['111', 60], // Временно разблокирует кошелек на 60 секунд
                                     ]);
+                                if ($unlock->successful()) {
+                                    $response = Http::withBasicAuth('bituser', '111')
+                                        ->post('http://92.205.163.43:8332', [
+                                            'jsonrpc' => '1.0',
+                                            'id' => 'withdrawal',
+                                            'method' => 'sendtoaddress',
+                                            'params' => [$wallet->wallet, $balance], //Самая важная строчка, в которрой передаем настройки транзакции
+                                        ]);
 
-                                if ($response->successful()) {
-                                    $income["status"] = 'completed';
-                                    $income["txid"] = $response->json()['result'];
+                                    if ($response->successful()) {
+                                        $income["status"] = 'completed';
+                                        $income["txid"] = $response->json()['result'];
 
-                                    $sumPayments = 0;
-                                    if ($sub->payments !== null) {
-                                        $sumPayments = $sumPayments + $sub->payments;
+                                        $sumPayments = 0;
+                                        if ($sub->payments !== null) {
+                                            $sumPayments = $sumPayments + $sub->payments;
+                                        }
+                                        $sub->payments = $sumPayments;
+                                        $sub->save();
+
+                                        $income["message"] = 'Выплата успешно выполнена.';
+                                    } else {
+                                        $income["message"] = 'Произошла ошибка при выполнении выплаты.';
                                     }
-                                    $sub->payments = $sumPayments;
-                                    $sub->save();
-
-                                    $income["message"] = 'Выплата успешно выполнена.';
+                                    $lock = Http::withBasicAuth('bituser', '111')
+                                        ->post('http://92.205.163.43:8332', [
+                                            'jsonrpc' => '1.0',
+                                            'id' => 'lock',
+                                            'method' => 'walletlock',
+                                        ]);
                                 } else {
+                                    // Обработка ошибки разблокировки кошелька
                                     $income["message"] = 'Произошла ошибка при выполнении выплаты.';
                                 }
                             } else {
                                 $income["message"] = 'Недостаточно средств для вывода.';
                             }
                         } else {
-                            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек, процент вывода и минимальную сумму выплаты).';
+                            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек и процент вывода).';
                         }
 
                         $sub->incomes()->create($income);

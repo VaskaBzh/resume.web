@@ -248,23 +248,35 @@ td {
                 max-width: 200%;
                 bottom: 100%;
                 right: 0;
-                padding: 6px 12px;
-                border-radius: 12px;
-                background-color: rgba(#000, 0.5);
                 color: #fff;
                 white-space: break-spaces;
+                padding: 14px 16px;
+                background-color: rgba(0, 0, 0, 0.8);
+                border-radius: 6px;
                 &:after {
                     overflow: hidden;
                     opacity: 0;
                     transition: all 0.3s ease 0s;
                     position: absolute;
-                    content: url("data:image/svg+xml,%3Csvg width='30' height='15' viewBox='0 0 30 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.85791 0H15H29.1422L15 14.1421L0.85791 0Z' fill='black' fill-opacity='0.5'/%3E%3C/svg%3E%0A");
-                    width: 20px;
-                    height: 20px;
+                    content: "";
+                    clip-path: path(
+                        "M 9.849242404917499 24.091883092036785 A 5 5 0 0 1 13.384776310850237 22.627416997969522 L 20.627416997969522 22.627416997969522 A 2 2 0 0 0 22.627416997969522 20.627416997969522 L 22.627416997969522 13.384776310850237 A 5 5 0 0 1 24.091883092036785 9.849242404917499 L 23.091883092036785 9.849242404917499 L 9.849242404917499 23.091883092036785 Z"
+                    );
+                    background-image: linear-gradient(
+                        to right bottom,
+                        rgba(0, 0, 0, 0.65),
+                        rgba(0, 0, 0, 0.75)
+                    );
+                    position: absolute;
+                    background-repeat: no-repeat;
+                    background-position: -10px -10px;
+                    //content: url("data:image/svg+xml,%3Csvg width='30' height='15' viewBox='0 0 30 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.85791 0H15H29.1422L15 14.1421L0.85791 0Z' fill='black' fill-opacity='0.5'/%3E%3C/svg%3E%0A");
+                    width: 33.9411255px;
+                    height: 33.9411255px;
                     top: calc(100% - 5px);
                     left: 50%;
                     z-index: 10;
-                    transform: translateX(-50%);
+                    transform: translateX(-50%) translateY(-12px) rotate(45deg);
                 }
             }
         }

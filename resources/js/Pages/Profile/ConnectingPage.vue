@@ -10,7 +10,7 @@
                         ниже данным:
                     </div>
                     <div class="connecting__row connecting__row-copy">
-                        PortAdress:
+                        PortAddress:
                         <div
                             class="connecting__block-copy copy"
                             ref="linkAddress"
@@ -34,7 +34,7 @@
                         </div>
                     </div>
                     <div class="connecting__row connecting__row-copy">
-                        PortAdress 1:
+                        PortAddress 1:
                         <div
                             class="connecting__block-copy copy"
                             ref="linkAddress1"
@@ -282,6 +282,9 @@ export default {
     &__block-copy {
         max-width: calc(100% - 140px) !important;
         @media (max-width: 991.98px) {
+            max-width: calc(100% - 120px) !important;
+        }
+        @media (max-width: 320.98px) {
             max-width: calc(100% - 92px) !important;
         }
     }

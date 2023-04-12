@@ -102,11 +102,11 @@ export default {
     flex: 1 1 auto;
     position: relative;
     padding-bottom: 60px;
+    @media (max-width: 991.98px) {
+        padding-bottom: 30px;
+    }
     @media (max-width: 767.98px) {
         margin-top: 80px;
-    }
-    @media (max-width: 478.98px) {
-        padding-bottom: 30px;
     }
     .feedback {
         position: fixed;
