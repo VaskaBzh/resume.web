@@ -3,13 +3,13 @@
         <div class="graph__main">
             <div class="graph__head">
                 <main-title tag="h3">{{ graphs[0].title[0] }}</main-title>
-                <div class="graph__buttons">
-                    <button class="graph__button graph__button-active">
-                        1 день
-                    </button>
-                    <button class="graph__button">7 дней</button>
-                    <button class="graph__button">30 дней</button>
-                </div>
+                <!--                <div class="graph__buttons">-->
+                <!--                    <button class="graph__button graph__button-active">-->
+                <!--                        1 день-->
+                <!--                    </button>-->
+                <!--                    <button class="graph__button">7 дней</button>-->
+                <!--                    <button class="graph__button">30 дней</button>-->
+                <!--                </div>-->
             </div>
             <div class="graph__list">
                 <div

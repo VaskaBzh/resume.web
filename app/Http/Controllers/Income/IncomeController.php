@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
+    public function pay(Request $request)
+    {
+        $request->validate([
+            'group_id' => 'required',
+        ]);
+
+        return Sub::all()->where('group_id', $request->input('group_id'))->first()->incomes;
+    }
     public function visual(Request $request)
     {
         $request->validate([

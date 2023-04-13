@@ -30,9 +30,6 @@
         <td class="main__number" v-if="this.viewportWidth > 991.98">
             {{ Number(this.columns.diff / 1000000000000).toFixed(2) }} T
         </td>
-        <td class="main__number" v-if="this.viewportWidth <= 991.98">
-            {{ this.columns.message }}
-        </td>
         <td class="main__number main__number-status">
             <div v-if="this.viewportWidth > 991.98">
                 {{ this.columns.message }}

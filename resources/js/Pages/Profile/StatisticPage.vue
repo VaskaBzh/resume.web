@@ -10,7 +10,7 @@
                 ref="popupShow"
                 data-popup="#graph"
             ></div>
-            <div class="wrap wrap-no-padding">
+            <div class="wrap wrap-no-padding wrap-modify">
                 <div class="wrap_head wrap_head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">
                         Общий хешрейт
@@ -19,7 +19,7 @@
                 <div class="wrap__block wrap__block-graph">
                     <div class="propeller" v-if="this.id === 0"></div>
                     <statistic-chart
-                        v-else-if="this.graphs[0].values.length > 0"
+                        v-else
                         class="no-title"
                         :graphs="this.graphs"
                         :key="
@@ -28,7 +28,6 @@
                             ]
                         "
                     />
-                    <div v-else></div>
                 </div>
                 <div class="wrap__block">
                     <div class="wrap_head">
@@ -93,13 +92,107 @@
                     />
                 </div>
             </div>
-            <!--            <wrap-table-->
-            <!--                :table="this.tables.payment"-->
-            <!--                :wait="this.allIncomeHistory"-->
-            <!--                link="payment"-->
-            <!--                linkText="выплат"-->
-            <!--                title="Выплаты"-->
-            <!--            />-->
+            <div
+                class="wrap wrap-no-padding wrap-modify wrap-modify-reverse-mini"
+            >
+                <div class="wrap_head wrap_head-graph">
+                    <main-title tag="h3" class="statistic__wrap_title">
+                        Подключение и аккаунты
+                    </main-title>
+                </div>
+                <div class="wrap__block">
+                    <div class="connecting__block">
+                        <div class="connecting__row connecting__row-copy">
+                            Port:
+                            <div
+                                class="connecting__block-copy copy"
+                                ref="linkAddress"
+                            >
+                                {{ this.linkAddress }}
+                                <svg
+                                    class="copy-button"
+                                    @click="this.copyLink(1)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
+                                        stroke-width="2"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="connecting__row connecting__row-copy">
+                            Port 1:
+                            <div
+                                class="connecting__block-copy copy"
+                                ref="linkAddress1"
+                            >
+                                {{ this.linkAddress1 }}
+                                <svg
+                                    class="copy-button"
+                                    @click="this.copyLink(2)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
+                                        stroke-width="2"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="connecting__row connecting__row-copy">
+                            Port 2:
+                            <div
+                                class="connecting__block-copy copy"
+                                ref="linkAddress2"
+                            >
+                                {{ this.linkAddress2 }}
+                                <svg
+                                    class="copy-button"
+                                    @click="this.copyLink(3)"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                >
+                                    <path
+                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
+                                        stroke-width="2"
+                                        stroke-linejoin="round"
+                                    />
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div
+                    class="wrap__block wrap__block-no-bg"
+                    v-if="Object.values(this.allAccounts).length > 0"
+                >
+                    <account-profile-mini
+                        v-for="(account, i) in this.allAccounts"
+                        :key="i"
+                        :accKey="i"
+                        :accountInfo="account"
+                        :profit="this.profit"
+                        @changeActive="this.activeChanger"
+                    />
+                </div>
+                <div class="wrap__block no-info" v-else>
+                    <div class="propeller"></div>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -108,14 +201,15 @@ import { Link, Head, router } from "@inertiajs/vue3";
 import PaymentCard from "@/Components/account/PaymentCard.vue";
 import StatisticChart from "@/Components/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import WrapTable from "@/Components/tables/WrapTable.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
+import AccountProfileMini from "@/Components/account/AccountProfileMini.vue";
+import Vue from "lodash";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
     components: {
-        WrapTable,
+        AccountProfileMini,
         StatisticChart,
         MainTitle,
         PaymentCard,
@@ -125,6 +219,10 @@ export default {
     layout: profileLayoutView,
     data() {
         return {
+            profit: {},
+            linkAddress: "btc.all-btc.com:4444",
+            linkAddress1: "btc.all-btc.com:3333",
+            linkAddress2: "btc.all-btc.com:2222",
             visualType: "table",
             interval: null,
             hash: 0,
@@ -169,8 +267,8 @@ export default {
             return obj;
         },
         earn() {
-            if (this.$store.getters.FullEarn[this.getActive]) {
-                return Number(this.$store.getters.FullEarn[this.getActive]);
+            if (this.$store.getters.getIncome[this.getActive]) {
+                return Number(this.$store.getters.getIncome[this.getActive].accruals);
             } else {
                 return 0;
             }
@@ -233,6 +331,48 @@ export default {
         ]),
     },
     methods: {
+        activeMount() {
+            document.querySelectorAll(".profile").forEach((profile) => {
+                profile.classList.remove("active");
+                if (profile.dataset.key == this.getActive) {
+                    profile.classList.add("active");
+                }
+            });
+        },
+        activeChanger(el) {
+            this.$store.commit("updateActive", el);
+            setTimeout(this.activeMount, 300);
+        },
+        async startMount(index) {
+            this.activeChanger(index);
+        },
+        getForcast() {
+            if (this.btcInfo) {
+                let val = 0;
+                Object.values(this.allAccounts).forEach((el, i) => {
+                    if (el.shares1d > 0) {
+                        val =
+                            (el.shares1d *
+                                Math.pow(10, 12) *
+                                86400 *
+                                this.btcInfo.btc.reward) /
+                            (this.btcInfo.btc.diff * Math.pow(2, 32));
+                    } else if (el.shares1m > 0) {
+                        val =
+                            (el.shares1m *
+                                Math.pow(10, 12) *
+                                86400 *
+                                this.btcInfo.btc.reward) /
+                            (this.btcInfo.btc.diff * Math.pow(2, 32));
+                    }
+                    Vue.set(
+                        this.profit,
+                        Object.keys(this.allAccounts)[i],
+                        val * 3.5 * 1.75
+                    );
+                });
+            }
+        },
         changeId() {
             if (this.id === 0) {
                 this.id = 1;
@@ -244,6 +384,27 @@ export default {
         },
         router() {
             return router;
+        },
+        copyLink(i) {
+            if (i === 1) {
+                navigator.clipboard.writeText(this.linkAddress);
+                this.$refs.linkAddress.classList.add("active");
+                setTimeout(() => {
+                    this.$refs.linkAddress.classList.remove("active");
+                }, 1000);
+            } else if (i === 2) {
+                navigator.clipboard.writeText(this.linkAddress1);
+                this.$refs.linkAddress1.classList.add("active");
+                setTimeout(() => {
+                    this.$refs.linkAddress1.classList.remove("active");
+                }, 1000);
+            } else if (i === 3) {
+                navigator.clipboard.writeText(this.linkAddress2);
+                this.$refs.linkAddress2.classList.add("active");
+                setTimeout(() => {
+                    this.$refs.linkAddress2.classList.remove("active");
+                }, 1000);
+            }
         },
         renderChart() {
             this.changeId();
@@ -281,6 +442,8 @@ export default {
     mounted() {
         document.title = "Статистика";
         if (this.allHistory[this.getActive]) {
+            this.activeMount();
+            this.getForcast();
             if (Object.values(this.allHistory[this.getActive])) {
                 this.renderChart();
             }
@@ -288,6 +451,8 @@ export default {
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
+            this.startMount(this.getActive);
+            this.getForcast();
             if (Object.values(this.allHistory[this.getActive])) {
                 if (this.id === 0) {
                     this.renderChart();
@@ -306,24 +471,6 @@ export default {
     .wrap {
         .title {
             width: 100%;
-        }
-        &-no-padding {
-            display: grid;
-            grid-template-columns: 600px auto;
-            gap: 12px 32px;
-            grid-template-rows: repeat(2, auto);
-            @media (max-width: 998.98px) {
-                overflow: hidden;
-                grid-template-columns: 65% auto;
-            }
-            @media (max-width: 767.98px) {
-                grid-template-columns: 100%;
-            }
-            .title {
-                @media (min-width: 767.98px) {
-                    margin-bottom: 0;
-                }
-            }
         }
         &__row,
         &_list {

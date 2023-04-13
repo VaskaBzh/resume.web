@@ -102,13 +102,21 @@ class UpdateIncomesCommand extends Command
                     }
 
                     foreach ($wallets as $wallet) {
-                        if ($wallet->wallet && $wallet->percent && $wallet->minWithdrawal) {
+                        if ($wallet->wallet && $wallet->percent) {
                             $income["wallet"] = $wallet->wallet;
                             $income["percent"] = $wallet->percent;
                             $balance = $earn * ($wallet->percent / 100);
                             $income["payment"] = $balance;
-                            if ($balance >= 0) {
-//                            if ($balance >= $wallet->minWithdrawal) {
+                            $min = 0.005;
+                            if ($sub->incomes()->where("status", "pending")) {
+                                foreach ($sub->incomes()->where("status", "pending") as $pending) {
+                                    $balance = $balance + $pending->payment;
+                                }
+                            }
+                            if ($wallet->minWithdrawal) {
+                                $min = $wallet->minWithdrawal;
+                            }
+                            if ($balance >= $min) {
                                 $unlock = Http::withBasicAuth('bituser', '111')
                                     ->post('http://92.205.163.43:8332', [
                                         'jsonrpc' => '1.0',
@@ -151,7 +159,8 @@ class UpdateIncomesCommand extends Command
                                     $income["message"] = 'Произошла ошибка при выполнении выплаты.';
                                 }
                             } else {
-                                $income["message"] = 'Недостаточно средств для вывода.';
+                                $income["message"] = 'Недостаточно средств для вывода. Минимальное значение' . $min;
+                                $income["status"] = "pending";
                             }
                         } else {
                             $income["message"] = 'Настройте аккаунт для вывода (введите кошелек и процент вывода).';

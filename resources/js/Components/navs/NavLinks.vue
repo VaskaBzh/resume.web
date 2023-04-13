@@ -1,12 +1,21 @@
 <template>
     <div class="nav__links_con">
-        <div v-if="!is_auth" class="nav__links">
+        <div class="nav__links">
             <Link
+                v-if="!is_auth"
                 :href="route('home')"
                 class="nav__link"
                 :class="{ active: $page.url === '/' }"
             >
                 Главная
+            </Link>
+            <Link
+                v-else
+                :href="route('accounts')"
+                class="nav__link"
+                :class="{ active: $page.url.startsWith('/profile') }"
+            >
+                Майнинг
             </Link>
             <Link
                 :href="route('complexity')"
@@ -28,43 +37,6 @@
             <!--                :class="{ active: $page.url === '/about' }"-->
             <!--            >-->
             <!--                О нас-->
-            <!--            </Link>-->
-        </div>
-        <div v-else class="nav__links">
-            <Link
-                :href="route('accounts')"
-                class="nav__link non-before"
-                :class="{ active: $page.url.startsWith('/profile') }"
-            >
-                Майнинг
-            </Link>
-            <Link
-                :href="route('wallets')"
-                class="nav__link non-before"
-                :class="{ active: $page.url === '/wallets' }"
-            >
-                Кошельки
-            </Link>
-            <Link
-                :href="route('income')"
-                class="nav__link non-before"
-                :class="{ active: $page.url === '/income' }"
-            >
-                Доходы
-            </Link>
-            <!--            <Link-->
-            <!--                :href="route('ref_page')"-->
-            <!--                class="nav__link non-before"-->
-            <!--                :class="{ active: $page.url === '/ref-page' }"-->
-            <!--            >-->
-            <!--                Реферальная программа-->
-            <!--            </Link>-->
-            <!--            <Link-->
-            <!--                :href="route('help')"-->
-            <!--                class="nav__link non-before"-->
-            <!--                :class="{ active: $page.url === '/help' }"-->
-            <!--            >-->
-            <!--                FAQ-->
             <!--            </Link>-->
         </div>
     </div>
@@ -133,15 +105,6 @@ export default {
     display: flex;
     gap: 16px;
     align-items: center;
-
-    &::before {
-        content: "";
-        position: relative;
-        height: 20px;
-        width: 1px;
-        background: rgba(0, 0, 0, 0.09);
-        transform: matrix(-0.97, -0.26, -0.26, 0.97, 0, 0);
-    }
 
     &.active {
         color: #4182ec;

@@ -6,25 +6,22 @@ export default {
         destroyer({ commit }) {
             commit("destroy");
         },
-        getAllEarn({ commit, state }, group) {
-            let sum = 0;
-            if (Object.values(state.incomeHistory).length > 0) {
-                Object.values(state.incomeHistory).forEach((data) => {
-                    if (data) {
-                        Object.values(data).forEach((el) => {
-                            sum += Number(el["amount"]);
-                        });
-                        let accruals = group;
-                        accruals.accruals = Number(sum.toFixed(8));
-
-                        this.dispatch("getWallets", accruals);
-                        commit("setAllEarn", {
-                            key: group.group_id,
-                            sum: sum,
-                        });
-                    }
-                });
+        getAllIncome({ commit, state }, group) {
+            let income = {
+                payments: 0,
+                accruals: 0,
+                unPayments: 0,
+            };
+            if (group.payments) {
+                income.payments = group.payments;
             }
+            if (group.accruals) {
+                income.accruals = group.accruals;
+            }
+            if (group.unPayments) {
+                income.unPayments = group.unPayments;
+            }
+            commit("updateIncome", { item: income, key: group.group_id });
         },
         async getAccounts({ commit, state }) {
             commit("destroy");
@@ -63,6 +60,7 @@ export default {
                                     group.index = i;
                                     let group_with_length = group;
                                     group_with_length.length = arr.length;
+                                    this.dispatch("getAllIncome", group);
                                     this.dispatch("getHistoryHash", group);
                                     this.dispatch(
                                         "getincomeHistory",
@@ -273,12 +271,12 @@ export default {
             axios
                 .put("/hash_process", data)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        commit("updateHistory", {
-                            historyItem: Object.values(res.data),
-                            key: data.group_id,
-                        });
-                    }
+                    // if (res.data.length > 0) {
+                    commit("updateHistory", {
+                        historyItem: Object.values(res.data),
+                        key: data.group_id,
+                    });
+                    // }
                 })
                 .catch((err) => console.log(err));
         },
@@ -286,13 +284,10 @@ export default {
             axios
                 .put("/income_process", data)
                 .then((res) => {
-                    if (res.data.length > 0) {
-                        commit("updateincomeHistory", {
-                            historyItem: Object.values(res.data),
-                            key: data.group_id,
-                        });
-                        this.dispatch("getAllEarn", data);
-                    }
+                    commit("updateincomeHistory", {
+                        historyItem: Object.values(res.data),
+                        key: data.group_id,
+                    });
                 })
                 .catch((err) => console.log(err));
         },
@@ -303,8 +298,7 @@ export default {
     mutations: {
         destroy(state) {
             state.incomeHistory = {};
-            state.valid = true;
-            state.active = -1;
+            (state.income = {}), (state.valid = true);
             state.accounts = {};
             state.hash = {};
             state.history = {};
@@ -335,21 +329,20 @@ export default {
         updateincomeHistory(state, data) {
             Vue.set(state.incomeHistory, data.key, data.historyItem);
         },
-        setEarn(state, earn) {
-            state.earn = earn;
+        updateIncome(state, data) {
+            Vue.set(state.income, data.key, data.item);
         },
         updateAccounts(state, data) {
             Vue.set(state.accounts, data.account.id, data.account);
-            state.active = data.account.id;
+            if (state.active === -1) {
+                state.active = data.account.id;
+            }
         },
         setHash(state, data) {
             Vue.set(state.hash, data.key, data.hash);
         },
         updateHash(state, data) {
             Vue.set(state.hash[data.i], data.key, data.hash);
-        },
-        setAllEarn(state, data) {
-            Vue.set(state.fullEarn, data.key, Number(data.sum).toFixed(8));
         },
     },
     state: {
@@ -361,6 +354,7 @@ export default {
         history: {},
         historyMiners: {},
         incomeHistory: {},
+        income: {},
         updateId: 0,
         fullEarn: {},
         validate: false,
@@ -386,8 +380,8 @@ export default {
         getActive(state) {
             return state.active;
         },
-        FullEarn(state) {
-            return state.fullEarn;
+        getIncome(state) {
+            return state.income;
         },
         getValid(state) {
             return state.valid;

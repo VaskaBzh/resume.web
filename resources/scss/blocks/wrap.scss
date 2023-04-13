@@ -26,6 +26,58 @@
             }
         }
     }
+    &-modify {
+        display: grid;
+        grid-template-columns: 600px auto;
+        gap: 0 32px;
+        grid-template-rows: repeat(2, auto);
+        @media (max-width: 998.98px) {
+            overflow: hidden;
+            grid-template-columns: 65% auto;
+        }
+        @media (max-width: 767.98px) {
+            grid-template-columns: 100%;
+            .wrap__block {
+                grid-column-start: 1;
+                grid-column-end: 2;
+            }
+        }
+        .title {
+            @media (min-width: 767.98px) {
+                margin-bottom: 0;
+            }
+        }
+        &-reverse {
+            grid-template-columns: auto 600px;
+            @media (max-width: 998.98px) {
+                grid-template-columns: auto 65%;
+            }
+            @media (max-width: 767.98px) {
+                grid-template-columns: 100%;
+                .wrap__block {
+                    grid-column-start: 1;
+                    grid-column-end: 2;
+                }
+            }
+            &-mini {
+                grid-template-columns: auto 475px;
+                .wrap__block {
+                    min-height: 0 !important;
+                    @media (max-width: $mobile) {
+                        display: flex!important;
+                        grid-template-columns: auto!important;
+                    }
+                }
+                @media (max-width: 998.98px) {
+                    grid-template-columns: 100%;
+                    .wrap__block {
+                        grid-column-start: 1;
+                        grid-column-end: 2;
+                    }
+                }
+            }
+        }
+    }
     &-no-padding {
         @media (max-width: $mobile) {
             padding: 20px 0 20px 0 !important;
@@ -80,6 +132,31 @@
                     &__list {
                         width: 100%;
                     }
+                }
+            }
+        }
+        &-no-bg {
+            background-color: transparent !important;
+            overflow-x: scroll;
+            border: 1px solid #4a5568;
+            padding: 12px !important;
+            flex-direction: row !important;
+            gap: 12px !important;
+            overflow-y: hidden;
+            border-radius: 21px 21px 9px 9px !important;
+
+            &::-webkit-scrollbar {
+                width: 3px;
+
+                &-track {
+                    background: transparent;
+                    border-radius: 21px;
+                    padding: 0 10px;
+                }
+                &-thumb {
+                    height: 1px;
+                    background-color: #4282ec;
+                    border-radius: 21px;
                 }
             }
         }

@@ -2,52 +2,10 @@
     <div class="wallets">
         <div class="wallets__container">
             <main-title tag="h2" titleName="Мои кошельки">
-                <blue-button class="wallets__button wallets__button-history">
-                    <Link :href="route('income')"> Доходы </Link>
-                </blue-button>
+                <!--                <blue-button class="wallets__button wallets__button-history">-->
+                <!--                    <Link :href="route('income')"> Доходы </Link>-->
+                <!--                </blue-button>-->
             </main-title>
-            <div class="wallets__wrap">
-                <div class="wallets__row wallets__row-balance">
-                    <h3 class="wallets__title">Обзор:</h3>
-                </div>
-                <div class="wallets__row">
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">Оплачено:</span>
-                            <span class="wallets__value"
-                                ><span> 0.00000000 </span>
-                                BTC
-                            </span>
-                        </div>
-                    </div>
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">
-                                Неоплаченно:
-                            </span>
-                            <span class="wallets__value">
-                                <span>
-                                    {{ this.allEarn }}
-                                </span>
-                                BTC
-                            </span>
-                        </div>
-                    </div>
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">
-                                Верашний доход:
-                            </span>
-                            <span class="wallets__value">
-                                <span>
-                                    {{ this.yesterdayProfit }}
-                                </span>
-                                BTC
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div ref="wallets" class="wallets__wrap">
                 <h3 class="wallets__title">
                     Список кошельков
@@ -116,45 +74,20 @@ import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 import { Link } from "@inertiajs/vue3";
+import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
 export default {
     components: { MainCheckbox, BlueButton, MainTitle, Link },
+    layout: profileLayoutView,
     computed: {
-        ...mapGetters(["FullEarn", "allAccounts", "allHistoryForDays"]),
+        ...mapGetters([
+            "getIncome",
+            "allAccounts",
+            "allHistoryForDays",
+            "getActive",
+        ]),
         bool() {
             return this.wallets.length > 0;
-        },
-        allEarn() {
-            let sum = 0;
-            if (this.FullEarn && Object.values(this.FullEarn).length > 0) {
-                Object.values(this.FullEarn).forEach((acc) => {
-                    sum += Number(acc);
-                });
-            }
-            return sum.toFixed(8);
-        },
-        yesterdayProfit() {
-            let sum = 0;
-            if (
-                this.allHistoryForDays &&
-                Object.values(this.allHistoryForDays).length > 0
-            ) {
-                Object.values(this.allHistoryForDays).forEach((acc) => {
-                    if (acc[1]) {
-                        sum += Number(acc[1][3]);
-                    }
-                });
-            }
-            return sum.toFixed(8);
-        },
-        walletsCash() {
-            let sum = 0;
-            if (this.FullEarn && Object.values(this.FullEarn).length > 0) {
-                Object.values(this.FullEarn).forEach((el) => {
-                    sum += Number(el);
-                });
-            }
-            return sum;
         },
         wallets() {
             let arr = [];
@@ -165,8 +98,8 @@ export default {
                 if (this.isChecked) {
                     Object.values(this.allAccounts).forEach((acc, i) => {
                         let val = 0;
-                        if (this.FullEarn[i]) {
-                            val = this.FullEarn[i];
+                        if (this.getIncome[acc.group_id]) {
+                            val = this.getIncome[acc.group_id].accruals;
                         }
                         if (val > 0) {
                             let walletModel = {
@@ -183,8 +116,8 @@ export default {
                 } else {
                     Object.values(this.allAccounts).forEach((acc, i) => {
                         let val = 0;
-                        if (this.FullEarn[i]) {
-                            val = this.FullEarn[i];
+                        if (this.getIncome[acc.group_id]) {
+                            val = this.getIncome[acc.geoup_id].accruals;
                         }
                         let walletModel = {
                             img: "bitcoin_img.png",
@@ -266,8 +199,9 @@ export default {
     props: ["errors", "message", "user", "auth_user"],
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .wallets {
+    width: 100%;
     &__title {
         font-family: AmpleSoftPro, serif;
         font-style: normal;
@@ -315,7 +249,8 @@ export default {
     }
 
     .title {
-        margin: 49px 0 24px;
+        margin: 0 0 24px;
+        padding-left: 70px;
         display: flex;
         width: 100%;
         align-items: center;
@@ -475,8 +410,8 @@ export default {
 
     // .wallets__button
     &__button {
-        color: #68809d;
-        background: #fff;
+        color: #68809d !important;
+        background: #fff !important;
         min-width: 179px;
         box-shadow: none;
         transform: translate(0, 0);
@@ -487,9 +422,9 @@ export default {
             height: 38px;
         }
         @media (max-width: 767.98px) {
-            font-size: 18px;
-            line-height: 22px;
-            width: 100%;
+            font-size: 18px !important;
+            line-height: 22px !important;
+            width: 100% !important;
             min-width: 120px;
             &:before {
                 content: none;
@@ -500,8 +435,8 @@ export default {
             gap: 6px;
             min-height: 54px;
             min-width: 0;
-            font-size: 12px;
-            line-height: 14px;
+            font-size: 12px !important;
+            line-height: 14px !important;
             padding: 0;
         }
 
@@ -541,8 +476,8 @@ export default {
 
         @media (any-hover: hover) {
             &:hover {
-                background-color: #4182ec;
-                color: #fff;
+                background-color: #4182ec !important;
+                color: #fff !important;
 
                 &:before {
                     background: linear-gradient(

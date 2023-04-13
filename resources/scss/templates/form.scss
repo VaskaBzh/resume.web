@@ -106,7 +106,25 @@
             fill: #ff0000;
         }
     }
+    &_column {
+        width: calc(50% - 4px);
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 21px;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 26px;
+        @media (max-width: 767.98px) {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 17px;
+        }
+    }
     &_row {
+        height: 48px;
+        display: flex;
         position: relative;
         svg {
             position: absolute;

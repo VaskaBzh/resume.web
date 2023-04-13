@@ -35,17 +35,19 @@
             v-if="viewportWidth >= 991.98 && is_auth"
             ref="list"
         >
-            {{ this.name }}
+            <Link :href="route('accounts')" class="nav__button_link">
+                {{ this.name }}
+            </Link>
             <div class="nav__button_menu">
                 <main-list>
                     <template
                         v-slot:head
                         v-if="
                             this.allAccounts[this.getActive] &&
-                            this.FullEarn[this.getActive]
+                            this.getIncome[this.getActive].accruals
                         "
                     >
-                        {{ this.FullEarn[this.getActive] }}
+                        {{ this.getIncome[this.getActive].accruals }}
                         BTC</template
                     >
                     <template v-slot:head v-else> 0.00000000 BTC</template>
@@ -56,8 +58,8 @@
                         </div>
                         <div class="list_row">
                             <blue-button class="list_button"
-                                ><Link :href="route('wallets')"
-                                    >Кошельки</Link
+                                ><Link :href="route('income')"
+                                    >Доходы</Link
                                 ></blue-button
                             >
                         </div>
@@ -668,7 +670,7 @@ export default defineComponent({
         };
     },
     computed: {
-        ...mapGetters(["FullEarn", "allAccounts", "getActive"]),
+        ...mapGetters(["getIncome", "allAccounts", "getActive"]),
         name() {
             let name = "...";
             if (this.allAccounts[this.getActive]) {
@@ -678,9 +680,9 @@ export default defineComponent({
         },
         earnSum() {
             let sum = 0;
-            if (Object.values(this.FullEarn).length > 0) {
-                Object.values(this.FullEarn).forEach((el) => {
-                    sum += Number(el);
+            if (Object.values(this.getIncome).length > 0) {
+                Object.values(this.getIncome).forEach((el) => {
+                    sum += Number(el.accruals);
                 });
             }
             return sum.toFixed(8);
@@ -781,7 +783,7 @@ export default defineComponent({
                         if (i > 1) {
                             if (group.name === this.$refs.name.value) {
                                 this.allErrors.name =
-                                    "Аккаунт с таким имененм уже существует";
+                                    "Аккаунт с таким именем уже существует";
                                 validate = false;
                             } else if (
                                 i === resp.data.data.list.length - 1 &&
@@ -1185,12 +1187,19 @@ nav.nav__container {
             }
         }
     }
-
+    &_link {
+        padding: 0 20px;
+        width: 100%;
+        height: 100%;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
     &-account {
         border-radius: 13px;
+        padding: 0;
         height: 44px;
         min-width: 162px;
-        padding: 0 20px;
         display: inline-flex;
         align-items: center;
         justify-content: center;

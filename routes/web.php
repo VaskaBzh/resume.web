@@ -69,14 +69,14 @@ Route::middleware('auth')->group(function () {
     Route::controller(IndexController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::redirect('/profile', '/profile/accounts');
-        Route::get('/wallets', 'wallets')->name('wallets');
-        Route::get('/income', 'income')->name('income');
 //        Route::get('/ref-page', 'ref_page')->name('ref_page');
         Route::get('/settings', 'settings')->name('settings');
         Route::prefix('/profile')->group(function () {
             Route::get('/accounts', 'accounts')->name('accounts');
             Route::get('/statistic', 'statistic')->name('statistic');
             Route::get('/workers', 'workers')->name('workers');
+            Route::get('/income', 'income')->name('income');
+            Route::get('/wallets', 'wallets')->name('wallets');
 //            Route::get('/payment', 'payment')->name('payment');
 //            Route::get('/accruals', 'accruals')->name('accruals');
             Route::get('/connecting', 'connecting')->name('connecting');
