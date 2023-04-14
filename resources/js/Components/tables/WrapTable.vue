@@ -5,7 +5,11 @@
             <main-title tag="h3" v-if="this.title"
                 >{{ this.title }}
             </main-title>
-            <span v-else-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'" class="wrap_head_elem"
+            <span
+                v-else-if="
+                    this.viewportWidth < 767.98 && this.type !== 'Платежи'
+                "
+                class="wrap_head_elem"
                 >Отображать в виде</span
             >
             <div
@@ -17,7 +21,8 @@
                 </div>
                 <div class="legend_elem legend_elem-unstable">
                     Нестабильные: {{ this.unstable }}
-                </div>workers
+                </div>
+                workers
                 <div class="legend_elem legend_elem-unActive">
                     Неактивные: {{ this.unActive }}
                 </div>

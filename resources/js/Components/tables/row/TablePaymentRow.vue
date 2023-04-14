@@ -35,11 +35,16 @@
         </td>
         <td
             class="main__number main__link"
+            @click="link"
             v-tooltip="{
                 mode: 'interactive: true',
                 message: `${this.columns.txid}`,
             }"
+            v-if="this.columns.txid"
         >
+            {{ this.columns.wallet }}
+        </td>
+        <td @click="link" class="main__number main__link" v-else>
             {{ this.columns.wallet }}
         </td>
         <!--        <td class="main__number" v-if="this.viewportWidth > 991.98">-->
@@ -61,6 +66,8 @@
                 {{
                     this.columns.status === "rejected"
                         ? "Отклонено"
+                        : this.columns.status === "pending"
+                        ? "В ожидании"
                         : "Выполнено"
                 }}
             </span>
@@ -90,6 +97,8 @@
     <!--    </tr>-->
 </template>
 <script>
+import { router } from "@inertiajs/vue3";
+
 export default {
     name: "table-payment-row",
     props: {
@@ -113,6 +122,9 @@ export default {
         },
     },
     methods: {
+        link() {
+            router.visit("/profile/wallets");
+        },
         copy() {
             navigator.clipboard.writeText(this.$refs.link.innerText);
         },
@@ -271,6 +283,11 @@ td {
             &.completed {
                 &:before {
                     background: #13d60e;
+                }
+            }
+            &.pending {
+                &:before {
+                    background: #e9c058;
                 }
             }
             &.rejected {

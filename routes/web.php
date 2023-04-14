@@ -104,7 +104,7 @@ Route::middleware('auth')->group(function () {
     });
     Route::controller(WalletController::class)->group(function () {
         Route::post('/wallet_create', 'create')->name('wallet_create');
-        Route::post('/wallet_update', 'update')->name('wallet_update');
+        Route::post('/wallet_delete', 'delete')->name('wallet_delete');
         Route::put('/wallet_process', 'visual')->name('wallet_process');
     });
 });

@@ -58,11 +58,32 @@
                             <!--                                    `/resources/assets/img/${wallet.img}`-->
                             <!--                                "-->
                             <!--                            />-->
-                            <span>{{ wallet.name }}</span>
+                            <span v-if="wallet.fullName === ''">{{
+                                wallet.wallet
+                            }}</span>
+                            <span
+                                v-else
+                                v-tooltip="{ message: wallet.fullName }"
+                                >{{ wallet.wallet }}</span
+                            >
                             <div class="wallets__block_doths">
                                 <div></div>
                                 <div></div>
                                 <div></div>
+                                <div class="wallets__block_doths_menu">
+                                    <!--                                    <button-->
+                                    <!--                                        @mouseenter="change"-->
+                                    <!--                                        class="button-remove"-->
+                                    <!--                                    >-->
+                                    <!--                                        Изменить-->
+                                    <!--                                    </button>-->
+                                    <button
+                                        @mouseenter="remove(wallet)"
+                                        class="button-remove"
+                                    >
+                                        Удалить
+                                    </button>
+                                </div>
                             </div>
                         </div>
                         <div class="wallets__block_value">
@@ -84,6 +105,9 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div class="hint" v-scroll="'opacity'" v-if="this.mess !== ''">
+        {{ this.mess }}
     </div>
     <popup-view id="addWallet">
         <div
@@ -187,49 +211,75 @@ export default {
         },
         wallets() {
             let arr = [];
-            if (this.getWallet && Object.values(this.getWallet).length > 0) {
+            if (
+                this.getWallet[this.getActive] &&
+                Object.values(this.getWallet[this.getActive]).length > 0
+            ) {
                 if (this.isChecked) {
-                    Object.values(this.getWallet).forEach((wal, i) => {
-                        let val = 0;
-                        if (wal[i].payment) {
-                            val = wal[i].payment;
-                        }
-                        if (val > 0) {
-                            let name = wal[i].wallet;
-                            if (wal[i].name) {
-                                name = wal[i].name;
+                    Object.values(this.getWallet[this.getActive]).forEach(
+                        (wal, i) => {
+                            let val = 0;
+                            if (wal) {
+                                if (wal.payment) {
+                                    val = wal.payment;
+                                }
+                                if (val > 0) {
+                                    let name = wal.wallet;
+                                    if (wal.name) {
+                                        name = wal.name;
+                                    }
+                                    let fullName = "";
+                                    if (name.length > 6) {
+                                        fullName = name;
+                                        name = name.substr(0, 6) + "...";
+                                    }
+                                    let walletModel = {
+                                        img: "bitcoin_img.png",
+                                        wallet: name,
+                                        fullName: fullName,
+                                        shortName: "BTC",
+                                        value: val.toFixed(8),
+                                        dollarValue: 0,
+                                        rubleValue: 0,
+                                        percent: wal.percent,
+                                    };
+                                    Vue.set(arr, i, walletModel);
+                                }
                             }
-                            let walletModel = {
-                                img: "bitcoin_img.png",
-                                name: name,
-                                shortName: "BTC",
-                                value: val.toFixed(8),
-                                dollarValue: 0,
-                                rubleValue: 0,
-                            };
-                            Vue.set(arr, i, walletModel);
                         }
-                    });
+                    );
                 } else {
-                    Object.values(this.getWallet).forEach((wal, i) => {
-                        let val = 0;
-                        if (wal[i].payment) {
-                            val = wal[i].payment;
+                    Object.values(this.getWallet[this.getActive]).forEach(
+                        (wal, i) => {
+                            let val = 0;
+                            if (wal) {
+                                if (wal.payment) {
+                                    val = wal.payment;
+                                }
+                                let name = wal.wallet;
+                                if (wal.name) {
+                                    name = wal.name;
+                                }
+                                let fullName = "";
+                                if (name.length > 6) {
+                                    fullName = name;
+                                    name = name.substr(0, 6) + "...";
+                                }
+                                let walletModel = {
+                                    img: "bitcoin_img.png",
+                                    wallet: name,
+                                    fullName: fullName,
+                                    shortName: "BTC",
+                                    value: val.toFixed(8),
+                                    dollarValue: 0,
+                                    rubleValue: 0,
+                                    percent: wal.percent,
+                                    minWithdrawal: wal.minWithdrawal,
+                                };
+                                Vue.set(arr, i, walletModel);
+                            }
                         }
-                        let name = wal[i].wallet;
-                        if (wal[i].name) {
-                            name = wal[i].name;
-                        }
-                        let walletModel = {
-                            img: "bitcoin_img.png",
-                            name: name,
-                            shortName: "BTC",
-                            value: val.toFixed(8),
-                            dollarValue: 0,
-                            rubleValue: 0,
-                        };
-                        Vue.set(arr, i, walletModel);
-                    });
+                    );
                 }
             }
             return arr;
@@ -255,6 +305,7 @@ export default {
             ruble: 0,
             dollar: 0,
             err: {},
+            mess: "",
             form: {
                 name: "",
                 wallet: "",
@@ -264,6 +315,14 @@ export default {
         };
     },
     methods: {
+        remove(wallet) {
+            wallet.group_id = this.getActive;
+            axios
+                .post("/wallet_delete", wallet)
+                .then((res) => (this.mess = res.data.message))
+                .catch((err) => (this.mess = err.response.data.message));
+            setTimeout(() => (this.mess = ""), 3000);
+        },
         removeLetters(input) {
             const letterRegExp = /[a-zA-Z]/g;
             let fin = input.replace(letterRegExp, "");
@@ -277,16 +336,29 @@ export default {
             this.form[name] = this.removeLetters(value);
         },
         addWallet() {
-            let obj = this.form;
-            obj.group_id = this.getActive;
-            obj.minWithdrawal === "0"
-                ? (this.err.message = ["Вывод должен быть больше 0.005."])
-                : axios
-                      .post("/wallet_create", this.form)
-                      .then((res) =>
-                          document.querySelector("[data-close]").click()
-                      )
-                      .catch((err) => (this.err = err.response.data.errors));
+            if (this.wallets) {
+                let per = 0;
+                this.wallets.forEach((wal) => {
+                    per = per + wal["percent"];
+                });
+                let obj = this.form;
+                per = per + obj.percent;
+                obj.group_id = this.getActive;
+                per > 100
+                    ? (this.err.message = [
+                          "Процент с ваших кошельков больше 100.",
+                      ])
+                    : obj.minWithdrawal === "0"
+                    ? (this.err.message = ["Вывод должен быть больше 0.005."])
+                    : axios
+                          .post("/wallet_create", this.form)
+                          .then((res) =>
+                              document.querySelector("[data-close]").click()
+                          )
+                          .catch(
+                              (err) => (this.err = err.response.data.errors)
+                          );
+            }
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
@@ -300,7 +372,7 @@ export default {
                     } else {
                         setTimeout(() => {
                             this.$refs.wallets.style.height =
-                                40 + 114 + this.$refs.list.offsetHeight + "px";
+                                40 + 132 + this.$refs.list.offsetHeight + "px";
                         }, 1);
                     }
                 } else {
@@ -313,7 +385,7 @@ export default {
                         setTimeout(() => {
                             this.$refs.wallets.style.height =
                                 40 +
-                                114 +
+                                132 +
                                 this.$refs.noInfo.offsetHeight +
                                 "px";
                         }, 1);
@@ -333,12 +405,31 @@ export default {
 };
 </script>
 <style lang="scss">
+.hint {
+    position: fixed;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #fff;
+    transition: all 0.3s ease 0s;
+}
 .wallets {
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
+    }
+    .button-remove {
+        color: #ff0000;
+        background: transparent;
+        height: 28px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
     &__title {
         font-family: AmpleSoftPro, serif;
@@ -482,14 +573,43 @@ export default {
             width: 23.5px;
             gap: 3px;
             cursor: pointer;
+            position: relative;
             @media (max-width: 767.98px) {
                 width: 20px;
                 gap: 2.5px;
+            }
+            &_menu {
+                position: absolute;
+                visibility: hidden;
+                left: calc(100% + 20px);
+                top: -16px;
+                border-radius: 8px !important;
+                background: rgba(#fff, 0.8) !important;
+                min-width: 160px;
+                overflow: hidden;
+                opacity: 0;
+                width: 0 !important;
+                height: fit-content !important;
+                box-shadow: 0 0 12px rgba(#000, 0.3);
+                display: flex;
+                flex-direction: column;
+                gap: 6px;
+                max-height: 290px;
+                @media (max-width: 991.98px) {
+                    right: 0;
+                    left: auto;
+                    top: 0;
+                }
             }
 
             &:hover {
                 div {
                     background-color: #3f7bdd;
+                }
+                .wallets__block_doths_menu {
+                    width: 100% !important;
+                    opacity: 1;
+                    visibility: visible;
                 }
             }
 

@@ -15,7 +15,8 @@ class WalletController extends Controller
         $messages = [
             'wallet.required' => 'Введите ссылку на кошелек',
             'percent.integer' => 'Процент должен быть числом.',
-            'percent.min' => 'Процент должен быть больше 5.',
+            'percent.min' => 'Процент должен быть больше 1.',
+            'percent.max' => 'Процент не может быть больше 100.',
             'minWithdrawal.numeric' => 'Вывод должен быть числом.',
             'minWithdrawal.gt' => 'Вывод должен быть больше 0.005.',
             'name.min' => 'Имя должно иметь больше трех букв',
@@ -33,14 +34,14 @@ class WalletController extends Controller
 
         if ($request->input('percent')) {
             $request->validate([
-                'percent' => 'integer|min:6',
+                'percent' => 'integer|min:1|max:100',
             ], $messages);
 
             $wallet->percent = $request->input('percent');
         }
         if ($request->input('minWithdrawal')) {
             $request->validate([
-                'minWithdrawal' => 'numeric|gt:0.005',
+                'minWithdrawal' => 'numeric|gt:0.004',
             ], $messages);
 
             $wallet->minWithdrawal = $request->input('minWithdrawal');
@@ -54,7 +55,7 @@ class WalletController extends Controller
         }
         $wallet->save();
     }
-    public function update(Request $request)
+    public function delete(Request $request)
     {
         $request->validate([
             'group_id' => 'required',
@@ -64,12 +65,12 @@ class WalletController extends Controller
         $wallets = Sub::all()->where("group_id", $request->input("group_id"))->first()->wallets();
         $wallet = $wallets->where("wallet", $request->input("wallet"))->first();
 
-        if (count($wallets) > 1) {
+        if (count($wallets->get()) > 1) {
             $wallet->delete();
-            return;
+            return response()->json(['message' => 'Кошелек успешно удален.'], 200);
         }
 
-        $wallet->save();
+        return response()->json(['message' => 'Нельзя удалять единственный кошелек.'], 200);
     }
     public function visual(Request $request)
     {

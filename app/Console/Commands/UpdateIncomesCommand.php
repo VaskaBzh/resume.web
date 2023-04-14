@@ -171,7 +171,7 @@ class UpdateIncomesCommand extends Command
                                     $income["message"] = 'Произошла ошибка при выполнении выплаты.';
                                 }
                             } else {
-                                $income["message"] = 'Недостаточно средств для вывода. Минимальное значение' . $min;
+                                $income["message"] = 'Недостаточно средств для вывода. Минимальное значение ' . $min;
                                 $income["status"] = "pending";
                             }
                         } else {
