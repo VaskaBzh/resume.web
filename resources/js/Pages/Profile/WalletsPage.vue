@@ -78,7 +78,7 @@
                                     <!--                                        Изменить-->
                                     <!--                                    </button>-->
                                     <button
-                                        @mouseenter="remove(wallet)"
+                                        @click="remove(wallet)"
                                         class="button-remove"
                                     >
                                         Удалить
