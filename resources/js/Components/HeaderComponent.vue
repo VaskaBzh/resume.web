@@ -885,15 +885,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.header-fix {
-    @media (min-width: 1271px) {
-        nav.nav__container {
-            position: fixed;
-            transform: translateX(-50%) translateY(-120%);
-            z-index: 100;
-        }
-    }
-}
+//.header-fix {
+//    @media (min-width: 1271px) {
+//        nav.nav__container {
+//            position: fixed;
+//            transform: translateX(-50%) translateY(-120%);
+//            z-index: 100;
+//        }
+//    }
+//}
 
 #app {
     display: flex;
@@ -950,7 +950,8 @@ nav.nav__container {
     padding: 40px 0 15px;
     @media (min-width: 1271px) {
         transition: all 0.3s ease 0s;
-        position: fixed;
+        //position: fixed;
+        position: absolute;
         top: 0;
         left: 50%;
         transform: translateX(-50%) translateY(0);
@@ -965,7 +966,8 @@ nav.nav__container {
             width: 100vw;
             height: 101px;
             z-index: -1;
-            position: fixed;
+            //position: fixed;
+            position: absolute;
             filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
             background: linear-gradient(
                 179.87deg,
@@ -976,13 +978,13 @@ nav.nav__container {
                 #e8ecf2 19.07%
             );
         }
-        &.fixed {
-            transform: translateX(-50%) translateY(0);
-
-            &:before {
-                transform: translateX(-50%) translateY(0);
-            }
-        }
+        //&.fixed {
+        //    transform: translateX(-50%) translateY(0);
+        //
+        //    &:before {
+        //        transform: translateX(-50%) translateY(0);
+        //    }
+        //}
     }
     @media (max-width: 1270px) {
         padding: 40px 0 15px;

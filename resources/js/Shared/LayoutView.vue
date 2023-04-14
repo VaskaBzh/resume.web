@@ -147,6 +147,8 @@ export default {
         #eaeef4 14.75%,
         #e8ecf2 19.07%
     );
+
+    position: relative;
     width: 100vw;
 }
 

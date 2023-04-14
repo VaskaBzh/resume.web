@@ -2,7 +2,9 @@
     <div
         class="nav-tabs"
         :class="{
-            'nav-tabs-full-page': $page.url === '/profile/income' || $page.url === '/profile/wallets',
+            'nav-tabs-full-page':
+                $page.url === '/profile/income' ||
+                $page.url === '/profile/wallets',
         }"
         ref="tabs"
     >
@@ -269,14 +271,15 @@ export default {
             }
         }
     }
-    &.fixed {
-        @media (min-width: 1271px) {
-            transform: translateY(-92px);
-        }
-    }
+    //&.fixed {
+    //    @media (min-width: 1271px) {
+    //        transform: translateY(-92px);
+    //    }
+    //}
     &-full-page {
         @media (min-width: 1271px) {
             position: absolute;
+            border-radius: 0;
             top: 7px;
             background-color: transparent;
             border: 0.5px solid transparent;
