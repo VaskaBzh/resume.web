@@ -110,7 +110,8 @@
         width: calc(50% - 4px);
         height: 100%;
         display: flex;
-        align-items: center;
+        align-items: flex-start;
+        flex-direction: column;
         justify-content: center;
         border-radius: 21px;
         font-weight: 400;
@@ -123,6 +124,7 @@
         }
     }
     &_row {
+        gap: 8px;
         height: 48px;
         display: flex;
         position: relative;

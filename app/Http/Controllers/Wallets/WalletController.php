@@ -10,27 +10,65 @@ use Illuminate\Support\Facades\Http;
 
 class WalletController extends Controller
 {
+    public function create(Request $request)
+    {
+        $messages = [
+            'wallet.required' => 'Введите ссылку на кошелек',
+            'percent.integer' => 'Процент должен быть числом.',
+            'percent.min' => 'Процент должен быть больше 5.',
+            'minWithdrawal.numeric' => 'Вывод должен быть числом.',
+            'minWithdrawal.gt' => 'Вывод должен быть больше 0.005.',
+            'name.min' => 'Имя должно иметь больше трех букв',
+        ];
+
+        $request->validate([
+           'group_id' => 'required',
+           'wallet' => 'required',
+        ], $messages);
+
+        $wallet = new Wallet([
+            'group_id' => $request->input("group_id"),
+            'wallet' => $request->input("wallet"),
+        ]);
+
+        if ($request->input('percent')) {
+            $request->validate([
+                'percent' => 'integer|min:6',
+            ], $messages);
+
+            $wallet->percent = $request->input('percent');
+        }
+        if ($request->input('minWithdrawal')) {
+            $request->validate([
+                'minWithdrawal' => 'numeric|gt:0.005',
+            ], $messages);
+
+            $wallet->minWithdrawal = $request->input('minWithdrawal');
+        }
+        if ($request->input('name')) {
+            $request->validate([
+                'name' => 'min:3',
+            ], $messages);
+
+            $wallet->name = $request->input("name");
+        }
+        $wallet->save();
+    }
     public function update(Request $request)
     {
         $request->validate([
-           'group_id' => 'required',
+            'group_id' => 'required',
+            'wallet' => 'required',
         ]);
 
-        $wallet = Sub::all()->where('group_id', $request->input('group_id'))->first()->wallet()->first();
+        $wallets = Sub::all()->where("group_id", $request->input("group_id"))->first()->wallets();
+        $wallet = $wallets->where("wallet", $request->input("wallet"))->first();
 
-        if ($request->input('payments')) {
-            $request->validate([
-                'payments' => 'required',
-            ]);
-
-            $wallet->payments = $request->input('payments');
-        } else if ($request->input('accruals')) {
-            $request->validate([
-                'accruals' => 'required',
-            ]);
-
-            $wallet->accruals = $request->input('accruals');
+        if (count($wallets) > 1) {
+            $wallet->delete();
+            return;
         }
+
         $wallet->save();
     }
     public function visual(Request $request)

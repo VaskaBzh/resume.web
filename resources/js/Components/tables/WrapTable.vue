@@ -5,7 +5,7 @@
             <main-title tag="h3" v-if="this.title"
                 >{{ this.title }}
             </main-title>
-            <span v-else-if="this.viewportWidth < 767.98" class="wrap_head_elem"
+            <span v-else-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'" class="wrap_head_elem"
                 >Отображать в виде</span
             >
             <div
@@ -17,7 +17,7 @@
                 </div>
                 <div class="legend_elem legend_elem-unstable">
                     Нестабильные: {{ this.unstable }}
-                </div>
+                </div>workers
                 <div class="legend_elem legend_elem-unActive">
                     Неактивные: {{ this.unActive }}
                 </div>
@@ -25,7 +25,10 @@
                     Все: {{ this.all }}
                 </div>
             </div>
-            <div class="wrap_head-usability" v-if="this.viewportWidth < 767.98">
+            <div
+                class="wrap_head-usability"
+                v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'"
+            >
                 <div
                     ref="block"
                     @click="this.visualType = 'block'"
@@ -223,7 +226,7 @@ export default {
             this.viewportWidth = window.innerWidth;
         },
         vsType() {
-            if (this.viewportWidth < 767.98) {
+            if (this.viewportWidth < 767.98 && this.type !== "Платежи") {
                 if (this.visualType === "block") {
                     this.$refs.block.classList.add("active");
                     this.$refs.table.classList.remove("active");

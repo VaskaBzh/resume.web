@@ -6,7 +6,9 @@ export default {
         // https://pool.btc.com/v1/coins-income?puid=781195
         async getDiff({ commit, state }, data) {
             axios
-                .get("https://pool.api.btc.com/v1/coins-income")
+                .get(
+                    "https://pool.api.btc.com/v1/coins-income?lang=ru&puid=781195"
+                )
                 .then((res) => {
                     Object.values(res.data.data).forEach((el, i) => {
                         if (Object.keys(res.data.data)[i] === "btc") {

@@ -16,25 +16,45 @@
         <td class="main__number">
             {{ this.columns.date }}
         </td>
-        <!--        <td class="main__number">-->
-        <!--            {{ this.columns.wallet }}-->
-        <!--        </td>-->
         <td class="main__number">
-            <div>FPPS+ начисления</div>
+            {{ this.columns.payDate }}
         </td>
-        <td class="main__number">{{ this.columns.percent }} %</td>
+        <!--        <td class="main__number">-->
+        <!--            <div>FPPS+ начисления</div>-->
+        <!--        </td>-->
         <td class="main__number">
             {{ this.columns.hash }} {{ this.columns.unit }}
         </td>
-        <td class="main__number">{{ this.BTCVal }} BTC</td>
-        <td class="main__number" v-if="this.viewportWidth > 991.98">
-            {{ Number(this.columns.diff / 1000000000000).toFixed(2) }} T
+        <td
+            class="main__number"
+            v-tooltip="{
+                message: `Сумма к выплате: ${this.columns.percent}% (${this.BTCVal} BTC)`,
+            }"
+        >
+            {{ this.columns.earn.toFixed(8) }} BTC
+        </td>
+        <td
+            class="main__number main__link"
+            v-tooltip="{
+                mode: 'interactive: true',
+                message: `${this.columns.txid}`,
+            }"
+        >
+            {{ this.columns.wallet }}
+        </td>
+        <!--        <td class="main__number" v-if="this.viewportWidth > 991.98">-->
+        <!--            {{ Number(this.columns.diff / 1000000000000).toFixed(2) }} T-->
+        <!--        </td>-->
+        <td
+            class="main__number"
+            v-tooltip="{ message: `Сумма к выплате: ${this.BTCVal} BTC` }"
+        >
+            {{ this.columns.percent }} %
         </td>
         <td class="main__number main__number-status">
-            <div v-if="this.viewportWidth > 991.98">
-                {{ this.columns.message }}
-            </div>
             <span
+                v-tooltip="{ message: this.columns.message }"
+                id="status"
                 :class="this.columns.status"
                 v-if="this.viewportWidth > 991.98"
             >
@@ -44,7 +64,12 @@
                         : "Выполнено"
                 }}
             </span>
-            <span :class="this.columns.status" v-else></span>
+            <span
+                v-tooltip="this.columns.message"
+                id="status"
+                :class="this.columns.status"
+                v-else
+            ></span>
         </td>
     </tr>
     <tr v-scroll="'opacity'" class="row-ref-list" v-else-if="columns.email">
@@ -57,12 +82,12 @@
             {{ this.columns.date }}
         </td>
     </tr>
-    <tr v-scroll="'opacity'" class="row-ref" v-else>
-        <td class="main__number">
-            {{ this.columns.date }}
-        </td>
-        <td class="main__number">{{ this.BTCVal }} BTC</td>
-    </tr>
+    <!--    <tr v-scroll="'opacity'" class="row-ref" v-else>-->
+    <!--        <td class="main__number">-->
+    <!--            {{ this.columns.date }}-->
+    <!--        </td>-->
+    <!--        <td class="main__number">{{ this.BTCVal }} BTC</td>-->
+    <!--    </tr>-->
 </template>
 <script>
 export default {
@@ -84,7 +109,7 @@ export default {
     },
     computed: {
         BTCVal() {
-            return Number(this.columnsArr.earn).toFixed(8);
+            return Number(this.columnsArr.payment).toFixed(8);
         },
     },
     methods: {
@@ -94,26 +119,24 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        handleInfoChanger() {
-            if (this.viewportWidth < 767.98 && this.columns.type) {
-                if (this.columns.hash) {
-                    this.type = this.type.split(" ").splice(0, 1)[0];
-                } else if (this.columns.status) {
-                    if (this.type === "Поступление") {
-                        this.type = "img-icon-enter.svg";
-                    }
-                    if (this.status === "Успешно") {
-                        this.status = "img-icon-accept.svg";
-                    }
-                }
-            }
-        },
+        // handleInfoChanger() {
+        //     if (this.viewportWidth < 767.98 && this.columns.type) {
+        //         if (this.columns.hash) {
+        //             this.type = this.type.split(" ").splice(0, 1)[0];
+        //         } else if (this.columns.status) {
+        //             if (this.type === "Поступление") {
+        //                 this.type = "img-icon-enter.svg";
+        //             }
+        //             if (this.status === "Успешно") {
+        //                 this.status = "img-icon-accept.svg";
+        //             }
+        //         }
+        //     }
+        // },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
-        window.addEventListener("resize", this.handleInfoChanger);
         this.handleResize();
-        this.handleInfoChanger();
     },
 };
 </script>
@@ -225,57 +248,6 @@ td {
         &.main__number-status {
             position: relative;
             cursor: pointer;
-            &:hover {
-                div {
-                    overflow: visible;
-                    opacity: 1;
-                    z-index: 12;
-                    &:after {
-                        overflow: visible;
-                        opacity: 1;
-                    }
-                }
-            }
-            div {
-                overflow: hidden;
-                opacity: 0;
-                z-index: -1;
-                transition: all 0.3s ease 0s;
-                position: absolute;
-                max-width: 200%;
-                bottom: 100%;
-                right: 0;
-                color: #fff;
-                white-space: break-spaces;
-                padding: 14px 16px;
-                background-color: rgba(0, 0, 0, 0.8);
-                border-radius: 6px;
-                &:after {
-                    overflow: hidden;
-                    opacity: 0;
-                    transition: all 0.3s ease 0s;
-                    position: absolute;
-                    content: "";
-                    clip-path: path(
-                        "M 9.849242404917499 24.091883092036785 A 5 5 0 0 1 13.384776310850237 22.627416997969522 L 20.627416997969522 22.627416997969522 A 2 2 0 0 0 22.627416997969522 20.627416997969522 L 22.627416997969522 13.384776310850237 A 5 5 0 0 1 24.091883092036785 9.849242404917499 L 23.091883092036785 9.849242404917499 L 9.849242404917499 23.091883092036785 Z"
-                    );
-                    background-image: linear-gradient(
-                        to right bottom,
-                        rgba(0, 0, 0, 0.65),
-                        rgba(0, 0, 0, 0.75)
-                    );
-                    position: absolute;
-                    background-repeat: no-repeat;
-                    background-position: -10px -10px;
-                    //content: url("data:image/svg+xml,%3Csvg width='30' height='15' viewBox='0 0 30 15' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0.85791 0H15H29.1422L15 14.1421L0.85791 0Z' fill='black' fill-opacity='0.5'/%3E%3C/svg%3E%0A");
-                    width: 33.9411255px;
-                    height: 33.9411255px;
-                    top: calc(100% - 5px);
-                    left: 50%;
-                    z-index: 10;
-                    transform: translateX(-50%) translateY(-12px) rotate(45deg);
-                }
-            }
         }
         &:last-child {
             text-align: left;

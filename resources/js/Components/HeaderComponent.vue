@@ -34,6 +34,8 @@
             class="nav__button nav__button-account"
             v-if="viewportWidth >= 991.98 && is_auth"
             ref="list"
+            @mouseenter="this.open"
+            @mouseout="this.close"
         >
             <Link :href="route('accounts')" class="nav__button_link">
                 {{ this.name }}
@@ -47,7 +49,7 @@
                             this.getIncome[this.getActive].accruals
                         "
                     >
-                        {{ this.getIncome[this.getActive].accruals }}
+                        {{ this.getIncome[this.getActive].accruals.toFixed(8) }}
                         BTC</template
                     >
                     <template v-slot:head v-else> 0.00000000 BTC</template>
@@ -434,7 +436,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import MainList from "@/Components/UI/MainList.vue";
 import { mapGetters } from "vuex";
-import Vue from "lodash";
 
 export default defineComponent({
     components: {
@@ -488,31 +489,6 @@ export default defineComponent({
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
-    },
-    updated() {
-        if (this.$refs.list) {
-            this.$refs.list.addEventListener("mouseenter", () => {
-                this.$refs.list.classList.add("target");
-            });
-            this.$refs.list.addEventListener("mouseout", () => {
-                setTimeout(() => {
-                    this.$refs.list.classList.remove("target");
-                }, 500);
-            });
-        }
-    },
-    mounted() {
-        setTimeout(this.handleScroll, 10);
-        if (this.$refs.list) {
-            this.$refs.list.addEventListener("mouseenter", () => {
-                this.$refs.list.classList.add("target");
-            });
-            this.$refs.list.addEventListener("mouseout", () => {
-                setTimeout(() => {
-                    this.$refs.list.classList.remove("target");
-                }, 500);
-            });
-        }
     },
     setup() {
         let message = ref("");
@@ -698,6 +674,14 @@ export default defineComponent({
         },
     },
     methods: {
+        open() {
+            this.$refs.list.classList.add("target");
+        },
+        close() {
+            setTimeout(() => {
+                this.$refs.list.classList.remove("target");
+            }, 500);
+        },
         seePassword(type) {
             if (this.$refs[`${type}`].getAttribute("type") === "password") {
                 document.querySelector(

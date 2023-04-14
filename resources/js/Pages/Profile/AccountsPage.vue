@@ -121,7 +121,7 @@ export default {
     },
     methods: {
         getForcast() {
-            if (this.btcInfo) {
+            if (this.btcInfo && this.btcInfo.btc) {
                 let val = 0;
                 Object.values(this.allAccounts).forEach((el, i) => {
                     if (el.shares1d > 0) {

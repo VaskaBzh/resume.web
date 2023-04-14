@@ -280,6 +280,7 @@ export default {
                 height: 14px;
             }
             th {
+                padding-right: 10px;
                 color: rgba(0, 0, 0, 0.62);
                 font-weight: 400;
                 font-size: 16px;

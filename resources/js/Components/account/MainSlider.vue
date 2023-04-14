@@ -2,6 +2,7 @@
     <div class="slider">
         <wrap-table
             ref="list"
+            :type="this.type"
             :table="this.table"
             :first="firstRow"
             :wait="this.wait"
@@ -107,6 +108,7 @@ export default {
     components: { WrapTable },
     props: {
         table: Object,
+        type: String,
         wait: Object,
     },
     data() {

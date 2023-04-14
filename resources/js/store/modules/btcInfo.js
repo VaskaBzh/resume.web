@@ -24,7 +24,7 @@ export default {
             commit("updateIncome", { item: income, key: group.group_id });
         },
         async getAccounts({ commit, state }) {
-            commit("destroy");
+            // commit("destroy");
             commit("setValid");
             await axios
                 .get("/accountsAll")
@@ -60,6 +60,7 @@ export default {
                                     group.index = i;
                                     let group_with_length = group;
                                     group_with_length.length = arr.length;
+                                    this.dispatch("getWallets", group);
                                     this.dispatch("getAllIncome", group);
                                     this.dispatch("getHistoryHash", group);
                                     this.dispatch(
@@ -291,7 +292,16 @@ export default {
                 })
                 .catch((err) => console.log(err));
         },
-        getWallets({ commit }, data) {
+        getWallets({ commit, state }, data) {
+            axios
+                .put("/wallet_process", data)
+                .then((res) => {
+                    commit("updateWallet", {
+                        historyItem: Object.values(res.data),
+                        key: data.group_id,
+                    });
+                })
+                .catch((err) => console.log(err));
             // axios.post("/wallet_update", data);
         },
     },
@@ -326,6 +336,9 @@ export default {
         updateHistory(state, data) {
             Vue.set(state.history, data.key, data.historyItem);
         },
+        updateWallet(state, data) {
+            Vue.set(state.wallet, data.key, data.historyItem);
+        },
         updateincomeHistory(state, data) {
             Vue.set(state.incomeHistory, data.key, data.historyItem);
         },
@@ -355,6 +368,7 @@ export default {
         historyMiners: {},
         incomeHistory: {},
         income: {},
+        wallet: {},
         updateId: 0,
         fullEarn: {},
         validate: false,
@@ -382,6 +396,9 @@ export default {
         },
         getIncome(state) {
             return state.income;
+        },
+        getWallet(state) {
+            return state.wallet;
         },
         getValid(state) {
             return state.valid;

@@ -5,6 +5,7 @@ import Layout from "./Shared/LayoutView.vue";
 import store from "./store/index.js";
 import scrollAnimation from "@/Components/animations/scrollAnimation.vue";
 import scrollValueAnimation from "@/Components/animations/scrollValueAnimation.vue";
+import tippyAnimation from "@/Components/animations/tippyAnimation.vue";
 
 createInertiaApp({
     resolve: (name) => {
@@ -22,6 +23,7 @@ createInertiaApp({
             .mixin({ methods: { route: window.route } })
             .directive("scroll", scrollAnimation)
             .directive("value-scroll", scrollValueAnimation)
+            .directive("tooltip", tippyAnimation)
             .mount(el);
     },
     progress: {

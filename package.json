@@ -10,6 +10,7 @@
         "chart.js": "^3.9.1",
         "core-js": "^3.8.3",
         "swiper": "^8.4.5",
+        "tippy.js": "^6.3.7",
         "unique-names-generator": "^4.7.1",
         "vue": "^3.2.13",
         "vue-chartjs": "^4.1.2",

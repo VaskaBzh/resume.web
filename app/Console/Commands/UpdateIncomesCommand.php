@@ -87,7 +87,7 @@ class UpdateIncomesCommand extends Command
                         'wallet' => "",
                         'amount' => number_format($earn, 8, ".", ""),
                         'payment' => 0,
-                        'percent' => 0,
+                        'percent' => 100,
                         'diff' => $responseEncode[0]->difficulty,
                         'unit' => $unit,
                         'hash' => number_format($share, 2, ".", ""),
@@ -95,6 +95,7 @@ class UpdateIncomesCommand extends Command
                         'message' => "",
                         'txid' => "",
                     ];
+                    $income["payment"] = $income["amount"] * ($income["percent"] / 100);
 
                     $sumAccruals = $earn;
                     if ($sub->accruals !== null) {
@@ -102,20 +103,24 @@ class UpdateIncomesCommand extends Command
                     }
 
                     foreach ($wallets as $wallet) {
-                        if ($wallet->wallet && $wallet->percent) {
+                        if ($wallet->wallet) {
                             $income["wallet"] = $wallet->wallet;
-                            $income["percent"] = $wallet->percent;
-                            $balance = $earn * ($wallet->percent / 100);
-                            $income["payment"] = $balance;
+                            $balance = $earn;
                             $min = 0.005;
                             if ($sub->incomes()->where("status", "pending")) {
                                 foreach ($sub->incomes()->where("status", "pending") as $pending) {
-                                    $balance = $balance + $pending->payment;
+                                    $balance = $balance + $pending->unPayments;
                                 }
                             }
                             if ($wallet->minWithdrawal) {
                                 $min = $wallet->minWithdrawal;
                             }
+                            if ($wallet->percent) {
+                                $income["percent"] = $wallet->percent;
+                            }
+                            $balance = $balance * ($income["percent"] / 100);
+                            $income["payment"] = $balance;
+                            $this->info($balance);
                             if ($balance >= $min) {
                                 $unlock = Http::withBasicAuth('bituser', '111')
                                     ->post('http://92.205.163.43:8332', [
@@ -136,6 +141,7 @@ class UpdateIncomesCommand extends Command
                                     if ($response->successful()) {
                                         $income["status"] = 'completed';
                                         $income["txid"] = $response->json()['result'];
+                                        $wallet["payment"] = $balance;
 
                                         $sumPayments = 0;
                                         if ($sub->payments !== null) {
@@ -143,12 +149,18 @@ class UpdateIncomesCommand extends Command
                                         }
                                         $sub->payments = $sumPayments;
                                         $sub->save();
+                                        $wallet->save();
+                                        if ($sub->incomes()->where("status", "pending")) {
+                                            foreach ($sub->incomes()->where("status", "pending") as $pending) {
+                                                $pending["status"] = "completed";
+                                            }
+                                        }
 
                                         $income["message"] = 'Выплата успешно выполнена.';
                                     } else {
                                         $income["message"] = 'Произошла ошибка при выполнении выплаты.';
                                     }
-                                    $lock = Http::withBasicAuth('bituser', '111')
+                                    Http::withBasicAuth('bituser', '111')
                                         ->post('http://92.205.163.43:8332', [
                                             'jsonrpc' => '1.0',
                                             'id' => 'lock',
@@ -163,7 +175,8 @@ class UpdateIncomesCommand extends Command
                                 $income["status"] = "pending";
                             }
                         } else {
-                            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек и процент вывода).';
+                            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек).';
+                            $income["txid"] = 'Введите кошелек';
                         }
 
                         $sub->incomes()->create($income);

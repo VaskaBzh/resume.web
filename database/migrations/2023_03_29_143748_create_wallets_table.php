@@ -19,6 +19,8 @@ return new class extends Migration
             $table->integer('percent')->nullable();
             $table->float('minWithdrawal')->nullable();
             $table->string('wallet')->nullable();
+            $table->string('name')->nullable();
+            $table->float('payment')->nullable();
             $table->timestamps();
 
             $table->foreign('group_id')

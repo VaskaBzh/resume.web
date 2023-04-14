@@ -11,7 +11,6 @@
             <div class="account__container">
                 <nav-tabs ref="tabs" />
                 <slot
-                    class="padding"
                     :histotyForDays="this.allIncomeHistory"
                     :histoty="this.allHistory"
                     :accounts="this.allAccounts"
@@ -65,8 +64,7 @@ export default {
             this.$store.dispatch("getAccounts");
         }, 60000);
     },
-    updated() {
-    },
+    updated() {},
     unmounted() {
         if (!this.auth_user) {
             this.$store.dispatch("destroyer");

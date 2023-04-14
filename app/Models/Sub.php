@@ -49,13 +49,4 @@ class Sub extends Model
     {
         return $this->hasMany(Client::class);
     }
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function ($sub) {
-            $sub->wallets()->create([]);
-        });
-    }
 }
