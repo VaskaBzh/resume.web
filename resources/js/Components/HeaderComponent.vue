@@ -8,19 +8,7 @@
             />
         </Link>
 
-        <nav-links :is_auth="is_auth" />
-        <div
-            @click="burgerAction"
-            v-if="viewportWidth < 767.98"
-            class="nav__burger"
-            :class="{ active: is_clicked }"
-        >
-            <div class="nav__burger_con">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+        <nav-links :is_auth="is_auth" :viewportWidth="viewportWidth" />
         <div
             v-show="viewportWidth >= 991.98 && !is_auth"
             class="nav__button"
@@ -32,7 +20,7 @@
 
         <div
             class="nav__button nav__button-account"
-            v-show="viewportWidth >= 991.98 && is_auth"
+            v-show="viewportWidth >= 767.78 && is_auth"
         >
             <Link :href="route('profile')" class="nav__button_link">
                 {{ this.name }}
@@ -114,17 +102,14 @@
             </div>
         </div>
 
-        <div
-            v-show="viewportWidth < 991.98 && !is_auth"
-            class="nav__buttons_mobile"
-        >
-            <div
-                class="nav__button_mobile"
-                data-popup="#auth"
-                @click="this.linkChanger"
-            >
-                <img src="../../assets/img/user.svg" alt="" />
-            </div>
+        <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
+            <!--            <div-->
+            <!--                class="nav__button_mobile"-->
+            <!--                data-popup="#auth"-->
+            <!--                @click="this.linkChanger"-->
+            <!--            >-->
+            <!--                <img src="../../assets/img/user.svg" alt="" />-->
+            <!--            </div>-->
             <div
                 @click="burgerAction"
                 v-if="viewportWidth < 767.98"
@@ -436,7 +421,6 @@ import "swiper/css";
 import "swiper/css/pagination";
 import MainList from "@/Components/UI/MainList.vue";
 import { mapGetters } from "vuex";
-import { doc } from "prettier";
 
 export default defineComponent({
     components: {
