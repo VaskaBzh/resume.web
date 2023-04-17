@@ -11,11 +11,11 @@
             </Link>
             <Link
                 v-else
-                :href="route('accounts')"
+                :href="route('statistic')"
                 class="nav__link"
                 :class="{ active: $page.url.startsWith('/profile') }"
             >
-                Майнинг
+                Личный кабинет
             </Link>
             <Link
                 :href="route('complexity')"

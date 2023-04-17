@@ -8,6 +8,7 @@ use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\Requests\RequestController;
+use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
 use App\Http\Controllers\Wallets\WalletController;
 use App\Http\Controllers\Workers\WorkerController;
@@ -36,6 +37,9 @@ Route::controller(HashController::class)->group(function () {
 
 Route::controller(SubController::class)->group(function () {
     Route::put('/sub_create', 'create')->name('sub_create');
+});
+Route::controller(SendMessageConroller::class)->group(function () {
+    Route::post('/send_message', 'send_message')->name('send_message');
 });
 
 Route::controller(IndexController::class)
@@ -68,12 +72,12 @@ Route::controller(RequestController::class)
 Route::middleware('auth')->group(function () {
     Route::controller(IndexController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
-        Route::redirect('/profile', '/profile/accounts');
+        Route::redirect('/profile', '/profile/statistic');
 //        Route::get('/ref-page', 'ref_page')->name('ref_page');
-        Route::get('/settings', 'settings')->name('settings');
+//        Route::get('/settings', 'settings')->name('settings');
         Route::prefix('/profile')->group(function () {
-            Route::get('/accounts', 'accounts')->name('accounts');
             Route::get('/statistic', 'statistic')->name('statistic');
+            Route::get('/accounts', 'accounts')->name('accounts');
             Route::get('/workers', 'workers')->name('workers');
             Route::get('/income', 'income')->name('income');
             Route::get('/wallets', 'wallets')->name('wallets');

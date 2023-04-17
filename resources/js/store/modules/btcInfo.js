@@ -25,7 +25,7 @@ export default {
         },
         async getAccounts({ commit, state }) {
             // commit("destroy");
-            commit("setValid");
+            state.groupName = "";
             await axios
                 .get("/accountsAll")
                 .then(async (response) => {
@@ -56,18 +56,21 @@ export default {
                                         });
                                     }
                                 }
-                                Object.values(arr).forEach((group, i) => {
-                                    group.index = i;
-                                    let group_with_length = group;
-                                    group_with_length.length = arr.length;
-                                    this.dispatch("getWallets", group);
-                                    this.dispatch("getAllIncome", group);
-                                    this.dispatch("getHistoryHash", group);
-                                    this.dispatch(
-                                        "getincomeHistory",
-                                        group_with_length
-                                    );
-                                });
+                                if (state.valid) {
+                                    Object.values(arr).forEach((group, i) => {
+                                        group.index = i;
+                                        let group_with_length = group;
+                                        group_with_length.length = arr.length;
+                                        this.dispatch("getWallets", group);
+                                        this.dispatch("getAllIncome", group);
+                                        this.dispatch("getHistoryHash", group);
+                                        this.dispatch(
+                                            "getincomeHistory",
+                                            group_with_length
+                                        );
+                                    });
+                                }
+                                commit("setValid");
                             }
                         })
                         .catch((err) => {

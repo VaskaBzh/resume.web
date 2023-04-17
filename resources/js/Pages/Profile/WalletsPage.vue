@@ -37,10 +37,22 @@
                     </main-checkbox>
                 </h3>
                 <div
+                    v-scroll="'opacity'"
+                    class="no-info"
+                    ref="noInfo"
+                    v-if="this.boolFalse"
+                >
+                    <img
+                        src="../../../assets/img/img_no-info.png"
+                        alt="no_info"
+                    />
+                    <span>Нет данных</span>
+                </div>
+                <div
                     class="no-info"
                     v-scroll="'opacity'"
                     ref="noInfo"
-                    v-if="!this.bool"
+                    v-else-if="this.bool"
                 >
                     <div class="propeller"></div>
                 </div>
@@ -106,7 +118,7 @@
             </div>
         </div>
     </div>
-    <div class="hint" v-scroll="'opacity'" v-if="this.mess !== ''">
+    <div class="hint" v-hide="this.mess !== ''">
         {{ this.mess }}
     </div>
     <popup-view id="addWallet">
@@ -206,8 +218,12 @@ export default {
             "getActive",
             "getWallet",
         ]),
+        boolFalse() {
+            let bool = this.bool;
+            return !!(this.getWallet[this.getActive] && bool);
+        },
         bool() {
-            return this.wallets.length > 0;
+            return !this.wallets.length > 0;
         },
         wallets() {
             let arr = [];
@@ -352,9 +368,13 @@ export default {
                     ? (this.err.message = ["Вывод должен быть больше 0.005."])
                     : axios
                           .post("/wallet_create", this.form)
-                          .then((res) =>
-                              document.querySelector("[data-close]").click()
-                          )
+                          .then((res) => {
+                              let group = this.allAccounts[this.getActive];
+                              group.group_id =
+                                  this.allAccounts[this.getActive].id;
+                              this.dispatch("getWallets", group);
+                              document.querySelector("[data-close]").click();
+                          })
                           .catch(
                               (err) => (this.err = err.response.data.errors)
                           );
@@ -413,6 +433,8 @@ export default {
     padding: 12px;
     border-radius: 8px;
     background-color: #fff;
+    visibility: hidden;
+    opacity: 0;
     transition: all 0.3s ease 0s;
 }
 .wallets {

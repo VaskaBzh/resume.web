@@ -12,6 +12,13 @@
             margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
         }
     }
+    textarea {
+        resize: none;
+        padding: calc((48px - 20px) / 2);
+        &::-webkit-scrollbar {
+            width: 0;
+        }
+    }
     &-popup {
         gap: 24px;
         @media (max-width: $mobileSmall) {

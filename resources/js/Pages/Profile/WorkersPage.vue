@@ -20,6 +20,7 @@
                         <main-select
                             class="workers__select"
                             :options="statuses"
+                            @getCoin="useFilter"
                         >
                         </main-select>
                     </div>
@@ -152,6 +153,7 @@ import { mapGetters } from "vuex";
 export default {
     components: { WrapTable, MainTitle, MainSelect, Head, PopupView },
     layout: profileLayoutView,
+    props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
             workersActive: 0,
@@ -187,10 +189,10 @@ export default {
                 },
             },
             statuses: [
-                { title: "Все", value: 1 },
-                { title: "Активные", value: 2 },
-                { title: "Нестабильные", value: 3 },
-                { title: "Неактивные", value: 4 },
+                { title: "Все", value: "all" },
+                { title: "Активные", value: "active" },
+                { title: "Нестабильные", value: "unstable" },
+                // { title: "Неактивные", value: "instable" },
             ],
         };
     },
@@ -218,6 +220,27 @@ export default {
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
+        },
+        useFilter(data) {
+            this.table.rows.length = 0;
+            if (data !== "all") {
+                Object.values(this.allHash[this.getActive]).forEach((el) => {
+                    if (el.status.toLowerCase() === data) {
+                        let workersRowModel = {
+                            hashClass: el.status.toLowerCase(),
+                            hash: el.name,
+                            hashRate: el.shares1m,
+                            // hashAvarage: el.shares1h,
+                            hashAvarage24: el.shares1d,
+                            rejectRate: el.persent,
+                            graphId: el.workerId,
+                        };
+                        this.table.rows.push(workersRowModel);
+                    }
+                });
+            } else {
+                this.getWorker();
+            }
         },
         getWorker() {
             this.table.rows.length = 0;

@@ -1,5 +1,10 @@
 <template ref="row">
-    <tr v-if="this.viewportWidth > 991.98" ref="tr" class="row-workers">
+    <tr
+        v-scroll="'opacity transition--fast'"
+        v-if="this.viewportWidth > 991.98"
+        ref="tr"
+        class="row-workers"
+    >
         <td class="main__number">
             {{ this.columns.hash }}
         </td>

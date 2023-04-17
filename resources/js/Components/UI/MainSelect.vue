@@ -43,7 +43,7 @@
                 <p
                     v-else
                     class="main_select"
-                    @click="selectOptions(option.title, option.value)"
+                    @click="selectOptions(option.title, '', option.value)"
                 >
                     {{ option.title }}
                 </p>

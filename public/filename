@@ -1,0 +1,3 @@
+[17-Apr-2023 13:55:28 UTC] PHP Fatal error:  Maximum execution time of 60 seconds exceeded in D:\Pirip\allbtc_main\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\HandleExceptions.php on line 265
+[17-Apr-2023 14:05:11 UTC] PHP Fatal error:  Maximum execution time of 60 seconds exceeded in D:\Pirip\allbtc_main\vendor\laravel\framework\src\Illuminate\Foundation\Bootstrap\HandleExceptions.php on line 265
+[17-Apr-2023 14:10:06 UTC] PHP Fatal error:  Maximum execution time of 60 seconds exceeded in D:\Pirip\allbtc_main\app\Http\Controllers\Requests\RequestController.php on line 34

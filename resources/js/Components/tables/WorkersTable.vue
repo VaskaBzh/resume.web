@@ -10,7 +10,10 @@
                     {{ title }}
                 </span>
             </div>
-            <div class="table-block_column">
+            <div
+                class="table-block_column"
+                v-scroll="'opacity transition--fast'"
+            >
                 <span>
                     <span class="legend_elem legend_elem-active">
                         {{ this.workers.active }}
@@ -35,7 +38,10 @@
             v-for="(row, i) in this.table.rows"
             :key="i"
         >
-            <div class="table-block_column">
+            <div
+                class="table-block_column"
+                v-scroll="'opacity transition--fast'"
+            >
                 <span
                     class="main__name table-block_title"
                     v-for="(title, index) in this.table.shortTitles"

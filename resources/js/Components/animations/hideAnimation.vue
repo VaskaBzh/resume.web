@@ -1,9 +1,13 @@
 <script>
 export default {
-    mounted(el) {
-        setTimeout(() => {
-            el.style.visibility = "hidden";
-        }, 3000);
+    updated(el, binding) {
+        if (binding.value) {
+            el.style.visibility = "visible";
+            el.style.opacity = 1;
+            setTimeout(() => {
+                el.removeAttribute("style");
+            }, 2700);
+        }
     },
 };
 </script>

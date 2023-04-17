@@ -1,21 +1,18 @@
 <template>
     <header-component :is_auth="auth_user" />
     <div class="page">
-        <blue-button class="feedback">
-            <a class="all-link" href="mailto:support@all-btc.com"
-                >Обратная связь</a
-            >
-        </blue-button>
         <div class="observer_block"></div>
         <div class="account">
             <div class="account__container">
                 <nav-tabs ref="tabs" />
-                <slot
-                    :histotyForDays="this.allIncomeHistory"
-                    :histoty="this.allHistory"
-                    :accounts="this.allAccounts"
-                    :hash="this.allHash"
-                />
+                <keep-alive>
+                    <slot
+                        :histotyForDays="this.allIncomeHistory"
+                        :histoty="this.allHistory"
+                        :accounts="this.allAccounts"
+                        :hash="this.allHash"
+                    />
+                </keep-alive>
             </div>
         </div>
     </div>
@@ -26,7 +23,6 @@ import NavTabs from "@/Components/navs/NavTabs.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
 import FooterComponent from "@/Components/FooterComponent.vue";
 import { mapGetters } from "vuex";
-import BlueButton from "@/Components/UI/BlueButton.vue";
 
 export default {
     props: {
@@ -41,7 +37,6 @@ export default {
         };
     },
     components: {
-        BlueButton,
         FooterComponent,
         HeaderComponent,
         NavTabs,
@@ -64,7 +59,6 @@ export default {
             this.$store.dispatch("getAccounts");
         }, 60000);
     },
-    updated() {},
     unmounted() {
         if (!this.auth_user) {
             this.$store.dispatch("destroyer");

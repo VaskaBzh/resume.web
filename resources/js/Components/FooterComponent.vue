@@ -1,4 +1,35 @@
 <template>
+    <blue-button class="feedback" data-popup="#feedback">
+        <a class="all-link">Обратная связь</a>
+    </blue-button>
+    <popup-view id="feedback">
+        <form
+            @submit.prevent="this.sendFeedback"
+            class="form form-popup popup__form"
+        >
+            <main-title
+                tag="h3"
+                title-name="Оставьте комментарий по работе пула"
+            />
+            <input
+                v-model="form.contacts"
+                placeholder="Можете оставить свои контакты"
+                type="text"
+                class="input popup__input"
+            />
+            <textarea
+                v-model="form.message"
+                required
+                autofocus
+                type="text"
+                class="input popup__input"
+                placeholder="Ваш комментарий *"
+            />
+            <blue-button>
+                <button type="submit" class="all-link">Отправить</button>
+            </blue-button>
+        </form>
+    </popup-view>
     <footer class="footer__container">
         <div class="footer__main">
             <div class="footer__row">
@@ -139,8 +170,10 @@
                     </li>
                     <li class="footer__contacts_item contacts_item">
                         <img src="../../assets/img/location-icon.svg" alt="" />
-                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA">ВDubai Silicon Oasis, DDP, Building A2, Dubai,
-                            United Arab Emirates</a>
+                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA"
+                            >ВDubai Silicon Oasis, DDP, Building A2, Dubai,
+                            United Arab Emirates</a
+                        >
                     </li>
                 </ul>
             </div>
@@ -154,17 +187,68 @@
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
+import BlueButton from "@/Components/UI/BlueButton.vue";
+import PopupView from "@/Components/technical/PopupView.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
+import { useForm } from "@inertiajs/vue3";
+import axios from "axios";
 export default {
     name: "footer-component",
+    components: { MainTitle, PopupView, BlueButton },
     data() {
         return {
             pdf,
+        };
+    },
+    setup() {
+        let form = useForm({
+            message: "",
+            contacts: "",
+        });
+
+        const sendFeedback = () => {
+            axios
+                .post("/send_message", form)
+                .then(() => {
+                    form.message = "";
+                    form.contacts = "";
+                })
+                .catch((err) => console.log(err));
+        };
+
+        return {
+            form,
+            sendFeedback,
         };
     },
 };
 </script>
 
 <style lang="scss" scoped>
+.feedback {
+    position: fixed;
+    box-shadow: 2px 4px 10px rgba(#000034, 0.5);
+    .all-link {
+        min-height: 48px;
+        display: inline-flex;
+        align-items: center;
+        @media (max-width: 478.98px) {
+            min-height: 40px;
+        }
+    }
+    &:hover {
+        box-shadow: 2px 4px 10px rgba(transparent, 0.5);
+    }
+    @media (min-width: 767.98px) {
+        right: 60px;
+    }
+    @media (min-width: 478.98px) {
+        bottom: 50px;
+    }
+    right: 15px;
+    bottom: calc(30px);
+    z-index: 999;
+}
 .footer {
     // .footer__main
     &__main {

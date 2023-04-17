@@ -24,6 +24,92 @@ class UpdateIncomesCommand extends Command
      */
     protected $description = 'Обновление базы доходов в 5:00';
 
+    private function sendBalance($sub, $income, $wallet, $earn, $sumAccruals)
+    {
+        if (empty($wallet)) {
+            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек).';
+            $income["txid"] = 'Введите кошелек';
+        } else {
+            if ($wallet->wallet) {
+                $income["wallet"] = $wallet->wallet;
+                $balance = $earn;
+                $min = 0.005;
+                if ($sub->incomes()->where("status", "pending")) {
+                    foreach ($sub->incomes()->where("status", "pending") as $pending) {
+                        $balance = $balance + $pending->unPayments;
+                    }
+                }
+                if ($wallet->minWithdrawal) {
+                    $min = $wallet->minWithdrawal;
+                }
+                if ($wallet->percent) {
+                    $income["percent"] = $wallet->percent;
+                }
+                $balance = $balance * ($income["percent"] / 100);
+                $income["payment"] = $balance;
+                if ($balance >= $min) {
+                    $unlock = Http::withBasicAuth('bituser', '111')
+                        ->post('http://92.205.163.43:8332', [
+                            'jsonrpc' => '1.0',
+                            'id' => 'unlock',
+                            'method' => 'walletpassphrase',
+                            'params' => ['111', 60], // Временно разблокирует кошелек на 60 секунд
+                        ]);
+                    if ($unlock->successful()) {
+                        $response = Http::withBasicAuth('bituser', '111')
+                            ->post('http://92.205.163.43:8332', [
+                                'jsonrpc' => '1.0',
+                                'id' => 'withdrawal',
+                                'method' => 'sendtoaddress',
+                                'params' => [$wallet->wallet, $balance], //Самая важная строчка, в которрой передаем настройки транзакции
+                            ]);
+
+                        if ($response->successful()) {
+                            $income["status"] = 'completed';
+                            $income["txid"] = $response->json()['result'];
+                            $wallet["payment"] = $balance;
+
+                            $sumPayments = $balance;
+                            if ($sub->payments !== null) {
+                                $sumPayments = $sumPayments + $sub->payments;
+                            }
+                            $sub->payments = $sumPayments;
+                            $sub->save();
+                            $wallet->save();
+                            if ($sub->incomes()->where("status", "pending")) {
+                                foreach ($sub->incomes()->where("status", "pending") as $pending) {
+                                    $pending["status"] = "completed";
+                                }
+                            }
+
+                            $income["message"] = 'Выплата успешно выполнена.';
+                        } else {
+                            $income["message"] = 'Произошла ошибка при выполнении выплаты.';
+                        }
+                        Http::withBasicAuth('bituser', '111')
+                            ->post('http://92.205.163.43:8332', [
+                                'jsonrpc' => '1.0',
+                                'id' => 'lock',
+                                'method' => 'walletlock',
+                            ]);
+                    } else {
+                        // Обработка ошибки разблокировки кошелька
+                        $income["message"] = 'Произошла ошибка при выполнении выплаты.';
+                    }
+                } else {
+                    $income["message"] = 'Недостаточно средств для вывода. Минимальное значение ' . $min;
+                    $income["status"] = "pending";
+                }
+            }
+        }
+
+        $sub->incomes()->create($income);
+
+        $sub->accruals = $sumAccruals;
+        $sub->unPayments = $sub->accruals - $sub->payments;
+        $sub->save();
+    }
+
     /**
      * Execute the console command.
      *
@@ -102,88 +188,12 @@ class UpdateIncomesCommand extends Command
                         $sumAccruals = $sumAccruals + $sub->accruals;
                     }
 
+                    if (count($wallets) === 0) {
+                        $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
+                    }
+
                     foreach ($wallets as $wallet) {
-                        if ($wallet->wallet) {
-                            $income["wallet"] = $wallet->wallet;
-                            $balance = $earn;
-                            $min = 0.005;
-                            if ($sub->incomes()->where("status", "pending")) {
-                                foreach ($sub->incomes()->where("status", "pending") as $pending) {
-                                    $balance = $balance + $pending->unPayments;
-                                }
-                            }
-                            if ($wallet->minWithdrawal) {
-                                $min = $wallet->minWithdrawal;
-                            }
-                            if ($wallet->percent) {
-                                $income["percent"] = $wallet->percent;
-                            }
-                            $balance = $balance * ($income["percent"] / 100);
-                            $income["payment"] = $balance;
-                            $this->info($balance);
-                            if ($balance >= $min) {
-                                $unlock = Http::withBasicAuth('bituser', '111')
-                                    ->post('http://92.205.163.43:8332', [
-                                        'jsonrpc' => '1.0',
-                                        'id' => 'unlock',
-                                        'method' => 'walletpassphrase',
-                                        'params' => ['111', 60], // Временно разблокирует кошелек на 60 секунд
-                                    ]);
-                                if ($unlock->successful()) {
-                                    $response = Http::withBasicAuth('bituser', '111')
-                                        ->post('http://92.205.163.43:8332', [
-                                            'jsonrpc' => '1.0',
-                                            'id' => 'withdrawal',
-                                            'method' => 'sendtoaddress',
-                                            'params' => [$wallet->wallet, $balance], //Самая важная строчка, в которрой передаем настройки транзакции
-                                        ]);
-
-                                    if ($response->successful()) {
-                                        $income["status"] = 'completed';
-                                        $income["txid"] = $response->json()['result'];
-                                        $wallet["payment"] = $balance;
-
-                                        $sumPayments = 0;
-                                        if ($sub->payments !== null) {
-                                            $sumPayments = $sumPayments + $sub->payments;
-                                        }
-                                        $sub->payments = $sumPayments;
-                                        $sub->save();
-                                        $wallet->save();
-                                        if ($sub->incomes()->where("status", "pending")) {
-                                            foreach ($sub->incomes()->where("status", "pending") as $pending) {
-                                                $pending["status"] = "completed";
-                                            }
-                                        }
-
-                                        $income["message"] = 'Выплата успешно выполнена.';
-                                    } else {
-                                        $income["message"] = 'Произошла ошибка при выполнении выплаты.';
-                                    }
-                                    Http::withBasicAuth('bituser', '111')
-                                        ->post('http://92.205.163.43:8332', [
-                                            'jsonrpc' => '1.0',
-                                            'id' => 'lock',
-                                            'method' => 'walletlock',
-                                        ]);
-                                } else {
-                                    // Обработка ошибки разблокировки кошелька
-                                    $income["message"] = 'Произошла ошибка при выполнении выплаты.';
-                                }
-                            } else {
-                                $income["message"] = 'Недостаточно средств для вывода. Минимальное значение ' . $min;
-                                $income["status"] = "pending";
-                            }
-                        } else {
-                            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек).';
-                            $income["txid"] = 'Введите кошелек';
-                        }
-
-                        $sub->incomes()->create($income);
-
-                        $sub->accruals = $sumAccruals;
-                        $sub->unPayments = $sub->accruals - $sub->payments;
-                        $sub->save();
+                        $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
                     }
                 } catch (Exception $e) {
                     // Обработка ошибки разбора JSON

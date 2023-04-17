@@ -122,16 +122,10 @@ export default {
     methods: {
         getForcast() {
             if (this.btcInfo && this.btcInfo.btc) {
-                let val = 0;
+                let val;
                 Object.values(this.allAccounts).forEach((el, i) => {
-                    if (el.shares1d > 0) {
-                        val =
-                            (el.shares1d *
-                                Math.pow(10, 12) *
-                                86400 *
-                                this.btcInfo.btc.reward) /
-                            (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    } else if (el.shares1m > 0) {
+                    val = 0;
+                    if (el.shares1m > 0) {
                         val =
                             (el.shares1m *
                                 Math.pow(10, 12) *

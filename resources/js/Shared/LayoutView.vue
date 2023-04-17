@@ -1,11 +1,6 @@
 <template>
     <header-component :errors="errors" :is_auth="auth_user" />
     <div class="page">
-        <blue-button class="feedback">
-            <a class="all-link" href="mailto:support@all-btc.com"
-                >Обратная связь</a
-            >
-        </blue-button>
         <div class="preloader">
             <div class="preloader__wrap">
                 <svg
@@ -36,7 +31,9 @@
             </div>
         </div>
         <div class="observer_block"></div>
-        <slot></slot>
+        <keep-alive>
+            <slot></slot>
+        </keep-alive>
     </div>
     <footer-component />
 </template>
@@ -44,7 +41,6 @@
 <script>
 import FooterComponent from "@/Components/FooterComponent.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
 
 export default {
     props: {
@@ -61,7 +57,7 @@ export default {
             interval: null,
         };
     },
-    components: { BlueButton, HeaderComponent, FooterComponent },
+    components: { HeaderComponent, FooterComponent },
     computed: {
         allAccounts() {
             return this.$store.getters.allAccounts;
@@ -107,30 +103,6 @@ export default {
     }
     @media (max-width: 767.98px) {
         margin-top: 80px;
-    }
-    .feedback {
-        position: fixed;
-        box-shadow: 2px 4px 10px rgba(#000034, 0.5);
-        .all-link {
-            min-height: 48px;
-            display: inline-flex;
-            align-items: center;
-            @media (max-width: 478.98px) {
-                min-height: 40px;
-            }
-        }
-        &:hover {
-            box-shadow: 2px 4px 10px rgba(transparent, 0.5);
-        }
-        @media (min-width: 767.98px) {
-            right: 60px;
-        }
-        @media (min-width: 478.98px) {
-            bottom: 50px;
-        }
-        right: 15px;
-        bottom: calc(30px);
-        z-index: 999;
     }
 }
 

@@ -63,23 +63,15 @@
             <!--                <div class="income__filter_block">-->
             <!--                    <div class="income__filter_label">Кошелек</div>-->
             <!--                    <main-select-->
-            <!--                        @add-filter="this.filter"-->
+            <!--                        @getCoin="this.filter"-->
             <!--                        class="income__filter_select"-->
             <!--                        :options="this.walletOptions"-->
             <!--                    ></main-select>-->
             <!--                </div>-->
             <!--                <div class="income__filter_block income__filter_block-adapt">-->
-            <!--                    <div class="income__filter_label">Продукт</div>-->
+            <!--                    <div class="income__filter_label">Статус операции</div>-->
             <!--                    <main-select-->
-            <!--                        @add-filter="this.filter"-->
-            <!--                        class="income__filter_select"-->
-            <!--                        :options="this.walletOptions"-->
-            <!--                    ></main-select>-->
-            <!--                </div>-->
-            <!--                <div class="income__filter_block income__filter_block-adapt">-->
-            <!--                    <div class="income__filter_label">Тип операции</div>-->
-            <!--                    <main-select-->
-            <!--                        @add-filter="this.filter"-->
+            <!--                        @getCoin="this.filter"-->
             <!--                        class="income__filter_select"-->
             <!--                        :options="this.operationOptions"-->
             <!--                    ></main-select>-->
@@ -100,7 +92,7 @@
 </template>
 <script>
 import MainSlider from "@/components/account/MainSlider.vue";
-import MainSelect from "@/components/UI/MainSelect.vue";
+import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/components/UI/MainTitle.vue";
 import BlueButton from "@/components/UI/BlueButton.vue";
 import MainDate from "@/components/UI/MainDate.vue";
@@ -123,18 +115,13 @@ export default {
             error: "",
             date: {},
             viewportWidth: 0,
-            // walletOptions: [
-            //     { title: "Любой", value: 1 },
-            //     { title: "Bitcoin", value: 2 },
-            //     { title: "Bitcoin Cash", value: 3 },
-            //     { title: "Litecoin", value: 4 },
-            // ],
-            // operationOptions: [
-            //     { title: "Любой", value: 1 },
-            //     { title: "Пополнение", value: 2 },
-            //     { title: "Доход", value: 3 },
-            //     { title: "Вывод", value: 4 },
-            // ],
+            walletOptions: [{ title: "Любой", value: "all" }],
+            operationOptions: [
+                { title: "Любой", value: "all" },
+                { title: "Отклонено", value: "rejected" },
+                { title: "В ожидании", value: "pending" },
+                { title: "Выполнено", value: "completed" },
+            ],
         };
     },
     layout: profileLayoutView,
@@ -243,9 +230,9 @@ export default {
         router() {
             return router;
         },
-        // filter() {
-        //     console.log(123);
-        // },
+        filter(data) {
+            // console.log(data);
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
@@ -320,6 +307,7 @@ export default {
         align-items: flex-end;
         margin-bottom: 40px;
         gap: 16px;
+        justify-content: space-between;
         @media (max-width: 767.98px) {
             margin: 0 0 20px;
             justify-content: space-between;
@@ -333,7 +321,7 @@ export default {
         &_block {
             display: flex;
             flex-direction: column;
-            max-width: 100%;
+            max-width: 320px;
             width: 100%;
             @media (max-width: 767.98px) {
                 max-width: 100%;

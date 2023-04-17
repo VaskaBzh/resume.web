@@ -67,7 +67,7 @@ class WorkerController extends Controller
                 $worker->save();
             } catch (Exception $e) {
                 // Обработка ошибки разбора JSON
-                $this->release(10);
+//                $this->release(10);
             }
         }
     }

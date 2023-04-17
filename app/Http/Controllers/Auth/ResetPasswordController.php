@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 
@@ -17,6 +18,11 @@ class ResetPasswordController extends Controller
      * @var string
      */
     protected $redirectTo = RouteServiceProvider::PROFILE;
+
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
 
     /**
      * Show the form to change the user's password.
@@ -41,7 +47,9 @@ class ResetPasswordController extends Controller
         $user = auth()->user();
 
         if (!Hash::check($request->input('old_password'), $user->password)) {
-            return back()->withErrors(['old_password' => 'The provided password does not match your current password.'], 'changePassword');
+            $validator = Validator::make([], []);
+            $validator->errors()->add('old_password', 'Необходимо подтвердить старый пароль');
+            return back()->with(['errorBags' => ['changePassword' => $validator->errors()]])->withErrors($validator, 'changePassword');
         }
 
         $this->resetPassword($user, $request->input('password'));
@@ -70,9 +78,10 @@ class ResetPasswordController extends Controller
     protected function customErrorMessages()
     {
         return [
-            'old_password.required' => 'Please provide your old password.',
-            'password.required' => 'Please provide a new password.',
-            'password.confirmed' => 'The new password confirmation does not match.',
+            'old_password.required' => 'Введите старый пароль',
+            'password.required' => 'Введите новый пароль',
+            'password.confirmed' => 'Подтвердите пароль',
+            'password.min' => 'Новый пароль должен содержать минимум 8 символов.',
         ];
     }
 
