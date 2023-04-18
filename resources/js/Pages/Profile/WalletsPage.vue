@@ -36,27 +36,12 @@
                         Скрыть с нулевым балансом
                     </main-checkbox>
                 </h3>
-                <div
-                    v-scroll="'opacity'"
-                    class="no-info"
+                <no-info
                     ref="noInfo"
-                    v-if="this.boolFalse"
-                >
-                    <img
-                        src="../../../assets/img/img_no-info.png"
-                        alt="no_info"
-                    />
-                    <span>Нет данных</span>
-                </div>
-                <div
-                    class="no-info"
-                    v-scroll="'opacity'"
-                    ref="noInfo"
-                    v-else-if="this.bool"
-                >
-                    <div class="propeller"></div>
-                </div>
-                <div ref="list" class="wallets__list" v-else>
+                    :wait="this.getWallet"
+                    :empty="this.wallets"
+                ></no-info>
+                <div ref="list" class="wallets__list" v-show="this.wallets">
                     <div
                         class="wallets__block wallets__block-wallet"
                         v-for="(wallet, i) in this.wallets"
@@ -76,7 +61,7 @@
                             <span
                                 v-else
                                 v-tooltip="{ message: wallet.fullName }"
-                                >{{ wallet.wallet }}</span
+                                >{{ wallet.name }}</span
                             >
                             <div class="wallets__block_doths">
                                 <div></div>
@@ -201,6 +186,7 @@ import axios from "axios";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
+import NoInfo from "@/Components/technical/NoInfo.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 import { Link } from "@inertiajs/vue3";
@@ -208,7 +194,14 @@ import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 
 export default {
-    components: { PopupView, MainCheckbox, BlueButton, MainTitle, Link },
+    components: {
+        PopupView,
+        MainCheckbox,
+        BlueButton,
+        MainTitle,
+        Link,
+        NoInfo,
+    },
     layout: profileLayoutView,
     computed: {
         ...mapGetters([
@@ -218,13 +211,6 @@ export default {
             "getActive",
             "getWallet",
         ]),
-        boolFalse() {
-            let bool = this.bool;
-            return !!(this.getWallet[this.getActive] && bool);
-        },
-        bool() {
-            return !this.wallets.length > 0;
-        },
         wallets() {
             let arr = [];
             if (
@@ -251,7 +237,8 @@ export default {
                                     }
                                     let walletModel = {
                                         img: "bitcoin_img.png",
-                                        wallet: name,
+                                        name: name,
+                                        wallet: wal.wallet,
                                         fullName: fullName,
                                         shortName: "BTC",
                                         value: val.toFixed(8),
@@ -283,7 +270,8 @@ export default {
                                 }
                                 let walletModel = {
                                     img: "bitcoin_img.png",
-                                    wallet: name,
+                                    name: name,
+                                    wallet: wal.wallet,
                                     fullName: fullName,
                                     shortName: "BTC",
                                     value: val.toFixed(8),
@@ -335,7 +323,10 @@ export default {
             wallet.group_id = this.getActive;
             axios
                 .post("/wallet_delete", wallet)
-                .then((res) => (this.mess = res.data.message))
+                .then((res) => {
+                    this.mess = res.data.message;
+                    this.$store.dispatch("getWallets", wallet);
+                })
                 .catch((err) => (this.mess = err.response.data.message));
             setTimeout(() => (this.mess = ""), 3000);
         },
@@ -352,7 +343,7 @@ export default {
             this.form[name] = this.removeLetters(value);
         },
         addWallet() {
-            if (this.wallets) {
+            if (this.wallets && this.getActive !== -1) {
                 let per = 0;
                 this.wallets.forEach((wal) => {
                     per = per + wal["percent"];
@@ -372,46 +363,52 @@ export default {
                               let group = this.allAccounts[this.getActive];
                               group.group_id =
                                   this.allAccounts[this.getActive].id;
-                              this.dispatch("getWallets", group);
+                              this.$store.dispatch("getWallets", group);
                               document.querySelector("[data-close]").click();
                           })
-                          .catch(
-                              (err) => (this.err = err.response.data.errors)
-                          );
+                          .catch((err) => {
+                              if (err.response) {
+                                  this.err = {};
+                                  this.err = err.response.data.errors;
+                              }
+                          });
+            } else {
+                this.err = {};
+                this.err = { 0: ["Попробуйте через 5 секунд"] };
             }
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
-            setTimeout(() => {
-                if (this.$refs.list) {
-                    if (this.viewportWidth > 768) {
-                        setTimeout(() => {
-                            this.$refs.wallets.style.height =
-                                48 + 46 + this.$refs.list.offsetHeight + "px";
-                        }, 1);
-                    } else {
-                        setTimeout(() => {
-                            this.$refs.wallets.style.height =
-                                40 + 132 + this.$refs.list.offsetHeight + "px";
-                        }, 1);
-                    }
-                } else {
-                    if (this.viewportWidth > 768) {
-                        setTimeout(() => {
-                            this.$refs.wallets.style.height =
-                                48 + 46 + this.$refs.noInfo.offsetHeight + "px";
-                        }, 1);
-                    } else {
-                        setTimeout(() => {
-                            this.$refs.wallets.style.height =
-                                40 +
-                                132 +
-                                this.$refs.noInfo.offsetHeight +
-                                "px";
-                        }, 1);
-                    }
-                }
-            }, 100);
+            // setTimeout(() => {
+            //     if (this.$refs.list) {
+            //         if (this.viewportWidth > 768) {
+            //             setTimeout(() => {
+            //                 this.$refs.wallets.style.height =
+            //                     48 + 46 + this.$refs.list.offsetHeight + "px";
+            //             }, 1);
+            //         } else {
+            //             setTimeout(() => {
+            //                 this.$refs.wallets.style.height =
+            //                     40 + 132 + this.$refs.list.offsetHeight + "px";
+            //             }, 1);
+            //         }
+            //     } else {
+            //         if (this.viewportWidth > 768) {
+            //             setTimeout(() => {
+            //                 this.$refs.wallets.style.height =
+            //                     48 + 46 + this.$refs.noInfo.offsetHeight + "px";
+            //             }, 1);
+            //         } else {
+            //             setTimeout(() => {
+            //                 this.$refs.wallets.style.height =
+            //                     40 +
+            //                     132 +
+            //                     this.$refs.noInfo.offsetHeight +
+            //                     "px";
+            //             }, 1);
+            //         }
+            //     }
+            // }, 100);
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
@@ -501,7 +498,9 @@ export default {
 
     .title {
         margin: 0 0 24px;
-        padding-left: 70px;
+        @media (min-width: 1271.98px) {
+            padding-left: 70px;
+        }
         display: flex;
         width: 100%;
         align-items: center;
@@ -900,7 +899,7 @@ export default {
 
         &:last-child {
             margin-bottom: 0;
-            overflow-y: hidden;
+            overflow: hidden;
             transition: all 0.3s ease;
         }
     }

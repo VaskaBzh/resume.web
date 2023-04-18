@@ -219,6 +219,11 @@ body::after {
                 .form {
                     padding-left: 0;
                 }
+                .title {
+                    @media (max-width: $mobileSmall) {
+                        max-width: calc(100% - 30px);
+                    }
+                }
             }
         }
         @media (max-width: $mobileSmall) {
@@ -242,7 +247,7 @@ body::after {
         z-index: 10;
         outline: none;
         @media (max-width: $mobileSmall) {
-            top: 5px;
+            top: 20px;
             right: 20px;
         }
     }
@@ -250,7 +255,7 @@ body::after {
         font-size: 18px;
         line-height: 26px;
         color: #595a5c;
-        @media (max-width: $mobile) {
+        @media (max-width: $mobileSmall) {
             font-size: 14px;
             line-height: 20px;
         }
@@ -258,9 +263,11 @@ body::after {
     .blue-button {
         width: 100% !important;
         @media (max-width: $mobileSmall) {
-            height: 40px;
+            height: 34px;
+            min-height: 34px !important;
             .all-link {
                 font-size: 14px;
+                padding: 0;
                 line-height: 20px;
             }
         }

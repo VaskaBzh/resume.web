@@ -37,6 +37,7 @@
         }
         @media (max-width: 767.98px) {
             grid-template-columns: 100%;
+            gap: 32px;
             .wrap__block {
                 grid-column-start: 1;
                 grid-column-end: 2;

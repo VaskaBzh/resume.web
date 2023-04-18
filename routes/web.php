@@ -52,6 +52,7 @@ Route::controller(IndexController::class)
 
 Route::middleware('guest:web')->group(function () {
     Route::post("/user_get", [RegisterController::class, "getter"])->name('user_get');
+    Route::post("/get_name", [RegisterController::class, "getName"])->name('get_name');
 });
 
 Route::controller(VerificationController::class)
@@ -74,11 +75,11 @@ Route::middleware('auth')->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::redirect('/profile', '/profile/statistic');
 //        Route::get('/ref-page', 'ref_page')->name('ref_page');
-//        Route::get('/settings', 'settings')->name('settings');
         Route::prefix('/profile')->group(function () {
             Route::get('/statistic', 'statistic')->name('statistic');
             Route::get('/accounts', 'accounts')->name('accounts');
             Route::get('/workers', 'workers')->name('workers');
+            Route::get('/settings', 'settings')->name('settings');
             Route::get('/income', 'income')->name('income');
             Route::get('/wallets', 'wallets')->name('wallets');
 //            Route::get('/payment', 'payment')->name('payment');

@@ -4,7 +4,7 @@
         <div class="accounts__wrapper">
             <main-title tag="h2" class="accounts__title">
                 Аккаунты
-                <span class="accounts__button" data-popup="#addAcc">
+                <blue-button class="accounts__button" data-popup="#addAcc">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="21"
@@ -23,7 +23,7 @@
                             d="M10.0708 1.0708C10.6231 1.0708 11.0708 1.51852 11.0708 2.0708V18.0708C11.0708 18.6231 10.6231 19.0708 10.0708 19.0708C9.51852 19.0708 9.0708 18.6231 9.0708 18.0708V2.0708C9.0708 1.51852 9.51852 1.0708 10.0708 1.0708Z"
                         />
                     </svg>
-                </span>
+                </blue-button>
             </main-title>
             <div
                 class="accounts__content"
@@ -38,9 +38,10 @@
                     @changeActive="this.activeChanger"
                 />
             </div>
-            <div class="accounts__content no-info" v-else>
-                <div class="propeller"></div>
-            </div>
+            <no-info
+                class="accounts__content"
+                :wait="this.allAccounts"
+            ></no-info>
         </div>
         <popup-view id="addAcc">
             <div
@@ -91,6 +92,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
+import NoInfo from "@/Components/technical/NoInfo.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
@@ -103,6 +105,7 @@ export default {
         Head,
         PopupView,
         BlueButton,
+        NoInfo,
     },
     layout: profileLayoutView,
     props: ["errors", "message", "user", "auth_user"],
@@ -270,56 +273,13 @@ export default {
     &__button {
         width: 60px;
         height: 44px;
-        border-radius: 13px;
-        background-color: #4182ec;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: linear-gradient(
-                84.14deg,
-                rgba(63, 123, 221, 0.27) 8.75%,
-                rgba(66, 130, 236, 0.27) 92.01%
-            );
-            border-radius: 10px;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            transition: all 0.3s ease 0s;
-        }
-        @media (any-hover: hover) {
-            &:hover {
-                transform: translate(-4px, -4px);
-                &::before {
-                    top: 4px;
-                    left: 4px;
-                }
-            }
-        }
-        &:active {
-            @media (min-width: 479.89px) {
-                transform: translate(0, 0);
-                box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
-                &::before {
-                    top: 0;
-                    left: 0;
-                }
-            }
-        }
         svg {
             width: 14px;
             height: 14px;
             fill: #fff;
         }
         @media (max-width: 479.89px) {
-            background-color: transparent;
+            background: transparent;
             width: 20px;
             height: 20px;
 

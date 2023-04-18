@@ -263,7 +263,9 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        padding-left: 70px;
+        @media (min-width: 1271.98px) {
+            padding-left: 70px;
+        }
     }
 
     // .income__button

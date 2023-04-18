@@ -6,11 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Validation\ValidationException;
 
 class UserController extends Controller
 {
-
     public function index(Request $request)
     {
         if (Auth::user()) {
@@ -19,8 +18,18 @@ class UserController extends Controller
             $request->validate([
                 'email' => 'required|email',
             ]);
-            return User::all()->where("email", $request->input("email"))->first()->id;
+            $user = User::where('email', $request->input('email'))->first();
+
+            if ($user) {
+                throw ValidationException::withMessages([
+                    'email' => 'Пользователь с такой почтой уже существует.',
+                ]);
+            } else {
+                return [
+                    'status' => 'success',
+                    'user_id' => $user->id,
+                ];
+            }
         }
     }
-
 }

@@ -7,8 +7,10 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
+use Illuminate\Validation\ValidationException;
 
 class ResetPasswordController extends Controller
 {
@@ -38,27 +40,33 @@ class ResetPasswordController extends Controller
      * Handle the password change request.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function changePassword(Request $request)
     {
-        $this->validateWithBag('changePassword', $request, $this->rules(), $this->customErrorMessages());
+        $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
+
+        if ($validator->fails()) {
+            return back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $user = auth()->user();
 
         if (!Hash::check($request->input('old_password'), $user->password)) {
-            $validator = Validator::make([], []);
-            $validator->errors()->add('old_password', 'Необходимо подтвердить старый пароль');
-            return back()->with(['errorBags' => ['changePassword' => $validator->errors()]])->withErrors($validator, 'changePassword');
+            return back()
+                ->withErrors(new MessageBag(['error' => 'Необходимо подтвердить старый пароль.']))
+                ->withInput();
         }
-
         $this->resetPassword($user, $request->input('password'));
 
-        return redirect($this->redirectTo);
+        return back()->with('message', 'Пароль успешно изменен.');
     }
 
     /**
      * Get the password change validation rules.
+     *
      *
      * @return array
      */

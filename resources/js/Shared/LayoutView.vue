@@ -32,7 +32,7 @@
         </div>
         <div class="observer_block"></div>
         <keep-alive>
-            <slot></slot>
+            <slot :errors="errors"></slot>
         </keep-alive>
     </div>
     <footer-component />

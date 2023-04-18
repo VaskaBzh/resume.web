@@ -51,6 +51,7 @@
                 :key="Object.values(this.allAccounts).length"
                 type="Воркеры"
                 :wait="this.allAccounts"
+                :empty="this.table.rows"
             />
             <popup-view id="connect" typePopup="connect">
                 <form class="form form-popup popup__form">
@@ -63,78 +64,11 @@
                             1. Настройте ваше устройство согласно представленным
                             ниже данным:
                         </div>
-                        <div class="connecting__row connecting__row-copy">
-                            Address:
-                            <div
-                                class="connecting__block-copy copy"
-                                ref="linkAddress"
-                            >
-                                {{ this.linkAddress }}
-                                <svg
-                                    class="copy-button"
-                                    @click="this.copyLink(1)"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
-                                        stroke-width="2"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="connecting__row connecting__row-copy">
-                            Address 1:
-                            <div
-                                class="connecting__block-copy copy"
-                                ref="linkAddress1"
-                            >
-                                {{ this.linkAddress1 }}
-                                <svg
-                                    class="copy-button"
-                                    @click="this.copyLink(2)"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
-                                        stroke-width="2"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="connecting__row connecting__row-copy">
-                            Address 2:
-                            <div
-                                class="connecting__block-copy copy"
-                                ref="linkAddress2"
-                            >
-                                {{ this.linkAddress2 }}
-                                <svg
-                                    class="copy-button"
-                                    @click="this.copyLink(3)"
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    width="24"
-                                    height="24"
-                                    viewBox="0 0 24 24"
-                                    fill="none"
-                                >
-                                    <path
-                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
-                                        stroke-width="2"
-                                        stroke-linejoin="round"
-                                    />
-                                </svg>
-                            </div>
-                        </div>
+                        <copy-block
+                            v-for="(object, i) in this.copyObject"
+                            :key="i"
+                            :copyObject="object"
+                        ></copy-block>
                     </div>
                 </form>
             </popup-view>
@@ -148,21 +82,36 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
+import CopyBlock from "@/Components/account/CopyBlock.vue";
 import { mapGetters } from "vuex";
 
 export default {
-    components: { WrapTable, MainTitle, MainSelect, Head, PopupView },
+    components: {
+        WrapTable,
+        MainTitle,
+        MainSelect,
+        Head,
+        PopupView,
+        CopyBlock,
+    },
     layout: profileLayoutView,
     props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
+            copyObject: [
+                {
+                    title: "1. Настройте ваше устройство согласно представленным ниже данным:",
+                    copyObject: [
+                        { link: "btc.all-btc.com:4444", title: "Port" },
+                        { link: "btc.all-btc.com:3333", title: "Port 1" },
+                        { link: "btc.all-btc.com:2222", title: "Port 2" },
+                    ],
+                },
+            ],
             workersActive: 0,
             workersInActive: 0,
             workersDead: 0,
             viewportWidth: 0,
-            linkAddress: "btc.all-btc.com:4444",
-            linkAddress1: "btc.all-btc.com:3333",
-            linkAddress2: "btc.all-btc.com:2222",
             table: {
                 titles: [
                     "Имя воркера",

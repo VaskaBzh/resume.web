@@ -4,6 +4,17 @@
     width: 100%;
     gap: 16px;
     position: relative;
+    [type="password"] {
+        letter-spacing: 2px;
+        transition: all 0.3s ease 0s;
+        &::placeholder {
+            letter-spacing: normal;
+        }
+    }
+    [type="text"] {
+        letter-spacing: normal;
+        transition: all 0.3s ease 0s;
+    }
     [type="number"] {
         &::-webkit-outer-spin-button,
         &::-webkit-inner-spin-button {
@@ -124,7 +135,7 @@
         font-weight: 400;
         font-size: 18px;
         line-height: 26px;
-        @media (max-width: 767.98px) {
+        @media (max-width: $mobile) {
             font-weight: 400;
             font-size: 12px;
             line-height: 17px;
@@ -135,6 +146,9 @@
         height: 48px;
         display: flex;
         position: relative;
+        @media (max-width: $mobileSmall) {
+            height: 34px;
+        }
         svg {
             position: absolute;
             right: 12px;

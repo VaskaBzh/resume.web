@@ -279,21 +279,13 @@ export default {
             let val = 0;
             if (this.btcInfo) {
                 if (this.allAccounts[this.getActive]) {
-                    if (this.allAccounts[this.getActive].shares1d > 0) {
-                        val =
-                            (this.allAccounts[this.getActive].shares1d *
-                                Math.pow(10, 12) *
-                                86400 *
-                                this.btcInfo.btc.reward) /
-                            (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    } else if (this.allAccounts[this.getActive].shares1m > 0) {
-                        val =
-                            (this.allAccounts[this.getActive].shares1m *
-                                Math.pow(10, 12) *
-                                86400 *
-                                this.btcInfo.btc.reward) /
-                            (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    }
+                    val =
+                        (this.allAccounts[this.getActive].shares1m *
+                            Math.pow(10, 12) *
+                            86400 *
+                            this.btcInfo.btc.reward) /
+                        (this.btcInfo.btc.diff * Math.pow(2, 32));
+                    val = val * 3.5 * 1.75;
                 }
             }
             if (typeof val === "number") {

@@ -62,10 +62,10 @@ class WalletController extends Controller
             'wallet' => 'required',
         ]);
 
-        $wallets = Sub::all()->where("group_id", $request->input("group_id"))->first()->wallets();
-        $wallet = $wallets->where("wallet", $request->input("wallet"))->first();
+        $wallets = Sub::all()->firstWhere("group_id", $request->input("group_id"))->wallets;
+        $wallet = $wallets->firstWhere("wallet", $request->input("wallet"));
 
-        if (count($wallets->get()) > 1) {
+        if (count($wallets) > 1) {
             $wallet->delete();
             return response()->json(['message' => 'Кошелек успешно удален.'], 200);
         }
