@@ -56,20 +56,20 @@ export default {
                                         });
                                     }
                                 }
-                                if (state.valid) {
-                                    Object.values(arr).forEach((group, i) => {
-                                        group.index = i;
+                                Object.values(arr).forEach((group, i) => {
+                                    group.index = i;
+                                    if (state.valid) {
                                         let group_with_length = group;
                                         group_with_length.length = arr.length;
                                         this.dispatch("getWallets", group);
-                                        this.dispatch("getAllIncome", group);
-                                        this.dispatch("getHistoryHash", group);
                                         this.dispatch(
-                                            "getincomeHistory",
+                                            "getIncomeHistory",
                                             group_with_length
                                         );
-                                    });
-                                }
+                                        this.dispatch("getAllIncome", group);
+                                    }
+                                    this.dispatch("getHistoryHash", group);
+                                });
                                 commit("setValid");
                             }
                         })
@@ -97,18 +97,24 @@ export default {
                 .then(async (workers) => {
                     const workerChecker = (str, substr) => {
                         const regExp = new RegExp(substr);
-                        return regExp.test(str);
+
+                        return (
+                            regExp.test(str) &&
+                            str.split(".")[0].length === substr.length
+                        );
                     };
-                    let wordsLength = 0;
+                    // let wordsLength = 0;
                     Object.values(data.arr).forEach((group) => {
                         workers.data.data.data.forEach((worker) => {
                             if (workerChecker(worker.worker_name, group.sub)) {
                                 // разобраться с возможным багом
-                                if (wordsLength < group.sub.length) {
-                                    wordsLength = group.sub.length;
-                                    commit("updateGroupName", group.sub);
-                                    commit("updateUpdateId", worker.worker_id);
-                                }
+                                // if (wordsLength < group.sub.length) {
+                                // wordsLength = group.sub.length;
+                                commit("updateGroupName", group.sub);
+                                commit("updateUpdateId", {
+                                    item: worker.worker_id,
+                                });
+                                // }
                             }
                         });
                     });
@@ -116,7 +122,8 @@ export default {
                 .catch((err) => this.dispatch("getAccounts"));
         },
         async getAccGroup({ commit, state }, data) {
-            await Object.values(data.arr).forEach((group) => {
+            let groupElem;
+            await Object.values(data.arr).forEach((group, i) => {
                 if (data.el.name === group.sub) {
                     state.validate = true;
                     let accountModel = {
@@ -138,6 +145,7 @@ export default {
                     };
                     if (data.el.name == state.groupName) {
                         this.dispatch("updateGroup", data.el);
+                        state.updateId = {};
                     }
                     commit("setHash", {
                         hash: {},
@@ -150,44 +158,47 @@ export default {
                         response: data.response,
                     });
                 }
-                // if (data.i === data.response.data.data.list.length - 1) {
-                // window.location.reload();
-                // this.dispatch("reloader", data.arr);
-                // }
             });
         },
-        updateGroup({ state, commit }, data) {
+        async updateGroup({ state, commit }, data) {
             let instance = axios.create({
                 baseURL: "https://pool.api.btc.com/v1",
                 headers: {
                     "Content-Type": "application/json; charset=utf-8",
                     Authorization: "sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N",
-                    "Access-Control-Allow-Origin": "http://127.0.0.1:8000",
                     "Access-Control-Allow-Methods":
                         "GET, PUT, POST, DELETE, HEAD, OPTIONS",
                     "Access-Control-Allow-Credentials": "true",
                     Accept: "application/json",
                 },
             });
-            // Object.values(state.updateId).forEach(async (id, i) => {
-            let updateData = {
-                puid: "781195",
-                group_id: String(data.gid),
-                worker_id: String(state.updateId),
-            };
-            instance
-                .post(
+
+            commit("setMessage", "Мы подключаем воркеров к вашему аккаунту");
+
+            setTimeout(() => {
+                commit("setMessage", "");
+            }, 3000);
+
+            const delay = (ms) =>
+                new Promise((resolve) => setTimeout(resolve, ms));
+
+            for (const workerId of Object.values(state.updateId)) {
+                let updateData = {
+                    puid: "781195",
+                    group_id: String(data.gid),
+                    worker_id: String(workerId),
+                };
+
+                await instance.post(
                     `/worker/update?group=${data.gid}&puid=781195`,
                     updateData
-                )
-                .then(async (res) => {
-                    await axios.post("/worker_create", updateData);
-                    this.dispatch("getAccounts");
-                });
-            // if (i === Object.values(state.updateId).length - 1) {
-            //     this.dispatch("getAccounts");
-            // }
-            // });
+                );
+
+                await axios.post("/worker_create", updateData);
+                await delay(1000); // Задержка в 1 секунду между каждым запросом
+            }
+
+            this.dispatch("getAccounts");
         },
         async getHash({ state, commit }, data) {
             await axios
@@ -284,7 +295,7 @@ export default {
                 })
                 .catch((err) => console.log(err));
         },
-        getincomeHistory({ commit }, data) {
+        getIncomeHistory({ commit }, data) {
             axios
                 .put("/income_process", data)
                 .then((res) => {
@@ -311,7 +322,8 @@ export default {
     mutations: {
         destroy(state) {
             state.incomeHistory = {};
-            (state.income = {}), (state.valid = true);
+            state.income = {};
+            state.valid = true;
             state.accounts = {};
             state.hash = {};
             state.history = {};
@@ -320,6 +332,7 @@ export default {
             state.updateId = {};
             state.validate = false;
             state.groupName = "";
+            state.message = "";
         },
         setValid(state) {
             state.valid = false;
@@ -327,8 +340,8 @@ export default {
         updateActive(state, index) {
             state.active = index;
         },
-        updateUpdateId(state, updateId) {
-            state.updateId = updateId;
+        updateUpdateId(state, data) {
+            Vue.set(state.updateId, data.item, data.item);
         },
         updateGroupName(state, name) {
             state.groupName = name;
@@ -360,6 +373,9 @@ export default {
         updateHash(state, data) {
             Vue.set(state.hash[data.i], data.key, data.hash);
         },
+        setMessage(state, data) {
+            state.message = data;
+        },
     },
     state: {
         checkFive: 0,
@@ -372,11 +388,12 @@ export default {
         incomeHistory: {},
         income: {},
         wallet: {},
-        updateId: 0,
+        updateId: {},
         fullEarn: {},
         validate: false,
         groupName: "",
         i: -1,
+        message: "",
     },
     getters: {
         allHistoryMiner(state) {
@@ -405,6 +422,9 @@ export default {
         },
         getValid(state) {
             return state.valid;
+        },
+        getMessage(state) {
+            return state.message;
         },
     },
 };

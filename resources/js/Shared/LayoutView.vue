@@ -1,6 +1,9 @@
 <template>
     <header-component :errors="errors" :is_auth="auth_user" />
     <div class="page">
+        <div class="hint" v-hide="this.getMessage !== ''">
+            {{ this.getMessage }}
+        </div>
         <div class="preloader">
             <div class="preloader__wrap">
                 <svg
@@ -41,6 +44,7 @@
 <script>
 import FooterComponent from "@/Components/FooterComponent.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
+import { mapGetters } from "vuex";
 
 export default {
     props: {
@@ -59,9 +63,7 @@ export default {
     },
     components: { HeaderComponent, FooterComponent },
     computed: {
-        allAccounts() {
-            return this.$store.getters.allAccounts;
-        },
+        ...mapGetters(["getMessage", "allAccounts"]),
     },
     async created() {
         await this.$store.dispatch("getConverter");

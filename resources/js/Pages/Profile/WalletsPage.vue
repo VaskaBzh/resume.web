@@ -349,7 +349,7 @@ export default {
                     per = per + wal["percent"];
                 });
                 let obj = this.form;
-                per = per + obj.percent;
+                per = per + Number(obj.percent);
                 obj.group_id = this.getActive;
                 per > 100
                     ? (this.err.message = [
@@ -422,18 +422,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.hint {
-    position: fixed;
-    top: 10vh;
-    left: 50%;
-    transform: translateX(-50%);
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #fff;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease 0s;
-}
 .wallets {
     width: 100%;
     transition: all 0.3s linear 0.2s;

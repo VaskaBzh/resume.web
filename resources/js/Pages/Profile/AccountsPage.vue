@@ -139,7 +139,7 @@ export default {
                     Vue.set(
                         this.profit,
                         Object.keys(this.allAccounts)[i],
-                        val * 3.5 * 1.75
+                        val * (1 - 0.035 - 0.0175)
                     );
                 });
             }

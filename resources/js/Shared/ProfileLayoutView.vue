@@ -1,17 +1,15 @@
 <template>
     <header-component :is_auth="auth_user" />
     <div class="page">
+        <div class="hint" v-hide="this.getMessage !== ''">
+            {{ this.getMessage }}
+        </div>
         <div class="observer_block"></div>
         <div class="account">
             <div class="account__container">
                 <nav-tabs ref="tabs" />
                 <keep-alive>
-                    <slot
-                        :histotyForDays="this.allIncomeHistory"
-                        :histoty="this.allHistory"
-                        :accounts="this.allAccounts"
-                        :hash="this.allHash"
-                    />
+                    <slot />
                 </keep-alive>
             </div>
         </div>
@@ -48,6 +46,7 @@ export default {
             "allHistory",
             "allHash",
             "getActive",
+            "getMessage",
         ]),
     },
     async created() {

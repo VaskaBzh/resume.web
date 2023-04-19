@@ -8,6 +8,7 @@ use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\Requests\RequestController;
+use App\Http\Controllers\ReturnMessage\ReturnMessageController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
 use App\Http\Controllers\Wallets\WalletController;
@@ -50,9 +51,9 @@ Route::controller(IndexController::class)
         Route::get('/complexity', 'complexity')->name('complexity');
     });
 
-Route::middleware('guest:web')->group(function () {
-    Route::post("/user_get", [RegisterController::class, "getter"])->name('user_get');
-    Route::post("/get_name", [RegisterController::class, "getName"])->name('get_name');
+Route::controller(RegisterController::class)->group(function () {
+    Route::post("/user_get", "getter")->name('user_get');
+    Route::post("/get_name", "getName")->name('get_name');
 });
 
 Route::controller(VerificationController::class)

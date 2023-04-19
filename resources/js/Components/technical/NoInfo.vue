@@ -11,7 +11,7 @@
         class="no-info"
         v-if="
             empty &&
-            Object.values(empty).length === 0 &&
+            Object.values(this.empty).length === 0 &&
             Object.values(this.wait).length !== 0
         "
     >
@@ -27,6 +27,10 @@ export default {
         wait: Object,
         empty: Object,
     },
+    // mounted() {
+    //     console.log(this.wait);
+    //     console.log(this.empty);
+    // },
 };
 </script>
 

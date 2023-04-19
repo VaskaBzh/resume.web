@@ -9,6 +9,23 @@ use Illuminate\Support\Facades\Http;
 
 class RequestController extends Controller
 {
+    private $apiUrl = 'https://pool.api.btc.com/v1';
+
+    public function proxy(Request $request, $path)
+    {
+        $url = $this->apiUrl . '/' . $path . '?' . http_build_query($request->query());
+        $response = Http::withHeaders([
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Authorization' => 'sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N',
+        ])->post($url, $request->all());
+
+        return response($response->body())
+            ->header('Content-Type', 'application/json')
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS')
+            ->header('Access-Control-Allow-Credentials', 'true');
+    }
+
     public function getDifficultyData()
     {
         $response = Http::get('https://api.blockchain.info/charts/difficulty?format=json&timespan=all');

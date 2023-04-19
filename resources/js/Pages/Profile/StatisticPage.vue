@@ -285,7 +285,7 @@ export default {
                             86400 *
                             this.btcInfo.btc.reward) /
                         (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    val = val * 3.5 * 1.75;
+                    val = val * (1 - 0.035 - 0.0175);
                 }
             }
             if (typeof val === "number") {

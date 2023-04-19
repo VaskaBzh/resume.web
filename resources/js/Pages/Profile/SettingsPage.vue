@@ -218,6 +218,11 @@ export default {
             flex-wrap: nowrap;
         }
         gap: 30px;
+        .title {
+            @media (min-width: 1271.98px) {
+                padding-left: 0;
+            }
+        }
 
         &-adapt {
             @media (max-width: 1270px) {

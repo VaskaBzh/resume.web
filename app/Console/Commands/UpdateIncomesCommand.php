@@ -166,7 +166,7 @@ class UpdateIncomesCommand extends Command
                         $earn = 0;
                     }
 
-                    $earn = $earn - $earn * 0.035 - $earn * 0.0175;
+                    $earn = $earn * (1 - 0.035 - 0.0175);
 
                     $income = [
                         'group_id' => $sub->group_id,
