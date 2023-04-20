@@ -91,24 +91,26 @@
                     </svg>
                     Настройки</Link
                 >
-                <Link :href="route('home')" @click.prevent="logout"
-                    ><svg
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <path
-                            d="M16 16L20 12M20 12L16 8M20 12H10M12 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H12"
-                            stroke="#99ACD3"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-                    Выход</Link
-                >
+                <form @submit.prevent="logout">
+                    <button type="submit">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M16 16L20 12M20 12L16 8M20 12H10M12 4H7.2C6.0799 4 5.51984 4 5.09202 4.21799C4.71569 4.40973 4.40973 4.71569 4.21799 5.09202C4 5.51984 4 6.0799 4 7.2V16.8C4 17.9201 4 18.4802 4.21799 18.908C4.40973 19.2843 4.71569 19.5903 5.09202 19.782C5.51984 20 6.0799 20 7.2 20H12"
+                                stroke="#99ACD3"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        Выход
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -117,6 +119,7 @@
                 class="nav__button_mobile"
                 data-popup="#auth"
                 @click="this.linkChanger"
+                v-show="!is_auth"
             >
                 <img src="../../assets/img/user.svg" alt="" />
             </div>
@@ -277,10 +280,7 @@
                     ref="email"
                 />
 
-                <blue-button
-                    type="button"
-                    @click="this.email_validate(get_email)"
-                >
+                <blue-button type="button" @click="this.email_validate">
                     <div class="all-link">Дальше</div>
                 </blue-button>
                 <div class="popup__text">
@@ -427,8 +427,8 @@ import PopupView from "@/Components/technical/PopupView.vue";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import axios from "axios";
-import { defineComponent, ref } from "vue";
-
+import { defineComponent, reactive, ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 import "swiper/css";
 import "swiper/css/pagination";
 import MainList from "@/Components/UI/MainList.vue";
@@ -471,6 +471,9 @@ export default defineComponent({
         user: {
             type: Object,
         },
+        errors: {
+            type: Object,
+        },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
@@ -483,12 +486,15 @@ export default defineComponent({
             password: "",
             remember: false,
         });
-        const new_account_input = useForm({
-            email: "",
-            name: "",
-            password: "",
-            ["password_confirmation"]: "",
-        });
+        const new_account_input = reactive(
+            useForm({
+                email: "",
+                name: "",
+                password: "",
+                ["password_confirmation"]: "",
+            })
+        );
+
         const submit = async () => {
             // document.querySelector("[data-close]").click();
             document.querySelector(".no-info").style.display = "flex";
@@ -521,7 +527,7 @@ export default defineComponent({
             //     });
         };
         const logout = async () => {
-            form.post("/logout");
+            await Inertia.post("/logout");
         };
         const instance = axios.create({
             baseURL: "https://pool.api.btc.com/v1",
@@ -553,23 +559,6 @@ export default defineComponent({
                 .catch((err) => {
                     console.log(err);
                 });
-        };
-
-        const get_email = async () => {
-            let email = useForm({
-                email: new_account_input.email,
-            });
-            let val = false;
-            // eslint-disable-next-line no-undef
-            email.post(route("user_get"), {
-                onSuccess() {
-                    val = true;
-                },
-            });
-            // await instance.post(route("user_get"), email).then((res) => {
-            //     res.data !== "" ? (val = true) : (val = false);
-            // });
-            return val;
         };
         const account_create = () => {
             document.querySelector(".no-info").style.display = "flex";
@@ -654,7 +643,6 @@ export default defineComponent({
             submit,
             account_create,
             swipe,
-            get_email,
             logout,
             message,
         };
@@ -677,11 +665,11 @@ export default defineComponent({
             }
             return sum.toFixed(8);
         },
-        errors() {
-            let errs = this.$page.props.errors || {};
-            errs = Object.values(errs).filter((el) => el !== "");
-            return errs;
-        },
+        // errors() {
+        //     let errs = this.$page.props.errors || {};
+        //     errs = Object.values(errs).filter((el) => el !== "");
+        //     return errs;
+        // },
     },
     methods: {
         closePopup() {
@@ -711,28 +699,18 @@ export default defineComponent({
         swiper_init(swiper) {
             this.swiper = swiper;
         },
-        async email_validate(get_email) {
-            // eslint-disable-next-line no-undef
-            let reg =
-                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-            let tester = (val) => {
-                // eslint-disable-next-line no-undef
-                return reg.test(val);
-            };
-            let emailTest;
-            await get_email().then((res) => {
-                emailTest = res;
+        async email_validate() {
+            let email = useForm({
+                email: this.new_account_input.email,
             });
-
-            if (this.$refs.email.value === "") {
-                this.errors.email = "Необходимо заполнить «Email».";
-            } else if (!tester(this.$refs.email.value)) {
-                this.errors.email = "Некорректное поле «Email».";
-            } else if (emailTest) {
-                this.errors.email = "Такой «Email» уже зарегистрирован";
-            } else {
-                this.slideNext();
-            }
+            // сохраняем контекст
+            let self = this;
+            // eslint-disable-next-line no-undef
+            await email.post(route("user_get"), {
+                onSuccess() {
+                    self.slideNext();
+                },
+            });
         },
         name_validate(get_group) {
             const instance = axios.create({
@@ -1159,6 +1137,7 @@ nav.nav__container {
             max-height: 500px;
             opacity: 1;
         }
+        form button,
         a {
             font-weight: 400;
             display: inline-flex;
@@ -1167,6 +1146,7 @@ nav.nav__container {
             transition: all 0.3s ease 0s;
             text-decoration: underline;
             text-decoration-color: transparent;
+
             &:hover {
                 text-decoration-color: #000034;
             }

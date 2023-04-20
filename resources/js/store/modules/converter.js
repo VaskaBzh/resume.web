@@ -25,7 +25,7 @@ export default {
             axios
                 .get("/difficulty")
                 .then((res) => {
-                    commit(`updateHistory`, res.data.values);
+                    commit(`updateHistoryDiff`, res.data.values);
                 })
                 .catch((err) => console.log(err));
             axios
@@ -74,20 +74,20 @@ export default {
         updateInfo(state, data) {
             Vue.set(state.convertInfo, data.key, data.item);
         },
-        updateHistory(state, data) {
-            state.history = data;
+        updateHistoryDiff(state, data) {
+            state.historyDiff = data;
         },
     },
     state: {
         convertInfo: {},
-        history: [],
+        historyDiff: [],
     },
     getters: {
         btcInfo(state) {
             return state.convertInfo;
         },
         btcHistory(state) {
-            return state.history;
+            return state.historyDiff;
         },
     },
 };

@@ -1,5 +1,6 @@
 import axios from "axios";
 import Vue from "lodash";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     actions: {
@@ -27,14 +28,31 @@ export default {
             // commit("destroy");
             state.groupName = "";
             await axios
-                .get("/accountsAll")
+                .get("/accountsAll", {
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
                 .then(async (response) => {
                     let arr;
                     let groups = [];
                     state.checkFive = state.checkFive + 1;
                     // eslint-disable-next-line no-undef
                     await axios
-                        .get(route("sub_process"))
+                        .get(route("sub_process"), {
+                            headers: {
+                                "Content-Type":
+                                    "application/json; charset=utf-8",
+                                "X-CSRF-TOKEN": document
+                                    .querySelector('meta[name="csrf-token"]')
+                                    .getAttribute("content"),
+                                "X-Requested-With": "XMLHttpRequest",
+                            },
+                        })
                         .then(async (resp) => {
                             if (resp.data !== "") {
                                 arr = resp.data;
@@ -91,9 +109,18 @@ export default {
                     }
                 });
         },
-        async workerChecker({ commit }, data) {
+        async workerChecker({ commit, state }, data) {
             await axios
-                .put("/worker", { id: data.el.gid })
+                .get("/worker", {
+                    params: { id: data.el.gid },
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
                 .then(async (workers) => {
                     const workerChecker = (str, substr) => {
                         const regExp = new RegExp(substr);
@@ -119,10 +146,23 @@ export default {
                         });
                     });
                 })
-                .catch((err) => this.dispatch("getAccounts"));
+                .catch((err) => {
+                    this.dispatch("getAccounts");
+
+                    if (err.response.data.message === "CSRF token mismatch.") {
+                        Inertia.reload();
+                        // commit(
+                        //     "setMessage",
+                        //     "Кажется возникла проблема, перезагрузите страницу."
+                        // );
+                        //
+                        // setTimeout(() => {
+                        //     commit("setMessage", "");
+                        // }, 3000);
+                    }
+                });
         },
         async getAccGroup({ commit, state }, data) {
-            let groupElem;
             await Object.values(data.arr).forEach((group, i) => {
                 if (data.el.name === group.sub) {
                     state.validate = true;
@@ -202,7 +242,16 @@ export default {
         },
         async getHash({ state, commit }, data) {
             await axios
-                .put("/worker", { id: data.accountModel.id })
+                .get("/worker", {
+                    params: { id: data.accountModel.id },
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
                 .then(async (result) => {
                     if (result.data.data.data.length > 0) {
                         for (const worker of result.data.data.data) {
@@ -262,6 +311,16 @@ export default {
                         account: data.accountModel,
                         groupIndex: data.accountModel.id,
                     });
+                })
+                .catch(() => {
+                    // commit(
+                    //     "setMessage",
+                    //     "Кажется возникла проблема, перезагрузите страницу."
+                    // );
+                    //
+                    // setTimeout(() => {
+                    //     commit("setMessage", "");
+                    // }, 3000);
                 });
         },
         async reloader({ commit, state }, data) {
@@ -271,7 +330,15 @@ export default {
         },
         getMinerHistoryHash({ commit, state }, data) {
             axios
-                .put("/worker_process", data)
+                .get("/worker_process", {
+                    params: data,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
+                })
                 .then((res) => {
                     if (res.data) {
                         commit("updateHistoryMiners", {
@@ -284,7 +351,15 @@ export default {
         },
         getHistoryHash({ commit }, data) {
             axios
-                .put("/hash_process", data)
+                .get("/hash_process", {
+                    params: data,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
+                })
                 .then((res) => {
                     // if (res.data.length > 0) {
                     commit("updateHistory", {
@@ -295,11 +370,19 @@ export default {
                 })
                 .catch((err) => console.log(err));
         },
-        getIncomeHistory({ commit }, data) {
+        getIncomeHistory({ commit, state }, data) {
             axios
-                .put("/income_process", data)
+                .get("/income_process", {
+                    params: data,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
+                })
                 .then((res) => {
-                    commit("updateincomeHistory", {
+                    commit("updateIncomeHistory", {
                         historyItem: Object.values(res.data),
                         key: data.group_id,
                     });
@@ -308,7 +391,15 @@ export default {
         },
         getWallets({ commit, state }, data) {
             axios
-                .put("/wallet_process", data)
+                .get("/wallet_process", {
+                    params: data,
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
+                })
                 .then((res) => {
                     commit("updateWallet", {
                         historyItem: Object.values(res.data),
@@ -355,7 +446,7 @@ export default {
         updateWallet(state, data) {
             Vue.set(state.wallet, data.key, data.historyItem);
         },
-        updateincomeHistory(state, data) {
+        updateIncomeHistory(state, data) {
             Vue.set(state.incomeHistory, data.key, data.historyItem);
         },
         updateIncome(state, data) {

@@ -84,6 +84,9 @@
         top: -80px;
         width: 412px;
         height: 58px;
+        @media (max-width: $mobileSmall) {
+            width: 100%;
+        }
         .form_message {
             position: relative;
             left: 0;

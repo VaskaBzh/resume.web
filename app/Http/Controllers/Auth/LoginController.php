@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
+use Inertia\Inertia;
 
 class LoginController extends Controller
 {
@@ -42,6 +43,11 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    public function loggedOut(Request $request)
+    {
+        return redirect('/');
     }
 
     protected function sendFailedLoginResponse(Request $request)

@@ -66,7 +66,7 @@ Route::controller(VerificationController::class)
 Route::controller(RequestController::class)
     ->group(function () {
         Route::get('/accountsAll', 'accountsAll')->name('accountsAll');
-        Route::put('/worker', 'worker')->name('worker');
+        Route::get('/worker', 'worker')->name('worker');
         Route::post('/worker_update', 'worker_update')->name('worker_update');
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
@@ -95,10 +95,10 @@ Route::middleware('auth')->group(function () {
 
     Route::controller(WorkerController::class)->group(function () {
         Route::post('/worker_create', 'create')->name('worker_create');
-        Route::put('/worker_process', 'visual')->name('worker_process');
+        Route::get('/worker_process', 'visual')->name('worker_process');
     });
     Route::controller(HashController::class)->group(function () {
-        Route::put('/hash_process', 'visual')->name('hash_process');
+        Route::get('/hash_process', 'visual')->name('hash_process');
     });
     Route::controller(SubController::class)->group(function () {
         Route::get('/sub_process', 'visual')->name('sub_process');
@@ -106,11 +106,11 @@ Route::middleware('auth')->group(function () {
         Route::put('/sub_delete', 'remove')->name('sub_delete');
     });
     Route::controller(IncomeController::class)->group(function () {
-        Route::put('/income_process', 'visual')->name('income_process');
+        Route::get('/income_process', 'visual')->name('income_process');
     });
     Route::controller(WalletController::class)->group(function () {
         Route::post('/wallet_create', 'create')->name('wallet_create');
         Route::post('/wallet_delete', 'delete')->name('wallet_delete');
-        Route::put('/wallet_process', 'visual')->name('wallet_process');
+        Route::get('/wallet_process', 'visual')->name('wallet_process');
     });
 });

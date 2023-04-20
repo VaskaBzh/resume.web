@@ -59,17 +59,11 @@
                         tag="h2"
                         titleName="Подключиться к allbtc pool"
                     ></main-title>
-                    <div class="connecting__block">
-                        <div class="connecting__row">
-                            1. Настройте ваше устройство согласно представленным
-                            ниже данным:
-                        </div>
-                        <copy-block
-                            v-for="(object, i) in this.copyObject"
-                            :key="i"
-                            :copyObject="object"
-                        ></copy-block>
-                    </div>
+                    <copy-block
+                        v-for="(object, i) in this.copyObject"
+                        :key="i"
+                        :copyObject="object"
+                    ></copy-block>
                 </form>
             </popup-view>
         </div>

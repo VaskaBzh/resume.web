@@ -1,5 +1,6 @@
 <template>
     <Head title="Статистика" />
+    <div class="hidden">{{ this.allHistory[this.getActive] }}</div>
     <div class="statistic">
         <div class="statistic__wrapper">
             <main-title tag="h2" class="statistic__title">
@@ -438,20 +439,14 @@ export default {
         if (this.allHistory[this.getActive]) {
             this.activeMount();
             this.getForcast();
-            if (Object.values(this.allHistory[this.getActive])) {
-                this.renderChart();
-            }
+            this.renderChart();
         }
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
             this.startMount(this.getActive);
             this.getForcast();
-            if (Object.values(this.allHistory[this.getActive])) {
-                if (this.id === 0) {
-                    this.renderChart();
-                }
-            }
+            this.renderChart();
         }
     },
 };
