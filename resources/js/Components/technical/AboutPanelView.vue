@@ -124,22 +124,20 @@ export default {
     // .panel-am__image
     &__image {
         max-width: 1120px;
-        margin-left: -12pc;
-        margin-top: -10pc;
+        margin: -10pc 0 -3pc -12pc;
         @media (max-width: 1270px) {
             max-width: 930px;
+            margin: -5pc 0 -3pc -12pc;
         }
         @media (max-width: 991.98px) {
-            margin-left: 23%;
-            margin-top: -9pc;
             max-height: 700px;
             max-width: unset;
+            margin: -4pc 0 -1pc;
         }
         @media (max-width: 767.98px) {
             max-height: unset;
             max-width: 510px;
-            margin-left: 33vw;
-            margin-top: -5pc;
+            margin: -2pc 0 0;
         }
     }
 }

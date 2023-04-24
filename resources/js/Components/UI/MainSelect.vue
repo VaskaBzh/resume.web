@@ -438,6 +438,7 @@ $adaptHeight: 34px;
             animation: rotate 1.5s infinite linear;
             margin: auto 8px auto 0;
         }
+        gap: 6px;
         cursor: pointer;
         background: #ffffff;
         border: 1px solid #d6d6d6;

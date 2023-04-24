@@ -34,6 +34,18 @@
         >
             <Link :href="route('profile')" class="nav__button_link">
                 {{ this.name }}
+                <svg
+                    width="15"
+                    height="16"
+                    viewBox="0 0 15 16"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M6.79289 10.2929L3.70711 7.20711C3.07714 6.57714 3.52331 5.5 4.41421 5.5H10.5858C11.4767 5.5 11.9229 6.57714 11.2929 7.20711L8.20711 10.2929C7.81658 10.6834 7.18342 10.6834 6.79289 10.2929Z"
+                        fill="white"
+                    />
+                </svg>
             </Link>
             <div class="nav__button_menu">
                 <main-list>
@@ -62,10 +74,10 @@
                         </div>
                     </template>
                 </main-list>
-                <!--                                <auto-height-select-->
-                <!--                                    class="mini"-->
-                <!--                                    :options="this.wallets"-->
-                <!--                                ></auto-height-select>-->
+                <auto-height-select
+                    class="mini"
+                    :options="this.accounts"
+                ></auto-height-select>
                 <Link :href="route('settings')"
                     ><svg
                         width="24"
@@ -423,7 +435,7 @@ import NavLinks from "@/Components/navs/NavLinks.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
-// import AutoHeightSelect from "@/Components/UI/AutoHeightSelect.vue";
+import AutoHeightSelect from "@/Components/UI/AutoHeightSelect.vue";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import axios from "axios";
@@ -437,7 +449,7 @@ import { mapGetters } from "vuex";
 export default defineComponent({
     components: {
         MainList,
-        // AutoHeightSelect,
+        AutoHeightSelect,
         PopupView,
         BlueButton,
         MainTitle,
@@ -454,13 +466,6 @@ export default defineComponent({
             viewportWidth: 0,
             is_reg: false,
             swiper: {},
-            // wallets: [
-            //     { title: "BTC", value: "btc", img: "bitcoin_img.png" },
-            //     { title: "BCH", value: "bch", img: "bitcoin-cash_img.png" },
-            //     { title: "Dash", value: "dash", img: "dash_img.png" },
-            //     { title: "Etc", value: "etc", img: "etc_img.png" },
-            //     { title: "Litecoin", value: "ltc", img: "litecoin_img.png" },
-            // ],
         };
     },
     props: {
@@ -649,6 +654,16 @@ export default defineComponent({
     },
     computed: {
         ...mapGetters(["getIncome", "allAccounts", "getActive"]),
+        accounts() {
+            let arr = [];
+            if (this.allAccounts && Object.values(this.allAccounts)[0]) {
+                arr.length = 0;
+                Object.values(this.allAccounts).forEach((acc) => {
+                    arr.push({ title: acc.name, value: acc.id });
+                });
+            }
+            return arr;
+        },
         name() {
             let name = "...";
             if (this.allAccounts[this.getActive]) {
@@ -1159,22 +1174,28 @@ nav.nav__container {
         display: inline-flex;
         align-items: center;
         justify-content: center;
+        gap: 10px;
+        svg {
+            width: 15px;
+            height: 15px;
+            transition: all 0.5s ease 1s;
+        }
     }
     &-account {
         border-radius: 13px;
         padding: 0;
         height: 44px;
-        min-width: 162px;
+        min-width: 187px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         font-size: 16px;
         font-weight: 700;
         line-height: 20px;
-        color: #000034;
+        color: #ffffff;
         transition: all 0.3s ease 0s;
         position: relative;
-        background: rgba(194, 213, 242, 0.61);
+        background: rgba(65, 127, 229, 0.6);
         .list_button {
             a {
                 text-decoration: none;
@@ -1203,13 +1224,21 @@ nav.nav__container {
             color: #ffffff;
             background-color: #3f7bdd;
             transform: translate(-4px, -4px);
-            .nav__button_menu {
-                transform: translate(4px, 4px);
-                color: #000034;
-                visibility: visible;
-                max-height: 500px;
-                opacity: 1;
-                transition: all 0.5s ease 0s, opacity 0.2s ease 0s;
+            .nav__button {
+                &_menu {
+                    transform: translate(4px, 4px);
+                    color: #000034;
+                    visibility: visible;
+                    max-height: 500px;
+                    opacity: 1;
+                    transition: all 0.5s ease 0s, opacity 0.2s ease 0s;
+                }
+                &_link {
+                    svg {
+                        transform: rotate(-180deg);
+                        transition: all 0.5s ease 0s;
+                    }
+                }
             }
             &:before {
                 transform: translate(4px, 4px);

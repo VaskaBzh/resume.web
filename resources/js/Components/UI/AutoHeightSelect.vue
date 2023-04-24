@@ -1,7 +1,10 @@
 <template>
     <div ref="select" class="select_con" :class="{ open: select_is_open }">
         <div @click="this.openSelect" class="select_title main_select">
-            <img :src="this.baseImg" v-if="this.options[0].img" />
+            <img
+                :src="this.baseImg"
+                v-if="this.options[0] && this.options[0].img"
+            />
             <svg
                 v-if="selectType === 'large'"
                 xmlns="http://www.w3.org/2000/svg"
@@ -26,22 +29,22 @@
         </div>
         <div class="select_options">
             <div
-                v-for="(option, i) in this.options"
+                v-for="(option, i) in this.optionsObject"
                 :key="option.value"
                 class="select_option"
             >
                 <p
-                    v-if="this.options[0].img"
+                    v-if="this.options[0] && this.options[0].img && option"
                     class="main_select"
                     @click="
                         selectOptions(option.title, option.img, option.value)
                     "
                 >
-                    <img :src="this.optionsImgs[i]" />
+                    <img :src="this.optionsImgs && this.optionsImgs[i]" />
                     {{ option.title }}
                 </p>
                 <p
-                    v-else
+                    v-else-if="option"
                     class="main_select"
                     @click="selectOptions(option.title, option.value)"
                 >
@@ -65,19 +68,30 @@ export default {
     data() {
         return {
             select_is_open: false,
-            baseOption: "",
-            baseImg: "",
+            baseImg: "...",
+            baseOption: "...",
             height: 0,
         };
     },
     computed: {
+        optionsObject() {
+            let obj = [];
+            if (this.options[0]) {
+                for (let i = 0; i < this.options.length; i++) {
+                    obj.push(this.options[i]);
+                }
+            }
+            return obj;
+        },
         optionsImgs() {
             let obj = [];
-            for (let i = 0; i < this.options.length; i++) {
-                obj.push(
-                    "http://127.0.0.1:5173" +
-                        `/resources/assets/img/${this.options[i].img}`
-                );
+            if (this.options[0]) {
+                for (let i = 0; i < this.optionsObject.length; i++) {
+                    obj.push(
+                        "http://127.0.0.1:5173" +
+                            `/resources/assets/img/${this.optionsObject[i].img}`
+                    );
+                }
             }
             return obj;
         },
@@ -110,6 +124,15 @@ export default {
                 }
             }
         },
+        getBase() {
+            if (this.optionsObject[0]) {
+                this.baseOption = this.optionsObject[0].title;
+                if (this.optionsObject[0].img) {
+                    this.baseImg =
+                        "http://127.0.0.1:5173" + `/resources/assets/img/${this.optionsObject[0].img}`;
+                }
+            }
+        },
         openSelect() {
             this.select_is_open = true;
             this.$refs.select.querySelector(
@@ -118,7 +141,15 @@ export default {
             this.$refs.select.querySelector(".select_title").style.zIndex = 11;
         },
     },
+    beforeUpdate() {
+        if (this.options) {
+            this.getBase();
+        }
+    },
     mounted() {
+        if (this.options) {
+            this.getBase();
+        }
         this.$refs.select
             .querySelectorAll(".select_option")
             .forEach((option) => {
@@ -130,12 +161,6 @@ export default {
                 this.hideSelect();
             }
         });
-        this.baseOption = this.options[0].title;
-        if (this.options[0].img) {
-            this.baseImg =
-                "http://127.0.0.1:5173" +
-                `/resources/assets/img/${this.options[0].img}`;
-        }
     },
     unmounted() {
         document.removeEventListener("click", this.hideSelect.bind(this), true);
@@ -281,10 +306,12 @@ $adaptHeight: 34px;
         display: flex;
         align-items: center;
         justify-content: flex-start;
-        padding: 0 20px;
+        padding: 0 12px;
         position: relative;
         transition: all 0.5s ease 0s, pointer-events 0s;
         z-index: 3;
+        gap: 6px;
+        font-size: 17px;
         &:hover {
             border-color: #c2d5f2;
         }
@@ -338,7 +365,7 @@ $adaptHeight: 34px;
         font-style: normal;
         display: flex;
         flex-direction: column;
-        padding: 0 20px;
+        padding: 0 12px;
         height: $height;
         @media (max-width: 479.98px) {
             height: $adaptHeight;
