@@ -12,7 +12,7 @@
                 data-popup="#graph"
             ></div>
             <div class="wrap wrap-no-padding wrap-modify">
-                <div class="wrap_head wrap_head-graph">
+                <div class="wrap__head wrap__head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">
                         Общий хешрейт
                     </main-title>
@@ -30,8 +30,8 @@
                         "
                     />
                 </div>
-                <div class="wrap__block">
-                    <div class="wrap_head">
+                <div class="wrap__block wrap__column">
+                    <div class="wrap__head">
                         <div class="wrap__row">
                             <span class="wrap_title"> Текущий хешрейт </span>
                             <span class="wrap_hash"
@@ -96,7 +96,7 @@
             <!--            <div-->
             <!--                class="wrap wrap-no-padding wrap-modify wrap-modify-reverse-mini"-->
             <!--            >-->
-            <!--                <div class="wrap_head wrap_head-graph">-->
+            <!--                <div class="wrap__head wrap__head-graph">-->
             <!--                    <main-title tag="h3" class="statistic__wrap_title">-->
             <!--                        Подключение и аккаунты-->
             <!--                    </main-title>-->
@@ -515,7 +515,13 @@ export default {
                 gap: 4px;
             }
         }
-        &_head {
+        &__head {
+            flex-direction: column;
+            .title {
+                @media (max-width: 767.98px) {
+                    margin-bottom: 8px;
+                }
+            }
             &-graph {
                 grid-column-start: 1;
                 grid-column-end: 3;
@@ -565,14 +571,7 @@ export default {
             }
         }
         &__block {
-            width: 100%;
             min-height: 325px;
-            background: #ffffff;
-            border-radius: 21px;
-            padding: 24px;
-            gap: 24px;
-            display: flex;
-            flex-direction: column;
             @media (max-width: 767.98px) {
                 padding: 15px;
                 grid-column-start: 1;

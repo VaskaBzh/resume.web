@@ -1,5 +1,6 @@
 <template>
     <Head title="Воркеры" />
+    <div class="hidden">{{ this.getActive }}</div>
     <div class="workers">
         <div class="workers__wrapper">
             <main-title tag="h2" enter-class="workers__title">
@@ -140,27 +141,6 @@ export default {
         };
     },
     methods: {
-        copyLink(i) {
-            if (i === 1) {
-                navigator.clipboard.writeText(this.linkAddress);
-                this.$refs.linkAddress.classList.add("active");
-                setTimeout(() => {
-                    this.$refs.linkAddress.classList.remove("active");
-                }, 1000);
-            } else if (i === 2) {
-                navigator.clipboard.writeText(this.linkAddress1);
-                this.$refs.linkAddress1.classList.add("active");
-                setTimeout(() => {
-                    this.$refs.linkAddress1.classList.remove("active");
-                }, 1000);
-            } else if (i === 3) {
-                navigator.clipboard.writeText(this.linkAddress2);
-                this.$refs.linkAddress2.classList.add("active");
-                setTimeout(() => {
-                    this.$refs.linkAddress2.classList.remove("active");
-                }, 1000);
-            }
-        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
@@ -227,7 +207,7 @@ export default {
             "allHistoryMiner",
         ]),
     },
-    updated() {
+    beforeUpdate() {
         this.getWorker();
     },
     mounted() {

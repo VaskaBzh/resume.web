@@ -103,8 +103,13 @@
             </div>
         </div>
     </div>
-    <div class="hint" v-hide="this.mess !== ''">
-        {{ this.mess }}
+    <div class="hint">
+        <div
+            class="hint_item"
+            v-hide="this.mess !== ''"
+        >
+            {{ this.mess }}
+        </div>
     </div>
     <popup-view id="addWallet">
         <div

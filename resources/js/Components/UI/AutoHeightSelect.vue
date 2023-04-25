@@ -46,7 +46,7 @@
                 <p
                     v-else-if="option"
                     class="main_select"
-                    @click="selectOptions(option.title, option.value)"
+                    @click="selectOptions(option.title, null, option.value)"
                 >
                     {{ option.title }}
                 </p>
@@ -99,9 +99,12 @@ export default {
     methods: {
         selectOptions(optionTitle, optionImg, optionValue) {
             this.baseOption = optionTitle;
-            this.baseImg =
-                "http://127.0.0.1:5173" + `/resources/assets/img/${optionImg}`;
-            this.$emit("getCoin", optionValue);
+            if (optionImg) {
+                this.baseImg =
+                    "http://127.0.0.1:5173" +
+                    `/resources/assets/img/${optionImg}`;
+            }
+            this.$emit("getAcc", optionValue);
             this.hideSelect();
         },
         hideSelect() {
@@ -125,12 +128,11 @@ export default {
             }
         },
         getBase() {
-            if (this.optionsObject[0]) {
-                this.baseOption = this.optionsObject[0].title;
-                if (this.optionsObject[0].img) {
-                    this.baseImg =
-                        "http://127.0.0.1:5173" + `/resources/assets/img/${this.optionsObject[0].img}`;
-                }
+            this.baseOption = this.optionsObject[0].title;
+            if (this.optionsObject[0].img) {
+                this.baseImg =
+                    "http://127.0.0.1:5173" +
+                    `/resources/assets/img/${this.optionsObject[0].img}`;
             }
         },
         openSelect() {
@@ -142,12 +144,12 @@ export default {
         },
     },
     beforeUpdate() {
-        if (this.options) {
+        if (this.options && this.optionsObject[0] && this.baseOption === "...") {
             this.getBase();
         }
     },
     mounted() {
-        if (this.options) {
+        if (this.options && this.optionsObject[0]) {
             this.getBase();
         }
         this.$refs.select

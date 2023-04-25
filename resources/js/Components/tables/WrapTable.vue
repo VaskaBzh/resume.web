@@ -1,7 +1,7 @@
 <template>
     <div class="hidden">{{ this.boolFalse }}{{ this.allIncomeHistory }}</div>
     <div class="wrap wrap-no-padding">
-        <div class="wrap_head">
+        <div class="wrap__head">
             <main-title tag="h3" v-if="this.title"
                 >{{ this.title }}
             </main-title>
@@ -9,7 +9,7 @@
                 v-else-if="
                     this.viewportWidth < 767.98 && this.type !== 'Платежи'
                 "
-                class="wrap_head_elem"
+                class="wrap__head_elem"
                 >Отображать в виде</span
             >
             <div
@@ -31,13 +31,13 @@
                 </div>
             </div>
             <div
-                class="wrap_head-usability"
+                class="wrap__head-usability"
                 v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'"
             >
                 <div
                     ref="block"
                     @click="this.visualType = 'block'"
-                    class="wrap_head-usability_elem"
+                    class="wrap__head-usability_elem"
                 >
                     <span></span>
                     <span></span>
@@ -47,7 +47,7 @@
                 <div
                     ref="table"
                     @click="this.visualType = 'table'"
-                    class="wrap_head-usability_elem"
+                    class="wrap__head-usability_elem"
                 >
                     <span></span>
                     <span></span>
@@ -148,6 +148,7 @@ export default {
         first: Number,
         rowsVal: Number,
         wait: Object,
+        empty: Object,
     },
     data() {
         return {

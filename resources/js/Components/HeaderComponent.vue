@@ -77,6 +77,7 @@
                 <auto-height-select
                     class="mini"
                     :options="this.accounts"
+                    @getAcc="change_index"
                 ></auto-height-select>
                 <Link :href="route('settings')"
                     ><svg
@@ -687,6 +688,9 @@ export default defineComponent({
         // },
     },
     methods: {
+        change_index(data) {
+            this.$store.commit("updateActive", data);
+        },
         closePopup() {
             document.querySelector("[data-close]").click();
         },

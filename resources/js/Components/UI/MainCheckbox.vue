@@ -29,6 +29,14 @@ export default {
             this.$emit("is_checked", this.isChecked);
         },
     },
+    updated() {
+        if (this.is_checked) {
+            setTimeout(() => {
+                this.$refs.checkbox.classList.add("checked");
+                this.isChecked = true;
+            }, 1);
+        }
+    },
     mounted() {
         if (this.is_checked) {
             setTimeout(() => {

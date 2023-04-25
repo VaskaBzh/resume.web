@@ -11,6 +11,7 @@ use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\ReturnMessage\ReturnMessageController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
+use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Wallets\WalletController;
 use App\Http\Controllers\Workers\WorkerController;
 use Illuminate\Support\Facades\Route;
@@ -112,5 +113,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/wallet_create', 'create')->name('wallet_create');
         Route::post('/wallet_delete', 'delete')->name('wallet_delete');
         Route::get('/wallet_process', 'visual')->name('wallet_process');
+    });
+    Route::controller(UserController::class)->group(function () {
+        Route::get('/get_login', 'login')->name('get_login');
+        Route::get('/get_email', 'email')->name('get_email');
+        Route::get('/get_phone', 'phone')->name('get_phone');
+        Route::get('/get_sms', 'sms')->name('get_sms');
+        Route::get('/get_fac', 'fac')->name('get_fac');
+        Route::post('/change', 'change')->name('change');
     });
 });

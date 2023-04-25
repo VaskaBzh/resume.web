@@ -17,12 +17,17 @@ export default {
     top: 10%;
     left: 50%;
     transform: translateX(-50%);
-    padding: 12px;
-    border-radius: 8px;
-    background-color: #fff;
-    visibility: hidden;
-    opacity: 0;
-    transition: all 0.3s ease 0s;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
     z-index: 999;
+    &_item {
+        padding: 12px;
+        border-radius: 8px;
+        background-color: #fff;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease 0s;
+    }
 }
 </style>

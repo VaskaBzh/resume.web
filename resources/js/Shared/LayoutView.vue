@@ -1,8 +1,13 @@
 <template>
     <header-component :errors="errors" :is_auth="auth_user" />
     <div class="page">
-        <div class="hint" v-hide="this.getMessage !== ''">
-            {{ this.getMessage }}
+        <div class="hint">
+            <div
+                class="hint_item"
+                v-hide="this.getMessage !== ''"
+            >
+                {{ this.getMessage }}
+            </div>
         </div>
         <div class="preloader">
             <div class="preloader__wrap">
@@ -85,24 +90,24 @@ export default {
             }
         }
     },
-    mounted() {
-        Inertia.on("success", (event) => {
-            if (
-                event.detail.visit &&
-                event.detail.visit.page.props.newCsrfToken
-            ) {
-                const csrfMetaTag = document.querySelector(
-                    'meta[name="csrf-token"]'
-                );
-                if (csrfMetaTag) {
-                    csrfMetaTag.setAttribute(
-                        "content",
-                        event.detail.visit.page.props.newCsrfToken
-                    );
-                }
-            }
-        });
-    },
+    // mounted() {
+    //     Inertia.on("success", (event) => {
+    //         if (
+    //             event.detail.visit &&
+    //             event.detail.visit.page.props.newCsrfToken
+    //         ) {
+    //             const csrfMetaTag = document.querySelector(
+    //                 'meta[name="csrf-token"]'
+    //             );
+    //             if (csrfMetaTag) {
+    //                 csrfMetaTag.setAttribute(
+    //                     "content",
+    //                     event.detail.visit.page.props.newCsrfToken
+    //                 );
+    //             }
+    //         }
+    //     });
+    // },
     unmounted() {
         if (!this.auth_user) {
             this.$store.dispatch("destroyer");

@@ -1,5 +1,6 @@
 <template>
     <Head title="Аккаунты" />
+    <div class="hidden">{{ this.getActive }}</div>
     <div class="accounts">
         <div class="accounts__wrapper">
             <main-title tag="h2" class="accounts__title">
@@ -39,7 +40,6 @@
                 />
             </div>
             <no-info
-                class="accounts__content"
                 :wait="this.allAccounts"
             ></no-info>
         </div>
@@ -224,9 +224,10 @@ export default {
             error,
         };
     },
-    updated() {
+    beforeUpdate() {
         this.startMount(this.getActive);
         this.getForcast();
+        this.activeMount();
     },
     mounted() {
         document.title = "Аккаунты";

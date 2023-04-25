@@ -1,5 +1,5 @@
 <template>
-    <div class="payment-card">
+    <div class="wrap__block wrap__column">
         <btc-calculator
             :title="this.titleFirst"
             :BTC="this.BTCValueFirst"
@@ -28,19 +28,13 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.payment-card {
-    @media (min-width: 767.98px) {
-        width: 100%;
-        background: #ffffff;
-        border-radius: 21px;
-        padding: 24px;
-        gap: 24px;
+.wrap__block {
+    min-height: 0 !important;
+    @media (max-width: 767.98px) {
+        gap: 8px;
+        background-color: transparent;
+        padding: 0 !important;
+        display: flex !important;
     }
-    gap: 8px;
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    background-color: transparent;
-    padding: 0;
 }
 </style>
