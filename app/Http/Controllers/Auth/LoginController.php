@@ -50,6 +50,29 @@ class LoginController extends Controller
         return redirect('/');
     }
 
+    protected function attemptLogin(Request $request)
+    {
+        $credentials = $this->credentials($request);
+
+        if ($this->guard()->attempt($credentials, $request->filled('remember'))) {
+            $user = $this->guard()->getLastAttempted();
+
+            if ($user->hasVerifiedEmail()) {
+                return true;
+            } else {
+                $this->guard()->logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                throw ValidationException::withMessages([
+                    $this->username() => [trans('Ваша электронная почта еще не подтверждена. Пожалуйста, проверьте свою почту и подтвердите адрес.')],
+                ]);
+            }
+        }
+
+        return false;
+    }
+
     protected function sendFailedLoginResponse(Request $request)
     {
         // Здесь можно добавить свою кастомную логику проверки ошибок, если это необходимо

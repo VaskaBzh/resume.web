@@ -2,11 +2,11 @@
     <header-component :errors="errors" :is_auth="auth_user" />
     <div class="page">
         <div class="hint">
-            <div
-                class="hint_item"
-                v-hide="this.getMessage !== ''"
-            >
+            <div class="hint_item" v-hide="this.getMessage !== ''">
                 {{ this.getMessage }}
+            </div>
+            <div class="hint_item" v-hide="this.message && this.message !== ''">
+                {{ this.message }}
             </div>
         </div>
         <div class="preloader">
@@ -57,6 +57,9 @@ export default {
         auth_user: {
             type: Boolean,
             default: false,
+        },
+        message: {
+            type: String,
         },
         errors: {
             type: Object,

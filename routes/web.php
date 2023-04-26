@@ -6,17 +6,14 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Hashes\HashController;
 use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\Payments\PaymentController;
 use App\Http\Controllers\Requests\RequestController;
-use App\Http\Controllers\ReturnMessage\ReturnMessageController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
 use App\Http\Controllers\Users\UserController;
 use App\Http\Controllers\Wallets\WalletController;
 use App\Http\Controllers\Workers\WorkerController;
 use Illuminate\Support\Facades\Route;
-
-//use App\Http\Controllers\Payment\PaymentController;
 
 //use App\Http\Controllers\AuthController;
 
@@ -72,7 +69,9 @@ Route::controller(RequestController::class)
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
 
-Route::middleware('auth')->group(function () {
+Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
+
+Route::middleware('verified')->group(function () {
     Route::controller(IndexController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::redirect('/profile', '/profile/statistic');

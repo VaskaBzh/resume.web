@@ -149,7 +149,10 @@ export default {
                 .catch((err) => {
                     this.dispatch("getAccounts");
 
-                    if (err.response.data.message === "CSRF token mismatch.") {
+                    if (
+                        err.response &&
+                        err.response.data.message === "CSRF token mismatch."
+                    ) {
                         Inertia.reload();
                         // commit(
                         //     "setMessage",

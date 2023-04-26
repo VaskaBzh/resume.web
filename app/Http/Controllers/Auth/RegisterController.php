@@ -14,6 +14,9 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\MessageBag;
+use Illuminate\Auth\Notifications\VerifyEmail;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
+use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -64,10 +67,22 @@ class RegisterController extends Controller
         event(new Registered($user = $this->create($request->all())));
 
         $this->guard()->login($user);
+        $user->sendEmailVerificationNotification();
 
         if ($request->wantsJson()) {
             return back()->with('message', 'Пользователь успешно создан!');
         }
+    }
+
+    public function verify(EmailVerificationRequest $request)
+    {
+        Log::channel('single')->info('Verify method called');
+
+        $request->fulfill();
+
+        Log::channel('single')->info('Email verification fulfilled');
+
+        return redirect($this->redirectPath())->with('message', 'Ваша почта успешно подтверждена!');
     }
 
     protected function messages()
@@ -129,37 +144,4 @@ class RegisterController extends Controller
             }
         }
     }
-
-//    /**
-//     * The user has been registered.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @param  mixed  $user
-//     * @return mixed
-//     */
-//    protected function registered(Request $request, $user)
-//    {
-//        return Auth::user();
-//    }
-
-//    /**
-//     * Handle a registration request for the application.
-//     *
-//     * @param  \Illuminate\Http\Request  $request
-//     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
-//     */
-//    public function register(Request $request)
-//    {
-//        $this->validator($request->all())->validate();
-//
-//        event(new Registered($user = $this->create($request->all())));
-//
-//        if ($response = $this->registered($request, $user)) {
-//            return $response;
-//        }
-//
-//        return $request->wantsJson()
-//                    ? new JsonResponse([], 201)
-//                    : redirect($this->redirectPath());
-//    }
 }
