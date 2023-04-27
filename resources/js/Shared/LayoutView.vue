@@ -5,7 +5,7 @@
             <div class="hint_item" v-hide="this.getMessage !== ''">
                 {{ this.getMessage }}
             </div>
-            <div class="hint_item" v-hide="this.message && this.message !== ''">
+            <div class="hint_item" v-hide="this.message !== null">
                 {{ this.message }}
             </div>
         </div>

@@ -39,9 +39,7 @@
                     @changeActive="this.activeChanger"
                 />
             </div>
-            <no-info
-                :wait="this.allAccounts"
-            ></no-info>
+            <no-info :wait="this.allAccounts"></no-info>
         </div>
         <popup-view id="addAcc">
             <div

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
@@ -35,7 +36,8 @@ Route::controller(HashController::class)->group(function () {
 });
 
 Route::controller(SubController::class)->group(function () {
-    Route::put('/sub_create', 'create')->name('sub_create');
+    Route::post('/sub_create', 'create')->name('sub_create');
+    Route::put('/change_sub', 'change_name')->name('change_sub');
 });
 Route::controller(SendMessageConroller::class)->group(function () {
     Route::post('/send_message', 'send_message')->name('send_message');
@@ -54,6 +56,10 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post("/get_name", "getName")->name('get_name');
 });
 
+Route::controller(LoginController::class)->group(function () {
+    Route::post("/reverify", "verify")->name('reverify');
+});
+
 Route::controller(VerificationController::class)
     ->group(function () {
         Route::get('/email/verify', 'show')->name('verification.notice');
@@ -69,7 +75,7 @@ Route::controller(RequestController::class)
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
 
-Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->middleware(['auth', 'signed'])->name('verification.verify');
+Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->name('verification.verify');
 
 Route::middleware('verified')->group(function () {
     Route::controller(IndexController::class)->group(function () {

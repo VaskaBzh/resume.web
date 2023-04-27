@@ -37,15 +37,15 @@ class UserController extends Controller
 
     public function sms()
     {
-        if (Auth::user() && Auth::user()->phone) {
+        if (Auth::user() && Auth::user()->sms !== null) {
             return Auth::user()->sms;
         }
     }
 
     public function fac()
     {
-        if (Auth::user() && Auth::user()->phone) {
-            return Auth::user()->auth_fac_2;
+        if (Auth::user() && Auth::user()->auth_2fac !== null) {
+            return Auth::user()->auth_2fac;
         }
     }
 
@@ -67,9 +67,8 @@ class UserController extends Controller
             ]);
 
             $user->name = $request->input("item");
-            $user->save();
 
-            return back()->with('message', 'Логин успешно изменен!');
+            $message = 'Логин успешно изменен!';
         }
 
         if ($request->input("type") === 'Email') {
@@ -81,9 +80,8 @@ class UserController extends Controller
             ]);
 
             $user->email = $request->input("item");
-            $user->save();
 
-            return back()->with('message', 'Email успешно изменен!');
+            $message = 'Email успешно изменен!';
         }
 
         if ($request->input("type") === 'Телефон') {
@@ -95,31 +93,32 @@ class UserController extends Controller
             ]);
 
             $user->phone = $request->input("item");
-            $user->save();
 
-            return back()->with('message', 'Телефон успешно изменен!');
+            $message = 'Телефон успешно изменен!';
         }
 
         if ($request->input("type") === 'СМС авторизация') {
             $user->sms = $request->input("item");
-            $user->save();
 
             if ($request->input("item") === true) {
-                return back()->with('message', 'Вход по sms успешно подключен!');
+                $message = 'Вход по sms успешно подключен!';
             } else {
-                return back()->with('message', 'Вход по sms успешно отключен.');
+                $message = 'Вход по sms успешно отключен.';
             }
         }
 
         if ($request->input("type") === '2х факторная аутентификация') {
             $user->auth_2fac = $request->input("item");
-            $user->save();
 
             if ($request->input("item") === true) {
-                return back()->with('message', '2х факторная аутентификация успешно подключена!');
+                $message = '2х факторная аутентификация успешно подключена!';
             } else {
-                return back()->with('message', '2х факторная аутентификация успешно отключена.');
+                $message = '2х факторная аутентификация успешно отключена.';
             }
         }
+
+        $user->save();
+
+        return back()->with('message', $message);
     }
 }

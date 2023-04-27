@@ -12,13 +12,13 @@ class RequestController extends Controller
 {
     private $apiUrl = 'https://pool.api.btc.com/v1';
 
-    public function proxy(Request $request, $path)
+    public function proxy($data, $path)
     {
-        $url = $this->apiUrl . '/' . $path . '?' . http_build_query($request->query());
+        $url = $this->apiUrl . '/' . $path . '?' . http_build_query($data);
         $response = Http::withHeaders([
             'Content-Type' => 'application/json; charset=utf-8',
             'Authorization' => 'sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N',
-        ])->post($url, $request->all());
+        ])->post($url, $data);
 
         return response($response->body())
             ->header('Content-Type', 'application/json')

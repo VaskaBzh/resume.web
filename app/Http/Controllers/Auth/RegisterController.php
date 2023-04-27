@@ -3,10 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Subs\SubController;
+use App\Http\Controllers\Requests\RequestController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -14,9 +15,6 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\MessageBag;
-use Illuminate\Auth\Notifications\VerifyEmail;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Support\Facades\Log;
 
 class RegisterController extends Controller
 {
@@ -58,7 +56,7 @@ class RegisterController extends Controller
      * Handle a registration request for the application.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response|\Illuminate\Http\JsonResponse
+     * @return \Illuminate\Http\RedirectResponse
      */
     public function register(Request $request)
     {
@@ -66,21 +64,51 @@ class RegisterController extends Controller
 
         event(new Registered($user = $this->create($request->all())));
 
-        $this->guard()->login($user);
+//        $this->guard()->login($user);
         $user->sendEmailVerificationNotification();
 
-        if ($request->wantsJson()) {
-            return back()->with('message', 'Пользователь успешно создан!');
-        }
+        $data = [
+            "puid" => 781195,
+            "group_name" => $user->name,
+        ];
+
+        $requestController = new RequestController();
+
+        $response = json_decode($requestController->proxy($data,"groups/create")->getContent());
+
+        $subController = new SubController();
+        $data['group_id'] = strval($response->data->gid);
+        $data['user_id'] = $user->id;
+
+        $subController->create(new Request($data));
+
+        return back()->with([
+            'message' => 'Пользователь успешно создан! Подтвердите почту.',
+        ]);
     }
 
-    public function verify(EmailVerificationRequest $request)
+    public function isUserAuthorizedForVerification(Request $request, User $user)
     {
-        Log::channel('single')->info('Verify method called');
+        if (!hash_equals((string) $user->getKey(), (string) $request->route('id'))) {
+            return false;
+        }
 
-        $request->fulfill();
+        if (!hash_equals(sha1($user->getEmailForVerification()), (string) $request->route('hash'))) {
+            return false;
+        }
 
-        Log::channel('single')->info('Email verification fulfilled');
+        return true;
+    }
+
+    public function verify(Request $request, $id, $hash)
+    {
+        $user = User::findOrFail($id);
+
+        if (!$this->isUserAuthorizedForVerification($request, $user)) {
+            return abort(403, 'Unauthorized action.');
+        }
+
+        $user->markEmailAsVerified();
 
         return redirect($this->redirectPath())->with('message', 'Ваша почта успешно подтверждена!');
     }

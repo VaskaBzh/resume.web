@@ -4,9 +4,9 @@
             <span class="name">{{ this.name }}</span>
             <span
                 class="change"
-                v-if="this.val"
+                v-if="!this.text"
                 ref="link"
-                @mousedown="change_val"
+                @click="change_val"
             >
                 Изменить
             </span>
@@ -21,7 +21,7 @@
             v-model="this.value"
             ref="input"
             disabled
-            v-if="this.val"
+            v-if="!this.text"
             :type="this.name === 'Пароль' ? 'password' : 'text'"
             class="input input-no-bg"
         />
@@ -37,11 +37,7 @@ export default {
     components: {
         MainCheckbox,
     },
-    props: {
-        name: String,
-        text: String,
-        val: String,
-    },
+    props: ["name", "text", "val"],
     data() {
         return {
             value: this.val,
@@ -54,6 +50,11 @@ export default {
     },
     beforeUpdate() {
         if (this.value === "..." || this.value === null) {
+            this.value = this.val;
+        }
+    },
+    mounted() {
+        if (this.val === "..." || this.val === null) {
             this.value = this.val;
         }
     },

@@ -8,9 +8,6 @@
         >
             {{ error }}
         </div>
-        <div class="hint_item" v-hide="this.message !== null">
-            {{ this.message }}
-        </div>
     </div>
     <div class="settings" ref="page">
         <div class="settings__container">
@@ -163,13 +160,6 @@ export default {
         BlueButton,
         SettingsBlock,
     },
-    computed: {
-        errs() {
-            let errs = this.errors || {};
-            errs = Object.values(errs).filter((el) => el !== "");
-            return errs;
-        },
-    },
     props: ["errors", "message", "user", "auth_user"],
     setup() {
         // let resetForm = useForm({
@@ -210,14 +200,16 @@ export default {
         }
         async function get_sms() {
             axios.get(route("get_sms")).then((res) => {
-                sms.value = res.data;
+                res.data === 0 ? (sms.value = false) : (sms.value = true);
             });
         }
         async function get_2fac() {
             axios.get(route("get_fac")).then((res) => {
-                fac.value = res.data;
+                res.data === 0 ? (fac.value = false) : (fac.value = true);
+                console.log(res.data);
             });
         }
+
         get_login();
         get_email();
         get_phone();
@@ -251,17 +243,26 @@ export default {
             ],
         };
     },
+    computed: {
+        errs() {
+            let errs = this.errors || {};
+            errs = Object.values(errs).filter((el) => el !== "");
+            return errs;
+        },
+    },
     methods: {
         remove_checkboxes(data) {
             this.$refs.wrap.querySelectorAll("[data-remove]").forEach((el) => {
                 if (data) {
                     el.style.visibility = "hidden";
-                    el.style.transition = "all 0.3s ease 0.3s, display 0.3s ease 0.3s";
+                    el.style.transition =
+                        "all 0.3s ease 0.3s, display 0.3s ease 0.3s";
                     el.style.opacity = 0;
                     el.style.display = "none";
                 } else {
                     el.style.display = "flex";
-                    el.style.transition = "all 0.3s ease 0s, display 0.3s ease 0.3s";
+                    el.style.transition =
+                        "all 0.3s ease 0s, display 0.3s ease 0.3s";
                     el.style.visibility = "visible";
                     el.style.opacity = 1;
                 }

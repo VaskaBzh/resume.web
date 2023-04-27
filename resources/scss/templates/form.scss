@@ -123,8 +123,23 @@
         @media (max-width: $mobileExtraSmall) {
             width: 310px;
         }
+        span {
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 26px;
+            @media (max-width: $mobileSmall) {
+                font-size: 14px;
+                line-height: 17px;
+            }
+        }
         svg {
             fill: #ff0000;
+            width: 25px;
+            height: 25px;
+            min-width: 25px;
+        }
+        div {
+            max-width: 310px;
         }
     }
     &_column {

@@ -1,6 +1,6 @@
 <template>
-    <div class="profile" v-scroll="'opacity'" :data-key="this.accountInfo.id">
-        <div class="profile__head" ref="profileHead">
+    <div class="profile" v-scroll="'opacity'" :data-key="accountInfo.id">
+        <div class="profile__head">
             <!--            <img-->
             <!--                :src="-->
             <!--                    'http://127.0.0.1:5173' +-->
@@ -10,10 +10,29 @@
             <!--                class="profile__icon"-->
             <!--                alt="profile__icon"-->
             <!--            />-->
-            <span class="profile__name" @click="this.chageActive">{{
-                this.accountInfo.name
+            <span class="profile__name" v-show="!edit" @click="chageActive">{{
+                accountInfo.name
             }}</span>
-            <Link :href="route('settings')">
+            <div class="form_row" v-show="edit">
+                <input
+                    v-model="account.name"
+                    type="text"
+                    class="input input-no-bg"
+                />
+                <svg
+                    @click="saveName"
+                    width="1328"
+                    height="1346"
+                    viewBox="0 0 1328 1346"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        d="M1067.24 297.129L498.126 873.965L260.759 633.379C239.14 611.466 204.14 611.466 182.576 633.379C161.013 655.291 160.957 690.765 182.576 712.621L459.035 992.83C480.654 1014.74 515.653 1014.74 537.217 992.83L1145.43 376.371C1167.04 354.459 1167.04 318.985 1145.43 297.129C1123.81 275.272 1088.81 275.216 1067.24 297.129Z"
+                    />
+                </svg>
+            </div>
+            <div class="profile__settings">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -34,7 +53,41 @@
                         stroke-linejoin="round"
                     />
                 </svg>
-            </Link>
+                <div class="profile__menu">
+                    <div class="profile__menu_elem" @click="editName">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M22 7.24002C22.0008 7.10841 21.9756 6.97795 21.9258 6.85611C21.876 6.73427 21.8027 6.62346 21.71 6.53002L17.47 2.29002C17.3766 2.19734 17.2658 2.12401 17.1439 2.07425C17.0221 2.02448 16.8916 1.99926 16.76 2.00002C16.6284 1.99926 16.4979 2.02448 16.3761 2.07425C16.2543 2.12401 16.1435 2.19734 16.05 2.29002L13.22 5.12002L2.29002 16.05C2.19734 16.1435 2.12401 16.2543 2.07425 16.3761C2.02448 16.4979 1.99926 16.6284 2.00002 16.76V21C2.00002 21.2652 2.10537 21.5196 2.29291 21.7071C2.48045 21.8947 2.7348 22 3.00002 22H7.24002C7.37994 22.0076 7.51991 21.9857 7.65084 21.9358C7.78176 21.8858 7.90073 21.8089 8.00002 21.71L18.87 10.78L21.71 8.00002C21.8013 7.9031 21.8757 7.79155 21.93 7.67002C21.9397 7.59031 21.9397 7.50973 21.93 7.43002C21.9347 7.38347 21.9347 7.33657 21.93 7.29002L22 7.24002ZM6.83002 20H4.00002V17.17L13.93 7.24002L16.76 10.07L6.83002 20ZM18.17 8.66002L15.34 5.83002L16.76 4.42002L19.58 7.24002L18.17 8.66002Z"
+                            />
+                        </svg>
+                        Изменить название
+                    </div>
+                    <div @click="getWallets" class="profile__menu_elem">
+                        <svg
+                            class="stroke"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M16.4998 14.1502H16.5088M18.999 4.00098H6.19902C5.07892 4.00098 4.51887 4.00098 4.09104 4.21896C3.71472 4.41071 3.40876 4.71667 3.21701 5.093C2.99902 5.52082 2.99902 6.08087 2.99902 7.20098V16.801C2.99902 17.9211 2.99902 18.4811 3.21701 18.909C3.40876 19.2853 3.71472 19.5912 4.09104 19.783C4.51887 20.001 5.07892 20.001 6.19902 20.001H17.799C18.9191 20.001 19.4792 20.001 19.907 19.783C20.2833 19.5912 20.5893 19.2853 20.781 18.909C20.999 18.4811 20.999 17.9211 20.999 16.801V11.201C20.999 10.0809 20.999 9.52082 20.781 9.093C20.5893 8.71667 20.2833 8.41071 19.907 8.21896C19.4792 8.00098 18.9191 8.00098 17.799 8.00098H6.99902M16.9498 14.1502C16.9498 14.3987 16.7483 14.6002 16.4998 14.6002C16.2513 14.6002 16.0498 14.3987 16.0498 14.1502C16.0498 13.9017 16.2513 13.7002 16.4998 13.7002C16.7483 13.7002 16.9498 13.9017 16.9498 14.1502Z"
+                                stroke-width="2"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                        Привязанные кошельки
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="profile__body">
             <div class="profile__body-block">
@@ -69,8 +122,7 @@
     </div>
 </template>
 <script>
-import { Link, router } from "@inertiajs/vue3";
-import { mapGetters } from "vuex";
+import {Link, router, useForm} from "@inertiajs/vue3";
 export default {
     emits: ["changeActive", "click"],
     components: {
@@ -83,6 +135,7 @@ export default {
     data() {
         return {
             account: this.accountInfo,
+            edit: false,
         };
     },
     methods: {
@@ -91,6 +144,22 @@ export default {
         },
         chageActive() {
             this.$emit("changeActive", this.accountInfo.id);
+        },
+        editName() {
+            this.edit = !this.edit;
+        },
+        saveName() {
+            this.editName();
+            let form = useForm({
+                group_name: this.account.name,
+                group_id: String(this.account.id),
+            });
+            // Раскомментить и пофиксить
+            // form.put("/change_sub");
+        },
+        getWallets() {
+            this.$store.commit("updateActive", this.accountInfo.id);
+            router.visit("/profile/wallets");
         },
     },
     computed: {
@@ -138,53 +207,13 @@ export default {
         svg {
             stroke: #ffffff;
         }
-    }
-    &__head {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        margin-bottom: 16px;
-        @media (max-width: 479.98px) {
-            margin-bottom: 40px;
+        .form_row {
+            height: auto;
+            width: 100%;
             position: relative;
-            &:before {
-                content: "";
-                position: absolute;
-                bottom: -20px;
-                left: 0;
-                width: 100%;
-                height: 1px;
-                background-color: #d7d8d9;
+            svg {
+                fill: #fff;
             }
-        }
-    }
-    &__icon {
-        width: 64px;
-        height: 64px;
-        margin-right: 16px;
-        cursor: pointer;
-        @media (max-width: 479.98px) {
-            width: 36px;
-            height: 36px;
-            margin-right: 20px;
-        }
-    }
-    &__name {
-        margin-right: auto;
-        font-size: 24px;
-        line-height: 30px;
-        font-family: AmpleSoftPro, serif;
-        font-weight: 700;
-        text-decoration: underline;
-        text-decoration-color: transparent;
-        transition: all 0.3s ease 0s;
-        cursor: pointer;
-        @media (max-width: 479.98px) {
-            font-size: 15px;
-            line-height: 19px;
-        }
-        &:hover {
-            text-decoration-color: #331a38;
         }
     }
     svg {
@@ -201,6 +230,152 @@ export default {
             width: 24px;
             height: 24px;
             stroke: #4182ec;
+        }
+    }
+    &__settings {
+        position: relative;
+        &:hover {
+            .profile {
+                &__menu {
+                    transition: all 0.6s ease 0s;
+                    visibility: visible;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    .form_row {
+        height: auto;
+        width: 100%;
+        position: relative;
+        svg {
+            position: absolute;
+            right: 2px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 24px;
+            height: 24px;
+            fill: #4181ea;
+        }
+        .input {
+            color: #fff;
+            font-size: 24px;
+            line-height: 30px;
+            font-weight: 700;
+            min-height: 0;
+            font-family: AmpleSoftPro, serif;
+            height: auto;
+            border-bottom: 1px solid #fff !important;
+            padding-right: 32px;
+            @media (max-width: 479.98px) {
+                font-size: 15px;
+                line-height: 19px;
+            }
+        }
+    }
+    &__menu {
+        transition: all 0.6s ease 0.6s;
+        min-width: 257px;
+        max-width: 257px;
+        position: absolute;
+        top: calc(100% + 16px);
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        background: #ffffff;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        border-radius: 20px;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        border: 1px solid #fff;
+        &_elem {
+            width: 100%;
+            min-height: 48px;
+            display: flex;
+            gap: 12px;
+            font-size: 17px;
+            line-height: 143.1%;
+            color: #616161;
+            transition: all 0.6s ease 0s;
+            background: #ffffff;
+            align-items: center;
+            padding: 6px 12px;
+            cursor: pointer;
+            border-bottom: 1px solid transparent;
+            &:not(:last-child) {
+                border-bottom: 1px solid rgba(214, 214, 214, 0.3);
+            }
+            svg {
+                width: 24px;
+                height: 24px;
+                fill: transparent !important;
+                stroke: transparent !important;
+            }
+            svg:not(.stroke) {
+                fill: #99acd3 !important;
+            }
+            svg.stroke {
+                stroke: #99acd3 !important;
+            }
+            &:hover {
+                background: #331a38;
+                color: #fff;
+                svg:not(.stroke) {
+                    fill: #fff !important;
+                }
+                svg.stroke {
+                    stroke: #fff !important;
+                }
+            }
+        }
+    }
+    &__head {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+        @media (max-width: 479.98px) {
+            margin-bottom: 40px;
+            position: relative;
+            &:before {
+                content: "";
+                position: absolute;
+                bottom: -20px;
+                left: 0;
+                width: 100%;
+                height: 1px;
+                background-color: #d7d8d9;
+            }
+        }
+    }
+    //&__icon {
+    //    width: 64px;
+    //    height: 64px;
+    //    margin-right: 16px;
+    //    cursor: pointer;
+    //    @media (max-width: 479.98px) {
+    //        width: 36px;
+    //        height: 36px;
+    //        margin-right: 20px;
+    //    }
+    //}
+    &__name {
+        font-size: 24px;
+        line-height: 30px;
+        font-family: AmpleSoftPro, serif;
+        font-weight: 700;
+        text-decoration: underline;
+        text-decoration-color: transparent;
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        border: 1px solid transparent;
+        @media (max-width: 479.98px) {
+            font-size: 15px;
+            line-height: 19px;
+        }
+        &:hover {
+            text-decoration-color: #331a38;
         }
     }
     &__body {

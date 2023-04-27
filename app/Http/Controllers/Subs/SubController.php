@@ -16,7 +16,10 @@ class SubController extends Controller
         // Валидация входных данных
         $request->validate([
             'group_id' => 'required|string',
-            "group_name" => 'required|string|min:3',
+            "group_name" => 'required|string|min:3|max:16',
+        ], [
+            "group_name.max" => "Максимальное количество символов 16.",
+            "group_name.min" => "Минимальное количество символов 3.",
         ]);
 
         if ($request->input('user_id')) {
@@ -53,5 +56,24 @@ class SubController extends Controller
     public function visual()
     {
         return Sub::all()->where('user_id', Auth::user()->id);
+    }
+
+    public function change_name(Request $request)
+    {
+        // Валидация входных данных
+        $request->validate([
+            'group_id' => 'required|string',
+            "group_name" => 'required|string|min:3|max:16',
+        ], [
+            "group_name.max" => "Максимальное количество символов 16.",
+            "group_name.min" => "Минимальное количество символов 3.",
+        ]);
+
+        $sub = Sub::all()->firstWhere('group_id', $request->input("group_id"));
+
+        $sub->sub = $request->input("group_name");
+        $sub->save();
+
+        return back()->with("message", "Имя сабаккаунта успешно изменено");
     }
 }
