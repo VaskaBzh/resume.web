@@ -74,16 +74,23 @@ class RegisterController extends Controller
 
         $requestController = new RequestController();
 
-        $response = json_decode($requestController->proxy($data,"groups/create")->getContent());
+        try {
+            $response = json_decode($requestController->proxy($data,"groups/create")->getContent());
 
-        $subController = new SubController();
-        $data['group_id'] = strval($response->data->gid);
-        $data['user_id'] = $user->id;
+            $subController = new SubController();
+            $data['group_id'] = strval($response->data->gid);
+            $data['user_id'] = $user->id;
 
-        $subController->create(new Request($data));
+            $subController->create(new Request($data));
+
+            $message = 'Пользователь успешно создан! Подтвердите почту.';
+        } catch (Exception $e) {
+            // Обработка ошибок
+            $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
+        }
 
         return back()->with([
-            'message' => 'Пользователь успешно создан! Подтвердите почту.',
+            'message' => $message,
         ]);
     }
 

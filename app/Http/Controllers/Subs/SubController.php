@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Subs;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -69,11 +70,28 @@ class SubController extends Controller
             "group_name.min" => "Минимальное количество символов 3.",
         ]);
 
-        $sub = Sub::all()->firstWhere('group_id', $request->input("group_id"));
+        $requestController = new RequestController();
 
-        $sub->sub = $request->input("group_name");
-        $sub->save();
+        try {
+            $response = json_decode($requestController->proxy($request->all(),"groups/update/" . $request->input("group_id"))->getContent());
 
-        return back()->with("message", "Имя сабаккаунта успешно изменено");
+            if ($response->data->msg === 'Success') {
+                // Обработка успешного обновления
+                $sub = Sub::all()->firstWhere('group_id', $request->input("group_id"));
+
+                $message = 'Имя сабаккаунта успешно изменено';
+
+                $sub->sub = $request->input("group_name");
+                $sub->save();
+            } else {
+                // Обработка ошибок, возвращаемых API
+                $message = 'Произошла ошибка при смене имени сабаккаунта. Пожалуйста, попробуйте снова';
+            }
+        } catch (Exception $e) {
+            // Обработка ошибок
+            $message = 'Произошла ошибка при смене имени сабаккаунта. Пожалуйста, попробуйте снова';
+        }
+
+        return back()->with("message", $message);
     }
 }

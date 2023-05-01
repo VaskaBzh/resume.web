@@ -228,6 +228,7 @@ export default {
     display: flex;
     gap: 16px;
     align-items: center;
+    white-space: nowrap;
 
     &.active {
         color: #4182ec;

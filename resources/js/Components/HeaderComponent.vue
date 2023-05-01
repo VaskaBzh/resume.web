@@ -486,6 +486,10 @@ export default defineComponent({
         Swiper,
         // eslint-disable-next-line vue/no-unused-components
         SwiperSlide,
+        // eslint-disable-next-line vue/no-unused-components
+        Swiper,
+        // eslint-disable-next-line vue/no-unused-components
+        SwiperSlide,
     },
     data() {
         return {

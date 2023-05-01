@@ -11,7 +11,7 @@
             <!--                alt="profile__icon"-->
             <!--            />-->
             <span class="profile__name" v-show="!edit" @click="chageActive">{{
-                accountInfo.name
+                account.name
             }}</span>
             <div class="form_row" v-show="edit">
                 <input
@@ -122,7 +122,7 @@
     </div>
 </template>
 <script>
-import {Link, router, useForm} from "@inertiajs/vue3";
+import { Link, router, useForm } from "@inertiajs/vue3";
 export default {
     emits: ["changeActive", "click"],
     components: {
@@ -131,10 +131,12 @@ export default {
     props: {
         accountInfo: Object,
         profit: Object,
+        errors: Array,
     },
     data() {
         return {
             account: this.accountInfo,
+            savedName: this.accountInfo.name,
             edit: false,
         };
     },
@@ -153,9 +155,16 @@ export default {
             let form = useForm({
                 group_name: this.account.name,
                 group_id: String(this.account.id),
+                puid: "781195",
             });
-            // Раскомментить и пофиксить
-            // form.put("/change_sub");
+
+            form.put("/sub_change", {
+                onFinish: () => {
+                    this.errors?.length === 0
+                        ? this.$store.dispatch("getAccounts")
+                        : (this.account.name = this.savedName);
+                },
+            });
         },
         getWallets() {
             this.$store.commit("updateActive", this.accountInfo.id);

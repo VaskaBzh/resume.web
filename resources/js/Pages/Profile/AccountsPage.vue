@@ -1,6 +1,16 @@
 <template>
     <Head title="Аккаунты" />
     <div class="hidden">{{ this.getActive }}</div>
+    <div class="hint">
+        <div
+            class="hint_item"
+            v-for="(error, i) in this.errs"
+            :key="i"
+            v-hide="this.errs.length !== 0"
+        >
+            {{ error }}
+        </div>
+    </div>
     <div class="accounts">
         <div class="accounts__wrapper">
             <main-title tag="h2" class="accounts__title">
@@ -36,6 +46,7 @@
                     :accKey="i"
                     :accountInfo="account"
                     :profit="this.profit"
+                    :errors="this.errs"
                     @changeActive="this.activeChanger"
                 />
             </div>
@@ -119,6 +130,11 @@ export default {
             "getActive",
             "btcInfo",
         ]),
+        errs() {
+            let obj = this.$page.props.errors;
+            obj = Object.values(obj).filter((err) => err !== "");
+            return obj;
+        },
     },
     methods: {
         getForcast() {
@@ -199,12 +215,15 @@ export default {
                                         "groups/create?access_key=sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N&puid=781195",
                                         data
                                     )
-                                    .then((resp) => {
+                                    .then(async (resp) => {
                                         data.group_id = String(
                                             resp.data.data.gid
                                         );
                                         // eslint-disable-next-line no-undef
-                                        axios.put(route("sub_create"), data);
+                                        await axios.post(
+                                            route("sub_create"),
+                                            data
+                                        );
                                         window.location.reload();
                                     })
                                     .catch((err) => {

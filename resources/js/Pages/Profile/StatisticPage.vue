@@ -83,117 +83,45 @@
                         :iconFirst="1"
                         :iconSecond="1"
                     />
-                    <payment-card
-                        :BTCValueFirst="this.earn"
-                        :BTCValueSecond="0"
-                        titleFirst="Сумма к выплате"
-                        titleSecond="Всего выплачено"
-                        :iconFirst="2"
-                        :iconSecond="2"
-                    />
+                    <account-profile-swiper
+                        v-if="Object.values(this.allAccounts).length > 0"
+                    ></account-profile-swiper>
+                    <!--                    <payment-card-->
+                    <!--                        :BTCValueFirst="this.earn"-->
+                    <!--                        :BTCValueSecond="0"-->
+                    <!--                        titleFirst="Сумма к выплате"-->
+                    <!--                        titleSecond="Всего выплачено"-->
+                    <!--                        :iconFirst="2"-->
+                    <!--                        :iconSecond="2"-->
+                    <!--                    />-->
+                    <!--                    <swiper-->
+                    <!--                        class="wrap__swiper"-->
+                    <!--                        v-if="Object.values(this.allAccounts).length > 0"-->
+                    <!--                        :modules="modules"-->
+                    <!--                        :slides-per-view="1"-->
+                    <!--                        :space-between="15"-->
+                    <!--                        :pagination="pagination"-->
+                    <!--                        :allowSlideNext="false"-->
+                    <!--                        :allowTouchMove="false"-->
+                    <!--                        autoHeight-->
+                    <!--                        @swiper="this.swiper_init"-->
+                    <!--                    >-->
+                    <!--                        <swiper-slide>-->
+                    <!--                            <account-profile-swiper-->
+                    <!--                                v-for="(account, i) in this.allAccounts"-->
+                    <!--                                :key="i"-->
+                    <!--                                :accKey="i"-->
+                    <!--                                :accountInfo="account"-->
+                    <!--                                :profit="this.profit"-->
+                    <!--                                @changeActive="this.activeChanger"-->
+                    <!--                            />-->
+                    <!--                        </swiper-slide>-->
+                    <!--                    </swiper>-->
+                    <div class="wrap__column no-info" v-else>
+                        <div class="propeller"></div>
+                    </div>
                 </div>
             </div>
-            <!--            <div-->
-            <!--                class="wrap wrap-no-padding wrap-modify wrap-modify-reverse-mini"-->
-            <!--            >-->
-            <!--                <div class="wrap__head wrap__head-graph">-->
-            <!--                    <main-title tag="h3" class="statistic__wrap_title">-->
-            <!--                        Подключение и аккаунты-->
-            <!--                    </main-title>-->
-            <!--                </div>-->
-            <!--                <div class="wrap__block">-->
-            <!--                    <div class="connecting__block">-->
-            <!--                        <div class="connecting__row connecting__row-copy">-->
-            <!--                            Port:-->
-            <!--                            <div-->
-            <!--                                class="connecting__block-copy copy"-->
-            <!--                                ref="linkAddress"-->
-            <!--                            >-->
-            <!--                                {{ this.linkAddress }}-->
-            <!--                                <svg-->
-            <!--                                    class="copy-button"-->
-            <!--                                    @click="this.copyLink(1)"-->
-            <!--                                    xmlns="http://www.w3.org/2000/svg"-->
-            <!--                                    width="24"-->
-            <!--                                    height="24"-->
-            <!--                                    viewBox="0 0 24 24"-->
-            <!--                                    fill="none"-->
-            <!--                                >-->
-            <!--                                    <path-->
-            <!--                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"-->
-            <!--                                        stroke-width="2"-->
-            <!--                                        stroke-linejoin="round"-->
-            <!--                                    />-->
-            <!--                                </svg>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                        <div class="connecting__row connecting__row-copy">-->
-            <!--                            Port 1:-->
-            <!--                            <div-->
-            <!--                                class="connecting__block-copy copy"-->
-            <!--                                ref="linkAddress1"-->
-            <!--                            >-->
-            <!--                                {{ this.linkAddress1 }}-->
-            <!--                                <svg-->
-            <!--                                    class="copy-button"-->
-            <!--                                    @click="this.copyLink(2)"-->
-            <!--                                    xmlns="http://www.w3.org/2000/svg"-->
-            <!--                                    width="24"-->
-            <!--                                    height="24"-->
-            <!--                                    viewBox="0 0 24 24"-->
-            <!--                                    fill="none"-->
-            <!--                                >-->
-            <!--                                    <path-->
-            <!--                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"-->
-            <!--                                        stroke-width="2"-->
-            <!--                                        stroke-linejoin="round"-->
-            <!--                                    />-->
-            <!--                                </svg>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                        <div class="connecting__row connecting__row-copy">-->
-            <!--                            Port 2:-->
-            <!--                            <div-->
-            <!--                                class="connecting__block-copy copy"-->
-            <!--                                ref="linkAddress2"-->
-            <!--                            >-->
-            <!--                                {{ this.linkAddress2 }}-->
-            <!--                                <svg-->
-            <!--                                    class="copy-button"-->
-            <!--                                    @click="this.copyLink(3)"-->
-            <!--                                    xmlns="http://www.w3.org/2000/svg"-->
-            <!--                                    width="24"-->
-            <!--                                    height="24"-->
-            <!--                                    viewBox="0 0 24 24"-->
-            <!--                                    fill="none"-->
-            <!--                                >-->
-            <!--                                    <path-->
-            <!--                                        d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"-->
-            <!--                                        stroke-width="2"-->
-            <!--                                        stroke-linejoin="round"-->
-            <!--                                    />-->
-            <!--                                </svg>-->
-            <!--                            </div>-->
-            <!--                        </div>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--                <div-->
-            <!--                    class="wrap__block wrap__block-no-bg"-->
-            <!--                    v-if="Object.values(this.allAccounts).length > 0"-->
-            <!--                >-->
-            <!--                    <account-profile-mini-->
-            <!--                        v-for="(account, i) in this.allAccounts"-->
-            <!--                        :key="i"-->
-            <!--                        :accKey="i"-->
-            <!--                        :accountInfo="account"-->
-            <!--                        :profit="this.profit"-->
-            <!--                        @changeActive="this.activeChanger"-->
-            <!--                    />-->
-            <!--                </div>-->
-            <!--                <div class="wrap__block no-info" v-else>-->
-            <!--                    <div class="propeller"></div>-->
-            <!--                </div>-->
-            <!--            </div>-->
         </div>
     </div>
 </template>
@@ -204,13 +132,15 @@ import StatisticChart from "@/Components/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
-import AccountProfileMini from "@/Components/account/AccountProfileMini.vue";
+import AccountProfileSwiper from "@/Components/account/AccountProfileSwiper.vue";
 import Vue from "lodash";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Pagination } from "swiper";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
     components: {
-        AccountProfileMini,
+        AccountProfileSwiper,
         StatisticChart,
         MainTitle,
         PaymentCard,
@@ -326,48 +256,33 @@ export default {
         ]),
     },
     methods: {
-        activeMount() {
-            document.querySelectorAll(".profile").forEach((profile) => {
-                profile.classList.remove("active");
-                if (profile.dataset.key == this.getActive) {
-                    profile.classList.add("active");
-                }
-            });
-        },
-        activeChanger(el) {
-            this.$store.commit("updateActive", el);
-            setTimeout(this.activeMount, 300);
-        },
-        async startMount(index) {
-            this.activeChanger(index);
-        },
-        getForcast() {
-            if (this.btcInfo) {
-                let val = 0;
-                Object.values(this.allAccounts).forEach((el, i) => {
-                    if (el.shares1d > 0) {
-                        val =
-                            (el.shares1d *
-                                Math.pow(10, 12) *
-                                86400 *
-                                this.btcInfo.btc.reward) /
-                            (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    } else if (el.shares1m > 0) {
-                        val =
-                            (el.shares1m *
-                                Math.pow(10, 12) *
-                                86400 *
-                                this.btcInfo.btc.reward) /
-                            (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    }
-                    Vue.set(
-                        this.profit,
-                        Object.keys(this.allAccounts)[i],
-                        val * 3.5 * 1.75
-                    );
-                });
-            }
-        },
+        // getForcast() {
+        //     if (this.btcInfo) {
+        //         let val = 0;
+        //         Object.values(this.allAccounts).forEach((el, i) => {
+        //             if (el.shares1d > 0) {
+        //                 val =
+        //                     (el.shares1d *
+        //                         Math.pow(10, 12) *
+        //                         86400 *
+        //                         this.btcInfo.btc.reward) /
+        //                     (this.btcInfo.btc.diff * Math.pow(2, 32));
+        //             } else if (el.shares1m > 0) {
+        //                 val =
+        //                     (el.shares1m *
+        //                         Math.pow(10, 12) *
+        //                         86400 *
+        //                         this.btcInfo.btc.reward) /
+        //                     (this.btcInfo.btc.diff * Math.pow(2, 32));
+        //             }
+        //             Vue.set(
+        //                 this.profit,
+        //                 Object.keys(this.allAccounts)[i],
+        //                 val * 3.5 * 1.75
+        //             );
+        //         });
+        //     }
+        // },
         changeId() {
             if (this.id === 0) {
                 this.id = 1;
@@ -437,15 +352,13 @@ export default {
     mounted() {
         document.title = "Статистика";
         if (this.allHistory[this.getActive]) {
-            this.activeMount();
-            this.getForcast();
+            // this.getForcast();
             this.renderChart();
         }
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
-            this.startMount(this.getActive);
-            this.getForcast();
+            // this.getForcast();
             this.renderChart();
         }
     },
@@ -655,6 +568,16 @@ export default {
         width: 100%;
         grid-template-columns: repeat(2, 1fr);
         gap: 32px;
+        .no-info {
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .swiper {
+            padding: 4px 4px 6px !important;
+            background: rgba(255, 255, 255, 0.3);
+        }
         @media (max-width: 767.98px) {
             grid-template-columns: 1fr;
             gap: 8px;

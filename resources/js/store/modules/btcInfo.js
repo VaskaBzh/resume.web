@@ -7,6 +7,9 @@ export default {
         destroyer({ commit }) {
             commit("destroy");
         },
+        getMessage({ commit, state }, message) {
+            commit("setMessage", message)
+        },
         getAllIncome({ commit, state }, group) {
             let income = {
                 payments: 0,

@@ -37,7 +37,6 @@ Route::controller(HashController::class)->group(function () {
 
 Route::controller(SubController::class)->group(function () {
     Route::post('/sub_create', 'create')->name('sub_create');
-    Route::put('/change_sub', 'change_name')->name('change_sub');
 });
 Route::controller(SendMessageConroller::class)->group(function () {
     Route::post('/send_message', 'send_message')->name('send_message');
@@ -55,6 +54,8 @@ Route::controller(RegisterController::class)->group(function () {
     Route::post("/user_get", "getter")->name('user_get');
     Route::post("/get_name", "getName")->name('get_name');
 });
+
+Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->name('verification.verify');
 
 Route::controller(LoginController::class)->group(function () {
     Route::post("/reverify", "verify")->name('reverify');
@@ -74,8 +75,6 @@ Route::controller(RequestController::class)
         Route::post('/worker_update', 'worker_update')->name('worker_update');
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
-
-Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->name('verification.verify');
 
 Route::middleware('verified')->group(function () {
     Route::controller(IndexController::class)->group(function () {
@@ -108,6 +107,7 @@ Route::middleware('verified')->group(function () {
     });
     Route::controller(SubController::class)->group(function () {
         Route::get('/sub_process', 'visual')->name('sub_process');
+        Route::put('/sub_change', 'change_name')->name('sub_change');
         Route::get('/sub_strong_delete', 'delete')->name('sub_strong_delete');
         Route::put('/sub_delete', 'remove')->name('sub_delete');
     });
