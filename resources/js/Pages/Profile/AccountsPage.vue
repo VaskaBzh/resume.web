@@ -77,7 +77,7 @@
                 @submit.prevent="this.addAcc"
                 class="form form-popup popup__form"
             >
-                <main-title tag="h3" title-name="Задайте имя сабаккаунта" />
+                <main-title tag="h3" title-name="Задайте имя субаккаунта" />
                 <input
                     v-model="form.name"
                     required

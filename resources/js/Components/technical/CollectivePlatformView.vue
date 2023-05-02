@@ -24,7 +24,7 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Безопасный и прозрачный
+                            Безопасность и прозрачность
                         </div>
                         <div class="platform-c__item_text">
                             Хешрейт отображается в режиме реального времени,
@@ -198,7 +198,7 @@ export default {
         font-family: "AmpleSoftPro";
         font-style: normal;
         font-weight: 500;
-        font-size: 36px;
+        font-size: 40px;
         line-height: 132.6%;
         text-align: center;
         color: #000034;
@@ -250,6 +250,11 @@ export default {
             color: #000034;
             margin-bottom: 24px;
             align-self: start;
+            text-align: center;
+            width: 100%;
+            @media (min-width: 1270.98px) {
+                white-space: nowrap;
+            }
             @media (max-width: 991.98px) {
                 align-self: center;
                 text-align: center;
@@ -267,6 +272,7 @@ export default {
             font-size: 16px;
             line-height: 148.1%;
             color: rgba(0, 0, 0, 0.62);
+            text-align: center;
             @media (max-width: 991.98px) {
                 text-align: center;
             }

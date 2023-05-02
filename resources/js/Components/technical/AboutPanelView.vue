@@ -7,8 +7,7 @@
                         Удобная панель управления
                     </div>
                     <div class="panel-am__text" v-scroll="'left delay--lg'">
-                        Панель управления весьма удобна и обеспечивает отличную
-                        детализацию с регулярными обновлениями.
+                        Ваш персональный помощник в мире майнинга криптовалют! Присоединитесь к майнинг-пулу и получите доступ к интуитивно понятной и мощной платформе для управления вашими активами.
                     </div>
                 </div>
                 <img
@@ -93,7 +92,7 @@ export default {
         font-family: "AmpleSoftPro";
         font-style: normal;
         font-weight: 500;
-        font-size: 36px;
+        font-size: 40px;
         line-height: 132.6%;
         color: #000034;
         margin-bottom: 24px;

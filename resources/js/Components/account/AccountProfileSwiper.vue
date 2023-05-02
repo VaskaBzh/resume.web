@@ -117,7 +117,7 @@ export default {
             });
         },
         async startMount(index) {
-            this.activeChanger(index);
+            this.changeActive(index);
         },
         router() {
             return router;
@@ -185,33 +185,33 @@ export default {
         background: rgba(255, 255, 255, 0.29);
         border: 0.5px solid #d7d8d9;
     }
-    &.active {
-        border-color: rgba(#331a38, 0.5);
-        background: #331a38;
-        .profile {
-            &__name {
-                color: #ffffff;
-                &:hover {
-                    text-decoration-color: #fff;
-                }
-            }
-            @media (min-width: 479.98px) {
-                &__body {
-                    &-name,
-                    &-value {
-                        color: #fff;
-                        span {
-                            color: #fff;
-                            width: 100px;
-                        }
-                    }
-                }
-            }
-        }
-        svg {
-            stroke: #ffffff;
-        }
-    }
+    //&.active {
+    //    border-color: rgba(#331a38, 0.5);
+    //    background: #331a38;
+    //    .profile {
+    //        &__name {
+    //            color: #ffffff;
+    //            &:hover {
+    //                text-decoration-color: #fff;
+    //            }
+    //        }
+    //        @media (min-width: 479.98px) {
+    //            &__body {
+    //                &-name,
+    //                &-value {
+    //                    color: #fff;
+    //                    span {
+    //                        color: #fff;
+    //                        width: 100px;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //    svg {
+    //        stroke: #ffffff;
+    //    }
+    //}
     &__head {
         display: flex;
         justify-content: flex-start;

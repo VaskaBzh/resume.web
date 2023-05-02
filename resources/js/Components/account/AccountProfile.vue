@@ -213,24 +213,43 @@ export default {
 .profile {
     width: 100%;
     padding: 16px;
-    border: 1px solid;
-    border-color: transparent;
-    transition: all 0.3s ease 0s;
+    transition: all 0.7s ease 0s;
     background: rgba(255, 255, 255, 0.3);
     border-radius: 21px;
+    position: relative;
+    filter: drop-shadow(0px 8px 24px rgba(129, 135, 189, 0.15));
+    backdrop-filter: blur(5px);
+    -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 10%);
     @media (max-width: 479.98px) {
-        width: calc(100% + 40px);
-        margin: 0 -20px;
+        //width: calc(100% + 40px);
+        //margin: 0 -20px;
         border-radius: 12px;
         padding: 20px;
     }
-    &.active {
+    &:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        transition: all 0.7s ease 0s;
+        height: 100%;
+        z-index: 0;
+        opacity: 0;
+        visibility: hidden;
         background: radial-gradient(
-                66.49% 172.2% at 2.47% 5.67%,
-                rgba(65, 130, 236, 0.76) 0%,
-                #4182ec 100%
-            )
-            /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */;
+            66.49% 172.2% at 2.47% 5.67%,
+            rgba(65, 130, 236, 0.76) 0%,
+            #4182ec 100%
+        );
+        border-radius: 21px;
+    }
+    &.active {
+        -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 20%);
+        &:before {
+            visibility: visible;
+            opacity: 1;
+        }
         .profile {
             &__name {
                 color: #ffffff;
@@ -239,12 +258,14 @@ export default {
                 }
             }
             &__body {
-                background: linear-gradient(
-                    113.15deg,
-                    rgba(255, 255, 255, 0.2) 31.75%,
-                    rgba(255, 255, 255, 0) 121.06%
-                );
-                backdrop-filter: blur(5px);
+                background-color: transparent;
+                &-block {
+                    background: transparent;
+                }
+                &:before {
+                    visibility: visible;
+                    opacity: 1;
+                }
                 &-name,
                 &-value {
                     color: #fff;
@@ -272,10 +293,6 @@ export default {
         height: 24px;
         cursor: pointer;
         transition: all 0.3s ease 0s;
-        &:hover,
-        &:active {
-            stroke: #99acd3;
-        }
         @media (max-width: 479.98px) {
             width: 24px;
             height: 24px;
@@ -371,18 +388,7 @@ export default {
                 stroke: #417fe5 !important;
             }
             &:hover {
-                background: radial-gradient(
-                    66.49% 172.2% at 2.47% 5.67%,
-                    rgba(65, 130, 236, 0.76) 0%,
-                    #4182ec 100%
-                );
-                color: #fff;
-                svg:not(.stroke) {
-                    fill: #fff !important;
-                }
-                svg.stroke {
-                    stroke: #fff !important;
-                }
+                background: rgba(208, 222, 242, 0.7);
             }
         }
     }
@@ -423,23 +429,45 @@ export default {
         font-weight: 700;
         text-decoration: underline;
         text-decoration-color: transparent;
-        transition: all 0.3s ease 0s;
+        transition: all 0.7s ease 0s;
         cursor: pointer;
+        z-index: 1;
         border: 1px solid transparent;
-        @media (max-width: 479.98px) {
-            font-size: 15px;
-            line-height: 19px;
-        }
+        //@media (max-width: 479.98px) {
+        //    font-size: 15px;
+        //    line-height: 19px;
+        //}
         &:hover {
             text-decoration-color: #331a38;
         }
     }
     &__body {
+        position: relative;
         padding: 24px 16px 0;
         display: flex;
         flex-wrap: wrap;
         background-color: #fff;
         border-radius: 21px;
+        transition: all 0.5s ease 0s;
+        &:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            opacity: 0;
+            visibility: hidden;
+            background: linear-gradient(
+                    113.15deg,
+                    rgba(255, 255, 255, 0.2) 31.75%,
+                    rgba(255, 255, 255, 0) 121.06%
+            );
+            transition: all 0.5s ease 0s;
+            backdrop-filter: blur(5px);
+            border-radius: 21px;
+        }
         @media (max-width: 479.98px) {
             flex-direction: column;
             gap: 6px;
@@ -452,6 +480,9 @@ export default {
             display: flex;
             flex-direction: column;
             margin: 0 auto 24px 0;
+            z-index: 1;
+            transition: all 0.5s ease 0s;
+
             &:nth-child(2n) {
                 margin-right: 0;
             }
@@ -469,6 +500,7 @@ export default {
             font-size: 16px;
             line-height: 23px;
             margin-bottom: 4px;
+            z-index: 1;
             @media (max-width: 479.98px) {
                 font-size: 14px;
                 line-height: 20px;
@@ -480,11 +512,13 @@ export default {
             font-size: 18px;
             line-height: 25px;
             font-weight: 500;
+            z-index: 1;
             span {
                 color: rgba(0, 0, 0, 0.62);
                 font-weight: 400;
                 font-size: 16px;
                 line-height: 23px;
+                z-index: 1;
             }
             @media (max-width: 479.98px) {
                 font-size: 16px;

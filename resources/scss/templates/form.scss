@@ -25,7 +25,7 @@
     }
     textarea {
         resize: none;
-        padding: calc((48px - 20px) / 2);
+        padding: 14px 20px;
         &::-webkit-scrollbar {
             width: 0;
         }

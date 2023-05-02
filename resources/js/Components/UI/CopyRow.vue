@@ -1,11 +1,10 @@
 <template>
-    <div class="copy">
+    <div class="copy" @click="this.copyLink">
         {{ this.copyObject.title }}:
         <div class="copy_row" ref="link">
             {{ this.copyObject.link }}
             <svg
                 class="copy-button"
-                @mousedown="this.copyLink"
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
                 height="24"
@@ -49,6 +48,7 @@ export default {
     line-height: 18px;
     color: rgba(0, 0, 0, 0.62);
     position: relative;
+    cursor: pointer;
     @media (max-width: 767.98px) {
         color: rgba(0, 0, 0, 0.62);
     }

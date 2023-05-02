@@ -57,17 +57,18 @@ class LoginController extends Controller
         if ($this->guard()->attempt($credentials, $request->filled('remember'))) {
             $user = $this->guard()->getLastAttempted();
 
-            if ($user->hasVerifiedEmail()) {
-                return true;
-            } else {
-                $this->guard()->logout();
-                $request->session()->invalidate();
-                $request->session()->regenerateToken();
-
-                throw ValidationException::withMessages([
-                    $this->username() => [trans('Ваша электронная почта еще не подтверждена. Подтвердите адрес.')],
-                ]);
-            }
+            return true;
+//            if ($user->hasVerifiedEmail()) {
+//                return true;
+//            } else {
+//                $this->guard()->logout();
+//                $request->session()->invalidate();
+//                $request->session()->regenerateToken();
+//
+//                throw ValidationException::withMessages([
+//                    $this->username() => [trans('Ваша электронная почта еще не подтверждена. Подтвердите адрес.')],
+//                ]);
+//            }
         }
 
         return false;

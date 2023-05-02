@@ -438,7 +438,7 @@ export default {
             &-graph {
                 grid-column-start: 1;
                 grid-column-end: 3;
-                @media (max-width: 778.98px) {
+                @media (max-width: 767.98px) {
                     grid-column-end: 2;
                 }
             }

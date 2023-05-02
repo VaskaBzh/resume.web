@@ -160,11 +160,11 @@ h6 {
                 padding: 0 calc($containerPadding / 2) + px;
             }
         }
-        @media (max-width: $mobileSmall) {
-            @if ($containerPadding>0 and $maxWidthContainer>0) {
-                padding: 0 calc($containerPadding / 2) + 5 + px;
-            }
-        }
+        //@media (max-width: $mobileSmall) {
+        //    @if ($containerPadding>0 and $maxWidthContainer>0) {
+        //        padding: 0 calc($containerPadding / 2) + 5 + px;
+        //    }
+        //}
     }
 }
 

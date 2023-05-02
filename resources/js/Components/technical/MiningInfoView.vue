@@ -74,8 +74,7 @@
                                 </div>
                             </div>
                             <div class="mining-im__item_text">
-                                Сервера находятся в одном из крупнейших
-                                датацентров в Европе.
+                                Инновационные решения и передовые технологии обеспечивают оптимальную производительность и стабильность работы вашего оборудования.
                             </div>
                         </li>
                         <li class="mining-im__item" v-scroll="'left'">
@@ -107,8 +106,7 @@
                                 </div>
                             </div>
                             <div class="mining-im__item_text">
-                                Сервера находятся в одном из крупнейших
-                                датацентров в Европе.
+                                Откройте новые горизонты эффективности по управлению рабочими процессами и мониторингу производительности.
                             </div>
                         </li>
                         <li class="mining-im__item" v-scroll="'left delay--md'">
@@ -283,7 +281,7 @@ export default {
     &__item {
         background: #ffffff;
         border-radius: 21px;
-        padding: 34px 45px;
+        padding: 32px 40px;
         @media (max-width: 767.98px) {
             padding: 26px 30px;
             border-radius: 10px;
@@ -292,7 +290,7 @@ export default {
         // .mining-im__item_top
         &_top {
             display: flex;
-            align-items: start;
+            align-items: center;
             gap: 15px;
             margin-bottom: 12px;
             @media (max-width: 1270px) {
