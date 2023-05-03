@@ -53,7 +53,7 @@ class UpdateIncomesCommand extends Command
                             'jsonrpc' => '1.0',
                             'id' => 'unlock',
                             'method' => 'walletpassphrase',
-                            'params' => ['111', 60], // Временно разблокирует кошелек на 60 секунд
+                            'params' => ['gloom ethics august sample fun submit slow humor seek canvas cannon crystal actress sadness parent smoke hurdle shine pull trip ghost', 60], // Временно разблокирует кошелек на 60 секунд
                         ]);
                     if ($unlock->successful()) {
                         $response = Http::withBasicAuth('bituser', '111')
