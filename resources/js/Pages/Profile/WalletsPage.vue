@@ -167,7 +167,7 @@
                         <div
                             class="wallets__block_i"
                             v-tooltip="{
-                                message: `Процент вывода: ${wallet.percent}%.\n\n Мин сумма вывода: ${wallet.minWithdrawal}BTC)`,
+                                message: `Процент вывода: ${wallet.percent}%. Мин сумма вывода: ${wallet.minWithdrawal} BTC`,
                             }"
                         >
                             <svg
