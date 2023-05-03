@@ -1,6 +1,5 @@
 <template>
     <Head title="Статистика" />
-    <div class="hidden">{{ this.allHistory[this.getActive] }}</div>
     <div class="statistic">
         <div class="statistic__wrapper">
             <main-title tag="h2" class="statistic__title">
@@ -76,6 +75,7 @@
                 </main-title>
                 <div class="statistic__block">
                     <payment-card
+                        :key="this.allHistory[this.getActive]"
                         :BTCValueFirst="this.yesterdayEarn"
                         :BTCValueSecond="this.todayEarn"
                         titleFirst="Начисление за вчера"
@@ -84,6 +84,7 @@
                         :iconSecond="1"
                     />
                     <account-profile-swiper
+                        :key="this.allHistory[this.getActive]"
                         v-if="Object.values(this.allAccounts).length > 0"
                     ></account-profile-swiper>
                     <!--                    <payment-card-->
@@ -216,7 +217,7 @@ export default {
                             86400 *
                             this.btcInfo.btc.reward) /
                         (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    val = val * (1 - 0.035 - 0.0175);
+                    val = val * (1 - 0.035 - 0.005);
                 }
             }
             if (typeof val === "number") {

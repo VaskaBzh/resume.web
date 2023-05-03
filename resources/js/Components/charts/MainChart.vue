@@ -169,6 +169,7 @@ export default {
 .wrap {
     &__block {
         width: 100%;
+        flex-direction: column;
         @media (max-width: 767.98px) {
             padding: 15px;
             &-graph {

@@ -1,5 +1,4 @@
 <template>
-    <div class="hidden">{{ this.time }}</div>
     <Head title="Сложность сети" />
     <div class="complexity">
         <div class="complexity__container">
@@ -18,7 +17,7 @@
                     <img src="../../assets/img/compl-main-img.png" alt="" />
                 </div>
             </div>
-            <MainChart :graphs="graphs" />
+            <MainChart :graphs="graphs" :key="this.time" />
         </div>
     </div>
 </template>

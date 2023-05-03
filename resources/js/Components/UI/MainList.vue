@@ -1,5 +1,5 @@
 <template>
-    <div class="list" :class="{ open: list_is_open }">
+    <div class="list" :class="{ open: this.list_is_open }">
         <div class="list_head" @click="this.toggleList">
             <svg
                 class="arrow"
@@ -61,11 +61,13 @@ export default {
             this.list_is_open = !this.list_is_open;
         },
         hideList(e) {
-            this.list_is_open = false;
+            if (!e.target.closest(".open")) {
+                this.list_is_open = false;
+            }
         },
     },
     mounted() {
-        // document.addEventListener("click", this.hideList.bind(this), true);
+        document.addEventListener("click", this.hideList.bind(this), true);
         document.addEventListener("keydown", (e) => {
             if (e.keyCode === 27) {
                 this.hideList();

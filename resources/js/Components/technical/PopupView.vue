@@ -13,7 +13,10 @@
                     src="../../../assets/img/logo_high_quality.png"
                     alt="logo"
                 />
-                <div class="popup__content_block">
+                <div
+                    class="popup__content_block"
+                    :class="{ loading: this.wait }"
+                >
                     <button data-close type="button" class="popup__close">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
@@ -38,6 +41,54 @@ export default {
             type: String,
             default: "form",
         },
+        wait: Boolean,
     },
 };
 </script>
+<style lang="scss">
+.loading {
+    form {
+        .blue-button {
+            background: rgba(#4282ec, 0.8) !important;
+            .all-link {
+                svg {
+                    max-width: 100%;
+                    max-height: 100%;
+                    overflow: visible;
+                    visibility: visible;
+                    opacity: 1;
+                    path {
+                        transform-origin: center;
+                        fill: #ffffff;
+                        &:first-child {
+                            animation: rotate 2s linear 0s infinite;;
+                        }
+                        &:nth-child(2) {
+                            animation: reRotate 2s linear 0s infinite;;
+                        }
+                        &:last-child {
+                            animation: rotate 2s linear 0s infinite;;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+@keyframes rotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+@keyframes reRotate {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg);
+    }
+}
+</style>

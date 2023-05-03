@@ -1,6 +1,5 @@
 <template>
     <Head title="Выплаты" />
-    <div class="hidden">{{ this.allAccounts }}</div>
     <div class="payment">
         <div class="payment__wrapper">
             <main-title tag="h2" titleName="Выплаты"></main-title>
@@ -26,6 +25,7 @@
             <main-slider
                 :table="this.paymentInfo"
                 :wait="this.getTable"
+                :key="this.allAccounts"
             ></main-slider>
             <popup-view id="payment">
                 <form

@@ -155,7 +155,6 @@ export default {
 
 .all-link {
     width: 100%;
-    display: block;
     text-align: center;
 }
 

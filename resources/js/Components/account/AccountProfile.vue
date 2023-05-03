@@ -10,29 +10,14 @@
             <!--                class="profile__icon"-->
             <!--                alt="profile__icon"-->
             <!--            />-->
-            <span class="profile__name" v-show="!edit" @click="chageActive">{{
+            <span class="profile__name" @click="chageActive">{{
                 account.name
             }}</span>
-            <div class="form_row" v-show="edit">
-                <input
-                    v-model="account.name"
-                    type="text"
-                    class="input input-no-bg"
-                />
-                <svg
-                    @click="saveName"
-                    width="1328"
-                    height="1346"
-                    viewBox="0 0 1328 1346"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M1067.24 297.129L498.126 873.965L260.759 633.379C239.14 611.466 204.14 611.466 182.576 633.379C161.013 655.291 160.957 690.765 182.576 712.621L459.035 992.83C480.654 1014.74 515.653 1014.74 537.217 992.83L1145.43 376.371C1167.04 354.459 1167.04 318.985 1145.43 297.129C1123.81 275.272 1088.81 275.216 1067.24 297.129Z"
-                    />
-                </svg>
-            </div>
-            <div class="profile__settings">
+            <div
+                class="profile__settings"
+                @click="this.toggleTarget"
+                :class="{ target: this.target }"
+            >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -54,7 +39,11 @@
                     />
                 </svg>
                 <div class="profile__menu">
-                    <div class="profile__menu_elem" @click="editName">
+                    <div
+                        class="profile__menu_elem"
+                        :data-popup="`#edit`"
+                        @click="this.$emit('getId', account.id)"
+                    >
                         <svg
                             width="24"
                             height="24"
@@ -151,45 +140,51 @@ export default {
     props: {
         accountInfo: Object,
         profit: Object,
-        errors: Array,
     },
     data() {
         return {
             account: this.accountInfo,
             savedName: this.accountInfo.name,
-            edit: false,
+            target: false,
         };
     },
     methods: {
+        toggleTarget() {
+            this.target = !this.target;
+        },
+        hideMenu(e) {
+            if (!e.target.closest(".target")) {
+                this.target = false;
+            }
+        },
         router() {
             return router;
         },
         chageActive() {
             this.$emit("changeActive", this.accountInfo.id);
         },
-        editName() {
-            this.edit = !this.edit;
-        },
-        saveName() {
-            this.editName();
-            let form = useForm({
-                group_name: this.account.name,
-                group_id: String(this.account.id),
-                puid: "781195",
-            });
-
-            form.put("/sub_change", {
-                onFinish: () => {
-                    this.errors?.length === 0
-                        ? this.$store.dispatch("getAccounts")
-                        : (this.account.name = this.savedName);
-                },
-            });
-        },
+        // saveName() {
+        //     let form = useForm({
+        //         group_name: this.account.name,
+        //         group_id: String(this.account.id),
+        //         puid: "781195",
+        //     });
+        //
+        //     form.put("/sub_change", {
+        //         onFinish: () => {
+        //             this.errors?.length === 0
+        //                 ? this.$store.dispatch("getAccounts")
+        //                 : (this.account.name = this.savedName);
+        //         },
+        //     });
+        // },
         getWallets() {
             this.$store.commit("updateActive", this.accountInfo.id);
             router.visit("/profile/wallets");
         },
+    },
+    mounted() {
+        document.addEventListener("click", this.hideMenu.bind(this), true);
     },
     computed: {
         todayProfit() {
@@ -299,18 +294,6 @@ export default {
             stroke: #4182ec;
         }
     }
-    &__settings {
-        position: relative;
-        &:hover {
-            .profile {
-                &__menu {
-                    transition: all 0.6s ease 0s;
-                    visibility: visible;
-                    opacity: 1;
-                }
-            }
-        }
-    }
     .form_row {
         height: auto;
         width: 100%;
@@ -341,9 +324,7 @@ export default {
         }
     }
     &__menu {
-        transition: all 0.6s ease 0.6s;
-        min-width: 257px;
-        max-width: 257px;
+        transition: all 0.6s ease 0s;
         position: absolute;
         top: calc(100% + 16px);
         right: 0;
@@ -353,9 +334,11 @@ export default {
         box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
         border-radius: 20px;
         overflow: hidden;
-        visibility: hidden;
         opacity: 0;
-        z-index: 1;
+        z-index: 2;
+        max-height: 0;
+        min-width: 257px;
+        max-width: 257px;
         border: 1px solid #fff;
         &_elem {
             width: 100%;
@@ -378,7 +361,6 @@ export default {
             svg {
                 width: 24px;
                 height: 24px;
-                fill: transparent !important;
                 stroke: transparent !important;
             }
             svg:not(.stroke) {
@@ -389,6 +371,19 @@ export default {
             }
             &:hover {
                 background: rgba(208, 222, 242, 0.7);
+            }
+        }
+    }
+    &__settings {
+        position: relative;
+        &.target {
+            .profile {
+                &__menu {
+                    max-height: 100vh;
+                    transition: all 0.6s ease 0s;
+                    //visibility: visible;
+                    opacity: 1;
+                }
             }
         }
     }
@@ -460,9 +455,9 @@ export default {
             opacity: 0;
             visibility: hidden;
             background: linear-gradient(
-                    113.15deg,
-                    rgba(255, 255, 255, 0.2) 31.75%,
-                    rgba(255, 255, 255, 0) 121.06%
+                113.15deg,
+                rgba(255, 255, 255, 0.2) 31.75%,
+                rgba(255, 255, 255, 0) 121.06%
             );
             transition: all 0.5s ease 0s;
             backdrop-filter: blur(5px);

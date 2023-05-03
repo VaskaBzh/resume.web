@@ -1,5 +1,4 @@
 <template>
-    <div class="hidden">{{ this.boolFalse }}{{ this.allIncomeHistory }}</div>
     <div class="wrap wrap-no-padding">
         <div class="wrap__head">
             <main-title tag="h3" v-if="this.title"
@@ -69,6 +68,7 @@
             "
         >
             <workers-table
+                :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 @graph_render="this.graphRender"
@@ -79,6 +79,7 @@
             v-else-if="this.title === 'Воркеры' || this.type === 'Воркеры'"
         >
             <workers-table
+                :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 @graph_render="this.graphRender"
@@ -89,6 +90,7 @@
             v-else-if="this.first >= 0 && this.visualType === 'block'"
         >
             <payment-table
+                :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 :first="this.first"
@@ -97,6 +99,7 @@
         </div>
         <div class="wrap-overflow" v-else-if="this.first >= 0">
             <payment-table
+                :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 :first="this.first"

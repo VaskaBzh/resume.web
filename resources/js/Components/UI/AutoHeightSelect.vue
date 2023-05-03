@@ -139,8 +139,8 @@ export default {
             this.$emit("getAcc", optionValue);
             this.hideSelect();
         },
-        hideSelect() {
-            if (this.select_is_open === true) {
+        hideSelect(e) {
+            if (!e.target.closest(".select_con")) {
                 this.select_is_open = false;
             }
         },
@@ -159,7 +159,7 @@ export default {
             .forEach((option) => {
                 this.height += option.offsetHeight;
             });
-        // document.addEventListener("click", this.hideSelect.bind(this), true);
+        document.addEventListener("click", this.hideSelect.bind(this), true);
         document.addEventListener("keydown", (e) => {
             if (e.keyCode === 27) {
                 this.hideSelect();
@@ -270,6 +270,7 @@ export default {
         background: transparent;
         padding: 0 12px;
         height: 36px;
+        min-height: 36px;
         &:first-child {
             margin-top: 12px;
         }

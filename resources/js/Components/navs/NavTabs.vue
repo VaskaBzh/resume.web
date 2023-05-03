@@ -266,10 +266,9 @@ export default {
     border-radius: 21px;
     background-color: rgba(255, 255, 255, 0.29);
     margin-right: 30px;
-    max-height: calc(60px * 8);
     height: fit-content;
     -webkit-box-shadow: 0 11px 34px 0 transparent;
-    transition: all 0.8s ease 0s, top 0s ease 0s, position 0s ease 0s;
+    transition: all 0.8s ease 0s, top 0s ease 0s, position 0s ease 0s, padding 0s ease 0s, width 0s ease 0s;
     z-index: 9;
     @media (min-width: 1271px) {
         &:hover {
@@ -336,6 +335,7 @@ export default {
                     opacity: 0;
                     width: 0;
                     height: 0;
+                    min-height: 0;
                     transition: all 0s ease 0s;
                 }
 
@@ -397,9 +397,10 @@ export default {
         padding: 0 14px 0 16px;
         display: inline-flex;
         align-items: center;
-        transition: all 0.7s ease 0s;
+        transition: all 0.7s ease 0s, height 0s ease 0s, min-height 0s ease 0s, width 0s ease 0s;
         position: relative;
         height: 60px;
+        min-height: 60px;
         font-weight: 500;
         user-select: none;
         -webkit-tap-highlight-color: transparent;

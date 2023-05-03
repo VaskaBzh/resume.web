@@ -102,9 +102,6 @@
                 </div>
             </div>
         </div>
-        <div class="no-info" v-show="this.noInfo">
-            <div class="propeller"></div>
-        </div>
         <div v-if="message" class="form_wrapper-message">
             <div class="form_message form_message-error">
                 <svg

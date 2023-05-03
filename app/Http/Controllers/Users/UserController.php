@@ -58,7 +58,7 @@ class UserController extends Controller
 
         $user = auth()->user();
 
-        if ($request->input("type") === 'Логин') {
+        if ($request->input("type") === 'логин') {
             $request->validate([
                 'item' => 'unique:users,name|min:3',
             ], [
@@ -71,7 +71,7 @@ class UserController extends Controller
             $message = 'Логин успешно изменен!';
         }
 
-        if ($request->input("type") === 'Email') {
+        if ($request->input("type") === 'email') {
             $request->validate([
                 'item' => 'unique:users,email|email',
             ], [
@@ -84,7 +84,7 @@ class UserController extends Controller
             $message = 'Email успешно изменен!';
         }
 
-        if ($request->input("type") === 'Телефон') {
+        if ($request->input("type") === 'телефон') {
             $request->validate([
                 'item' => 'unique:users,phone|regex:/^\+?(\d[\d\-. ]+)?(\([\d\-. ]+\))?[\d\-. ]+\d$/',
             ], [
@@ -97,7 +97,7 @@ class UserController extends Controller
             $message = 'Телефон успешно изменен!';
         }
 
-        if ($request->input("type") === 'СМС авторизация') {
+        if ($request->input("type") === 'смс авторизация') {
             $user->sms = $request->input("item");
 
             if ($request->input("item") === true) {

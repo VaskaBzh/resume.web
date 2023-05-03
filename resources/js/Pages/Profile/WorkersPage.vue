@@ -1,6 +1,5 @@
 <template>
     <Head title="Воркеры" />
-    <div class="hidden">{{ this.getActive }}</div>
     <div class="workers">
         <div class="workers__wrapper">
             <main-title tag="h2" enter-class="workers__title">
@@ -49,7 +48,7 @@
             </div>
             <wrap-table
                 :table="this.table"
-                :key="Object.values(this.allAccounts).length"
+                :key="Object.values(this.allAccounts).length + this.getActive"
                 type="Воркеры"
                 :wait="this.allAccounts"
                 :empty="this.table.rows"
