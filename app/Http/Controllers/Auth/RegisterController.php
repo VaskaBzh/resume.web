@@ -159,24 +159,20 @@ class RegisterController extends Controller
 
     protected function getter(Request $request)
     {
-        if (Auth::user()) {
-            return Auth::user()->id;
-        } else {
-            $request->validate([
-                'email' => 'required|email',
-            ], [
-                'email.required' => 'Необходимо заполнить «Email».',
-                'email.email' => 'Некорректное поле «Email».',
-            ]);
-            $user = User::where('email', $request->input('email'))->first();
+        $request->validate([
+            'email' => 'required|email',
+        ], [
+            'email.required' => 'Необходимо заполнить «Email».',
+            'email.email' => 'Некорректное поле «Email».',
+        ]);
+        $user = User::where('email', $request->input('email'))->first();
 
-            if ($user) {
-                throw ValidationException::withMessages([
-                    'error' => 'Пользователь с такой почтой уже существует.',
-                ]);
-            } else {
-                return back()->with('message', 'Почта доступна.');
-            }
+        if ($user) {
+            throw ValidationException::withMessages([
+                'error' => 'Пользователь с такой почтой уже существует.',
+            ]);
+        } else {
+            return back()->with('message', 'Почта доступна.');
         }
     }
 }
