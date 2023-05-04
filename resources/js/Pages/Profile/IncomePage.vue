@@ -180,7 +180,7 @@ export default {
             if (this.getIncome[this.getActive]) {
                 sum = this.getIncome[this.getActive].unPayments;
             }
-            return sum.toFixed(8);
+            return Number(sum).toFixed(8);
         },
         result() {
             let sum = 0;
@@ -189,7 +189,7 @@ export default {
                     this.getIncome[this.getActive].unPayments *
                     (Number(this.amount.replace("%", "")) / 100);
             }
-            return sum.toFixed(8) + " BTC";
+            return Number(sum).toFixed(8) + " BTC";
         },
         yesterdayProfit() {
             let sum = 0;
