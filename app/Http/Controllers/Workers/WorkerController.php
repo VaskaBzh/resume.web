@@ -75,6 +75,9 @@ class WorkerController extends Controller
 
     public function visual(Request $request)
     {
+        dump(123);
+        dump(Worker::all());
+        dump(Worker::all()->where('worker_id', $request->input('worker_id')));
         $request->validate([
             'worker_id' => 'required',
         ]);

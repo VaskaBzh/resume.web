@@ -18,7 +18,7 @@
                             this.getIncome[this.getActive].accruals
                         "
                     >
-                        {{ this.getIncome[this.getActive].accruals.toFixed(8) }}
+                        {{ Number(this.getIncome[this.getActive].accruals).toFixed(8) }}
                         BTC</template
                     >
                     <template v-slot:head v-else> 0.00000000 BTC</template>

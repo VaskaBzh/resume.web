@@ -193,7 +193,9 @@ class UpdateIncomesCommand extends Command
                     }
 
                     foreach ($wallets as $wallet) {
-                        $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
+                        if ($income["amount"] > 0) {
+                            $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
+                        }
                     }
                 } catch (Exception $e) {
                     // Обработка ошибки разбора JSON

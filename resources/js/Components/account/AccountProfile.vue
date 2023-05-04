@@ -380,7 +380,7 @@ export default {
             .profile {
                 &__menu {
                     max-height: 100vh;
-                    transition: all 0.6s ease 0s;
+                    transition: all 0.6s ease 0s, ;
                     //visibility: visible;
                     opacity: 1;
                 }

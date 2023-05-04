@@ -195,6 +195,7 @@ export default {
             let sum = 0;
             if (
                 this.allIncomeHistory &&
+
                 Object.values(this.allIncomeHistory).length > 0
             ) {
                 Object.values(this.allIncomeHistory).forEach((acc) => {
