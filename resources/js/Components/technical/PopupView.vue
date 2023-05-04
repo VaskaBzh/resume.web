@@ -1,5 +1,8 @@
 <template>
-    <div aria-hidden="true" class="popup">
+    <div aria-hidden="true" class="popup" ref="popup">
+        <Teleport to="body">
+            <div class="un-click" v-if="this.wait === true"></div>
+        </Teleport>
         <div class="popup__wrapper">
             <div
                 :class="
@@ -46,49 +49,15 @@ export default {
 };
 </script>
 <style lang="scss">
-.loading {
-    form {
-        .blue-button {
-            background: rgba(#4282ec, 0.8) !important;
-            .all-link {
-                svg {
-                    max-width: 100%;
-                    max-height: 100%;
-                    overflow: visible;
-                    visibility: visible;
-                    opacity: 1;
-                    path {
-                        transform-origin: center;
-                        fill: #ffffff;
-                        &:first-child {
-                            animation: rotate 2s linear 0s infinite;;
-                        }
-                        &:nth-child(2) {
-                            animation: reRotate 2s linear 0s infinite;;
-                        }
-                        &:last-child {
-                            animation: rotate 2s linear 0s infinite;;
-                        }
-                    }
-                }
-            }
-        }
-    }
+.all-link {
+    line-height: 24px;
 }
-@keyframes rotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(360deg);
-    }
-}
-@keyframes reRotate {
-    from {
-        transform: rotate(0deg);
-    }
-    to {
-        transform: rotate(-360deg);
-    }
+.un-click {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
 }
 </style>

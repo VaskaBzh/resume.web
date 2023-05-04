@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Models\Sub;
+use App\Models\Worker;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -33,7 +34,21 @@ class HourlyHashesUpdate implements ShouldQueue
     {
         // Получите список пользователей или другие данные, необходимые для выполнения запроса
         $subs = Sub::all();
+        $maximum_records = 256;
+
         foreach ($subs as $sub) {
+            $extra_records = Sub::where('group_id', $sub->group_id)
+                ->oldest('created_at')
+                ->offset($maximum_records)
+                ->limit(PHP_INT_MAX)
+                ->get();
+
+            if ($extra_records->count() > 0) {
+                foreach ($extra_records as $extra_record) {
+                    $extra_record->delete();
+                }
+            }
+
             // Выполните запрос для каждого пользователя (или другой необходимой единицы)
             $opts = array(
                 "http" => array(

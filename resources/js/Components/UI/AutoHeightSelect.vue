@@ -47,6 +47,10 @@
                 v-for="(option, i) in this.optionsObject"
                 :key="option.value"
                 class="select_option"
+                :class="{
+                    active:
+                        option.title === this.allAccounts[this.getActive]?.name && this.optionsObject.length > 1,
+                }"
             >
                 <p
                     class="main_select"
@@ -190,6 +194,9 @@ export default {
         position: relative;
         &.open {
             .select {
+                &_title {
+                    background: rgba(234, 238, 244, 0.4);
+                }
                 &_options {
                     max-height: 20vh;
                     opacity: 1;
@@ -271,6 +278,18 @@ export default {
         padding: 0 12px;
         height: 36px;
         min-height: 36px;
+        transition: background 0.3s ease 0s;
+        &.active {
+            padding: 0 10px;
+            &:hover {
+                background: transparent;
+            }
+            .main_select {
+                background: rgba(234, 238, 244, 0.4);
+                border-radius: 8px;
+                padding: 0 10px;
+            }
+        }
         &:first-child {
             margin-top: 12px;
         }
@@ -283,8 +302,10 @@ export default {
             display: inline-flex;
             align-items: center;
             gap: 10px;
+            background: transparent;
             font-weight: 400;
             font-size: 17px;
+            transition: background 0.3s ease 0s;
             line-height: 143.1%;
             color: #000034;
         }

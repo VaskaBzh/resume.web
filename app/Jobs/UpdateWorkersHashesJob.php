@@ -32,8 +32,22 @@ class UpdateWorkersHashesJob implements ShouldQueue
     public function handle()
     {
         $workers = Worker::all();
+        $maximum_records = 256;
 
         foreach ($workers as $worker) {
+            $extra_records = Worker::where('group_id', $worker->group_id)
+                ->where('worker_id', $worker->worker_id)
+                ->oldest('created_at')
+                ->offset($maximum_records)
+                ->limit(PHP_INT_MAX)
+                ->get();
+
+            if ($extra_records->count() > 0) {
+                foreach ($extra_records as $extra_record) {
+                    $extra_record->delete();
+                }
+            }
+
             $opts = array(
                 "http" => array(
                     "method" => "GET",

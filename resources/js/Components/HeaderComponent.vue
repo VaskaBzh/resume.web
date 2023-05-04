@@ -55,7 +55,7 @@
         </div>
     </nav>
 
-    <popup-view id="auth">
+    <popup-view id="auth" :wait="this.wait">
         <div
             v-for="(error, i) in this.errors"
             :key="i"
@@ -181,7 +181,25 @@
                     ></div>
                 </div>
                 <blue-button>
-                    <button class="all-link" type="submit">Войти</button>
+                    <button class="all-link" type="submit">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
+                            />
+                            <path
+                                d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
+                            />
+                            <path
+                                d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
+                            /></svg
+                        >Войти
+                    </button>
                 </blue-button>
                 <div class="popup__text">
                     Нет аккаунта?
@@ -222,7 +240,25 @@
                 />
 
                 <blue-button type="button" @click="this.email_validate">
-                    <div class="all-link">Дальше</div>
+                    <div class="all-link">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
+                            />
+                            <path
+                                d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
+                            />
+                            <path
+                                d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
+                            /></svg
+                        >Дальше
+                    </div>
                 </blue-button>
                 <div class="popup__text">
                     Уже есть аккаунт?
@@ -277,7 +313,25 @@
                     type="button"
                     @click="this.name_validate(this.get_group)"
                 >
-                    <button class="all-link">Дальше</button>
+                    <button class="all-link">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
+                            />
+                            <path
+                                d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
+                            />
+                            <path
+                                d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
+                            /></svg
+                        >Дальше
+                    </button>
                 </blue-button>
             </swiper-slide>
             <swiper-slide class="popup_slide form form-popup" data-id="email">
@@ -351,7 +405,26 @@
                     type="button"
                     @click="this.password_validate(account_create)"
                 >
-                    <button class="all-link">Зарегистрироваться</button>
+                    <button class="all-link">
+                        <svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
+                            />
+                            <path
+                                d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
+                            />
+                            <path
+                                d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
+                            />
+                        </svg>
+                        Зарегистрироваться
+                    </button>
                 </blue-button>
             </swiper-slide>
         </swiper>
@@ -415,6 +488,7 @@ export default defineComponent({
         this.handleResize();
     },
     setup() {
+        let wait = ref(false);
         let message = ref("");
         let noInfo = ref(false);
         const form = useForm({
@@ -432,32 +506,36 @@ export default defineComponent({
         );
 
         const submit = async () => {
-            noInfo.value = true;
+            wait.value = true;
             form.post("/login", {
                 onSuccess: (response) => {
-                    noInfo.value = false;
+                    wait.value = false;
                     document.querySelector("[data-close]").click();
                 },
                 onError: (errors) => {
                     // Обработка ошибок
                     console.log(errors);
-                    noInfo.value = false;
+                    wait.value = false;
                 },
             });
         };
         const reverify = () => {
-            form.post("/reverify");
+            wait.value = true;
+            form.post("/reverify", {
+                onFinish() {
+                    wait.value = false;
+                },
+            });
         };
         const account_create = () => {
-            noInfo.value = true;
+            wait.value = true;
             new_account_input.post("/register", {
                 async onSuccess() {
-                    noInfo.value = false;
+                    wait.value = false;
                     document.querySelector("[data-close]").click();
                 },
                 onError(error) {
-                    console.error(error);
-                    noInfo.value = false;
+                    wait.value = false;
                 },
             });
         };
@@ -495,6 +573,7 @@ export default defineComponent({
             message,
             noInfo,
             reverify,
+            wait,
         };
     },
     computed: {
@@ -539,6 +618,9 @@ export default defineComponent({
             });
             // сохраняем контекст
             let self = this;
+            this.wait = true;
+
+            setTimeout(() => this.wait = false, 1000);
             // eslint-disable-next-line no-undef
             await email.post(route("user_get"), {
                 onSuccess() {
@@ -547,6 +629,7 @@ export default defineComponent({
             });
         },
         name_validate(get_group) {
+            this.wait = true;
             const instance = axios.create({
                 baseURL: "https://pool.api.btc.com/v1",
                 headers: {
@@ -591,6 +674,10 @@ export default defineComponent({
                             this.slideNext();
                         }
                     });
+                    this.wait = false;
+                })
+                .catch(() => {
+                    this.wait = false;
                 });
         },
         password_validate(account_create) {
@@ -735,8 +822,7 @@ export default defineComponent({
 .all-link {
     width: 100%;
     height: 100%;
-    padding: 14px 40px;
-    display: block;
+    padding: 2px 40px;
 }
 
 .nav__logo {
