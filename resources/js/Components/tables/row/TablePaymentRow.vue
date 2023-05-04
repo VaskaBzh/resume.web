@@ -31,7 +31,7 @@
                 message: `Сумма к выплате: ${this.columns.percent}% (${this.BTCVal} BTC)`,
             }"
         >
-            {{ this.columns.earn.toFixed(8) }} BTC
+            {{ Number(this.columns.earn).toFixed(8) }} BTC
         </td>
         <td
             class="main__number main__link"
