@@ -5,15 +5,13 @@
     gap: 16px;
     position: relative;
     [type="password"] {
-        letter-spacing: 2px;
-        transition: all 0.3s ease 0s;
+        letter-spacing: normal;
         &::placeholder {
             letter-spacing: normal;
         }
     }
     [type="text"] {
         letter-spacing: normal;
-        transition: all 0.3s ease 0s;
     }
     [type="number"] {
         &::-webkit-outer-spin-button,

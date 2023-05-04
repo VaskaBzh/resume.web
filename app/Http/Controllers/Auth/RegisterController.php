@@ -147,9 +147,11 @@ class RegisterController extends Controller
     protected function getName(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|min:3|max:16',
         ], [
             'name.required' => 'Необходимо дать имя аккаунту.',
+            "name.max" => "Максимальное количество символов аккаунта 16.",
+            "name.min" => "Минимальное количество символов аккаунта 3.",
         ]);
 
         if ($request->input("name") === "done") {
