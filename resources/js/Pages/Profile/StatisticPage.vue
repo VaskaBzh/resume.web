@@ -15,12 +15,24 @@
                     <main-title tag="h3" class="statistic__wrap_title">
                         Общий хешрейт
                     </main-title>
+                    <button
+                        class="button"
+                        :key="button.title + i"
+                        v-for="(button, i) in buttons"
+                        :class="{ active: button.value === this.val }"
+                        @click="changeGraph(button.value)"
+                    >
+                        {{ button.title }}
+                    </button>
+                    <!--                    <button class="button">1 день</button>-->
+                    <!--                    <button class="button">7 дней</button>-->
                 </div>
                 <div class="wrap__block wrap__block-graph">
-                    <div class="propeller" v-if="this.id === 0"></div>
+                    <div class="propeller" v-if="this.id !== this.val"></div>
                     <statistic-chart
                         v-else
                         class="no-title"
+                        :val="this.val"
                         :graphs="this.graphs"
                         :key="
                             this.graphs[0].values[
@@ -87,37 +99,6 @@
                         :key="this.allHistory[this.getActive]"
                         v-if="Object.values(this.allAccounts).length > 0"
                     ></account-profile-swiper>
-                    <!--                    <payment-card-->
-                    <!--                        :BTCValueFirst="this.earn"-->
-                    <!--                        :BTCValueSecond="0"-->
-                    <!--                        titleFirst="Сумма к выплате"-->
-                    <!--                        titleSecond="Всего выплачено"-->
-                    <!--                        :iconFirst="2"-->
-                    <!--                        :iconSecond="2"-->
-                    <!--                    />-->
-                    <!--                    <swiper-->
-                    <!--                        class="wrap__swiper"-->
-                    <!--                        v-if="Object.values(this.allAccounts).length > 0"-->
-                    <!--                        :modules="modules"-->
-                    <!--                        :slides-per-view="1"-->
-                    <!--                        :space-between="15"-->
-                    <!--                        :pagination="pagination"-->
-                    <!--                        :allowSlideNext="false"-->
-                    <!--                        :allowTouchMove="false"-->
-                    <!--                        autoHeight-->
-                    <!--                        @swiper="this.swiper_init"-->
-                    <!--                    >-->
-                    <!--                        <swiper-slide>-->
-                    <!--                            <account-profile-swiper-->
-                    <!--                                v-for="(account, i) in this.allAccounts"-->
-                    <!--                                :key="i"-->
-                    <!--                                :accKey="i"-->
-                    <!--                                :accountInfo="account"-->
-                    <!--                                :profit="this.profit"-->
-                    <!--                                @changeActive="this.activeChanger"-->
-                    <!--                            />-->
-                    <!--                        </swiper-slide>-->
-                    <!--                    </swiper>-->
                     <div class="wrap__column no-info" v-else>
                         <div class="propeller"></div>
                     </div>
@@ -134,9 +115,6 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
 import AccountProfileSwiper from "@/Components/account/AccountProfileSwiper.vue";
-import Vue from "lodash";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Pagination } from "swiper";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
@@ -164,6 +142,12 @@ export default {
             workersUnActive: 0,
             workersInActive: 0,
             id: 0,
+            val: 6,
+            buttons: [
+                { title: "6 часов", value: 6 },
+                { title: "1 день", value: 24 },
+                { title: "7 дней", value: 168 },
+            ],
             graphs: [
                 {
                     id: 1,
@@ -257,41 +241,11 @@ export default {
         ]),
     },
     methods: {
-        // getForcast() {
-        //     if (this.btcInfo) {
-        //         let val = 0;
-        //         Object.values(this.allAccounts).forEach((el, i) => {
-        //             if (el.shares1d > 0) {
-        //                 val =
-        //                     (el.shares1d *
-        //                         Math.pow(10, 12) *
-        //                         86400 *
-        //                         this.btcInfo.btc.reward) /
-        //                     (this.btcInfo.btc.diff * Math.pow(2, 32));
-        //             } else if (el.shares1m > 0) {
-        //                 val =
-        //                     (el.shares1m *
-        //                         Math.pow(10, 12) *
-        //                         86400 *
-        //                         this.btcInfo.btc.reward) /
-        //                     (this.btcInfo.btc.diff * Math.pow(2, 32));
-        //             }
-        //             Vue.set(
-        //                 this.profit,
-        //                 Object.keys(this.allAccounts)[i],
-        //                 val * 3.5 * 1.75
-        //             );
-        //         });
-        //     }
-        // },
+        changeGraph(val) {
+            this.val = val;
+        },
         changeId() {
-            if (this.id === 0) {
-                this.id = 1;
-            } else if (this.id === 1) {
-                this.id = 2;
-            } else {
-                this.id = 1;
-            }
+            this.id = this.val;
         },
         router() {
             return router;
@@ -318,7 +272,6 @@ export default {
             }
         },
         renderChart() {
-            this.changeId();
             let history = {};
             if (
                 this.allHistory[this.getActive] &&
@@ -334,8 +287,9 @@ export default {
                     }
                 );
             }
+            let val = this.val + 1;
             let values = [];
-            for (let i = 1; i <= 25; i++) {
+            for (let i = 1; i <= val; i++) {
                 if (history) {
                     let timeStamp = history[history.length - i];
                     if (timeStamp) {
@@ -348,18 +302,17 @@ export default {
                 }
             }
             this.graphs[0].values = values;
+            setTimeout(this.changeId, 1000);
         },
     },
     mounted() {
         document.title = "Статистика";
         if (this.allHistory[this.getActive]) {
-            // this.getForcast();
             this.renderChart();
         }
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
-            // this.getForcast();
             this.renderChart();
         }
     },
@@ -430,17 +383,56 @@ export default {
             }
         }
         &__head {
-            flex-direction: column;
+            gap: 8px;
+            .button {
+                white-space: nowrap;
+                padding: 2px 12px;
+                border-radius: 16px;
+                min-height: 36px;
+                color: #99acd3;
+                font-weight: 400;
+                font-size: 17px;
+                line-height: 20px;
+                background: transparent;
+                transition: all 0.3s ease 0s;
+                &.active {
+                    color: #181847;
+                    background: #ffffff;
+                }
+            }
             .title {
                 @media (max-width: 767.98px) {
                     margin-bottom: 8px;
                 }
             }
             &-graph {
+                align-items: center;
                 grid-column-start: 1;
                 grid-column-end: 3;
+                .title {
+                    margin-bottom: 0;
+                    &:after {
+                        content: none;
+                    }
+                }
                 @media (max-width: 767.98px) {
                     grid-column-end: 2;
+                    margin-bottom: 8px;
+                    &:after {
+                        content: "";
+                        height: 1px;
+                        position: absolute;
+                        bottom: -20px;
+                        left: 0;
+                        width: 100%;
+                        background-color: #d7d8d9;
+                    }
+                }
+                @media (min-width: 767.98px) {
+                    margin-bottom: 12px;
+                }
+                @media (max-width: 467.98px) {
+                    flex-wrap: wrap;
                 }
             }
         }

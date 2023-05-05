@@ -45,6 +45,10 @@ export default {
             type: Number,
             default: 1980,
         },
+        val: {
+            type: Number,
+            default: 6,
+        },
     },
     components: {
         MainTitle,
@@ -60,31 +64,69 @@ export default {
                 gradientBg.addColorStop(0, "rgba(63,123,221,1)");
                 gradientBg.addColorStop(1, "rgba(255,255,255,0)");
 
+                let interval = 1; // Интервал между метками времени
                 let hours = () => {
                     let arr = [];
                     let time = "";
-                    let bool = true;
-                    for (let i = 24; i >= 0; i--) {
-                        if (new Date().getHours() - i <= 0) {
-                            bool = false;
-                        }
-                        if (new Date().getHours() - i + 24 === 24) {
-                            bool = true;
-                        }
-                        if (bool) {
-                            time =
-                                Math.abs(new Date().getHours() - i) +
-                                ":" +
-                                "00";
+
+                    switch (this.val) {
+                        case 6:
+                            interval = 1;
+                            break;
+                        case 24:
+                            interval = 4;
+                            break;
+                        case 168:
+                            interval = 24;
+                            break;
+                    }
+
+                    for (let i = this.val; i >= 0; i -= interval) {
+                        let currentHour = new Date().getHours() - i;
+                        let currentDate = new Date();
+                        currentDate.setHours(currentHour);
+
+                        let hour = currentDate.getHours();
+                        let day =
+                            String(currentDate.getDate()).length !== 2
+                                ? `0${currentDate.getDate()}`
+                                : currentDate.getDate();
+                        let mounth =
+                            String(currentDate.getUTCMonth() + 1).length !== 2
+                                ? `0${currentDate.getUTCMonth() + 1}`
+                                : currentDate.getUTCMonth() + 1;
+
+                        if (this.val === 168) {
+                            time = `${day}.${mounth}`;
                         } else {
-                            time =
-                                Math.abs(new Date().getHours() - i + 24) +
-                                ":" +
-                                "00";
+                            time = `${hour}:00`;
                         }
                         arr.push(time);
                     }
                     return arr;
+                };
+
+                let calculateAverage = (data, interval) => {
+                    let averages = [];
+
+                    for (let i = 0; i < data.length; i += interval) {
+                        let sum = 0;
+                        let count = 0;
+
+                        for (
+                            let j = i;
+                            j < i + interval && j < data.length;
+                            j++
+                        ) {
+                            sum += Number(data[j]);
+                            count++;
+                        }
+
+                        let average = Number(sum) / count;
+                        averages.push(average);
+                    }
+
+                    return averages;
                 };
 
                 new Chart(ctx, {
@@ -94,7 +136,10 @@ export default {
                         datasets: [
                             {
                                 label: graphsList[0].title[0],
-                                data: graphsList[i].values,
+                                data: calculateAverage(
+                                    graphsList[i].values,
+                                    interval
+                                ),
                                 borderColor: "#3f7bdd",
                                 backgroundColor: gradientBg,
                                 tension: 0.4,

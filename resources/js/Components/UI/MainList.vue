@@ -154,11 +154,20 @@ export default {
         border: 1.4px solid #417fe5 !important;
         color: #417fe5 !important;
         background: transparent !important;
+        justify-content: center !important;
+        display: flex !important;
         &:hover {
             transform: translate(0) !important;
         }
         &:before {
             content: none !important;
+        }
+        a {
+            width: fit-content !important;
+            border-radius: 0 !important;
+            &:hover {
+                background: transparent !important;
+            }
         }
     }
     &.open {

@@ -1,7 +1,7 @@
 <template>
-    <div class="copy" @click="this.copyLink">
+    <div class="copy">
         {{ this.copyObject.title }}:
-        <div class="copy_row" ref="link">
+        <div class="copy_row" @click="this.copyLink" ref="link">
             {{ this.copyObject.link }}
             <svg
                 class="copy-button"

@@ -111,6 +111,9 @@
     }
     &__column {
         flex-direction: column;
+        .wrap__head {
+            flex-direction: column;
+        }
     }
     &-modify {
         display: grid;

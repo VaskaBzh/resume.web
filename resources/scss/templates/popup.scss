@@ -135,6 +135,36 @@ body::after {
             }
         }
     }
+    .loading {
+        form,
+        .swiper {
+            .blue-button {
+                background: rgba(#4282ec, 0.8) !important;
+                .all-link {
+                    svg {
+                        max-width: 100%;
+                        max-height: 100%;
+                        overflow: visible;
+                        visibility: visible;
+                        opacity: 1;
+                        path {
+                            transform-origin: center;
+                            fill: #ffffff;
+                            &:first-child {
+                                animation: rotate 2s linear 0s infinite;;
+                            }
+                            &:nth-child(2) {
+                                animation: reRotate 2s linear 0s infinite;;
+                            }
+                            &:last-child {
+                                animation: rotate 2s linear 0s infinite;;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
     &__content {
         cursor: default;
         visibility: hidden;
@@ -225,36 +255,6 @@ body::after {
             padding: 40px 0;
             @media (max-width: $mobileSmall) {
                 padding: 20px 0;
-            }
-            &.loading {
-                form,
-                .swiper {
-                    .blue-button {
-                        background: rgba(#4282ec, 0.8) !important;
-                        .all-link {
-                            svg {
-                                max-width: 100%;
-                                max-height: 100%;
-                                overflow: visible;
-                                visibility: visible;
-                                opacity: 1;
-                                path {
-                                    transform-origin: center;
-                                    fill: #ffffff;
-                                    &:first-child {
-                                        animation: rotate 2s linear 0s infinite;;
-                                    }
-                                    &:nth-child(2) {
-                                        animation: reRotate 2s linear 0s infinite;;
-                                    }
-                                    &:last-child {
-                                        animation: rotate 2s linear 0s infinite;;
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
             }
             .popup__close {
                 opacity: 0;

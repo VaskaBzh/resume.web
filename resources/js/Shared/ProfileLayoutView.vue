@@ -93,7 +93,7 @@ export default {
 </script>
 <style lang="scss">
 .account {
-    margin-top: 32px;
+    margin-top: 40px;
 
     &__container {
         display: flex;

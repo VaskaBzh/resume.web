@@ -65,7 +65,7 @@ Route::controller(LoginController::class)->group(function () {
 Route::controller(VerificationController::class)
     ->group(function () {
         Route::get('/email/verify', 'show')->name('verification.notice');
-        Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
+//        Route::get('/email/verify/{id}/{hash}', 'verify')->name('verification.verify');
         Route::get('/email/resend', 'resend')->name('verification.resend');
     });
 
@@ -77,7 +77,7 @@ Route::controller(RequestController::class)
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
 
-Route::middleware('auth')->group(function () {
+Route::middleware('verified')->group(function () {
     Route::controller(IndexController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::redirect('/profile', '/profile/statistic');
@@ -96,7 +96,7 @@ Route::middleware('auth')->group(function () {
     });
 
     Route::controller(ResetPasswordController::class)->group(function () {
-       Route::post('/password/reset', 'changePassword');
+        Route::post('/password/reset', 'changePassword');
     });
 
     Route::controller(WorkerController::class)->group(function () {

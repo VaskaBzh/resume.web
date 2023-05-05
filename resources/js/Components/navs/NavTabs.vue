@@ -444,6 +444,7 @@ export default {
             border-radius: 8px;
             color: #818c99;
             height: 40px;
+            min-height: 40px;
             padding: 0 20px;
             justify-content: center;
             font-size: 18px;

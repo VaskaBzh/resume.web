@@ -189,7 +189,11 @@ class Popup {
                 const buttonClose = e.target.closest(
                     `[${this.options.attributeCloseButton}]`
                 );
-                if (buttonClose && this.isOpen) {
+                if (
+                    buttonClose &&
+                    this.isOpen &&
+                    !this.targetOpen.element.querySelector(".loading")
+                ) {
                     e.preventDefault();
                     this.close();
                     return;
@@ -208,7 +212,8 @@ class Popup {
                     !e.target.closest(
                         `.${this.options.classes.popupContent}`
                     ) &&
-                    this.isOpen
+                    this.isOpen &&
+                    !this.targetOpen.element.querySelector(".loading")
                 ) {
                     e.preventDefault();
                     this.close();

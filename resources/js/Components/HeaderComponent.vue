@@ -510,7 +510,9 @@ export default defineComponent({
             form.post("/login", {
                 onSuccess: (response) => {
                     wait.value = false;
-                    document.querySelector("[data-close]").click();
+                    setTimeout(() => {
+                        document.querySelector("[data-close]").click();
+                    }, 300);
                 },
                 onError: (errors) => {
                     // Обработка ошибок
@@ -532,7 +534,9 @@ export default defineComponent({
             new_account_input.post("/register", {
                 async onSuccess() {
                     wait.value = false;
-                    document.querySelector("[data-close]").click();
+                    setTimeout(() => {
+                        document.querySelector("[data-close]").click();
+                    }, 300);
                 },
                 onError(error) {
                     wait.value = false;
@@ -620,7 +624,7 @@ export default defineComponent({
             let self = this;
             this.wait = true;
 
-            setTimeout(() => this.wait = false, 1000);
+            setTimeout(() => (this.wait = false), 1000);
             // eslint-disable-next-line no-undef
             await email.post(route("user_get"), {
                 onSuccess() {
@@ -846,36 +850,27 @@ nav.nav__container {
     width: 100%;
     box-sizing: border-box !important;
     padding: 21px 0;
+    &:before {
+        transition: all 0.3s ease 0s;
+        left: 50%;
+        content: "";
+        transform: translateX(-50%);
+        top: 0;
+        width: 100vw;
+        height: 84px;
+        z-index: -1;
+        position: fixed;
+        background: #eef1f5;
+        box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+    }
     @media (min-width: 1271px) {
         transition: all 0.3s ease 0s;
-        //position: fixed;
-        position: absolute;
+        position: fixed;
         top: 0;
         left: 50%;
         transform: translateX(-50%) translateY(0);
         width: 100vw;
         z-index: 100;
-        &:before {
-            transition: all 0.3s ease 0s;
-            left: 50%;
-            content: "";
-            transform: translateX(-50%) translateY(-120%);
-            top: 0;
-            width: 100vw;
-            height: 101px;
-            z-index: -1;
-            //position: fixed;
-            position: absolute;
-            filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
-            background: linear-gradient(
-                179.87deg,
-                #e6eaf0 1.02%,
-                #e6eaf1 4.79%,
-                #e7ebf1 8.76%,
-                #eaeef4 14.75%,
-                #e8ecf2 19.07%
-            );
-        }
         //&.fixed {
         //    transform: translateX(-50%) translateY(0);
         //
