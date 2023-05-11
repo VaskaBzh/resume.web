@@ -1,4 +1,4 @@
-<template>
+ <template>
     <swiper
         class="wrap__swiper"
         v-if="Object.values(this.allAccounts).length > 0"
@@ -170,7 +170,7 @@ export default {
     border-color: transparent;
     transition: all 0.3s ease 0s;
     height: 100%;
-    max-width: 416px;
+    max-width: 429px;
     @media (max-width: 991.98px) {
         max-width: 339px;
         padding: 16px 12px;
@@ -181,10 +181,10 @@ export default {
     @media (max-width: 767.98px) {
         max-width: 100%;
     }
-    @media (max-width: 479.98px) {
-        background: rgba(255, 255, 255, 0.29);
-        border: 0.5px solid #d7d8d9;
-    }
+    //@media (max-width: 479.98px) {
+    //    background: rgba(255, 255, 255, 0.29);
+    //    border: 0.5px solid #d7d8d9;
+    //}
     //&.active {
     //    border-color: rgba(#331a38, 0.5);
     //    background: #331a38;

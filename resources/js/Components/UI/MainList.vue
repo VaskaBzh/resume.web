@@ -100,6 +100,9 @@ export default {
         font-size: 17px;
         height: 36px;
         background: transparent;
+        &:hover {
+            background: rgba(234, 238, 244, 0.4);
+        }
         svg {
             width: 24px;
             height: 24px;

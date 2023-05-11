@@ -1,99 +1,95 @@
 <template>
     <div class="income" ref="page">
-        <div class="income__container">
-            <main-title
-                v-if="this.viewportWidth > 767.98"
-                tag="h2"
-                titleName="История платежей"
-            >
-                <!--                <blue-button class="income__button">-->
-                <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
-                <!--                </blue-button>-->
-            </main-title>
+        <main-title
+            v-if="this.viewportWidth > 767.98"
+            tag="h2"
+            titleName="История платежей"
+        >
+            <!--                <blue-button class="income__button">-->
+            <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
+            <!--                </blue-button>-->
+        </main-title>
 
-            <main-title v-else tag="h2" titleName="Платежи">
-                <!--                <blue-button class="income__button">-->
-                <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
-                <!--                </blue-button>-->
-            </main-title>
-            <div class="wallets__wrap">
-                <div class="wallets__row wallets__row-balance">
-                    <h3 class="wallets__title">Платежи:</h3>
+        <main-title v-else tag="h2" titleName="Платежи">
+            <!--                <blue-button class="income__button">-->
+            <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
+            <!--                </blue-button>-->
+        </main-title>
+        <div class="wallets__wrap">
+            <div class="wallets__row wallets__row-balance">
+                <h3 class="wallets__title">Платежи:</h3>
+            </div>
+            <div class="wallets__row">
+                <div class="wallets__block">
+                    <div class="wallets__column">
+                        <span class="wallets__subtitle">Оплачено:</span>
+                        <span class="wallets__value"
+                            ><span> 0.00000000 </span>
+                            BTC
+                        </span>
+                    </div>
                 </div>
-                <div class="wallets__row">
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">Оплачено:</span>
-                            <span class="wallets__value"
-                                ><span> 0.00000000 </span>
-                                BTC
+                <div class="wallets__block">
+                    <div class="wallets__column">
+                        <span class="wallets__subtitle"> Неоплаченно: </span>
+                        <span class="wallets__value">
+                            <span>
+                                {{ this.unPayment }}
                             </span>
-                        </div>
+                            BTC
+                        </span>
                     </div>
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">
-                                Неоплаченно:
+                </div>
+                <div class="wallets__block">
+                    <div class="wallets__column">
+                        <span class="wallets__subtitle">
+                            Вчерашний доход:
+                        </span>
+                        <span class="wallets__value">
+                            <span>
+                                {{ this.yesterdayProfit }}
                             </span>
-                            <span class="wallets__value">
-                                <span>
-                                    {{ this.unPayment }}
-                                </span>
-                                BTC
-                            </span>
-                        </div>
-                    </div>
-                    <div class="wallets__block">
-                        <div class="wallets__column">
-                            <span class="wallets__subtitle">
-                                Вчерашний доход:
-                            </span>
-                            <span class="wallets__value">
-                                <span>
-                                    {{ this.yesterdayProfit }}
-                                </span>
-                                BTC
-                            </span>
-                        </div>
+                            BTC
+                        </span>
                     </div>
                 </div>
             </div>
-
-            <div class="income__filter">
-                <!--                <div-->
-                <!--                    class="income__filter_block"-->
-                <!--                    v-show="this.walletOptions[1]"-->
-                <!--                >-->
-                <!--                    <div class="income__filter_label">Кошелек</div>-->
-                <!--                    <main-select-->
-                <!--                        @getCoin="this.filter"-->
-                <!--                        class="income__filter_select"-->
-                <!--                        :options="this.walletOptions"-->
-                <!--                    ></main-select>-->
-                <!--                </div>-->
-                <!--                <div class="income__filter_block income__filter_block-adapt">-->
-                <!--                    <div class="income__filter_label">Статус операции</div>-->
-                <!--                    <main-select-->
-                <!--                        @getCoin="this.filter"-->
-                <!--                        class="income__filter_select"-->
-                <!--                        :options="this.operationOptions"-->
-                <!--                    ></main-select>-->
-                <!--                </div>-->
-                <div class="income__filter_block">
-                    <div class="income__filter_label">Дата</div>
-                    <main-date
-                        v-model="date"
-                        placeholder="За все время"
-                    ></main-date>
-                </div>
-            </div>
-            <main-slider
-                class="wrap-no-overflow"
-                :wait="this.allIncomeHistory"
-                :table="this.incomeInfo"
-                type="Платежи"
-            ></main-slider>
         </div>
+
+        <div class="income__filter">
+            <!--                <div-->
+            <!--                    class="income__filter_block"-->
+            <!--                    v-show="this.walletOptions[1]"-->
+            <!--                >-->
+            <!--                    <div class="income__filter_label">Кошелек</div>-->
+            <!--                    <main-select-->
+            <!--                        @getCoin="this.filter"-->
+            <!--                        class="income__filter_select"-->
+            <!--                        :options="this.walletOptions"-->
+            <!--                    ></main-select>-->
+            <!--                </div>-->
+            <!--                <div class="income__filter_block income__filter_block-adapt">-->
+            <!--                    <div class="income__filter_label">Статус операции</div>-->
+            <!--                    <main-select-->
+            <!--                        @getCoin="this.filter"-->
+            <!--                        class="income__filter_select"-->
+            <!--                        :options="this.operationOptions"-->
+            <!--                    ></main-select>-->
+            <!--                </div>-->
+            <div class="income__filter_block">
+                <div class="income__filter_label">Дата</div>
+                <main-date
+                    v-model="date"
+                    placeholder="За все время"
+                ></main-date>
+            </div>
+        </div>
+        <main-slider
+            class="wrap-no-overflow"
+            :wait="this.allIncomeHistory"
+            :table="this.incomeInfo"
+            type="Платежи"
+        ></main-slider>
     </div>
 </template>
 <script>
@@ -195,7 +191,6 @@ export default {
             let sum = 0;
             if (
                 this.allIncomeHistory &&
-
                 Object.values(this.allIncomeHistory).length > 0
             ) {
                 Object.values(this.allIncomeHistory).forEach((acc) => {

@@ -219,7 +219,6 @@ export default {
         //width: calc(100% + 40px);
         //margin: 0 -20px;
         border-radius: 12px;
-        padding: 20px;
     }
     &:before {
         content: "";
@@ -238,6 +237,9 @@ export default {
             #4182ec 100%
         );
         border-radius: 21px;
+        @media (max-width: 479.98px) {
+            border-radius: 12px;
+        }
     }
     &.active {
         -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 20%);

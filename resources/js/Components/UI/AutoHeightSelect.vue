@@ -43,13 +43,17 @@
             </span>
         </div>
         <div class="select_options" v-if="this.optionsObject.length > 0">
+            <!--                @mouseenter="hoverInEffect"-->
+            <!--                @mouseout="hoverOutEffect"-->
             <div
                 v-for="(option, i) in this.optionsObject"
                 :key="option.value"
                 class="select_option"
                 :class="{
                     active:
-                        option.title === this.allAccounts[this.getActive]?.name && this.optionsObject.length > 1,
+                        option.title ===
+                            this.allAccounts[this.getActive]?.name &&
+                        this.optionsObject.length > 1,
                 }"
             >
                 <p
@@ -57,35 +61,35 @@
                     @click="selectOptions(option.title, option.value)"
                 >
                     {{ option.title }}
-                    <svg
-                        v-show="option.title !== this.name"
-                        width="20"
-                        height="20"
-                        viewBox="0 0 20 20"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                    >
-                        <g clip-path="url(#clip0_1021_16869)">
-                            <path
-                                d="M9.96094 19.9658C11.3216 19.9658 12.6026 19.7054 13.8037 19.1846C15.0049 18.6637 16.0645 17.9443 16.9824 17.0264C17.9004 16.1084 18.6198 15.0488 19.1406 13.8477C19.6615 12.6465 19.9219 11.3655 19.9219 10.0049C19.9219 8.64421 19.6615 7.36328 19.1406 6.16211C18.6198 4.96094 17.9004 3.90137 16.9824 2.9834C16.0645 2.06543 15.0033 1.34603 13.7988 0.825196C12.5944 0.304362 11.3119 0.0439453 9.95117 0.0439453C8.5905 0.0439453 7.30957 0.304362 6.1084 0.825196C4.90723 1.34603 3.84928 2.06543 2.93457 2.9834C2.01986 3.90137 1.30208 4.96094 0.78125 6.16211C0.260417 7.36328 0 8.64421 0 10.0049C0 11.3655 0.260417 12.6465 0.78125 13.8477C1.30208 15.0488 2.02148 16.1084 2.93945 17.0264C3.85742 17.9443 4.91699 18.6637 6.11816 19.1846C7.31933 19.7054 8.60026 19.9658 9.96094 19.9658Z"
-                                fill="#EAEEF4"
-                            />
-                            <path
-                                d="M4.95117 14.3506C4.81445 14.3506 4.6875 14.2903 4.57031 14.1699C4.45312 14.0495 4.39453 13.8721 4.39453 13.6377C4.39453 12.3031 4.58984 11.1507 4.98047 10.1807C5.3711 9.21062 5.97819 8.46354 6.80176 7.93945C7.62533 7.41536 8.6849 7.15332 9.98047 7.15332H10.1367V5.09277C10.1367 4.91699 10.1969 4.76399 10.3174 4.63379C10.4378 4.50358 10.5924 4.43848 10.7812 4.43848C10.9179 4.43848 11.0368 4.4694 11.1377 4.53125C11.2386 4.59309 11.3607 4.68912 11.5039 4.81934L15.7812 8.81348C15.8919 8.91113 15.9668 9.00879 16.0059 9.10645C16.045 9.2041 16.0645 9.30175 16.0645 9.39941C16.0645 9.49055 16.0433 9.58496 16.001 9.68262C15.9587 9.78027 15.8854 9.87793 15.7812 9.97559L11.5039 13.999C11.3802 14.1162 11.2614 14.2041 11.1475 14.2627C11.0336 14.3213 10.9082 14.3506 10.7715 14.3506C10.5892 14.3506 10.4378 14.2903 10.3174 14.1699C10.1969 14.0495 10.1367 13.9014 10.1367 13.7256V11.6553H9.98047C8.93229 11.6553 8.06152 11.818 7.36816 12.1436C6.6748 12.4691 6.09049 13.0713 5.61523 13.9502C5.5306 14.126 5.42806 14.2366 5.30762 14.2822C5.18717 14.3278 5.06836 14.3506 4.95117 14.3506Z"
-                                fill="white"
-                            />
-                        </g>
-                        <defs>
-                            <clipPath id="clip0_1021_16869">
-                                <rect
-                                    width="19.9219"
-                                    height="19.9316"
-                                    fill="white"
-                                    transform="translate(0 0.0341797)"
+                    <transition name="fade">
+                        <svg
+                            v-if="option.title !== this.name"
+                            width="20"
+                            height="20"
+                            viewBox="0 0 20 20"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clip-path="url(#clip0_1021_16869)">
+                                <path
+                                    d="M9.96094 19.9658C11.3216 19.9658 12.6026 19.7054 13.8037 19.1846C15.0049 18.6637 16.0645 17.9443 16.9824 17.0264C17.9004 16.1084 18.6198 15.0488 19.1406 13.8477C19.6615 12.6465 19.9219 11.3655 19.9219 10.0049C19.9219 8.64421 19.6615 7.36328 19.1406 6.16211C18.6198 4.96094 17.9004 3.90137 16.9824 2.9834C16.0645 2.06543 15.0033 1.34603 13.7988 0.825196C12.5944 0.304362 11.3119 0.0439453 9.95117 0.0439453C8.5905 0.0439453 7.30957 0.304362 6.1084 0.825196C4.90723 1.34603 3.84928 2.06543 2.93457 2.9834C2.01986 3.90137 1.30208 4.96094 0.78125 6.16211C0.260417 7.36328 0 8.64421 0 10.0049C0 11.3655 0.260417 12.6465 0.78125 13.8477C1.30208 15.0488 2.02148 16.1084 2.93945 17.0264C3.85742 17.9443 4.91699 18.6637 6.11816 19.1846C7.31933 19.7054 8.60026 19.9658 9.96094 19.9658Z"
                                 />
-                            </clipPath>
-                        </defs>
-                    </svg>
+                                <path
+                                    d="M4.95117 14.3506C4.81445 14.3506 4.6875 14.2903 4.57031 14.1699C4.45312 14.0495 4.39453 13.8721 4.39453 13.6377C4.39453 12.3031 4.58984 11.1507 4.98047 10.1807C5.3711 9.21062 5.97819 8.46354 6.80176 7.93945C7.62533 7.41536 8.6849 7.15332 9.98047 7.15332H10.1367V5.09277C10.1367 4.91699 10.1969 4.76399 10.3174 4.63379C10.4378 4.50358 10.5924 4.43848 10.7812 4.43848C10.9179 4.43848 11.0368 4.4694 11.1377 4.53125C11.2386 4.59309 11.3607 4.68912 11.5039 4.81934L15.7812 8.81348C15.8919 8.91113 15.9668 9.00879 16.0059 9.10645C16.045 9.2041 16.0645 9.30175 16.0645 9.39941C16.0645 9.49055 16.0433 9.58496 16.001 9.68262C15.9587 9.78027 15.8854 9.87793 15.7812 9.97559L11.5039 13.999C11.3802 14.1162 11.2614 14.2041 11.1475 14.2627C11.0336 14.3213 10.9082 14.3506 10.7715 14.3506C10.5892 14.3506 10.4378 14.2903 10.3174 14.1699C10.1969 14.0495 10.1367 13.9014 10.1367 13.7256V11.6553H9.98047C8.93229 11.6553 8.06152 11.818 7.36816 12.1436C6.6748 12.4691 6.09049 13.0713 5.61523 13.9502C5.5306 14.126 5.42806 14.2366 5.30762 14.2822C5.18717 14.3278 5.06836 14.3506 4.95117 14.3506Z"
+                                    fill="white"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1021_16869">
+                                    <rect
+                                        width="19.9219"
+                                        height="19.9316"
+                                        fill="white"
+                                        transform="translate(0 0.0341797)"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>
+                    </transition>
                 </p>
             </div>
         </div>
@@ -94,6 +98,7 @@
 
 <script>
 import { mapGetters } from "vuex";
+import anime from "animejs/lib/anime.es.js";
 
 export default {
     name: "auto-height-select",
@@ -156,6 +161,22 @@ export default {
         toggleSelect() {
             this.select_is_open = !this.select_is_open;
         },
+        // hoverInEffect(e) {
+        //     let target = e.target;
+        //     anime({
+        //         targets: target,
+        //         easing: "linear",
+        //         translateX: 8,
+        //     });
+        // },
+        // hoverOutEffect(e) {
+        //     let target = e.target;
+        //     anime({
+        //         targets: target,
+        //         easing: "linear",
+        //         translateX: 0,
+        //     });
+        // },
     },
     mounted() {
         this.$refs.select
@@ -181,6 +202,30 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+//.fade {
+//    &-enter {
+//        &-active {
+//            path:first-child {
+//                fill: #417fe5 !important;
+//            }
+//        }
+//    }
+//    &-leave {
+//        &-active {
+//            path:first-child {
+//                fill: #EAEEF4 !important;
+//            }
+//        }
+//    }
+//}
+.fade-enter-active,
+.fade-leave-active {
+    transition: opacity 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 .select {
     &_con {
         height: fit-content;
@@ -271,6 +316,10 @@ export default {
         max-height: 0;
         visibility: hidden;
         opacity: 0;
+        svg path:first-child {
+            fill: #eaeef4;
+            transition: all 0.8s ease-in 0s;
+        }
     }
     &_option {
         width: 100%;
@@ -278,7 +327,7 @@ export default {
         padding: 0 12px;
         height: 36px;
         min-height: 36px;
-        transition: background 0.3s ease 0s;
+        transition: background 0.3s ease 0s, padding 0.8s ease 0s;
         &.active {
             padding: 0 10px;
             &:hover {
@@ -305,7 +354,7 @@ export default {
             background: transparent;
             font-weight: 400;
             font-size: 17px;
-            transition: background 0.3s ease 0s;
+            transition: background 0.3s ease 0s, padding 0.8s ease 0s;
             line-height: 143.1%;
             color: #000034;
         }
@@ -313,9 +362,17 @@ export default {
             width: 20px;
             height: 20px;
         }
-        &:hover {
-            background: rgba(234, 238, 244, 0.4);
-        }
+        //&:hover {
+        //    //    background: rgba(234, 238, 244, 0.4);
+        //    //    transition: padding 0.8s ease 0s;
+        //    transition: background 0.3s ease 0s, padding 0.3s ease 0s;
+        //    padding: 0 10px;
+        //    .main_select {
+        //        padding: 0 10px;
+        //        //transition: padding 0.8s ease 0s;
+        //        transition: background 0.3s ease 0s, padding 0.3s ease 0s;
+        //    }
+        //}
     }
 }
 </style>

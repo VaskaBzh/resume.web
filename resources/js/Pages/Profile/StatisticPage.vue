@@ -10,22 +10,22 @@
                 ref="popupShow"
                 data-popup="#graph"
             ></div>
-            <div class="wrap wrap-no-padding wrap-modify">
+            <div class="wrap wrap-modify">
                 <div class="wrap__head wrap__head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">
                         Общий хешрейт
                     </main-title>
-                    <button
-                        class="button"
-                        :key="button.title + i"
-                        v-for="(button, i) in buttons"
-                        :class="{ active: button.value === this.val }"
-                        @click="changeGraph(button.value)"
-                    >
-                        {{ button.title }}
-                    </button>
-                    <!--                    <button class="button">1 день</button>-->
-                    <!--                    <button class="button">7 дней</button>-->
+                    <div class="buttons">
+                        <button
+                            class="button"
+                            :key="button.title + i"
+                            v-for="(button, i) in buttons"
+                            :class="{ active: button.value === this.val }"
+                            @click="changeGraph(button.value)"
+                        >
+                            {{ button.title }}
+                        </button>
+                    </div>
                 </div>
                 <div class="wrap__block wrap__block-graph">
                     <div class="propeller" v-if="this.id !== this.val"></div>
@@ -321,7 +321,7 @@ export default {
 <style lang="scss" scoped>
 .statistic {
     @media (min-width: 1271px) {
-        padding-left: 330px;
+        padding-left: 310px;
     }
     width: 100%;
     .wrap {
@@ -384,6 +384,17 @@ export default {
         }
         &__head {
             gap: 8px;
+            .buttons {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                @media (max-width: 776.98px) {
+                    gap: 1px;
+                    position: absolute;
+                    top: calc(100% + 40px);
+                    left: 0;
+                }
+            }
             .button {
                 white-space: nowrap;
                 padding: 2px 12px;
@@ -395,6 +406,14 @@ export default {
                 line-height: 20px;
                 background: transparent;
                 transition: all 0.3s ease 0s;
+                @media (max-width: 767.98px) {
+                    border-radius: 12px;
+                    min-height: 38px;
+                    padding: 2px 20px;
+                    font-weight: 400;
+                    font-size: 16px;
+                    line-height: 18px;
+                }
                 &.active {
                     color: #181847;
                     background: #ffffff;
@@ -409,6 +428,7 @@ export default {
                 align-items: center;
                 grid-column-start: 1;
                 grid-column-end: 3;
+                position: relative;
                 .title {
                     margin-bottom: 0;
                     &:after {
@@ -417,7 +437,7 @@ export default {
                 }
                 @media (max-width: 767.98px) {
                     grid-column-end: 2;
-                    margin-bottom: 8px;
+                    margin-bottom: calc(8px + 8px + 38px + 8px);
                     &:after {
                         content: "";
                         height: 1px;
@@ -560,7 +580,7 @@ export default {
         display: grid;
         width: 100%;
         grid-template-columns: repeat(2, 1fr);
-        gap: 32px;
+        gap: 24px;
         .no-info {
             padding: 12px;
             display: flex;

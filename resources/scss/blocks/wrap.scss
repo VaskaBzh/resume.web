@@ -6,7 +6,7 @@
     border-radius: 21px;
     display: flex;
     flex-wrap: wrap;
-    margin-bottom: 32px;
+    margin-bottom: 30px;
     overflow-y: hidden;
     .main__link {
         margin-top: calc(24px - 8px);
@@ -25,7 +25,7 @@
         padding: 4px 4px 6px;
         min-height: 0!important;
         gap: 6px;
-        max-width: 423px;
+        max-width: 437px;
         @media (max-width: $tablet) {
             max-width: 339px;
         }
@@ -117,8 +117,8 @@
     }
     &-modify {
         display: grid;
-        grid-template-columns: 600px auto;
-        gap: 0 32px;
+        grid-template-columns: 620px auto;
+        gap: 0 24px;
         grid-template-rows: repeat(2, auto);
         @media (max-width: 998.98px) {
             overflow: hidden;
@@ -126,7 +126,7 @@
         }
         @media (max-width: 767.98px) {
             grid-template-columns: 100%;
-            gap: 32px;
+            gap: 24px;
             .wrap__block {
                 grid-column-start: 1;
                 grid-column-end: 2;
@@ -194,7 +194,6 @@
             //height: 100%;
             //padding: 0 20px 40px;
             padding: 0 20px;
-            max-height: 50vh;
         }
     }
     @media (max-width: $pc) {

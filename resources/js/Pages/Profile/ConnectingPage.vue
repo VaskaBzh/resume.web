@@ -62,7 +62,7 @@ export default {
 <style lang="scss" scoped>
 .connecting {
     @media (min-width: 1271px) {
-        padding-left: 330px;
+        padding-left: 310px;
     }
     width: 100%;
     .title {

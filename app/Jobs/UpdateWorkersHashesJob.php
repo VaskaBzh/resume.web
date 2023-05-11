@@ -32,7 +32,7 @@ class UpdateWorkersHashesJob implements ShouldQueue
     public function handle()
     {
         $workers = Worker::all();
-        $maximum_records = 256;
+        $maximum_records = 128;
 
         foreach ($workers as $worker) {
             $extra_records = Worker::where('group_id', $worker->group_id)

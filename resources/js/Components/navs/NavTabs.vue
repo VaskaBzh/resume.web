@@ -104,7 +104,7 @@
         <!--        </Link>-->
         <Link
             :href="route('income')"
-            :class="{ 'router-link-active': $page.url === '/income' }"
+            :class="{ 'router-link-active': $page.url === '/profile/income' }"
             class="nav-tabs__tab"
         >
             <svg
@@ -259,7 +259,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .nav-tabs {
-    max-width: 300px;
+    max-width: 280px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -460,9 +460,11 @@ export default {
             font-size: 14px;
             line-height: 16px;
             height: 34px;
+            min-height: 34px;
         }
         @media (max-width: 380.98px) {
             height: 28px;
+            min-height: 28px;
             font-size: 12px;
             line-height: 14px;
         }

@@ -346,7 +346,7 @@ export default {
 .accounts {
     width: 100%;
     @media (min-width: 1271px) {
-        padding-left: 330px;
+        padding-left: 310px;
     }
     &__wrapper {
         width: 100%;

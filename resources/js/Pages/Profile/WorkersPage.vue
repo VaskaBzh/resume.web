@@ -223,7 +223,7 @@ export default {
 .workers {
     width: 100%;
     @media (min-width: 1271px) {
-        padding-left: 330px;
+        padding-left: 310px;
     }
     &__button {
         width: 60px;
