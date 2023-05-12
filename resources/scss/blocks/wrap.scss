@@ -8,6 +8,7 @@
     flex-wrap: wrap;
     margin-bottom: 30px;
     overflow-y: hidden;
+    border-top: 1px solid #fff;
     .main__link {
         margin-top: calc(24px - 8px);
         line-height: 26px;
@@ -23,7 +24,7 @@
         background: rgba(255, 255, 255, 0.3);
         border-radius: 20px;
         padding: 4px 4px 6px;
-        min-height: 0!important;
+        min-height: 0 !important;
         gap: 6px;
         max-width: 437px;
         @media (max-width: $tablet) {
@@ -35,8 +36,8 @@
         .swiper {
             &-pagination {
                 position: relative;
-                bottom: 0!important;
-                left: 0!important;
+                bottom: 0 !important;
+                left: 0 !important;
                 display: flex;
                 justify-content: center;
                 gap: 4px;
@@ -47,7 +48,7 @@
                     height: 4px !important;
                     margin: 0 !important;
                     &-active {
-                        background: #759FE3 !important;
+                        background: #759fe3 !important;
                     }
                 }
             }
@@ -154,8 +155,8 @@
                 .wrap__block {
                     min-height: 0 !important;
                     @media (max-width: $mobile) {
-                        display: flex!important;
-                        grid-template-columns: auto!important;
+                        display: flex !important;
+                        grid-template-columns: auto !important;
                     }
                 }
                 @media (max-width: 998.98px) {

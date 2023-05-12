@@ -47,7 +47,7 @@ export default {
         },
         val: {
             type: Number,
-            default: 6,
+            default: 24,
         },
     },
     components: {
@@ -74,7 +74,7 @@ export default {
                             interval = 1;
                             break;
                         case 24:
-                            interval = 4;
+                            interval = 2;
                             break;
                         case 168:
                             interval = 24;
@@ -129,17 +129,92 @@ export default {
                     return averages;
                 };
 
+                let changeVal =
+                    graphsList[i].values[graphsList[i].values.length - 1] /
+                        1000 /
+                        1000 >
+                    1
+                        ? "E"
+                        : graphsList[i].values[
+                              graphsList[i].values.length - 1
+                          ] /
+                              1000 >
+                          1
+                        ? "P"
+                        : null;
+
+                let values = graphsList[i].values.map((val) => {
+                    let newVal = val;
+                    if (changeVal === "E") {
+                        newVal = val / 1000 / 1000;
+                    }
+                    if (changeVal === "P") {
+                        newVal = val / 1000;
+                    }
+                    return newVal;
+                });
+
+                let yLabel =
+                    graphsList[i].values[graphsList[i].values.length - 1] /
+                        1000 /
+                        1000 >
+                    1
+                        ? "Eh/s"
+                        : graphsList[i].values[
+                              graphsList[i].values.length - 1
+                          ] /
+                              1000 >
+                          1
+                        ? "Ph/s"
+                        : "Th/s";
+
+                let dates = hours();
+
+                dates = [...new Set(dates)];
+
+                const customLinesPlugin = {
+                    id: "custom_lines_plugin",
+                    afterDraw: (chart, args, options) => {
+                        const yAxis = chart.scales["y"];
+                        const xAxis = chart.scales["x"];
+
+                        const dataset = chart.data.datasets[0];
+                        const minValue = Math.min(...dataset.data);
+                        const maxValue = Math.max(...dataset.data);
+
+                        const minYPos = yAxis.getPixelForValue(minValue);
+                        const maxYPos = yAxis.getPixelForValue(maxValue);
+
+                        chart.ctx.save();
+                        chart.ctx.strokeStyle = "#818c99";
+                        chart.ctx.setLineDash([5, 5]);
+
+                        // Draw min line
+                        chart.ctx.beginPath();
+                        chart.ctx.moveTo(xAxis.left, minYPos);
+                        chart.ctx.lineTo(xAxis.right, minYPos);
+                        chart.ctx.stroke();
+
+                        // Draw max line
+                        chart.ctx.beginPath();
+                        chart.ctx.moveTo(xAxis.left, maxYPos);
+                        chart.ctx.lineTo(xAxis.right, maxYPos);
+                        chart.ctx.stroke();
+
+                        chart.ctx.restore();
+                    },
+                };
+
+                Chart.register(customLinesPlugin);
+
                 new Chart(ctx, {
                     type: "line",
                     data: {
-                        labels: hours(),
+                        labels: dates,
                         datasets: [
                             {
                                 label: graphsList[0].title[0],
-                                data: calculateAverage(
-                                    graphsList[i].values,
-                                    interval
-                                ),
+                                data: calculateAverage(values, interval),
                                 borderColor: "#3f7bdd",
                                 backgroundColor: gradientBg,
                                 tension: 0.4,
@@ -148,6 +223,10 @@ export default {
                         ],
                     },
                     options: {
+                        interaction: {
+                            mode: "index",
+                            intersect: false,
+                        },
                         fill: true,
                         scales: {
                             y: {
@@ -156,7 +235,9 @@ export default {
                                     z: 2,
                                 },
                                 ticks: {
-                                    stepSize: 50,
+                                    callback: function (value, index, values) {
+                                        return value + " " + yLabel; // Добавьте единицу измерения к каждой метке на оси Y
+                                    },
                                 },
                             },
                             x: {
@@ -166,9 +247,27 @@ export default {
                             },
                         },
                         plugins: {
+                            custom_lines_plugin: {},
                             tooltip: {
                                 mode: "index",
                                 intersect: false,
+                                callbacks: {
+                                    label: function (tooltipItem) {
+                                        let label =
+                                            tooltipItem.dataset.label || "";
+                                        let value = tooltipItem.parsed.y;
+
+                                        if (label) {
+                                            label += ": ";
+                                        }
+
+                                        label += `${value.toFixed(
+                                            2
+                                        )} ${yLabel}`;
+
+                                        return label;
+                                    },
+                                },
                             },
                             legend: {
                                 // position: "left",
@@ -193,11 +292,27 @@ export default {
 
 <style lang="scss" scoped>
 #myChart {
-    @media (max-width: 479.98px) {
-        width: 240px;
+    @media (min-width: 1270.98px) {
+        height: 430px !important;
+    }
+    @media (min-width: 768.98px) {
+        height: 370px !important;
+        width: 100% !important;
     }
 }
 .graph {
+    @media (max-width: 478.98px) {
+        overflow-x: scroll;
+        &::-webkit-scrollbar {
+            height: 5px;
+
+            &-thumb {
+                /* плашка-бегунок */
+                background: #4282ec;
+                border-radius: 4px;
+            }
+        }
+    }
     // .graph__main
     &__main {
         background: rgba(255, 255, 255, 0.29);
@@ -274,17 +389,19 @@ export default {
         @media (max-width: 767.98px) {
             //padding: 20px 10px;
             flex-direction: column;
-            align-items: center;
         }
         @media (max-width: 479.98px) {
+            align-items: flex-start;
         }
     }
     // .graph__graph
     &__graph {
         flex: 1 1 auto;
         @media (max-width: 767.98px) {
-            margin: 12px 0;
             width: 100%;
+        }
+        @media (max-width: 478.98px) {
+            width: 120%;
         }
     }
     // .graph__title
@@ -302,6 +419,8 @@ export default {
         }
         @media (max-width: 479.98px) {
             font-size: 12px;
+            width: 120%;
+            text-align: center;
         }
         &-second {
             position: absolute;

@@ -75,7 +75,14 @@ export default {
             Vue.set(state.convertInfo, data.key, data.item);
         },
         updateHistoryDiff(state, data) {
-            state.historyDiff = data;
+            let hist = data.reverse();
+            hist = hist.map((el, i) => {
+                if (i < 120) {
+                    return el;
+                }
+            });
+            hist = hist.filter((el) => el !== undefined);
+            state.historyDiff = hist.reverse();
         },
     },
     state: {

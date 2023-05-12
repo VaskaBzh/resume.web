@@ -1,8 +1,9 @@
 <template>
     <div class="nav__links_con">
-        <div class="nav__links">
+        <div class="nav__links" @click="closeBurger">
             <account-menu
-                v-show="viewportWidth <= 767.78 && is_auth"></account-menu>
+                v-show="viewportWidth <= 767.78 && is_auth"
+            ></account-menu>
             <Link
                 v-if="!is_auth || $page.url.startsWith('/profile')"
                 :href="route('home')"
@@ -72,6 +73,9 @@ export default {
                 console.log(error.response);
             });
         },
+        closeBurger() {
+            this.$emit("clicked", null);
+        },
     },
     computed: {
         ...mapGetters(["getIncome", "allAccounts", "getActive"]),
@@ -90,13 +94,6 @@ export default {
                 });
             }
             return sum.toFixed(8);
-        },
-        allErrors() {
-            let obj = {};
-            if (this.errors) {
-                obj = this.errors;
-            }
-            return Object.assign(obj, this.frontErrs);
         },
     },
 };

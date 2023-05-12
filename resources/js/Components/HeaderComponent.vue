@@ -8,7 +8,7 @@
             />
         </Link>
 
-        <nav-links :is_auth="is_auth" :viewportWidth="viewportWidth" />
+        <nav-links @clicked="burgerAction" :is_auth="is_auth" :viewportWidth="viewportWidth" />
         <div
             v-show="viewportWidth >= 991.98 && !is_auth"
             class="nav__button"

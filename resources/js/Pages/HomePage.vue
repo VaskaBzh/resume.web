@@ -92,7 +92,7 @@
                             class="home-im__image"
                         />
                         <div class="home-im__content">
-                            <h2 class="home-im__title">Bitcoin</h2>
+                            <p class="home-im__title">Bitcoin</p>
                             <ul class="home-im__content_list">
                                 <li class="home-im__content_item">
                                     <p class="item_span">Мощность сети</p>

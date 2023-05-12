@@ -123,9 +123,7 @@ export default {
             ];
             Object.values(this.btcHistory).forEach((el) => {
                 arr[0].values.push(el["y"]);
-                arr[0].dates.push(
-                    new Date(Number(el["x"]).toFixed(0) * 1000).getFullYear()
-                );
+                arr[0].dates.push(el["x"] * 1000);
             });
             return arr;
         },

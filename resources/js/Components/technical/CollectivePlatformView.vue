@@ -9,10 +9,10 @@
                         alt=""
                     />
                 </div>
-                <div class="platform-c__title">
+                <h2 class="platform-c__title">
                     Комплексная платформа, предназначенная для повышения доходов
                     майнеров
-                </div>
+                </h2>
                 <ul v-if="viewportWidth >= 767.98" class="platform-c__list">
                     <li class="platform-c__item">
                         <div class="platform-c__item_image_con">

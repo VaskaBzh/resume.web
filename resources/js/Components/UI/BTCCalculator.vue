@@ -139,6 +139,9 @@ export default {
         @media (max-width: 479.98px) {
             margin-bottom: 2px;
         }
+        @media (max-width: 320.98px) {
+            font-size: 12px;
+        }
     }
 
     &__icon {
@@ -197,6 +200,10 @@ export default {
             gap: 5px;
             @media (max-width: 479.98px) {
                 gap: 0 5px;
+                font-size: 14px !important;
+            }
+            @media (max-width: 320.98px) {
+                font-size: 12px !important;
             }
 
             &::before {

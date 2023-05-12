@@ -149,7 +149,7 @@ export default {
             justify-content: center;
             border-radius: 8px;
             opacity: 0;
-            @media (max-width: 767.98px) {
+            @media (max-width: 478.98px) {
                 right: 5px;
             }
         }

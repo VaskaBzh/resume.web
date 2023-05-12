@@ -10,7 +10,10 @@
                 ref="popupShow"
                 data-popup="#graph"
             ></div>
-            <div class="wrap wrap-modify">
+            <div
+                class="wrap"
+                v-if="this.allIncomeHistory[this.getActive]?.length !== 0"
+            >
                 <div class="wrap__head wrap__head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">
                         Общий хешрейт
@@ -41,44 +44,18 @@
                         "
                     />
                 </div>
-                <div class="wrap__block wrap__column">
-                    <div class="wrap__head">
-                        <div class="wrap__row">
-                            <span class="wrap_title"> Текущий хешрейт </span>
-                            <span class="wrap_hash"
-                                >{{
-                                    Number(this.workers.hash).toFixed(2)
-                                }}
-                                TH/s</span
-                            >
-                        </div>
-                        <div class="wrap__row">
-                            <span class="wrap_title"> Ср.хешрейт /24ч </span>
-                            <span class="wrap_hash"
-                                >{{
-                                    Number(this.workers.hash24).toFixed(2)
-                                }}
-                                TH/s</span
-                            >
-                        </div>
-                    </div>
-                    <ul class="wrap_list">
-                        <main-title tag="h4" class="wrap_title">
-                            <Link class="main__link" :href="route(`workers`)"
-                                >Воркеры
-                            </Link>
-                        </main-title>
-                        <li class="active">
-                            {{ this.workers.active }}<span> Активные</span>
-                        </li>
-                        <li class="unStable">
-                            {{ this.workers.unStable
-                            }}<span> Нестабильные</span>
-                        </li>
-                        <li class="inActive">
-                            {{ this.workers.inActive }}<span> Неактивные</span>
-                        </li>
-                    </ul>
+            </div>
+            <div class="wrap" v-else>
+                <div class="wrap__block-connect">
+                    <main-title
+                        tag="h3"
+                        titleName="Подключиться к allbtc pool"
+                    ></main-title>
+                    <copy-block
+                        v-for="(object, i) in this.copyObject"
+                        :key="i"
+                        :copyObject="object"
+                    ></copy-block>
                 </div>
             </div>
             <div class="wrap">
@@ -95,10 +72,59 @@
                         :iconFirst="1"
                         :iconSecond="1"
                     />
-                    <account-profile-swiper
-                        :key="this.allHistory[this.getActive]"
+                    <!--                    <account-profile-swiper-->
+                    <!--                        :key="this.allHistory[this.getActive]"-->
+                    <!--                        v-if="Object.values(this.allAccounts).length > 0"-->
+                    <!--                    ></account-profile-swiper>-->
+                    <div
+                        class="wrap__block"
                         v-if="Object.values(this.allAccounts).length > 0"
-                    ></account-profile-swiper>
+                    >
+                        <div class="wrap__head wrap__column">
+                            <div class="wrap__row">
+                                <span class="wrap_title">
+                                    Текущий хешрейт
+                                </span>
+                                <span class="wrap_hash"
+                                    >{{
+                                        Number(this.workers.hash).toFixed(2)
+                                    }}
+                                    TH/s</span
+                                >
+                            </div>
+                            <div class="wrap__row">
+                                <span class="wrap_title">
+                                    Ср.хешрейт /24ч
+                                </span>
+                                <span class="wrap_hash"
+                                    >{{
+                                        Number(this.workers.hash24).toFixed(2)
+                                    }}
+                                    TH/s</span
+                                >
+                            </div>
+                        </div>
+                        <ul class="wrap_list">
+                            <main-title tag="h4" class="wrap_title">
+                                <Link
+                                    class="main__link"
+                                    :href="route(`workers`)"
+                                    >Воркеры
+                                </Link>
+                            </main-title>
+                            <li class="active">
+                                {{ this.workers.active }}<span> Активные</span>
+                            </li>
+                            <li class="unStable">
+                                {{ this.workers.unStable
+                                }}<span> Нестабильные</span>
+                            </li>
+                            <li class="inActive">
+                                {{ this.workers.inActive
+                                }}<span> Неактивные</span>
+                            </li>
+                        </ul>
+                    </div>
                     <div class="wrap__column no-info" v-else>
                         <div class="propeller"></div>
                     </div>
@@ -108,6 +134,7 @@
     </div>
 </template>
 <script>
+import CopyBlock from "@/Components/account/CopyBlock.vue";
 import { Link, Head, router } from "@inertiajs/vue3";
 import PaymentCard from "@/Components/account/PaymentCard.vue";
 import StatisticChart from "@/Components/charts/StatisticChart.vue";
@@ -125,10 +152,21 @@ export default {
         PaymentCard,
         Head,
         Link,
+        CopyBlock,
     },
     layout: profileLayoutView,
     data() {
         return {
+            copyObject: [
+                {
+                    title: "1. Настройте ваше устройство согласно представленным ниже данным:",
+                    copyObject: [
+                        { link: "btc.all-btc.com:4444", title: "Port" },
+                        { link: "btc.all-btc.com:3333", title: "Port 1" },
+                        { link: "btc.all-btc.com:2222", title: "Port 2" },
+                    ],
+                },
+            ],
             profit: {},
             linkAddress: "btc.all-btc.com:4444",
             linkAddress1: "btc.all-btc.com:3333",
@@ -142,10 +180,10 @@ export default {
             workersUnActive: 0,
             workersInActive: 0,
             id: 0,
-            val: 6,
+            val: 24,
             buttons: [
-                { title: "6 часов", value: 6 },
-                { title: "1 день", value: 24 },
+                // { title: "6 часов", value: 6 },
+                { title: "24 часа", value: 24 },
                 { title: "7 дней", value: 168 },
             ],
             graphs: [
@@ -250,27 +288,6 @@ export default {
         router() {
             return router;
         },
-        copyLink(i) {
-            if (i === 1) {
-                navigator.clipboard.writeText(this.linkAddress);
-                this.$refs.linkAddress.classList.add("active");
-                setTimeout(() => {
-                    this.$refs.linkAddress.classList.remove("active");
-                }, 1000);
-            } else if (i === 2) {
-                navigator.clipboard.writeText(this.linkAddress1);
-                this.$refs.linkAddress1.classList.add("active");
-                setTimeout(() => {
-                    this.$refs.linkAddress1.classList.remove("active");
-                }, 1000);
-            } else if (i === 3) {
-                navigator.clipboard.writeText(this.linkAddress2);
-                this.$refs.linkAddress2.classList.add("active");
-                setTimeout(() => {
-                    this.$refs.linkAddress2.classList.remove("active");
-                }, 1000);
-            }
-        },
         renderChart() {
             let history = {};
             if (
@@ -281,8 +298,10 @@ export default {
                     (el) => {
                         if (el["unit"] === "T") {
                             return el["hash"];
-                        } else {
+                        } else if (el["unit"] === "P") {
                             return Number(el["hash"]) * 1000;
+                        } else if (el["unit"] === "E") {
+                            return Number(el["hash"]) * 1000 * 1000;
                         }
                     }
                 );
@@ -357,8 +376,8 @@ export default {
                 font-size: 18px;
                 line-height: 26px;
                 @media (max-width: 479.98px) {
-                    font-size: 16px;
-                    line-height: 18px;
+                    font-size: 14px;
+                    line-height: 16px;
                 }
                 @media (max-width: 320.98px) {
                     font-size: 12px;
@@ -369,6 +388,10 @@ export default {
                     font-size: 16px;
                     line-height: 23px;
                     //margin-top: auto
+                    @media (max-width: 479.98px) {
+                        font-size: 14px;
+                        line-height: 16px;
+                    }
                     @media (max-width: 320.9px) {
                         font-size: 12px;
                         line-height: 14px;
@@ -414,6 +437,11 @@ export default {
                     font-size: 16px;
                     line-height: 18px;
                 }
+                @media (max-width: 478.98px) {
+                    min-height: 26px;
+                    font-size: 14px;
+                    line-height: 18px;
+                }
                 &.active {
                     color: #181847;
                     background: #ffffff;
@@ -437,7 +465,7 @@ export default {
                 }
                 @media (max-width: 767.98px) {
                     grid-column-end: 2;
-                    margin-bottom: calc(8px + 8px + 38px + 8px);
+                    margin-bottom: calc(26px + 48px);
                     &:after {
                         content: "";
                         height: 1px;
@@ -460,7 +488,7 @@ export default {
             gap: 4px;
             li {
                 display: inline-flex;
-                align-items: flex-end;
+                align-items: center;
                 gap: 8px;
                 span {
                     display: inline-flex;
@@ -498,6 +526,23 @@ export default {
         }
         &__block {
             min-height: 325px;
+            &:not(.wrap__column) {
+                min-height: 0;
+                @media (min-width: 991.98px) {
+                    align-items: center;
+                }
+            }
+            &-connect {
+                width: 100%;
+                height: 100%;
+                padding: 0 0 4px 12px;
+                .title {
+                    margin-bottom: 12px;
+                    @media (max-width: 768.98px) {
+                        margin-bottom: 40px;
+                    }
+                }
+            }
             @media (max-width: 767.98px) {
                 padding: 15px;
                 grid-column-start: 1;
@@ -542,7 +587,17 @@ export default {
                 margin: auto;
             }
             &-graph {
-                padding: 24px 24px 4px 12px;
+                min-height: 415px !important;
+                padding: 24px 24px 20px 8px;
+                @media (max-width: 998.98px) {
+                    min-height: 370px !important;
+                }
+                @media (max-width: 768.98px) {
+                    min-height: 310px !important;
+                }
+                @media (max-width: 478.98px) {
+                    min-height: 216px !important;
+                }
             }
         }
     }

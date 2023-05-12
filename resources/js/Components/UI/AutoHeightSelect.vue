@@ -43,8 +43,6 @@
             </span>
         </div>
         <div class="select_options" v-if="this.optionsObject.length > 0">
-            <!--                @mouseenter="hoverInEffect"-->
-            <!--                @mouseout="hoverOutEffect"-->
             <div
                 v-for="(option, i) in this.optionsObject"
                 :key="option.value"
@@ -55,6 +53,9 @@
                             this.allAccounts[this.getActive]?.name &&
                         this.optionsObject.length > 1,
                 }"
+                ref="option"
+                @mouseenter="hoverInEffect(i)"
+                @mouseout="hoverOutEffect(i)"
             >
                 <p
                     class="main_select"
@@ -149,7 +150,7 @@ export default {
             this.hideSelect();
         },
         hideSelect(e) {
-            if (!e.target.closest(".select_con")) {
+            if (!e?.target.closest(".select_con")) {
                 this.select_is_open = false;
             }
         },
@@ -161,22 +162,26 @@ export default {
         toggleSelect() {
             this.select_is_open = !this.select_is_open;
         },
-        // hoverInEffect(e) {
-        //     let target = e.target;
-        //     anime({
-        //         targets: target,
-        //         easing: "linear",
-        //         translateX: 8,
-        //     });
-        // },
-        // hoverOutEffect(e) {
-        //     let target = e.target;
-        //     anime({
-        //         targets: target,
-        //         easing: "linear",
-        //         translateX: 0,
-        //     });
-        // },
+        hoverInEffect(i) {
+            let target = this.$refs.option[i];
+            if (!this.$refs.option[i].classList.contains("active")) {
+                anime({
+                    targets: target,
+                    easing: "linear",
+                    translateX: 8,
+                    duration: 200,
+                });
+            }
+        },
+        hoverOutEffect(i) {
+            let target = this.$refs.option[i];
+            anime({
+                targets: target,
+                easing: "linear",
+                translateX: 0,
+                duration: 200,
+            });
+        },
     },
     mounted() {
         this.$refs.select

@@ -96,10 +96,24 @@ export default {
                     gradientBg.addColorStop(0, "rgba(63,123,221,1)");
                     gradientBg.addColorStop(1, "rgba(255,255,255,0)");
 
+                    let dates = graphsList[i].dates.map((date) => {
+                        // Преобразование даты в объект Date
+                        let dateObj = new Date(date);
+
+                        // Получение месяца и года
+                        let monthYear = `${
+                            String(dateObj.getUTCMonth() + 1).length === 1
+                                ? "0" + String(dateObj.getUTCMonth() + 1)
+                                : dateObj.getUTCMonth() + 1
+                        }.${dateObj.getUTCFullYear()}`;
+
+                        return monthYear;
+                    });
+
                     this.graph = new Chart(ctx, {
                         type: "line",
                         data: {
-                            labels: graphsList[i].dates,
+                            labels: dates,
                             datasets: [
                                 {
                                     label: graphsList[i].title,
