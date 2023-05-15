@@ -231,7 +231,7 @@ export default {
             if (window.history.state !== "") {
                 window.history.back();
             } else {
-                router.visit("/profile");
+                router.visit("/profile/statistic");
             }
         },
         router() {

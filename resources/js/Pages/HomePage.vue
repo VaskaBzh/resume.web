@@ -382,7 +382,7 @@ export default {
         max-width: 670px;
         margin-top: 160px;
         @media (max-width: 991.98px) {
-            margin-top: 48px;
+            margin-top: 100px;
             text-align: center;
             max-width: unset;
         }

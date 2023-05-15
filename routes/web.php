@@ -78,7 +78,7 @@ Route::controller(RequestController::class)
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
 
-Route::middleware('verified')->group(function () {
+Route::middleware('auth')->group(function () {
     Route::controller(IndexController::class)->group(function () {
         Route::get('/profile', 'profile')->name('profile');
         Route::redirect('/profile', '/profile/statistic');

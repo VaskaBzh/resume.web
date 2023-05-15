@@ -99,7 +99,7 @@ class WalletController extends Controller
             }
             if ($request->input("minWithdrawal")) {
                 $request->validate([
-                    "minWithdrawal" => "numeric|gt:0.005",
+                    "minWithdrawal" => "numeric|gt:0.0049",
                 ], $messages);
 
                 $wallet->minWithdrawal = $request->input("minWithdrawal");
