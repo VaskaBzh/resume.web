@@ -392,6 +392,20 @@ h6 {
         }
     }
 }
+@media (max-width: $mobile) {
+    .account {
+        &__container {
+            padding-top: 50px;
+        }
+    }
+}
+@media (max-width: $mobileSmall) {
+    .account {
+        &__container {
+            padding-top: 40px;
+        }
+    }
+}
 
 // Кастомные стили графиков
 .graph {

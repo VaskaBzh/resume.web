@@ -94,6 +94,15 @@ export default {
 <style lang="scss">
 .account {
     margin-top: 40px;
+    @media (max-width: 1280.98px) {
+        margin-top: 120px;
+    }
+    @media (max-width: 768.98px) {
+        margin-top: 20px;
+    }
+    @media (max-width: 467.98px) {
+        margin-top: 10px;
+    }
 
     &__container {
         display: flex;
