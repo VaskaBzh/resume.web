@@ -125,10 +125,6 @@ export default {
             gap: 0;
             min-height: 69px;
         }
-        @media (max-width: 320.98px) {
-            padding: 10px 10px 10px 56px;
-            min-height: 73px;
-        }
 
         &:last-child {
             margin-bottom: 0;
@@ -138,9 +134,6 @@ export default {
     &__title {
         @media (max-width: 479.98px) {
             margin-bottom: 2px;
-        }
-        @media (max-width: 320.98px) {
-            font-size: 12px;
         }
     }
 
@@ -163,19 +156,11 @@ export default {
             left: 10px;
             top: 10px;
         }
-        @media (max-width: 320.98px) {
-            height: 36px;
-            width: 36px;
-        }
 
         svg {
             fill: #818c99;
             max-width: 32px;
             max-height: 32px;
-            @media (max-width: 320.98px) {
-                max-width: 24px;
-                max-height: 24px;
-            }
         }
     }
 
@@ -201,9 +186,6 @@ export default {
             @media (max-width: 479.98px) {
                 gap: 0 5px;
                 font-size: 14px !important;
-            }
-            @media (max-width: 320.98px) {
-                font-size: 12px !important;
             }
 
             &::before {

@@ -234,10 +234,6 @@
                 display: inline-flex;
                 align-items: center;
             }
-            @media (max-width: $mobileExtraSmall) {
-                font-size: 12px;
-                line-height: 17px;
-            }
         }
         .title {
             @media (max-width: $mobile) {

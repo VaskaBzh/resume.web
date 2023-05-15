@@ -236,18 +236,12 @@ export default {
                     font-size: 16px;
                     line-height: 17px;
                     color: #000034;
-                    @media (max-width: 320.98px) {
-                        font-size: 12px;
-                    }
                 }
             }
             span {
                 font-size: 16px;
                 line-height: 17px;
                 color: rgba(0, 0, 0, 0.62);
-                @media (max-width: 320.98px) {
-                    font-size: 12px;
-                }
             }
         }
     }
@@ -286,10 +280,6 @@ export default {
                 font-size: 16px;
                 line-height: 23px;
                 text-align: left;
-                @media (max-width: 320.98px) {
-                    font-size: 12px;
-                    line-height: 14px;
-                }
                 &:last-child {
                     text-align: right;
                 }

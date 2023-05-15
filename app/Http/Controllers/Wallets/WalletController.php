@@ -72,6 +72,46 @@ class WalletController extends Controller
 
         return response()->json(['message' => 'Нельзя удалять единственный кошелек.'], 200);
     }
+    public function change(Request $request)
+    {
+        $messages = [
+            'percent.integer' => 'Процент должен быть числом.',
+            'percent.min' => 'Процент должен быть больше 1.',
+            'percent.max' => 'Процент не может быть больше 100.',
+            'minWithdrawal.numeric' => 'Вывод должен быть числом.',
+            'minWithdrawal.gt' => 'Вывод должен быть больше 0.005.',
+        ];
+        $request->validate([
+            'group_id' => 'required',
+            'wallet' => 'required',
+        ]);
+
+        $wallets = Sub::all()->firstWhere("group_id", $request->input("group_id"))->wallets;
+        $wallet = $wallets->firstWhere("wallet", $request->input("wallet"));
+
+        if ($request->input("minWithdrawal") || $request->input("percent")) {
+            if ($request->input("percent")) {
+                $request->validate([
+                    "percent" => "min:1|max:100|integer",
+                ], $messages);
+
+                $wallet->percent = $request->input("percent");
+            }
+            if ($request->input("minWithdrawal")) {
+                $request->validate([
+                    "minWithdrawal" => "numeric|gt:0.005",
+                ], $messages);
+
+                $wallet->minWithdrawal = $request->input("minWithdrawal");
+            }
+
+            $wallet->save();
+
+            return response()->json(['message' => 'Кошелек успешно изменен.'], 200);
+        } else {
+            return back()->withErrors(["change_error" => "Ошибка при смене кошелька."]);
+        }
+    }
     public function visual(Request $request)
     {
         $request->validate([

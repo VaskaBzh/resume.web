@@ -899,6 +899,10 @@ export default {
         }
         &__block {
             column-gap: 10px;
+            @media (max-width: 991.98px) and (max-width: 479.98px) {
+                flex-direction: row;
+                justify-content: center;
+            }
         }
         & span {
             &:last-child {

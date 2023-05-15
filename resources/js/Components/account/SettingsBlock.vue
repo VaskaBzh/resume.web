@@ -151,9 +151,6 @@ export default {
             @media (max-width: 478.98px) {
                 font-size: 16px;
             }
-            @media (max-width: 320.98px) {
-                font-size: 14px;
-            }
         }
         .name {
             color: rgba(0, 0, 0, 0.62);
@@ -167,9 +164,6 @@ export default {
         .text {
             color: rgba(97, 97, 97, 0.6);
             font-size: 14px;
-            @media (max-width: 320.98px) {
-                font-size: 12px;
-            }
             &_val {
                 font-weight: 500;
                 font-size: 24px;

@@ -186,18 +186,6 @@ export default {
         @media (max-width: 767.98px) {
             border-radius: 10px;
             position: relative;
-            &::before {
-                content: "";
-                position: absolute;
-                width: 105%;
-                height: 122%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                background: rgba(255, 255, 255, 0.29);
-                border-radius: 10px;
-                z-index: -1;
-            }
         }
         @media (max-width: 550px) {
             flex-direction: column;

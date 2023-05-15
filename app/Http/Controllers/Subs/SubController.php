@@ -73,7 +73,7 @@ class SubController extends Controller
         $requestController = new RequestController();
 
         try {
-            $response = json_decode($requestController->proxy($request->all(),"groups/update/" . $request->input("group_id"))->getContent());
+            $response = json_decode($requestController->proxy($request->all(),"groups/update/" . $request->input("group_id"), "post")->getContent());
 
             if ($response->data->msg === 'Success') {
                 // Обработка успешного обновления

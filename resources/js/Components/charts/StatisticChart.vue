@@ -74,14 +74,14 @@ export default {
                             interval = 1;
                             break;
                         case 24:
-                            interval = 2;
+                            interval = 1;
                             break;
                         case 168:
                             interval = 24;
                             break;
                     }
 
-                    for (let i = this.val; i >= 0; i -= interval) {
+                    for (let i = this.val - interval; i >= 0; i -= interval) {
                         let currentHour = new Date().getHours() - i;
                         let currentDate = new Date();
                         currentDate.setHours(currentHour);
@@ -109,7 +109,7 @@ export default {
                 let calculateAverage = (data, interval) => {
                     let averages = [];
 
-                    for (let i = 0; i < data.length; i += interval) {
+                    for (let i = interval; i < data.length; i += interval) {
                         let sum = 0;
                         let count = 0;
 
@@ -123,6 +123,29 @@ export default {
                         }
 
                         let average = Number(sum) / count;
+                        averages.push(average);
+                    }
+
+                    return averages;
+                };
+
+                let calculateMaxAverage = (data, interval) => {
+                    let averages = [];
+
+                    for (let i = interval; i < data.length; i += interval) {
+                        let sum = 0;
+
+                        for (
+                            let j = i;
+                            j < i + interval && j < data.length;
+                            j++
+                        ) {
+                            if (sum <= Number(data[j])) {
+                                sum = Number(data[j]);
+                            }
+                        }
+
+                        let average = sum;
                         averages.push(average);
                     }
 
@@ -256,6 +279,15 @@ export default {
                                         let label =
                                             tooltipItem.dataset.label || "";
                                         let value = tooltipItem.parsed.y;
+                                        let amount = "";
+                                        if (graphsList[0].amount) {
+                                            amount = `; Активные воркеры: ${
+                                                calculateMaxAverage(
+                                                    graphsList[0].amount,
+                                                    interval
+                                                )[tooltipItem.parsed.x]
+                                            }`;
+                                        }
 
                                         if (label) {
                                             label += ": ";
@@ -263,7 +295,7 @@ export default {
 
                                         label += `${value.toFixed(
                                             2
-                                        )} ${yLabel}`;
+                                        )} ${yLabel}${amount}`;
 
                                         return label;
                                     },
@@ -291,6 +323,23 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.popup_graph {
+    .graph {
+        &__item {
+            padding: 25px 0 0;
+        }
+    }
+    #myChart {
+        @media (min-width: 991.98px) {
+            height: 470px !important;
+            width: 100% !important;
+        }
+        @media (min-width: 768.98px) {
+            height: 370px !important;
+            width: 100% !important;
+        }
+    }
+}
 #myChart {
     @media (min-width: 1270.98px) {
         height: 430px !important;
@@ -301,18 +350,6 @@ export default {
     }
 }
 .graph {
-    @media (max-width: 478.98px) {
-        overflow-x: scroll;
-        &::-webkit-scrollbar {
-            height: 5px;
-
-            &-thumb {
-                /* плашка-бегунок */
-                background: #4282ec;
-                border-radius: 4px;
-            }
-        }
-    }
     // .graph__main
     &__main {
         background: rgba(255, 255, 255, 0.29);
@@ -390,8 +427,18 @@ export default {
             //padding: 20px 10px;
             flex-direction: column;
         }
-        @media (max-width: 479.98px) {
+        @media (max-width: 478.98px) {
             align-items: flex-start;
+            overflow-x: scroll;
+            &::-webkit-scrollbar {
+                height: 5px;
+
+                &-thumb {
+                    /* плашка-бегунок */
+                    background: #4282ec;
+                    border-radius: 4px;
+                }
+            }
         }
     }
     // .graph__graph
@@ -401,7 +448,7 @@ export default {
             width: 100%;
         }
         @media (max-width: 478.98px) {
-            width: 120%;
+            width: 200%;
         }
     }
     // .graph__title
@@ -419,7 +466,7 @@ export default {
         }
         @media (max-width: 479.98px) {
             font-size: 12px;
-            width: 120%;
+            width: 200%;
             text-align: center;
         }
         &-second {

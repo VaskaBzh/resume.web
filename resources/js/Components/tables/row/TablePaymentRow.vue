@@ -159,9 +159,6 @@ export default {
         height: 17px;
         img {
             left: -18px !important;
-            @media (max-width: 320.98px) {
-                left: 0 !important;
-            }
         }
         div {
             padding: 0 !important;
@@ -304,9 +301,6 @@ td {
         //    @media (max-width: 479.98px) {
         //        padding-left: 18px;
         //    }
-        //    @media (max-width: 320.98px) {
-        //        padding-left: 0;
-        //    }
         //    img {
         //        @media (min-width: 767.98px) {
         //            position: absolute;
@@ -319,12 +313,6 @@ td {
         //            left: 0;
         //            top: 50%;
         //            transform: translateY(-50%);
-        //        }
-        //        @media (max-width: 320.98px) {
-        //            position: relative;
-        //            transform: none;
-        //            left: auto;
-        //            top: auto;
         //        }
         //    }
         //}

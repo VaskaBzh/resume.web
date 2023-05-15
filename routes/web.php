@@ -71,6 +71,7 @@ Route::controller(VerificationController::class)
 
 Route::controller(RequestController::class)
     ->group(function () {
+        Route::put('/proxy', 'proxy_front')->name('proxy');
         Route::get('/accountsAll', 'accountsAll')->name('accountsAll');
         Route::get('/worker', 'worker')->name('worker');
         Route::post('/worker_update', 'worker_update')->name('worker_update');
@@ -118,6 +119,7 @@ Route::middleware('verified')->group(function () {
     Route::controller(WalletController::class)->group(function () {
         Route::post('/wallet_create', 'create')->name('wallet_create');
         Route::post('/wallet_delete', 'delete')->name('wallet_delete');
+        Route::post('/wallet_change', 'change')->name('wallet_change');
         Route::get('/wallet_process', 'visual')->name('wallet_process');
     });
     Route::controller(UserController::class)->group(function () {

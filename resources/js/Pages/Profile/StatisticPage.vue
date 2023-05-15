@@ -12,7 +12,7 @@
             ></div>
             <div
                 class="wrap"
-                v-if="this.allIncomeHistory[this.getActive]?.length !== 0"
+                v-if="this.allHistory[this.getActive]?.length !== 0"
             >
                 <div class="wrap__head wrap__head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">
@@ -191,6 +191,8 @@ export default {
                     id: 1,
                     title: ["Хешрейт", "Время"],
                     values: [],
+                    time: [],
+                    amount: [],
                 },
             ],
             tables: {
@@ -308,7 +310,14 @@ export default {
             }
             let val = this.val + 1;
             let values = [];
+            let amount = [];
             for (let i = 1; i <= val; i++) {
+                let timeItem = Object.values(this.allHistory[this.getActive])[
+                    Object.values(this.allHistory[this.getActive]).length - i
+                ]?.["created_at"];
+                let amountItem = Object.values(this.allHistory[this.getActive])[
+                    Object.values(this.allHistory[this.getActive]).length - i
+                ]?.amount;
                 if (history) {
                     let timeStamp = history[history.length - i];
                     if (timeStamp) {
@@ -319,8 +328,14 @@ export default {
                 } else {
                     values.unshift(String(0));
                 }
+                if (amountItem) {
+                    amount.unshift(amountItem);
+                } else {
+                    amount.unshift(String(0));
+                }
             }
             this.graphs[0].values = values;
+            this.graphs[0].amount = amount;
             setTimeout(this.changeId, 1000);
         },
     },
@@ -365,8 +380,9 @@ export default {
                     line-height: 20px;
                 }
                 @media (max-width: 320.98px) {
-                    font-size: 12px;
-                    line-height: 14px;
+                    font-weight: 500;
+                    font-size: 14px;
+                    line-height: 18px;
                 }
             }
             .wrap_hash,
@@ -379,10 +395,6 @@ export default {
                     font-size: 14px;
                     line-height: 16px;
                 }
-                @media (max-width: 320.98px) {
-                    font-size: 12px;
-                    line-height: 14px;
-                }
                 span {
                     font-weight: 400;
                     font-size: 16px;
@@ -392,9 +404,9 @@ export default {
                         font-size: 14px;
                         line-height: 16px;
                     }
-                    @media (max-width: 320.9px) {
-                        font-size: 12px;
-                        line-height: 14px;
+                    @media (max-width: 320.98px) {
+                        font-size: 14px;
+                        line-height: 18px;
                     }
                 }
             }
@@ -431,14 +443,13 @@ export default {
                 transition: all 0.3s ease 0s;
                 @media (max-width: 767.98px) {
                     border-radius: 12px;
-                    min-height: 38px;
                     padding: 2px 20px;
                     font-weight: 400;
                     font-size: 16px;
                     line-height: 18px;
+                    min-height: 26px;
                 }
                 @media (max-width: 478.98px) {
-                    min-height: 26px;
                     font-size: 14px;
                     line-height: 18px;
                 }

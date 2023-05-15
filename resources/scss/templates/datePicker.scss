@@ -44,10 +44,6 @@
           font-size: 14px;
           line-height: 16px;
         }
-        @media (max-width: $mobileExtraSmall) {
-          font-size: 12px;
-          line-height: 17px;
-        }
         &::placeholder {
           font-family: Ubuntu, serif;
           font-weight: 500;

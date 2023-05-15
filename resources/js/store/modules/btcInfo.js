@@ -8,7 +8,7 @@ export default {
             commit("destroy");
         },
         getMessage({ commit, state }, message) {
-            commit("setMessage", message)
+            commit("setMessage", message);
         },
         getAllIncome({ commit, state }, group) {
             let income = {
@@ -207,18 +207,6 @@ export default {
             });
         },
         async updateGroup({ state, commit }, data) {
-            let instance = axios.create({
-                baseURL: "https://pool.api.btc.com/v1",
-                headers: {
-                    "Content-Type": "application/json; charset=utf-8",
-                    Authorization: "sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N",
-                    "Access-Control-Allow-Methods":
-                        "GET, PUT, POST, DELETE, HEAD, OPTIONS",
-                    "Access-Control-Allow-Credentials": "true",
-                    Accept: "application/json",
-                },
-            });
-
             commit("setMessage", "Мы подключаем воркеров к вашему аккаунту");
 
             setTimeout(() => {
@@ -235,10 +223,11 @@ export default {
                     worker_id: String(workerId),
                 };
 
-                await instance.post(
-                    `/worker/update?group=${data.gid}&puid=781195`,
-                    updateData
-                );
+                await axios.put("/proxy", {
+                    data: updateData,
+                    path: "worker/update",
+                    type: "post",
+                });
 
                 await axios.post("/worker_create", updateData);
                 await delay(1000); // Задержка в 1 секунду между каждым запросом

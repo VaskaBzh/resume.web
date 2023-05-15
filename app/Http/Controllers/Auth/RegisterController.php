@@ -75,7 +75,7 @@ class RegisterController extends Controller
         $requestController = new RequestController();
 
         try {
-            $response = json_decode($requestController->proxy($data,"groups/create")->getContent());
+            $response = json_decode($requestController->proxy($data,"groups/create", "post")->getContent());
 
             $subController = new SubController();
             $data['group_id'] = strval($response->data->gid);

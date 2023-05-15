@@ -199,10 +199,6 @@ h6 {
             font-size: 24px;
             line-height: 30px;
         }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 21px;
-            line-height: 26px;
-        }
     }
 
     // .main__nickname
@@ -214,10 +210,6 @@ h6 {
         line-height: 30px;
         @media (max-width: $mobile) {
             font-size: 20px;
-            line-height: 26px;
-        }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 16px;
             line-height: 26px;
         }
     }
@@ -232,10 +224,6 @@ h6 {
             font-size: 16px !important;
             line-height: 18px !important;
         }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 12px !important;
-            line-height: 14px !important;
-        }
 
         span {
             font-weight: 400;
@@ -245,10 +233,6 @@ h6 {
             @media (max-width: 479.98px) {
                 color: #000034;
                 font-weight: 500;
-            }
-            @media (max-width: 320.98px) {
-                font-size: 12px;
-                line-height: 17px;
             }
         }
 
@@ -281,10 +265,6 @@ h6 {
         @media (max-width: $mobile) {
             line-height: 18px;
         }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 12px;
-            line-height: 14px;
-        }
     }
 
     // .main__label
@@ -296,10 +276,6 @@ h6 {
         @media (max-width: 479.98px) {
             font-size: 14px;
             line-height: 16px;
-        }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 12px;
-            line-height: 14px;
         }
 
         &-select {
@@ -318,10 +294,6 @@ h6 {
             @media (max-width: 479.98px) {
                 font-size: 14px;
                 line-height: 16px;
-            }
-            @media (max-width: $mobileExtraSmall) {
-                font-size: 12px;
-                line-height: 14px;
             }
 
             &.checked {
@@ -376,10 +348,6 @@ h6 {
             font-size: 14px;
             line-height: 16px;
         }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 12px;
-            line-height: 14px;
-        }
     }
 
     // .main__link
@@ -402,10 +370,6 @@ h6 {
         @media (max-width: $mobile) {
             font-size: 16px;
             line-height: 22px;
-        }
-        @media (max-width: $mobileExtraSmall) {
-            font-size: 14px;
-            line-height: 20px;
         }
     }
 }

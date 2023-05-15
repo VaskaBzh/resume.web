@@ -268,7 +268,8 @@ export default {
     margin-right: 30px;
     height: fit-content;
     -webkit-box-shadow: 0 11px 34px 0 transparent;
-    transition: all 0.8s ease 0s, top 0s ease 0s, position 0s ease 0s, padding 0s ease 0s, width 0s ease 0s;
+    transition: all 0.8s ease 0s, top 0s ease 0s, position 0s ease 0s,
+        padding 0s ease 0s, width 0s ease 0s;
     z-index: 9;
     @media (min-width: 1271px) {
         &:hover {
@@ -397,7 +398,8 @@ export default {
         padding: 0 14px 0 16px;
         display: inline-flex;
         align-items: center;
-        transition: all 0.7s ease 0s, height 0s ease 0s, min-height 0s ease 0s, width 0s ease 0s;
+        transition: all 0.7s ease 0s, height 0s ease 0s, min-height 0s ease 0s,
+            width 0s ease 0s;
         position: relative;
         height: 60px;
         min-height: 60px;

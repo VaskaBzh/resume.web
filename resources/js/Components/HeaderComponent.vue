@@ -8,7 +8,11 @@
             />
         </Link>
 
-        <nav-links @clicked="burgerAction" :is_auth="is_auth" :viewportWidth="viewportWidth" />
+        <nav-links
+            @clicked="burgerAction"
+            :is_auth="is_auth"
+            :viewportWidth="viewportWidth"
+        />
         <div
             v-show="viewportWidth >= 991.98 && !is_auth"
             class="nav__button"
@@ -841,7 +845,6 @@ export default defineComponent({
 }
 
 nav.nav__container {
-    position: relative;
     z-index: 100;
     display: flex;
     justify-content: space-between;
@@ -850,6 +853,10 @@ nav.nav__container {
     width: 100%;
     box-sizing: border-box !important;
     padding: 21px 0;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%) translateY(0);
     &:before {
         transition: all 0.3s ease 0s;
         left: 50%;
@@ -865,10 +872,6 @@ nav.nav__container {
     }
     @media (min-width: 1271px) {
         transition: all 0.3s ease 0s;
-        position: fixed;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%) translateY(0);
         width: 100vw;
         z-index: 100;
         //&.fixed {

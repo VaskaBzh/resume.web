@@ -58,10 +58,6 @@ export default {
         line-height: 23px;
         color: #818c99;
     }
-    @media (max-width: 320.98px) {
-        font-size: 12px;
-        line-height: 17px;
-    }
     &-button {
         width: 24px;
         height: 24px;
@@ -81,10 +77,6 @@ export default {
         }
         @media (max-width: 478.98px) {
             right: 7px;
-        }
-        @media (max-width: 320.98px) {
-            width: 18px;
-            height: 18px;
         }
         &:hover {
             stroke: #4182ec !important;
@@ -115,9 +107,6 @@ export default {
         color: #5b5c5e;
         overflow: hidden;
         max-width: calc(100% - 60px) !important;
-        @media (max-width: 320.98px) {
-            max-width: calc(100% - 40px) !important;
-        }
         border: 0.5px solid rgba(0, 0, 0, 0.08);
         &.active {
             border: 1px solid #4182ec;

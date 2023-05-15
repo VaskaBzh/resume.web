@@ -60,10 +60,6 @@ export default {
             line-height: 23px;
             color: #818c99;
         }
-        @media (max-width: 320.98px) {
-            font-size: 12px;
-            line-height: 17px;
-        }
         span {
             margin: 0 3px;
             font-weight: 700;

@@ -17,6 +17,7 @@ class Hash extends Model
         'group_id',
         'hash',
         'unit',
+        'amount',
     ];
     public function sub()
     {

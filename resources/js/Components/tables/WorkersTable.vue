@@ -122,6 +122,7 @@
         </tbody>
         <popup-view id="seeChart" typePopup="graph">
             <statistic-chart
+                class="popup_graph"
                 v-if="this.indexWorker !== -1"
                 :graphs="graphs"
                 :key="this.graphs[0].values[this.graphs[0].values.length - 1]"
@@ -342,10 +343,6 @@ export default {
                 line-height: 23px;
                 text-align: left;
                 padding-right: 10px;
-                @media (max-width: 320.98px) {
-                    font-size: 12px;
-                    line-height: 17px;
-                }
             }
         }
     }
@@ -370,10 +367,6 @@ export default {
                     font-size: 16px;
                     line-height: 22px;
                 }
-                @media (max-width: 320.98px) {
-                    font-size: 12px;
-                    line-height: 17px;
-                }
             }
         }
     }
@@ -385,10 +378,6 @@ export default {
                 font-weight: 500;
                 font-size: 16px;
                 line-height: 23px;
-                @media (max-width: 320.98px) {
-                    font-size: 12px;
-                    line-height: 17px;
-                }
                 &:not(:last-child) {
                     width: 16px;
                     height: 16px;

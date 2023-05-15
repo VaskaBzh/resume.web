@@ -70,9 +70,6 @@ export default {
         @media (max-width: 479.98px) {
             margin-bottom: 20px;
         }
-        @media (max-width: 320.98px) {
-            margin-bottom: 24px;
-        }
     }
     // .connecting_question
     &__question {

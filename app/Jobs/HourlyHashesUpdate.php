@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Models\Sub;
 use App\Models\Worker;
+use App\Http\Controllers\Requests\RequestController;
 use Exception;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -48,47 +49,32 @@ class HourlyHashesUpdate implements ShouldQueue
                     $extra_record->delete();
                 }
             }
+            $requestController = new RequestController();
 
-            // Выполните запрос для каждого пользователя (или другой необходимой единицы)
-            $opts = array(
-                "http" => array(
-                    "method" => "GET",
-                    "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
-                        "Content-Type: application/json; charset=utf-8",
-                )
-            );
-            $context = stream_context_create($opts);
-            $req_url = 'https://pool.api.btc.com/v1/worker?group=' . $sub->group_id . '&puid=781195';
-            $response_json = file_get_contents($req_url, false, $context);
+            $data = [
+                "group" => $sub->group_id,
+                "puid" => "781195",
+            ];
+
+            $response_json = json_decode($requestController->proxy($data,"groups/" . $sub->group_id, "get")->getContent());
+
             if (false !== $response_json) {
                 try {
-                    $responseData = json_decode($response_json);
-                    if ($responseData->data->data) {
-                        $share = 0;
-                        $share = array_reduce($responseData->data->data, function ($carry, $item) {
-                            foreach ($item as $key => $value) {
-                                if ($key == "shares_1m") {
-                                    $carry += floatval($value);
-                                }
-                            }
-                            return $carry;
-                        }, $share);
-                        $unit = array_reduce($responseData->data->data, function ($carry, $item) {
-                            foreach ($item as $key => $value) {
-                                if ($key == "shares_unit") {
-                                    $carry["shares_unit"] = $value;
-                                }
-                            }
-                            return $carry;}, ['shares_unit' => ''])['shares_unit'];
+                    if ($response_json->data) {
+                        $share = $response_json->data->shares_1m;
+                        $unit = $response_json->data->shares_unit;
+                        $amountWorkers = $response_json->data->workers_active;
                     } else {
                         $share = 0;
                         $unit = "T";
+                        $amountWorkers = 0;
                     }
 
                     $sub->hashes()->create([
                         'group_id' => $sub->group_id,
                         'hash' => number_format($share, 2, ".", ""),
                         'unit' => $unit,
+                        'amount' => intval($amountWorkers),
                     ]);
                 } catch (Exception $e) {
                     // Обработка ошибки разбора JSON
