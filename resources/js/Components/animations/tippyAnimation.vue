@@ -8,5 +8,10 @@ export default {
             content: binding.value.message,
         });
     },
+    beforeUpdate(el, binding, vnode, oldVnode) {
+        tippy(el, {
+            content: binding.value.message,
+        });
+    },
 };
 </script>

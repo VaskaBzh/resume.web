@@ -543,6 +543,16 @@ export default {
                     align-items: center;
                 }
             }
+            &:not(.wrap__block-graph) {
+                &:last-child {
+                    @media (max-width: 998.98px) {
+                        flex-direction: column;
+                    }
+                    @media (max-width: 767.98px) {
+                        flex-direction: row;
+                    }
+                }
+            }
             &-connect {
                 width: 100%;
                 height: 100%;

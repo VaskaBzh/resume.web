@@ -80,6 +80,7 @@ class WalletController extends Controller
             'percent.max' => 'Процент не может быть больше 100.',
             'minWithdrawal.numeric' => 'Вывод должен быть числом.',
             'minWithdrawal.gt' => 'Вывод должен быть больше 0.005.',
+            'name.min' => 'Имя должно иметь больше трех букв',
         ];
         $request->validate([
             'group_id' => 'required',
@@ -89,7 +90,7 @@ class WalletController extends Controller
         $wallets = Sub::all()->firstWhere("group_id", $request->input("group_id"))->wallets;
         $wallet = $wallets->firstWhere("wallet", $request->input("wallet"));
 
-        if ($request->input("minWithdrawal") || $request->input("percent")) {
+        if ($request->input("minWithdrawal") || $request->input("percent") || $request->input("name")) {
             if ($request->input("percent")) {
                 $request->validate([
                     "percent" => "min:1|max:100|integer",
@@ -103,6 +104,13 @@ class WalletController extends Controller
                 ], $messages);
 
                 $wallet->minWithdrawal = $request->input("minWithdrawal");
+            }
+            if ($request->input("name")) {
+                $request->validate([
+                    "name" => "min:3",
+                ], $messages);
+
+                $wallet->name = $request->input("name");
             }
 
             $wallet->save();

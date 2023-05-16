@@ -162,6 +162,9 @@
         @media (max-width: $mobileSmall) {
             height: 34px;
         }
+        &-non-height {
+            height: fit-content;
+        }
         svg {
             position: absolute;
             right: 12px;

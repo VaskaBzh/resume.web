@@ -1,4 +1,9 @@
 <template>
+    <div class="hint">
+        <div class="hint_item" v-hide="this.mess !== ''">
+            {{ this.mess }}
+        </div>
+    </div>
     <div class="wallets" ref="page">
         <main-title tag="h2" titleName="Мои кошельки">
             <!--                <blue-button class="wallets__button wallets__button-history">-->
@@ -50,18 +55,14 @@
                     :key="i"
                     v-scroll="'top'"
                     :wallet="wallet"
+                    @getWallet="changeWallet(wallet)"
                 ></wallet-block>
             </div>
         </div>
     </div>
-    <div class="hint">
-        <div class="hint_item" v-hide="this.mess !== ''">
-            {{ this.mess }}
-        </div>
-    </div>
     <popup-view id="changeWallet" :wait="this.wait">
         <div
-            v-for="(error, i) in this.errors"
+            v-for="(error, i) in this.errs"
             :key="i"
             class="form_wrapper-message"
         >
@@ -82,7 +83,14 @@
         </div>
         <form @submit.prevent="this.change" class="form form-popup popup__form">
             <main-title tag="h3" title-name="Измените кошелек" />
-            <div class="form_row">
+            <input
+                v-model="form.name"
+                autofocus
+                type="text"
+                class="input popup__input"
+                placeholder="Введите имя"
+            />
+            <div class="form_row form_row-non-height">
                 <div class="form_column">
                     <label for="percent" class="main__label">Процент</label>
                     <input
@@ -174,7 +182,7 @@
                 class="input popup__input"
                 placeholder="Введите имя"
             />
-            <div class="form_row">
+            <div class="form_row form_row-non-height">
                 <div class="form_column">
                     <label for="percent" class="main__label">Процент</label>
                     <input
@@ -251,6 +259,11 @@ export default {
     },
     layout: profileLayoutView,
     computed: {
+        errs() {
+            let errs = this.errors || {};
+            errs = Object.values(errs).filter((el) => el !== "");
+            return errs;
+        },
         ...mapGetters([
             "getIncome",
             "allAccounts",
@@ -313,7 +326,13 @@ export default {
                                 let fullName = "";
                                 if (name.length > 6) {
                                     fullName = name;
-                                    name = name.substr(0, 6) + "...";
+                                    name =
+                                        name.substr(0, 4) +
+                                        "..." +
+                                        name.substr(
+                                            name.length - 4,
+                                            name.length
+                                        );
                                 }
                                 let walletModel = {
                                     img: "bitcoin_img.png",
@@ -358,12 +377,21 @@ export default {
         };
     },
     methods: {
+        changeWallet(wallet) {
+            this.walletObj = wallet;
+            this.form.percent = wallet.percent;
+            this.form.minWithdrawal = wallet.minWithdrawal;
+            wallet.fullName === ""
+                ? (this.form.name = wallet.name)
+                : (this.form.name = wallet.fullName);
+        },
         change() {
             this.wait = true;
             let wallet = this.walletObj;
             wallet.group_id = this.getActive;
             wallet.percent = this.form.percent;
             wallet.minWithdrawal = this.form.minWithdrawal;
+            wallet.name = this.form.name;
             axios
                 .post("/wallet_change", wallet)
                 .then((res) => {
@@ -372,7 +400,12 @@ export default {
                     this.wait = false;
                     this.form.percent = "";
                     this.form.minWithdrawal = "";
-                    document.querySelector(".popup__wrapper").click();
+                    this.form.name = "";
+                    setTimeout(() => {
+                        document
+                            .querySelector("#changeWallet [data-close]")
+                            .click();
+                    }, 300);
                 })
                 .catch((err) => {
                     this.wait = false;
@@ -416,7 +449,11 @@ export default {
                               group.group_id =
                                   this.allAccounts[this.getActive].id;
                               this.$store.dispatch("getWallets", group);
-                              document.querySelector("[data-close]").click();
+                              setTimeout(() => {
+                                  document
+                                      .querySelector("#addWallet [data-close]")
+                                      .click();
+                              }, 300);
                           })
                           .catch((err) => {
                               this.wait = false;
@@ -559,243 +596,6 @@ export default {
         }
         @media (max-width: 479.98px) {
             grid-template-columns: repeat(1, 1fr);
-        }
-    }
-
-    // .wallets__block
-    &__block {
-        padding: 16px;
-        background-color: #fff;
-        border-radius: 13px;
-        width: 100%;
-
-        &-wallet {
-            width: 100%;
-            padding: 12px 0;
-            transition: all 0.5s ease;
-            @media (max-width: 767.98px) {
-                padding: 14px 0;
-            }
-
-            &.top {
-                &-before-enter {
-                    opacity: 0;
-                }
-
-                &-enter {
-                    opacity: 1;
-                }
-            }
-        }
-
-        &_name {
-            width: 100%;
-            display: inline-flex;
-            align-items: center;
-            padding: 0 16px 16px;
-            border-bottom: 1px solid #e8ecf2;
-            @media (max-width: 767.98px) {
-                padding: 0 10px 10px;
-            }
-
-            img {
-                margin-right: 16px;
-                width: 24px;
-                height: 24px;
-                border-radius: 50%;
-                @media (max-width: 767.98px) {
-                    margin-right: 6px;
-                }
-            }
-
-            span {
-                font-weight: 500;
-                font-size: 18px;
-                line-height: 26px;
-                color: #000000;
-                @media (max-width: 991.98px) {
-                    font-size: 16px;
-                    line-height: 23px;
-                }
-            }
-        }
-
-        &_i {
-            position: absolute;
-            width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            right: 12px;
-            bottom: 12px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            border: 1px solid #eff2f7;
-            cursor: pointer;
-            svg {
-                width: 4px;
-                height: 12px;
-            }
-        }
-
-        &_doths {
-            margin-left: auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            width: 23.5px;
-            gap: 3px;
-            cursor: pointer;
-            position: relative;
-            @media (max-width: 767.98px) {
-                width: 20px;
-                gap: 2.5px;
-            }
-            &_menu {
-                cursor: default;
-                position: absolute;
-                visibility: hidden;
-                right: -16px;
-                min-width: 255px;
-                background: #ffffff !important;
-                top: calc(100% + 13px);
-                overflow: hidden;
-                opacity: 0;
-                height: fit-content !important;
-                display: flex;
-                flex-direction: column;
-                align-items: center;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                border-radius: 20px !important;
-                width: fit-content;
-                z-index: 2;
-                @media (max-width: 991.98px) {
-                    right: 0;
-                    left: auto;
-                    top: 0;
-                }
-                .menu {
-                    &_elem {
-                        &-remove {
-                            color: #ff3b30;
-                        }
-                        svg {
-                            width: 24px;
-                            height: 24px;
-                        }
-                        font-weight: 400;
-                        font-size: 17px;
-                        line-height: 143.1%;
-                        color: #000034;
-                        display: flex;
-                        height: 48px;
-                        gap: 12px;
-                        padding: 12px;
-                        align-items: center;
-                        width: 100%;
-                        background: transparent;
-                        transition: all 0.3s ease 0s;
-                        &:not(:first-child) {
-                            border-top: 1px solid rgba(214, 214, 214, 0.3);
-                        }
-                        &:hover {
-                            background: #f6f8fa;
-                        }
-                        svg {
-                            width: 24px;
-                            height: 24px;
-                            stroke: transparent !important;
-                        }
-                        svg:not(.stroke) {
-                            fill: #417fe5 !important;
-                        }
-                        svg.stroke {
-                            stroke: #417fe5 !important;
-                        }
-                    }
-                    &_column {
-                        display: flex;
-                        flex-direction: column;
-                        span {
-                            width: 100%;
-                        }
-                    }
-                    &_title {
-                        font-weight: 400;
-                        font-size: 16px;
-                        line-height: 143.1%;
-                        color: rgba(0, 0, 0, 0.62);
-                    }
-                    &_val {
-                        font-weight: 500;
-                        font-size: 18px;
-                        line-height: 143.1%;
-                        color: #000034;
-                    }
-                }
-            }
-
-            &:hover {
-                div {
-                    background-color: #3f7bdd;
-                }
-                .wallets__block_doths_menu {
-                    width: 100% !important;
-                    opacity: 1;
-                    visibility: visible;
-                }
-            }
-
-            div {
-                width: 4px;
-                height: 4px;
-                border-radius: 50%;
-                background-color: rgba(0, 0, 0, 0.62);
-                transition: all 0.3s ease;
-            }
-        }
-
-        &_value {
-            padding: 16px 16px 0;
-            margin-bottom: 8px;
-            font-weight: 400;
-            font-size: 20px;
-            line-height: 28px;
-            color: #0000009e;
-            width: 100%;
-            @media (max-width: 767.98px) {
-                padding: 10px 10px 0;
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 23px;
-                color: #000034;
-                margin-bottom: 0;
-                span {
-                    font-weight: 500;
-                }
-            }
-
-            span {
-                font-weight: 700;
-                color: #000034;
-            }
-        }
-
-        &_convert {
-            padding: 0 16px;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 23px;
-            color: rgba(0, 0, 0, 0.62);
-            @media (max-width: 767.98px) {
-                color: #000034;
-            }
-        }
-
-        .wallets__subtitle {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 23px;
         }
     }
 

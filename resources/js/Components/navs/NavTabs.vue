@@ -385,10 +385,10 @@ export default {
         width: calc(100% + 15px);
     }
     @media (max-width: 479.98px) {
-        padding: 4px 20px 0 40px;
-        margin: 0 -20px;
-        max-width: calc(100% + 20px);
-        width: calc(100% + 20px);
+        padding: 4px 15px 0 15px;
+        margin: 0;
+        max-width: calc(100% + 30px);
+        width: calc(100% + 30px);
     }
     &__tab {
         width: 100%;

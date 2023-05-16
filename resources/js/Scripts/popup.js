@@ -205,9 +205,6 @@ class Popup {
             "mousedown",
             function (e) {
                 // Закрытие на пустом месте (popup__wrapper) и кнопки закрытия (popup__close) для закрытия
-                const buttonClose = e.target.closest(
-                    `[${this.options.attributeCloseButton}]`
-                );
                 if (
                     !e.target.closest(
                         `.${this.options.classes.popupContent}`

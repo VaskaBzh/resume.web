@@ -95,7 +95,7 @@ export default {
 .account {
     margin-top: 40px;
     @media (max-width: 1280.98px) {
-        margin-top: 120px;
+        margin-top: 100px;
     }
     @media (max-width: 768.98px) {
         margin-top: 20px;

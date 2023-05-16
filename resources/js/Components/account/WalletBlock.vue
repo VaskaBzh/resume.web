@@ -1,15 +1,25 @@
 <template>
     <div class="wallets__block wallets__block-wallet">
         <div class="wallets__block_name">
-            <span v-if="wallet.fullName === ''">{{ wallet.wallet }}</span>
-            <span v-else v-tooltip="{ message: wallet.fullName }">{{
+            <span v-if="wallet.fullName === '' && wallet.name === ''">{{
+                wallet.wallet
+            }}</span>
+            <span v-else-if="wallet.fullName === '' && wallet.name !== ''">{{
                 wallet.name
             }}</span>
-            <div class="wallets__block_doths">
+            <span
+                v-else-if="wallet.fullName !== '' && wallet.name !== ''"
+                v-tooltip="{ message: wallet.fullName }"
+                >{{ wallet.name }}</span
+            >
+            <div class="wallets__block_doths" @click="toggleOpen">
                 <div></div>
                 <div></div>
                 <div></div>
-                <div class="wallets__block_doths_menu menu">
+                <div
+                    class="wallets__block_doths_menu menu"
+                    :class="{ opened: opened }"
+                >
                     <button
                         @click="changeWalletObj(wallet)"
                         class="menu_elem"
@@ -122,7 +132,24 @@ export default {
         return {
             ruble: 0,
             dollar: 0,
+            opened: false,
         };
+    },
+    mounted() {
+        document.addEventListener("click", this.close.bind(this), true);
+        document.addEventListener("keydown", (e) => {
+            if (e.keyCode === 27) {
+                this.close();
+            }
+        });
+    },
+    unmounted() {
+        // document.removeEventListener("click", this.hideSelect.bind(this), true);
+        document.removeEventListener("keydown", (e) => {
+            if (e.keyCode === 27) {
+                this.close();
+            }
+        });
     },
     created() {
         axios
@@ -135,8 +162,16 @@ export default {
         }, 100);
     },
     methods: {
+        toggleOpen() {
+            this.opened = !this.opened;
+        },
+        close(e) {
+            if (!e?.target.closest(".wallets__block_doths")) {
+                this.opened = false;
+            }
+        },
         changeWalletObj(wallet) {
-            this.walletObj = wallet;
+            this.$emit("getWallet", wallet);
         },
         remove(wallet) {
             wallet.group_id = this.getActive;
@@ -153,4 +188,236 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped lang="scss">
+.wallets {
+    // .wallets__block
+    &__block {
+        padding: 16px;
+        background-color: #fff;
+        border-radius: 13px;
+        width: 100%;
+
+        &-wallet {
+            width: 100%;
+            padding: 12px 0;
+            transition: all 0.5s ease;
+            @media (max-width: 767.98px) {
+                padding: 14px 0;
+            }
+
+            &.top {
+                &-before-enter {
+                    opacity: 0;
+                }
+
+                &-enter {
+                    opacity: 1;
+                }
+            }
+        }
+
+        &_name {
+            width: 100%;
+            display: inline-flex;
+            align-items: center;
+            padding: 0 16px 16px;
+            border-bottom: 1px solid #e8ecf2;
+            @media (max-width: 767.98px) {
+                padding: 0 10px 10px;
+            }
+
+            img {
+                margin-right: 16px;
+                width: 24px;
+                height: 24px;
+                border-radius: 50%;
+                @media (max-width: 767.98px) {
+                    margin-right: 6px;
+                }
+            }
+
+            span {
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 26px;
+                color: #000000;
+                @media (max-width: 991.98px) {
+                    font-size: 16px;
+                    line-height: 23px;
+                }
+            }
+        }
+
+        &_i {
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            right: 12px;
+            bottom: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid #eff2f7;
+            cursor: pointer;
+            svg {
+                width: 4px;
+                height: 12px;
+            }
+        }
+
+        &_doths {
+            margin-left: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 23.5px;
+            gap: 3px;
+            cursor: pointer;
+            position: relative;
+            @media (max-width: 767.98px) {
+                width: 20px;
+                gap: 2.5px;
+            }
+            &_menu {
+                cursor: default;
+                position: absolute;
+                right: -16px;
+                min-width: 255px;
+                background: #ffffff !important;
+                top: calc(100% + 13px);
+                height: fit-content !important;
+                display: flex;
+                visibility: hidden;
+                flex-direction: column;
+                align-items: center;
+                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+                border-radius: 20px !important;
+                width: fit-content;
+                z-index: 2;
+                transition: all 0.5s ease 0s;
+                opacity: 0;
+                @media (max-width: 991.98px) {
+                    right: 0;
+                    left: auto;
+                    top: 0;
+                }
+                &.opened {
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .menu {
+                    &_elem {
+                        &-remove {
+                            color: #ff3b30;
+                        }
+                        svg {
+                            width: 24px;
+                            height: 24px;
+                        }
+                        font-weight: 400;
+                        font-size: 17px;
+                        line-height: 143.1%;
+                        color: #000034;
+                        display: flex;
+                        height: 48px;
+                        gap: 12px;
+                        padding: 12px;
+                        align-items: center;
+                        width: 100%;
+                        background: transparent;
+                        transition: all 0.3s ease 0s;
+                        &:not(:first-child) {
+                            border-top: 1px solid rgba(214, 214, 214, 0.3);
+                        }
+                        &:hover {
+                            background: #f6f8fa;
+                        }
+                        svg {
+                            width: 24px;
+                            height: 24px;
+                            stroke: transparent !important;
+                        }
+                        svg:not(.stroke) {
+                            fill: #417fe5 !important;
+                        }
+                        svg.stroke {
+                            stroke: #417fe5 !important;
+                        }
+                    }
+                    &_column {
+                        display: flex;
+                        flex-direction: column;
+                        span {
+                            width: 100%;
+                        }
+                    }
+                    &_title {
+                        font-weight: 400;
+                        font-size: 16px;
+                        line-height: 143.1%;
+                        color: rgba(0, 0, 0, 0.62);
+                    }
+                    &_val {
+                        font-weight: 500;
+                        font-size: 18px;
+                        line-height: 143.1%;
+                        color: #000034;
+                    }
+                }
+            }
+
+            div {
+                width: 4px;
+                height: 4px;
+                border-radius: 50%;
+                background-color: rgba(0, 0, 0, 0.62);
+                transition: all 0.3s ease;
+            }
+        }
+
+        &_value {
+            padding: 16px 16px 0;
+            margin-bottom: 8px;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 28px;
+            color: #0000009e;
+            width: 100%;
+            @media (max-width: 767.98px) {
+                padding: 10px 10px 0;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 23px;
+                color: #000034;
+                margin-bottom: 0;
+                span {
+                    font-weight: 500;
+                }
+            }
+
+            span {
+                font-weight: 700;
+                color: #000034;
+            }
+        }
+
+        &_convert {
+            padding: 0 16px;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 23px;
+            color: rgba(0, 0, 0, 0.62);
+            @media (max-width: 767.98px) {
+                color: #000034;
+            }
+        }
+
+        .wallets__subtitle {
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 23px;
+        }
+    }
+}
+</style>
