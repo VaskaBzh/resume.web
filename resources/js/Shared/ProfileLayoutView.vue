@@ -27,6 +27,7 @@ import HeaderComponent from "@/Components/HeaderComponent.vue";
 import FooterComponent from "@/Components/FooterComponent.vue";
 import { mapGetters } from "vuex";
 import { Inertia } from "@inertiajs/inertia";
+import axios from "axios";
 
 export default {
     props: {
@@ -61,11 +62,24 @@ export default {
     async created() {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getConverter");
-            await this.$store.dispatch("getAccounts");
+            // await this.$store.dispatch("getAccounts");
+            axios
+                .get("/accountsAll", {
+                    headers: {
+                        "Content-Type": "application/json; charset=utf-8",
+                        "X-CSRF-TOKEN": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                        "X-Requested-With": "XMLHttpRequest",
+                    },
+                })
+                .then(async (response) => {
+                    console.log(response);
+                });
         }
-        this.interval = setInterval(() => {
-            this.$store.dispatch("getAccounts");
-        }, 60000);
+        // this.interval = setInterval(() => {
+        //     this.$store.dispatch("getAccounts");
+        // }, 60000);
     },
     // mounted() {
     //     Inertia.on("success", (event) => {
@@ -93,15 +107,15 @@ export default {
 </script>
 <style lang="scss">
 .account {
-    margin-top: 40px;
+    margin-top: 20px;
     @media (max-width: 1280.98px) {
-        margin-top: 100px;
+        margin-top: 106px;
     }
     @media (max-width: 768.98px) {
-        margin-top: 20px;
+        margin-top: 26px;
     }
     @media (max-width: 467.98px) {
-        margin-top: 10px;
+        margin-top: 16px;
     }
 
     &__container {

@@ -255,7 +255,7 @@ export default {
         min-height: 48px;
         display: inline-flex;
         align-items: center;
-        @media (max-width: 478.98px) {
+        @media (max-width: 479.98px) {
             min-height: 40px;
         }
     }
@@ -265,7 +265,7 @@ export default {
     @media (min-width: 767.98px) {
         right: 60px;
     }
-    @media (min-width: 478.98px) {
+    @media (min-width: 479.98px) {
         bottom: 50px;
     }
     right: 15px;

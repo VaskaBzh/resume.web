@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Requests;
 use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use GuzzleHttp\Client;
 
@@ -57,24 +58,31 @@ class RequestController extends Controller
     }
     public function accountsAll()
     {
-        // Create a stream
-        $opts = array(
-            "http" => array(
-                "method" => "GET",
-                "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
-                    "Content-Type: application/json; charset=utf-8",
-            )
-        );
-        $context = stream_context_create($opts);
-        $req_url = 'https://pool.api.btc.com/v1/worker/groups?puid=781195&page=1&page_size=52';
-        $response_json = file_get_contents($req_url, false, $context);
-        if(false !== $response_json) {
-            try {
-                return json_decode($response_json);
-            } catch(Exception $e) {
-                // Handle JSON parse error...
+        $data = Cache::remember('accountsAll', 60, function () {
+            // Create a stream
+            $opts = array(
+                "http" => array(
+                    "method" => "GET",
+                    "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
+                        "Content-Type: application/json; charset=utf-8",
+                )
+            );
+            $context = stream_context_create($opts);
+            $req_url = 'https://pool.api.btc.com/v1/worker/groups?puid=781195&page=1&page_size=52';
+            $response_json = @file_get_contents($req_url, false, $context);
+            if(false !== $response_json) {
+                try {
+                    return json_decode($response_json);
+                } catch(Exception $e) {
+                    // Handle JSON parse error...
+                    return ['error' => 'Failed to parse JSON'];
+                }
+            } else {
+                return ['error' => 'Failed to fetch data'];
             }
-        }
+        });
+
+        return response()->json($data);
     }
 
     public function worker(Request $request)

@@ -413,7 +413,7 @@ export default {
         }
         &__row {
             gap: 8px;
-            @media (max-width: 998.98px) {
+            @media (max-width: 991.98px) {
                 gap: 4px;
             }
         }
@@ -423,7 +423,7 @@ export default {
                 display: flex;
                 align-items: center;
                 gap: 8px;
-                @media (max-width: 776.98px) {
+                @media (max-width: 767.98px) {
                     gap: 1px;
                     position: absolute;
                     top: calc(100% + 40px);
@@ -449,7 +449,7 @@ export default {
                     line-height: 18px;
                     min-height: 26px;
                 }
-                @media (max-width: 478.98px) {
+                @media (max-width: 479.98px) {
                     font-size: 14px;
                     line-height: 18px;
                 }
@@ -490,7 +490,7 @@ export default {
                 @media (min-width: 767.98px) {
                     margin-bottom: 12px;
                 }
-                @media (max-width: 467.98px) {
+                @media (max-width: 479.98px) {
                     flex-wrap: wrap;
                 }
             }
@@ -559,7 +559,7 @@ export default {
                 padding: 0 0 4px 12px;
                 .title {
                     margin-bottom: 12px;
-                    @media (max-width: 768.98px) {
+                    @media (max-width: 767.98px) {
                         margin-bottom: 40px;
                     }
                 }
@@ -610,13 +610,13 @@ export default {
             &-graph {
                 min-height: 415px !important;
                 padding: 24px 24px 20px 8px;
-                @media (max-width: 998.98px) {
+                @media (max-width: 991.98px) {
                     min-height: 370px !important;
                 }
-                @media (max-width: 768.98px) {
+                @media (max-width: 767.98px) {
                     min-height: 310px !important;
                 }
-                @media (max-width: 478.98px) {
+                @media (max-width: 479.98px) {
                     min-height: 216px !important;
                 }
             }

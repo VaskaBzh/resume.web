@@ -278,7 +278,7 @@ export default {
         overflow: hidden;
         border: 0.5px solid #fdfefe;
         position: fixed;
-        top: 132px;
+        top: 112px;
         padding: 12px;
         transform: translateY(0);
     }
