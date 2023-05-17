@@ -124,6 +124,7 @@
 
 <script>
 import axios from "axios";
+import { mapGetters } from "vuex";
 
 export default {
     name: "wallet-block",
@@ -134,6 +135,9 @@ export default {
             dollar: 0,
             opened: false,
         };
+    },
+    computed: {
+        ...mapGetters(["getActive"]),
     },
     mounted() {
         document.addEventListener("click", this.close.bind(this), true);
@@ -178,11 +182,13 @@ export default {
             axios
                 .post("/wallet_delete", wallet)
                 .then((res) => {
-                    this.mess = res.data.message;
+                    this.$emit("getMessage", res.data.message);
                     this.$store.dispatch("getWallets", wallet);
                 })
-                .catch((err) => (this.mess = err.response.data.message));
-            setTimeout(() => (this.mess = ""), 3000);
+                .catch((err) =>
+                    this.$emit("getMessage", err.response.data.message)
+                );
+            setTimeout(() => (this.$emit("getMessage", ""), 3000));
         },
     },
 };

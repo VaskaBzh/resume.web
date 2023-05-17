@@ -331,6 +331,9 @@ export default {
         @media (min-width: 1271.98px) {
             padding-left: 70px;
         }
+        @media (max-width: 767.98px) {
+            margin-bottom: 18px;
+        }
     }
 
     // .income__button

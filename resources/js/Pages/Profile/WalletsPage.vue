@@ -56,6 +56,7 @@
                     v-scroll="'top'"
                     :wallet="wallet"
                     @getWallet="changeWallet(wallet)"
+                    @getMessage="setMessage"
                 ></wallet-block>
             </div>
         </div>
@@ -377,6 +378,9 @@ export default {
         };
     },
     methods: {
+        setMessage(message) {
+            this.mess = message;
+        },
         changeWallet(wallet) {
             this.walletObj = wallet;
             this.form.percent = wallet.percent;
@@ -571,6 +575,9 @@ export default {
         margin: 0 0 24px;
         @media (min-width: 1271.98px) {
             padding-left: 70px;
+        }
+        @media (max-width: 767.98px) {
+            margin-bottom: 18px;
         }
         display: flex;
         width: 100%;
@@ -815,6 +822,21 @@ export default {
         }
     }
 
+    &__block {
+        padding: 16px;
+        background-color: #fff;
+        border-radius: 13px;
+        width: 100%;
+        @media (max-width: 767.98px) {
+            padding: 10px 0 10px;
+            border-top: 1px solid #d7d8d9;
+            border-radius: 0;
+
+            &:first-child {
+                border-top: none;
+            }
+        }
+    }
     // .wallets__row
     &__row {
         width: 100%;

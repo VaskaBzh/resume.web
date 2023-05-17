@@ -378,7 +378,7 @@ h6 {
 @media (max-width: $pc) {
     .account {
         &__container {
-            padding-top: 72px;
+            padding-top: 60px;
             position: relative;
             flex-direction: column;
         }
@@ -395,14 +395,7 @@ h6 {
 @media (max-width: $mobile) {
     .account {
         &__container {
-            padding-top: 56px;
-        }
-    }
-}
-@media (max-width: $mobileSmall) {
-    .account {
-        &__container {
-            padding-top: 52px;
+            padding-top: 18px;
         }
     }
 }

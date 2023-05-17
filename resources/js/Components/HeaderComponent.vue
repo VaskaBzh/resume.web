@@ -10,6 +10,7 @@
 
         <nav-links
             @clicked="burgerAction"
+            @auth="changeSlide"
             :is_auth="is_auth"
             :viewportWidth="viewportWidth"
         />
@@ -37,14 +38,6 @@
         ></account-menu>
 
         <div v-show="viewportWidth < 767.98" class="nav__buttons_mobile">
-            <div
-                class="nav__button_mobile"
-                data-popup="#auth"
-                @click="this.linkChanger"
-                v-show="!is_auth"
-            >
-                <img src="../../assets/img/user.svg" alt="" />
-            </div>
             <div
                 @click="burgerAction"
                 class="nav__burger"
@@ -593,6 +586,9 @@ export default defineComponent({
         // },
     },
     methods: {
+        changeSlide(type) {
+            this.is_reg = type;
+        },
         closePopup() {
             document.querySelector("[data-close]").click();
         },
@@ -840,7 +836,7 @@ export default defineComponent({
             position: relative;
             z-index: 100;
         }
-        max-width: 138px;
+        max-width: 120px;
     }
 }
 
@@ -923,10 +919,10 @@ nav.nav__container {
     z-index: 100;
 
     & .nav__burger {
-        background: #4182ec;
+        background: transparent;
         border-radius: 5px;
-        width: 60px;
-        height: 45px;
+        width: 24px;
+        height: 24px;
         gap: 4px;
         transition: all 0.3s ease 0s;
 
@@ -950,9 +946,9 @@ nav.nav__container {
         & span {
             display: block;
             width: 18px;
-            height: 1.5px;
-            flex: 0 0 1.5px;
-            background-color: #fff;
+            height: 2px;
+            flex: 0 0 2px;
+            background-color: #4182ec;
             border-radius: 5px;
             position: relative;
             right: 0;
@@ -967,7 +963,7 @@ nav.nav__container {
                     position: absolute;
                     width: 100%;
                     height: 100%;
-                    background-color: #fff;
+                    background-color: #4182ec;
                 }
             }
         }

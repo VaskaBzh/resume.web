@@ -21,6 +21,7 @@ export default {
     flex-direction: column;
     gap: 8px;
     z-index: 999;
+    visibility: hidden;
     &_item {
         padding: 12px;
         border-radius: 8px;

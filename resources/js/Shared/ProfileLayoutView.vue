@@ -62,20 +62,7 @@ export default {
     async created() {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getConverter");
-            // await this.$store.dispatch("getAccounts");
-            axios
-                .get("/accountsAll", {
-                    headers: {
-                        "Content-Type": "application/json; charset=utf-8",
-                        "X-CSRF-TOKEN": document
-                            .querySelector('meta[name="csrf-token"]')
-                            .getAttribute("content"),
-                        "X-Requested-With": "XMLHttpRequest",
-                    },
-                })
-                .then(async (response) => {
-                    console.log(response);
-                });
+            await this.$store.dispatch("getAccounts");
         }
         // this.interval = setInterval(() => {
         //     this.$store.dispatch("getAccounts");
@@ -109,13 +96,10 @@ export default {
 .account {
     margin-top: 20px;
     @media (max-width: 1280.98px) {
-        margin-top: 106px;
+        margin-top: 104px;
     }
-    @media (max-width: 768.98px) {
-        margin-top: 26px;
-    }
-    @media (max-width: 467.98px) {
-        margin-top: 16px;
+    @media (max-width: 767.98px) {
+        margin-top: 0;
     }
 
     &__container {

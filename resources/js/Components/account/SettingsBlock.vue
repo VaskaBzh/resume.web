@@ -117,8 +117,16 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .wrap {
+    &__head {
+        transition: all 0.3s ease 0s;
+        align-items: center;
+        flex-direction: row;
+        .name {
+            color: rgba(0, 0, 0, 0.62);
+        }
+    }
     &__block {
         gap: 12px;
         border-radius: 16px;
@@ -136,13 +144,13 @@ export default {
             min-height: 98px;
             padding: 12px;
         }
-        &__head {
-            transition: all 0.3s ease 0s;
-            align-items: center;
-            .name {
-                color: rgba(0, 0, 0, 0.62);
-            }
-        }
+        //&__head {
+        //    transition: all 0.3s ease 0s;
+        //    align-items: center;
+        //    .name {
+        //        color: rgba(0, 0, 0, 0.62);
+        //    }
+        //}
         span,
         p {
             font-weight: 400;

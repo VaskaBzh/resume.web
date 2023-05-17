@@ -552,7 +552,9 @@ export default {
         // .home__background_image
         &_image {
             position: absolute;
+            top: 40%;
             @media (max-width: 991.98px) {
+                top: 0;
                 position: relative;
                 width: 100%;
                 object-fit: cover;

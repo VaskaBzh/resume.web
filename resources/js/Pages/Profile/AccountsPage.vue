@@ -395,7 +395,7 @@ export default {
         width: 100%;
         align-items: center;
         @media (max-width: 767.98px) {
-            margin-bottom: 24px;
+            margin-bottom: 18px;
         }
     }
     &__button {

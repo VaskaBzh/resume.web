@@ -67,8 +67,8 @@ export default {
     width: 100%;
     .title {
         margin-bottom: 16px;
-        @media (max-width: 479.98px) {
-            margin-bottom: 20px;
+        @media (max-width: 767.98px) {
+            margin-bottom: 18px;
         }
     }
     // .connecting_question

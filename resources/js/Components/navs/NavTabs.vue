@@ -8,6 +8,7 @@
                 $page.url === '/profile/wallets',
         }"
         ref="tabs"
+        v-if="this.viewportWidth > 767.98"
     >
         <a class="nav-tabs_link-back" href="#" @click="back">
             <svg
@@ -28,6 +29,7 @@
         <Link
             :href="route('statistic')"
             :class="{
+                burger_link: this.viewportWidth < 776.98,
                 'router-link-active': $page.url === '/profile/statistic',
             }"
             class="nav-tabs__tab"
@@ -48,7 +50,10 @@
         </Link>
         <Link
             :href="route('accounts')"
-            :class="{ 'router-link-active': $page.url === '/profile/accounts' }"
+            :class="{
+                burger_link: this.viewportWidth < 776.98,
+                'router-link-active': $page.url === '/profile/accounts',
+            }"
             class="nav-tabs__tab"
         >
             <svg
@@ -67,7 +72,10 @@
         </Link>
         <Link
             :href="route('workers')"
-            :class="{ 'router-link-active': $page.url === '/profile/workers' }"
+            :class="{
+                burger_link: this.viewportWidth < 776.98,
+                'router-link-active': $page.url === '/profile/workers',
+            }"
             class="nav-tabs__tab"
         >
             <svg
@@ -104,7 +112,10 @@
         <!--        </Link>-->
         <Link
             :href="route('income')"
-            :class="{ 'router-link-active': $page.url === '/profile/income' }"
+            :class="{
+                burger_link: this.viewportWidth < 776.98,
+                'router-link-active': $page.url === '/profile/income',
+            }"
             class="nav-tabs__tab"
         >
             <svg
@@ -139,6 +150,7 @@
         <Link
             :href="route('connecting')"
             :class="{
+                burger_link: this.viewportWidth < 776.98,
                 'router-link-active': $page.url === '/profile/connecting',
             }"
             class="nav-tabs__tab"
@@ -161,6 +173,7 @@
             class="nav-tabs__tab"
             :href="route('wallets')"
             :class="{
+                burger_link: this.viewportWidth < 776.98,
                 'router-link-active': $page.url === '/profile/wallets',
             }"
         >
@@ -213,18 +226,27 @@
 <script>
 import { Link, router } from "@inertiajs/vue3";
 
-const animationObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-            document.querySelector(".nav-tabs").classList.remove("fixed");
-        } else {
-            document.querySelector(".nav-tabs").classList.add("fixed");
-        }
-    });
-});
+// const animationObserver = new IntersectionObserver((entries) => {
+//     entries.forEach((entry) => {
+//         if (entry.isIntersecting) {
+//             document.querySelector(".nav-tabs").classList.remove("fixed");
+//         } else {
+//             document.querySelector(".nav-tabs").classList.add("fixed");
+//         }
+//     });
+// });
 export default {
     components: {
         Link,
+    },
+    created() {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    data() {
+        return {
+            viewportWidth: 0,
+        };
     },
     methods: {
         back() {
@@ -237,27 +259,30 @@ export default {
         router() {
             return router;
         },
-        handleScroll(attr) {
-            if (attr !== "stop") {
-                animationObserver.observe(
-                    document.querySelector(".nav__container")
-                );
-            } else {
-                animationObserver.unobserve(
-                    document.querySelector(".nav__container")
-                );
-            }
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
         },
+        // handleScroll(attr) {
+        //     if (attr !== "stop") {
+        //         animationObserver.observe(
+        //             document.querySelector(".nav__container")
+        //         );
+        //     } else {
+        //         animationObserver.unobserve(
+        //             document.querySelector(".nav__container")
+        //         );
+        //     }
+        // },
     },
-    mounted() {
-        this.handleScroll();
-    },
-    beforeUnmount() {
-        this.handleScroll("stop");
-    },
+    // mounted() {
+    // this.handleScroll();
+    // },
+    // beforeUnmount() {
+    // this.handleScroll("stop");
+    // },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .nav-tabs {
     max-width: 280px;
     width: 100%;
@@ -383,6 +408,7 @@ export default {
         margin: 0 -15px;
         max-width: calc(100% + 15px);
         width: calc(100% + 15px);
+        display: none;
     }
     @media (max-width: 479.98px) {
         padding: 4px 15px 0 15px;
@@ -463,6 +489,11 @@ export default {
             line-height: 16px;
             height: 34px;
             min-height: 34px;
+        }
+        @media (max-width: 767.98px) {
+            svg {
+                display: block;
+            }
         }
         @media (max-width: 380.98px) {
             height: 28px;

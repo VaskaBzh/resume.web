@@ -1,11 +1,26 @@
 <template>
     <div @click="toggleMenu" class="button">
         <div class="button_name">
-            {{
-                this.name.length > 12
-                    ? this.name.slice(0, 12 - this.name.length) + "..."
-                    : this.name
-            }}
+            {{ this.name }}
+            <!--            {{-->
+            <!--                this.name.length > 12-->
+            <!--                    ? this.name.slice(0, 12 - this.name.length) + "..."-->
+            <!--                    : this.name-->
+            <!--            }}-->
+            <svg
+                v-show="this.viewportWidth < 767.98"
+                width="13"
+                height="12"
+                viewBox="0 0 13 12"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M6.19307 9.06485C6.28038 9.06485 6.36195 9.04762 6.43778 9.01315C6.51361 8.97869 6.58369 8.92929 6.64803 8.86495L10.0851 5.31761C10.2045 5.19353 10.2643 5.04188 10.2643 4.86265C10.2643 4.74776 10.2367 4.64206 10.1816 4.54555C10.1264 4.44905 10.0517 4.37322 9.95753 4.31807C9.86332 4.26293 9.75647 4.23535 9.63698 4.23535C9.46695 4.23535 9.31759 4.29509 9.18891 4.41458L6.19307 7.52074L3.19719 4.41458C3.06853 4.29509 2.91917 4.23535 2.7491 4.23535C2.62962 4.23535 2.52277 4.26293 2.42856 4.31807C2.33435 4.37322 2.25969 4.44905 2.20458 4.54555C2.14943 4.64206 2.12185 4.74776 2.12185 4.86265C2.12185 5.04188 2.18388 5.19353 2.30792 5.31761L5.7381 8.86495C5.80244 8.92929 5.87252 8.97869 5.94835 9.01315C6.02418 9.04762 6.10575 9.06485 6.19307 9.06485Z"
+                    fill="#000034"
+                    fill-opacity="0.8"
+                />
+            </svg>
         </div>
         <div class="button__menu" :class="{ target: targeted }">
             <div class="button__row">
@@ -18,7 +33,11 @@
                             this.getIncome[this.getActive].accruals
                         "
                     >
-                        {{ Number(this.getIncome[this.getActive].accruals).toFixed(8) }}
+                        {{
+                            Number(
+                                this.getIncome[this.getActive].accruals
+                            ).toFixed(8)
+                        }}
                         BTC</template
                     >
                     <template v-slot:head v-else> 0.00000000 BTC</template>
@@ -44,7 +63,7 @@
             </div>
             <div class="button__row">
                 <span class="button_title">Управление профилем</span>
-                <Link :href="route('settings')"
+                <Link class="settings" :href="route('settings')"
                     ><svg
                         width="24"
                         height="24"
@@ -196,6 +215,7 @@ export default {
             this.targeted = !this.targeted;
             if (this.targeted === true) {
                 setTimeout(() => (this.open = true), 300);
+                this.$emit("clicked", true);
             }
         },
     },
@@ -206,6 +226,9 @@ export default {
 .button {
     position: relative;
     width: 100%;
+    @media (max-width: 767.98px) {
+        padding: 0 12px;
+    }
     &_name {
         width: 100%;
         cursor: pointer;
@@ -218,13 +241,26 @@ export default {
         line-height: 20px;
         color: #417fe5;
         min-width: 160px;
-        padding: 17px 0;
-        height: 44px;
-        background: rgba(194, 213, 242, 0.6);
-        border-radius: 14px;
-        &:hover {
-            color: #ffffff;
-            background-color: #417fe5;
+        @media (max-width: 767.98px) {
+            min-width: 130px;
+            color: #000034;
+            font-weight: 400;
+            font-size: 18px;
+            line-height: 143.1%;
+            gap: 4px;
+        }
+        @media (max-width: 479.98px) {
+            font-size: 16px;
+        }
+        @media (min-width: 767.98px) {
+            padding: 17px 0;
+            height: 44px;
+            background: rgba(194, 213, 242, 0.6);
+            border-radius: 14px;
+            &:hover {
+                color: #ffffff;
+                background-color: #417fe5;
+            }
         }
     }
     .list_button {
@@ -277,6 +313,9 @@ export default {
         background: #ffffff;
         box-shadow: 0 8px 24px rgba(129, 135, 189, 0.15);
         border-radius: 20px;
+        @media (max-width: 767.98px) {
+            display: none;
+        }
         button,
         a {
             font-weight: 400;

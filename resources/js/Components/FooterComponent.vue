@@ -270,7 +270,7 @@ export default {
     }
     right: 15px;
     bottom: calc(30px);
-    z-index: 999;
+    z-index: 99;
 }
 .footer {
     // .footer__main

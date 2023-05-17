@@ -10,51 +10,49 @@
     <!--        </div>-->
     <!--    </div>-->
     <div class="settings" ref="page">
-        <div class="settings__container">
-            <main-title tag="h2" title-name="Настройки аккаунта"></main-title>
-            <div class="settings__wrap settings__wrap-adapt wrap">
-                <div class="settings__column">
-                    <main-title
-                        tag="h3"
-                        title-name="Персональные данные"
-                    ></main-title>
-                    <settings-block
-                        @openPopup="getHtml"
-                        name="Логин"
-                        :val="this.login"
-                    >
-                    </settings-block>
-                    <settings-block
-                        @openPopup="getHtml"
-                        name="Email"
-                        :val="this.email"
-                    ></settings-block>
-                </div>
-                <div class="settings__column" ref="wrap">
-                    <main-title tag="h3" title-name="Безопасность"></main-title>
-                    <settings-block
-                        @openPopup="getHtml"
-                        name="Пароль"
-                        :val="this.password"
-                    ></settings-block>
-                    <settings-block
-                        @openPopup="getHtml"
-                        name="Телефон"
-                        :val="this.phone"
-                    ></settings-block>
-                    <!--                    <settings-block-->
-                    <!--                        data-remove-->
-                    <!--                        :val="this.sms"-->
-                    <!--                        name="СМС авторизация"-->
-                    <!--                        text="Включив его, вы сможете войти в систему с помощью SMS. Но в целях безопасности в некоторых случаях вы можете включить его."-->
-                    <!--                    ></settings-block>-->
-                    <!--                    <settings-block-->
-                    <!--                        data-remove-->
-                    <!--                        :val="this.fac"-->
-                    <!--                        name="2х факторная аутентификация"-->
-                    <!--                        text="Двухфакторная аутентификация добавляет дополнительный уровень безопасности вашей учетной записи."-->
-                    <!--                    ></settings-block>-->
-                </div>
+        <main-title tag="h2" title-name="Настройки аккаунта"></main-title>
+        <div class="settings__wrap settings__wrap-adapt wrap">
+            <div class="settings__column">
+                <main-title
+                    tag="h3"
+                    title-name="Персональные данные"
+                ></main-title>
+                <settings-block
+                    @openPopup="getHtml"
+                    name="Логин"
+                    :val="this.login"
+                >
+                </settings-block>
+                <settings-block
+                    @openPopup="getHtml"
+                    name="Email"
+                    :val="this.email"
+                ></settings-block>
+            </div>
+            <div class="settings__column" ref="wrap">
+                <main-title tag="h3" title-name="Безопасность"></main-title>
+                <settings-block
+                    @openPopup="getHtml"
+                    name="Пароль"
+                    :val="this.password"
+                ></settings-block>
+                <settings-block
+                    @openPopup="getHtml"
+                    name="Телефон"
+                    :val="this.phone"
+                ></settings-block>
+                <!--                    <settings-block-->
+                <!--                        data-remove-->
+                <!--                        :val="this.sms"-->
+                <!--                        name="СМС авторизация"-->
+                <!--                        text="Включив его, вы сможете войти в систему с помощью SMS. Но в целях безопасности в некоторых случаях вы можете включить его."-->
+                <!--                    ></settings-block>-->
+                <!--                    <settings-block-->
+                <!--                        data-remove-->
+                <!--                        :val="this.fac"-->
+                <!--                        name="2х факторная аутентификация"-->
+                <!--                        text="Двухфакторная аутентификация добавляет дополнительный уровень безопасности вашей учетной записи."-->
+                <!--                    ></settings-block>-->
             </div>
         </div>
     </div>
@@ -327,7 +325,7 @@ export default {
             padding-left: 70px;
         }
         @media (max-width: 767.98px) {
-            margin: 28px 0 24px;
+            margin-bottom: 18px;
         }
     }
     .form_wrapper-message {
@@ -374,8 +372,6 @@ export default {
                     border: 0.5px solid rgba(0, 0, 0, 0.08);
                     border-radius: 12px;
                     padding: 20px;
-                    margin: 0 -15px;
-                    width: calc(100% + 30px);
                     gap: 20px;
                     .title {
                         margin-bottom: 0 !important;
@@ -384,10 +380,6 @@ export default {
                             content: none;
                         }
                     }
-                }
-                @media (max-width: 479.98px) {
-                    margin: 0 -20px;
-                    width: calc(100% + 40px);
                 }
             }
         }
