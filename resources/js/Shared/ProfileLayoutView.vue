@@ -64,9 +64,9 @@ export default {
             this.$store.dispatch("getConverter");
             await this.$store.dispatch("getAccounts");
         }
-        // this.interval = setInterval(() => {
-        //     this.$store.dispatch("getAccounts");
-        // }, 60000);
+        this.interval = setInterval(() => {
+            this.$store.dispatch("getAccounts");
+        }, 60000);
     },
     // mounted() {
     //     Inertia.on("success", (event) => {
