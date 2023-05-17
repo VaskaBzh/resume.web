@@ -48,7 +48,7 @@
             {{
                 this.columns.wallet.substr(0, 6) +
                 "..." +
-                this.columns.wallet.slice(this.columns.wallet.length - 8, 6)
+                this.columns.wallet.substr(this.columns.wallet.length - 8, 6)
             }}
         </td>
         <!--        <td class="main__number" v-if="this.viewportWidth > 991.98">-->
