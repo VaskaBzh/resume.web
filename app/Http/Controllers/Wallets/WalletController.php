@@ -13,7 +13,8 @@ class WalletController extends Controller
     public function create(Request $request)
     {
         $messages = [
-            'wallet.required' => 'Введите ссылку на кошелек',
+            'wallet.required' => 'Введите адрес на кошелека',
+            'wallet.min' => 'Неправильный адрес кошелька',
             'percent.integer' => 'Процент должен быть числом.',
             'percent.min' => 'Процент должен быть больше 1.',
             'percent.max' => 'Процент не может быть больше 100.',
@@ -24,8 +25,13 @@ class WalletController extends Controller
 
         $request->validate([
            'group_id' => 'required',
-           'wallet' => 'required',
+           'wallet' => 'required|min:20',
         ], $messages);
+
+        $percentSum = 0;
+        foreach (Wallet::all()->where('group_id', $request->input('group_id')) as $wallet) {
+            $percentSum = $percentSum + $wallet->percent;
+        }
 
         $wallet = new Wallet([
             'group_id' => $request->input("group_id"),
@@ -39,6 +45,11 @@ class WalletController extends Controller
 
             $wallet->percent = $request->input('percent');
         }
+
+        if ($percentSum + $request->input("percent") > 100) {
+            return response()->json(["errors" => ["create_error" => ["Суммарный процент вывода больше 100."]]], 500);
+        }
+
         if ($request->input('minWithdrawal')) {
             $request->validate([
                 'minWithdrawal' => 'numeric|gt:0.004',

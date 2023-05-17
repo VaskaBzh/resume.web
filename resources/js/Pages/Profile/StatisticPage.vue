@@ -12,7 +12,10 @@
             ></div>
             <div
                 class="wrap"
-                v-if="this.allHistory[this.getActive]?.length !== 0"
+                v-if="
+                    this.allHistory[this.getActive]?.filter((a) => a.hash > 0)
+                        .length !== 0
+                "
             >
                 <div class="wrap__head wrap__head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">

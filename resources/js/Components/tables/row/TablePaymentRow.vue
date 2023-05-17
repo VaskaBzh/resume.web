@@ -45,7 +45,11 @@
             {{ this.columns.wallet }}
         </td>
         <td @click="link" class="main__number main__link" v-else>
-            {{ this.columns.wallet }}
+            {{
+                this.columns.wallet.substr(0, 6) +
+                "..." +
+                this.columns.wallet.slice(this.columns.wallet.length - 8, 6)
+            }}
         </td>
         <!--        <td class="main__number" v-if="this.viewportWidth > 991.98">-->
         <!--            {{ Number(this.columns.diff / 1000000000000).toFixed(2) }} T-->

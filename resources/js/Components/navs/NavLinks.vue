@@ -81,8 +81,12 @@
                         <div class="all-link">Войти</div>
                     </blue-button>
                     <span class="nav_text"> или</span>
-                    <blue-button @click="openPopup(true)" data-popup="#auth">
-                        <div class="all-link light">Регистрация</div>
+                    <blue-button
+                        class="light"
+                        @click="openPopup(true)"
+                        data-popup="#auth"
+                    >
+                        <div class="all-link">Регистрация</div>
                     </blue-button>
                 </div>
             </div>
@@ -530,13 +534,15 @@ export default {
     @media (max-width: 767.98px) {
         flex-direction: column;
         gap: 0;
-        margin: 0 auto;
-        padding: 0 14px 80px;
+        margin: 0 14px 80px;
         border-radius: 12px;
         overflow: hidden;
+        width: calc(100% - 14px * 2);
     }
     @media (max-width: 469.98px) {
+        margin: 0 0 80px;
         padding: 0 0 80px;
+        width: 100%;
     }
 
     &_con {
@@ -595,7 +601,7 @@ export default {
         flex-direction: column;
         align-items: center;
         gap: 10px;
-        padding: 6px 6px 12px;
+        padding: 6px 6px 14px;
         .nav_block {
             display: flex;
             flex-direction: column;
@@ -603,6 +609,13 @@ export default {
         }
 
         .blue-button {
+            &.light {
+                margin-bottom: 10px;
+                .all-link {
+                    background: #c2d5f2;
+                    color: rgba(0, 0, 52, 0.75);
+                }
+            }
             height: 22px;
             max-width: 150px;
             min-height: 32px;
@@ -621,10 +634,6 @@ export default {
                 text-align: center;
                 color: #ffffff;
                 background: #4182ec;
-                &.light {
-                    background: #c2d5f2;
-                    color: rgba(0, 0, 52, 0.75);
-                }
             }
         }
     }
@@ -684,7 +693,7 @@ export default {
             flex-direction: column;
             transition: all 0.8s ease 0s;
             &.opened {
-                bottom: 60px;
+                bottom: 10px;
             }
         }
         &.opened {
@@ -779,8 +788,8 @@ export default {
         }
         svg {
             fill: #417fe5;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
         }
         &:after {
             content: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.0864 7.78131C12.0864 7.6649 12.0635 7.55614 12.0175 7.45503C11.9715 7.35393 11.9057 7.26048 11.8199 7.1747L7.09011 2.592C6.92467 2.43268 6.72246 2.35303 6.48349 2.35303C6.33031 2.35303 6.18937 2.38979 6.0607 2.46332C5.93202 2.53685 5.83092 2.63642 5.75739 2.76203C5.68386 2.88765 5.64709 3.03011 5.64709 3.18942C5.64709 3.41614 5.72675 3.61528 5.88607 3.78685L10.0276 7.78131L5.88607 11.7758C5.72675 11.9474 5.6471 12.1465 5.6471 12.3733C5.6471 12.5326 5.68386 12.675 5.75739 12.8007C5.83092 12.9263 5.93202 13.0258 6.0607 13.0993C6.18937 13.1728 6.33031 13.2096 6.48349 13.2096C6.72246 13.2096 6.92467 13.1269 7.09011 12.9615L11.8199 8.38793C11.9057 8.30215 11.9715 8.20871 12.0175 8.1076C12.0635 8.0065 12.0864 7.89774 12.0864 7.78131Z' fill='%23000034' fill-opacity='0.8'/%3E%3C/svg%3E%0A");
@@ -801,14 +810,6 @@ export default {
             &:after {
                 opacity: 0;
             }
-        }
-    }
-    @media (max-width: 479.98px) {
-        font-size: 16px;
-        svg {
-            fill: #417fe5;
-            width: 16px;
-            height: 16px;
         }
     }
 }

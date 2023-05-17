@@ -85,7 +85,7 @@
         <form @submit.prevent="this.change" class="form form-popup popup__form">
             <main-title tag="h3" title-name="Измените кошелек" />
             <input
-                v-model="form.name"
+                v-model="formChg.name"
                 autofocus
                 type="text"
                 class="input popup__input"
@@ -97,7 +97,7 @@
                     <input
                         name="percent"
                         @input="handleInputChange"
-                        v-model="form.percent"
+                        v-model="formChg.percent"
                         id="percent"
                         autofocus
                         type="text"
@@ -110,7 +110,7 @@
                     <input
                         name="minWithdrawal"
                         @input="handleInputChange"
-                        v-model="form.minWithdrawal"
+                        v-model="formChg.minWithdrawal"
                         id="min"
                         autofocus
                         type="text"
@@ -374,37 +374,43 @@ export default {
                 percent: 100,
                 minWithdrawal: 0.005,
             },
+            formChg: {
+                name: "",
+                percent: 100,
+                minWithdrawal: 0.005,
+            },
             walletObj: {},
         };
     },
     methods: {
         setMessage(message) {
             this.mess = message;
+            setTimeout(() => (this.mess = ""), 3000);
         },
         changeWallet(wallet) {
             this.walletObj = wallet;
-            this.form.percent = wallet.percent;
-            this.form.minWithdrawal = wallet.minWithdrawal;
+            this.formChg.percent = wallet.percent;
+            this.formChg.minWithdrawal = wallet.minWithdrawal;
             wallet.fullName === ""
-                ? (this.form.name = wallet.name)
-                : (this.form.name = wallet.fullName);
+                ? (this.formChg.name = wallet.name)
+                : (this.formChg.name = wallet.fullName);
         },
         change() {
             this.wait = true;
             let wallet = this.walletObj;
             wallet.group_id = this.getActive;
-            wallet.percent = this.form.percent;
-            wallet.minWithdrawal = this.form.minWithdrawal;
-            wallet.name = this.form.name;
+            wallet.percent = this.formChg.percent;
+            wallet.minWithdrawal = this.formChg.minWithdrawal;
+            wallet.name = this.formChg.name;
             axios
                 .post("/wallet_change", wallet)
                 .then((res) => {
                     this.mess = res.data.message;
                     this.$store.dispatch("getWallets", wallet);
                     this.wait = false;
-                    this.form.percent = "";
-                    this.form.minWithdrawal = "";
-                    this.form.name = "";
+                    this.formChg.percent = "";
+                    this.formChg.minWithdrawal = "";
+                    this.formChg.name = "";
                     setTimeout(() => {
                         document
                             .querySelector("#changeWallet [data-close]")
@@ -439,33 +445,26 @@ export default {
                 let obj = this.form;
                 per = per + Number(obj.percent);
                 obj.group_id = this.getActive;
-                per > 100
-                    ? (this.err.message = [
-                          "Процент с ваших кошельков больше 100.",
-                      ])
-                    : obj.minWithdrawal === "0"
-                    ? (this.err.message = ["Вывод должен быть больше 0.005."])
-                    : axios
-                          .post("/wallet_create", this.form)
-                          .then((res) => {
-                              this.wait = false;
-                              let group = this.allAccounts[this.getActive];
-                              group.group_id =
-                                  this.allAccounts[this.getActive].id;
-                              this.$store.dispatch("getWallets", group);
-                              setTimeout(() => {
-                                  document
-                                      .querySelector("#addWallet [data-close]")
-                                      .click();
-                              }, 300);
-                          })
-                          .catch((err) => {
-                              this.wait = false;
-                              if (err.response) {
-                                  this.err = {};
-                                  this.err = err.response.data.errors;
-                              }
-                          });
+                axios
+                    .post("/wallet_create", this.form)
+                    .then((res) => {
+                        this.wait = false;
+                        let group = this.allAccounts[this.getActive];
+                        group.group_id = this.allAccounts[this.getActive].id;
+                        this.$store.dispatch("getWallets", group);
+                        setTimeout(() => {
+                            document
+                                .querySelector("#addWallet [data-close]")
+                                .click();
+                        }, 300);
+                    })
+                    .catch((err) => {
+                        this.wait = false;
+                        if (err.response) {
+                            this.err = {};
+                            this.err = err.response.data.errors;
+                        }
+                    });
             } else {
                 this.err = {};
                 this.err = { 0: ["Попробуйте через 5 секунд"] };

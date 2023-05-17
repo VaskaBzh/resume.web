@@ -188,7 +188,7 @@ export default {
                 .catch((err) =>
                     this.$emit("getMessage", err.response.data.message)
                 );
-            setTimeout(() => (this.$emit("getMessage", ""), 3000));
+            setTimeout(() => (this.$emit("getMessage", "")), 3000);
         },
     },
 };

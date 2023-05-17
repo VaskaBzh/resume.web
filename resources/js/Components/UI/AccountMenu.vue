@@ -249,9 +249,6 @@ export default {
             line-height: 143.1%;
             gap: 4px;
         }
-        @media (max-width: 479.98px) {
-            font-size: 16px;
-        }
         @media (min-width: 767.98px) {
             padding: 17px 0;
             height: 44px;

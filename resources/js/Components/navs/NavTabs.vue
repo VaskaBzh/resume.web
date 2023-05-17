@@ -3,9 +3,9 @@
         class="nav-tabs"
         :class="{
             'nav-tabs-full-page':
-                $page.url === '/profile/income' ||
-                $page.url === '/profile/settings' ||
-                $page.url === '/profile/wallets',
+                $page.url.startsWith('/profile/income') ||
+                $page.url.startsWith('/profile/settings') ||
+                $page.url.startsWith('/profile/wallets'),
         }"
         ref="tabs"
         v-if="this.viewportWidth > 767.98"
