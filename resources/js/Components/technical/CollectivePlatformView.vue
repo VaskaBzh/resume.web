@@ -10,8 +10,7 @@
                     />
                 </div>
                 <h2 class="platform-c__title">
-                    Комплексная платформа, предназначенная для повышения доходов
-                    майнеров
+                    {{ $t("platform.title") }}
                 </h2>
                 <ul v-if="viewportWidth >= 767.98" class="platform-c__list">
                     <li class="platform-c__item">
@@ -24,12 +23,10 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Безопасность и прозрачность
+                            {{ $t("platform.blocks[0].title") }}
                         </div>
                         <div class="platform-c__item_text">
-                            Хешрейт отображается в режиме реального времени,
-                            пока команда безопасности Allbtc защищает ваши
-                            активы
+                            {{ $t("platform.blocks[0].text") }}
                         </div>
                     </li>
                     <li class="platform-c__item">
@@ -42,11 +39,10 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Стабильный заработок
+                            {{ $t("platform.blocks[1].title") }}
                         </div>
                         <div class="platform-c__item_text">
-                            Используя модель FPPS+ и мгновенные расчеты, вы
-                            можете избежать колебаний заработка
+                            {{ $t("platform.blocks[1].text") }}
                         </div>
                     </li>
                     <li class="platform-c__item">
@@ -59,13 +55,10 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Комплексное обслуживание
+                            {{ $t("platform.blocks[2].title") }}
                         </div>
                         <div class="platform-c__item_text">
-                            Наше комплексное обслуживание направлено на
-                            повышение доходов майнеров, сокращение разрыва между
-                            добычей полезных ископаемых и трейдингом, а также
-                            обеспечение универсальной экосистемы майнинга.
+                            {{ $t("platform.blocks[2].text") }}
                         </div>
                     </li>
                 </ul>

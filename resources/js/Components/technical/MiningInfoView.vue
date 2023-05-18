@@ -6,14 +6,14 @@
                     <div class="mining-im__general" v-scroll="'left delay--lg'">
                         <div class="mining-im__general_content">
                             <div class="mining-im__general_title">
-                                Начните майнинг c allbtc pool
+                                {{ $t("info.title") }}
                             </div>
                             <Link
                                 :href="route('accounts')"
                                 v-if="this.auth_user"
                                 class="mining-im__general_link"
                             >
-                                Начать майнинг
+                                {{ $t("info.link") }}
                                 <svg
                                     width="14"
                                     height="14"
@@ -35,7 +35,7 @@
                                 v-else
                                 class="mining-im__general_link"
                             >
-                                Начать майнинг
+                                {{ $t("info.link") }}
                                 <svg
                                     width="14"
                                     height="14"
@@ -70,11 +70,11 @@
                                     class="mining-im__item_icon"
                                 />
                                 <div class="mining-im__item_title">
-                                    Высокая надежность
+                                    {{ $t("info.blocks[0].title") }}
                                 </div>
                             </div>
                             <div class="mining-im__item_text">
-                                Инновационные решения и передовые технологии обеспечивают оптимальную производительность и стабильность работы вашего оборудования.
+                                {{ $t("info.blocks[0].text") }}
                             </div>
                         </li>
                         <li class="mining-im__item" v-scroll="'left'">
@@ -85,13 +85,11 @@
                                     class="mining-im__item_icon"
                                 />
                                 <div class="mining-im__item_title">
-                                    Частые и настраиваемые выплаты
+                                    {{ $t("info.blocks[1].title") }}
                                 </div>
                             </div>
                             <div class="mining-im__item_text">
-                                Контролируйте каждую деталь ваших финансовых
-                                потоков с помощью нашей настраиваемой системы
-                                выплат
+                                {{ $t("info.blocks[1].text") }}
                             </div>
                         </li>
                         <li class="mining-im__item" v-scroll="'left delay'">
@@ -102,11 +100,11 @@
                                     class="mining-im__item_icon"
                                 />
                                 <div class="mining-im__item_title">
-                                    Управление воркерами и мониторинг
+                                    {{ $t("info.blocks[2].title") }}
                                 </div>
                             </div>
                             <div class="mining-im__item_text">
-                                Откройте новые горизонты эффективности по управлению рабочими процессами и мониторингу производительности.
+                                {{ $t("info.blocks[2].text") }}
                             </div>
                         </li>
                         <li class="mining-im__item" v-scroll="'left delay--md'">
@@ -117,14 +115,11 @@
                                     class="mining-im__item_icon"
                                 />
                                 <div class="mining-im__item_title">
-                                    Постоянный мониторинг прибыли
+                                    {{ $t("info.blocks[3].title") }}
                                 </div>
                             </div>
                             <div class="mining-im__item_text">
-                                Мы постоянно мониторим прибыль наших
-                                пользователей и сраниваем ее с прибылью на
-                                других пулах, чтобы обеспечить
-                                конкурентоспособность.
+                                {{ $t("info.blocks[3].text") }}
                             </div>
                         </li>
                     </ul>

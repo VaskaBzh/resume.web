@@ -1,9 +1,9 @@
 <template>
-    <Head title="Воркеры" />
+    <Head :title="$t('workers.title')" />
     <div class="workers">
         <div class="workers__wrapper">
             <main-title tag="h2" enter-class="workers__title">
-                Воркеры
+                {{ $t("workers.title") }}
             </main-title>
             <div class="workers__filter">
                 <div class="workers__filter_wrapper">
@@ -16,7 +16,9 @@
                     <!--                        </main-select>-->
                     <!--                    </div>-->
                     <div class="workers__filter_block">
-                        <div class="workers__filter_label">Статус</div>
+                        <div class="workers__filter_label">
+                            {{ $t("workers.select_label") }}
+                        </div>
                         <main-select
                             class="workers__select"
                             :options="statuses"
@@ -57,7 +59,7 @@
                 <form class="form form-popup popup__form">
                     <main-title
                         tag="h2"
-                        titleName="Подключиться к allbtc pool"
+                        :titleName="$t('workers.popups.connection.title')"
                     ></main-title>
                     <copy-block
                         v-for="(object, i) in this.copyObject"

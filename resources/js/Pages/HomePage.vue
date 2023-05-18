@@ -9,24 +9,24 @@
                         class="home__title"
                         v-scroll="'left delay--md'"
                     >
-                        Зарабатывайте на майнинге вместе с allbtc pool
+                        {{ $t("home.title") }}
                     </main-title>
                     <div class="home__span" v-scroll="'left'">
-                        Высокий доход. Надежность. Эффективность.
+                        {{ $t("home.text") }}
                     </div>
                     <blue-button
                         class="home__button"
                         v-if="this.auth_user"
                         v-scroll="'left'"
                     >
-                        <Link :href="route('accounts')" class="all-link"
-                            >Начать майнинг
+                        <Link :href="route('accounts')" class="all-link">
+                            {{ $t("home.button") }}
                             <div class="home__button_propeller"></div
                         ></Link>
                     </blue-button>
                     <blue-button class="home__button" v-else v-scroll="'left'">
-                        <a href="#" data-popup="#auth" class="all-link"
-                            >Начать майнинг
+                        <a href="#" data-popup="#auth" class="all-link">
+                            {{ $t("home.button") }}
                             <div class="home__button_propeller"></div
                         ></a>
                     </blue-button>
@@ -74,16 +74,16 @@
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
                         >
-                            <Link :href="route('accounts')" class="all-link"
-                                >Начать майнинг</Link
+                            <Link :href="route('accounts')" class="all-link">
+                                {{ $t("home.button") }}</Link
                             >
                         </blue-button>
                         <blue-button
                             class="big"
                             v-else-if="viewportWidth < 991.98"
                         >
-                            <a href="#" data-popup="#auth" class="all-link"
-                                >Начать майнинг</a
+                            <a href="#" data-popup="#auth" class="all-link">
+                                {{ $t("home.button") }}</a
                             >
                         </blue-button>
                         <img
@@ -95,7 +95,9 @@
                             <p class="home-im__title">Bitcoin</p>
                             <ul class="home-im__content_list">
                                 <li class="home-im__content_item">
-                                    <p class="item_span">Мощность сети</p>
+                                    <p class="item_span">
+                                        {{ $t("home.bitcoin_block.network") }}
+                                    </p>
                                     <div class="item_info bgb">
                                         <span
                                             v-value-scroll
@@ -115,7 +117,7 @@
                                 </li>
                                 <li class="home-im__content_item">
                                     <p class="item_span">
-                                        Ожидаемая следующая сложность
+                                        {{ $t("home.bitcoin_block.next_diff") }}
                                     </p>
                                     <div class="item_info bgb">
                                         <span
@@ -153,7 +155,7 @@
 
                             <div class="home-im__content_date">
                                 <p class="item_span">
-                                    Дата следующей сложности
+                                    {{ $t("home.bitcoin_block.date_diff[0]") }}
                                 </p>
                                 <div
                                     class="item_info item_info__block"
@@ -171,27 +173,39 @@
                                                 this.btcInfo.btc.time / 24
                                             ).substr(0, 1)
                                         }}
-                                        Дней</span
+                                        {{
+                                            $t(
+                                                "home.bitcoin_block.date_diff[1]"
+                                            )
+                                        }}</span
                                     >
                                     <span
                                         class="item_info_text"
                                         v-if="this.btcInfo.btc.time % 24 !== 0"
-                                        >{{
-                                            this.btcInfo.btc.time % 24
-                                        }}
-                                        Часов</span
+                                        >{{ this.btcInfo.btc.time % 24 }}
+                                        {{
+                                            $t(
+                                                "home.bitcoin_block.date_diff[2]"
+                                            )
+                                        }}</span
                                     >
                                 </div>
                                 <div class="item_info" v-else>
-                                    ... Дней ... Часов
+                                    ...
+                                    {{ $t("home.bitcoin_block.date_diff[1]") }}
+                                    ...
+                                    {{ $t("home.bitcoin_block.date_diff[2]") }}
                                 </div>
                             </div>
                             <blue-button
                                 class="big"
                                 v-if="viewportWidth >= 991.98 && this.auth_user"
                             >
-                                <Link :href="route('accounts')" class="all-link"
-                                    >Начать майнинг</Link
+                                <Link
+                                    :href="route('accounts')"
+                                    class="all-link"
+                                >
+                                    {{ $t("home.bitcoin_block.button") }}</Link
                                 >
                             </blue-button>
                             <blue-button
@@ -200,8 +214,8 @@
                                     viewportWidth >= 991.98 && !this.auth_user
                                 "
                             >
-                                <a href="#" data-popup="#auth" class="all-link"
-                                    >Начать майнинг</a
+                                <a href="#" data-popup="#auth" class="all-link">
+                                    {{ $t("home.bitcoin_block.button") }}</a
                                 >
                             </blue-button>
                         </div>
@@ -214,17 +228,17 @@
                             <div class="home-inri__image mon"></div>
                             <div class="home-inri__content">
                                 <h4 class="home-inri__title">
-                                    Ежедневные выплаты
+                                    {{ $t("home.promo_blocks.payment.title") }}
                                 </h4>
                                 <div class="home-inri__text">
-                                    Без минимальной суммы за исключением ETH и
-                                    ETC
+                                    {{ $t("home.promo_blocks.payment.text") }}
                                 </div>
                                 <Link
                                     :href="route('accounts')"
                                     v-if="this.auth_user"
                                     class="home-inri__link"
-                                    >Начать получать выплаты<svg
+                                    >{{ $t("home.promo_blocks.payment.link")
+                                    }}<svg
                                         width="14"
                                         height="14"
                                         viewBox="0 0 14 14"
@@ -244,7 +258,8 @@
                                     v-else
                                     data-popup="#auth"
                                     class="home-inri__link"
-                                    >Начать получать выплаты<svg
+                                    >{{ $t("home.promo_blocks.payment.link")
+                                    }}<svg
                                         width="14"
                                         height="14"
                                         viewBox="0 0 14 14"
@@ -267,13 +282,15 @@
                         >
                             <div class="home-inri__image asic"></div>
                             <div class="home-inri__content">
-                                <h4 class="home-inri__title">FPPS+</h4>
+                                <h4 class="home-inri__title">
+                                    {{ $t("home.promo_blocks.fpps.title") }}
+                                </h4>
                                 <div class="home-inri__text">
-                                    Метод вознаграждения за майнинг с наивысшей
-                                    доходностью
+                                    {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
                                 <a href="#" class="home-inri__link"
-                                    >Подробнее<svg
+                                    >{{ $t("home.promo_blocks.fpps.link")
+                                    }}<svg
                                         width="14"
                                         height="14"
                                         viewBox="0 0 14 14"

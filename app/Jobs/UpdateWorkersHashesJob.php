@@ -80,7 +80,7 @@ class UpdateWorkersHashesJob implements ShouldQueue
                     ]);
                 } catch(Exception $e) {
                     // Handle JSON parse error...
-                    $this->release(10);
+//                    $this->release(10);
                 }
             }
         }

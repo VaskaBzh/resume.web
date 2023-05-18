@@ -1,6 +1,6 @@
 <template>
     <blue-button class="feedback" data-popup="#feedback">
-        <a class="all-link">Обратная связь</a>
+        <a class="all-link">{{ $t("footer.feedback.button") }}</a>
     </blue-button>
     <popup-view id="feedback" :wait="this.wait">
         <form
@@ -9,11 +9,11 @@
         >
             <main-title
                 tag="h3"
-                title-name="Оставьте комментарий по работе пула"
+                :title-name="$t('footer.feedback.popup.title')"
             />
             <input
                 v-model="form.contacts"
-                placeholder="Можете оставить свои контакты"
+                :placeholder="$t('footer.feedback.popup.placeholders.contacts')"
                 type="text"
                 class="input popup__input"
             />
@@ -23,7 +23,7 @@
                 autofocus
                 type="text"
                 class="input popup__input"
-                placeholder="Ваш комментарий *"
+                :placeholder="$t('footer.feedback.popup.placeholders.comment')"
             />
             <blue-button>
                 <button type="submit" class="all-link">
@@ -43,7 +43,7 @@
                         <path
                             d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
                         /></svg
-                    >Отправить
+                    >{{ $t("footer.feedback.popup.button") }}
                 </button>
             </blue-button>
         </form>
@@ -197,7 +197,7 @@
             </div>
             <div class="footer__quote quote">
                 © 2022 Allbtc Pool
-                <a :href="this.pdf">Конфиденциальность</a>
+                <a :href="this.pdf">{{ $t("footer.confidence") }}</a>
             </div>
         </div>
     </footer>

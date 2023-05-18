@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="wallets" ref="page">
-        <main-title tag="h2" titleName="Мои кошельки">
+        <main-title tag="h2" :titleName="$t('wallets.title')">
             <!--                <blue-button class="wallets__button wallets__button-history">-->
             <!--                    <Link :href="route('income')"> Доходы </Link>-->
             <!--                </blue-button>-->
@@ -32,12 +32,12 @@
         </main-title>
         <div ref="wallets" class="wallets__wrap">
             <h3 class="wallets__title">
-                Список кошельков
+                {{ $t("wallets.block.title") }}
                 <main-checkbox
                     class="wallets__filter"
                     @is_checked="this.checkboxer"
                 >
-                    Скрыть с нулевым балансом
+                    {{ $t("wallets.block.filter") }}
                 </main-checkbox>
             </h3>
             <no-info
@@ -83,17 +83,22 @@
             </div>
         </div>
         <form @submit.prevent="this.change" class="form form-popup popup__form">
-            <main-title tag="h3" title-name="Измените кошелек" />
+            <main-title
+                tag="h3"
+                :title-name="$t('wallets.popups.change.title')"
+            />
             <input
                 v-model="formChg.name"
                 autofocus
                 type="text"
                 class="input popup__input"
-                placeholder="Введите имя"
+                :placeholder="$t('wallets.change.placeholders.name')"
             />
             <div class="form_row form_row-non-height">
                 <div class="form_column">
-                    <label for="percent" class="main__label">Процент</label>
+                    <label for="percent" class="main__label">{{
+                        $t("wallets.popups.change.labels.percent")
+                    }}</label>
                     <input
                         name="percent"
                         @input="handleInputChange"
@@ -106,7 +111,9 @@
                     />
                 </div>
                 <div class="form_column">
-                    <label for="min" class="main__label">Мин. вывод</label>
+                    <label for="min" class="main__label">{{
+                        $t("wallets.popups.change.labels.minWithdrawal")
+                    }}</label>
                     <input
                         name="minWithdrawal"
                         @input="handleInputChange"
@@ -136,8 +143,9 @@
                         />
                         <path
                             d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                        /></svg
-                    >Изменить
+                        />
+                    </svg>
+                    {{ $t("wallets.popups.change.button") }}
                 </button>
             </blue-button>
         </form>
@@ -167,25 +175,27 @@
             @submit.prevent="this.addWallet"
             class="form form-popup popup__form"
         >
-            <main-title tag="h3" title-name="Добавьте кошелек" />
+            <main-title tag="h3" :title-name="$t('wallets.popups.add.title')" />
             <input
                 v-model="form.wallet"
                 required
                 autofocus
                 type="text"
                 class="input popup__input"
-                placeholder="Введите кошелек"
+                :placeholder="$t('wallets.popups.add.placeholders.wallet')"
             />
             <input
                 v-model="form.name"
                 autofocus
                 type="text"
                 class="input popup__input"
-                placeholder="Введите имя"
+                :placeholder="$t('wallets.popups.add.placeholders.name')"
             />
             <div class="form_row form_row-non-height">
                 <div class="form_column">
-                    <label for="percent" class="main__label">Процент</label>
+                    <label for="percent" class="main__label">{{
+                        $t("wallets.popups.add.labels.percent")
+                    }}</label>
                     <input
                         name="percent"
                         @input="handleInputChange"
@@ -198,7 +208,9 @@
                     />
                 </div>
                 <div class="form_column">
-                    <label for="min" class="main__label">Мин. вывод</label>
+                    <label for="min" class="main__label">{{
+                        $t("wallets.popups.add.labels.minWithdrawal")
+                    }}</label>
                     <input
                         name="minWithdrawal"
                         @input="handleInputChange"
@@ -228,8 +240,9 @@
                         />
                         <path
                             d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                        /></svg
-                    >+ Добавить
+                        />
+                    </svg>
+                    {{ $t("wallets.popups.add.button") }}
                 </button>
             </blue-button>
         </form>

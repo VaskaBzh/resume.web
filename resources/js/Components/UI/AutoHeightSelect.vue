@@ -37,7 +37,8 @@
                     </clipPath>
                 </defs>
             </svg>
-            Аккаунты
+
+            {{ $t("header.menu.accounts_title") }}
             <span>
                 {{ this.optionsObject.length }}
             </span>

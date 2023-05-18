@@ -78,7 +78,7 @@ class HourlyHashesUpdate implements ShouldQueue
                     ]);
                 } catch (Exception $e) {
                     // Обработка ошибки разбора JSON
-                    $this->release(10);
+//                    $this->release(10);
                 }
             } else {
                 // Обработка ошибки при выполнении запроса

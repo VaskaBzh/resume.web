@@ -10,12 +10,12 @@
     <!--        </div>-->
     <!--    </div>-->
     <div class="settings" ref="page">
-        <main-title tag="h2" title-name="Настройки аккаунта"></main-title>
+        <main-title tag="h2" :title-name="$t('settings.title')"></main-title>
         <div class="settings__wrap settings__wrap-adapt wrap">
             <div class="settings__column">
                 <main-title
                     tag="h3"
-                    title-name="Персональные данные"
+                    :title-name="$t('settings.block.titles[0]')"
                 ></main-title>
                 <settings-block
                     @openPopup="getHtml"
@@ -30,7 +30,10 @@
                 ></settings-block>
             </div>
             <div class="settings__column" ref="wrap">
-                <main-title tag="h3" title-name="Безопасность"></main-title>
+                <main-title
+                    tag="h3"
+                    :title-name="$t('settings.block.titles[1]')"
+                ></main-title>
                 <settings-block
                     @openPopup="getHtml"
                     name="Пароль"
@@ -87,7 +90,9 @@
         >
             <main-title
                 tag="h3"
-                :title-name="`Задайте новый ${this.popupHtml.name}`"
+                :title-name="`${$t(
+                    'settings.block.settings_block.popup.title'
+                )} ${this.popupHtml.name}`"
             />
             <input
                 v-model="this.form.item"
@@ -95,7 +100,9 @@
                 autofocus
                 :type="this.popupHtml.name === 'пароль' ? 'password' : 'text'"
                 class="input popup__input"
-                :placeholder="`Введите ${this.popupHtml.name}`"
+                :placeholder="`${$t(
+                    'settings.block.settings_block.popup.placeholders.placeholder'
+                )} ${this.popupHtml.name}`"
             />
             <input
                 v-model="this.pass"
@@ -104,7 +111,9 @@
                 autofocus
                 type="password"
                 class="input popup__input"
-                :placeholder="`Введите новый ${this.popupHtml.name}`"
+                :placeholder="`${$t(
+                    'settings.block.settings_block.popup.placeholders.password_new'
+                )} ${this.popupHtml.name}`"
             />
             <input
                 v-model="this.password_confirmation"
@@ -113,7 +122,9 @@
                 autofocus
                 type="password"
                 class="input popup__input"
-                :placeholder="`Подтвердите ${this.popupHtml.name}`"
+                :placeholder="`${$t(
+                    'settings.block.settings_block.popup.placeholders.password_confirmation'
+                )} ${this.popupHtml.name}`"
             />
             <blue-button>
                 <button type="submit" class="all-link">
@@ -134,7 +145,8 @@
                             d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
                         />
                     </svg>
-                    Изменить {{ this.popupHtml.name }}
+                    {{ $t("settings.block.settings_block.popup.button") }}
+                    {{ this.popupHtml.name }}
                 </button>
             </blue-button>
         </form>

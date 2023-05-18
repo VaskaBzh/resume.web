@@ -3,26 +3,30 @@
         <main-title
             v-if="this.viewportWidth > 767.98"
             tag="h2"
-            titleName="История платежей"
+            :titleName="$t('income.title')"
         >
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
             <!--                </blue-button>-->
         </main-title>
 
-        <main-title v-else tag="h2" titleName="Платежи">
+        <main-title v-else tag="h2" :titleName="$t('income.title')">
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
             <!--                </blue-button>-->
         </main-title>
         <div class="wallets__wrap">
             <div class="wallets__row wallets__row-balance">
-                <h3 class="wallets__title">Платежи:</h3>
+                <h3 class="wallets__title">
+                    {{ $t("income.income_info.title") }}:
+                </h3>
             </div>
             <div class="wallets__row">
                 <div class="wallets__block">
                     <div class="wallets__column">
-                        <span class="wallets__subtitle">Оплачено:</span>
+                        <span class="wallets__subtitle"
+                            >{{ $t("income.income_info.titles[0]") }}:</span
+                        >
                         <span class="wallets__value"
                             ><span> 0.00000000 </span>
                             BTC
@@ -31,7 +35,9 @@
                 </div>
                 <div class="wallets__block">
                     <div class="wallets__column">
-                        <span class="wallets__subtitle"> Неоплаченно: </span>
+                        <span class="wallets__subtitle"
+                            >{{ $t("income.income_info.titles[1]") }}:
+                        </span>
                         <span class="wallets__value">
                             <span>
                                 {{ this.unPayment }}
@@ -43,7 +49,9 @@
                 <div class="wallets__block">
                     <div class="wallets__column">
                         <span class="wallets__subtitle">
-                            Вчерашний доход:
+                            <span class="wallets__subtitle"
+                                >{{ $t("income.income_info.titles[2]") }}:</span
+                            >
                         </span>
                         <span class="wallets__value">
                             <span>
@@ -77,10 +85,10 @@
             <!--                    ></main-select>-->
             <!--                </div>-->
             <div class="income__filter_block">
-                <div class="income__filter_label">Дата</div>
+                <div class="income__filter_label">{{ $t("date.label") }}</div>
                 <main-date
                     v-model="date"
-                    placeholder="За все время"
+                    :placeholder="$t('date.placeholder')"
                 ></main-date>
             </div>
         </div>

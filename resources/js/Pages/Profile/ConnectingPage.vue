@@ -1,8 +1,11 @@
 <template>
-    <Head title="Подключение" />
+    <Head :title="$t('connection.title')" />
     <div class="connecting">
         <div class="connecting__wrapper">
-            <main-title tag="h2" titleName="Подключение воркера"></main-title>
+            <main-title
+                tag="h2"
+                :titleName="$t('connection.title')"
+            ></main-title>
             <div class="connecting__wrap wrap">
                 <copy-block
                     v-for="(object, i) in this.copyObject"

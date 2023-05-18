@@ -67,7 +67,7 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                        Изменить название
+                        {{ $t("accounts.block.menu[0]") }}
                     </div>
                     <div @click="getWallets" class="profile__menu_elem">
                         <svg
@@ -93,36 +93,45 @@
                                 </clipPath>
                             </defs>
                         </svg>
-                        Привязанные кошельки
+                        {{ $t("accounts.block.menu[1]") }}
                     </div>
                 </div>
             </div>
         </div>
         <div class="profile__body">
             <div class="profile__body-block">
-                <span class="profile__body-name">Ср. хешрейт / 1ч</span>
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[0]")
+                }}</span>
                 <span class="profile__body-value">
                     {{ this.hashRate }} {{ this.accountInfo.unit }}H/s</span
                 >
             </div>
             <div class="profile__body-block">
-                <span class="profile__body-name">Количество воркеров</span>
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[1]")
+                }}</span>
                 <span class="profile__body-value">
                     {{ this.accountInfo.workersActive }} /
                     {{ this.accountInfo.workersAll }}
-                    <span>(Активные / Все)</span>
+                    <span
+                        >({{ $t("accounts.block.workers_status[0]") }} /
+                        {{ $t("accounts.block.workers_status[1]") }})</span
+                    >
                 </span>
             </div>
             <div class="profile__body-block">
-                <span class="profile__body-name"
-                    >Прогнозируемое начисление за сегодня</span
-                >
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[2]")
+                }}</span>
                 <span class="profile__body-value">
                     {{ this.todayProfit }} BTC</span
                 >
             </div>
             <div class="profile__body-block">
-                <span class="profile__body-name">Всего выплачено</span>
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[3]")
+                }}</span>
                 <span class="profile__body-value">
                     {{ this.myPayment }} BTC</span
                 >

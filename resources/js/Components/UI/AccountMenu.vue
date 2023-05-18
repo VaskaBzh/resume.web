@@ -24,7 +24,9 @@
         </div>
         <div class="button__menu" :class="{ target: targeted }">
             <div class="button__row">
-                <span class="button_title">Финансы и аккаунты</span>
+                <span class="button_title">
+                    {{ $t("header.menu.acc_admin.title") }}</span
+                >
                 <main-list>
                     <template
                         v-slot:head
@@ -43,13 +45,13 @@
                     <template v-slot:head v-else> 0.00000000 BTC</template>
                     <template v-slot:body>
                         <div class="list_row">
-                            <span>Всего</span>
+                            <span> {{ $t("header.menu.wallets.all") }}</span>
                             <span> {{ this.earnSum }} BTC</span>
                         </div>
                         <div class="list_row">
                             <blue-button class="list_button"
-                                ><Link :href="route('income')"
-                                    >Доходы</Link
+                                ><Link :href="route('income')">
+                                    {{ $t("header.menu.wallets.button") }}</Link
                                 ></blue-button
                             >
                         </div>
@@ -62,7 +64,9 @@
                 ></auto-height-select>
             </div>
             <div class="button__row">
-                <span class="button_title">Управление профилем</span>
+                <span class="button_title">
+                    {{ $t("header.menu.acc_admin.title") }}</span
+                >
                 <Link class="settings" :href="route('settings')"
                     ><svg
                         width="24"
@@ -89,7 +93,7 @@
                         </defs>
                     </svg>
 
-                    Настройки</Link
+                    {{ $t("header.menu.acc_admin.settings") }}</Link
                 >
                 <form @submit.prevent="logout">
                     <button type="submit">
@@ -118,7 +122,7 @@
                             </defs>
                         </svg>
 
-                        Выход
+                        {{ $t("header.menu.acc_admin.logout") }}
                     </button>
                 </form>
             </div>

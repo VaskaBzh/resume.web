@@ -4,13 +4,10 @@
             <div class="about-panel__main panel-am">
                 <div class="panel-am__content">
                     <div class="panel-am__title" v-scroll="'left delay--md'">
-                        Удобная панель управления
+                        {{ $t("panel.title") }}
                     </div>
                     <div class="panel-am__text" v-scroll="'left delay--lg'">
-                        Ваш персональный помощник в мире майнинга криптовалют!
-                        Присоединитесь к майнинг-пулу и получите доступ к
-                        интуитивно понятной и мощной платформе для управления
-                        вашими активами.
+                        {{ $t("panel.text") }}
                     </div>
                 </div>
                 <img
@@ -126,7 +123,7 @@ export default {
     // .panel-am__image
     &__image {
         max-width: 1120px;
-        margin: -10pc 0 -3pc -12pc;
+        margin: -9pc 0 -3pc -12pc;
         @media (max-width: 1270px) {
             max-width: 930px;
             margin: -5pc 0 -3pc -12pc;

@@ -1,5 +1,5 @@
 <template>
-    <Head title="Аккаунты" />
+    <Head :title="$t('accounts.title')" />
     <div class="hint">
         <div
             class="hint_item"
@@ -13,7 +13,7 @@
     <div class="accounts">
         <div class="accounts__wrapper">
             <main-title tag="h2" class="accounts__title">
-                Аккаунты
+                {{ $t("accounts.title") }}
                 <blue-button class="accounts__button" data-popup="#addAcc">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -76,14 +76,17 @@
                 @submit.prevent="this.addAcc"
                 class="form form-popup popup__form"
             >
-                <main-title tag="h3" title-name="Задайте имя субаккаунта" />
+                <main-title
+                    tag="h3"
+                    :title-name="$t('accounts.popups.add.title')"
+                />
                 <input
                     v-model="form.name"
                     required
                     autofocus
                     type="text"
                     class="input popup__input"
-                    placeholder="Введите имя"
+                    :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
                 <blue-button>
                     <button type="submit" class="all-link">
@@ -102,8 +105,9 @@
                             />
                             <path
                                 d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                            /></svg
-                        >+ Добавить
+                            />
+                        </svg>
+                        {{ $t("accounts.popups.add.button") }}
                     </button>
                 </blue-button>
             </form>
@@ -133,14 +137,19 @@
                 @submit.prevent="this.changeName"
                 class="form form-popup popup__form"
             >
-                <main-title tag="h3" title-name="Измените имя субаккаунта" />
+                <main-title
+                    tag="h3"
+                    :title-name="$t('accounts.popups.change.title')"
+                />
                 <input
                     v-model="form.name"
                     required
                     autofocus
                     type="text"
                     class="input popup__input"
-                    placeholder="Введите новое имя"
+                    :placeholder="
+                        $t('accounts.popups.change.placeholders.name')
+                    "
                 />
                 <blue-button>
                     <button type="submit" class="all-link">
@@ -161,7 +170,7 @@
                                 d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
                             />
                         </svg>
-                        Изменить
+                        {{ $t("accounts.popups.change.button") }}
                     </button>
                 </blue-button>
             </form>

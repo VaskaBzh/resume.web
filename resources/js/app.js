@@ -1,6 +1,8 @@
 import { createApp, h } from "vue";
 import { createInertiaApp } from "@inertiajs/vue3";
 
+import { i18n } from "./lang/vue-translate.js";
+
 import Layout from "./Shared/LayoutView.vue";
 import store from "./store/index.js";
 import scrollAnimation from "@/Components/animations/scrollAnimation.vue";
@@ -21,6 +23,7 @@ createInertiaApp({
         createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(store)
+            .use(i18n)
             .mixin({ methods: { route: window.route } })
             .directive("scroll", scrollAnimation)
             .directive("value-scroll", scrollValueAnimation)

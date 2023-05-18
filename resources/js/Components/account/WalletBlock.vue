@@ -49,7 +49,7 @@
                             </defs>
                         </svg>
 
-                        Изменить
+                        {{ $t("wallets.block.wallet_block.menu[0]") }}
                     </button>
                     <button
                         @click="remove(wallet)"
@@ -80,7 +80,7 @@
                             </defs>
                         </svg>
 
-                        Удалить
+                        {{ $t("wallets.block.wallet_block.menu[1]") }}
                     </button>
                 </div>
             </div>
@@ -99,7 +99,11 @@
         <div
             class="wallets__block_i"
             v-tooltip="{
-                message: `Процент вывода: ${wallet.percent}%. Мин сумма вывода: ${wallet.minWithdrawal} BTC`,
+                message: `${$t(
+                    'wallets.block.wallet_block.i_info_titles[0]'
+                )}: ${wallet.percent}%. ${$t(
+                    'wallets.block.wallet_block.i_info_titles[1]'
+                )}: ${wallet.minWithdrawal} BTC`,
             }"
         >
             <svg
@@ -188,7 +192,7 @@ export default {
                 .catch((err) =>
                     this.$emit("getMessage", err.response.data.message)
                 );
-            setTimeout(() => (this.$emit("getMessage", "")), 3000);
+            setTimeout(() => this.$emit("getMessage", ""), 3000);
         },
     },
 };

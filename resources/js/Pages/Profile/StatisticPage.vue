@@ -1,9 +1,9 @@
 <template>
-    <Head title="Статистика" />
+    <Head :title="$t('statistic.title')" />
     <div class="statistic">
         <div class="statistic__wrapper">
             <main-title tag="h2" class="statistic__title">
-                Статистика
+                {{ $t("statistic.title") }}
             </main-title>
             <div
                 class="invisible_button"
@@ -19,7 +19,7 @@
             >
                 <div class="wrap__head wrap__head-graph">
                     <main-title tag="h3" class="statistic__wrap_title">
-                        Общий хешрейт
+                        {{ $t("statistic.chart.title") }}
                     </main-title>
                     <div class="buttons">
                         <button
@@ -52,7 +52,7 @@
                 <div class="wrap__block-connect">
                     <main-title
                         tag="h3"
-                        titleName="Подключиться к allbtc pool"
+                        :titleName="$t('statistic.chart.no_workers_title')"
                     ></main-title>
                     <copy-block
                         v-for="(object, i) in this.copyObject"
@@ -63,15 +63,19 @@
             </div>
             <div class="wrap">
                 <main-title tag="h3" class="statistic__wrap_title">
-                    Начисления и выплаты
+                    {{ $t("statistic.info_blocks.title") }}
                 </main-title>
                 <div class="statistic__block">
                     <payment-card
                         :key="this.allHistory[this.getActive]"
                         :BTCValueFirst="this.yesterdayEarn"
                         :BTCValueSecond="this.todayEarn"
-                        titleFirst="Начисление за вчера"
-                        titleSecond="Прогнозируемое начисление за сегодня"
+                        :titleFirst="
+                            $t('statistic.info_blocks.payment.titles[0]')
+                        "
+                        :titleSecond="
+                            $t('statistic.info_blocks.payment.titles[1]')
+                        "
                         :iconFirst="1"
                         :iconSecond="1"
                     />
@@ -86,7 +90,7 @@
                         <div class="wrap__head wrap__column">
                             <div class="wrap__row">
                                 <span class="wrap_title">
-                                    Текущий хешрейт
+                                    {{ $t("statistic.info_blocks.hash.titles[0]") }}
                                 </span>
                                 <span class="wrap_hash"
                                     >{{
@@ -97,7 +101,7 @@
                             </div>
                             <div class="wrap__row">
                                 <span class="wrap_title">
-                                    Ср.хешрейт /24ч
+                                    {{ $t("statistic.info_blocks.hash.titles[1]") }}
                                 </span>
                                 <span class="wrap_hash"
                                     >{{
@@ -112,19 +116,26 @@
                                 <Link
                                     class="main__link"
                                     :href="route(`workers`)"
-                                    >Воркеры
+                                    >{{ $t("statistic.info_blocks.workers.title") }}
                                 </Link>
                             </main-title>
                             <li class="active">
-                                {{ this.workers.active }}<span> Активные</span>
+                                {{ this.workers.active
+                                }}<span>
+                                    {{ $t("statistic.info_blocks.workers.types[0]") }}</span
+                                >
                             </li>
                             <li class="unStable">
                                 {{ this.workers.unStable
-                                }}<span> Нестабильные</span>
+                                }}<span>
+                                    {{ $t("statistic.info_blocks.workers.types[1]") }}</span
+                                >
                             </li>
                             <li class="inActive">
                                 {{ this.workers.inActive
-                                }}<span> Неактивные</span>
+                                }}<span>{{
+                                    $t("statistic.info_blocks.workers.types[2]")
+                                }}</span>
                             </li>
                         </ul>
                     </div>

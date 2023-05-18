@@ -39,7 +39,9 @@
                     v-show="is_auth"
                     @clicked="open"
                 ></account-menu>
-                <div class="login_link" v-show="!is_auth">Авторизируйтесь!</div>
+                <div class="login_link" v-show="!is_auth">
+                    {{ $t("header.login.title") }}
+                </div>
                 <div @click="closeBurger" class="nav__burger active">
                     <div class="nav__burger_con">
                         <span></span>
@@ -50,7 +52,9 @@
             </div>
             <div class="nav__column">
                 <div class="nav_block" v-show="is_auth">
-                    <span class="nav_subtitle">Средний хэшрейт / 1ч</span>
+                    <span class="nav_subtitle">
+                        {{ $t("header.login.hash") }}</span
+                    >
                     <span class="nav_value"
                         >{{
                             this.allAccounts[this.getActive]?.shares1m || "..."
@@ -59,7 +63,9 @@
                     >
                 </div>
                 <div class="nav_block" v-show="is_auth">
-                    <span class="nav_subtitle">Количество воркеров</span>
+                    <span class="nav_subtitle">
+                        {{ $t("header.login.workers") }}</span
+                    >
                     <span class="nav_value"
                         >{{
                             this.allAccounts[this.getActive]?.workersActive ||
@@ -71,22 +77,27 @@
                     >
                 </div>
                 <div class="nav_block" v-show="!is_auth">
-                    <span class="nav_title"
-                        >Войдите или зарегистрируйтесь, чтобы начать
-                        майнинг!</span
+                    <span class="nav_title">
+                        {{ $t("header.login.text") }}</span
                     >
                 </div>
                 <div class="nav_block" v-show="!is_auth">
                     <blue-button @click="openPopup(false)" data-popup="#auth">
-                        <div class="all-link">Войти</div>
+                        <div class="all-link">
+                            {{ $t("header.login.buttons.login") }}
+                        </div>
                     </blue-button>
-                    <span class="nav_text"> или</span>
+                    <span class="nav_text">
+                        {{ $t("header.login.buttons.step") }}</span
+                    >
                     <blue-button
                         class="light"
                         @click="openPopup(true)"
                         data-popup="#auth"
                     >
-                        <div class="all-link">Регистрация</div>
+                        <div class="all-link">
+                            {{ $t("header.login.buttons.registration") }}
+                        </div>
                     </blue-button>
                 </div>
             </div>
@@ -113,7 +124,7 @@
                     />
                 </svg>
 
-                Статистика
+                {{ $t("header.links.statistic") }}
             </Link>
             <Link
                 :href="route('accounts')"
@@ -136,7 +147,7 @@
                     />
                 </svg>
 
-                Аккаунты
+                {{ $t("header.links.accounts") }}
             </Link>
             <Link
                 :href="route('workers')"
@@ -159,7 +170,7 @@
                     />
                 </svg>
 
-                Воркеры
+                {{ $t("header.links.workers") }}
             </Link>
             <Link
                 :href="route('income')"
@@ -182,7 +193,7 @@
                     />
                 </svg>
 
-                Доходы
+                {{ $t("header.links.income") }}
             </Link>
             <Link
                 :href="route('connecting')"
@@ -205,7 +216,7 @@
                     />
                 </svg>
 
-                Подключение
+                {{ $t("header.links.connection") }}
             </Link>
             <Link
                 class="nav-tabs__tab"
@@ -228,7 +239,7 @@
                     />
                 </svg>
 
-                Кошельки
+                {{ $t("header.links.wallets") }}
             </Link>
             <Link
                 v-if="!is_auth || $page.url.startsWith('/profile')"
@@ -274,7 +285,7 @@
                     </defs>
                 </svg>
 
-                Главная
+                {{ $t("header.links.home") }}
             </Link>
             <Link
                 v-else-if="this.viewportWidth > 767.98"
@@ -285,7 +296,7 @@
                     active: $page.url.startsWith('/profile'),
                 }"
             >
-                Личный кабинет
+                {{ $t("header.links.own_cabinet") }}
             </Link>
             <Link
                 :href="route('complexity')"
@@ -316,7 +327,7 @@
                     </defs>
                 </svg>
 
-                Сложность
+                {{ $t("header.links.complexity") }}
             </Link>
             <!--            <Link-->
             <!--                :href="route('help')"-->
@@ -539,7 +550,7 @@ export default {
         overflow: hidden;
         width: calc(100% - 14px * 2);
     }
-    @media (max-width: 469.98px) {
+    @media (max-width: 4 69.98px) {
         margin: 0 0 80px;
         padding: 0 0 80px;
         width: 100%;

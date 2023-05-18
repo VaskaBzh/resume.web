@@ -20,7 +20,7 @@
             data-popup="#auth"
             @mousedown="this.linkChanger"
         >
-            Личный кабинет
+            {{ $t("header.login_button") }}
         </div>
         <div
             v-show="
@@ -94,7 +94,7 @@
                 <div>
                     {{ error.replace(" Подтвердите адрес.", "") }}
                     <span class="main__link" @click="reverify">
-                        Подтвердите адрес.</span
+                        {{ $t("header.popup.errors.link_email_confirm") }}</span
                     >
                 </div>
             </div>
@@ -136,7 +136,10 @@
                 class="form form-popup popup__form popup_slide"
                 data-id="login"
             >
-                <main-title tag="h3" title-name="Войти в аккаунт Allbtc" />
+                <main-title
+                    tag="h3"
+                    :title-name="$t('header.popups.login.title')"
+                />
                 <input
                     v-model="form.email"
                     required
@@ -144,7 +147,7 @@
                     type="text"
                     name="login"
                     class="input popup__input"
-                    placeholder="Введите ваш Email"
+                    :placeholder="$t('header.popups.login.placeholders.email')"
                 />
                 <div class="form_row">
                     <input
@@ -153,7 +156,9 @@
                         type="password"
                         name="password"
                         class="input popup__input"
-                        placeholder="Введите пароль"
+                        :placeholder="
+                            $t('header.popups.login.placeholders.password')
+                        "
                         ref="password-login"
                     />
                     <svg
@@ -199,9 +204,9 @@
                     </button>
                 </blue-button>
                 <div class="popup__text">
-                    Нет аккаунта?
+                    {{ $t("header.popups.login.swiper.text") }}
                     <span class="main__link" @click="this.formChanger">
-                        Зарегистрироваться
+                        {{ $t("header.popups.login.swiper.link") }}
                     </span>
                 </div>
             </swiper-slide>
@@ -225,14 +230,23 @@
             v-else-if="this.is_reg === true"
         >
             <swiper-slide class="popup_slide form form-popup" data-id="email">
-                <main-title tag="h3" title-name="Создать аккаунт Allbtc" />
+                <main-title
+                    tag="h3"
+                    :title-name="
+                        $t('header.popups.registration_steps.email.title')
+                    "
+                />
                 <input
                     v-model="new_account_input.email"
                     autofocus
                     name="Reg_email"
                     type="email"
                     class="input popup__input"
-                    placeholder="Введите ваш Email"
+                    :placeholder="
+                        $t(
+                            'header.popups.registration_steps.email.placeholders.email'
+                        )
+                    "
                     ref="email"
                 />
 
@@ -253,14 +267,17 @@
                             />
                             <path
                                 d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                            /></svg
-                        >Дальше
+                            />
+                        </svg>
+                        {{
+                            $t("header.popups.registration_steps.email.button")
+                        }}
                     </div>
                 </blue-button>
                 <div class="popup__text">
-                    Уже есть аккаунт?
+                    {{ $t("header.popups.registration_steps.swiper.text") }}
                     <span class="main__link" @click="this.formChanger">
-                        Войти
+                        {{ $t("header.popups.registration_steps.swiper.link") }}
                     </span>
                 </div>
             </swiper-slide>
@@ -294,7 +311,12 @@
             <!--                </div>-->
             <!--            </swiper-slide>-->
             <swiper-slide class="popup_slide form form-popup" data-id="email">
-                <main-title tag="h3" title-name="Создать аккаунт Allbtc" />
+                <main-title
+                    tag="h3"
+                    :title-name="
+                        $t('header.popups.registration_steps.name.title')
+                    "
+                />
                 <input
                     v-model="new_account_input.name"
                     required
@@ -302,7 +324,11 @@
                     name="Reg_name"
                     type="text"
                     class="input popup__input"
-                    placeholder="Введите название аккаунта"
+                    :placeholder="
+                        $t(
+                            'header.popups.registration_steps.name.placeholders.name'
+                        )
+                    "
                     ref="name"
                 />
 
@@ -326,13 +352,19 @@
                             />
                             <path
                                 d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                            /></svg
-                        >Дальше
+                            />
+                        </svg>
+                        {{ $t("header.popups.registration_steps.name.button") }}
                     </button>
                 </blue-button>
             </swiper-slide>
             <swiper-slide class="popup_slide form form-popup" data-id="email">
-                <main-title tag="h3" title-name="Создать аккаунт Allbtc" />
+                <main-title
+                    tag="h3"
+                    :title-name="
+                        $t('header.popups.registration_steps.password.title')
+                    "
+                />
                 <div class="form_row">
                     <input
                         v-model="new_account_input.password"
@@ -341,7 +373,11 @@
                         autocomplete="off"
                         type="password"
                         class="input popup__input"
-                        placeholder="Введите пароль"
+                        :placeholder="
+                            $t(
+                                'header.popups.registration_steps.password.placeholders.password'
+                            )
+                        "
                         ref="password"
                     />
                     <svg
@@ -373,7 +409,11 @@
                         autocomplete="off"
                         type="password"
                         class="input popup__input"
-                        placeholder="Подтвердите пароль"
+                        :placeholder="
+                            $t(
+                                'header.popups.registration_steps.password.placeholders.password_confirmation'
+                            )
+                        "
                         ref="password-confirm"
                     />
                     <svg
@@ -420,7 +460,11 @@
                                 d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
                             />
                         </svg>
-                        Зарегистрироваться
+                        {{
+                            $t(
+                                "header.popups.registration_steps.password.button"
+                            )
+                        }}
                     </button>
                 </blue-button>
             </swiper-slide>
