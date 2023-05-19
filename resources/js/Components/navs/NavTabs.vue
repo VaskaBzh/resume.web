@@ -46,7 +46,7 @@
                 />
             </svg>
 
-            Статистика
+            {{ $t("tabs.statistic") }}
         </Link>
         <Link
             :href="route('accounts')"
@@ -68,7 +68,7 @@
                 />
             </svg>
 
-            Аккаунты
+            {{ $t("tabs.accounts") }}
         </Link>
         <Link
             :href="route('workers')"
@@ -90,7 +90,7 @@
                 />
             </svg>
 
-            Воркеры
+            {{ $t("tabs.workers") }}
         </Link>
         <!--        <Link-->
         <!--            :href="route('payment')"-->
@@ -130,7 +130,7 @@
                 />
             </svg>
 
-            Доходы
+            {{ $t("tabs.income") }}
         </Link>
         <!--        <Link class="nav-tabs__tab" to="/ref">-->
         <!--            <svg-->
@@ -167,7 +167,7 @@
                 />
             </svg>
 
-            Подключение
+            {{ $t("tabs.connection") }}
         </Link>
         <Link
             class="nav-tabs__tab"
@@ -189,7 +189,7 @@
                 />
             </svg>
 
-            Кошельки
+            {{ $t("tabs.wallets") }}
         </Link>
         <!--        <Link-->
         <!--            class="nav-tabs__tab nav-tabs__tab-stroke"-->

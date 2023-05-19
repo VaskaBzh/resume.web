@@ -26,6 +26,7 @@
         "@babel/core": "^7.12.16",
         "@babel/eslint-parser": "^7.12.16",
         "@inertiajs/vue3": "^1.0.0",
+        "@intlify/vue-i18n-loader": "^4.2.0",
         "@vitejs/plugin-vue": "^4.0.0",
         "@vue/cli-plugin-babel": "~5.0.0",
         "@vue/cli-plugin-eslint": "~5.0.0",

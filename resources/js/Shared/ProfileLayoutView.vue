@@ -67,6 +67,11 @@ export default {
         this.interval = setInterval(() => {
             this.$store.dispatch("getAccounts");
         }, 60000);
+        // if (!localStorage.getItem("location")) {
+        //     axios.get("/get_location").then((res) => {
+        //         localStorage.setItem("location", res.data);
+        //     });
+        // }
     },
     // mounted() {
     //     Inertia.on("success", (event) => {

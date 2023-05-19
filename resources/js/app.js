@@ -20,8 +20,9 @@ createInertiaApp({
     },
     title: (title) => `${title}`,
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
-            .use(plugin)
+        const app = createApp({ render: () => h(App, props) });
+
+        app.use(plugin)
             .use(store)
             .use(i18n)
             .mixin({ methods: { route: window.route } })

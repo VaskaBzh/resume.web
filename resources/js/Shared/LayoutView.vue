@@ -51,6 +51,7 @@ import FooterComponent from "@/Components/FooterComponent.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
 import { mapGetters } from "vuex";
 import { Inertia } from "@inertiajs/inertia";
+import axios from "axios";
 
 export default {
     props: {
@@ -84,6 +85,11 @@ export default {
                 this.$store.dispatch("getAccounts");
             }, 60000);
         }
+        // if (!localStorage.getItem("location")) {
+        //     axios.get("/get_location").then((res) => {
+        //         localStorage.setItem('location', res.data);
+        //     });
+        // }
     },
     async updated() {
         if (!this.auth_user) {

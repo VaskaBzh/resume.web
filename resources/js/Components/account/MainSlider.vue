@@ -10,18 +10,19 @@
         ></wrap-table>
         <div class="slider__nav" v-if="this.table.rows">
             <span class="slider__nav_info" v-if="this.pages === 0">
-                0 из
+                0 {{ $t("swiper.or") }}
                 {{ this.table.rows.length }}
             </span>
             <span
                 class="slider__nav_info"
                 v-else-if="this.rows > this.table.rows.length"
             >
-                {{ this.startRow }}-{{ this.table.rows.length }} из
+                {{ this.startRow }}-{{ this.table.rows.length }}
+                {{ $t("swiper.or") }}
                 {{ this.table.rows.length }}
             </span>
             <span class="slider__nav_info" v-else>
-                {{ this.startRow }}-{{ this.rows }} из
+                {{ this.startRow }}-{{ this.rows }} {{ $t("swiper.or") }}
                 {{ this.table.rows.length }}
             </span>
             <div class="slider__nav-slides">

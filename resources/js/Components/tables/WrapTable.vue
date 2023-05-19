@@ -16,17 +16,17 @@
                 v-if="this.viewportWidth > 767.98 && this.legend"
             >
                 <div class="legend_elem legend_elem-active">
-                    Активные: {{ this.active }}
+                    {{ $t("worker_statuses.active") }}: {{ this.active }}
                 </div>
                 <div class="legend_elem legend_elem-unstable">
-                    Нестабильные: {{ this.unstable }}
+                    {{ $t("worker_statuses.unstable") }}: {{ this.unstable }}
                 </div>
                 workers
                 <div class="legend_elem legend_elem-unActive">
-                    Неактивные: {{ this.unActive }}
+                    {{ $t("worker_statuses.inactive") }}: {{ this.unActive }}
                 </div>
                 <div class="legend_elem legend_elem-all">
-                    Все: {{ this.all }}
+                    {{ $t("worker_statuses.all") }}: {{ this.all }}
                 </div>
             </div>
             <div
@@ -58,7 +58,7 @@
         </div>
         <div class="no-info" v-else-if="this.boolFalse">
             <img src="../../../assets/img/img_no-info.png" alt="no_info" />
-            <span>Нет данных</span>
+            <span>{{ $t("no_info") }}</span>
         </div>
         <div
             class="wrap-overflow wrap-overflow-scrollY"

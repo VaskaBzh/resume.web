@@ -3,7 +3,418 @@ import { createI18n } from "vue-i18n";
 
 // Ready translated locale messages
 const messages = {
-    en: {},
+    en: {
+        header: {
+            login_button: "Account",
+            popups: {
+                errors: {
+                    link_email_confirm: "Confirm the address.",
+                },
+                login: {
+                    title: "Log into Allbtc account",
+                    placeholders: {
+                        email: "Please enter the Email",
+                        password: "Please enter the password",
+                    },
+                    swiper: {
+                        text: "No account?",
+                        link: "Register",
+                    },
+                    button: "Log in",
+                },
+                registration_steps: {
+                    swiper: {
+                        text: "Already have an account?",
+                        link: "Log in",
+                    },
+                    email: {
+                        title: "Create account Allbtc",
+                        placeholders: {
+                            email: "Please enter the email",
+                        },
+                        button: "Continue",
+                    },
+                    name: {
+                        title: "Create account Allbtc",
+                        placeholders: {
+                            name: "Please enter the name",
+                        },
+                        button: "Continue",
+                    },
+                    password: {
+                        title: "Create account Allbtc",
+                        placeholders: {
+                            password: "Please enter the password",
+                            password_confirmation:
+                                "Please confirm the password",
+                        },
+                        button: "Register",
+                    },
+                },
+            },
+            menu: {
+                title: "Finances and accounts",
+                wallets: {
+                    all: "Full earn",
+                    button: "Earnings",
+                },
+                accounts_title: "Accounts",
+                acc_admin: {
+                    title: "Profile management",
+                    settings: "Settings",
+                    logout: "Exit",
+                },
+            },
+            login: {
+                title: "Authorize yourself!",
+                hash: "Average hashrate / 1 hour",
+                workers: "Number of workers",
+                text: "Login or register to start mining!",
+                buttons: {
+                    login: "Login",
+                    step: "or",
+                    registration: "Register",
+                },
+                menu: {
+                    add: "Add subaccount",
+                    logout: "Log out",
+                },
+            },
+            links: {
+                statistic: "Statistics",
+                accounts: "Accounts",
+                workers: "Workers",
+                income: "Earnings",
+                connection: "Connection",
+                wallets: "Wallets",
+                home: "Home",
+                own_cabinet: "Personal cabinet",
+                complexity: "Difficulty",
+            },
+        },
+        home: {
+            title: "Earn from mining together with allbtc pool",
+            text: "High income. Reliability. Efficiency.",
+            button: "Start Mining",
+            bitcoin_block: {
+                network: "Network difficulty",
+                next_diff: "Expected next difficulty",
+                date_diff: ["Next difficulty date", "Days", "Hours"],
+                button: "Start Mining",
+            },
+            promo_blocks: {
+                payment: {
+                    title: "Daily payouts",
+                    text: "Without a minimum payout requirement, except for ETH and ETC",
+                    link: "Start receiving payouts",
+                },
+                fpps: {
+                    title: "FPPS+",
+                    text: "The most profitable mining reward method",
+                    link: "Learn more",
+                },
+            },
+        },
+        complexity: {
+            title: "Network complexity",
+            text: "Complexity is adjusted every 2016 blocks (approximately every 2 weeks) to maintain the average time between each block at 10 minutes.",
+            blocks: {
+                chart_label: "Complexity",
+                subtitles: [
+                    "Hashrate",
+                    "Complexity",
+                    "Expected complexity",
+                    "Date of next complexity",
+                ],
+            },
+        },
+        platform: {
+            title: "An all-in-one platform designed to increase miners' earnings",
+            blocks: [
+                {
+                    title: "Security and transparency",
+                    text: "The hashrate is displayed in real-time while the Allbtc security team protects your assets.",
+                },
+                {
+                    title: "Security and transparency",
+                    text: "By utilizing the FPPS, PPS+, PPS, and instant calculation models, you can avoid earnings fluctuations",
+                },
+                {
+                    title: "Comprehensive service",
+                    text: "Our comprehensive service aims to increase miners' earnings, reduce the gap between mining and trading, and provide a universal mining ecosystem.",
+                },
+            ],
+        },
+        panel: {
+            title: "Convenient control panel",
+            text: "The control panel is highly user-friendly and provides excellent detail with regular updates.",
+        },
+        info: {
+            title: "Start mining with Allbtc pool",
+            link: "Start Mining",
+            blocks: [
+                {
+                    title: "High reliability",
+                    text: "Innovative solutions and cutting-edge technologies ensure optimal performance and stability of your equipment.",
+                },
+                {
+                    title: "Frequent and customizable payouts",
+                    text: "Take control of every detail of your financial streams with our customizable payout system.",
+                },
+                {
+                    title: "Worker management and monitoring",
+                    text: "Explore new horizons of efficiency in managing workflows and monitoring performance.",
+                },
+                {
+                    title: "Constant profit monitoring",
+                    text: "We constantly monitor the profit of our users and compare it with the earnings on other pools to ensure competitiveness.",
+                },
+            ],
+        },
+        tabs: {
+            statistic: "Statistics",
+            accounts: "Accounts",
+            workers: "Workers",
+            income: "Earnings",
+            connection: "Connection",
+            wallets: "Wallets",
+        },
+        days: "Days",
+        hours: "Hours",
+        chart: {
+            buttons: {
+                day: "24 days",
+                week: "7 hours",
+            },
+            labels: ["Hashrate", "time"],
+            hint_label: "Active workers",
+        },
+        date: {
+            label: "Date",
+            placeholder: "For all time",
+        },
+        swiper: {
+            or: "of",
+        },
+        no_info: "No info",
+        worker_statuses: {
+            all: "All",
+            active: "Active",
+            inactive: "Inactive",
+            unstable: "Unstable",
+        },
+        statistic: {
+            title: "Statistics",
+            chart: {
+                title: "Hashrate",
+                no_workers_title: "Connect to allbtc pool",
+            },
+            info_blocks: {
+                title: "Earnings and payouts",
+                payment: {
+                    titles: [
+                        "Earnings for yesterday",
+                        "Projected earnings for today",
+                    ],
+                },
+                hash: {
+                    titles: ["Current hashrate", "Avg.hashrate / 24"],
+                },
+                workers: {
+                    title: "Workers",
+                    types: [
+                        "Active",
+                        "Unstable",
+                        "Inactive",
+                    ],
+                },
+            },
+        },
+        accounts: {
+            title: "Accounts",
+            block: {
+                titles: [
+                    "Avg.hashrate / 1h",
+                    "Number of workers",
+                    "Projected earnings for today",
+                    "Total paid out",
+                ],
+                workers_status: ["Active", "All"],
+                menu: ["Change name", "Linked wallets"],
+            },
+            popups: {
+                add: {
+                    title: "Enter the sub-account name",
+                    placeholders: {
+                        name: "Please enter the name",
+                    },
+                    button: "+ Add",
+                },
+                change: {
+                    title: "Change the sub-account name",
+                    placeholders: {
+                        name: "Please enter the name",
+                    },
+                    button: "Change",
+                },
+            },
+        },
+        workers: {
+            title: "Workers",
+            select_label: "Status",
+            select: ["All", "Active", "Inactive"],
+            table: {
+                thead: [
+                    "Worker name",
+                    "Current hashrate",
+                    "Avg.hashrate / 24",
+                    "Failure rate / 24",
+                ],
+                thead_short: [
+                    "Name",
+                    "Hashrate",
+                    "Avg.hashrate/1d",
+                    "Failure/1d",
+                ],
+                sub_thead: "Total hashrate",
+            },
+            popups: {
+                connection: {
+                    title: "Connect to allbtc pool",
+                },
+                chart: {
+                    title: "Hashrate",
+                },
+            },
+        },
+        income: {
+            title: "Earnings history",
+            income_info: {
+                title: "Earnings",
+                titles: ["Paid", "Unpaid", "Yesterday's income"],
+            },
+            table: {
+                thead: [
+                    "Accrual date",
+                    "Payout date",
+                    "Hashrate",
+                    "Accrual amount",
+                    "Wallet",
+                    "Withdrawal percentage",
+                    "Status",
+                ],
+                thead_short: [
+                    "Accrual date",
+                    "Payout date",
+                    "Hashrate",
+                    "Average Hashrate",
+                    "Amount of accruals",
+                    "Wallet",
+                    "Withdrawal percentage",
+                    "Status",
+                ],
+                messages: {
+                    sum: "Amount to be paid",
+                    no_wallet_txid: "Enter the wallet",
+                    no_wallet:
+                        "Configure your account for withdrawal (enter the wallet).",
+                    less_minWithdrawal: "Insufficient funds for withdrawal.",
+                    error: "An error occurred while making the payment.",
+                    error_payout: "An error occurred while making the payout.",
+                    completed: "Payout successfully completed.",
+                },
+                status: {
+                    pending: "Pending",
+                    rejected: "Rejected",
+                    fullfill: "Completed",
+                },
+            },
+        },
+        connection: {
+            title: "Worker connection",
+            block: {
+                title: "1. Configure your device according to the data provided below:",
+            },
+        },
+        wallets: {
+            title: "Your wallets",
+            block: {
+                title: "Wallets list",
+                filter: "Hide with zero balance",
+                wallet_block: {
+                    menu: ["Change", "Remove"],
+                    i_info_titles: [
+                        "Withdrawal percentage",
+                        "Min withdrawal amount",
+                    ],
+                },
+            },
+            popups: {
+                add: {
+                    title: "Add wallet",
+                    placeholders: {
+                        wallet: "Please enter the wallet",
+                        name: "Please enter the wallet's name",
+                    },
+                    labels: {
+                        percent: "Percent",
+                        minWithdrawal: "Min. withdrawal",
+                    },
+                    button: "+ Add",
+                },
+                change: {
+                    title: "Change wallet",
+                    placeholders: {
+                        name: "Please enter the name",
+                    },
+                    labels: {
+                        percent: "Percent",
+                        minWithdrawal: "Min. withdrawal",
+                    },
+                    button: "Change",
+                },
+            },
+        },
+        settings: {
+            title: "Account settings",
+            block: {
+                titles: ["Personal information", "Security"],
+                settings_block: {
+                    change_link: "Change",
+                    labels: {
+                        login: "Login",
+                        password: "Password",
+                        phone: "Phone number",
+                    },
+                    phone_message: "Add phone number",
+                    popup: {
+                        title: "Set a new one",
+                        placeholders: {
+                            placeholder: "Please enter the ",
+                            password_new: "Please enter the password",
+                            password_confirmation:
+                                "Please confirm the password",
+                        },
+                        button: "Change",
+                    },
+                },
+            },
+        },
+        footer: {
+            feedback: {
+                button: "Feedback",
+                popup: {
+                    title: "Leave a comment about the pool's performance",
+                    placeholders: {
+                        contacts: "You can leave your contacts",
+                        comment: "Please enter the comment *",
+                    },
+                    button: "Send",
+                },
+            },
+            confidence: "Confidence",
+        },
+    },
     ru: {
         header: {
             login_button: "Личный кабинет",
@@ -115,6 +526,19 @@ const messages = {
                 },
             },
         },
+        complexity: {
+            title: "Сложность сети",
+            text: "Сложность корректируется каждые 2016 блоков (примерно каждые 2 недели), чтобы среднее время между каждым блоком оставалось в размере 10 минут.",
+            blocks: {
+                chart_label: "Сложность",
+                subtitles: [
+                    "Хешрейт",
+                    "Сложность",
+                    "Ожидаемая сложность",
+                    "Дата следующей сложности",
+                ],
+            },
+        },
         platform: {
             title: "Комплексная платформа, предназначенная для повышения доходов майнеров",
             blocks: [
@@ -166,6 +590,8 @@ const messages = {
             connection: "Подключение",
             wallets: "Кошельки",
         },
+        days: "Дней",
+        hours: "Часов",
         chart: {
             buttons: {
                 day: "24 часа",
@@ -179,7 +605,14 @@ const messages = {
             placeholder: "За все время",
         },
         swiper: {
-            steps: "из",
+            or: "из",
+        },
+        no_info: "Нет данных",
+        worker_statuses: {
+            all: "Все",
+            active: "Активные",
+            inactive: "Неактивные",
+            unstable: "Нестабильные",
         },
         statistic: {
             title: "Статистика",
@@ -241,9 +674,10 @@ const messages = {
                 thead: [
                     "Имя воркера",
                     "Текущий",
-                    "Ср.хешрейт/24",
-                    "Частота отказов/24",
+                    "Ср.хешрейт / 24",
+                    "Частота отказов / 24",
                 ],
+                thead_short: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
                 sub_thead: "Общий хешрейт",
             },
             popups: {
@@ -265,11 +699,37 @@ const messages = {
                 thead: [
                     "Дата начисления",
                     "Дата вылпаты",
+                    "Хешрейт",
                     "Сумма начислений",
                     "Кошелек",
                     "Процент вывода",
                     "Статус",
                 ],
+                thead_short: [
+                    "Дата начисления",
+                    "Дата выплаты",
+                    "Хешрейт",
+                    "Средний Хешрейт",
+                    "Сумма начислений",
+                    "Кошелек",
+                    "Процент вывода",
+                    "Статус",
+                ],
+                messages: {
+                    sum: "Сумма к выплате",
+                    no_wallet_txid: "Введите кошелек",
+                    no_wallet:
+                        "Настройте аккаунт для вывода (введите кошелек).",
+                    less_minWithdrawal: "Недостаточно средств для вывода",
+                    error: "Произошла ошибка при выполнении выплаты.",
+                    error_payout: "Произошла ошибка при выполнении выплаты.",
+                    completed: "Выплата успешно выполнена.",
+                },
+                status: {
+                    pending: "В ожидании",
+                    rejected: "Отклонено",
+                    fullfill: "Выполнено",
+                },
             },
         },
         connection: {

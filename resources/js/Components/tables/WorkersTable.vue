@@ -152,17 +152,22 @@ export default {
             mainRow: this.table.mainRow,
             mainTable: this.table,
             indexWorker: -1,
-            graphs: [
-                {
-                    id: 1,
-                    title: ["Хешрейт", "Время"],
-                    values: [],
-                },
-            ],
         };
     },
     computed: {
         ...mapGetters(["allHistoryMiner", "getActive"]),
+        graphs() {
+            return [
+                {
+                    id: 1,
+                    title: [
+                        this.$t("chart.labels[0]"),
+                        this.$t("chart.labels[1]"),
+                    ],
+                    values: [],
+                },
+            ];
+        },
         workers() {
             let workers = {
                 active: 0,
@@ -228,12 +233,6 @@ export default {
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
-    },
-    mounted() {
-        document.addEventListener("mousedown", this.closeGraph);
-    },
-    unmounted() {
-        document.removeEventListener("mousedown", this.closeGraph);
     },
 };
 </script>

@@ -4,29 +4,6 @@
         <div class="workers__wrapper">
             <main-title tag="h2" enter-class="workers__title">
                 {{ $t("workers.title") }}
-            </main-title>
-            <div class="workers__filter">
-                <div class="workers__filter_wrapper">
-                    <!--                    <div class="workers__filter_block">-->
-                    <!--                        <div class="workers__filter_label">Отображение</div>-->
-                    <!--                        <main-select-->
-                    <!--                            class="workers__select"-->
-                    <!--                            :options="workersOptions"-->
-                    <!--                        >-->
-                    <!--                        </main-select>-->
-                    <!--                    </div>-->
-                    <div class="workers__filter_block">
-                        <div class="workers__filter_label">
-                            {{ $t("workers.select_label") }}
-                        </div>
-                        <main-select
-                            class="workers__select"
-                            :options="statuses"
-                            @getCoin="useFilter"
-                        >
-                        </main-select>
-                    </div>
-                </div>
                 <span class="workers__button" data-popup="#connect">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -47,7 +24,30 @@
                         />
                     </svg>
                 </span>
-            </div>
+            </main-title>
+            <!--            <div class="workers__filter">-->
+            <!--                <div class="workers__filter_wrapper">-->
+            <!--                    <div class="workers__filter_block">-->
+            <!--                        <div class="workers__filter_label">Отображение</div>-->
+            <!--                        <main-select-->
+            <!--                            class="workers__select"-->
+            <!--                            :options="workersOptions"-->
+            <!--                        >-->
+            <!--                        </main-select>-->
+            <!--                    </div>-->
+            <!--                    <div class="workers__filter_block">-->
+            <!--                        <div class="workers__filter_label">-->
+            <!--                            {{ $t("workers.select_label") }}-->
+            <!--                        </div>-->
+            <!--                        <main-select-->
+            <!--                            class="workers__select"-->
+            <!--                            :options="statuses"-->
+            <!--                            @getCoin="useFilter"-->
+            <!--                        >-->
+            <!--                        </main-select>-->
+            <!--                    </div>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <wrap-table
                 :table="this.table"
                 :key="Object.values(this.allAccounts).length + this.getActive"
@@ -80,6 +80,7 @@ import PopupView from "@/Components/technical/PopupView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import CopyBlock from "@/Components/account/CopyBlock.vue";
 import { mapGetters } from "vuex";
+import Vue from "lodash";
 
 export default {
     components: {
@@ -94,82 +95,99 @@ export default {
     props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
-            copyObject: [
-                {
-                    title: "1. Настройте ваше устройство согласно представленным ниже данным:",
-                    copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port" },
-                        { link: "btc.all-btc.com:3333", title: "Port 1" },
-                        { link: "btc.all-btc.com:2222", title: "Port 2" },
-                    ],
-                },
-            ],
             workersActive: 0,
             workersInActive: 0,
             workersDead: 0,
             viewportWidth: 0,
-            table: {
-                titles: [
-                    "Имя воркера",
-                    "Текущий",
-                    // "Ср.хешрейт /1ч",
-                    "Ср.хешрейт /24ч",
-                    "Частота отказов /24ч",
-                ],
-                shortTitles: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
-                rows: [],
-                mainRow: {
-                    hash: "Общий хешрейт",
-                    hashRate: 0,
-                    // hashAvarage: 0,
-                    hashAvarage24: 0,
-                    rejectRate: 0,
-                },
-                mainShortRow: {
-                    hash: "Общий",
-                    hashRate: 0,
-                    // hashAvarage: 0,
-                    hashAvarage24: 0,
-                    rejectRate: 0,
-                },
-            },
-            statuses: [
-                { title: "Все", value: "all" },
-                { title: "Активные", value: "active" },
-                { title: "Нестабильные", value: "unstable" },
-                // { title: "Неактивные", value: "instable" },
-            ],
         };
     },
     methods: {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        useFilter(data) {
-            this.table.rows.length = 0;
-            if (data !== "all") {
-                Object.values(this.allHash[this.getActive]).forEach((el) => {
-                    if (el.status.toLowerCase() === data) {
-                        let workersRowModel = {
-                            hashClass: el.status.toLowerCase(),
-                            hash: el.name,
-                            hashRate: el.shares1m,
-                            // hashAvarage: el.shares1h,
-                            hashAvarage24: el.shares1d,
-                            rejectRate: el.persent,
-                            graphId: el.workerId,
-                        };
-                        this.table.rows.push(workersRowModel);
-                    }
-                });
-            } else {
-                this.getWorker();
-            }
+        // useFilter(data) {
+        //     this.table.rows.length = 0;
+        //     if (data !== "all") {
+        //         Object.values(this.allHash[this.getActive]).forEach((el) => {
+        //             if (el.status.toLowerCase() === data) {
+        //                 let workersRowModel = {
+        //                     hashClass: el.status.toLowerCase(),
+        //                     hash: el.name,
+        //                     hashRate: el.shares1m,
+        //                     // hashAvarage: el.shares1h,
+        //                     hashAvarage24: el.shares1d,
+        //                     rejectRate: el.persent,
+        //                     graphId: el.workerId,
+        //                 };
+        //                 this.table.rows.push(workersRowModel);
+        //             }
+        //         });
+        //     } else {
+        //         this.getWorker();
+        //     }
+        // },
+    },
+    computed: {
+        ...mapGetters([
+            "getActive",
+            "allAccounts",
+            "allHash",
+            "allHistoryMiner",
+        ]),
+        copyObject() {
+            return [
+                {
+                    title: this.$t("connection.block.title"),
+                    copyObject: [
+                        { link: "btc.all-btc.com:4444", title: "Port" },
+                        { link: "btc.all-btc.com:3333", title: "Port 1" },
+                        { link: "btc.all-btc.com:2222", title: "Port 2" },
+                    ],
+                },
+            ];
         },
-        getWorker() {
-            this.table.rows.length = 0;
+        statuses() {
+            return [
+                { title: this.$t("workers.select[0]"), value: "all" },
+                { title: this.$t("workers.select[1]"), value: "active" },
+                { title: this.$t("workers.select[2]"), value: "unstable" },
+                // { title: "Неактивные", value: "instable" },
+            ];
+        },
+        table() {
+            let obj = {
+                titles: [
+                    this.$t("workers.table.thead[0]"),
+                    this.$t("workers.table.thead[1]"),
+                    // "Ср.хешрейт /1ч",
+                    this.$t("workers.table.thead[2]"),
+                    this.$t("workers.table.thead[3]"),
+                ],
+                shortTitles: [
+                    this.$t("workers.table.thead_short[0]"),
+                    this.$t("workers.table.thead_short[1]"),
+                    this.$t("workers.table.thead_short[2]"),
+                    this.$t("workers.table.thead_short[3]"),
+                ],
+                rows: [],
+                mainRow: {
+                    hash: this.$t("workers.table.sub_thead"),
+                    hashRate: 0,
+                    // hashAvarage: 0,
+                    hashAvarage24: 0,
+                    rejectRate: 0,
+                },
+                mainShortRow: {
+                    hash: this.$t("workers.table.sub_thead"),
+                    hashRate: 0,
+                    // hashAvarage: 0,
+                    hashAvarage24: 0,
+                    rejectRate: 0,
+                },
+            };
+
             if (this.allHash[this.getActive]) {
-                Object.values(this.allHash[this.getActive]).forEach((el) => {
+                Object.values(this.allHash[this.getActive]).forEach((el, i) => {
                     let workersRowModel = {
                         hashClass: el.status.toLowerCase(),
                         hash: el.name,
@@ -179,41 +197,30 @@ export default {
                         rejectRate: el.persent,
                         graphId: el.workerId,
                     };
-                    this.table.rows.push(workersRowModel);
+                    Vue.set(obj.rows, i, workersRowModel);
                 });
             }
             if (this.allAccounts[this.getActive]) {
-                this.table.mainRow.hashRate =
+                obj.mainRow.hashRate =
                     this.allAccounts[this.getActive].shares1m;
                 // this.table.mainRow.hashAvarage = acc.shares1h;
-                this.table.mainRow.hashAvarage24 =
+                obj.mainRow.hashAvarage24 =
                     this.allAccounts[this.getActive].shares1d;
-                this.table.mainRow.rejectRate =
+                obj.mainRow.rejectRate =
                     this.allAccounts[this.getActive].rejectRate;
-                this.table.mainShortRow.hashRate =
+                obj.mainShortRow.hashRate =
                     this.allAccounts[this.getActive].shares1m;
                 // this.table.mainShortRow.hashAvarage = acc.shares1h;
-                this.table.mainShortRow.hashAvarage24 =
+                obj.mainShortRow.hashAvarage24 =
                     this.allAccounts[this.getActive].shares1d;
-                this.table.mainShortRow.rejectRate =
+                obj.mainShortRow.rejectRate =
                     this.allAccounts[this.getActive].rejectRate;
             }
+            return obj;
         },
-    },
-    computed: {
-        ...mapGetters([
-            "getActive",
-            "allAccounts",
-            "allHash",
-            "allHistoryMiner",
-        ]),
-    },
-    beforeUpdate() {
-        this.getWorker();
     },
     mounted() {
         document.title = "Воркеры";
-        this.getWorker();
     },
     created() {
         window.addEventListener("resize", this.handleResize);
@@ -226,6 +233,16 @@ export default {
     width: 100%;
     @media (min-width: 1271px) {
         padding-left: 310px;
+    }
+    .title {
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 16px;
+    }
+    .form .title {
+        margin-bottom: 0;
     }
     &__button {
         width: 60px;

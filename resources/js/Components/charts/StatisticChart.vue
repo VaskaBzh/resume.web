@@ -53,6 +53,11 @@ export default {
     components: {
         MainTitle,
     },
+    computed: {
+        hint_label_workers() {
+            return this.$t("chart.hint_label");
+        },
+    },
     methods: {
         renderChart() {
             const graphsList = this.graphs;
@@ -230,6 +235,8 @@ export default {
 
                 Chart.register(customLinesPlugin);
 
+                let hint_label_workers = this.hint_label_workers;
+
                 new Chart(ctx, {
                     type: "line",
                     data: {
@@ -281,7 +288,7 @@ export default {
                                         let value = tooltipItem.parsed.y;
                                         let amount = "";
                                         if (graphsList[0].amount) {
-                                            amount = `; Активные воркеры: ${
+                                            amount = `; ${hint_label_workers}: ${
                                                 calculateMaxAverage(
                                                     graphsList[0].amount,
                                                     interval

@@ -64,34 +64,34 @@
             </div>
         </div>
 
-        <div class="income__filter">
-            <!--                <div-->
-            <!--                    class="income__filter_block"-->
-            <!--                    v-show="this.walletOptions[1]"-->
-            <!--                >-->
-            <!--                    <div class="income__filter_label">Кошелек</div>-->
-            <!--                    <main-select-->
-            <!--                        @getCoin="this.filter"-->
-            <!--                        class="income__filter_select"-->
-            <!--                        :options="this.walletOptions"-->
-            <!--                    ></main-select>-->
-            <!--                </div>-->
-            <!--                <div class="income__filter_block income__filter_block-adapt">-->
-            <!--                    <div class="income__filter_label">Статус операции</div>-->
-            <!--                    <main-select-->
-            <!--                        @getCoin="this.filter"-->
-            <!--                        class="income__filter_select"-->
-            <!--                        :options="this.operationOptions"-->
-            <!--                    ></main-select>-->
-            <!--                </div>-->
-            <div class="income__filter_block">
-                <div class="income__filter_label">{{ $t("date.label") }}</div>
-                <main-date
-                    v-model="date"
-                    :placeholder="$t('date.placeholder')"
-                ></main-date>
-            </div>
-        </div>
+        <!--        <div class="income__filter">-->
+        <!--                <div-->
+        <!--                    class="income__filter_block"-->
+        <!--                    v-show="this.walletOptions[1]"-->
+        <!--                >-->
+        <!--                    <div class="income__filter_label">Кошелек</div>-->
+        <!--                    <main-select-->
+        <!--                        @getCoin="this.filter"-->
+        <!--                        class="income__filter_select"-->
+        <!--                        :options="this.walletOptions"-->
+        <!--                    ></main-select>-->
+        <!--                </div>-->
+        <!--                <div class="income__filter_block income__filter_block-adapt">-->
+        <!--                    <div class="income__filter_label">Статус операции</div>-->
+        <!--                    <main-select-->
+        <!--                        @getCoin="this.filter"-->
+        <!--                        class="income__filter_select"-->
+        <!--                        :options="this.operationOptions"-->
+        <!--                    ></main-select>-->
+        <!--                </div>-->
+        <!--            <div class="income__filter_block">-->
+        <!--                <div class="income__filter_label">{{ $t("date.label") }}</div>-->
+        <!--                <main-date-->
+        <!--                    v-model="date"-->
+        <!--                    :placeholder="$t('date.placeholder')"-->
+        <!--                ></main-date>-->
+        <!--            </div>-->
+        <!--        </div>-->
         <main-slider
             class="wrap-no-overflow"
             :wait="this.allIncomeHistory"
@@ -110,6 +110,7 @@ import { Link, router } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { ref } from "vue";
+import Vue from "lodash";
 
 export default {
     components: {
@@ -132,31 +133,137 @@ export default {
                 { title: "Выполнено", value: "completed" },
             ],
             date: {},
-            incomeInfo: {
-                titles: [
-                    "Дата начисления",
-                    "Дата выплаты",
-                    "Средний Хешрейт",
-                    "Сумма начислений",
-                    "Кошелек",
-                    "Процент вывода",
-                    "Статус",
-                ],
-                shortTitles: [
-                    "Дата начисления",
-                    "Дата выплаты",
-                    "Средний Хешрейт",
-                    "Сумма начислений",
-                    "Кошелек",
-                    "Процент вывода",
-                    "Статус",
-                ],
-                rows: [],
-            },
         };
     },
     layout: profileLayoutView,
     computed: {
+        incomeInfo() {
+            let obj = {
+                titles: [
+                    this.$t("income.table.thead[0]"),
+                    this.$t("income.table.thead[1]"),
+                    this.$t("income.table.thead[2]"),
+                    this.$t("income.table.thead[3]"),
+                    this.$t("income.table.thead[4]"),
+                    this.$t("income.table.thead[5]"),
+                    this.$t("income.table.thead[6]"),
+                ],
+                shortTitles: [
+                    this.$t("income.table.thead_short[0]"),
+                    this.$t("income.table.thead_short[1]"),
+                    this.$t("income.table.thead_short[2]"),
+                    this.$t("income.table.thead_short[3]"),
+                    this.$t("income.table.thead_short[4]"),
+                    this.$t("income.table.thead_short[5]"),
+                    this.$t("income.table.thead_short[6]"),
+                ],
+                rows: [],
+            };
+            if (
+                this.allIncomeHistory &&
+                this.allIncomeHistory[this.getActive]
+            ) {
+                obj.rows.length = 0;
+                Object.values(this.allIncomeHistory[this.getActive]).forEach(
+                    (row, i) => {
+                        let date = row["created_at"].split("");
+                        let time = row["created_at"].substr(11).split("");
+                        time.length = 8;
+                        date.length = 10;
+                        let percent = 0;
+                        let datePay = "...";
+                        let wallet = "...";
+                        let message = "...";
+                        let txid = row["txid"];
+                        if (row["percent"]) {
+                            percent = row["percent"];
+                        }
+                        if (row["status"] === "completed") {
+                            datePay = date
+                                .join("")
+                                .split("-")
+                                .reverse()
+                                .join(".");
+                        }
+                        if (row["wallet"]) {
+                            wallet = row["wallet"];
+                        }
+                        if (
+                            new RegExp("Введите кошелек").test(row["txid"]) ||
+                            row["txid"] === "no wallet"
+                        ) {
+                            txid = this.$t(
+                                "income.table.messages.no_wallet_txid"
+                            );
+                        }
+                        if (
+                            new RegExp(
+                                "Настройте аккаунт для вывода (введите кошелек)."
+                            ).test(row["message"]) ||
+                            row["message"] === "no wallet"
+                        ) {
+                            message = this.$t(
+                                "income.table.messages.no_wallet"
+                            );
+                        }
+                        if (
+                            new RegExp(
+                                "Недостаточно средств для вывода. Минимальное значение"
+                            ).test(row["message"]) ||
+                            row["message"] === "less minWithdrawal"
+                        ) {
+                            message = this.$t(
+                                "income.table.messages.less_minWithdrawal"
+                            );
+                        }
+                        if (
+                            new RegExp(
+                                "Произошла ошибка при выполнении выплаты."
+                            ).test(row["message"]) ||
+                            row["message"] === "error"
+                        ) {
+                            message = this.$t("income.table.messages.error");
+                        }
+                        if (
+                            new RegExp(
+                                "Произошла ошибка при выполнении выплаты."
+                            ).test(row["message"]) ||
+                            row["message"] === "error payout"
+                        ) {
+                            message = this.$t(
+                                "income.table.messages.error_payout"
+                            );
+                        }
+                        if (
+                            new RegExp("Выплата успешно выполнена.").test(
+                                row["message"]
+                            ) ||
+                            row["message"] === "completed"
+                        ) {
+                            message = this.$t(
+                                "income.table.messages.completed"
+                            );
+                        }
+                        let rowModel = {
+                            date: date.join("").split("-").reverse().join("."),
+                            payDate: datePay,
+                            time: time.join(""),
+                            earn: row["amount"],
+                            payment: row["payment"],
+                            percent: percent,
+                            diff: row["diff"],
+                            hash: `${row["hash"]} ${row["unit"]}H/s`,
+                            status: row["status"],
+                            txid: txid,
+                            message: message,
+                            wallet: wallet,
+                        };
+                        Vue.set(obj.rows, i, rowModel);
+                    }
+                );
+            }
+            return obj;
+        },
         ...mapGetters([
             "allIncomeHistory",
             "getActive",
@@ -211,79 +318,31 @@ export default {
         },
     },
     methods: {
-        getIncomeInfo() {
-            if (
-                this.allIncomeHistory &&
-                this.allIncomeHistory[this.getActive]
-            ) {
-                this.incomeInfo.rows.length = 0;
-                Object.values(this.allIncomeHistory[this.getActive]).forEach(
-                    (row) => {
-                        this.setRows(row);
-                    }
-                );
-            }
-        },
-        setRows(row) {
-            let date = row["created_at"].split("");
-            let time = row["created_at"].substr(11).split("");
-            time.length = 8;
-            date.length = 10;
-            let percent = 0;
-            let datePay = "...";
-            let wallet = "...";
-            if (row["percent"]) {
-                percent = row["percent"];
-            }
-            if (row["status"] === "completed") {
-                datePay = date.join("").split("-").reverse().join(".");
-            }
-            if (row["wallet"]) {
-                wallet = row["wallet"];
-            }
-            let rowModel = {
-                date: date.join("").split("-").reverse().join("."),
-                payDate: datePay,
-                time: time.join(""),
-                earn: row["amount"],
-                payment: row["payment"],
-                percent: percent,
-                diff: row["diff"],
-                hash: `${row["hash"]} ${row["unit"]}H/s`,
-                status: row["status"],
-                txid: row["txid"],
-                message: row["message"],
-                wallet: wallet,
-            };
-            this.incomeInfo.rows.push(rowModel);
-        },
         router() {
             return router;
         },
-        filterDate() {
-            if (this.date && Object.values(this.date).length !== 0) {
-                if (
-                    Object.values(this.date)[0] &&
-                    Object.values(this.date)[1]
-                ) {
-                    this.incomeInfo.rows.length = 0;
-                    Object.values(
-                        this.allIncomeHistory[this.getActive]
-                    ).forEach((row) => {
-                        if (
-                            new Date(row.created_at) >=
-                                new Date(Object.values(this.date)[0]) &&
-                            new Date(row.created_at) <=
-                                new Date(Object.values(this.date)[1])
-                        ) {
-                            this.setRows(row);
-                        }
-                    });
-                }
-            } else {
-                this.getIncomeInfo();
-            }
-        },
+        // filterDate() {
+        //     if (this.date && Object.values(this.date).length !== 0) {
+        //         if (
+        //             Object.values(this.date)[0] &&
+        //             Object.values(this.date)[1]
+        //         ) {
+        //             this.incomeInfo.rows.length = 0;
+        //             Object.values(
+        //                 this.allIncomeHistory[this.getActive]
+        //             ).forEach((row) => {
+        //                 if (
+        //                     new Date(row.created_at) >=
+        //                         new Date(Object.values(this.date)[0]) &&
+        //                     new Date(row.created_at) <=
+        //                         new Date(Object.values(this.date)[1])
+        //                 ) {
+        //                     this.setRows(row);
+        //                 }
+        //             });
+        //         }
+        //     }
+        // },
         filter(data) {
             this.incomeInfo.rows.length = 0;
             if (data !== "all") {
@@ -309,11 +368,6 @@ export default {
         // await this.$store.dispatch("getAccounts");
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
-        this.getIncomeInfo();
-    },
-    updated() {
-        this.getIncomeInfo();
-        this.filterDate();
     },
     mounted() {
         document.title = "История";

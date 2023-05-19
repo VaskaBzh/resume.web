@@ -16,7 +16,7 @@
         "
     >
         <img src="../../../assets/img/img_no-info.png" alt="no_info" />
-        <span>Нет данных</span>
+        <span>{{ $t("no_info") }}</span>
     </div>
 </template>
 

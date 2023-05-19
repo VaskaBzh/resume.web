@@ -90,7 +90,11 @@
                         <div class="wrap__head wrap__column">
                             <div class="wrap__row">
                                 <span class="wrap_title">
-                                    {{ $t("statistic.info_blocks.hash.titles[0]") }}
+                                    {{
+                                        $t(
+                                            "statistic.info_blocks.hash.titles[0]"
+                                        )
+                                    }}
                                 </span>
                                 <span class="wrap_hash"
                                     >{{
@@ -101,7 +105,11 @@
                             </div>
                             <div class="wrap__row">
                                 <span class="wrap_title">
-                                    {{ $t("statistic.info_blocks.hash.titles[1]") }}
+                                    {{
+                                        $t(
+                                            "statistic.info_blocks.hash.titles[1]"
+                                        )
+                                    }}
                                 </span>
                                 <span class="wrap_hash"
                                     >{{
@@ -116,19 +124,31 @@
                                 <Link
                                     class="main__link"
                                     :href="route(`workers`)"
-                                    >{{ $t("statistic.info_blocks.workers.title") }}
+                                    >{{
+                                        $t(
+                                            "statistic.info_blocks.workers.title"
+                                        )
+                                    }}
                                 </Link>
                             </main-title>
                             <li class="active">
                                 {{ this.workers.active
                                 }}<span>
-                                    {{ $t("statistic.info_blocks.workers.types[0]") }}</span
+                                    {{
+                                        $t(
+                                            "statistic.info_blocks.workers.types[0]"
+                                        )
+                                    }}</span
                                 >
                             </li>
                             <li class="unStable">
                                 {{ this.workers.unStable
                                 }}<span>
-                                    {{ $t("statistic.info_blocks.workers.types[1]") }}</span
+                                    {{
+                                        $t(
+                                            "statistic.info_blocks.workers.types[1]"
+                                        )
+                                    }}</span
                                 >
                             </li>
                             <li class="inActive">
@@ -195,15 +215,13 @@ export default {
             workersInActive: 0,
             id: 0,
             val: 24,
-            buttons: [
-                // { title: "6 часов", value: 6 },
-                { title: "24 часа", value: 24 },
-                { title: "7 дней", value: 168 },
-            ],
             graphs: [
                 {
                     id: 1,
-                    title: ["Хешрейт", "Время"],
+                    title: [
+                        this.$t("chart.labels[0]"),
+                        this.$t("chart.labels[1]"),
+                    ],
                     values: [],
                     time: [],
                     amount: [],
@@ -217,6 +235,13 @@ export default {
         };
     },
     computed: {
+        buttons() {
+            return [
+                // { title: "6 часов", value: 6 },
+                { title: `24 ${this.$t("hours")}`, value: 24 },
+                { title: `7 ${this.$t("days")}`, value: 168 },
+            ];
+        },
         workers() {
             let obj = {
                 hash: 0,
@@ -326,9 +351,6 @@ export default {
             let values = [];
             let amount = [];
             for (let i = 1; i <= val; i++) {
-                let timeItem = Object.values(this.allHistory[this.getActive])[
-                    Object.values(this.allHistory[this.getActive]).length - i
-                ]?.["created_at"];
                 let amountItem = Object.values(this.allHistory[this.getActive])[
                     Object.values(this.allHistory[this.getActive]).length - i
                 ]?.amount;
@@ -671,6 +693,23 @@ export default {
         width: 100%;
         grid-template-columns: repeat(2, 1fr);
         gap: 24px;
+        @media (max-width: 998.98px) {
+            grid-template-columns: auto 300px;
+        }
+        .wrap {
+            &__block {
+                justify-content: space-between;
+                @media (max-width: 998.98px) {
+                    justify-content: center;
+                }
+                @media (max-width: 767.98px) {
+                    justify-content: space-between;
+                }
+            }
+            &__head {
+                width: auto;
+            }
+        }
         .no-info {
             padding: 12px;
             display: flex;

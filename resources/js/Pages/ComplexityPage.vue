@@ -1,16 +1,14 @@
 <template>
-    <Head title="Сложность сети" />
+    <Head :title="$t('complexity.title')" />
     <div class="complexity">
         <div class="complexity__container">
             <div class="complexity__main">
                 <div class="complexity__content">
                     <main-title tag="h1" class="complexity__title">
-                        Сложность сети
+                        {{ $t("complexity.title") }}
                     </main-title>
                     <div class="complexity__text main__text">
-                        Сложность корректируется каждые 2016 блоков (примерно
-                        каждые 2 недели), чтобы среднее время между каждым
-                        блоком оставалось в размере 10 минут.
+                        {{ $t("complexity.text") }}
                     </div>
                 </div>
                 <div class="complexity__image">
@@ -77,11 +75,13 @@ export default {
                     ? (string = `${String(this.btcInfo.btc.time / 24).substr(
                           0,
                           1
-                      )} Дни ${this.btcInfo.btc.time % 24} Часы`)
+                      )} ${this.$t("days")} ${
+                          this.btcInfo.btc.time % 24
+                      } ${this.$t("hours")}`)
                     : (string = `${String(this.btcInfo.btc.time / 24).substr(
                           0,
                           1
-                      )} Дни`);
+                      )} ${this.$t("days")}`);
             }
             return string;
         },
@@ -89,18 +89,18 @@ export default {
             let arr = [
                 {
                     id: 1,
-                    title: "Сложность",
+                    title: this.$t("complexity.blocks.chart_label"),
                     values: [],
                     dates: [],
                     about: [
                         {
                             id: 11,
-                            title: "Хэшрейт",
+                            title: this.$t("complexity.blocks.subtitles[0]"),
                             text: this.network,
                         },
                         {
                             id: 12,
-                            title: "Сложность",
+                            title: this.$t("complexity.blocks.subtitles[1]"),
                             text: this.diff,
                         },
                     ],
@@ -109,13 +109,13 @@ export default {
                     about: [
                         {
                             id: 21,
-                            title: "Ожидаемая следующая сложность",
+                            title: this.$t("complexity.blocks.subtitles[2]"),
                             text: this.nextDiff,
                             span: this.changeDiff,
                         },
                         {
                             id: 22,
-                            title: "Дата следующей сложности",
+                            title: this.$t("complexity.blocks.subtitles[3]"),
                             text: this.time,
                         },
                     ],

@@ -28,7 +28,9 @@
         <td
             class="main__number"
             v-tooltip="{
-                message: `Сумма к выплате: ${this.columns.percent}% (${this.BTCVal} BTC)`,
+                message: `${this.$t('income.table.messages.sum')}: ${
+                    this.columns.percent
+                }% (${this.BTCVal} BTC)`,
             }"
         >
             {{ Number(this.columns.earn).toFixed(8) }} BTC
@@ -56,7 +58,11 @@
         <!--        </td>-->
         <td
             class="main__number"
-            v-tooltip="{ message: `Сумма к выплате: ${this.BTCVal} BTC` }"
+            v-tooltip="{
+                message: `${this.$t('income.table.messages.sum')}: ${
+                    this.BTCVal
+                } BTC`,
+            }"
         >
             {{ this.columns.percent }} %
         </td>
@@ -69,10 +75,10 @@
             >
                 {{
                     this.columns.status === "rejected"
-                        ? "Отклонено"
+                        ? this.$t("income.table.status.rejected")
                         : this.columns.status === "pending"
-                        ? "В ожидании"
-                        : "Выполнено"
+                        ? this.$t("income.table.status.pending")
+                        : this.$t("income.table.status.fullfill")
                 }}
             </span>
             <span

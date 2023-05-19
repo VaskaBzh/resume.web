@@ -32,7 +32,7 @@ export default {
             viewportWidth: 0,
             copyObject: [
                 {
-                    title: "1. Настройте ваше устройство согласно представленным ниже данным:",
+                    title: this.$t("connection.block.title"),
                     copyObject: [
                         { link: "btc.all-btc.com:4444", title: "Port" },
                         { link: "btc.all-btc.com:3333", title: "Port 1" },

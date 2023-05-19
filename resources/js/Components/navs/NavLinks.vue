@@ -550,7 +550,7 @@ export default {
         overflow: hidden;
         width: calc(100% - 14px * 2);
     }
-    @media (max-width: 4 69.98px) {
+    @media (max-width: 469.98px) {
         margin: 0 0 80px;
         padding: 0 0 80px;
         width: 100%;

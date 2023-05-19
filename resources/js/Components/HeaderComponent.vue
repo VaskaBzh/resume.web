@@ -14,30 +14,38 @@
             :is_auth="is_auth"
             :viewportWidth="viewportWidth"
         />
-        <div
-            v-show="viewportWidth >= 991.98 && !is_auth"
-            class="nav__button"
-            data-popup="#auth"
-            @mousedown="this.linkChanger"
-        >
-            {{ $t("header.login_button") }}
-        </div>
-        <div
-            v-show="
-                viewportWidth <= 991.98 && !is_auth && viewportWidth >= 767.98
-            "
-            class="nav__button_mobile"
-            data-popup="#auth"
-            @click="this.linkChanger"
-        >
-            <img src="../../assets/img/user.svg" alt="" />
-        </div>
 
-        <account-menu
-            v-show="viewportWidth >= 767.78 && is_auth"
-        ></account-menu>
+        <div class="nav__buttons" v-show="viewportWidth >= 767.78">
+            <select-language
+                v-if="viewportWidth >= 767.78"
+                :viewportWidth="viewportWidth"
+            ></select-language>
+
+            <account-menu v-show="is_auth"></account-menu>
+            <div
+                v-show="viewportWidth >= 991.98 && !is_auth"
+                class="nav__button"
+                data-popup="#auth"
+                @mousedown="this.linkChanger"
+            >
+                {{ $t("header.login_button") }}
+            </div>
+            <div
+                v-show="
+                    viewportWidth <= 991.98 &&
+                    !is_auth &&
+                    viewportWidth >= 767.98
+                "
+                class="nav__button_mobile"
+                data-popup="#auth"
+                @click="this.linkChanger"
+            >
+                <img src="../../assets/img/user.svg" alt="" />
+            </div>
+        </div>
 
         <div v-show="viewportWidth < 767.98" class="nav__buttons_mobile">
+            <select-language :viewportWidth="viewportWidth"></select-language>
             <div
                 @click="burgerAction"
                 class="nav__burger"
@@ -474,6 +482,7 @@
 
 <script>
 import { Link, router, useForm } from "@inertiajs/vue3";
+import SelectLanguage from "@/Components/technical/SelectLanguage.vue";
 import NavLinks from "@/Components/navs/NavLinks.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
@@ -503,6 +512,7 @@ export default defineComponent({
         // eslint-disable-next-line vue/no-unused-components
         SwiperSlide,
         AccountMenu,
+        SelectLanguage,
     },
     data() {
         return {
@@ -933,6 +943,7 @@ nav.nav__container {
         padding: 20px 15px 15px;
         position: fixed;
         gap: 15px;
+        height: 64px;
         &::before {
             content: "";
             position: absolute;
@@ -958,13 +969,13 @@ nav.nav__container {
 .nav__buttons_mobile {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 15px;
     position: relative;
     z-index: 100;
 
     & .nav__burger {
         background: transparent;
-        border-radius: 5px;
+        border-radius: 14px;
         width: 24px;
         height: 24px;
         gap: 4px;
@@ -1037,7 +1048,11 @@ nav.nav__container {
         }
     }
 }
-
+.nav__buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
 .nav__button {
     font-style: normal;
     font-weight: 400;
@@ -1045,7 +1060,7 @@ nav.nav__container {
     line-height: 143.1%;
     color: #3f7bdd;
     background: rgba(194, 213, 242, 0.61);
-    border-radius: 5px;
+    border-radius: 14px;
     padding: 11px 36px;
     white-space: nowrap;
     transition: all 0.3s ease 0s;
@@ -1058,8 +1073,8 @@ nav.nav__container {
 
     &_mobile {
         background: rgba(194, 213, 242, 0.61);
-        border-radius: 5px;
-        min-width: 60px;
+        border-radius: 14px;
+        min-width: 65px;
         width: 60px;
         height: 45px;
         display: flex;

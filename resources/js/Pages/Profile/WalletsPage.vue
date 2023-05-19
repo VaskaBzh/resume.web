@@ -92,7 +92,7 @@
                 autofocus
                 type="text"
                 class="input popup__input"
-                :placeholder="$t('wallets.change.placeholders.name')"
+                :placeholder="$t('wallets.popups.change.placeholders.name')"
             />
             <div class="form_row form_row-non-height">
                 <div class="form_column">

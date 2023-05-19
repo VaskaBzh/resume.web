@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\Hashes\HashController;
 use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Requests\RequestController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
@@ -57,6 +58,8 @@ Route::controller(RegisterController::class)->group(function () {
 });
 
 Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->name('verification.verify');
+
+Route::get('/get_location', [LocationController::class, 'get_location'])->name('get_location.verify');
 
 Route::controller(LoginController::class)->group(function () {
     Route::post("/reverify", "verify")->name('reverify');

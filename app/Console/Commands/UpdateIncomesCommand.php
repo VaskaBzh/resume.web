@@ -27,8 +27,8 @@ class UpdateIncomesCommand extends Command
     private function sendBalance($sub, $income, $wallet, $earn, $sumAccruals)
     {
         if (empty($wallet)) {
-            $income["message"] = 'Настройте аккаунт для вывода (введите кошелек).';
-            $income["txid"] = 'Введите кошелек';
+            $income["message"] = 'no wallet';
+            $income["txid"] = 'no wallet';
         } else {
             if ($wallet->wallet) {
                 $income["wallet"] = $wallet->wallet;
@@ -82,9 +82,9 @@ class UpdateIncomesCommand extends Command
                                 }
                             }
 
-                            $income["message"] = 'Выплата успешно выполнена.';
+                            $income["message"] = 'completed';
                         } else {
-                            $income["message"] = 'Произошла ошибка при выполнении выплаты.';
+                            $income["message"] = 'error payout';
                         }
                         Http::withBasicAuth('bituser', '111')
                             ->post('http://92.205.163.43:8332', [
@@ -94,10 +94,10 @@ class UpdateIncomesCommand extends Command
                             ]);
                     } else {
                         // Обработка ошибки разблокировки кошелька
-                        $income["message"] = 'Произошла ошибка при выполнении выплаты.';
+                        $income["message"] = 'error';
                     }
                 } else {
-                    $income["message"] = 'Недостаточно средств для вывода. Минимальное значение ' . $min;
+                    $income["message"] = 'less minWithdrawal';
                     $income["status"] = "pending";
                 }
             }
