@@ -47,7 +47,7 @@
 
 <script>
 import axios from "axios";
-import {Inertia} from "@inertiajs/inertia";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     name: "select-language",
@@ -68,10 +68,12 @@ export default {
             return this.langs.filter((el) => el.value === this.$i18n.locale)[0];
         },
         activeImg() {
-            return new URL(
-                `/resources/assets/img/${this.active.img}`,
-                import.meta.url
-            );
+            if (this.active) {
+                return new URL(
+                    `/resources/assets/img/${this.active.img}`,
+                    import.meta.url
+                );
+            }
         },
         imgs() {
             let arr = [];
