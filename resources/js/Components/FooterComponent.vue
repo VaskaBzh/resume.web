@@ -235,7 +235,10 @@ export default {
                     form.contacts = "";
                     wait.value = false;
                 })
-                .catch((err) => console.log(err));
+                .catch((err) => {
+                    wait.value = false;
+                    console.log(err);
+                });
         };
 
         return {

@@ -34,8 +34,10 @@ class UpdateIncomesCommand extends Command
                 $income["wallet"] = $wallet->wallet;
                 $balance = $earn;
                 $min = 0.005;
-                if ($sub->incomes()->where("status", "pending")) {
-                    foreach ($sub->incomes()->where("status", "pending") as $pending) {
+                $pendingIncomes = $sub->incomes->where("status", "pending");
+
+                if ($pendingIncomes->count() > 0) {
+                    foreach ($pendingIncomes as $pending) {
                         $balance = $balance + $pending->unPayments;
                     }
                 }
@@ -74,11 +76,12 @@ class UpdateIncomesCommand extends Command
                                 $sumPayments = $sumPayments + $sub->payments;
                             }
                             $sub->payments = $sumPayments;
-                            $sub->save();
                             $wallet->save();
-                            if ($sub->incomes()->where("status", "pending")) {
-                                foreach ($sub->incomes()->where("status", "pending") as $pending) {
+                            $sub->save();
+                            if ($pendingIncomes->count() > 0) {
+                                foreach ($pendingIncomes as $pending) {
                                     $pending["status"] = "completed";
+                                    $pending->save();
                                 }
                             }
 
