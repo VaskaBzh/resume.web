@@ -122,7 +122,9 @@ export default {
         },
     },
     created() {
-        this.$i18n.locale = localStorage.getItem("location");
+        if (localStorage.getItem("location")) {
+            this.$i18n.locale = localStorage.getItem("location");
+        }
     },
     mounted() {
         document.addEventListener("click", this.close.bind(this), true);
