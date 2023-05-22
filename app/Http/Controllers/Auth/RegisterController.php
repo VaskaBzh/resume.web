@@ -15,6 +15,7 @@ use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\MessageBag;
+use Illuminate\Support\Facades\Config;
 
 class RegisterController extends Controller
 {
@@ -86,7 +87,11 @@ class RegisterController extends Controller
             $message = 'Пользователь успешно создан! Подтвердите почту.';
         } catch (Exception $e) {
             // Обработка ошибок
-            $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
+            if (app()->getLocale() === 'ru') {
+                $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
+            } else if (app()->getLocale() === 'en') {
+                $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
+            }
         }
 
         return back()->with([
@@ -122,11 +127,19 @@ class RegisterController extends Controller
 
     protected function messages()
     {
-        return [
-            'password.required' => 'Поле "Пароль" обязательно для заполнения.',
-            'password.min' => 'Поле "Пароль" должно быть не менее 8 символов.',
-            'password.confirmed' => 'Подтверждение пароля не совпадает.',
-        ];
+        if (app()->getLocale() === 'ru') {
+            return [
+                'password.required' => 'Поле "Пароль" обязательно для заполнения.',
+                'password.min' => 'Поле "Пароль" должно быть не менее 8 символов.',
+                'password.confirmed' => 'Подтверждение пароля не совпадает.',
+            ];
+        } else if (app()->getLocale() === 'en') {
+            return [
+                'password.required' => 'The "Password" field is required.',
+                'password.min' => 'The "Password" field must be at least 8 characters.',
+                'password.confirmed' => 'The password confirmation does not match.',
+            ];
+        }
     }
 
     /**
@@ -146,35 +159,66 @@ class RegisterController extends Controller
 
     protected function getName(Request $request)
     {
+        if (app()->getLocale() === 'ru') {
+            $messages = [
+                'name.required' => 'Необходимо дать имя аккаунту.',
+                "name.max" => "Максимальное количество символов аккаунта 16.",
+                "name.min" => "Минимальное количество символов аккаунта 3.",
+            ];
+        } else if (app()->getLocale() === 'en') {
+            $messages = [
+                'name.required' => 'Please provide an account name.',
+                'name.max' => 'The maximum number of characters for the account name is 16.',
+                'name.min' => 'The minimum number of characters for the account name is 3.',
+            ];
+        }
         $request->validate([
             'name' => 'required|min:3|max:16',
-        ], [
-            'name.required' => 'Необходимо дать имя аккаунту.',
-            "name.max" => "Максимальное количество символов аккаунта 16.",
-            "name.min" => "Минимальное количество символов аккаунта 3.",
-        ]);
+        ], $messages);
 
         if ($request->input("name") === "done") {
-            return back()->withErrors(new MessageBag(['error' => 'Аккаунт с таким именем уже существует!']));
+            if (app()->getLocale() === 'ru') {
+                return back()->withErrors(new MessageBag(['error' => 'Аккаунт с таким именем уже существует!']));
+            } else if (app()->getLocale() === 'en') {
+                return back()->withErrors(new MessageBag(['error' => 'An account with this name already exists!']));
+            }
         }
     }
 
     protected function getter(Request $request)
     {
+        if (app()->getLocale() === 'ru') {
+            $messages = [
+                'email.required' => 'Необходимо заполнить «Email».',
+                'email.email' => 'Некорректное поле «Email».',
+            ];
+        } else if (app()->getLocale() === 'en') {
+            $messages = [
+                'email.required' => 'Please fill in the "Email" field.',
+                'email.email' => 'Invalid email field.',
+            ];
+        }
         $request->validate([
             'email' => 'required|email',
-        ], [
-            'email.required' => 'Необходимо заполнить «Email».',
-            'email.email' => 'Некорректное поле «Email».',
-        ]);
+        ], $messages);
         $user = User::where('email', $request->input('email'))->first();
 
         if ($user) {
-            throw ValidationException::withMessages([
-                'error' => 'Пользователь с такой почтой уже существует.',
-            ]);
+            if (app()->getLocale() === 'ru') {
+                throw ValidationException::withMessages([
+                    'error' => 'Пользователь с такой почтой уже существует.',
+                ]);
+            } else if (app()->getLocale() === 'en') {
+                throw ValidationException::withMessages([
+                    'error' => 'A user with this email already exists.',
+                ]);
+            }
         } else {
-            return back()->with('message', 'Почта доступна.');
+            if (app()->getLocale() === 'ru') {
+                return back()->with('message', 'Почта доступна.');
+            } else if (app()->getLocale() === 'en') {
+                return back()->with('message', 'The email is available.');
+            }
         }
     }
 }

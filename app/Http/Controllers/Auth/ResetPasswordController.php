@@ -11,6 +11,7 @@ use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Config;
 
 class ResetPasswordController extends Controller
 {
@@ -55,13 +56,23 @@ class ResetPasswordController extends Controller
         $user = auth()->user();
 
         if (!Hash::check($request->input('old_password'), $user->password)) {
-            return back()
-                ->withErrors(new MessageBag(['error' => 'Необходимо подтвердить старый пароль.']))
-                ->withInput();
+            if (app()->getLocale() === 'ru') {
+                return back()
+                    ->withErrors(new MessageBag(['error' => 'Необходимо подтвердить старый пароль.']))
+                    ->withInput();
+            } else if (app()->getLocale() === 'en') {
+                return back()
+                    ->withErrors(new MessageBag(['error' => 'You need to confirm your old password.']))
+                    ->withInput();
+            }
         }
         $this->resetPassword($user, $request->input('password'));
 
-        return back()->with('message', 'Пароль успешно изменен.');
+        if (app()->getLocale() === 'ru') {
+            return back()->with('message', 'Пароль успешно изменен.');
+        } else if (app()->getLocale() === 'en') {
+            return back()->with('message', 'The password has been successfully changed.');
+        }
     }
 
     /**
@@ -85,12 +96,21 @@ class ResetPasswordController extends Controller
      */
     protected function customErrorMessages()
     {
-        return [
-            'old_password.required' => 'Введите старый пароль',
-            'password.required' => 'Введите новый пароль',
-            'password.confirmed' => 'Подтвердите пароль',
-            'password.min' => 'Новый пароль должен содержать минимум 8 символов.',
-        ];
+        if (app()->getLocale() === 'ru') {
+            return [
+                'old_password.required' => 'Введите старый пароль',
+                'password.required' => 'Введите новый пароль',
+                'password.confirmed' => 'Подтвердите пароль',
+                'password.min' => 'Новый пароль должен содержать минимум 8 символов.',
+            ];
+        } else if (app()->getLocale() === 'en') {
+            return [
+                'old_password.required' => 'Enter the old password.',
+                'password.required' => 'Enter the new password.',
+                'password.confirmed' => 'Confirm the password.',
+                'password.min' => 'The new password must be at least 8 characters.',
+            ];
+        }
     }
 
     /**

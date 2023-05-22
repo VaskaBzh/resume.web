@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 
 class LocationController extends Controller
 {
@@ -18,5 +19,17 @@ class LocationController extends Controller
         } else {
             return "en";
         }
+    }
+
+    public function set_location(Request $request)
+    {
+        $request->validate([
+            'location' => 'required|in:ru,en',
+        ]);
+
+        $request->session()->put('locale', $request->input('location'));
+
+        $locale = $request->session()->get('locale');
+        dump($locale);
     }
 }

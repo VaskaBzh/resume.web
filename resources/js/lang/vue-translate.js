@@ -222,11 +222,7 @@ const messages = {
                 },
                 workers: {
                     title: "Workers",
-                    types: [
-                        "Active",
-                        "Unstable",
-                        "Inactive",
-                    ],
+                    types: ["Active", "Unstable", "Inactive"],
                 },
             },
         },

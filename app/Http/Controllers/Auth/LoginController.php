@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Config;
 
 class LoginController extends Controller
 {
@@ -65,9 +66,15 @@ class LoginController extends Controller
 //                $request->session()->invalidate();
 //                $request->session()->regenerateToken();
 //
-//                throw ValidationException::withMessages([
-//                    $this->username() => [trans('Ваша электронная почта еще не подтверждена. Подтвердите адрес.')],
-//                ]);
+//                    if (app()->getLocale() === 'ru') {
+//                        throw ValidationException::withMessages([
+//                            $this->username() => [trans('Ваша электронная почта еще не подтверждена. Подтвердите адрес.')],
+//                        ]);
+//                    } else if (app()->getLocale() === 'en') {
+//                        throw ValidationException::withMessages([
+//                            $this->username() => [trans('Your email has not been verified yet. Please verify your email address.')],
+//                        ]);
+//                    }
 //            }
         }
 
@@ -84,18 +91,29 @@ class LoginController extends Controller
             $user->sendEmailVerificationNotification();
             $this->guard()->logout();
 
-            throw ValidationException::withMessages([
-                $this->username() => [trans('Сообщение с подтверждением отправлено на почту.')],
-            ]);
+            if (app()->getLocale() === 'ru') {
+                throw ValidationException::withMessages([
+                    $this->username() => [trans('Сообщение с подтверждением отправлено на почту.')],
+                ]);
+            } else if (app()->getLocale() === 'en') {
+                throw ValidationException::withMessages([
+                    $this->username() => [trans('A confirmation email has been sent to your email address.')],
+                ]);
+            }
         }
     }
 
     protected function sendFailedLoginResponse(Request $request)
     {
         // Здесь можно добавить свою кастомную логику проверки ошибок, если это необходимо
-
-        throw ValidationException::withMessages([
-            $this->username() => [trans('Неверная почта или пароль')], // Замените 'auth.failed' на своё кастомное сообщение об ошибке
-        ]);
+        if (app()->getLocale() === 'ru') {
+            throw ValidationException::withMessages([
+                $this->username() => [trans('Неверная почта или пароль.')],
+            ]);
+        } else if (app()->getLocale() === 'en') {
+            throw ValidationException::withMessages([
+                $this->username() => [trans('Invalid email or password.')],
+            ]);
+        }
     }
 }

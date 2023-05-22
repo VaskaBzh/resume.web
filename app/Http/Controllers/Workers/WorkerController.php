@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Sub;
 use App\Models\Worker;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 
 
 class WorkerController extends Controller
@@ -32,10 +33,17 @@ class WorkerController extends Controller
         $sub->workers()-> save($newWorker);
 
         // Возвращение успешного ответа (настроить ответ в соответствии с фронтендом)
-        return response()->json([
-            'success' => true,
-            'message' => 'Воркер создан',
-        ], 201);
+        if (App::getLocale() === 'ru') {
+            return response()->json([
+                'success' => true,
+                'message' => 'Воркер создан',
+            ], 201);
+        } else if (App::getLocale() === 'en') {
+            return response()->json([
+                'success' => true,
+                'message' => 'The worker is created.',
+            ], 201);
+        }
     }
     public  function firstHash($worker)
     {

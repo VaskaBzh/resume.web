@@ -46,6 +46,9 @@
 </template>
 
 <script>
+import axios from "axios";
+import {Inertia} from "@inertiajs/inertia";
+
 export default {
     name: "select-language",
     props: {
@@ -81,10 +84,18 @@ export default {
         },
     },
     methods: {
-        changeActive(lang) {
+        async changeActive(lang) {
             if (this.$i18n.locale !== lang.value) {
                 this.$i18n.locale = lang.value;
                 localStorage.setItem("location", lang.value);
+                await axios.post(
+                    "/set_location",
+                    {
+                        location: this.$i18n.locale,
+                    },
+                    {}
+                );
+                Inertia.reload({ preserveScroll: true });
             }
         },
         toggle() {
@@ -93,6 +104,18 @@ export default {
         close(e) {
             if (!e.target.closest(".select")) {
                 this.opened = false;
+            }
+        },
+        setLanguage() {
+            if (localStorage.getItem("location")) {
+                this.$i18n.locale = localStorage.getItem("location");
+                axios.post(
+                    "/set_location",
+                    {
+                        location: this.$i18n.locale,
+                    },
+                    {}
+                );
             }
         },
     },
@@ -106,6 +129,7 @@ export default {
                 this.close();
             }
         });
+        this.setLanguage();
     },
     unmounted() {
         // document.removeEventListener("click", this.hideSelect.bind(this), true);

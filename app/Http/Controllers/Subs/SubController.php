@@ -7,6 +7,7 @@ use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Config;
 
 
 class SubController extends Controller
@@ -14,14 +15,22 @@ class SubController extends Controller
 
     public function create(Request $request)
     {
+        if (app()->getLocale() === 'ru') {
+            $messages = [
+                "group_name.max" => "Максимальное количество символов 16.",
+                "group_name.min" => "Минимальное количество символов 3.",
+            ];
+        } else if (app()->getLocale() === 'en') {
+            $messages = [
+                "group_name.max" => "Maximum of 16 characters allowed.",
+                "group_name.min" => "Minimum of 3 characters required."
+            ];
+        }
         // Валидация входных данных
         $request->validate([
             'group_id' => 'required|string',
             "group_name" => 'required|string|min:3|max:16',
-        ], [
-            "group_name.max" => "Максимальное количество символов 16.",
-            "group_name.min" => "Минимальное количество символов 3.",
-        ]);
+        ], $messages);
 
         if ($request->input('user_id')) {
             // Валидация входных данных
@@ -48,10 +57,17 @@ class SubController extends Controller
         $sub->save();
 
         // Возвращение успешного ответа (настроить ответ в соответствии с фронтендом)
-        return response()->json([
-            'success' => true,
-            'message' => 'Сабаккаунт создан',
-        ], 201);
+        if (app()->getLocale() === 'ru') {
+            return response()->json([
+                'success' => true,
+                'message' => 'Сабаккаунт создан.',
+            ], 201);
+        } else if (app()->getLocale() === 'en') {
+            return response()->json([
+                'success' => true,
+                'message' => 'The subaccount has been created.',
+            ], 201);
+        }
     }
 
     public function visual()
@@ -61,14 +77,22 @@ class SubController extends Controller
 
     public function change_name(Request $request)
     {
+        if (app()->getLocale() === 'ru') {
+            $messages = [
+                "group_name.max" => "Максимальное количество символов 16.",
+                "group_name.min" => "Минимальное количество символов 3.",
+            ];
+        } else if (app()->getLocale() === 'en') {
+            $messages = [
+                "group_name.max" => "The maximum number of characters allowed is 16.",
+                "group_name.min" => "The minimum number of characters required is 3."
+            ];
+        }
         // Валидация входных данных
         $request->validate([
             'group_id' => 'required|string',
             "group_name" => 'required|string|min:3|max:16',
-        ], [
-            "group_name.max" => "Максимальное количество символов 16.",
-            "group_name.min" => "Минимальное количество символов 3.",
-        ]);
+        ], $messages);
 
         $requestController = new RequestController();
 
@@ -79,17 +103,29 @@ class SubController extends Controller
                 // Обработка успешного обновления
                 $sub = Sub::all()->firstWhere('group_id', $request->input("group_id"));
 
-                $message = 'Имя сабаккаунта успешно изменено';
+                if (app()->getLocale() === 'ru') {
+                    $message = 'Имя сабаккаунта успешно изменено';
+                } else if (app()->getLocale() === 'en') {
+                    $message = 'The subaccount name has been successfully changed.';
+                }
 
                 $sub->sub = $request->input("group_name");
                 $sub->save();
             } else {
                 // Обработка ошибок, возвращаемых API
-                $message = 'Произошла ошибка при смене имени сабаккаунта. Пожалуйста, попробуйте снова';
+                if (app()->getLocale() === 'ru') {
+                    $message = 'Произошла ошибка при смене имени сабаккаунта. Пожалуйста, попробуйте снова';
+                } else if (app()->getLocale() === 'en') {
+                    $message = 'An error occurred while changing the subaccount name. Please try again.';
+                }
             }
         } catch (Exception $e) {
             // Обработка ошибок
-            $message = 'Произошла ошибка при смене имени сабаккаунта. Пожалуйста, попробуйте снова';
+            if (app()->getLocale() === 'ru') {
+                $message = 'Произошла ошибка при смене имени сабаккаунта. Пожалуйста, попробуйте снова';
+            } else if (app()->getLocale() === 'en') {
+                $message = 'An error occurred while changing the subaccount name. Please try again.';
+            }
         }
 
         return back()->with("message", $message);

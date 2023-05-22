@@ -59,7 +59,10 @@ Route::controller(RegisterController::class)->group(function () {
 
 Route::get('/email/verify/{id}/{hash}', [RegisterController::class, 'verify'])->name('verification.verify');
 
-Route::get('/get_location', [LocationController::class, 'get_location'])->name('get_location.verify');
+Route::controller(LocationController::class)->group(function () {
+    Route::post("/get_location", "get_location")->name('get_location');
+    Route::post("/set_location", "set_location")->name('set_location');
+});
 
 Route::controller(LoginController::class)->group(function () {
     Route::post("/reverify", "verify")->name('reverify');
