@@ -1,13 +1,12 @@
 <template>
     <div class="select" @click="toggle">
-        <div class="select_title">
+        <div class="select_title" :class="{ rotate: opened }">
             <svg
                 width="15"
                 height="16"
                 viewBox="0 0 15 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                :class="{ rotate: opened }"
             >
                 <path
                     d="M6.79289 10.2929L3.70711 7.20711C3.07714 6.57714 3.52331 5.5 4.41421 5.5H10.5858C11.4767 5.5 11.9229 6.57714 11.2929 7.20711L8.20711 10.2929C7.81658 10.6834 7.18342 10.6834 6.79289 10.2929Z"
@@ -25,7 +24,7 @@
                 ></div>
             </transition>
         </teleport>
-        <teleport to="#shadow_container" :disabled="viewportWidth >= 767.98">
+        <teleport to="body" :disabled="viewportWidth >= 767.98">
             <transition name="options">
                 <div class="select__options" v-show="this.opened">
                     <div
@@ -33,10 +32,16 @@
                         v-for="(lang, i) in langs"
                         @click="changeActive(lang)"
                         :key="i"
+                        ref="option"
+                        @mouseover="hoverInEffect(i)"
+                        @mouseleave="hoverOutEffect(i)"
+                        :class="{
+                            active: lang.value === this.$i18n.locale,
+                        }"
                     >
                         <p>
                             <img :src="imgs[i]" :alt="lang.value" />
-                            {{ lang.title }}
+                            <span> {{ lang.title }}</span>
                         </p>
                     </div>
                 </div>
@@ -48,6 +53,7 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
+import anime from "animejs";
 
 export default {
     name: "select-language",
@@ -56,14 +62,24 @@ export default {
     },
     data() {
         return {
-            langs: [
-                { title: "Russian", img: "ru.png", value: "ru" },
-                { title: "English", img: "en.png", value: "en" },
-            ],
             opened: false,
         };
     },
     computed: {
+        langs() {
+            return [
+                {
+                    title: this.$t("language.ru"),
+                    img: "ru.png",
+                    value: "ru",
+                },
+                {
+                    title: this.$t("language.en"),
+                    img: "en.png",
+                    value: "en",
+                },
+            ];
+        },
         active() {
             return this.langs.filter((el) => el.value === this.$i18n.locale)[0];
         },
@@ -86,6 +102,27 @@ export default {
         },
     },
     methods: {
+        hoverInEffect(i) {
+            let target = this.$refs.option[i];
+            console.log(target);
+            if (!this.$refs.option[i].classList.contains("active")) {
+                anime({
+                    targets: target,
+                    easing: "linear",
+                    translateX: 8,
+                    duration: 150,
+                });
+            }
+        },
+        hoverOutEffect(i) {
+            let target = this.$refs.option[i];
+            anime({
+                targets: target,
+                easing: "linear",
+                translateX: 0,
+                duration: 150,
+            });
+        },
         async changeActive(lang) {
             if (this.$i18n.locale !== lang.value) {
                 this.$i18n.locale = lang.value;
@@ -212,11 +249,15 @@ export default {
         gap: 8px;
         background: rgba(194, 213, 242, 0.6);
         border-radius: 14px;
+        transition: all 0.5s ease 0s;
         svg {
             fill: #000034;
             transition: all 0.5s ease 0s;
-            &.rotate {
-                fill: #4282ec;
+        }
+        &:hover {
+            background-color: #417fe5;
+            svg {
+                fill: #ffffff;
             }
         }
     }
@@ -265,8 +306,9 @@ export default {
         @media (max-width: 767.98px) {
             height: 42px;
         }
-        &:hover {
+        &.active {
             p {
+                padding: 2px 10px;
                 background: rgba(175, 208, 255, 0.8);
             }
         }
@@ -275,7 +317,6 @@ export default {
             display: inline-flex;
             align-items: center;
             gap: 10px;
-            padding: 2px 10px;
             height: 32px;
             background: transparent;
             border-radius: 8px;

@@ -88,9 +88,13 @@ const messages = {
                 connection: "Connection",
                 wallets: "Wallets",
                 home: "Home",
-                own_cabinet: "Personal cabinet",
+                own_cabinet: "profile",
                 complexity: "Difficulty",
             },
+        },
+        language: {
+            ru: "Russian",
+            en: "English",
         },
         home: {
             title: "Earn from mining together with allbtc pool",
@@ -136,8 +140,8 @@ const messages = {
                     text: "The hashrate is displayed in real-time while the Allbtc security team protects your assets.",
                 },
                 {
-                    title: "Security and transparency",
-                    text: "By utilizing the FPPS, PPS+, PPS, and instant calculation models, you can avoid earnings fluctuations",
+                    title: "Stable income",
+                    text: "By utilizing the FPPS, PPS+, PPS, and instant calculation models you can avoid earnings fluctuations.",
                 },
                 {
                     title: "Comprehensive service",
@@ -148,6 +152,7 @@ const messages = {
         panel: {
             title: "Convenient control panel",
             text: "The control panel is highly user-friendly and provides excellent detail with regular updates.",
+            img: "about-panel-img-en",
         },
         info: {
             title: "Start mining with Allbtc pool",
@@ -499,6 +504,10 @@ const messages = {
                 complexity: "Сложность",
             },
         },
+        language: {
+            ru: "Русский",
+            en: "Английский",
+        },
         home: {
             title: "Зарабатывайте на майнинге вместе с allbtc pool",
             text: "Высокий доход. Надежность. Эффективность.",
@@ -544,7 +553,7 @@ const messages = {
                 },
                 {
                     title: "Стабильный заработок",
-                    text: " Ваш персональный помощник в мире майнинга криптовалют! Присоединитесь к майнинг-пулу и получите доступ к интуитивно понятной и мощной платформе для управления вашими активами. ",
+                    text: " Ваш персональный помощник в мире майнинга криптовалют! Присоединяйтесь к майнинг-пулу и получите доступ к интуитивно понятной и мощной платформе для управления вашими активами. ",
                 },
                 {
                     title: " Комплексное обслуживание ",
@@ -555,6 +564,7 @@ const messages = {
         panel: {
             title: "Удобная панель управления",
             text: "Ваш персональный помощник в мире майнинга криптовалют! Присоединитесь к майнинг-пулу и получите доступ к интуитивно понятной и мощной платформе для управления вашими активами.\n",
+            img: "about-panel-img-ru",
         },
         info: {
             title: "Начните майнинг c allbtc pool",

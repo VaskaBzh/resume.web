@@ -11,16 +11,7 @@
                     </div>
                 </div>
                 <img
-                    v-if="viewportWidth >= 991.98"
-                    src="../../../assets/img/about-panel-img.png"
-                    alt=""
-                    class="panel-am__image"
-                    v-scroll="'left'"
-                />
-
-                <img
-                    v-else
-                    src="../../../assets/img/about-panel-img.png"
+                    :src="img"
                     alt=""
                     class="panel-am__image"
                     v-scroll="'left'"
@@ -36,6 +27,14 @@ export default {
         return {
             viewportWidth: 0,
         };
+    },
+    computed: {
+        img() {
+            return new URL(
+                `../../../assets/img/${this.$t("panel.img")}.png`,
+                import.meta.url
+            );
+        },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
@@ -123,20 +122,20 @@ export default {
     // .panel-am__image
     &__image {
         max-width: 1120px;
-        margin: -9pc 0 -3pc -12pc;
+        margin: -17pc 0 -13pc -12pc;
         @media (max-width: 1270px) {
             max-width: 930px;
-            margin: -5pc 0 -3pc -12pc;
+            margin: -14pc 0 -13pc -12pc;
         }
         @media (max-width: 991.98px) {
             max-height: 700px;
             max-width: unset;
-            margin: -4pc 0 -1pc;
+            margin: -9pc 0 -8pc;
         }
         @media (max-width: 767.98px) {
             max-height: unset;
             max-width: 510px;
-            margin: -2pc 0;
+            margin: -6pc 0;
         }
     }
 }

@@ -826,8 +826,9 @@ export default {
 }
 .nav__burger {
     background: transparent;
-    width: 14px;
-    height: 14px;
+    min-width: 38px;
+    height: 38px;
+    margin: -7px -7px -7px 0;
     gap: 4px;
 
     &:active {
@@ -842,7 +843,7 @@ export default {
         align-items: center;
         flex-direction: column;
         gap: 4px;
-        width: 18px;
+        width: 100%;
         overflow: hidden;
     }
 
