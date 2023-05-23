@@ -167,9 +167,11 @@ export default {
                 Object.values(this.allIncomeHistory[this.getActive]).forEach(
                     (row, i) => {
                         let date = row["created_at"].split("");
+                        let dateUpdate = row["updated_at"].split("");
                         let time = row["created_at"].substr(11).split("");
                         time.length = 8;
                         date.length = 10;
+                        dateUpdate.length = 10;
                         let percent = 0;
                         let datePay = "...";
                         let wallet = "...";
@@ -179,7 +181,7 @@ export default {
                             percent = row["percent"];
                         }
                         if (row["status"] === "completed") {
-                            datePay = date
+                            datePay = dateUpdate
                                 .join("")
                                 .split("-")
                                 .reverse()
@@ -262,6 +264,7 @@ export default {
                     }
                 );
             }
+            obj.rows = obj.rows.reverse();
             return obj;
         },
         ...mapGetters([

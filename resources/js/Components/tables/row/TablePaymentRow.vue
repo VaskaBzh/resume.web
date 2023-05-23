@@ -45,16 +45,26 @@
             v-if="this.columns.txid"
         >
             {{
-                this.columns.wallet.substr(0, 6) +
-                "..." +
-                this.columns.wallet.substr(this.columns.wallet.length - 8, 6)
+                this.columns.wallet === "..."
+                    ? this.columns.wallet
+                    : this.columns.wallet.substr(0, 6) +
+                      "..." +
+                      this.columns.wallet.substr(
+                          this.columns.wallet.length - 6,
+                          6
+                      )
             }}
         </td>
         <td @click="link" class="main__number main__link" v-else>
             {{
-                this.columns.wallet.substr(0, 6) +
-                "..." +
-                this.columns.wallet.substr(this.columns.wallet.length - 8, 6)
+                this.columns.wallet === "..."
+                    ? this.columns.wallet
+                    : this.columns.wallet.substr(0, 6) +
+                      "..." +
+                      this.columns.wallet.substr(
+                          this.columns.wallet.length - 6,
+                          6
+                      )
             }}
         </td>
         <!--        <td class="main__number" v-if="this.viewportWidth > 991.98">-->
