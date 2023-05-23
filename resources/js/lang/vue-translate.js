@@ -141,7 +141,7 @@ const messages = {
                 },
                 {
                     title: "Stable income",
-                    text: "By utilizing the FPPS, PPS+, PPS, and instant calculation models you can avoid earnings fluctuations.",
+                    text: "Your go-to guide in the crypto mining universe! Jump into our mining pool and unlock the power of an intuitive platform to steer your assets.",
                 },
                 {
                     title: "Comprehensive service",

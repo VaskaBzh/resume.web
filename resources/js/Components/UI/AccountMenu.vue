@@ -259,8 +259,9 @@ export default {
             background: rgba(194, 213, 242, 0.6);
             border-radius: 14px;
             &:hover {
-                color: #ffffff;
-                background-color: #417fe5;
+                //color: #ffffff;
+                //background-color: #417fe5;
+                background: rgb(194, 213, 242);
             }
         }
     }

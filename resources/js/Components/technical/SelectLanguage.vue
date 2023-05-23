@@ -255,10 +255,10 @@ export default {
             transition: all 0.5s ease 0s;
         }
         &:hover {
-            background-color: #417fe5;
-            svg {
-                fill: #ffffff;
-            }
+            background-color: rgb(194, 213, 242);
+            //svg {
+            //    fill: #ffffff;
+            //}
         }
     }
     &__options {
