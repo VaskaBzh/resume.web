@@ -88,7 +88,7 @@ const messages = {
                 connection: "Connection",
                 wallets: "Wallets",
                 home: "Home",
-                own_cabinet: "profile",
+                own_cabinet: "Profile",
                 complexity: "Difficulty",
             },
         },
@@ -151,7 +151,7 @@ const messages = {
         },
         panel: {
             title: "Convenient control panel",
-            text: "The control panel is highly user-friendly and provides excellent detail with regular updates.",
+            text: "Your personal assistant in cryptocurrency mining universe! Join our mining pool and get an access to the up to date mining platform for managing your cryptocurrency assets.",
             img: "about-panel-img-en",
         },
         info: {
@@ -167,7 +167,7 @@ const messages = {
                     text: "Take control of every detail of your financial streams with our customizable payout system.",
                 },
                 {
-                    title: "Worker management and monitoring",
+                    title: "Workers management and monitoring",
                     text: "Explore new horizons of efficiency in managing workflows and monitoring performance.",
                 },
                 {
@@ -413,7 +413,7 @@ const messages = {
                     button: "Send",
                 },
             },
-            confidence: "Confidence",
+            confidence: "Privacy policy",
         },
     },
     ru: {
