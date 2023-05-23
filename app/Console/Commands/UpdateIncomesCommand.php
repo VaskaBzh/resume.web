@@ -36,11 +36,7 @@ class UpdateIncomesCommand extends Command
                 $min = 0.005;
                 $pendingIncomes = $sub->incomes->where("status", "pending");
 
-                if ($pendingIncomes->count() > 0) {
-                    foreach ($pendingIncomes as $pending) {
-                        $balance = $balance + $pending->unPayments;
-                    }
-                }
+                $balance = $balance + $sub->unPayments;
                 if ($wallet->minWithdrawal) {
                     $min = $wallet->minWithdrawal;
                 }
@@ -49,6 +45,7 @@ class UpdateIncomesCommand extends Command
                 }
                 $balance = $balance * ($income["percent"] / 100);
                 $income["payment"] = $balance;
+
                 if ($balance >= $min) {
                     $unlock = Http::withBasicAuth('bituser', '111')
                         ->post('http://92.205.163.43:8332', [
@@ -58,13 +55,17 @@ class UpdateIncomesCommand extends Command
                             'params' => ['gloom ethics august sample fun submit slow humor seek canvas cannon crystal actress sadness parent smoke hurdle shine pull trip ghost', 60], // Временно разблокирует кошелек на 60 секунд
                         ]);
                     if ($unlock->successful()) {
+                        $limitedBalance = number_format($balance, 8, '.', '');
                         $response = Http::withBasicAuth('bituser', '111')
                             ->post('http://92.205.163.43:8332', [
                                 'jsonrpc' => '1.0',
                                 'id' => 'withdrawal',
                                 'method' => 'sendtoaddress',
-                                'params' => [$wallet->wallet, $balance], //Самая важная строчка, в которрой передаем настройки транзакции
+                                'params' => [$wallet->wallet, $limitedBalance], //Самая важная строчка, в которрой передаем настройки транзакции
                             ]);
+                        $this->info($balance); // Выводит содержимое ответа
+                        $this->info($response->body()); // Выводит содержимое ответа
+                        $this->info($response->status()); // Выводит HTTP-статус ответа
 
                         if ($response->successful()) {
                             $income["status"] = 'completed';
