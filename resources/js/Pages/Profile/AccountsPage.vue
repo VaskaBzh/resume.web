@@ -53,7 +53,7 @@
         </div>
         <popup-view id="addAcc" :wait="this.wait">
             <div
-                v-for="(error, i) in this.errs"
+                v-for="(error, i) in this.error"
                 :key="i"
                 class="form_wrapper-message"
             >
@@ -190,6 +190,7 @@ import axios from "axios";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 import { ref } from "vue";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     components: {
@@ -311,14 +312,14 @@ export default {
                 .get(
                     "/worker/groups?access_key=sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N&puid=781195&page=1&page_size=52"
                 )
-                .then((resp) => {
-                    resp.data.data.list.forEach((group, i) => {
+                .then((response) => {
+                    response.data.data.list.forEach((group, i) => {
                         if (i > 1) {
                             if (group.name === form.name) {
                                 error.value.name =
                                     "Аккаунт с таким имененм уже существует";
                             } else if (
-                                i === resp.data.data.list.length - 1 &&
+                                i === response.data.data.list.length - 1 &&
                                 error.value.name === ""
                             ) {
                                 instance
@@ -331,18 +332,28 @@ export default {
                                             resp.data.data.gid
                                         );
                                         // eslint-disable-next-line no-undef
-                                        await axios.post(
-                                            route("sub_create"),
-                                            data
-                                        );
-                                        wait.value = false;
-                                        setTimeout(() => {
-                                            document
-                                                .querySelector("[data-close]")
-                                                .click();
-                                            form.name = "";
-                                            this.$store.dispatch("getAccounts");
-                                        }, 300);
+                                        await axios
+                                            .post(route("sub_create"), data)
+                                            .then((res) => {
+                                                error.value.name =
+                                                    res.data.message;
+                                                wait.value = false;
+                                                setTimeout(() => {
+                                                    document
+                                                        .querySelector(
+                                                            "[data-close]"
+                                                        )
+                                                        .click();
+                                                    form.name = "";
+                                                    Inertia.reload();
+                                                }, 300);
+                                            })
+                                            .catch((err) => {
+                                                error.value.name =
+                                                    err.response.data.message;
+                                                wait.value = false;
+                                                form.name = "";
+                                            });
                                     })
                                     .catch((err) => {
                                         console.log(err);

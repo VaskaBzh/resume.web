@@ -30,16 +30,6 @@ export default {
     data() {
         return {
             viewportWidth: 0,
-            copyObject: [
-                {
-                    title: this.$t("connection.block.title"),
-                    copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port" },
-                        { link: "btc.all-btc.com:3333", title: "Port 1" },
-                        { link: "btc.all-btc.com:2222", title: "Port 2" },
-                    ],
-                },
-            ],
         };
     },
     methods: {
@@ -56,6 +46,18 @@ export default {
     },
     computed: {
         ...mapGetters(["allAccounts"]),
+        copyObject() {
+            return [
+                {
+                    title: this.$t("connection.block.title"),
+                    copyObject: [
+                        { link: "btc.all-btc.com:4444", title: "Port" },
+                        { link: "btc.all-btc.com:3333", title: "Port 1" },
+                        { link: "btc.all-btc.com:2222", title: "Port 2" },
+                    ],
+                },
+            ];
+        },
     },
     mounted() {
         document.title = "Подключение";

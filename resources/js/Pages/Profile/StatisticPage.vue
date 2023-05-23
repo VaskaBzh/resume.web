@@ -191,16 +191,6 @@ export default {
     layout: profileLayoutView,
     data() {
         return {
-            copyObject: [
-                {
-                    title: "1. Настройте ваше устройство согласно представленным ниже данным:",
-                    copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port" },
-                        { link: "btc.all-btc.com:3333", title: "Port 1" },
-                        { link: "btc.all-btc.com:2222", title: "Port 2" },
-                    ],
-                },
-            ],
             profit: {},
             linkAddress: "btc.all-btc.com:4444",
             linkAddress1: "btc.all-btc.com:3333",
@@ -235,6 +225,18 @@ export default {
         };
     },
     computed: {
+        copyObject() {
+            return [
+                {
+                    title: this.$t("connection.block.title"),
+                    copyObject: [
+                        { link: "btc.all-btc.com:4444", title: "Port" },
+                        { link: "btc.all-btc.com:3333", title: "Port 1" },
+                        { link: "btc.all-btc.com:2222", title: "Port 2" },
+                    ],
+                },
+            ];
+        },
         buttons() {
             return [
                 // { title: "6 часов", value: 6 },
