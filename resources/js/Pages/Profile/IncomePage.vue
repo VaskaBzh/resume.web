@@ -28,7 +28,7 @@
                             >{{ $t("income.income_info.titles[0]") }}:</span
                         >
                         <span class="wallets__value"
-                            ><span> 0.00000000 </span>
+                            ><span> {{ this.payed }} </span>
                             BTC
                         </span>
                     </div>
@@ -293,6 +293,13 @@ export default {
             let sum = 0;
             if (this.getIncome[this.getActive]) {
                 sum = this.getIncome[this.getActive].unPayments;
+            }
+            return Number(sum).toFixed(8);
+        },
+        payed() {
+            let sum = 0;
+            if (this.getIncome[this.getActive]) {
+                sum = this.getIncome[this.getActive].payments;
             }
             return Number(sum).toFixed(8);
         },
