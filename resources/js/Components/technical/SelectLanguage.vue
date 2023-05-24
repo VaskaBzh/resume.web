@@ -32,9 +32,6 @@
                         v-for="(lang, i) in langs"
                         @click="changeActive(lang)"
                         :key="i"
-                        ref="option"
-                        @mouseover="hoverInEffect(i)"
-                        @mouseleave="hoverOutEffect(i)"
                         :class="{
                             active: lang.value === this.$i18n.locale,
                         }"
@@ -102,27 +99,6 @@ export default {
         },
     },
     methods: {
-        hoverInEffect(i) {
-            let target = this.$refs.option[i];
-            console.log(target);
-            if (!this.$refs.option[i].classList.contains("active")) {
-                anime({
-                    targets: target,
-                    easing: "linear",
-                    translateX: 8,
-                    duration: 150,
-                });
-            }
-        },
-        hoverOutEffect(i) {
-            let target = this.$refs.option[i];
-            anime({
-                targets: target,
-                easing: "linear",
-                translateX: 0,
-                duration: 150,
-            });
-        },
         async changeActive(lang) {
             if (this.$i18n.locale !== lang.value) {
                 this.$i18n.locale = lang.value;
@@ -306,6 +282,9 @@ export default {
         @media (max-width: 767.98px) {
             height: 42px;
         }
+        &:hover {
+            background: rgba(175, 208, 255, 0.8);
+        }
         &.active {
             p {
                 padding: 2px 10px;
@@ -323,6 +302,7 @@ export default {
             font-weight: 400;
             font-size: 17px;
             line-height: 143.1%;
+            padding: 2px 10px;
             color: #000000;
             transition: all 0.3s ease 0s;
             @media (max-width: 767.98px) {

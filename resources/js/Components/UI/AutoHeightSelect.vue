@@ -55,8 +55,8 @@
                         this.optionsObject.length > 1,
                 }"
                 ref="option"
-                @mouseover="hoverInEffect(i)"
-                @mouseleave="hoverOutEffect(i)"
+                @mouseenter="hoverInEffect(i)"
+                @mouseout="hoverOutEffect(i)"
             >
                 <p
                     class="main_select"

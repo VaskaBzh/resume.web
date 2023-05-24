@@ -87,9 +87,9 @@ class RequestController extends Controller
 
     public function worker(Request $request)
     {
-        if ($request->header('X-CSRF-TOKEN') != csrf_token()) {
-            return response()->json(['message' => 'CSRF token mismatch.'], 403);
-        }
+        //if ($request->header('X-CSRF-TOKEN') != csrf_token()) {
+        //    return response()->json(['message' => 'CSRF token mismatch.'], 403);
+        //}
         $client = new Client([
             'base_uri' => 'https://pool.api.btc.com/v1/',
             'headers' => [
@@ -98,11 +98,11 @@ class RequestController extends Controller
             ]
 
         ]);
-
         try {
             $response = $client->get('worker', [
                 'query' => [
                     'group' => $request->input("id"),
+                    'status' => "all",
                     'puid' => '781195'
                 ]
             ]);

@@ -91,14 +91,14 @@ export default {
         //     });
         // }
     },
-    async updated() {
-        if (!this.auth_user) {
-            this.$store.dispatch("destroyer");
-            if (this.interval) {
-                clearInterval(this.interval);
-            }
-        }
-    },
+    // async updated() {
+    //     if (!this.auth_user) {
+    //         this.$store.dispatch("destroyer");
+    //         if (this.interval) {
+    //             clearInterval(this.interval);
+    //         }
+    //     }
+    // },
     // mounted() {
     //     Inertia.on("success", (event) => {
     //         if (
