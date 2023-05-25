@@ -9,7 +9,6 @@ use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\Requests\RequestController;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
 use App\Http\Controllers\Users\UserController;
@@ -78,9 +77,6 @@ Route::controller(VerificationController::class)
 Route::controller(RequestController::class)
     ->group(function () {
         Route::put('/proxy', 'proxy_front')->name('proxy');
-        Route::get('/accountsAll', 'accountsAll')->name('accountsAll');
-        Route::get('/worker', 'worker')->name('worker');
-        Route::post('/worker_update', 'worker_update')->name('worker_update');
         Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
     });
 

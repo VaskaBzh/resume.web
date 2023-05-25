@@ -35,20 +35,6 @@ export default {
             .catch((err) => (error = err));
         return response || error;
     },
-    async fetch_worker(data) {
-        let response = null;
-        let error = null;
-        await axios
-            .get("/worker", {
-                params: { id: Number(data.accountModel.id) },
-                header,
-            })
-            .then(async (res) => {
-                response = res;
-            })
-            .catch((err) => (error = err));
-        return response || error;
-    },
     async fetch_miner_history(data) {
         let response = null;
         let error = null;
@@ -124,11 +110,24 @@ export default {
     async worker_create(data) {
         await axios.post("/worker_create", data);
     },
-    async request(data) {
-        await axios.put("/proxy", {
-            data: data.data,
-            path: data.link,
-            type: data.method,
-        });
+    async fetch(data) {
+        let response = null;
+        let error = null;
+        await axios
+            .put(
+                "/proxy",
+                {
+                    data: data.data,
+                    path: data.path,
+                    type: data.method,
+                    link_type: data.link_type,
+                },
+                header
+            )
+            .then(async (res) => {
+                response = res;
+            })
+            .catch((err) => (error = err));
+        return response || error;
     },
 };

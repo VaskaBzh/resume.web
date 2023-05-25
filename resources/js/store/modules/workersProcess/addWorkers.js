@@ -18,9 +18,9 @@ export default {
                     group_id: String(data.gid),
                     worker_id: String(workerId),
                 };
-                await btccom.request({
+                await btccom.fetch({
                     data: updateData,
-                    link: "worker/update",
+                    path: "worker/update",
                     method: "post",
                 });
 

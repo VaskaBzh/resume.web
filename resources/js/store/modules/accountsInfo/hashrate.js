@@ -4,8 +4,15 @@ import btccom from "@/api/btccom";
 export default {
     actions: {
         async get_hash({ state, commit }, data) {
+            let query = {};
+            query.group = data.el.gid;
+            query.puid = "781195";
             await btccom
-                .fetch_worker(data)
+                .fetch({
+                    data: query,
+                    path: "worker",
+                    method: "get",
+                })
                 .then(async (result) => {
                     if (result.data.data.data.length > 0) {
                         for (const worker of result.data.data.data) {

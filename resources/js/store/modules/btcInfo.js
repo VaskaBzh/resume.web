@@ -7,7 +7,6 @@ import minerHashHistory from "@/store/modules/accountsInfo/minerHashHistory";
 import wallets from "@/store/modules/accountsInfo/wallets";
 import addWorkers from "@/store/modules/workersProcess/addWorkers";
 import checkWorkers from "@/store/modules/workersProcess/checkWorkers";
-import Vue from "lodash";
 
 export default {
     modules: {

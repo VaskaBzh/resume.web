@@ -1,11 +1,17 @@
-import { Inertia } from "@inertiajs/inertia";
 import btccom from "@/api/btccom";
 
 export default {
     actions: {
         async check_worker({ commit, state }, data) {
+            let query = {};
+            query.group = data.el.gid;
+            query.puid = "781195";
             await btccom
-                .check_workers(data)
+                .fetch({
+                    data: query,
+                    path: "worker",
+                    method: "get",
+                })
                 .then(async (workers) => {
                     const workerChecker = (str, substr) => {
                         const regExp = new RegExp(substr);
@@ -38,10 +44,12 @@ export default {
                     // this.dispatch("getAccounts");
 
                     if (
-                        err.response &&
-                        err.response.data.message === "CSRF token mismatch."
+                        err.response ||
+                        (err.response &&
+                            err.response.data.message ===
+                                "CSRF token mismatch.")
                     ) {
-                        Inertia.reload();
+                        this.dispatch("check_worker", data);
                         // commit(
                         //     "setMessage",
                         //     "Кажется возникла проблема, перезагрузите страницу."

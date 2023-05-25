@@ -7,63 +7,74 @@ export default {
             state.groupName = "";
             let arr;
             let groups = [];
-            await btccom.fetch_accounts().then(async (resp) => {
-                await btccom.fetch_subs().then(async (response) => {
-                    if (response.data !== "") {
-                        arr = response.data;
-                        for (const el of resp.data.data.list) {
-                            const i = resp.data.data.list.indexOf(el);
-                            if (i === 1) {
-                                await this.dispatch("workerChecker", {
-                                    arr: arr,
-                                    el: el,
-                                    groupName: state.groupName,
+            await btccom
+                .fetch({
+                    data: {
+                        puid: "781195",
+                        page: 1,
+                        page_size: 52,
+                    },
+                    path: "worker/groups",
+                    method: "get",
+                })
+                .then(async (resp) => {
+                    await btccom
+                        .fetch_subs()
+                        .then(async (response) => {
+                            if (response.data !== "") {
+                                arr = response.data;
+                                for (const el of resp.data.data.list) {
+                                    const i = resp.data.data.list.indexOf(el);
+                                    if (i === 1) {
+                                        await this.dispatch("workerChecker", {
+                                            arr: arr,
+                                            el: el,
+                                            groupName: state.groupName,
+                                        });
+                                    } else if (i > 1) {
+                                        await this.dispatch("get_acc_group", {
+                                            arr: arr,
+                                            el: el,
+                                            i: i,
+                                            response: resp,
+                                            groups: groups,
+                                        });
+                                    }
+                                }
+                                Object.values(arr).forEach((group, i) => {
+                                    group.index = i;
+                                    if (state.valid) {
+                                        let group_with_length = group;
+                                        group_with_length.length = arr.length;
+                                        this.dispatch("getWallets", group);
+                                        this.dispatch(
+                                            "getIncomeHistory",
+                                            group_with_length
+                                        );
+                                        this.dispatch("getAllIncome", group);
+                                    }
+                                    this.dispatch("getHistoryHash", group);
                                 });
-                            } else if (i > 1) {
-                                await this.dispatch("get_acc_group", {
-                                    arr: arr,
-                                    el: el,
-                                    i: i,
-                                    response: resp,
-                                    groups: groups,
-                                });
+                                commit("setValid");
                             }
-                        }
-                        Object.values(arr).forEach((group, i) => {
-                            group.index = i;
-                            if (state.valid) {
-                                let group_with_length = group;
-                                group_with_length.length = arr.length;
-                                this.dispatch("getWallets", group);
-                                this.dispatch(
-                                    "getIncomeHistory",
-                                    group_with_length
-                                );
-                                this.dispatch("getAllIncome", group);
+                        })
+                        .catch((err) => {
+                            console.log(err);
+                            if (state.checkFive <= 5) {
+                                this.dispatch("getAccounts");
+                            } else {
+                                state.checkFive = 0;
                             }
-                            this.dispatch("getHistoryHash", group);
                         });
-                        commit("setValid");
+                })
+                .catch((err) => {
+                    console.log(err);
+                    if (state.checkFive <= 5) {
+                        this.dispatch("getAccounts");
+                    } else {
+                        state.checkFive = 0;
                     }
                 });
-            });
-            // .catch((err) => {
-            //     console.log(err);
-            //     if (state.checkFive <= 5) {
-            //         this.dispatch("getAccounts");
-            //     } else {
-            //         state.checkFive = 0;
-            //     }
-            // });
-            // })
-            // .catch((err) => {
-            //     console.log(err);
-            //     if (state.checkFive <= 5) {
-            //         this.dispatch("getAccounts");
-            //     } else {
-            //         state.checkFive = 0;
-            //     }
-            // });
         },
         async get_acc_group({ commit, state }, data) {
             await Object.values(data.arr).forEach((group, i) => {
