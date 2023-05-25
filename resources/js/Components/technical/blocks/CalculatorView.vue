@@ -136,10 +136,4 @@ export default {
         }
     }
 }
-
-.all-link {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 </style>

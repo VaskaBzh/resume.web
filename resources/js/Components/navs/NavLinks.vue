@@ -453,7 +453,7 @@
 <script>
 import { Link } from "@inertiajs/vue3";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import AccountMenu from "@/Components/UI/AccountMenu.vue";
+import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
 import { mapGetters } from "vuex";
 import MainList from "@/Components/UI/MainList.vue";
 import { Inertia } from "@inertiajs/inertia";

@@ -22,7 +22,7 @@
 
 <script>
 import { Head } from "@inertiajs/vue3";
-import MainChart from "@/Components/charts/MainChart.vue";
+import MainChart from "@/Components/technical/charts/MainChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 

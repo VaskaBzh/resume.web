@@ -482,11 +482,11 @@
 
 <script>
 import { Link, router, useForm } from "@inertiajs/vue3";
-import SelectLanguage from "@/Components/technical/SelectLanguage.vue";
+import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/Components/navs/NavLinks.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import AccountMenu from "@/Components/UI/AccountMenu.vue";
+import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import AutoHeightSelect from "@/Components/UI/AutoHeightSelect.vue";
 import { Navigation, Pagination } from "swiper";
@@ -878,8 +878,6 @@ export default defineComponent({
 }
 
 .all-link {
-    width: 100%;
-    height: 100%;
     padding: 2px 40px;
 }
 

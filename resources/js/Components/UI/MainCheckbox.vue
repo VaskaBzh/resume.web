@@ -1,5 +1,10 @@
 <template>
-    <span ref="checkbox" class="checkbox" @click="this.checkboxer">
+    <span
+        ref="checkbox"
+        class="checkbox"
+        @click="this.checkboxer"
+        :class="{ checked: this.isChecked }"
+    >
         <slot></slot>
     </span>
 </template>
@@ -19,13 +24,7 @@ export default {
     },
     methods: {
         checkboxer() {
-            if (this.isChecked) {
-                this.$refs.checkbox.classList.remove("checked");
-                this.isChecked = false;
-            } else {
-                this.$refs.checkbox.classList.add("checked");
-                this.isChecked = true;
-            }
+            this.isChecked = !this.isChecked;
             this.$emit("is_checked", this.isChecked);
         },
     },

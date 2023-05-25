@@ -3,6 +3,9 @@ import btccom from "@/api/btccom";
 
 export default {
     actions: {
+        async destroy_accounts({ commit, state }) {
+            commit("destroy_acc");
+        },
         async accounts_all({ commit, state }) {
             state.groupName = "";
             let arr;
@@ -118,6 +121,12 @@ export default {
         },
     },
     mutations: {
+        destroy_acc(state) {
+            state.accounts = {};
+            state.updateId = {};
+            state.groupName = "";
+            state.checkFive = 0;
+        },
         updateActive(state, index) {
             state.active = index;
         },

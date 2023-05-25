@@ -54,7 +54,7 @@
                         </div>
                         <div class="mining-im__general_image_con">
                             <img
-                                src="../../../assets/img/more-coins.png"
+                                src="../../../../assets/img/more-coins.png"
                                 alt=""
                                 class="mining-im__general_image"
                             />
@@ -65,7 +65,7 @@
                         <li class="mining-im__item" v-scroll="'left delay--md'">
                             <div class="mining-im__item_top">
                                 <img
-                                    src="../../../assets/img/static-propeller.svg"
+                                    src="../../../../assets/img/static-propeller.svg"
                                     alt=""
                                     class="mining-im__item_icon"
                                 />
@@ -80,7 +80,7 @@
                         <li class="mining-im__item" v-scroll="'left'">
                             <div class="mining-im__item_top">
                                 <img
-                                    src="../../../assets/img/static-propeller.svg"
+                                    src="../../../../assets/img/static-propeller.svg"
                                     alt=""
                                     class="mining-im__item_icon"
                                 />
@@ -95,7 +95,7 @@
                         <li class="mining-im__item" v-scroll="'left delay'">
                             <div class="mining-im__item_top">
                                 <img
-                                    src="../../../assets/img/static-propeller.svg"
+                                    src="../../../../assets/img/static-propeller.svg"
                                     alt=""
                                     class="mining-im__item_icon"
                                 />
@@ -110,7 +110,7 @@
                         <li class="mining-im__item" v-scroll="'left delay--md'">
                             <div class="mining-im__item_top">
                                 <img
-                                    src="../../../assets/img/static-propeller.svg"
+                                    src="../../../../assets/img/static-propeller.svg"
                                     alt=""
                                     class="mining-im__item_icon"
                                 />

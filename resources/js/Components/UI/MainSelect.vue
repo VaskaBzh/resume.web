@@ -146,6 +146,14 @@ export default {
                 document.querySelector("body").classList.remove("lock-select");
             }
         },
+        initBase() {
+            this.baseOption = this.options[0].title;
+            if (this.options[0].img) {
+                this.baseImg =
+                    "http://127.0.0.1:5173" +
+                    `/resources/assets/img/${this.options[0].img}`;
+            }
+        },
     },
     mounted() {
         this.$refs.select
@@ -159,17 +167,12 @@ export default {
                 this.hideSelect();
             }
         });
-        this.baseOption = this.options[0].title;
-        if (this.options[0].img) {
-            this.baseImg =
-                "http://127.0.0.1:5173" +
-                `/resources/assets/img/${this.options[0].img}`;
-        }
+        this.initBase();
         this.handleScroll();
         document.addEventListener("wheel", this.handleScroll);
     },
     unmounted() {
-        document.removeEventListener("click", this.hideSelect.bind(this), true);
+        document.removeEventListener("click", this.hideSelect.bind(this));
         document.removeEventListener("keydown", (e) => {
             if (e.keyCode === 27) {
                 this.hideSelect();

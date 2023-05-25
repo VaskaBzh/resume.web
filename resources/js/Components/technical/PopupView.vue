@@ -49,9 +49,6 @@ export default {
 };
 </script>
 <style lang="scss">
-.all-link {
-    line-height: 24px;
-}
 .un-click {
     position: fixed;
     z-index: 9999;

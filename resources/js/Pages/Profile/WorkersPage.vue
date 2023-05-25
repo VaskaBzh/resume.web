@@ -57,10 +57,9 @@
             />
             <popup-view id="connect" typePopup="connect">
                 <form class="form form-popup popup__form">
-                    <main-title
-                        tag="h2"
-                        :titleName="$t('workers.popups.connection.title')"
-                    ></main-title>
+                    <main-title tag="h2">{{
+                        $t("workers.popups.connection.title")
+                    }}</main-title>
                     <copy-block
                         v-for="(object, i) in this.copyObject"
                         :key="i"
@@ -78,7 +77,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
-import CopyBlock from "@/Components/account/CopyBlock.vue";
+import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 

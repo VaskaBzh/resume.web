@@ -26,8 +26,6 @@ import NavTabs from "@/Components/navs/NavTabs.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
 import FooterComponent from "@/Components/FooterComponent.vue";
 import { mapGetters } from "vuex";
-import { Inertia } from "@inertiajs/inertia";
-import axios from "axios";
 
 export default {
     props: {
@@ -73,22 +71,6 @@ export default {
         //     });
         // }
     },
-    // mounted() {
-    //     Inertia.on("success", (event) => {
-    //         if (this.$page.props.message) {
-    //             console.log(this.$page.props.message);
-    //             const csrfMetaTag = document.querySelector(
-    //                 'meta[name="csrf-token"]'
-    //             );
-    //             if (csrfMetaTag) {
-    //                 csrfMetaTag.setAttribute(
-    //                     "content",
-    //                     event.detail.visit.page.props.newCsrfToken
-    //                 );
-    //             }
-    //         }
-    //     });
-    // },
     unmounted() {
         if (!this.auth_user) {
             this.$store.dispatch("destroyer");

@@ -23,6 +23,12 @@ export default {
     actions: {
         destroyer({ commit }) {
             commit("destroy");
+            this.dispatch("destroy_accounts");
+            this.dispatch("destroy_hashrate");
+            this.dispatch("destroy_income");
+            this.dispatch("destroy_income_history");
+            this.dispatch("destroy_miner_history_hash");
+            this.dispatch("destroy_wallets");
         },
         getFullInfo() {
             // this.dispatch("accounts", state);
@@ -54,23 +60,10 @@ export default {
     },
     mutations: {
         destroy(state) {
-            state.incomeHistory = {};
-            state.income = {};
-            state.valid = true;
-            state.accounts = {};
-            state.hash = {};
-            state.history = {};
-            state.historyMiners = {};
-            state.earn = {};
-            state.updateId = {};
-            state.validate = false;
             state.groupName = "";
-            state.message = "";
         },
     },
     state: {
-        checkFive: 0,
         groupName: "",
-        fullEarn: {},
     },
 };

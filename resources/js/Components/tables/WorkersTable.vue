@@ -132,7 +132,7 @@
 </template>
 <script>
 import TableWorkersRow from "@/Components/tables/row/TableWorkersRow.vue";
-import StatisticChart from "@/Components/charts/StatisticChart.vue";
+import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
 import PopupView from "@/Components/technical/PopupView.vue";
 

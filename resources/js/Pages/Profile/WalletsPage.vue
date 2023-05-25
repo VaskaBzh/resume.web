@@ -5,7 +5,8 @@
         </div>
     </div>
     <div class="wallets" ref="page">
-        <main-title tag="h2" :titleName="$t('wallets.title')">
+        <main-title tag="h2"
+            >{{ $t("wallets.title") }}
             <!--                <blue-button class="wallets__button wallets__button-history">-->
             <!--                    <Link :href="route('income')"> Доходы </Link>-->
             <!--                </blue-button>-->
@@ -251,10 +252,10 @@
 <script>
 import axios from "axios";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import WalletBlock from "@/Components/account/WalletBlock.vue";
+import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
-import NoInfo from "@/Components/technical/NoInfo.vue";
+import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 import { Link } from "@inertiajs/vue3";

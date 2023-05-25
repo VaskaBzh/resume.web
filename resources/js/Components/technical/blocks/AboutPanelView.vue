@@ -50,7 +50,7 @@ export default {
 
 <style lang="scss" scoped>
 .about-panel {
-    background-image: url("../../../assets/img/about-panel-bg.png");
+    background-image: url("../../../../assets/img/about-panel-bg.png");
     background-position: center 30%;
     background-size: contain;
     background-repeat: no-repeat;

@@ -3,6 +3,9 @@ import btccom from "@/api/btccom";
 
 export default {
     actions: {
+        destroy_wallets({ commit, state }) {
+            commit("destroy_wal");
+        },
         async get_wallets({ commit, state }, data) {
             await btccom
                 .fetch_wallets(data)
@@ -17,6 +20,9 @@ export default {
         },
     },
     mutations: {
+        destroy_wal(state) {
+            state.wallet = {};
+        },
         updateWallet(state, data) {
             Vue.set(state.wallet, data.key, data.historyItem);
         },

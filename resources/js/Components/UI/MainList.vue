@@ -74,6 +74,14 @@ export default {
             }
         });
     },
+    unmounted() {
+        document.removeEventListener("click", this.hideList.bind(this));
+        document.removeEventListener("keydown", (e) => {
+            if (e.keyCode === 27) {
+                this.hideList();
+            }
+        });
+    },
 };
 </script>
 

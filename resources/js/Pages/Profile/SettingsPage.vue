@@ -156,7 +156,7 @@
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import SettingsBlock from "@/Components/account/SettingsBlock.vue";
+import SettingsBlock from "@/Components/technical/blocks/profile/SettingsBlock.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import axios from "axios";
 import { ref } from "vue";

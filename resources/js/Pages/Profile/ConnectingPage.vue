@@ -2,10 +2,9 @@
     <Head :title="$t('connection.title')" />
     <div class="connecting">
         <div class="connecting__wrapper">
-            <main-title
-                tag="h2"
-                :titleName="$t('connection.title')"
-            ></main-title>
+            <main-title tag="h2">{{
+                $t("connection.title")
+            }}</main-title>
             <div class="connecting__wrap wrap">
                 <copy-block
                     v-for="(object, i) in this.copyObject"
@@ -20,7 +19,7 @@
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import CopyBlock from "@/Components/account/CopyBlock.vue";
+import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 

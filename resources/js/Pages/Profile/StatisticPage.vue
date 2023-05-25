@@ -50,10 +50,9 @@
             </div>
             <div class="wrap" v-else>
                 <div class="wrap__block-connect">
-                    <main-title
-                        tag="h3"
-                        :titleName="$t('statistic.chart.no_workers_title')"
-                    ></main-title>
+                    <main-title tag="h3">{{
+                        $t("statistic.chart.no_workers_title")
+                    }}</main-title>
                     <copy-block
                         v-for="(object, i) in this.copyObject"
                         :key="i"
@@ -168,14 +167,14 @@
     </div>
 </template>
 <script>
-import CopyBlock from "@/Components/account/CopyBlock.vue";
+import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { Link, Head, router } from "@inertiajs/vue3";
-import PaymentCard from "@/Components/account/PaymentCard.vue";
-import StatisticChart from "@/Components/charts/StatisticChart.vue";
+import PaymentCard from "@/Components/technical/blocks/profile/PaymentCard.vue";
+import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
-import AccountProfileSwiper from "@/Components/account/AccountProfileSwiper.vue";
+import AccountProfileSwiper from "@/Components/technical/blocks/profile/AccountProfileSwiper.vue";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],

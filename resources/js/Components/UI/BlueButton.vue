@@ -11,6 +11,31 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.all-link {
+    width: 100%;
+    height: 100%;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 18px;
+    padding: 2px 17px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: all 0.3s ease 0s;
+    position: relative;
+    min-height: 24px;
+    background: transparent;
+    gap: 10px;
+    svg {
+        max-width: 0;
+        max-height: 0;
+        overflow: hidden;
+        visibility: hidden;
+        opacity: 0;
+        transition: all 0.3s ease 0s;
+    }
+}
 .blue-button {
     display: flex;
     justify-content: center;

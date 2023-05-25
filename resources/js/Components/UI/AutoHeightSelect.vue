@@ -118,12 +118,6 @@ export default {
             height: 0,
         };
     },
-    // updated() {
-    //     if (this.open && this.select_is_open === false) {
-    //         console.log(this.select_is_open);
-    //         this.openSelect();
-    //     }
-    // },
     computed: {
         ...mapGetters(["allAccounts", "getActive"]),
         name() {
@@ -185,11 +179,6 @@ export default {
         },
     },
     mounted() {
-        this.$refs.select
-            .querySelectorAll(".select_option")
-            .forEach((option) => {
-                this.height += option.offsetHeight;
-            });
         document.addEventListener("click", this.hideSelect.bind(this), true);
         document.addEventListener("keydown", (e) => {
             if (e.keyCode === 27) {
@@ -198,7 +187,7 @@ export default {
         });
     },
     unmounted() {
-        // document.removeEventListener("click", this.hideSelect.bind(this), true);
+        document.removeEventListener("click", this.hideSelect.bind(this));
         document.removeEventListener("keydown", (e) => {
             if (e.keyCode === 27) {
                 this.hideSelect();
@@ -208,22 +197,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-//.fade {
-//    &-enter {
-//        &-active {
-//            path:first-child {
-//                fill: #417fe5 !important;
-//            }
-//        }
-//    }
-//    &-leave {
-//        &-active {
-//            path:first-child {
-//                fill: #EAEEF4 !important;
-//            }
-//        }
-//    }
-//}
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.5s ease;
@@ -368,17 +341,6 @@ export default {
             width: 20px;
             height: 20px;
         }
-        //&:hover {
-        //    //    background: rgba(234, 238, 244, 0.4);
-        //    //    transition: padding 0.8s ease 0s;
-        //    transition: background 0.3s ease 0s, padding 0.3s ease 0s;
-        //    padding: 0 10px;
-        //    .main_select {
-        //        padding: 0 10px;
-        //        //transition: padding 0.8s ease 0s;
-        //        transition: background 0.3s ease 0s, padding 0.3s ease 0s;
-        //    }
-        //}
     }
 }
 </style>

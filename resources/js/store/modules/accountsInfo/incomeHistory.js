@@ -3,6 +3,9 @@ import btccom from "@/api/btccom";
 
 export default {
     actions: {
+        destroy_income_history({ commit, state }) {
+            commit("destroy_incHist");
+        },
         async get_income_history({ commit, state }, data) {
             await btccom
                 .fetch_income(data)
@@ -24,6 +27,9 @@ export default {
         incomeHistory: {},
     },
     getters: {
+        destroy_incHist(state) {
+            state.incomeHistory = {};
+        },
         allIncomeHistory(state) {
             return state.incomeHistory;
         },

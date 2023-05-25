@@ -3,6 +3,9 @@ import btccom from "@/api/btccom";
 
 export default {
     actions: {
+        destroy_hashrate({ state, commit }) {
+            commit("destroy_hash");
+        },
         async get_hash({ state, commit }, data) {
             let query = {};
             query.group = data.el.gid;
@@ -89,12 +92,14 @@ export default {
         hash: {},
     },
     mutations: {
+        destroy_hash(state) {
+            state.hash = {};
+        },
         setHash(state, data) {
             Vue.set(state.hash, data.key, data.hash);
         },
         updateHash(state, data) {
             Vue.set(state.hash[data.i], data.key, data.hash);
-            console.log(state.hash);
         },
     },
     getters: {

@@ -318,7 +318,7 @@
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainDate from "@/Components/UI/MainDate.vue";
-import MainSlider from "@/Components/account/MainSlider.vue";
+import MainSlider from "@/Components/technical/MainSlider.vue";
 import { Link, router } from "@inertiajs/vue3";
 
 export default {

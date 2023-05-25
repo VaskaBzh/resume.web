@@ -1,16 +1,14 @@
 <template>
     <div class="income" ref="page">
-        <main-title
-            v-if="this.viewportWidth > 767.98"
-            tag="h2"
-            :titleName="$t('income.title')"
-        >
+        <main-title v-if="this.viewportWidth > 767.98" tag="h2">
+            {{ $t("income.title") }}
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
             <!--                </blue-button>-->
         </main-title>
 
-        <main-title v-else tag="h2" :titleName="$t('income.title')">
+        <main-title v-else tag="h2">
+            {{ $t("income.title") }}
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
             <!--                </blue-button>-->
@@ -101,7 +99,7 @@
     </div>
 </template>
 <script>
-import MainSlider from "@/components/account/MainSlider.vue";
+import MainSlider from "@/components/technical/MainSlider.vue";
 import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/components/UI/MainTitle.vue";
 import BlueButton from "@/components/UI/BlueButton.vue";

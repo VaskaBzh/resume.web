@@ -13,7 +13,7 @@
     </div>
 </template>
 <script>
-import BtcCalculator from "@/Components/UI/BTCCalculator.vue";
+import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 
 export default {
     components: { BtcCalculator },

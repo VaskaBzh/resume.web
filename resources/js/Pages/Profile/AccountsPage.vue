@@ -1,15 +1,15 @@
 <template>
     <Head :title="$t('accounts.title')" />
-    <div class="hint">
-        <div
-            class="hint_item"
-            v-for="(error, i) in this.errs"
-            :key="i"
-            v-hide="this.errs.length !== 0"
-        >
-            {{ error }}
-        </div>
-    </div>
+    <!--    <div class="hint">-->
+    <!--        <div-->
+    <!--            class="hint_item"-->
+    <!--            v-for="(error, i) in this.errs"-->
+    <!--            :key="i"-->
+    <!--            v-hide="this.errs.length !== 0"-->
+    <!--        >-->
+    <!--            {{ error }}-->
+    <!--        </div>-->
+    <!--    </div>-->
     <div class="accounts">
         <div class="accounts__wrapper">
             <main-title tag="h2" class="accounts__title">
@@ -76,10 +76,9 @@
                 @submit.prevent="this.addAcc"
                 class="form form-popup popup__form"
             >
-                <main-title
-                    tag="h3"
-                    :title-name="$t('accounts.popups.add.title')"
-                />
+                <main-title tag="h3">{{
+                    $t("accounts.popups.add.title")
+                }}</main-title>
                 <input
                     v-model="form.name"
                     required
@@ -180,12 +179,12 @@
 
 <script>
 import { Head, useForm } from "@inertiajs/vue3";
-import AccountProfile from "@/Components/account/AccountProfile.vue";
+import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import NoInfo from "@/Components/technical/NoInfo.vue";
+import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import axios from "axios";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
@@ -220,6 +219,11 @@ export default {
             let obj = this.$page.props.errors;
             obj = Object.values(obj).filter((err) => err !== "");
             return obj;
+        },
+    },
+    watch: {
+        errs(newErrors) {
+            this.$store.dispatch("getMessage", newErrors);
         },
     },
     methods: {

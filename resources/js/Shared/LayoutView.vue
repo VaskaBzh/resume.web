@@ -50,8 +50,6 @@
 import FooterComponent from "@/Components/FooterComponent.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
 import { mapGetters } from "vuex";
-import { Inertia } from "@inertiajs/inertia";
-import axios from "axios";
 
 export default {
     props: {
@@ -91,32 +89,6 @@ export default {
         //     });
         // }
     },
-    // async updated() {
-    //     if (!this.auth_user) {
-    //         this.$store.dispatch("destroyer");
-    //         if (this.interval) {
-    //             clearInterval(this.interval);
-    //         }
-    //     }
-    // },
-    // mounted() {
-    //     Inertia.on("success", (event) => {
-    //         if (
-    //             event.detail.visit &&
-    //             event.detail.visit.page.props.newCsrfToken
-    //         ) {
-    //             const csrfMetaTag = document.querySelector(
-    //                 'meta[name="csrf-token"]'
-    //             );
-    //             if (csrfMetaTag) {
-    //                 csrfMetaTag.setAttribute(
-    //                     "content",
-    //                     event.detail.visit.page.props.newCsrfToken
-    //                 );
-    //             }
-    //         }
-    //     });
-    // },
     unmounted() {
         if (!this.auth_user) {
             this.$store.dispatch("destroyer");
@@ -157,11 +129,6 @@ export default {
 
     position: relative;
     width: 100vw;
-}
-
-.all-link {
-    width: 100%;
-    text-align: center;
 }
 
 .nav__logo {
