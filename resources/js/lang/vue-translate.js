@@ -145,7 +145,7 @@ const messages = {
                 },
                 {
                     title: "Comprehensive service",
-                    text: "Our comprehensive service aims to increase miners' earnings, reduce the gap between mining and trading, and provide a universal mining ecosystem.",
+                    text: "Our comprehensive service is designed to boost miners' revenue and ensure a versatile mining ecosystem.",
                 },
             ],
         },
@@ -557,7 +557,7 @@ const messages = {
                 },
                 {
                     title: " Комплексное обслуживание ",
-                    text: " Наше комплексное обслуживание направлено на повышение доходов майнеров, сокращение разрыва между добычей полезных ископаемых и трейдингом, а также обеспечение универсальной экосистемы майнинга. ",
+                    text: " Наше комплексное обслуживание направлено на повышение доходов майнеров, а также обеспечение универсальной экосистемы майнинга. ",
                 },
             ],
         },
