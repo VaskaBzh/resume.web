@@ -28,45 +28,69 @@ class SubController extends Controller
         }
         // Валидация входных данных
         $request->validate([
-            'group_id' => 'required|string',
             "group_name" => 'required|string|min:3|max:16',
         ], $messages);
+        $requestController = new RequestController();
 
-        if ($request->input('user_id')) {
-            // Валидация входных данных
-            $request->validate([
-                'user_id' => 'required|integer|exists:users,id',
-            ]);
+        $response = $requestController->proxy([
+            "puid" => "781195",
+            "page" => 1,
+            "page_size" => 52,
+        ], "worker/groups", "get");
 
-            // Создание новой записи о выводе
-            $sub = new Sub([
-                'user_id' => $request->input('user_id'),
-                'group_id' => $request->input('group_id'),
-                'sub' => $request->input('group_name'),
-            ]);
-        } else {
-            // Создание новой записи о выводе
-            $sub = new Sub([
-                'user_id' => Auth::user()->id,
-                'group_id' => $request->input('group_id'),
-                'sub' => $request->input('group_name'),
-            ]);
-        }
+        foreach (json_decode($response->getContent())->data->list  as $index => $group) {
+            if ($index > 1) {
+                if ($group->name === $request->input("group_name")) {
+                    if (app()->getLocale() === 'ru') {
+                        return back()->withErrors([
+                            'name' => 'Аккаунт с таким имененм уже существует',
+                        ], 201);
+                    } else if (app()->getLocale() === 'en') {
+                        return back()->withErrors([
+                            'name' => 'An account with that name already exists.',
+                        ], 201);
+                    }
+                } elseif ($index === count(json_decode($response->getContent())->data->list) - 1) {
+                    $responseCreate = $requestController->proxy([
+                        "puid" => "781195",
+                        "group_name" => $request->input("group_name"),
+                    ], "groups/create", "post");
+                    if ($request->input('user_id')) {
+                        // Валидация входных данных
+                        $request->validate([
+                            'user_id' => 'required|integer|exists:users,id',
+                        ]);
 
-        // Сохранение записи в базе данных
-        $sub->save();
+                        // Создание новой записи о выводе
+                        $sub = new Sub([
+                            'user_id' => $request->input('user_id'),
+                            'group_id' => json_decode($responseCreate->getContent())->data->gid,
+                            'sub' => $request->input('group_name'),
+                        ]);
+                    } else {
+                        // Создание новой записи о выводе
+                        $sub = new Sub([
+                            'user_id' => Auth::user()->id,
+                            'group_id' => json_decode($responseCreate->getContent())->data->gid,
+                            'sub' => $request->input('group_name'),
+                        ]);
+                    }
 
-        // Возвращение успешного ответа (настроить ответ в соответствии с фронтендом)
-        if (app()->getLocale() === 'ru') {
-            return response()->json([
-                'success' => true,
-                'message' => 'Сабаккаунт создан.',
-            ], 201);
-        } else if (app()->getLocale() === 'en') {
-            return response()->json([
-                'success' => true,
-                'message' => 'The subaccount has been created.',
-            ], 201);
+                    // Сохранение записи в базе данных
+                    $sub->save();
+
+                    // Возвращение успешного ответа (настроить ответ в соответствии с фронтендом)
+                    if (app()->getLocale() === 'ru') {
+                        return back()->with([
+                            'message' => 'Сабаккаунт создан.',
+                        ], 201);
+                    } else if (app()->getLocale() === 'en') {
+                        return back()->with([
+                            'message' => 'The subaccount has been created.',
+                        ], 201);
+                    }
+                }
+            }
         }
     }
 
