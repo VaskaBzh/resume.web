@@ -16,85 +16,25 @@
                 <div></div>
                 <div></div>
                 <div></div>
-                <div
-                    class="wallets__block_doths_menu menu"
-                    :class="{ opened: opened }"
-                >
-                    <button
-                        @click="changeWalletObj(wallet)"
-                        class="menu_elem"
-                        data-popup="#changeWallet"
-                    >
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <g clip-path="url(#clip0_1063_956)">
-                                <path
-                                    d="M5.40577 20.9698H16.8706C17.7495 20.9698 18.4315 20.7175 18.9165 20.2129C19.4015 19.7083 19.6441 18.9515 19.6441 17.9424V7.50293L18.0718 9.0752V17.8643C18.0718 18.3721 17.9513 18.7546 17.7105 19.0118C17.4696 19.2689 17.1831 19.3975 16.8511 19.3975H5.43506C4.94678 19.3975 4.5708 19.2689 4.30713 19.0118C4.04346 18.7546 3.91163 18.3721 3.91163 17.8643V6.78028C3.91163 6.27247 4.04346 5.88835 4.30713 5.62793C4.5708 5.36752 4.94678 5.23731 5.43506 5.23731H14.3316L15.9039 3.66504H5.40577C4.39014 3.66504 3.62516 3.91732 3.11084 4.42188C2.59652 4.92644 2.33936 5.68328 2.33936 6.69239V17.9424C2.33936 18.9515 2.59652 19.7083 3.11084 20.2129C3.62516 20.7175 4.39014 20.9698 5.40577 20.9698ZM8.96045 14.6416L10.8647 13.8116L19.9859 4.7002L18.648 3.38184L9.53663 12.4932L8.65772 14.3291C8.61866 14.4137 8.63656 14.4968 8.71143 14.5782C8.7863 14.6595 8.86931 14.6806 8.96045 14.6416ZM20.7085 3.98731L21.4117 3.26465C21.5744 3.08887 21.6574 2.89519 21.6607 2.6836C21.6639 2.47201 21.5809 2.28484 21.4117 2.12208L21.1871 1.8877C21.0373 1.73796 20.8566 1.6696 20.6451 1.68262C20.4335 1.69564 20.2463 1.78028 20.0835 1.93653L19.3706 2.63965L20.7085 3.98731Z"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_1063_956">
-                                    <rect
-                                        width="19.3214"
-                                        height="20.6379"
-                                        fill="white"
-                                        transform="translate(2.33936 1.68106)"
-                                    />
-                                </clipPath>
-                            </defs>
-                        </svg>
-
-                        {{ $t("wallets.block.wallet_block.menu[0]") }}
-                    </button>
-                    <button
-                        @click="remove(wallet)"
-                        class="menu_elem menu_elem-remove"
-                    >
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <g clip-path="url(#clip0_1073_213)">
-                                <path
-                                    d="M4.51031 19.4951C4.62749 19.6058 4.76096 19.6806 4.9107 19.7197C5.06044 19.7588 5.21018 19.7588 5.35992 19.7197C5.50966 19.6806 5.63986 19.6058 5.75054 19.4951L12.0005 13.2451L18.2505 19.4951C18.3612 19.6058 18.4914 19.6806 18.6411 19.7197C18.7909 19.7588 18.9422 19.7604 19.0952 19.7246C19.2482 19.6888 19.3801 19.6123 19.4907 19.4951C19.6015 19.3844 19.6747 19.2542 19.7105 19.1045C19.7463 18.9548 19.7463 18.805 19.7105 18.6553C19.6747 18.5056 19.6015 18.3753 19.4907 18.2646L13.2408 12.0049L19.4907 5.75487C19.6015 5.64419 19.6764 5.51398 19.7154 5.36425C19.7545 5.2145 19.7545 5.06476 19.7154 4.91502C19.6764 4.76528 19.6015 4.63508 19.4907 4.5244C19.3736 4.40721 19.2402 4.33071 19.0904 4.29491C18.9406 4.2591 18.7909 4.2591 18.6411 4.29491C18.4914 4.33071 18.3612 4.40721 18.2505 4.5244L12.0005 10.7744L5.75054 4.5244C5.63986 4.40721 5.50803 4.33071 5.35504 4.29491C5.20204 4.2591 5.05067 4.2591 4.90093 4.29491C4.75119 4.33071 4.62098 4.40721 4.51031 4.5244C4.39963 4.63508 4.32639 4.76528 4.29058 4.91502C4.25477 5.06476 4.25477 5.2145 4.29058 5.36425C4.32639 5.51398 4.39963 5.64419 4.51031 5.75487L10.7603 12.0049L4.51031 18.2646C4.39963 18.3753 4.32476 18.5056 4.2857 18.6553C4.24664 18.805 4.24501 18.9548 4.28081 19.1045C4.31662 19.2542 4.39312 19.3844 4.51031 19.4951Z"
-                                    fill="#FF3B30"
-                                />
-                            </g>
-                            <defs>
-                                <clipPath id="clip0_1073_213">
-                                    <rect
-                                        width="15.4896"
-                                        height="15.5006"
-                                        fill="white"
-                                        transform="translate(4.25513 4.24969)"
-                                    />
-                                </clipPath>
-                            </defs>
-                        </svg>
-
-                        {{ $t("wallets.block.wallet_block.menu[1]") }}
-                    </button>
-                </div>
+                <main-menu
+                    class="wallets__block_doths_menu"
+                    :options="options"
+                    :opened="opened"
+                    @remove="remove(wallet)"
+                    @clicked="changeWalletObj(wallet)"
+                ></main-menu>
             </div>
         </div>
-        <div class="wallets__block_value">
-            <span>{{ wallet.value }}</span>
-            {{ wallet.shortName }}
-        </div>
-        <div class="wallets__block_convert">
-            ≈
-            <span>{{ (wallet.value * dollar).toFixed(2) }}</span>
-            $ ≈
-            <span>{{ ((wallet.value * dollar) / ruble).toFixed(2) }}</span>
-            ₽
+        <div class="main__number">
+            {{ wallet.value }}
+            <div class="unit">{{ wallet.shortName }}</div>
+            <div class="row">
+                ≈
+                <span>{{ (wallet.value * dollar).toFixed(2) }}</span>
+                $ ≈
+                <span>{{ ((wallet.value * dollar) / ruble).toFixed(2) }}</span>
+                ₽
+            </div>
         </div>
         <div
             class="wallets__block_i"
@@ -129,6 +69,7 @@
 <script>
 import axios from "axios";
 import { mapGetters } from "vuex";
+import MainMenu from "@/Components/UI/MainMenu.vue";
 
 export default {
     name: "wallet-block",
@@ -140,8 +81,68 @@ export default {
             opened: false,
         };
     },
+    components: { MainMenu },
     computed: {
         ...mapGetters(["getActive"]),
+        options() {
+            return [
+                {
+                    name: this.$t("wallets.block.wallet_block.menu[0]"),
+                    svg: `<svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clip-path="url(#clip0_1063_956)">
+                                <path
+                                    d="M5.40577 20.9698H16.8706C17.7495 20.9698 18.4315 20.7175 18.9165 20.2129C19.4015 19.7083 19.6441 18.9515 19.6441 17.9424V7.50293L18.0718 9.0752V17.8643C18.0718 18.3721 17.9513 18.7546 17.7105 19.0118C17.4696 19.2689 17.1831 19.3975 16.8511 19.3975H5.43506C4.94678 19.3975 4.5708 19.2689 4.30713 19.0118C4.04346 18.7546 3.91163 18.3721 3.91163 17.8643V6.78028C3.91163 6.27247 4.04346 5.88835 4.30713 5.62793C4.5708 5.36752 4.94678 5.23731 5.43506 5.23731H14.3316L15.9039 3.66504H5.40577C4.39014 3.66504 3.62516 3.91732 3.11084 4.42188C2.59652 4.92644 2.33936 5.68328 2.33936 6.69239V17.9424C2.33936 18.9515 2.59652 19.7083 3.11084 20.2129C3.62516 20.7175 4.39014 20.9698 5.40577 20.9698ZM8.96045 14.6416L10.8647 13.8116L19.9859 4.7002L18.648 3.38184L9.53663 12.4932L8.65772 14.3291C8.61866 14.4137 8.63656 14.4968 8.71143 14.5782C8.7863 14.6595 8.86931 14.6806 8.96045 14.6416ZM20.7085 3.98731L21.4117 3.26465C21.5744 3.08887 21.6574 2.89519 21.6607 2.6836C21.6639 2.47201 21.5809 2.28484 21.4117 2.12208L21.1871 1.8877C21.0373 1.73796 20.8566 1.6696 20.6451 1.68262C20.4335 1.69564 20.2463 1.78028 20.0835 1.93653L19.3706 2.63965L20.7085 3.98731Z"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1063_956">
+                                    <rect
+                                        width="19.3214"
+                                        height="20.6379"
+                                        fill="white"
+                                        transform="translate(2.33936 1.68106)"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>`,
+                    attr: "#changeWallet",
+                },
+                {
+                    name: this.$t("wallets.block.wallet_block.menu[1]"),
+                    svg: `<svg
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <g clip-path="url(#clip0_1073_213)">
+                                <path
+                                    d="M4.51031 19.4951C4.62749 19.6058 4.76096 19.6806 4.9107 19.7197C5.06044 19.7588 5.21018 19.7588 5.35992 19.7197C5.50966 19.6806 5.63986 19.6058 5.75054 19.4951L12.0005 13.2451L18.2505 19.4951C18.3612 19.6058 18.4914 19.6806 18.6411 19.7197C18.7909 19.7588 18.9422 19.7604 19.0952 19.7246C19.2482 19.6888 19.3801 19.6123 19.4907 19.4951C19.6015 19.3844 19.6747 19.2542 19.7105 19.1045C19.7463 18.9548 19.7463 18.805 19.7105 18.6553C19.6747 18.5056 19.6015 18.3753 19.4907 18.2646L13.2408 12.0049L19.4907 5.75487C19.6015 5.64419 19.6764 5.51398 19.7154 5.36425C19.7545 5.2145 19.7545 5.06476 19.7154 4.91502C19.6764 4.76528 19.6015 4.63508 19.4907 4.5244C19.3736 4.40721 19.2402 4.33071 19.0904 4.29491C18.9406 4.2591 18.7909 4.2591 18.6411 4.29491C18.4914 4.33071 18.3612 4.40721 18.2505 4.5244L12.0005 10.7744L5.75054 4.5244C5.63986 4.40721 5.50803 4.33071 5.35504 4.29491C5.20204 4.2591 5.05067 4.2591 4.90093 4.29491C4.75119 4.33071 4.62098 4.40721 4.51031 4.5244C4.39963 4.63508 4.32639 4.76528 4.29058 4.91502C4.25477 5.06476 4.25477 5.2145 4.29058 5.36425C4.32639 5.51398 4.39963 5.64419 4.51031 5.75487L10.7603 12.0049L4.51031 18.2646C4.39963 18.3753 4.32476 18.5056 4.2857 18.6553C4.24664 18.805 4.24501 18.9548 4.28081 19.1045C4.31662 19.2542 4.39312 19.3844 4.51031 19.4951Z"
+                                    fill="#FF3B30"
+                                />
+                            </g>
+                            <defs>
+                                <clipPath id="clip0_1073_213">
+                                    <rect
+                                        width="15.4896"
+                                        height="15.5006"
+                                        fill="white"
+                                        transform="translate(4.25513 4.24969)"
+                                    />
+                                </clipPath>
+                            </defs>
+                        </svg>`,
+                    class: "remove",
+                },
+            ];
+        },
     },
     mounted() {
         document.addEventListener("click", this.close.bind(this), true);
@@ -206,6 +207,38 @@ export default {
         background-color: #fff;
         border-radius: 13px;
         width: 100%;
+
+        .main__number {
+            padding: 16px 16px 0;
+            margin-bottom: 8px;
+            font-size: 20px;
+            line-height: 28px;
+            width: 100%;
+            display: flex;
+            gap: 4px;
+            flex-wrap: wrap;
+            .unit {
+                font-weight: 400;
+            }
+            @media (min-width: 767.98px) {
+                font-weight: 700;
+            }
+            @media (max-width: 767.98px) {
+                font-size: 18px;
+                padding: 10px 10px 0;
+                line-height: 23px;
+                margin-bottom: 0;
+                .unit {
+                    font-weight: 500;
+                }
+            }
+            span {
+                padding: 0 16px;
+                @media (max-width: 767.98px) {
+                    color: #000034;
+                }
+            }
+        }
 
         &-wallet {
             width: 100%;
@@ -290,91 +323,11 @@ export default {
                 gap: 2.5px;
             }
             &_menu {
-                cursor: default;
-                position: absolute;
                 right: -16px;
-                min-width: 255px;
-                background: #ffffff !important;
                 top: calc(100% + 13px);
                 height: fit-content !important;
-                display: flex;
-                visibility: hidden;
-                flex-direction: column;
-                align-items: center;
-                box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-                border-radius: 20px !important;
-                width: fit-content;
-                z-index: 2;
-                transition: all 0.5s ease 0s;
-                opacity: 0;
-                @media (max-width: 991.98px) {
-                    right: 0;
-                    left: auto;
-                    top: 0;
-                }
-                &.opened {
-                    visibility: visible;
-                    opacity: 1;
-                }
-                .menu {
-                    &_elem {
-                        &-remove {
-                            color: #ff3b30;
-                        }
-                        svg {
-                            width: 24px;
-                            height: 24px;
-                        }
-                        font-weight: 400;
-                        font-size: 17px;
-                        line-height: 143.1%;
-                        color: #000034;
-                        display: flex;
-                        height: 48px;
-                        gap: 12px;
-                        padding: 12px;
-                        align-items: center;
-                        width: 100%;
-                        background: transparent;
-                        transition: all 0.3s ease 0s;
-                        &:not(:first-child) {
-                            border-top: 1px solid rgba(214, 214, 214, 0.3);
-                        }
-                        &:hover {
-                            background: #f6f8fa;
-                        }
-                        svg {
-                            width: 24px;
-                            height: 24px;
-                            stroke: transparent !important;
-                        }
-                        svg:not(.stroke) {
-                            fill: #417fe5 !important;
-                        }
-                        svg.stroke {
-                            stroke: #417fe5 !important;
-                        }
-                    }
-                    &_column {
-                        display: flex;
-                        flex-direction: column;
-                        span {
-                            width: 100%;
-                        }
-                    }
-                    &_title {
-                        font-weight: 400;
-                        font-size: 16px;
-                        line-height: 143.1%;
-                        color: rgba(0, 0, 0, 0.62);
-                    }
-                    &_val {
-                        font-weight: 500;
-                        font-size: 18px;
-                        line-height: 143.1%;
-                        color: #000034;
-                    }
-                }
+                border-radius: 21px !important;
+                background: #fff !important;
             }
 
             div {
@@ -383,43 +336,6 @@ export default {
                 border-radius: 50%;
                 background-color: rgba(0, 0, 0, 0.62);
                 transition: all 0.3s ease;
-            }
-        }
-
-        &_value {
-            padding: 16px 16px 0;
-            margin-bottom: 8px;
-            font-weight: 400;
-            font-size: 20px;
-            line-height: 28px;
-            color: #0000009e;
-            width: 100%;
-            @media (max-width: 767.98px) {
-                padding: 10px 10px 0;
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 23px;
-                color: #000034;
-                margin-bottom: 0;
-                span {
-                    font-weight: 500;
-                }
-            }
-
-            span {
-                font-weight: 700;
-                color: #000034;
-            }
-        }
-
-        &_convert {
-            padding: 0 16px;
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 23px;
-            color: rgba(0, 0, 0, 0.62);
-            @media (max-width: 767.98px) {
-                color: #000034;
             }
         }
 

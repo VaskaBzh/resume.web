@@ -1,6 +1,6 @@
 <template>
     <div class="copy__block">
-        <div class="copy__row">
+        <div class="text text-md">
             {{ this.copyObject.title }}
         </div>
         <copy-row
@@ -48,18 +48,9 @@ export default {
             }
         }
     }
-    &__row {
+    .text {
         display: inline-flex;
         align-items: center;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 18px;
-        color: rgba(0, 0, 0, 0.62);
-        @media (max-width: 767.98px) {
-            font-size: 16px;
-            line-height: 23px;
-            color: #818c99;
-        }
         span {
             margin: 0 3px;
             font-weight: 700;

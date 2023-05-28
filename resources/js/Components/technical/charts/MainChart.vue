@@ -20,7 +20,7 @@
                                 :key="aboutItem.id"
                                 class="graph-ia__item"
                             >
-                                <div class="graph-ia__item_title">
+                                <div class="text text-black">
                                     {{ aboutItem.title }}
                                 </div>
                                 <div class="graph-ia__item_text">
@@ -299,13 +299,8 @@ export default {
             align-items: start;
         }
         // .graph-ia__item_title
-        &_title {
+        .text {
             flex: 1 0 50%;
-            font-style: normal;
-            font-weight: 300;
-            font-size: 16px;
-            line-height: 158.1%;
-            color: #000000;
             max-width: 230px;
             @media (max-width: 767.98px) {
                 font-size: 15px;

@@ -6,7 +6,10 @@
                     <div class="panel-am__title" v-scroll="'left delay--md'">
                         {{ $t("panel.title") }}
                     </div>
-                    <div class="panel-am__text" v-scroll="'left delay--lg'">
+                    <div
+                        class="text text-md text-black"
+                        v-scroll="'left delay--lg'"
+                    >
                         {{ $t("panel.text") }}
                     </div>
                 </div>
@@ -31,7 +34,7 @@ export default {
     computed: {
         img() {
             return new URL(
-                `../../../assets/img/${this.$t("panel.img")}.png`,
+                `/resources/assets/img/${this.$t("panel.img")}.png`,
                 import.meta.url
             );
         },
@@ -105,18 +108,9 @@ export default {
         }
     }
     // .panel-am__text
-    &__text {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 18px;
-        line-height: 181.1%;
-        color: #000000;
+    .text {
         @media (max-width: 991.98px) {
             text-align: center;
-        }
-        @media (max-width: 767.98px) {
-            font-size: 16px;
-            line-height: 148.1%;
         }
     }
     // .panel-am__image

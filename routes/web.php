@@ -77,7 +77,7 @@ Route::controller(VerificationController::class)
 Route::controller(RequestController::class)
     ->group(function () {
         Route::put('/proxy', 'proxy_front')->name('proxy');
-        Route::get('/difficulty', 'getDifficultyData')->name('difficulty');
+        Route::put('/proxy_diff', 'proxy_diff')->name('proxy_diff');
     });
 
 Route::middleware('auth')->group(function () {

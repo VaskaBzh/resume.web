@@ -25,6 +25,19 @@ export default {
 .title {
     font-family: AmpleSoftPro, serif;
     font-style: normal;
+    &.profile {
+        margin: 0 0 24px;
+        @media (min-width: 1271.98px) {
+            padding-left: 70px;
+        }
+        @media (max-width: 767.98px) {
+            margin-bottom: 18px;
+        }
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+    }
 }
 
 h1 {

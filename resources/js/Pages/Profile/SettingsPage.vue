@@ -10,7 +10,7 @@
     <!--        </div>-->
     <!--    </div>-->
     <div class="settings" ref="page">
-        <main-title tag="h2" :title-name="$t('settings.title')"></main-title>
+        <main-title tag="h2" class="profile" :title-name="$t('settings.title')"></main-title>
         <div class="settings__wrap settings__wrap-adapt wrap">
             <div class="settings__column">
                 <main-title
@@ -330,15 +330,6 @@ export default {
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
-    }
-    .title {
-        margin: 0 0 16px;
-        @media (min-width: 1271.98px) {
-            padding-left: 70px;
-        }
-        @media (max-width: 767.98px) {
-            margin-bottom: 18px;
-        }
     }
     .form_wrapper-message {
         position: relative;

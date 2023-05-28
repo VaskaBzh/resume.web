@@ -1,14 +1,20 @@
-import axios from "axios";
 import Vue from "lodash";
+import difficulty from "@/api/difficulty";
+import btccom from "@/api/btccom";
 
 export default {
     actions: {
-        // https://pool.btc.com/v1/coins-income?puid=781195
         async getDiff({ commit, state }, data) {
-            axios
-                .get(
-                    "https://pool.api.btc.com/v1/coins-income?lang=ru&puid=781195"
-                )
+            btccom
+                .fetch({
+                    data: {
+                        lang: "ru",
+                        puid: 781195,
+                    },
+                    path: "coins-income",
+                    method: "get",
+                    link_type: "",
+                })
                 .then((res) => {
                     Object.values(res.data.data).forEach((el, i) => {
                         if (Object.keys(res.data.data)[i] === "btc") {
@@ -22,14 +28,27 @@ export default {
                 });
         },
         async getConverter({ commit, state }) {
-            axios
-                .get("/difficulty")
+            difficulty
+                .fetch({
+                    data: {
+                        format: "json",
+                        timespan: "all",
+                    },
+                    path: "https://api.blockchain.info/charts/difficulty",
+                    method: "get",
+                    link_type: "",
+                })
                 .then((res) => {
                     commit(`updateHistoryDiff`, res.data.values);
                 })
                 .catch((err) => console.log(err));
-            axios
-                .get("https://pool.api.btc.com/v1/pool/status/")
+            btccom
+                .fetch({
+                    data: {},
+                    path: "pool/status",
+                    method: "get",
+                    link_type: "",
+                })
                 .then(async (response) => {
                     let converterModel = {
                         diff: 0,
@@ -59,8 +78,15 @@ export default {
                 });
         },
         async getReward({ commit, state }, data) {
-            axios
-                .get("https://api.minerstat.com/v2/coins?list=BTC,BCH")
+            difficulty
+                .fetch({
+                    data: {
+                        list: "BTC,BCH",
+                    },
+                    path: "https://api.minerstat.com/v2/coins",
+                    method: "get",
+                    link_type: "",
+                })
                 .then((response) => {
                     response.data.forEach((el, i) => {
                         if (el.coin === "BTC") {

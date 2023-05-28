@@ -111,12 +111,15 @@ export default {
         table: Object,
         type: String,
         wait: Object,
+        rowsNum: {
+            type: Number,
+            default: 10,
+        },
     },
     data() {
         return {
             viewportWidth: 0,
             firstRow: 0,
-            rows: 10,
             slides: 1,
             slide: 1,
             firstPages: [1, 2, 3, 4, 5],
@@ -128,6 +131,9 @@ export default {
         this.handleResize();
     },
     computed: {
+        rows() {
+            return this.rowsNum;
+        },
         startRow() {
             return this.firstRow + 1;
         },

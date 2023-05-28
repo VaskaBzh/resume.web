@@ -5,7 +5,7 @@
         </div>
     </div>
     <div class="wallets" ref="page">
-        <main-title tag="h2"
+        <main-title tag="h2" class="profile"
             >{{ $t("wallets.title") }}
             <!--                <blue-button class="wallets__button wallets__button-history">-->
             <!--                    <Link :href="route('income')"> Доходы </Link>-->
@@ -31,8 +31,8 @@
                 </svg>
             </span>
         </main-title>
-        <div ref="wallets" class="wallets__wrap">
-            <h3 class="wallets__title">
+        <div ref="wallets" class="wrap">
+            <main-title tag="h3" class="wrap_title">
                 {{ $t("wallets.block.title") }}
                 <main-checkbox
                     class="wallets__filter"
@@ -40,7 +40,7 @@
                 >
                     {{ $t("wallets.block.filter") }}
                 </main-checkbox>
-            </h3>
+            </main-title>
             <no-info
                 ref="noInfo"
                 :wait="this.getWallet"
@@ -84,10 +84,9 @@
             </div>
         </div>
         <form @submit.prevent="this.change" class="form form-popup popup__form">
-            <main-title
-                tag="h3"
-                :title-name="$t('wallets.popups.change.title')"
-            />
+            <main-title tag="h3">
+                {{ $t("wallets.popups.change.title") }}
+            </main-title>
             <input
                 v-model="formChg.name"
                 autofocus
@@ -176,7 +175,9 @@
             @submit.prevent="this.addWallet"
             class="form form-popup popup__form"
         >
-            <main-title tag="h3" :title-name="$t('wallets.popups.add.title')" />
+            <main-title tag="h3">{{
+                $t("wallets.popups.add.title")
+            }}</main-title>
             <input
                 v-model="form.wallet"
                 required
@@ -574,28 +575,9 @@ export default {
         line-height: 23px;
         font-size: 16px;
         color: #99acd3;
-        @media (max-width: 767.98px) {
-            position: absolute;
-            left: 0;
-            bottom: calc(-40px - 100%);
-        }
         @media (max-width: 479.98px) {
             width: 100%;
         }
-    }
-
-    .title {
-        margin: 0 0 24px;
-        @media (min-width: 1271.98px) {
-            padding-left: 70px;
-        }
-        @media (max-width: 767.98px) {
-            margin-bottom: 18px;
-        }
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
     }
 
     &__list {
@@ -621,132 +603,6 @@ export default {
 
     // .wallets__button
     &__button {
-        //color: #68809d !important;
-        //background: #fff !important;
-        //min-width: 179px;
-        //box-shadow: none;
-        //transform: translate(0, 0);
-        //max-height: 51px;
-        //gap: 10px;
-        //@media (max-width: 991.98px) {
-        //    min-width: 160px;
-        //    height: 38px;
-        //}
-        //@media (max-width: 767.98px) {
-        //    font-size: 18px !important;
-        //    line-height: 22px !important;
-        //    width: 100% !important;
-        //    min-width: 120px;
-        //    &:before {
-        //        content: none;
-        //    }
-        //}
-        //@media (max-width: 479.98px) {
-        //    flex-direction: column;
-        //    gap: 6px;
-        //    min-height: 54px;
-        //    min-width: 0;
-        //    font-size: 12px !important;
-        //    line-height: 14px !important;
-        //    padding: 0;
-        //}
-        //
-        //&:first-child {
-        //    margin-left: 0;
-        //}
-        //
-        //svg {
-        //    stroke: #68809d;
-        //    transition: all 0.3s ease;
-        //    @media (max-width: 767.98px) {
-        //        width: 20px;
-        //        height: 20px;
-        //        stroke: #68809d;
-        //        margin-right: 6px;
-        //    }
-        //    @media (max-width: 479.98px) {
-        //        margin: 0;
-        //    }
-        //}
-        //
-        //&::before {
-        //    z-index: -1;
-        //    content: "";
-        //    position: absolute;
-        //    background: transparent;
-        //    border-radius: 10px;
-        //    width: 100%;
-        //    height: 100%;
-        //    top: 0;
-        //    left: 0;
-        //    transition: all 0.3s ease 0s;
-        //    @media (max-width: 767.98px) {
-        //        background: #fff;
-        //    }
-        //}
-        //
-        //@media (any-hover: hover) {
-        //    &:hover {
-        //        background-color: #4182ec !important;
-        //        color: #fff !important;
-        //
-        //        &:before {
-        //            background: linear-gradient(
-        //                84.14deg,
-        //                rgba(63, 123, 221, 0.27) 8.75%,
-        //                rgba(66, 130, 236, 0.27) 92.01%
-        //            );
-        //        }
-        //
-        //        svg {
-        //            stroke: #fff;
-        //        }
-        //    }
-        //}
-        // .wallets__button-history
-        //&-history {
-        //    min-height: 51px;
-        //    color: #fff;
-        //    background-color: #4182ec;
-        //    min-width: 210px;
-        //    padding: 0;
-        //
-        //    &:before {
-        //        background: linear-gradient(
-        //            84.14deg,
-        //            rgba(63, 123, 221, 0.27) 8.75%,
-        //            rgba(66, 130, 236, 0.27) 92.01%
-        //        );
-        //    }
-        //
-        //    a {
-        //        width: 100%;
-        //        height: 100%;
-        //        display: inline-flex;
-        //        align-items: center;
-        //        justify-content: center;
-        //    }
-        //
-        //    @media (min-width: 767.98px) {
-        //        font-size: 20px;
-        //        line-height: 28px;
-        //    }
-        //    @media (max-width: 767.98px) {
-        //        width: auto;
-        //        min-height: 48px;
-        //        min-width: 150px;
-        //        &:before {
-        //            content: none;
-        //        }
-        //    }
-        //    @media (max-width: 479.98px) {
-        //        min-height: 28px;
-        //        height: auto;
-        //        font-size: 14px;
-        //        line-height: 20px;
-        //        min-width: 90px;
-        //    }
-        //}&__button {
         width: 60px;
         height: 44px;
         border-radius: 13px;
@@ -811,27 +667,26 @@ export default {
     }
 
     // .wallets__wrap
-    &__wrap {
+    .wrap {
         margin-bottom: 40px;
-        background: rgba(255, 255, 255, 0.29);
-        border-radius: 21px;
-        width: 100%;
-        padding: 24px 16px;
-        @media (max-width: 1270px) {
-            padding: 20px;
-        }
-        @media (max-width: 767.98px) {
-            margin: 0 -15px 20px;
-            width: calc(100% + 30px);
-        }
-        @media (max-width: 479.98px) {
-            margin: 0 -20px 20px;
-            width: calc(100% + 40px);
-        }
 
         &:last-child {
             margin-bottom: 0;
             transition: all 0.3s ease;
+        }
+
+        &_title {
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            @media (max-width: 767.98px) {
+                margin-bottom: 0;
+                &:after {
+                    content: none;
+                }
+                flex-wrap: wrap;
+                gap: 12px;
+            }
         }
     }
 
@@ -850,71 +705,6 @@ export default {
             }
         }
     }
-    // .wallets__row
-    &__row {
-        width: 100%;
-        display: flex;
-        gap: 16px;
-        @media (max-width: 767.98px) {
-            flex-direction: column;
-            gap: 0;
-            background-color: #fff;
-            border: 0.5px solid rgba(0, 0, 0, 0.08);
-            border-radius: 8px;
-            padding: 4px 10px;
-        }
-        @media (max-width: 767.98px) {
-            .wallets__block {
-                padding: 10px 0 10px;
-                border-top: 1px solid #d7d8d9;
-                border-radius: 0;
-
-                &:last-child {
-                    padding: 10px 0 0;
-                }
-
-                &:first-child {
-                    border-top: none;
-                    padding: 0 0 10px;
-                }
-            }
-        }
-        // .wallets__row-balance
-        &-balance {
-            gap: 0;
-            justify-content: space-between;
-            margin-bottom: 16px;
-            h3 {
-                margin-bottom: 0;
-                @media (max-width: 767.98px) {
-                    margin-bottom: 30px !important;
-                }
-            }
-            @media (max-width: 767.98px) {
-                background-color: transparent;
-                padding: 0;
-                border: none;
-                .wallets__column {
-                    gap: 0;
-                    background-color: #fff;
-                    border: 0.5px solid rgba(0, 0, 0, 0.08);
-                    border-radius: 8px;
-                    padding: 10px 10px;
-                    margin-bottom: 10px;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                }
-            }
-            @media (max-width: 479.98px) {
-                .wallets__column {
-                    padding: 4px 10px;
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-            }
-        }
-    }
 
     // .wallets__column
     &__column {
@@ -929,41 +719,6 @@ export default {
             gap: 0;
             flex-direction: column;
             align-items: flex-start;
-        }
-    }
-
-    // .wallets__subtitle
-    &__subtitle {
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 26px;
-        color: rgba(0, 0, 0, 0.62);
-        margin-bottom: 8px;
-        @media (max-width: 767.98px) {
-            margin-bottom: 0;
-            font-size: 14px;
-            line-height: 20px;
-            font-weight: 400;
-        }
-    }
-
-    // .wallets__value
-    &__value {
-        color: #000034;
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 34px;
-        @media (max-width: 767.98px) {
-            margin-left: 5px;
-            font-size: 21px;
-            line-height: 30px;
-        }
-        @media (max-width: 479.98px) {
-            margin-left: 0;
-        }
-
-        span {
-            font-weight: 700;
         }
     }
 

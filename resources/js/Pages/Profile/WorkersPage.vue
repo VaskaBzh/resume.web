@@ -1,8 +1,8 @@
 <template>
     <Head :title="$t('workers.title')" />
-    <div class="workers">
+    <div class="workers profile">
         <div class="workers__wrapper">
-            <main-title tag="h2" enter-class="workers__title">
+            <main-title tag="h2" class="workers__title">
                 {{ $t("workers.title") }}
                 <span class="workers__button" data-popup="#connect">
                     <svg
@@ -229,10 +229,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .workers {
-    width: 100%;
-    @media (min-width: 1271px) {
-        padding-left: 310px;
-    }
     .title {
         display: flex;
         width: 100%;

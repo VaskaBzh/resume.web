@@ -1,0 +1,11 @@
+.description {
+    font-weight: 300;
+    font-size: 21px;
+    line-height: 143.1%;
+    color: #000000;
+    @media (max-width: $mobile) {
+        text-align: center;
+        font-size: 16px;
+        line-height: 148.6%;
+    }
+}

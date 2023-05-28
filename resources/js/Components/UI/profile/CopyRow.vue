@@ -1,5 +1,5 @@
 <template>
-    <div class="copy">
+    <div class="text text-md">
         {{ this.copyObject.title }}:
         <div class="copy_row" @click="this.copyLink" ref="link">
             {{ this.copyObject.link }}
@@ -40,24 +40,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.copy {
+.text {
     display: inline-flex;
     align-items: center;
-    font-weight: 400;
-    font-size: 18px;
-    line-height: 18px;
-    color: rgba(0, 0, 0, 0.62);
     position: relative;
     cursor: pointer;
     @media (max-width: 767.98px) {
         color: rgba(0, 0, 0, 0.62);
     }
     @media (max-width: 767.98px) {
-        align-items: center;
-        font-size: 16px;
-        line-height: 23px;
         color: #818c99;
+        align-items: center;
     }
+}
+.copy {
     &-button {
         width: 24px;
         height: 24px;

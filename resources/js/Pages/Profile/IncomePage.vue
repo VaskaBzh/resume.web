@@ -1,13 +1,13 @@
 <template>
     <div class="income" ref="page">
-        <main-title v-if="this.viewportWidth > 767.98" tag="h2">
+        <main-title class="profile" v-if="this.viewportWidth > 767.98" tag="h2">
             {{ $t("income.title") }}
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
             <!--                </blue-button>-->
         </main-title>
 
-        <main-title v-else tag="h2">
+        <main-title class="profile" v-else tag="h2">
             {{ $t("income.title") }}
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
@@ -15,9 +15,9 @@
         </main-title>
         <div class="wallets__wrap">
             <div class="wallets__row wallets__row-balance">
-                <h3 class="wallets__title">
+                <main-title tag="h3" class="wallets__title">
                     {{ $t("income.income_info.title") }}:
-                </h3>
+                </main-title>
             </div>
             <div class="wallets__row">
                 <div class="wallets__block">
@@ -95,19 +95,19 @@
             :wait="this.allIncomeHistory"
             :table="this.incomeInfo"
             type="Платежи"
+            rowsNum="10"
         ></main-slider>
     </div>
 </template>
 <script>
-import MainSlider from "@/components/technical/MainSlider.vue";
+import MainSlider from "@/Components/technical/MainSlider.vue";
 import MainSelect from "@/Components/UI/MainSelect.vue";
-import MainTitle from "@/components/UI/MainTitle.vue";
-import BlueButton from "@/components/UI/BlueButton.vue";
-import MainDate from "@/components/UI/MainDate.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
+import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainDate from "@/Components/UI/MainDate.vue";
 import { Link, router } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import { ref } from "vue";
 import Vue from "lodash";
 
 export default {
@@ -390,20 +390,6 @@ export default {
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
-    }
-
-    .title {
-        margin: 0 0 24px;
-        width: 100%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: space-between;
-        @media (min-width: 1271.98px) {
-            padding-left: 70px;
-        }
-        @media (max-width: 767.98px) {
-            margin-bottom: 18px;
-        }
     }
 
     // .income__button

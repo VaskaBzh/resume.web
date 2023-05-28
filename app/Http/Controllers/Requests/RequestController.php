@@ -49,14 +49,29 @@ class RequestController extends Controller
         )->getContent();
     }
 
-    public function getDifficultyData()
+    public function proxy_diff(Request $request)
     {
-        $response = Http::get('https://api.blockchain.info/charts/difficulty?format=json&timespan=all');
+        $request->validate([
+            "path" => "required",
+            "type" => "required",
+        ]);
 
-        if ($response->successful()) {
-            return $response->json();
+        $url = $request->input("path") . '?' . http_build_query($request->input("data"));
+        if ($request->input("type") === "get") {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json; charset=utf-8',
+            ])->get($url);
+        } else {
+            $response = Http::withHeaders([
+                'Content-Type' => 'application/json; charset=utf-8',
+            ])->post($url, $request->input("data"));
         }
 
-        return response()->json(['error' => 'Failed to fetch data'], 500);
+        return response($response->body())
+            ->header('Content-Type', 'application/json')
+            ->header('Access-Control-Allow-Origin', '*')
+            ->header('Access-Control-Allow-Methods', 'GET, PUT, POST, DELETE, HEAD, OPTIONS')
+            ->header('Access-Control-Allow-Credentials', 'true')
+            ->getContent();
     }
 }

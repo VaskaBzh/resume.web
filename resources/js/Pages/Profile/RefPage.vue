@@ -4,8 +4,7 @@
             <div class="ref__section">
                 <main-title
                     tag="h2"
-                    titleName="Реферальная программа"
-                ></main-title>
+                >Реферальная программа</main-title>
                 <div class="ref__block">
                     <div class="ref__wrap wrap">
                         <main-title

@@ -1,0 +1,38 @@
+.text {
+    font-style: normal;
+    font-weight: 300;
+    font-size: 16px;
+    line-height: 148.1%;
+    color: rgba(0, 0, 0, 0.62);
+    &-lg {
+        font-size: 20px;
+        line-height: 181.1%;
+        @media (max-width: $mobile) {
+            font-size: 16px;
+            line-height: 148.1%;
+        }
+    }
+    &-md {
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 143.1%;
+        @media (max-width: $mobile) {
+            font-size: 16px;
+            line-height: 23px;
+        }
+        @media (max-width: $mobileSmall) {
+            font-size: 10px;
+        }
+    }
+    &-sm {
+        font-size: 14px;
+        line-height: 143.1%;
+        @media (max-width: $mobile) {
+            font-size: 16px;
+            line-height: 148.1%;
+        }
+    }
+    &-black {
+        color: #000000;
+    }
+}

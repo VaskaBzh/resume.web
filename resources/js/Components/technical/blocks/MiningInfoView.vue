@@ -73,7 +73,7 @@
                                     {{ $t("info.blocks[0].title") }}
                                 </div>
                             </div>
-                            <div class="mining-im__item_text">
+                            <div class="text">
                                 {{ $t("info.blocks[0].text") }}
                             </div>
                         </li>
@@ -88,7 +88,7 @@
                                     {{ $t("info.blocks[1].title") }}
                                 </div>
                             </div>
-                            <div class="mining-im__item_text">
+                            <div class="text">
                                 {{ $t("info.blocks[1].text") }}
                             </div>
                         </li>
@@ -103,7 +103,7 @@
                                     {{ $t("info.blocks[2].title") }}
                                 </div>
                             </div>
-                            <div class="mining-im__item_text">
+                            <div class="text">
                                 {{ $t("info.blocks[2].text") }}
                             </div>
                         </li>
@@ -118,7 +118,7 @@
                                     {{ $t("info.blocks[3].title") }}
                                 </div>
                             </div>
-                            <div class="mining-im__item_text">
+                            <div class="text">
                                 {{ $t("info.blocks[3].text") }}
                             </div>
                         </li>
@@ -291,14 +291,6 @@ export default {
             font-size: 22px;
             line-height: 107.6%;
             color: #000034;
-        }
-        // .mining-im__item_text
-        &_text {
-            font-style: normal;
-            font-weight: 300;
-            font-size: 16px;
-            line-height: 148.1%;
-            color: rgba(0, 0, 0, 0.62);
         }
     }
 }

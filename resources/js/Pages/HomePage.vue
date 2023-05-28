@@ -1,4 +1,5 @@
-|<template>
+|
+<template>
     <Head title="Главная Allbtc" />
     <div class="home">
         <div class="home__container">
@@ -11,7 +12,7 @@
                     >
                         {{ $t("home.title") }}
                     </main-title>
-                    <div class="home__span" v-scroll="'left'">
+                    <div class="description" v-scroll="'left'">
                         {{ $t("home.text") }}
                     </div>
                     <blue-button
@@ -68,8 +69,8 @@
                 </div>
             </div>
             <div class="home__info">
-                <div class="home__info_main home-im bagr-t">
-                    <div class="home-im__main" v-scroll="'left'">
+                <div class="home__info_main home-im wrap wrap-no-overflow">
+                    <div class="home-im__main wrap__block" v-scroll="'left'">
                         <blue-button
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
@@ -95,7 +96,7 @@
                             <p class="home-im__title">Bitcoin</p>
                             <ul class="home-im__content_list">
                                 <li class="home-im__content_item">
-                                    <p class="item_span">
+                                    <p class="text">
                                         {{ $t("home.bitcoin_block.network") }}
                                     </p>
                                     <div class="item_info bgb">
@@ -116,7 +117,7 @@
                                     </div>
                                 </li>
                                 <li class="home-im__content_item">
-                                    <p class="item_span">
+                                    <p class="text">
                                         {{ $t("home.bitcoin_block.next_diff") }}
                                     </p>
                                     <div class="item_info bgb">
@@ -154,7 +155,7 @@
                             </ul>
 
                             <div class="home-im__content_date">
-                                <p class="item_span">
+                                <p class="text">
                                     {{ $t("home.bitcoin_block.date_diff[0]") }}
                                 </p>
                                 <div
@@ -222,15 +223,15 @@
                     </div>
                     <div class="home-in__row">
                         <div
-                            class="home-in__row_item home-inri"
+                            class="home-in__row_item home-inri wrap__block"
                             v-scroll="'left important--delay'"
                         >
                             <div class="home-inri__image mon"></div>
                             <div class="home-inri__content">
-                                <h4 class="home-inri__title">
+                                <main-title tag="h4" class="home-inri__title">
                                     {{ $t("home.promo_blocks.payment.title") }}
-                                </h4>
-                                <div class="home-inri__text">
+                                </main-title>
+                                <div class="text">
                                     {{ $t("home.promo_blocks.payment.text") }}
                                 </div>
                                 <Link
@@ -277,15 +278,15 @@
                             </div>
                         </div>
                         <div
-                            class="home-in__row_item home-inri asic__con"
+                            class="home-in__row_item home-inri asic__con wrap__block"
                             v-scroll="'left important--delay--md'"
                         >
                             <div class="home-inri__image asic"></div>
                             <div class="home-inri__content">
-                                <h4 class="home-inri__title">
+                                <main-title tag="h4" class="home-inri__title">
                                     {{ $t("home.promo_blocks.fpps.title") }}
-                                </h4>
-                                <div class="home-inri__text">
+                                </main-title>
+                                <div class="text">
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
                                 <a href="#" class="home-inri__link"
@@ -365,11 +366,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.bagr-t {
-    @media (max-width: 479.98px) {
-        margin: 0 -15px;
-    }
-}
 .home {
     margin-bottom: 100px;
     @media (max-width: 1270px) {
@@ -418,13 +414,7 @@ export default {
             line-height: 107.6%;
         }
     }
-    // .home__span
-    &__span {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 21px;
-        line-height: 143.1%;
-        color: #000000;
+    .description {
         margin-bottom: 36px;
         @media (max-width: 1270px) {
             margin-bottom: 28px;
@@ -711,20 +701,13 @@ export default {
     }
 }
 .home-im {
-    background: rgba(255, 255, 255, 0.29);
-    border-radius: 21px;
-    padding: 17px;
     // .home-im__main
     &__main {
         position: relative;
-        background: #ffffff;
-        border-radius: 21px;
         padding: 70px;
-        display: flex;
         align-items: end;
         gap: 100px;
         justify-content: space-between;
-        margin-bottom: 17px;
         .blue-button {
             min-width: 222px;
             margin-bottom: 0;
@@ -801,6 +784,9 @@ export default {
         flex-direction: column;
         gap: 12px;
         flex: 0 1 50%;
+        .text {
+            margin-bottom: 6px;
+        }
         .blue-button {
             min-width: 222px;
             margin-bottom: 0;
@@ -888,15 +874,6 @@ export default {
     }
 }
 .item {
-    // .item_span
-    &_span {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 16px;
-        line-height: 143.1%;
-        color: rgba(0, 0, 0, 0.55);
-        margin-bottom: 12px;
-    }
     // .item_info
     &_info {
         font-family: AmpleSoftPro, serif;
@@ -962,16 +939,15 @@ export default {
         }
         // .home-in__row_item
         &_item {
-            background: #ffffff;
-            border-radius: 21px;
             transition: all 0.3s ease 0s;
+            padding: 0;
             @media (any-hover: hover) {
                 &:hover {
                     background: #3f65b3;
                     & .home-inri__title {
                         color: #ffffff;
                     }
-                    & .home-inri__text {
+                    & .text {
                         color: rgba(255, 255, 255, 0.68);
                     }
                     & .home-inri__link {
@@ -987,7 +963,7 @@ export default {
                 & .home-inri__title {
                     color: #ffffff;
                 }
-                & .home-inri__text {
+                & .text {
                     color: rgba(255, 255, 255, 0.68);
                 }
                 & .home-inri__link {
@@ -1001,7 +977,7 @@ export default {
                     & .home-inri__title {
                         color: #000034;
                     }
-                    & .home-inri__text {
+                    & .text {
                         color: rgba(0, 0, 0, 0.62);
                     }
                     & .home-inri__link {
@@ -1092,7 +1068,15 @@ export default {
             flex: 0 0 70%;
         }
         @media (max-width: 479.98px) {
+            flex: 0;
             padding: 0px 30px 36px;
+        }
+        .text {
+            margin-bottom: 26px;
+            transition: all 0.5s ease 0s;
+            @media (max-width: 479.98px) {
+                margin-bottom: 16px;
+            }
         }
     }
 
@@ -1110,19 +1094,6 @@ export default {
             font-size: 22px;
             line-height: 100%;
             margin-bottom: 10px;
-        }
-    }
-    // .home-inri__text
-    &__text {
-        font-style: normal;
-        font-weight: 300;
-        font-size: 16px;
-        line-height: 143.1%;
-        color: rgba(0, 0, 0, 0.62);
-        margin-bottom: 26px;
-        transition: all 0.5s ease 0s;
-        @media (max-width: 479.98px) {
-            margin-bottom: 16px;
         }
     }
     // .home-inri__link
@@ -1168,8 +1139,5 @@ export default {
 .all-link {
     position: relative;
     z-index: 5;
-}
-.blue-button {
-    margin-bottom: 10px;
 }
 </style>

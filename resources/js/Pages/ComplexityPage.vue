@@ -7,7 +7,7 @@
                     <main-title tag="h1" class="complexity__title">
                         {{ $t("complexity.title") }}
                     </main-title>
-                    <div class="complexity__text main__text">
+                    <div class="description">
                         {{ $t("complexity.text") }}
                     </div>
                 </div>
@@ -156,14 +156,6 @@ export default {
             margin-top: 32px;
             text-align: center;
             margin-bottom: 10px;
-        }
-    }
-    // .complexity__text
-    &__text {
-        @media (max-width: 767.98px) {
-            text-align: center;
-            font-size: 16px;
-            line-height: 148.6%;
         }
     }
     // .complexity__image

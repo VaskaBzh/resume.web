@@ -1,6 +1,6 @@
 <template>
     <Head :title="$t('statistic.title')" />
-    <div class="statistic">
+    <div class="statistic profile">
         <div class="statistic__wrapper">
             <main-title tag="h2" class="statistic__title">
                 {{ $t("statistic.title") }}
@@ -18,7 +18,7 @@
                 "
             >
                 <div class="wrap__head wrap__head-graph">
-                    <main-title tag="h3" class="statistic__wrap_title">
+                    <main-title tag="h3">
                         {{ $t("statistic.chart.title") }}
                     </main-title>
                     <div class="buttons">
@@ -61,7 +61,7 @@
                 </div>
             </div>
             <div class="wrap">
-                <main-title tag="h3" class="statistic__wrap_title">
+                <main-title tag="h3">
                     {{ $t("statistic.info_blocks.title") }}
                 </main-title>
                 <div class="statistic__block">
@@ -391,10 +391,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .statistic {
-    @media (min-width: 1271px) {
-        padding-left: 310px;
-    }
-    width: 100%;
     .wrap {
         .title {
             width: 100%;
@@ -523,9 +519,6 @@ export default {
                         width: 100%;
                         background-color: #d7d8d9;
                     }
-                }
-                @media (min-width: 767.98px) {
-                    margin-bottom: 12px;
                 }
                 @media (max-width: 479.98px) {
                     flex-wrap: wrap;
@@ -680,13 +673,6 @@ export default {
         //animation: shadowDown 0.3s ease forwards;
         @media (max-width: 479.98px) {
             margin-bottom: 0;
-        }
-    }
-    &__wrap {
-        &_title {
-            @media (min-width: 767.98px) {
-                margin-bottom: 12px;
-            }
         }
     }
     &__block {

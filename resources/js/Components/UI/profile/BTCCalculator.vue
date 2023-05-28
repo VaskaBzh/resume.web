@@ -39,8 +39,8 @@
         </div>
         <span class="BTC__title main__name">{{ title }}</span>
         <div class="BTC__value main__number">
-            <span class="main__number">{{ value }} BTC</span
-            ><span>{{ dollarCalc.toFixed(2) }} $</span>
+            {{ value }} BTC
+            <span>{{ dollarCalc.toFixed(2) }} $</span>
             <span>{{ rubleCalc.toFixed(2) }} ₽</span>
         </div>
     </div>
@@ -196,10 +196,6 @@ export default {
             &:first-child {
                 @media (max-width: 479.98px) {
                     width: 100%;
-                }
-
-                &::before {
-                    content: none;
                 }
             }
 

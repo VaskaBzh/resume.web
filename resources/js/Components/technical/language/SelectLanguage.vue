@@ -50,7 +50,6 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import anime from "animejs";
 
 export default {
     name: "select-language",

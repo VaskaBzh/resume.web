@@ -50,7 +50,6 @@ export default {
 .checkbox {
     display: flex;
     align-items: center;
-    margin-left: auto;
     font-weight: 400;
     font-size: 20px;
     line-height: 28.62px;
@@ -58,6 +57,7 @@ export default {
     position: relative;
     user-select: none;
     cursor: pointer;
+    gap: 12px;
     @media (max-width: 767.98px) {
         font-size: 16px;
         line-height: 24px;
@@ -65,6 +65,7 @@ export default {
     @media (max-width: 479.98px) {
         font-size: 14px;
         line-height: 20px;
+        justify-content: space-between;
     }
     &::after {
         content: "";
@@ -73,9 +74,7 @@ export default {
         height: 28px;
         background: rgba(194, 213, 242, 0.61);
         border-radius: 32px;
-        margin-left: 12px;
         @media (max-width: 479.98px) {
-            margin-left: auto;
             width: 37px;
             height: 20px;
         }

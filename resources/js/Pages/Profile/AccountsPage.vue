@@ -10,7 +10,7 @@
     <!--            {{ error }}-->
     <!--        </div>-->
     <!--    </div>-->
-    <div class="accounts">
+    <div class="accounts profile">
         <div class="accounts__wrapper">
             <main-title tag="h2" class="accounts__title">
                 {{ $t("accounts.title") }}
@@ -329,10 +329,6 @@ export default {
 
 <style lang="scss" scoped>
 .accounts {
-    width: 100%;
-    @media (min-width: 1271px) {
-        padding-left: 310px;
-    }
     &__wrapper {
         width: 100%;
     }

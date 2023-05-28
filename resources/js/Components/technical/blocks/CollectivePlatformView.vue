@@ -9,9 +9,9 @@
                         alt=""
                     />
                 </div>
-                <h2 class="platform-c__title">
+                <main-title tag="h2" class="platform-c__title">
                     {{ $t("platform.title") }}
-                </h2>
+                </main-title>
                 <ul v-if="viewportWidth >= 767.98" class="platform-c__list">
                     <li class="platform-c__item">
                         <div class="platform-c__item_image_con">
@@ -25,7 +25,7 @@
                         <div class="platform-c__item_title">
                             {{ $t("platform.blocks[0].title") }}
                         </div>
-                        <div class="platform-c__item_text">
+                        <div class="text">
                             {{ $t("platform.blocks[0].text") }}
                         </div>
                     </li>
@@ -41,7 +41,7 @@
                         <div class="platform-c__item_title">
                             {{ $t("platform.blocks[1].title") }}
                         </div>
-                        <div class="platform-c__item_text">
+                        <div class="text">
                             {{ $t("platform.blocks[1].text") }}
                         </div>
                     </li>
@@ -57,7 +57,7 @@
                         <div class="platform-c__item_title">
                             {{ $t("platform.blocks[2].title") }}
                         </div>
-                        <div class="platform-c__item_text">
+                        <div class="text">
                             {{ $t("platform.blocks[2].text") }}
                         </div>
                     </li>
@@ -81,7 +81,7 @@
                         <div class="platform-c__item_title">
                             Безопасный и прозрачный
                         </div>
-                        <div class="platform-c__item_text">
+                        <div class="text">
                             Хешрейт отображается в режиме реального времени,
                             пока команда безопасности Allbtc защищает ваши
                             активы
@@ -98,7 +98,7 @@
                         <div class="platform-c__item_title">
                             Стабильный заработок
                         </div>
-                        <div class="platform-c__item_text">
+                        <div class="text">
                             Используя модель FPPS+ и мгновенные расчеты, вы
                             можете избежать колебаний заработка
                         </div>
@@ -114,7 +114,7 @@
                         <div class="platform-c__item_title">
                             Комплексное обслуживание
                         </div>
-                        <div class="platform-c__item_text">
+                        <div class="text">
                             Наше комплексное обслуживание направлено на
                             повышение доходов майнеров, сокращение разрыва между
                             добычей полезных ископаемых и трейдингом, а также
@@ -133,6 +133,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
 import "swiper/css/pagination";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
     data() {
@@ -152,6 +153,7 @@ export default {
     components: {
         Swiper,
         SwiperSlide,
+        MainTitle,
     },
     setup() {
         return {
@@ -259,16 +261,8 @@ export default {
             }
         }
         // .platform-c__item_text
-        &_text {
-            font-style: normal;
-            font-weight: 300;
-            font-size: 16px;
-            line-height: 148.1%;
-            color: rgba(0, 0, 0, 0.62);
+        .text {
             text-align: center;
-            @media (max-width: 991.98px) {
-                text-align: center;
-            }
             @media (max-width: 767.98px) {
                 align-self: center;
             }

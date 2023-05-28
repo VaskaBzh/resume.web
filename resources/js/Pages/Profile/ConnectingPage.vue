@@ -1,6 +1,6 @@
 <template>
     <Head :title="$t('connection.title')" />
-    <div class="connecting">
+    <div class="connecting profile">
         <div class="connecting__wrapper">
             <main-title tag="h2">{{
                 $t("connection.title")
@@ -65,10 +65,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .connecting {
-    @media (min-width: 1271px) {
-        padding-left: 310px;
-    }
-    width: 100%;
     .title {
         margin-bottom: 16px;
         @media (max-width: 767.98px) {

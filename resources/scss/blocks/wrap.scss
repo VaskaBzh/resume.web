@@ -1,7 +1,7 @@
 // Кастомные стили для оболочки
 .wrap {
     width: 100%;
-    padding: 24px 16px;
+    padding: 16px;
     background: rgba(255, 255, 255, 0.29);
     border-radius: 21px;
     display: flex;
@@ -9,6 +9,7 @@
     margin-bottom: 30px;
     overflow-y: hidden;
     border: 1px solid #fff;
+    gap: 16px;
     .main__link {
         margin-top: calc(24px - 8px);
         line-height: 26px;
@@ -55,14 +56,7 @@
         }
     }
     &-no-overflow {
-        @media (min-width: 991.98px) {
-            .wrap {
-                overflow: visible;
-                &-overflow {
-                    overflow: visible;
-                }
-            }
-        }
+        overflow: visible;
     }
     &__block {
         background: #ffffff;
@@ -197,16 +191,8 @@
             padding: 0 20px;
         }
     }
-    @media (max-width: $pc) {
-        padding: 20px;
-    }
     @media (max-width: $mobile) {
-        margin: 0 -15px 20px;
-        width: calc(100% + 30px);
-    }
-    @media (max-width: $mobileSmall) {
-        margin: 0 -20px 20px;
-        width: calc(100% + 40px);
+        padding: 10px;
     }
     &:last-child {
         margin-bottom: 0;
