@@ -13,51 +13,39 @@
             <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
             <!--                </blue-button>-->
         </main-title>
-        <div class="wallets__wrap">
-            <div class="wallets__row wallets__row-balance">
-                <main-title tag="h3" class="wallets__title">
+        <div class="wrap wrap__column">
+            <div class="wrap__head">
+                <main-title tag="h3" class="wrap_title">
                     {{ $t("income.income_info.title") }}:
                 </main-title>
             </div>
-            <div class="wallets__row">
-                <div class="wallets__block">
-                    <div class="wallets__column">
-                        <span class="wallets__subtitle"
-                            >{{ $t("income.income_info.titles[0]") }}:</span
-                        >
-                        <span class="wallets__value"
-                            ><span> {{ this.payed }} </span>
-                            BTC
-                        </span>
-                    </div>
+            <div class="wrap__row">
+                <div class="wrap__block wrap__column">
+                    <span class="text"
+                        >{{ $t("income.income_info.titles[0]") }}:</span
+                    >
+                    <span class="main__number"
+                        >{{ this.payed }}
+                        BTC
+                    </span>
                 </div>
-                <div class="wallets__block">
-                    <div class="wallets__column">
-                        <span class="wallets__subtitle"
-                            >{{ $t("income.income_info.titles[1]") }}:
-                        </span>
-                        <span class="wallets__value">
-                            <span>
-                                {{ this.unPayment }}
-                            </span>
-                            BTC
-                        </span>
-                    </div>
+                <div class="wrap__block wrap__column">
+                    <span class="text"
+                        >{{ $t("income.income_info.titles[1]") }}:
+                    </span>
+                    <span class="main__number">
+                        {{ this.unPayment }}
+                        BTC
+                    </span>
                 </div>
-                <div class="wallets__block">
-                    <div class="wallets__column">
-                        <span class="wallets__subtitle">
-                            <span class="wallets__subtitle"
-                                >{{ $t("income.income_info.titles[2]") }}:</span
-                            >
-                        </span>
-                        <span class="wallets__value">
-                            <span>
-                                {{ this.yesterdayProfit }}
-                            </span>
-                            BTC
-                        </span>
-                    </div>
+                <div class="wrap__block wrap__column">
+                    <span class="text"
+                        >{{ $t("income.income_info.titles[2]") }}:
+                    </span>
+                    <span class="main__number">
+                        {{ this.yesterdayProfit }}
+                        BTC
+                    </span>
                 </div>
             </div>
         </div>
@@ -95,7 +83,7 @@
             :wait="this.allIncomeHistory"
             :table="this.incomeInfo"
             type="Платежи"
-            rowsNum="10"
+            rowsNum="25"
         ></main-slider>
     </div>
 </template>
@@ -475,6 +463,29 @@ export default {
             height: 48px;
             @media (max-width: 767.98px) {
                 max-width: 100% !important;
+            }
+        }
+    }
+    .wrap {
+        height: fit-content;
+        &__row {
+            height: fit-content;
+            @media (max-width: 767.98px) {
+                flex-direction: column;
+            }
+        }
+        &__block {
+            height: 85px;
+            gap: 6px;
+            @media (min-width: 991.98px) {
+                height: 104px;
+            }
+            @media (max-width: 991.98px) {
+                padding: 16px;
+            }
+
+            .text {
+                font-weight: 400;
             }
         }
     }

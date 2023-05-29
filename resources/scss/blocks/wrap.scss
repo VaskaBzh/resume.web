@@ -110,6 +110,14 @@
             flex-direction: column;
         }
     }
+    &__row {
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+        @media (max-width: $mobile) {
+            gap: 12px;
+        }
+    }
     &-modify {
         display: grid;
         grid-template-columns: 620px auto;
@@ -182,13 +190,11 @@
         width: 100%;
         @media (max-width: $mobile) {
             overflow-x: scroll;
-            padding: 0 20px 20px;
+            padding: 0 0 20px;
         }
         &-scrollY {
             overflow-y: scroll;
-            //height: 100%;
-            //padding: 0 20px 40px;
-            padding: 0 20px;
+            padding: 0;
         }
     }
     @media (max-width: $mobile) {
@@ -198,7 +204,7 @@
         margin-bottom: 0;
     }
     &_title {
-        margin-bottom: 12px;
+        //margin-bottom: 12px;
         width: 100%;
     }
     &__head {
@@ -213,7 +219,6 @@
             width: 100%;
             font-size: 16px;
             line-height: 28px;
-            margin-bottom: 10px;
             @media (max-width: $mobile) {
                 font-size: 14px;
                 line-height: 23px;

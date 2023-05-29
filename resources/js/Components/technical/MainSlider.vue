@@ -26,7 +26,7 @@
                 {{ this.table.rows.length }}
             </span>
             <div class="slider__nav-slides">
-                <button class="slider__button" @click="slider(false, 1)">
+                <button class="slider__button" @click="slider(-1)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -52,6 +52,7 @@
                         v-for="(page, index) in this.pages"
                         :key="index"
                         @click="pagination(page)"
+                        :class="{ active: this.page === page }"
                         >{{ page }}</a
                     >
                 </div>
@@ -61,6 +62,7 @@
                         ref="page"
                         v-for="(page, index) in this.overPages"
                         :key="index"
+                        :class="{ active: this.page === page }"
                         >{{ page }}</a
                     >
                 </div>
@@ -70,6 +72,7 @@
                         ref="page"
                         v-for="(page, index) in this.firstPages"
                         :key="index"
+                        :class="{ active: this.page === page }"
                         >{{ page }}</a
                     >
                     <span>...</span>
@@ -78,10 +81,11 @@
                         ref="page"
                         v-for="(page, index) in this.lastPages"
                         :key="index"
+                        :class="{ active: this.page === page }"
                         >{{ page }}</a
                     >
                 </div>
-                <button class="slider__button" @click="slider(true, 1)">
+                <button class="slider__button" @click="slider(1)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -124,6 +128,8 @@ export default {
             slide: 1,
             firstPages: [1, 2, 3, 4, 5],
             key: 0,
+            rows: this.rowsNum,
+            page: 1,
         };
     },
     created() {
@@ -131,238 +137,61 @@ export default {
         this.handleResize();
     },
     computed: {
-        rows() {
-            return this.rowsNum;
-        },
         startRow() {
-            return this.firstRow + 1;
+            return Number(this.firstRow) + 1;
         },
         pages() {
-            return Math.ceil(this.table.rows.length / 10);
+            return Math.ceil(this.table.rows.length / this.rowsNum);
         },
         lastPages() {
-            let obj = [
-                Math.ceil(this.table.rows.length / 10 - 1),
-                Math.ceil(this.table.rows.length / 10),
-            ];
-            return obj;
+            return [this.pages - 1, this.pages].filter((page) => page > 0);
         },
         overPages() {
-            let obj = [
-                Math.ceil(this.table.rows.length / 10 - 7),
-                Math.ceil(this.table.rows.length / 10 - 6),
-                Math.ceil(this.table.rows.length / 10 - 5),
-                Math.ceil(this.table.rows.length / 10 - 4),
-                Math.ceil(this.table.rows.length / 10 - 3),
-                Math.ceil(this.table.rows.length / 10 - 2),
-                Math.ceil(this.table.rows.length / 10 - 1),
-                Math.ceil(this.table.rows.length / 10),
-            ];
-            return obj;
+            let startPage = Math.max(this.pages - 7, 1);
+            let pages = [];
+            for (let i = 0; i < 8 && startPage + i <= this.pages; i++) {
+                pages.push(startPage + i);
+            }
+            return pages;
         },
         booler() {
-            let bool = false;
-            for (let i = 0; i < this.firstPages.length; i++) {
-                if (this.firstPages[i] === this.lastPages[0]) {
-                    bool = true;
-                }
-            }
-            if (this.rows / 10 >= this.lastPages[0]) {
-                bool = true;
-            }
-            return bool;
+            return this.overPages.includes(this.page);
         },
     },
     methods: {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        slider(event, skip) {
-            if (
-                event &&
-                this.rows < this.table.rows.length &&
-                this.firstRow < this.table.rows.length - Number(skip + "0")
-            ) {
-                if (
-                    skip < 3 &&
-                    this.rows < 30 &&
-                    this.rows + Number(skip + "0") !== 40
-                ) {
-                    this.firstPages = [1, 2, 3, 4, 5];
-                } else if (this.rows < this.table.rows.length) {
-                    if (
-                        this.$refs.page[0].innerText !==
-                            String(this.rows).slice(0, -1) &&
-                        this.$refs.page[1].innerText !==
-                            String(this.rows).slice(0, -1)
-                    ) {
-                        this.firstPages = this.firstPages.map(
-                            (elem) => elem + Number(skip)
-                        );
-                    } else if (
-                        this.$refs.page[0].innerText ===
-                        String(this.rows).slice(0, -1)
-                    ) {
-                        this.firstPages = this.firstPages.map(
-                            (elem) => elem + Number(skip) - 2
-                        );
-                    } else if (
-                        this.$refs.page[1].innerText ===
-                        String(this.rows).slice(0, -1)
-                    ) {
-                        this.firstPages = this.firstPages.map(
-                            (elem) => elem + Number(skip) - 1
-                        );
-                    }
-                }
-                this.firstRow = this.firstRow + Number(skip + "0");
-                this.rows = this.rows + Number(skip + "0");
-            } else if (
-                !event &&
-                this.firstRow > 0 &&
-                this.rows > Number(skip + "0")
-            ) {
-                if (this.rows > 40 && this.rows > Number(skip + "0") + 30) {
-                    this.firstPages = this.firstPages.map(
-                        (elem) => elem - Math.abs(Number(skip))
-                    );
-                } else {
-                    this.firstPages = [1, 2, 3, 4, 5];
-                }
-                this.firstRow = this.firstRow - Math.abs(Number(skip + "0"));
-                this.rows = this.rows - Math.abs(Number(skip + "0"));
-            }
-            this.slideNumber();
-        },
-        pagination(skip) {
-            if (Number(skip + "0") > this.rows) {
-                this.slider(true, skip - String(this.rows).slice(0, -1));
-            } else {
-                this.slider(false, skip - String(this.rows).slice(0, -1));
+        slider(slides = 1) {
+            let newPage = this.page + slides;
+
+            // Проверка границ
+            if (newPage < 1) newPage = this.pages;
+            else if (newPage > this.pages) newPage = 1;
+
+            this.page = newPage;
+            this.firstRow = (newPage - 1) * this.rowsNum;
+            this.rows = Number(this.firstRow) + Number(this.rowsNum);
+
+            // Проверка, чтобы rows не выходил за границы общего количества строк
+            if (this.rows > this.table.rows.length) {
+                this.rows = this.table.rows.length;
             }
         },
-        slideNumber() {
-            if (this.$refs.page) {
-                setTimeout(() => {
-                    for (let i = 0; i < this.$refs.page.length; i++) {
-                        if (
-                            this.$refs.page[i].innerText ===
-                            String(this.rows).slice(0, -1)
-                        ) {
-                            this.$refs.page[i].classList.add("active");
-                        } else {
-                            this.$refs.page[i].classList.remove("active");
-                        }
-                    }
-                }, 10);
+        pagination(page) {
+            // Проверка границ
+            if (page < 1) page = 1;
+            else if (page > this.pages) page = this.pages;
+
+            this.page = page;
+            this.firstRow = (page - 1) * this.rowsNum;
+            this.rows = Number(this.firstRow) + Number(this.rowsNum);
+
+            // Проверка, чтобы rows не выходил за границы общего количества строк
+            if (this.rows > this.table.rows.length) {
+                this.rows = this.table.rows.length;
             }
         },
-        // autoHeight() {
-        //     if (
-        //         this.viewportWidth > 798.98 &&
-        //         document.querySelector(".wrap").querySelector("thead")
-        //     ) {
-        //         if (this.rows <= this.table.rows.length) {
-        //             document.querySelector(".wrap").style.height =
-        //                 48 +
-        //                 24 +
-        //                 document.querySelector(".wrap").querySelector("thead")
-        //                     .offsetHeight +
-        //                 8 * (this.rows - this.firstRow) -
-        //                 1 +
-        //                 document.querySelector(".wrap").querySelector("tr")
-        //                     .offsetHeight *
-        //                     2 *
-        //                     (this.rows - this.firstRow) +
-        //                 "px";
-        //         } else {
-        //             let lg = this.table.rows.length;
-        //             document.querySelector(".wrap").style.height =
-        //                 28 +
-        //                 18 +
-        //                 document.querySelector(".wrap").querySelector("thead")
-        //                     .offsetHeight +
-        //                 8 * (this.rows - this.firstRow) -
-        //                 1 +
-        //                 document.querySelector(".wrap").querySelector("tr")
-        //                     .offsetHeight *
-        //                     2 *
-        //                     (lg - this.firstRow) +
-        //                 "px";
-        //         }
-        //     } else {
-        //         document.querySelector(".wrap").removeAttribute("style");
-        //     }
-        //     //     if (document.querySelector(".wrap").querySelector("thead")) {
-        //     //     if (this.rows <= this.table.rows.length) {
-        //     //         document.querySelector(".wrap").style.height =
-        //     //             28 +
-        //     //             document.querySelector(".wrap").querySelector("thead")
-        //     //                 .offsetHeight +
-        //     //             10 * (this.rows - this.firstRow) -
-        //     //             1 +
-        //     //             document.querySelector(".wrap").querySelector("tr")
-        //     //                 .offsetHeight *
-        //     //                 2 *
-        //     //                 (this.rows - this.firstRow) +
-        //     //             "px";
-        //     //     } else {
-        //     //         let lg = this.table.rows.length;
-        //     //         document.querySelector(".wrap").style.height =
-        //     //             28 +
-        //     //             document.querySelector(".wrap").querySelector("thead")
-        //     //                 .offsetHeight +
-        //     //             10 * (this.rows - this.firstRow) -
-        //     //             1 +
-        //     //             document.querySelector(".wrap").querySelector("tr")
-        //     //                 .offsetHeight *
-        //     //                 2 *
-        //     //                 (lg - this.firstRow - 1) +
-        //     //             "px";
-        //     //     }
-        //     // }
-        // },
-    },
-    mounted() {
-        // if (document.querySelector("tr")) {
-        //     setTimeout(this.slideNumber, 100);
-        //     document.querySelector(".wrap").style.height =
-        //         48 +
-        //         24 +
-        //         document.querySelector(".wrap").querySelector("thead")
-        //             .offsetHeight +
-        //         8 * (this.rows - this.firstRow) -
-        //         1 +
-        //         document.querySelector(".wrap").querySelector("tr")
-        //             .offsetHeight *
-        //             0.001 *
-        //             (this.rows - this.firstRow) -
-        //         118 +
-        //         "px";
-        //     this.autoHeight();
-        // }
-    },
-    updated() {
-        // if (
-        //     document.querySelector("tr") &&
-        //     document.querySelector(".wrap").querySelector("thead")
-        // ) {
-        //     setTimeout(this.slideNumber, 100);
-        //     document.querySelector(".wrap").style.height =
-        //         48 +
-        //         48 +
-        //         document.querySelector(".wrap").querySelector("thead")
-        //             .offsetHeight +
-        //         8 * (this.rows - this.firstRow) -
-        //         1 +
-        //         document.querySelector(".wrap").querySelector("tr")
-        //             .offsetHeight *
-        //             0.001 *
-        //             (this.rows - this.firstRow) -
-        //         118 +
-        //         "px";
-        //     this.autoHeight();
-        // }
     },
 };
 </script>

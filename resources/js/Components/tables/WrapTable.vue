@@ -1,6 +1,13 @@
 <template>
-    <div class="wrap wrap-no-padding">
-        <div class="wrap__head">
+    <div class="wrap">
+        <div
+            class="wrap__head"
+            v-if="
+                this.title ||
+                (this.viewportWidth < 767.98 && this.type !== 'Платежи') ||
+                (this.viewportWidth < 767.98 && this.type !== 'Платежи')
+            "
+        >
             <main-title tag="h3" v-if="this.title"
                 >{{ this.title }}
             </main-title>
@@ -261,8 +268,5 @@ export default {
 <style lang="scss" scoped>
 .wrap {
     transition: all 0.3s ease 0s;
-    .no-info {
-        margin-top: 12px;
-    }
 }
 </style>

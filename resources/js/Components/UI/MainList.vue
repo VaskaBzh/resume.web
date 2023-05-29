@@ -61,9 +61,12 @@ export default {
             this.list_is_open = !this.list_is_open;
         },
         hideList(e) {
-            if (!e.target.closest(".open")) {
+            if (!e?.target?.closest(".open")) {
                 this.list_is_open = false;
             }
+            // if (this.list_is_open === true) {
+            //     this.list_is_open = false;
+            // }
         },
     },
     mounted() {

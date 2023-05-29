@@ -4,7 +4,7 @@
         <div class="workers__wrapper">
             <main-title tag="h2" class="workers__title">
                 {{ $t("workers.title") }}
-                <span class="workers__button" data-popup="#connect">
+                <blue-button class="workers__button" data-popup="#connect">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="21"
@@ -23,7 +23,7 @@
                             d="M10.0708 1.0708C10.6231 1.0708 11.0708 1.51852 11.0708 2.0708V18.0708C11.0708 18.6231 10.6231 19.0708 10.0708 19.0708C9.51852 19.0708 9.0708 18.6231 9.0708 18.0708V2.0708C9.0708 1.51852 9.51852 1.0708 10.0708 1.0708Z"
                         />
                     </svg>
-                </span>
+                </blue-button>
             </main-title>
             <!--            <div class="workers__filter">-->
             <!--                <div class="workers__filter_wrapper">-->
@@ -80,6 +80,7 @@ import WrapTable from "@/Components/tables/WrapTable.vue";
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
+import BlueButton from "@/Components/UI/BlueButton.vue";
 
 export default {
     components: {
@@ -89,6 +90,7 @@ export default {
         Head,
         PopupView,
         CopyBlock,
+        BlueButton,
     },
     layout: profileLayoutView,
     props: ["errors", "message", "user", "auth_user"],
@@ -235,63 +237,28 @@ export default {
         justify-content: space-between;
         align-items: center;
         margin-bottom: 16px;
+        position: relative;
     }
     .form .title {
         margin-bottom: 0;
     }
     &__button {
-        width: 60px;
-        height: 44px;
-        border-radius: 13px;
-        background-color: #4182ec;
+        min-width: 60px;
+        min-height: 44px;
         display: inline-flex;
         align-items: center;
         justify-content: center;
         cursor: pointer;
-        margin-left: auto;
-        transition: all 0.3s ease;
-        position: relative;
         @media (max-width: 767.98px) {
             position: absolute;
-            top: -96%;
-            right: 0;
-        }
-        @media (max-width: 479.98px) {
-            top: -90%;
-        }
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: linear-gradient(
-                84.14deg,
-                rgba(63, 123, 221, 0.27) 8.75%,
-                rgba(66, 130, 236, 0.27) 92.01%
-            );
-            border-radius: 10px;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            transition: all 0.3s ease 0s;
-        }
-        @media (any-hover: hover) {
-            &:hover {
-                transform: translate(-4px, -4px);
-                &::before {
-                    top: 4px;
-                    left: 4px;
-                }
+            top: 50%;
+            transform: translateY(-50%);
+            right: -10px;
+            &:before {
+                content: none;
             }
-        }
-        &:active {
-            @media (min-width: 479.89px) {
-                transform: translate(0, 0);
-                box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-                &::before {
-                    top: 0px;
-                    left: 0px;
-                }
+            &:active {
+                transform: translateY(-50%);
             }
         }
         svg {
@@ -300,9 +267,9 @@ export default {
             fill: #fff;
         }
         @media (max-width: 479.89px) {
-            background-color: transparent;
-            width: 20px;
-            height: 20px;
+            background: transparent;
+            min-width: 40px;
+            min-height: 40px;
 
             svg {
                 fill: #4182ec;

@@ -77,15 +77,6 @@ export default {
         left: 0;
         transition: all 0.3s ease 0s;
     }
-    @media (any-hover: hover) {
-        &:hover {
-            transform: translate(-4px, -4px);
-            &::before {
-                top: 4px;
-                left: 4px;
-            }
-        }
-    }
     &:active {
         transform: translate(0, 0);
         box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);

@@ -253,7 +253,6 @@ export default {
 <style lang="scss" scoped>
 .feedback {
     position: fixed;
-    box-shadow: 2px 4px 10px rgba(#000034, 0.5);
     .all-link {
         min-height: 48px;
         display: inline-flex;
@@ -262,8 +261,8 @@ export default {
             min-height: 40px;
         }
     }
-    &:hover {
-        box-shadow: 2px 4px 10px rgba(transparent, 0.5);
+    &:before {
+        box-shadow: 2px 4px 10px rgba(#000034, 0.5);
     }
     @media (min-width: 767.98px) {
         right: 60px;

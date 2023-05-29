@@ -17,7 +17,7 @@
                 <div></div>
                 <div></div>
                 <main-menu
-                    class="wallets__block_doths_menu"
+                    className="wallets__block_doths_menu"
                     :options="options"
                     :opened="opened"
                     @remove="remove(wallet)"
@@ -322,13 +322,6 @@ export default {
                 width: 20px;
                 gap: 2.5px;
             }
-            &_menu {
-                right: -16px;
-                top: calc(100% + 13px);
-                height: fit-content !important;
-                border-radius: 21px !important;
-                background: #fff !important;
-            }
 
             div {
                 width: 4px;
@@ -337,12 +330,6 @@ export default {
                 background-color: rgba(0, 0, 0, 0.62);
                 transition: all 0.3s ease;
             }
-        }
-
-        .wallets__subtitle {
-            font-weight: 400;
-            font-size: 16px;
-            line-height: 23px;
         }
     }
 }

@@ -22,7 +22,7 @@
                 />
             </svg>
         </div>
-        <div class="button__menu" :class="{ target: targeted }">
+        <div class="button__menu" :class="{ target: target }">
             <div class="button__row">
                 <span class="button_title">
                     {{ $t("header.menu.acc_admin.title") }}</span
@@ -158,7 +158,7 @@ export default {
     },
     data() {
         return {
-            targeted: false,
+            target: false,
             open: false,
         };
     },
@@ -213,11 +213,11 @@ export default {
             this.$store.commit("updateActive", data);
         },
         hideMenu() {
-            this.targeted = false;
+            this.target = false;
         },
         toggleMenu() {
-            this.targeted = !this.targeted;
-            if (this.targeted === true) {
+            this.target = !this.target;
+            if (this.target === true) {
                 setTimeout(() => (this.open = true), 300);
                 this.$emit("clicked", true);
             }
@@ -306,7 +306,7 @@ export default {
         padding: 12px 12px 18px;
         right: 0;
         min-width: 251px;
-        transition: all 0.5s ease 0.2s;
+        transition: all 0.2s ease 0s, max-height 0.2s ease 0.2s;
         height: fit-content;
         display: flex;
         flex-direction: column;

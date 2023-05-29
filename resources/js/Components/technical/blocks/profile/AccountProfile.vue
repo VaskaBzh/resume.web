@@ -13,11 +13,7 @@
             <span class="profile__name" @click="chageActive">{{
                 account.name
             }}</span>
-            <div
-                class="profile__settings"
-                @click="this.toggleTarget"
-                :class="{ target: this.target }"
-            >
+            <div class="profile__settings" @click="toggleOpen">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
                     width="32"
@@ -38,13 +34,91 @@
                         stroke-linejoin="round"
                     />
                 </svg>
-                <div class="profile__menu">
-                    <div
-                        class="profile__menu_elem"
-                        :data-popup="`#edit`"
-                        @click="this.$emit('getId', account.id)"
+                <main-menu
+                    className="profile__menu"
+                    :opened="opened"
+                    :options="options"
+                    @clicked="getWallets"
+                ></main-menu>
+            </div>
+        </div>
+        <div class="profile__body">
+            <div class="profile__body-block">
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[0]")
+                }}</span>
+                <span class="profile__body-value">
+                    {{ hashRate }} {{ accountInfo.unit }}H/s</span
+                >
+            </div>
+            <div class="profile__body-block">
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[1]")
+                }}</span>
+                <span class="profile__body-value">
+                    {{ accountInfo.workersActive }} /
+                    {{ accountInfo.workersAll }}
+                    <span
+                        >({{ $t("accounts.block.workers_status[0]") }} /
+                        {{ $t("accounts.block.workers_status[1]") }})</span
                     >
-                        <svg
+                </span>
+            </div>
+            <div class="profile__body-block">
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[2]")
+                }}</span>
+                <span class="profile__body-value"> {{ todayProfit }} BTC</span>
+            </div>
+            <div class="profile__body-block">
+                <span class="profile__body-name">{{
+                    $t("accounts.block.titles[3]")
+                }}</span>
+                <span class="profile__body-value"> {{ myPayment }} BTC</span>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+import { router } from "@inertiajs/vue3";
+import MainMenu from "@/Components/UI/MainMenu.vue";
+export default {
+    emits: ["changeActive", "click"],
+    components: {
+        MainMenu,
+    },
+    props: {
+        accountInfo: Object,
+        profit: Object,
+    },
+    data() {
+        return {
+            account: this.accountInfo,
+            savedName: this.accountInfo.name,
+            opened: false,
+        };
+    },
+    methods: {
+        toggleOpen() {
+            this.opened = !this.opened;
+        },
+        router() {
+            return router;
+        },
+        chageActive() {
+            this.$emit("changeActive", this.accountInfo.id);
+        },
+        getWallets() {
+            this.$store.commit("updateActive", this.accountInfo.id);
+            router.visit("/profile/wallets");
+        },
+    },
+    computed: {
+        options() {
+            return [
+                {
+                    name: this.$t("accounts.block.menu[0]"),
+                    svg: `<svg
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -66,11 +140,12 @@
                                     />
                                 </clipPath>
                             </defs>
-                        </svg>
-                        {{ $t("accounts.block.menu[0]") }}
-                    </div>
-                    <div @click="getWallets" class="profile__menu_elem">
-                        <svg
+                        </svg>`,
+                    attr: "#edit",
+                },
+                {
+                    name: this.$t("accounts.block.menu[1]"),
+                    svg: `<svg
                             width="24"
                             height="24"
                             viewBox="0 0 24 24"
@@ -92,110 +167,10 @@
                                     />
                                 </clipPath>
                             </defs>
-                        </svg>
-                        {{ $t("accounts.block.menu[1]") }}
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="profile__body">
-            <div class="profile__body-block">
-                <span class="profile__body-name">{{
-                    $t("accounts.block.titles[0]")
-                }}</span>
-                <span class="profile__body-value">
-                    {{ this.hashRate }} {{ this.accountInfo.unit }}H/s</span
-                >
-            </div>
-            <div class="profile__body-block">
-                <span class="profile__body-name">{{
-                    $t("accounts.block.titles[1]")
-                }}</span>
-                <span class="profile__body-value">
-                    {{ this.accountInfo.workersActive }} /
-                    {{ this.accountInfo.workersAll }}
-                    <span
-                        >({{ $t("accounts.block.workers_status[0]") }} /
-                        {{ $t("accounts.block.workers_status[1]") }})</span
-                    >
-                </span>
-            </div>
-            <div class="profile__body-block">
-                <span class="profile__body-name">{{
-                    $t("accounts.block.titles[2]")
-                }}</span>
-                <span class="profile__body-value">
-                    {{ this.todayProfit }} BTC</span
-                >
-            </div>
-            <div class="profile__body-block">
-                <span class="profile__body-name">{{
-                    $t("accounts.block.titles[3]")
-                }}</span>
-                <span class="profile__body-value">
-                    {{ this.myPayment }} BTC</span
-                >
-            </div>
-        </div>
-    </div>
-</template>
-<script>
-import { Link, router, useForm } from "@inertiajs/vue3";
-export default {
-    emits: ["changeActive", "click"],
-    components: {
-        Link,
-    },
-    props: {
-        accountInfo: Object,
-        profit: Object,
-    },
-    data() {
-        return {
-            account: this.accountInfo,
-            savedName: this.accountInfo.name,
-            target: false,
-        };
-    },
-    methods: {
-        toggleTarget() {
-            this.target = !this.target;
+                        </svg>`,
+                },
+            ];
         },
-        hideMenu(e) {
-            if (!e.target.closest(".target")) {
-                this.target = false;
-            }
-        },
-        router() {
-            return router;
-        },
-        chageActive() {
-            this.$emit("changeActive", this.accountInfo.id);
-        },
-        // saveName() {
-        //     let form = useForm({
-        //         group_name: this.account.name,
-        //         group_id: String(this.account.id),
-        //         puid: "781195",
-        //     });
-        //
-        //     form.put("/sub_change", {
-        //         onFinish: () => {
-        //             this.errors?.length === 0
-        //                 ? this.$store.dispatch("getAccounts")
-        //                 : (this.account.name = this.savedName);
-        //         },
-        //     });
-        // },
-        getWallets() {
-            this.$store.commit("updateActive", this.accountInfo.id);
-            router.visit("/profile/wallets");
-        },
-    },
-    mounted() {
-        document.addEventListener("click", this.hideMenu.bind(this), true);
-    },
-    computed: {
         todayProfit() {
             if (isNaN(this.profit[this.accountInfo.id])) {
                 return "0.00000000";
@@ -334,69 +309,8 @@ export default {
             }
         }
     }
-    &__menu {
-        transition: all 0.6s ease 0s;
-        position: absolute;
-        top: calc(100% + 16px);
-        right: 0;
-        display: flex;
-        flex-direction: column;
-        background: #ffffff;
-        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-        border-radius: 20px;
-        overflow: hidden;
-        opacity: 0;
-        z-index: 2;
-        max-height: 0;
-        min-width: 257px;
-        max-width: 257px;
-        border: 1px solid #fff;
-        &_elem {
-            width: 100%;
-            min-height: 48px;
-            display: flex;
-            gap: 12px;
-            transition: all 0.6s ease 0s;
-            background: #ffffff;
-            align-items: center;
-            padding: 6px 12px;
-            cursor: pointer;
-            border-bottom: 1px solid transparent;
-            font-weight: 400;
-            font-size: 17px;
-            line-height: 143.1%;
-            color: #000034;
-            &:not(:last-child) {
-                border-bottom: 1px solid rgba(214, 214, 214, 0.3);
-            }
-            svg {
-                width: 24px;
-                height: 24px;
-                stroke: transparent !important;
-            }
-            svg:not(.stroke) {
-                fill: #417fe5 !important;
-            }
-            svg.stroke {
-                stroke: #417fe5 !important;
-            }
-            &:hover {
-                background: rgba(208, 222, 242, 0.7);
-            }
-        }
-    }
     &__settings {
         position: relative;
-        &.target {
-            .profile {
-                &__menu {
-                    max-height: 100vh;
-                    transition: all 0.6s ease 0s;
-                    //visibility: visible;
-                    opacity: 1;
-                }
-            }
-        }
     }
     &__head {
         display: flex;
@@ -417,17 +331,7 @@ export default {
             }
         }
     }
-    //&__icon {
-    //    width: 64px;
-    //    height: 64px;
-    //    margin-right: 16px;
-    //    cursor: pointer;
-    //    @media (max-width: 479.98px) {
-    //        width: 36px;
-    //        height: 36px;
-    //        margin-right: 20px;
-    //    }
-    //}
+
     &__name {
         font-size: 24px;
         line-height: 30px;
@@ -439,10 +343,6 @@ export default {
         cursor: pointer;
         z-index: 1;
         border: 1px solid transparent;
-        //@media (max-width: 479.98px) {
-        //    font-size: 15px;
-        //    line-height: 19px;
-        //}
         &:hover {
             text-decoration-color: #331a38;
         }
