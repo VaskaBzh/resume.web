@@ -90,6 +90,7 @@ const messages = {
                 home: "Home",
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
+                hostings: "Hosting services",
             },
         },
         language: {
@@ -502,6 +503,7 @@ const messages = {
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
+                hostings: "Хостингам",
             },
         },
         language: {

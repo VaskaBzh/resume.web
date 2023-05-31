@@ -22,6 +22,13 @@ class IndexController extends Controller
         ]);
     }
 
+    public function hostings()
+    {
+        return Inertia::render('HostingPage', [
+            'auth_user' => Auth::check(),
+        ]);
+    }
+
 //    public function help()
 //    {
 //        return Inertia::render('FaqPage', [

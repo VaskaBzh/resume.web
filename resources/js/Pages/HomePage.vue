@@ -1,13 +1,12 @@
-|
 <template>
     <Head title="Главная Allbtc" />
     <div class="home">
         <div class="home__container">
-            <div class="home__main">
-                <div class="home__content">
+            <div class="home__main page__main">
+                <div class="home__content page__content">
                     <main-title
                         tag="h1"
-                        class="home__title"
+                        class="home__title page__title"
                         v-scroll="'left delay--md'"
                     >
                         {{ $t("home.title") }}
@@ -22,13 +21,13 @@
                     >
                         <Link :href="route('accounts')" class="all-link">
                             {{ $t("home.button") }}
-                            <div class="home__button_propeller"></div
+                            <div class="button_propeller"></div
                         ></Link>
                     </blue-button>
                     <blue-button class="home__button" v-else v-scroll="'left'">
                         <a href="#" data-popup="#auth" class="all-link">
                             {{ $t("home.button") }}
-                            <div class="home__button_propeller"></div
+                            <div class="button_propeller"></div
                         ></a>
                     </blue-button>
                 </div>
@@ -487,57 +486,6 @@ export default {
             top: 10px;
             left: 10px;
             transition: all 0.3s ease 0s;
-        }
-        // .home__button_propeller
-        &_propeller {
-            width: 51px;
-            height: 51px;
-            background: #366dc8;
-            box-shadow: 0px 0px 35px rgba(255, 255, 255, 0.04),
-                inset 0px 11px 6px rgba(0, 0, 0, 0.08);
-            border-radius: 50%;
-            position: relative;
-            &::before {
-                content: "";
-                position: absolute;
-                width: 36px;
-                height: 36px;
-                background: url("../../assets/img/propeller.svg");
-                background-position: center;
-                background-size: cover;
-                background-repeat: no-repeat;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                animation-name: ventilation;
-                animation-duration: 1.5s;
-                animation-iteration-count: infinite;
-                animation-timing-function: linear;
-            }
-            @keyframes ventilation {
-                0% {
-                    transform: translate(-50%, -50%) rotate(0deg);
-                }
-                100% {
-                    transform: translate(-50%, -50%) rotate(-720deg);
-                }
-            }
-            @media (max-width: 1270px) {
-                width: 45px;
-                height: 45px;
-                &::before {
-                    width: 30px;
-                    height: 30px;
-                }
-            }
-            @media (max-width: 767.98px) {
-                width: 39px;
-                height: 39px;
-                &::before {
-                    width: 26px;
-                    height: 26px;
-                }
-            }
         }
     }
     // .home__background

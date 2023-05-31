@@ -14,8 +14,8 @@
                 <button
                     @click="
                         option.class === 'remove'
-                            ? this.$emit('remove')
-                            : this.$emit('clicked')
+                            ? this.$emit('remove', option)
+                            : this.$emit('clicked', option)
                     "
                     class="menu_elem"
                     v-for="(option, i) in options"

@@ -475,17 +475,27 @@ export default {
             }
         }
         &__block {
-            height: 85px;
             gap: 6px;
-            @media (min-width: 991.98px) {
-                height: 104px;
-            }
             @media (max-width: 991.98px) {
                 padding: 16px;
             }
 
+            .main__number {
+                font-size: 24px;
+                line-height: 34px;
+                @media (max-width: 767.98px) {
+                    font-size: 20px;
+                    line-height: 30px;
+                }
+            }
             .text {
-                font-weight: 400;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 26px;
+                @media (max-width: 767.98px) {
+                    font-size: 16px;
+                    line-height: 24px;
+                }
             }
         }
     }

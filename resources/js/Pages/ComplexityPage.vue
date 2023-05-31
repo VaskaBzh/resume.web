@@ -2,16 +2,16 @@
     <Head :title="$t('complexity.title')" />
     <div class="complexity">
         <div class="complexity__container">
-            <div class="complexity__main">
-                <div class="complexity__content">
-                    <main-title tag="h1" class="complexity__title">
+            <div class="page__main">
+                <div class="page__content">
+                    <main-title tag="h1" class="page__title">
                         {{ $t("complexity.title") }}
                     </main-title>
                     <div class="description">
                         {{ $t("complexity.text") }}
                     </div>
                 </div>
-                <div class="complexity__image">
+                <div class="page__image">
                     <img src="../../assets/img/compl-main-img.png" alt="" />
                 </div>
             </div>
@@ -133,47 +133,8 @@ export default {
 
 <style lang="scss" scoped>
 .complexity {
-    // .complexity__main
     &__main {
-        display: flex;
         align-items: center;
-        @media (max-width: 767.98px) {
-            flex-direction: column;
-        }
-    }
-    // .complexity__content
-    &__content {
-        flex: 1 0 40%;
-        position: relative;
-        @media (max-width: 991.98px) {
-            flex: 1 0 60%;
-        }
-    }
-    // .complexity__title
-    &__title {
-        margin-bottom: 24px;
-        @media (max-width: 767.98px) {
-            margin-top: 32px;
-            text-align: center;
-            margin-bottom: 10px;
-        }
-    }
-    // .complexity__image
-    &__image {
-        position: relative;
-        & img {
-            max-width: 1050px;
-            @media (max-width: 1270px) {
-                max-width: 770px;
-            }
-            @media (max-width: 767.98px) {
-                position: relative;
-                left: 20vw;
-                max-width: unset;
-                width: 140vw;
-                object-fit: cover;
-            }
-        }
     }
 }
 .graph {

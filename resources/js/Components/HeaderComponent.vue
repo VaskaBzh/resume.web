@@ -144,10 +144,9 @@
                 class="form form-popup popup__form popup_slide"
                 data-id="login"
             >
-                <main-title
-                    tag="h3"
-                    :title-name="$t('header.popups.login.title')"
-                />
+                <main-title tag="h3">{{
+                    $t("header.popups.login.title")
+                }}</main-title>
                 <input
                     v-model="form.email"
                     required
@@ -238,12 +237,9 @@
             v-else-if="this.is_reg === true"
         >
             <swiper-slide class="popup_slide form form-popup" data-id="email">
-                <main-title
-                    tag="h3"
-                    :title-name="
-                        $t('header.popups.registration_steps.email.title')
-                    "
-                />
+                <main-title tag="h3">{{
+                    $t("header.popups.registration_steps.email.title")
+                }}</main-title>
                 <input
                     v-model="new_account_input.email"
                     autofocus
@@ -319,12 +315,9 @@
             <!--                </div>-->
             <!--            </swiper-slide>-->
             <swiper-slide class="popup_slide form form-popup" data-id="email">
-                <main-title
-                    tag="h3"
-                    :title-name="
-                        $t('header.popups.registration_steps.name.title')
-                    "
-                />
+                <main-title tag="h3">{{
+                    $t("header.popups.registration_steps.name.title")
+                }}</main-title>
                 <input
                     v-model="new_account_input.name"
                     required
@@ -367,12 +360,9 @@
                 </blue-button>
             </swiper-slide>
             <swiper-slide class="popup_slide form form-popup" data-id="email">
-                <main-title
-                    tag="h3"
-                    :title-name="
-                        $t('header.popups.registration_steps.password.title')
-                    "
-                />
+                <main-title tag="h3">{{
+                    $t("header.popups.registration_steps.password.title")
+                }}</main-title>
                 <div class="form_row">
                     <input
                         v-model="new_account_input.password"

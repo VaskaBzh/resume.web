@@ -49,6 +49,7 @@ Route::controller(IndexController::class)
 //        Route::get('/help', 'help')->name('help');
 //        Route::get('/about', 'about')->name('about');
         Route::get('/complexity', 'complexity')->name('complexity');
+        Route::get('/hostings', 'hostings')->name('hostings');
     });
 
 Route::controller(RegisterController::class)->group(function () {

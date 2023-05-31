@@ -22,14 +22,14 @@ export default {
         updateIncomeHistory(state, data) {
             Vue.set(state.incomeHistory, data.key, data.historyItem);
         },
+        destroy_incHist(state) {
+            state.incomeHistory = {};
+        },
     },
     state: {
         incomeHistory: {},
     },
     getters: {
-        destroy_incHist(state) {
-            state.incomeHistory = {};
-        },
         allIncomeHistory(state) {
             return state.incomeHistory;
         },

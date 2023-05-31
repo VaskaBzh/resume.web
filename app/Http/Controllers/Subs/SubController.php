@@ -13,6 +13,34 @@ use Illuminate\Support\Facades\Config;
 class SubController extends Controller
 {
 
+    public function check_users($groupName) {
+        $requestController = new RequestController();
+
+        $response = $requestController->proxy([
+            "puid" => "781195",
+            "page" => 1,
+            "page_size" => 52,
+        ], "worker/groups", "get");
+
+        foreach (json_decode($response->getContent())->data->list  as $index => $group) {
+            if ($index > 1) {
+                if ($group->name === $groupName) {
+                    if (app()->getLocale() === 'ru') {
+                        return back()->withErrors([
+                            'name' => 'Аккаунт с таким имененм уже существует',
+                        ], 201);
+                    } else if (app()->getLocale() === 'en') {
+                        return back()->withErrors([
+                            'name' => 'An account with that name already exists.',
+                        ], 201);
+                    }
+                } elseif ($index === count(json_decode($response->getContent())->data->list) - 1) {
+                    return false;
+                }
+            }
+        }
+    }
+
     public function create(Request $request)
     {
         if (app()->getLocale() === 'ru') {
@@ -30,68 +58,51 @@ class SubController extends Controller
         $request->validate([
             "group_name" => 'required|string|min:3|max:16',
         ], $messages);
+
         $requestController = new RequestController();
+        $response = $this->check_users($request->input('group_name'));
 
-        $response = $requestController->proxy([
-            "puid" => "781195",
-            "page" => 1,
-            "page_size" => 52,
-        ], "worker/groups", "get");
+        if ($response === false) {
+            $responseCreate = $requestController->proxy([
+                "puid" => "781195",
+                "group_name" => $request->input("group_name"),
+            ], "groups/create", "post");
+            if ($request->input('user_id')) {
+                // Валидация входных данных
+                $request->validate([
+                    'user_id' => 'required|integer|exists:users,id',
+                ]);
 
-        foreach (json_decode($response->getContent())->data->list  as $index => $group) {
-            if ($index > 1) {
-                if ($group->name === $request->input("group_name")) {
-                    if (app()->getLocale() === 'ru') {
-                        return back()->withErrors([
-                            'name' => 'Аккаунт с таким имененм уже существует',
-                        ], 201);
-                    } else if (app()->getLocale() === 'en') {
-                        return back()->withErrors([
-                            'name' => 'An account with that name already exists.',
-                        ], 201);
-                    }
-                } elseif ($index === count(json_decode($response->getContent())->data->list) - 1) {
-                    $responseCreate = $requestController->proxy([
-                        "puid" => "781195",
-                        "group_name" => $request->input("group_name"),
-                    ], "groups/create", "post");
-                    if ($request->input('user_id')) {
-                        // Валидация входных данных
-                        $request->validate([
-                            'user_id' => 'required|integer|exists:users,id',
-                        ]);
+                // Создание новой записи о выводе
+                $sub = new Sub([
+                    'user_id' => $request->input('user_id'),
+                    'group_id' => json_decode($responseCreate->getContent())->data->gid,
+                    'sub' => $request->input('group_name'),
+                ]);
+            } else {
+                // Создание новой записи о выводе
+                $sub = new Sub([
+                    'user_id' => Auth::user()->id,
+                    'group_id' => json_decode($responseCreate->getContent())->data->gid,
+                    'sub' => $request->input('group_name'),
+                ]);
+            }
 
-                        // Создание новой записи о выводе
-                        $sub = new Sub([
-                            'user_id' => $request->input('user_id'),
-                            'group_id' => json_decode($responseCreate->getContent())->data->gid,
-                            'sub' => $request->input('group_name'),
-                        ]);
-                    } else {
-                        // Создание новой записи о выводе
-                        $sub = new Sub([
-                            'user_id' => Auth::user()->id,
-                            'group_id' => json_decode($responseCreate->getContent())->data->gid,
-                            'sub' => $request->input('group_name'),
-                        ]);
-                    }
+            // Сохранение записи в базе данных
+            $sub->save();
 
-                    // Сохранение записи в базе данных
-                    $sub->save();
-
-                    // Возвращение успешного ответа (настроить ответ в соответствии с фронтендом)
-                    if (app()->getLocale() === 'ru') {
-                        return back()->with([
-                            'message' => 'Сабаккаунт создан.',
-                        ], 201);
-                    } else if (app()->getLocale() === 'en') {
-                        return back()->with([
-                            'message' => 'The subaccount has been created.',
-                        ], 201);
-                    }
-                }
+            // Возвращение успешного ответа (настроить ответ в соответствии с фронтендом)
+            if (app()->getLocale() === 'ru') {
+                return back()->with([
+                    'message' => 'Сабаккаунт создан.',
+                ], 201);
+            } else if (app()->getLocale() === 'en') {
+                return back()->with([
+                    'message' => 'The subaccount has been created.',
+                ], 201);
             }
         }
+        return $response;
     }
 
     public function visual()

@@ -13,13 +13,13 @@
                 />
             </svg>
 
-            <img :src="activeImg" :alt="active.value" />
+            <img :src="activeImg" :alt="active" />
         </div>
         <main-menu
             className="select__options"
             :opened="opened"
             :options="options"
-            @clicked="setLanguage"
+            @clicked="changeActive"
         ></main-menu>
     </div>
 </template>

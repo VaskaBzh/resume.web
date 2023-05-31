@@ -329,6 +329,37 @@
 
                 {{ $t("header.links.complexity") }}
             </Link>
+            <Link
+                :href="route('hostings')"
+                class="nav__link"
+                :class="{
+                    burger_link: this.viewportWidth < 767.98,
+                    active: $page.url.startsWith('/hostings'),
+                }"
+            >
+                <svg
+                    v-if="this.viewportWidth < 767.98"
+                    width="20"
+                    height="20"
+                    viewBox="0 0 20 20"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <g clip-path="url(#clip0_1241_17163)">
+                        <path
+                            d="M3.32314 15.8711L1.98899 14.7113L7.78779 8.04058L11.334 11.16L16.7547 4.12386L18.0053 5.21095L11.5084 13.6539L7.96218 10.5345L3.32314 15.8711Z"
+                            fill="#417FE5"
+                        />
+                    </g>
+                    <defs>
+                        <clipPath id="clip0_1241_17163">
+                            <rect width="20" height="20" fill="white" />
+                        </clipPath>
+                    </defs>
+                </svg>
+
+                {{ $t("header.links.hostings") }}
+            </Link>
             <!--            <Link-->
             <!--                :href="route('help')"-->
             <!--                class="nav__link"-->

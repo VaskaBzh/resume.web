@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Subs\SubController;
-use App\Http\Controllers\Requests\RequestController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -73,24 +72,23 @@ class RegisterController extends Controller
             "group_name" => $user->name,
         ];
 
-        $requestController = new RequestController();
-
         try {
-            $response = json_decode($requestController->proxy($data,"groups/create", "post")->getContent());
-
             $subController = new SubController();
-            $data['group_id'] = strval($response->data->gid);
             $data['user_id'] = $user->id;
 
             $subController->create(new Request($data));
 
-            $message = 'Пользователь успешно создан! Подтвердите почту.';
+            if (app()->getLocale() === 'ru') {
+                $message = 'Пользователь успешно создан! Подтвердите почту.';
+            } else if (app()->getLocale() === 'en') {
+                $message = 'The user has been successfully created! Confirm your email.';
+            }
         } catch (Exception $e) {
             // Обработка ошибок
             if (app()->getLocale() === 'ru') {
                 $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
             } else if (app()->getLocale() === 'en') {
-                $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
+                $message = 'An error occurred when creating a user. Please try again.';
             }
         }
 
