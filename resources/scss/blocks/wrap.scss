@@ -65,6 +65,9 @@
         width: 100%;
         gap: 24px;
         padding: 24px;
+        &-blue {
+            background: #3F65B3;
+        }
         &-graph {
             @media (max-width: 998.98px) {
                 .graph {

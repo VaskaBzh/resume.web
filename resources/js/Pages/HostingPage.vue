@@ -4,24 +4,20 @@
         <div class="hosting__container">
             <div class="hosting__main page__main">
                 <div class="hosting__content page__content">
-                    <main-title tag="h1" class="hosting__title page__title">
+                    <main-title tag="h1" class="hosting_title page__title">
                         Платформа управления хостингом
                     </main-title>
-                    <div class="description">
-                        Вы ищете надежную платформу <br />
-                        для
-                        <b>эффективного управления дата-центрами?</b>
-                        Наша платформа - это идеальное решение для тех, кто
-                        хочет максимизировать свою прибыль от майнинга
-                        криптовалют
-                    </div>
+                    <div
+                        class="description"
+                        v-html="this.$t('hosting.text')"
+                    ></div>
                     <blue-button
                         class="hosting__button"
                         v-if="this.auth_user"
                         v-scroll="'left'"
                     >
                         <Link :href="route('accounts')" class="all-link">
-                            {{ $t("home.button") }}
+                            {{ $t("hosting.button") }}
                             <div class="button_propeller"></div
                         ></Link>
                     </blue-button>
@@ -31,7 +27,7 @@
                         v-scroll="'left'"
                     >
                         <a href="#" data-popup="#auth" class="all-link">
-                            {{ $t("home.button") }}
+                            {{ $t("hosting.button") }}
                             <div class="button_propeller"></div
                         ></a>
                     </blue-button>
@@ -41,6 +37,10 @@
                 </div>
             </div>
         </div>
+        <personal-system-view />
+        <advantages-view />
+        <monitoring-view />
+        <metrics-view />
     </div>
 </template>
 
@@ -48,12 +48,23 @@
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { Link, Head } from "@inertiajs/vue3";
+import PersonalSystemView from "@/Components/technical/views/PersonalSystemView.vue";
+import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
+import MonitoringView from "@/Components/technical/views/MonitoringView.vue";
+import MetricsView from "@/Components/technical/views/MetricsView.vue";
 
 export default {
     name: "hosting-page",
+    props: {
+        auth_user: Boolean,
+    },
     components: {
         MainTitle,
         BlueButton,
+        PersonalSystemView,
+        AdvantagesView,
+        MonitoringView,
+        MetricsView,
         Link,
         Head,
     },
@@ -63,9 +74,22 @@ export default {
 <style scoped lang="scss">
 .hosting {
     margin-top: 150px;
+    @media (max-width: 991.98px) {
+        margin-top: 40px;
+    }
     .description {
         max-width: 478px;
         margin-bottom: 36px;
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+            text-align: center;
+        }
+    }
+    &_title {
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+            text-align: center;
+        }
     }
     &__button {
         gap: 36px;
@@ -133,6 +157,66 @@ export default {
             top: 10px;
             left: 10px;
             transition: all 0.3s ease 0s;
+        }
+    }
+    &__image {
+        position: relative;
+        margin-bottom: 130px;
+        @media (max-width: 991.98px) {
+            margin: 40px 0 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            img {
+                width: 100%;
+                left: 0;
+            }
+        }
+        @media (max-width: 767.98px) {
+            margin: 100px 0;
+            img {
+                width: 140%;
+            }
+        }
+        &:before,
+        &:after {
+            width: 150px;
+            height: 150px;
+            position: absolute;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            @media (max-width: 991.98px) {
+                height: 100px;
+                width: 100px;
+            }
+        }
+        &:before {
+            content: url("/resources/assets/img/hosting_img_bitcoin.png");
+            left: 10%;
+            bottom: -100px;
+            animation: plane-soaring infinite 5s ease-in-out 0s;
+        }
+        &:after {
+            content: url("/resources/assets/img/hosting_img_etherium.png");
+            right: 10%;
+            top: 0;
+            animation: plane-soaring infinite 3s ease-in-out 0s;
+            @media (max-width: 767.98px) {
+                top: -20px;
+            }
+        }
+        @keyframes plane-soaring {
+            0% {
+                transform: translate(0, 0);
+            }
+            50% {
+                transform: translate(0, 15px);
+            }
+            100% {
+                transform: translate(0px, 0px);
+            }
         }
     }
 }

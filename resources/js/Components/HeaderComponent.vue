@@ -873,6 +873,9 @@ export default defineComponent({
 
 .nav__logo {
     max-width: 170px;
+    @media (max-width: 1270px) {
+        max-width: 140px;
+    }
     @media (max-width: 767.98px) {
         &.headder {
             position: relative;
@@ -922,7 +925,7 @@ nav.nav__container {
     }
     @media (max-width: 1270px) {
         padding: 21px 0;
-        gap: 50px;
+        gap: 20px;
     }
     @media (max-width: 991.98px) {
         padding-top: 20px;

@@ -90,7 +90,7 @@ const messages = {
                 home: "Home",
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
-                hostings: "Hosting services",
+                hosting: "Hosting services",
             },
         },
         language: {
@@ -119,6 +119,17 @@ const messages = {
                     link: "Learn more",
                 },
             },
+        },
+        hosting: {
+            title: "Hosting Management Platform",
+            text:
+                "Are you looking for a reliable platform  <br>" +
+                "for <b>efficient data center management?</b> \n" +
+                "Our platform is an ideal solution for those who want to maximize their profits from mining cryptocurrencies",
+            button: "Start Mining",
+        },
+        personal_system: {
+            title: "We will implement the system and provide a personal manager who will manage the platform",
         },
         complexity: {
             title: "Network complexity",
@@ -503,7 +514,7 @@ const messages = {
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
-                hostings: "Хостингам",
+                hosting: "Хостингам",
             },
         },
         language: {
@@ -532,6 +543,17 @@ const messages = {
                     link: "Подробнее",
                 },
             },
+        },
+        hosting: {
+            title: "Платформа управления хостингом",
+            text:
+                "Вы ищете надежную платформу <br>" +
+                "для <b>эффективного управления дата-центрами?</b> \n" +
+                "Наша платформа - это идеальное решение для тех, кто хочет максимизировать свою прибыль от майнинга криптовалют",
+            button: "Начать майнинг",
+        },
+        personal_system: {
+            title: "Внедрим систему и предоставим персонального менеджера, который будет управлять платформой",
         },
         complexity: {
             title: "Сложность сети",

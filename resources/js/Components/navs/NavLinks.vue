@@ -330,11 +330,11 @@
                 {{ $t("header.links.complexity") }}
             </Link>
             <Link
-                :href="route('hostings')"
+                :href="route('hosting')"
                 class="nav__link"
                 :class="{
                     burger_link: this.viewportWidth < 767.98,
-                    active: $page.url.startsWith('/hostings'),
+                    active: $page.url.startsWith('/hosting'),
                 }"
             >
                 <svg
@@ -358,7 +358,7 @@
                     </defs>
                 </svg>
 
-                {{ $t("header.links.hostings") }}
+                {{ $t("header.links.hosting") }}
             </Link>
             <!--            <Link-->
             <!--                :href="route('help')"-->
@@ -569,7 +569,7 @@ export default {
     display: flex;
     width: 100%;
     gap: 100px;
-    @media (max-width: 991.98px) {
+    @media (max-width: 1270.98px) {
         justify-content: space-between;
         gap: 10px;
     }

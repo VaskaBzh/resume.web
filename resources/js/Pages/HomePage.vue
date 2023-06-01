@@ -320,9 +320,9 @@
 import { Head, Link } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import CollectivePlatformView from "@/Components/technical/blocks/CollectivePlatformView.vue";
-import AboutPanelView from "@/Components/technical/blocks/AboutPanelView.vue";
-import MiningInfoView from "@/Components/technical/blocks/MiningInfoView.vue";
+import CollectivePlatformView from "@/Components/technical/views/CollectivePlatformView.vue";
+import AboutPanelView from "@/Components/technical/views/AboutPanelView.vue";
+import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -385,7 +385,6 @@ export default {
             margin-bottom: 15em;
         }
         @media (max-width: 991.98px) {
-            flex-direction: column;
             margin-bottom: -40px;
         }
     }

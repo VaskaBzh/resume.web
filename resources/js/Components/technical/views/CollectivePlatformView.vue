@@ -79,12 +79,10 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Безопасный и прозрачный
+                            {{ $t("platform.blocks[0].title") }}
                         </div>
                         <div class="text">
-                            Хешрейт отображается в режиме реального времени,
-                            пока команда безопасности Allbtc защищает ваши
-                            активы
+                            {{ $t("platform.blocks[0].text") }}
                         </div>
                     </swiper-slide>
                     <swiper-slide class="platform-c__item">
@@ -96,11 +94,10 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Стабильный заработок
+                            {{ $t("platform.blocks[1].title") }}
                         </div>
                         <div class="text">
-                            Используя модель FPPS+ и мгновенные расчеты, вы
-                            можете избежать колебаний заработка
+                            {{ $t("platform.blocks[1].text") }}
                         </div>
                     </swiper-slide>
                     <swiper-slide class="platform-c__item">
@@ -112,13 +109,10 @@
                             />
                         </div>
                         <div class="platform-c__item_title">
-                            Комплексное обслуживание
+                            {{ $t("platform.blocks[2].title") }}
                         </div>
                         <div class="text">
-                            Наше комплексное обслуживание направлено на
-                            повышение доходов майнеров, сокращение разрыва между
-                            добычей полезных ископаемых и трейдингом, а также
-                            обеспечение универсальной экосистемы майнинга.
+                            {{ $t("platform.blocks[2].text") }}
                         </div>
                     </swiper-slide>
                 </swiper>

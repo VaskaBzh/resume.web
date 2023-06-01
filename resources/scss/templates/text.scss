@@ -35,4 +35,23 @@
     &-black {
         color: #000000;
     }
+    &-ligth {
+        color: rgba(255, 255, 255, 0.68);
+        span {
+            font-weight: 500;
+            font-size: 31px;
+            line-height: 100%;
+            color: #FFFFFF;
+            @media (max-width: $mobile) {
+                font-size: 20px;
+                line-height: 107.6%;
+            }
+        }
+    }
+    &-white {
+        color: #ffffff;
+        b {
+            font-weight: 500;
+        }
+    }
 }
