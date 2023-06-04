@@ -41,6 +41,7 @@
         <advantages-view />
         <monitoring-view />
         <metrics-view />
+        <monitoring-indicators-view />
     </div>
 </template>
 
@@ -52,6 +53,7 @@ import PersonalSystemView from "@/Components/technical/views/PersonalSystemView.
 import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import MonitoringView from "@/Components/technical/views/MonitoringView.vue";
 import MetricsView from "@/Components/technical/views/MetricsView.vue";
+import MonitoringIndicatorsView from "@/Components/technical/views/MonitoringIndicatorsView.vue";
 
 export default {
     name: "hosting-page",
@@ -65,6 +67,7 @@ export default {
         AdvantagesView,
         MonitoringView,
         MetricsView,
+        MonitoringIndicatorsView,
         Link,
         Head,
     },

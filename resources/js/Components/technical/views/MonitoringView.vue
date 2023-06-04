@@ -3,10 +3,10 @@
         <div class="monitoring__container">
             <div class="monitoring__main">
                 <div class="monitoring__content">
+<!--                    v-scroll="'left delay&#45;&#45;md'"-->
                     <main-title
                         tag="h2"
                         class="monitoring__title"
-                        v-scroll="'left delay--md'"
                     >
                         Мониторинг пулов
                     </main-title>
@@ -54,10 +54,10 @@ export default {
 
 <style scoped lang="scss">
 .monitoring {
-    background-image: url("/resources/assets/img/about-panel-bg.png");
-    background-position: center 30%;
-    background-size: contain;
-    background-repeat: no-repeat;
+    //background-image: url("/resources/assets/img/about-panel-bg.png");
+    //background-position: center 30%;
+    //background-size: contain;
+    //background-repeat: no-repeat;
     margin-bottom: 64px;
     @media (max-width: 991.98px) {
         margin-bottom: 32px;
