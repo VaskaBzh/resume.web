@@ -53,7 +53,7 @@ class UpdateIncomesCommand extends Command
                             'jsonrpc' => '1.0',
                             'id' => 'unlock',
                             'method' => 'walletpassphrase',
-                            'params' => ['gloom ethics august sample fun submit slow humor seek canvas cannon crystal actress sadness parent smoke hurdle shine pull trip ghost', 60], // Временно разблокирует кошелек на 60 секунд
+                            'params' => ['gloom ethics august sample fun submit slow humor seek canvas cannon crystal actress sadness parent smoke hurdle shine pull trip ghost', 60],
                         ]);
                     if ($unlock->successful()) {
                         $limitedBalance = number_format($balance, 8, '.', '');
@@ -62,7 +62,7 @@ class UpdateIncomesCommand extends Command
                                 'jsonrpc' => '1.0',
                                 'id' => 'withdrawal',
                                 'method' => 'sendtoaddress',
-                                'params' => [$wallet->wallet, $limitedBalance], //Самая важная строчка, в которрой передаем настройки транзакции
+                                'params' => [$wallet->wallet, $limitedBalance]
                             ]);
                         $this->info($balance); // Выводит содержимое ответа
                         $this->info($response->body()); // Выводит содержимое ответа
