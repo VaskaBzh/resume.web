@@ -229,7 +229,7 @@
         max-width: 100%;
         overflow: hidden;
         width: 100%;
-        @media (max-width: $mobile) {
+        @media (max-width: $tablet) {
             overflow-x: scroll;
             padding: 0 0 20px;
         }

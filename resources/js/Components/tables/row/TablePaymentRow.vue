@@ -71,7 +71,7 @@
         <!--            {{ Number(this.columns.diff / 1000000000000).toFixed(2) }} T-->
         <!--        </td>-->
         <td
-            class="main__number"
+            class="main__number center"
             v-tooltip="{
                 message: `${this.$t('income.table.messages.sum')}: ${
                     this.BTCVal
@@ -85,7 +85,9 @@
                 v-tooltip="{ message: this.columns.message }"
                 id="status"
                 :class="this.columns.status"
-                v-if="this.viewportWidth > 991.98"
+                v-if="
+                    this.viewportWidth > 1270.98 || this.viewportWidth < 991.98
+                "
             >
                 {{
                     this.columns.status === "rejected"
@@ -202,6 +204,9 @@ td {
     background: #ffffff;
     white-space: nowrap;
     padding: 0 10px 0 0;
+    &.center {
+        text-align: center;
+    }
     div {
         @media (max-width: 767.98px) {
             display: inline-flex;
