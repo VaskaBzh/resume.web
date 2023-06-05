@@ -61,11 +61,31 @@
             min-height: 48px;
         }
     }
-    &:hover {
-        border-color: #c2d5f2;
+    &-strong {
+        border-radius: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.16);
+        min-height: 60px;
+        padding: 2px 30px;
+        color: rgba(0, 0, 0, 0.72);
+        background: #ffffff;
+        @media (max-width: $mobile) {
+            padding: 2px 12px;
+        }
+        &::placeholder {
+            color: rgba(0, 0, 0, 0.42);
+        }
     }
-    &:active,
-    &:focus {
-        border-color: #4182ec;
+    &:disabled {
+        background: rgba(#e9edf3, 0.5);
+        color: rgba(#000034, 0.5);
+    }
+    &:not(:disabled) {
+        &:hover {
+            border-color: #c2d5f2;
+        }
+        &:active,
+        &:focus {
+            border-color: #4182ec;
+        }
     }
 }

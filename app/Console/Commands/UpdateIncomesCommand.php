@@ -35,6 +35,7 @@ class UpdateIncomesCommand extends Command
                 $balance = $earn;
                 $min = 0.005;
                 $pendingIncomes = $sub->incomes->where("status", "pending");
+                $rejectedIncomes = $sub->incomes->where("status", "rejected");
 
                 $balance = $balance + $sub->unPayments;
                 if ($wallet->minWithdrawal) {
@@ -81,6 +82,12 @@ class UpdateIncomesCommand extends Command
                             $sub->save();
                             if ($pendingIncomes->count() > 0) {
                                 foreach ($pendingIncomes as $pending) {
+                                    $pending["status"] = "completed";
+                                    $pending->save();
+                                }
+                            }
+                            if ($rejectedIncomes->count() > 0) {
+                                foreach ($rejectedIncomes as $pending) {
                                     $pending["status"] = "completed";
                                     $pending->save();
                                 }

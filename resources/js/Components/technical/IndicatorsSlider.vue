@@ -2,13 +2,15 @@
     <div class="indicators__row">
         <div class="indicators__slider indicators__slider-image">
             <swiper
-                :allowTouchMove="false"
+                ref="swiper1"
                 :slides-per-view="1"
                 :space-between="24"
-                :navigation="{
-                    nextEl: '.next',
-                    prevEl: '.prev',
+                @swiper="onSwiper1Ready"
+                :pagination="{
+                    el: '.indicators__slider-main .swiper-pagination',
+                    clickable: true,
                 }"
+                :loop="true"
                 :modules="modules"
             >
                 <swiper-slide class="wrap__row" v-for="option in options">
@@ -17,93 +19,64 @@
             </swiper>
         </div>
         <div class="indicators__slider indicators__slider-main">
-            <div class="prev swiper-button">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M14 18L8 12L14 6"
-                        stroke="#131A29"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
+            <div class="swiper-pagination"></div>
             <swiper
-                :allowTouchMove="false"
+                ref="swiper2"
+                @swiper="onSwiper2Ready"
                 :slides-per-view="1"
                 :space-between="24"
                 class="indicators__slider wrap"
-                :navigation="{
-                    nextEl: '.next',
-                    prevEl: '.prev',
-                }"
+                :loop="true"
                 :modules="modules"
+                :pagination="{
+                    el: '.indicators__slider-main .swiper-pagination',
+                    clickable: true,
+                }"
             >
                 <swiper-slide class="wrap__row" v-for="option in options">
-                    <div class="wrap__block wrap__block-blue wrap__column">
-                        <main-title
-                            tag="h3"
-                            class="wrap_title wrap_title-white wrap_title-no-before"
-                            >{{ option[0].title }}</main-title
-                        >
-                        <p class="text text-sm text-ligth">
-                            {{ option[0].text }}
-                        </p>
-                    </div>
-                    <div class="wrap__block wrap__column">
-                        <p class="text text-sm" v-for="opt in option[1]">
-                            {{ opt }}
-                        </p>
-                    </div>
+                    <indicator-block :option="option"> </indicator-block>
                 </swiper-slide>
             </swiper>
-            <div class="next swiper-button">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        d="M10 6L16 12L10 18"
-                        stroke="#131A29"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-            </div>
         </div>
     </div>
 </template>
 
 <script>
 import { Swiper, SwiperSlide } from "swiper/vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Navigation } from "swiper";
+import { Pagination, Controller } from "swiper";
+import indicatorBlock from "@/Components/technical/blocks/IndicatorBlock.vue";
 
 export default {
     name: "indicators-slider",
     components: {
         Swiper,
         SwiperSlide,
-        MainTitle,
+        indicatorBlock,
     },
     props: {
         options: Array,
     },
+    methods: {
+        onSwiper1Ready(swiper) {
+            this.swiper1 = swiper;
+            if (this.swiper2) {
+                this.swiper1.controller.control = this.swiper2;
+                this.swiper2.controller.control = this.swiper1;
+            }
+        },
+        onSwiper2Ready(swiper) {
+            this.swiper2 = swiper;
+            if (this.swiper1) {
+                this.swiper1.controller.control = this.swiper2;
+                this.swiper2.controller.control = this.swiper1;
+            }
+        },
+    },
     setup() {
         return {
-            modules: [Navigation],
+            modules: [Pagination, Controller],
         };
     },
 };
@@ -112,11 +85,17 @@ export default {
 <style scoped lang="scss">
 .indicators {
     &__slider {
+        .swiper {
+            &-pagination {
+                top: -40px;
+                height: 20px;
+            }
+        }
         .wrap {
             margin-bottom: 0;
-            padding: 20px 20px 20px !important;
-            &__row {
-                min-height: 263px;
+            padding: 20px !important;
+            @media (max-width: 767.98px) {
+                padding: 10px !important;
             }
 
             &__block {
@@ -125,6 +104,30 @@ export default {
         }
         &-image {
             min-height: 760px;
+            max-height: 760px;
+            @media (max-width: 1270.98px) {
+                min-height: 580px;
+                max-height: 580px;
+            }
+            @media (max-width: 991.98px) {
+                min-height: 460px;
+                max-height: 460px;
+            }
+            @media (max-width: 767.98px) {
+                min-height: 420px;
+                max-height: 420px;
+            }
+            @media (max-width: 479.98px) {
+                min-height: 280px;
+                max-height: 280px;
+            }
+            @media (max-width: 320.98px) {
+                min-height: 200px;
+                max-height: 200px;
+            }
+            img {
+                width: 100%;
+            }
             //position: relative;
             //&:before {
             //    content: "";

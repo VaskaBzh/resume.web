@@ -88,6 +88,14 @@
                 {{ $t("wallets.popups.change.title") }}
             </main-title>
             <input
+                v-model="formChg.wallet"
+                autofocus
+                disabled
+                type="text"
+                class="input popup__input"
+                :placeholder="$t('wallets.popups.change.placeholders.wallet')"
+            />
+            <input
                 v-model="formChg.name"
                 autofocus
                 type="text"
@@ -309,7 +317,13 @@ export default {
                                     let fullName = "";
                                     if (name.length > 6) {
                                         fullName = name;
-                                        name = name.substr(0, 6) + "...";
+                                        name =
+                                            name.substr(0, 4) +
+                                            "..." +
+                                            name.substr(
+                                                name.length - 4,
+                                                name.length
+                                            );
                                     }
                                     let walletModel = {
                                         img: "bitcoin_img.png",
@@ -317,7 +331,7 @@ export default {
                                         wallet: wal.wallet,
                                         fullName: fullName,
                                         shortName: "BTC",
-                                        value: val.toFixed(8),
+                                        value: val,
                                         dollarValue: 0,
                                         rubleValue: 0,
                                         percent: wal.percent,
@@ -356,7 +370,7 @@ export default {
                                     wallet: wal.wallet,
                                     fullName: fullName,
                                     shortName: "BTC",
-                                    value: val.toFixed(8),
+                                    value: val,
                                     dollarValue: 0,
                                     rubleValue: 0,
                                     percent: wal.percent,
@@ -406,6 +420,7 @@ export default {
             this.walletObj = wallet;
             this.formChg.percent = wallet.percent;
             this.formChg.minWithdrawal = wallet.minWithdrawal;
+            this.formChg.wallet = wallet.wallet;
             wallet.fullName === ""
                 ? (this.formChg.name = wallet.name)
                 : (this.formChg.name = wallet.fullName);

@@ -63,11 +63,15 @@
             </div>
             <swiper
                 class="wrap"
-                v-show="viewportWidth < 767.98"
+                loop
+                v-if="viewportWidth < 767.98"
                 :modules="modules"
                 :slides-per-view="1"
                 :space-between="25"
                 :pagination="pagination"
+                :autoHeight="false"
+                @swiper="heightChange"
+                @slideChangeTransitionStart="heightChange"
             >
                 <swiper-slide class="wrap__block"
                     ><div class="wrap__column">
@@ -157,6 +161,12 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        heightChange(swiper) {
+            // при свайпе к первому или последнему слайду, изменить высоту слайдера вручную
+            swiper.$el[0].style.height = `${
+                swiper.slides[swiper.activeIndex].scrollHeight + 53
+            }px`;
+        },
     },
     components: {
         Swiper,
@@ -199,6 +209,15 @@ export default {
     }
     .swiper {
         padding: 10px 10px 43px !important;
+        transition: all 0.3s ease 0s;
+        &-slide {
+            height: fit-content;
+        }
+    }
+    .text-md {
+        @media (max-width: 479.98px) {
+            font-size: 16px;
+        }
     }
     .wrap {
         &__block {

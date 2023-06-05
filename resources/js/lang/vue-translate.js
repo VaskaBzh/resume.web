@@ -366,18 +366,19 @@ const messages = {
                 add: {
                     title: "Add wallet",
                     placeholders: {
-                        wallet: "Please enter the wallet",
+                        wallet: "Please enter the wallet *",
                         name: "Please enter the wallet's name",
                     },
                     labels: {
-                        percent: "Percent",
-                        minWithdrawal: "Min. withdrawal",
+                        percent: "Percent *",
+                        minWithdrawal: "Min. withdrawal *",
                     },
                     button: "+ Add",
                 },
                 change: {
                     title: "Change wallet",
                     placeholders: {
+                        wallet: "Please enter the wallet *",
                         name: "Please enter the name",
                     },
                     labels: {
@@ -782,23 +783,24 @@ const messages = {
                 add: {
                     title: "Добавить кошелек",
                     placeholders: {
-                        wallet: "Введите кошелек",
+                        wallet: "Введите кошелек *",
                         name: "Введите имя кошелька",
                     },
                     labels: {
-                        percent: "Процент",
-                        minWithdrawal: "Мин. вывод",
+                        percent: "Процент *",
+                        minWithdrawal: "Мин. вывод *",
                     },
                     button: "+ Добавить",
                 },
                 change: {
                     title: "Измените кошелек",
                     placeholders: {
+                        wallet: "Введите кошелек *",
                         name: "Введите имя",
                     },
                     labels: {
-                        percent: "Процент",
-                        minWithdrawal: "Мин. вывод",
+                        percent: "Процент *",
+                        minWithdrawal: "Мин. вывод *",
                     },
                     button: "Изменить",
                 },

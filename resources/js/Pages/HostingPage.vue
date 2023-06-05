@@ -42,6 +42,7 @@
         <monitoring-view />
         <metrics-view />
         <monitoring-indicators-view />
+        <get-consultation></get-consultation>
     </div>
 </template>
 
@@ -54,6 +55,7 @@ import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import MonitoringView from "@/Components/technical/views/MonitoringView.vue";
 import MetricsView from "@/Components/technical/views/MetricsView.vue";
 import MonitoringIndicatorsView from "@/Components/technical/views/MonitoringIndicatorsView.vue";
+import GetConsultation from "@/Components/technical/views/GetConsultation.vue";
 
 export default {
     name: "hosting-page",
@@ -68,6 +70,7 @@ export default {
         MonitoringView,
         MetricsView,
         MonitoringIndicatorsView,
+        GetConsultation,
         Link,
         Head,
     },
@@ -183,31 +186,63 @@ export default {
         }
         &:before,
         &:after {
-            width: 150px;
-            height: 150px;
+            width: 300px;
+            height: 300px;
             position: absolute;
             display: inline-flex;
             align-items: center;
             justify-content: center;
             text-align: center;
-            @media (max-width: 991.98px) {
-                height: 100px;
-                width: 100px;
+            @media (max-width: 1270.98px) {
+                height: 250px;
+                width: 250px;
+            }
+            @media (max-width: 479.98px) {
+                height: 200px;
+                width: 200px;
             }
         }
         &:before {
-            content: url("/resources/assets/img/hosting_img_bitcoin.png");
+            content: "";
+            background: url("/resources/assets/img/hosting_img_bitcoin.png"),
+                no-repeat, center;
+            background-size: cover;
             left: 10%;
             bottom: -100px;
             animation: plane-soaring infinite 5s ease-in-out 0s;
+            z-index: 10;
+            @media (max-width: 1270.98px) {
+                left: 0;
+            }
+            @media (max-width: 991.98px) {
+                bottom: -130px;
+                left: -60px;
+            }
+            @media (max-width: 479.98px) {
+                bottom: -70px;
+            }
+            @media (max-width: 320.98px) {
+                bottom: -140px;
+                left: -40px;
+            }
         }
         &:after {
-            content: url("/resources/assets/img/hosting_img_etherium.png");
+            content: "";
+            background: url("/resources/assets/img/hosting_img_etherium.png"),
+                no-repeat, center;
+            background-size: cover;
             right: 10%;
             top: 0;
             animation: plane-soaring infinite 3s ease-in-out 0s;
+            @media (max-width: 1270.98px) {
+                right: 15%;
+            }
+            @media (max-width: 991.98px) {
+                right: 0;
+                top: -80px;
+            }
             @media (max-width: 767.98px) {
-                top: -20px;
+                right: -60px;
             }
         }
         @keyframes plane-soaring {

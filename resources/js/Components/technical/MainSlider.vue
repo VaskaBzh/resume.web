@@ -165,7 +165,6 @@ export default {
         slider(slides = 1) {
             let newPage = this.page + slides;
 
-            // Проверка границ
             if (newPage < 1) newPage = this.pages;
             else if (newPage > this.pages) newPage = 1;
 
@@ -173,13 +172,11 @@ export default {
             this.firstRow = (newPage - 1) * this.rowsNum;
             this.rows = Number(this.firstRow) + Number(this.rowsNum);
 
-            // Проверка, чтобы rows не выходил за границы общего количества строк
             if (this.rows > this.table.rows.length) {
                 this.rows = this.table.rows.length;
             }
         },
         pagination(page) {
-            // Проверка границ
             if (page < 1) page = 1;
             else if (page > this.pages) page = this.pages;
 
@@ -187,7 +184,6 @@ export default {
             this.firstRow = (page - 1) * this.rowsNum;
             this.rows = Number(this.firstRow) + Number(this.rowsNum);
 
-            // Проверка, чтобы rows не выходил за границы общего количества строк
             if (this.rows > this.table.rows.length) {
                 this.rows = this.table.rows.length;
             }

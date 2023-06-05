@@ -3,11 +3,8 @@
         <div class="monitoring__container">
             <div class="monitoring__main">
                 <div class="monitoring__content">
-<!--                    v-scroll="'left delay&#45;&#45;md'"-->
-                    <main-title
-                        tag="h2"
-                        class="monitoring__title"
-                    >
+                    <!--                    v-scroll="'left delay&#45;&#45;md'"-->
+                    <main-title tag="h2" class="monitoring__title">
                         Мониторинг пулов
                     </main-title>
                     <div class="wrap">
@@ -54,10 +51,6 @@ export default {
 
 <style scoped lang="scss">
 .monitoring {
-    //background-image: url("/resources/assets/img/about-panel-bg.png");
-    //background-position: center 30%;
-    //background-size: contain;
-    //background-repeat: no-repeat;
     margin-bottom: 64px;
     @media (max-width: 991.98px) {
         margin-bottom: 32px;
@@ -110,6 +103,12 @@ export default {
         @media (max-width: 991.98px) {
             text-align: center;
         }
+        &-md {
+            @media (max-width: 479.98px) {
+                font-size: 16px;
+            }
+        }
+
     }
     // .monitoring__image
     &__image {
@@ -120,14 +119,23 @@ export default {
             margin: -10pc 0 -13pc -12pc;
         }
         @media (max-width: 991.98px) {
-            max-height: 700px;
-            max-width: unset;
-            margin: -9pc 0 -8pc;
+            max-width: 130%;
+            margin: -15pc 0 -11pc;
         }
         @media (max-width: 767.98px) {
-            max-height: unset;
-            max-width: 510px;
-            margin: -6pc 0;
+            margin: -20pc 0 0;
+        }
+        @media (max-width: 680.98px) {
+            margin: -12pc 0 0;
+            max-width: 110%;
+        }
+        @media (max-width: 479.98px) {
+            margin: -6pc 0 0;
+            max-width: 110%;
+        }
+        @media (max-width: 340.98px) {
+            margin: -2pc 0 0;
+            max-width: 110%;
         }
     }
 }

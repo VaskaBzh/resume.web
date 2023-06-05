@@ -1,5 +1,10 @@
 <template>
-    <div class="profile" v-scroll="'opacity'" :data-key="accountInfo.id">
+    <div
+        class="profile"
+        v-scroll="'opacity'"
+        :class="{ active: accountInfo.id === this.getActive }"
+        :data-key="accountInfo.id"
+    >
         <div class="profile__head">
             <!--            <img-->
             <!--                :src="-->
@@ -82,6 +87,7 @@
 <script>
 import { router } from "@inertiajs/vue3";
 import MainMenu from "@/Components/UI/MainMenu.vue";
+import { mapGetters } from "vuex";
 export default {
     emits: ["changeActive", "click"],
     components: {
@@ -106,14 +112,15 @@ export default {
             return router;
         },
         chageActive() {
-            this.$emit("changeActive", this.accountInfo.id);
+            this.$store.commit("updateActive", this.accountInfo.id);
         },
         getWallets() {
-            this.$store.commit("updateActive", this.accountInfo.id);
+            this.chageActive();
             router.visit("/profile/wallets");
         },
     },
     computed: {
+        ...mapGetters(["getActive"]),
         options() {
             return [
                 {
@@ -202,7 +209,7 @@ export default {
     @media (max-width: 479.98px) {
         //width: calc(100% + 40px);
         //margin: 0 -20px;
-        border-radius: 12px;
+        //border-radius: 12px;
     }
     &:before {
         content: "";
@@ -221,9 +228,6 @@ export default {
             #4182ec 100%
         );
         border-radius: 21px;
-        @media (max-width: 479.98px) {
-            border-radius: 12px;
-        }
     }
     &.active {
         -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 20%);
@@ -240,12 +244,16 @@ export default {
             }
             &__body {
                 background-color: transparent;
+                transition: all 0.5s ease 0s;
                 &-block {
                     background: transparent;
                 }
                 &:before {
                     visibility: visible;
                     opacity: 1;
+                    @media (max-width: 479.98px) {
+                        border-radius: 12px;
+                    }
                 }
                 &-name,
                 &-value {
@@ -293,21 +301,6 @@ export default {
             height: 24px;
             fill: #4181ea;
         }
-        .input {
-            color: #fff;
-            font-size: 24px;
-            line-height: 30px;
-            font-weight: 700;
-            min-height: 0;
-            font-family: AmpleSoftPro, serif;
-            height: auto;
-            border-bottom: 1px solid #fff !important;
-            padding-right: 32px;
-            @media (max-width: 479.98px) {
-                font-size: 15px;
-                line-height: 19px;
-            }
-        }
     }
     &__settings {
         position: relative;
@@ -354,7 +347,8 @@ export default {
         flex-wrap: wrap;
         background-color: #fff;
         border-radius: 21px;
-        transition: all 0.5s ease 0s;
+        transition: all 0.5s ease 0.2s;
+        backdrop-filter: blur(5px);
         &:before {
             content: "";
             position: absolute;
@@ -370,8 +364,7 @@ export default {
                 rgba(255, 255, 255, 0.2) 31.75%,
                 rgba(255, 255, 255, 0) 121.06%
             );
-            transition: all 0.5s ease 0s;
-            backdrop-filter: blur(5px);
+            transition: all 0.1s ease 0s;
             border-radius: 21px;
         }
         @media (max-width: 479.98px) {
@@ -406,6 +399,7 @@ export default {
             font-size: 16px;
             line-height: 23px;
             margin-bottom: 4px;
+            transition: all 0.5s ease 0s;
             z-index: 1;
             @media (max-width: 479.98px) {
                 font-size: 14px;
@@ -418,12 +412,14 @@ export default {
             font-size: 18px;
             line-height: 25px;
             font-weight: 500;
+            transition: all 0.5s ease 0s;
             z-index: 1;
             span {
                 color: rgba(0, 0, 0, 0.62);
                 font-weight: 400;
                 font-size: 16px;
                 line-height: 23px;
+                transition: all 0.5s ease 0s;
                 z-index: 1;
             }
             @media (max-width: 479.98px) {

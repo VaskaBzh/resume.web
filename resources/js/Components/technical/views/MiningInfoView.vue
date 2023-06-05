@@ -1,7 +1,7 @@
 <template>
     <div class="mining-info">
         <div class="mining-info__container">
-            <div class="mining-info__main mining-im">
+            <div class="mining-info__main mining-im wrap">
                 <div class="mining-im__con">
                     <div class="mining-im__general" v-scroll="'left delay--lg'">
                         <div class="mining-im__general_content">
@@ -152,13 +152,6 @@ export default {
     }
 }
 .mining-im {
-    background: rgba(255, 255, 255, 0.29);
-    border-radius: 21px;
-    padding: 17px;
-    @media (max-width: 767.98px) {
-        margin: 0 -15px;
-        background-color: transparent;
-    }
     // .mining-im__con
     &__con {
         display: grid;

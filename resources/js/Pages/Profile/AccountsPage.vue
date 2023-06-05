@@ -46,7 +46,6 @@
                     :accKey="i"
                     :accountInfo="account"
                     :profit="this.profit"
-                    @changeActive="this.activeChanger"
                 />
             </div>
             <no-info :wait="this.allAccounts"></no-info>
@@ -185,11 +184,9 @@ import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import PopupView from "@/Components/technical/PopupView.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
-import axios from "axios";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 import { ref } from "vue";
-import { Inertia } from "@inertiajs/inertia";
 
 export default {
     components: {
@@ -212,7 +209,6 @@ export default {
         ...mapGetters([
             "allAccounts",
             "allHistoryForDays",
-            "getActive",
             "btcInfo",
         ]),
         errs() {
@@ -267,21 +263,6 @@ export default {
                 });
             }
         },
-        activeMount() {
-            document.querySelectorAll(".profile").forEach((profile) => {
-                profile.classList.remove("active");
-                if (profile.dataset.key == this.getActive) {
-                    profile.classList.add("active");
-                }
-            });
-        },
-        activeChanger(el) {
-            this.$store.commit("updateActive", el);
-            setTimeout(this.activeMount, 300);
-        },
-        async startMount(index) {
-            this.activeChanger(index);
-        },
     },
     setup() {
         let wait = ref(false);
@@ -312,16 +293,13 @@ export default {
             wait,
         };
     },
-    beforeUpdate() {
-        this.startMount(this.getActive);
-        this.getForcast();
-        this.activeMount();
-    },
+    // beforeUpdate() {
+    //     this.getForcast();
+    // },
     mounted() {
         document.title = "Аккаунты";
         document.querySelector("html").removeAttribute("class");
 
-        this.activeMount();
         this.getForcast();
     },
 };

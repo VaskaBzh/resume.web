@@ -152,8 +152,22 @@ export default {
 
 <style scoped lang="scss">
 .indicators {
+    margin: 0 0 94px;
+    background-image: url("/resources/assets/img/about-panel-bg.png");
+    background-position: 20% 30%;
+    background-size: contain;
+    background-repeat: no-repeat;
+    @media (max-width: 991.98px) {
+        background-position: 20% 280px;
+    }
+    @media (max-width: 767.98px) {
+        background-position: 20% 200px;
+    }
     &__main {
         position: relative;
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
     }
 }
 </style>

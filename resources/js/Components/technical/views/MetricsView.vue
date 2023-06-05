@@ -18,9 +18,7 @@
                         :space-between="24"
                         :pagination="pagination"
                     >
-                        <swiper-slide
-                            v-for="options in metrics"
-                        >
+                        <swiper-slide v-for="options in metrics">
                             <metric-block
                                 v-for="option in options"
                                 :options="option"
@@ -207,13 +205,22 @@ export default {
         &__block-blue {
             grid-column-start: 1;
             grid-column-end: 4;
-            padding: 62px 57px;
+            padding: 20px;
+            @media (min-width: 991.98px) {
+                padding: 62px 57px;
+            }
+            @media (max-width: 767.98px) {
+                padding: 10px;
+            }
             @media (max-width: 991.98px) {
                 grid-column-end: 1;
             }
 
             .text {
                 line-height: 181.1%;
+                @media (max-width: 479.98px) {
+                    font-size: 16px;
+                }
             }
         }
     }

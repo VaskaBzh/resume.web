@@ -219,11 +219,6 @@ export default {
         &-remove {
             color: #ff3b30;
         }
-        .icon,
-        svg {
-            width: 24px;
-            height: 24px;
-        }
         font-weight: 400;
         font-size: 17px;
         line-height: 143.1%;
@@ -241,17 +236,6 @@ export default {
         }
         &:hover {
             background: #f6f8fa;
-        }
-        svg {
-            width: 24px;
-            height: 24px;
-            stroke: transparent !important;
-        }
-        svg:not(.stroke) {
-            fill: #417fe5 !important;
-        }
-        svg.stroke {
-            stroke: #417fe5 !important;
         }
     }
     &_column {
