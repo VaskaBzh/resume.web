@@ -570,7 +570,7 @@ export default {
     width: 100%;
     gap: 100px;
     @media (max-width: 1270.98px) {
-        justify-content: space-between;
+        justify-content: space-around;
         gap: 10px;
     }
     @media (max-width: 767.98px) {
