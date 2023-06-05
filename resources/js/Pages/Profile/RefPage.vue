@@ -1567,7 +1567,7 @@ export default {
             color: #99acd3;
             @media (max-width: 767.98px) {
                 color: #818c99;
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 16px;
                 padding: 6px 20px;
                 height: 28px;
@@ -1614,7 +1614,7 @@ export default {
                 grid-column-start: 1;
                 &_label {
                     margin-bottom: 6px;
-                    font-size: 14px;
+                    font-size: 16px;
                     font-weight: 400;
                     line-height: 20px;
                     color: #818c99;
@@ -1732,7 +1732,7 @@ export default {
                 font-size: 16px;
                 line-height: 23px;
                 @media (max-width: 767.98px) {
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 20px;
                 }
             }
@@ -1795,7 +1795,7 @@ export default {
                     border-radius: 8px;
                     border: 0.5px solid rgba(0, 0, 0, 0.08);
                     .ref__text {
-                        font-size: 12px;
+                        font-size: 16px;
                         margin: 0 0 13px;
                         position: relative;
                         color: #818c99;
@@ -1820,13 +1820,13 @@ export default {
         line-height: 40px;
         color: #0000349e;
         @media (max-width: 767.98px) {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 23px;
             color: #000034;
             font-weight: 500;
         }
         @media (max-width: 479.98px) {
-            font-size: 12px;
+            font-size: 16px;
             line-height: 17px;
         }
         span {
@@ -1846,12 +1846,12 @@ export default {
         display: inline-flex;
         align-items: center;
         @media (max-width: 767.98px) {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 23px;
             font-weight: 400;
         }
         @media (max-width: 479.98px) {
-            font-size: 12px;
+            font-size: 16px;
             line-height: 17px;
         }
     }
@@ -1873,7 +1873,7 @@ export default {
             font-weight: 700;
         }
         @media (max-width: 767.98px) {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 20px;
             margin: 6px 0;
             color: #818c99;
@@ -1894,7 +1894,7 @@ export default {
             align-items: flex-start;
             width: 100%;
             color: #818c99;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 17px;
             height: auto;
             font-weight: 400;
@@ -1941,7 +1941,7 @@ export default {
         @media (max-width: 767.98px) {
             display: inline-flex;
             flex-direction: column;
-            font-size: 14px;
+            font-size: 16px;
             font-weight: 400;
             line-height: 20px;
         }

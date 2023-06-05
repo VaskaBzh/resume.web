@@ -155,7 +155,7 @@ export default {
         span {
             &:first-child {
                 color: #969797;
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 143.1%;
                 font-weight: 500;
             }

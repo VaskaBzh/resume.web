@@ -485,7 +485,7 @@ export default {
             }
         }
         @media (max-width: 991.98px) {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 16px;
             height: 34px;
             min-height: 34px;
@@ -498,7 +498,7 @@ export default {
         @media (max-width: 380.98px) {
             height: 28px;
             min-height: 28px;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 14px;
         }
         svg {

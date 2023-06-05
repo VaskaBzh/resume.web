@@ -145,14 +145,9 @@ export default {
             min-height: 36px;
         }
         @media (max-width: 478.98px) {
-            font-size: 14px;
+            font-size: 16px;
             color: #000034;
             line-height: 20px;
-        }
-        @media (max-width: 380.98px) {
-            font-size: 12px;
-            line-height: 17px;
-            min-height: 34px;
         }
     }
 }

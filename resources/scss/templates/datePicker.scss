@@ -41,7 +41,7 @@
         }
         @media (max-width: $mobileSmall) {
           height: 34px;
-          font-size: 14px;
+          font-size: 16px;
           line-height: 16px;
         }
         &::placeholder {
@@ -52,7 +52,7 @@
           color: #000034;
           opacity: 1;
           @media (max-width: $mobileSmall) {
-            font-size: 12px;
+            font-size: 16px;
             line-height: 14px;
           }
         }

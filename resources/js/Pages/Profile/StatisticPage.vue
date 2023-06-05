@@ -414,7 +414,7 @@ export default {
                 }
                 @media (max-width: 320.98px) {
                     font-weight: 500;
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 18px;
                 }
             }
@@ -425,7 +425,7 @@ export default {
                 font-size: 18px;
                 line-height: 26px;
                 @media (max-width: 479.98px) {
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 16px;
                 }
                 span {
@@ -434,11 +434,11 @@ export default {
                     line-height: 23px;
                     //margin-top: auto
                     @media (max-width: 479.98px) {
-                        font-size: 14px;
+                        font-size: 16px;
                         line-height: 16px;
                     }
                     @media (max-width: 320.98px) {
-                        font-size: 14px;
+                        font-size: 16px;
                         line-height: 18px;
                     }
                 }
@@ -483,7 +483,7 @@ export default {
                     min-height: 26px;
                 }
                 @media (max-width: 479.98px) {
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 18px;
                 }
                 &.active {
@@ -716,7 +716,7 @@ export default {
         margin-top: 16px;
         font-size: 18px;
         @media (max-width: 479.98px) {
-            font-size: 14px;
+            font-size: 16px;
         }
     }
 }

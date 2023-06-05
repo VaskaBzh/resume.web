@@ -232,6 +232,7 @@ export default {
     width: 100%;
     @media (max-width: 767.98px) {
         padding: 0 12px;
+        margin-right: -10px;
     }
     &_name {
         width: 100%;
@@ -293,7 +294,7 @@ export default {
     }
     &_title {
         font-weight: 500;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 143.1%;
         color: #969797;
     }

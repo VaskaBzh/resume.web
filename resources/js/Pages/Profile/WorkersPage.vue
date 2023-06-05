@@ -309,7 +309,7 @@ export default {
             color: rgba(0, 0, 0, 0.62);
             margin-bottom: 8px;
             @media (max-width: 767.98px) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 20px;
                 color: #818c99;
                 margin-bottom: 6px;

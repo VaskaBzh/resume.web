@@ -50,7 +50,7 @@
                 @media (max-width: $mobileSmall) {
                     min-height: 48px;
                     font-weight: 700;
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 20px;
                 }
             }
@@ -69,7 +69,7 @@
         color: #4182ec;
         font-weight: 400;
         @media (max-width: $mobile) {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 20px;
         }
         &:hover {
@@ -112,7 +112,7 @@
         color: rgba(0, 0, 0, 0.62);
         @media (max-width: $mobileSmall) {
             width: 330px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 17px;
             left: 0px;
             min-height: 48px;
@@ -123,7 +123,7 @@
             font-size: 18px;
             line-height: 26px;
             @media (max-width: $mobileSmall) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 17px;
             }
         }
@@ -150,7 +150,7 @@
         line-height: 26px;
         @media (max-width: $mobile) {
             font-weight: 400;
-            font-size: 12px;
+            font-size: 16px;
             line-height: 17px;
         }
     }

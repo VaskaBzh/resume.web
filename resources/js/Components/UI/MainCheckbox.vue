@@ -63,7 +63,6 @@ export default {
         line-height: 24px;
     }
     @media (max-width: 479.98px) {
-        font-size: 14px;
         line-height: 20px;
         justify-content: space-between;
     }

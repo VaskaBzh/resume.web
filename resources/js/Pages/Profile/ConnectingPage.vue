@@ -105,7 +105,7 @@ export default {
             margin-bottom: 8px;
             @media (max-width: 767.98px) {
                 margin: 0;
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 20px;
             }
         }
@@ -113,7 +113,7 @@ export default {
             font-weight: 400;
             line-height: 21px;
             @media (max-width: 767.98px) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 16px;
             }
         }

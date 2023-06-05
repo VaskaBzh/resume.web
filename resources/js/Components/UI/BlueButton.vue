@@ -86,7 +86,7 @@ export default {
         }
     }
     @media (max-width: 479.98px) {
-        font-size: 14px;
+        font-size: 16px;
         line-height: 20px;
         min-height: 40px;
     }

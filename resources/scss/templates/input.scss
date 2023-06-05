@@ -41,14 +41,17 @@
             }
         }
     }
+    @media (max-width: $mobile) {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 18px;
+    }
     @media (max-width: $mobileSmall) {
         background-color: #fff;
         padding: 0 10px;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 18px;
-        min-height: 34px;
+        min-height: 40px;
         border-radius: 12px;
+        height: 40px;
     }
     &-popup {
         border-color: transparent;
@@ -56,7 +59,7 @@
             padding: 0 22px;
             background: #e9edf3;
             border-radius: 21px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 20px;
             min-height: 48px;
         }

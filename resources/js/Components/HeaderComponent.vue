@@ -548,19 +548,17 @@ export default defineComponent({
 
         const submit = async () => {
             wait.value = true;
-            form.post("/login", {
-                onSuccess: (response) => {
-                    wait.value = false;
-                    setTimeout(() => {
-                        document.querySelector("[data-close]").click();
-                    }, 300);
-                },
+            await form.post("/login", {
                 onError: (errors) => {
                     // Обработка ошибок
                     console.log(errors);
                     wait.value = false;
                 },
             });
+            wait.value = false;
+            setTimeout(() => {
+                document.querySelector("[data-close]").click();
+            }, 300);
         };
         const reverify = () => {
             wait.value = true;
@@ -960,20 +958,19 @@ nav.nav__container {
 .nav__buttons_mobile {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 6px;
     position: relative;
     z-index: 100;
 
     & .nav__burger {
         background: transparent;
         border-radius: 14px;
-        width: 24px;
-        height: 24px;
         gap: 4px;
+        width: 38px;
+        height: 38px;
         transition: all 0.3s ease 0s;
 
         &:active {
-            background: #305ea8;
             box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
         }
 

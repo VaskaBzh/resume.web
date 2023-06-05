@@ -151,13 +151,13 @@ body::after {
                             transform-origin: center;
                             fill: #ffffff;
                             &:first-child {
-                                animation: rotate 2s linear 0s infinite;;
+                                animation: rotate 2s linear 0s infinite;
                             }
                             &:nth-child(2) {
-                                animation: reRotate 2s linear 0s infinite;;
+                                animation: reRotate 2s linear 0s infinite;
                             }
                             &:last-child {
-                                animation: rotate 2s linear 0s infinite;;
+                                animation: rotate 2s linear 0s infinite;
                             }
                         }
                     }
@@ -303,22 +303,27 @@ body::after {
         font-size: 18px;
         line-height: 26px;
         color: #595a5c;
-        @media (max-width: $mobileSmall) {
-            font-size: 14px;
+        @media (max-width: $mobile) {
+            font-size: 16px;
             line-height: 20px;
+        }
+        @media (max-width: $mobileSmall) {
+            font-size: 16px;
         }
     }
     .blue-button {
         width: 100% !important;
         transition: all 0.3s ease 0s;
-        @media (max-width: $mobileSmall) {
-            height: 34px;
-            min-height: 34px !important;
+        @media (max-width: $mobile) {
             .all-link {
-                font-size: 14px;
+                font-size: 16px;
                 padding: 0;
                 line-height: 20px;
             }
+        }
+        @media (max-width: $mobileSmall) {
+            height: 40px;
+            min-height: 40px !important;
         }
         &.back {
             background: #dae6f7 !important;

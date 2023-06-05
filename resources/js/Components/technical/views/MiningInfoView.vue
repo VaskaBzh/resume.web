@@ -158,7 +158,8 @@ export default {
         grid-template-columns: 1fr 2fr;
         gap: 17px;
         @media (max-width: 1270px) {
-            grid-template-columns: 1fr;
+            grid-template-columns: 100%;
+            width: 100%;
         }
     }
     // .mining-im__general

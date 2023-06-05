@@ -411,7 +411,7 @@ export default {
         @media (max-width: 479.98px) {
             border-radius: 8px;
             margin-right: 1px;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 16px;
             width: 83px;
             height: 28px;
@@ -472,7 +472,7 @@ export default {
             transform: rotate(0deg);
         }
         @media (max-width: 479.98px) {
-            font-size: 12px;
+            font-size: 16px;
             width: 200%;
             text-align: center;
         }

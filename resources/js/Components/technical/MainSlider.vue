@@ -244,7 +244,7 @@ export default {
             @media (max-width: 479.98px) {
                 margin-bottom: 16px;
                 color: #000034;
-                font-size: 12px;
+                font-size: 16px;
                 line-height: 15px;
             }
         }
@@ -322,7 +322,7 @@ export default {
             text-decoration: underline;
             text-decoration-color: transparent;
             @media (max-width: 479.98px) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 17px;
             }
         }

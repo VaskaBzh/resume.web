@@ -240,7 +240,7 @@ export default {
         writing-mode: vertical-lr;
         transform: rotate(180deg);
         @media (max-width: 479.98px) {
-            font-size: 12px;
+            font-size: 16px;
         }
     }
     // .graph__list
@@ -322,6 +322,9 @@ export default {
             @media (max-width: 767.98px) {
                 font-size: 15px;
                 line-height: 158.1%;
+            }
+            @media (max-width: 479.98px) {
+                justify-content: flex-start;
             }
 
             & span {

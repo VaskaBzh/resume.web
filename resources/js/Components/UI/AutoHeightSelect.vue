@@ -275,7 +275,7 @@ export default {
             align-items: center;
             transform: translateY(-50%);
             font-weight: 500;
-            font-size: 14px;
+            font-size: 16px;
             line-height: 143.1%;
             color: #969797;
             border-radius: 50%;

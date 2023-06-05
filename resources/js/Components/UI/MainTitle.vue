@@ -82,7 +82,7 @@ h3 {
     }
     @media (max-width: 767.98px) {
         position: relative;
-        margin-bottom: 40px;
+        margin-bottom: 24px;
         &:after {
             content: "";
             height: 1px;

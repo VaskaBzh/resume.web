@@ -120,12 +120,14 @@ export default {
 <style lang="scss" scoped>
 .shadow-enter-active,
 .shadow-leave-active {
-    transition: all 0.5s ease 0s;
+    transition: all 0.3s ease 0s, visibility 0.3s ease 0s;
     visibility: visible;
+    opacity: 1;
 }
 .shadow-enter-from,
 .shadow-leave-to {
     visibility: hidden;
+    opacity: 0;
 }
 .options-enter-active,
 .options-leave-active {
@@ -136,7 +138,7 @@ export default {
         max-height: 300px;
     }
     @media (max-width: 767.98px) {
-        transition: all 0.8s ease 0s !important;
+        transition: all 0.5s ease 0s !important;
         bottom: 10px !important;
     }
 }

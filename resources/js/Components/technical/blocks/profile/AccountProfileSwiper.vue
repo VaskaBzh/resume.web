@@ -290,7 +290,7 @@ export default {
         }
         &-name {
             color: rgba(0, 0, 0, 0.62);
-            font-size: 14px;
+            font-size: 16px;
             line-height: 20px;
             margin-bottom: 4px;
             transition: all 0.3s ease 0s;
@@ -299,14 +299,14 @@ export default {
                 line-height: 24px;
             }
             @media (max-width: 479.98px) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 16px;
                 color: #818c99;
                 margin-bottom: 6px;
             }
         }
         &-value {
-            font-size: 14px;
+            font-size: 16px;
             line-height: 20px;
             font-weight: 500;
             transition: all 0.3s ease 0s;
@@ -317,12 +317,12 @@ export default {
             span {
                 color: rgba(0, 0, 0, 0.62);
                 font-weight: 400;
-                font-size: 12px;
+                font-size: 16px;
                 line-height: 16px;
                 transition: all 0.3s ease 0s;
             }
             @media (max-width: 479.98px) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 16px;
                 color: #000034;
             }

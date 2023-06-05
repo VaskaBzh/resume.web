@@ -156,14 +156,14 @@ export default {
                     align-items: center;
                     justify-content: center;
                     border-radius: 50%;
-                    font-size: 14px;
+                    font-size: 16px;
                     line-height: 14px;
                     font-weight: 500;
                 }
                 @media (max-width: 767.98px) {
                     width: 16px;
                     height: 16px;
-                    font-size: 12px;
+                    font-size: 16px;
                     line-height: 12px;
                 }
             }

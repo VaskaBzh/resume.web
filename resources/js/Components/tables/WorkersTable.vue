@@ -290,7 +290,7 @@ export default {
                                 display: inline-flex;
                                 align-items: center;
                                 justify-content: center;
-                                font-size: 12px;
+                                font-size: 16px;
                                 line-height: 12px;
                                 width: 16px;
                                 height: 16px;
@@ -386,7 +386,7 @@ export default {
                     margin-right: 6px;
                     color: #fff;
                     @media (max-width: 767.98px) {
-                        font-size: 12px;
+                        font-size: 16px;
                         line-height: 17px;
                     }
                 }

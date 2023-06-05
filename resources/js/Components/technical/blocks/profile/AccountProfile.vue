@@ -402,7 +402,7 @@ export default {
             transition: all 0.5s ease 0s;
             z-index: 1;
             @media (max-width: 479.98px) {
-                font-size: 14px;
+                font-size: 16px;
                 line-height: 20px;
                 color: #818c99;
                 margin-bottom: 6px;

@@ -185,7 +185,7 @@ export default {
             gap: 5px;
             @media (max-width: 479.98px) {
                 gap: 0 5px;
-                font-size: 14px !important;
+                font-size: 16px !important;
                 font-weight: 500;
             }
 

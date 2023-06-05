@@ -681,7 +681,7 @@ export default {
     }
     &_subtitle {
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 16px;
         color: #818c99;
     }
@@ -703,7 +703,7 @@ export default {
     }
     &_text {
         font-weight: 400;
-        font-size: 14px;
+        font-size: 16px;
         line-height: 143.1%;
         text-align: center;
         color: #000000;
@@ -860,6 +860,7 @@ export default {
     min-width: 38px;
     height: 38px;
     margin: -7px -7px -7px 0;
+    border-radius: 14px;
     gap: 4px;
 
     &:active {

@@ -299,6 +299,9 @@ td {
             color: #000034 !important;
             font-size: 18px !important;
             line-height: 26px !important;
+            @media (max-width: 479.98px) {
+                font-size: 16px !important;
+            }
             &:before {
                 content: "";
                 position: relative;
