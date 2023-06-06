@@ -82,7 +82,7 @@ export default {
                             interval = 1;
                             break;
                         case 168:
-                            interval = 24;
+                            interval = 4;
                             break;
                     }
 
@@ -102,7 +102,7 @@ export default {
                                 : currentDate.getUTCMonth() + 1;
 
                         if (this.val === 168) {
-                            time = `${day}.${mounth}`;
+                            time = `${day}.${mounth} ${hour}:00`;
                         } else {
                             time = `${hour}:00`;
                         }
@@ -200,40 +200,40 @@ export default {
 
                 dates = [...new Set(dates)];
 
-                const customLinesPlugin = {
-                    id: "custom_lines_plugin",
-                    afterDraw: (chart, args, options) => {
-                        const yAxis = chart.scales["y"];
-                        const xAxis = chart.scales["x"];
+                // const customLinesPlugin = {
+                //     id: "custom_lines_plugin",
+                //     afterDraw: (chart, args, options) => {
+                //         const yAxis = chart.scales["y"];
+                //         const xAxis = chart.scales["x"];
+                //
+                //         const dataset = chart.data.datasets[0];
+                //         const minValue = Math.min(...dataset.data);
+                //         const maxValue = Math.max(...dataset.data);
+                //
+                //         const minYPos = yAxis.getPixelForValue(minValue);
+                //         const maxYPos = yAxis.getPixelForValue(maxValue);
+                //
+                //         chart.ctx.save();
+                //         chart.ctx.strokeStyle = "#818c99";
+                //         chart.ctx.setLineDash([5, 5]);
+                //
+                //         // Draw min line
+                //         chart.ctx.beginPath();
+                //         chart.ctx.moveTo(xAxis.left, minYPos);
+                //         chart.ctx.lineTo(xAxis.right, minYPos);
+                //         chart.ctx.stroke();
+                //
+                //         // Draw max line
+                //         chart.ctx.beginPath();
+                //         chart.ctx.moveTo(xAxis.left, maxYPos);
+                //         chart.ctx.lineTo(xAxis.right, maxYPos);
+                //         chart.ctx.stroke();
+                //
+                //         chart.ctx.restore();
+                //     },
+                // };
 
-                        const dataset = chart.data.datasets[0];
-                        const minValue = Math.min(...dataset.data);
-                        const maxValue = Math.max(...dataset.data);
-
-                        const minYPos = yAxis.getPixelForValue(minValue);
-                        const maxYPos = yAxis.getPixelForValue(maxValue);
-
-                        chart.ctx.save();
-                        chart.ctx.strokeStyle = "#818c99";
-                        chart.ctx.setLineDash([5, 5]);
-
-                        // Draw min line
-                        chart.ctx.beginPath();
-                        chart.ctx.moveTo(xAxis.left, minYPos);
-                        chart.ctx.lineTo(xAxis.right, minYPos);
-                        chart.ctx.stroke();
-
-                        // Draw max line
-                        chart.ctx.beginPath();
-                        chart.ctx.moveTo(xAxis.left, maxYPos);
-                        chart.ctx.lineTo(xAxis.right, maxYPos);
-                        chart.ctx.stroke();
-
-                        chart.ctx.restore();
-                    },
-                };
-
-                Chart.register(customLinesPlugin);
+                // Chart.register(customLinesPlugin);
 
                 let hint_label_workers = this.hint_label_workers;
 
@@ -271,13 +271,19 @@ export default {
                                 },
                             },
                             x: {
+                                ticks: {
+                                    maxRotation: 0,
+                                    minRotation: 0,
+                                    autoSkip: true,
+                                    maxTicksLimit: 10,
+                                },
                                 grid: {
                                     display: false,
                                 },
                             },
                         },
                         plugins: {
-                            custom_lines_plugin: {},
+                            // custom_lines_plugin: {},
                             tooltip: {
                                 mode: "index",
                                 intersect: false,

@@ -196,7 +196,7 @@ export default {
         right: 0;
         left: auto;
         top: 0;
-        max-width: 225px;
+        min-width: 200px;
     }
     @media (max-width: 767.98px) {
         bottom: 10px;

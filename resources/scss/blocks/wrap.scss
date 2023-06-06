@@ -13,11 +13,6 @@
     position: relative;
     gap: 16px;
     border-radius: 21px;
-    z-index: 0;
-    div,
-    .title {
-        z-index: 1;
-    }
     //&::before {
     //    content: "";
     //    position: absolute;
