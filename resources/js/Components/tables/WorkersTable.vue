@@ -121,10 +121,12 @@
             />
         </tbody>
         <popup-view id="seeChart" typePopup="graph">
-            <statistic-chart
+            <line-graph-statistic
                 class="popup_graph"
                 v-if="this.indexWorker !== -1"
-                :graphs="graphs"
+                :graphData="graphs[0]"
+                :height="height"
+                :closer="this.closer"
                 :key="this.graphs[0].values[this.graphs[0].values.length - 1]"
             />
         </popup-view>
@@ -132,12 +134,12 @@
 </template>
 <script>
 import TableWorkersRow from "@/Components/tables/row/TableWorkersRow.vue";
-import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
 import PopupView from "@/Components/technical/PopupView.vue";
+import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 
 export default {
-    components: { PopupView, TableWorkersRow, StatisticChart },
+    components: { PopupView, TableWorkersRow, LineGraphStatistic },
     props: {
         table: Object,
         visualType: {
@@ -152,7 +154,28 @@ export default {
             mainRow: this.table.mainRow,
             mainTable: this.table,
             indexWorker: -1,
+            height: 300,
+            closer: false,
         };
+    },
+    watch: {
+        viewportWidth() {
+            if (this.viewportWidth >= 1270.98) {
+                this.height = 500;
+            }
+            if (this.viewportWidth < 1270.98) {
+                this.height = 320;
+            }
+            if (this.viewportWidth < 991.98) {
+                this.height = 280;
+            }
+            if (this.viewportWidth < 767.98) {
+                this.height = 260;
+            }
+            if (this.viewportWidth < 479.98) {
+                this.height = 220;
+            }
+        },
     },
     computed: {
         ...mapGetters(["allHistoryMiner", "getActive"]),
@@ -203,18 +226,51 @@ export default {
             setTimeout(() => {
                 if (this.indexWorker !== key) {
                     this.indexWorker = key;
+                    this.graphs = [
+                        {
+                            id: 1,
+                            title: [
+                                this.$t("chart.labels[0]"),
+                                this.$t("chart.labels[1]"),
+                            ],
+                            values: [],
+                        },
+                    ];
+                    this.closer = true;
                     this.renderChart(key);
+                    setTimeout(() => {
+                        this.closer = false;
+                    }, 2000);
                 }
             }, 10);
         },
         renderChart(index) {
+            let interval = 60 * 60 * 1000;
+            let currentTime = new Date().getTime();
+
+            let dates = [];
+            for (let i = 24; i >= 0; i--) {
+                let date = new Date(currentTime - i * interval);
+                dates.push(date);
+            }
+
+            this.graphs[0].dates = dates.map((date) => date.getTime());
+
             let history;
             if (this.allHistoryMiner && this.allHistoryMiner[index]) {
                 history = this.allHistoryMiner[index];
             }
             this.graphs[0].values = [];
+            this.graphs[0].amount = [];
+            this.graphs[0].units = [];
 
-            for (let i = 1; i <= 25; i++) {
+            for (let i = 1; i <= 24; i++) {
+                let amountItem = Object.values(this.allHistoryMiner[index])[
+                    Object.values(this.allHistoryMiner[index]).length - i
+                ]?.amount;
+                let unitItem = Object.values(this.allHistoryMiner[index])[
+                    Object.values(this.allHistoryMiner[index]).length - i
+                ]?.unit;
                 if (history) {
                     let timeStamp = history[history.length - i];
                     if (timeStamp) {
@@ -226,6 +282,16 @@ export default {
                     }
                 } else {
                     this.graphs[0].values.unshift(String(0));
+                }
+                if (amountItem) {
+                    this.graphs[0].amount.unshift(amountItem);
+                } else {
+                    this.graphs[0].amount.unshift(String(0));
+                }
+                if (unitItem) {
+                    this.graphs[0].units.unshift(unitItem);
+                } else {
+                    this.graphs[0].units.unshift(String(""));
                 }
             }
         },

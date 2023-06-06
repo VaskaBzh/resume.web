@@ -83,7 +83,7 @@
                     <!--                        v-if="Object.values(this.allAccounts).length > 0"-->
                     <!--                    ></account-profile-swiper>-->
                     <div
-                        class="wrap__block"
+                        class="wrap__block hash__block"
                         v-if="Object.values(this.allAccounts).length > 0"
                     >
                         <div class="wrap__head wrap__column">
@@ -212,8 +212,9 @@ export default {
                         this.$t("chart.labels[1]"),
                     ],
                     values: [],
-                    time: [],
+                    dates: [],
                     amount: [],
+                    unit: [],
                 },
             ],
             tables: {
@@ -331,6 +332,17 @@ export default {
             return router;
         },
         renderChart() {
+            let interval = this.val === 24 ? 60 * 60 * 1000 : 60 * 60 * 1000;
+            let currentTime = new Date().getTime();
+
+            let dates = [];
+            for (let i = this.val - 1; i >= 0; i--) {
+                let date = new Date(currentTime - i * interval);
+                dates.push(date);
+            }
+
+            this.graphs[0].dates = dates.map((date) => date.getTime());
+
             let history = {};
             if (
                 this.allHistory[this.getActive] &&
@@ -348,13 +360,17 @@ export default {
                     }
                 );
             }
-            let val = this.val + 1;
+            let val = this.val;
             let values = [];
             let amount = [];
+            let unit = [];
             for (let i = 1; i <= val; i++) {
                 let amountItem = Object.values(this.allHistory[this.getActive])[
                     Object.values(this.allHistory[this.getActive]).length - i
                 ]?.amount;
+                let unitItem = Object.values(this.allHistory[this.getActive])[
+                    Object.values(this.allHistory[this.getActive]).length - i
+                ]?.unit;
                 if (history) {
                     let timeStamp = history[history.length - i];
                     if (timeStamp) {
@@ -370,9 +386,15 @@ export default {
                 } else {
                     amount.unshift(String(0));
                 }
+                if (unitItem) {
+                    unit.unshift(unitItem);
+                } else {
+                    unit.unshift(String(""));
+                }
             }
             this.graphs[0].values = values;
             this.graphs[0].amount = amount;
+            this.graphs[0].units = unit;
             setTimeout(this.changeId, 1000);
         },
     },
@@ -717,6 +739,11 @@ export default {
         font-size: 18px;
         @media (max-width: 479.98px) {
             font-size: 16px;
+        }
+    }
+    .hash__block {
+        @media (max-width: 479.98px) {
+            grid-template-columns: 1fr;
         }
     }
 }

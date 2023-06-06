@@ -9,9 +9,10 @@
                 >
                     <div class="graph__con">
                         <div class="graph__title">{{ graph.title }}</div>
-                        <div class="graph__graph" v-if="graph.id">
-                            <canvas id="myChart"></canvas>
-                        </div>
+                        <line-graph
+                            :graphData="graph"
+                            :height="height"
+                        ></line-graph>
                     </div>
                     <div class="graph__item_about graph-ia">
                         <ul class="graph-ia__list">
@@ -24,8 +25,8 @@
                                     {{ aboutItem.title }}
                                 </div>
                                 <div class="graph-ia__item_text">
-                                    <span>{{ this.text[aboutItem.id] }}</span>
-                                    <span>{{ this.span[aboutItem.id] }}</span>
+                                    <span>{{ text[aboutItem.id] }}</span>
+                                    <span>{{ span[aboutItem.id] }}</span>
                                 </div>
                             </li>
                         </ul>
@@ -37,9 +38,13 @@
 </template>
 
 <script>
-import Chart from "chart.js/auto";
 import Vue from "lodash";
+import LineGraph from "@/Components/technical/LineGraph.vue";
+
 export default {
+    components: {
+        LineGraph,
+    },
     props: {
         graphs: {
             type: Array,
@@ -48,15 +53,32 @@ export default {
     },
     data() {
         return {
-            graph: null,
+            viewportWidth: 0,
+            height: 300,
         };
     },
+    created: function () {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    methods: {
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
+        },
+    },
     watch: {
-        graphs() {
-            if (this.graphs[0].values[0]) {
-                if (this.graph === null) {
-                    this.graphInit();
-                }
+        viewportWidth() {
+            if (this.viewportWidth >= 1270.98) {
+                this.height = 300;
+            }
+            if (this.viewportWidth < 1270.98) {
+                this.height = 260;
+            }
+            if (this.viewportWidth < 991.98) {
+                this.height = 240;
+            }
+            if (this.viewportWidth < 767.98) {
+                this.height = 200;
             }
         },
     },
@@ -83,93 +105,6 @@ export default {
             });
             return str;
         },
-    },
-    methods: {
-        graphInit() {
-            const graphsList = this.graphs;
-            for (let i = 0; i < graphsList.length; i++) {
-                if (graphsList[i].id) {
-                    const ctr = document.querySelectorAll("#myChart");
-                    const ctx = ctr[i].getContext("2d");
-
-                    const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
-                    gradientBg.addColorStop(0, "rgba(63,123,221,1)");
-                    gradientBg.addColorStop(1, "rgba(255,255,255,0)");
-
-                    let dates = graphsList[i].dates.map((date) => {
-                        // Преобразование даты в объект Date
-                        let dateObj = new Date(date);
-
-                        // Получение месяца и года
-                        let monthYear = `${
-                            String(dateObj.getUTCMonth() + 1).length === 1
-                                ? "0" + String(dateObj.getUTCMonth() + 1)
-                                : dateObj.getUTCMonth() + 1
-                        }.${dateObj.getUTCFullYear()}`;
-
-                        return monthYear;
-                    });
-
-                    this.graph = new Chart(ctx, {
-                        type: "line",
-                        data: {
-                            labels: dates,
-                            datasets: [
-                                {
-                                    label: graphsList[i].title,
-                                    data: graphsList[i].values,
-                                    borderColor: "#3f7bdd",
-                                    backgroundColor: gradientBg,
-                                    tension: 0.4,
-                                    radius: 0,
-                                },
-                            ],
-                        },
-                        options: {
-                            fill: true,
-                            scales: {
-                                y: {
-                                    beginAtZero: true,
-                                    grid: {
-                                        z: 2,
-                                    },
-                                    ticks: {
-                                        callback: function (value) {
-                                            return value / 1000000000000 + "T";
-                                        },
-                                    },
-                                },
-                                x: {
-                                    grid: {
-                                        display: false,
-                                    },
-                                },
-                            },
-                            plugins: {
-                                tooltip: {
-                                    mode: "index",
-                                    intersect: false,
-                                },
-                                legend: {
-                                    // position: "left",
-                                    // onClick: false,
-                                    display: false,
-                                },
-                            },
-                            hover: {
-                                mode: "nearest",
-                                intersect: false,
-                            },
-                        },
-                    });
-                }
-            }
-        },
-    },
-    mounted() {
-        if (this.graphs[0].values[0]) {
-            this.graphInit();
-        }
     },
 };
 </script>

@@ -19,9 +19,11 @@
                 >
                     <div class="graph__con">
                         <div class="graph__title">{{ graph.title[0] }}</div>
-                        <div class="graph__graph">
-                            <canvas id="myChart"></canvas>
-                        </div>
+                        <line-graph-statistic
+                            :graphData="graph"
+                            :height="height"
+                            :viewportWidth="viewportWidth"
+                        ></line-graph-statistic>
                         <div class="graph__title graph__title-second">
                             {{ graph.title[1] }}
                         </div>
@@ -33,8 +35,8 @@
 </template>
 
 <script>
-import Chart from "chart.js/auto";
 import MainTitle from "@/Components/UI/MainTitle.vue";
+import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 export default {
     props: {
         graphs: {
@@ -50,287 +52,38 @@ export default {
             default: 24,
         },
     },
+    data() {
+        return {
+            height: 300,
+        };
+    },
+    watch: {
+        viewportWidth() {
+            if (this.viewportWidth >= 1270.98) {
+                this.height = 300;
+            }
+            if (this.viewportWidth < 1270.98) {
+                this.height = 260;
+            }
+            if (this.viewportWidth < 991.98) {
+                this.height = 240;
+            }
+            if (this.viewportWidth < 767.98) {
+                this.height = 200;
+            }
+            if (this.viewportWidth < 479.98) {
+                this.height = 180;
+            }
+        },
+    },
     components: {
         MainTitle,
+        LineGraphStatistic,
     },
     computed: {
         hint_label_workers() {
             return this.$t("chart.hint_label");
         },
-    },
-    methods: {
-        renderChart() {
-            const graphsList = this.graphs;
-            for (let i = 0; i < graphsList.length; i++) {
-                const ctr = document.querySelectorAll("#myChart");
-                const ctx = ctr[i].getContext("2d");
-
-                const gradientBg = ctx.createLinearGradient(0, 0, 0, 400);
-                gradientBg.addColorStop(0, "rgba(63,123,221,1)");
-                gradientBg.addColorStop(1, "rgba(255,255,255,0)");
-
-                let interval = 1; // Интервал между метками времени
-                let hours = () => {
-                    let arr = [];
-                    let time = "";
-
-                    switch (this.val) {
-                        case 6:
-                            interval = 1;
-                            break;
-                        case 24:
-                            interval = 1;
-                            break;
-                        case 168:
-                            interval = 4;
-                            break;
-                    }
-
-                    for (let i = this.val - interval; i >= 0; i -= interval) {
-                        let currentHour = new Date().getHours() - i;
-                        let currentDate = new Date();
-                        currentDate.setHours(currentHour);
-
-                        let hour = currentDate.getHours();
-                        let day =
-                            String(currentDate.getDate()).length !== 2
-                                ? `0${currentDate.getDate()}`
-                                : currentDate.getDate();
-                        let mounth =
-                            String(currentDate.getUTCMonth() + 1).length !== 2
-                                ? `0${currentDate.getUTCMonth() + 1}`
-                                : currentDate.getUTCMonth() + 1;
-
-                        if (this.val === 168) {
-                            time = `${day}.${mounth} ${hour}:00`;
-                        } else {
-                            time = `${hour}:00`;
-                        }
-                        arr.push(time);
-                    }
-                    return arr;
-                };
-
-                let calculateAverage = (data, interval) => {
-                    let averages = [];
-
-                    for (let i = interval; i < data.length; i += interval) {
-                        let sum = 0;
-                        let count = 0;
-
-                        for (
-                            let j = i;
-                            j < i + interval && j < data.length;
-                            j++
-                        ) {
-                            sum += Number(data[j]);
-                            count++;
-                        }
-
-                        let average = Number(sum) / count;
-                        averages.push(average);
-                    }
-
-                    return averages;
-                };
-
-                let calculateMaxAverage = (data, interval) => {
-                    let averages = [];
-
-                    for (let i = interval; i < data.length; i += interval) {
-                        let sum = 0;
-
-                        for (
-                            let j = i;
-                            j < i + interval && j < data.length;
-                            j++
-                        ) {
-                            if (sum <= Number(data[j])) {
-                                sum = Number(data[j]);
-                            }
-                        }
-
-                        let average = sum;
-                        averages.push(average);
-                    }
-
-                    return averages;
-                };
-
-                let changeVal =
-                    graphsList[i].values[graphsList[i].values.length - 1] /
-                        1000 /
-                        1000 >
-                    1
-                        ? "E"
-                        : graphsList[i].values[
-                              graphsList[i].values.length - 1
-                          ] /
-                              1000 >
-                          1
-                        ? "P"
-                        : null;
-
-                let values = graphsList[i].values.map((val) => {
-                    let newVal = val;
-                    if (changeVal === "E") {
-                        newVal = val / 1000 / 1000;
-                    }
-                    if (changeVal === "P") {
-                        newVal = val / 1000;
-                    }
-                    return newVal;
-                });
-
-                let yLabel =
-                    graphsList[i].values[graphsList[i].values.length - 1] /
-                        1000 /
-                        1000 >
-                    1
-                        ? "Eh/s"
-                        : graphsList[i].values[
-                              graphsList[i].values.length - 1
-                          ] /
-                              1000 >
-                          1
-                        ? "Ph/s"
-                        : "Th/s";
-
-                let dates = hours();
-
-                dates = [...new Set(dates)];
-
-                // const customLinesPlugin = {
-                //     id: "custom_lines_plugin",
-                //     afterDraw: (chart, args, options) => {
-                //         const yAxis = chart.scales["y"];
-                //         const xAxis = chart.scales["x"];
-                //
-                //         const dataset = chart.data.datasets[0];
-                //         const minValue = Math.min(...dataset.data);
-                //         const maxValue = Math.max(...dataset.data);
-                //
-                //         const minYPos = yAxis.getPixelForValue(minValue);
-                //         const maxYPos = yAxis.getPixelForValue(maxValue);
-                //
-                //         chart.ctx.save();
-                //         chart.ctx.strokeStyle = "#818c99";
-                //         chart.ctx.setLineDash([5, 5]);
-                //
-                //         // Draw min line
-                //         chart.ctx.beginPath();
-                //         chart.ctx.moveTo(xAxis.left, minYPos);
-                //         chart.ctx.lineTo(xAxis.right, minYPos);
-                //         chart.ctx.stroke();
-                //
-                //         // Draw max line
-                //         chart.ctx.beginPath();
-                //         chart.ctx.moveTo(xAxis.left, maxYPos);
-                //         chart.ctx.lineTo(xAxis.right, maxYPos);
-                //         chart.ctx.stroke();
-                //
-                //         chart.ctx.restore();
-                //     },
-                // };
-
-                // Chart.register(customLinesPlugin);
-
-                let hint_label_workers = this.hint_label_workers;
-
-                new Chart(ctx, {
-                    type: "line",
-                    data: {
-                        labels: dates,
-                        datasets: [
-                            {
-                                label: graphsList[0].title[0],
-                                data: calculateAverage(values, interval),
-                                borderColor: "#3f7bdd",
-                                backgroundColor: gradientBg,
-                                tension: 0.4,
-                                radius: 0,
-                            },
-                        ],
-                    },
-                    options: {
-                        interaction: {
-                            mode: "index",
-                            intersect: false,
-                        },
-                        fill: true,
-                        scales: {
-                            y: {
-                                beginAtZero: true,
-                                grid: {
-                                    z: 2,
-                                },
-                                ticks: {
-                                    callback: function (value, index, values) {
-                                        return value + " " + yLabel; // Добавьте единицу измерения к каждой метке на оси Y
-                                    },
-                                },
-                            },
-                            x: {
-                                ticks: {
-                                    maxRotation: 0,
-                                    minRotation: 0,
-                                    autoSkip: true,
-                                    maxTicksLimit: 10,
-                                },
-                                grid: {
-                                    display: false,
-                                },
-                            },
-                        },
-                        plugins: {
-                            // custom_lines_plugin: {},
-                            tooltip: {
-                                mode: "index",
-                                intersect: false,
-                                callbacks: {
-                                    label: function (tooltipItem) {
-                                        let label =
-                                            tooltipItem.dataset.label || "";
-                                        let value = tooltipItem.parsed.y;
-                                        let amount = "";
-                                        if (graphsList[0].amount) {
-                                            amount = `; ${hint_label_workers}: ${
-                                                calculateMaxAverage(
-                                                    graphsList[0].amount,
-                                                    interval
-                                                )[tooltipItem.parsed.x]
-                                            }`;
-                                        }
-
-                                        if (label) {
-                                            label += ": ";
-                                        }
-
-                                        label += `${value.toFixed(
-                                            2
-                                        )} ${yLabel}${amount}`;
-
-                                        return label;
-                                    },
-                                },
-                            },
-                            legend: {
-                                // position: "left",
-                                // onClick: false,
-                                display: false,
-                            },
-                        },
-                        hover: {
-                            mode: "nearest",
-                            intersect: false,
-                        },
-                    },
-                });
-            }
-        },
-    },
-    mounted() {
-        this.renderChart();
     },
 };
 </script>
@@ -363,6 +116,9 @@ export default {
     }
 }
 .graph {
+    @media (max-width: 991.98px) {
+        padding-bottom: 30px;
+    }
     // .graph__main
     &__main {
         background: rgba(255, 255, 255, 0.29);
@@ -443,6 +199,8 @@ export default {
         @media (max-width: 478.98px) {
             align-items: flex-start;
             overflow-x: scroll;
+            overflow-y: hidden;
+            padding: 0 0 15px;
             &::-webkit-scrollbar {
                 height: 5px;
 
@@ -476,6 +234,7 @@ export default {
         @media (max-width: 767.98px) {
             writing-mode: horizontal-tb;
             transform: rotate(0deg);
+            display: none;
         }
         @media (max-width: 479.98px) {
             font-size: 16px;
@@ -484,14 +243,13 @@ export default {
         }
         &-second {
             position: absolute;
-            bottom: -16px;
+            bottom: -45px;
             writing-mode: horizontal-tb;
             left: 50%;
             transform: translateX(-50%);
             @media (max-width: 767.98px) {
                 position: relative;
                 left: 0;
-                bottom: 0;
                 transform: translateX(0);
             }
         }
@@ -509,17 +267,7 @@ export default {
     }
     // .graph__item
     &__item {
-        background: #ffffff;
-        border-radius: 21px;
         flex: 0 1 100%;
-        padding: 28px 36px 33px;
-
-        @media (max-width: 767.98px) {
-            padding: 0;
-        }
-        @media (max-width: 479.98px) {
-            border-radius: 10px;
-        }
     }
 }
 .graph-ia {

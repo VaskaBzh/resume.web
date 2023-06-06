@@ -193,12 +193,6 @@ export default {
                 content: "≈";
             }
 
-            &:first-child {
-                @media (max-width: 479.98px) {
-                    width: 100%;
-                }
-            }
-
             &:last-child {
                 margin-right: 0;
             }

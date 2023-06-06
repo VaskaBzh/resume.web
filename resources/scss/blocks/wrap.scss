@@ -102,6 +102,7 @@
             background: #3f65b3;
         }
         &-graph {
+            overflow: hidden;
             @media (max-width: 998.98px) {
                 .graph {
                     &__main {
