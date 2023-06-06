@@ -601,7 +601,7 @@ export default {
         gap: 16px;
         transition: all 0.3s ease 0s;
         width: 100%;
-        @media (max-width: 991.98px) {
+        @media (max-width: 1270.98px) {
             grid-template-columns: repeat(3, 1fr);
         }
         @media (max-width: 767.98px) {
