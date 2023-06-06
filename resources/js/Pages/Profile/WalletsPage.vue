@@ -600,6 +600,7 @@ export default {
         grid-template-columns: repeat(4, 1fr);
         gap: 16px;
         transition: all 0.3s ease 0s;
+        width: 100%;
         @media (max-width: 991.98px) {
             grid-template-columns: repeat(3, 1fr);
         }
