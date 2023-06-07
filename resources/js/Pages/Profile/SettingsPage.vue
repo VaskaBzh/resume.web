@@ -10,7 +10,9 @@
     <!--        </div>-->
     <!--    </div>-->
     <div class="settings" ref="page">
-        <main-title tag="h2" class="profile" :title-name="$t('settings.title')"></main-title>
+        <main-title tag="h2" class="profile">{{
+            $t("settings.title")
+        }}</main-title>
         <div class="settings__wrap settings__wrap-adapt wrap">
             <div class="settings__column">
                 <main-title

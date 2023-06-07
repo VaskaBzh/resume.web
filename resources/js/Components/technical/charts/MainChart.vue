@@ -1,37 +1,34 @@
 <template>
-    <div class="graph">
-        <div class="wrap">
-            <div class="graph__list">
-                <div
-                    v-for="graph in graphs"
-                    :key="graph.id"
-                    class="graph__item wrap__block"
-                >
-                    <div class="graph__con">
-                        <div class="graph__title">{{ graph.title }}</div>
-                        <line-graph
-                            :graphData="graph"
-                            :height="height"
-                        ></line-graph>
-                    </div>
-                    <div class="graph__item_about graph-ia">
-                        <ul class="graph-ia__list">
-                            <li
-                                v-for="(aboutItem, i) in graph.about"
-                                :key="aboutItem.id"
-                                class="graph-ia__item"
-                            >
-                                <div class="text text-black">
-                                    {{ aboutItem.title }}
-                                </div>
-                                <div class="graph-ia__item_text">
-                                    <span>{{ text[aboutItem.id] }}</span>
-                                    <span>{{ span[aboutItem.id] }}</span>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+    <div class="wrap">
+        <div
+            v-for="graph in graphs"
+            :key="graph.id"
+            class="wrap__block wrap__column"
+        >
+            <div class="graph" v-show="graph.values">
+                <div class="graph_title">{{ graph.title }}</div>
+                <line-graph
+                    :graphData="graph"
+                    :height="height"
+                    :viewportWidth="viewportWidth"
+                ></line-graph>
+            </div>
+            <div class="graph__item_about graph-ia">
+                <ul class="graph-ia__list">
+                    <li
+                        v-for="(aboutItem, i) in graph.about"
+                        :key="aboutItem.id"
+                        class="graph-ia__item"
+                    >
+                        <div class="text text-black">
+                            {{ aboutItem.title }}
+                        </div>
+                        <div class="graph-ia__item_text">
+                            <span>{{ text[aboutItem.id] }}</span>
+                            <span>{{ span[aboutItem.id] }}</span>
+                        </div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -116,11 +113,16 @@ export default {
     }
 }
 .wrap {
+    flex-wrap: nowrap;
+    @media (max-width: 991.98px) {
+        flex-wrap: wrap;
+    }
     &__block {
         width: 100%;
-        flex-direction: column;
+        gap: 20px;
         @media (max-width: 767.98px) {
             padding: 15px;
+            gap: 10px;
             &-graph {
                 order: 3;
                 padding: 24px !important;
@@ -138,35 +140,19 @@ export default {
     }
 }
 .graph {
-    // .graph__main
-    &__main {
-        background: rgba(255, 255, 255, 0.29);
-        border-radius: 21px;
-        padding: 17px;
-        @media (max-width: 1270px) {
-            padding: 20px;
-        }
-        @media (max-width: 479.98px) {
-            margin: 0 -15px;
-            border-radius: 10px;
-        }
-    }
-    // .graph__con
-    &__con {
-        display: flex;
-        align-items: center;
-        @media (max-width: 767.98px) {
-            padding: 15px 30px 15px 9px;
-        }
-        @media (max-width: 479.98px) {
-        }
+    display: flex;
+    align-items: center;
+    padding: 0 0 15px;
+    @media (max-width: 767.98px) {
+        padding: 0 0px 30px 0;
+        overflow-x: hidden;
     }
     // .graph__graph
     &__graph {
         flex: 1 1 auto;
     }
     // .graph__title
-    &__title {
+    &_title {
         font-style: normal;
         font-weight: 400;
         font-size: 15px;
@@ -176,18 +162,6 @@ export default {
         transform: rotate(180deg);
         @media (max-width: 479.98px) {
             font-size: 16px;
-        }
-    }
-    // .graph__list
-    &__list {
-        width: 100%;
-        display: flex;
-        gap: 17px;
-        @media (max-width: 991.98px) {
-            flex-direction: column;
-        }
-        @media (max-width: 767.98px) {
-            gap: 35px;
         }
     }
     // .graph__item
@@ -207,18 +181,11 @@ export default {
     }
 }
 .graph-ia {
-    margin-top: 24px;
-    @media (max-width: 767.98px) {
-        margin-top: 9px;
-    }
     // .graph-ia__list
     &__list {
         display: flex;
         flex-direction: column;
         gap: 16px;
-        @media (max-width: 767.98px) {
-            padding: 0 23px 25px;
-        }
         @media (max-width: 479.98px) {
             gap: 12px;
         }

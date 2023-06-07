@@ -22,6 +22,7 @@
                         <line-graph-statistic
                             :graphData="graph"
                             :height="height"
+                            :redraw="redraw"
                             :viewportWidth="viewportWidth"
                         ></line-graph-statistic>
                         <div class="graph__title graph__title-second">
@@ -50,6 +51,10 @@ export default {
         val: {
             type: Number,
             default: 24,
+        },
+        redraw: {
+            type: Boolean,
+            default: true,
         },
     },
     data() {
@@ -94,25 +99,6 @@ export default {
         &__item {
             padding: 25px 0 0;
         }
-    }
-    #myChart {
-        @media (min-width: 991.98px) {
-            height: 470px !important;
-            width: 100% !important;
-        }
-        @media (min-width: 768.98px) {
-            height: 370px !important;
-            width: 100% !important;
-        }
-    }
-}
-#myChart {
-    @media (min-width: 1270.98px) {
-        height: 430px !important;
-    }
-    @media (min-width: 768.98px) {
-        height: 330px !important;
-        width: 100% !important;
     }
 }
 .graph {
@@ -198,18 +184,6 @@ export default {
         }
         @media (max-width: 478.98px) {
             align-items: flex-start;
-            overflow-x: scroll;
-            overflow-y: hidden;
-            padding: 0 0 15px;
-            &::-webkit-scrollbar {
-                height: 5px;
-
-                &-thumb {
-                    /* плашка-бегунок */
-                    background: #4282ec;
-                    border-radius: 4px;
-                }
-            }
         }
     }
     // .graph__graph

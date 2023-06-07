@@ -180,6 +180,7 @@ body::after {
         opacity: 0;
         transform: translateY(400px);
         transition: all 0.5s ease 0s;
+        overflow: hidden;
         .no-info {
             position: absolute;
             display: flex;

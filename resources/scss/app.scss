@@ -405,6 +405,52 @@ h6 {
     }
 }
 
+.container-chart {
+    position: relative;
+    width: 100%;
+    svg {
+        overflow: visible;
+        g {
+            g.tick {
+                font-size: 14px;
+                font-family: "AmpleSoftPro", serif;
+                color: #0000009e;
+                line {
+                    color: #bec9e0;
+                    display: none;
+                }
+            }
+            .domain {
+                display: none;
+            }
+        }
+    }
+}
+
+.tooltip {
+    position: absolute;
+    transition: all 0.2s ease 0s;
+    width: fit-content;
+    border: none;
+    background: #fff;
+    .tooltip-wrapper {
+        position: relative;
+        border-radius: 5px;
+        font-family: "AmpleSoftPro", serif;
+        font-size: 16px;
+        line-height: 20px;
+        padding: 10px;
+        color: #417fe5;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        background: rgba(194, 213, 242, 0.6);
+        overflow: hidden;
+        z-index: 10;
+        box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+    }
+}
+
 .menu {
     &_elem {
         svg {

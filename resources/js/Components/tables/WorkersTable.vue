@@ -120,16 +120,20 @@
                 @click="this.indexChanger(row.graphId)"
             />
         </tbody>
-        <popup-view id="seeChart" typePopup="graph">
-            <line-graph-statistic
-                class="popup_graph"
-                v-if="this.indexWorker !== -1"
-                :graphData="graphs[0]"
-                :height="height"
-                :closer="this.closer"
-                :key="this.graphs[0].values[this.graphs[0].values.length - 1]"
-            />
-        </popup-view>
+        <!--        <popup-view-->
+        <!--            id="seeChart"-->
+        <!--            v-show="this.indexWorker !== -1"-->
+        <!--            ref="chart"-->
+        <!--            typePopup="graph"-->
+        <!--        >-->
+        <!--            <line-graph-statistic-->
+        <!--                class="graph"-->
+        <!--                :graphData="graphs[0]"-->
+        <!--                :height="height"-->
+        <!--                :redraw="redraw"-->
+        <!--                :key="this.graphs[0].values[this.graphs[0].values.length - 1]"-->
+        <!--            />-->
+        <!--        </popup-view>-->
     </table>
 </template>
 <script>
@@ -155,7 +159,7 @@ export default {
             mainTable: this.table,
             indexWorker: -1,
             height: 300,
-            closer: false,
+            redraw: false,
         };
     },
     watch: {
@@ -174,6 +178,11 @@ export default {
             }
             if (this.viewportWidth < 479.98) {
                 this.height = 220;
+            }
+        },
+        async indexWorker(newVal, oldVal) {
+            if (newVal !== oldVal && newVal !== -1) {
+                await setTimeout(() => (this.redraw = true), 1700);
             }
         },
     },
@@ -236,69 +245,73 @@ export default {
                             values: [],
                         },
                     ];
-                    this.closer = true;
                     this.renderChart(key);
-                    setTimeout(() => {
-                        this.closer = false;
-                    }, 2000);
                 }
             }, 10);
         },
         renderChart(index) {
-            let interval = 60 * 60 * 1000;
-            let currentTime = new Date().getTime();
+            const interval = 60 * 60 * 1000;
+            const currentTime = new Date().getTime();
+            const historyValues = this.allHistoryMiner[index];
 
-            let dates = [];
-            for (let i = 24; i >= 0; i--) {
-                let date = new Date(currentTime - i * interval);
-                dates.push(date);
+            this.graphs[0].dates = Array.from({ length: 24 }, (_, i) => {
+                const date = new Date(currentTime - (24 - 1 - i) * interval);
+                return date.getTime();
+            });
+
+            const [values, amount, unit] = historyValues
+                .slice(-24)
+                .reverse()
+                .reduce(
+                    (acc, el) => {
+                        if (el) {
+                            let hash = el.hash ?? 0;
+                            if (el.unit === "P") hash *= 1000;
+                            else if (el.unit === "E") hash *= 1000000;
+                            acc[0].push(Number(hash).toFixed(2));
+                            el.amount ? acc[1].push(el.amount) : acc[1].push(0);
+                            acc[2].push(el.unit);
+                        } else {
+                            acc[0].push(0);
+                            acc[1].push(0);
+                            acc[2].push("T");
+                        }
+
+                        return acc;
+                    },
+                    [[], [], []]
+                );
+
+            while (values.length < this.val) {
+                values.push("0");
+                amount.push("0");
+                unit.push("T");
             }
 
-            this.graphs[0].dates = dates.map((date) => date.getTime());
-
-            let history;
-            if (this.allHistoryMiner && this.allHistoryMiner[index]) {
-                history = this.allHistoryMiner[index];
-            }
-            this.graphs[0].values = [];
-            this.graphs[0].amount = [];
-            this.graphs[0].units = [];
-
-            for (let i = 1; i <= 24; i++) {
-                let amountItem = Object.values(this.allHistoryMiner[index])[
-                    Object.values(this.allHistoryMiner[index]).length - i
-                ]?.amount;
-                let unitItem = Object.values(this.allHistoryMiner[index])[
-                    Object.values(this.allHistoryMiner[index]).length - i
-                ]?.unit;
-                if (history) {
-                    let timeStamp = history[history.length - i];
-                    if (timeStamp) {
-                        this.graphs[0].values.unshift(
-                            Number(Object.values(timeStamp)[3]).toFixed(0)
-                        );
-                    } else {
-                        this.graphs[0].values.unshift(String(0));
-                    }
-                } else {
-                    this.graphs[0].values.unshift(String(0));
-                }
-                if (amountItem) {
-                    this.graphs[0].amount.unshift(amountItem);
-                } else {
-                    this.graphs[0].amount.unshift(String(0));
-                }
-                if (unitItem) {
-                    this.graphs[0].units.unshift(unitItem);
-                } else {
-                    this.graphs[0].units.unshift(String(""));
-                }
-            }
+            Object.assign(this.graphs[0], {
+                values: values.reverse(),
+                amount: amount.map(String).reverse(),
+                unit: unit.reverse(),
+            });
         },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
+    },
+    mounted() {
+        document
+            .querySelector(".workers .wrap-overflow")
+            .addEventListener("click", (e) => {
+                if (e.target.closest("[data-close]")) {
+                    this.indexWorker = -1;
+                    console.log(this.indexWorker);
+                }
+            });
+        // document.querySelector("body.lock").addEventListener("click", () => {
+        //     this.indexWorker = -1;
+        //     console.log(this.indexWorker);
+        // });
     },
 };
 </script>

@@ -13,10 +13,7 @@ export default {
         graphData: Array,
         height: Number,
         viewportWidth: Number,
-        closer: {
-            type: Boolean,
-            default: false,
-        },
+        redraw: Boolean,
     },
     data() {
         return {
@@ -26,23 +23,9 @@ export default {
         };
     },
     watch: {
-        closer(newValue, oldValue) {
-            if (this.$refs.chart && this.graphData.values?.length > 0) {
-                if (newValue === true) {
-                    if (this.svg !== null) {
-                        this.svg.remove();
-                    }
-                }
-                if (newValue === false) {
-                    this.graphInit();
-                }
-            }
-        },
         height() {
             if (this.$refs.chart && this.graphData.values?.length > 0) {
-                if (this.svg !== null) {
-                    this.svg.remove();
-                }
+                this.dropGraph();
                 this.graphInit();
             }
         },
@@ -50,24 +33,25 @@ export default {
     computed: {
         getPosition() {
             if (this.mouseX) {
-                if (
+                const isLeft =
                     this.mouseX <
                     this.$refs.chart.clientWidth -
-                        this.$refs.tooltip.clientWidth
-                ) {
-                    return { side: "left", position: this.mouseX };
-                } else {
-                    return {
-                        side: "right",
-                        position:
-                            this.clientX -
-                            this.svg.node().getBoundingClientRect().right,
-                    };
-                }
+                        this.$refs.tooltip.clientWidth;
+
+                return {
+                    side: "left",
+                    position: isLeft
+                        ? this.mouseX
+                        : this.mouseX - this.$refs.tooltip.clientWidth,
+                };
             }
         },
     },
     methods: {
+        dropGraph() {
+            this.svg.selectAll("*").remove();
+            this.svg._groups[0][0].remove();
+        },
         tooltipInit(event, tooltip, x) {
             try {
                 this.clientX = event.clientX;
@@ -75,59 +59,64 @@ export default {
                     this.clientX - this.svg.node().getBoundingClientRect().left;
                 const nearestIndex = Math.round(x.invert(this.mouseX));
                 const d = this.graphData.values[nearestIndex];
-                const u = this.graphData.units[nearestIndex];
+                const u = this.graphData.unit[nearestIndex];
                 const a = this.graphData.amount[nearestIndex];
                 const time = this.graphData.dates[nearestIndex];
-
                 if (this.graphData.dates.length === 24) {
-                    tooltip
-                        .style("opacity", 1)
-                        .style(
-                            this.getPosition.side,
-                            this.getPosition.position + "px"
-                        )
-                        .style(
-                            "top",
-                            event.clientY -
-                                this.$refs.chart.getBoundingClientRect().top +
-                                "px"
-                        ).html(`<div class="tolltip-wrapper">
+                    if (
+                        new Date(time).toLocaleTimeString() !== "Invalid Date"
+                    ) {
+                        tooltip
+                            .style("opacity", 1)
+                            .style(
+                                this.getPosition.side,
+                                this.getPosition.position + "px"
+                            )
+                            .style(
+                                "top",
+                                event.clientY -
+                                    this.$refs.chart.getBoundingClientRect()
+                                        .top +
+                                    "px"
+                            ).html(`<div class="tooltip-wrapper">
                                 <span>Время: ${
-                                    new Date(time).toLocaleTimeString() || ""
+                                    new Date(time).toLocaleTimeString()
                                 }</span>
-                                <span>Хешрейт: ${d || ""} ${
-                        (u || "T") + "H/s" || ""
-                    }</span>
-                                <span>Активные воркеры: ${a || ""}</span>
+                                <span>Хешрейт: ${d} ${(u || "T") + "H/s"}</span>
+                                <span>Активные воркеры: ${a}</span>
                             </div>`);
+                    }
                 } else {
-                    tooltip
-                        .style("opacity", 1)
-                        .style(
-                            this.getPosition.side,
-                            this.getPosition.position + "px"
-                        )
-                        .style(
-                            "top",
-                            event.clientY -
-                                this.$refs.chart.getBoundingClientRect().top +
-                                "px"
-                        ).html(`<div class="tolltip-wrapper">
+                    if (
+                        new Date(time).toLocaleTimeString() !== "Invalid Date"
+                    ) {
+                        tooltip
+                            .style("opacity", 1)
+                            .style(
+                                this.getPosition.side,
+                                this.getPosition.position + "px"
+                            )
+                            .style(
+                                "top",
+                                event.clientY -
+                                    this.$refs.chart.getBoundingClientRect()
+                                        .top +
+                                    "px"
+                            ).html(`<div class="tooltip-wrapper">
                                 <span>День: ${
                                     new Date(time)
                                         .getDate()
                                         .toString()
-                                        .padStart(2, "0") || ""
-                                }.${
-                        (new Date(time).getMonth() + 1)
+                                        .padStart(2, "0") + "."
+                                }${(new Date(time).getMonth() + 1)
                             .toString()
-                            .padStart(2, "0") || ""
-                    } Время: ${new Date(time).toLocaleTimeString() || ""}</span>
-                                <span>Хешрейт: ${d || ""} ${
-                        (u || "T") + "H/s" || ""
-                    }</span>
-                                <span>Активные воркеры: ${a || ""}</span>
+                            .padStart(2, "0")} Время: ${new Date(
+                            time
+                        ).toLocaleTimeString()}</span>
+                                <span>Хешрейт: ${d} ${(u || "T") + "H/s"}</span>
+                                <span>Активные воркеры: ${a}</span>
                             </div>`);
+                    }
                 }
             } catch (error) {
                 console.error(error);
@@ -177,7 +166,7 @@ export default {
                 .domain(d3.extent(this.graphData.values, (d) => d))
                 .range([this.height, 0]);
 
-            let formatTime = (date) => {
+            let formatTime = (date, i) => {
                 const hours = date.getHours();
                 const minutes = date.getMinutes();
                 if (this.graphData.dates.length > 24) {
@@ -194,8 +183,11 @@ export default {
                 }
             };
 
+            let isMobile = this.viewportWidth <= 479.98;
+
             const xAxis = d3
                 .axisBottom(x)
+                .ticks(isMobile ? 4 : this.viewportWidth <= 767.98 ? 10 : 12)
                 .tickFormat((d) => formatTime(new Date(d)));
 
             const yAxis = d3.axisLeft(y).tickFormat(formatNumber);
@@ -260,79 +252,39 @@ export default {
                 .attr("transform", `translate(-5, 0)`)
                 .call(yAxis);
 
-            const tooltip = d3.select(this.$refs.tooltip);
+            if (!isMobile) {
+                const tooltip = d3.select(this.$refs.tooltip);
 
-            this.svg.on("mousemove", (event) =>
-                this.tooltipInit(event, tooltip, x)
-            );
-            tooltip.on("mousemove", () => tooltip.style("opacity", 1));
-            tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
+                this.svg.on("mousemove", (event) =>
+                    this.tooltipInit(event, tooltip, x)
+                );
 
-            this.svg.on("mouseleave", () => {
-                tooltip.style("opacity", 0);
-            });
+                this.svg.on("mouseleave", () => {
+                    tooltip.style("opacity", 0);
+                });
+            }
         },
     },
     mounted() {
         if (this.$refs.chart && this.graphData?.values?.length > 0) {
-            this.graphInit();
+            if (this.redraw) {
+                this.graphInit();
+            }
         }
     },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container-chart {
-    position: relative;
-    width: 100%;
     text-align: center;
+    margin: 0 0 0 35px;
+    @media (max-width: 767.98px) {
+        margin: 0 10px 0 35px;
+    }
     @media (max-width: 479.98px) {
-        width: 200%;
-        margin: 0 20px 20px 40px;
-    }
-
-    svg {
-        overflow: visible;
-        g {
-            g.tick {
-                font-size: 14px;
-                font-family: "AmpleSoftPro", serif;
-                color: #0000009e;
-                line {
-                    color: #bec9e0;
-                    display: none;
-                }
-            }
-            .domain {
-                display: none;
-            }
-        }
-    }
-}
-
-.tooltip {
-    position: absolute;
-    transition: all 0.2s ease 0s;
-    width: fit-content;
-    border: none;
-    background: #fff;
-    @media (max-width: 479.98px) {
-        display: none;
-    }
-    .tolltip-wrapper {
-        display: flex;
-        flex-direction: column;
-        position: relative;
-        border-radius: 5px;
-        font-family: "AmpleSoftPro", serif;
-        font-size: 16px;
-        line-height: 20px;
-        padding: 10px;
-        color: #417fe5;
-        background: rgba(194, 213, 242, 0.6);
-        overflow: hidden;
-        z-index: 10;
-        box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+        margin: 0 10px 0 35px;
+        width: calc(100% - 10px - 35px);
     }
 }
 </style>

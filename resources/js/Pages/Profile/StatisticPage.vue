@@ -34,17 +34,14 @@
                     </div>
                 </div>
                 <div class="wrap__block wrap__block-graph">
-                    <div class="propeller" v-if="this.id !== this.val"></div>
+                    <div class="propeller" v-if="id !== val"></div>
                     <statistic-chart
                         v-else
                         class="no-title"
-                        :val="this.val"
-                        :graphs="this.graphs"
-                        :key="
-                            this.graphs[0].values[
-                                this.graphs[0].values.length - 1
-                            ]
-                        "
+                        :val="val"
+                        :graphs="graphs"
+                        :viewportWidth="viewportWidth"
+                        :key="graphs[0].values[graphs[0].values.length - 1]"
                     />
                 </div>
             </div>
@@ -174,12 +171,10 @@ import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
-import AccountProfileSwiper from "@/Components/technical/blocks/profile/AccountProfileSwiper.vue";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
     components: {
-        AccountProfileSwiper,
         StatisticChart,
         MainTitle,
         PaymentCard,
@@ -190,6 +185,7 @@ export default {
     layout: profileLayoutView,
     data() {
         return {
+            viewportWidth: 0,
             profit: {},
             linkAddress: "btc.all-btc.com:4444",
             linkAddress1: "btc.all-btc.com:3333",
@@ -223,6 +219,10 @@ export default {
                 },
             },
         };
+    },
+    created: function () {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
     },
     computed: {
         copyObject() {
@@ -322,6 +322,9 @@ export default {
         ]),
     },
     methods: {
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
+        },
         changeGraph(val) {
             this.val = val;
         },
@@ -332,69 +335,52 @@ export default {
             return router;
         },
         renderChart() {
-            let interval = this.val === 24 ? 60 * 60 * 1000 : 60 * 60 * 1000;
-            let currentTime = new Date().getTime();
+            const interval = 60 * 60 * 1000;
+            const currentTime = new Date().getTime();
+            const activeHistory = this.allHistory[this.getActive];
+            const historyValues = Object.values(activeHistory);
 
-            let dates = [];
-            for (let i = this.val - 1; i >= 0; i--) {
-                let date = new Date(currentTime - i * interval);
-                dates.push(date);
-            }
-
-            this.graphs[0].dates = dates.map((date) => date.getTime());
-
-            let history = {};
-            if (
-                this.allHistory[this.getActive] &&
-                Object.values(this.allHistory[this.getActive])[0]
-            ) {
-                history = Object.values(this.allHistory[this.getActive]).map(
-                    (el) => {
-                        if (el["unit"] === "T") {
-                            return el["hash"];
-                        } else if (el["unit"] === "P") {
-                            return Number(el["hash"]) * 1000;
-                        } else if (el["unit"] === "E") {
-                            return Number(el["hash"]) * 1000 * 1000;
-                        }
-                    }
+            this.graphs[0].dates = Array.from({ length: this.val }, (_, i) => {
+                const date = new Date(
+                    currentTime - (this.val - 1 - i) * interval
                 );
+                return date.getTime();
+            });
+
+            const [values, amount, unit] = historyValues
+                .slice(-this.val)
+                .reverse()
+                .reduce(
+                    (acc, el) => {
+                        if (el) {
+                            let hash = el.hash ?? 0;
+                            if (el.unit === "P") hash *= 1000;
+                            else if (el.unit === "E") hash *= 1000000;
+                            acc[0].push(Number(hash).toFixed(2));
+                            el.amount ? acc[1].push(el.amount) : 0;
+                            acc[2].push(el.unit);
+                        } else {
+                            acc[0].push(0);
+                            acc[1].push(0);
+                            acc[2].push("T");
+                        }
+
+                        return acc;
+                    },
+                    [[], [], []]
+                );
+
+            while (values.length < this.val) {
+                values.push("0");
+                amount.push("0");
+                unit.push("T");
             }
-            let val = this.val;
-            let values = [];
-            let amount = [];
-            let unit = [];
-            for (let i = 1; i <= val; i++) {
-                let amountItem = Object.values(this.allHistory[this.getActive])[
-                    Object.values(this.allHistory[this.getActive]).length - i
-                ]?.amount;
-                let unitItem = Object.values(this.allHistory[this.getActive])[
-                    Object.values(this.allHistory[this.getActive]).length - i
-                ]?.unit;
-                if (history) {
-                    let timeStamp = history[history.length - i];
-                    if (timeStamp) {
-                        values.unshift(Number(timeStamp).toFixed(2));
-                    } else {
-                        values.unshift(String(0));
-                    }
-                } else {
-                    values.unshift(String(0));
-                }
-                if (amountItem) {
-                    amount.unshift(amountItem);
-                } else {
-                    amount.unshift(String(0));
-                }
-                if (unitItem) {
-                    unit.unshift(unitItem);
-                } else {
-                    unit.unshift(String(""));
-                }
-            }
-            this.graphs[0].values = values;
-            this.graphs[0].amount = amount;
-            this.graphs[0].units = unit;
+
+            Object.assign(this.graphs[0], {
+                values: values.reverse(),
+                amount: amount.map(String).reverse(),
+                unit: unit.reverse(),
+            });
             setTimeout(this.changeId, 1000);
         },
     },

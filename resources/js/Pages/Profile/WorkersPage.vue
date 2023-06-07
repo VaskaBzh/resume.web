@@ -201,6 +201,7 @@ export default {
                     Vue.set(obj.rows, i, workersRowModel);
                 });
             }
+
             if (this.allAccounts[this.getActive]) {
                 obj.mainRow.hashRate =
                     this.allAccounts[this.getActive].shares1m;

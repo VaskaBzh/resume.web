@@ -78,8 +78,6 @@ export default {
     padding-bottom: 60px;
     @media (max-width: 991.98px) {
         padding-bottom: 30px;
-    }
-    @media (max-width: 767.98px) {
         margin-top: 64px;
     }
 }

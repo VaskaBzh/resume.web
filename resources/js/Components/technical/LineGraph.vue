@@ -12,6 +12,7 @@ export default {
     props: {
         graphData: Array,
         height: Number,
+        viewportWidth: Number,
     },
     data() {
         return {
@@ -20,33 +21,23 @@ export default {
             clientX: null,
         };
     },
-    watch: {
-        height() {
-            if (this.$refs.chart && this.graphData.values?.length > 0) {
-                if (this.svg !== null) {
-                    this.svg.remove();
-                }
-                this.graphInit();
-            }
-        },
+    beforeMount() {
+        window.removeEventListener("resize", this.graphInit);
     },
     computed: {
         getPosition() {
             if (this.mouseX) {
-                if (
+                const isLeft =
                     this.mouseX <
                     this.$refs.chart.clientWidth -
-                        this.$refs.tooltip.clientWidth
-                ) {
-                    return { side: "left", position: this.mouseX };
-                } else {
-                    return {
-                        side: "right",
-                        position:
-                            this.clientX -
-                            this.svg.node().getBoundingClientRect().right,
-                    };
-                }
+                    this.$refs.tooltip.clientWidth;
+
+                return {
+                    side: "left",
+                    position: isLeft
+                        ? this.mouseX
+                        : this.mouseX - this.$refs.tooltip.clientWidth,
+                };
             }
         },
     },
@@ -73,7 +64,11 @@ export default {
                                 this.$refs.chart.getBoundingClientRect().top +
                                 "px"
                         )
-                        .html(`<div class="tolltip-wrapper">${d} ${this.unit || "H"}</div>`);
+                        .html(
+                            `<div class="tooltip-wrapper">${d} ${
+                                this.unit || "H"
+                            }</div>`
+                        );
                 } else if (type === "tooltip") {
                     tooltip.style("opacity", 1);
                 }
@@ -124,7 +119,12 @@ export default {
                 .domain(d3.extent(this.graphData.values, (d) => d))
                 .range([this.height, 0]);
 
-            const xAxis = d3.axisBottom(x).tickFormat(d3.timeFormat("%m.%y"));
+            let isMobile = this.viewportWidth <= 479.98;
+
+            const xAxis = d3
+                .axisBottom(x)
+                .ticks(isMobile ? 4 : 12)
+                .tickFormat(d3.timeFormat("%m.%y"));
             const yAxis = d3.axisLeft(y).tickFormat(formatNumber);
 
             x = d3
@@ -187,21 +187,23 @@ export default {
                 .attr("transform", `translate(-5, 0)`)
                 .call(yAxis);
 
-            const tooltip = d3.select(this.$refs.tooltip);
+            if (!isMobile) {
+                const tooltip = d3.select(this.$refs.tooltip);
 
-            this.svg.on("mousemove", (event) =>
-                this.tooltipInit(event, "svg", tooltip, x)
-            );
-            tooltip.on("mousemove", (event) =>
-                this.tooltipInit(event, "tooltip", tooltip, x)
-            );
-            tooltip.on("mouseleave", () => {
-                tooltip.style("opacity", 0);
-            });
+                this.svg.on("mousemove", (event) =>
+                    this.tooltipInit(event, "svg", tooltip, x)
+                );
+                tooltip.on("mousemove", (event) =>
+                    this.tooltipInit(event, "tooltip", tooltip, x)
+                );
+                tooltip.on("mouseleave", () => {
+                    tooltip.style("opacity", 0);
+                });
 
-            this.svg.on("mouseout", () => {
-                tooltip.style("opacity", 0);
-            });
+                this.svg.on("mouseout", () => {
+                    tooltip.style("opacity", 0);
+                });
+            }
         },
     },
     mounted() {
@@ -212,50 +214,12 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .container-chart {
-    position: relative;
-    width: 100%;
     text-align: right;
     margin-left: 35px;
-
-    svg {
-        overflow: visible;
-        g {
-            g.tick {
-                font-size: 14px;
-                font-family: "AmpleSoftPro", serif;
-                color: #0000009e;
-                line {
-                    color: #bec9e0;
-                    display: none;
-                }
-            }
-            .domain {
-                display: none;
-            }
-        }
-    }
-}
-
-.tooltip {
-    position: absolute;
-    transition: all 0.2s ease 0s;
-    width: fit-content;
-    border: none;
-    background: #fff;
-    .tolltip-wrapper {
-        position: relative;
-        border-radius: 5px;
-        font-family: "AmpleSoftPro", serif;
-        font-size: 16px;
-        line-height: 20px;
-        padding: 10px;
-        color: #417fe5;
-        background: rgba(194, 213, 242, 0.6);
-        overflow: hidden;
-        z-index: 10;
-        box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+    @media (max-width: 479.98px) {
+        flex: 0 0 calc(100% - 57px);
     }
 }
 </style>
