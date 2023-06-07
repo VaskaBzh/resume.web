@@ -112,14 +112,14 @@ export default {
     }
 }
 .row-workers {
-    cursor: pointer;
-    @media (min-width: 767.98px) {
-        &:hover {
-            td:first-child {
-                text-decoration-color: #000034;
-            }
-        }
-    }
+    //cursor: pointer;
+    //@media (min-width: 767.98px) {
+    //    &:hover {
+    //        td:first-child {
+    //            text-decoration-color: #000034;
+    //        }
+    //    }
+    //}
     td {
         white-space: nowrap;
         background: #ffffff;

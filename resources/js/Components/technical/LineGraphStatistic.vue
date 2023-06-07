@@ -79,9 +79,9 @@ export default {
                                         .top +
                                     "px"
                             ).html(`<div class="tooltip-wrapper">
-                                <span>Время: ${
-                                    new Date(time).toLocaleTimeString()
-                                }</span>
+                                <span>Время: ${new Date(
+                                    time
+                                ).toLocaleTimeString()}</span>
                                 <span>Хешрейт: ${d} ${(u || "T") + "H/s"}</span>
                                 <span>Активные воркеры: ${a}</span>
                             </div>`);
@@ -124,6 +124,7 @@ export default {
         },
 
         graphInit() {
+            console.log(this.graphData);
             let formatSi = d3.format(".2s");
             let formatNumber = (num) =>
                 formatSi(num)
@@ -262,6 +263,8 @@ export default {
                 this.svg.on("mouseleave", () => {
                     tooltip.style("opacity", 0);
                 });
+                tooltip.on("mousemove", () => tooltip.style("opacity", 1));
+                tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
             }
         },
     },

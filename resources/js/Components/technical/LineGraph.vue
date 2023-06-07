@@ -193,14 +193,8 @@ export default {
                 this.svg.on("mousemove", (event) =>
                     this.tooltipInit(event, "svg", tooltip, x)
                 );
-                tooltip.on("mousemove", (event) =>
-                    this.tooltipInit(event, "tooltip", tooltip, x)
-                );
-                tooltip.on("mouseleave", () => {
-                    tooltip.style("opacity", 0);
-                });
 
-                this.svg.on("mouseout", () => {
+                this.svg.on("mouseleave", () => {
                     tooltip.style("opacity", 0);
                 });
             }

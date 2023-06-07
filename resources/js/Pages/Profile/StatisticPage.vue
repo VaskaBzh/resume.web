@@ -357,7 +357,7 @@ export default {
                             if (el.unit === "P") hash *= 1000;
                             else if (el.unit === "E") hash *= 1000000;
                             acc[0].push(Number(hash).toFixed(2));
-                            el.amount ? acc[1].push(el.amount) : 0;
+                            el.amount ? acc[1].push(el.amount) : acc[1].push(0);
                             acc[2].push(el.unit);
                         } else {
                             acc[0].push(0);
