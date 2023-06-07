@@ -352,18 +352,12 @@ export default {
                 .reverse()
                 .reduce(
                     (acc, el) => {
-                        if (el) {
-                            let hash = el.hash ?? 0;
-                            if (el.unit === "P") hash *= 1000;
-                            else if (el.unit === "E") hash *= 1000000;
-                            acc[0].push(Number(hash).toFixed(2));
-                            el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                            acc[2].push(el.unit);
-                        } else {
-                            acc[0].push(0);
-                            acc[1].push(0);
-                            acc[2].push("T");
-                        }
+                        let hash = el.hash ?? 0;
+                        if (el.unit === "P") hash *= 1000;
+                        else if (el.unit === "E") hash *= 1000000;
+                        acc[0].push(Number(hash));
+                        el.amount ? acc[1].push(el.amount) : acc[1].push(0);
+                        acc[2].push(el.unit);
 
                         return acc;
                     },
@@ -371,7 +365,7 @@ export default {
                 );
 
             while (values.length < this.val) {
-                values.push("0");
+                values.push(0);
                 amount.push("0");
                 unit.push("T");
             }
@@ -381,6 +375,7 @@ export default {
                 amount: amount.map(String).reverse(),
                 unit: unit.reverse(),
             });
+            console.log(this.graphs);
             setTimeout(this.changeId, 1000);
         },
     },
@@ -400,6 +395,7 @@ export default {
 <style lang="scss" scoped>
 .statistic {
     .wrap {
+        overflow: visible;
         .title {
             width: 100%;
         }
@@ -575,6 +571,7 @@ export default {
         }
         &__block {
             min-height: 325px;
+            overflow: visible;
             &:not(.wrap__column) {
                 min-height: 0;
                 @media (min-width: 991.98px) {
