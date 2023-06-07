@@ -53,7 +53,7 @@ class UpdateIncomesCommand extends Command
                             'jsonrpc' => '1.0',
                             'id' => 'unlock',
                             'method' => 'walletpassphrase',
-                            'params' => ['gloom ethics august sample fun submit slow humor seek canvas cannon crystal actress sadness parent smoke hurdle shine pull trip ghost', 60],
+                            'params' => [env('WALLET_PASSPHRASE'), 60],
                         ]);
                     if ($unlock->successful()) {
                         $limitedBalance = number_format($balance, 8, '.', '');
