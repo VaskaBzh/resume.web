@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <popup-view id="changes" :wait="this.wait" v-if="this.popupHtml !== ''">
+    <main-popup id="changes" :wait="this.wait" v-if="this.popupHtml !== ''">
         <div
             v-for="(error, i) in this.errs"
             :key="i"
@@ -152,14 +152,14 @@
                 </button>
             </blue-button>
         </form>
-    </popup-view>
+    </main-popup>
 </template>
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import SettingsBlock from "@/Components/technical/blocks/profile/SettingsBlock.vue";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
@@ -170,7 +170,7 @@ export default {
         MainTitle,
         BlueButton,
         SettingsBlock,
-        PopupView,
+        MainPopup,
     },
     props: ["errors", "message", "user", "auth_user"],
     setup() {

@@ -60,7 +60,7 @@
         </div>
     </nav>
 
-    <popup-view id="auth" :wait="this.wait">
+    <main-popup id="auth" :wait="this.wait">
         <div
             v-for="(error, i) in this.errors"
             :key="i"
@@ -467,7 +467,7 @@
                 </blue-button>
             </swiper-slide>
         </swiper>
-    </popup-view>
+    </main-popup>
 </template>
 
 <script>
@@ -477,7 +477,7 @@ import NavLinks from "@/Components/navs/NavLinks.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 import AutoHeightSelect from "@/Components/UI/AutoHeightSelect.vue";
 import { Navigation, Pagination } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/vue";
@@ -492,7 +492,7 @@ export default defineComponent({
     components: {
         MainList,
         AutoHeightSelect,
-        PopupView,
+        MainPopup,
         BlueButton,
         MainTitle,
         Link,

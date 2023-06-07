@@ -50,7 +50,7 @@
             </div>
             <no-info :wait="this.allAccounts"></no-info>
         </div>
-        <popup-view id="addAcc" :wait="this.wait">
+        <main-popup id="addAcc" :wait="this.wait">
             <div
                 v-for="(error, i) in this.errs"
                 :key="i"
@@ -109,8 +109,8 @@
                     </button>
                 </blue-button>
             </form>
-        </popup-view>
-        <popup-view id="edit" :wait="this.wait">
+        </main-popup>
+        <main-popup id="edit" :wait="this.wait">
             <div
                 v-for="(error, i) in this.errs"
                 :key="i"
@@ -172,7 +172,7 @@
                     </button>
                 </blue-button>
             </form>
-        </popup-view>
+        </main-popup>
     </div>
 </template>
 
@@ -181,7 +181,7 @@ import { Head, useForm } from "@inertiajs/vue3";
 import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import { mapGetters } from "vuex";
@@ -193,7 +193,7 @@ export default {
         MainTitle,
         AccountProfile,
         Head,
-        PopupView,
+        MainPopup,
         BlueButton,
         NoInfo,
     },

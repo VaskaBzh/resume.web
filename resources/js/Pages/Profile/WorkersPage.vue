@@ -55,7 +55,7 @@
                 :wait="this.allAccounts"
                 :empty="this.table.rows"
             />
-            <popup-view id="connect" typePopup="connect">
+            <main-popup id="connect" typePopup="connect">
                 <form class="form form-popup popup__form">
                     <main-title tag="h2">{{
                         $t("workers.popups.connection.title")
@@ -66,7 +66,7 @@
                         :copyObject="object"
                     ></copy-block>
                 </form>
-            </popup-view>
+            </main-popup>
         </div>
     </div>
 </template>
@@ -75,7 +75,7 @@ import { Head } from "@inertiajs/vue3";
 import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { mapGetters } from "vuex";
@@ -88,7 +88,7 @@ export default {
         MainTitle,
         MainSelect,
         Head,
-        PopupView,
+        MainPopup,
         CopyBlock,
         BlueButton,
     },

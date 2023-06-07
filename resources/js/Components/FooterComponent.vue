@@ -2,7 +2,7 @@
     <blue-button class="feedback" data-popup="#feedback">
         <a class="all-link">{{ $t("footer.feedback.button") }}</a>
     </blue-button>
-    <popup-view id="feedback" :wait="this.wait">
+    <main-popup id="feedback" :wait="this.wait">
         <form
             @submit.prevent="this.sendFeedback"
             class="form form-popup popup__form"
@@ -47,7 +47,7 @@
                 </button>
             </blue-button>
         </form>
-    </popup-view>
+    </main-popup>
     <footer class="footer__container">
         <div class="footer__main">
             <div class="footer__row">
@@ -206,14 +206,14 @@
 <script>
 import pdf from "@/../assets/files/policy.pdf";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import { useForm } from "@inertiajs/vue3";
 import axios from "axios";
 import { ref } from "vue";
 export default {
     name: "footer-component",
-    components: { MainTitle, PopupView, BlueButton },
+    components: { MainTitle, MainPopup, BlueButton },
     data() {
         return {
             pdf,

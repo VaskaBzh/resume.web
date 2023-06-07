@@ -5,10 +5,11 @@
         </Teleport>
         <div class="popup__wrapper">
             <div
+                class="popup__content"
                 :class="
                     this.typePopup === 'form'
-                        ? 'popup__content'
-                        : `popup__content popup__content-${this.typePopup}`
+                        ? ''
+                        : `popup__content-${this.typePopup}`
                 "
             >
                 <img
@@ -39,6 +40,7 @@
 <script>
 import "../../Scripts/popup";
 export default {
+    name: "main-popup",
     props: {
         typePopup: {
             type: String,

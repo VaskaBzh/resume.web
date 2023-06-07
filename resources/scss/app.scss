@@ -425,6 +425,17 @@ h6 {
             }
         }
     }
+    .main_line {
+        z-index: 5;
+    }
+    .band {
+        z-index: 2;
+    }
+    .horizontal-line,
+    .vertical-line {
+        stroke-dasharray: 4;
+        transition: all 0.5s ease 0s;
+    }
 }
 
 .tooltip {

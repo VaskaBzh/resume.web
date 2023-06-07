@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    <popup-view id="changeWallet" :wait="this.wait">
+    <main-popup id="changeWallet" :wait="this.wait">
         <div
             v-for="(error, i) in this.errs"
             :key="i"
@@ -157,8 +157,8 @@
                 </button>
             </blue-button>
         </form>
-    </popup-view>
-    <popup-view id="addWallet" :wait="this.wait">
+    </main-popup>
+    <main-popup id="addWallet" :wait="this.wait">
         <div
             v-for="(error, i) in this.err"
             :key="i"
@@ -256,7 +256,7 @@
                 </button>
             </blue-button>
         </form>
-    </popup-view>
+    </main-popup>
 </template>
 <script>
 import axios from "axios";
@@ -269,11 +269,11 @@ import { mapGetters } from "vuex";
 import Vue from "lodash";
 import { Link } from "@inertiajs/vue3";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 
 export default {
     components: {
-        PopupView,
+        MainPopup,
         MainCheckbox,
         BlueButton,
         MainTitle,

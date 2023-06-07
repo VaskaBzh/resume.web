@@ -52,8 +52,14 @@ export default {
             this.svg.selectAll("*").remove();
             this.svg._groups[0][0].remove();
         },
-        tooltipInit(event, tooltip, x) {
+        tooltipInit(event, tooltip, x, adjustValue, formatNumber, formatSi) {
             try {
+                let formatNumberWithUnit = (num, i) =>
+                    formatNumber(adjustValue(num, this.graphData.unit[i]).val) +
+                    " " +
+                    adjustValue(num, this.graphData.unit[i]).unit +
+                    "H";
+
                 this.clientX = event.clientX;
                 this.mouseX =
                     this.clientX - this.svg.node().getBoundingClientRect().left;
@@ -62,6 +68,37 @@ export default {
                 const u = this.graphData.unit[nearestIndex];
                 const a = this.graphData.amount[nearestIndex];
                 const time = this.graphData.dates[nearestIndex];
+
+                // Устанавливаем координаты вертикальной полосы
+                const verticalLineX = this.mouseX;
+
+                // Устанавливаем координаты горизонтальной полосы
+                const horizontalLineY =
+                    event.clientY -
+                    this.$refs.chart.getBoundingClientRect().top;
+
+                // Устанавливаем стили и позицию вертикальной полосы
+                this.svg
+                    .selectAll(".vertical-line")
+                    .attr("x1", verticalLineX)
+                    .attr("x2", verticalLineX)
+                    .attr("y1", 0)
+                    .attr("y2", this.height)
+                    .attr("stroke-width", 0.7)
+                    .style("opacity", 1)
+                    .attr("stroke", "#BEC9E0");
+
+                // Устанавливаем стили и позицию горизонтальной полосы
+                this.svg
+                    .selectAll(".horizontal-line")
+                    .attr("x1", 0)
+                    .attr("x2", this.$refs.chart.offsetWidth)
+                    .attr("y1", horizontalLineY)
+                    .attr("y2", horizontalLineY)
+                    .attr("stroke-width", 0.7)
+                    .style("opacity", 1)
+                    .attr("stroke", "#BEC9E0");
+
                 if (this.graphData.dates.length === 24) {
                     if (
                         new Date(time).toLocaleTimeString() !== "Invalid Date"
@@ -82,7 +119,10 @@ export default {
                                 <span>Время: ${new Date(
                                     time
                                 ).toLocaleTimeString()}</span>
-                                <span>Хешрейт: ${d} ${(u || "T") + "H/s"}</span>
+                                <span>Хешрейт: ${formatNumberWithUnit(
+                                    d,
+                                    u
+                                )}/s</span>
                                 <span>Активные воркеры: ${a}</span>
                             </div>`);
                     }
@@ -113,7 +153,10 @@ export default {
                             .padStart(2, "0")} Время: ${new Date(
                             time
                         ).toLocaleTimeString()}</span>
-                                <span>Хешрейт: ${d} ${(u || "T") + "H/s"}</span>
+                                <span>Хешрейт: ${formatNumberWithUnit(
+                                    d,
+                                    u
+                                )}/s</span>
                                 <span>Активные воркеры: ${a}</span>
                             </div>`);
                     }
@@ -124,14 +167,13 @@ export default {
         },
 
         graphInit() {
-            let adjustValue = (num, unit) => {
-                switch (unit) {
-                    case "P":
-                        return num / 1000;
-                    case "E":
-                        return num / 1000000;
-                    default:
-                        return num;
+            let adjustValue = (num) => {
+                if (num / 1000 >= 1) {
+                    return { val: num / 1000, unit: "P" };
+                } else if (num / 1000000 > 1) {
+                    return { val: num / 1000000, unit: "E" };
+                } else {
+                    return { val: num, unit: "T" };
                 }
             };
 
@@ -165,7 +207,7 @@ export default {
             gradient
                 .append("stop")
                 .attr("offset", "100%")
-                .attr("stop-color", "#fff");
+                .attr("stop-color", "rgba(78, 122, 214, 0)");
 
             let x = d3
                 .scaleLinear()
@@ -173,9 +215,9 @@ export default {
                 .range([0, this.$refs.chart.offsetWidth]);
 
             let formatNumberWithUnit = (num, i) =>
-                formatNumber(adjustValue(num, this.graphData.unit[i])) +
+                formatNumber(adjustValue(num, this.graphData.unit[i]).val) +
                 " " +
-                this.graphData.unit[i] +
+                adjustValue(num, this.graphData.unit[i]).unit +
                 "H";
 
             const y = d3
@@ -237,6 +279,29 @@ export default {
                 .scaleBand()
                 .domain(yAxis.scale().ticks())
                 .range([this.height, 0]);
+            // Создание вертикальной полосы
+            this.svg
+                .append("line")
+                .attr("class", "vertical-line")
+                .attr("x1", 0)
+                .attr("y1", 0)
+                .attr("x2", 0)
+                .attr("y2", this.height)
+                .attr("stroke-width", 0.7)
+                .style("opacity", 0)
+                .attr("stroke", "#BEC9E0");
+
+            // Создание горизонтальной полосы
+            this.svg
+                .append("line")
+                .attr("class", "horizontal-line")
+                .attr("x1", 0)
+                .attr("y1", 0)
+                .attr("x2", this.$refs.chart.offsetWidth)
+                .attr("y2", 0)
+                .attr("stroke-width", 0.7)
+                .style("opacity", 0)
+                .attr("stroke", "#BEC9E0");
 
             this.svg
                 .selectAll(".band")
@@ -244,7 +309,7 @@ export default {
                 .enter()
                 .append("rect")
                 .attr("class", "band")
-                .attr("y", (d) => yBand(d))
+                .attr("y", (d) => y(d) - 0.3) // Выравнивание полосы
                 .attr("height", 0.3)
                 .attr("width", "100%")
                 .attr("fill", "#BEC9E0");
@@ -261,6 +326,7 @@ export default {
                 .datum(this.graphData.values)
                 .attr("d", lineGenerator)
                 .attr("fill", "none")
+                .attr("class", "main_line")
                 .attr("width", "100%")
                 .attr("stroke", "#4E7AD6")
                 .attr("stroke-width", 2);
@@ -279,11 +345,23 @@ export default {
                 const tooltip = d3.select(this.$refs.tooltip);
 
                 this.svg.on("mousemove", (event) =>
-                    this.tooltipInit(event, tooltip, x)
+                    this.tooltipInit(
+                        event,
+                        tooltip,
+                        x,
+                        adjustValue,
+                        formatNumber,
+                        formatSi
+                    )
                 );
 
                 this.svg.on("mouseleave", () => {
                     tooltip.style("opacity", 0);
+
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+
+                    // Устанавливаем стили и позицию горизонтальной полосы
+                    this.svg.selectAll(".horizontal-line").style("opacity", 0);
                 });
                 tooltip.on("mousemove", () => tooltip.style("opacity", 1));
                 tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
@@ -303,11 +381,11 @@ export default {
 <style lang="scss" scoped>
 .container-chart {
     text-align: right;
-    margin: 0 0 0 55px;
-    width: calc(100% - 55px);
+    margin: 0 0 0 60px;
+    width: calc(100% - 60px);
     @media (max-width: 767.98px) {
         margin: 0 10px 0 55px;
-        width: calc(100% - 10px - 55px);
+        width: calc(100% - 10px - 65px);
     }
 }
 </style>

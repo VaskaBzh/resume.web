@@ -64,11 +64,11 @@ export default {
     },
     watch: {
         viewportWidth() {
-            this.getHeight;
+            this.height = this.getHeight;
         },
     },
     mounted() {
-        this.getHeight;
+        this.height = this.getHeight;
     },
     components: {
         MainTitle,

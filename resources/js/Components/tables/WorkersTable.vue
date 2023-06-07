@@ -120,7 +120,7 @@
         </tbody>
         <!--        data-popup="#seeChart"-->
         <!--                @click="this.indexChanger(row.graphId)"-->
-        <!--        <popup-view-->
+        <!--        <main-popup-->
         <!--            id="seeChart"-->
         <!--            v-show="this.indexWorker !== -1"-->
         <!--            ref="chart"-->
@@ -133,17 +133,17 @@
         <!--                :redraw="redraw"-->
         <!--                :key="this.graphs[0].values[this.graphs[0].values.length - 1]"-->
         <!--            />-->
-        <!--        </popup-view>-->
+        <!--        </main-popup>-->
     </table>
 </template>
 <script>
 import TableWorkersRow from "@/Components/tables/row/TableWorkersRow.vue";
 import { mapGetters } from "vuex";
-import PopupView from "@/Components/technical/PopupView.vue";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 
 export default {
-    components: { PopupView, TableWorkersRow, LineGraphStatistic },
+    components: { MainPopup, TableWorkersRow, LineGraphStatistic },
     props: {
         table: Object,
         visualType: {
