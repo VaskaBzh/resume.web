@@ -30,7 +30,7 @@ export default {
                 const isLeft =
                     this.mouseX <
                     this.$refs.chart.clientWidth -
-                    this.$refs.tooltip.clientWidth;
+                        this.$refs.tooltip.clientWidth;
 
                 return {
                     side: "left",

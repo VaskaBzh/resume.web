@@ -7,17 +7,17 @@ export default {
             commit("destroy_histMiners");
         },
         get_miner_history_hash: async function ({ commit, state }, data) {
-            await btccom
-                .fetch_miner_history(data)
-                .then((res) => {
-                    if (res.data) {
-                        commit("updateHistoryMiners", {
-                            historyItem: Object.values(res.data),
-                            key: data.worker_id,
-                        });
-                    }
-                })
-                .catch((err) => console.log(err));
+            // await btccom
+            //     .fetch_miner_history(data)
+            //     .then((res) => {
+            //         if (res.data) {
+            //             commit("updateHistoryMiners", {
+            //                 historyItem: Object.values(res.data),
+            //                 key: data.worker_id,
+            //             });
+            //         }
+            //     })
+            //     .catch((err) => console.log(err));
         },
     },
     state: {

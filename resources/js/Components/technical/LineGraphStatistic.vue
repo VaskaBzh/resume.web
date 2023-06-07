@@ -124,7 +124,17 @@ export default {
         },
 
         graphInit() {
-            console.log(this.graphData);
+            let adjustValue = (num, unit) => {
+                switch (unit) {
+                    case "P":
+                        return num * 1000;
+                    case "E":
+                        return num * 1000000;
+                    default:
+                        return num;
+                }
+            };
+
             let formatSi = d3.format(".2s");
             let formatNumber = (num) =>
                 formatSi(num)
@@ -162,9 +172,13 @@ export default {
                 .domain(d3.extent(this.graphData.dates, (d) => new Date(d)))
                 .range([0, this.$refs.chart.offsetWidth]);
 
+            let formatNumberWithUnit = (num, i) =>
+                formatNumber(adjustValue(num, this.graphData.unit[i])) +
+                this.graphData.unit[i];
+
             const y = d3
                 .scaleLinear()
-                .domain(d3.extent(this.graphData.values, (d) => d))
+                .domain([0, d3.max(this.graphData.values)])
                 .range([this.height, 0]);
 
             let formatTime = (date, i) => {
@@ -191,7 +205,9 @@ export default {
                 .ticks(isMobile ? 4 : this.viewportWidth <= 767.98 ? 10 : 12)
                 .tickFormat((d) => formatTime(new Date(d)));
 
-            const yAxis = d3.axisLeft(y).tickFormat(formatNumber);
+            const yAxis = d3
+                .axisLeft(y)
+                .tickFormat((d, i) => formatNumberWithUnit(d, i));
 
             x = d3
                 .scaleLinear()

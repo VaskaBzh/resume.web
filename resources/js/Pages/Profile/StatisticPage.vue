@@ -357,7 +357,7 @@ export default {
                         else if (el.unit === "E") hash *= 1000000;
                         acc[0].push(Number(hash));
                         el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                        acc[2].push(el.unit);
+                        acc[2].push(el.unit ?? "T");
 
                         return acc;
                     },
@@ -375,7 +375,7 @@ export default {
                 amount: amount.map(String).reverse(),
                 unit: unit.reverse(),
             });
-            console.log(this.graphs);
+
             setTimeout(this.changeId, 1000);
         },
     },
