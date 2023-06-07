@@ -643,16 +643,9 @@ export default {
                 margin: auto;
             }
             &-graph {
-                min-height: 415px !important;
-                padding: 24px 24px 20px 8px;
+                padding: 24px 24px 24px 8px;
                 @media (max-width: 991.98px) {
-                    min-height: 370px !important;
-                }
-                @media (max-width: 767.98px) {
-                    min-height: 310px !important;
-                }
-                @media (max-width: 479.98px) {
-                    min-height: 216px !important;
+                    padding: 24px 24px 24px 8px;
                 }
             }
         }

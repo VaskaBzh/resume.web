@@ -112,14 +112,14 @@
                 <td class="main__number">{{ this.rejectRate }} %</td>
             </tr>
             <table-workers-row
-                data-popup="#seeChart"
                 v-for="(row, i) in rows"
                 :columns="row"
                 :key="i"
                 :class="row.hashClass"
-                @click="this.indexChanger(row.graphId)"
             />
         </tbody>
+        <!--        data-popup="#seeChart"-->
+        <!--                @click="this.indexChanger(row.graphId)"-->
         <!--        <popup-view-->
         <!--            id="seeChart"-->
         <!--            v-show="this.indexWorker !== -1"-->

@@ -127,9 +127,9 @@ export default {
             let adjustValue = (num, unit) => {
                 switch (unit) {
                     case "P":
-                        return num * 1000;
+                        return num / 1000;
                     case "E":
-                        return num * 1000000;
+                        return num / 1000000;
                     default:
                         return num;
                 }
@@ -174,7 +174,9 @@ export default {
 
             let formatNumberWithUnit = (num, i) =>
                 formatNumber(adjustValue(num, this.graphData.unit[i])) +
-                this.graphData.unit[i];
+                " " +
+                this.graphData.unit[i] +
+                "H";
 
             const y = d3
                 .scaleLinear()
@@ -182,15 +184,18 @@ export default {
                 .range([this.height, 0]);
 
             let formatTime = (date, i) => {
-                const hours = date.getHours();
-                const minutes = date.getMinutes();
+                const hours = date.getHours().toString().padStart(2, "0");
+                const minutes = date.getMinutes().toString().padStart(2, "0");
                 if (this.graphData.dates.length > 24) {
-                    const day = date.getDate();
-                    return `${day}.${hours
-                        .toString()
-                        .padStart(2, "0")}:${minutes
+                    const day = date.getDate().toString().padStart(2, "0");
+                    return `${day}/${(date.getUTCMonth() + 1)
                         .toString()
                         .padStart(2, "0")}`;
+                    // ${hours
+                    //     .toString()
+                    //     .padStart(2, "0")}:${minutes
+                    //     .toString()
+                    //     .padStart(2, "0")}`;
                 } else {
                     return `${hours.toString().padStart(2, "0")}:${minutes
                         .toString()
@@ -202,11 +207,12 @@ export default {
 
             const xAxis = d3
                 .axisBottom(x)
-                .ticks(isMobile ? 4 : this.viewportWidth <= 767.98 ? 10 : 12)
+                .ticks(isMobile ? 4 : this.viewportWidth <= 991.98 ? 8 : 12)
                 .tickFormat((d) => formatTime(new Date(d)));
 
             const yAxis = d3
                 .axisLeft(y)
+                .ticks(isMobile ? 6 : 10)
                 .tickFormat((d, i) => formatNumberWithUnit(d, i));
 
             x = d3
@@ -296,14 +302,12 @@ export default {
 
 <style lang="scss" scoped>
 .container-chart {
-    text-align: center;
-    margin: 0 0 0 35px;
+    text-align: right;
+    margin: 0 0 0 55px;
+    width: calc(100% - 55px);
     @media (max-width: 767.98px) {
-        margin: 0 10px 0 35px;
-    }
-    @media (max-width: 479.98px) {
-        margin: 0 10px 0 35px;
-        width: calc(100% - 10px - 35px);
+        margin: 0 10px 0 55px;
+        width: calc(100% - 10px - 55px);
     }
 }
 </style>

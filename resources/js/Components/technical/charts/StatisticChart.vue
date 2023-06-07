@@ -59,33 +59,29 @@ export default {
     },
     data() {
         return {
-            height: 300,
+            height: 360,
         };
     },
     watch: {
         viewportWidth() {
-            if (this.viewportWidth >= 1270.98) {
-                this.height = 300;
-            }
-            if (this.viewportWidth < 1270.98) {
-                this.height = 260;
-            }
-            if (this.viewportWidth < 991.98) {
-                this.height = 240;
-            }
-            if (this.viewportWidth < 767.98) {
-                this.height = 200;
-            }
-            if (this.viewportWidth < 479.98) {
-                this.height = 180;
-            }
+            this.getHeight;
         },
+    },
+    mounted() {
+        this.getHeight;
     },
     components: {
         MainTitle,
         LineGraphStatistic,
     },
     computed: {
+        getHeight() {
+            if (this.viewportWidth < 479.98) return 180;
+            else if (this.viewportWidth < 767.98) return 200;
+            else if (this.viewportWidth < 991.98) return 240;
+            else if (this.viewportWidth < 1270.98) return 320;
+            else return 360;
+        },
         hint_label_workers() {
             return this.$t("chart.hint_label");
         },
@@ -103,7 +99,7 @@ export default {
 }
 .graph {
     @media (max-width: 991.98px) {
-        padding-bottom: 30px;
+        padding-bottom: 20px;
     }
     // .graph__main
     &__main {
@@ -178,6 +174,10 @@ export default {
         display: flex;
         align-items: center;
         position: relative;
+        margin: 0 0 calc(54px - 24px);
+        @media (max-width: 991.98px) {
+            margin: 0 0 calc(34px - 24px);
+        }
         @media (max-width: 767.98px) {
             //padding: 20px 10px;
             flex-direction: column;
