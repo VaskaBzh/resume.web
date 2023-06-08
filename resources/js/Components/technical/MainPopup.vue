@@ -1,27 +1,24 @@
 <template>
-    <div aria-hidden="true" class="popup" ref="popup">
+    <div class="popup" :class="{ popup_show: opened }">
         <Teleport to="body">
-            <div class="un-click" v-if="this.wait === true"></div>
+            <div class="un-click" v-if="wait === true"></div>
         </Teleport>
         <div class="popup__wrapper">
             <div
+                ref="popup"
                 class="popup__content"
-                :class="
-                    this.typePopup === 'form'
-                        ? ''
-                        : `popup__content-${this.typePopup}`
-                "
+                :class="{
+                    opened: this.contentOpened,
+                    ['popup__content-' + typePopup]: typePopup !== 'form',
+                }"
             >
                 <img
                     class="popup__content_logo"
                     src="../../../assets/img/logo_high_quality.png"
                     alt="logo"
                 />
-                <div
-                    class="popup__content_block"
-                    :class="{ loading: this.wait }"
-                >
-                    <button data-close type="button" class="popup__close">
+                <div class="popup__content_block" :class="{ loading: wait }">
+                    <button type="button" class="popup__close" @click="close">
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
                             viewBox="0 0 48 48"
@@ -38,7 +35,8 @@
     </div>
 </template>
 <script>
-import "../../Scripts/popup";
+import { Inertia } from "@inertiajs/inertia";
+
 export default {
     name: "main-popup",
     props: {
@@ -47,6 +45,83 @@ export default {
             default: "form",
         },
         wait: Boolean,
+        id: String,
+        animationEnd: Number,
+    },
+    data() {
+        return {
+            opened: false,
+            contentOpened: false,
+        };
+    },
+    methods: {
+        async close() {
+            this.$emit("closed");
+            this.opened = false;
+            this.contentOpened = false;
+            document.body.classList.remove("popup-show");
+            setTimeout(() => {
+                document.body.classList.remove("lock");
+            }, 500);
+        },
+        async open() {
+            this.opened = true;
+            setTimeout(() => {
+                this.contentOpened = true;
+            }, 300);
+            document.body.classList.add("popup-show");
+            document.body.classList.add("lock");
+            this.animationEnd
+                ? setTimeout(() => this.$emit("opened"), this.animationEnd)
+                : this.$emit("opened");
+        },
+        initFunc() {
+            document.addEventListener(
+                "click",
+                (e) => {
+                    if (!this.opened) {
+                        if (e.target.closest(`[data-popup="#${this.id}"]`)) {
+                            e.preventDefault();
+                            this.open();
+                        }
+                    } else if (!e.target.closest(".popup__content")) {
+                        this.close();
+                    }
+                },
+                true
+            );
+            document.addEventListener("keydown", (e) => {
+                if (e.keyCode === 27) this.close(e);
+            });
+        },
+        destroyFunc() {
+            document.removeEventListener(
+                "click",
+                (e) => {
+                    if (!this.opened) {
+                        if (e.target.closest(`[data-popup="#${this.id}"]`)) {
+                            e.preventDefault();
+                            this.open();
+                        }
+                    } else if (!e.target.closest(".popup__content")) {
+                        this.close();
+                    }
+                },
+                true
+            );
+            document.removeEventListener("keydown", (e) => {
+                if (e.keyCode === 27) this.close(e);
+            });
+        },
+    },
+    mounted() {
+        this.initFunc();
+        Inertia.on("before", async (event) => {
+            await this.close();
+        });
+    },
+    beforeUnmount() {
+        this.destroyFunc();
     },
 };
 </script>

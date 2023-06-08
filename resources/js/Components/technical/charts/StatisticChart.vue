@@ -18,16 +18,13 @@
                     class="graph__item"
                 >
                     <div class="graph__con">
-                        <div class="graph__title">{{ graph.title[0] }}</div>
+                        <!--                        <div class="graph__title">{{ graph.title[0] }}</div>-->
                         <line-graph-statistic
                             :graphData="graph"
                             :height="height"
                             :redraw="redraw"
                             :viewportWidth="viewportWidth"
                         ></line-graph-statistic>
-                        <div class="graph__title graph__title-second">
-                            {{ graph.title[1] }}
-                        </div>
                     </div>
                 </div>
             </div>
@@ -40,6 +37,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 export default {
     props: {
+        heightVal: Number,
         graphs: {
             type: Array,
             required: true,
@@ -76,11 +74,15 @@ export default {
     },
     computed: {
         getHeight() {
-            if (this.viewportWidth < 479.98) return 180;
-            else if (this.viewportWidth < 767.98) return 200;
-            else if (this.viewportWidth < 991.98) return 240;
-            else if (this.viewportWidth < 1270.98) return 320;
-            else return 360;
+            if (!this.heightVal) {
+                if (this.viewportWidth < 479.98) return 260;
+                else if (this.viewportWidth < 767.98) return 280;
+                else if (this.viewportWidth < 991.98) return 300;
+                else if (this.viewportWidth < 1270.98) return 320;
+                else return 360;
+            } else {
+                return this.heightVal;
+            }
         },
         hint_label_workers() {
             return this.$t("chart.hint_label");
@@ -99,7 +101,7 @@ export default {
 }
 .graph {
     @media (max-width: 991.98px) {
-        padding-bottom: 20px;
+        padding-bottom: 12px;
     }
     // .graph__main
     &__main {
@@ -174,7 +176,7 @@ export default {
         display: flex;
         align-items: center;
         position: relative;
-        margin: 0 0 calc(54px - 24px);
+        margin: 0 0 23px;
         @media (max-width: 991.98px) {
             margin: 0 0 calc(34px - 24px);
         }
@@ -200,11 +202,23 @@ export default {
     &__title {
         font-style: normal;
         font-weight: 400;
-        font-size: 13px;
         line-height: 20px;
-        color: #606060;
-        writing-mode: vertical-lr;
-        transform: rotate(180deg);
+        position: absolute;
+        left: 0;
+        font-size: 14px;
+        font-family: "AmpleSoftPro", serif;
+        color: rgba(0, 0, 0, 0.6196078431);
+        top: -20px;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        &:after {
+            content: "";
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background-color: #417fe5;
+        }
         @media (max-width: 767.98px) {
             writing-mode: horizontal-tb;
             transform: rotate(0deg);
@@ -214,18 +228,6 @@ export default {
             font-size: 16px;
             width: 200%;
             text-align: center;
-        }
-        &-second {
-            position: absolute;
-            bottom: -45px;
-            writing-mode: horizontal-tb;
-            left: 50%;
-            transform: translateX(-50%);
-            @media (max-width: 767.98px) {
-                position: relative;
-                left: 0;
-                transform: translateX(0);
-            }
         }
     }
     // .graph__list

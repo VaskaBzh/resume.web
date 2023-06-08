@@ -69,15 +69,12 @@ export default {
                 const a = this.graphData.amount[nearestIndex];
                 const time = this.graphData.dates[nearestIndex];
 
-                // Устанавливаем координаты вертикальной полосы
                 const verticalLineX = this.mouseX;
 
-                // Устанавливаем координаты горизонтальной полосы
                 const horizontalLineY =
                     event.clientY -
                     this.$refs.chart.getBoundingClientRect().top;
 
-                // Устанавливаем стили и позицию вертикальной полосы
                 this.svg
                     .selectAll(".vertical-line")
                     .attr("x1", verticalLineX)
@@ -88,7 +85,6 @@ export default {
                     .style("opacity", 1)
                     .attr("stroke", "#BEC9E0");
 
-                // Устанавливаем стили и позицию горизонтальной полосы
                 this.svg
                     .selectAll(".horizontal-line")
                     .attr("x1", 0)
@@ -99,67 +95,36 @@ export default {
                     .style("opacity", 1)
                     .attr("stroke", "#BEC9E0");
 
-                if (this.graphData.dates.length === 24) {
-                    if (
-                        new Date(time).toLocaleTimeString() !== "Invalid Date"
-                    ) {
-                        tooltip
-                            .style("opacity", 1)
-                            .style(
-                                this.getPosition.side,
-                                this.getPosition.position + "px"
-                            )
-                            .style(
-                                "top",
-                                event.clientY -
-                                    this.$refs.chart.getBoundingClientRect()
-                                        .top +
-                                    "px"
-                            ).html(`<div class="tooltip-wrapper">
-                                <span>Время: ${new Date(
-                                    time
-                                ).toLocaleTimeString()}</span>
+                if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
+                    tooltip
+                        .style("opacity", 1)
+                        .style(
+                            this.getPosition?.side,
+                            this.getPosition?.position + "px"
+                        )
+                        .style(
+                            "top",
+                            event.clientY -
+                                this.$refs.chart.getBoundingClientRect().top +
+                                "px"
+                        ).html(`<div class="tooltip-wrapper">
+
                                 <span>Хешрейт: ${formatNumberWithUnit(
                                     d,
                                     u
                                 )}/s</span>
                                 <span>Активные воркеры: ${a}</span>
+                                <span class="time">${
+                                    new Date(time).getUTCFullYear() + "."
+                                }${
+                        new Date(time).getDate().toString().padStart(2, "0") +
+                        "."
+                    }${(new Date(time).getMonth() + 1)
+                        .toString()
+                        .padStart(2, "0")} ${new Date(
+                        time
+                    ).toLocaleTimeString()}</span>
                             </div>`);
-                    }
-                } else {
-                    if (
-                        new Date(time).toLocaleTimeString() !== "Invalid Date"
-                    ) {
-                        tooltip
-                            .style("opacity", 1)
-                            .style(
-                                this.getPosition.side,
-                                this.getPosition.position + "px"
-                            )
-                            .style(
-                                "top",
-                                event.clientY -
-                                    this.$refs.chart.getBoundingClientRect()
-                                        .top +
-                                    "px"
-                            ).html(`<div class="tooltip-wrapper">
-                                <span>День: ${
-                                    new Date(time)
-                                        .getDate()
-                                        .toString()
-                                        .padStart(2, "0") + "."
-                                }${(new Date(time).getMonth() + 1)
-                            .toString()
-                            .padStart(2, "0")} Время: ${new Date(
-                            time
-                        ).toLocaleTimeString()}</span>
-                                <span>Хешрейт: ${formatNumberWithUnit(
-                                    d,
-                                    u
-                                )}/s</span>
-                                <span>Активные воркеры: ${a}</span>
-                            </div>`);
-                    }
                 }
             } catch (error) {
                 console.error(error);
@@ -279,7 +244,7 @@ export default {
                 .scaleBand()
                 .domain(yAxis.scale().ticks())
                 .range([this.height, 0]);
-            // Создание вертикальной полосы
+
             this.svg
                 .append("line")
                 .attr("class", "vertical-line")
@@ -291,7 +256,6 @@ export default {
                 .style("opacity", 0)
                 .attr("stroke", "#BEC9E0");
 
-            // Создание горизонтальной полосы
             this.svg
                 .append("line")
                 .attr("class", "horizontal-line")
@@ -381,8 +345,8 @@ export default {
 <style lang="scss" scoped>
 .container-chart {
     text-align: right;
-    margin: 0 0 0 60px;
-    width: calc(100% - 60px);
+    margin: 0 0 0 55px;
+    width: calc(100% - 55px);
     @media (max-width: 767.98px) {
         margin: 0 10px 0 55px;
         width: calc(100% - 10px - 65px);

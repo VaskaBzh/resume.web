@@ -15,10 +15,9 @@
         }}</main-title>
         <div class="settings__wrap settings__wrap-adapt wrap">
             <div class="settings__column">
-                <main-title
-                    tag="h3"
-                    :title-name="$t('settings.block.titles[0]')"
-                ></main-title>
+                <main-title tag="h3">{{
+                    $t("settings.block.titles[0]")
+                }}</main-title>
                 <settings-block
                     @openPopup="getHtml"
                     name="Логин"
@@ -32,10 +31,9 @@
                 ></settings-block>
             </div>
             <div class="settings__column" ref="wrap">
-                <main-title
-                    tag="h3"
-                    :title-name="$t('settings.block.titles[1]')"
-                ></main-title>
+                <main-title tag="h3">{{
+                    $t("settings.block.titles[1]")
+                }}</main-title>
                 <settings-block
                     @openPopup="getHtml"
                     name="Пароль"
@@ -90,12 +88,11 @@
             "
             class="form form-popup popup__form"
         >
-            <main-title
-                tag="h3"
-                :title-name="`${$t(
-                    'settings.block.settings_block.popup.title'
-                )} ${this.popupHtml.name}`"
-            />
+            <main-title tag="h3">{{
+                `${$t("settings.block.settings_block.popup.title")} ${
+                    this.popupHtml.name
+                }`
+            }}</main-title>
             <input
                 v-model="this.form.item"
                 required

@@ -15,25 +15,23 @@
             transform: translateY(0px);
         }
     }
-}
-@media (min-width: 479.98px) {
     @keyframes mainAnimationGraph {
         0% {
             transform: translateY(200px);
         }
         50% {
+            min-height: 120px;
             max-height: 120px;
             max-width: 1200px;
             transform: translateY(0px);
         }
         100% {
             max-width: 1200px;
+            min-height: 508px;
             max-height: 700px;
             transform: translateY(0px);
         }
     }
-}
-@media (min-width: 479.98px) {
     @keyframes mainAnimationConnect {
         0% {
             transform: translateY(200px);
@@ -45,13 +43,11 @@
         }
         100% {
             max-width: 700px;
-            max-height: 768px;
+            max-height: 400px;
             transform: translateY(0px);
         }
     }
-}
 // обратная анимация
-@media (min-width: 479.98px) {
     @keyframes backMainAnimation {
         0% {
             max-width: 412px;
@@ -67,12 +63,10 @@
             transform: translateY(200px);
         }
     }
-}
-@media (min-width: 479.98px) {
     @keyframes backMainAnimationGraph {
         0% {
             max-width: 1200px;
-            max-height: 700px;
+            max-height: 500px;
             transform: translateY(0px);
         }
         50% {
@@ -86,13 +80,10 @@
             transform: translateY(200px);
         }
     }
-}
-
-@media (min-width: 479.98px) {
     @keyframes backMainAnimationConnect {
         0% {
             max-width: 700px;
-            max-height: 768px;
+            max-height: 400px;
             transform: translateY(0px);
         }
         50% {
@@ -124,8 +115,6 @@
             transform: translateY(0px);
         }
     }
-}
-@media (max-width: 479.98px) {
     @keyframes mainAnimationGraph {
         0% {
             transform: translateY(200px);
@@ -141,8 +130,6 @@
             transform: translateY(0px);
         }
     }
-}
-@media (max-width: 479.98px) {
     @keyframes mainAnimationConnect {
         0% {
             transform: translateY(200px);
@@ -154,13 +141,11 @@
         }
         100% {
             max-width: 90vw;
-            max-height: 80vh;
+            max-height: 500px;
             transform: translateY(0px);
         }
     }
-}
 // обратная анимация на мобилке
-@media (max-width: 479.98px) {
     @keyframes backMainAnimation {
         0% {
             max-width: 330px;
@@ -177,8 +162,6 @@
             transform: translateY(200px);
         }
     }
-}
-@media (max-width: 479.98px) {
     @keyframes backMainAnimationGraph {
         0% {
             max-width: 90vw;
@@ -193,8 +176,6 @@
             transform: translateY(200px);
         }
     }
-}
-@media (max-width: 479.98px) {
     @keyframes backMainAnimationConnect {
         0% {
             max-width: 90vw;

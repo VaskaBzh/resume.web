@@ -382,7 +382,7 @@ export default {
         display: flex;
         margin-bottom: 25.7em;
         @media (max-width: 1270px) {
-            margin-bottom: 15em;
+            margin-bottom: 19em;
         }
         @media (max-width: 991.98px) {
             margin-bottom: -40px;
@@ -487,10 +487,10 @@ export default {
     // .home__background
     &__background {
         position: relative;
-        top: -3em;
+        top: -19em;
         @media (max-width: 1270px) {
-            top: -7em;
-            left: -5em;
+            top: -5em;
+            left: -21em;
             margin: 0 -15px 15px;
             transform: scale(0.7);
         }

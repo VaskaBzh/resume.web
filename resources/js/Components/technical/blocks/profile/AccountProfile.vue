@@ -114,9 +114,13 @@ export default {
         chageActive() {
             this.$store.commit("updateActive", this.accountInfo.id);
         },
-        getWallets() {
-            this.chageActive();
-            router.visit("/profile/wallets");
+        getWallets(el) {
+            if (this.accountInfo.id !== this.getActive) {
+                this.chageActive();
+            }
+            if (!el.attr) {
+                router.visit("/profile/wallets");
+            }
         },
     },
     computed: {

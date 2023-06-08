@@ -116,34 +116,42 @@
                 :columns="row"
                 :key="i"
                 :class="row.hashClass"
+                data-popup="#seeChart"
+                @click="this.indexChanger(row.graphId)"
             />
         </tbody>
-        <!--        data-popup="#seeChart"-->
-        <!--                @click="this.indexChanger(row.graphId)"-->
-        <!--        <main-popup-->
-        <!--            id="seeChart"-->
-        <!--            v-show="this.indexWorker !== -1"-->
-        <!--            ref="chart"-->
-        <!--            typePopup="graph"-->
-        <!--        >-->
-        <!--            <line-graph-statistic-->
-        <!--                class="graph"-->
-        <!--                :graphData="graphs[0]"-->
-        <!--                :height="height"-->
-        <!--                :redraw="redraw"-->
-        <!--                :key="this.graphs[0].values[this.graphs[0].values.length - 1]"-->
-        <!--            />-->
-        <!--        </main-popup>-->
+        <teleport to="body">
+            <main-popup
+                id="seeChart"
+                ref="chart"
+                typePopup="graph"
+                @closed="dropIndex"
+                @opened="setIndex"
+                :animationEnd="animationEnd"
+            >
+                <transition name="chart">
+                    <statistic-chart
+                        class="graph"
+                        :graphs="graphs"
+                        v-if="indexWorker !== -1"
+                        :redraw="redraw"
+                        :viewportWidth="viewportWidth"
+                        :heightVal="height"
+                        :key="graphs[0].values[graphs[0].values.length - 1]"
+                    />
+                </transition>
+            </main-popup>
+        </teleport>
     </table>
 </template>
 <script>
 import TableWorkersRow from "@/Components/tables/row/TableWorkersRow.vue";
 import { mapGetters } from "vuex";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
+import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 
 export default {
-    components: { MainPopup, TableWorkersRow, LineGraphStatistic },
+    components: { MainPopup, TableWorkersRow, StatisticChart },
     props: {
         table: Object,
         visualType: {
@@ -158,20 +166,32 @@ export default {
             mainRow: this.table.mainRow,
             mainTable: this.table,
             indexWorker: -1,
-            height: 300,
-            redraw: false,
+            safeIndex: -1,
+            height: 360,
+            redraw: true,
+            animationEnd: 1250,
+            graphs: [
+                {
+                    id: 1,
+                    title: [
+                        this.$t("chart.labels[0]"),
+                        this.$t("chart.labels[1]"),
+                    ],
+                    values: [],
+                },
+            ],
         };
     },
     watch: {
         viewportWidth() {
             if (this.viewportWidth >= 1270.98) {
-                this.height = 500;
+                this.height = 360;
             }
             if (this.viewportWidth < 1270.98) {
-                this.height = 320;
+                this.height = 360;
             }
             if (this.viewportWidth < 991.98) {
-                this.height = 280;
+                this.height = 360;
             }
             if (this.viewportWidth < 767.98) {
                 this.height = 260;
@@ -188,18 +208,6 @@ export default {
     },
     computed: {
         ...mapGetters(["allHistoryMiner", "getActive"]),
-        graphs() {
-            return [
-                {
-                    id: 1,
-                    title: [
-                        this.$t("chart.labels[0]"),
-                        this.$t("chart.labels[1]"),
-                    ],
-                    values: [],
-                },
-            ];
-        },
         workers() {
             let workers = {
                 active: 0,
@@ -228,13 +236,20 @@ export default {
         ...mapGetters(["allHistory", "allAccounts"]),
     },
     methods: {
+        setIndex() {
+            this.indexWorker = this.safeIndex;
+        },
+        dropIndex() {
+            setTimeout(() => {
+                this.indexWorker = -1;
+            }, 100);
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
         indexChanger(key) {
             setTimeout(() => {
                 if (this.indexWorker !== key) {
-                    this.indexWorker = key;
                     this.graphs = [
                         {
                             id: 1,
@@ -245,11 +260,12 @@ export default {
                             values: [],
                         },
                     ];
+
                     this.renderChart(key);
                 }
             }, 10);
         },
-        renderChart(index) {
+        async renderChart(index) {
             const interval = 60 * 60 * 1000;
             const currentTime = new Date().getTime();
             const historyValues = this.allHistoryMiner[index];
@@ -259,63 +275,59 @@ export default {
                 return date.getTime();
             });
 
-            const [values, amount, unit] = historyValues
-                .slice(-24)
-                .reverse()
-                .reduce(
-                    (acc, el) => {
-                        if (el) {
+            if (historyValues) {
+                const [values, amount, unit] = historyValues
+                    .slice(-24)
+                    .reverse()
+                    .reduce(
+                        (acc, el) => {
                             let hash = el.hash ?? 0;
                             if (el.unit === "P") hash *= 1000;
                             else if (el.unit === "E") hash *= 1000000;
-                            acc[0].push(Number(hash).toFixed(2));
+                            acc[0].push(Number(hash));
                             el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                            acc[2].push(el.unit);
-                        } else {
-                            acc[0].push(0);
-                            acc[1].push(0);
-                            acc[2].push("T");
-                        }
+                            acc[2].push(el.unit ?? "T");
 
-                        return acc;
-                    },
-                    [[], [], []]
-                );
+                            return acc;
+                        },
+                        [[], [], []]
+                    );
 
-            while (values.length < this.val) {
-                values.push("0");
-                amount.push("0");
-                unit.push("T");
+                while (values.length < 24) {
+                    values.push(0);
+                    amount.push(0);
+                    unit.push("T");
+                }
+
+                await Object.assign(this.graphs[0], {
+                    values: values.reverse(),
+                    amount: amount.map(String).reverse(),
+                    unit: unit.reverse(),
+                });
+
+                this.safeIndex = index;
             }
-
-            Object.assign(this.graphs[0], {
-                values: values.reverse(),
-                amount: amount.map(String).reverse(),
-                unit: unit.reverse(),
-            });
         },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
-    mounted() {
-        document
-            .querySelector(".workers .wrap-overflow")
-            .addEventListener("click", (e) => {
-                if (e.target.closest("[data-close]")) {
-                    this.indexWorker = -1;
-                    console.log(this.indexWorker);
-                }
-            });
-        // document.querySelector("body.lock").addEventListener("click", () => {
-        //     this.indexWorker = -1;
-        //     console.log(this.indexWorker);
-        // });
-    },
 };
 </script>
 <style lang="scss" scoped>
+.chart-enter-active,
+.chart-leave-active {
+    transition: all 0.5s ease 0s;
+    transform: translateY(0);
+    opacity: 1;
+    max-height: fit-content;
+}
+.chart-enter-from,
+.chart-leave-to {
+    transform: translateY(200px);
+    opacity: 0;
+}
 @keyframes opacity {
     from {
         opacity: 0;

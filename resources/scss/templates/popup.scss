@@ -54,7 +54,7 @@ body::after {
     transition: visibility 0.5s ease 0s;
     visibility: hidden;
     pointer-events: none;
-    &-show body::after {
+    &-show::after {
         opacity: 1 !important;
     }
     &_show {
@@ -68,7 +68,7 @@ body::after {
             transform: translateY(200px);
             animation: mainAnimation forwards 0.8s ease 0.5s !important;
             &-graph {
-                animation: mainAnimationGraph forwards 0.8s ease 0.5s !important;
+                animation: mainAnimationGraph forwards 1s ease 0.5s !important;
             }
             &-connect {
                 animation: mainAnimationConnect forwards 0.8s ease 0.5s !important;
@@ -119,9 +119,9 @@ body::after {
                 width: 5px;
                 border-radius: 5px;
                 background: linear-gradient(
-                    84.14deg,
-                    #3f7bdd 8.75%,
-                    #4282ec 92.01%
+                        84.14deg,
+                        #3f7bdd 8.75%,
+                        #4282ec 92.01%
                 );
                 transition: all 0.3s ease 0s;
                 position: relative;
@@ -211,27 +211,27 @@ body::after {
             margin: auto;
             transition: all 0.8s ease 0s;
         }
-        .graph {
-            width: 100%;
-            opacity: 0;
-            margin: 0 !important;
-
-            &__main {
-                padding: 0 !important;
-                width: 100% !important;
-                margin: 0 !important;
-            }
-            &__graph,
-            &__list,
-            &__item,
-            &__con {
-                width: 100%;
-            }
-        }
+        //.graph {
+        //    width: 100%;
+        //    opacity: 0;
+        //    margin: 0 !important;
+        //
+        //    &__main {
+        //        padding: 0 !important;
+        //        width: 100% !important;
+        //        margin: 0 !important;
+        //    }
+        //    &__graph,
+        //    &__list,
+        //    &__item,
+        //    &__con {
+        //        width: 100%;
+        //    }
+        //}
         &.opened {
-            .graph {
-                animation: contentAnimation forwards 1.3s ease 0.8s !important;
-            }
+            //.graph {
+            //    animation: contentAnimation forwards 1.3s ease 0.8s !important;
+            //}
             .popup__content_block {
                 animation: wrapperAnimation forwards 0.4s ease 0.5s;
                 width: 100%;

@@ -25,7 +25,7 @@
         <div class="button__menu" :class="{ target: target }">
             <div class="button__row">
                 <span class="button_title">
-                    {{ $t("header.menu.acc_admin.title") }}</span
+                    {{ $t("header.menu.title") }}</span
                 >
                 <main-list>
                     <template

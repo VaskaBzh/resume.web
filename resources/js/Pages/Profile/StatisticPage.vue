@@ -376,7 +376,7 @@ export default {
                 unit: unit.reverse(),
             });
 
-            setTimeout(this.changeId, 1000);
+            setTimeout(this.changeId, 700);
         },
     },
     mounted() {
@@ -643,10 +643,7 @@ export default {
                 margin: auto;
             }
             &-graph {
-                padding: 24px 24px 24px 8px;
-                @media (max-width: 991.98px) {
-                    padding: 24px 24px 24px 8px;
-                }
+                padding: 24px;
             }
         }
     }
@@ -664,13 +661,6 @@ export default {
         margin-bottom: 16px;
         @media (max-width: 479.98px) {
             margin-bottom: 24px;
-        }
-    }
-    .graph {
-        //margin-bottom: 32px;
-        //animation: shadowDown 0.3s ease forwards;
-        @media (max-width: 479.98px) {
-            margin-bottom: 0;
         }
     }
     &__block {

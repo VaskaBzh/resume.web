@@ -7,10 +7,9 @@
             @submit.prevent="this.sendFeedback"
             class="form form-popup popup__form"
         >
-            <main-title
-                tag="h3"
-                :title-name="$t('footer.feedback.popup.title')"
-            />
+            <main-title tag="h3">{{
+                $t("footer.feedback.popup.title")
+            }}</main-title>
             <input
                 v-model="form.contacts"
                 :placeholder="$t('footer.feedback.popup.placeholders.contacts')"
