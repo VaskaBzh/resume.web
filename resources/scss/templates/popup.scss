@@ -13,6 +13,7 @@ body::after {
     z-index: 149;
 }
 .lock {
+    overflow: hidden;
     body::after {
         opacity: 1;
     }
@@ -60,8 +61,10 @@ body::after {
     @media (max-width: $mobile) {
         padding: 15px;
     }
-    &-show::after {
-        opacity: 1 !important;
+    &-show {
+        &::after {
+            opacity: 1 !important;
+        }
     }
     &_show {
         z-index: 150;
@@ -121,12 +124,12 @@ body::after {
                         .title {
                             opacity: 0;
                         }
-                        padding: 0 0 10px;
+                        padding: 10px 0;
                         margin: 0 0 10px;
                         overflow-x: scroll;
                         overflow-y: hidden;
                         .container-chart {
-                            margin-right: 10px;
+                            margin: 0 10px 0 60px;
                         }
                     }
                 }
@@ -139,7 +142,7 @@ body::after {
                         padding: 15px 0 0;
 
                         .title {
-                            margin-bottom: 15px;
+                            margin-bottom: 20px;
                             &:after,
                             &:before {
                                 content: none;

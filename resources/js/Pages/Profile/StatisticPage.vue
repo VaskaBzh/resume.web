@@ -62,7 +62,9 @@
                         class="hover"
                         v-show="id === val && this.viewportWidth <= 479.98"
                         data-popup="#graph"
-                        :class="{ active: active }"
+                        :class="{ active: active, hover_event: hover }"
+                        @touchstart="hover = true"
+                        @touchend="hover = false"
                     >
                         <div class="hover_wrap" ref="fullScreen">
                             <svg
@@ -269,6 +271,7 @@ export default {
                 },
             },
             active: false,
+            hover: false,
         };
     },
     created: function () {
@@ -459,6 +462,9 @@ export default {
     opacity: 0;
     box-shadow: 0 0 6px 4px rgba(#4182ec, 0.4);
     backdrop-filter: blur(2px);
+    &.hover_event {
+        opacity: 1;
+    }
     &.active {
         opacity: 1;
         .hover {

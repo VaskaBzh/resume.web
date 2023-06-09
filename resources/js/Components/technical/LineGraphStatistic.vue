@@ -179,7 +179,7 @@ export default {
             gradient
                 .append("stop")
                 .attr("offset", "0%")
-                .attr("stop-color", "#4E7AD6");
+                .attr("stop-color", "rgba(78, 122, 214, 0.6)");
 
             gradient
                 .append("stop")
@@ -325,7 +325,7 @@ export default {
                 .attr("class", "main_line")
                 .attr("width", "100%")
                 .attr("stroke", "#4E7AD6")
-                .attr("stroke-width", 2);
+                .attr("stroke-width", 2.5);
 
             this.svg
                 .append("g")
@@ -339,6 +339,38 @@ export default {
 
             if (!isMobile || this.tooltip) {
                 const tooltip = d3.select(this.$refs.tooltip);
+
+                if (isMobile) {
+                    this.svg.on("touchstart", (event) =>
+                        this.tooltipInit(
+                            event.changedTouches[0], // Используем первый объект Touch из списка TouchList
+                            tooltip,
+                            x,
+                            adjustValue,
+                            formatNumber,
+                            formatSi
+                        )
+                    );
+                    this.svg.on("touchmove", (event) =>
+                        this.tooltipInit(
+                            event.changedTouches[0],
+                            tooltip,
+                            x,
+                            adjustValue,
+                            formatNumber,
+                            formatSi
+                        )
+                    );
+                    this.svg.on("touchend", () => {
+                        tooltip.style("opacity", 0);
+                        this.svg
+                            .selectAll(".vertical-line")
+                            .style("opacity", 0);
+                        this.svg
+                            .selectAll(".horizontal-line")
+                            .style("opacity", 0);
+                    });
+                }
 
                 this.svg.on("mousemove", (event) =>
                     this.tooltipInit(
