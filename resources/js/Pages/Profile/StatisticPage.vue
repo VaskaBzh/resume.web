@@ -461,8 +461,8 @@ export default {
     transition: all 0.3s ease 0s;
     opacity: 0;
     box-shadow: 0 0 6px 4px rgba(#4182ec, 0.4);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(2px);
+    -webkit-backdrop-filter: blur(1.5px);
+    backdrop-filter: blur(1.5px);
     &.hover_event {
         opacity: 1;
     }
