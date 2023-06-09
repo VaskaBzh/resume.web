@@ -45,16 +45,18 @@ export default {
     computed: {
         getPosition() {
             if (this.mouseX) {
-                const isLeft =
-                    this.mouseX <
-                    this.$refs.chart.clientWidth -
-                        this.$refs.tooltip.clientWidth;
+                // const isLeft =
+                //     this.mouseX <
+                //     this.$refs.chart.clientWidth -
+                //         this.$refs.tooltip.clientWidth;
+                const isRigth =
+                    this.mouseX < this.$refs.tooltip.clientWidth - 8;
 
                 return {
                     side: "left",
-                    position: isLeft
-                        ? this.mouseX
-                        : this.mouseX - this.$refs.tooltip.clientWidth,
+                    position: isRigth
+                        ? this.mouseX + 8
+                        : this.mouseX - 8 - this.$refs.tooltip.clientWidth,
                 };
             }
         },
@@ -64,7 +66,7 @@ export default {
             this.svg.selectAll("*").remove();
             this.svg._groups[0][0].remove();
         },
-        tooltipInit(event, tooltip, x, adjustValue, formatNumber, formatSi) {
+        tooltipInit(event, tooltip, x, adjustValue, formatNumber) {
             try {
                 let formatNumberWithUnit = (num, i) =>
                     formatNumber(adjustValue(num, this.graphData.unit[i]).val) +
@@ -80,6 +82,11 @@ export default {
                 const u = this.graphData.unit[nearestIndex];
                 const a = this.graphData.amount[nearestIndex];
                 const time = this.graphData.dates[nearestIndex];
+
+                let topPos = 0;
+
+                if (this.$refs.tooltip?.clientHeight)
+                    topPos = this.$refs.tooltip.clientHeight + 8;
 
                 const verticalLineX = this.mouseX;
 
@@ -117,10 +124,10 @@ export default {
                         .style(
                             "top",
                             event.clientY -
-                                this.$refs.chart.getBoundingClientRect().top +
+                                this.$refs.chart.getBoundingClientRect().top -
+                                topPos +
                                 "px"
                         ).html(`<div class="tooltip-wrapper">
-
                                 <span>Хешрейт: <span class="value">${formatNumberWithUnit(
                                     d,
                                     u
