@@ -29,6 +29,7 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 20px;
+        flex: 1 1 auto;
         @media (max-width: 767.98px) {
             max-width: 100%;
             //&:not(:first-child) {

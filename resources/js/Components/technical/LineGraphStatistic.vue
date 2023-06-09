@@ -14,16 +14,28 @@ export default {
         height: Number,
         viewportWidth: Number,
         redraw: Boolean,
+        tooltip: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
             svg: null,
             mouseX: null,
             clientX: null,
+            containerWidth: 0,
+            containerHeight: 0,
         };
     },
     watch: {
         height() {
+            if (this.$refs.chart && this.graphData.values?.length > 0) {
+                this.dropGraph();
+                this.graphInit();
+            }
+        },
+        containerWidth() {
             if (this.$refs.chart && this.graphData.values?.length > 0) {
                 this.dropGraph();
                 this.graphInit();
@@ -80,7 +92,7 @@ export default {
                     .attr("x1", verticalLineX)
                     .attr("x2", verticalLineX)
                     .attr("y1", 0)
-                    .attr("y2", this.height)
+                    .attr("y2", this.containerHeight)
                     .attr("stroke-width", 0.7)
                     .style("opacity", 1)
                     .attr("stroke", "#BEC9E0");
@@ -109,11 +121,11 @@ export default {
                                 "px"
                         ).html(`<div class="tooltip-wrapper">
 
-                                <span>Хешрейт: ${formatNumberWithUnit(
+                                <span>Хешрейт: <span class="value">${formatNumberWithUnit(
                                     d,
                                     u
-                                )}/s</span>
-                                <span>Активные воркеры: ${a}</span>
+                                )}/s</span></span>
+                                <span>Активные воркеры: <span class="value">${a}</span></span>
                                 <span class="time">${
                                     new Date(time).getUTCFullYear() + "."
                                 }${
@@ -153,7 +165,7 @@ export default {
                 .select(this.$refs.chart)
                 .append("svg")
                 .attr("width", "100%")
-                .attr("height", this.height);
+                .attr("height", this.containerHeight);
 
             const gradient = this.svg
                 .append("defs")
@@ -185,14 +197,22 @@ export default {
                 adjustValue(num, this.graphData.unit[i]).unit +
                 "H";
 
+            let isMobile = this.viewportWidth <= 479.98;
+
+            this.containerHeight = this.height;
+
+            if (isMobile && this.tooltip) {
+                this.containerHeight = 380;
+            }
+
             const y = d3
                 .scaleLinear()
                 .domain([0, d3.max(this.graphData.values)])
-                .range([this.height, 0]);
+                .range([this.containerHeight, 0]);
 
             let formatTime = (date, i) => {
                 const hours = date.getHours().toString().padStart(2, "0");
-                const minutes = date.getMinutes().toString().padStart(2, "0");
+                // const minutes = date.getMinutes().toString().padStart(2, "0");
                 if (this.graphData.dates.length > 24) {
                     const day = date.getDate().toString().padStart(2, "0");
                     return `${day}/${(date.getUTCMonth() + 1)
@@ -204,28 +224,40 @@ export default {
                     //     .toString()
                     //     .padStart(2, "0")}`;
                 } else {
-                    return `${hours.toString().padStart(2, "0")}:${minutes
-                        .toString()
-                        .padStart(2, "0")}`;
+                    return `${hours.toString().padStart(2, "0")}:00`;
+                    // ${minutes
+                    //     .toString()
+                    //     .padStart(2, "0")}`;
                 }
             };
 
-            let isMobile = this.viewportWidth <= 479.98;
+            let xAxis = null;
 
-            const xAxis = d3
-                .axisBottom(x)
-                .ticks(isMobile ? 4 : this.viewportWidth <= 991.98 ? 8 : 12)
-                .tickFormat((d) => formatTime(new Date(d)));
-
-            const yAxis = d3
-                .axisLeft(y)
-                .ticks(isMobile ? 6 : 10)
-                .tickFormat((d, i) => formatNumberWithUnit(d, i));
+            let yAxis = null;
+            if (isMobile && this.tooltip) {
+                yAxis = d3
+                    .axisLeft(y)
+                    .ticks(12)
+                    .tickFormat((d, i) => formatNumberWithUnit(d, i));
+                xAxis = d3
+                    .axisBottom(x)
+                    .ticks(12)
+                    .tickFormat((d) => formatTime(new Date(d)));
+            } else {
+                yAxis = d3
+                    .axisLeft(y)
+                    .ticks(isMobile ? 6 : 10)
+                    .tickFormat((d, i) => formatNumberWithUnit(d, i));
+                xAxis = d3
+                    .axisBottom(x)
+                    .ticks(isMobile ? 4 : this.viewportWidth <= 991.98 ? 8 : 12)
+                    .tickFormat((d) => formatTime(new Date(d)));
+            }
 
             x = d3
                 .scaleLinear()
                 .domain(d3.extent(this.graphData.dates, (d, i) => i))
-                .range([0, this.$refs.chart.offsetWidth]);
+                .range([0, this.containerWidth]);
 
             const lineGenerator = d3
                 .line()
@@ -236,14 +268,14 @@ export default {
             const areaGenerator = d3
                 .area()
                 .x((d, i) => x(i))
-                .y0(this.height)
+                .y0(this.containerHeight)
                 .y1((d) => y(d))
                 .curve(d3.curveBasis);
 
             const yBand = d3
                 .scaleBand()
                 .domain(yAxis.scale().ticks())
-                .range([this.height, 0]);
+                .range([this.containerHeight, 0]);
 
             this.svg
                 .append("line")
@@ -251,7 +283,7 @@ export default {
                 .attr("x1", 0)
                 .attr("y1", 0)
                 .attr("x2", 0)
-                .attr("y2", this.height)
+                .attr("y2", this.containerHeight)
                 .attr("stroke-width", 0.7)
                 .style("opacity", 0)
                 .attr("stroke", "#BEC9E0");
@@ -297,7 +329,7 @@ export default {
 
             this.svg
                 .append("g")
-                .attr("transform", `translate(0, ${this.height + 5})`)
+                .attr("transform", `translate(0, ${this.containerHeight + 5})`)
                 .call(xAxis);
 
             this.svg
@@ -305,7 +337,7 @@ export default {
                 .attr("transform", `translate(-5, 0)`)
                 .call(yAxis);
 
-            if (!isMobile) {
+            if (!isMobile || this.tooltip) {
                 const tooltip = d3.select(this.$refs.tooltip);
 
                 this.svg.on("mousemove", (event) =>
@@ -334,6 +366,14 @@ export default {
     },
     mounted() {
         if (this.$refs.chart && this.graphData?.values?.length > 0) {
+            setInterval(() => {
+                if (
+                    this.$refs.chart?.offsetWidth &&
+                    this.containerWidth !== this.$refs.chart.offsetWidth
+                ) {
+                    this.containerWidth = this.$refs.chart.offsetWidth;
+                }
+            }, 100);
             if (this.redraw) {
                 this.graphInit();
             }
@@ -347,9 +387,5 @@ export default {
     text-align: right;
     margin: 0 0 0 55px;
     width: calc(100% - 55px);
-    @media (max-width: 767.98px) {
-        margin: 0 10px 0 55px;
-        width: calc(100% - 10px - 65px);
-    }
 }
 </style>

@@ -6,11 +6,6 @@
                 {{ $t("statistic.title") }}
             </main-title>
             <div
-                class="invisible_button"
-                ref="popupShow"
-                data-popup="#graph"
-            ></div>
-            <div
                 class="wrap"
                 v-if="
                     this.allHistory[this.getActive]?.filter((a) => a.hash > 0)
@@ -43,6 +38,59 @@
                         :viewportWidth="viewportWidth"
                         :key="graphs[0].values[graphs[0].values.length - 1]"
                     />
+                    <teleport to="body">
+                        <main-popup
+                            id="graph"
+                            class="popup-graph"
+                            @opened="active = true"
+                            @closed="active = false"
+                        >
+                            <statistic-chart
+                                :val="val"
+                                :graphs="graphs"
+                                :viewportWidth="viewportWidth"
+                                :tooltip="true"
+                                :key="
+                                    graphs[0].values[
+                                        graphs[0].values.length - 1
+                                    ]
+                                "
+                            />
+                        </main-popup>
+                    </teleport>
+                    <div
+                        class="hover"
+                        v-show="id === val && this.viewportWidth <= 479.98"
+                        data-popup="#graph"
+                        :class="{ active: active }"
+                    >
+                        <div class="hover_wrap" ref="fullScreen">
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 32 32"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M25 7V12C25 12.5523 25.4477 13 26 13C26.5523 13 27 12.5523 27 12V6C27 5.44772 26.5523 5 26 5H20C19.4477 5 19 5.44772 19 6C19 6.55228 19.4477 7 20 7H25Z"
+                                    fill="#1C1C1C"
+                                />
+                                <path
+                                    d="M26.7067 6.70748C26.8943 6.51995 27 6.26522 27 6C27 5.73478 26.8946 5.48043 26.7071 5.29289L26.6985 5.28436C26.5117 5.1024 26.2607 5 26 5C25.7348 5 25.4804 5.10536 25.2929 5.29289L18.2933 12.2925C18.1057 12.4801 18 12.7348 18 13C18 13.016 18.0004 13.032 18.0012 13.048C18.0131 13.2964 18.1171 13.5313 18.2929 13.7071C18.4804 13.8946 18.7348 14 19 14C19.2652 14 19.5196 13.8946 19.7071 13.7071L26.7067 6.70748Z"
+                                    fill="#1C1C1C"
+                                />
+                                <path
+                                    d="M7 25V20C7 19.4477 6.55228 19 6 19C5.44772 19 5 19.4477 5 20V26C5 26.5523 5.44772 27 6 27H12C12.5523 27 13 26.5523 13 26C13 25.4477 12.5523 25 12 25H7Z"
+                                    fill="#1C1C1C"
+                                />
+                                <path
+                                    d="M13.7067 19.7075C13.8943 19.5199 14 19.2652 14 19C14 18.7348 13.8946 18.4804 13.7071 18.2929L13.6985 18.2844C13.5117 18.1024 13.2607 18 13 18C12.7348 18 12.4804 18.1054 12.2929 18.2929L5.29327 25.2925C5.10573 25.4801 5 25.7348 5 26C5 26.016 5.00038 26.032 5.00115 26.048C5.0131 26.2964 5.1171 26.5313 5.29289 26.7071C5.48043 26.8946 5.73478 27 6 27C6.26522 27 6.51957 26.8946 6.70711 26.7071L13.7067 19.7075Z"
+                                    fill="#1C1C1C"
+                                />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="wrap" v-else>
@@ -171,6 +219,7 @@ import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
+import MainPopup from "@/Components/technical/MainPopup.vue";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
@@ -181,6 +230,7 @@ export default {
         Head,
         Link,
         CopyBlock,
+        MainPopup,
     },
     layout: profileLayoutView,
     data() {
@@ -218,6 +268,7 @@ export default {
                     rows: [],
                 },
             },
+            active: false,
         };
     },
     created: function () {
@@ -393,6 +444,66 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.hover {
+    background: rgba(#4182ec, 0.4);
+    border-radius: 21px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    transition: all 0.3s ease 0s;
+    opacity: 0;
+    box-shadow: 0 0 6px 4px rgba(#4182ec, 0.4);
+    backdrop-filter: blur(2px);
+    &.active {
+        opacity: 1;
+        .hover {
+            &_wrap {
+                background: #4182ec;
+                svg {
+                    path {
+                        &:nth-child(1) {
+                            transform: translate(1px, -1px);
+                        }
+                        &:nth-child(2) {
+                            transform: translate(1px, -1px);
+                        }
+                        &:nth-child(3) {
+                            transform: translate(-1px, 1px);
+                        }
+                        &:nth-child(4) {
+                            transform: translate(-1px, 1px);
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &_wrap {
+        background: rgba(#000034, 0.6);
+        border-radius: 14px;
+        padding: 6px;
+        transition: all 0.3s ease 0s;
+
+        svg {
+            min-width: 30px;
+            height: 30px;
+
+            path {
+                fill: #fff;
+                transition: all 0.3s ease 0s;
+            }
+
+            @media (min-width: 479.98px) {
+                display: none;
+            }
+        }
+    }
+}
 .statistic {
     .wrap {
         overflow: visible;
@@ -465,6 +576,7 @@ export default {
                     position: absolute;
                     top: calc(100% + 40px);
                     left: 0;
+                    width: 100%;
                 }
             }
             .button {
@@ -477,6 +589,7 @@ export default {
                 font-size: 17px;
                 line-height: 20px;
                 background: transparent;
+                width: fit-content;
                 transition: all 0.3s ease 0s;
                 @media (max-width: 767.98px) {
                     border-radius: 12px;
@@ -608,6 +721,7 @@ export default {
                 min-height: 100px;
                 &-graph {
                     order: 3;
+                    position: relative;
                     padding: 24px !important;
                     display: flex;
                     align-items: center;
@@ -621,7 +735,7 @@ export default {
                 min-height: 100px;
                 &-graph {
                     order: 3;
-                    padding: 15px 4px !important;
+                    padding: 15px !important;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -644,18 +758,15 @@ export default {
             }
             &-graph {
                 padding: 24px;
+                &:active {
+                    @media (max-width: 479.98px) {
+                        .hover {
+                            opacity: 1;
+                        }
+                    }
+                }
             }
         }
-    }
-    .invisible_button {
-        width: 0;
-        height: 0;
-        position: absolute;
-        left: 0;
-        top: 0;
-        z-index: -10;
-        visibility: hidden;
-        opacity: 0;
     }
     &__title {
         margin-bottom: 16px;

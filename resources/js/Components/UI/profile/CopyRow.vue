@@ -73,6 +73,8 @@ export default {
         }
         @media (max-width: 478.98px) {
             right: 7px;
+            width: 20px;
+            height: 20px;
         }
         &:hover {
             stroke: #4182ec !important;
@@ -104,6 +106,9 @@ export default {
         overflow: hidden;
         max-width: calc(100% - 60px) !important;
         border: 0.5px solid rgba(0, 0, 0, 0.08);
+        @media (max-width: 320.98px) {
+            max-width: calc(100% - 55px) !important;
+        }
         &.active {
             border: 1px solid #4182ec;
             .copy-button {
@@ -136,6 +141,8 @@ export default {
             opacity: 0;
             @media (max-width: 478.98px) {
                 right: 5px;
+                width: 20px;
+                height: 20px;
             }
         }
         @media (max-width: 767.98px) {

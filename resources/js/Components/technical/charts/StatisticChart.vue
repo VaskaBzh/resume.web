@@ -24,6 +24,7 @@
                             :height="height"
                             :redraw="redraw"
                             :viewportWidth="viewportWidth"
+                            :tooltip="tooltip"
                         ></line-graph-statistic>
                     </div>
                 </div>
@@ -35,6 +36,7 @@
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
+
 export default {
     props: {
         heightVal: Number,
@@ -53,6 +55,10 @@ export default {
         redraw: {
             type: Boolean,
             default: true,
+        },
+        tooltip: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {

@@ -4,26 +4,28 @@
         <div class="workers__wrapper">
             <main-title tag="h2" class="workers__title">
                 {{ $t("workers.title") }}
-                <blue-button class="workers__button" data-popup="#connect">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="21"
-                        height="21"
-                        viewBox="0 0 21 21"
-                        fill="none"
-                    >
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M1.07129 10.0703C1.07129 9.51803 1.519 9.07031 2.07129 9.07031H18.0713C18.6236 9.07031 19.0713 9.51803 19.0713 10.0703C19.0713 10.6226 18.6236 11.0703 18.0713 11.0703H2.07129C1.519 11.0703 1.07129 10.6226 1.07129 10.0703Z"
-                        />
-                        <path
-                            fill-rule="evenodd"
-                            clip-rule="evenodd"
-                            d="M10.0708 1.0708C10.6231 1.0708 11.0708 1.51852 11.0708 2.0708V18.0708C11.0708 18.6231 10.6231 19.0708 10.0708 19.0708C9.51852 19.0708 9.0708 18.6231 9.0708 18.0708V2.0708C9.0708 1.51852 9.51852 1.0708 10.0708 1.0708Z"
-                        />
-                    </svg>
-                </blue-button>
+                <Link :href="route('connecting')">
+                    <blue-button class="workers__button">
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="21"
+                            height="21"
+                            viewBox="0 0 21 21"
+                            fill="none"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M1.07129 10.0703C1.07129 9.51803 1.519 9.07031 2.07129 9.07031H18.0713C18.6236 9.07031 19.0713 9.51803 19.0713 10.0703C19.0713 10.6226 18.6236 11.0703 18.0713 11.0703H2.07129C1.519 11.0703 1.07129 10.6226 1.07129 10.0703Z"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M10.0708 1.0708C10.6231 1.0708 11.0708 1.51852 11.0708 2.0708V18.0708C11.0708 18.6231 10.6231 19.0708 10.0708 19.0708C9.51852 19.0708 9.0708 18.6231 9.0708 18.0708V2.0708C9.0708 1.51852 9.51852 1.0708 10.0708 1.0708Z"
+                            />
+                        </svg>
+                    </blue-button>
+                </Link>
             </main-title>
             <!--            <div class="workers__filter">-->
             <!--                <div class="workers__filter_wrapper">-->
@@ -55,29 +57,16 @@
                 :wait="this.allAccounts"
                 :empty="this.table.rows"
             />
-            <main-popup id="connect" typePopup="connect">
-                <form class="form form-popup popup__form">
-                    <main-title tag="h2">{{
-                        $t("workers.popups.connection.title")
-                    }}</main-title>
-                    <copy-block
-                        v-for="(object, i) in this.copyObject"
-                        :key="i"
-                        :copyObject="object"
-                    ></copy-block>
-                </form>
-            </main-popup>
         </div>
     </div>
 </template>
 <script>
+import { Link, router } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
-import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { mapGetters } from "vuex";
 import Vue from "lodash";
 import BlueButton from "@/Components/UI/BlueButton.vue";
@@ -88,9 +77,8 @@ export default {
         MainTitle,
         MainSelect,
         Head,
-        MainPopup,
-        CopyBlock,
         BlueButton,
+        Link,
     },
     layout: profileLayoutView,
     props: ["errors", "message", "user", "auth_user"],

@@ -8,11 +8,11 @@
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 30px;
-    overflow-y: hidden;
     border: 0.5px solid #fdfefe;
     position: relative;
     gap: 16px;
     border-radius: 21px;
+    overflow: hidden;
     //&::before {
     //    content: "";
     //    position: absolute;
@@ -222,15 +222,17 @@
         }
     }
     &-overflow {
-        max-width: 100%;
         overflow: hidden;
-        width: 100%;
+        flex: 1 1 auto;
         @media (max-width: $tablet) {
             overflow-x: scroll;
-            padding: 0 0 20px;
+            padding: 0 15px 20px;
+            margin: 0 -15px;
         }
         &-scrollY {
             overflow-y: scroll;
+            flex: 1 1 auto;
+            margin: 0;
             padding: 0;
         }
     }
@@ -283,9 +285,6 @@
             gap: 16px;
             padding: 3px;
             display: flex;
-            position: absolute;
-            right: 20px;
-            top: 3px;
             box-sizing: border-box;
             &_elem {
                 display: grid;

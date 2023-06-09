@@ -122,6 +122,8 @@
         </tbody>
         <teleport to="body">
             <main-popup
+                v-if="Object.values(allHistoryMiner).length > 0"
+                class="popup-graph"
                 id="seeChart"
                 ref="chart"
                 typePopup="graph"
@@ -129,17 +131,15 @@
                 @opened="setIndex"
                 :animationEnd="animationEnd"
             >
-                <transition name="chart">
-                    <statistic-chart
-                        class="graph"
-                        :graphs="graphs"
-                        v-if="indexWorker !== -1"
-                        :redraw="redraw"
-                        :viewportWidth="viewportWidth"
-                        :heightVal="height"
-                        :key="graphs[0].values[graphs[0].values.length - 1]"
-                    />
-                </transition>
+                <statistic-chart
+                    class="graph"
+                    :graphs="graphs"
+                    :redraw="redraw"
+                    :viewportWidth="viewportWidth"
+                    :heightVal="height"
+                    :tooltip="true"
+                    :key="graphs[0].values[graphs[0].values.length - 1]"
+                />
             </main-popup>
         </teleport>
     </table>
@@ -169,7 +169,7 @@ export default {
             safeIndex: -1,
             height: 360,
             redraw: true,
-            animationEnd: 1250,
+            animationEnd: 0,
             graphs: [
                 {
                     id: 1,
@@ -316,18 +316,6 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.chart-enter-active,
-.chart-leave-active {
-    transition: all 0.5s ease 0s;
-    transform: translateY(0);
-    opacity: 1;
-    max-height: fit-content;
-}
-.chart-enter-from,
-.chart-leave-to {
-    transform: translateY(200px);
-    opacity: 0;
-}
 @keyframes opacity {
     from {
         opacity: 0;

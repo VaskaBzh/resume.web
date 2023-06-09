@@ -5,7 +5,7 @@
             <main-title tag="h2">{{
                 $t("connection.title")
             }}</main-title>
-            <div class="connecting__wrap wrap">
+            <div class="wrap">
                 <copy-block
                     v-for="(object, i) in this.copyObject"
                     :key="i"
@@ -121,19 +121,6 @@ export default {
     // .connecting__wrapper
     &__wrapper {
         width: 100%;
-    }
-    // .connecting__wrap
-    &__wrap {
-        padding: 32px;
-        flex-direction: column;
-        gap: 40px;
-        svg {
-            stroke: #4182ec;
-        }
-        @media (max-width: 991.98px) {
-            padding: 20px;
-            gap: 22px;
-        }
     }
     &__select {
         max-width: 280px !important;

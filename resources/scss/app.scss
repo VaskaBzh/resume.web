@@ -458,8 +458,20 @@ h6 {
         align-items: flex-start;
         background: rgba(194, 213, 242, 0.6);
         overflow: hidden;
+        font-weight: 400;
         z-index: 10;
         box-shadow: 0px 8px 24px rgba(129, 135, 189, 0.15);
+        .value {
+            font-weight: 700;
+        }
+        @media (max-width: $mobile) {
+            font-size: 14px;
+            line-height: 18px;
+            padding: 5px;
+            .time {
+                font-size: 12px;
+            }
+        }
         .time {
             color: rgba(#417fe5, 0.6);
             font-size: 14px;

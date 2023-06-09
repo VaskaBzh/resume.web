@@ -20,34 +20,17 @@
             transform: translateY(200px);
         }
         50% {
-            min-height: 120px;
             max-height: 120px;
             max-width: 1200px;
             transform: translateY(0px);
         }
         100% {
             max-width: 1200px;
-            min-height: 508px;
-            max-height: 700px;
+            max-height: 520px;
             transform: translateY(0px);
         }
     }
-    @keyframes mainAnimationConnect {
-        0% {
-            transform: translateY(200px);
-        }
-        50% {
-            max-height: 120px;
-            max-width: 700px;
-            transform: translateY(0px);
-        }
-        100% {
-            max-width: 700px;
-            max-height: 400px;
-            transform: translateY(0px);
-        }
-    }
-// обратная анимация
+    // обратная анимация
     @keyframes backMainAnimation {
         0% {
             max-width: 412px;
@@ -80,21 +63,21 @@
             transform: translateY(200px);
         }
     }
-    @keyframes backMainAnimationConnect {
+}
+@media (max-width: 767.98px) {
+    @keyframes mainAnimationGraph {
         0% {
-            max-width: 700px;
-            max-height: 400px;
-            transform: translateY(0px);
+            transform: translateY(200px);
         }
         50% {
-            max-width: 500px;
-            max-height: 300px;
+            max-height: 120px;
+            max-width: 1200px;
             transform: translateY(0px);
         }
         100% {
-            max-width: 120px;
-            max-height: 120px;
-            transform: translateY(200px);
+            max-width: 1200px;
+            max-height: 450px;
+            transform: translateY(0px);
         }
     }
 }
@@ -106,46 +89,36 @@
         }
         50% {
             max-width: 330px;
-            max-height: 210px;
+            max-height: 120px;
             transform: translateY(0px);
         }
         100% {
             max-width: 330px;
-            max-height: 325px;
+            max-height: 500px;
             transform: translateY(0px);
         }
     }
     @keyframes mainAnimationGraph {
         0% {
             transform: translateY(200px);
+            overflow: hidden;
         }
         50% {
-            max-height: 210px;
-            max-width: 90vw;
-            transform: translateY(0px);
+            max-height: 120px;
+            max-width: 210px;
+            transform: translateY(0);
+        }
+        99% {
+            overflow: hidden;
         }
         100% {
-            max-width: 90vw;
-            max-height: 80vh;
-            transform: translateY(0px);
-        }
-    }
-    @keyframes mainAnimationConnect {
-        0% {
-            transform: translateY(200px);
-        }
-        50% {
-            max-height: 210px;
-            max-width: 90vw;
-            transform: translateY(0px);
-        }
-        100% {
-            max-width: 90vw;
+            max-width: 100%;
             max-height: 500px;
-            transform: translateY(0px);
+            transform: translateY(0);
+            overflow: visible;
         }
     }
-// обратная анимация на мобилке
+    // обратная анимация на мобилке
     @keyframes backMainAnimation {
         0% {
             max-width: 330px;
@@ -176,20 +149,6 @@
             transform: translateY(200px);
         }
     }
-    @keyframes backMainAnimationConnect {
-        0% {
-            max-width: 90vw;
-            transform: translateY(0px);
-        }
-        50% {
-            max-width: 210px;
-        }
-        100% {
-            max-width: 210px;
-            max-height: 120px;
-            transform: translateY(200px);
-        }
-    }
 }
 // анимация враппера
 @keyframes wrapperAnimation {
@@ -205,7 +164,7 @@
         height: 100%;
     }
 }
-@keyframes opacity {
+@keyframes fadeIn {
     0% {
         opacity: 0;
     }
