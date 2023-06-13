@@ -241,7 +241,7 @@ export default {
             align-self: start;
             text-align: center;
             width: 100%;
-            @media (min-width: 1270.98px) {
+            @media (min-width: 1320.98px) {
                 white-space: nowrap;
             }
             @media (max-width: 991.98px) {

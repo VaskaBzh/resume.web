@@ -128,6 +128,9 @@ export default {
             return arr;
         },
     },
+    mounted() {
+        document.title = "Сложность";
+    },
 };
 </script>
 

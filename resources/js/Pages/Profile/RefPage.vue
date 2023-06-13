@@ -1666,7 +1666,7 @@ export default {
     }
     // .ref__wrap
     &__wrap {
-        @media (min-width: 1270.98px) {
+        @media (min-width: 1320.98px) {
             padding: 24px;
         }
         flex-direction: column;

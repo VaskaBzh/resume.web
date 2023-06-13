@@ -1,0 +1,24 @@
+.description {
+    font-weight: 300;
+    font-size: 20px;
+    line-height: 140%;
+    color: #505050;
+    @media (max-width: $mobile) {
+        font-size: 16px;
+        line-height: 140%;
+    }
+    @media (max-width: $mobileSmall) {
+        font-size: 14px;
+        line-height: 140%;
+    }
+    b {
+        font-weight: 400;
+    }
+    &-sm {
+        font-size: 18px;
+        @media (max-width: $mobile) {
+            font-size: 14px;
+            line-height: 130%;
+        }
+    }
+}

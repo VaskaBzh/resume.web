@@ -230,6 +230,7 @@ export default {
 .button {
     position: relative;
     width: 100%;
+    min-width: 160px;
     @media (max-width: 767.98px) {
         padding: 0 12px;
         margin-right: -10px;

@@ -105,7 +105,7 @@ export default {
         &-image {
             min-height: 760px;
             max-height: 760px;
-            @media (max-width: 1270.98px) {
+            @media (max-width: 1320.98px) {
                 min-height: 580px;
                 max-height: 580px;
             }

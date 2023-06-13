@@ -122,14 +122,27 @@ const messages = {
         },
         hosting: {
             title: "Hosting Management Platform",
-            text:
-                "Are you looking for a reliable platform  <br>" +
-                "for <b>efficient data center management?</b> \n" +
-                "Our platform is an ideal solution for those who want to maximize their profits from mining cryptocurrencies",
+            text: "platform is the optimal solution for those who want to <b>increase their profits <br> automate the management of data centers</b>",
             button: "Start Mining",
         },
-        personal_system: {
-            title: "We will implement the system and provide a personal manager who will manage the platform",
+        hosting_info: {
+            cards: [
+                {
+                    title: "Employee Handbook",
+                    img: "hosting_info_img-1.png",
+                    text: "Create and control employees' work regulations",
+                },
+                {
+                    title: "ASIC Device Monitoring",
+                    img: "hosting_info_img-2.png",
+                    text: "Track the operation of all ASIC devices in real time",
+                },
+                {
+                    title: "Mining Hosting Management System",
+                    img: "hosting_info_img-3.png",
+                    text: "Full control over your ASIC devices",
+                },
+            ],
         },
         complexity: {
             title: "Network complexity",
@@ -547,14 +560,27 @@ const messages = {
         },
         hosting: {
             title: "Платформа управления хостингом",
-            text:
-                "Вы ищете надежную платформу <br>" +
-                "для <b>эффективного управления дата-центрами?</b> \n" +
-                "Наша платформа - это идеальное решение для тех, кто хочет максимизировать свою прибыль от майнинга криптовалют",
+            text: "Наша платформа — это оптимальное решение для тех, кто хочет <b>увеличить свою прибыль <br> и автоматизировать управление дата-центрами</b>",
             button: "Начать майнинг",
         },
-        personal_system: {
-            title: "Внедрим систему и предоставим персонального менеджера, который будет управлять платформой",
+        hosting_info: {
+            cards: [
+                {
+                    title: "Регламент для сотрудников",
+                    img: "hosting_info_img-1.png",
+                    text: "Создавайте и контролируйте регламент работы сотрудников",
+                },
+                {
+                    title: "Отслеживание работы ASIC-устройств",
+                    img: "hosting_info_img-2.png",
+                    text: "Отслеживайте работу всех  ASIC-устройств в реальном времени",
+                },
+                {
+                    title: "Система управления\n" + "майнинг-хостингом",
+                    img: "hosting_info_img-3.png",
+                    text: "Полный контроль над вашими \n" + "ASIC-устройствами",
+                },
+            ],
         },
         complexity: {
             title: "Сложность сети",
@@ -850,6 +876,6 @@ const messages = {
 // Create VueI18n instance with options
 export const i18n = createI18n({
     legacy: false, // you must specify 'legacy: false' option
-    locale: "ru", // set locale
+    locale: "en", // set locale
     messages, // set locale messages
 });

@@ -391,6 +391,7 @@ export default {
     // .home__content
     &__content {
         max-width: 670px;
+        margin-bottom: 0;
         @media (max-width: 991.98px) {
             text-align: center;
             max-width: unset;

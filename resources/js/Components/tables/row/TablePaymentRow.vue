@@ -86,7 +86,7 @@
                 id="status"
                 :class="this.columns.status"
                 v-if="
-                    this.viewportWidth > 1270.98 || this.viewportWidth < 991.98
+                    this.viewportWidth > 1320.98 || this.viewportWidth < 991.98
                 "
             >
                 {{

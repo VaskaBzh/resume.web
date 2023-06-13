@@ -18,12 +18,14 @@
 @import "./blocks/page";
 @import "./blocks/legend";
 @import "./blocks/swiper";
+@import "./blocks/section";
 
 //========================================================================================================================================================
 // импорты кастомных стилей templates
 @import "./templates/display";
 @import "./templates/text";
-@import "./templates/decription";
+@import "./templates/description";
+@import "./templates/subtitle";
 @import "./templates/button";
 @import "./templates/socials";
 @import "./templates/contacts";
@@ -159,7 +161,7 @@ h6 {
             max-width: 750px;
         }
         @media (max-width: $mobile) {
-            max-width: none;
+            max-width: 100%;
             @if ($containerPadding>0 and $maxWidthContainer>0) {
                 padding: 0 calc($containerPadding / 2) + px;
             }

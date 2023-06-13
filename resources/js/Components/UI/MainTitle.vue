@@ -22,60 +22,48 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.title {
-    font-family: AmpleSoftPro, serif;
-    font-style: normal;
-    &.profile {
-        margin: 0 0 24px;
-        @media (min-width: 1271.98px) {
-            padding-left: 70px;
-        }
-        @media (max-width: 767.98px) {
-            margin-bottom: 18px;
-        }
-        display: flex;
-        width: 100%;
-        align-items: center;
-        justify-content: space-between;
-    }
-}
-
 h1 {
-    color: #000034;
     font-weight: 500;
     font-size: 64px;
     line-height: 107.6%;
-    @media (max-width: 1270px) {
-        font-size: 48px;
-        line-height: 52px;
+    @media (max-width: 767.98px) {
+        font-size: 56px;
+        line-height: 100%;
     }
-    @media (max-width: 479.89px) {
-        text-align: center;
-        font-size: 35px;
-        line-height: 38px;
+    @media (max-width: 479.98px) {
+        font-size: 40px;
+        line-height: 100%;
     }
 }
 
 h2 {
-    font-weight: 700;
-    font-size: 40px;
-    line-height: 50px;
-    color: #000000;
-    @media (max-width: 991.89px) {
-        font-size: 34px;
+    font-weight: 500;
+    font-size: 56px;
+    line-height: 105%;
+    @media (max-width: 767.89px) {
+        font-size: 40px;
     }
     @media (max-width: 479.89px) {
-        font-size: 24px;
-        line-height: 30px;
-        color: #000034;
+        font-size: 28px;
     }
 }
 
 h3 {
+    font-weight: 500;
+    font-size: 40px;
+    line-height: 120%;
+    @media (max-width: 767.98px) {
+        font-size: 32px;
+    }
+    @media (max-width: 479.98px) {
+        font-size: 24px;
+    }
+}
+
+h4 {
     font-weight: 700;
     font-size: 24px;
     line-height: 30px;
-    color: #000034;
     @media (max-width: 479.89px) {
         font-size: 21px;
         line-height: 26px;
@@ -92,6 +80,27 @@ h3 {
             width: 100%;
             background-color: #d7d8d9;
         }
+    }
+}
+.title {
+    font-family: AmpleSoftPro, serif;
+    font-style: normal;
+    color: #343434;
+    &.profile {
+        margin: 0 0 24px;
+        @media (min-width: 1271.98px) {
+            padding-left: 70px;
+        }
+        @media (max-width: 767.98px) {
+            margin-bottom: 18px;
+        }
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: space-between;
+    }
+    &-blue {
+        color: #3f7bdd;
     }
 }
 </style>

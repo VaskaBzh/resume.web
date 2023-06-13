@@ -84,7 +84,7 @@ export default {
                 if (this.viewportWidth < 479.98) return 260;
                 else if (this.viewportWidth < 767.98) return 280;
                 else if (this.viewportWidth < 991.98) return 300;
-                else if (this.viewportWidth < 1270.98) return 320;
+                else if (this.viewportWidth < 1320.98) return 320;
                 else return 360;
             } else {
                 return this.heightVal;

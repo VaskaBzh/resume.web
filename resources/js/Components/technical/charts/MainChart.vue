@@ -65,10 +65,10 @@ export default {
     },
     watch: {
         viewportWidth() {
-            if (this.viewportWidth >= 1270.98) {
+            if (this.viewportWidth >= 1320.98) {
                 this.height = 300;
             }
-            if (this.viewportWidth < 1270.98) {
+            if (this.viewportWidth < 1320.98) {
                 this.height = 260;
             }
             if (this.viewportWidth < 991.98) {

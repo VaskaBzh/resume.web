@@ -1084,7 +1084,4 @@ nav.nav__container {
         gap: 10px;
     }
 }
-.button {
-    max-width: 160px;
-}
 </style>

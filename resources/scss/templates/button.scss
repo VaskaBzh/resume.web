@@ -1,10 +1,36 @@
 .button {
+    min-width: 256px;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 140%;
+    &-md {
+        min-height: 61px;
+    }
+    &-lg {
+        min-height: 85px;
+    }
+    &-blue {
+        background: linear-gradient(84.14deg, #3f7bdd 8.75%, #4282ec 92.01%);
+        box-shadow: 0px 10px 50px rgba(112, 165, 236, 0.5);
+        color: #ffffff;
+    }
+    &-light {
+        background: #c6d8f5;
+        box-shadow: 0px 10px 50px rgba(112, 165, 236, 0.15);
+        color: #3f7bdd;
+    }
     &_propeller {
         width: 51px;
         height: 51px;
         background: #366dc8;
         box-shadow: 0px 0px 35px rgba(255, 255, 255, 0.04),
-        inset 0px 11px 6px rgba(0, 0, 0, 0.08);
+            inset 0px 11px 6px rgba(0, 0, 0, 0.08);
         border-radius: 50%;
         position: relative;
         &::before {

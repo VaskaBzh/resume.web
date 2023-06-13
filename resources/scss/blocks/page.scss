@@ -30,7 +30,10 @@
     &__content {
         flex: 1 0 40%;
         position: relative;
-        margin-top: 160px;
+        margin: 10px 0 15px;
+        .description {
+            margin-bottom: 40px;
+        }
         @media (max-width: $pc) {
             margin-top: 100px;
         }
@@ -40,7 +43,7 @@
         }
     }
     &__title {
-        margin-bottom: 24px;
+        margin-bottom: 16px;
         @media (max-width: $mobile) {
             margin-top: 32px;
             text-align: center;
@@ -50,7 +53,7 @@
     &__image {
         position: relative;
         & img {
-            max-width: 1050px;
+            max-width: 897px;
             @media (max-width: $pc) {
                 max-width: 770px;
             }
