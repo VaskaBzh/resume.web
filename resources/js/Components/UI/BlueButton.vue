@@ -91,4 +91,81 @@ export default {
         min-height: 40px;
     }
 }
+.button {
+    min-width: 256px;
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    font-weight: 500;
+    font-size: 18px;
+    cursor: pointer;
+    line-height: 140%;
+
+    &-md {
+        min-height: 61px;
+    }
+
+    &-lg {
+        min-height: 85px;
+        border-radius: 10px;
+        min-width: 347px;
+        @media (max-width: 767.98px) {
+            min-height: 65px;
+            border-radius: 7px;
+            min-width: 266px;
+        }
+    }
+
+    &-with-propeller {
+        gap: 36px;
+        a {
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-style: normal;
+            font-weight: 500;
+            font-size: 22px;
+            line-height: 107.6%;
+            padding: 0;
+            color: #ffffff;
+            gap: 36px;
+            @media (max-width: 767.98px) {
+                gap: 32px;
+                font-size: 16px;
+            }
+        }
+
+        @media (any-hover: hover) {
+            &:hover {
+                box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
+                transform: translate(10px, 10px);
+
+                &::before {
+                    top: 0;
+                    left: 0;
+                }
+            }
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            background: linear-gradient(
+                84.14deg,
+                rgba(63, 123, 221, 0.27) 8.75%,
+                rgba(66, 130, 236, 0.27) 92.01%
+            );
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            top: 10px;
+            left: 10px;
+            transition: all 0.3s ease 0s;
+        }
+    }
+}
 </style>

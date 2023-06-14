@@ -2,8 +2,15 @@
     <nav class="nav__container">
         <Link :href="route('home')">
             <img
+                v-if="!this.getTheme"
                 class="nav__logo headder"
                 src="../../assets/img/logo_high_quality.png"
+                alt="logo"
+            />
+            <img
+                v-else
+                class="nav__logo headder"
+                src="../../assets/img/logo_high_quality-dark.png"
                 alt="logo"
             />
         </Link>
@@ -20,6 +27,10 @@
                 v-if="viewportWidth >= 767.78"
                 :viewportWidth="viewportWidth"
             ></select-language>
+            <select-theme
+                v-if="viewportWidth >= 767.78"
+                :viewportWidth="viewportWidth"
+            ></select-theme>
 
             <account-menu v-show="is_auth"></account-menu>
             <div
@@ -487,6 +498,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import MainList from "@/Components/UI/MainList.vue";
 import { mapGetters } from "vuex";
+import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 
 export default defineComponent({
     components: {
@@ -503,6 +515,7 @@ export default defineComponent({
         SwiperSlide,
         AccountMenu,
         SelectLanguage,
+        SelectTheme,
     },
     data() {
         return {
@@ -620,7 +633,7 @@ export default defineComponent({
         };
     },
     computed: {
-        ...mapGetters(["getIncome", "allAccounts", "getActive"]),
+        ...mapGetters(["getIncome", "allAccounts", "getActive", "getTheme"]),
         // errors() {
         //     let errs = this.$page.props.errors || {};
         //     errs = Object.values(errs).filter((el) => el !== "");

@@ -42,13 +42,14 @@ export default {
         0px 0px 0px rgba(0, 0, 0, 0.05);
     border-radius: 32px;
     padding: 32px 39px;
+    @media (max-width: 991.98px) {
+        padding: 32px 22px;
+        margin: 0 15px;
+        width: auto;
+    }
     @media (max-width: 767.98px) {
         padding: 32px;
         gap: 24px;
-    }
-    @media (max-width: 767.98px) {
-        margin: 0 15px;
-        width: auto;
     }
     &_img {
         display: flex;

@@ -1,0 +1,113 @@
+body {
+    &[color-scheme="dark"] {
+        #app {
+            background: #040d15;
+        }
+        nav {
+            &.nav {
+                &__container {
+                    &:before {
+                        background: #10171f;
+                        box-shadow: 0 8px 20px rgba(34, 34, 35, 0.07);
+                    }
+                }
+            }
+            .nav {
+                &__link {
+                    color: #989898;
+                    &.active {
+                        color: #4182ec;
+                    }
+                }
+                &__buttons {
+                    .button {
+                        .button_name {
+                            &:hover {
+                                background: #1a345a;
+                                border: 1px solid #1a345a;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .description {
+            color: #cacaca;
+        }
+        .subtitle {
+            color: #79a3e8;
+        }
+        .hosting_info_wrapper {
+            .card {
+                background: #10171f;
+                box-shadow: 0 8px 50px rgba(4, 8, 26, 0.25);
+            }
+        }
+        h3.title {
+            color: #f1f1f1;
+        }
+        .button {
+            &-blue {
+                box-shadow: 0px 10px 50px rgba(112, 165, 236, 0.1);
+            }
+        }
+        .interface {
+            &__content {
+                .list {
+                    &_icon {
+                        background: radial-gradient(
+                                    63.11% 63.11% at 31.97% 19.67%,
+                                    rgba(255, 255, 255, 0.7) 0%,
+                                    rgba(255, 255, 255, 0) 69.79%,
+                                    rgba(255, 255, 255, 0) 100%
+                                )
+                                /* warning: gradient uses a rotation that is not supported by CSS and may not behave as expected */,
+                            #c6d8f5;
+                    }
+                }
+            }
+        }
+        .section {
+            &__block {
+                box-shadow: 0px 8px 50px rgba(4, 8, 26, 0.25);
+                &-light {
+                    background: #10171f;
+                }
+            }
+        }
+        .input {
+            &-lg {
+                background: #e1e1e1;
+                border: 1px solid rgba(0, 0, 0, 0.16);
+                &::placeholder {
+                    color: #989898;
+                }
+            }
+        }
+        .quote {
+            color: #989898;
+        }
+        .contacts {
+            &_item {
+                a {
+                    color: #f1f1f1;
+                }
+            }
+        }
+        .socials {
+            &_link {
+                background: linear-gradient(
+                    137.86deg,
+                    #3f7bdd 15.41%,
+                    #3f66b6 90.59%
+                );
+                svg {
+                    fill: #040d15;
+                }
+                &:after {
+                    background: #79A3E8;
+                }
+            }
+        }
+    }
+}

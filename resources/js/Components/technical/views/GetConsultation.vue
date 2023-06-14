@@ -1,42 +1,26 @@
 <template>
     <div class="consultation">
         <div class="consultation__container">
-            <div class="wrap">
-                <div class="consultation__main wrap__block wrap__column">
-                    <main-title
-                        v-if="viewportWidth > 767.98"
-                        tag="h2"
-                        class="consultation_title"
-                    >
-                        Свяжитесь с нами и получите консультацию о том, как
-                        эффективно управлять дата-центрами с помощью нашей
-                        платформы управления хостингом
+            <div class="consultation__main section__block section__block-light">
+                <div class="consultation__content">
+                    <main-title tag="h3" class="consultation_title"
+                        >Получите консультацию
                     </main-title>
-                    <main-title v-else tag="h2" class="consultation_title">
-                        <img
-                            src="../../../../assets/img/logo_icon.png"
-                            alt="logo"
-                        />
-                        Не упустите возможность эффективно управлять
-                        дата-центрами с помощью нашей платформы управления
-                        хостингом
-                    </main-title>
-                    <p class="text" v-if="viewportWidth <= 767.98">
-                        Свяжитесь с нами и получите консультацию о том, как
-                        эффективно управлять дата-центрами с помощью нашей
-                        платформы управления хостингом
+                    <p class="description">
+                        о том, как эффективно управлять дата-центрами с помощью
+                        нашей платформы управления хостингом
                     </p>
-                    <div class="wrap__row">
-                        <input
-                            class="input input-strong"
-                            type="text"
-                            placeholder="+7 (900) 00 00 000"
-                        />
-                        <blue-button class="consultation_button">
-                            <a href="#" class="all-link">Перезвоните мне</a>
-                        </blue-button>
-                    </div>
                 </div>
+                <form class="consultation__form">
+                    <input
+                        type="text"
+                        class="input input-lg"
+                        placeholder="+7 (900) 00 00 000"
+                    />
+                    <blue-button class="button button-md">
+                        Перезвоните мне</blue-button
+                    >
+                </form>
             </div>
         </div>
     </div>
@@ -71,55 +55,46 @@ export default {
 
 <style scoped lang="scss">
 .consultation {
-    &_title {
-        text-align: center;
-        @media (max-width: 767.98px) {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 32px;
-            img {
-                width: 30%;
-            }
-        }
-    }
     &__main {
-        padding: 70px;
+        display: flex;
+        flex-direction: column;
         align-items: center;
-        gap: 32px;
+        gap: 40px;
         @media (max-width: 479.98px) {
-            padding: 40px 6px;
-            gap: 24px;
+            gap: 32px;
         }
     }
-    &_button {
-        min-width: 236px;
-        border-radius: 5px;
-        @media (max-width: 767.98px) {
-            min-width: calc(50% - 27px / 2);
-        }
-        @media (max-width: 479.98px) {
-            min-width: 100%;
-            min-height: 60px;
-        }
-    }
-    .text {
-        text-align: center;
-        padding: 0 14px;
-    }
-    .wrap {
-        &__row {
-            gap: 27px;
-            @media (max-width: 479.98px) {
-                flex-direction: column;
-                padding: 0 14px;
-                gap: 24px;
+    &__content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 8px;
+        .description,
+        .title {
+            width: 100%;
+            @media (min-width: 479.98px) {
+                text-align: center;
             }
-            .input {
-                max-width: 350px;
-                @media (max-width: 479.98px) {
-                    max-width: 100%;
-                }
+        }
+    }
+    &__form {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 30px;
+        width: 100%;
+        @media (max-width: 479.98px) {
+            gap: 12px;
+            flex-direction: column;
+        }
+        .input {
+            max-width: 386px;
+            width: 100%;
+        }
+        .button {
+            min-width: 236px;
+            @media (max-width: 479.98px) {
+                min-width: 100%;
             }
         }
     }

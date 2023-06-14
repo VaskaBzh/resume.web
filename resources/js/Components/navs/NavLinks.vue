@@ -782,7 +782,7 @@ export default {
     font-weight: 400;
     font-size: 17px;
     line-height: 143.1%;
-    color: #000000;
+    color: #505050;
     display: flex;
     gap: 16px;
     align-items: center;

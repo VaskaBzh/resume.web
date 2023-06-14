@@ -1,29 +1,43 @@
 <template>
     <div class="hosting_info section">
         <div class="hosting_info__container">
-            <div class="hosting_info_wrapper">
+            <div class="hosting_info_wrapper" v-if="viewportWidth > 991.98">
                 <hosting-info-card
                     v-for="(card, i) in cards"
                     :key="i"
                     :card="card"
-                    v-if="viewportWidth > 767.98"
                 ></hosting-info-card>
-                <swiper
-                    v-else
-                    :modules="modules"
-                    loop
-                    :slides-per-view="1"
-                    :space-between="24"
-                    :pagination="pagination"
-                >
-                    <swiper-slide :key="i" v-for="(card, i) in cards">
-                        <hosting-info-card
-                            :key="i"
-                            :card="card"
-                        ></hosting-info-card>
-                    </swiper-slide>
-                </swiper>
             </div>
+            <swiper
+                v-else-if="viewportWidth > 479.98"
+                :modules="modules"
+                loop
+                :slides-per-view="2"
+                :space-between="1"
+                :pagination="pagination"
+            >
+                <swiper-slide :key="i" v-for="(card, i) in cards">
+                    <hosting-info-card
+                        :key="i"
+                        :card="card"
+                    ></hosting-info-card>
+                </swiper-slide>
+            </swiper>
+            <swiper
+                v-else
+                :modules="modules"
+                loop
+                :slides-per-view="1"
+                :space-between="9"
+                :pagination="pagination"
+            >
+                <swiper-slide :key="i" v-for="(card, i) in cards">
+                    <hosting-info-card
+                        :key="i"
+                        :card="card"
+                    ></hosting-info-card>
+                </swiper-slide>
+            </swiper>
         </div>
     </div>
 </template>
@@ -91,38 +105,59 @@ export default {
 
 <style lang="scss">
 .hosting_info {
+    margin-bottom: 20px;
+    &__container {
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+            padding: 0;
+        }
+    }
+    .swiper {
+        padding-bottom: 172px !important;
+        @media (max-width: 991.98px) {
+            padding-bottom: 100px !important;
+        }
+        @media (max-width: 767.98px) {
+            padding-bottom: 52px !important;
+        }
+        &-wrapper {
+            height: fit-content;
+        }
+        &-slide {
+            height: 100%;
+        }
+        &-pagination {
+            bottom: 142px;
+            @media (max-width: 991.98px) {
+                bottom: 70px;
+            }
+            @media (max-width: 767.98px) {
+                bottom: 22px;
+            }
+            &-bullet {
+                height: 8px !important;
+                width: 8px !important;
+                border-radius: 10px !important;
+                background: #d9d9d9 !important;
+                transition: all 0.3s ease 0s !important;
+                &-active {
+                    background: #c6d8f5 !important;
+                    width: 32px !important;
+                }
+                &:before,
+                &:after {
+                    content: none !important;
+                }
+            }
+        }
+    }
     &_wrapper {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 40px;
         width: 100%;
-        .swiper {
-            width: calc(100% + 30px);
-            margin: 0 -15px;
-            padding-bottom: 30px !important;
-            &-pagination {
-                bottom: 0;
-                &-bullet {
-                    height: 8px !important;
-                    width: 8px !important;
-                    border-radius: 10px !important;
-                    background: #d9d9d9 !important;
-                    transition: all 0.3s ease 0s !important;
-                    &-active {
-                        background: #c6d8f5 !important;
-                        width: 32px !important;
-                    }
-                    &:before,
-                    &:after {
-                        content: none !important;
-                    }
-                }
-            }
-        }
         @media (max-width: 991.98px) {
             grid-template-columns: 1fr;
-        }
-        @media (max-width: 767.98px) {
         }
     }
 }

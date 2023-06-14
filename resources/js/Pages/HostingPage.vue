@@ -15,9 +15,8 @@
                         v-html="this.$t('hosting.text')"
                     ></div>
                     <blue-button
-                        class="hosting__button"
+                        class="button button-lg button-with-propeller"
                         v-if="this.auth_user"
-                        v-scroll="'left'"
                     >
                         <Link :href="route('accounts')" class="all-link">
                             {{ $t("hosting.button") }}
@@ -25,9 +24,8 @@
                         ></Link>
                     </blue-button>
                     <blue-button
-                        class="hosting__button"
+                        class="button button-lg button-with-propeller"
                         v-else
-                        v-scroll="'left'"
                     >
                         <a href="#" data-popup="#auth" class="all-link">
                             {{ $t("hosting.button") }}
@@ -36,7 +34,16 @@
                     </blue-button>
                 </div>
                 <div class="hosting__image page__image">
-                    <img src="../../assets/img/hosting_back_img.png" alt="" />
+                    <img
+                        v-if="!getTheme"
+                        src="../../assets/img/hosting_back_img.png"
+                        alt=""
+                    />
+                    <img
+                        v-else
+                        src="../../assets/img/hosting_back_img-dark.png"
+                        alt=""
+                    />
                 </div>
             </div>
         </div>
@@ -44,7 +51,10 @@
     <hosting-info-view />
     <advantages-view />
     <profit-view />
+    <control-view />
     <interface-view />
+    <sikker-view />
+    <efficiency-view />
     <get-consultation></get-consultation>
 </template>
 
@@ -57,6 +67,10 @@ import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import ProfitView from "@/Components/technical/views/ProfitView.vue";
 import GetConsultation from "@/Components/technical/views/GetConsultation.vue";
 import InterfaceView from "@/Components/technical/views/InterfaceView.vue";
+import SikkerView from "@/Components/technical/views/SikkerView.vue";
+import EfficiencyView from "@/Components/technical/views/EfficiencyView.vue";
+import ControlView from "@/Components/technical/views/ControlView.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "hosting-page",
@@ -64,6 +78,7 @@ export default {
         auth_user: Boolean,
     },
     components: {
+        EfficiencyView,
         MainTitle,
         BlueButton,
         HostingInfoView,
@@ -71,8 +86,13 @@ export default {
         ProfitView,
         GetConsultation,
         InterfaceView,
+        SikkerView,
+        ControlView,
         Link,
         Head,
+    },
+    computed: {
+        ...mapGetters(["getTheme"]),
     },
     mounted() {
         document.title = "Хостингам";
@@ -108,65 +128,7 @@ export default {
             margin: 0;
         }
     }
-    &__button {
-        gap: 36px;
-        width: 347px;
-        height: 85px;
-        z-index: 5;
-        margin: 0;
-        a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 22px;
-            line-height: 107.6%;
-            color: #ffffff;
-            padding: 0 20px;
-            gap: 36px;
-        }
-        @media (any-hover: hover) {
-            &:hover {
-                box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-                transform: translate(10px, 10px);
-                &::before {
-                    top: 0;
-                    left: 0;
-                }
-            }
-        }
-        @media (max-width: 767.98px) {
-            width: fit-content;
-            padding: 0 26px 0 45px;
-            height: 65px;
-            .all-link {
-                gap: 32px;
-                padding: 0;
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 107%;
-            }
-        }
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: linear-gradient(
-                84.14deg,
-                rgba(63, 123, 221, 0.27) 8.75%,
-                rgba(66, 130, 236, 0.27) 92.01%
-            );
-            border-radius: 10px;
-            width: 100%;
-            height: 100%;
-            top: 10px;
-            left: 10px;
-            transition: all 0.3s ease 0s;
-        }
-    }
     &__image {
-        position: relative;
         @media (max-width: 991.98px) {
             margin: 40px 0 0;
             display: flex;

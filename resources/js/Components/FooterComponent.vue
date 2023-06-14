@@ -54,7 +54,14 @@
                     <a href="/">
                         <img
                             class="nav__logo"
+                            v-if="!this.getTheme"
                             src="../../assets/img/logo_high_quality.png"
+                            alt="logo"
+                        />
+                        <img
+                            class="nav__logo"
+                            v-else
+                            src="../../assets/img/logo_high_quality-dark.png"
                             alt="logo"
                         />
                     </a>
@@ -180,13 +187,31 @@
 
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
-                        <img src="../../assets/img/mail-icon.svg" alt="" />
+                        <img
+                            v-if="!getTheme"
+                            src="../../assets/img/mail-icon.svg"
+                            alt=""
+                        />
+                        <img
+                            v-else
+                            src="../../assets/img/mail-icon-dark.svg"
+                            alt=""
+                        />
                         <a href="mailto:support@all-btc.com"
                             >support@all-btc.com</a
                         >
                     </li>
                     <li class="footer__contacts_item contacts_item">
-                        <img src="../../assets/img/location-icon.svg" alt="" />
+                        <img
+                            v-if="!getTheme"
+                            src="../../assets/img/location-icon.svg"
+                            alt=""
+                        />
+                        <img
+                            v-else
+                            src="../../assets/img/location-icon-dark.svg"
+                            alt=""
+                        />
                         <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA"
                             >ВDubai Silicon Oasis, DDP, Building A2, Dubai,
                             United Arab Emirates</a
@@ -210,9 +235,13 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import { useForm } from "@inertiajs/vue3";
 import axios from "axios";
 import { ref } from "vue";
+import { mapGetters } from "vuex";
 export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
+    computed: {
+        ...mapGetters(["getTheme"]),
+    },
     data() {
         return {
             pdf,

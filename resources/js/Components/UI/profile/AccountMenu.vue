@@ -24,9 +24,7 @@
         </div>
         <div class="button__menu" :class="{ target: target }">
             <div class="button__row">
-                <span class="button_title">
-                    {{ $t("header.menu.title") }}</span
-                >
+                <span class="button_title"> {{ $t("header.menu.title") }}</span>
                 <main-list>
                     <template
                         v-slot:head
@@ -242,10 +240,10 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
-        font-weight: 700;
-        line-height: 20px;
-        color: #417fe5;
+        font-weight: 400;
+        font-size: 17px;
+        line-height: 140%;
+        color: #3f7bdd;
         min-width: 160px;
         @media (max-width: 767.98px) {
             min-width: 130px;
@@ -256,14 +254,15 @@ export default {
             gap: 4px;
         }
         @media (min-width: 767.98px) {
-            padding: 17px 0;
-            height: 44px;
-            background: rgba(194, 213, 242, 0.6);
-            border-radius: 14px;
+            border: 1px solid #3f7bdd;
+            padding: 0 24px;
+            min-height: 40px;
+            border-radius: 8px;
             &:hover {
                 //color: #ffffff;
                 //background-color: #417fe5;
-                background: rgb(194, 213, 242);
+                background: #c6d8f5;
+                border: 1px solid #c6d8f5;
             }
         }
     }

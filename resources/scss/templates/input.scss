@@ -5,8 +5,8 @@
     border-radius: 21px;
     font-weight: 400;
     font-size: 18px;
-    line-height: 26px;
-    color: #000034;
+    line-height: 181.1%;
+    color: #343434;
     border: 1px solid;
     border-color: #d6d6d6;
     outline: none;
@@ -15,7 +15,7 @@
     transition: border-color 0.3s ease 0s;
     min-height: 48px;
     &::placeholder {
-        color: rgba(0, 0, 0, 0.62);
+        color: #c5c5c5;
     }
     &-no-bg {
         @media (min-width: 767.98px) {
@@ -52,6 +52,16 @@
         min-height: 40px;
         border-radius: 12px;
         height: 40px;
+    }
+    &-lg {
+        min-height: 61px;
+        padding: 0 32px;
+        background: #ffffff;
+        border: 1px solid rgba(0, 0, 0, 0.16);
+        border-radius: 8px;
+        @media (max-width: $mobileSmall) {
+            min-height: 61px;
+        }
     }
     &-popup {
         border-color: transparent;

@@ -3,7 +3,14 @@
         <div class="profit__container">
             <div class="profit__main">
                 <img
+                    v-if="!getTheme"
                     src="../../../../assets/img/profit_view_img-1.png"
+                    alt="img"
+                    class="profit__image"
+                />
+                <img
+                    v-else
+                    src="../../../../assets/img/profit_view_img-1-dark.png"
                     alt="img"
                     class="profit__image"
                 />
@@ -26,10 +33,14 @@
 
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
+import { mapGetters } from "vuex";
 export default {
     name: "profit-view",
     components: {
         MainTitle,
+    },
+    computed: {
+        ...mapGetters(["getTheme"]),
     },
 };
 </script>

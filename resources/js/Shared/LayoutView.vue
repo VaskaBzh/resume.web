@@ -86,6 +86,7 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: all 0.5s ease 0s;
     overflow: hidden;
     background: linear-gradient(
         179.87deg,
