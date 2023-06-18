@@ -37,7 +37,7 @@
                 />
             </svg>
         </div>
-        <span class="BTC__title main__name">{{ title }}</span>
+        <span class="description description-xs">{{ title }}</span>
         <div class="BTC__value main__number">
             {{ value }} BTC
             <span>{{ dollarCalc.toFixed(2) }} $</span>
@@ -104,7 +104,6 @@ export default {
     &__block {
         display: flex;
         flex-direction: column;
-        gap: 8px;
         position: relative;
         @media (max-width: 991.98px) {
             padding-left: 58px;
@@ -128,12 +127,6 @@ export default {
 
         &:last-child {
             margin-bottom: 0;
-        }
-    }
-
-    &__title {
-        @media (max-width: 479.98px) {
-            margin-bottom: 2px;
         }
     }
 

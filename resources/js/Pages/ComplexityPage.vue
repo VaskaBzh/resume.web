@@ -139,6 +139,12 @@ export default {
     &__main {
         align-items: center;
     }
+    .page__content {
+        @media (max-width: 991.98px) {
+
+            margin-top: 70px;
+        }
+    }
 }
 .graph {
     margin-bottom: 50px;

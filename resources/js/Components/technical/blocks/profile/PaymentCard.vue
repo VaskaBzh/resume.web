@@ -1,5 +1,8 @@
 <template>
-    <div class="wrap__block wrap__column">
+    <div class="cabinet__block cabinet__block-light">
+        <span class="title title-blue">{{
+            $t("statistic.info_blocks.title")
+        }}</span>
         <btc-calculator
             :title="this.titleFirst"
             :BTC="this.BTCValueFirst"
@@ -27,17 +30,4 @@ export default {
     },
 };
 </script>
-<style lang="scss" scoped>
-.wrap__block {
-    min-height: 0 !important;
-    @media (max-width: 991.98px) {
-        padding: 12px 20px;
-    }
-    @media (max-width: 767.98px) {
-        gap: 8px;
-        background-color: transparent;
-        padding: 0 !important;
-        display: flex !important;
-    }
-}
-</style>
+<style lang="scss" scoped></style>

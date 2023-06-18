@@ -10,12 +10,12 @@
     <!--        </div>-->
     <!--    </div>-->
     <div class="settings" ref="page">
-        <main-title tag="h2" class="profile">{{
+        <main-title class="profile cabinet_title" tag="h3">{{
             $t("settings.title")
         }}</main-title>
-        <div class="settings__wrap settings__wrap-adapt wrap">
+        <div class="settings__wrap settings__wrap-adapt">
             <div class="settings__column">
-                <main-title tag="h3">{{
+                <main-title class="headline" tag="h4">{{
                     $t("settings.block.titles[0]")
                 }}</main-title>
                 <settings-block
@@ -31,7 +31,7 @@
                 ></settings-block>
             </div>
             <div class="settings__column" ref="wrap">
-                <main-title tag="h3">{{
+                <main-title class="headline" tag="h4">{{
                     $t("settings.block.titles[1]")
                 }}</main-title>
                 <settings-block
@@ -343,11 +343,13 @@ export default {
     }
 
     &__wrap {
+        display: flex;
+        justify-content: space-between;
+        gap: 24px;
         @media (min-width: 991.98px) {
             flex-direction: row;
             flex-wrap: nowrap;
         }
-        gap: 24px;
         .title {
             @media (min-width: 1271.98px) {
                 padding-left: 0;

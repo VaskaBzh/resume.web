@@ -2,26 +2,26 @@
     <Head :title="$t('workers.title')" />
     <div class="workers profile">
         <div class="workers__wrapper">
-            <main-title tag="h2" class="workers__title">
+            <main-title tag="h3" class="cabinet_title">
                 {{ $t("workers.title") }}
                 <Link :href="route('connecting')">
-                    <blue-button class="workers__button">
+                    <blue-button class="add">
                         <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="21"
-                            height="21"
-                            viewBox="0 0 21 21"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
                             fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
                         >
                             <path
                                 fill-rule="evenodd"
                                 clip-rule="evenodd"
-                                d="M1.07129 10.0703C1.07129 9.51803 1.519 9.07031 2.07129 9.07031H18.0713C18.6236 9.07031 19.0713 9.51803 19.0713 10.0703C19.0713 10.6226 18.6236 11.0703 18.0713 11.0703H2.07129C1.519 11.0703 1.07129 10.6226 1.07129 10.0703Z"
+                                d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
                             />
                             <path
                                 fill-rule="evenodd"
                                 clip-rule="evenodd"
-                                d="M10.0708 1.0708C10.6231 1.0708 11.0708 1.51852 11.0708 2.0708V18.0708C11.0708 18.6231 10.6231 19.0708 10.0708 19.0708C9.51852 19.0708 9.0708 18.6231 9.0708 18.0708V2.0708C9.0708 1.51852 9.51852 1.0708 10.0708 1.0708Z"
+                                d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
                             />
                         </svg>
                     </blue-button>
@@ -220,14 +220,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .workers {
-    .title {
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 16px;
-        position: relative;
-    }
     .form .title {
         margin-bottom: 0;
     }

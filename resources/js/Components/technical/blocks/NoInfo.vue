@@ -1,6 +1,6 @@
 <template>
     <div
-        class="no-info"
+        class="no-info cabinet__block cabinet__block-light"
         v-scroll="'opacity transition--fast'"
         v-if="Object.values(this.wait).length === 0"
     >
@@ -34,17 +34,17 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .no-info {
     display: flex;
     flex-direction: column;
     gap: 28px;
     align-items: center;
     padding: 52px 0 46px;
-    background: #ffffff;
-    border-radius: 21px;
-    width: 100%;
     transition: all 1.5s ease 0s;
+    &.no-bg {
+        background: transparent !important;
+    }
     img {
         max-width: 118px;
     }

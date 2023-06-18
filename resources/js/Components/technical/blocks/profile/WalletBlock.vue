@@ -217,6 +217,8 @@ export default {
             display: flex;
             gap: 4px;
             flex-wrap: wrap;
+            font-weight: 700;
+            color: #818c99;
             .unit {
                 font-weight: 400;
             }

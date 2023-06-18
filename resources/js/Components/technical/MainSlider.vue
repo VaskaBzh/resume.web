@@ -36,7 +36,6 @@
                     >
                         <path
                             d="M14 18L8 12L14 6"
-                            stroke="#131A29"
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
@@ -95,7 +94,6 @@
                     >
                         <path
                             d="M10 6L16 12L10 18"
-                            stroke="#131A29"
                             stroke-width="2"
                             stroke-linecap="round"
                             stroke-linejoin="round"
@@ -224,6 +222,7 @@ export default {
     }
     // .slider__nav
     &__nav {
+        margin-top: 40px;
         width: 100%;
         display: flex;
         align-items: center;
@@ -274,6 +273,9 @@ export default {
         justify-content: center;
         cursor: pointer;
         transition: all 0.3s ease;
+        svg {
+            stroke: #131a29;
+        }
         &:hover {
             background: rgba(#c2d5f2, 0.61);
         }

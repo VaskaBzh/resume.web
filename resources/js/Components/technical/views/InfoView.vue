@@ -1,0 +1,86 @@
+<template>
+    <div class="info section">
+        <div class="info__container">
+            <div class="info_wrapper" v-if="viewportWidth > 991.98">
+                <slot name="pc"></slot>
+            </div>
+            <swiper
+                v-else-if="viewportWidth > 600.98"
+                :modules="modules"
+                loop
+                :slides-per-view="2"
+                :space-between="1"
+                :pagination="pagination"
+            >
+                <slot name="mobile"></slot>
+            </swiper>
+            <swiper
+                v-else
+                :modules="modules"
+                loop
+                :slides-per-view="1"
+                :space-between="9"
+                :pagination="pagination"
+            >
+                <slot name="mobile"></slot>
+            </swiper>
+        </div>
+    </div>
+</template>
+
+<script>
+import { Swiper } from "swiper/vue";
+import { Pagination } from "swiper";
+
+export default {
+    name: "hosting-info-view",
+    setup() {
+        return {
+            pagination: {
+                clickable: true,
+                renderBullet: function (index, className) {
+                    return '<span class="' + className + '">' + "</span>";
+                },
+            },
+            modules: [Pagination],
+        };
+    },
+    components: {
+        Swiper,
+    },
+    data() {
+        return {
+            viewportWidth: 0,
+        };
+    },
+    created() {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    methods: {
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
+        },
+    },
+};
+</script>
+
+<style lang="scss">
+.info {
+    &__container {
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+            padding: 0;
+        }
+    }
+    &_wrapper {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 40px;
+        width: 100%;
+        @media (max-width: 991.98px) {
+            grid-template-columns: 1fr;
+        }
+    }
+}
+</style>

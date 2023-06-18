@@ -219,11 +219,10 @@ td {
         padding-right: 10px;
     }
     &:first-child {
-        border-radius: 21px 0 0 21px;
+        border-radius: 8px 0 0 8px;
         padding-left: 16px;
         @media (max-width: 767.98px) {
             padding: 0 10px;
-            border-radius: 12px 0 0 12px;
         }
         @media (max-width: 479.98px) {
             padding: 1px 10px;
@@ -231,10 +230,9 @@ td {
     }
     &:last-child {
         text-align: right;
-        border-radius: 0 21px 21px 0;
+        border-radius: 0 8px 8px 0;
         padding-right: 16px;
         @media (max-width: 767.98px) {
-            border-radius: 0 12px 12px 0;
             padding-right: 10px;
         }
     }

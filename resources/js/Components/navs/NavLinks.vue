@@ -3,7 +3,7 @@
         <div
             class="nav__header"
             id="burger_head"
-            v-if="this.viewportWidth < 767.98"
+            v-if="this.viewportWidth < 991.98"
         >
             <div class="nav__row">
                 <Link
@@ -106,10 +106,10 @@
             <Link
                 :href="route('statistic')"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/statistic',
                 }"
-                v-if="this.viewportWidth < 767.98 && is_auth"
+                v-if="this.viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -129,10 +129,10 @@
             <Link
                 :href="route('accounts')"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/accounts',
                 }"
-                v-if="this.viewportWidth < 767.98 && is_auth"
+                v-if="this.viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -152,10 +152,10 @@
             <Link
                 :href="route('workers')"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/workers',
                 }"
-                v-if="this.viewportWidth < 767.98 && is_auth"
+                v-if="this.viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -175,10 +175,10 @@
             <Link
                 :href="route('income')"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/income',
                 }"
-                v-if="this.viewportWidth < 767.98 && is_auth"
+                v-if="this.viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -198,10 +198,10 @@
             <Link
                 :href="route('connecting')"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/connecting',
                 }"
-                v-if="this.viewportWidth < 767.98 && is_auth"
+                v-if="this.viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -222,10 +222,10 @@
                 class="nav-tabs__tab"
                 :href="route('wallets')"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/wallets',
                 }"
-                v-if="this.viewportWidth < 767.98 && is_auth"
+                v-if="this.viewportWidth < 991.98 && is_auth"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -246,12 +246,12 @@
                 :href="route('home')"
                 class="nav__link"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     active: $page.url === '/',
                 }"
             >
                 <svg
-                    v-if="this.viewportWidth < 767.98"
+                    v-if="this.viewportWidth < 991.98"
                     width="20"
                     height="20"
                     viewBox="0 0 20 20"
@@ -288,57 +288,57 @@
                 {{ $t("header.links.home") }}
             </Link>
             <Link
-                v-else-if="this.viewportWidth > 767.98"
+                v-else-if="this.viewportWidth > 991.98"
                 :href="route('statistic')"
                 class="nav__link"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     active: $page.url.startsWith('/profile'),
                 }"
             >
                 {{ $t("header.links.own_cabinet") }}
             </Link>
-            <Link
-                :href="route('complexity')"
-                class="nav__link"
-                :class="{
-                    burger_link: this.viewportWidth < 767.98,
-                    active: $page.url.startsWith('/complexity'),
-                }"
-            >
-                <svg
-                    v-if="this.viewportWidth < 767.98"
-                    width="20"
-                    height="20"
-                    viewBox="0 0 20 20"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <g clip-path="url(#clip0_1241_17163)">
-                        <path
-                            d="M3.32314 15.8711L1.98899 14.7113L7.78779 8.04058L11.334 11.16L16.7547 4.12386L18.0053 5.21095L11.5084 13.6539L7.96218 10.5345L3.32314 15.8711Z"
-                            fill="#417FE5"
-                        />
-                    </g>
-                    <defs>
-                        <clipPath id="clip0_1241_17163">
-                            <rect width="20" height="20" fill="white" />
-                        </clipPath>
-                    </defs>
-                </svg>
+            <!--            <Link-->
+            <!--                :href="route('complexity')"-->
+            <!--                class="nav__link"-->
+            <!--                :class="{-->
+            <!--                    burger_link: this.viewportWidth < 991.98,-->
+            <!--                    active: $page.url.startsWith('/complexity'),-->
+            <!--                }"-->
+            <!--            >-->
+            <!--                <svg-->
+            <!--                    v-if="this.viewportWidth < 991.98"-->
+            <!--                    width="20"-->
+            <!--                    height="20"-->
+            <!--                    viewBox="0 0 20 20"-->
+            <!--                    fill="none"-->
+            <!--                    xmlns="http://www.w3.org/2000/svg"-->
+            <!--                >-->
+            <!--                    <g clip-path="url(#clip0_1241_17163)">-->
+            <!--                        <path-->
+            <!--                            d="M3.32314 15.8711L1.98899 14.7113L7.78779 8.04058L11.334 11.16L16.7547 4.12386L18.0053 5.21095L11.5084 13.6539L7.96218 10.5345L3.32314 15.8711Z"-->
+            <!--                            fill="#417FE5"-->
+            <!--                        />-->
+            <!--                    </g>-->
+            <!--                    <defs>-->
+            <!--                        <clipPath id="clip0_1241_17163">-->
+            <!--                            <rect width="20" height="20" fill="white" />-->
+            <!--                        </clipPath>-->
+            <!--                    </defs>-->
+            <!--                </svg>-->
 
-                {{ $t("header.links.complexity") }}
-            </Link>
+            <!--                {{ $t("header.links.complexity") }}-->
+            <!--            </Link>-->
             <Link
                 :href="route('hosting')"
                 class="nav__link"
                 :class="{
-                    burger_link: this.viewportWidth < 767.98,
+                    burger_link: this.viewportWidth < 991.98,
                     active: $page.url.startsWith('/hosting'),
                 }"
             >
                 <svg
-                    v-if="this.viewportWidth < 767.98"
+                    v-if="this.viewportWidth < 991.98"
                     width="20"
                     height="20"
                     viewBox="0 0 20 20"
@@ -568,12 +568,8 @@ export default {
 .nav__links {
     display: flex;
     width: 100%;
-    gap: 100px;
-    @media (max-width: 1320.98px) {
-        justify-content: space-around;
-        gap: 10px;
-    }
-    @media (max-width: 767.98px) {
+    gap: 48px;
+    @media (max-width: 991.98px) {
         flex-direction: column;
         gap: 0;
         margin: 0 14px 80px;
@@ -589,7 +585,7 @@ export default {
 
     &_con {
         width: 100%;
-        @media (max-width: 767.98px) {
+        @media (max-width: 991.98px) {
             position: absolute;
             background: #e8ecf3;
             overflow: scroll;
@@ -751,10 +747,7 @@ export default {
             font-weight: 400;
             font-size: 17px;
             line-height: 143.1%;
-            color: #000034;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
+            color: #7c7c7c;
             background: transparent;
             transition: all 0.5s ease 0s;
             padding: 2px 10px;
@@ -789,7 +782,7 @@ export default {
     white-space: nowrap;
 
     &.active {
-        @media (max-width: 767.98px) {
+        @media (max-width: 991.98px) {
             color: #000;
             background: rgba(211, 229, 255, 0.8);
         }
@@ -807,7 +800,7 @@ export default {
     }
 }
 .burger_link {
-    @media (max-width: 767.98px) {
+    @media (max-width: 991.98px) {
         gap: 16px;
         font-weight: 500;
         font-size: 18px;

@@ -1,9 +1,21 @@
 .text {
-    font-style: normal;
     font-weight: 300;
     font-size: 16px;
-    line-height: 148.1%;
-    color: rgba(0, 0, 0, 0.62);
+    line-height: 150%;
+    color: #818C99;
+    &-b {
+        font-family: AmpleSoftPro, serif;
+        font-weight: 500;
+        font-size: 24px;
+        line-height: 115%;
+        color: #343434;
+        @media (max-width: $mobile) {
+            font-size: 20px;
+        }
+        @media (max-width: $mobileSmall) {
+            font-size: 18px;
+        }
+    }
     &-lg {
         font-size: 20px;
         line-height: 181.1%;

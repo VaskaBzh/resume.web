@@ -1,20 +1,23 @@
 <template>
-    <div class="text text-md">
+    <div class="text-b">
         {{ this.copyObject.title }}:
-        <div class="copy_row" @click="this.copyLink" ref="link">
+        <div
+            class="copy_row text-b"
+            :class="{ active: active }"
+            @click="this.copyLink"
+        >
             {{ this.copyObject.link }}
             <svg
-                class="copy-button"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
+                width="28"
+                height="28"
+                viewBox="0 0 28 28"
                 fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                class="copy_button"
+                :class="{ hide: active }"
             >
                 <path
-                    d="M15 3V6.4C15 6.96005 15 7.24008 15.109 7.45399C15.2049 7.64215 15.3578 7.79513 15.546 7.89101C15.7599 8 16.0399 8 16.6 8H20M10 8H6C4.89543 8 4 8.89543 4 10V19C4 20.1046 4.89543 21 6 21H12C13.1046 21 14 20.1046 14 19V16M16 3H13.2C12.0799 3 11.5198 3 11.092 3.21799C10.7157 3.40973 10.4097 3.71569 10.218 4.09202C10 4.51984 10 5.0799 10 6.2V12.8C10 13.9201 10 14.4802 10.218 14.908C10.4097 15.2843 10.7157 15.5903 11.092 15.782C11.5198 16 12.0799 16 13.2 16H16.8C17.9201 16 18.4802 16 18.908 15.782C19.2843 15.5903 19.5903 15.2843 19.782 14.908C20 14.4802 20 13.9201 20 12.8V7L16 3Z"
-                    stroke-width="2"
-                    stroke-linejoin="round"
+                    d="M13.125 4.375V13.125H4.375V14.875H13.125V23.625H14.875V14.875H23.625V13.125H14.875V4.375H13.125Z"
                 />
             </svg>
         </div>
@@ -27,12 +30,17 @@ export default {
     props: {
         copyObject: Object,
     },
+    data() {
+        return {
+            active: false,
+        };
+    },
     methods: {
         copyLink() {
             navigator.clipboard.writeText(this.copyObject.link);
-            this.$refs.link.classList.add("active");
+            this.active = true;
             setTimeout(() => {
-                this.$refs.link.classList.remove("active");
+                this.active = false;
             }, 1000);
         },
     },
@@ -40,72 +48,62 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.text {
-    display: inline-flex;
+.text-b {
+    display: flex;
+    justify-content: space-between;
+    gap: 4px;
     align-items: center;
     position: relative;
-    cursor: pointer;
-    @media (max-width: 767.98px) {
-        color: rgba(0, 0, 0, 0.62);
-    }
-    @media (max-width: 767.98px) {
-        color: #818c99;
-        align-items: center;
-    }
 }
 .copy {
-    &-button {
-        width: 24px;
-        height: 24px;
+    &_button {
+        width: 28px;
+        height: 28px;
         cursor: pointer;
         position: absolute;
-        right: 20px;
+        right: 24px;
         top: 50%;
         transform: translateY(-50%);
         transition: all 0.3s ease 0s;
-        stroke: rgba(#5b5c5e, 0.33) !important;
         opacity: 1;
-        @media (max-width: 767.98px) {
-            //transform: translateY(-35%);
-            width: 22px;
-            height: 22px;
-            stroke: #000034 !important;
-        }
+        fill: #343434;
         @media (max-width: 478.98px) {
             right: 7px;
             width: 20px;
             height: 20px;
         }
-        &:hover {
-            stroke: #4182ec !important;
+        &.hide {
+            opacity: 0;
         }
     }
     &_row {
         width: 100%;
-        min-height: 40px;
-        border-radius: 21px;
-        background: linear-gradient(0deg, #ffffff, #ffffff),
-            linear-gradient(
-                179.87deg,
-                #e6eaf0 1.02%,
-                #e6eaf1 4.79%,
-                #e7ebf1 8.76%,
-                #eaeef4 14.75%,
-                #e8ecf2 19.07%
-            );
-        padding: 7px 20px;
+        min-height: 56px;
+        border-radius: 8px;
+        box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
+        background: #fafafa;
+        padding: 5px 24px;
         outline: none;
         margin-left: auto;
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 26px;
+        cursor: pointer;
         display: inline-flex;
         justify-content: space-between;
         transition: all 0.3s ease 0s;
-        color: #5b5c5e;
         overflow: hidden;
-        max-width: calc(100% - 60px) !important;
-        border: 0.5px solid rgba(0, 0, 0, 0.08);
+        max-width: calc(100% - 90px) !important;
+        border: 1px solid transparent;
+        @media (max-width: 767.98px) {
+            padding: 2px 12px;
+            min-height: 36px;
+            max-width: calc(100% - 60px) !important;
+        }
+        &:hover {
+            .copy {
+                &_button {
+                    fill: #4182ec !important;
+                }
+            }
+        }
         @media (max-width: 320.98px) {
             max-width: calc(100% - 55px) !important;
         }
@@ -130,9 +128,9 @@ export default {
             cursor: pointer;
             transform: translate(100%, -50%);
             transition: all 0.3s ease 0s;
-            height: 24px;
-            max-width: 24px;
-            width: 24px;
+            height: 28px;
+            max-width: 28px;
+            width: 28px;
             overflow: hidden;
             display: inline-flex;
             align-items: center;
@@ -140,21 +138,10 @@ export default {
             border-radius: 8px;
             opacity: 0;
             @media (max-width: 478.98px) {
-                right: 5px;
+                right: 24px;
                 width: 20px;
                 height: 20px;
             }
-        }
-        @media (max-width: 767.98px) {
-            border: 0.5px solid rgba(0, 0, 0, 0.08);
-            border-radius: 12px;
-            padding: 7px 10px;
-            min-height: 36px;
-        }
-        @media (max-width: 478.98px) {
-            font-size: 16px;
-            color: #000034;
-            line-height: 20px;
         }
     }
 }

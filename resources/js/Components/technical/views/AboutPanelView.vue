@@ -1,15 +1,16 @@
 <template>
-    <div class="about-panel">
+    <div class="about-panel section">
         <div class="about-panel__container">
             <div class="about-panel__main panel-am">
                 <div class="panel-am__content">
-                    <div class="panel-am__title" v-scroll="'left delay--md'">
-                        {{ $t("panel.title") }}
-                    </div>
-                    <div
-                        class="text text-md text-black"
-                        v-scroll="'left delay--lg'"
+                    <main-title
+                        tag="h2"
+                        class="title-blue"
+                        v-scroll="'left delay--md'"
                     >
+                        {{ $t("panel.title") }}
+                    </main-title>
+                    <div class="description description-sm" v-scroll="'left delay--lg'">
                         {{ $t("panel.text") }}
                     </div>
                 </div>
@@ -25,7 +26,12 @@
 </template>
 
 <script>
+import MainTitle from "@/Components/UI/MainTitle.vue";
+
 export default {
+    components: {
+        MainTitle,
+    },
     data() {
         return {
             viewportWidth: 0,
@@ -53,19 +59,16 @@ export default {
 
 <style lang="scss" scoped>
 .about-panel {
-    background-image: url("../../../../assets/img/about-panel-bg.png");
-    background-position: center 30%;
-    background-size: contain;
-    background-repeat: no-repeat;
-    margin-bottom: 64px;
+    //background-image: url("../../../../assets/img/about-panel-bg.png");
+    //background-position: center 30%;
+    //background-size: contain;
+    //background-repeat: no-repeat;
+    //margin-bottom: 64px;
     // animation: 3s linear 0s infinite strokeAnimate;
     // transition: all 0.3s ease;
-    @media (max-width: 991.98px) {
-        margin-bottom: 32px;
-    }
-    @media (max-width: 767.98px) {
-        background-position: center 45%;
-    }
+    //@media (max-width: 767.98px) {
+    //    background-position: center 45%;
+    //}
 }
 // @keyframes strokeAnimate {
 //   0% {../
@@ -77,59 +80,27 @@ export default {
 // }
 .panel-am {
     display: flex;
-    align-items: center;
-    @media (max-width: 1270px) {
-        gap: 65px;
-    }
+    gap: 84px;
     @media (max-width: 991.98px) {
         flex-direction: column;
-        gap: 20px;
+        gap: 48px;
+        align-items: center;
     }
     // .panel-am__content
     &__content {
         flex: 0 0 50%;
-    }
-    // .panel-am__title
-    &__title {
-        font-family: "AmpleSoftPro";
-        font-style: normal;
-        font-weight: 500;
-        font-size: 40px;
-        line-height: 132.6%;
-        color: #000034;
-        margin-bottom: 24px;
+        padding-top: 46px;
+        display: flex;
+        flex-direction: column;
+        gap: 48px;
         @media (max-width: 991.98px) {
-            text-align: center;
-        }
-        @media (max-width: 767.98px) {
-            font-size: 27px;
-            line-height: 107.6%;
-            margin-bottom: 16px;
+            flex: 0 0 100%;
         }
     }
     // .panel-am__text
     .text {
         @media (max-width: 991.98px) {
             text-align: center;
-        }
-    }
-    // .panel-am__image
-    &__image {
-        max-width: 1120px;
-        margin: -17pc 0 -13pc -12pc;
-        @media (max-width: 1270px) {
-            max-width: 930px;
-            margin: -14pc 0 -13pc -12pc;
-        }
-        @media (max-width: 991.98px) {
-            max-height: 700px;
-            max-width: unset;
-            margin: -9pc 0 -8pc;
-        }
-        @media (max-width: 767.98px) {
-            max-height: unset;
-            max-width: 510px;
-            margin: -6pc 0;
         }
     }
 }

@@ -1,21 +1,19 @@
 .input {
     width: 100%;
-    padding: 0 22px;
-    background: #e9edf3;
-    border-radius: 21px;
+    padding: 0 12px;
+    border-radius: 8px;
     font-weight: 400;
-    font-size: 18px;
-    line-height: 181.1%;
-    color: #343434;
-    border: 1px solid;
-    border-color: #d6d6d6;
+    color: #7C7C7C;
+    background: #EDEDED;
+    font-size: 16px;
+    line-height: 150%;
+    border: none;
     outline: none;
     display: inline-flex;
     align-items: center;
-    transition: border-color 0.3s ease 0s;
     min-height: 48px;
     &::placeholder {
-        color: #c5c5c5;
+        color: #7C7C7C;
     }
     &-no-bg {
         @media (min-width: 767.98px) {
@@ -89,16 +87,6 @@
         }
     }
     &:disabled {
-        background: rgba(#e9edf3, 0.5);
-        color: rgba(#000034, 0.5);
-    }
-    &:not(:disabled) {
-        &:hover {
-            border-color: #c2d5f2;
-        }
-        &:active,
-        &:focus {
-            border-color: #4182ec;
-        }
+        color: #C5C5C5;
     }
 }

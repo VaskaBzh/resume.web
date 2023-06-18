@@ -239,14 +239,15 @@ body::after {
     &__content {
         cursor: default;
         visibility: hidden;
-        background-color: #fff;
-        padding: 0 40px;
+        background: #FAFAFA;
+        box-shadow: 0px 10px 10px rgba(16, 16, 16, 0.12);
+        padding: 0 32px;
         min-width: 255px;
         min-height: 120px;
         max-height: 120px;
         max-width: 255px;
         width: 100%;
-        border-radius: 21px;
+        border-radius: 16px;
         position: relative;
         opacity: 0;
         transform: translateY(400px);
@@ -337,7 +338,7 @@ body::after {
             transition: all 0.8s ease 0s;
             overflow-x: hidden;
             overflow-y: hidden;
-            padding: 40px 0;
+            padding: 32px 0;
             @media (max-width: $pc) {
                 padding: 20px 0;
             }
@@ -377,9 +378,9 @@ body::after {
         width: 24px;
         height: 24px;
         position: absolute;
-        top: 40px;
-        right: 40px;
-        fill: #000;
+        top: 32px;
+        right: 32px;
+        fill: #C5C5C5;
         z-index: 10;
         outline: none;
         @media (max-width: $pc) {
@@ -406,17 +407,33 @@ body::after {
     .blue-button {
         width: 100% !important;
         transition: all 0.3s ease 0s;
-        @media (max-width: $mobile) {
-            .all-link {
-                font-size: 16px;
-                padding: 0;
-                line-height: 20px;
-            }
+        text-align: center;
+        font-family: Ubuntu, serif;
+        min-height: 51px;
+        .all-link {
+            color: #EAEAEA;
+            font-weight: 700;
+            font-size: 18px;
+            font-family: Ubuntu, serif;
+            line-height: 107.6%;
         }
-        @media (max-width: $mobileSmall) {
-            height: 40px;
-            min-height: 40px !important;
-        }
+        //@media (max-width: $mobileSmall) {
+        //    min-height: 48px;
+        //    font-weight: 700;
+        //    font-size: 16px;
+        //    line-height: 20px;
+        //}
+        //@media (max-width: $mobile) {
+        //    .all-link {
+        //        font-size: 16px;
+        //        padding: 0;
+        //        line-height: 20px;
+        //    }
+        //}
+        //@media (max-width: $mobileSmall) {
+        //    height: 40px;
+        //    min-height: 40px !important;
+        //}
         &.back {
             background: #dae6f7 !important;
             padding: 0;

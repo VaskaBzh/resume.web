@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .blue-button {
     display: flex;
     justify-content: center;
@@ -21,7 +21,7 @@ export default {
     font-size: 18px;
     line-height: 107.6%;
     color: #ffffff;
-    min-height: 48px;
+    min-height: 40px;
     background: linear-gradient(84.14deg, #3f7bdd 8.75%, #4282ec 92.01%);
     border-radius: 12px;
     position: relative;
@@ -42,29 +42,31 @@ export default {
     }
     &.add {
         width: 60px;
+        border-radius: 8px;
         svg {
-            width: 14px;
-            height: 14px;
-            fill: #fff;
+            width: 24px;
+            height: 24px;
+            fill: #fafafa;
+        }
+        &:before {
+            content: none;
         }
         @media (max-width: 479.89px) {
             border: none;
             background: transparent;
             padding: 0;
-            width: 20px;
-            height: 20px;
+            width: 24px;
+            height: 24px;
 
             svg {
                 fill: #4182ec;
-                width: 18px;
-                height: 18px;
             }
         }
     }
     &::before {
         content: "";
         position: absolute;
-        z-index: -1;
+        z-index: 0;
         background: linear-gradient(
             84.14deg,
             rgba(63, 123, 221, 0.27) 8.75%,
@@ -111,17 +113,45 @@ export default {
         min-height: 85px;
         border-radius: 10px;
         min-width: 347px;
+        font-size: 22px;
+        line-height: 107.6%;
         @media (max-width: 767.98px) {
             min-height: 65px;
             border-radius: 7px;
             min-width: 266px;
+            font-size: 16px;
+            line-height: 107%;
+        }
+        @media (max-width: 767.98px) {
+            left: 7px;
+            top: 6px;
+        }
+
+        &::before {
+            content: "";
+            position: absolute;
+            z-index: 0;
+            background: linear-gradient(
+                84.14deg,
+                rgba(63, 123, 221, 0.27) 8.75%,
+                rgba(66, 130, 236, 0.27) 92.01%
+            );
+            border-radius: 10px;
+            width: 100%;
+            height: 100%;
+            top: 10px;
+            left: 10px;
+            transition: all 0.3s ease 0s;
+            @media (max-width: 767.98px) {
+                left: 7px;
+                top: 6px;
+            }
         }
     }
 
     &-with-propeller {
         gap: 36px;
         a {
-
             display: flex;
             justify-content: center;
             align-items: center;
@@ -148,23 +178,6 @@ export default {
                     left: 0;
                 }
             }
-        }
-
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: linear-gradient(
-                84.14deg,
-                rgba(63, 123, 221, 0.27) 8.75%,
-                rgba(66, 130, 236, 0.27) 92.01%
-            );
-            border-radius: 10px;
-            width: 100%;
-            height: 100%;
-            top: 10px;
-            left: 10px;
-            transition: all 0.3s ease 0s;
         }
     }
 }

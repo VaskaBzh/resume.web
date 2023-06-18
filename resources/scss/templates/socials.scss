@@ -3,7 +3,7 @@
   align-items: center;
   gap: 16px;
   &_link {
-    background: linear-gradient(137.86deg, rgba(255, 255, 255, 0.7) 15.41%, #F7F2F2 90.59%);
+    background: #79A3E8;
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -27,10 +27,10 @@
       width: 100%;
       opacity: 0;
       transition: all 0.3s ease 0s;
-      background: linear-gradient(137.86deg, #3F66B6 15.41%, #3F66B6 90.59%);
+      background: #79A3E8;
     }
     & svg {
-      fill: #3f7bdd;
+      fill: #fff;
       transition: all 0.3s ease 0s;
       position: absolute;
       left: 50%;

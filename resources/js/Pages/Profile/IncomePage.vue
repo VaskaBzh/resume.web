@@ -1,26 +1,30 @@
 <template>
     <div class="income" ref="page">
-        <main-title class="profile" v-if="this.viewportWidth > 767.98" tag="h2">
+        <main-title
+            class="profile cabinet_title"
+            v-if="this.viewportWidth > 767.98"
+            tag="h3"
+        >
             {{ $t("income.title") }}
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
             <!--                </blue-button>-->
         </main-title>
 
-        <main-title class="profile" v-else tag="h2">
+        <main-title class="profile cabinet_title" v-else tag="h3">
             {{ $t("income.title") }}
             <!--                <blue-button class="income__button">-->
             <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
             <!--                </blue-button>-->
         </main-title>
-        <div class="wrap wrap__column">
-            <div class="wrap__head">
-                <main-title tag="h3" class="wrap_title">
+        <div class="income__column">
+            <div class="cabinet__head">
+                <main-title tag="h4" class="headline">
                     {{ $t("income.income_info.title") }}:
                 </main-title>
             </div>
-            <div class="wrap__row">
-                <div class="wrap__block wrap__column">
+            <div class="income__row">
+                <div class="cabinet__block cabinet__block-light">
                     <span class="text"
                         >{{ $t("income.income_info.titles[0]") }}:</span
                     >
@@ -29,7 +33,7 @@
                         BTC
                     </span>
                 </div>
-                <div class="wrap__block wrap__column">
+                <div class="cabinet__block cabinet__block-light">
                     <span class="text"
                         >{{ $t("income.income_info.titles[1]") }}:
                     </span>
@@ -38,7 +42,7 @@
                         BTC
                     </span>
                 </div>
-                <div class="wrap__block wrap__column">
+                <div class="cabinet__block cabinet__block-light">
                     <span class="text"
                         >{{ $t("income.income_info.titles[2]") }}:
                     </span>
@@ -378,6 +382,27 @@ export default {
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
+    }
+
+    &__column {
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        margin-bottom: 40px;
+    }
+    &__row {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        .cabinet__block {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            width: 100%;
+        }
+        @media (max-width: 767.98px) {
+            flex-wrap: wrap;
+        }
     }
 
     // .income__button

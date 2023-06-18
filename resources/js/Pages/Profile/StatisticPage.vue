@@ -2,23 +2,23 @@
     <Head :title="$t('statistic.title')" />
     <div class="statistic profile">
         <div class="statistic__wrapper">
-            <main-title tag="h2" class="statistic__title">
+            <main-title tag="h3" class="cabinet_title">
                 {{ $t("statistic.title") }}
             </main-title>
             <div
-                class="wrap"
+                class="cabinet"
                 v-if="
                     this.allHistory[this.getActive]?.filter((a) => a.hash > 0)
                         .length !== 0
                 "
             >
-                <div class="wrap__head wrap__head-graph">
-                    <main-title tag="h3">
+                <div class="cabinet__head">
+                    <main-title tag="h4" class="headline">
                         {{ $t("statistic.chart.title") }}
                     </main-title>
-                    <div class="buttons">
+                    <div class="cabinet__buttons">
                         <button
-                            class="button"
+                            class="cabinet_button"
                             :key="button.title + i"
                             v-for="(button, i) in buttons"
                             :class="{ active: button.value === this.val }"
@@ -28,8 +28,12 @@
                         </button>
                     </div>
                 </div>
-                <div class="wrap__block wrap__block-graph">
-                    <div class="propeller" v-if="id !== val"></div>
+                <div
+                    class="cabinet__block cabinet__block-graph cabinet__block-light"
+                >
+                    <div class="no-info no-bg" v-if="id !== val">
+                        <div class="propeller"></div>
+                    </div>
                     <statistic-chart
                         v-else
                         class="no-title"
@@ -97,7 +101,7 @@
             </div>
             <div class="wrap" v-else>
                 <div class="wrap__block-connect">
-                    <main-title tag="h3">{{
+                    <main-title tag="h4" class="headline">{{
                         $t("statistic.chart.no_workers_title")
                     }}</main-title>
                     <copy-block
@@ -107,11 +111,11 @@
                     ></copy-block>
                 </div>
             </div>
-            <div class="wrap">
-                <main-title tag="h3">
+            <div class="cabinet">
+                <main-title tag="h4" class="headline">
                     {{ $t("statistic.info_blocks.title") }}
                 </main-title>
-                <div class="statistic__block">
+                <div class="statistic__row">
                     <payment-card
                         :key="this.allHistory[this.getActive]"
                         :BTCValueFirst="this.yesterdayEarn"
@@ -125,87 +129,83 @@
                         :iconFirst="1"
                         :iconSecond="1"
                     />
-                    <!--                    <account-profile-swiper-->
-                    <!--                        :key="this.allHistory[this.getActive]"-->
-                    <!--                        v-if="Object.values(this.allAccounts).length > 0"-->
-                    <!--                    ></account-profile-swiper>-->
                     <div
-                        class="wrap__block hash__block"
+                        class="cabinet__block cabinet__block-light hash__block"
                         v-if="Object.values(this.allAccounts).length > 0"
                     >
-                        <div class="wrap__head wrap__column">
-                            <div class="wrap__row">
-                                <span class="wrap_title">
-                                    {{
-                                        $t(
-                                            "statistic.info_blocks.hash.titles[0]"
-                                        )
-                                    }}
-                                </span>
-                                <span class="wrap_hash"
-                                    >{{
-                                        Number(this.workers.hash).toFixed(2)
-                                    }}
-                                    TH/s</span
-                                >
-                            </div>
-                            <div class="wrap__row">
-                                <span class="wrap_title">
-                                    {{
-                                        $t(
-                                            "statistic.info_blocks.hash.titles[1]"
-                                        )
-                                    }}
-                                </span>
-                                <span class="wrap_hash"
-                                    >{{
-                                        Number(this.workers.hash24).toFixed(2)
-                                    }}
-                                    TH/s</span
-                                >
-                            </div>
-                        </div>
-                        <ul class="wrap_list">
-                            <main-title tag="h4" class="wrap_title">
-                                <Link
-                                    class="main__link"
-                                    :href="route(`workers`)"
-                                    >{{
-                                        $t(
-                                            "statistic.info_blocks.workers.title"
-                                        )
-                                    }}
-                                </Link>
-                            </main-title>
-                            <li class="active">
-                                {{ this.workers.active
-                                }}<span>
+                        <Link class="title title-blue" :href="route(`workers`)"
+                            >{{ $t("statistic.info_blocks.workers.title") }}
+                        </Link>
+                        <!--                        <span class="title title-blue">-->
+                        <!--                            {{ $t("statistic.info_blocks.hash.titles[0]") }}-->
+                        <!--                        </span>-->
+                        <!--                        <div class="wrap__head wrap__column">-->
+                        <!--                            <div class="wrap__row">-->
+                        <!--                                <span class="wrap_title">-->
+                        <!--                                    {{-->
+                        <!--                                        $t(-->
+                        <!--                                            "statistic.info_blocks.hash.titles[0]"-->
+                        <!--                                        )-->
+                        <!--                                    }}-->
+                        <!--                                </span>-->
+                        <!--                                <span class="wrap_hash"-->
+                        <!--                                    >{{-->
+                        <!--                                        Number(this.workers.hash).toFixed(2)-->
+                        <!--                                    }}-->
+                        <!--                                    TH/s</span-->
+                        <!--                                >-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <ul class="statistic__list">
+                            <li class="active description description-xs">
+                                <span>
                                     {{
                                         $t(
                                             "statistic.info_blocks.workers.types[0]"
                                         )
                                     }}</span
                                 >
+                                {{ this.workers.active }}
                             </li>
-                            <li class="unStable">
-                                {{ this.workers.unStable
-                                }}<span>
+                            <li class="unStable description description-xs">
+                                <span>
                                     {{
                                         $t(
                                             "statistic.info_blocks.workers.types[1]"
                                         )
                                     }}</span
                                 >
+                                {{ this.workers.unStable }}
                             </li>
-                            <li class="inActive">
-                                {{ this.workers.inActive
-                                }}<span>{{
+                            <li class="inActive description description-xs">
+                                <span>{{
                                     $t("statistic.info_blocks.workers.types[2]")
                                 }}</span>
+                                {{ this.workers.inActive }}
+                            </li>
+                        </ul>
+                        <ul class="statistic__list statistic__list-last">
+                            <li class="description description-xs">
+                                {{ $t("statistic.info_blocks.hash.titles[0]") }}
+                                <span class="statistic_info"
+                                    >{{
+                                        Number(this.workers.hash).toFixed(2)
+                                    }}
+                                    TH/s</span
+                                >
+                            </li>
+                            <li class="description description-xs">
+                                {{ $t("statistic.info_blocks.hash.titles[1]") }}
+                                <span class="statistic_info"
+                                    >{{
+                                        Number(this.workers.hash24).toFixed(2)
+                                    }}
+                                    TH/s</span
+                                >
                             </li>
                         </ul>
                     </div>
-                    <div class="wrap__column no-info" v-else>
+                    <div class="no-info" v-else>
                         <div class="propeller"></div>
                     </div>
                 </div>
@@ -512,269 +512,308 @@ export default {
     }
 }
 .statistic {
-    .wrap {
-        overflow: visible;
-        .title {
-            width: 100%;
+    &__row {
+        display: grid;
+        gap: 16px;
+        grid-template-columns: repeat(2, 1fr);
+        @media (max-width: 479.98px) {
+            grid-template-columns: 1fr;
         }
-        &__row,
-        &_list {
+        .cabinet__block {
             display: flex;
             flex-direction: column;
-            .wrap_title,
-            a {
-                margin-bottom: 0;
-                margin-top: 0;
-                font-weight: 400;
-                font-size: 20px;
-                line-height: 23px;
-                text-align: left;
-                font-family: AmpleSoftPro, serif;
-                @media (max-width: 479.98px) {
-                    font-size: 16px;
-                    line-height: 20px;
-                }
-                @media (max-width: 320.98px) {
-                    font-weight: 500;
-                    font-size: 16px;
-                    line-height: 18px;
-                }
-            }
-            .wrap_hash,
-            li {
-                color: #000034;
-                font-weight: 500;
-                font-size: 18px;
-                line-height: 26px;
-                @media (max-width: 479.98px) {
-                    font-size: 16px;
-                    line-height: 16px;
-                }
-                span {
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 23px;
-                    //margin-top: auto
-                    @media (max-width: 479.98px) {
-                        font-size: 16px;
-                        line-height: 16px;
-                    }
-                    @media (max-width: 320.98px) {
-                        font-size: 16px;
-                        line-height: 18px;
-                    }
-                }
-            }
-        }
-        &__row {
             gap: 8px;
-            @media (max-width: 991.98px) {
-                gap: 4px;
-            }
         }
-        &__head {
-            gap: 8px;
-            .buttons {
-                display: flex;
-                align-items: center;
-                gap: 8px;
-                @media (max-width: 767.98px) {
-                    gap: 1px;
-                    position: absolute;
-                    top: calc(100% + 40px);
-                    left: 0;
-                    width: 100%;
-                }
-            }
-            .button {
-                white-space: nowrap;
-                padding: 2px 12px;
-                border-radius: 16px;
-                min-height: 36px;
-                color: #99acd3;
-                font-weight: 400;
-                font-size: 17px;
-                line-height: 20px;
-                background: transparent;
-                width: fit-content;
-                transition: all 0.3s ease 0s;
-                @media (max-width: 767.98px) {
-                    border-radius: 12px;
-                    padding: 2px 20px;
-                    font-weight: 400;
-                    font-size: 16px;
-                    line-height: 18px;
-                    min-height: 26px;
-                }
-                @media (max-width: 479.98px) {
-                    font-size: 16px;
-                    line-height: 18px;
-                }
-                &.active {
-                    color: #181847;
-                    background: #ffffff;
-                }
-            }
-            .title {
-                @media (max-width: 767.98px) {
-                    margin-bottom: 8px;
-                }
-            }
-            &-graph {
-                align-items: center;
-                grid-column-start: 1;
-                grid-column-end: 3;
-                position: relative;
-                .title {
-                    margin-bottom: 0;
-                    &:after {
-                        content: none;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    grid-column-end: 2;
-                    margin-bottom: calc(26px + 48px);
-                    &:after {
-                        content: "";
-                        height: 1px;
-                        position: absolute;
-                        bottom: -20px;
-                        left: 0;
-                        width: 100%;
-                        background-color: #d7d8d9;
-                    }
-                }
-                @media (max-width: 479.98px) {
-                    flex-wrap: wrap;
-                }
-            }
+    }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        &-last {
+            margin-top: 8px;
         }
-        &_list {
-            gap: 4px;
-            li {
+        li {
+            width: 100%;
+            display: inline-flex;
+            justify-content: space-between;
+            span {
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
+                &:before {
+                    content: "";
+                    width: 12px;
+                    height: 12px;
+                    display: flex;
+                    border-radius: 50%;
+                }
+            }
+            &.active {
                 span {
-                    display: inline-flex;
-                    gap: 4px;
-                    align-items: center;
                     &:before {
-                        content: "";
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                    }
-                }
-                &.active {
-                    span {
-                        &:before {
-                            background: #13d60e;
-                        }
-                    }
-                }
-                &.inActive {
-                    span {
-                        &:before {
-                            background: #ff0000;
-                        }
-                    }
-                }
-                &.unStable {
-                    span {
-                        &:before {
-                            background: #e9c058;
-                        }
+                        background: #13d60e;
                     }
                 }
             }
-        }
-        &__block {
-            min-height: 325px;
-            overflow: visible;
-            &:not(.wrap__column) {
-                min-height: 0;
-                @media (min-width: 991.98px) {
-                    align-items: center;
-                }
-            }
-            &:not(.wrap__block-graph) {
-                &:last-child {
-                    @media (max-width: 998.98px) {
-                        flex-direction: column;
-                    }
-                    @media (max-width: 767.98px) {
-                        flex-direction: row;
+            &.inActive {
+                span {
+                    &:before {
+                        background: #ff0000;
                     }
                 }
             }
-            &-connect {
-                width: 100%;
-                height: 100%;
-                padding: 0 0 4px 12px;
-                .title {
-                    margin-bottom: 12px;
-                    @media (max-width: 767.98px) {
-                        margin-bottom: 40px;
+            &.unStable {
+                span {
+                    &:before {
+                        background: #e9c058;
                     }
                 }
             }
-            @media (max-width: 767.98px) {
-                padding: 15px;
-                grid-column-start: 1;
-                grid-column-end: 2;
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                min-height: 100px;
-                &-graph {
-                    order: 3;
-                    position: relative;
-                    padding: 24px !important;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    .propeller {
-                        margin: auto auto auto auto !important;
-                    }
-                }
-            }
-            @media (max-width: 479.98px) {
-                min-height: 100px;
-                &-graph {
-                    order: 3;
-                    padding: 15px !important;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    .propeller {
-                        margin: auto auto auto auto !important;
-                    }
-                }
-            }
-            .wrap {
-                &_head {
-                    display: flex;
-                    justify-content: flex-start;
-                    flex-direction: column;
-                    gap: 8px;
-                    padding: 0 !important;
-                }
-            }
-            .propeller {
-                margin: auto;
-            }
-            &-graph {
-                padding: 24px;
-                &:active {
-                    @media (max-width: 479.98px) {
-                        .hover {
-                            opacity: 1;
-                        }
-                    }
+            .statistic_info {
+                color: #486382;
+                font-weight: 500;
+                &:before {
+                    content: none;
                 }
             }
         }
     }
+    //.wrap {
+    //    overflow: visible;
+    //    .title {
+    //        width: 100%;
+    //    }
+    //    &__row,
+    //    &_list {
+    //        display: flex;
+    //        flex-direction: column;
+    //        .wrap_title,
+    //        a {
+    //            margin-bottom: 0;
+    //            margin-top: 0;
+    //            font-weight: 400;
+    //            font-size: 20px;
+    //            line-height: 23px;
+    //            text-align: left;
+    //            font-family: AmpleSoftPro, serif;
+    //            @media (max-width: 479.98px) {
+    //                font-size: 16px;
+    //                line-height: 20px;
+    //            }
+    //            @media (max-width: 320.98px) {
+    //                font-weight: 500;
+    //                font-size: 16px;
+    //                line-height: 18px;
+    //            }
+    //        }
+    //        .wrap_hash,
+    //        li {
+    //            color: #000034;
+    //            font-weight: 500;
+    //            font-size: 18px;
+    //            line-height: 26px;
+    //            @media (max-width: 479.98px) {
+    //                font-size: 16px;
+    //                line-height: 16px;
+    //            }
+    //            span {
+    //                font-weight: 400;
+    //                font-size: 16px;
+    //                line-height: 23px;
+    //                //margin-top: auto
+    //                @media (max-width: 479.98px) {
+    //                    font-size: 16px;
+    //                    line-height: 16px;
+    //                }
+    //                @media (max-width: 320.98px) {
+    //                    font-size: 16px;
+    //                    line-height: 18px;
+    //                }
+    //            }
+    //        }
+    //    }
+    //    &__row {
+    //        gap: 8px;
+    //        @media (max-width: 991.98px) {
+    //            gap: 4px;
+    //        }
+    //    }
+    //    &__head {
+    //        gap: 8px;
+    //        .buttons {
+    //            display: flex;
+    //            align-items: center;
+    //            gap: 8px;
+    //            @media (max-width: 767.98px) {
+    //                gap: 1px;
+    //                position: absolute;
+    //                top: calc(100% + 40px);
+    //                left: 0;
+    //                width: 100%;
+    //            }
+    //        }
+    //        .button {
+    //            white-space: nowrap;
+    //            padding: 2px 12px;
+    //            border-radius: 16px;
+    //            min-height: 36px;
+    //            color: #99acd3;
+    //            font-weight: 400;
+    //            font-size: 17px;
+    //            line-height: 20px;
+    //            background: transparent;
+    //            width: fit-content;
+    //            transition: all 0.3s ease 0s;
+    //            @media (max-width: 767.98px) {
+    //                border-radius: 12px;
+    //                padding: 2px 20px;
+    //                font-weight: 400;
+    //                font-size: 16px;
+    //                line-height: 18px;
+    //                min-height: 26px;
+    //            }
+    //            @media (max-width: 479.98px) {
+    //                font-size: 16px;
+    //                line-height: 18px;
+    //            }
+    //            &.active {
+    //                color: #181847;
+    //                background: #ffffff;
+    //            }
+    //        }
+    //        .title {
+    //            @media (max-width: 767.98px) {
+    //                margin-bottom: 8px;
+    //            }
+    //        }
+    //        &-graph {
+    //            align-items: center;
+    //            grid-column-start: 1;
+    //            grid-column-end: 3;
+    //            position: relative;
+    //            .title {
+    //                margin-bottom: 0;
+    //                &:after {
+    //                    content: none;
+    //                }
+    //            }
+    //            @media (max-width: 767.98px) {
+    //                grid-column-end: 2;
+    //                margin-bottom: calc(26px + 48px);
+    //                &:after {
+    //                    content: "";
+    //                    height: 1px;
+    //                    position: absolute;
+    //                    bottom: -20px;
+    //                    left: 0;
+    //                    width: 100%;
+    //                    background-color: #d7d8d9;
+    //                }
+    //            }
+    //            @media (max-width: 479.98px) {
+    //                flex-wrap: wrap;
+    //            }
+    //        }
+    //    }
+    //    &_list {
+    //        gap: 4px;
+    //        li {
+    //            display: inline-flex;
+    //            align-items: center;
+    //            gap: 8px;
+    //            span {
+    //                display: inline-flex;
+    //                gap: 4px;
+    //                align-items: center;
+    //            }
+    //        }
+    //    }
+    //    &__block {
+    //        min-height: 325px;
+    //        overflow: visible;
+    //        &:not(.wrap__column) {
+    //            min-height: 0;
+    //            @media (min-width: 991.98px) {
+    //                align-items: center;
+    //            }
+    //        }
+    //        &:not(.wrap__block-graph) {
+    //            &:last-child {
+    //                @media (max-width: 998.98px) {
+    //                    flex-direction: column;
+    //                }
+    //                @media (max-width: 767.98px) {
+    //                    flex-direction: row;
+    //                }
+    //            }
+    //        }
+    //        &-connect {
+    //            width: 100%;
+    //            height: 100%;
+    //            padding: 0 0 4px 12px;
+    //            .title {
+    //                margin-bottom: 12px;
+    //                @media (max-width: 767.98px) {
+    //                    margin-bottom: 40px;
+    //                }
+    //            }
+    //        }
+    //        @media (max-width: 767.98px) {
+    //            padding: 15px;
+    //            grid-column-start: 1;
+    //            grid-column-end: 2;
+    //            display: grid;
+    //            grid-template-columns: repeat(2, 1fr);
+    //            min-height: 100px;
+    //            &-graph {
+    //                order: 3;
+    //                position: relative;
+    //                padding: 24px !important;
+    //                display: flex;
+    //                align-items: center;
+    //                justify-content: center;
+    //                .propeller {
+    //                    margin: auto auto auto auto !important;
+    //                }
+    //            }
+    //        }
+    //        @media (max-width: 479.98px) {
+    //            min-height: 100px;
+    //            &-graph {
+    //                order: 3;
+    //                padding: 15px !important;
+    //                display: flex;
+    //                align-items: center;
+    //                justify-content: center;
+    //                .propeller {
+    //                    margin: auto auto auto auto !important;
+    //                }
+    //            }
+    //        }
+    //        .wrap {
+    //            &_head {
+    //                display: flex;
+    //                justify-content: flex-start;
+    //                flex-direction: column;
+    //                gap: 8px;
+    //                padding: 0 !important;
+    //            }
+    //        }
+    //        .propeller {
+    //            margin: auto;
+    //        }
+    //        &-graph {
+    //            padding: 24px;
+    //            &:active {
+    //                @media (max-width: 479.98px) {
+    //                    .hover {
+    //                        opacity: 1;
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    //}
     &__title {
         margin-bottom: 16px;
         @media (max-width: 479.98px) {

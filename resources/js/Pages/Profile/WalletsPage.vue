@@ -5,42 +5,39 @@
         </div>
     </div>
     <div class="wallets" ref="page">
-        <main-title tag="h2" class="profile"
+        <main-title class="profile cabinet_title" tag="h3"
             >{{ $t("wallets.title") }}
             <!--                <blue-button class="wallets__button wallets__button-history">-->
             <!--                    <Link :href="route('income')"> Доходы </Link>-->
             <!--                </blue-button>-->
-            <span class="wallets__button" data-popup="#addWallet">
+            <main-checkbox
+                class="wallets__filter"
+                @is_checked="this.checkboxer"
+            >
+                {{ $t("wallets.block.filter") }}
+            </main-checkbox>
+            <blue-button class="add" data-popup="#addWallet">
                 <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="21"
-                    height="21"
-                    viewBox="0 0 21 21"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
                     fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
                 >
                     <path
                         fill-rule="evenodd"
                         clip-rule="evenodd"
-                        d="M1.07129 10.0703C1.07129 9.51803 1.519 9.07031 2.07129 9.07031H18.0713C18.6236 9.07031 19.0713 9.51803 19.0713 10.0703C19.0713 10.6226 18.6236 11.0703 18.0713 11.0703H2.07129C1.519 11.0703 1.07129 10.6226 1.07129 10.0703Z"
+                        d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
                     />
                     <path
                         fill-rule="evenodd"
                         clip-rule="evenodd"
-                        d="M10.0708 1.0708C10.6231 1.0708 11.0708 1.51852 11.0708 2.0708V18.0708C11.0708 18.6231 10.6231 19.0708 10.0708 19.0708C9.51852 19.0708 9.0708 18.6231 9.0708 18.0708V2.0708C9.0708 1.51852 9.51852 1.0708 10.0708 1.0708Z"
+                        d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
                     />
                 </svg>
-            </span>
+            </blue-button>
         </main-title>
         <div ref="wallets" class="wrap">
-            <main-title tag="h3" class="wrap_title">
-                {{ $t("wallets.block.title") }}
-                <main-checkbox
-                    class="wallets__filter"
-                    @is_checked="this.checkboxer"
-                >
-                    {{ $t("wallets.block.filter") }}
-                </main-checkbox>
-            </main-title>
             <no-info
                 ref="noInfo"
                 :wait="this.getWallet"
@@ -552,46 +549,40 @@ export default {
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
-    &__title {
-        font-family: AmpleSoftPro, serif;
-        font-style: normal;
-        color: #000;
-        margin: 0 0 16px;
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 30px;
-        width: 100%;
-        display: inline-flex;
-        justify-content: space-between;
-        @media (max-width: 479.89px) {
-            font-size: 21px;
-            line-height: 26px;
-        }
+    .title.profile {
         @media (max-width: 767.98px) {
-            position: relative;
-            margin-bottom: 40px;
-            &:after {
-                content: "";
-                height: 1px;
-                position: absolute;
-                bottom: -20px;
-                left: 0;
-                width: 100%;
-                background-color: #d7d8d9;
-            }
-        }
-        @media (max-width: 532.98px) {
-            flex-direction: column;
+            flex-wrap: wrap;
         }
     }
-
     // .wallets__filter
     &__filter {
         line-height: 23px;
         font-size: 16px;
         color: #99acd3;
+        margin: 0 24px 0 auto;
+        @media (max-width: 767.98px) {
+            width: 80%;
+            margin: 0;
+            justify-content: flex-start !important;
+            &:before {
+                left: 210px;
+            }
+            &.checked {
+                &:before {
+                    left: 233px;
+                }
+            }
+        }
         @media (max-width: 479.98px) {
-            width: 100%;
+            width: 90%;
+            &:before {
+                left: 210px;
+            }
+            &.checked {
+                &:before {
+                    left: 227px;
+                }
+            }
         }
     }
 
@@ -614,71 +605,6 @@ export default {
         }
         @media (max-width: 479.98px) {
             grid-template-columns: repeat(1, 1fr);
-        }
-    }
-
-    // .wallets__button
-    &__button {
-        width: 60px;
-        height: 44px;
-        border-radius: 13px;
-        background-color: #4182ec;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
-        transition: all 0.3s ease;
-        position: relative;
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: linear-gradient(
-                84.14deg,
-                rgba(63, 123, 221, 0.27) 8.75%,
-                rgba(66, 130, 236, 0.27) 92.01%
-            );
-            border-radius: 10px;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            transition: all 0.3s ease 0s;
-        }
-        @media (any-hover: hover) {
-            &:hover {
-                transform: translate(-4px, -4px);
-                &::before {
-                    top: 4px;
-                    left: 4px;
-                }
-            }
-        }
-        &:active {
-            @media (min-width: 479.89px) {
-                transform: translate(0, 0);
-                box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
-                &::before {
-                    top: 0;
-                    left: 0;
-                }
-            }
-        }
-        svg {
-            width: 14px;
-            height: 14px;
-            fill: #fff;
-        }
-        @media (max-width: 479.89px) {
-            background-color: transparent;
-            width: 20px;
-            height: 20px;
-
-            svg {
-                fill: #4182ec;
-                width: 18px;
-                height: 18px;
-            }
         }
     }
 

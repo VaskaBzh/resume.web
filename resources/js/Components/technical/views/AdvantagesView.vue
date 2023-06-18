@@ -1,5 +1,5 @@
 <template>
-    <div class="advantages">
+    <div class="advantages section">
         <div class="advantages__container">
             <main-title tag="h3" class="advantages_title"
                 >Присоединяйтесь к нам и ощутите преимущества продвинутого
@@ -30,10 +30,6 @@ export default {
 
 <style scoped lang="scss">
 .advantages {
-    margin: 124px 0;
-    @media (max-width: 767.98px) {
-        margin: 52px 0;
-    }
     &_title {
         margin-bottom: 48px;
         max-width: 1216px;
@@ -49,8 +45,9 @@ export default {
         display: flex;
         align-items: center;
         gap: 24px;
-        width: fit-content;
-        margin: 0 auto;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: center;
         .button {
             z-index: 5;
         }

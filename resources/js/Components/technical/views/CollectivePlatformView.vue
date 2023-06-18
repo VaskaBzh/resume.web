@@ -9,7 +9,7 @@
                         alt=""
                     />
                 </div>
-                <main-title tag="h2" class="platform-c__title">
+                <main-title tag="h3" class="platform-c__title title-blue">
                     {{ $t("platform.title") }}
                 </main-title>
                 <ul v-if="viewportWidth >= 767.98" class="platform-c__list">
@@ -184,13 +184,10 @@ export default {
     }
     // .platform-c__title
     &__title {
-        font-family: "AmpleSoftPro";
-        font-style: normal;
         font-weight: 500;
         font-size: 40px;
         line-height: 132.6%;
         text-align: center;
-        color: #000034;
         margin-bottom: 36px;
         @media (max-width: 767.98px) {
             font-size: 27px;
@@ -231,16 +228,8 @@ export default {
         }
         // .platform-c__item_title
         &_title {
-            font-family: "AmpleSoftPro";
-            font-style: normal;
-            font-weight: 500;
-            font-size: 27px;
-            line-height: 107.6%;
-            color: #000034;
             margin-bottom: 24px;
-            align-self: start;
             text-align: center;
-            width: 100%;
             @media (min-width: 1320.98px) {
                 white-space: nowrap;
             }

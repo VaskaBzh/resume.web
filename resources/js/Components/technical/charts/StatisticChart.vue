@@ -110,23 +110,6 @@ export default {
         padding-bottom: 12px;
     }
     // .graph__main
-    &__main {
-        background: rgba(255, 255, 255, 0.29);
-        border-radius: 21px;
-        //padding: 21px 17px 17px;
-        //@media (max-width: 767.98px) {
-        //    margin: 0 -15px 20px;
-        //    width: 105%;
-        //}
-        //@media (max-width: 479.98px) {
-        //    margin: 0 -20px 20px;
-        //    width: 110%;
-        //    border-radius: 10px;
-        //}
-        //@media (max-width: 380.98px) {
-        //    width: 115%;
-        //}
-    }
     // .grapth__head
     &__head {
         width: 100%;

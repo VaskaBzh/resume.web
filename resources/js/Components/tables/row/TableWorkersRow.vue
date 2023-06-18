@@ -122,12 +122,12 @@ export default {
     //}
     td {
         white-space: nowrap;
-        background: #ffffff;
+        background: #fafafa;
         padding-right: 10px;
         &:first-child {
             padding-left: 36px;
             position: relative;
-            border-radius: 21px 0 0 21px;
+            border-radius: 8px 0 0 8px;
             cursor: pointer;
             text-decoration: underline;
             text-decoration-color: transparent;
@@ -167,16 +167,14 @@ export default {
                     line-height: 12px;
                 }
             }
-            @media (max-width: 767.98px) {
-                border-radius: 12px 0 0 12px;
+            @media (max-width: 991.98px) {
                 padding-left: 10px;
             }
         }
         &:last-child {
-            border-radius: 0 21px 21px 0;
+            border-radius: 0 8px 8px 0;
             @media (max-width: 767.98px) {
                 justify-content: flex-end;
-                border-radius: 0 12px 12px 0;
             }
         }
     }

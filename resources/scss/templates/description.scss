@@ -2,7 +2,7 @@
     font-weight: 300;
     font-size: 20px;
     line-height: 140%;
-    color: #505050;
+    color: #7C7C7C;
     @media (max-width: $mobile) {
         font-size: 16px;
         line-height: 140%;
@@ -14,8 +14,22 @@
     b {
         font-weight: 400;
     }
+    &-list {
+        padding-left: 30px;
+        list-style: disc;
+        li {
+            list-style: disc;
+        }
+    }
     &-sm {
         font-size: 18px;
+        @media (max-width: $mobile) {
+            font-size: 16px;
+        }
+    }
+    &-xs {
+        font-size: 16px;
+        line-height: 150%;
         @media (max-width: $mobile) {
             font-size: 14px;
             line-height: 130%;

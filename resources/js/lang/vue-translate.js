@@ -99,7 +99,7 @@ const messages = {
         },
         home: {
             title: "Earn from mining together with allbtc pool",
-            text: "High income. Reliability. Efficiency.",
+            text: ["High income.", "Reliability.", "Efficiency."],
             button: "Start Mining",
             bitcoin_block: {
                 network: "Network difficulty",
@@ -240,12 +240,9 @@ const messages = {
                 no_workers_title: "Connect to allbtc pool",
             },
             info_blocks: {
-                title: "Earnings and payouts",
+                title: "Earnings",
                 payment: {
-                    titles: [
-                        "Earnings for yesterday",
-                        "Projected earnings for today",
-                    ],
+                    titles: ["Yesterday", "Projected for today"],
                 },
                 hash: {
                     titles: ["Current hashrate", "Avg.hashrate / 24"],
@@ -537,7 +534,7 @@ const messages = {
         },
         home: {
             title: "Зарабатывайте на майнинге вместе с allbtc pool",
-            text: "Высокий доход. Надежность. Эффективность.",
+            text: ["Высокий доход.", "Надежность.", "Эффективность."],
             button: "Начать майнинг",
             bitcoin_block: {
                 network: "Мощность сети",
@@ -678,12 +675,9 @@ const messages = {
                 no_workers_title: "Подключиться к allbtc pool",
             },
             info_blocks: {
-                title: "Начисления и выплаты",
+                title: "Начисления",
                 payment: {
-                    titles: [
-                        "Начисление за вчера",
-                        "Прогнозируемое начисление за сегодня",
-                    ],
+                    titles: ["Вчера", "Прогноз на сегодня"],
                 },
                 hash: {
                     titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],

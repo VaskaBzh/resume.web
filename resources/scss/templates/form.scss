@@ -42,27 +42,31 @@
                 }
             }
             &_button {
-                font-size: 20px;
-                line-height: 28px;
                 width: 100%;
                 text-align: center;
                 min-height: 51px;
-                @media (max-width: $mobileSmall) {
-                    min-height: 48px;
-                    font-weight: 700;
-                    font-size: 16px;
-                    line-height: 20px;
-                }
+                color: #EAEAEA;
+                font-weight: 700;
+                font-size: 18px;
+                line-height: 107.6%;
+                //@media (max-width: $mobileSmall) {
+                //    min-height: 48px;
+                //    font-weight: 700;
+                //    font-size: 16px;
+                //    line-height: 20px;
+                //}
             }
         }
     }
     h3 {
         color: #000000 !important;
+        font-weight: 500 !important;
+        font-size: 20px !important;
+        line-height: 120% !important;
+        font-family: Ubuntu, serif !important;
+        margin-bottom: 24px !important;
         @media (max-width: $mobile) {
-            margin-bottom: 0 !important;
-            &:after {
-                content: none !important;
-            }
+            margin-bottom: 20 !important;
         }
     }
     &_link {

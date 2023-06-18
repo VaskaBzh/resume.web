@@ -1,66 +1,63 @@
 <template>
     <div
-        class="profile"
+        class="profile cabinet__block cabinet__block-light"
         v-scroll="'opacity'"
-        :class="{ active: accountInfo.id === this.getActive }"
         :data-key="accountInfo.id"
     >
         <div class="profile__head">
-            <!--            <img-->
-            <!--                :src="-->
-            <!--                    'http://127.0.0.1:5173' +-->
-            <!--                    `/resources/assets/img/${this.accountInfo.img}`-->
-            <!--                "-->
-            <!--                @click="this.chageActive"-->
-            <!--                class="profile__icon"-->
-            <!--                alt="profile__icon"-->
-            <!--            />-->
-            <span class="profile__name" @click="chageActive">{{
+            <span class="profile_name" @click="chageActive">{{
                 account.name
             }}</span>
-            <div class="profile__settings" @click="toggleOpen">
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="32"
-                    height="32"
-                    viewBox="0 0 32 32"
-                    fill="none"
-                >
-                    <path
-                        d="M20 16C20 18.2091 18.2091 20 16 20C13.7909 20 12 18.2091 12 16C12 13.7909 13.7909 12 16 12C18.2091 12 20 13.7909 20 16Z"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                    <path
-                        d="M17.2061 4.08006C16.9318 4 16.6212 4 16 4C15.3788 4 15.0682 4 14.7939 4.08006C14.3922 4.19725 14.0375 4.43743 13.7795 4.76681C13.6033 4.99183 13.4879 5.28021 13.2572 5.85695C12.9256 6.68602 12.0052 7.11294 11.1581 6.83067L10.397 6.57708C9.8572 6.39713 9.58726 6.30715 9.32262 6.29173C8.93385 6.26908 8.54694 6.36042 8.20935 6.55454C7.97953 6.68668 7.77834 6.88788 7.37596 7.29026C6.94829 7.71793 6.73445 7.93176 6.59861 8.17585C6.39903 8.53446 6.3146 8.94578 6.35678 9.35401C6.38549 9.63187 6.4978 9.91265 6.72243 10.4742C7.0742 11.3536 6.73578 12.3584 5.92363 12.8458L5.55361 13.0678C4.98708 13.4078 4.70382 13.5777 4.49806 13.8117C4.31597 14.0188 4.17868 14.2613 4.09479 14.524C4 14.8208 4 15.1544 4 15.8217C4 16.6118 4 17.0069 4.12616 17.345C4.23764 17.6438 4.41895 17.9116 4.65498 18.1261C4.9221 18.3688 5.28527 18.5141 6.01155 18.8046C6.75378 19.1015 7.13595 19.9255 6.88315 20.6839L6.59628 21.5445C6.39758 22.1406 6.29823 22.4386 6.2892 22.7315C6.27833 23.0836 6.36065 23.4323 6.52783 23.7423C6.66687 24.0002 6.88904 24.2224 7.33333 24.6667C7.77764 25.111 7.9998 25.3331 8.25767 25.4722C8.56773 25.6393 8.91645 25.7217 9.26854 25.7108C9.56137 25.7018 9.85942 25.6024 10.4555 25.4037L11.1582 25.1695C12.0052 24.8871 12.9256 25.314 13.2572 26.143C13.4879 26.7198 13.6033 27.0082 13.7795 27.2332C14.0375 27.5626 14.3922 27.8028 14.7939 27.9199C15.0682 28 15.3788 28 16 28C16.6212 28 16.9318 28 17.2061 27.9199C17.6078 27.8028 17.9625 27.5626 18.2205 27.2332C18.3967 27.0082 18.5121 26.7198 18.7428 26.143C19.0744 25.314 19.9948 24.8872 20.8418 25.1697L21.5439 25.4038C22.14 25.6025 22.4381 25.7019 22.7309 25.7109C23.083 25.7218 23.4317 25.6395 23.7418 25.4723C23.9997 25.3332 24.2218 25.1111 24.6661 24.6668C25.1104 24.2225 25.3326 24.0003 25.4716 23.7424C25.6388 23.4324 25.7211 23.0837 25.7103 22.7316C25.7012 22.4387 25.6019 22.1406 25.4032 21.5446L25.1165 20.6845C24.8636 19.9258 25.2459 19.1016 25.9884 18.8046C26.7147 18.5141 27.0779 18.3688 27.345 18.1261C27.581 17.9116 27.7624 17.6438 27.8738 17.345C28 17.0069 28 16.6118 28 15.8217C28 15.1544 28 14.8208 27.9052 14.524C27.8213 14.2613 27.684 14.0188 27.5019 13.8117C27.2962 13.5777 27.0129 13.4078 26.4464 13.0678L26.0759 12.8455C25.2637 12.3582 24.9253 11.3535 25.277 10.4741C25.5016 9.91257 25.614 9.63177 25.6427 9.35391C25.6848 8.94568 25.6004 8.53436 25.4008 8.17575C25.265 7.93166 25.0512 7.71783 24.6235 7.29016C24.2211 6.88779 24.0199 6.68658 23.7901 6.55444C23.4525 6.36032 23.0656 6.26898 22.6768 6.29163C22.4122 6.30705 22.1423 6.39703 21.6024 6.57698L20.8418 6.8305C19.9948 7.11286 19.0744 6.686 18.7428 5.85695C18.5121 5.28021 18.3967 4.99184 18.2205 4.76681C17.9625 4.43743 17.6078 4.19725 17.2061 4.08006Z"
-                        stroke-width="2"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
-                <main-menu
-                    className="profile__menu"
-                    :opened="opened"
-                    :options="options"
-                    @clicked="getWallets"
-                ></main-menu>
-            </div>
+            <span
+                class="profile_status active"
+                v-if="accountInfo.id === getActive"
+            >
+                Активный
+            </span>
+            <span class="profile_status" v-else>Переключить</span>
+            <!--            <div class="profile__settings" @click="toggleOpen">-->
+            <!--                <svg-->
+            <!--                    xmlns="http://www.w3.org/2000/svg"-->
+            <!--                    width="32"-->
+            <!--                    height="32"-->
+            <!--                    viewBox="0 0 32 32"-->
+            <!--                    fill="none"-->
+            <!--                >-->
+            <!--                    <path-->
+            <!--                        d="M20 16C20 18.2091 18.2091 20 16 20C13.7909 20 12 18.2091 12 16C12 13.7909 13.7909 12 16 12C18.2091 12 20 13.7909 20 16Z"-->
+            <!--                        stroke-width="2"-->
+            <!--                        stroke-linecap="round"-->
+            <!--                        stroke-linejoin="round"-->
+            <!--                    />-->
+            <!--                    <path-->
+            <!--                        d="M17.2061 4.08006C16.9318 4 16.6212 4 16 4C15.3788 4 15.0682 4 14.7939 4.08006C14.3922 4.19725 14.0375 4.43743 13.7795 4.76681C13.6033 4.99183 13.4879 5.28021 13.2572 5.85695C12.9256 6.68602 12.0052 7.11294 11.1581 6.83067L10.397 6.57708C9.8572 6.39713 9.58726 6.30715 9.32262 6.29173C8.93385 6.26908 8.54694 6.36042 8.20935 6.55454C7.97953 6.68668 7.77834 6.88788 7.37596 7.29026C6.94829 7.71793 6.73445 7.93176 6.59861 8.17585C6.39903 8.53446 6.3146 8.94578 6.35678 9.35401C6.38549 9.63187 6.4978 9.91265 6.72243 10.4742C7.0742 11.3536 6.73578 12.3584 5.92363 12.8458L5.55361 13.0678C4.98708 13.4078 4.70382 13.5777 4.49806 13.8117C4.31597 14.0188 4.17868 14.2613 4.09479 14.524C4 14.8208 4 15.1544 4 15.8217C4 16.6118 4 17.0069 4.12616 17.345C4.23764 17.6438 4.41895 17.9116 4.65498 18.1261C4.9221 18.3688 5.28527 18.5141 6.01155 18.8046C6.75378 19.1015 7.13595 19.9255 6.88315 20.6839L6.59628 21.5445C6.39758 22.1406 6.29823 22.4386 6.2892 22.7315C6.27833 23.0836 6.36065 23.4323 6.52783 23.7423C6.66687 24.0002 6.88904 24.2224 7.33333 24.6667C7.77764 25.111 7.9998 25.3331 8.25767 25.4722C8.56773 25.6393 8.91645 25.7217 9.26854 25.7108C9.56137 25.7018 9.85942 25.6024 10.4555 25.4037L11.1582 25.1695C12.0052 24.8871 12.9256 25.314 13.2572 26.143C13.4879 26.7198 13.6033 27.0082 13.7795 27.2332C14.0375 27.5626 14.3922 27.8028 14.7939 27.9199C15.0682 28 15.3788 28 16 28C16.6212 28 16.9318 28 17.2061 27.9199C17.6078 27.8028 17.9625 27.5626 18.2205 27.2332C18.3967 27.0082 18.5121 26.7198 18.7428 26.143C19.0744 25.314 19.9948 24.8872 20.8418 25.1697L21.5439 25.4038C22.14 25.6025 22.4381 25.7019 22.7309 25.7109C23.083 25.7218 23.4317 25.6395 23.7418 25.4723C23.9997 25.3332 24.2218 25.1111 24.6661 24.6668C25.1104 24.2225 25.3326 24.0003 25.4716 23.7424C25.6388 23.4324 25.7211 23.0837 25.7103 22.7316C25.7012 22.4387 25.6019 22.1406 25.4032 21.5446L25.1165 20.6845C24.8636 19.9258 25.2459 19.1016 25.9884 18.8046C26.7147 18.5141 27.0779 18.3688 27.345 18.1261C27.581 17.9116 27.7624 17.6438 27.8738 17.345C28 17.0069 28 16.6118 28 15.8217C28 15.1544 28 14.8208 27.9052 14.524C27.8213 14.2613 27.684 14.0188 27.5019 13.8117C27.2962 13.5777 27.0129 13.4078 26.4464 13.0678L26.0759 12.8455C25.2637 12.3582 24.9253 11.3535 25.277 10.4741C25.5016 9.91257 25.614 9.63177 25.6427 9.35391C25.6848 8.94568 25.6004 8.53436 25.4008 8.17575C25.265 7.93166 25.0512 7.71783 24.6235 7.29016C24.2211 6.88779 24.0199 6.68658 23.7901 6.55444C23.4525 6.36032 23.0656 6.26898 22.6768 6.29163C22.4122 6.30705 22.1423 6.39703 21.6024 6.57698L20.8418 6.8305C19.9948 7.11286 19.0744 6.686 18.7428 5.85695C18.5121 5.28021 18.3967 4.99184 18.2205 4.76681C17.9625 4.43743 17.6078 4.19725 17.2061 4.08006Z"-->
+            <!--                        stroke-width="2"-->
+            <!--                        stroke-linecap="round"-->
+            <!--                        stroke-linejoin="round"-->
+            <!--                    />-->
+            <!--                </svg>-->
+            <!--                <main-menu-->
+            <!--                    className="profile__menu"-->
+            <!--                    :opened="opened"-->
+            <!--                    :options="options"-->
+            <!--                    @clicked="getWallets"-->
+            <!--                ></main-menu>-->
+            <!--            </div>-->
         </div>
         <div class="profile__body">
             <div class="profile__body-block">
-                <span class="profile__body-name">{{
+                <span class="description description-xs">{{
                     $t("accounts.block.titles[0]")
                 }}</span>
-                <span class="profile__body-value">
+                <span class="description description-xs">
                     {{ hashRate }} {{ accountInfo.unit }}H/s</span
                 >
             </div>
             <div class="profile__body-block">
-                <span class="profile__body-name">{{
+                <span class="description description-xs">{{
                     $t("accounts.block.titles[1]")
                 }}</span>
-                <span class="profile__body-value">
+                <span class="description description-xs">
                     {{ accountInfo.workersActive }} /
                     {{ accountInfo.workersAll }}
                     <span
@@ -70,16 +67,20 @@
                 </span>
             </div>
             <div class="profile__body-block">
-                <span class="profile__body-name">{{
+                <span class="description description-xs">{{
                     $t("accounts.block.titles[2]")
                 }}</span>
-                <span class="profile__body-value"> {{ todayProfit }} BTC</span>
+                <span class="description description-xs">
+                    {{ todayProfit }} BTC</span
+                >
             </div>
             <div class="profile__body-block">
-                <span class="profile__body-name">{{
+                <span class="description description-xs">{{
                     $t("accounts.block.titles[3]")
                 }}</span>
-                <span class="profile__body-value"> {{ myPayment }} BTC</span>
+                <span class="description description-xs">
+                    {{ myPayment }} BTC</span
+                >
             </div>
         </div>
     </div>
@@ -202,84 +203,10 @@ export default {
 <style lang="scss" scoped>
 .profile {
     width: 100%;
-    padding: 16px;
-    transition: all 0.7s ease 0s;
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 21px;
-    position: relative;
-    filter: drop-shadow(0px 8px 24px rgba(129, 135, 189, 0.15));
-    backdrop-filter: blur(5px);
-    -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 10%);
-    @media (max-width: 479.98px) {
-        //width: calc(100% + 40px);
-        //margin: 0 -20px;
-        //border-radius: 12px;
-    }
-    &:before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0;
-        width: 100%;
-        transition: all 0.7s ease 0s;
-        height: 100%;
-        z-index: 0;
-        opacity: 0;
-        visibility: hidden;
-        background: radial-gradient(
-            66.49% 172.2% at 2.47% 5.67%,
-            rgba(65, 130, 236, 0.76) 0%,
-            #4182ec 100%
-        );
-        border-radius: 21px;
-    }
-    &.active {
-        -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 20%);
-        &:before {
-            visibility: visible;
-            opacity: 1;
-        }
-        .profile {
-            &__name {
-                color: #ffffff;
-                &:hover {
-                    text-decoration-color: #fff;
-                }
-            }
-            &__body {
-                background-color: transparent;
-                transition: all 0.5s ease 0s;
-                &-block {
-                    background: transparent;
-                }
-                &:before {
-                    visibility: visible;
-                    opacity: 1;
-                    @media (max-width: 479.98px) {
-                        border-radius: 12px;
-                    }
-                }
-                &-name,
-                &-value {
-                    color: #fff;
-                    span {
-                        color: #fff;
-                    }
-                }
-            }
-        }
-        svg {
-            stroke: #ffffff;
-        }
-        .form_row {
-            height: auto;
-            width: 100%;
-            position: relative;
-            svg {
-                fill: #fff;
-            }
-        }
-    }
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 24px 24px 24px 24px;
     svg {
         stroke: #417fe5;
         width: 24px;
@@ -313,125 +240,92 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 16px;
-        @media (max-width: 479.98px) {
-            margin-bottom: 40px;
-            position: relative;
-            &:before {
-                content: "";
-                position: absolute;
-                bottom: -20px;
-                left: 0;
-                width: 100%;
-                height: 1px;
-                background-color: #d7d8d9;
-            }
-        }
     }
 
-    &__name {
+    &_name {
+        color: #3f7bdd;
+        font-weight: 700;
         font-size: 24px;
         line-height: 30px;
         font-family: AmpleSoftPro, serif;
-        font-weight: 700;
-        text-decoration: underline;
-        text-decoration-color: transparent;
-        transition: all 0.7s ease 0s;
-        cursor: pointer;
         z-index: 1;
-        border: 1px solid transparent;
-        &:hover {
-            text-decoration-color: #331a38;
+    }
+    &_status {
+        color: #cacaca;
+        font-family: AmpleSoftPro, serif;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        text-decoration-line: underline;
+        transition: all 0.5s ease 0s;
+        cursor: pointer;
+        &.active {
+            color: #13d60e;
+            text-decoration-color: transparent;
         }
     }
     &__body {
-        position: relative;
-        padding: 24px 16px 0;
         display: flex;
         flex-wrap: wrap;
-        background-color: #fff;
         border-radius: 21px;
         transition: all 0.5s ease 0.2s;
-        backdrop-filter: blur(5px);
-        &:before {
-            content: "";
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            opacity: 0;
-            visibility: hidden;
-            background: linear-gradient(
-                113.15deg,
-                rgba(255, 255, 255, 0.2) 31.75%,
-                rgba(255, 255, 255, 0) 121.06%
-            );
-            transition: all 0.1s ease 0s;
-            border-radius: 21px;
-        }
-        @media (max-width: 479.98px) {
-            flex-direction: column;
-            gap: 6px;
-            color: rgba(255, 255, 255, 0.3);
-            background-color: transparent;
-            padding: 0;
-        }
+        gap: 24px;
+        justify-content: space-between;
+        //@media (max-width: 479.98px) {
+        //    flex-direction: column;
+        //    gap: 6px;
+        //    color: rgba(255, 255, 255, 0.3);
+        //    background-color: transparent;
+        //    padding: 0;
+        //}
         &-block {
-            width: calc(50% - 5px);
+            width: calc(50% - 12px);
             display: flex;
             flex-direction: column;
-            margin: 0 auto 24px 0;
-            z-index: 1;
-            transition: all 0.5s ease 0s;
-
-            &:nth-child(2n) {
-                margin-right: 0;
-            }
-            @media (max-width: 479.98px) {
-                width: 100%;
-                background: #ffffff;
-                border-radius: 12px;
-                border: 0.5px solid #d7d8d9;
-                margin: 0;
-                padding: 4px 10px;
-            }
+            gap: 8px;
+            //@media (max-width: 479.98px) {
+            //    width: 100%;
+            //    background: #ffffff;
+            //    border-radius: 12px;
+            //    border: 0.5px solid #d7d8d9;
+            //    margin: 0;
+            //    padding: 4px 10px;
+            //}
         }
-        &-name {
-            color: rgba(0, 0, 0, 0.62);
-            font-size: 16px;
-            line-height: 23px;
-            margin-bottom: 4px;
-            transition: all 0.5s ease 0s;
-            z-index: 1;
-            @media (max-width: 479.98px) {
-                font-size: 16px;
-                line-height: 20px;
-                color: #818c99;
-                margin-bottom: 6px;
-            }
-        }
-        &-value {
-            font-size: 18px;
-            line-height: 25px;
-            font-weight: 500;
-            transition: all 0.5s ease 0s;
-            z-index: 1;
-            span {
-                color: rgba(0, 0, 0, 0.62);
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 23px;
-                transition: all 0.5s ease 0s;
-                z-index: 1;
-            }
-            @media (max-width: 479.98px) {
-                font-size: 16px;
-                line-height: 23px;
-                color: #000034;
-            }
-        }
+        //&-name {
+        //    color: rgba(0, 0, 0, 0.62);
+        //    font-size: 16px;
+        //    line-height: 23px;
+        //    margin-bottom: 4px;
+        //    transition: all 0.5s ease 0s;
+        //    z-index: 1;
+        //    @media (max-width: 479.98px) {
+        //        font-size: 16px;
+        //        line-height: 20px;
+        //        color: #818c99;
+        //        margin-bottom: 6px;
+        //    }
+        //}
+        //&-value {
+        //    font-size: 18px;
+        //    line-height: 25px;
+        //    font-weight: 500;
+        //    transition: all 0.5s ease 0s;
+        //    z-index: 1;
+        //    span {
+        //        color: rgba(0, 0, 0, 0.62);
+        //        font-weight: 400;
+        //        font-size: 16px;
+        //        line-height: 23px;
+        //        transition: all 0.5s ease 0s;
+        //        z-index: 1;
+        //    }
+        //    @media (max-width: 479.98px) {
+        //        font-size: 16px;
+        //        line-height: 23px;
+        //        color: #000034;
+        //    }
+        //}
     }
 }
 </style>

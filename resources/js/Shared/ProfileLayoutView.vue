@@ -82,13 +82,7 @@ export default {
 <style lang="scss">
 .account {
     margin-top: 20px;
-    @media (max-width: 1280.98px) {
-        margin-top: 104px;
-    }
     @media (max-width: 991.98px) {
-        margin-top: 35px;
-    }
-    @media (max-width: 767.98px) {
         margin-top: 0;
     }
 
@@ -96,12 +90,6 @@ export default {
         display: flex;
         justify-content: space-between;
         position: relative;
-
-        .padding {
-            @media (min-width: 1271px) {
-                padding-left: 330px;
-            }
-        }
     }
 }
 </style>

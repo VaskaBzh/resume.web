@@ -8,7 +8,7 @@
                 $page.url.startsWith('/profile/wallets'),
         }"
         ref="tabs"
-        v-if="this.viewportWidth > 767.98"
+        v-if="this.viewportWidth > 991.98"
     >
         <a class="nav-tabs_link-back" href="#" @click="back">
             <svg
@@ -29,7 +29,7 @@
         <Link
             :href="route('statistic')"
             :class="{
-                burger_link: this.viewportWidth < 776.98,
+                burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url === '/profile/statistic',
             }"
             class="nav-tabs__tab"
@@ -51,7 +51,7 @@
         <Link
             :href="route('accounts')"
             :class="{
-                burger_link: this.viewportWidth < 776.98,
+                burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url === '/profile/accounts',
             }"
             class="nav-tabs__tab"
@@ -73,7 +73,7 @@
         <Link
             :href="route('workers')"
             :class="{
-                burger_link: this.viewportWidth < 776.98,
+                burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url === '/profile/workers',
             }"
             class="nav-tabs__tab"
@@ -113,7 +113,7 @@
         <Link
             :href="route('income')"
             :class="{
-                burger_link: this.viewportWidth < 776.98,
+                burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url === '/profile/income',
             }"
             class="nav-tabs__tab"
@@ -150,7 +150,7 @@
         <Link
             :href="route('connecting')"
             :class="{
-                burger_link: this.viewportWidth < 776.98,
+                burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url === '/profile/connecting',
             }"
             class="nav-tabs__tab"
@@ -173,7 +173,7 @@
             class="nav-tabs__tab"
             :href="route('wallets')"
             :class="{
-                burger_link: this.viewportWidth < 776.98,
+                burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url === '/profile/wallets',
             }"
         >
@@ -284,35 +284,31 @@ export default {
 </script>
 <style lang="scss">
 .nav-tabs {
-    max-width: 280px;
+    max-width: 240px;
     width: 100%;
     display: flex;
     flex-direction: column;
-    border-radius: 21px;
-    background-color: rgba(255, 255, 255, 0.29);
-    margin-right: 30px;
+    border-radius: 12px;
+    background: transparent;
     height: fit-content;
     -webkit-box-shadow: 0 11px 34px 0 transparent;
     transition: all 0.8s ease 0s, top 0s ease 0s, position 0s ease 0s,
         padding 0s ease 0s, width 0s ease 0s;
     z-index: 9;
-    @media (min-width: 1271px) {
-        &:hover {
-            -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 10%);
-        }
+    @media (min-width: 991px) {
+        //&:hover {
+        //    -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 10%);
+        //}
         overflow: hidden;
-        border: 0.5px solid #fdfefe;
         position: fixed;
         top: 112px;
-        padding: 12px;
         transform: translateY(0);
     }
     &_link-back {
         display: none;
-        @media (min-width: 1271px) {
-            border: 1px solid #fff;
-            background: rgba(255, 255, 255, 0.3);
-            border-radius: 13px;
+        @media (min-width: 991px) {
+            background: #fafafa;
+            border-radius: 8px;
             transition: background 0.3s ease 0s;
             display: inline-flex;
             align-items: center;
@@ -325,10 +321,13 @@ export default {
             svg {
                 width: 24px;
                 height: 24px;
-                stroke: #131a29;
+                stroke: #343434;
             }
             &:hover {
-                background: #fff;
+                background: #5389e1;
+                svg {
+                    stroke: #fafafa;
+                }
             }
         }
     }
@@ -338,19 +337,19 @@ export default {
     //    }
     //}
     &-full-page {
-        @media (min-width: 1271px) {
+        @media (min-width: 991.98px) {
             position: absolute;
             border-radius: 13px;
             padding: 0;
             transition: all 0s;
-            top: 7px;
+            top: 3px;
             background-color: transparent;
             border: 0.5px solid transparent;
             width: fit-content;
             height: fit-content;
             -webkit-box-shadow: 0 11px 34px 0 transparent !important;
             &.fixed {
-                @media (min-width: 1271px) {
+                @media (min-width: 991px) {
                     transform: translate(0);
                 }
             }
@@ -376,34 +375,34 @@ export default {
             }
         }
     }
-    @media (max-width: 1270px) {
-        max-height: 68px;
-        height: 100%;
-        max-width: 131%;
-        width: 131%;
-        overflow-x: scroll;
-        overflow-y: visible;
-        background-color: transparent;
-        padding: 4px calc((1270px - 970px) / 2) 0;
-        border-radius: 0;
-        flex-direction: row;
-        box-sizing: border-box;
-        gap: 6px;
-        position: absolute;
-        top: 0;
-        left: 0;
-        margin: 0 calc((1270px - 970px) / -2);
-        &::-webkit-scrollbar {
-            width: 0;
-        }
-    }
+    //@media (max-width: 1270px) {
+    //    max-height: 68px;
+    //    height: 100%;
+    //    max-width: 131%;
+    //    width: 131%;
+    //    overflow-x: scroll;
+    //    overflow-y: visible;
+    //    background-color: transparent;
+    //    padding: 4px calc((1270px - 970px) / 2) 0;
+    //    border-radius: 0;
+    //    flex-direction: row;
+    //    box-sizing: border-box;
+    //    gap: 6px;
+    //    position: absolute;
+    //    top: 0;
+    //    left: 0;
+    //    margin: 0 calc((1270px - 970px) / -2);
+    //    &::-webkit-scrollbar {
+    //        width: 0;
+    //    }
+    //}
     @media (max-width: 991.98px) {
         padding: 4px calc((992px - 750px) / 2) 0;
         margin: 0 calc((992px - 750px) / -2);
         max-width: calc(100% + (992px - 750px) / 2);
         width: calc(100% + (992px - 750px) / 2);
     }
-    @media (max-width: 767.98px) {
+    @media (max-width: 991.98px) {
         padding: 4px 15px 0 30px;
         margin: 0 -15px;
         max-width: calc(100% + 15px);
@@ -417,11 +416,10 @@ export default {
         width: calc(100% + 30px);
     }
     &__tab {
+        font-weight: 500;
         width: 100%;
-        line-height: 28px;
-        font-size: 20px;
-        color: #000000;
-        padding: 0 14px 0 16px;
+        color: #80809a;
+        padding: 5px 20px 5px 16px;
         display: inline-flex;
         align-items: center;
         transition: all 0.7s ease 0s, height 0s ease 0s, min-height 0s ease 0s,
@@ -429,68 +427,50 @@ export default {
         position: relative;
         height: 60px;
         min-height: 60px;
-        font-weight: 500;
         user-select: none;
+        font-weight: 400;
         -webkit-tap-highlight-color: transparent;
         //-webkit-box-shadow: 0 11px 34px 0 transparent;
-        @media (min-width: 1271px) {
-            font-family: AmpleSoftPro, serif;
+        @media (min-width: 991px) {
             position: relative;
             color: #000;
-            font-weight: 500;
-            border-radius: 14px;
+            border-radius: 12px;
+            font-weight: 400;
+            font-size: 20px;
+            font-family: AmpleSoftPro, serif;
+            line-height: 132.6%;
             gap: 16px;
             background: transparent;
             //transition: all 0.3s ease 0s;
-            &:before {
-                filter: drop-shadow(0px 8px 24px rgba(129, 135, 189, 0.15));
-                backdrop-filter: blur(5px);
-                content: "";
-                width: 100%;
-                height: 100%;
-                border-radius: 14px;
-                position: absolute;
-                left: 0;
-                top: 0;
-                background: linear-gradient(
-                    90deg,
-                    #ffffff 0%,
-                    rgba(255, 255, 255, 0) 121.2%
-                );
-                opacity: 0;
-                visibility: hidden;
-                //transition: all 0.3s ease 0s;
-                z-index: -1;
-            }
             svg {
                 width: 22px;
                 height: 22px;
             }
         }
-        @media (max-width: 1270px) {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 8px;
-            color: #818c99;
-            height: 40px;
-            min-height: 40px;
-            padding: 0 20px;
-            justify-content: center;
-            font-size: 18px;
-            line-height: 23px;
-            border: none;
-            width: auto;
-            white-space: nowrap;
-            svg {
-                display: none;
-            }
-        }
+        //@media (max-width: 1270px) {
+        //    background: rgba(255, 255, 255, 0.5);
+        //    border-radius: 8px;
+        //    color: #818c99;
+        //    height: 40px;
+        //    min-height: 40px;
+        //    padding: 0 20px;
+        //    justify-content: center;
+        //    font-size: 18px;
+        //    line-height: 23px;
+        //    border: none;
+        //    width: auto;
+        //    white-space: nowrap;
+        //    svg {
+        //        display: none;
+        //    }
+        //}
         @media (max-width: 991.98px) {
             font-size: 16px;
             line-height: 16px;
             height: 34px;
             min-height: 34px;
         }
-        @media (max-width: 767.98px) {
+        @media (max-width: 991.98px) {
             svg {
                 display: block;
             }
@@ -502,14 +482,14 @@ export default {
             line-height: 14px;
         }
         svg {
-            @media (min-width: 1270px) {
+            @media (min-width: 991px) {
                 fill: #417fe5;
                 transition: all 0.3s ease;
             }
         }
         &-stroke {
             svg {
-                @media (min-width: 1270px) {
+                @media (min-width: 991px) {
                     fill: transparent;
                     stroke: #417fe5;
                 }
@@ -557,23 +537,9 @@ export default {
         }
     }
     .router-link-active {
-        @media (max-width: 1270px) {
-            color: #4182ec;
-            background: #ffffff;
-            border: 0.5px solid rgba(0, 0, 0, 0.08);
-            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.04);
-        }
-        @media (min-width: 1271px) {
-            &:before {
-                opacity: 1;
-                visibility: visible;
-            }
-            svg {
-                stroke: transparent;
-                stroke-width: 0;
-                fill-opacity: 1;
-                fill: #417fe5;
-            }
+        @media (min-width: 991.98px) {
+            color: #5389e1;
+            background: #dce4f1;
         }
     }
 }

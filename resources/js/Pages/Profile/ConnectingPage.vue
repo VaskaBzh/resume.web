@@ -2,10 +2,10 @@
     <Head :title="$t('connection.title')" />
     <div class="connecting profile">
         <div class="connecting__wrapper">
-            <main-title tag="h2">{{
+            <main-title class="cabinet_title" tag="h3">{{
                 $t("connection.title")
             }}</main-title>
-            <div class="wrap">
+            <div>
                 <copy-block
                     v-for="(object, i) in this.copyObject"
                     :key="i"
@@ -66,7 +66,7 @@ export default {
 <style lang="scss" scoped>
 .connecting {
     .title {
-        margin-bottom: 16px;
+        margin-bottom: 40px;
         @media (max-width: 767.98px) {
             margin-bottom: 18px;
         }

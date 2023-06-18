@@ -2,20 +2,36 @@
     <Head title="Главная Allbtc" />
     <div class="home">
         <div class="home__container">
-            <div class="home__main page__main">
+            <div class="home__main page__main section">
                 <div class="home__content page__content">
                     <main-title
                         tag="h1"
-                        class="home__title page__title"
+                        class="home__title page__title title-blue"
                         v-scroll="'left delay--md'"
                     >
                         {{ $t("home.title") }}
                     </main-title>
-                    <div class="description" v-scroll="'left'">
-                        {{ $t("home.text") }}
+                    <ul
+                        class="description description-list"
+                        v-if="viewportWidth > 479.98"
+                        v-scroll="'left'"
+                    >
+                        <li>
+                            {{ $t("home.text[0]") }}
+                        </li>
+                        <li>
+                            {{ $t("home.text[1]") }}
+                        </li>
+                        <li>
+                            {{ $t("home.text[2]") }}
+                        </li>
+                    </ul>
+                    <div class="description" v-else v-scroll="'left'">
+                        {{ $t("home.text[0]") }}{{ $t("home.text[1]")
+                        }}{{ $t("home.text[2]") }}
                     </div>
                     <blue-button
-                        class="home__button"
+                        class="button-lg button-with-propeller"
                         v-if="this.auth_user"
                         v-scroll="'left'"
                     >
@@ -24,7 +40,11 @@
                             <div class="button_propeller"></div
                         ></Link>
                     </blue-button>
-                    <blue-button class="home__button" v-else v-scroll="'left'">
+                    <blue-button
+                        class="button-lg button-with-propeller"
+                        v-else
+                        v-scroll="'left'"
+                    >
                         <a href="#" data-popup="#auth" class="all-link">
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
@@ -34,42 +54,87 @@
 
                 <div v-if="viewportWidth >= 991.98" class="home__background">
                     <img
+                        v-if="!getTheme"
                         class="home__background_image home__background_1"
                         src="../../assets/img/main_an_img_1.png"
                         alt=""
                     />
                     <img
+                        v-else
+                        class="home__background_image home__background_1"
+                        src="../../assets/img/main_an_img_1-dark.png"
+                        alt=""
+                    />
+                    <img
+                        v-if="!getTheme"
                         class="home__background_image home__background_2"
                         src="../../assets/img/main_an_img_2.png"
                         alt=""
                     />
                     <img
+                        v-else
+                        class="home__background_image home__background_2"
+                        src="../../assets/img/main_an_img_2-dark.png"
+                        alt=""
+                    />
+                    <img
+                        v-if="!getTheme"
                         class="home__background_image home__background_3"
                         src="../../assets/img/main_an_img_3.png"
                         alt=""
                     />
                     <img
+                        v-else
+                        class="home__background_image home__background_3"
+                        src="../../assets/img/main_an_img_3-dark.png"
+                        alt=""
+                    />
+                    <img
+                        v-if="!getTheme"
                         class="home__background_image home__background_4"
                         src="../../assets/img/main_an_img_4.png"
                         alt=""
                     />
                     <img
+                        v-else
+                        class="home__background_image home__background_4"
+                        src="../../assets/img/main_an_img_4-dark.png"
+                        alt=""
+                    />
+                    <img
+                        v-if="!getTheme"
                         class="home__background_image home__background_5"
                         src="../../assets/img/main_an_img_5.png"
+                        alt=""
+                    />
+                    <img
+                        v-else
+                        class="home__background_image home__background_5"
+                        src="../../assets/img/main_an_img_5-dark.png"
                         alt=""
                     />
                 </div>
                 <div v-else class="home__background">
                     <img
+                        v-if="!getTheme"
                         class="home__background_image"
                         src="../../assets/img/main_an_img_full.png"
                         alt=""
                     />
+                    <img
+                        v-else
+                        class="home__background_image"
+                        src="../../assets/img/main_an_img_full-dark.png"
+                        alt=""
+                    />
                 </div>
             </div>
-            <div class="home__info">
-                <div class="home__info_main home-im wrap wrap-no-overflow">
-                    <div class="home-im__main wrap__block" v-scroll="'left'">
+            <div class="home__info section">
+                <div class="home__info_main home-im">
+                    <div
+                        class="home-im__main section__block section__block-light"
+                        v-scroll="'left'"
+                    >
                         <blue-button
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
@@ -87,7 +152,14 @@
                             >
                         </blue-button>
                         <img
+                            v-if="!getTheme"
                             src="../../assets/img/graph.png"
+                            alt=""
+                            class="home-im__image"
+                        />
+                        <img
+                            v-else
+                            src="../../assets/img/graph-dark.png"
                             alt=""
                             class="home-im__image"
                         />
@@ -98,7 +170,7 @@
                                     <p class="text">
                                         {{ $t("home.bitcoin_block.network") }}
                                     </p>
-                                    <div class="item_info bgb">
+                                    <div class="subtitle subtitle-value">
                                         <span
                                             v-value-scroll
                                             v-if="this.btcInfo.btc"
@@ -119,7 +191,7 @@
                                     <p class="text">
                                         {{ $t("home.bitcoin_block.next_diff") }}
                                     </p>
-                                    <div class="item_info bgb">
+                                    <div class="subtitle subtitle-value">
                                         <span
                                             v-value-scroll
                                             v-if="this.btcInfo.btc"
@@ -151,52 +223,63 @@
                                         <span v-else>... / ...</span>
                                     </div>
                                 </li>
-                            </ul>
-
-                            <div class="home-im__content_date">
-                                <p class="text">
-                                    {{ $t("home.bitcoin_block.date_diff[0]") }}
-                                </p>
-                                <div
-                                    class="item_info item_info__block"
-                                    v-if="this.btcInfo.btc"
-                                >
-                                    <span
-                                        class="item_info_text"
-                                        v-if="
-                                            String(
-                                                this.btcInfo.btc.time / 24
-                                            ).substr(0, 1) !== '0'
-                                        "
-                                        >{{
-                                            String(
-                                                this.btcInfo.btc.time / 24
-                                            ).substr(0, 1)
+                                <li class="home-im__content_item">
+                                    <p class="text">
+                                        {{
+                                            $t(
+                                                "home.bitcoin_block.date_diff[0]"
+                                            )
                                         }}
+                                    </p>
+                                    <div
+                                        class="subtitle subtitle-value"
+                                        v-if="this.btcInfo.btc"
+                                    >
+                                        <span
+                                            v-if="
+                                                String(
+                                                    this.btcInfo.btc.time / 24
+                                                ).substr(0, 1) !== '0'
+                                            "
+                                            >{{
+                                                String(
+                                                    this.btcInfo.btc.time / 24
+                                                ).substr(0, 1)
+                                            }}
+                                            {{
+                                                $t(
+                                                    "home.bitcoin_block.date_diff[1]"
+                                                )
+                                            }}</span
+                                        >
+                                        <span
+                                            v-if="
+                                                this.btcInfo.btc.time % 24 !== 0
+                                            "
+                                            >{{ this.btcInfo.btc.time % 24 }}
+                                            {{
+                                                $t(
+                                                    "home.bitcoin_block.date_diff[2]"
+                                                )
+                                            }}</span
+                                        >
+                                    </div>
+                                    <div class="subtitle subtitle-value" v-else>
+                                        ...
                                         {{
                                             $t(
                                                 "home.bitcoin_block.date_diff[1]"
                                             )
-                                        }}</span
-                                    >
-                                    <span
-                                        class="item_info_text"
-                                        v-if="this.btcInfo.btc.time % 24 !== 0"
-                                        >{{ this.btcInfo.btc.time % 24 }}
+                                        }}
+                                        ...
                                         {{
                                             $t(
                                                 "home.bitcoin_block.date_diff[2]"
                                             )
-                                        }}</span
-                                    >
-                                </div>
-                                <div class="item_info" v-else>
-                                    ...
-                                    {{ $t("home.bitcoin_block.date_diff[1]") }}
-                                    ...
-                                    {{ $t("home.bitcoin_block.date_diff[2]") }}
-                                </div>
-                            </div>
+                                        }}
+                                    </div>
+                                </li>
+                            </ul>
                             <blue-button
                                 class="big"
                                 v-if="viewportWidth >= 991.98 && this.auth_user"
@@ -222,12 +305,12 @@
                     </div>
                     <div class="home-in__row">
                         <div
-                            class="home-in__row_item home-inri wrap__block"
+                            class="home-in__row_item home-inri section__block section__block-light"
                             v-scroll="'left important--delay'"
                         >
                             <div class="home-inri__image mon"></div>
                             <div class="home-inri__content">
-                                <main-title tag="h4" class="home-inri__title">
+                                <main-title tag="h4">
                                     {{ $t("home.promo_blocks.payment.title") }}
                                 </main-title>
                                 <div class="text">
@@ -236,7 +319,7 @@
                                 <Link
                                     :href="route('accounts')"
                                     v-if="this.auth_user"
-                                    class="home-inri__link"
+                                    class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link")
                                     }}<svg
                                         width="14"
@@ -257,7 +340,7 @@
                                     href="#"
                                     v-else
                                     data-popup="#auth"
-                                    class="home-inri__link"
+                                    class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link")
                                     }}<svg
                                         width="14"
@@ -277,18 +360,18 @@
                             </div>
                         </div>
                         <div
-                            class="home-in__row_item home-inri asic__con wrap__block"
+                            class="home-in__row_item home-inri section__block section__block-light"
                             v-scroll="'left important--delay--md'"
                         >
                             <div class="home-inri__image asic"></div>
                             <div class="home-inri__content">
-                                <main-title tag="h4" class="home-inri__title">
+                                <main-title tag="h4">
                                     {{ $t("home.promo_blocks.fpps.title") }}
                                 </main-title>
                                 <div class="text">
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
-                                <a href="#" class="home-inri__link"
+                                <a href="#" class="link link-blue"
                                     >{{ $t("home.promo_blocks.fpps.link")
                                     }}<svg
                                         width="14"
@@ -312,7 +395,21 @@
             </div>
         </div>
     </div>
-    <collective-platform-view />
+    <info-view class="info-home">
+        <template v-slot:pc>
+            <info-card
+                class="sm"
+                v-for="(card, i) in cards"
+                :key="i"
+                :card="card"
+            ></info-card>
+        </template>
+        <template v-slot:mobile>
+            <swiper-slide :key="i" v-for="(card, i) in cards">
+                <info-card class="sm" :key="i" :card="card"></info-card>
+            </swiper-slide>
+        </template>
+    </info-view>
     <about-panel-view />
     <mining-info-view :auth_user="this.auth_user" />
 </template>
@@ -320,10 +417,12 @@
 import { Head, Link } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import CollectivePlatformView from "@/Components/technical/views/CollectivePlatformView.vue";
+import InfoView from "@/Components/technical/views/InfoView.vue";
+import InfoCard from "@/Components/technical/blocks/InfoCard.vue";
 import AboutPanelView from "@/Components/technical/views/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";
+import { SwiperSlide } from "swiper/vue";
 
 export default {
     props: {
@@ -335,11 +434,13 @@ export default {
     components: {
         MiningInfoView,
         AboutPanelView,
-        CollectivePlatformView,
+        InfoView,
+        InfoCard,
         BlueButton,
         MainTitle,
         Head,
         Link,
+        SwiperSlide,
     },
     data() {
         return {
@@ -351,7 +452,26 @@ export default {
         this.handleResize();
     },
     computed: {
-        ...mapGetters(["btcInfo"]),
+        ...mapGetters(["btcInfo", "getTheme"]),
+        cards() {
+            return [
+                {
+                    title: this.$t("platform.blocks[0].title"),
+                    img: "platform-img-1.png",
+                    text: this.$t("platform.blocks[0].text"),
+                },
+                {
+                    title: this.$t("platform.blocks[1].title"),
+                    img: "platform-img-2.png",
+                    text: this.$t("platform.blocks[1].text"),
+                },
+                {
+                    title: this.$t("platform.blocks[2].title"),
+                    img: "platform-img-3.png",
+                    text: this.$t("platform.blocks[2].text"),
+                },
+            ];
+        },
     },
     methods: {
         handleResize() {
@@ -366,133 +486,44 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-    margin-bottom: 100px;
-    @media (max-width: 1270px) {
-        margin-bottom: 40px;
-    }
-    @media (max-width: 767.98px) {
-        margin-bottom: 30px;
-    }
-    @media (max-width: 479.98px) {
-        margin-bottom: 16px;
-    }
-
     // .home__main
     &__main {
         display: flex;
-        margin-bottom: 25.7em;
-        @media (max-width: 1270px) {
-            margin-bottom: 19em;
-        }
-        @media (max-width: 991.98px) {
-            margin-bottom: -40px;
+        @media (min-width: 991.98px) {
+            margin-bottom: 338px;
         }
     }
     // .home__content
     &__content {
         max-width: 670px;
-        margin-bottom: 0;
         @media (max-width: 991.98px) {
-            text-align: center;
             max-width: unset;
         }
-        @media (max-width: 767.98px) {
+        @media (max-width: 479.98px) {
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            .button-lg {
+                margin-right: 7px;
+            }
         }
     }
     // .home__title
     &__title {
         margin-bottom: 20px;
-        @media (max-width: 1270px) {
-            margin-bottom: 16px;
-        }
         @media (max-width: 479.98px) {
             font-size: 35px;
             line-height: 107.6%;
         }
     }
-    .description {
-        margin-bottom: 36px;
-        @media (max-width: 1270px) {
-            margin-bottom: 28px;
-        }
-    }
-    // .home__button
-    &__button {
-        gap: 36px;
-        width: 347px;
-        height: 85px;
-        z-index: 5;
-        margin: 0;
-        a {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-style: normal;
-            font-weight: 500;
-            font-size: 22px;
-            line-height: 107.6%;
-            color: #ffffff;
-            padding: 0 20px;
-            gap: 36px;
-        }
-        @media (any-hover: hover) {
-            &:hover {
-                box-shadow: inset 0px 4px 4px rgba(0, 0, 0, 0.25);
-                transform: translate(10px, 10px);
-                &::before {
-                    top: 0;
-                    left: 0;
-                }
-            }
-        }
-        @media (max-width: 1270px) {
-            height: 74px;
-            width: 266px;
-            gap: 26px;
-            font-size: 20px;
-            line-height: 22px;
-        }
-        @media (max-width: 991.98px) {
-            margin: 0 auto;
-        }
-        @media (max-width: 767.98px) {
-            height: 74px;
-            width: 266px;
-            gap: 32px;
-            font-size: 16px;
-            line-height: 107%;
-        }
-        @media (max-width: 479.98px) {
-            height: 65px;
-            .all-link {
-                gap: 12px;
-            }
-        }
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: -1;
-            background: linear-gradient(
-                84.14deg,
-                rgba(63, 123, 221, 0.27) 8.75%,
-                rgba(66, 130, 236, 0.27) 92.01%
-            );
-            border-radius: 10px;
-            width: 100%;
-            height: 100%;
-            top: 10px;
-            left: 10px;
-            transition: all 0.3s ease 0s;
-        }
-    }
     // .home__background
     &__background {
         position: relative;
-        top: -19em;
-        @media (max-width: 1270px) {
-            top: -5em;
+        top: -29em;
+        @media (max-width: 1320.98px) {
+            top: -10em;
             left: -21em;
-            margin: 0 -15px 15px;
             transform: scale(0.7);
         }
         @media (max-width: 991.98px) {
@@ -520,7 +551,7 @@ export default {
         }
         // .home__background_1
         &_1 {
-            @media (min-width: 1270px) {
+            @media (min-width: 1320.98px) {
                 left: 0;
                 top: 0;
                 will-change: transform;
@@ -532,7 +563,7 @@ export default {
         }
         // .home__background_2
         &_2 {
-            @media (min-width: 1270px) {
+            @media (min-width: 1320.98px) {
                 top: 31em;
                 right: -15em;
                 will-change: transform;
@@ -541,13 +572,13 @@ export default {
                 animation-timing-function: ease;
                 animation-fill-mode: forwards;
             }
-            @media (max-width: 1270px) {
+            @media (max-width: 1320.98px) {
                 display: none;
             }
         }
         // .home__background_3
         &_3 {
-            @media (min-width: 1270px) {
+            @media (min-width: 1320.98px) {
                 top: 42.6em;
                 right: -31.4em;
                 will-change: transform;
@@ -556,13 +587,13 @@ export default {
                 animation-timing-function: ease;
                 animation-fill-mode: forwards;
             }
-            @media (max-width: 1270px) {
+            @media (max-width: 1320.98px) {
                 display: none;
             }
         }
         // .home__background_4
         &_4 {
-            @media (min-width: 1270px) {
+            @media (min-width: 1320.98px) {
                 top: 46.6em;
                 right: -12.3em;
                 will-change: transform;
@@ -571,7 +602,7 @@ export default {
                 animation-timing-function: ease;
                 animation-fill-mode: forwards;
             }
-            @media (max-width: 1270px) {
+            @media (max-width: 1320.98px) {
                 display: none;
             }
         }
@@ -582,7 +613,7 @@ export default {
             will-change: transform;
             animation: keyshow5 1.7s ease forwards,
                 imag5 12s 1.7s infinite linear;
-            @media (max-width: 1270px) {
+            @media (max-width: 1320.98px) {
                 display: none;
             }
         }
@@ -646,16 +677,54 @@ export default {
     }
 }
 .home-im {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    @media (max-width: 991.98px) {
+        gap: 16px;
+    }
     // .home-im__main
     &__main {
+        display: flex;
         position: relative;
-        padding: 70px;
-        align-items: end;
-        gap: 100px;
+        padding: 40px;
+        gap: 30px;
         justify-content: space-between;
+        @media (max-width: 1320.98px) {
+            gap: 36px;
+            padding: 32px;
+        }
+        @media (max-width: 991.98px) {
+            flex-direction: column-reverse;
+            &::before {
+                display: none;
+            }
+        }
+        @media (max-width: 767.98px) {
+            gap: 25px;
+        }
+        @media (max-width: 479.98px) {
+            padding: 24px;
+            gap: 32px;
+        }
+        .subtitle-value {
+            display: inline-flex;
+            gap: 18px;
+            & span {
+                &:last-child {
+                    color: #e9c058;
+                }
+            }
+            &_text {
+                color: #000034 !important;
+            }
+        }
         .blue-button {
             min-width: 222px;
             margin-bottom: 0;
+            @media (max-width: 991.98px) {
+                display: none;
+            }
         }
         &::before {
             content: "";
@@ -665,40 +734,17 @@ export default {
             background-position: center;
             background-size: contain;
             background-repeat: no-repeat;
-            height: 530px;
-            bottom: 10em;
-            left: 5em;
+            height: 390px;
+            top: -12em;
+            left: 7em;
             animation-name: plane-soaring;
             animation-duration: 5s;
             animation-iteration-count: infinite;
             animation-timing-function: ease-in-out;
-        }
-        @media (max-width: 1270px) {
-            gap: 36px;
-            padding: 26px 16px;
-            & .home-im__image {
-                max-width: 500px;
+            @media (max-width: 1320.98px) {
+                height: 350px;
+                width: 300px;
             }
-            &::before {
-                width: 450px;
-                height: 460px;
-                bottom: 7em;
-                left: 1em;
-            }
-        }
-        @media (max-width: 991.98px) {
-            flex-direction: column-reverse;
-            align-items: center;
-            & .home-im__content {
-                width: 100%;
-                padding: 0 18px;
-            }
-            &::before {
-                display: none;
-            }
-        }
-        @media (max-width: 479.98px) {
-            gap: 26px;
         }
 
         @keyframes plane-soaring {
@@ -715,10 +761,13 @@ export default {
     }
     // .home-im__image
     &__image {
-        max-width: 550px;
+        max-width: 70%;
         object-fit: contain;
+        @media (max-width: 1320.98px) {
+            max-width: 66%;
+        }
         @media (max-width: 991.98px) {
-            max-width: unset;
+            max-width: 100%;
             width: 100%;
             object-fit: cover;
         }
@@ -727,34 +776,40 @@ export default {
     &__content {
         display: flex;
         flex-direction: column;
-        gap: 12px;
-        flex: 0 1 50%;
-        .text {
-            margin-bottom: 6px;
-        }
+        flex: 0 1 100%;
         .blue-button {
             min-width: 222px;
             margin-bottom: 0;
-        }
-        @media (max-width: 1270px) {
-            //flex: 1 1 auto;
+            margin-top: 32px;
+            @media (max-width: 1320.98px) {
+                margin-top: 8px;
+            }
+            @media (max-width: 767.98px) {
+                display: none;
+            }
         }
         // .home-im__content_list
         &_list {
-            @media (max-width: 991.98px) {
-                display: flex;
-                flex-wrap: wrap;
-                column-gap: 48px;
-                justify-content: space-between;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            @media (max-width: 1320.98px) {
+                gap: 8px;
+            }
+            @media (max-width: 767.98px) {
+                gap: 20px;
             }
         }
         // .home-im__content_item
         &_item {
-            &:not(:last-child) {
-                margin-bottom: 12px;
-            }
-            @media (max-width: 479.98px) {
-                width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            width: 100%;
+            &:last-child {
+                .subtitle-value span:last-child {
+                    color: #343434;
+                }
             }
         }
         // .home-im__content_date
@@ -770,29 +825,30 @@ export default {
         font-size: 64.4231px;
         line-height: 107.6%;
         color: #e9c058;
-        position: relative;
         display: flex;
+        align-items: center;
+        gap: 24px;
+        margin-bottom: 39px;
+        @media (max-width: 1320.98px) {
+            margin-bottom: 8px;
+        }
+        @media (max-width: 767.98px) {
+            margin-bottom: 24px;
+        }
+        @media (max-width: 479.98px) {
+            margin-bottom: 40px;
+        }
         &::before {
             content: "";
-            position: absolute;
             width: 51px;
             height: 51px;
             background-image: url("../../assets/img/orange-propeller-icon.svg");
             background-position: center;
             background-size: cover;
             background-repeat: no-repeat;
-            top: 50%;
-            left: -1em;
-            transform: translate(0, -45%);
-            @media (max-width: 991.98px) {
-                position: relative;
-                top: 0;
-                left: -10px;
-                transform: translate(0, 20%);
-            }
-            @media (max-width: 767.98px) {
-                width: 37px;
-                height: 37px;
+            @media (max-width: 479.98px) {
+                width: 40px;
+                height: 40px;
             }
         }
         span {
@@ -810,66 +866,9 @@ export default {
         @media (max-width: 767.98px) {
             font-size: 45px;
             line-height: 107.6%;
-            &::after {
-                font-size: 13px;
-                line-height: 143.1%;
-                right: -6px;
-            }
         }
-    }
-}
-.item {
-    // .item_info
-    &_info {
-        font-family: AmpleSoftPro, serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 22px;
-        line-height: 143.1%;
-        color: #000034;
-        display: flex;
-        column-gap: 18px;
-        @media (max-width: 991.98px) {
-            font-size: 18px;
-            line-height: 143.1%;
-            @media (max-width: 479.98px) {
-                width: 100% !important;
-                flex-direction: column;
-                align-items: center;
-            }
-        }
-        &__block {
-            column-gap: 10px;
-            @media (max-width: 991.98px) and (max-width: 479.98px) {
-                flex-direction: row;
-                justify-content: center;
-            }
-        }
-        & span {
-            &:last-child {
-                color: #e9c058;
-            }
-        }
-        &_text {
-            color: #000034 !important;
-        }
-        &.bgb {
-            position: relative;
-            width: fit-content;
-            @media (min-width: 1271px) {
-                min-width: 85%;
-            }
-            &::before {
-                content: "";
-                position: absolute;
-                background: rgba(233, 192, 88, 0.09);
-                border-radius: 53px;
-                width: 112%;
-                height: 110%;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
+        @media (max-width: 479.98px) {
+            gap: 16px;
         }
     }
 }
@@ -877,62 +876,33 @@ export default {
     // .home-in__row
     &__row {
         display: flex;
-        gap: 17px;
+        gap: 30px;
         bottom: 100px;
         @media (max-width: 991.98px) {
             flex-direction: column;
+            gap: 16px;
         }
         // .home-in__row_item
         &_item {
-            transition: all 0.3s ease 0s;
+            //transition: all 0.3s ease 0s;
             padding: 0;
-            @media (any-hover: hover) {
-                &:hover {
-                    background: #3f65b3;
-                    & .home-inri__title {
-                        color: #ffffff;
-                    }
-                    & .text {
-                        color: rgba(255, 255, 255, 0.68);
-                    }
-                    & .home-inri__link {
-                        color: #ffffff;
-                        & svg path {
-                            stroke: #fff;
-                        }
-                    }
-                }
-            }
-            @media (max-width: 767.98px) {
-                background: #3f65b3;
-                & .home-inri__title {
-                    color: #ffffff;
-                }
-                & .text {
-                    color: rgba(255, 255, 255, 0.68);
-                }
-                & .home-inri__link {
-                    color: #ffffff;
-                    & svg path {
-                        stroke: #fff;
-                    }
-                }
-                &.asic__con {
-                    background: #ffffff;
-                    & .home-inri__title {
-                        color: #000034;
-                    }
-                    & .text {
-                        color: rgba(0, 0, 0, 0.62);
-                    }
-                    & .home-inri__link {
-                        color: #4181ea;
-                        & svg path {
-                            stroke: #4181ea;
-                        }
-                    }
-                }
-            }
+            //@media (any-hover: hover) {
+            //    &:hover {
+            //        background: #3f65b3;
+            //        & .home-inri__title {
+            //            color: #ffffff;
+            //        }
+            //        & .text {
+            //            color: rgba(255, 255, 255, 0.68);
+            //        }
+            //        & .home-inri__link {
+            //            color: #ffffff;
+            //            & svg path {
+            //                stroke: #fff;
+            //            }
+            //        }
+            //    }
+            //}
         }
     }
 }
@@ -944,32 +914,43 @@ export default {
         flex: 1 1 auto;
     }
     @media (max-width: 479.98px) {
-        flex-direction: column;
-        align-items: center;
+        padding: 32px 24px;
     }
     // .home-inri__image
     &__image {
         position: relative;
-        width: 200px;
+        width: 30%;
         height: 100%;
+        @media (max-width: 1320.98px) {
+            width: 56%;
+        }
+        @media (max-width: 991.98px) {
+            width: 25%;
+        }
+        @media (max-width: 767.98px) {
+            width: 30%;
+        }
         @media (max-width: 479.98px) {
-            height: 150px;
+            display: none;
         }
         &.mon {
             &::before {
                 content: "";
                 position: absolute;
-                background-image: url("../../assets/img/coins.png");
+                background-image: url("../../assets/img/home_img-earn.png");
                 background-position: center;
                 background-size: contain;
                 background-repeat: no-repeat;
-                width: 213px;
-                height: 275px;
+                width: 140px;
+                height: 100%;
                 bottom: 0;
-                left: 0;
-                @media (max-width: 1270px) {
-                    width: 165px;
-                    height: 280px;
+                left: 40px;
+                @media (max-width: 1320.98px) {
+                    left: 26px;
+                    height: 221px;
+                }
+                @media (max-width: 767.98px) {
+                    width: 80%;
                 }
                 @media (max-width: 479.98px) {
                     left: 50%;
@@ -984,20 +965,19 @@ export default {
             &::before {
                 content: "";
                 position: absolute;
-                background-image: url("../../assets/img/asic.png");
+                background-image: url("../../assets/img/home_img-asic.png");
                 background-position: center;
                 background-size: contain;
                 background-repeat: no-repeat;
                 width: 182px;
                 height: 260px;
-                bottom: 0;
-                left: 42px;
-                @media (max-width: 1270px) {
-                    bottom: 6px;
-                    left: 31px;
+                bottom: 12px;
+                left: 48px;
+                @media (max-width: 1320.98px) {
+                    left: 26px;
                 }
                 @media (max-width: 767.98px) {
-                    width: 150px;
+                    width: 100%;
                 }
                 @media (max-width: 479.98px) {
                     bottom: -20px;
@@ -1008,81 +988,35 @@ export default {
     }
     // .home-inri__content
     &__content {
-        padding: 50px 30px;
+        padding: 43px 26px 43px 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
         @media (max-width: 767.98px) {
             flex: 0 0 70%;
+            padding: 48px 16px 48px 8px;
         }
         @media (max-width: 479.98px) {
-            flex: 0;
-            padding: 0px 30px 36px;
+            flex: 1 0 100%;
+            padding: 0;
         }
         .text {
-            margin-bottom: 26px;
+            min-height: 68px;
             transition: all 0.5s ease 0s;
+            @media (max-width: 767.98px) {
+                min-height: 70px;
+            }
             @media (max-width: 479.98px) {
-                margin-bottom: 16px;
+                min-height: 56px;
             }
-        }
-    }
-
-    // .home-inri__title
-    &__title {
-        font-family: "AmpleSoftPro", serif;
-        font-style: normal;
-        font-weight: 500;
-        font-size: 31px;
-        line-height: 100%;
-        color: #000034;
-        margin-bottom: 4px;
-        transition: all 0.5s ease 0s;
-        @media (max-width: 479.98px) {
-            font-size: 22px;
-            line-height: 100%;
-            margin-bottom: 10px;
-        }
-    }
-    // .home-inri__link
-    &__link {
-        font-style: normal;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 107.6%;
-        color: #4181ea;
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        transition: all 0.5s ease 0s;
-        width: fit-content;
-        & svg {
-            position: relative;
-            transition: all 0.3s ease 0s;
-            & path {
-                stroke: #4181ea;
-            }
-        }
-        @media (any-hover: hover) {
-            &:hover {
-                text-decoration: underline;
-                & svg {
-                    transform: translate(4px, 0);
-                }
-            }
-        }
-    }
-}
-.asic__con {
-    @media (max-width: 479.98px) {
-        flex-direction: column-reverse;
-        & .home-inri__content {
-            padding: 36px 30px 0px;
-        }
-        & .asic {
-            height: 170px;
         }
     }
 }
 .all-link {
     position: relative;
     z-index: 5;
+}
+.info-home {
+
 }
 </style>

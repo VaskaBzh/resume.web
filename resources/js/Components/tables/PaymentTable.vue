@@ -10,7 +10,7 @@
         >
             <div class="table-block_column" v-if="this.table.shortTitles">
                 <span
-                    class="table-block_title"
+                    class="description description-xs"
                     v-for="(title, index) in this.table.shortTitles"
                     :key="index"
                 >
@@ -19,7 +19,7 @@
             </div>
             <div class="table-block_column" v-else>
                 <span
-                    class="table-block_title"
+                    class="description description-xs"
                     v-for="(title, index) in this.table.titles"
                     :key="index"
                 >
@@ -69,12 +69,20 @@
     <table class="table" v-else-if="this.table.rows">
         <thead class="history__thead" v-if="this.table.rows[0].img">
             <tr v-if="this.viewportWidth > 991.98">
-                <th v-for="(title, i) in this.table.titles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.titles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
             <tr v-else>
-                <th v-for="(title, i) in this.table.shortTitles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.shortTitles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
@@ -84,12 +92,20 @@
             v-else-if="this.table.titles.length === 4"
         >
             <tr v-if="this.viewportWidth > 991.98">
-                <th v-for="(title, i) in this.table.titles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.titles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
             <tr v-else>
-                <th v-for="(title, i) in this.table.shortTitles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.shortTitles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
@@ -97,26 +113,42 @@
 
         <thead v-else-if="this.table.titles.length === 3">
             <tr>
-                <th v-for="(title, i) in this.table.titles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.titles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
         </thead>
         <thead class="ref__thead" v-else-if="this.table.titles.length === 2">
             <tr>
-                <th v-for="(title, i) in this.table.titles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.titles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
         </thead>
         <thead class="accruals__thead" v-else>
             <tr v-if="this.viewportWidth > 991.98">
-                <th v-for="(title, i) in this.table.titles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.titles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>
             <tr v-else>
-                <th v-for="(title, i) in this.table.shortTitles" :key="i">
+                <th
+                    class="description description-xs"
+                    v-for="(title, i) in this.table.shortTitles"
+                    :key="i"
+                >
                     {{ title }}
                 </th>
             </tr>

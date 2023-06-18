@@ -2,7 +2,7 @@
     <nav class="nav__container">
         <Link :href="route('home')">
             <img
-                v-if="!this.getTheme"
+                v-if="!getTheme"
                 class="nav__logo headder"
                 src="../../assets/img/logo_high_quality.png"
                 alt="logo"
@@ -15,20 +15,22 @@
             />
         </Link>
 
-        <nav-links
-            @clicked="burgerAction"
-            @auth="changeSlide"
-            :is_auth="is_auth"
-            :viewportWidth="viewportWidth"
-        />
+        <teleport to="body" :disabled="viewportWidth >= 991.98">
+            <nav-links
+                @clicked="burgerAction"
+                @auth="changeSlide"
+                :is_auth="is_auth"
+                :viewportWidth="viewportWidth"
+            />
+        </teleport>
 
-        <div class="nav__buttons" v-show="viewportWidth >= 767.78">
+        <div class="nav__buttons" v-show="viewportWidth >= 991.78">
             <select-language
-                v-if="viewportWidth >= 767.78"
+                v-if="viewportWidth >= 991.78"
                 :viewportWidth="viewportWidth"
             ></select-language>
             <select-theme
-                v-if="viewportWidth >= 767.78"
+                v-if="viewportWidth >= 991.78"
                 :viewportWidth="viewportWidth"
             ></select-theme>
 
@@ -41,21 +43,21 @@
             >
                 {{ $t("header.login_button") }}
             </div>
-            <div
-                v-show="
-                    viewportWidth <= 991.98 &&
-                    !is_auth &&
-                    viewportWidth >= 767.98
-                "
-                class="nav__button_mobile"
-                data-popup="#auth"
-                @click="this.linkChanger"
-            >
-                <img src="../../assets/img/user.svg" alt="" />
-            </div>
+            <!--            <div-->
+            <!--                v-show="-->
+            <!--                    viewportWidth <= 991.98 &&-->
+            <!--                    !is_auth &&-->
+            <!--                    viewportWidth >= 991.98-->
+            <!--                "-->
+            <!--                class="nav__button_mobile"-->
+            <!--                data-popup="#auth"-->
+            <!--                @click="this.linkChanger"-->
+            <!--            >-->
+            <!--                <img src="../../assets/img/user.svg" alt="" />-->
+            <!--            </div>-->
         </div>
 
-        <div v-show="viewportWidth < 767.98" class="nav__buttons_mobile">
+        <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
             <select-language :viewportWidth="viewportWidth"></select-language>
             <div
                 @click="burgerAction"
@@ -773,18 +775,18 @@ export default defineComponent({
             this.viewportWidth = window.innerWidth;
         },
         burgerAction() {
-            if (this.is_clicked === true && this.viewportWidth < 767.98) {
+            if (this.is_clicked === true && this.viewportWidth < 991.98) {
                 this.is_clicked = false;
-                document.querySelector("body").style.overflow = "auto";
+                document.querySelector("body").style.overflowY = "auto";
                 document
                     .querySelector(".nav__links_con")
                     .classList.remove("open");
             } else if (
                 this.is_clicked === false &&
-                this.viewportWidth < 767.98
+                this.viewportWidth < 991.98
             ) {
                 this.is_clicked = true;
-                document.querySelector("body").style.overflow = "hidden";
+                document.querySelector("body").style.overflowY = "hidden";
                 document.querySelector(".nav__links_con").classList.add("open");
             }
         },
@@ -887,7 +889,7 @@ export default defineComponent({
     @media (max-width: 1270px) {
         max-width: 140px;
     }
-    @media (max-width: 767.98px) {
+    @media (max-width: 991.98px) {
         &.headder {
             position: relative;
             z-index: 100;
@@ -904,7 +906,7 @@ nav.nav__container {
     gap: 115px;
     width: 100%;
     box-sizing: border-box !important;
-    padding: 21px 0;
+    padding: 22px 0;
     position: fixed;
     top: 0;
     left: 50%;
@@ -938,19 +940,23 @@ nav.nav__container {
         padding: 21px 0;
         gap: 20px;
     }
+    //@media (max-width: 991.98px) {
+    //    padding-top: 20px;
+    //}
     @media (max-width: 991.98px) {
-        padding-top: 20px;
-    }
-    @media (max-width: 767.98px) {
         padding: 20px 15px 15px;
         position: fixed;
+        left: 50%;
+        top: 0;
+        transform: translate(-50%, 0);
         gap: 15px;
         height: 64px;
+        width: 100vw;
         &::before {
             content: "";
             position: absolute;
             z-index: 100;
-            width: 100%;
+            width: 100vw;
             height: 100%;
             top: 50%;
             left: 50%;
@@ -1095,6 +1101,86 @@ nav.nav__container {
         align-items: center;
         justify-content: center;
         gap: 10px;
+    }
+}
+
+//.nav__button {
+//    font-style: normal;
+//    font-weight: 400;
+//    font-size: 17px;
+//    line-height: 143.1%;
+//    color: #3f7bdd;
+//    background: rgba(194, 213, 242, 0.61);
+//    border-radius: 14px;
+//    padding: 11px 36px;
+//    white-space: nowrap;
+//    transition: all 0.3s ease 0s;
+//    cursor: pointer;
+//    @media (any-hover: hover) {
+//        &:hover {
+//            background: rgba(194, 213, 242);
+//        }
+//    }
+//
+//    &_mobile {
+//        background: rgba(194, 213, 242, 0.61);
+//        border-radius: 14px;
+//        min-width: 65px;
+//        width: 60px;
+//        height: 45px;
+//        display: flex;
+//        justify-content: center;
+//        align-items: center;
+//        white-space: nowrap;
+//        transition: all 0.3s ease 0s;
+//        &:hover {
+//            background: rgba(194, 213, 242);
+//        }
+//    }
+//    &_link {
+//        padding: 0 20px;
+//        width: 100%;
+//        height: 100%;
+//        display: inline-flex;
+//        align-items: center;
+//        justify-content: center;
+//        gap: 10px;
+//    }
+//}
+.nav__button {
+    font-style: normal;
+    font-weight: 400;
+    color: #3f7bdd;
+    background: transparent;
+    border: 1px solid #3f7bdd;
+    padding: 8px 24px;
+    white-space: nowrap;
+    transition: all 0.3s ease 0s;
+    border-radius: 8px;
+    font-size: 17px;
+    line-height: 140%;
+    @media (any-hover: hover) {
+        &:hover {
+            background: #c6d8f5;
+            border: 1px solid #c6d8f5;
+        }
+    }
+
+    &_mobile {
+        background: rgba(194, 213, 242, 0.61);
+        border-radius: 5px;
+        width: 60px;
+        height: 45px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        white-space: nowrap;
+        transition: all 0.3s ease 0s;
+        @media (any-hover: hover) {
+            &:hover {
+                background: rgba(194, 213, 242);
+            }
+        }
     }
 }
 </style>

@@ -305,7 +305,6 @@ export default {
 .footer {
     // .footer__main
     &__main {
-        padding-top: 60px;
         text-align: center;
         min-width: 1240px;
         @media (max-width: 1270px) {

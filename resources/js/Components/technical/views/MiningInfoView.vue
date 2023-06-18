@@ -1,17 +1,20 @@
 <template>
     <div class="mining-info">
         <div class="mining-info__container">
-            <div class="mining-info__main mining-im wrap">
+            <div class="mining-info__main mining-im">
                 <div class="mining-im__con">
-                    <div class="mining-im__general" v-scroll="'left delay--lg'">
+                    <div
+                        class="section__block section__block-blue mining-im__general"
+                        v-scroll="'left delay--lg'"
+                    >
                         <div class="mining-im__general_content">
-                            <div class="mining-im__general_title">
+                            <div class="subtitle subtitle-white">
                                 {{ $t("info.title") }}
                             </div>
                             <Link
                                 :href="route('accounts')"
                                 v-if="this.auth_user"
-                                class="mining-im__general_link"
+                                class="link link-white"
                             >
                                 {{ $t("info.link") }}
                                 <svg
@@ -33,7 +36,7 @@
                                 href="#"
                                 data-popup="#auth"
                                 v-else
-                                class="mining-im__general_link"
+                                class="link link-white"
                             >
                                 {{ $t("info.link") }}
                                 <svg
@@ -62,64 +65,27 @@
                     </div>
 
                     <ul class="mining-im__list">
-                        <li class="mining-im__item" v-scroll="'left delay--md'">
+                        <li
+                            class="section__block section__block-light"
+                            v-scroll="'left delay--md'"
+                            v-for="(card, i) in cards"
+                            :key="i"
+                        >
                             <div class="mining-im__item_top">
                                 <img
                                     src="../../../../assets/img/static-propeller.svg"
                                     alt=""
                                     class="mining-im__item_icon"
                                 />
-                                <div class="mining-im__item_title">
-                                    {{ $t("info.blocks[0].title") }}
-                                </div>
+                                <main-title
+                                    tag="h4"
+                                    class="mining-im__item_title"
+                                >
+                                    {{ card.title }}
+                                </main-title>
                             </div>
-                            <div class="text">
-                                {{ $t("info.blocks[0].text") }}
-                            </div>
-                        </li>
-                        <li class="mining-im__item" v-scroll="'left'">
-                            <div class="mining-im__item_top">
-                                <img
-                                    src="../../../../assets/img/static-propeller.svg"
-                                    alt=""
-                                    class="mining-im__item_icon"
-                                />
-                                <div class="mining-im__item_title">
-                                    {{ $t("info.blocks[1].title") }}
-                                </div>
-                            </div>
-                            <div class="text">
-                                {{ $t("info.blocks[1].text") }}
-                            </div>
-                        </li>
-                        <li class="mining-im__item" v-scroll="'left delay'">
-                            <div class="mining-im__item_top">
-                                <img
-                                    src="../../../../assets/img/static-propeller.svg"
-                                    alt=""
-                                    class="mining-im__item_icon"
-                                />
-                                <div class="mining-im__item_title">
-                                    {{ $t("info.blocks[2].title") }}
-                                </div>
-                            </div>
-                            <div class="text">
-                                {{ $t("info.blocks[2].text") }}
-                            </div>
-                        </li>
-                        <li class="mining-im__item" v-scroll="'left delay--md'">
-                            <div class="mining-im__item_top">
-                                <img
-                                    src="../../../../assets/img/static-propeller.svg"
-                                    alt=""
-                                    class="mining-im__item_icon"
-                                />
-                                <div class="mining-im__item_title">
-                                    {{ $t("info.blocks[3].title") }}
-                                </div>
-                            </div>
-                            <div class="text">
-                                {{ $t("info.blocks[3].text") }}
+                            <div class="description-xs description">
+                                {{ card.text }}
                             </div>
                         </li>
                     </ul>
@@ -131,6 +97,7 @@
 
 <script>
 import { Link } from "@inertiajs/vue3";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 export default {
     props: {
         auth_user: {
@@ -138,88 +105,84 @@ export default {
             default: false,
         },
     },
-    components: { Link },
+    components: { Link, MainTitle },
+    computed: {
+        cards() {
+            return [
+                {
+                    title: this.$t("info.blocks[0].title"),
+                    text: this.$t("info.blocks[0].text"),
+                },
+                {
+                    title: this.$t("info.blocks[1].title"),
+                    text: this.$t("info.blocks[1].text"),
+                },
+                {
+                    title: this.$t("info.blocks[2].title"),
+                    text: this.$t("info.blocks[2].text"),
+                },
+                {
+                    title: this.$t("info.blocks[3].title"),
+                    text: this.$t("info.blocks[3].text"),
+                },
+            ];
+        },
+    },
 };
 </script>
 
 <style lang="scss" scoped>
-.mining-info {
-    // .mining-info__container
-    &__container {
-    }
-    // .mining-info__main
-    &__main {
-    }
-}
 .mining-im {
     // .mining-im__con
     &__con {
         display: grid;
         grid-template-columns: 1fr 2fr;
-        gap: 17px;
-        @media (max-width: 1270px) {
+        gap: 30px;
+        @media (max-width: 1320.98px) {
             grid-template-columns: 100%;
             width: 100%;
+            gap: 16px;
+        }
+        @media (max-width: 479.98px) {
+            gap: 8px;
         }
     }
     // .mining-im__general
     &__general {
-        background: #3f65b3;
-        border-radius: 21px;
-        display: flex;
-        flex-direction: column;
-        @media (max-width: 1270px) {
-            flex-direction: row;
-            align-items: center;
+        @media (max-width: 1320.98px) {
+            order: 2;
         }
-        @media (max-width: 767.98px) {
-            border-radius: 10px;
-            position: relative;
+        @media (max-width: 991.98px) {
+            display: flex;
+            justify-content: space-between;
         }
-        @media (max-width: 550px) {
+        @media (max-width: 600.98px) {
             flex-direction: column;
+            gap: 15px;
         }
         // .mining-im__general_content
         &_content {
-            padding: 35px 48px 0;
             flex: 1 1 auto;
-            @media (max-width: 1270px) {
-                padding: 33px 30px;
-            }
-        }
-        // .mining-im__general_title
-        &_title {
-            font-family: "AmpleSoftPro";
-            font-style: normal;
-            font-weight: 500;
-            font-size: 31px;
-            line-height: 100%;
-            color: #ffffff;
-            margin-bottom: 16px;
-        }
-        // .mining-im__general_link
-        &_link {
-            font-style: normal;
-            font-weight: 500;
-            font-size: 15px;
-            line-height: 107.6%;
-            color: #fff;
             display: flex;
-            align-items: center;
-            gap: 10px;
-            & svg {
-                position: relative;
-                transition: all 0.3s ease 0s;
-                & path {
-                    stroke: #fff;
-                }
+            flex-direction: column;
+            gap: 20px;
+            @media (max-width: 991.98px) {
+                justify-content: space-between;
+                height: 100%;
             }
-            @media (any-hover: hover) {
-                &:hover {
-                    & svg {
-                        transform: translate(4px, 0);
-                    }
-                    text-decoration: underline;
+            @media (max-width: 600.98px) {
+                gap: 40px;
+                height: fit-content;
+                justify-content: flex-start;
+            }
+            .subtitle {
+                @media (max-width: 767.98px) {
+                    font-size: 40px;
+                    line-height: 100%;
+                }
+                @media (max-width: 479.89px) {
+                    font-size: 24px;
+                    line-height: 100%;
                 }
             }
         }
@@ -248,22 +211,17 @@ export default {
     &__list {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        gap: 17px;
+        gap: 8px;
         @media (max-width: 767.98px) {
-            display: flex;
-            flex-direction: column;
+            gap: 16px;
+        }
+        @media (max-width: 479.98px) {
+            gap: 8px;
+            grid-template-columns: 1fr;
         }
     }
     // .mining-im__item
     &__item {
-        background: #ffffff;
-        border-radius: 21px;
-        padding: 32px 40px;
-        @media (max-width: 767.98px) {
-            padding: 26px 30px;
-            border-radius: 10px;
-        }
-
         // .mining-im__item_top
         &_top {
             display: flex;
@@ -273,18 +231,6 @@ export default {
             @media (max-width: 1270px) {
                 align-items: center;
             }
-        }
-        // .mining-im__item_icon
-        &_icon {
-        }
-        // .mining-im__item_title
-        &_title {
-            font-family: "AmpleSoftPro";
-            font-style: normal;
-            font-weight: 500;
-            font-size: 22px;
-            line-height: 107.6%;
-            color: #000034;
         }
     }
 }

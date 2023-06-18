@@ -1,0 +1,12 @@
+.icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+    &-light {
+        background: #C6D8F5;
+    }
+    &-blue {
+        background: #5389E1;
+    }
+}

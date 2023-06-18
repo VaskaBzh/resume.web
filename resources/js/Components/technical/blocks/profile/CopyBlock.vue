@@ -1,8 +1,8 @@
 <template>
     <div class="copy__block">
-        <div class="text text-md">
+        <main-title tag="h4" class="headline">
             {{ this.copyObject.title }}
-        </div>
+        </main-title>
         <copy-row
             v-for="(copy, i) in this.copyObject.copyObject"
             :key="i"
@@ -13,9 +13,10 @@
 
 <script>
 import CopyRow from "@/Components/UI/profile/CopyRow.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
-    components: { CopyRow },
+    components: { CopyRow, MainTitle },
     name: "copy-block",
     props: {
         copyObject: Object,
@@ -28,34 +29,23 @@ export default {
     &__block {
         display: flex;
         flex-direction: column;
-        gap: 20px;
+        gap: 22px;
         flex: 1 1 auto;
-        @media (max-width: 767.98px) {
-            max-width: 100%;
-            //&:not(:first-child) {
-            .connecting__row {
-                &:first-child {
-                    margin-bottom: -16px;
-                }
-            }
-            //}
-            &:last-child {
-                gap: 6px;
-                .connecting__row {
-                    flex-direction: row;
-                    margin-top: 6px;
-                    margin-bottom: 0 !important;
-                }
-            }
-        }
-    }
-    .text {
-        display: inline-flex;
-        align-items: center;
-        span {
-            margin: 0 3px;
-            font-weight: 700;
-        }
+        //@media (max-width: 767.98px) {
+        //.connecting__row {
+        //    &:first-child {
+        //        margin-bottom: -16px;
+        //    }
+        //}
+        //&:last-child {
+        //    gap: 6px;
+        //    .connecting__row {
+        //        flex-direction: row;
+        //        margin-top: 6px;
+        //        margin-bottom: 0 !important;
+        //    }
+        //}
+        //}
     }
 }
 </style>

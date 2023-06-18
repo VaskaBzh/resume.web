@@ -48,7 +48,20 @@
             </div>
         </div>
     </div>
-    <hosting-info-view />
+    <info-view>
+        <template v-slot:pc>
+            <info-card
+                v-for="(card, i) in cards"
+                :key="i"
+                :card="card"
+            ></info-card>
+        </template>
+        <template v-slot:mobile>
+            <swiper-slide :key="i" v-for="(card, i) in cards">
+                <info-card :key="i" :card="card"></info-card>
+            </swiper-slide>
+        </template>
+    </info-view>
     <advantages-view />
     <profit-view />
     <control-view />
@@ -62,7 +75,7 @@
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { Link, Head } from "@inertiajs/vue3";
-import HostingInfoView from "@/Components/technical/views/HostingInfoView.vue";
+import InfoView from "@/Components/technical/views/InfoView.vue";
 import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import ProfitView from "@/Components/technical/views/ProfitView.vue";
 import GetConsultation from "@/Components/technical/views/GetConsultation.vue";
@@ -71,6 +84,8 @@ import SikkerView from "@/Components/technical/views/SikkerView.vue";
 import EfficiencyView from "@/Components/technical/views/EfficiencyView.vue";
 import ControlView from "@/Components/technical/views/ControlView.vue";
 import { mapGetters } from "vuex";
+import InfoCard from "@/Components/technical/blocks/InfoCard.vue";
+import { SwiperSlide } from "swiper/vue";
 
 export default {
     name: "hosting-page",
@@ -81,7 +96,7 @@ export default {
         EfficiencyView,
         MainTitle,
         BlueButton,
-        HostingInfoView,
+        InfoView,
         AdvantagesView,
         ProfitView,
         GetConsultation,
@@ -90,9 +105,30 @@ export default {
         ControlView,
         Link,
         Head,
+        SwiperSlide,
+        InfoCard,
     },
     computed: {
         ...mapGetters(["getTheme"]),
+        cards() {
+            return [
+                {
+                    title: this.$t("hosting_info.cards[0].title"),
+                    img: this.$t("hosting_info.cards[0].img"),
+                    text: this.$t("hosting_info.cards[0].text"),
+                },
+                {
+                    title: this.$t("hosting_info.cards[1].title"),
+                    img: this.$t("hosting_info.cards[1].img"),
+                    text: this.$t("hosting_info.cards[1].text"),
+                },
+                {
+                    title: this.$t("hosting_info.cards[2].title"),
+                    img: this.$t("hosting_info.cards[2].img"),
+                    text: this.$t("hosting_info.cards[2].text"),
+                },
+            ];
+        },
     },
     mounted() {
         document.title = "Хостингам";
@@ -102,14 +138,6 @@ export default {
 
 <style scoped lang="scss">
 .hosting {
-    margin-top: 140px;
-    @media (max-width: 991.98px) {
-        margin-top: 56px;
-    }
-    @media (max-width: 767.98px) {
-        margin-top: 56px;
-    }
-
     .description {
         max-width: 492px;
         @media (max-width: 991.98px) {

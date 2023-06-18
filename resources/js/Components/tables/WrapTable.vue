@@ -1,7 +1,7 @@
 <template>
-    <div class="wrap">
+    <div>
         <div
-            class="wrap__head"
+            class="cabinet__head"
             v-if="
                 this.title ||
                 (this.viewportWidth < 767.98 && this.type !== 'Платежи') ||
@@ -15,7 +15,7 @@
                 v-else-if="
                     this.viewportWidth < 767.98 && this.type !== 'Платежи'
                 "
-                class="wrap__head_elem"
+                class="description-xs description"
                 >Отображать в виде</span
             >
             <div
@@ -37,13 +37,11 @@
                 </div>
             </div>
             <div
-                class="wrap__head-usability"
-                v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'"
-            >
+                class="wrap_row" v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'">
                 <div
                     ref="block"
                     @click="this.visualType = 'block'"
-                    class="wrap__head-usability_elem"
+                    class="usability_elem"
                 >
                     <span></span>
                     <span></span>
@@ -53,7 +51,7 @@
                 <div
                     ref="table"
                     @click="this.visualType = 'table'"
-                    class="wrap__head-usability_elem"
+                    class="usability_elem"
                 >
                     <span></span>
                     <span></span>
@@ -68,7 +66,7 @@
             <span>{{ $t("no_info") }}</span>
         </div>
         <div
-            class="wrap-overflow wrap-overflow-scrollY"
+            class="cabinet__block-scroll"
             v-else-if="
                 (this.title === 'Воркеры' && this.visualType === 'block') ||
                 (this.type === 'Воркеры' && this.visualType === 'block')
@@ -82,7 +80,7 @@
             />
         </div>
         <div
-            class="wrap-overflow"
+            class="cabinet__block-scroll"
             v-else-if="this.title === 'Воркеры' || this.type === 'Воркеры'"
         >
             <workers-table
@@ -93,7 +91,7 @@
             />
         </div>
         <div
-            class="wrap-overflow wrap-overflow-scrollY"
+            class="cabinet__block-scroll"
             v-else-if="this.first >= 0 && this.visualType === 'block'"
         >
             <payment-table
@@ -104,7 +102,7 @@
                 :rows-val="this.rowsVal"
             />
         </div>
-        <div class="wrap-overflow" v-else-if="this.first >= 0">
+        <div class="cabinet__block-scroll" v-else-if="this.first >= 0">
             <payment-table
                 :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
@@ -114,12 +112,12 @@
             />
         </div>
         <div
-            class="wrap-overflow wrap-overflow-scrollY"
+            class="cabinet__block-scroll"
             v-else-if="this.visualType === 'block'"
         >
             <payment-table :table="this.table" :visualType="this.visualType" />
         </div>
-        <div class="wrap-overflow" v-else>
+        <div class="cabinet__block-scroll" v-else>
             <payment-table :table="this.table" :visualType="this.visualType" />
         </div>
         <Link
@@ -266,7 +264,37 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cabinet__head {
+    margin-bottom: 16px;
+    .usability_elem {
+        display: grid;
+        grid-template-rows: repeat(2, 1fr);
+        width: 19px;
+        height: 19px;
+        gap: 1px;
+        box-sizing: border-box;
+        &:first-child {
+            grid-template-columns: repeat(2, 1fr);
+        }
+        span {
+            width: 100%;
+            height: 100%;
+            border-radius: 2px;
+            box-sizing: border-box;
+            border: 2px solid #818c99;
+            transition: all 0.3s ease 0s;
+        }
+        &.active {
+            span {
+                border: 2px solid #4182ec;
+            }
+        }
+    }
+}
 .wrap {
-    transition: all 0.3s ease 0s;
+    &_row {
+        display: flex;
+        gap: 8px;
+    }
 }
 </style>

@@ -12,7 +12,7 @@
 
 <script>
 export default {
-    name: "hosting-info-card",
+    name: "info-card",
     props: {
         card: Object,
     },
@@ -50,6 +50,36 @@ export default {
     @media (max-width: 767.98px) {
         padding: 32px;
         gap: 24px;
+    }
+    &.sm {
+        @media (max-width: 991.98px) {
+            padding: 50px 32px 32px;
+        }
+        @media (max-width: 479.98px) {
+            padding: 18px 32px 32px;
+        }
+        .card {
+            &_img {
+                max-width: 200px;
+                height: 200px;
+                @media (max-width: 767.98px) {
+                    max-width: 140px;
+                    height: 140px;
+                }
+                img {
+                    max-width: 200px;
+                    @media (max-width: 767.98px) {
+                        max-width: 140px;
+                    }
+                }
+            }
+            .description {
+                font-size: 16px;
+                @media (max-width: 767.98px) {
+                    font-size: 14px;
+                }
+            }
+        }
     }
     &_img {
         display: flex;

@@ -8,13 +8,20 @@
                 ref="popup"
                 class="popup__content"
                 :class="{
-                    opened: this.contentOpened,
+                    opened: contentOpened,
                     ['popup__content-' + typePopup]: typePopup !== 'form',
                 }"
             >
                 <img
+                    v-if="!getTheme"
                     class="popup__content_logo"
                     src="../../../assets/img/logo_high_quality.png"
+                    alt="logo"
+                />
+                <img
+                    v-else
+                    class="popup__content_logo"
+                    src="../../../assets/img/logo_high_quality-dark.png"
                     alt="logo"
                 />
                 <div class="popup__content_block" :class="{ loading: wait }">
@@ -36,6 +43,7 @@
 </template>
 <script>
 import { Inertia } from "@inertiajs/inertia";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-popup",
@@ -53,6 +61,9 @@ export default {
             opened: false,
             contentOpened: false,
         };
+    },
+    computed: {
+        ...mapGetters(["getTheme"]),
     },
     methods: {
         async close() {

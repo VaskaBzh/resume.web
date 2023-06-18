@@ -43,7 +43,6 @@
                 v-scroll="'opacity transition--fast'"
             >
                 <span
-                    class="main__name table-block_title"
                     v-for="(title, index) in this.table.shortTitles"
                     :key="index"
                 >
@@ -64,7 +63,7 @@
         <thead>
             <tr v-if="this.viewportWidth > 991.98">
                 <th
-                    class="main__name"
+                    class="description description-xs"
                     v-for="(title, i) in this.table.titles"
                     :key="i"
                 >
@@ -415,10 +414,6 @@ export default {
                 height: 14px;
             }
             th {
-                color: rgba(0, 0, 0, 0.62);
-                font-weight: 400;
-                font-size: 16px;
-                line-height: 23px;
                 text-align: left;
                 padding-right: 10px;
             }
@@ -429,9 +424,6 @@ export default {
             height: 48px;
             @media (max-width: 767.98px) {
                 height: 34px;
-            }
-            @media (max-width: 479.98px) {
-                border: 0.5px solid rgba(0, 0, 0, 0.08);
             }
             &:last-child {
                 margin-bottom: 0;
@@ -490,11 +482,11 @@ export default {
                     background-color: #fff;
                 }
                 &:first-child {
-                    border-radius: 12px 0 0 12px;
+                    border-radius: 8px 0 0 8px;
                     padding: 9px 10px;
                 }
                 &:last-child {
-                    border-radius: 0 12px 12px 0;
+                    border-radius: 0 8px 8px 0;
                 }
             }
         }

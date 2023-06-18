@@ -8,7 +8,7 @@
             <!--                    : this.name-->
             <!--            }}-->
             <svg
-                v-show="this.viewportWidth < 767.98"
+                v-show="this.viewportWidth < 991.98"
                 width="13"
                 height="12"
                 viewBox="0 0 13 12"
@@ -229,7 +229,7 @@ export default {
     position: relative;
     width: 100%;
     min-width: 160px;
-    @media (max-width: 767.98px) {
+    @media (max-width: 991.98px) {
         padding: 0 12px;
         margin-right: -10px;
     }
@@ -245,7 +245,7 @@ export default {
         line-height: 140%;
         color: #3f7bdd;
         min-width: 160px;
-        @media (max-width: 767.98px) {
+        @media (max-width: 991.98px) {
             min-width: 130px;
             color: #000034;
             font-weight: 400;
@@ -253,7 +253,7 @@ export default {
             line-height: 143.1%;
             gap: 4px;
         }
-        @media (min-width: 767.98px) {
+        @media (min-width: 991.98px) {
             border: 1px solid #3f7bdd;
             padding: 0 24px;
             min-height: 40px;
@@ -316,7 +316,7 @@ export default {
         background: #ffffff;
         box-shadow: 0 8px 24px rgba(129, 135, 189, 0.15);
         border-radius: 20px;
-        @media (max-width: 767.98px) {
+        @media (max-width: 991.98px) {
             display: none;
         }
         button,

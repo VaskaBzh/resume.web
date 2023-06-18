@@ -19,6 +19,7 @@
 @import "./blocks/legend";
 @import "./blocks/swiper";
 @import "./blocks/section";
+@import "./blocks/cabinet";
 
 //========================================================================================================================================================
 // импорты кастомных стилей templates
@@ -26,7 +27,9 @@
 @import "./templates/text";
 @import "./templates/description";
 @import "./templates/subtitle";
+@import "./templates/link";
 @import "./templates/button";
+@import "./templates/icon";
 @import "./templates/socials";
 @import "./templates/contacts";
 @import "./templates/quote";
@@ -76,6 +79,7 @@ body {
 }
 
 body {
+    position: relative;
     color: $mainColor;
     line-height: 1;
     font-family: $fontFamily;
@@ -191,8 +195,11 @@ h6 {
 
 // Профиль
 .profile {
-    @media (min-width: 1271px) {
-        padding-left: 310px;
+    @media (min-width: $pc) {
+        padding-left: 320px;
+    }
+    @media (min-width: $tablet) {
+        padding-left: 270px;
     }
     width: 100%;
 }
@@ -267,10 +274,7 @@ h6 {
             font-weight: 400;
             font-size: 16px;
             line-height: 23px;
-            color: rgba(0, 0, 0, 0.62);
-            @media (max-width: 479.98px) {
-                color: #000034;
-            }
+            color: #818c99;
         }
 
         &-lg {
@@ -293,27 +297,12 @@ h6 {
         }
     }
 
-    // .main__name
-    &__name {
-        font-weight: 400;
-        color: #818c99;
-        font-size: 16px;
-        line-height: 23px;
-        @media (max-width: $mobile) {
-            line-height: 18px;
-        }
-    }
-
     // .main__label
     &__label {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 23px;
-        color: rgba(0, 0, 0, 0.62);
-        @media (max-width: 479.98px) {
-            font-size: 16px;
-            line-height: 16px;
-        }
+        font-weight: 300;
+        font-size: 14px;
+        line-height: 150%;
+        color: #7C7C7C;
 
         &-select {
             color: #000034;
@@ -632,28 +621,17 @@ h6 {
     }
 }
 
-// Кастомные стили (адаптация)
-@media (max-width: $pc) {
-    .account {
-        &__container {
-            padding-top: 60px;
-            position: relative;
-            flex-direction: column;
-        }
-    }
-}
-
 @media (max-width: $tablet) {
     .account {
         &__container {
-            padding-top: 46px;
+            padding-top: 40px;
         }
     }
 }
-@media (max-width: $mobile) {
+@media (max-width: $mobileSmall) {
     .account {
         &__container {
-            padding-top: 18px;
+            padding-top: 24px;
         }
     }
 }
