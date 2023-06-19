@@ -35,12 +35,12 @@
                 </div>
                 <div class="hosting__image page__image">
                     <img
-                        v-if="!getTheme"
+                        v-show="!getTheme"
                         src="../../assets/img/hosting_back_img.png"
                         alt=""
                     />
                     <img
-                        v-else
+                        v-show="getTheme"
                         src="../../assets/img/hosting_back_img-dark.png"
                         alt=""
                     />

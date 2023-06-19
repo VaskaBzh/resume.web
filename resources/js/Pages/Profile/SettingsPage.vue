@@ -21,13 +21,13 @@
                 <settings-block
                     @openPopup="getHtml"
                     name="Логин"
-                    :val="this.login"
+                    :val="login"
                 >
                 </settings-block>
                 <settings-block
                     @openPopup="getHtml"
                     name="Email"
-                    :val="this.email"
+                    :val="email"
                 ></settings-block>
             </div>
             <div class="settings__column" ref="wrap">
@@ -37,12 +37,12 @@
                 <settings-block
                     @openPopup="getHtml"
                     name="Пароль"
-                    :val="this.password"
+                    :val="password"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
                     name="Телефон"
-                    :val="this.phone"
+                    :val="phone"
                 ></settings-block>
                 <!--                    <settings-block-->
                 <!--                        data-remove-->
@@ -59,12 +59,13 @@
             </div>
         </div>
     </div>
-    <main-popup id="changes" :wait="this.wait" v-if="this.popupHtml !== ''">
-        <div
-            v-for="(error, i) in this.errs"
-            :key="i"
-            class="form_wrapper-message"
-        >
+    <main-popup
+        id="changes"
+        :wait="wait"
+        v-if="popupHtml !== ''"
+        :closed="closed"
+    >
+        <div v-for="(error, i) in errs" :key="i" class="form_wrapper-message">
             <div class="form_message" v-if="error">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -82,48 +83,48 @@
         </div>
         <form
             @submit.prevent="
-                this.popupHtml.password
-                    ? this.ajaxChange(false, this.getInfo)
-                    : this.ajaxChange(true, this.getInfo)
+                popupHtml.password
+                    ? ajaxChange(false, getInfo)
+                    : ajaxChange(true, getInfo)
             "
             class="form form-popup popup__form"
         >
             <main-title tag="h3">{{
                 `${$t("settings.block.settings_block.popup.title")} ${
-                    this.popupHtml.name
+                    popupHtml.name
                 }`
             }}</main-title>
             <input
-                v-model="this.form.item"
+                v-model="form.item"
                 required
                 autofocus
-                :type="this.popupHtml.name === 'пароль' ? 'password' : 'text'"
+                :type="popupHtml.name === 'пароль' ? 'password' : 'text'"
                 class="input popup__input"
                 :placeholder="`${$t(
                     'settings.block.settings_block.popup.placeholders.placeholder'
-                )} ${this.popupHtml.name}`"
+                )} ${popupHtml.name}`"
             />
             <input
-                v-model="this.pass"
-                v-if="this.popupHtml.password"
+                v-model="pass"
+                v-if="popupHtml.password"
                 required
                 autofocus
                 type="password"
                 class="input popup__input"
                 :placeholder="`${$t(
                     'settings.block.settings_block.popup.placeholders.password_new'
-                )} ${this.popupHtml.name}`"
+                )} ${popupHtml.name}`"
             />
             <input
-                v-model="this.password_confirmation"
-                v-if="this.popupHtml.password"
+                v-model="password_confirmation"
+                v-if="popupHtml.password"
                 required
                 autofocus
                 type="password"
                 class="input popup__input"
                 :placeholder="`${$t(
                     'settings.block.settings_block.popup.placeholders.password_confirmation'
-                )} ${this.popupHtml.name}`"
+                )} ${popupHtml.name}`"
             />
             <blue-button>
                 <button type="submit" class="all-link">
@@ -284,7 +285,12 @@ export default {
                     this.wait = false;
                     await func();
 
-                    document.querySelector("[data-close]").click();
+                    setTimeout(() => {
+                        this.closed = true;
+                    }, 300);
+                    setTimeout(() => {
+                        this.closed = false;
+                    }, 600);
                 },
             });
         },

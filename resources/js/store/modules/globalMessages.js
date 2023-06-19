@@ -1,12 +1,16 @@
 export default {
     actions: {
         getMessage({ commit }, message) {
-            commit("setMessage", message);
+            commit("SetMessage", message);
+            setTimeout(() => commit("ClearMessage"), 3000);
         },
     },
     mutations: {
-        setMessage(state, data) {
+        SetMessage(state, data) {
             state.message = data;
+        },
+        ClearMessage(state) {
+            state.message = "";
         },
     },
     state: {

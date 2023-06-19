@@ -335,7 +335,7 @@ export default {
             font-size: 17px;
             transition: background 0.3s ease 0s, padding 0.8s ease 0s;
             line-height: 143.1%;
-            color: #000034;
+            color: #989898;
         }
         svg {
             width: 20px;

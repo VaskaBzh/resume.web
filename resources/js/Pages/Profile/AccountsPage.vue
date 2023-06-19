@@ -37,23 +37,23 @@
             </main-title>
             <div
                 class="accounts__content"
-                v-if="Object.values(this.allAccounts).length > 0"
+                v-if="Object.values(allAccounts).length > 0"
             >
                 <account-profile
-                    @getId="this.setId"
-                    v-for="(account, i) in this.allAccounts"
-                    :key="i + account.name + this.getActive"
+                    @getId="setId"
+                    v-for="(account, i) in allAccounts"
+                    :key="i + account.name + getActive"
                     :accKey="i"
                     :accountInfo="account"
-                    :profit="this.profit"
+                    :profit="profit"
                 />
             </div>
-            <no-info :wait="this.allAccounts"></no-info>
+            <no-info :wait="allAccounts"></no-info>
         </div>
         <teleport to="body">
-            <main-popup id="addAcc" :wait="this.wait">
+            <main-popup id="addAcc" :wait="wait" :closed="closed">
                 <div
-                    v-for="(error, i) in this.errs"
+                    v-for="(error, i) in errs"
                     :key="i"
                     class="form_wrapper-message"
                 >
@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <form
-                    @submit.prevent="this.addAcc"
+                    @submit.prevent="addAcc"
                     class="form form-popup popup__form"
                 >
                     <main-title tag="h3">{{
@@ -113,9 +113,9 @@
                     </blue-button>
                 </form>
             </main-popup>
-            <main-popup id="edit" :wait="this.wait">
+            <main-popup id="edit" :wait="wait" :closed="closed">
                 <div
-                    v-for="(error, i) in this.errs"
+                    v-for="(error, i) in errs"
                     :key="i"
                     class="form_wrapper-message"
                 >
@@ -135,7 +135,7 @@
                     </div>
                 </div>
                 <form
-                    @submit.prevent="this.changeName"
+                    @submit.prevent="changeName"
                     class="form form-popup popup__form"
                 >
                     <main-title tag="h3">{{
@@ -206,6 +206,7 @@ export default {
         return {
             profit: {},
             id: null,
+            closed: false,
         };
     },
     computed: {
@@ -236,7 +237,12 @@ export default {
                         this.form.name = "";
                         this.wait = false;
 
-                        document.querySelector("[data-close]").click();
+                        setTimeout(() => {
+                            this.closed = true;
+                        }, 300);
+                        setTimeout(() => {
+                            this.closed = false;
+                        }, 600);
                     }
                 },
             });

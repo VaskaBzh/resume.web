@@ -62,9 +62,9 @@ class RegisterController extends Controller
     {
         $this->validator($request->all())->validate();
 
-        event(new Registered($user = $this->create($request->all())));
+        new Registered($user = $this->create($request->all()));
 
-//        $this->guard()->login($user);
+        $this->guard()->login($user);
 //        $user->sendEmailVerificationNotification();
 
         $data = [
@@ -79,9 +79,11 @@ class RegisterController extends Controller
             $subController->create(new Request($data));
 
             if (app()->getLocale() === 'ru') {
-                $message = 'Пользователь успешно создан! Подтвердите почту.';
+//                $message = 'Пользователь успешно создан! Подтвердите почту.';
+                $message = 'Пользователь успешно создан!';
             } else if (app()->getLocale() === 'en') {
-                $message = 'The user has been successfully created! Confirm your email.';
+//                $message = 'The user has been successfully created! Confirm your email.';
+                $message = 'The user has been successfully created!';
             }
         } catch (Exception $e) {
             // Обработка ошибок
@@ -92,9 +94,11 @@ class RegisterController extends Controller
             }
         }
 
-        return back()->with([
-            'message' => $message,
-        ]);
+        return redirect("/profile/accounts");
+
+//        return back()->with([
+//            'message' => $message,
+//        ]);
     }
 
     public function isUserAuthorizedForVerification(Request $request, User $user)

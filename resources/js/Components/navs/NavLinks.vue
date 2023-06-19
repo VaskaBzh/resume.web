@@ -3,7 +3,7 @@
         <div
             class="nav__header"
             id="burger_head"
-            v-if="this.viewportWidth < 991.98"
+            v-if="viewportWidth < 991.98"
         >
             <div class="nav__row">
                 <Link
@@ -57,9 +57,9 @@
                     >
                     <span class="nav_value"
                         >{{
-                            this.allAccounts[this.getActive]?.shares1m || "..."
+                            allAccounts[getActive]?.shares1m || "..."
                         }}
-                        {{ this.allAccounts[this.getActive]?.unit }}H/s</span
+                        {{ allAccounts[getActive]?.unit }}H/s</span
                     >
                 </div>
                 <div class="nav_block" v-show="is_auth">
@@ -68,10 +68,10 @@
                     >
                     <span class="nav_value"
                         >{{
-                            this.allAccounts[this.getActive]?.workersActive ||
+                            allAccounts[getActive]?.workersActive ||
                             "..."
                         }}/{{
-                            this.allAccounts[this.getActive]?.workersAll ||
+                            allAccounts[getActive]?.workersAll ||
                             "..."
                         }}</span
                     >
@@ -106,10 +106,10 @@
             <Link
                 :href="route('statistic')"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/statistic',
                 }"
-                v-if="this.viewportWidth < 991.98 && is_auth"
+                v-if="viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -129,10 +129,10 @@
             <Link
                 :href="route('accounts')"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/accounts',
                 }"
-                v-if="this.viewportWidth < 991.98 && is_auth"
+                v-if="viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -152,10 +152,10 @@
             <Link
                 :href="route('workers')"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/workers',
                 }"
-                v-if="this.viewportWidth < 991.98 && is_auth"
+                v-if="viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -175,10 +175,10 @@
             <Link
                 :href="route('income')"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/income',
                 }"
-                v-if="this.viewportWidth < 991.98 && is_auth"
+                v-if="viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -198,10 +198,10 @@
             <Link
                 :href="route('connecting')"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/connecting',
                 }"
-                v-if="this.viewportWidth < 991.98 && is_auth"
+                v-if="viewportWidth < 991.98 && is_auth"
                 class="nav-tabs__tab"
             >
                 <svg
@@ -222,10 +222,10 @@
                 class="nav-tabs__tab"
                 :href="route('wallets')"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     'burger_link-active': $page.url === '/profile/wallets',
                 }"
-                v-if="this.viewportWidth < 991.98 && is_auth"
+                v-if="viewportWidth < 991.98 && is_auth"
             >
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -246,12 +246,12 @@
                 :href="route('home')"
                 class="nav__link"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     active: $page.url === '/',
                 }"
             >
                 <svg
-                    v-if="this.viewportWidth < 991.98"
+                    v-if="viewportWidth < 991.98"
                     width="20"
                     height="20"
                     viewBox="0 0 20 20"
@@ -288,11 +288,11 @@
                 {{ $t("header.links.home") }}
             </Link>
             <Link
-                v-else-if="this.viewportWidth > 991.98"
+                v-else-if="viewportWidth > 991.98"
                 :href="route('statistic')"
                 class="nav__link"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     active: $page.url.startsWith('/profile'),
                 }"
             >
@@ -333,12 +333,12 @@
                 :href="route('hosting')"
                 class="nav__link"
                 :class="{
-                    burger_link: this.viewportWidth < 991.98,
+                    burger_link: viewportWidth < 991.98,
                     active: $page.url.startsWith('/hosting'),
                 }"
             >
                 <svg
-                    v-if="this.viewportWidth < 991.98"
+                    v-if="viewportWidth < 991.98"
                     width="20"
                     height="20"
                     viewBox="0 0 20 20"
@@ -385,17 +385,17 @@
                     <div class="nav__menu_wrap" :class="{ opened: is_opened }">
                         <div
                             class="nav__menu_item nav__menu_item-acc"
-                            v-for="acc in this.allAccounts"
+                            v-for="acc in allAccounts"
                             :key="acc.id"
                             @click="change_index(acc.id)"
                             :class="{
-                                active: acc.id === this.getActive,
+                                active: acc.id === getActive,
                             }"
                         >
                             {{ acc.name }}
                             <transition name="fade">
                                 <svg
-                                    v-if="acc.id !== this.getActive"
+                                    v-if="acc.id !== getActive"
                                     width="20"
                                     height="20"
                                     viewBox="0 0 20 20"

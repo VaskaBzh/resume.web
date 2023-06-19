@@ -199,13 +199,15 @@ class UpdateIncomesCommand extends Command
                         $sumAccruals = $sumAccruals + $sub->accruals;
                     }
 
-                    if (count($wallets) === 0) {
-                        $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
-                    }
-
-                    foreach ($wallets as $wallet) {
-                        if ($income["amount"] > 0) {
-                            $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
+                    if ($income["amount"] > 0) {
+                        if (count($wallets) === 0) {
+                            $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
+                        } else {
+                            foreach ($wallets as $wallet) {
+                                if ($income["amount"] > 0) {
+                                    $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
+                                }
+                            }
                         }
                     }
                 } catch (Exception $e) {

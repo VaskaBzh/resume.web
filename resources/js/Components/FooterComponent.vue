@@ -303,6 +303,9 @@ export default {
     z-index: 99;
 }
 .footer {
+    &__container {
+        z-index: 1;
+    }
     // .footer__main
     &__main {
         text-align: center;

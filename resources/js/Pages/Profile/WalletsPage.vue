@@ -1,6 +1,6 @@
 <template>
     <div class="hint">
-        <div class="hint_item" v-hide="this.mess !== ''">
+        <div class="hint_item" v-hide="mess !== ''">
             {{ this.mess }}
         </div>
     </div>
@@ -12,7 +12,7 @@
             <!--                </blue-button>-->
             <main-checkbox
                 class="wallets__filter"
-                @is_checked="this.checkboxer"
+                @is_checked="checkboxer"
             >
                 {{ $t("wallets.block.filter") }}
             </main-checkbox>
@@ -40,16 +40,16 @@
         <div ref="wallets" class="wrap">
             <no-info
                 ref="noInfo"
-                :wait="this.getWallet"
-                :empty="this.wallets"
+                :wait="getWallet"
+                :empty="wallets"
             ></no-info>
             <div
                 ref="list"
                 class="wallets__list"
-                v-if="this.wallets.length > 0"
+                v-if="wallets.length > 0"
             >
                 <wallet-block
-                    v-for="(wallet, i) in this.wallets"
+                    v-for="(wallet, i) in wallets"
                     :key="i"
                     v-scroll="'top'"
                     :wallet="wallet"
@@ -59,9 +59,9 @@
             </div>
         </div>
     </div>
-    <main-popup id="changeWallet" :wait="this.wait">
+    <main-popup id="changeWallet" :wait="wait" :closed="closed">
         <div
-            v-for="(error, i) in this.errs"
+            v-for="(error, i) in errs"
             :key="i"
             class="form_wrapper-message"
         >
@@ -80,7 +80,7 @@
                 {{ error[0] }}
             </div>
         </div>
-        <form @submit.prevent="this.change" class="form form-popup popup__form">
+        <form @submit.prevent="change" class="form form-popup popup__form">
             <main-title tag="h3">
                 {{ $t("wallets.popups.change.title") }}
             </main-title>
@@ -155,12 +155,8 @@
             </blue-button>
         </form>
     </main-popup>
-    <main-popup id="addWallet" :wait="this.wait">
-        <div
-            v-for="(error, i) in this.err"
-            :key="i"
-            class="form_wrapper-message"
-        >
+    <main-popup id="addWallet" :wait="wait" :closed="closed">
+        <div v-for="(error, i) in err" :key="i" class="form_wrapper-message">
             <div class="form_message" v-if="error">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -176,10 +172,7 @@
                 {{ error[0] }}
             </div>
         </div>
-        <form
-            @submit.prevent="this.addWallet"
-            class="form form-popup popup__form"
-        >
+        <form @submit.prevent="addWallet" class="form form-popup popup__form">
             <main-title tag="h3">{{
                 $t("wallets.popups.add.title")
             }}</main-title>
@@ -312,7 +305,7 @@ export default {
                                         name = wal.name;
                                     }
                                     let fullName = "";
-                                    if (name.length > 6) {
+                                    if (name.length > 11) {
                                         fullName = name;
                                         name =
                                             name.substr(0, 4) +
@@ -351,7 +344,7 @@ export default {
                                     name = wal.name;
                                 }
                                 let fullName = "";
-                                if (name.length > 6) {
+                                if (name.length > 11) {
                                     fullName = name;
                                     name =
                                         name.substr(0, 4) +
@@ -406,6 +399,7 @@ export default {
                 minWithdrawal: 0.005,
             },
             walletObj: {},
+            closed: false,
         };
     },
     methods: {
@@ -439,10 +433,11 @@ export default {
                     this.formChg.minWithdrawal = "";
                     this.formChg.name = "";
                     setTimeout(() => {
-                        document
-                            .querySelector("#changeWallet [data-close]")
-                            .click();
+                        this.closed = true;
                     }, 300);
+                    setTimeout(() => {
+                        this.closed = false;
+                    }, 600);
                 })
                 .catch((err) => {
                     this.wait = false;
@@ -480,10 +475,11 @@ export default {
                         group.group_id = this.allAccounts[this.getActive].id;
                         this.$store.dispatch("getWallets", group);
                         setTimeout(() => {
-                            document
-                                .querySelector("#addWallet [data-close]")
-                                .click();
+                            this.closed = true;
                         }, 300);
+                        setTimeout(() => {
+                            this.closed = false;
+                        }, 600);
                     })
                     .catch((err) => {
                         this.wait = false;
@@ -558,14 +554,13 @@ export default {
     &__filter {
         line-height: 23px;
         font-size: 16px;
-        color: #99acd3;
         margin: 0 24px 0 auto;
         @media (max-width: 767.98px) {
             width: 80%;
             margin: 0;
             justify-content: flex-start !important;
             &:before {
-                left: 210px;
+                left: 213px;
             }
             &.checked {
                 &:before {
@@ -576,7 +571,7 @@ export default {
         @media (max-width: 479.98px) {
             width: 90%;
             &:before {
-                left: 210px;
+                left: 212px;
             }
             &.checked {
                 &:before {

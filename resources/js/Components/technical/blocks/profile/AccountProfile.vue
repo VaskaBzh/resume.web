@@ -14,7 +14,7 @@
             >
                 Активный
             </span>
-            <span class="profile_status" v-else>Переключить</span>
+            <span class="profile_status" @click="chageActive" v-else>Переключить</span>
             <!--            <div class="profile__settings" @click="toggleOpen">-->
             <!--                <svg-->
             <!--                    xmlns="http://www.w3.org/2000/svg"-->

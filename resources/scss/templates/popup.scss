@@ -252,7 +252,6 @@ body::after {
         opacity: 0;
         transform: translateY(400px);
         transition: all 0.5s ease 0s;
-        overflow: hidden;
         @media (max-width: $pc) {
             padding: 0 20px;
         }
@@ -317,20 +316,22 @@ body::after {
                     animation: contentAnimation forwards 0.3s ease 0.7s !important;
                 }
             }
-            .popup__content_block {
-                animation: wrapperAnimation forwards 0.4s ease 0.5s;
-                width: 100%;
-                .popup__close {
-                    animation: fadeIn forwards 0.3s ease 0.5s;
+            .form {
+                animation: contentAnimation forwards 0.3s ease 0.7s;
+                &_message {
+                    animation: fadeIn forwards 0.3s ease 0s;
                 }
-                .form {
-                    animation: contentAnimation forwards 0.3s ease 0.7s;
-                    &_message {
-                        animation: fadeIn forwards 0.3s ease 0s;
+            }
+            .popup__content {
+                &_block {
+                    animation: wrapperAnimation forwards 0.4s ease 0.5s;
+                    width: 100%;
+                    .popup__close {
+                        animation: fadeIn forwards 0.3s ease 0.5s;
                     }
-                }
-                .swiper {
-                    animation: contentAnimation forwards 0.3s ease 0.7s;
+                    .swiper {
+                        animation: contentAnimation forwards 0.3s ease 0.7s;
+                    }
                 }
             }
         }

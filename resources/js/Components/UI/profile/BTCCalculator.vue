@@ -41,7 +41,9 @@
         <div class="BTC__value main__number">
             {{ value }} BTC
             <span>{{ dollarCalc.toFixed(2) }} $</span>
-            <span>{{ rubleCalc.toFixed(2) }} ₽</span>
+            <span v-if="this.$i18n.locale === 'ru'"
+                >{{ rubleCalc.toFixed(2) }} ₽</span
+            >
         </div>
     </div>
 </template>

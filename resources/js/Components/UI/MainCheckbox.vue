@@ -51,9 +51,9 @@ export default {
     display: flex;
     align-items: center;
     font-weight: 400;
-    font-size: 20px;
-    line-height: 28.62px;
-    color: rgba(0, 0, 0, 0.62);
+    font-size: 14px;
+    line-height: 130%;
+    color: #99acd3;
     position: relative;
     user-select: none;
     cursor: pointer;
@@ -69,9 +69,10 @@ export default {
     &::after {
         content: "";
         display: inline-block;
-        width: 52px;
-        height: 28px;
-        background: rgba(194, 213, 242, 0.61);
+        width: 48px;
+        height: 24px;
+        background: #d9d9d9;
+        transition: all 0.3s ease;
         border-radius: 32px;
         @media (max-width: 479.98px) {
             width: 37px;
@@ -84,11 +85,11 @@ export default {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        right: 27px;
-        width: 22px;
-        height: 22px;
+        right: 28px;
+        width: 16px;
+        height: 16px;
         border-radius: 50%;
-        background-color: #fff;
+        background: #818c99;
         transition: all 0.3s ease;
         @media (max-width: 479.98px) {
             width: 15px;
@@ -98,8 +99,11 @@ export default {
     }
     &.checked {
         &::before {
-            right: 3px;
-            background-color: #4282ec;
+            right: 4px;
+            background: #5389e1;
+        }
+        &:after {
+            background: #bcd0f1;
         }
     }
 }

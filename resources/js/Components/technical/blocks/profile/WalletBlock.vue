@@ -29,11 +29,10 @@
             {{ wallet.value }}
             <div class="unit">{{ wallet.shortName }}</div>
             <div class="row">
-                ≈
-                <span>{{ (wallet.value * dollar).toFixed(2) }}</span>
-                $ ≈
-                <span>{{ ((wallet.value * dollar) / ruble).toFixed(2) }}</span>
-                ₽
+                <span> ≈ {{ (wallet.value * dollar).toFixed(2) }} $</span>
+                <span v-if="this.$i18n.locale === 'ru'">
+                    ≈ {{ ((wallet.value * dollar) / ruble).toFixed(2) }} ₽</span
+                >
             </div>
         </div>
         <div
@@ -217,13 +216,10 @@ export default {
             display: flex;
             gap: 4px;
             flex-wrap: wrap;
-            font-weight: 700;
+            font-weight: 500;
             color: #818c99;
             .unit {
-                font-weight: 400;
-            }
-            @media (min-width: 767.98px) {
-                font-weight: 700;
+                font-weight: 500;
             }
             @media (max-width: 767.98px) {
                 font-size: 18px;

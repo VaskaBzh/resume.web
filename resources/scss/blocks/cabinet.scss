@@ -48,7 +48,7 @@
         font-weight: 400;
         font-size: 17px;
         line-height: 20px;
-        color: #3F7BDD;
+        color: #3f7bdd;
         background: transparent;
         height: 100%;
         padding: 6px 12px;
@@ -68,7 +68,7 @@
             }
         }
         &.active {
-            background: #FFFFFF;
+            background: #ffffff;
             box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
             @media (max-width: 767.98px) {
                 box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
@@ -83,16 +83,20 @@
             padding: 16px;
         }
         &-light {
-            background: #FAFAFA;
+            background: #fafafa;
         }
         &-graph {
             position: relative;
             padding: 60px 40px 44px 28px;
             @media (max-width: 767.98px) {
-                padding: 60px 16px 44px 14px;
+                padding: 44px 16px 44px 14px;
             }
             @media (max-width: 479.98px) {
-                padding: 50px 15px 24px 15px;
+                padding: 30px 15px 24px 15px;
+                overflow-x: scroll;
+                .graph {
+                    width: 320%;
+                }
             }
         }
         .title {
@@ -101,7 +105,7 @@
             font-size: 18px;
             line-height: 140%;
             &-blue {
-                color: #5389E1;
+                color: #5389e1;
             }
         }
         &-scroll {

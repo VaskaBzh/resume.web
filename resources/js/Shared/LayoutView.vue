@@ -76,19 +76,30 @@ export default {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    transition: all 0.5s ease 0s;
+    transition: all 0.8s ease 0s;
     overflow: hidden;
-    background: linear-gradient(
-        179.87deg,
-        #e6eaf0 1.02%,
-        #e6eaf1 4.79%,
-        #e7ebf1 8.76%,
-        #eaeef4 14.75%,
-        #e8ecf2 19.07%
-    );
-
     position: relative;
     width: 100vw;
+    background: #040d15;
+    &:before {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        left: 0;
+        top: 0;
+        content: "";
+        background: linear-gradient(
+            179.87deg,
+            #e6eaf0 1.02%,
+            #e6eaf1 4.79%,
+            #e7ebf1 8.76%,
+            #eaeef4 14.75%,
+            #e8ecf2 19.07%
+        );
+        transition: all 0.8s ease 0s;
+        opacity: 1;
+        z-index: 0;
+    }
 }
 
 .nav__logo {

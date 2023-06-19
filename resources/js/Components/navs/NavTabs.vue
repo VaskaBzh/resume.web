@@ -416,7 +416,6 @@ export default {
         width: calc(100% + 30px);
     }
     &__tab {
-        font-weight: 500;
         width: 100%;
         color: #80809a;
         padding: 5px 20px 5px 16px;
@@ -428,7 +427,7 @@ export default {
         height: 60px;
         min-height: 60px;
         user-select: none;
-        font-weight: 400;
+        font-weight: 500;
         -webkit-tap-highlight-color: transparent;
         //-webkit-box-shadow: 0 11px 34px 0 transparent;
         @media (min-width: 991px) {

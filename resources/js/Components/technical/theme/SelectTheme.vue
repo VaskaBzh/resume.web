@@ -1,9 +1,5 @@
 <template>
-    <div
-        class="checkbox"
-        :class="{ active: isDark }"
-        @click="changeActive()"
-    >
+    <div class="checkbox" :class="{ active: isDark }" @click="changeActive()">
         <svg
             class="sun"
             width="16"
@@ -67,7 +63,7 @@
 </template>
 
 <script>
-import { useDark, useToggle } from "@vueuse/core";
+import { mapGetters } from "vuex";
 
 export default {
     name: "select-theme",
@@ -77,10 +73,11 @@ export default {
     data() {
         return {
             opened: false,
-            isDark: false,
+            timer: true,
         };
     },
     computed: {
+        ...mapGetters(["isDark"]),
         theme() {
             return this.active.value;
         },
@@ -108,19 +105,17 @@ export default {
     },
     methods: {
         async changeActive() {
-            this.theme === "light"
-                ? (this.isDark = true)
-                : (this.isDark = false);
-            this.$store.dispatch("theme", this.isDark);
+            if (this.timer) {
+                this.timer = false;
+                this.theme === "light"
+                    ? this.$store.dispatch("SetThemeVal", true)
+                    : this.$store.dispatch("SetThemeVal", false);
+                this.$store.dispatch("theme", this.isDark);
+                setTimeout(() => this.timer = true, 500)
+            }
         },
     },
     mounted() {
-        this.isDark = useDark({
-            selector: "body",
-            attribute: "color-scheme",
-            valueDark: "dark",
-            valueLight: "light",
-        });
         this.$store.dispatch("theme", this.isDark);
     },
 };

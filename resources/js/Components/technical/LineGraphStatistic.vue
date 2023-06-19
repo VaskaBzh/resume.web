@@ -14,10 +14,6 @@ export default {
         height: Number,
         viewportWidth: Number,
         redraw: Boolean,
-        tooltip: {
-            type: Boolean,
-            default: false,
-        },
     },
     data() {
         return {
@@ -66,7 +62,7 @@ export default {
             this.svg.selectAll("*").remove();
             this.svg._groups[0][0].remove();
         },
-        tooltipInit(event, tooltip, x, adjustValue, formatNumber) {
+        tooltipInit(event, tooltip, x, adjustValue, formatNumber, posy) {
             try {
                 let formatNumberWithUnit = (num, i) =>
                     formatNumber(adjustValue(num, this.graphData.unit[i]).val) +
@@ -90,9 +86,9 @@ export default {
 
                 const verticalLineX = this.mouseX;
 
-                const horizontalLineY =
-                    event.clientY -
-                    this.$refs.chart.getBoundingClientRect().top;
+                // const horizontalLineY =
+                //     event.clientY -
+                //     this.$refs.chart.getBoundingClientRect().top;
 
                 this.svg
                     .selectAll(".vertical-line")
@@ -100,19 +96,19 @@ export default {
                     .attr("x2", verticalLineX)
                     .attr("y1", 0)
                     .attr("y2", this.containerHeight)
-                    .attr("stroke-width", 0.7)
+                    .attr("stroke-width", 1)
                     .style("opacity", 1)
-                    .attr("stroke", "#BEC9E0");
+                    .attr("stroke", "#3F7BDD");
 
-                this.svg
-                    .selectAll(".horizontal-line")
-                    .attr("x1", 0)
-                    .attr("x2", this.$refs.chart.offsetWidth)
-                    .attr("y1", horizontalLineY)
-                    .attr("y2", horizontalLineY)
-                    .attr("stroke-width", 0.7)
-                    .style("opacity", 1)
-                    .attr("stroke", "#BEC9E0");
+                // this.svg
+                //     .selectAll(".horizontal-line")
+                //     .attr("x1", 0)
+                //     .attr("x2", this.$refs.chart.offsetWidth)
+                //     .attr("y1", horizontalLineY)
+                //     .attr("y2", horizontalLineY)
+                //     .attr("stroke-width", 0.7)
+                //     .style("opacity", 1)
+                //     .attr("stroke", "#BEC9E0");
 
                 if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
                     tooltip
@@ -120,13 +116,6 @@ export default {
                         .style(
                             this.getPosition?.side,
                             this.getPosition?.position + "px"
-                        )
-                        .style(
-                            "top",
-                            event.clientY -
-                                this.$refs.chart.getBoundingClientRect().top -
-                                topPos +
-                                "px"
                         ).html(`<div class="tooltip-wrapper">
                                 <span>Хешрейт: <span class="value">${formatNumberWithUnit(
                                     d,
@@ -186,12 +175,12 @@ export default {
             gradient
                 .append("stop")
                 .attr("offset", "0%")
-                .attr("stop-color", "rgba(78, 122, 214, 0.6)");
+                .attr("stop-color", "rgba(66, 130, 236, 0.8)");
 
             gradient
                 .append("stop")
                 .attr("offset", "100%")
-                .attr("stop-color", "rgba(78, 122, 214, 0)");
+                .attr("stop-color", "rgba(66, 129, 231, 0.04)");
 
             let x = d3
                 .scaleLinear()
@@ -241,7 +230,7 @@ export default {
             let xAxis = null;
 
             let yAxis = null;
-            if (isMobile && this.tooltip) {
+            if (isMobile) {
                 yAxis = d3
                     .axisLeft(y)
                     .ticks(12)
@@ -291,20 +280,28 @@ export default {
                 .attr("y1", 0)
                 .attr("x2", 0)
                 .attr("y2", this.containerHeight)
-                .attr("stroke-width", 0.7)
+                .attr("stroke-width", 1)
                 .style("opacity", 0)
-                .attr("stroke", "#BEC9E0");
+                .attr("stroke", "#3F7BDD");
+
+            // this.svg
+            //     .append("line")
+            //     .attr("class", "horizontal-line")
+            //     .attr("x1", 0)
+            //     .attr("y1", 0)
+            //     .attr("x2", this.$refs.chart.offsetWidth)
+            //     .attr("y2", 0)
+            //     .attr("stroke-width", 0.7)
+            //     .style("opacity", 0)
+            //     .attr("stroke", "#BEC9E0");
 
             this.svg
-                .append("line")
-                .attr("class", "horizontal-line")
-                .attr("x1", 0)
-                .attr("y1", 0)
-                .attr("x2", this.$refs.chart.offsetWidth)
-                .attr("y2", 0)
-                .attr("stroke-width", 0.7)
+                .append("circle") // Добавляем эту строку в ваш исходный код
+                .attr("class", "dot")
+                .attr("r", 6) // Задаем радиус нашей точки
                 .style("opacity", 0)
-                .attr("stroke", "#BEC9E0");
+                .attr("fill", "#79A3E8") // Используем тот же цвет, что и для линии графика
+                .attr("border", "#79A3E8");
 
             this.svg
                 .selectAll(".band")
@@ -312,10 +309,10 @@ export default {
                 .enter()
                 .append("rect")
                 .attr("class", "band")
-                .attr("y", (d) => y(d) - 0.3) // Выравнивание полосы
-                .attr("height", 0.3)
+                .attr("y", (d) => y(d) - 1) // Выравнивание полосы
+                .attr("height", 1)
                 .attr("width", "100%")
-                .attr("fill", "#BEC9E0");
+                .attr("fill", "#E6EAF0");
 
             this.svg
                 .append("path")
@@ -331,7 +328,7 @@ export default {
                 .attr("fill", "none")
                 .attr("class", "main_line")
                 .attr("width", "100%")
-                .attr("stroke", "#4E7AD6")
+                .attr("stroke", "#3F7BDD")
                 .attr("stroke-width", 2.5);
 
             this.svg
@@ -344,63 +341,179 @@ export default {
                 .attr("transform", `translate(-5, 0)`)
                 .call(yAxis);
 
-            if (!isMobile || this.tooltip) {
-                const tooltip = d3.select(this.$refs.tooltip);
+            const tooltip = d3.select(this.$refs.tooltip);
 
-                if (isMobile) {
-                    this.svg.on("touchstart", (event) =>
-                        this.tooltipInit(
-                            event.changedTouches[0], // Используем первый объект Touch из списка TouchList
-                            tooltip,
-                            x,
-                            adjustValue,
-                            formatNumber,
-                            formatSi
-                        )
-                    );
-                    this.svg.on("touchmove", (event) =>
-                        this.tooltipInit(
-                            event.changedTouches[0],
-                            tooltip,
-                            x,
-                            adjustValue,
-                            formatNumber,
-                            formatSi
-                        )
-                    );
-                    this.svg.on("touchend", () => {
-                        tooltip.style("opacity", 0);
-                        this.svg
-                            .selectAll(".vertical-line")
-                            .style("opacity", 0);
-                        this.svg
-                            .selectAll(".horizontal-line")
-                            .style("opacity", 0);
-                    });
-                }
+            if (isMobile) {
+                this.svg.on("touchstart", (event) => {
+                    const mouseX = d3.pointer(event)[0]; // Get the current mouse X position
 
-                this.svg.on("mousemove", (event) =>
+                    // Определение ближайшего индекса
+                    const pathNode = this.svg.select(".main_line").node();
+                    let beginning = 0,
+                        end = pathNode.getTotalLength();
+                    let position = null;
+
+                    // Поиск позиции на пути, которая ближе всего к позиции мыши
+                    while (true) {
+                        const target = Math.floor((beginning + end) / 2);
+                        position = pathNode.getPointAtLength(target);
+                        if (
+                            (target === end || target === beginning) &&
+                            position.x !== mouseX
+                        ) {
+                            break;
+                        }
+                        if (position.x > mouseX) end = target;
+                        else if (position.x < mouseX) beginning = target;
+                        else break; //position.x === mouseX
+                    }
+
+                    const d = y.invert(position.y);
+
+                    // Обновляем позицию точки на линии графика
+                    this.svg
+                        .selectAll(".dot")
+                        .attr("cx", position.x) // X-координата точки находится на той же позиции, что и вертикальная линия
+                        .attr("cy", position.y) // Y-координата точки соответствует значению графика
+                        .style("opacity", 1); // Делаем точку видимой
+
                     this.tooltipInit(
-                        event,
+                        event.changedTouches[0], // Используем первый объект Touch из списка TouchList
                         tooltip,
                         x,
                         adjustValue,
                         formatNumber,
-                        formatSi
-                    )
-                );
+                        formatSi,
+                        position.y
+                    );
 
-                this.svg.on("mouseleave", () => {
-                    tooltip.style("opacity", 0);
-
-                    this.svg.selectAll(".vertical-line").style("opacity", 0);
-
-                    // Устанавливаем стили и позицию горизонтальной полосы
-                    this.svg.selectAll(".horizontal-line").style("opacity", 0);
+                    tooltip.style(
+                        "top",
+                        position.y -
+                            this.$refs.tooltip.clientWidth / 2 -
+                            7 +
+                            "px"
+                    );
                 });
-                tooltip.on("mousemove", () => tooltip.style("opacity", 1));
-                tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
+                this.svg.on("touchmove", (event) => {
+                    const mouseX = d3.pointer(event)[0]; // Get the current mouse X position
+
+                    // Определение ближайшего индекса
+                    const pathNode = this.svg.select(".main_line").node();
+                    let beginning = 0,
+                        end = pathNode.getTotalLength();
+                    let position = null;
+
+                    // Поиск позиции на пути, которая ближе всего к позиции мыши
+                    while (true) {
+                        const target = Math.floor((beginning + end) / 2);
+                        position = pathNode.getPointAtLength(target);
+                        if (
+                            (target === end || target === beginning) &&
+                            position.x !== mouseX
+                        ) {
+                            break;
+                        }
+                        if (position.x > mouseX) end = target;
+                        else if (position.x < mouseX) beginning = target;
+                        else break; //position.x === mouseX
+                    }
+
+                    const d = y.invert(position.y);
+
+                    // Обновляем позицию точки на линии графика
+                    this.svg
+                        .selectAll(".dot")
+                        .attr("cx", position.x) // X-координата точки находится на той же позиции, что и вертикальная линия
+                        .attr("cy", position.y) // Y-координата точки соответствует значению графика
+                        .style("opacity", 1); // Делаем точку видимой
+
+                    this.tooltipInit(
+                        event.changedTouches[0],
+                        tooltip,
+                        x,
+                        adjustValue,
+                        formatNumber,
+                        formatSi,
+                        position.y
+                    );
+                    tooltip.style(
+                        "top",
+                        position.y -
+                            this.$refs.tooltip.clientWidth / 2 -
+                            7 +
+                            "px"
+                    );
+                });
+                this.svg.on("touchend", () => {
+                    tooltip.style("opacity", 0);
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+                    // this.svg.selectAll(".horizontal-line").style("opacity", 0);
+                });
             }
+
+            this.svg.on("mousemove", (event) => {
+                const mouseX = d3.pointer(event)[0]; // Get the current mouse X position
+
+                // Определение ближайшего индекса
+                const pathNode = this.svg.select(".main_line").node();
+                let beginning = 0,
+                    end = pathNode.getTotalLength();
+                let position = null;
+
+                // Поиск позиции на пути, которая ближе всего к позиции мыши
+                while (true) {
+                    const target = Math.floor((beginning + end) / 2);
+                    position = pathNode.getPointAtLength(target);
+                    if (
+                        (target === end || target === beginning) &&
+                        position.x !== mouseX
+                    ) {
+                        break;
+                    }
+                    if (position.x > mouseX) end = target;
+                    else if (position.x < mouseX) beginning = target;
+                    else break; //position.x === mouseX
+                }
+
+                const d = y.invert(position.y);
+
+                // Обновляем позицию точки на линии графика
+                this.svg
+                    .selectAll(".dot")
+                    .attr("cx", position.x) // X-координата точки находится на той же позиции, что и вертикальная линия
+                    .attr("cy", position.y) // Y-координата точки соответствует значению графика
+                    .style("opacity", 1); // Делаем точку видимой
+
+                this.tooltipInit(
+                    event,
+                    tooltip,
+                    x,
+                    adjustValue,
+                    formatNumber,
+                    formatSi,
+                    position.y
+                );
+                tooltip.style(
+                    "top",
+                    position.y - this.$refs.tooltip.clientWidth / 2 - 7 + "px"
+                );
+            });
+
+            this.svg.on("mouseleave", () => {
+                tooltip.style("opacity", 0);
+
+                this.svg.selectAll(".vertical-line").style("opacity", 0);
+
+                // Устанавливаем стили и позицию горизонтальной полосы
+                // this.svg.selectAll(".horizontal-line").style("opacity", 0);
+                tooltip.style("opacity", 0);
+
+                this.svg.selectAll(".vertical-line").style("opacity", 0);
+                this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+            });
+            tooltip.on("mousemove", () => tooltip.style("opacity", 1));
+            tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
         },
     },
     mounted() {
