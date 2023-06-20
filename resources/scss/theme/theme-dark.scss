@@ -39,10 +39,35 @@ body {
                 }
                 &__buttons {
                     .button {
-                        .button_name {
-                            &:hover {
-                                background: #1a345a;
-                                border: 1px solid #1a345a;
+                        .button {
+                            &_name {
+                                &:hover {
+                                    background: #1a345a;
+                                    border: 1px solid #1a345a;
+                                }
+                            }
+                            &__menu {
+                                background: #101d2b;
+                                box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
+                                .select_title .name,
+                                a {
+                                    color: #cacaca;
+                                }
+                                svg:last-child {
+                                    fill: #cacaca;
+                                }
+                                .select {
+                                    &_option {
+                                        &.active {
+                                            .main_select {
+                                                color: #cacaca;
+                                            }
+                                        }
+                                        .main_select {
+                                            color: #989898;
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
@@ -208,23 +233,17 @@ body {
                     }
                 }
             }
-            &__buttons {
-                transition: all $theme-transition ease 0s;
-                box-shadow: 0 4px 10px rgba(35, 38, 63, 0.15);
-                background: rgba(16, 23, 31, 0.5);
-            }
             &_button {
                 transition: all $theme-transition ease 0s;
-                color: #283955;
+                color: #333639;
                 &.active {
                     transition: all $theme-transition ease 0s;
-                    color: #79a3e8;
-                    background: rgba(36, 36, 36, 0.6);
-                    box-shadow: 0 4px 10px rgba(35, 38, 63, 0.15);
+                    color: #3f7bdd;
+                    background: rgba(40, 57, 85, 0.5);
+                    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
                 }
                 &:hover {
-                    transition: all $theme-transition ease 0s;
-                    box-shadow: 0 4px 10px rgba(35, 38, 63, 0.15);
+                    color: #3f7bdd;
                 }
             }
         }
@@ -570,13 +589,15 @@ body {
     }
     .nav-tabs {
         &__tab {
-            transition: all $theme-transition ease 0s;
+            transition: color $theme-transition ease 0s,
+                background $theme-transition ease 0s;
             &.router-link-active {
-                transition: all $theme-transition ease 0s;
+                transition: color $theme-transition ease 0s,
+                    background $theme-transition ease 0s;
             }
         }
         &_link-back {
-            transition: all $theme-transition ease 0s;
+            transition: background $theme-transition ease 0s;
             svg {
                 transition: all $theme-transition ease 0s;
             }
@@ -593,15 +614,9 @@ body {
                 }
             }
         }
-        &__buttons {
-            transition: all $theme-transition ease 0s;
-        }
         &_button {
             transition: all $theme-transition ease 0s;
             &.active {
-                transition: all $theme-transition ease 0s;
-            }
-            &:hover {
                 transition: all $theme-transition ease 0s;
             }
         }

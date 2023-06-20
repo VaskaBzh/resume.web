@@ -1,12 +1,14 @@
 <template>
     <div class="wallets__block wallets__block-wallet">
         <div class="wallets__block_name">
-            <span v-if="wallet.fullName === '' && wallet.name === ''">{{
-                wallet.wallet
-            }}</span>
-            <span v-else-if="wallet.fullName === '' && wallet.name !== ''">{{
-                wallet.name
-            }}</span>
+            <span
+                v-if="wallet.fullName === '' && wallet.name === ''"
+                >{{ wallet.wallet }}</span
+            >
+            <span
+                v-else-if="wallet.fullName === '' && wallet.name !== ''"
+                >{{ wallet.name }}</span
+            >
             <span
                 v-else-if="wallet.fullName !== '' && wallet.name !== ''"
                 v-tooltip="{ message: wallet.fullName }"
@@ -217,7 +219,7 @@ export default {
             gap: 4px;
             flex-wrap: wrap;
             font-weight: 500;
-            color: #818c99;
+            color: #343434;
             .unit {
                 font-weight: 500;
             }
@@ -232,9 +234,6 @@ export default {
             }
             span {
                 padding: 0 16px;
-                @media (max-width: 767.98px) {
-                    color: #000034;
-                }
             }
         }
 
@@ -281,7 +280,7 @@ export default {
                 font-weight: 500;
                 font-size: 18px;
                 line-height: 26px;
-                color: #000000;
+                color: #343434;
                 @media (max-width: 991.98px) {
                     font-size: 16px;
                     line-height: 23px;

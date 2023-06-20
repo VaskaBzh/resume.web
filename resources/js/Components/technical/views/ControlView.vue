@@ -279,10 +279,10 @@ export default {
                 ];
                 asics.forEach((asic) => {
                     this.$refs.asic_container.style.minHeight =
-                        asics[3].clientHeight + asics[3].offsetTop + "px";
+                        asics[3].clientHeight + topPos[3] + "px";
                     asic.style.position = "absolute";
                     asic.style.left = "50%";
-                    asic.style.top = asics[3].offsetTop + "px";
+                    asic.style.top = topPos[3] + "px";
                     asic.style.marginTop = "65px";
                     asic.style.marginLeft = -asics[3].clientHeight / 2 + "px";
                 });
@@ -322,11 +322,11 @@ export default {
                     asics[0].style.marginTop = topPos[0] + "px";
                     asics[6].style.marginTop = topPos[6] + "px";
                 }, 2000);
-                setTimeout(() => {
-                    asics.forEach((asic) => {
-                        asic.removeAttribute("style");
-                    });
-                }, 3000);
+                // setTimeout(() => {
+                //     asics.forEach((asic) => {
+                //         asic.removeAttribute("style");
+                //     });
+                // }, 3000);
             }
         },
     },
@@ -372,15 +372,31 @@ export default {
     opacity: 0 !important;
 }
 .sun-moon {
-    &-enter-active,
+    &-enter-active {
+        animation: inAnim 0.8s ease forwards 0s;
+    }
     &-leave-active {
-        transition: all 1.3s ease 0s;
+        animation: outAnim 0.8s ease forwards 0s;
     }
-    &-enter-from {
-        transform: translate(100vw, 300px) !important;
+}
+@keyframes outAnim {
+    from {
+        transform: translate(-50%, 0);
+        opacity: 1;
     }
-    &-leave-to {
-        transform: translate(-100vw, 300px) !important;
+    to {
+        transform: translate(-100vw, 300px);
+        opacity: 0;
+    }
+}
+@keyframes inAnim {
+    from {
+        transform: translate(100vw, 300px);
+        opacity: 0;
+    }
+    to {
+        transform: translate(-50%, 0);
+        opacity: 1;
     }
 }
 @keyframes fadeGreen {
@@ -559,7 +575,7 @@ export default {
             position: absolute;
             bottom: 0;
             left: 50%;
-            margin-left: -60px;
+            transform: translate(-50%, 0);
             transition: all 1.3s ease 0s;
         }
     }

@@ -65,12 +65,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .connecting {
-    .title {
-        margin-bottom: 40px;
-        @media (max-width: 767.98px) {
-            margin-bottom: 18px;
-        }
-    }
     // .connecting_question
     &__question {
         width: 100%;
@@ -129,11 +123,6 @@ export default {
             margin: 6px 0 0;
             max-width: 100% !important;
             height: 38px;
-        }
-    }
-    .title {
-        @media (max-width: 767.98px) {
-            margin-bottom: 24px;
         }
     }
 }

@@ -13,7 +13,17 @@ export default {
         graphData: Array,
         height: Number,
         viewportWidth: Number,
-        redraw: Boolean,
+        redraw: {
+            type: Boolean,
+            default: true,
+        },
+        graphType: String,
+        lineColor: String,
+        lineWidth: Number,
+        mouseLineColor: String,
+        circleColor: String,
+        circleBorder: String,
+        bandColor: String,
     },
     data() {
         return {
@@ -59,8 +69,10 @@ export default {
     },
     methods: {
         dropGraph() {
-            this.svg.selectAll("*").remove();
-            this.svg._groups[0][0].remove();
+            if (this.svg) {
+                this.svg.selectAll("*").remove();
+                this.svg._groups[0][0].remove();
+            }
         },
         tooltipInit(event, tooltip, x, adjustValue, formatNumber, posy) {
             try {
@@ -70,13 +82,18 @@ export default {
                     adjustValue(num, this.graphData.unit[i]).unit +
                     "H";
 
-                this.clientX = event.clientX;
+                event.touches
+                    ? (this.clientX = event.touches[0].clientX)
+                    : (this.clientX = event.clientX);
                 this.mouseX =
                     this.clientX - this.svg.node().getBoundingClientRect().left;
                 const nearestIndex = Math.round(x.invert(this.mouseX));
                 const d = this.graphData.values[nearestIndex];
                 const u = this.graphData.unit[nearestIndex];
-                const a = this.graphData.amount[nearestIndex];
+                let a = null;
+                if (this.graphType === "statistic") {
+                    a = this.graphData.amount[nearestIndex];
+                }
                 const time = this.graphData.dates[nearestIndex];
 
                 let topPos = 0;
@@ -98,7 +115,7 @@ export default {
                     .attr("y2", this.containerHeight)
                     .attr("stroke-width", 1)
                     .style("opacity", 1)
-                    .attr("stroke", "#3F7BDD");
+                    .attr("stroke", this.mouseLineColor);
 
                 // this.svg
                 //     .selectAll(".horizontal-line")
@@ -109,19 +126,16 @@ export default {
                 //     .attr("stroke-width", 0.7)
                 //     .style("opacity", 1)
                 //     .attr("stroke", "#BEC9E0");
+                let contentTooltip = null;
 
-                if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
-                    tooltip
-                        .style("opacity", 1)
-                        .style(
-                            this.getPosition?.side,
-                            this.getPosition?.position + "px"
-                        ).html(`<div class="tooltip-wrapper">
-                                <span>Хешрейт: <span class="value">${formatNumberWithUnit(
+                if (this.graphType === "statistic") {
+                    contentTooltip = `<div class="tooltip-wrapper">
+                                <span>Хешрейт <span class="value">${formatNumberWithUnit(
                                     d,
                                     u
-                                )}/s</span></span>
-                                <span>Активные воркеры: <span class="value">${a}</span></span>
+                                )}</span></span>
+                                <span>Активные воркеры <span class="value">${a}</span></span>
+                                <span>Отклоненный <span class="value">0.000%</span></span>
                                 <span class="time">${
                                     new Date(time).getUTCFullYear() + "."
                                 }${
@@ -132,7 +146,35 @@ export default {
                         .padStart(2, "0")} ${new Date(
                         time
                     ).toLocaleTimeString()}</span>
-                            </div>`);
+                            </div>`;
+                } else if (this.graphType === "complexity") {
+                    contentTooltip = `<div class="tooltip-wrapper">
+                                <span>Хешрейт <span class="value">${formatNumberWithUnit(
+                                    d,
+                                    u
+                                )}</span></span>
+                                <span>Отклоненный <span class="value">0.000%</span></span>
+                                <span class="time">${
+                                    new Date(time).getUTCFullYear() + "."
+                                }${
+                        new Date(time).getDate().toString().padStart(2, "0") +
+                        "."
+                    }${(new Date(time).getMonth() + 1)
+                        .toString()
+                        .padStart(2, "0")} ${new Date(
+                        time
+                    ).toLocaleTimeString()}</span>
+                            </div>`;
+                }
+
+                if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
+                    tooltip
+                        .style("opacity", 1)
+                        .style(
+                            this.getPosition?.side,
+                            this.getPosition?.position + "px"
+                        )
+                        .html(contentTooltip);
                 }
             } catch (error) {
                 console.error(error);
@@ -140,6 +182,13 @@ export default {
         },
 
         graphInit() {
+            let isMobile = this.viewportWidth <= 479.98;
+
+            this.containerHeight = this.height;
+
+            if (isMobile && this.tooltip) {
+                this.containerHeight = 380;
+            }
             let adjustValue = (num) => {
                 if (num / 1000 >= 1) {
                     return { val: num / 1000, unit: "P" };
@@ -192,14 +241,6 @@ export default {
                 " " +
                 adjustValue(num, this.graphData.unit[i]).unit +
                 "H";
-
-            let isMobile = this.viewportWidth <= 479.98;
-
-            this.containerHeight = this.height;
-
-            if (isMobile && this.tooltip) {
-                this.containerHeight = 380;
-            }
 
             const y = d3
                 .scaleLinear()
@@ -282,7 +323,7 @@ export default {
                 .attr("y2", this.containerHeight)
                 .attr("stroke-width", 1)
                 .style("opacity", 0)
-                .attr("stroke", "#3F7BDD");
+                .attr("stroke", this.mouseLineColor);
 
             // this.svg
             //     .append("line")
@@ -300,8 +341,8 @@ export default {
                 .attr("class", "dot")
                 .attr("r", 6) // Задаем радиус нашей точки
                 .style("opacity", 0)
-                .attr("fill", "#79A3E8") // Используем тот же цвет, что и для линии графика
-                .attr("border", "#79A3E8");
+                .attr("fill", this.circleColor) // Используем тот же цвет, что и для линии графика
+                .attr("border", this.circleBorder);
 
             this.svg
                 .selectAll(".band")
@@ -312,14 +353,16 @@ export default {
                 .attr("y", (d) => y(d) - 1) // Выравнивание полосы
                 .attr("height", 1)
                 .attr("width", "100%")
-                .attr("fill", "#E6EAF0");
+                .attr("fill", this.bandColor);
 
-            this.svg
-                .append("path")
-                .datum(this.graphData.values)
-                .attr("d", areaGenerator)
-                .attr("width", "100%")
-                .attr("fill", "url(#gradient)");
+            if (this.graphType === "statistic") {
+                this.svg
+                    .append("path")
+                    .datum(this.graphData.values)
+                    .attr("d", areaGenerator)
+                    .attr("width", "100%")
+                    .attr("fill", "url(#gradient)");
+            }
 
             this.svg
                 .append("path")
@@ -328,8 +371,8 @@ export default {
                 .attr("fill", "none")
                 .attr("class", "main_line")
                 .attr("width", "100%")
-                .attr("stroke", "#3F7BDD")
-                .attr("stroke-width", 2.5);
+                .attr("stroke", this.lineColor)
+                .attr("stroke-width", this.lineWidth);
 
             this.svg
                 .append("g")
@@ -345,179 +388,138 @@ export default {
 
             if (isMobile) {
                 this.svg.on("touchstart", (event) => {
-                    const mouseX = d3.pointer(event)[0]; // Get the current mouse X position
-
-                    // Определение ближайшего индекса
-                    const pathNode = this.svg.select(".main_line").node();
-                    let beginning = 0,
-                        end = pathNode.getTotalLength();
-                    let position = null;
-
-                    // Поиск позиции на пути, которая ближе всего к позиции мыши
-                    while (true) {
-                        const target = Math.floor((beginning + end) / 2);
-                        position = pathNode.getPointAtLength(target);
-                        if (
-                            (target === end || target === beginning) &&
-                            position.x !== mouseX
-                        ) {
-                            break;
-                        }
-                        if (position.x > mouseX) end = target;
-                        else if (position.x < mouseX) beginning = target;
-                        else break; //position.x === mouseX
-                    }
-
-                    const d = y.invert(position.y);
-
-                    // Обновляем позицию точки на линии графика
-                    this.svg
-                        .selectAll(".dot")
-                        .attr("cx", position.x) // X-координата точки находится на той же позиции, что и вертикальная линия
-                        .attr("cy", position.y) // Y-координата точки соответствует значению графика
-                        .style("opacity", 1); // Делаем точку видимой
-
-                    this.tooltipInit(
-                        event.changedTouches[0], // Используем первый объект Touch из списка TouchList
+                    const touchX =
+                        event.touches[0].clientX -
+                        this.svg.node().getBoundingClientRect().left;
+                    const position = this.getClosestPoint(touchX);
+                    this.updateDotAndTooltip(
+                        event,
                         tooltip,
                         x,
                         adjustValue,
                         formatNumber,
                         formatSi,
-                        position.y
-                    );
-
-                    tooltip.style(
-                        "top",
-                        position.y -
-                            this.$refs.tooltip.clientWidth / 2 -
-                            7 +
-                            "px"
+                        position
                     );
                 });
+
                 this.svg.on("touchmove", (event) => {
-                    const mouseX = d3.pointer(event)[0]; // Get the current mouse X position
-
-                    // Определение ближайшего индекса
-                    const pathNode = this.svg.select(".main_line").node();
-                    let beginning = 0,
-                        end = pathNode.getTotalLength();
-                    let position = null;
-
-                    // Поиск позиции на пути, которая ближе всего к позиции мыши
-                    while (true) {
-                        const target = Math.floor((beginning + end) / 2);
-                        position = pathNode.getPointAtLength(target);
-                        if (
-                            (target === end || target === beginning) &&
-                            position.x !== mouseX
-                        ) {
-                            break;
-                        }
-                        if (position.x > mouseX) end = target;
-                        else if (position.x < mouseX) beginning = target;
-                        else break; //position.x === mouseX
-                    }
-
-                    const d = y.invert(position.y);
-
-                    // Обновляем позицию точки на линии графика
-                    this.svg
-                        .selectAll(".dot")
-                        .attr("cx", position.x) // X-координата точки находится на той же позиции, что и вертикальная линия
-                        .attr("cy", position.y) // Y-координата точки соответствует значению графика
-                        .style("opacity", 1); // Делаем точку видимой
-
-                    this.tooltipInit(
-                        event.changedTouches[0],
+                    const touchX =
+                        event.touches[0].clientX -
+                        this.svg.node().getBoundingClientRect().left;
+                    const position = this.getClosestPoint(touchX);
+                    this.updateDotAndTooltip(
+                        event,
                         tooltip,
                         x,
                         adjustValue,
                         formatNumber,
                         formatSi,
-                        position.y
-                    );
-                    tooltip.style(
-                        "top",
-                        position.y -
-                            this.$refs.tooltip.clientWidth / 2 -
-                            7 +
-                            "px"
+                        position
                     );
                 });
+
                 this.svg.on("touchend", () => {
                     tooltip.style("opacity", 0);
                     this.svg.selectAll(".vertical-line").style("opacity", 0);
-                    // this.svg.selectAll(".horizontal-line").style("opacity", 0);
+                    this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
                 });
+            } else {
+                this.svg.on("mousemove", (event) => {
+                    const mouseX = d3.pointer(event)[0];
+                    const position = this.getClosestPoint(mouseX);
+                    this.updateDotAndTooltip(
+                        event,
+                        tooltip,
+                        x,
+                        adjustValue,
+                        formatNumber,
+                        formatSi,
+                        position
+                    );
+                });
+
+                this.svg.on("mouseleave", () => {
+                    tooltip.style("opacity", 0);
+
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+
+                    // Устанавливаем стили и позицию горизонтальной полосы
+                    // this.svg.selectAll(".horizontal-line").style("opacity", 0);
+                    tooltip.style("opacity", 0);
+
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+                    this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+                });
+                tooltip.on("mousemove", () => tooltip.style("opacity", 1));
+                tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
+            }
+        },
+        getClosestPoint(touchX) {
+            const pathNode = this.svg.select(".main_line").node();
+            let beginning = 0,
+                end = pathNode.getTotalLength();
+            let position = null;
+
+            while (true) {
+                const target = Math.floor((beginning + end) / 2);
+                position = pathNode.getPointAtLength(target);
+                if (
+                    (target === end || target === beginning) &&
+                    position.x !== touchX
+                ) {
+                    break;
+                }
+                if (position.x > touchX) end = target;
+                else if (position.x < touchX) beginning = target;
+                else break; //position.x === touchX
             }
 
-            this.svg.on("mousemove", (event) => {
-                const mouseX = d3.pointer(event)[0]; // Get the current mouse X position
+            return position;
+        },
+        updateDotAndTooltip(
+            event,
+            tooltip,
+            x,
+            adjustValue,
+            formatNumber,
+            formatSi,
+            position
+        ) {
+            // Обновляем позицию точки на линии графика
+            this.svg
+                .selectAll(".dot")
+                .attr("cx", position.x)
+                .attr("cy", position.y)
+                .style("opacity", 1);
 
-                // Определение ближайшего индекса
-                const pathNode = this.svg.select(".main_line").node();
-                let beginning = 0,
-                    end = pathNode.getTotalLength();
-                let position = null;
+            this.tooltipInit(
+                event,
+                tooltip,
+                x,
+                adjustValue,
+                formatNumber,
+                formatSi,
+                position.y
+            );
 
-                // Поиск позиции на пути, которая ближе всего к позиции мыши
-                while (true) {
-                    const target = Math.floor((beginning + end) / 2);
-                    position = pathNode.getPointAtLength(target);
-                    if (
-                        (target === end || target === beginning) &&
-                        position.x !== mouseX
-                    ) {
-                        break;
-                    }
-                    if (position.x > mouseX) end = target;
-                    else if (position.x < mouseX) beginning = target;
-                    else break; //position.x === mouseX
-                }
-
-                const d = y.invert(position.y);
-
-                // Обновляем позицию точки на линии графика
-                this.svg
-                    .selectAll(".dot")
-                    .attr("cx", position.x) // X-координата точки находится на той же позиции, что и вертикальная линия
-                    .attr("cy", position.y) // Y-координата точки соответствует значению графика
-                    .style("opacity", 1); // Делаем точку видимой
-
-                this.tooltipInit(
-                    event,
-                    tooltip,
-                    x,
-                    adjustValue,
-                    formatNumber,
-                    formatSi,
-                    position.y
-                );
-                tooltip.style(
+            tooltip
+                .style(
                     "top",
-                    position.y - this.$refs.tooltip.clientWidth / 2 - 7 + "px"
-                );
-            });
+                    position.y - this.$refs.tooltip.clientHeight - 7 + "px"
+                )
+                .style("opacity", 1);
 
-            this.svg.on("mouseleave", () => {
-                tooltip.style("opacity", 0);
-
-                this.svg.selectAll(".vertical-line").style("opacity", 0);
-
-                // Устанавливаем стили и позицию горизонтальной полосы
-                // this.svg.selectAll(".horizontal-line").style("opacity", 0);
-                tooltip.style("opacity", 0);
-
-                this.svg.selectAll(".vertical-line").style("opacity", 0);
-                this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
-            });
-            tooltip.on("mousemove", () => tooltip.style("opacity", 1));
-            tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
+            // Обновляем позицию вертикальной линии
+            this.svg
+                .selectAll(".vertical-line")
+                .attr("x1", position.x)
+                .attr("x2", position.x)
+                .style("opacity", 1);
         },
     },
     mounted() {
-        if (this.$refs.chart && this.graphData?.values?.length > 0) {
+        if (this.$refs.chart && this.graphData.values?.length > 0) {
             setInterval(() => {
                 if (
                     this.$refs.chart?.offsetWidth &&

@@ -1,23 +1,24 @@
 <template>
-    <div class="text-b">
-        {{ this.copyObject.title }}:
+    <div class="text">
+        <b>{{ this.copyObject.title }}:</b>
         <div
-            class="copy_row text-b"
+            class="copy_row text text-light"
             :class="{ active: active }"
             @click="this.copyLink"
         >
             {{ this.copyObject.link }}
             <svg
-                width="28"
-                height="28"
-                viewBox="0 0 28 28"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
                 class="copy_button"
                 :class="{ hide: active }"
             >
                 <path
-                    d="M13.125 4.375V13.125H4.375V14.875H13.125V23.625H14.875V14.875H23.625V13.125H14.875V4.375H13.125Z"
+                    d="M20 2H10C8.897 2 8 2.897 8 4V8H4C2.897 8 2 8.897 2 10V20C2 21.103 2.897 22 4 22H14C15.103 22 16 21.103 16 20V16H20C21.103 16 22 15.103 22 14V4C22 2.897 21.103 2 20 2ZM4 20V10H14L14.002 20H4ZM20 14H16V10C16 8.897 15.103 8 14 8H10V4H20V14Z"
+                    fill="#818C99"
                 />
             </svg>
         </div>
@@ -48,7 +49,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.text-b {
+.text {
     display: flex;
     justify-content: space-between;
     gap: 4px;
@@ -78,7 +79,7 @@ export default {
     }
     &_row {
         width: 100%;
-        min-height: 56px;
+        min-height: 48px;
         border-radius: 8px;
         box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
         background: #fafafa;
@@ -90,12 +91,12 @@ export default {
         justify-content: space-between;
         transition: all 0.3s ease 0s;
         overflow: hidden;
-        max-width: calc(100% - 90px) !important;
+        max-width: calc(100% - 70px) !important;
         border: 1px solid transparent;
-        @media (max-width: 767.98px) {
-            padding: 2px 12px;
-            min-height: 36px;
-            max-width: calc(100% - 60px) !important;
+        @media (max-width: 479.98px) {
+            padding: 2px 8px;
+            min-height: 40px;
+            max-width: calc(100% - 55px) !important;
         }
         &:hover {
             .copy {
@@ -104,11 +105,7 @@ export default {
                 }
             }
         }
-        @media (max-width: 320.98px) {
-            max-width: calc(100% - 55px) !important;
-        }
         &.active {
-            border: 1px solid #4182ec;
             .copy-button {
                 opacity: 0;
             }
@@ -119,7 +116,7 @@ export default {
         }
         &:before {
             content: "";
-            background-image: url("data:image/svg+xml,%3Csvg width='756' height='756' viewBox='0 0 756 756' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M607.729 166.729L283.5 490.959L148.27 355.729C135.954 343.413 116.014 343.413 103.729 355.729C91.4445 368.046 91.413 387.985 103.729 400.27L261.229 557.771C273.546 570.087 293.485 570.087 305.77 557.771L652.271 211.27C664.587 198.954 664.587 179.014 652.271 166.729C639.954 154.444 620.014 154.413 607.729 166.729Z' fill='%234181EA'/%3E%3C/svg%3E%0A");
+            background-image: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9.27283 18.0269L9.44961 18.2037L9.62639 18.0269L20.3014 7.35187L20.4782 7.1751L20.3014 6.99832L19.2264 5.92332L19.0496 5.74654L18.8728 5.92332L9.44961 15.3465L5.10139 10.9983L4.92461 10.8215L4.74783 10.9983L3.67283 12.0733L3.49606 12.2501L3.67283 12.4269L9.27283 18.0269Z' fill='%233F7BDD' stroke='%233F7BDD' stroke-width='0.5'/%3E%3C/svg%3E%0A");
             background-position: center;
             background-size: cover;
             position: absolute;
@@ -138,7 +135,7 @@ export default {
             border-radius: 8px;
             opacity: 0;
             @media (max-width: 478.98px) {
-                right: 24px;
+                right: 8px;
                 width: 20px;
                 height: 20px;
             }

@@ -8,6 +8,7 @@
             <div
                 class="cabinet"
                 v-if="
+                    this.allHistory[this.getActive] &&
                     this.allHistory[this.getActive]?.filter((a) => a.hash > 0)
                         .length !== 0
                 "
@@ -99,17 +100,15 @@
                     <!--                    </div>-->
                 </div>
             </div>
-            <div class="wrap" v-else>
-                <div class="wrap__block-connect">
-                    <main-title tag="h4" class="headline">{{
-                        $t("statistic.chart.no_workers_title")
-                    }}</main-title>
-                    <copy-block
-                        v-for="(object, i) in this.copyObject"
-                        :key="i"
-                        :copyObject="object"
-                    ></copy-block>
-                </div>
+            <div class="cabinet" v-else>
+                <main-title tag="h4" class="headline">{{
+                    $t("statistic.chart.no_workers_title")
+                }}</main-title>
+                <copy-block
+                    v-for="(object, i) in this.copyObject"
+                    :key="i"
+                    :copyObject="object"
+                ></copy-block>
             </div>
             <div class="cabinet">
                 <main-title tag="h4" class="headline">

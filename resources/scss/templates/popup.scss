@@ -409,14 +409,12 @@ body::after {
         width: 100% !important;
         transition: all 0.3s ease 0s;
         text-align: center;
-        font-family: Ubuntu, serif;
-        min-height: 51px;
+        min-height: 48px;
         .all-link {
             color: #EAEAEA;
-            font-weight: 700;
-            font-size: 18px;
-            font-family: Ubuntu, serif;
-            line-height: 107.6%;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 120%;
         }
         //@media (max-width: $mobileSmall) {
         //    min-height: 48px;

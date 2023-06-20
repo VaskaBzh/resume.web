@@ -292,8 +292,6 @@ export default {
     background: transparent;
     height: fit-content;
     -webkit-box-shadow: 0 11px 34px 0 transparent;
-    transition: all 0.8s ease 0s, top 0s ease 0s, position 0s ease 0s,
-        padding 0s ease 0s, width 0s ease 0s;
     z-index: 9;
     @media (min-width: 991px) {
         //&:hover {
@@ -309,7 +307,6 @@ export default {
         @media (min-width: 991px) {
             background: #fafafa;
             border-radius: 8px;
-            transition: background 0.3s ease 0s;
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -341,7 +338,6 @@ export default {
             position: absolute;
             border-radius: 13px;
             padding: 0;
-            transition: all 0s;
             top: 3px;
             background-color: transparent;
             border: 0.5px solid transparent;
@@ -361,13 +357,11 @@ export default {
                     width: 0;
                     height: 0;
                     min-height: 0;
-                    transition: all 0s ease 0s;
                 }
 
                 &_link-back {
                     width: 40px;
                     height: 40px;
-                    transition: background 0.3s ease 0s;
                     overflow: visible;
                     visibility: visible;
                     opacity: 1;
@@ -421,8 +415,6 @@ export default {
         padding: 5px 20px 5px 16px;
         display: inline-flex;
         align-items: center;
-        transition: all 0.7s ease 0s, height 0s ease 0s, min-height 0s ease 0s,
-            width 0s ease 0s;
         position: relative;
         height: 60px;
         min-height: 60px;
@@ -440,7 +432,6 @@ export default {
             line-height: 132.6%;
             gap: 16px;
             background: transparent;
-            //transition: all 0.3s ease 0s;
             svg {
                 width: 22px;
                 height: 22px;
@@ -483,7 +474,6 @@ export default {
         svg {
             @media (min-width: 991px) {
                 fill: #417fe5;
-                transition: all 0.3s ease;
             }
         }
         &-stroke {

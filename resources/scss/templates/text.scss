@@ -1,66 +1,28 @@
 .text {
-    font-weight: 300;
-    font-size: 16px;
-    line-height: 150%;
-    color: #818C99;
-    &-b {
-        font-family: AmpleSoftPro, serif;
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 115%;
-        color: #343434;
-        @media (max-width: $mobile) {
-            font-size: 20px;
-        }
-        @media (max-width: $mobileSmall) {
-            font-size: 18px;
-        }
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 120%;
+    color: #818c99;
+    @media (max-width: $mobileSmall) {
+        font-size: 14px;
     }
-    &-lg {
-        font-size: 20px;
-        line-height: 181.1%;
-        @media (max-width: $mobile) {
-            font-size: 16px;
-            line-height: 148.1%;
-        }
+    b {
+        font-weight: 500;
     }
     &-md {
-        font-weight: 400;
-        font-size: 18px;
-        line-height: 143.1%;
-        @media (max-width: $mobile) {
-            font-size: 16px;
-            line-height: 23px;
-        }
-    }
-    &-sm {
-        font-size: 16px;
-        line-height: 143.1%;
-        @media (max-width: $mobile) {
-            font-size: 16px;
-            line-height: 148.1%;
+        font-size: 14px;
+        line-height: 130%;
+        @media (max-width: $mobileSmall) {
+            font-size: 12px;
         }
     }
     &-black {
         color: #000000;
     }
     &-ligth {
-        color: rgba(255, 255, 255, 0.68);
-        span {
-            font-weight: 500;
-            font-size: 31px;
-            line-height: 100%;
-            color: #FFFFFF;
-            @media (max-width: $mobile) {
-                font-size: 20px;
-                line-height: 107.6%;
-            }
-        }
+        color: #7c7c7c;
     }
     &-white {
         color: #ffffff;
-        b {
-            font-weight: 500;
-        }
     }
 }

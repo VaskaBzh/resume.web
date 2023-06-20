@@ -2,11 +2,11 @@
     width: 100%;
     padding: 0 12px;
     border-radius: 8px;
-    font-weight: 400;
     color: #7C7C7C;
     background: #EDEDED;
-    font-size: 16px;
-    line-height: 150%;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 115%;
     border: none;
     outline: none;
     display: inline-flex;
@@ -38,18 +38,6 @@
                 }
             }
         }
-    }
-    @media (max-width: $mobile) {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 18px;
-    }
-    @media (max-width: $mobileSmall) {
-        background-color: #fff;
-        padding: 0 10px;
-        min-height: 40px;
-        border-radius: 12px;
-        height: 40px;
     }
     &-lg {
         min-height: 61px;

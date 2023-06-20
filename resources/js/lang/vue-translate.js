@@ -44,9 +44,9 @@ const messages = {
                     password: {
                         title: "Create account Allbtc",
                         placeholders: {
-                            password: "Please enter the password",
+                            password: "Please enter the ",
                             password_confirmation:
-                                "Please confirm the password",
+                                "Please confirm the ",
                         },
                         button: "Register",
                     },
@@ -356,7 +356,7 @@ const messages = {
         connection: {
             title: "Worker connection",
             block: {
-                title: "1. Configure your device according to the data provided below:",
+                title: "Configure your device according to the data provided below:",
             },
         },
         wallets: {
@@ -413,6 +413,7 @@ const messages = {
                     phone_message: "Add phone number",
                     popup: {
                         title: "Set a new one",
+                        title_email: "Set a new one",
                         placeholders: {
                             placeholder: "Please enter the ",
                             password_new: "Please enter the password",
@@ -786,7 +787,7 @@ const messages = {
         connection: {
             title: "Подключение воркера",
             block: {
-                title: "1. Настройте ваше устройство согласно представленным ниже данным:",
+                title: "Настройте ваше устройство согласно представленным ниже данным:",
             },
         },
         wallets: {
@@ -840,10 +841,11 @@ const messages = {
                     phone_message: "Добавьте телефон",
                     popup: {
                         title: "Задайте новый",
+                        title_email: "Задайте новую",
                         placeholders: {
                             placeholder: "Введите",
-                            password_new: "Введите новый пароль",
-                            password_confirmation: "Подтвердите пароль",
+                            password_new: "Введите новый",
+                            password_confirmation: "Подтвердите",
                         },
                         button: "Изменить",
                     },

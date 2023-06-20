@@ -25,6 +25,13 @@
                             :redraw="redraw"
                             :viewportWidth="viewportWidth"
                             :tooltip="tooltip"
+                            lineColor="#3F7BDD"
+                            :lineWidth="2.5"
+                            mouseLineColor="#3F7BDD"
+                            circleColor="#79A3E8"
+                            circleBorder="#3F7BDD"
+                            :bandColor="bandColor"
+                            graphType="statistic"
                         ></line-graph-statistic>
                     </div>
                 </div>
@@ -36,6 +43,7 @@
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
+import { mapGetters } from "vuex";
 
 export default {
     props: {
@@ -79,6 +87,14 @@ export default {
         LineGraphStatistic,
     },
     computed: {
+        ...mapGetters(["isDark"]),
+        bandColor() {
+            let color = "#E6EAF0";
+            if (this.isDark) {
+                color = "#262626";
+            }
+            return color;
+        },
         getHeight() {
             if (!this.heightVal) {
                 if (this.viewportWidth < 479.98) return 260;

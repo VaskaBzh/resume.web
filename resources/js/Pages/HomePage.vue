@@ -151,18 +151,20 @@
                                 {{ $t("home.button") }}</a
                             >
                         </blue-button>
-                        <img
-                            v-if="!getTheme"
-                            src="../../assets/img/graph.png"
-                            alt=""
-                            class="home-im__image"
-                        />
-                        <img
-                            v-else
-                            src="../../assets/img/graph-dark.png"
-                            alt=""
-                            class="home-im__image"
-                        />
+                        <!--                        class="home-im__image"-->
+                        <line-graph-statistic
+                            v-if="Object.values(btcHistory).length > 0"
+                            :graphData="graph"
+                            :height="height"
+                            :viewportWidth="viewportWidth"
+                            lineColor="#FDC433"
+                            :lineWidth="7"
+                            bandColor="#FAFAFA"
+                            mouseLineColor="#FFE5A1"
+                            circleColor="#FDC433"
+                            circleBorder="#FCF5E2"
+                            graphType="complexity"
+                        ></line-graph-statistic>
                         <div class="home-im__content">
                             <p class="home-im__title">Bitcoin</p>
                             <ul class="home-im__content_list">
@@ -320,16 +322,14 @@
                                     :href="route('accounts')"
                                     v-if="this.auth_user"
                                     class="link link-blue"
-                                    >{{ $t("home.promo_blocks.payment.link")
-                                    }}
+                                    >{{ $t("home.promo_blocks.payment.link") }}
                                 </Link>
                                 <a
                                     href="#"
                                     v-else
                                     data-popup="#auth"
                                     class="link link-blue"
-                                    >{{ $t("home.promo_blocks.payment.link")
-                                    }}
+                                    >{{ $t("home.promo_blocks.payment.link") }}
                                 </a>
                             </div>
                         </div>
@@ -346,8 +346,7 @@
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
                                 <a href="#" class="link link-blue"
-                                    >{{ $t("home.promo_blocks.fpps.link")
-                                    }}
+                                    >{{ $t("home.promo_blocks.fpps.link") }}
                                 </a>
                             </div>
                         </div>
@@ -384,6 +383,7 @@ import AboutPanelView from "@/Components/technical/views/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";
 import { SwiperSlide } from "swiper/vue";
+import lineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 
 export default {
     props: {
@@ -399,6 +399,7 @@ export default {
         InfoCard,
         BlueButton,
         MainTitle,
+        lineGraphStatistic,
         Head,
         Link,
         SwiperSlide,
@@ -406,14 +407,27 @@ export default {
     data() {
         return {
             viewportWidth: 0,
+            height: 404,
         };
+    },
+    watch: {
+        viewportWidth() {
+            this.height = this.getHeight;
+        },
     },
     created: function () {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
     computed: {
-        ...mapGetters(["btcInfo", "getTheme"]),
+        ...mapGetters(["btcInfo", "btcHistory", "getTheme"]),
+        getHeight() {
+            if (this.viewportWidth < 479.98) return 366;
+            else if (this.viewportWidth < 767.98) return 370;
+            else if (this.viewportWidth < 991.98) return 370;
+            else if (this.viewportWidth < 1320.98) return 404;
+            else return 366;
+        },
         cards() {
             return [
                 {
@@ -433,6 +447,22 @@ export default {
                 },
             ];
         },
+        graph() {
+            let arr = {
+                id: 1,
+                values: [],
+                dates: [],
+                unit: [],
+            };
+            Object.values(this.btcHistory).forEach((el) => {
+                arr.values.push(el["y"]);
+                arr.dates.push(el["x"] * 1000);
+                while (arr.unit.length < this.val) {
+                    arr.unit.push("T");
+                }
+            });
+            return arr;
+        },
     },
     methods: {
         handleResize() {
@@ -441,6 +471,7 @@ export default {
     },
     mounted() {
         document.title = "Главная";
+        this.height = this.getHeight;
     },
 };
 </script>
@@ -696,7 +727,7 @@ export default {
             background-size: contain;
             background-repeat: no-repeat;
             height: 390px;
-            top: -12em;
+            top: -15em;
             left: 7em;
             animation-name: plane-soaring;
             animation-duration: 5s;
@@ -978,6 +1009,5 @@ export default {
     z-index: 5;
 }
 .info-home {
-
 }
 </style>

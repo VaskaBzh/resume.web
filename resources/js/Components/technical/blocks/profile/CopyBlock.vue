@@ -1,8 +1,8 @@
 <template>
     <div class="copy__block">
-        <main-title tag="h4" class="headline">
+        <span class="text">
             {{ this.copyObject.title }}
-        </main-title>
+        </span>
         <copy-row
             v-for="(copy, i) in this.copyObject.copyObject"
             :key="i"
@@ -13,10 +13,9 @@
 
 <script>
 import CopyRow from "@/Components/UI/profile/CopyRow.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
-    components: { CopyRow, MainTitle },
+    components: { CopyRow },
     name: "copy-block",
     props: {
         copyObject: Object,
