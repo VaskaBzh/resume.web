@@ -281,6 +281,18 @@ body {
                 color: #cacaca;
             }
         }
+        .home-im__image {
+            .container-chart {
+                .main-line {
+                    transition: all $theme-transition ease 0s;
+                    fill: rgba(233, 192, 88, 0.2) !important;
+                }
+                .band {
+                    transition: all $theme-transition ease 0s;
+                    fill: #262626 !important;
+                }
+            }
+        }
         .home-im__content_item {
             .subtitle-value {
                 transition: all $theme-transition ease 0s;

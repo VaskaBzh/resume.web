@@ -162,9 +162,6 @@ export default {
                             ? formatNumberWithUnit(d, u)
                             : formatNumber(d)
                     }</span></span>
-                                <span>${this.$t(
-                                    "tooltip.rejected"
-                                )} <span class="value">0.000%</span></span>
                                 <span class="time">${
                                     new Date(time).getUTCFullYear() + "."
                                 }${
