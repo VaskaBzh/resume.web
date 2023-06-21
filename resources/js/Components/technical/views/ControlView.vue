@@ -345,7 +345,7 @@ export default {
                         setTimeout(() => {
                             this.$store.dispatch("theme", !this.getTheme);
                             this.$store.dispatch("SetThemeVal", this.getTheme);
-                        }, 2000);
+                        }, 1000);
                     }
                     // else if (entry.isIntersecting) {
                     //     this.animated = false;
@@ -372,10 +372,10 @@ export default {
 }
 .sun-moon {
     &-enter-active {
-        animation: inAnim 0.8s ease forwards 0s;
+        animation: inAnim 3s ease forwards 0s;
     }
     &-leave-active {
-        animation: outAnim 0.8s ease forwards 0s;
+        animation: outAnim 3s ease forwards 0s;
     }
 }
 @keyframes outAnim {
