@@ -2,15 +2,12 @@
     <div class="efficiency section">
         <div class="efficiency__container">
             <div class="efficiency__main">
-                <main-title tag="h2" class="title-blue"
-                    >Увеличивайте эффективность ваших ресурсов</main-title
-                >
+                <main-title tag="h2" class="title-blue">{{
+                    this.$t("hosting.eff.title")
+                }}</main-title>
                 <img src="../../../../assets/img/efficiency_img-1.png" alt="" />
                 <p class="description">
-                    Наша платформа обеспечивает вам максимальную гибкость и
-                    эффективность в использовании ваших ресурсов. Мы помогаем
-                    вам принимать обоснованные решения о распределении ресурсов,
-                    обеспечивая оптимальное использование каждого устройства.
+                    {{ this.$t("hosting.eff.text") }}
                 </p>
             </div>
         </div>

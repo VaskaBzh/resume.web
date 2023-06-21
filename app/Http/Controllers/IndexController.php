@@ -29,12 +29,12 @@ class IndexController extends Controller
         ]);
     }
 
-//    public function help()
-//    {
-//        return Inertia::render('FaqPage', [
-//            'auth_user' => Auth::check(),
-//        ]);
-//    }
+    public function help()
+    {
+        return Inertia::render('FaqPage', [
+            'auth_user' => Auth::check(),
+        ]);
+    }
 
 //    public function about()
 //    {

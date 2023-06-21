@@ -12,6 +12,95 @@ body {
                 opacity: 0;
             }
         }
+        @media (max-width: 991.98px) {
+            .nav {
+                &__menu {
+                    &_wrap {
+                        background: #0F1924;
+                    }
+                    &_item {
+                        color: #CACACA;
+                        padding: 0 10px;
+                        display: inline-flex;
+                        align-items: center;
+                        &-add {
+                            svg path {
+                                fill:  #CACACA;
+                            }
+                        }
+
+                        &:not(:last-child) {
+                            border-bottom: 0.5px solid #333639;
+                        }
+                        &.active {
+                            background: #16212B;
+                        }
+                    }
+                }
+                &__links_con {
+                    background: #040D15;
+                    .button {
+                        &_name {
+                            color: #3F7BDD;
+                            svg path {
+                                fill: #3F7BDD !important;
+                            }
+                        }
+                    }
+
+                    .nav {
+                        &_subtitle {
+                            color: #818C99;
+                        }
+
+                        &_value {
+                            color: #E1E1E1;
+                        }
+
+                        &__links {
+                            background: #101D2B;
+
+                            .burger {
+                                &_link {
+                                    border-bottom: 0.5px solid #606060;
+                                    background: transparent;
+                                    color: #818C99;
+
+                                    &-active {
+                                        color: #3F7BDD;
+                                    }
+
+                                    svg {
+                                        fill: #3F7BDD;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        .search {
+            input {
+                transition: all $theme-transition ease 0s;
+                border: 1px solid #484848;
+            }
+        }
+        .faq {
+            .section__block-light {
+                transition: all $theme-transition ease 0s;
+                background: #101D2B;
+                box-shadow: 0px 4px 10px rgba(85, 85, 85, 0.1);
+            }
+            .accordion_title svg path {
+                transition: all $theme-transition ease 0s;
+                fill: #CACACA !important;
+            }
+            &_title {
+                color: #3F7BDD;
+                transition: all $theme-transition ease 0s;
+            }
+        }
         nav {
             &.nav {
                 &__container {
@@ -221,6 +310,21 @@ body {
             }
         }
         .cabinet {
+            &_title {
+                .checkbox {
+                    transition: all $theme-transition ease 0s;
+                    background: transparent !important;
+                    color: #989898;
+                    &:after {
+                        transition: all $theme-transition ease 0s;
+                        background-color: #989898;
+                    }
+                    &:before {
+                        transition: all $theme-transition ease 0s;
+                        background: #DDE1E6;
+                    }
+                }
+            }
             &__block {
                 &-light {
                     transition: all $theme-transition ease 0s;
@@ -466,6 +570,22 @@ body {
             color: #989898;
         }
     }
+    .search {
+        input {
+            transition: all $theme-transition ease 0s;
+        }
+    }
+    .faq {
+        .section__block-light {
+            transition: all $theme-transition ease 0s;
+        }
+        .accordion_title svg path {
+            transition: all $theme-transition ease 0s;
+        }
+        &_title {
+            transition: all $theme-transition ease 0s;
+        }
+    }
     #app {
         .checkbox {
             transition: all $theme-transition ease 0s;
@@ -604,6 +724,17 @@ body {
         }
     }
     .cabinet {
+        &_title {
+            .checkbox {
+                transition: all $theme-transition ease 0s;
+                &:after {
+                    transition: all $theme-transition ease 0s;
+                }
+                &:before {
+                    transition: all $theme-transition ease 0s;
+                }
+            }
+        }
         &__block {
             &-light {
                 transition: all $theme-transition ease 0s;

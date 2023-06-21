@@ -57,13 +57,8 @@ export default {
     position: relative;
     user-select: none;
     cursor: pointer;
-    gap: 12px;
-    @media (max-width: 767.98px) {
-        font-size: 16px;
-        line-height: 24px;
-    }
+    gap: 16px;
     @media (max-width: 479.98px) {
-        line-height: 20px;
         justify-content: space-between;
     }
     &::after {
@@ -71,7 +66,7 @@ export default {
         display: inline-block;
         width: 48px;
         height: 24px;
-        background: #d9d9d9;
+        background: #d2dff3;
         transition: all 0.3s ease;
         border-radius: 32px;
         @media (max-width: 479.98px) {
@@ -89,7 +84,7 @@ export default {
         width: 16px;
         height: 16px;
         border-radius: 50%;
-        background: #818c99;
+        background: rgba(255, 255, 255, 0.75);
         transition: all 0.3s ease;
         @media (max-width: 479.98px) {
             width: 15px;

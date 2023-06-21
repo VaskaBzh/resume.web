@@ -260,10 +260,11 @@ export default {
                                 this.btcInfo.btc.reward) /
                             (this.btcInfo.btc.diff * Math.pow(2, 32));
                     }
+                    val = val * (1 - 0.005);
                     Vue.set(
                         this.profit,
                         Object.keys(this.allAccounts)[i],
-                        val * (1 - 0.035 - 0.005)
+                        val * (1 - 0.035)
                     );
                 });
             }

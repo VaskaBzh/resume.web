@@ -12,9 +12,11 @@
                 class="profile_status active"
                 v-if="accountInfo.id === getActive"
             >
-                Активный
+                {{ this.$t("accounts.toggle[0]") }}
             </span>
-            <span class="profile_status" @click="chageActive" v-else>Переключить</span>
+            <span class="profile_status" @click="chageActive" v-else>
+                {{ this.$t("accounts.toggle[1]") }}</span
+            >
             <!--            <div class="profile__settings" @click="toggleOpen">-->
             <!--                <svg-->
             <!--                    xmlns="http://www.w3.org/2000/svg"-->

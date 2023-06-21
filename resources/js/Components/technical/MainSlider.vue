@@ -59,10 +59,28 @@
                     <a
                         @click="pagination(page)"
                         ref="page"
+                        v-for="(page, index) in this.firstPages"
+                        :key="index"
+                        :class="{ active: this.page === page }"
+                    >{{ page }}</a
+                    >
+                    <span>...</span>
+                    <a
+                        @click="pagination(page)"
+                        ref="page"
                         v-for="(page, index) in this.overPages"
                         :key="index"
                         :class="{ active: this.page === page }"
                         >{{ page }}</a
+                    >
+                    <span>...</span>
+                    <a
+                        @click="pagination(page)"
+                        ref="page"
+                        v-for="(page, index) in this.lastPages"
+                        :key="index"
+                        :class="{ active: this.page === page }"
+                    >{{ page }}</a
                     >
                 </div>
                 <div class="slider__slides slider__slides-full" v-else>
@@ -101,6 +119,34 @@
                     </svg>
                 </button>
             </div>
+            <div class="slider__nav-rows">
+                <input type="text" v-model="rowsNumber" />
+                <span class="slider__nav-rows__buttons">
+                    <svg
+                        @click="rowsNumber = String(Number(rowsNumber) + 1)"
+                        width="15"
+                        height="15"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M8.20711 5.20711L11.2929 8.29289C11.9229 8.92286 11.4767 10 10.5858 10H4.41421C3.52331 10 3.07714 8.92286 3.70711 8.29289L6.79289 5.20711C7.18342 4.81658 7.81658 4.81658 8.20711 5.20711Z"
+                        /></svg
+                    ><svg
+                        @click="rowsNumber = String(Number(rowsNumber) - 1)"
+                        width="15"
+                        height="15"
+                        viewBox="0 0 15 15"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M6.79289 9.79289L3.70711 6.70711C3.07714 6.07714 3.52331 5 4.41421 5H10.5858C11.4767 5 11.9229 6.07714 11.2929 6.70711L8.20711 9.79289C7.81658 10.1834 7.18342 10.1834 6.79289 9.79289Z"
+                        />
+                    </svg>
+                </span>
+            </div>
         </div>
     </div>
 </template>
@@ -118,15 +164,26 @@ export default {
             default: 10,
         },
     },
+    watch: {
+        rowsNumber(newValue, oldValue) {
+            console.log(newValue);
+            if (String(this.rowsNumber).length < 3 && String(this.rowsNumber).length > 0) {
+                this.rowsNumber = newValue.replace(/[^0-9]/g, "");
+            } else {
+                this.rowsNumber = oldValue;
+            }
+            this.rows = Number(this.firstRow) + Number(this.rowsNumber);
+        },
+    },
     data() {
         return {
             viewportWidth: 0,
             firstRow: 0,
             slides: 1,
             slide: 1,
-            firstPages: [1, 2, 3, 4, 5],
             key: 0,
-            rows: this.rowsNum,
+            rowsNumber: this.rowsNum,
+            rows: this.rowsNumber,
             page: 1,
         };
     },
@@ -139,21 +196,32 @@ export default {
             return Number(this.firstRow) + 1;
         },
         pages() {
-            return Math.ceil(this.table.rows.length / this.rowsNum);
+            return Math.ceil(this.table.rows.length / this.rowsNumber);
+        },
+        firstPages() {
+            if (this.page <= 4) {
+                return Array.from({length: Math.min(5, this.pages)}, (_, i) => i + 1);
+            }
+            return [1, 2];
         },
         lastPages() {
+            if (this.page >= this.pages - 3) {
+                return Array.from({length: Math.min(5, this.pages)}, (_, i) => this.pages - i).reverse();
+            }
             return [this.pages - 1, this.pages].filter((page) => page > 0);
         },
         overPages() {
-            let startPage = Math.max(this.pages - 7, 1);
-            let pages = [];
-            for (let i = 0; i < 8 && startPage + i <= this.pages; i++) {
-                pages.push(startPage + i);
+            if (this.page > 4 && this.page < this.pages - 3) {
+                let pages = [];
+                for (let i = this.page - 1; i <= this.page + 1; i++) {
+                    pages.push(i);
+                }
+                return pages;
             }
-            return pages;
+            return [];
         },
         booler() {
-            return this.overPages.includes(this.page);
+            return this.page > 4 && this.page < this.pages - 3;
         },
     },
     methods: {
@@ -167,8 +235,8 @@ export default {
             else if (newPage > this.pages) newPage = 1;
 
             this.page = newPage;
-            this.firstRow = (newPage - 1) * this.rowsNum;
-            this.rows = Number(this.firstRow) + Number(this.rowsNum);
+            this.firstRow = (newPage - 1) * this.rowsNumber;
+            this.rows = Number(this.firstRow) + Number(this.rowsNumber);
 
             if (this.rows > this.table.rows.length) {
                 this.rows = this.table.rows.length;
@@ -179,8 +247,8 @@ export default {
             else if (page > this.pages) page = this.pages;
 
             this.page = page;
-            this.firstRow = (page - 1) * this.rowsNum;
-            this.rows = Number(this.firstRow) + Number(this.rowsNum);
+            this.firstRow = (page - 1) * this.rowsNumber;
+            this.rows = Number(this.firstRow) + Number(this.rowsNumber);
 
             if (this.rows > this.table.rows.length) {
                 this.rows = this.table.rows.length;
@@ -245,6 +313,51 @@ export default {
                 color: #000034;
                 font-size: 16px;
                 line-height: 15px;
+            }
+        }
+
+        &-rows {
+            max-width: 96px;
+            width: 100%;
+            min-height: 40px;
+            display: flex;
+            padding: 0 5px;
+            background: #fafafa;
+            border-radius: 8px;
+            align-items: center;
+            input {
+                outline: none;
+                color: #7c7c7c;
+                border: none;
+                font-family: AmpleSoftPro, serif;
+                font-weight: 500;
+                font-size: 18px;
+                line-height: 135%;
+                padding: 0 13px 0 12px;
+                background: transparent;
+                max-width: calc(18px + 13px + 12px);
+            }
+            &__buttons {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                padding: 0 15px 0 15px;
+                position: relative;
+                svg {
+                    fill: #7c7c7c;
+                    cursor: pointer;
+                    width: 15px;
+                    height: 15px;
+                }
+                &:before {
+                    content: "";
+                    position: absolute;
+                    left: 0;
+                    height: 100%;
+                    width: 1px;
+                    background: #eff2f6;
+                }
             }
         }
 

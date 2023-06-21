@@ -130,12 +130,18 @@ export default {
 
                 if (this.graphType === "statistic") {
                     contentTooltip = `<div class="tooltip-wrapper">
-                                <span>Хешрейт <span class="value">${formatNumberWithUnit(
-                                    d,
-                                    u
-                                )}</span></span>
-                                <span>Активные воркеры <span class="value">${a}</span></span>
-                                <span>Отклоненный <span class="value">0.000%</span></span>
+                                <span>${this.$t(
+                                    "tooltip.hash"
+                                )} <span class="value">${formatNumberWithUnit(
+                        d,
+                        u
+                    )}</span></span>
+                                <span>${this.$t(
+                                    "tooltip.workers"
+                                )} <span class="value">${a}</span></span>
+                                <span>${this.$t(
+                                    "tooltip.rejected"
+                                )} <span class="value">0.000%</span></span>
                                 <span class="time">${
                                     new Date(time).getUTCFullYear() + "."
                                 }${
@@ -149,11 +155,16 @@ export default {
                             </div>`;
                 } else if (this.graphType === "complexity") {
                     contentTooltip = `<div class="tooltip-wrapper">
-                                <span>Хешрейт <span class="value">${formatNumberWithUnit(
-                                    d,
-                                    u
-                                )}</span></span>
-                                <span>Отклоненный <span class="value">0.000%</span></span>
+                                <span>${this.$t(
+                                    "tooltip.hash"
+                                )} <span class="value">${
+                        this.graphType === "statistic"
+                            ? formatNumberWithUnit(d, u)
+                            : formatNumber(d)
+                    }</span></span>
+                                <span>${this.$t(
+                                    "tooltip.rejected"
+                                )} <span class="value">0.000%</span></span>
                                 <span class="time">${
                                     new Date(time).getUTCFullYear() + "."
                                 }${
@@ -272,19 +283,30 @@ export default {
 
             let yAxis = null;
             if (isMobile) {
-                yAxis = d3
-                    .axisLeft(y)
-                    .ticks(12)
-                    .tickFormat((d, i) => formatNumberWithUnit(d, i));
+                if (this.graphType === "statistic") {
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(12)
+                        .tickFormat((d, i) => formatNumberWithUnit(d, i));
+                } else {
+                    yAxis = d3.axisLeft(y).ticks(12).tickFormat(formatNumber);
+                }
                 xAxis = d3
                     .axisBottom(x)
                     .ticks(12)
                     .tickFormat((d) => formatTime(new Date(d)));
             } else {
-                yAxis = d3
-                    .axisLeft(y)
-                    .ticks(isMobile ? 6 : 10)
-                    .tickFormat((d, i) => formatNumberWithUnit(d, i));
+                if (this.graphType === "statistic") {
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(isMobile ? 6 : 10)
+                        .tickFormat((d, i) => formatNumberWithUnit(d, i));
+                } else {
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(isMobile ? 6 : 10)
+                        .tickFormat(formatNumber);
+                }
                 xAxis = d3
                     .axisBottom(x)
                     .ticks(isMobile ? 4 : this.viewportWidth <= 991.98 ? 8 : 12)
@@ -362,6 +384,19 @@ export default {
                     .attr("d", areaGenerator)
                     .attr("width", "100%")
                     .attr("fill", "url(#gradient)");
+            } else {
+                this.svg
+                    .selectAll(".value-line")
+                    .data(this.graphData.values) // выбираем каждый второй элемент
+                    .enter()
+                    .append("line")
+                    .attr("class", "value-line")
+                    .attr("x1", (d, i) => x(i)) // умножаем на 2, так как выбрали каждый второй элемент
+                    .attr("y1", (d) => y(d))
+                    .attr("x2", (d, i) => x(i))
+                    .attr("y2", this.containerHeight) // вторая точка находится на нижнем краю контейнера
+                    .attr("stroke", this.lineColor) // или любой цвет, который вам нужен
+                    .attr("stroke-width", 0.5); // или любая ширина, которую вы хотите
             }
 
             this.svg

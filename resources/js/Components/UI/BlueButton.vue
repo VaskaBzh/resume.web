@@ -105,7 +105,36 @@ export default {
     line-height: 140%;
 
     &-md {
-        min-height: 61px;
+        min-height: 56px;
+    }
+
+    &-reverce {
+        filter: drop-shadow(0px 10px 30px rgba(112, 165, 236, 0.5));
+        background: transparent;
+        border: 1px solid #4282ec;
+        color: #4282ec;
+        padding: 0 32px;
+        gap: 10px;
+        transition: all 0.5s ease 0s;
+        svg {
+            fill: #4282ec !important;
+            transition: all 0.5s ease 0s;
+        }
+        &:before {
+            content: none !important;
+        }
+        &:hover {
+            background: linear-gradient(
+                84.14deg,
+                #3f7bdd 8.75%,
+                #4282ec 92.01%
+            );
+            box-shadow: 0px 10px 30px rgba(112, 165, 236, 0.5);
+            color: #e8ecf2;
+            svg {
+                fill: #e8ecf2 !important;
+            }
+        }
     }
 
     &-lg {

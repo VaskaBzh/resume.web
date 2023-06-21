@@ -4,6 +4,9 @@
         <div class="statistic__wrapper">
             <main-title tag="h3" class="cabinet_title">
                 {{ $t("statistic.title") }}
+                <main-checkbox @is_checked="allGraph">
+                    {{ $t("statistic.checkbox") }}</main-checkbox
+                >
             </main-title>
             <div
                 class="cabinet"
@@ -43,61 +46,41 @@
                         :viewportWidth="viewportWidth"
                         :key="graphs[0].values[graphs[0].values.length - 1]"
                     />
-                    <!--                    <teleport to="body">-->
-                    <!--                        <main-popup-->
-                    <!--                            id="graph"-->
-                    <!--                            class="popup-graph"-->
-                    <!--                            @opened="active = true"-->
-                    <!--                            @closed="active = false"-->
-                    <!--                        >-->
-                    <!--                            <statistic-chart-->
-                    <!--                                :val="val"-->
-                    <!--                                :graphs="graphs"-->
-                    <!--                                :viewportWidth="viewportWidth"-->
-                    <!--                                :tooltip="true"-->
-                    <!--                                :key="-->
-                    <!--                                    graphs[0].values[-->
-                    <!--                                        graphs[0].values.length - 1-->
-                    <!--                                    ]-->
-                    <!--                                "-->
-                    <!--                            />-->
-                    <!--                        </main-popup>-->
-                    <!--                    </teleport>-->
-                    <!--                    <div-->
-                    <!--                        class="hover"-->
-                    <!--                        v-show="id === val && this.viewportWidth <= 479.98"-->
-                    <!--                        data-popup="#graph"-->
-                    <!--                        :class="{ active: active, hover_event: hover }"-->
-                    <!--                        @touchstart="hover = true"-->
-                    <!--                        @touchend="hover = false"-->
-                    <!--                    >-->
-                    <!--                        <div class="hover_wrap" ref="fullScreen">-->
-                    <!--                            <svg-->
-                    <!--                                width="32"-->
-                    <!--                                height="32"-->
-                    <!--                                viewBox="0 0 32 32"-->
-                    <!--                                fill="none"-->
-                    <!--                                xmlns="http://www.w3.org/2000/svg"-->
-                    <!--                            >-->
-                    <!--                                <path-->
-                    <!--                                    d="M25 7V12C25 12.5523 25.4477 13 26 13C26.5523 13 27 12.5523 27 12V6C27 5.44772 26.5523 5 26 5H20C19.4477 5 19 5.44772 19 6C19 6.55228 19.4477 7 20 7H25Z"-->
-                    <!--                                    fill="#1C1C1C"-->
-                    <!--                                />-->
-                    <!--                                <path-->
-                    <!--                                    d="M26.7067 6.70748C26.8943 6.51995 27 6.26522 27 6C27 5.73478 26.8946 5.48043 26.7071 5.29289L26.6985 5.28436C26.5117 5.1024 26.2607 5 26 5C25.7348 5 25.4804 5.10536 25.2929 5.29289L18.2933 12.2925C18.1057 12.4801 18 12.7348 18 13C18 13.016 18.0004 13.032 18.0012 13.048C18.0131 13.2964 18.1171 13.5313 18.2929 13.7071C18.4804 13.8946 18.7348 14 19 14C19.2652 14 19.5196 13.8946 19.7071 13.7071L26.7067 6.70748Z"-->
-                    <!--                                    fill="#1C1C1C"-->
-                    <!--                                />-->
-                    <!--                                <path-->
-                    <!--                                    d="M7 25V20C7 19.4477 6.55228 19 6 19C5.44772 19 5 19.4477 5 20V26C5 26.5523 5.44772 27 6 27H12C12.5523 27 13 26.5523 13 26C13 25.4477 12.5523 25 12 25H7Z"-->
-                    <!--                                    fill="#1C1C1C"-->
-                    <!--                                />-->
-                    <!--                                <path-->
-                    <!--                                    d="M13.7067 19.7075C13.8943 19.5199 14 19.2652 14 19C14 18.7348 13.8946 18.4804 13.7071 18.2929L13.6985 18.2844C13.5117 18.1024 13.2607 18 13 18C12.7348 18 12.4804 18.1054 12.2929 18.2929L5.29327 25.2925C5.10573 25.4801 5 25.7348 5 26C5 26.016 5.00038 26.032 5.00115 26.048C5.0131 26.2964 5.1171 26.5313 5.29289 26.7071C5.48043 26.8946 5.73478 27 6 27C6.26522 27 6.51957 26.8946 6.70711 26.7071L13.7067 19.7075Z"-->
-                    <!--                                    fill="#1C1C1C"-->
-                    <!--                                />-->
-                    <!--                            </svg>-->
-                    <!--                        </div>-->
-                    <!--                    </div>-->
+                    <div
+                        class="hover"
+                        v-show="id === val && this.viewportWidth <= 479.98"
+                        data-popup="#graph"
+                        :class="{ active: active, hover_event: hover }"
+                        @touchstart="hover = true"
+                        @touchend="hover = false"
+                    >
+                        <div class="hover_wrap" ref="fullScreen">
+                            <svg
+                                width="32"
+                                height="32"
+                                viewBox="0 0 32 32"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                            >
+                                <path
+                                    d="M25 7V12C25 12.5523 25.4477 13 26 13C26.5523 13 27 12.5523 27 12V6C27 5.44772 26.5523 5 26 5H20C19.4477 5 19 5.44772 19 6C19 6.55228 19.4477 7 20 7H25Z"
+                                    fill="#1C1C1C"
+                                />
+                                <path
+                                    d="M26.7067 6.70748C26.8943 6.51995 27 6.26522 27 6C27 5.73478 26.8946 5.48043 26.7071 5.29289L26.6985 5.28436C26.5117 5.1024 26.2607 5 26 5C25.7348 5 25.4804 5.10536 25.2929 5.29289L18.2933 12.2925C18.1057 12.4801 18 12.7348 18 13C18 13.016 18.0004 13.032 18.0012 13.048C18.0131 13.2964 18.1171 13.5313 18.2929 13.7071C18.4804 13.8946 18.7348 14 19 14C19.2652 14 19.5196 13.8946 19.7071 13.7071L26.7067 6.70748Z"
+                                    fill="#1C1C1C"
+                                />
+                                <path
+                                    d="M7 25V20C7 19.4477 6.55228 19 6 19C5.44772 19 5 19.4477 5 20V26C5 26.5523 5.44772 27 6 27H12C12.5523 27 13 26.5523 13 26C13 25.4477 12.5523 25 12 25H7Z"
+                                    fill="#1C1C1C"
+                                />
+                                <path
+                                    d="M13.7067 19.7075C13.8943 19.5199 14 19.2652 14 19C14 18.7348 13.8946 18.4804 13.7071 18.2929L13.6985 18.2844C13.5117 18.1024 13.2607 18 13 18C12.7348 18 12.4804 18.1054 12.2929 18.2929L5.29327 25.2925C5.10573 25.4801 5 25.7348 5 26C5 26.016 5.00038 26.032 5.00115 26.048C5.0131 26.2964 5.1171 26.5313 5.29289 26.7071C5.48043 26.8946 5.73478 27 6 27C6.26522 27 6.51957 26.8946 6.70711 26.7071L13.7067 19.7075Z"
+                                    fill="#1C1C1C"
+                                />
+                            </svg>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="cabinet" v-else>
@@ -115,19 +98,6 @@
                     {{ $t("statistic.info_blocks.title") }}
                 </main-title>
                 <div class="statistic__row">
-                    <payment-card
-                        :key="this.allHistory[this.getActive]"
-                        :BTCValueFirst="this.yesterdayEarn"
-                        :BTCValueSecond="this.todayEarn"
-                        :titleFirst="
-                            $t('statistic.info_blocks.payment.titles[0]')
-                        "
-                        :titleSecond="
-                            $t('statistic.info_blocks.payment.titles[1]')
-                        "
-                        :iconFirst="1"
-                        :iconSecond="1"
-                    />
                     <div
                         class="cabinet__block cabinet__block-light hash__block"
                         v-if="Object.values(this.allAccounts).length > 0"
@@ -135,28 +105,8 @@
                         <Link class="title title-blue" :href="route(`workers`)"
                             >{{ $t("statistic.info_blocks.workers.title") }}
                         </Link>
-                        <!--                        <span class="title title-blue">-->
-                        <!--                            {{ $t("statistic.info_blocks.hash.titles[0]") }}-->
-                        <!--                        </span>-->
-                        <!--                        <div class="wrap__head wrap__column">-->
-                        <!--                            <div class="wrap__row">-->
-                        <!--                                <span class="wrap_title">-->
-                        <!--                                    {{-->
-                        <!--                                        $t(-->
-                        <!--                                            "statistic.info_blocks.hash.titles[0]"-->
-                        <!--                                        )-->
-                        <!--                                    }}-->
-                        <!--                                </span>-->
-                        <!--                                <span class="wrap_hash"-->
-                        <!--                                    >{{-->
-                        <!--                                        Number(this.workers.hash).toFixed(2)-->
-                        <!--                                    }}-->
-                        <!--                                    TH/s</span-->
-                        <!--                                >-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
                         <ul class="statistic__list">
-                            <li class="active description description-xs">
+                            <li class="active text text-md">
                                 <span>
                                     {{
                                         $t(
@@ -166,7 +116,7 @@
                                 >
                                 {{ this.workers.active }}
                             </li>
-                            <li class="unStable description description-xs">
+                            <li class="unStable text text-md">
                                 <span>
                                     {{
                                         $t(
@@ -176,7 +126,7 @@
                                 >
                                 {{ this.workers.unStable }}
                             </li>
-                            <li class="inActive description description-xs">
+                            <li class="inActive text text-md">
                                 <span>{{
                                     $t("statistic.info_blocks.workers.types[2]")
                                 }}</span>
@@ -184,28 +134,79 @@
                             </li>
                         </ul>
                         <ul class="statistic__list statistic__list-last">
-                            <li class="description description-xs">
+                            <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[0]") }}
-                                <span class="statistic_info"
-                                    >{{
-                                        Number(this.workers.hash).toFixed(2)
-                                    }}
-                                    TH/s</span
+                                <span class="statistic_info text-blue"
+                                    ><b
+                                        >{{
+                                            Number(this.workers.hash).toFixed(2)
+                                        }}
+                                        TH/s</b
+                                    ></span
                                 >
                             </li>
-                            <li class="description description-xs">
+                            <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[1]") }}
-                                <span class="statistic_info"
-                                    >{{
-                                        Number(this.workers.hash24).toFixed(2)
-                                    }}
-                                    TH/s</span
+                                <span class="statistic_info text-blue"
+                                    ><b
+                                        >{{
+                                            Number(this.workers.hash24).toFixed(
+                                                2
+                                            )
+                                        }}
+                                        TH/s</b
+                                    ></span
                                 >
                             </li>
                         </ul>
                     </div>
                     <div class="no-info" v-else>
                         <div class="propeller"></div>
+                    </div>
+                    <div
+                        class="statistic__info cabinet__block cabinet__block-light"
+                    >
+                        <main-title tag="h4" class="title title-blue"
+                            >Чистая прибыль</main-title
+                        >
+                        <p class="text text-md" v-if="!clearProfit">
+                            Укажите расходы на электроэнергию для расчета чистой
+                            прибыли.
+                        </p>
+                        <blue-button v-if="!clearProfit">
+                            <Link
+                                :href="route('settings')"
+                                class="text text-md text-white"
+                                ><b>Указать</b></Link
+                            >
+                        </blue-button>
+                        <btc-calculator
+                            v-if="clearProfit"
+                            title="Сегодня"
+                            :BTC="todayEarn"
+                            :clearProfit="clearProfitDay"
+                        />
+                        <btc-calculator
+                            v-if="clearProfit"
+                            title="За месяц"
+                            :BTC="clearBTCMounth"
+                            :clearProfit="clearProfit"
+                        />
+                    </div>
+                    <div
+                        class="statistic__info cabinet__block cabinet__block-light"
+                    >
+                        <main-title tag="h4" class="title title-blue">{{
+                            $t("statistic.info_blocks.title")
+                        }}</main-title>
+                        <btc-calculator
+                            title="Вчера"
+                            :BTC="this.BTCValueFirst"
+                        />
+                        <btc-calculator
+                            title="Прогноз на сегодня"
+                            :BTC="this.BTCValueSecond"
+                        />
                     </div>
                 </div>
             </div>
@@ -215,23 +216,25 @@
 <script>
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { Link, Head, router } from "@inertiajs/vue3";
-import PaymentCard from "@/Components/technical/blocks/profile/PaymentCard.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import BlueButton from "@/Components/UI/BlueButton.vue";
+import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
+import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
     components: {
         StatisticChart,
         MainTitle,
-        PaymentCard,
         Head,
         Link,
         CopyBlock,
-        MainPopup,
+        BlueButton,
+        BtcCalculator,
+        MainCheckbox,
     },
     layout: profileLayoutView,
     data() {
@@ -251,6 +254,7 @@ export default {
             workersInActive: 0,
             id: 0,
             val: 24,
+            clearProfit: null,
             graphs: [
                 {
                     id: 1,
@@ -271,6 +275,7 @@ export default {
             },
             active: false,
             hover: false,
+            activeHistory: null,
         };
     },
     created: function () {
@@ -278,6 +283,26 @@ export default {
         this.handleResize();
     },
     computed: {
+        clearProfitDay() {
+            let val = 0;
+            if (this.btcInfo) {
+                if (this.allAccounts[this.getActive]) {
+                    val = Number(this.clearProfit);
+                    val = val / 30;
+                }
+            }
+            return val;
+        },
+        clearBTCMounth() {
+            let val = 0;
+            if (this.btcInfo) {
+                if (this.allAccounts[this.getActive]) {
+                    val = this.todayEarn;
+                    val = val * 30;
+                }
+            }
+            return val;
+        },
         copyObject() {
             return [
                 {
@@ -335,7 +360,8 @@ export default {
                             86400 *
                             this.btcInfo.btc.reward) /
                         (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    val = val * (1 - 0.035 - 0.005);
+                    val = val * (1 - 0.005);
+                    val = val * (1 - 0.035);
                 }
             }
             if (typeof val === "number") {
@@ -387,11 +413,26 @@ export default {
         router() {
             return router;
         },
+        allGraph(bool) {
+            if (bool) {
+                let allArrays = Object.values(this.allHistory);
+                this.activeHistory = allArrays.flat();
+            } else {
+                this.setActive();
+            }
+            let id = this.id;
+            this.changeGraph(1);
+            this.changeId();
+            this.renderChart();
+            this.changeGraph(id);
+        },
+        setActive() {
+            this.activeHistory = this.allHistory[this.getActive];
+        },
         renderChart() {
             const interval = 60 * 60 * 1000;
             const currentTime = new Date().getTime();
-            const activeHistory = this.allHistory[this.getActive];
-            const historyValues = Object.values(activeHistory);
+            const historyValues = Object.values(this.activeHistory);
 
             this.graphs[0].dates = Array.from({ length: this.val }, (_, i) => {
                 const date = new Date(
@@ -435,11 +476,16 @@ export default {
     mounted() {
         document.title = "Статистика";
         if (this.allHistory[this.getActive]) {
+            this.setActive();
             this.renderChart();
+        }
+        if (localStorage.getItem("clearProfit")) {
+            this.clearProfit = localStorage.getItem("clearProfit");
         }
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
+            this.setActive();
             this.renderChart();
         }
     },
@@ -514,14 +560,31 @@ export default {
     &__row {
         display: grid;
         gap: 16px;
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+        @media (max-width: 1320.98px) {
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: repeat(2, 1fr);
+        }
         @media (max-width: 479.98px) {
             grid-template-columns: 1fr;
+            grid-template-rows: repeat(3, 1fr);
         }
         .cabinet__block {
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+    }
+    &__info {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        .blue-button {
+            margin-top: auto;
+            padding: 0 24px;
+            .text {
+                z-index: 1;
+            }
         }
     }
     &__list {
@@ -569,8 +632,6 @@ export default {
                 }
             }
             .statistic_info {
-                color: #486382;
-                font-weight: 500;
                 &:before {
                     content: none;
                 }

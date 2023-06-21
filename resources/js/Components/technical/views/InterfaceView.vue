@@ -3,18 +3,16 @@
         <div class="interface__container">
             <div class="interface__main">
                 <div class="interface__content">
-                    <main-title tag="h2" class="title-blue"
-                        >Интуитивный интерфейс для простого
-                        управления</main-title
-                    >
+                    <main-title tag="h2" class="title-blue">{{
+                        this.$t("hosting.interface.title")
+                    }}</main-title>
                     <img
                         src="../../../../assets/img/interface_img-back.png"
                         alt="interface"
                     />
                     <div class="list">
                         <p class="description">
-                            Мы разработали удобный и простой интерфейс, который
-                            позволяет
+                            {{ this.$t("hosting.interface.text") }}
                         </p>
                         <p class="description list_item">
                             <span class="list_icon">
@@ -31,11 +29,9 @@
                                     />
                                 </svg>
                             </span>
-                            <span>
-                                <b>Управлять параметрами устройства –</b>
-                                перезапускать устройство и
-                                останавливать/запускать майнинг</span
-                            >
+                            <span
+                                v-html="this.$t('hosting.interface.list[0]')"
+                            ></span>
                         </p>
                         <p class="description list_item">
                             <span class="list_icon"
@@ -52,9 +48,7 @@
                                     />
                                 </svg>
                             </span>
-                            <span>
-                                <b>Моментальные уведомления</b> о
-                                производительности системы в Telegram
+                            <span v-html="this.$t('hosting.interface.list[1]')">
                             </span>
                         </p>
                         <p class="description list_item">
@@ -72,9 +66,7 @@
                                     />
                                 </svg>
                             </span>
-                            <span>
-                                <b>Отслеживать состояние</b> оборудования для
-                                майнинга
+                            <span v-html="this.$t('hosting.interface.list[2]')">
                             </span>
                         </p>
                         <p class="description list_item">
@@ -92,10 +84,7 @@
                                     />
                                 </svg>
                             </span>
-                            <span>
-                                <b>Удобный мониторинг пула –</b> процесс
-                                контроля всего оборудования клиентов,
-                                подключенного к пулу
+                            <span v-html="this.$t('hosting.interface.list[3]')">
                             </span>
                         </p>
                     </div>

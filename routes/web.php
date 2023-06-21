@@ -48,6 +48,7 @@ Route::controller(IndexController::class)
         Route::get('/', 'index')->name('home');
 //        Route::get('/help', 'help')->name('help');
 //        Route::get('/about', 'about')->name('about');
+        Route::get('/help', 'help')->name('help');
         Route::get('/complexity', 'complexity')->name('complexity');
         Route::get('/hosting', 'hosting')->name('hosting');
     });

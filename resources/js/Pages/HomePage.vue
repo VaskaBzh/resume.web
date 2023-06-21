@@ -11,25 +11,25 @@
                     >
                         {{ $t("home.title") }}
                     </main-title>
-                    <ul
-                        class="description description-list"
-                        v-if="viewportWidth > 479.98"
-                        v-scroll="'left'"
-                    >
-                        <li>
-                            {{ $t("home.text[0]") }}
-                        </li>
-                        <li>
-                            {{ $t("home.text[1]") }}
-                        </li>
-                        <li>
-                            {{ $t("home.text[2]") }}
-                        </li>
-                    </ul>
-                    <div class="description" v-else v-scroll="'left'">
-                        {{ $t("home.text[0]") }}{{ $t("home.text[1]")
-                        }}{{ $t("home.text[2]") }}
-                    </div>
+                    <!--                    <ul-->
+                    <!--                        class="description description-list"-->
+                    <!--                        v-if="viewportWidth > 479.98"-->
+                    <!--                        v-scroll="'left'"-->
+                    <!--                    >-->
+                    <!--                        <li>-->
+                    <!--                            {{ $t("home.text[0]") }}-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            {{ $t("home.text[1]") }}-->
+                    <!--                        </li>-->
+                    <!--                        <li>-->
+                    <!--                            {{ $t("home.text[2]") }}-->
+                    <!--                        </li>-->
+                    <!--                    </ul>-->
+                    <!--                    <div class="description" v-else v-scroll="'left'">-->
+                    <!--                        {{ $t("home.text[0]") }}{{ $t("home.text[1]")-->
+                    <!--                        }}{{ $t("home.text[2]") }}-->
+                    <!--                    </div>-->
                     <blue-button
                         class="button-lg button-with-propeller"
                         v-if="this.auth_user"
@@ -152,19 +152,21 @@
                             >
                         </blue-button>
                         <!--                        class="home-im__image"-->
-                        <line-graph-statistic
-                            v-if="Object.values(btcHistory).length > 0"
-                            :graphData="graph"
-                            :height="height"
-                            :viewportWidth="viewportWidth"
-                            lineColor="#FDC433"
-                            :lineWidth="7"
-                            bandColor="#FAFAFA"
-                            mouseLineColor="#FFE5A1"
-                            circleColor="#FDC433"
-                            circleBorder="#FCF5E2"
-                            graphType="complexity"
-                        ></line-graph-statistic>
+                        <div class="home-im__image">
+                            <line-graph-statistic
+                                v-if="Object.values(btcHistory).length > 0"
+                                :graphData="graph"
+                                :height="height"
+                                :viewportWidth="viewportWidth"
+                                lineColor="#FDC433"
+                                :lineWidth="7"
+                                bandColor="#FAFAFA"
+                                mouseLineColor="#FFE5A1"
+                                circleColor="#FDC433"
+                                circleBorder="#FCF5E2"
+                                graphType="complexity"
+                            ></line-graph-statistic>
+                        </div>
                         <div class="home-im__content">
                             <p class="home-im__title">Bitcoin</p>
                             <ul class="home-im__content_list">
@@ -482,7 +484,7 @@ export default {
     &__main {
         display: flex;
         @media (min-width: 991.98px) {
-            margin-bottom: 338px;
+            margin-bottom: 388px;
         }
     }
     // .home__content
@@ -693,10 +695,11 @@ export default {
             }
         }
         @media (max-width: 767.98px) {
+            padding: 32px 32px 12px;
             gap: 25px;
         }
         @media (max-width: 479.98px) {
-            padding: 24px;
+            padding: 24px 24px 12px;
             gap: 32px;
         }
         .subtitle-value {
@@ -736,6 +739,7 @@ export default {
             @media (max-width: 1320.98px) {
                 height: 350px;
                 width: 300px;
+                top: -13.3em;
             }
         }
 
@@ -753,15 +757,22 @@ export default {
     }
     // .home-im__image
     &__image {
-        max-width: 70%;
+        min-width: 65%;
         object-fit: contain;
         @media (max-width: 1320.98px) {
-            max-width: 66%;
+            min-width: 55%;
         }
         @media (max-width: 991.98px) {
-            max-width: 100%;
-            width: 100%;
             object-fit: cover;
+        }
+        @media (max-width: 767.98px) {
+            min-width: 100%;
+            overflow-x: scroll;
+            overflow-y: visible;
+            padding-bottom: 40px;
+            .container-chart {
+                min-width: 200%;
+            }
         }
     }
     // .home-im__content
@@ -984,6 +995,13 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 4px;
+        max-width: 400px;
+        @media (max-width: 1320px) {
+            max-width: 300px;
+        }
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+        }
         @media (max-width: 767.98px) {
             flex: 0 0 70%;
             padding: 48px 16px 48px 8px;

@@ -8,6 +8,7 @@
     }
     b {
         font-weight: 500;
+        line-height: 140%;
     }
     &-md {
         font-size: 14px;
@@ -15,6 +16,9 @@
         @media (max-width: $mobileSmall) {
             font-size: 12px;
         }
+    }
+    &-blue {
+        color: #486382;
     }
     &-black {
         color: #000000;

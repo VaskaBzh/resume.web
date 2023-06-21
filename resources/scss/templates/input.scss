@@ -15,39 +15,23 @@
     &::placeholder {
         color: #7C7C7C;
     }
-    &-no-bg {
-        @media (min-width: 767.98px) {
-            border-radius: 0;
-            border: 1px solid transparent !important;
-            background-color: transparent;
-            padding: 0;
-            height: 34px;
-            min-height: 34px;
-            font-weight: 500;
-            font-size: 24px;
-            line-height: 34px;
-            color: #000034;
-            &:not([disabled]) {
-                border-bottom: 1px solid rgba(0, 0, 0, 0.17) !important;
-                &:hover {
-                    border-bottom: 1px solid #c2d5f2 !important;
-                }
-                &:active,
-                &:focus {
-                    border-bottom: 1px solid #4182ec !important;
-                }
-            }
-        }
-    }
     &-lg {
+        min-height: 64px;
+        padding: 0 40px;
+        box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
+        border-radius: 12px;
+    }
+    &-md {
         min-height: 61px;
         padding: 0 32px;
-        background: #ffffff;
         border: 1px solid rgba(0, 0, 0, 0.16);
         border-radius: 8px;
         @media (max-width: $mobileSmall) {
             min-height: 61px;
         }
+    }
+    &-white {
+        background: #ffffff;
     }
     &-popup {
         border-color: transparent;

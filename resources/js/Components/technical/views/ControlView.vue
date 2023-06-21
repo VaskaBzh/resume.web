@@ -4,10 +4,9 @@
             <div class="control__content">
                 <div class="control__head">
                     <main-title tag="h2" class="title-blue"
-                        >Безупречный контроль доходов <br />
-                        в реальном времени в течении
+                        >{{ this.$t("hosting.control.title") }}
                         <span class="title-span"
-                            ><span>дня</span> <span>и</span> <span>ночи</span>
+                            ><span>{{ this.$t("hosting.control.spans[0]") }}</span> <span>{{ this.$t("hosting.control.spans[1]") }}</span> <span>{{ this.$t("hosting.control.spans[2]") }}</span>
                         </span></main-title
                     >
                     <transition name="sun-moon">
@@ -467,11 +466,11 @@ export default {
                     animation: fade forwards 0.3s ease 1s;
 
                     &:nth-child(2) {
-                        animation: fade forwards 0.3s ease 4.6s;
+                        animation: fade forwards 0.3s ease 1.5s;
                     }
 
                     &:nth-child(3) {
-                        animation: fade forwards 0.3s ease 2.6s;
+                        animation: fade forwards 0.3s ease 2s;
                     }
                 }
             }

@@ -4,15 +4,11 @@
             <div class="sikker__main">
                 <img src="../../../../assets/img/sikker_img-1.svg" alt="" />
                 <div class="sikker__content">
-                    <main-title tag="h3" class="sikker_title"
-                        >Обеспечивайте стабильность и безопасность
-                        дата-центров</main-title
-                    >
+                    <main-title tag="h3" class="sikker_title">{{
+                        this.$t("hosting.security.title")
+                    }}</main-title>
                     <p class="description">
-                        Мы предоставляем вам набор инструментов, которые
-                        позволяют быстро выявлять и устранять любые проблемы что
-                        минимизирует риски и повышает надежность работы вашего
-                        оборудования
+                        {{ this.$t("hosting.security.text") }}
                     </p>
                 </div>
                 <blue-button

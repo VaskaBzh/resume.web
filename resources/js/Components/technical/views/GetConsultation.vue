@@ -3,23 +3,22 @@
         <div class="consultation__container">
             <div class="consultation__main section__block section__block-light">
                 <div class="consultation__content">
-                    <main-title tag="h3" class="consultation_title"
-                        >Получите консультацию
-                    </main-title>
+                    <main-title tag="h3" class="consultation_title">{{
+                        this.$t("hosting.consultation.title")
+                    }}</main-title>
                     <p class="description">
-                        о том, как эффективно управлять дата-центрами с помощью
-                        нашей платформы управления хостингом
+                        {{ this.$t("hosting.consultation.text") }}
                     </p>
                 </div>
                 <form class="consultation__form">
                     <input
                         type="text"
-                        class="input input-lg"
+                        class="input input-md input-white"
                         placeholder="+7 (900) 00 00 000"
                     />
-                    <blue-button class="button button-md">
-                        Перезвоните мне</blue-button
-                    >
+                    <blue-button class="button button-md">{{
+                        this.$t("hosting.consultation.button")
+                    }}</blue-button>
                 </form>
             </div>
         </div>

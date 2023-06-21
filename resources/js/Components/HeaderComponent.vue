@@ -59,6 +59,7 @@
 
         <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
             <select-language :viewportWidth="viewportWidth"></select-language>
+            <select-theme :viewportWidth="viewportWidth"></select-theme>
             <div
                 @click="burgerAction"
                 class="nav__burger"

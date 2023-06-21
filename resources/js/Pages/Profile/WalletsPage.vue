@@ -552,8 +552,6 @@ export default {
     }
     // .wallets__filter
     &__filter {
-        line-height: 23px;
-        font-size: 16px;
         margin: 0 24px 0 auto;
         @media (max-width: 767.98px) {
             width: 80%;
