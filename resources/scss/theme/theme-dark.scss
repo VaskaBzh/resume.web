@@ -12,7 +12,17 @@ body {
                 opacity: 0;
             }
         }
+        &::after {
+            background: rgba(9, 9, 9, 0.6);
+            backdrop-filter: blur(1.5px);
+        }
         @media (max-width: 991.98px) {
+            .login {
+                &_link {
+                    color: #3F7BDD;
+
+                }
+            }
             .nav {
                 &__menu {
                     &_wrap {
@@ -49,7 +59,8 @@ body {
                     }
 
                     .nav {
-                        &_subtitle {
+                        &_subtitle,
+                        &_title {
                             color: #818C99;
                         }
 

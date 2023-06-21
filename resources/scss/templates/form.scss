@@ -160,9 +160,9 @@
         height: 48px;
         display: flex;
         position: relative;
-        @media (max-width: $mobileSmall) {
-            height: 34px;
-        }
+        //@media (max-width: $mobileSmall) {
+        //    height: 34px;
+        //}
         &-non-height {
             height: fit-content;
         }
