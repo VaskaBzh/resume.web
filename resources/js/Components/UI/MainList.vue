@@ -94,7 +94,6 @@ export default {
     max-width: 320px;
     width: 100%;
     min-height: 36px;
-    cursor: pointer;
     height: fit-content;
     overflow: hidden;
     border-radius: 12px;

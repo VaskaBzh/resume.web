@@ -20,26 +20,34 @@
                 <!--                }}</main-title>-->
                 <settings-block
                     @openPopup="getHtml"
-                    name="Логин"
+                    :name="
+                        this.$t('settings.block.settings_block.labels.login')
+                    "
                     :val="login"
                     :svg="svgs[0]"
                 >
                 </settings-block>
                 <settings-block
                     @openPopup="getHtml"
-                    name="Почту"
+                    :name="
+                        this.$t('settings.block.settings_block.labels.email')
+                    "
                     :val="email"
                     :svg="svgs[1]"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
-                    name="Пароль"
+                    :name="
+                        this.$t('settings.block.settings_block.labels.password')
+                    "
                     :val="password"
                     :svg="svgs[2]"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
-                    name="Номер"
+                    :name="
+                        this.$t('settings.block.settings_block.labels.phone')
+                    "
                     :val="phone"
                     :svg="svgs[3]"
                 ></settings-block>
@@ -47,7 +55,11 @@
             <div class="settings__column">
                 <div class="cabinet__block cabinet__block-light">
                     <span class="text"
-                        >Расчет чистой прибыли
+                        >{{
+                            this.$t(
+                                "settings.block.settings_block.income.title"
+                            )
+                        }}
                         <span class="success" v-show="clearProfit">
                             <svg
                                 width="20"
@@ -66,9 +78,9 @@
                             Успешно</span
                         ></span
                     >
-                    <span class="text text-light text-md"
-                        >Укажите стоимость электроэнергии за месяц</span
-                    >
+                    <span class="text text-light text-md">{{
+                        this.$t("settings.block.settings_block.income.text")
+                    }}</span>
                     <div class="settings__row">
                         <div class="form_row">
                             <input
@@ -80,7 +92,11 @@
                             <span>$</span>
                         </div>
                         <blue-button @click="setClearProfit">
-                            <a href="#" class="all-link">Изменить</a>
+                            <a href="#" class="all-link">{{
+                                this.$t(
+                                    "settings.block.settings_block.income.button"
+                                )
+                            }}</a>
                         </blue-button>
                     </div>
                 </div>

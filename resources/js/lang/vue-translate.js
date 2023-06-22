@@ -4,8 +4,33 @@ import { createI18n } from "vue-i18n";
 // Ready translated locale messages
 const messages = {
     en: {
+        auth: {
+            error: "",
+            login: {
+                title: "Log into Allbtc account",
+                placeholders: ["Enter e-mail", "Enter password"],
+                checkbox: "Remember me",
+                button: "Log in",
+                reset: "Forgot password?",
+                link: ["Don't have an account?", "Sign up"],
+            },
+            reg: {
+                title: "Create Allbtc account",
+                placeholders: [
+                    "Enter e-mail",
+                    "Enter username",
+                    "Enter password",
+                    "Confirm password",
+                ],
+                checkbox: ["I agree to the terms of", "Privacy Policy"],
+                button: "Sign up",
+                link: ["Already have an account?", "Log in"],
+            },
+        },
+        back: "Back",
         tooltip: {
             hash: "Hashrate",
+            difficulty: "Difficulty",
             rejected: "Rejected",
             workers: "Active workers",
         },
@@ -95,6 +120,10 @@ const messages = {
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
                 hosting: "Hosting services",
+                buttons: {
+                    add: "Add a subaccount",
+                    leave: "Exit",
+                },
             },
         },
         language: {
@@ -138,8 +167,8 @@ const messages = {
                 text: "Exceed your profit expectations with our advanced hosting management platform for mining equipment. Start using it today and experience how your profit grows while worries and risks decrease. With us, you can achieve maximum returns from your equipment and enhance the efficiency of your business.",
             },
             control: {
-                title: "Impeccable Real-time Income Monitoring",
-                spans: ["Around", "the", "Clock"],
+                title: "Flawless real-time revenue control throughout",
+                spans: ["the day", "and", "night"],
             },
             interface: {
                 title: "Intuitive Interface for Easy Management",
@@ -264,6 +293,39 @@ const messages = {
                     },
                 },
             },
+            {
+                title: "Technical support and contact us.",
+                list: {
+                    0: {
+                        title: "How to Contact Our Technical Support?",
+                        text: `If you have any questions or issues, our technical support team is ready to assist you. To get in touch with us, you can use the following methods:
+                                            <ul class="list"><li class="list_item">Email: Send us an email at <a href="mailto:support@all-btc.com">support@all-btc.com</a>. We will strive to respond to you as soon as possible.</li>
+                                            <li class="list_item">Website Chat: Visit our website and use the live chat feature to communicate with our support team in real-time.</li>
+                                            <li class="list_item">Telegram: Add us on Telegram via the link <a href="https://t.me/ailasmon">t.me/allbtc_support</a> for quick communication and prompt support.</li>
+                                            <li class="list_item">Feedback Form: On our website, you can fill out a feedback form, providing your name, email address, and message. We will get back to you promptly.</li></ul>
+                                            Feel free to reach out to us with any questions or concerns. We are here to help and provide quality technical support.
+                                            `,
+                    },
+                    1: {
+                        title: "How Quickly Can I Expect a Response from Our Support Team?",
+                        text: `We strive to provide prompt and efficient responses to our customers from our support team. The response time may vary depending on the current workload and the complexity of the inquiry. However, typically, we aim to respond to inquiries within 24 hours. <br> <br>
+
+                                We make every effort to deliver timely and quality service to our customers. If you have an urgent question or issue, we recommend utilizing our live chat or phone support to receive a quicker response from our support team. <br> <br>
+
+                                We appreciate your patience and cooperation and are committed to providing you with top-notch support in a timely manner.`,
+                    },
+                    2: {
+                        title: "What Recommendations Do You Provide for Quick and Effective Problem Resolution?",
+                        text: `To achieve quick and effective problem resolution, we recommend following these recommendations:
+                                            <ul class="list"><li class="list_item">Provide Detailed Problem Description: When reaching out to technical support, provide a detailed description of the problem. Include all relevant details, mention the steps leading up to the issue, and any error messages encountered. This will help us better understand the nature of the problem and provide the best possible solution.</li>
+                                            <li class="list_item">Check Resource Availability: Ensure that all necessary resources, such as internet connectivity, power, and mining equipment, are functioning properly. Sometimes, issues may be related to external factors, and verifying these can help eliminate such problems.</li>
+                                            <li class="list_item">Utilize Guides and Documentation: Make use of our user guides, FAQs, and other documentation provided. They contain helpful instructions and answers to frequently asked questions that may assist you in resolving some issues on your own.</li>
+                                            <li class="list_item">Reach Out to Technical Support: If you're unable to resolve the problem on your own, reach out to our technical support. We are ready to assist you, perform additional checks, and provide the best possible solution to the problem.</li></ul>
+                                            We are committed to providing you with quick and effective problem resolution. By following these recommendations, you increase the chances of successful issue resolution and minimize downtime.
+                                            `,
+                    },
+                },
+            },
         ],
         complexity: {
             title: "Network complexity",
@@ -287,11 +349,11 @@ const messages = {
                 },
                 {
                     title: "Stable income",
-                    text: "Your go-to guide in the crypto mining universe! Jump into our mining pool and unlock the power of an intuitive platform to steer your assets.",
+                    text: "Using the FPPS, PPS+, PPS and instantaneous calculations, you can avoid fluctuations in earnings",
                 },
                 {
                     title: "Comprehensive service",
-                    text: "Our comprehensive service is designed to boost miners' revenue and ensure a versatile mining ecosystem.",
+                    text: "Service aims to reduce the gap between mining and trading",
                 },
             ],
         },
@@ -363,8 +425,15 @@ const messages = {
             },
             info_blocks: {
                 title: "Earnings",
+                title_clear: "Net income",
+                text_clear:
+                    "Specify the cost of electricity to calculate net income.",
+                button_clear: "Specify",
                 payment: {
                     titles: ["Yesterday", "Projected for today"],
+                },
+                clear: {
+                    titles: ["Today", "For month"],
                 },
                 hash: {
                     titles: ["Current hashrate", "Avg.hashrate / 24"],
@@ -528,8 +597,14 @@ const messages = {
                 titles: ["Personal information", "Security"],
                 settings_block: {
                     change_link: "Change",
+                    income: {
+                        title: "Net Income Calculation",
+                        text: "Enter the cost of electricity for the month",
+                        button: "Change",
+                    },
                     labels: {
                         login: "Login",
+                        email: "Email",
                         password: "Password",
                         phone: "Phone number",
                     },
@@ -564,8 +639,35 @@ const messages = {
         },
     },
     ru: {
+        auth: {
+            login: {
+                title: "Войти в аккаунт Allbtc",
+                placeholders: ["Введите e-mail", "Введите пароль"],
+                checkbox: "Запомнить меня",
+                button: "Войти",
+                reset: "Забыли пароль?",
+                link: ["Нет аккаунта?", "Зарегистрироваться"],
+            },
+            reg: {
+                title: "Создать аккаунт Allbtc",
+                placeholders: [
+                    "Введите e-mail",
+                    "Введите имя пользователя",
+                    "Введите пароль",
+                    "Введите пароль",
+                ],
+                checkbox: [
+                    "Я согласен с условиями",
+                    "Политики Конфиденциальности",
+                ],
+                button: "Зарегистрироваться",
+                link: ["Уже есть аккаунт?", "Войти"],
+            },
+        },
+        back: "Назад",
         tooltip: {
             hash: "Хешрейт",
+            difficulty: "Сложность",
             rejected: "Отклоненный",
             workers: "Активные воркеры",
         },
@@ -655,6 +757,10 @@ const messages = {
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
                 hosting: "Хостингам",
+                buttons: {
+                    add: "Добавить сабаккаунт",
+                    leave: "Выйти",
+                },
             },
         },
         language: {
@@ -829,6 +935,41 @@ const messages = {
                     },
                 },
             },
+            {
+                title: "Техническая поддержка и связь с нами",
+                list: {
+                    0: {
+                        title: "Как связаться с нашей технической поддержкой?",
+                        text: `Если у вас возникли вопросы или проблемы, наша техническая поддержка готова помочь вам. Для связи с нами вы можете использовать следующие способы:
+                                            <ul class="list"><li class="list_item">Электронная почта: Отправьте нам письмо на нашу электронную почту <a href="mailto:support@all-btc.com">support@all-btc.com</a>. Мы постараемся ответить вам в кратчайшие сроки.</li>
+                                            <li class="list_item">Чат на сайте: Посетите наш веб-сайт и воспользуйтесь функцией онлайн-чата для общения с нашей командой поддержки в режиме реального времени.</li>
+                                            <li class="list_item">Телеграм: Добавьте нас в Телеграм по ссылке <a href="https://t.me/ailasmon">t.me/allbtc_support</a> для быстрой связи и получения оперативной поддержки.</li>
+                                            <li class="list_item">Форма обратной связи: На нашем веб-сайте вы можете заполнить форму обратной связи, указав свое имя, адрес электронной почты и сообщение. Мы свяжемся с вами в ближайшее время.</li></ul>
+                                            Не стесняйтесь обращаться к нам с любыми вопросами или проблемами. Мы готовы помочь вам и обеспечить качественную техническую поддержку.
+                                            `,
+                    },
+                    1: {
+                        title: "Как быстро я могу ожидать ответа от нашей команды поддержки?",
+                        text: `Как быстро я могу ожидать ответа от нашей команды поддержки? <br>
+                                Мы стремимся предоставить нашим клиентам быстрые и эффективные ответы от нашей команды поддержки. Время ожидания зависит от текущей загруженности и сложности вопроса. Однако, обычно мы стараемся отвечать на запросы в течение 24 часов. <br><br>
+
+                                Мы прилагаем все усилия, чтобы обеспечить своевременное и качественное обслуживание наших клиентов. Если у вас срочный вопрос или проблема, рекомендуется использовать функцию онлайн-чата или звонок, чтобы получить быстрый ответ от нашей команды поддержки. <br><br>
+
+                                Мы ценим ваше терпение и сотрудничество и обязуемся предоставить вам высококлассную поддержку в кратчайшие сроки.`,
+                    },
+                    2: {
+                        title: "Какие рекомендации вы даете для быстрого и эффективного решения проблем?",
+
+                        text: `Чтобы быстро и эффективно решать проблемы, мы рекомендуем вам следовать этим рекомендациям:
+                                            <ul class="list"><li class="list_item">Подробное описание проблемы: При обращении в техническую поддержку, предоставьте подробное описание проблемы. Укажите все важные детали, сообщите о шагах, предшествующих возникновению проблемы и о любых сообщениях об ошибках. Это поможет нам лучше понять суть проблемы и предложить наилучшее решение.</li>
+                                            <li class="list_item">Проверьте доступность ресурсов: Убедитесь, что все необходимые ресурсы, такие как интернет-соединение, питание и майнинговое оборудование, работают нормально. Иногда проблема может быть связана с внешними факторами, и их проверка может помочь исключить такие проблемы.</li>
+                                            <li class="list_item">Пользуйтесь руководствами и документацией: Используйте наше руководство пользователя, FAQ и другую документацию, предоставленную нами. Она содержит полезные инструкции и ответы на часто задаваемые вопросы, которые могут помочь вам самостоятельно решить некоторые проблемы.</li>
+                                            <li class="list_item">Обратитесь в техническую поддержку: Если вы не можете решить проблему самостоятельно, обратитесь в нашу техническую поддержку. Мы готовы помочь вам, провести дополнительные проверки и предложить наилучшее решение проблемы.</li></ul>
+                                            Мы нацелены на то, чтобы обеспечить вас быстрым и эффективным решением проблем. Следуя этим рекомендациям, вы повышаете шансы на успешное разрешение вопросов и минимизируете время простоя.
+                                            `,
+                    },
+                },
+            },
         ],
         complexity: {
             title: "Сложность сети",
@@ -852,11 +993,11 @@ const messages = {
                 },
                 {
                     title: "Стабильный заработок",
-                    text: " Ваш персональный помощник в мире майнинга криптовалют! Присоединяйтесь к майнинг-пулу и получите доступ к интуитивно понятной и мощной платформе для управления вашими активами. ",
+                    text: "Используя модель FPPS, PPS+, PPS и мгновенные расчеты, вы можете избежать колебаний заработка",
                 },
                 {
                     title: " Комплексное обслуживание ",
-                    text: " Наше комплексное обслуживание направлено на повышение доходов майнеров, а также обеспечение универсальной экосистемы майнинга. ",
+                    text: "Обслуживание направлено на  сокращение разрыва между добычей полезных ископаемых и трейдингом",
                 },
             ],
         },
@@ -928,8 +1069,15 @@ const messages = {
             },
             info_blocks: {
                 title: "Начисления",
+                title_clear: "Чистая прибыль",
+                text_clear:
+                    "Укажите расходы на электроэнергию для расчета чистой прибыли. ",
+                button_clear: "Указать",
                 payment: {
                     titles: ["Вчера", "Прогноз на сегодня"],
+                },
+                clear: {
+                    titles: ["Сегодня", "За месяц"],
                 },
                 hash: {
                     titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
@@ -947,7 +1095,7 @@ const messages = {
                 titles: [
                     "Ср.хешрейт / 1ч",
                     "Количество воркеров",
-                    "Прогнозируемое начисление за сегодня",
+                    "Прогноз на сегодня",
                     "Всего выплачено",
                 ],
                 workers_status: ["Активные", "Все"],
@@ -1084,9 +1232,15 @@ const messages = {
             block: {
                 titles: ["Персональные данные", "Безопасность"],
                 settings_block: {
+                    income: {
+                        title: "Расчет чистой прибыли ",
+                        text: "Укажите стоимость электроэнергии за месяц",
+                        button: "Изменить",
+                    },
                     change_link: "Изменить",
                     labels: {
                         login: "Логин",
+                        email: "Почту",
                         password: "Пароль",
                         phone: "Телефон",
                     },

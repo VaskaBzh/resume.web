@@ -128,7 +128,7 @@ export default {
             padding-left: 36px;
             position: relative;
             border-radius: 8px 0 0 8px;
-            cursor: pointer;
+            //cursor: pointer;
             text-decoration: underline;
             text-decoration-color: transparent;
             transition: all 0.3s ease 0s;

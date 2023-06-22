@@ -1,6 +1,6 @@
 <template>
-    <div class="accordion" :class="{ opened: isOpen }">
-        <main-title tag="h4" class="accordion_title" @click="isOpen = !isOpen"
+    <div class="accordion" ref="accordion">
+        <main-title tag="h4" class="accordion_title" @click="accordionFunc"
             >{{ accordion.title }}
             <svg
                 width="28"
@@ -28,9 +28,10 @@
         </main-title>
         <transition name="slide-fade">
             <p
+                ref="value"
                 class="description description-xs"
                 v-html="accordion.text"
-                v-if="isOpen"
+                v-show="isOpen"
             ></p>
         </transition>
     </div>
@@ -46,10 +47,32 @@ export default {
     data() {
         return {
             isOpen: false,
+            height: null,
         };
+    },
+    methods: {
+        accordionFunc() {
+            this.isOpen = !this.isOpen;
+            this.isOpen ? this.open() : this.close();
+        },
+        open() {
+            setTimeout(() => {
+                this.$refs.accordion.style.height =
+                    this.height + this.$refs.value.offsetHeight + "px";
+            }, 100);
+        },
+        close() {
+            this.$refs.accordion.style.height = this.height + "px";
+        },
     },
     props: {
         accordion: Object,
+    },
+    mounted() {
+        setTimeout(() => {
+            this.height = this.$refs.accordion.offsetHeight;
+            this.close();
+        }, 500);
     },
     name: "main-accordion",
 };
@@ -60,10 +83,9 @@ export default {
     transition: all 0.3s ease;
 }
 .slide-fade-leave-active {
-    transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+    transition: all 0.3s cubic-bezier(1, 0.5, 0.8, 1);
 }
 .slide-fade-enter {
-    transform: translateY(10px);
     opacity: 0;
 }
 .slide-fade-leave-to {
@@ -76,10 +98,12 @@ export default {
     padding: 24px 0;
     overflow: hidden;
     height: fit-content;
-    max-height: 77px;
     transition: all 0.8s ease 0s;
-    &.opened {
-        max-height: 500px;
+    @media (max-width: 991.98px) {
+        padding: 16px 0;
+    }
+    @media (max-width: 479.98px) {
+        padding: 10px 0;
     }
     &:not(:last-child) {
         border-bottom: 1px solid #e6eaf0;
@@ -89,6 +113,33 @@ export default {
         display: inline-flex;
         justify-content: space-between;
         width: 100%;
+        @media (max-width: 479.98px) {
+            font-size: 14px;
+        }
+        svg {
+            min-width: 28px;
+            min-height: 28px;
+            width: 28px;
+            height: 28px;
+            @media (max-width: 991.98px) {
+                min-width: 24px;
+                min-height: 24px;
+                width: 24px;
+                height: 24px;
+            }
+            @media (max-width: 767.98px) {
+                min-width: 18px;
+                min-height: 18px;
+                width: 18px;
+                height: 18px;
+            }
+        }
+    }
+    .description {
+        height: fit-content;
+        @media (max-width: 767.98px) {
+            font-size: 14px;
+        }
     }
     .list {
         max-width: 100%;

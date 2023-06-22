@@ -89,6 +89,14 @@ export default {
         .input {
             max-width: 386px;
             width: 100%;
+            font-size: 18px;
+            color: #c5c5c5;
+            line-height: 181.1%;
+            font-weight: 500;
+            &::placeholder {
+                color: #c5c5c5;
+                font-weight: 300;
+            }
         }
         .button {
             min-width: 236px;

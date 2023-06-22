@@ -16,44 +16,60 @@ body {
             background: rgba(9, 9, 9, 0.6);
             backdrop-filter: blur(1.5px);
         }
+        .statistic .title .checkbox {
+            transition: all $theme-transition ease 0s;
+            background: transparent !important;
+            color: #989898;
+            &:after {
+                background: #78879c;
+            }
+            &:before {
+                background: #dde1e6;
+            }
+        }
         @media (max-width: 991.98px) {
             .login {
                 &_link {
-                    color: #3F7BDD;
-
+                    color: #3f7bdd;
                 }
             }
             .nav {
                 &__menu {
                     &_wrap {
-                        background: #0F1924;
+                        background: #0f1924;
                     }
+
                     &_item {
-                        color: #CACACA;
+                        color: #cacaca;
                         padding: 0 10px;
                         display: inline-flex;
                         align-items: center;
+
                         &-add {
                             svg path {
-                                fill:  #CACACA;
+                                fill: #cacaca;
                             }
                         }
 
                         &:not(:last-child) {
                             border-bottom: 0.5px solid #333639;
                         }
+
                         &.active {
-                            background: #16212B;
+                            background: #16212b;
                         }
                     }
                 }
+
                 &__links_con {
-                    background: #040D15;
+                    background: #040d15;
+
                     .button {
                         &_name {
-                            color: #3F7BDD;
+                            color: #3f7bdd;
+
                             svg path {
-                                fill: #3F7BDD !important;
+                                fill: #3f7bdd !important;
                             }
                         }
                     }
@@ -61,28 +77,28 @@ body {
                     .nav {
                         &_subtitle,
                         &_title {
-                            color: #818C99;
+                            color: #818c99;
                         }
 
                         &_value {
-                            color: #E1E1E1;
+                            color: #e1e1e1;
                         }
 
                         &__links {
-                            background: #101D2B;
+                            background: #101d2b;
 
                             .burger {
                                 &_link {
-                                    border-bottom: 0.5px solid #606060;
+                                    border-bottom: 0.5px solid #343434;
                                     background: transparent;
-                                    color: #818C99;
+                                    color: #818c99;
 
                                     &-active {
-                                        color: #3F7BDD;
+                                        color: #3f7bdd;
                                     }
 
                                     svg {
-                                        fill: #3F7BDD;
+                                        fill: #3f7bdd;
                                     }
                                 }
                             }
@@ -92,42 +108,82 @@ body {
             }
         }
         .search {
+            box-shadow: 0px 4px 10px 0px rgba(35, 38, 63, 0.15);
             input {
                 transition: all $theme-transition ease 0s;
-                border: 1px solid #484848;
+                border: 1px solid #484848 !important;
+                color: #cacaca !important;
+                background: #101d2b !important;
+            }
+        }
+        .blue-button {
+            &.add {
+                svg {
+                    transition: all $theme-transition ease 0s;
+                    fill: #c6d1e9;
+                }
             }
         }
         .faq {
             .section__block-light {
                 transition: all $theme-transition ease 0s;
-                background: #101D2B;
+                background: #101d2b;
                 box-shadow: 0px 4px 10px rgba(85, 85, 85, 0.1);
             }
             .accordion_title svg path {
                 transition: all $theme-transition ease 0s;
-                fill: #CACACA !important;
+                fill: #cacaca !important;
+            }
+            .accordion {
+                &:not(:last-child) {
+                    transition: all $theme-transition ease 0s;
+                    border-color: #333639;
+                }
             }
             &_title {
-                color: #3F7BDD;
+                color: #3f7bdd;
                 transition: all $theme-transition ease 0s;
+            }
+        }
+        .settings__column {
+            .text {
+                color: #cacaca;
+            }
+
+            .form {
+                &_row {
+                    span {
+                        color: #989898;
+                    }
+                    input {
+                        background: #283955;
+                    }
+                }
             }
         }
         nav {
             &.nav {
                 &__container {
+                    .back {
+                        color: rgba(202, 202, 202, 1);
+                        &_link {
+                            border: 1px solid #79a3e8;
+                            svg {
+                                fill: #79a3e8;
+                            }
+                        }
+                    }
                     &:before {
                         transition: all $theme-transition ease 0s;
-                        background: #10171f;
+                        background: #0f1924;
                         box-shadow: 0 8px 20px rgba(34, 34, 35, 0.07);
                     }
                 }
             }
             .nav {
                 &__link {
-                    transition: all $theme-transition ease 0s;
                     color: #989898;
                     &.active {
-                        transition: all $theme-transition ease 0s;
                         color: #4182ec;
                     }
                 }
@@ -176,7 +232,7 @@ body {
         }
         .description {
             transition: all $theme-transition ease 0s;
-            color: #cacaca;
+            color: #989898;
             &-xs {
                 transition: all $theme-transition ease 0s;
                 color: #989898;
@@ -186,11 +242,11 @@ body {
             transition: all $theme-transition ease 0s;
             color: #79a3e8;
         }
-        .info_wrapper {
+        .info {
             .card {
                 transition: all $theme-transition ease 0s;
-                background: #10171f;
-                box-shadow: 0 8px 50px rgba(4, 8, 26, 0.25);
+                background: #101d2b;
+                box-shadow: 0px 4px 10px rgba(85, 85, 85, 0.1);
             }
         }
         h3.title {
@@ -205,6 +261,48 @@ body {
             &-blue {
                 transition: all $theme-transition ease 0s;
                 box-shadow: 0px 10px 50px rgba(112, 165, 236, 0.1);
+            }
+        }
+        .table {
+            tr {
+                th {
+                    color: #7994ca;
+                }
+            }
+            .row-main_elem {
+                color: #fafafa !important;
+            }
+            .main__number {
+                color: #989898 !important;
+            }
+            &-block {
+                &_block {
+                    background: #0b1621;
+                    .main__number {
+                        color: #fafafa !important;
+                    }
+                }
+                &_column {
+                    color: #989898;
+                }
+            }
+        }
+        .menu {
+            background: #0b1621 !important;
+            &_elem {
+                color: #3f7bdd !important;
+                &:hover {
+                    background: #0d1f31 !important;
+                }
+                &.remove {
+                    color: #ef4e4d !important;
+                    svg {
+                        fill: #ef4e4d !important;
+                    }
+                }
+                &:not(:last-child) {
+                    border-bottom: 1px solid rgba(214, 214, 214, 0.3) !important;
+                }
             }
         }
         .interface {
@@ -227,16 +325,19 @@ body {
         .section {
             &__block {
                 transition: all $theme-transition ease 0s;
-                box-shadow: 0px 8px 50px rgba(4, 8, 26, 0.25);
+                box-shadow: 0px 4px 10px 0px rgba(35, 38, 63, 0.15);
                 &-light {
                     transition: all $theme-transition ease 0s;
-                    background: #10171f;
+                    background: #101d2b;
                 }
             }
         }
         .no-info {
             transition: all $theme-transition ease 0s;
             background: #101d2b;
+            span {
+                color: #fafafa;
+            }
         }
         .input {
             &-lg {
@@ -246,6 +347,15 @@ body {
                 &::placeholder {
                     transition: all $theme-transition ease 0s;
                     color: #989898;
+                }
+            }
+            &-white {
+                transition: all $theme-transition ease 0s;
+                background: #e1e1e1 !important;
+                color: #989898 !important;
+                &::placeholder {
+                    transition: all $theme-transition ease 0s;
+                    color: #989898 !important;
                 }
             }
         }
@@ -315,19 +425,18 @@ body {
         }
         .nav-tabs {
             &__tab {
-                transition: all $theme-transition ease 0s;
                 color: #818c99;
                 &.router-link-active {
-                    transition: all $theme-transition ease 0s;
                     background: rgba(40, 57, 85, 0.1);
                     color: #5389e1;
                 }
             }
             &_link-back {
-                transition: all $theme-transition ease 0s;
                 background: #0f1924;
+                &:hover {
+                    background: #101d2b;
+                }
                 svg {
-                    transition: all $theme-transition ease 0s;
                     stroke: #e1e1e1;
                 }
             }
@@ -344,7 +453,7 @@ body {
                     }
                     &:before {
                         transition: all $theme-transition ease 0s;
-                        background: #DDE1E6;
+                        background: #dde1e6;
                     }
                 }
             }
@@ -408,6 +517,14 @@ body {
             .tooltip {
                 transition: all $theme-transition ease 0s;
                 background: rgba(40, 57, 85, 0.65);
+                &.complexity {
+                    background: #152d4f;
+                    .tooltip-wrapper {
+                        span:not(.time) {
+                            color: rgba(83, 137, 225, 1);
+                        }
+                    }
+                }
                 .tooltip-wrapper {
                     transition: all $theme-transition ease 0s;
                     background: rgba(40, 57, 85, 0.65);
@@ -533,8 +650,24 @@ body {
         .slider {
             &__nav {
                 &_info {
-                    transition: all $theme-transition ease 0s;
                     color: #606060;
+                }
+                &-rows {
+                    background: #0b1621;
+                    input {
+                        color: #606060;
+                    }
+                    &__buttons {
+                        &:before {
+                            background-color: #333639;
+                        }
+                        svg {
+                            fill: #606060;
+                            &:hover {
+                                fill: #cacaca;
+                            }
+                        }
+                    }
                 }
             }
             &__slides {
@@ -543,7 +676,6 @@ body {
                     color: #606060 !important;
                     &.active {
                         transition: all $theme-transition ease 0s;
-                        text-decoration-color: #606060 !important;
                     }
                 }
             }
@@ -569,10 +701,78 @@ body {
                 }
             }
         }
+        @keyframes errorPlaceholder {
+            from {
+                color: #989898;
+            }
+            to {
+                color: #ef4e4d;
+            }
+        }
+        @keyframes error {
+            from {
+                color: #ef4e4d;
+                border-color: #ef4e4d;
+                fill: #ef4e4d;
+            }
+            to {
+                color: #cacaca;
+                border-color: transparent;
+                fill: #989898;
+            }
+        }
         .form {
             h3 {
                 transition: all $theme-transition ease 0s;
                 color: #e1e1e1 !important;
+            }
+            &_message {
+                background: #0b1015;
+                color: #ef4e4d;
+                svg {
+                    fill: #ef4e4d !important;
+                }
+            }
+            &-auth {
+                .form {
+                    &_row {
+                        &.error {
+                            .input {
+                                border-color: #ef4e4d;
+                                color: #cacaca;
+                            }
+                            svg {
+                                fill: #ef4e4d;
+                            }
+                        }
+                        svg {
+                            fill: #989898;
+                        }
+                    }
+                    &_link {
+                        color: #3f7bdd;
+                    }
+                }
+                input[type="checkbox"] {
+                    & + label {
+                        color: #e1e1e1;
+                        &:before {
+                            border-color: #cacaca;
+                        }
+                        svg {
+                            fill: #cacaca;
+                        }
+                    }
+                }
+                .text {
+                    color: #e1e1e1;
+                }
+                .input {
+                    background: #333639;
+                    &::placeholder {
+                        color: #989898;
+                    }
+                }
             }
         }
         .input {
@@ -598,12 +798,24 @@ body {
             transition: all $theme-transition ease 0s;
         }
     }
+    .blue-button {
+        &.add {
+            svg {
+                transition: all $theme-transition ease 0s;
+            }
+        }
+    }
     .faq {
         .section__block-light {
             transition: all $theme-transition ease 0s;
         }
         .accordion_title svg path {
             transition: all $theme-transition ease 0s;
+        }
+        .accordion {
+            &:not(:last-child) {
+                transition: all $theme-transition ease 0s;
+            }
         }
         &_title {
             transition: all $theme-transition ease 0s;
@@ -620,15 +832,16 @@ body {
     nav {
         &.nav {
             &__container {
-                &:before {
+                .back {
                     transition: all $theme-transition ease 0s;
+                    &_link {
+                        transition: all $theme-transition ease 0s;
+                        svg {
+                            transition: all $theme-transition ease 0s;
+                        }
+                    }
                 }
-            }
-        }
-        .nav {
-            &__link {
-                transition: all $theme-transition ease 0s;
-                &.active {
+                &:before {
                     transition: all $theme-transition ease 0s;
                 }
             }
@@ -643,7 +856,7 @@ body {
     .subtitle {
         transition: all $theme-transition ease 0s;
     }
-    .info_wrapper {
+    .info {
         .card {
             transition: all $theme-transition ease 0s;
         }
@@ -684,6 +897,17 @@ body {
             transition: all $theme-transition ease 0s;
             &::placeholder {
                 transition: all $theme-transition ease 0s;
+            }
+        }
+    }
+    @media (max-width: 991.98px) {
+        .nav {
+            &__menu {
+                &_item {
+                    padding: 0 10px;
+                    display: inline-flex;
+                    align-items: center;
+                }
             }
         }
     }
@@ -742,7 +966,7 @@ body {
         &_link-back {
             transition: background $theme-transition ease 0s;
             svg {
-                transition: all $theme-transition ease 0s;
+                transition: stroke $theme-transition ease 0s;
             }
         }
     }
@@ -900,6 +1124,23 @@ body {
             &_info {
                 transition: all $theme-transition ease 0s;
             }
+            &-rows {
+                transition: all $theme-transition ease 0s;
+                input {
+                    transition: all $theme-transition ease 0s;
+                }
+                &__buttons {
+                    &:before {
+                        transition: all $theme-transition ease 0s;
+                    }
+                    svg {
+                        transition: all $theme-transition ease 0s;
+                        &:hover {
+                            transition: all $theme-transition ease 0s;
+                        }
+                    }
+                }
+            }
         }
         &__slides {
             a {
@@ -929,6 +1170,46 @@ body {
     .form {
         h3 {
             transition: all $theme-transition ease 0s;
+        }
+        &-auth {
+            .form {
+                &_row {
+                    &.error {
+                        .input {
+                            transition: all $theme-transition ease 0s;
+                        }
+                        svg {
+                            transition: all $theme-transition ease 0s;
+                        }
+                    }
+                    svg {
+                        transition: all $theme-transition ease 0s;
+                    }
+                }
+                &_link {
+                    transition: all $theme-transition ease 0s;
+                }
+            }
+            input[type="checkbox"] {
+                & + label {
+                    transition: all $theme-transition ease 0s;
+                    &:before {
+                        transition: all $theme-transition ease 0s;
+                    }
+                    svg {
+                        transition: all $theme-transition ease 0s;
+                    }
+                }
+            }
+            .text {
+                transition: all $theme-transition ease 0s;
+            }
+            .input {
+                transition: all $theme-transition ease 0s;
+                &::placeholder {
+                    transition: all $theme-transition ease 0s;
+                }
+            }
         }
     }
     .input {

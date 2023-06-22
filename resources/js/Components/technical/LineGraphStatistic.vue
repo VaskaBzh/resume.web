@@ -1,11 +1,19 @@
 <template>
     <div ref="chart" class="container-chart">
-        <div ref="tooltip" class="tooltip" style="opacity: 0">Tooltip</div>
+        <div
+            ref="tooltip"
+            class="tooltip"
+            :class="graphType"
+            style="opacity: 0"
+        >
+            Tooltip
+        </div>
     </div>
 </template>
 
 <script>
 import * as d3 from "d3";
+import { mapGetters } from "vuex";
 
 export default {
     name: "line-graph",
@@ -47,8 +55,15 @@ export default {
                 this.graphInit();
             }
         },
+        isDark() {
+            if (this.$refs.chart && this.graphData.values?.length > 0) {
+                this.dropGraph();
+                this.graphInit();
+            }
+        },
     },
     computed: {
+        ...mapGetters(["isDark"]),
         getPosition() {
             if (this.mouseX) {
                 // const isLeft =
@@ -57,12 +72,16 @@ export default {
                 //         this.$refs.tooltip.clientWidth;
                 const isRigth =
                     this.mouseX < this.$refs.tooltip.clientWidth - 8;
+                let width = this.$refs.tooltip.clientWidth;
+                if (this.graphType === "complexity") {
+                    width = this.$refs.tooltip.clientWidth / 2 - 8;
+                }
 
                 return {
                     side: "left",
                     position: isRigth
                         ? this.mouseX + 8
-                        : this.mouseX - 8 - this.$refs.tooltip.clientWidth,
+                        : this.mouseX - 8 - width,
                 };
             }
         },
@@ -103,29 +122,14 @@ export default {
 
                 const verticalLineX = this.mouseX;
 
-                // const horizontalLineY =
-                //     event.clientY -
-                //     this.$refs.chart.getBoundingClientRect().top;
-
                 this.svg
                     .selectAll(".vertical-line")
                     .attr("x1", verticalLineX)
                     .attr("x2", verticalLineX)
                     .attr("y1", 0)
                     .attr("y2", this.containerHeight)
-                    .attr("stroke-width", 1)
-                    .style("opacity", 1)
-                    .attr("stroke", this.mouseLineColor);
+                    .style("opacity", 1);
 
-                // this.svg
-                //     .selectAll(".horizontal-line")
-                //     .attr("x1", 0)
-                //     .attr("x2", this.$refs.chart.offsetWidth)
-                //     .attr("y1", horizontalLineY)
-                //     .attr("y2", horizontalLineY)
-                //     .attr("stroke-width", 0.7)
-                //     .style("opacity", 1)
-                //     .attr("stroke", "#BEC9E0");
                 let contentTooltip = null;
 
                 if (this.graphType === "statistic") {
@@ -156,8 +160,8 @@ export default {
                 } else if (this.graphType === "complexity") {
                     contentTooltip = `<div class="tooltip-wrapper">
                                 <span>${this.$t(
-                                    "tooltip.hash"
-                                )} <span class="value">${
+                                    "tooltip.difficulty"
+                                )}: <span class="value">${
                         this.graphType === "statistic"
                             ? formatNumberWithUnit(d, u)
                             : formatNumber(d)
@@ -229,15 +233,39 @@ export default {
                 .attr("x2", "0")
                 .attr("y2", "1");
 
-            gradient
-                .append("stop")
-                .attr("offset", "0%")
-                .attr("stop-color", "rgba(66, 130, 236, 0.8)");
+            if (this.graphType === "statistic") {
+                gradient
+                    .append("stop")
+                    .attr("offset", "0%")
+                    .attr("stop-color", "rgba(66, 130, 236, 0.8)");
 
-            gradient
-                .append("stop")
-                .attr("offset", "100%")
-                .attr("stop-color", "rgba(66, 129, 231, 0.04)");
+                gradient
+                    .append("stop")
+                    .attr("offset", "100%")
+                    .attr("stop-color", "rgba(66, 129, 231, 0.04)");
+            } else {
+                if (this.isDark) {
+                    gradient
+                        .append("stop")
+                        .attr("offset", "0%")
+                        .attr("stop-color", "rgba(253, 196, 51, 0.66)");
+
+                    gradient
+                        .append("stop")
+                        .attr("offset", "100")
+                        .attr("stop-color", "rgba(13, 10, 4, 0.09)");
+                } else {
+                    gradient
+                        .append("stop")
+                        .attr("offset", "0%")
+                        .attr("stop-color", "rgba(253, 196, 51, 0.66)");
+
+                    gradient
+                        .append("stop")
+                        .attr("offset", "100")
+                        .attr("stop-color", "rgba(255, 255, 255, 0.26)");
+                }
+            }
 
             let x = d3
                 .scaleLinear()
@@ -250,10 +278,21 @@ export default {
                 adjustValue(num, this.graphData.unit[i]).unit +
                 "H";
 
-            const y = d3
-                .scaleLinear()
-                .domain([0, d3.max(this.graphData.values)])
-                .range([this.containerHeight, 0]);
+            let y = null;
+            if (this.graphType === "statistic") {
+                y = d3
+                    .scaleLinear()
+                    .domain([0, d3.max(this.graphData.values)])
+                    .range([this.containerHeight, 0]);
+            } else {
+                y = d3
+                    .scaleLinear()
+                    .domain([
+                        d3.min(this.graphData.values) - 4000000000000,
+                        d3.max(this.graphData.values) + 4000000000000,
+                    ])
+                    .range([this.containerHeight, 0]);
+            }
 
             let formatTime = (date, i) => {
                 const hours = date.getHours().toString().padStart(2, "0");
@@ -334,36 +373,6 @@ export default {
                 .range([this.containerHeight, 0]);
 
             this.svg
-                .append("line")
-                .attr("class", "vertical-line")
-                .attr("x1", 0)
-                .attr("y1", 0)
-                .attr("x2", 0)
-                .attr("y2", this.containerHeight)
-                .attr("stroke-width", 1)
-                .style("opacity", 0)
-                .attr("stroke", this.mouseLineColor);
-
-            // this.svg
-            //     .append("line")
-            //     .attr("class", "horizontal-line")
-            //     .attr("x1", 0)
-            //     .attr("y1", 0)
-            //     .attr("x2", this.$refs.chart.offsetWidth)
-            //     .attr("y2", 0)
-            //     .attr("stroke-width", 0.7)
-            //     .style("opacity", 0)
-            //     .attr("stroke", "#BEC9E0");
-
-            this.svg
-                .append("circle") // Добавляем эту строку в ваш исходный код
-                .attr("class", "dot")
-                .attr("r", 6) // Задаем радиус нашей точки
-                .style("opacity", 0)
-                .attr("fill", this.circleColor) // Используем тот же цвет, что и для линии графика
-                .attr("border", this.circleBorder);
-
-            this.svg
                 .selectAll(".band")
                 .data(yBand.domain())
                 .enter()
@@ -374,27 +383,26 @@ export default {
                 .attr("width", "100%")
                 .attr("fill", this.bandColor);
 
-            if (this.graphType === "statistic") {
-                this.svg
-                    .append("path")
-                    .datum(this.graphData.values)
-                    .attr("d", areaGenerator)
-                    .attr("width", "100%")
-                    .attr("fill", "url(#gradient)");
-            } else {
-                this.svg
-                    .selectAll(".value-line")
-                    .data(this.graphData.values) // выбираем каждый второй элемент
-                    .enter()
-                    .append("line")
-                    .attr("class", "value-line")
-                    .attr("x1", (d, i) => x(i)) // умножаем на 2, так как выбрали каждый второй элемент
-                    .attr("y1", (d) => y(d))
-                    .attr("x2", (d, i) => x(i))
-                    .attr("y2", this.containerHeight) // вторая точка находится на нижнем краю контейнера
-                    .attr("stroke", this.lineColor) // или любой цвет, который вам нужен
-                    .attr("stroke-width", 0.5); // или любая ширина, которую вы хотите
-            }
+            this.svg
+                .append("path")
+                .datum(this.graphData.values)
+                .attr("d", areaGenerator)
+                .attr("width", "100%")
+                .attr("fill", "url(#gradient)");
+
+            let width = 3;
+            this.graphType === "statistic" ? (width = 1) : (width = 3);
+
+            this.svg
+                .append("line")
+                .attr("class", "vertical-line")
+                .attr("x1", 0)
+                .attr("y1", 0)
+                .attr("x2", 0)
+                .attr("y2", this.containerHeight)
+                .attr("stroke-width", width)
+                .style("opacity", 0)
+                .attr("stroke", this.mouseLineColor);
 
             this.svg
                 .append("path")
@@ -405,6 +413,15 @@ export default {
                 .attr("width", "100%")
                 .attr("stroke", this.lineColor)
                 .attr("stroke-width", this.lineWidth);
+
+            this.svg
+                .append("circle") // Добавляем эту строку в ваш исходный код
+                .attr("class", "dot")
+                .attr("r", 6) // Задаем радиус нашей точки
+                .style("opacity", 0)
+                .attr("fill", this.circleColor) // Используем тот же цвет, что и для линии графика
+                .attr("stroke", this.circleBorder) // Установите цвет границы круга
+                .attr("stroke-width", 2); // Установите ширину границы
 
             this.svg
                 .append("g")
@@ -476,8 +493,6 @@ export default {
 
                     this.svg.selectAll(".vertical-line").style("opacity", 0);
 
-                    // Устанавливаем стили и позицию горизонтальной полосы
-                    // this.svg.selectAll(".horizontal-line").style("opacity", 0);
                     tooltip.style("opacity", 0);
 
                     this.svg.selectAll(".vertical-line").style("opacity", 0);

@@ -15,6 +15,27 @@ class IndexController extends Controller
         ]);
     }
 
+    public function confirm()
+    {
+        return Inertia::render('Auth/ConfirmPage', [
+            'auth_user' => Auth::check(),
+        ]);
+    }
+
+    public function login()
+    {
+        return Inertia::render('Auth/LoginPage', [
+            'auth_user' => Auth::check(),
+        ]);
+    }
+
+    public function registration()
+    {
+        return Inertia::render('Auth/RegPage', [
+            'auth_user' => Auth::check(),
+        ]);
+    }
+
     public function complexity()
     {
         return Inertia::render('ComplexityPage', [

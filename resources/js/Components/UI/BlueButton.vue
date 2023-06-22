@@ -41,51 +41,55 @@ export default {
         }
     }
     &.add {
-        width: 60px;
+        width: 56px;
         border-radius: 8px;
+        background: transparent;
+        border: 1px solid #3f7bdd;
         svg {
             width: 24px;
             height: 24px;
-            fill: #fafafa;
+            fill: #3f7bdd;
         }
         &:before {
             content: none;
         }
         @media (max-width: 479.89px) {
-            border: none;
-            background: transparent;
             padding: 0;
-            width: 24px;
+            width: 40px;
             height: 24px;
+            min-height: 32px;
 
             svg {
-                fill: #4182ec;
+                width: 16px;
+                height: 16px;
+            }
+        }
+        &:hover {
+            background: #3f7bdd;
+            svg {
+                fill: #e6eaf0;
             }
         }
     }
-    &::before {
-        content: "";
-        position: absolute;
-        z-index: 0;
-        background: linear-gradient(
-            84.14deg,
-            rgba(63, 123, 221, 0.27) 8.75%,
-            rgba(66, 130, 236, 0.27) 92.01%
-        );
-        border-radius: 12px;
-        width: 100%;
-        height: 100%;
-        top: 0;
-        left: 0;
-        transition: all 0.3s ease 0s;
-    }
+    //&::before {
+    //    content: "";
+    //    position: absolute;
+    //    z-index: 0;
+    //    background: linear-gradient(
+    //        84.14deg,
+    //        rgba(63, 123, 221, 0.27) 8.75%,
+    //        rgba(66, 130, 236, 0.27) 92.01%
+    //    );
+    //    border-radius: 12px;
+    //    width: 100%;
+    //    height: 100%;
+    //    top: 0;
+    //    left: 0;
+    //    transition: all 0.3s ease 0s;
+    //}
+
     &:active {
-        transform: translate(0, 0);
-        box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
-        &::before {
-            top: 0;
-            left: 0;
-        }
+        box-shadow: 0px 4px 5px 0px rgba(39, 39, 39, 0.2) inset;
     }
     @media (max-width: 479.98px) {
         font-size: 16px;
@@ -104,16 +108,19 @@ export default {
     cursor: pointer;
     line-height: 140%;
 
+    &:active {
+        box-shadow: 0px 4px 5px 0px rgba(39, 39, 39, 0.2) inset;
+    }
+
     &-md {
         min-height: 56px;
     }
 
     &-reverce {
-        filter: drop-shadow(0px 10px 30px rgba(112, 165, 236, 0.5));
+        filter: drop-shadow(0px 10px 10px rgba(112, 165, 236, 0.2));
         background: transparent;
         border: 1px solid #4282ec;
         color: #4282ec;
-        padding: 0 32px;
         gap: 10px;
         transition: all 0.5s ease 0s;
         svg {
@@ -129,7 +136,30 @@ export default {
                 #3f7bdd 8.75%,
                 #4282ec 92.01%
             );
-            box-shadow: 0px 10px 30px rgba(112, 165, 236, 0.5);
+            color: #e8ecf2;
+            svg {
+                fill: #e8ecf2 !important;
+            }
+        }
+        .all-link {
+            padding: 0 32px;
+            min-height: 56px;
+            svg {
+                max-width: 100%;
+                max-height: 100%;
+                overflow: visible;
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+
+        &:active {
+            box-shadow: 0px 4px 5px 0px rgba(39, 39, 39, 0.2) inset;
+            background: linear-gradient(
+                84.14deg,
+                #3f7bdd 8.75%,
+                #4282ec 92.01%
+            );
             color: #e8ecf2;
             svg {
                 fill: #e8ecf2 !important;
@@ -149,10 +179,6 @@ export default {
             min-width: 266px;
             font-size: 16px;
             line-height: 107%;
-        }
-        @media (max-width: 767.98px) {
-            left: 7px;
-            top: 6px;
         }
 
         &::before {

@@ -35,11 +35,7 @@ export default {
     align-items: center;
     gap: 40px;
     background: #fafafa;
-    box-shadow: -21.7831px 32.6746px 15.4297px rgba(0, 0, 0, 0.01),
-        -11.7992px 18.1526px 13.6144px rgba(0, 0, 0, 0.03),
-        -5.44577px 8.16865px 9.98391px rgba(0, 0, 0, 0.04),
-        -0.907628px 1.81526px 5.44577px rgba(0, 0, 0, 0.05),
-        0px 0px 0px rgba(0, 0, 0, 0.05);
+    box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     border-radius: 32px;
     padding: 32px 39px;
     @media (max-width: 991.98px) {

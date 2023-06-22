@@ -548,34 +548,15 @@ export default {
     .title.profile {
         @media (max-width: 767.98px) {
             flex-wrap: wrap;
+            gap: 30px;
         }
     }
     // .wallets__filter
     &__filter {
         margin: 0 24px 0 auto;
         @media (max-width: 767.98px) {
-            width: 80%;
             margin: 0;
             justify-content: flex-start !important;
-            &:before {
-                left: 213px;
-            }
-            &.checked {
-                &:before {
-                    left: 233px;
-                }
-            }
-        }
-        @media (max-width: 479.98px) {
-            width: 90%;
-            &:before {
-                left: 212px;
-            }
-            &.checked {
-                &:before {
-                    left: 227px;
-                }
-            }
         }
     }
 

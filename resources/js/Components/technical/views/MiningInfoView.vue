@@ -32,9 +32,8 @@
                                     />
                                 </svg>
                             </Link>
-                            <a
-                                href="#"
-                                data-popup="#auth"
+                            <Link
+                                :href="route('registration')"
                                 v-else
                                 class="link link-white"
                             >
@@ -53,7 +52,7 @@
                                         fill="white"
                                     />
                                 </svg>
-                            </a>
+                            </Link>
                         </div>
                         <div class="mining-im__general_image_con">
                             <img

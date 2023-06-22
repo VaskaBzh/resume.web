@@ -166,29 +166,38 @@
                     <div
                         class="statistic__info cabinet__block cabinet__block-light"
                     >
-                        <main-title tag="h4" class="title title-blue"
-                            >Чистая прибыль</main-title
-                        >
+                        <main-title tag="h4" class="title title-blue">{{
+                            this.$t("statistic.info_blocks.title_clear")
+                        }}</main-title>
                         <p class="text text-md" v-if="!clearProfit">
-                            Укажите расходы на электроэнергию для расчета чистой
-                            прибыли.
+                            {{ this.$t("statistic.info_blocks.text_clear") }}
                         </p>
                         <blue-button v-if="!clearProfit">
                             <Link
                                 :href="route('settings')"
                                 class="text text-md text-white"
-                                ><b>Указать</b></Link
+                                ><b>
+                                    {{
+                                        this.$t(
+                                            "statistic.info_blocks.button_clear"
+                                        )
+                                    }}</b
+                                ></Link
                             >
                         </blue-button>
                         <btc-calculator
                             v-if="clearProfit"
-                            title="Сегодня"
+                            :title="
+                                this.$t('statistic.info_blocks.clear.titles[0]')
+                            "
                             :BTC="todayEarn"
                             :clearProfit="clearProfitDay"
                         />
                         <btc-calculator
                             v-if="clearProfit"
-                            title="За месяц"
+                            :title="
+                                this.$t('statistic.info_blocks.clear.titles[1]')
+                            "
                             :BTC="clearBTCMounth"
                             :clearProfit="clearProfit"
                         />
@@ -200,11 +209,19 @@
                             $t("statistic.info_blocks.title")
                         }}</main-title>
                         <btc-calculator
-                            title="Вчера"
+                            :title="
+                                this.$t(
+                                    'statistic.info_blocks.payment.titles[0]'
+                                )
+                            "
                             :BTC="this.BTCValueFirst"
                         />
                         <btc-calculator
-                            title="Прогноз на сегодня"
+                            :title="
+                                this.$t(
+                                    'statistic.info_blocks.payment.titles[1]'
+                                )
+                            "
                             :BTC="this.BTCValueSecond"
                         />
                     </div>

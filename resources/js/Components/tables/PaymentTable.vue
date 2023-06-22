@@ -307,7 +307,7 @@ export default {
             }
             th {
                 padding-right: 10px;
-                color: rgba(0, 0, 0, 0.62);
+                color: #5389e1;
                 font-weight: 400;
                 font-size: 16px;
                 line-height: 23px;

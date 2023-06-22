@@ -27,10 +27,10 @@
                         class="button button-lg button-with-propeller"
                         v-else
                     >
-                        <a href="#" data-popup="#auth" class="all-link">
+                        <Link :href="route('registration')" class="all-link">
                             {{ $t("hosting.button") }}
                             <div class="button_propeller"></div
-                        ></a>
+                        ></Link>
                     </blue-button>
                 </div>
                 <div class="hosting__image page__image">

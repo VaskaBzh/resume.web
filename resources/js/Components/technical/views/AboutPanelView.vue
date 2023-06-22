@@ -10,7 +10,10 @@
                     >
                         {{ $t("panel.title") }}
                     </main-title>
-                    <div class="description description-sm" v-scroll="'left delay--lg'">
+                    <div
+                        class="description description-sm"
+                        v-scroll="'left delay--lg'"
+                    >
                         {{ $t("panel.text") }}
                     </div>
                 </div>
@@ -102,6 +105,9 @@ export default {
         @media (max-width: 991.98px) {
             text-align: center;
         }
+    }
+    &__image {
+        width: 100%;
     }
 }
 </style>

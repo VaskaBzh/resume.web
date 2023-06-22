@@ -2,7 +2,9 @@
     <div class="faq">
         <div class="faq__container">
             <div class="faq__main">
-                <main-title tag="h1" class="faq_title">FAQ</main-title>
+                <main-title tag="h1" class="title-blue faq_title"
+                    >FAQ</main-title
+                >
 
                 <div class="search">
                     <input
@@ -40,7 +42,9 @@
                         v-for="(accordion, i) in filteredFaq"
                         :key="i"
                     >
-                        <main-title tag="h3">{{ accordion.title }}</main-title>
+                        <main-title tag="h3" class="title-blue">{{
+                            accordion.title
+                        }}</main-title>
                         <div class="section__block section__block-light">
                             <main-accordion
                                 v-for="(accordionList, index) in accordion.list"
@@ -133,6 +137,23 @@ export default {
                         },
                     },
                 },
+                {
+                    title: this.$t("faq[2].title"),
+                    list: {
+                        0: {
+                            title: this.$t("faq[2].list[0].title"),
+                            text: this.$t("faq[2].list[0].text"),
+                        },
+                        1: {
+                            title: this.$t("faq[2].list[1].title"),
+                            text: this.$t("faq[2].list[1].text"),
+                        },
+                        2: {
+                            title: this.$t("faq[2].list[2].title"),
+                            text: this.$t("faq[2].list[2].text"),
+                        },
+                    },
+                },
             ];
         },
     },
@@ -182,6 +203,12 @@ export default {
         .section__block {
             border-radius: 16px;
             padding: 16px 40px;
+            @media (max-width: 991.98px) {
+                padding: 8px 24px;
+            }
+            @media (max-width: 479.98px) {
+                padding: 6px 8px;
+            }
         }
     }
 }

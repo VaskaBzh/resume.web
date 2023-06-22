@@ -62,7 +62,7 @@
                         v-for="(page, index) in this.firstPages"
                         :key="index"
                         :class="{ active: this.page === page }"
-                    >{{ page }}</a
+                        >{{ page }}</a
                     >
                     <span>...</span>
                     <a
@@ -80,7 +80,7 @@
                         v-for="(page, index) in this.lastPages"
                         :key="index"
                         :class="{ active: this.page === page }"
-                    >{{ page }}</a
+                        >{{ page }}</a
                     >
                 </div>
                 <div class="slider__slides slider__slides-full" v-else>
@@ -166,8 +166,11 @@ export default {
     },
     watch: {
         rowsNumber(newValue, oldValue) {
-            console.log(newValue);
-            if (String(this.rowsNumber).length < 3 && String(this.rowsNumber).length > 0) {
+            if (
+                String(this.rowsNumber).length < 3 &&
+                String(this.rowsNumber).length > 0 &&
+                Number(this.rowsNumber) !== 0
+            ) {
                 this.rowsNumber = newValue.replace(/[^0-9]/g, "");
             } else {
                 this.rowsNumber = oldValue;
@@ -183,7 +186,7 @@ export default {
             slide: 1,
             key: 0,
             rowsNumber: this.rowsNum,
-            rows: this.rowsNumber,
+            rows: this.rowsNum,
             page: 1,
         };
     },
@@ -200,13 +203,19 @@ export default {
         },
         firstPages() {
             if (this.page <= 4) {
-                return Array.from({length: Math.min(5, this.pages)}, (_, i) => i + 1);
+                return Array.from(
+                    { length: Math.min(5, this.pages) },
+                    (_, i) => i + 1
+                );
             }
             return [1, 2];
         },
         lastPages() {
             if (this.page >= this.pages - 3) {
-                return Array.from({length: Math.min(5, this.pages)}, (_, i) => this.pages - i).reverse();
+                return Array.from(
+                    { length: Math.min(5, this.pages) },
+                    (_, i) => this.pages - i
+                ).reverse();
             }
             return [this.pages - 1, this.pages].filter((page) => page > 0);
         },
@@ -295,6 +304,7 @@ export default {
         display: flex;
         align-items: center;
         min-height: 40px;
+        gap: 16px;
         @media (min-width: 480px) {
             justify-content: space-between;
         }
@@ -325,6 +335,9 @@ export default {
             background: #fafafa;
             border-radius: 8px;
             align-items: center;
+            @media (max-width: 767.98px) {
+                display: none;
+            }
             input {
                 outline: none;
                 color: #7c7c7c;
@@ -333,8 +346,9 @@ export default {
                 font-weight: 500;
                 font-size: 18px;
                 line-height: 135%;
-                padding: 0 13px 0 12px;
+                padding: 0 9px 0 8px;
                 background: transparent;
+                text-align: center;
                 max-width: calc(18px + 13px + 12px);
             }
             &__buttons {
@@ -349,6 +363,10 @@ export default {
                     cursor: pointer;
                     width: 15px;
                     height: 15px;
+                    transition: all 0.3s ease 0s;
+                    &:hover {
+                        fill: #343434;
+                    }
                 }
                 &:before {
                     content: "";
@@ -367,6 +385,7 @@ export default {
             height: 100%;
             align-items: center;
             gap: 16px;
+            margin-left: auto;
             @media (max-width: 767.98px) {
                 gap: 13px;
             }
@@ -442,8 +461,7 @@ export default {
             }
         }
         .active {
-            color: #4182ec;
-            text-decoration-color: #4182ec;
+            color: #3f7bdd !important;
         }
     }
 }

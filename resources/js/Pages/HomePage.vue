@@ -45,10 +45,10 @@
                         v-else
                         v-scroll="'left'"
                     >
-                        <a href="#" data-popup="#auth" class="all-link">
+                        <Link :href="route('registration')" class="all-link">
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
-                        ></a>
+                        ></Link>
                     </blue-button>
                 </div>
 
@@ -160,7 +160,7 @@
                                 :viewportWidth="viewportWidth"
                                 lineColor="#FDC433"
                                 :lineWidth="7"
-                                bandColor="#FAFAFA"
+                                bandColor="rgba(230, 234, 240, 1)"
                                 mouseLineColor="#FFE5A1"
                                 circleColor="#FDC433"
                                 circleBorder="#FCF5E2"
@@ -301,8 +301,11 @@
                                     viewportWidth >= 991.98 && !this.auth_user
                                 "
                             >
-                                <a href="#" data-popup="#auth" class="all-link">
-                                    {{ $t("home.bitcoin_block.button") }}</a
+                                <Link
+                                    :href="route('registration')"
+                                    class="all-link"
+                                >
+                                    {{ $t("home.bitcoin_block.button") }}</Link
                                 >
                             </blue-button>
                         </div>
@@ -326,13 +329,12 @@
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link") }}
                                 </Link>
-                                <a
-                                    href="#"
+                                <Link
+                                    :href="route('registration')"
                                     v-else
-                                    data-popup="#auth"
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link") }}
-                                </a>
+                                </Link>
                             </div>
                         </div>
                         <div
@@ -347,9 +349,11 @@
                                 <div class="text">
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
-                                <a href="#" class="link link-blue"
+                                <Link
+                                    :href="route('help')"
+                                    class="link link-blue"
                                     >{{ $t("home.promo_blocks.fpps.link") }}
-                                </a>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -516,7 +520,7 @@ export default {
         position: relative;
         top: -29em;
         @media (max-width: 1320.98px) {
-            top: -10em;
+            top: -6em;
             left: -21em;
             transform: scale(0.7);
         }

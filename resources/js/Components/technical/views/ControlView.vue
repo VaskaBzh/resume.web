@@ -6,7 +6,15 @@
                     <main-title tag="h2" class="title-blue"
                         >{{ this.$t("hosting.control.title") }}
                         <span class="title-span"
-                            ><span>{{ this.$t("hosting.control.spans[0]") }}</span> <span>{{ this.$t("hosting.control.spans[1]") }}</span> <span>{{ this.$t("hosting.control.spans[2]") }}</span>
+                            ><span>{{
+                                this.$t("hosting.control.spans[0]")
+                            }}</span>
+                            <span>
+                                {{ this.$t("hosting.control.spans[1]") }}</span
+                            >
+                            <span>
+                                {{ this.$t("hosting.control.spans[2]") }}</span
+                            >
                         </span></main-title
                     >
                     <transition name="sun-moon">
@@ -281,9 +289,10 @@ export default {
                         asics[3].clientHeight + topPos[3] + "px";
                     asic.style.position = "absolute";
                     asic.style.left = "50%";
-                    asic.style.top = topPos[3] + "px";
-                    asic.style.marginTop = "65px";
+                    // asic.style.top = topPos[3] + "px";
+                    asic.style.marginTop = topPos[3] + "px";
                     asic.style.marginLeft = -asics[3].clientHeight / 2 + "px";
+                    asic.style.transition = "all 0.5s ease 0s";
                 });
                 setTimeout(() => {
                     asics[0].style.marginLeft = "0";
@@ -323,6 +332,7 @@ export default {
                 }, 2000);
                 // setTimeout(() => {
                 //     asics.forEach((asic) => {
+                //         asic.style.transition = "none";
                 //         asic.removeAttribute("style");
                 //     });
                 // }, 3000);
@@ -345,7 +355,7 @@ export default {
                         setTimeout(() => {
                             this.$store.dispatch("theme", !this.getTheme);
                             this.$store.dispatch("SetThemeVal", this.getTheme);
-                        }, 1000);
+                        }, 2000);
                     }
                     // else if (entry.isIntersecting) {
                     //     this.animated = false;
@@ -372,10 +382,10 @@ export default {
 }
 .sun-moon {
     &-enter-active {
-        animation: inAnim 3s ease forwards 0s;
+        animation: inAnim 2s ease forwards 0s, opacityIn 0.5s ease forwards 0s;
     }
     &-leave-active {
-        animation: outAnim 3s ease forwards 0s;
+        animation: outAnim 2s ease forwards 0s, opacityOut 0.5s ease forwards 0s;
     }
 }
 @keyframes outAnim {
@@ -384,13 +394,29 @@ export default {
         opacity: 1;
     }
     to {
-        transform: translate(-100vw, 300px);
+        transform: translate(-100vw, 500px);
+        opacity: 0;
+    }
+}
+@keyframes opacityIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes opacityOut {
+    from {
+        opacity: 1;
+    }
+    to {
         opacity: 0;
     }
 }
 @keyframes inAnim {
     from {
-        transform: translate(100vw, 300px);
+        transform: translate(100vw, 500px);
         opacity: 0;
     }
     to {
@@ -452,6 +478,8 @@ export default {
         transform: translateX(-200px);
         transition: all 0.3s ease 0.3s;
         .title-span {
+            display: inline-flex;
+            gap: 12px;
             span {
                 opacity: 0;
             }
@@ -475,79 +503,81 @@ export default {
                 }
             }
         }
-        .asic {
-            .blinks {
-                .green {
-                    animation: fadeGreen linear forwards 3s 4.9s;
-                }
-
-                .red {
-                    animation: fadeRed linear forwards 2s 2.9s;
-                }
-            }
-            &:nth-child(2) {
+        @media (min-width: 767.98px) {
+            .asic {
                 .blinks {
                     .green {
-                        animation: fadeGreen linear forwards 3s 4.2s;
+                        animation: fadeGreen linear forwards 3s 4.9s;
                     }
 
                     .red {
-                        animation: fadeRed linear forwards 2s 2.4s;
+                        animation: fadeRed linear forwards 2s 2.9s;
                     }
                 }
-            }
-            &:nth-child(6) {
-                .blinks {
-                    .green {
-                        animation: fadeGreen linear forwards 3s 4.1s;
-                    }
+                &:nth-child(2) {
+                    .blinks {
+                        .green {
+                            animation: fadeGreen linear forwards 3s 4.2s;
+                        }
 
-                    .red {
-                        animation: fadeRed linear forwards 2s 2.1s;
+                        .red {
+                            animation: fadeRed linear forwards 2s 2.4s;
+                        }
                     }
                 }
-            }
-            &:nth-child(3) {
-                .blinks {
-                    .green {
-                        animation: fadeGreen linear forwards 3s 4.5s;
-                    }
+                &:nth-child(6) {
+                    .blinks {
+                        .green {
+                            animation: fadeGreen linear forwards 3s 4.1s;
+                        }
 
-                    .red {
-                        animation: fadeRed linear forwards 2s 2.5s;
+                        .red {
+                            animation: fadeRed linear forwards 2s 2.1s;
+                        }
                     }
                 }
-            }
-            &:nth-child(5) {
-                .blinks {
-                    .green {
-                        animation: fadeGreen linear forwards 3s 4.7s;
-                    }
+                &:nth-child(3) {
+                    .blinks {
+                        .green {
+                            animation: fadeGreen linear forwards 3s 4.5s;
+                        }
 
-                    .red {
-                        animation: fadeRed linear forwards 2s 2.7s;
+                        .red {
+                            animation: fadeRed linear forwards 2s 2.5s;
+                        }
                     }
                 }
-            }
-            &:nth-child(4) {
-                .blinks {
-                    .green {
-                        animation: fadeGreen linear forwards 3s 4.2s;
-                    }
+                &:nth-child(5) {
+                    .blinks {
+                        .green {
+                            animation: fadeGreen linear forwards 3s 4.7s;
+                        }
 
-                    .red {
-                        animation: fadeRed linear forwards 2s 2.2s;
+                        .red {
+                            animation: fadeRed linear forwards 2s 2.7s;
+                        }
                     }
                 }
-            }
-            &:nth-child(7) {
-                .blinks {
-                    .green {
-                        animation: fadeGreen linear forwards 3s 4s;
-                    }
+                &:nth-child(4) {
+                    .blinks {
+                        .green {
+                            animation: fadeGreen linear forwards 3s 4.2s;
+                        }
 
-                    .red {
-                        animation: fadeRed linear forwards 2s 2s;
+                        .red {
+                            animation: fadeRed linear forwards 2s 2.2s;
+                        }
+                    }
+                }
+                &:nth-child(7) {
+                    .blinks {
+                        .green {
+                            animation: fadeGreen linear forwards 3s 4s;
+                        }
+
+                        .red {
+                            animation: fadeRed linear forwards 2s 2s;
+                        }
                     }
                 }
             }
@@ -559,8 +589,11 @@ export default {
         padding-bottom: 260px;
         position: relative;
         align-items: center;
+        @media (max-width: 767.98px) {
+            padding-bottom: 136px;
+        }
         @media (max-width: 479.98px) {
-            gap: 32px;
+            padding-bottom: 88px;
         }
         .title {
             @media (min-width: 991.98px) {
@@ -576,6 +609,14 @@ export default {
             left: 50%;
             transform: translate(-50%, 0);
             transition: all 1.3s ease 0s;
+            @media (max-width: 767.98px) {
+                width: 96px;
+                height: 96px;
+            }
+            @media (max-width: 479.98px) {
+                width: 56px;
+                height: 56px;
+            }
         }
     }
     &__asics {
@@ -591,7 +632,6 @@ export default {
             width: 8%;
             filter: drop-shadow(0px 5.94951px 47.5961px rgba(27, 27, 27, 0.25));
             position: relative;
-            transition: all 0.5s ease 0s;
             z-index: 0;
             img {
                 width: 100%;

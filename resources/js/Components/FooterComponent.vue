@@ -221,7 +221,7 @@
             </div>
             <div class="footer__quote quote">
                 © 2022 Allbtc Pool
-                <a :href="this.pdf">{{ $t("footer.confidence") }}</a>
+                <a :href="pdf">{{ $t("footer.confidence") }}</a>
             </div>
         </div>
     </footer>
@@ -310,7 +310,7 @@ export default {
     &__main {
         text-align: center;
         min-width: 1240px;
-        @media (max-width: 1270px) {
+        @media (max-width: 1320.98px) {
             min-width: 970px;
         }
         @media (max-width: 991.98px) {
@@ -326,7 +326,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        @media (max-width: 1270px) {
+        @media (max-width: 1320.98px) {
             flex-direction: column;
             gap: 48px;
         }
@@ -341,7 +341,7 @@ export default {
         &_con {
             display: flex;
             gap: 80px;
-            @media (max-width: 1270px) {
+            @media (max-width: 1320.98px) {
                 justify-content: space-between;
                 width: 100%;
             }

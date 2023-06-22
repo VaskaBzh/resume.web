@@ -51,6 +51,10 @@ Route::controller(IndexController::class)
         Route::get('/help', 'help')->name('help');
         Route::get('/complexity', 'complexity')->name('complexity');
         Route::get('/hosting', 'hosting')->name('hosting');
+
+        Route::get('/registration', 'registration')->name('registration');
+        Route::get('/login', 'login')->name('login');
+//        Route::get('/confirm', 'confirm')->name('confirm');
     });
 
 Route::controller(RegisterController::class)->group(function () {
