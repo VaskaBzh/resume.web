@@ -73,9 +73,9 @@
                 </div>
                 <div class="nav_block" v-show="!is_auth">
                     <blue-button @click="openPopup(false)" data-popup="#auth">
-                        <div class="all-link">
+                        <Link :href="route('login')" class="all-link">
                             {{ $t("header.login.buttons.login") }}
-                        </div>
+                        </Link>
                     </blue-button>
                     <span class="nav_text">
                         {{ $t("header.login.buttons.step") }}</span
@@ -85,9 +85,9 @@
                         @click="openPopup(true)"
                         data-popup="#auth"
                     >
-                        <div class="all-link">
+                        <Link :href="route('registration')" class="all-link">
                             {{ $t("header.login.buttons.registration") }}
-                        </div>
+                        </Link>
                     </blue-button>
                 </div>
             </div>
@@ -580,7 +580,7 @@ export default {
 
     &_con {
         @media (max-width: 991.98px) {
-            position: absolute;
+            position: fixed;
             background: #e8ecf3;
             overflow: scroll;
             width: 100vw;
