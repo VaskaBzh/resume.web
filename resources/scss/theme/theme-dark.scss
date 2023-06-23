@@ -7,9 +7,11 @@ body {
                 transition: all $theme-transition ease 0s;
                 background: #283955;
             }
-            &::before {
-                transition: all $theme-transition ease 0s;
-                opacity: 0;
+            .app_back {
+                &::before {
+                    transition: all $theme-transition ease 0s;
+                    opacity: 0;
+                }
             }
         }
         &::after {
@@ -701,30 +703,30 @@ body {
                 }
             }
         }
-        @keyframes errorPlaceholder {
-            from {
-                color: #989898;
-            }
-            to {
-                color: #ef4e4d;
-            }
-        }
-        @keyframes error {
-            from {
-                color: #ef4e4d;
-                border-color: #ef4e4d;
-                fill: #ef4e4d;
-            }
-            to {
-                color: #cacaca;
-                border-color: transparent;
-                fill: #989898;
-            }
-        }
         .form {
             h3 {
                 transition: all $theme-transition ease 0s;
                 color: #e1e1e1 !important;
+            }
+            @keyframes error1Placeholder {
+                from {
+                    color: #ef4e4d;
+                }
+                to {
+                    color: #989898;
+                }
+            }
+            @keyframes error1 {
+                from {
+                    color: #ef4e4d;
+                    border-color: #ef4e4d;
+                    fill: #ef4e4d;
+                }
+                to {
+                    color: #e1e1e1;
+                    border-color: transparent;
+                    fill: #989898;
+                }
             }
             &_message {
                 background: #0b1015;
@@ -738,11 +740,13 @@ body {
                     &_row {
                         &.error {
                             .input {
-                                border-color: #ef4e4d;
-                                color: #cacaca;
+                                animation: error1 5s ease forwards 0s;
+                                &::placeholder {
+                                    animation: error1Placeholder 5s ease forwards 0s;
+                                }
                             }
                             svg {
-                                fill: #ef4e4d;
+                                animation: error1 5s ease forwards 0s;
                             }
                         }
                         svg {
@@ -825,8 +829,10 @@ body {
         .checkbox {
             transition: all $theme-transition ease 0s;
         }
-        &::before {
-            transition: all $theme-transition ease 0s;
+        .app_back {
+            &::before {
+                transition: all $theme-transition ease 0s;
+            }
         }
     }
     nav {

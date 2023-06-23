@@ -1,20 +1,22 @@
 <template>
-    <header-component :errors="errors" :is_auth="auth_user" />
-    <div class="page">
-        <div class="hint">
-            <div class="hint_item" v-hide="this.getMessage !== ''">
-                {{ this.getMessage }}
+    <div class="app_back">
+        <header-component :errors="errors" :is_auth="auth_user" />
+        <div class="page">
+            <div class="hint">
+                <div class="hint_item" v-hide="this.getMessage !== ''">
+                    {{ this.getMessage }}
+                </div>
+                <div class="hint_item" v-hide="this.message !== null">
+                    {{ this.message }}
+                </div>
             </div>
-            <div class="hint_item" v-hide="this.message !== null">
-                {{ this.message }}
-            </div>
+            <div class="observer_block"></div>
+            <keep-alive>
+                <slot :errors="errors"></slot>
+            </keep-alive>
         </div>
-        <div class="observer_block"></div>
-        <keep-alive>
-            <slot :errors="errors"></slot>
-        </keep-alive>
+        <footer-component />
     </div>
-    <footer-component />
 </template>
 
 <script>
@@ -72,28 +74,6 @@ export default {
 </script>
 
 <style lang="scss">
-#app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    transition: all 0.8s ease 0s;
-    overflow: hidden;
-    position: relative;
-    width: 100vw;
-    background: #040d15;
-    &:before {
-        width: 100%;
-        height: 100%;
-        position: absolute;
-        left: 0;
-        top: 0;
-        content: "";
-        background: #FAFAFA;
-        transition: all 0.8s ease 0s;
-        opacity: 1;
-        z-index: 0;
-    }
-}
 
 .nav__logo {
     max-width: 170px;

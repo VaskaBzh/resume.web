@@ -55,13 +55,13 @@
                         <img
                             class="nav__logo"
                             v-if="!this.getTheme"
-                            src="../../assets/img/logo_high_quality.png"
+                            src="../../assets/img/logo_high_quality.svg"
                             alt="logo"
                         />
                         <img
                             class="nav__logo"
                             v-else
-                            src="../../assets/img/logo_high_quality-dark.png"
+                            src="../../assets/img/logo_high_quality-dark.svg"
                             alt="logo"
                         />
                     </a>

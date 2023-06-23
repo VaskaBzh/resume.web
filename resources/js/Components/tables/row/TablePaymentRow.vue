@@ -201,7 +201,7 @@ export default {
     }
 }
 td {
-    background: #ffffff;
+    background: #fafafa;
     white-space: nowrap;
     padding: 0 10px 0 0;
     &.center {

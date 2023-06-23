@@ -95,11 +95,9 @@ Route::middleware('auth')->group(function () {
             Route::get('/statistic', 'statistic')->name('statistic');
             Route::get('/accounts', 'accounts')->name('accounts');
             Route::get('/workers', 'workers')->name('workers');
-            Route::get('/settings', 'settings')->name('settings');
-            Route::get('/income', 'income')->name('income');
-            Route::get('/wallets', 'wallets')->name('wallets');
-//            Route::get('/payment', 'payment')->name('payment');
-//            Route::get('/accruals', 'accruals')->name('accruals');
+            Route::get('/full-page/settings', 'settings')->name('settings');
+            Route::get('/full-page/income', 'income')->name('income');
+            Route::get('/full-page/wallets', 'wallets')->name('wallets');
             Route::get('/connecting', 'connecting')->name('connecting');
         });
     });

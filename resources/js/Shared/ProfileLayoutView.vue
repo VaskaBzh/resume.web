@@ -1,25 +1,27 @@
 <template>
-    <header-component :is_auth="auth_user" />
-    <div class="page">
-        <div class="hint">
-            <div class="hint_item" v-hide="this.getMessage !== ''">
-                {{ this.getMessage }}
+    <div class="app_back">
+        <header-component :is_auth="auth_user" />
+        <div class="page">
+            <div class="hint">
+                <div class="hint_item" v-hide="this.getMessage !== ''">
+                    {{ this.getMessage }}
+                </div>
+                <div class="hint_item" v-hide="this.message !== null">
+                    {{ this.message }}
+                </div>
             </div>
-            <div class="hint_item" v-hide="this.message !== null">
-                {{ this.message }}
+            <div class="observer_block"></div>
+            <div class="account">
+                <div class="account__container">
+                    <nav-tabs ref="tabs" />
+                    <keep-alive>
+                        <slot />
+                    </keep-alive>
+                </div>
             </div>
         </div>
-        <div class="observer_block"></div>
-        <div class="account">
-            <div class="account__container">
-                <nav-tabs ref="tabs" />
-                <keep-alive>
-                    <slot />
-                </keep-alive>
-            </div>
-        </div>
+        <footer-component />
     </div>
-    <footer-component />
 </template>
 <script>
 import NavTabs from "@/Components/navs/NavTabs.vue";

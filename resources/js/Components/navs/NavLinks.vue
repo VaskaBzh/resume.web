@@ -232,7 +232,6 @@
                 {{ $t("header.links.wallets") }}
             </Link>
             <Link
-                v-if="!is_auth || $page.url.startsWith('/profile')"
                 :href="route('home')"
                 class="nav__link"
                 :class="{
@@ -277,17 +276,7 @@
 
                 {{ $t("header.links.home") }}
             </Link>
-            <Link
-                v-else-if="viewportWidth > 991.98"
-                :href="route('statistic')"
-                class="nav__link"
-                :class="{
-                    burger_link: viewportWidth < 991.98,
-                    active: $page.url.startsWith('/profile'),
-                }"
-            >
-                {{ $t("header.links.own_cabinet") }}
-            </Link>
+            <!--            <Link-->
             <!--            <Link-->
             <!--                :href="route('complexity')"-->
             <!--                class="nav__link"-->

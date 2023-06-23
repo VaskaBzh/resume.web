@@ -4,13 +4,13 @@
             <img
                 v-if="!getTheme"
                 class="nav__logo headder"
-                src="../../assets/img/logo_high_quality.png"
+                src="../../assets/img/logo_high_quality.svg"
                 alt="logo"
             />
             <img
                 v-else
                 class="nav__logo headder"
-                src="../../assets/img/logo_high_quality-dark.png"
+                src="../../assets/img/logo_high_quality-dark.svg"
                 alt="logo"
             />
         </Link>
@@ -34,10 +34,22 @@
                 :viewportWidth="viewportWidth"
             ></select-theme>
 
-            <account-menu v-show="is_auth"></account-menu>
+            <account-menu
+                v-show="is_auth && $page.url.startsWith('/profile')"
+            ></account-menu>
             <Link
                 :href="route('login')"
                 v-show="viewportWidth >= 991.98 && !is_auth"
+                class="nav__button"
+                @mousedown="this.linkChanger"
+            >
+                {{ $t("header.login_button") }}
+            </Link>
+            <Link
+                :href="route('statistic')"
+                v-show="
+                    viewportWidth >= 991.98 && !$page.url.startsWith('/profile')
+                "
                 class="nav__button"
                 @mousedown="this.linkChanger"
             >
@@ -314,15 +326,6 @@ export default defineComponent({
 //    }
 //}
 
-#app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow: hidden;
-    background: #fafafa;
-    width: 100vw;
-}
-
 .swiper {
     padding-bottom: 0 !important;
     .swiper {
@@ -515,7 +518,8 @@ nav.nav__container {
     display: flex;
     gap: 12px;
     align-items: center;
-    .button {
+    .button,
+    .nav__button {
         margin-left: 28px;
     }
 }

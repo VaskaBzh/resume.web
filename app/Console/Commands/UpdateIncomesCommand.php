@@ -143,12 +143,15 @@ class UpdateIncomesCommand extends Command
             $url = "https://api.minerstat.com/v2/coins?list=BTC";
             $response = file_get_contents($url, false, $context);
             $req_url = 'https://pool.api.btc.com/v1/worker?group=' . $sub->group_id . '&puid=781195';
+            $req_url_list = 'https://pool.api.btc.com/v1/worker/groups?puid=781195';
             $response_json = file_get_contents($req_url, false, $context);
+            $response_json_list = file_get_contents($req_url_list, false, $context);
             if (false !== $response_json) {
                 try {
                     $wallets = $sub->wallets;
                     $responseEncode = json_decode($response);
                     $responseData = json_decode($response_json);
+                    $responseList = json_decode($response_json_list);
                     if ($responseData->data->data) {
                         $share = 0;
                         $share = array_reduce($responseData->data->data, function ($carry, $item) {
@@ -170,14 +173,22 @@ class UpdateIncomesCommand extends Command
                         $share = 0;
                         $unit = "T";
                     }
+                    $total_pool_hashrate = 0;
+
+                    foreach ($responseList->data->list as $item) {
+                        $total_pool_hashrate += $item->shares_1m;
+                    }
+
+
 
                     if ($share > 0) {
+//                        $earn = $share / $total_pool_hashrate * $responseEncode[0]->reward_block * (1 - 0.035);
                         $earn = ($share * pow(10, 12) * 86400 * $responseEncode[0]->reward_block) / ($responseEncode[0]->difficulty * pow(2,32));
                     } else {
                         $earn = 0;
                     }
 
-                    $earn = $earn * (1 - 0.005);
+//                    $earn = $earn * (1 - 0.005);
                     $earn = $earn * (1 - 0.035);
 
                     $income = [

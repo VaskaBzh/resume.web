@@ -76,22 +76,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-#app {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    overflow: hidden;
-    background: linear-gradient(
-        179.87deg,
-        #e6eaf0 1.02%,
-        #e6eaf1 4.79%,
-        #e7ebf1 8.76%,
-        #eaeef4 14.75%,
-        #e8ecf2 19.07%
-    );
-    width: 100vw;
-}
-
 nav.nav__container {
     z-index: 100;
     display: flex;
@@ -129,9 +113,6 @@ nav.nav__container {
     display: flex;
     gap: 12px;
     align-items: center;
-    .button {
-        margin-left: 28px;
-    }
 }
 .back {
     cursor: pointer;

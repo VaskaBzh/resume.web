@@ -119,28 +119,28 @@
                 @click="this.indexChanger(row.graphId)"
             />
         </tbody>
-        <!--        <teleport to="body">-->
-        <!--            <main-popup-->
-        <!--                v-if="Object.values(allHistoryMiner).length > 0"-->
-        <!--                class="popup-graph"-->
-        <!--                id="seeChart"-->
-        <!--                ref="chart"-->
-        <!--                typePopup="graph"-->
-        <!--                @closed="dropIndex"-->
-        <!--                @opened="setIndex"-->
-        <!--                :animationEnd="animationEnd"-->
-        <!--            >-->
-        <!--                <statistic-chart-->
-        <!--                    class="graph"-->
-        <!--                    :graphs="graphs"-->
-        <!--                    :redraw="redraw"-->
-        <!--                    :viewportWidth="viewportWidth"-->
-        <!--                    :heightVal="height"-->
-        <!--                    :tooltip="true"-->
-        <!--                    :key="graphs[0].values[graphs[0].values.length - 1]"-->
-        <!--                />-->
-        <!--            </main-popup>-->
-        <!--        </teleport>-->
+        <teleport to="body">
+            <main-popup
+                v-if="Object.values(allHistoryMiner).length > 0"
+                class="popup-graph"
+                id="seeChart"
+                ref="chart"
+                typePopup="graph"
+                @closed="dropIndex"
+                @opened="setIndex"
+                :animationEnd="animationEnd"
+            >
+                <statistic-chart
+                    class="graph"
+                    :graphs="graphs"
+                    :redraw="redraw"
+                    :viewportWidth="viewportWidth"
+                    :heightVal="height"
+                    :tooltip="true"
+                    :key="graphs[0].values[graphs[0].values.length - 1]"
+                />
+            </main-popup>
+        </teleport>
     </table>
 </template>
 <script>

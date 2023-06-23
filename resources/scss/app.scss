@@ -446,6 +446,43 @@ h6 {
     }
 }
 
+.app {
+    &_back {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        transition: all 0.8s ease 0s;
+        overflow: hidden;
+        position: relative;
+        width: 100vw;
+        background: #040d15;
+        &:before {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            content: "";
+            background: linear-gradient(
+                179deg,
+                #e6eaf0 0%,
+                #e6eaf1 20.89%,
+                #e7ebf1 42.88%,
+                #eaeef4 76.04%,
+                #e8ecf2 100%
+            );
+            transition: all 0.8s ease 0s;
+            opacity: 1;
+            z-index: 0;
+        }
+        &-auth {
+            &:before {
+                background: #fafafa;
+            }
+        }
+    }
+}
+
 .tooltip {
     position: absolute;
     transition: all 0.2s ease 0s;

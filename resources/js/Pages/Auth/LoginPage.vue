@@ -34,7 +34,7 @@
                     :placeholder="this.$t('auth.login.placeholders[0]')"
                 />
             </div>
-            <div class="form_row" :class="{ error: errors.password }">
+            <div class="form_row" :class="{ error: errors.email }">
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.login.placeholders[1]')"

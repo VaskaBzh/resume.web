@@ -117,14 +117,14 @@ class IndexController extends Controller
 
     public function wallets()
     {
-        return Inertia::render('Profile/WalletsPage', [
+        return Inertia::render('Profile/FullPages/WalletsPage', [
             'auth_user' => Auth::check(),
         ]);
     }
 
     public function Income()
     {
-        return Inertia::render('Profile/IncomePage', [
+        return Inertia::render('Profile/FullPages/IncomePage', [
             'auth_user' => Auth::check(),
         ]);
     }
@@ -138,7 +138,7 @@ class IndexController extends Controller
 
     public function settings()
     {
-        return Inertia::render('Profile/SettingsPage', [
+        return Inertia::render('Profile/FullPages/SettingsPage', [
             'auth_user' => Auth::check(),
         ]);
     }

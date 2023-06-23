@@ -282,7 +282,14 @@ export default {
             if (this.graphType === "statistic") {
                 y = d3
                     .scaleLinear()
-                    .domain([0, d3.max(this.graphData.values)])
+                    .domain([
+                        d3.min(this.graphData.values) <= 40
+                            ? 0
+                            : d3.min(this.graphData.values) - 20,
+                        d3.max(this.graphData.values) !== 0
+                            ? d3.max(this.graphData.values) + 20
+                            : 120,
+                    ])
                     .range([this.containerHeight, 0]);
             } else {
                 y = d3

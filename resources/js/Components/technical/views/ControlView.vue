@@ -1,5 +1,5 @@
 <template>
-    <div class="control section" ref="asics" :class="{ animated: animated }">
+    <div class="control section" :class="{ animated: animated }">
         <div class="control__container">
             <div class="control__content">
                 <div class="control__head">
@@ -291,16 +291,16 @@ export default {
                     asic.style.left = "50%";
                     // asic.style.top = topPos[3] + "px";
                     asic.style.marginTop = topPos[3] + "px";
-                    asic.style.marginLeft = -asics[3].clientHeight / 2 + "px";
+                    asic.style.transform = "translateX(-50%)";
                     asic.style.transition = "all 0.5s ease 0s";
                 });
                 setTimeout(() => {
-                    asics[0].style.marginLeft = "0";
-                    asics[1].style.marginLeft = "0";
-                    asics[2].style.marginLeft = "0";
-                    asics[4].style.marginLeft = "0";
-                    asics[5].style.marginLeft = "0";
-                    asics[6].style.marginLeft = "0";
+                    asics[0].style.transform = "none";
+                    asics[1].style.transform = "none";
+                    asics[2].style.transform = "none";
+                    asics[4].style.transform = "none";
+                    asics[5].style.transform = "none";
+                    asics[6].style.transform = "none";
                     asics[0].style.left = leftPos[2] + 30 + "px";
                     asics[1].style.left = leftPos[2] + 30 + "px";
                     asics[2].style.left = leftPos[2] + "px";
@@ -330,12 +330,12 @@ export default {
                     asics[0].style.marginTop = topPos[0] + "px";
                     asics[6].style.marginTop = topPos[6] + "px";
                 }, 2000);
-                // setTimeout(() => {
-                //     asics.forEach((asic) => {
-                //         asic.style.transition = "none";
-                //         asic.removeAttribute("style");
-                //     });
-                // }, 3000);
+                setTimeout(() => {
+                    asics.forEach((asic) => {
+                        asic.style.transition = "none";
+                        asic.removeAttribute("style");
+                    });
+                }, 3000);
             }
         },
     },
@@ -362,7 +362,7 @@ export default {
                     // }
                 });
             });
-            animationObserver.observe(this.$refs.asics);
+            animationObserver.observe(this.$refs.asic_container);
         },
     },
     mounted() {

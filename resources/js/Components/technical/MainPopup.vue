@@ -66,13 +66,13 @@
                 <img
                     v-if="!getTheme"
                     class="popup__content_logo"
-                    src="../../../assets/img/logo_high_quality.png"
+                    src="../../../assets/img/logo_high_quality.svg"
                     alt="logo"
                 />
                 <img
                     v-else
                     class="popup__content_logo"
-                    src="../../../assets/img/logo_high_quality-dark.png"
+                    src="../../../assets/img/logo_high_quality-dark.svg"
                     alt="logo"
                 />
                 <div class="popup__content_block" :class="{ loading: wait }">

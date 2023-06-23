@@ -27,12 +27,12 @@
             </svg>
         </main-title>
         <transition name="slide-fade">
-            <p
+            <div
                 ref="value"
                 class="description description-xs"
                 v-html="accordion.text"
                 v-show="isOpen"
-            ></p>
+            ></div>
         </transition>
     </div>
 </template>

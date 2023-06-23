@@ -4,9 +4,9 @@
         <div class="statistic__wrapper">
             <main-title tag="h3" class="cabinet_title">
                 {{ $t("statistic.title") }}
-                <main-checkbox @is_checked="allGraph">
-                    {{ $t("statistic.checkbox") }}</main-checkbox
-                >
+                <!--                <main-checkbox @is_checked="allStat">-->
+                <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
+                <!--                >-->
             </main-title>
             <div
                 class="cabinet"
@@ -214,7 +214,7 @@
                                     'statistic.info_blocks.payment.titles[0]'
                                 )
                             "
-                            :BTC="this.BTCValueFirst"
+                            :BTC="this.yesterdayEarn"
                         />
                         <btc-calculator
                             :title="
@@ -222,7 +222,7 @@
                                     'statistic.info_blocks.payment.titles[1]'
                                 )
                             "
-                            :BTC="this.BTCValueSecond"
+                            :BTC="this.todayEarn"
                         />
                     </div>
                 </div>
@@ -293,6 +293,7 @@ export default {
             active: false,
             hover: false,
             activeHistory: null,
+            all: false,
         };
     },
     created: function () {
@@ -369,6 +370,30 @@ export default {
         },
         todayEarn() {
             let val = 0;
+            // if (this.all) {
+            //     if (Object.values(this.allAccounts)[0]) {
+            //         let arr = Object.fromEntries(
+            //             Object.entries(this.allHistory).map(([key, value]) => {
+            //                 Object.values(this.allHistory).forEach((el) => {
+            //                     if (Object.keys(el).includes(key)) {
+            //                         value.push(...el[key]);
+            //                     }
+            //                 });
+            //                 return [key, value];
+            //             })
+            //         );
+            //         // Object.values(this.allHistory).map((elem) => {
+            //         //     console.log(elem[0]);
+            //         // });
+            //         val =
+            //             (arr[0].shares1m *
+            //                 Math.pow(10, 12) *
+            //                 86400 *
+            //                 this.btcInfo.btc.reward) /
+            //             (this.btcInfo.btc.diff * Math.pow(2, 32));
+            //         return val * (1 - 0.035);
+            //     }
+            // }
             if (this.btcInfo) {
                 if (this.allAccounts[this.getActive]) {
                     val =
@@ -377,7 +402,6 @@ export default {
                             86400 *
                             this.btcInfo.btc.reward) /
                         (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    val = val * (1 - 0.005);
                     val = val * (1 - 0.035);
                 }
             }
@@ -389,6 +413,12 @@ export default {
         },
         yesterdayEarn() {
             let val = 0;
+            // if (this.all) {
+            //     if (Object.values(this.allIncomeHistory)[0]) {
+            //         let arr = Object.values(this.allIncomeHistory).flat();
+            //         return Number(arr[1]["amount"]);
+            //     }
+            // }
             if (this.allIncomeHistory[this.getActive]) {
                 if (
                     Object.values(this.allIncomeHistory[this.getActive]) &&
@@ -430,19 +460,23 @@ export default {
         router() {
             return router;
         },
-        allGraph(bool) {
-            if (bool) {
-                let allArrays = Object.values(this.allHistory);
-                this.activeHistory = allArrays.flat();
-            } else {
-                this.setActive();
-            }
-            let id = this.id;
-            this.changeGraph(1);
-            this.changeId();
-            this.renderChart();
-            this.changeGraph(id);
-        },
+        // allStat(bool) {
+        //     if (this.allHistory[this.getActive]) {
+        //         if (bool) {
+        //             let allArrays = Object.values(this.allHistory);
+        //             this.activeHistory = allArrays.flat();
+        //             this.all = true;
+        //         } else {
+        //             this.setActive();
+        //             this.all = false;
+        //         }
+        //         let id = this.id;
+        //         this.changeGraph(1);
+        //         this.changeId();
+        //         this.renderChart();
+        //         this.changeGraph(id);
+        //     }
+        // },
         setActive() {
             this.activeHistory = this.allHistory[this.getActive];
         },

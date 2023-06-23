@@ -2,10 +2,7 @@
     <div
         class="nav-tabs"
         :class="{
-            'nav-tabs-full-page':
-                $page.url.startsWith('/profile/income') ||
-                $page.url.startsWith('/profile/settings') ||
-                $page.url.startsWith('/profile/wallets'),
+            'nav-tabs-full-page': $page.url.startsWith('/profile/full-page'),
         }"
         ref="tabs"
         v-if="this.viewportWidth > 991.98"
@@ -250,11 +247,12 @@ export default {
     },
     methods: {
         back() {
-            if (window.history.state !== "") {
-                window.history.back();
-            } else {
-                router.visit("/profile/statistic");
-            }
+            router.visit("/profile/statistic");
+            // if (window.history.length > 1) {
+            //     window.history.back();
+            // } else {
+            //     router.visit("/profile/statistic");
+            // }
         },
         router() {
             return router;
