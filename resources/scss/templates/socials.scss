@@ -1,60 +1,60 @@
 .socials {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  &_link {
-    background: #79A3E8;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    justify-content: center;
-    transition: all 0.3s ease 0.3s;
-    position: relative;
-    &.teleg {
-      svg {
-        margin-left: -2px;
-      }
-    }
-    &:after {
-      content: "";
-      position: absolute;
-      border-radius: 50%;
-      left: 0;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      opacity: 0;
-      transition: all 0.3s ease 0s;
-      background: #79A3E8;
-    }
-    & svg {
-      fill: #fff;
-      transition: all 0.3s ease 0s;
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-    }
-    @media (any-hover: hover) {
-      &:hover {
+    gap: 16px;
+    &_link {
+        background: #5389E1;
+        border-radius: 50%;
+        width: 40px;
+        height: 40px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease 0.3s;
+        position: relative;
+        &.teleg {
+            svg {
+                margin-left: -2px;
+            }
+        }
         &:after {
-          opacity: 1;
+            content: "";
+            position: absolute;
+            border-radius: 50%;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            transition: all 0.3s ease 0s;
+            background: #79A3E8;
         }
         & svg {
-          fill: #fff;
+            fill: #fff;
+            transition: all 0.3s ease 0s;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1;
         }
-      }
+        @media (any-hover: hover) {
+            &:hover {
+                &:after {
+                    opacity: 1;
+                }
+                & svg {
+                    fill: #fff;
+                }
+            }
+        }
+        &:active {
+            &:after {
+                opacity: 1;
+            }
+            & svg {
+                fill: #fff;
+            }
+        }
     }
-    &:active {
-      &:after {
-        opacity: 1;
-      }
-      & svg {
-        fill: #fff;
-      }
-    }
-  }
 }

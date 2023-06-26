@@ -46,12 +46,12 @@ export default {
             return [
                 {
                     name: this.$t("language.ru"),
-                    img: "ru.png",
+                    img: "ru.webp",
                     value: "ru",
                 },
                 {
                     name: this.$t("language.en"),
-                    img: "en.png",
+                    img: "en.webp",
                     value: "en",
                 },
             ];
@@ -151,44 +151,5 @@ export default {
             height: 15px;
         }
     }
-    //&_option {
-    //    font-size: 17px;
-    //    line-height: 143.1%;
-    //    transition: all 0.3s ease 0s;
-    //    width: 100%;
-    //    height: 32px;
-    //    display: inline-flex;
-    //    align-items: center;
-    //    @media (max-width: 767.98px) {
-    //        height: 42px;
-    //    }
-    //    &:hover {
-    //        background: rgba(175, 208, 255, 0.8);
-    //    }
-    //    &.active {
-    //        p {
-    //            padding: 2px 10px;
-    //            background: rgba(175, 208, 255, 0.8);
-    //        }
-    //    }
-    //    p {
-    //        width: 100%;
-    //        display: inline-flex;
-    //        align-items: center;
-    //        gap: 10px;
-    //        height: 32px;
-    //        background: transparent;
-    //        border-radius: 8px;
-    //        font-weight: 400;
-    //        font-size: 17px;
-    //        line-height: 143.1%;
-    //        padding: 2px 10px;
-    //        color: #000000;
-    //        transition: all 0.3s ease 0s;
-    //        @media (max-width: 767.98px) {
-    //            height: 42px;
-    //        }
-    //    }
-    //}
 }
 </style>

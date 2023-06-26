@@ -155,7 +155,7 @@
         </thead>
         <tbody v-if="!this.table.rows">
             <div class="no-info">
-                <img src="../../../assets/img/img_no-info.png" alt="no_info" />
+                <img src="../../../assets/img/img_no-info.webp" alt="no_info" />
                 <span>Нет данных</span>
             </div>
         </tbody>

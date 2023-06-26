@@ -36,12 +36,12 @@
                 <div class="hosting__image page__image">
                     <img
                         v-show="!getTheme"
-                        src="../../assets/img/hosting_back_img.png"
+                        src="../../assets/img/hosting_back_img.webp"
                         alt=""
                     />
                     <img
                         v-show="getTheme"
-                        src="../../assets/img/hosting_back_img-dark.png"
+                        src="../../assets/img/hosting_back_img-dark.webp"
                         alt=""
                     />
                 </div>

@@ -187,32 +187,38 @@
 
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
-                        <img
-                            v-if="!getTheme"
-                            src="../../assets/img/mail-icon.svg"
-                            alt=""
-                        />
-                        <img
-                            v-else
-                            src="../../assets/img/mail-icon-dark.svg"
-                            alt=""
-                        />
-                        <a href="mailto:support@all-btc.com"
+                        <a href="mailto:support@all-btc.com">
+                            <span class="contacts_img">
+                                <svg
+                                    width="26"
+                                    height="24"
+                                    viewBox="0 0 26 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M6.5 8.70248L12.5 12.5764L18.5 8.70248L12.5 4.82851L6.5 8.70248ZM20 8.70248V16.4504C20 16.8614 19.842 17.2555 19.5607 17.5461C19.2794 17.8367 18.8978 18 18.5 18H6.5C6.10218 18 5.72064 17.8367 5.43934 17.5461C5.15804 17.2555 5 16.8614 5 16.4504V8.70248C5 8.13688 5.2925 7.64876 5.7275 7.37758L12.5 3L19.2725 7.37758C19.7075 7.64876 20 8.13688 20 8.70248Z"
+                                        fill="#5389E1"
+                                    />
+                                </svg> </span
                             >support@all-btc.com</a
                         >
                     </li>
                     <li class="footer__contacts_item contacts_item">
-                        <img
-                            v-if="!getTheme"
-                            src="../../assets/img/location-icon.svg"
-                            alt=""
-                        />
-                        <img
-                            v-else
-                            src="../../assets/img/location-icon-dark.svg"
-                            alt=""
-                        />
-                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA"
+                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA">
+                            <span class="contacts_img">
+                                <svg
+                                    width="19"
+                                    height="19"
+                                    viewBox="0 0 19 19"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <path
+                                        d="M9.5 1C7.77669 1.00201 6.12453 1.70631 4.90597 2.9584C3.6874 4.21049 3.00195 5.90811 3 7.67883C3 13.3938 8.90909 17.7123 9.16023 17.8944C9.26087 17.9633 9.37909 18 9.5 18C9.62091 18 9.73913 17.9633 9.83977 17.8944C10.0909 17.7123 16 13.3938 16 7.67883C15.998 5.90811 15.3126 4.21049 14.094 2.9584C12.8755 1.70631 11.2233 1.00201 9.5 1ZM9.5 5.25016C9.96748 5.25016 10.4245 5.3926 10.8132 5.65947C11.2019 5.92633 11.5048 6.30564 11.6837 6.74942C11.8626 7.1932 11.9094 7.68152 11.8182 8.15264C11.727 8.62375 11.5019 9.0565 11.1713 9.39616C10.8408 9.73581 10.4196 9.96712 9.96112 10.0608C9.50262 10.1545 9.02737 10.1064 8.59548 9.92263C8.16358 9.7388 7.79443 9.42752 7.53471 9.02812C7.27499 8.62873 7.13636 8.15918 7.13636 7.67883C7.13636 7.03471 7.38539 6.41697 7.82866 5.9615C8.27192 5.50604 8.87313 5.25016 9.5 5.25016Z"
+                                        fill="#5389E1"
+                                    />
+                                </svg> </span
                             >ВDubai Silicon Oasis, DDP, Building A2, Dubai,
                             United Arab Emirates</a
                         >
@@ -220,7 +226,7 @@
                 </ul>
             </div>
             <div class="footer__quote quote">
-                © 2022 Allbtc Pool
+                © 2023 Allbtc Pool
                 <a :href="pdf">{{ $t("footer.confidence") }}</a>
             </div>
         </div>

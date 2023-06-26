@@ -20,7 +20,7 @@
                     <transition name="sun-moon">
                         <img
                             v-show="!getTheme"
-                            src="../../../../assets/img/light.png"
+                            src="../../../../assets/img/light.webp"
                             alt="light"
                             class="light"
                         />
@@ -28,7 +28,7 @@
                     <transition name="sun-moon">
                         <img
                             v-show="getTheme"
-                            src="../../../../assets/img/dark.png"
+                            src="../../../../assets/img/dark.webp"
                             alt="dark"
                             class="dark"
                         />
@@ -36,7 +36,7 @@
                 </div>
                 <div class="control__asics" ref="asic_container">
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -50,7 +50,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -58,14 +58,14 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -79,7 +79,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -87,14 +87,14 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -108,7 +108,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -116,14 +116,14 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -137,7 +137,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -145,14 +145,14 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -166,7 +166,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -174,14 +174,14 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -195,7 +195,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -203,14 +203,14 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.png" alt="asic" />
+                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -224,7 +224,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.png"
+                                src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />
@@ -232,7 +232,7 @@
                         <transition name="asic-shadow">
                             <img
                                 v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.png"
+                                src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
                             />

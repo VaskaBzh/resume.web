@@ -208,8 +208,7 @@ export default {
     width: 100%;
     min-width: 160px;
     @media (max-width: 991.98px) {
-        padding: 0 12px;
-        margin-right: -10px;
+        padding: 0 16px;
     }
     &_name {
         width: 100%;
@@ -225,11 +224,12 @@ export default {
         min-width: 160px;
         @media (max-width: 991.98px) {
             min-width: 130px;
-            color: #000034;
-            font-weight: 400;
+            color: #5389e1;
             font-size: 18px;
-            line-height: 143.1%;
-            gap: 4px;
+            font-weight: 500;
+            line-height: 120%;
+            gap: 8px;
+            width: 100%;
         }
         @media (min-width: 991.98px) {
             border: 1px solid #3f7bdd;

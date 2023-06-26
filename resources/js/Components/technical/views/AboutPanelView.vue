@@ -43,7 +43,7 @@ export default {
     computed: {
         img() {
             return new URL(
-                `/resources/assets/img/${this.$t("panel.img")}.png`,
+                `/resources/assets/img/${this.$t("panel.img")}.webp`,
                 import.meta.url
             );
         },
@@ -62,7 +62,7 @@ export default {
 
 <style lang="scss" scoped>
 .about-panel {
-    //background-image: url("../../../../assets/img/about-panel-bg.png");
+    //background-image: url("../../../../assets/img/about-panel-bg.webp");
     //background-position: center 30%;
     //background-size: contain;
     //background-repeat: no-repeat;

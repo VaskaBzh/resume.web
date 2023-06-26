@@ -163,15 +163,6 @@ export default {
         bottom: -100% !important;
     }
 }
-.shadow_container {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    left: 0;
-    top: 0;
-    background: rgba(#000, 0.65);
-    z-index: 300;
-}
 .menu {
     cursor: default;
     position: absolute;

@@ -12,7 +12,7 @@
                     </div>
                 </div>
                 <div class="page__image">
-                    <img src="../../assets/img/compl-main-img.png" alt="" />
+                    <img src="../../assets/img/compl-main-img.webp" alt="" />
                 </div>
             </div>
             <MainChart :graphs="graphs" :key="this.time" />

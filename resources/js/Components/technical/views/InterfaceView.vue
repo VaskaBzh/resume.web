@@ -7,7 +7,7 @@
                         this.$t("hosting.interface.title")
                     }}</main-title>
                     <img
-                        src="../../../../assets/img/interface_img-back.png"
+                        src="../../../../assets/img/interface_img-back.webp"
                         alt="interface"
                     />
                     <div class="list">

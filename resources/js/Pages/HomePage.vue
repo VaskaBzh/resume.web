@@ -56,61 +56,61 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1.png"
+                        src="../../assets/img/main_an_img_1.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1-dark.png"
+                        src="../../assets/img/main_an_img_1-dark.webp"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_2"
-                        src="../../assets/img/main_an_img_2.png"
+                        src="../../assets/img/main_an_img_2.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_2"
-                        src="../../assets/img/main_an_img_2-dark.png"
+                        src="../../assets/img/main_an_img_2-dark.webp"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_3"
-                        src="../../assets/img/main_an_img_3.png"
+                        src="../../assets/img/main_an_img_3.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_3"
-                        src="../../assets/img/main_an_img_3-dark.png"
+                        src="../../assets/img/main_an_img_3-dark.webp"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_4"
-                        src="../../assets/img/main_an_img_4.png"
+                        src="../../assets/img/main_an_img_4.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_4"
-                        src="../../assets/img/main_an_img_4-dark.png"
+                        src="../../assets/img/main_an_img_4-dark.webp"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_5"
-                        src="../../assets/img/main_an_img_5.png"
+                        src="../../assets/img/main_an_img_5.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_5"
-                        src="../../assets/img/main_an_img_5-dark.png"
+                        src="../../assets/img/main_an_img_5-dark.webp"
                         alt=""
                     />
                 </div>
@@ -118,13 +118,13 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full.png"
+                        src="../../assets/img/main_an_img_full.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full-dark.png"
+                        src="../../assets/img/main_an_img_full-dark.webp"
                         alt=""
                     />
                 </div>
@@ -315,7 +315,12 @@
                             class="home-in__row_item home-inri section__block section__block-light"
                             v-scroll="'left important--delay'"
                         >
-                            <div class="home-inri__image mon"></div>
+                            <div class="home-inri__image mon">
+                                <img
+                                    src="../../assets/img/home_img-earn.webp"
+                                    alt="mon"
+                                />
+                            </div>
                             <div class="home-inri__content">
                                 <main-title tag="h4">
                                     {{ $t("home.promo_blocks.payment.title") }}
@@ -341,7 +346,12 @@
                             class="home-in__row_item home-inri section__block section__block-light"
                             v-scroll="'left important--delay--md'"
                         >
-                            <div class="home-inri__image asic"></div>
+                            <div class="home-inri__image asic">
+                                <img
+                                    src="../../assets/img/home_img-asic.webp"
+                                    alt="asic"
+                                />
+                            </div>
                             <div class="home-inri__content">
                                 <main-title tag="h4">
                                     {{ $t("home.promo_blocks.fpps.title") }}
@@ -438,17 +448,17 @@ export default {
             return [
                 {
                     title: this.$t("platform.blocks[0].title"),
-                    img: "platform-img-1.png",
+                    img: "platform-img-1.webp",
                     text: this.$t("platform.blocks[0].text"),
                 },
                 {
                     title: this.$t("platform.blocks[1].title"),
-                    img: "platform-img-2.png",
+                    img: "platform-img-2.webp",
                     text: this.$t("platform.blocks[1].text"),
                 },
                 {
                     title: this.$t("platform.blocks[2].title"),
-                    img: "platform-img-3.png",
+                    img: "platform-img-3.webp",
                     text: this.$t("platform.blocks[2].text"),
                 },
             ];
@@ -727,7 +737,7 @@ export default {
         }
         &::before {
             content: "";
-            background-image: url("../../assets/img/bitcoin.png");
+            background-image: url("../../assets/img/bitcoin.webp");
             position: absolute;
             width: 500px;
             background-position: center;
@@ -941,55 +951,21 @@ export default {
             display: none;
         }
         &.mon {
-            &::before {
-                content: "";
-                position: absolute;
-                background-image: url("../../assets/img/home_img-earn.png");
-                background-position: center;
-                background-size: contain;
-                background-repeat: no-repeat;
-                width: 140px;
-                height: 100%;
-                bottom: 0;
-                left: 40px;
-                @media (max-width: 1320.98px) {
-                    left: 26px;
-                    height: 221px;
-                }
-                @media (max-width: 767.98px) {
-                    width: 80%;
-                }
-                @media (max-width: 479.98px) {
-                    left: 50%;
-                    top: -55%;
-                    transform: translate(-50%, 0);
-                    width: 155px;
-                    height: 260px;
-                }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto 0;
+
+            img {
             }
         }
         &.asic {
-            &::before {
-                content: "";
-                position: absolute;
-                background-image: url("../../assets/img/home_img-asic.png");
-                background-position: center;
-                background-size: contain;
-                background-repeat: no-repeat;
-                width: 182px;
-                height: 260px;
-                bottom: 12px;
-                left: 48px;
-                @media (max-width: 1320.98px) {
-                    left: 26px;
-                }
-                @media (max-width: 767.98px) {
-                    width: 100%;
-                }
-                @media (max-width: 479.98px) {
-                    bottom: -20px;
-                    left: 25%;
-                }
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            img {
+                margin: -70px -70px 0 0;
             }
         }
     }

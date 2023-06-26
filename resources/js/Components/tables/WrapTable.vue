@@ -62,7 +62,7 @@
             <div class="propeller"></div>
         </div>
         <div class="no-info" v-else-if="this.boolFalse">
-            <img src="../../../assets/img/img_no-info.png" alt="no_info" />
+            <img src="../../../assets/img/img_no-info.webp" alt="no_info" />
             <span>{{ $t("no_info") }}</span>
         </div>
         <div

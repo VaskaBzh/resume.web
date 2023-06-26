@@ -316,7 +316,7 @@ export default {
                                             );
                                     }
                                     let walletModel = {
-                                        img: "bitcoin_img.png",
+                                        img: "bitcoin_img.webp",
                                         name: name,
                                         wallet: wal.wallet,
                                         fullName: fullName,
@@ -355,7 +355,7 @@ export default {
                                         );
                                 }
                                 let walletModel = {
-                                    img: "bitcoin_img.png",
+                                    img: "bitcoin_img.webp",
                                     name: name,
                                     wallet: wal.wallet,
                                     fullName: fullName,

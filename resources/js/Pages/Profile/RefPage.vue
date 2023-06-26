@@ -1672,7 +1672,7 @@ export default {
         flex-direction: column;
         &-back {
             background: rgba(255, 255, 255, 0.29)
-                url("../../../assets/img/ref_img_back.png") no-repeat right
+                url("../../../assets/img/ref_img_back.webp") no-repeat right
                 center;
             @media (max-width: 1270px) {
                 order: -1;
@@ -1683,7 +1683,7 @@ export default {
             }
             @media (max-width: 479.98px) {
                 background: rgba(255, 255, 255, 0.29)
-                    url("../../../assets/img/ref_img_back_mobile.png") no-repeat
+                    url("../../../assets/img/ref_img_back_mobile.webp") no-repeat
                     right bottom;
             }
             .ref__text {

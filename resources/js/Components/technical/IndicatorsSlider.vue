@@ -131,7 +131,7 @@ export default {
             //position: relative;
             //&:before {
             //    content: "";
-            //    background-image: url("../../../assets/img/indicators_img-wrap.png");
+            //    background-image: url("../../../assets/img/indicators_img-wrap.webp");
             //    background-position: top;
             //    background-repeat: no-repeat;
             //    min-height: 760px;

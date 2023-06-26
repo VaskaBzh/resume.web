@@ -5,7 +5,7 @@
                 <div class="platform-c__logo_con">
                     <img
                         class="platform-c__logo"
-                        src="../../../../assets/img/logo_icon.png"
+                        src="../../../../assets/img/logo_icon.webp"
                         alt=""
                     />
                 </div>
@@ -17,7 +17,7 @@
                         <div class="platform-c__item_image_con">
                             <img
                                 class="platform-c__item_image n-1"
-                                src="../../../../assets/img/platform-img-1.png"
+                                src="../../../../assets/img/platform-img-1.webp"
                                 alt=""
                                 v-scroll="'left delay'"
                             />
@@ -33,7 +33,7 @@
                         <div class="platform-c__item_image_con">
                             <img
                                 class="platform-c__item_image n-2"
-                                src="../../../../assets/img/platform-img-2.png"
+                                src="../../../../assets/img/platform-img-2.webp"
                                 alt=""
                                 v-scroll="'left delay--md'"
                             />
@@ -49,7 +49,7 @@
                         <div class="platform-c__item_image_con">
                             <img
                                 class="platform-c__item_image n-3"
-                                src="../../../../assets/img/platform-img-3.png"
+                                src="../../../../assets/img/platform-img-3.webp"
                                 alt=""
                                 v-scroll="'left delay--lg'"
                             />
@@ -74,7 +74,7 @@
                         <div class="platform-c__item_image_con">
                             <img
                                 class="platform-c__item_image n-1"
-                                src="../../../../assets/img/platform-img-1.png"
+                                src="../../../../assets/img/platform-img-1.webp"
                                 alt=""
                             />
                         </div>
@@ -89,7 +89,7 @@
                         <div class="platform-c__item_image_con">
                             <img
                                 class="platform-c__item_image n-2"
-                                src="../../../../assets/img/platform-img-2.png"
+                                src="../../../../assets/img/platform-img-2.webp"
                                 alt=""
                             />
                         </div>
@@ -104,7 +104,7 @@
                         <div class="platform-c__item_image_con">
                             <img
                                 class="platform-c__item_image n-3"
-                                src="../../../../assets/img/platform-img-3.png"
+                                src="../../../../assets/img/platform-img-3.webp"
                                 alt=""
                             />
                         </div>

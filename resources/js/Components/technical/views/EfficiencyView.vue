@@ -5,7 +5,7 @@
                 <main-title tag="h2" class="title-blue">{{
                     this.$t("hosting.eff.title")
                 }}</main-title>
-                <img src="../../../../assets/img/efficiency_img-1.png" alt="" />
+                <img src="../../../../assets/img/efficiency_img-1.webp" alt="" />
                 <p class="description">
                     {{ this.$t("hosting.eff.text") }}
                 </p>

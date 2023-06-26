@@ -57,10 +57,9 @@ export default {
         .card {
             &_img {
                 max-width: 200px;
-                height: 200px;
                 @media (max-width: 767.98px) {
                     max-width: 140px;
-                    height: 140px;
+                    height: 180px;
                 }
                 img {
                     max-width: 200px;

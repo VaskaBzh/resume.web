@@ -34,12 +34,12 @@
                         <div class="page__image">
                             <img
                                 v-show="!isDark"
-                                src="../../assets/img/auth_img-back.png"
+                                src="../../assets/img/auth_img-back.webp"
                                 alt=""
                             />
                             <img
                                 v-show="isDark"
-                                src="../../assets/img/auth_img-back-dark.png"
+                                src="../../assets/img/auth_img-back-dark.webp"
                                 alt=""
                             />
                         </div>

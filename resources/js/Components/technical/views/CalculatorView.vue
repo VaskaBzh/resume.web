@@ -42,14 +42,14 @@ export default {
     data() {
         return {
             calculatorOptions: [
-                { title: "Bitcoin", value: 1, img: "bitcoin_img.png" },
+                { title: "Bitcoin", value: 1, img: "bitcoin_img.webp" },
                 {
                     title: "Bitcoin Cash",
                     value: 2,
-                    img: "bitcoin-cash_img.png",
+                    img: "bitcoin-cash_img.webp",
                 },
-                { title: "Litecoin", value: 3, img: "litecoin_img.png" },
-                { title: "Dash", value: 4, img: "dash_img.png" },
+                { title: "Litecoin", value: 3, img: "litecoin_img.webp" },
+                { title: "Dash", value: 4, img: "dash_img.webp" },
             ],
         };
     },

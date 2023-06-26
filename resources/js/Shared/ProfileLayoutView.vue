@@ -83,9 +83,12 @@ export default {
 </script>
 <style lang="scss">
 .account {
-    margin-top: 20px;
-    @media (max-width: 991.98px) {
-        margin-top: 0;
+    margin-top: 40px;
+    @media (max-width: 767.98px) {
+        margin-top: 32px;
+    }
+    @media (max-width: 479.98px) {
+        margin-top: 24px;
     }
 
     &__container {

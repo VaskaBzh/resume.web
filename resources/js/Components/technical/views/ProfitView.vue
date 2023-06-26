@@ -4,13 +4,13 @@
             <div class="profit__main">
                 <img
                     v-if="!getTheme"
-                    src="../../../../assets/img/profit_view_img-1.png"
+                    src="../../../../assets/img/profit_view_img-1.webp"
                     alt="img"
                     class="profit__image"
                 />
                 <img
                     v-else
-                    src="../../../../assets/img/profit_view_img-1-dark.png"
+                    src="../../../../assets/img/profit_view_img-1-dark.webp"
                     alt="img"
                     class="profit__image"
                 />

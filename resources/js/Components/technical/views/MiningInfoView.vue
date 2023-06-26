@@ -56,7 +56,7 @@
                         </div>
                         <div class="mining-im__general_image_con">
                             <img
-                                src="../../../../assets/img/more-coins.png"
+                                src="../../../../assets/img/more-coins.webp"
                                 alt=""
                                 class="mining-im__general_image"
                             />

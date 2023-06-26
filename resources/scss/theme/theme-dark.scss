@@ -376,14 +376,14 @@ body {
         .socials {
             &_link {
                 transition: all $theme-transition ease 0s;
-                background: #79a3e8;
+                background: #79A3E8;
                 svg {
                     transition: all $theme-transition ease 0s;
                     fill: #040d15;
                 }
                 &:after {
                     transition: all $theme-transition ease 0s;
-                    background: #79a3e8;
+                    background: #5389E1;
                 }
             }
         }
@@ -742,7 +742,8 @@ body {
                             .input {
                                 animation: error1 5s ease forwards 0s;
                                 &::placeholder {
-                                    animation: error1Placeholder 5s ease forwards 0s;
+                                    animation: error1Placeholder 5s ease
+                                        forwards 0s;
                                 }
                             }
                             svg {

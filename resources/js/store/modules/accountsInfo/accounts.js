@@ -84,7 +84,7 @@ export default {
                 if (data.el.name === group.sub) {
                     data.validate = true;
                     let accountModel = {
-                        img: "profile.png",
+                        img: "profile.webp",
                         name: data.el.name,
                         hashRate: "",
                         workersActive: data.el.workers_active,

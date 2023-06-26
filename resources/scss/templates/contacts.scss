@@ -1,9 +1,10 @@
 .contacts {
     display: flex;
     align-items: center;
-    gap: 60px;
+    gap: 72px;
     @media (max-width: $pc) {
         width: 100%;
+        gap: 60px;
         justify-content: space-between;
     }
     @media (max-width: $tablet) {
@@ -16,21 +17,31 @@
         display: block;
         width: fit-content;
     }
+    &_img {
+        width: 40px;
+        min-width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        transition: all 0.3s ease 0s;
+        background: #fafafa;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
     &_item {
         display: flex;
         align-items: center;
         gap: 16px;
-        & a,
-        & span {
+        & a {
+            display: inline-flex;
+            align-items: center;
+            gap: 16px;
             text-align: left;
-            font-style: normal;
+            color: #343434;
+            font-size: 14px;
             font-weight: 500;
-            font-size: 16px;
-            line-height: 148.1%;
-            color: #000034;
-            max-width: 200px;
-            text-decoration: underline !important;
-            text-decoration-color: transparent !important;
+            line-height: 140%;
+            max-width: 350px;
             transition: all 0.3s ease 0s;
             cursor: pointer;
             @media (max-width: $mobile) {
@@ -38,11 +49,12 @@
             }
             @media (any-hover: hover) {
                 &:hover {
-                    text-decoration-color: #000034 !important;
+                    .contacts_img {
+                        background: #C6D8F5;
+                    }
                 }
             }
             &:active {
-                text-decoration-color: #000034 !important;
             }
         }
         @media (max-width: $mobileSmall) {

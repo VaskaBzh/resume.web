@@ -120,6 +120,7 @@ const messages = {
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
                 hosting: "Hosting services",
+                settings: "Settings",
                 buttons: {
                     add: "Add a subaccount",
                     leave: "Exit",
@@ -199,17 +200,17 @@ const messages = {
             cards: [
                 {
                     title: "Employee Handbook",
-                    img: "hosting_info_img-1.png",
+                    img: "hosting_info_img-1.webp",
                     text: "Create and control employees' work regulations",
                 },
                 {
                     title: "ASIC Device Monitoring",
-                    img: "hosting_info_img-2.png",
+                    img: "hosting_info_img-2.webp",
                     text: "Track the operation of all ASIC devices in real time",
                 },
                 {
                     title: "Mining Hosting Management System",
-                    img: "hosting_info_img-3.png",
+                    img: "hosting_info_img-3.webp",
                     text: "Full control over your ASIC devices",
                 },
             ],
@@ -759,6 +760,7 @@ const messages = {
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
                 hosting: "Хостингам",
+                settings: "Настройки",
                 buttons: {
                     add: "Добавить сабаккаунт",
                     leave: "Выйти",
@@ -842,17 +844,17 @@ const messages = {
             cards: [
                 {
                     title: "Регламент для сотрудников",
-                    img: "hosting_info_img-1.png",
+                    img: "hosting_info_img-1.webp",
                     text: "Создавайте и контролируйте регламент работы сотрудников",
                 },
                 {
                     title: "Отслеживание работы ASIC-устройств",
-                    img: "hosting_info_img-2.png",
+                    img: "hosting_info_img-2.webp",
                     text: "Отслеживайте работу всех  ASIC-устройств в реальном времени",
                 },
                 {
                     title: "Система управления\n" + "майнинг-хостингом",
-                    img: "hosting_info_img-3.png",
+                    img: "hosting_info_img-3.webp",
                     text: "Полный контроль над вашими \n" + "ASIC-устройствами",
                 },
             ],
