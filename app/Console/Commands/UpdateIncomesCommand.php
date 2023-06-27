@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Http\Controllers\Requests\RequestController;
 use App\Models\Income;
 use App\Models\Sub;
 use Exception;
@@ -128,10 +129,10 @@ class UpdateIncomesCommand extends Command
      */
     public function handle()
     {
-        // Получите список пользователей или другие данные, необходимые для выполнения запроса
         $subs = Sub::all();
         foreach ($subs as $sub) {
-            // Выполните запрос для каждого пользователя (или другой необходимой единицы)
+            $requestController = new RequestController();
+
             $opts = array(
                 "http" => array(
                     "method" => "GET",
@@ -141,20 +142,27 @@ class UpdateIncomesCommand extends Command
             );
             $context = stream_context_create($opts);
             $url = "https://api.minerstat.com/v2/coins?list=BTC";
-            $response = file_get_contents($url, false, $context);
-            $req_url = 'https://pool.api.btc.com/v1/worker?group=' . $sub->group_id . '&puid=781195';
-            $req_url_list = 'https://pool.api.btc.com/v1/worker/groups?puid=781195';
-            $response_json = file_get_contents($req_url, false, $context);
-            $response_json_list = file_get_contents($req_url_list, false, $context);
-            if (false !== $response_json) {
+            $response_stat = file_get_contents($url, false, $context);
+
+            $response_hash = $requestController->proxy([
+                "puid" => "781195",
+                "group" => $sub->group_id,
+            ], "worker", "get");
+            $response_diff = $requestController->proxy([], "pool/status", "get");
+//
+//            $response_list = $requestController->proxy([
+//                "puid" => "781195",
+//            ], "worker/groups", "get");
+            if (false !== $response_hash) {
                 try {
                     $wallets = $sub->wallets;
-                    $responseEncode = json_decode($response);
-                    $responseData = json_decode($response_json);
-                    $responseList = json_decode($response_json_list);
-                    if ($responseData->data->data) {
+                    $response_stat_encode = json_decode($response_stat);
+                    $response_hash_encode = json_decode($response_hash->getContent());
+                    $response_diff_encode = json_decode($response_diff->getContent());
+//                    $response_list_encode = json_decode($response_list->getContent());
+                    if ($response_hash_encode->data->data) {
                         $share = 0;
-                        $share = array_reduce($responseData->data->data, function ($carry, $item) {
+                        $share = array_reduce($response_hash_encode->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_1d") {
                                     $carry += floatval($value);
@@ -162,7 +170,7 @@ class UpdateIncomesCommand extends Command
                             }
                             return $carry;
                         }, $share);
-                        $unit = array_reduce($responseData->data->data, function ($carry, $item) {
+                        $unit = array_reduce($response_hash_encode->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_unit") {
                                     $carry["shares_unit"] = $value;
@@ -173,23 +181,15 @@ class UpdateIncomesCommand extends Command
                         $share = 0;
                         $unit = "T";
                     }
-                    $total_pool_hashrate = 0;
-
-                    foreach ($responseList->data->list as $item) {
-                        $total_pool_hashrate += $item->shares_1m;
-                    }
-
-
 
                     if ($share > 0) {
-//                        $earn = $share / $total_pool_hashrate * $responseEncode[0]->reward_block * (1 - 0.035);
-                        $earn = ($share * pow(10, 12) * 86400 * $responseEncode[0]->reward_block) / ($responseEncode[0]->difficulty * pow(2,32));
+                        $earn = ($share * pow(10, 12) * 86400 * ($response_stat_encode[0]->reward_block + $response_diff_encode->data->fpps_mining_earnings)) / ($response_stat_encode[0]->difficulty * pow(2,32));
                     } else {
                         $earn = 0;
                     }
 
 //                    $earn = $earn * (1 - 0.005);
-                    $earn = $earn * (1 - 0.035);
+//                    $earn = $earn * (1 - 0.035);
 
                     $income = [
                         'group_id' => $sub->group_id,
@@ -197,7 +197,7 @@ class UpdateIncomesCommand extends Command
                         'amount' => number_format($earn, 8, ".", ""),
                         'payment' => 0,
                         'percent' => 100,
-                        'diff' => $responseEncode[0]->difficulty,
+                        'diff' => $response_stat_encode[0]->difficulty,
                         'unit' => $unit,
                         'hash' => number_format($share, 2, ".", ""),
                         'status' => "rejected",
