@@ -61,8 +61,14 @@
         </div>
 
         <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
-            <select-language :viewportWidth="viewportWidth"></select-language>
-            <select-theme :viewportWidth="viewportWidth"></select-theme>
+            <select-language
+                v-show="viewportWidth > 479.98"
+                :viewportWidth="viewportWidth"
+            ></select-language>
+            <select-theme
+                v-show="viewportWidth > 479.98"
+                :viewportWidth="viewportWidth"
+            ></select-theme>
             <div
                 @click="burgerAction"
                 class="nav__burger"
@@ -168,7 +174,6 @@ export default defineComponent({
 }
 .nav__logo {
     max-width: 170px;
-    margin-right: 154px;
     @media (max-width: 991.98px) {
         &.headder {
             position: relative;
@@ -211,7 +216,6 @@ nav.nav__container {
         z-index: 100;
     }
     @media (max-width: 991.98px) {
-        padding: 19px 0;
         position: fixed;
         left: 50%;
         top: 0;
@@ -219,6 +223,7 @@ nav.nav__container {
         gap: 15px;
         height: 80px;
         width: 100vw;
+        padding: 16px 32px;
         &::before {
             content: "";
             position: absolute;
@@ -239,8 +244,12 @@ nav.nav__container {
             );
         }
     }
-    @media (max-width: 991.98px) {
-        padding: 13px 0;
+    @media (max-width: 479.98px) {
+        padding: 13px 16px;
+        height: 59px;
+        &:before {
+            box-shadow: 0px 8px 24px 0px rgba(129, 135, 189, 0.15);
+        }
     }
 }
 
@@ -259,8 +268,11 @@ nav.nav__container {
         height: 38px;
         transition: all 0.3s ease 0s;
         margin-left: 28px;
+        @media (max-width: 767.98px) {
+            margin-left: 48px;
+        }
         @media (max-width: 479.98px) {
-            margin-left: 8px;
+            margin-left: 0;
         }
 
         &:active {
@@ -336,6 +348,9 @@ nav.nav__container {
     .button,
     .nav__button {
         margin-left: 28px;
+        @media (max-width: 767.98px) {
+            margin-left: 48px;
+        }
     }
 }
 .nav__button {

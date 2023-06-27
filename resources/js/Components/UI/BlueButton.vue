@@ -5,8 +5,10 @@
 </template>
 
 <script>
+import PaymentTable from "@/Components/tables/PaymentTable.vue";
 export default {
     name: "blue-button",
+    components: { PaymentTable },
 };
 </script>
 
@@ -115,6 +117,10 @@ export default {
     &-md {
         min-height: 56px;
     }
+    &-light {
+        background: #d2def2;
+        color: #5389E1;
+    }
 
     &-reverce {
         filter: drop-shadow(0px 10px 10px rgba(112, 165, 236, 0.2));
@@ -123,6 +129,11 @@ export default {
         color: #4282ec;
         gap: 10px;
         transition: all 0.5s ease 0s;
+        &-border {
+            border: 1px solid #5389e1;
+            filter: none;
+            color: #5389e1;
+        }
         svg {
             fill: #4282ec !important;
             transition: all 0.5s ease 0s;

@@ -297,7 +297,7 @@ export default {
         //}
         overflow: hidden;
         position: fixed;
-        top: 112px;
+        top: 132px;
         transform: translateY(0);
     }
     &_link-back {

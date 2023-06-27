@@ -101,7 +101,6 @@ const messages = {
                 text: "Login or register to start mining!",
                 buttons: {
                     login: "Login",
-                    step: "or",
                     registration: "Register",
                 },
                 menu: {
@@ -741,8 +740,7 @@ const messages = {
                 text: "Войдите или зарегистрируйтесь, чтобы начать майнинг!",
                 buttons: {
                     login: "Войти",
-                    step: "или",
-                    registration: "Регистрация",
+                    registration: "Зарегистрироваться",
                 },
                 menu: {
                     add: "Добавить субаккаунт",

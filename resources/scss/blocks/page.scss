@@ -3,12 +3,13 @@
     position: relative;
     margin-top: 84px;
     padding-bottom: 120px;
-    @media (max-width: $mobile) {
-        margin-top: 64px;
+    @media (max-width: $tablet) {
+        margin-top: 80px;
         padding-bottom: 80px;
     }
     @media (max-width: $mobileSmall) {
         padding-bottom: 113px;
+        margin-top: 59px;
     }
     .observer_block {
         @media (min-width: $pc) {

@@ -31,12 +31,11 @@ export default {
 <style scoped lang="scss">
 .nav__link {
     font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 143.1%;
-    color: #505050;
+    font-size: 16px;
+    line-height: 150%;
     display: flex;
-    gap: 16px;
+    color: #989898;
+    gap: 48px;
     align-items: center;
     white-space: nowrap;
 
@@ -62,14 +61,14 @@ export default {
     }
     @media (max-width: 991.98px) {
         gap: 16px;
-        font-size: 16px;
+        font-size: 18px;
         line-height: 150%;
-        color: #80809a;
+        color: #80809A;
         height: 48px;
         transition: all 0.3s ease 0s;
         border-radius: 8px;
         border: 1px solid transparent;
-        padding: 10px 16px;
+        padding: 2px 16px;
         font-weight: 400;
         &::before,
         &::after {
@@ -95,11 +94,11 @@ export default {
             &.burger_link-active {
                 border-color: #3f7bdd;
                 color: #5389e1;
-                &:after {
-                    opacity: 0;
-                }
             }
         }
+    }
+    @media (max-width: 479.98px) {
+        height: 40px;
     }
 }
 </style>

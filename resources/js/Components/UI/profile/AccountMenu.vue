@@ -1,70 +1,41 @@
 <template>
     <div @click="toggleMenu" class="button">
-        <div class="button_name">
-            {{ this.name }}
-            <!--            {{-->
-            <!--                this.name.length > 12-->
-            <!--                    ? this.name.slice(0, 12 - this.name.length) + "..."-->
-            <!--                    : this.name-->
-            <!--            }}-->
+        <div class="button_name" ref="name">
             <svg
-                v-show="this.viewportWidth < 991.98"
-                width="13"
-                height="12"
-                viewBox="0 0 13 12"
+                width="22"
+                height="22"
+                viewBox="0 0 22 22"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
-                    d="M6.19307 9.06485C6.28038 9.06485 6.36195 9.04762 6.43778 9.01315C6.51361 8.97869 6.58369 8.92929 6.64803 8.86495L10.0851 5.31761C10.2045 5.19353 10.2643 5.04188 10.2643 4.86265C10.2643 4.74776 10.2367 4.64206 10.1816 4.54555C10.1264 4.44905 10.0517 4.37322 9.95753 4.31807C9.86332 4.26293 9.75647 4.23535 9.63698 4.23535C9.46695 4.23535 9.31759 4.29509 9.18891 4.41458L6.19307 7.52074L3.19719 4.41458C3.06853 4.29509 2.91917 4.23535 2.7491 4.23535C2.62962 4.23535 2.52277 4.26293 2.42856 4.31807C2.33435 4.37322 2.25969 4.44905 2.20458 4.54555C2.14943 4.64206 2.12185 4.74776 2.12185 4.86265C2.12185 5.04188 2.18388 5.19353 2.30792 5.31761L5.7381 8.86495C5.80244 8.92929 5.87252 8.97869 5.94835 9.01315C6.02418 9.04762 6.10575 9.06485 6.19307 9.06485Z"
-                    fill="#000034"
-                    fill-opacity="0.8"
+                    d="M11.0003 3.66553C11.9606 3.68412 12.8752 4.07865 13.5478 4.76435C14.2203 5.45004 14.5971 6.37219 14.5971 7.33265C14.5971 8.29312 14.2203 9.21526 13.5478 9.90096C12.8752 10.5867 11.9606 10.9812 11.0003 10.9998C10.04 10.9812 9.1253 10.5867 8.45276 9.90096C7.78021 9.21526 7.40347 8.29312 7.40347 7.33265C7.40347 6.37219 7.78021 5.45004 8.45276 4.76435C9.1253 4.07865 10.04 3.68412 11.0003 3.66553ZM11.0003 12.834C15.0531 12.834 18.3345 14.4751 18.3345 16.4998V18.334H3.66602V16.4998C3.66602 14.4751 6.94745 12.834 11.0003 12.834Z"
+                />
+            </svg>
+
+            {{ this.name }}
+            <svg
+                width="20"
+                height="20"
+                viewBox="0 0 20 20"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M1.70833 6.33317L2.89583 5.1665L10.0417 12.3123L17.1875 5.1665L18.375 6.33317L10.0417 14.6665L1.70833 6.33317Z"
                 />
             </svg>
         </div>
-        <div class="button__menu" :class="{ target: target }">
+        <div class="button__menu" ref="menu" :class="{ target: target }">
             <div class="button__row">
-                <!--                <span class="button_title"> {{ $t("header.menu.title") }}</span>-->
-                <!--                <main-list>-->
-                <!--                    <template-->
-                <!--                        v-slot:head-->
-                <!--                        v-if="-->
-                <!--                            this.allAccounts[this.getActive] &&-->
-                <!--                            this.getIncome[this.getActive].accruals-->
-                <!--                        "-->
-                <!--                    >-->
-                <!--                        {{-->
-                <!--                            Number(-->
-                <!--                                this.getIncome[this.getActive].accruals-->
-                <!--                            ).toFixed(8)-->
-                <!--                        }}-->
-                <!--                        BTC</template-->
-                <!--                    >-->
-                <!--                    <template v-slot:head v-else> 0.00000000 BTC</template>-->
-                <!--                    <template v-slot:body>-->
-                <!--                        <div class="list_row">-->
-                <!--                            <span> {{ $t("header.menu.wallets.all") }}</span>-->
-                <!--                            <span> {{ this.earnSum }} BTC</span>-->
-                <!--                        </div>-->
-                <!--                        <div class="list_row">-->
-                <!--                            <blue-button class="list_button"-->
-                <!--                                ><Link :href="route('income')">-->
-                <!--                                    {{ $t("header.menu.wallets.button") }}</Link-->
-                <!--                                ></blue-button-->
-                <!--                            >-->
-                <!--                        </div>-->
-                <!--                    </template>-->
-                <!--                </main-list>-->
-                <auto-height-select
-                    :open="this.open"
-                    :options="this.accounts"
-                    @getAcc="change_index"
-                ></auto-height-select>
+                <main-radio
+                    v-for="(option, i) in accounts"
+                    :key="i"
+                    :options="option"
+                    :getActive="getActive"
+                ></main-radio>
             </div>
             <div class="button__row">
-                <!--                <span class="button_title">-->
-                <!--                    {{ $t("header.menu.acc_admin.title") }}</span-->
-                <!--                >-->
                 <Link class="settings" :href="route('settings')"
                     ><svg
                         width="16"
@@ -108,18 +79,18 @@
 
 <script>
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import AutoHeightSelect from "@/Components/UI/AutoHeightSelect.vue";
 import { mapGetters } from "vuex";
 import MainList from "@/Components/UI/MainList.vue";
 import { Link } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
+import MainRadio from "@/Components/UI/MainRadio.vue";
 
 export default {
     name: "account-menu",
     components: {
         MainList,
         BlueButton,
-        AutoHeightSelect,
+        MainRadio,
         Link,
     },
     props: {
@@ -162,7 +133,10 @@ export default {
             if (this.allAccounts && Object.values(this.allAccounts)[0]) {
                 arr.length = 0;
                 Object.values(this.allAccounts).forEach((acc) => {
-                    arr.push({ title: acc.name, value: acc.id });
+                    arr.push({
+                        title: acc.name,
+                        value: acc.id,
+                    });
                 });
             }
             return arr;
@@ -185,6 +159,22 @@ export default {
         },
     },
     methods: {
+        change_height() {
+            if (this.target) {
+                this.$nextTick(() => {
+                    const height = this.$refs.menu.scrollHeight;
+                    this.$refs.menu.style.maxHeight = `${height}px`;
+                    if (this.viewportWidth <= 991.98) {
+                        this.$refs.name.style.marginBottom = `${height}px`;
+                    }
+                });
+            } else {
+                this.$refs.menu.style.maxHeight = `0`;
+                if (this.viewportWidth <= 991.98) {
+                    this.$refs.name.style.marginBottom = `0`;
+                }
+            }
+        },
         change_index(data) {
             this.$store.commit("updateActive", data);
         },
@@ -193,6 +183,7 @@ export default {
         },
         toggleMenu() {
             this.target = !this.target;
+            this.change_height();
             if (this.target === true) {
                 setTimeout(() => (this.open = true), 300);
                 this.$emit("clicked", true);
@@ -208,7 +199,10 @@ export default {
     width: 100%;
     min-width: 160px;
     @media (max-width: 991.98px) {
-        padding: 0 16px;
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
     }
     &_name {
         width: 100%;
@@ -217,28 +211,46 @@ export default {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        font-weight: 400;
-        font-size: 17px;
-        line-height: 140%;
+        gap: 4px;
         color: #3f7bdd;
         min-width: 160px;
+        font-size: 16px;
+        line-height: 150%;
+        border: 1px solid #3f7bdd;
+        padding: 0 24px;
+        min-height: 40px;
+        border-radius: 8px;
+        svg {
+            fill: #3f7bdd;
+            &:last-child {
+                margin-left: auto;
+            }
+        }
         @media (max-width: 991.98px) {
-            min-width: 130px;
-            color: #5389e1;
-            font-size: 18px;
-            font-weight: 500;
-            line-height: 120%;
+            background: #d2def2;
+            border: none;
+            padding: 0 16px;
+            min-height: 56px;
             gap: 8px;
-            width: 100%;
+            font-weight: 500;
+            font-size: 18px;
+            line-height: 120%;
+            svg {
+                width: 24px;
+                height: 24px;
+                &:last-child {
+                    width: 22px;
+                    height: 22px;
+                }
+            }
+        }
+        @media (max-width: 479.98px) {
+            background: #d2def2;
+            border: none;
+            min-height: 48px;
         }
         @media (min-width: 991.98px) {
-            border: 1px solid #3f7bdd;
-            padding: 0 24px;
-            min-height: 40px;
-            border-radius: 8px;
             &:hover {
-                //color: #ffffff;
-                //background-color: #417fe5;
                 background: #c6d8f5;
                 border: 1px solid #c6d8f5;
             }
@@ -255,11 +267,9 @@ export default {
     .target {
         &.button {
             &__menu {
-                color: #000034;
                 visibility: visible;
-                max-height: 500px;
                 opacity: 1;
-                transition: all 0.5s ease 0s, opacity 0.2s ease 0s;
+                transition: all 0.5s ease 0s;
             }
         }
     }
@@ -293,23 +303,28 @@ export default {
     }
     &__menu {
         border-radius: 8px;
-        position: absolute;
-        top: calc(100% + 8px);
         visibility: hidden;
         opacity: 0;
-        max-height: 0;
-        padding: 16px;
-        right: 0;
-        min-width: 326px;
-        transition: all 0.2s ease 0s, max-height 0.2s ease 0.2s;
         height: fit-content;
         display: flex;
         flex-direction: column;
         overflow: hidden;
         background: #fafafa;
         box-shadow: 0 4px 10px rgba(35, 38, 63, 0.15);
+        min-width: 100%;
+        padding: 16px;
+        position: absolute;
+        right: 0;
+        top: 48px;
+        transition: all 0.5s ease 0s;
         @media (max-width: 991.98px) {
-            display: none;
+            top: 64px;
+        }
+        @media (max-width: 479.98px) {
+            top: 56px;
+        }
+        @media (min-width: 991.98px) {
+            min-width: 326px;
         }
         button,
         a {

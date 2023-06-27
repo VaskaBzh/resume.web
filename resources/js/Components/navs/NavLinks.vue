@@ -1,64 +1,29 @@
 <template>
     <div class="nav__links_con" :class="{ open: is_open }">
         <div class="nav__header" id="burger_head" v-if="viewportWidth < 991.98">
-            <div class="nav__row">
-                <account-menu
-                    :viewportWidth="viewportWidth"
-                    :is_auth="is_auth"
-                    v-show="is_auth"
-                    @clicked="open"
-                ></account-menu>
-                <div class="login_link" v-show="!is_auth">
-                    {{ $t("header.login.title") }}
-                </div>
-            </div>
-            <div class="nav__column">
-                <div class="nav_block" v-show="is_auth">
-                    <span class="nav_subtitle">
-                        {{ $t("header.login.hash") }}</span
-                    >
-                    <span class="nav_value"
-                        >{{ allAccounts[getActive]?.shares1m || "..." }}
-                        {{ allAccounts[getActive]?.unit }}H/s</span
-                    >
-                </div>
-                <div class="nav_block" v-show="is_auth">
-                    <span class="nav_subtitle">
-                        {{ $t("header.login.workers") }}</span
-                    >
-                    <span class="nav_value"
-                        >{{ allAccounts[getActive]?.workersActive || "..." }}/{{
-                            allAccounts[getActive]?.workersAll || "..."
-                        }}</span
-                    >
-                </div>
-                <div class="nav_block" v-show="!is_auth">
-                    <span class="nav_title">
-                        {{ $t("header.login.text") }}</span
-                    >
-                </div>
-                <div class="nav_block" v-show="!is_auth">
-                    <blue-button @click="openPopup(false)" data-popup="#auth">
-                        <Link :href="route('login')" class="all-link">
-                            {{ $t("header.login.buttons.login") }}
-                        </Link>
-                    </blue-button>
-                    <span class="nav_text">
-                        {{ $t("header.login.buttons.step") }}</span
-                    >
-                    <blue-button
-                        class="light"
-                        @click="openPopup(true)"
-                        data-popup="#auth"
-                    >
-                        <Link :href="route('registration')" class="all-link">
-                            {{ $t("header.login.buttons.registration") }}
-                        </Link>
-                    </blue-button>
-                </div>
+            <account-menu
+                :viewportWidth="viewportWidth"
+                :is_auth="is_auth"
+                @clicked="open"
+                v-show="is_auth"
+            ></account-menu>
+            <div class="nav__column" v-show="!is_auth">
+                <blue-button @click="openPopup(false)" class="button button-md button-light">
+                    <Link :href="route('login')" class="all-link">
+                        {{ $t("header.login.buttons.login") }}
+                    </Link>
+                </blue-button>
+                <blue-button
+                    class="button button-md button-reverce button-reverce-border"
+                    @click="openPopup(true)"
+                >
+                    <Link :href="route('registration')" class="all-link">
+                        {{ $t("header.login.buttons.registration") }}
+                    </Link>
+                </blue-button>
             </div>
         </div>
-        <div class="nav__links" id="links" @click="closeBurger">
+        <div class="nav__links" id="links" v-if="is_auth" @click="closeBurger">
             <main-link
                 v-for="(link, i) in linksAccount"
                 :link="link"
@@ -69,44 +34,23 @@
                 }"
                 :viewportWidth="viewportWidth"
             ></main-link>
+        </div>
+        <div class="nav__links" id="links" @click="closeBurger">
             <main-link
                 v-for="(link, i) in linksMain"
                 :link="link"
                 :key="i"
                 :viewportWidth="viewportWidth"
             ></main-link>
-            <!--            <Link-->
-            <!--            <Link-->
-            <!--                :href="route('complexity')"-->
-            <!--                class="nav__link"-->
-            <!--                :class="{-->
-            <!--                    burger_link: this.viewportWidth < 991.98,-->
-            <!--                    active: $page.url.startsWith('/complexity'),-->
-            <!--                }"-->
-            <!--            >-->
-            <!--                <svg-->
-            <!--                    v-if="this.viewportWidth < 991.98"-->
-            <!--                    width="20"-->
-            <!--                    height="20"-->
-            <!--                    viewBox="0 0 20 20"-->
-            <!--                    fill="none"-->
-            <!--                    xmlns="http://www.w3.org/2000/svg"-->
-            <!--                >-->
-            <!--                    <g clip-path="url(#clip0_1241_17163)">-->
-            <!--                        <path-->
-            <!--                            d="M3.32314 15.8711L1.98899 14.7113L7.78779 8.04058L11.334 11.16L16.7547 4.12386L18.0053 5.21095L11.5084 13.6539L7.96218 10.5345L3.32314 15.8711Z"-->
-            <!--                            fill="#417FE5"-->
-            <!--                        />-->
-            <!--                    </g>-->
-            <!--                    <defs>-->
-            <!--                        <clipPath id="clip0_1241_17163">-->
-            <!--                            <rect width="20" height="20" fill="white" />-->
-            <!--                        </clipPath>-->
-            <!--                    </defs>-->
-            <!--                </svg>-->
-
-            <!--                {{ $t("header.links.complexity") }}-->
-            <!--            </Link>-->
+        </div>
+        <div class="nav__footer" v-show="viewportWidth <= 479.98">
+            <div class="nav__row">
+                <select-language
+                    :viewportWidth="viewportWidth"
+                ></select-language>
+                <select-theme :viewportWidth="viewportWidth"></select-theme>
+            </div>
+            <div class="quote">© 2023 Allbtc Pool</div>
         </div>
         <teleport to="body">
             <transition name="shadow">
@@ -211,6 +155,8 @@ import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
 import { mapGetters } from "vuex";
 import { Inertia } from "@inertiajs/inertia";
 import MainLink from "@/Components/UI/MainLink.vue";
+import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
+import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 
 export default {
     components: {
@@ -218,6 +164,8 @@ export default {
         AccountMenu,
         Link,
         MainLink,
+        SelectLanguage,
+        SelectTheme,
     },
     props: {
         viewportWidth: Number,
@@ -259,7 +207,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["getIncome", "allAccounts", "getActive"]),
+        ...mapGetters(["allAccounts", "getActive"]),
         name() {
             let name = "...";
             if (this.allAccounts[this.getActive]) {
@@ -433,6 +381,9 @@ export default {
     width: 100%;
     gap: 42px;
     justify-content: flex-start;
+    @media (min-width: 1320.98px) {
+        min-width: 580px;
+    }
     @media (max-width: 1320.98px) {
         gap: 15px;
     }
@@ -440,11 +391,9 @@ export default {
         flex-direction: column;
         gap: 0;
         overflow: hidden;
-        flex: 1 0 auto;
     }
     @media (max-width: 767.98px) {
         margin: 0;
-        padding: 0 0 80px;
         width: 100%;
     }
 
@@ -459,10 +408,17 @@ export default {
             height: 100vh;
             top: 80px;
             right: -100vw;
-            z-index: 101;
+            z-index: 99;
             display: flex;
             flex-direction: column;
             padding: 40px 32px;
+            gap: 40px;
+        }
+        @media (max-width: 479.98px) {
+            gap: 32px;
+            top: 59px;
+            padding: 32px 16px 24px;
+            max-width: 100%;
         }
         transition: all 0.5s ease 0s;
 
@@ -471,150 +427,25 @@ export default {
         }
     }
 }
-
-.burger_link-account:last-child {
-    margin-bottom: 40px;
-}
 .nav {
+    &__footer {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 32px;
+    }
     &__row {
         display: flex;
-        justify-content: space-between;
         align-items: center;
-        height: 60px;
-        padding: 20px;
+        gap: 12px;
+        justify-content: center;
     }
     &__column {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        gap: 10px;
-        padding: 6px 6px 14px;
-        .nav_block {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
+        gap: 13px;
         .blue-button {
-            &.light {
-                margin-bottom: 10px;
-                .all-link {
-                    background: #c2d5f2;
-                    color: rgba(0, 0, 52, 0.75);
-                }
-            }
-            height: 22px;
-            max-width: 150px;
-            min-height: 32px;
-            border-radius: 13px;
             width: 100%;
-            background: transparent;
-            &:before {
-                border-radius: 13px;
-                background: transparent;
-            }
-            .all-link {
-                border-radius: 13px;
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 143.1%;
-                text-align: center;
-                color: #ffffff;
-                background: #4182ec;
-            }
-        }
-    }
-    &_subtitle {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 16px;
-        color: #818c99;
-    }
-    &_value {
-        font-weight: 500;
-        font-size: 21px;
-        line-height: 26px;
-        color: #000034;
-    }
-    &_title {
-        font-weight: 500;
-        font-size: 16px;
-        line-height: 132.6%;
-        text-align: center;
-        color: #000000;
-        @media (max-width: 479.98px) {
-            max-width: 282px;
-        }
-    }
-    &_text {
-        font-weight: 400;
-        font-size: 16px;
-        line-height: 143.1%;
-        text-align: center;
-        color: #000000;
-    }
-    &__menu {
-        position: fixed;
-        transition: all 0.8s ease 0s;
-        background: transparent;
-        visibility: hidden;
-        opacity: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        top: 0;
-        z-index: 300;
-        &_wrap {
-            position: fixed;
-            bottom: -100%;
-            left: 50%;
-            transform: translateX(-50%);
-            background: #ffffff;
-            border-radius: 21px;
-            width: calc(100% - 20px);
-            max-height: 50vh;
-            height: fit-content;
-            z-index: 350;
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
-            transition: all 0.8s ease 0s;
-            &.opened {
-                bottom: 10px;
-            }
-        }
-        &.opened {
-            background: #000;
-            visibility: visible;
-            opacity: 0.65;
-            .nav__menu_wrap {
-                bottom: 60px;
-            }
-        }
-        &_item {
-            height: 48px;
-            font-weight: 400;
-            font-size: 17px;
-            line-height: 143.1%;
-            color: #7c7c7c;
-            background: transparent;
-            transition: all 0.5s ease 0s;
-            padding: 2px 10px;
-
-            &-acc {
-                &.active {
-                    background: rgba(234, 238, 244, 0.4);
-                }
-            }
-            &-logout {
-                color: #ff3b30;
-            }
-            &:first-child {
-                border-radius: 8px 8px 0px 0px;
-            }
-            &:not(:last-child) {
-                border-bottom: 0.5px solid #d7d8d9;
-            }
         }
     }
 }

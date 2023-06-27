@@ -188,6 +188,7 @@ class UpdateIncomesCommand extends Command
                         $earn = 0;
                     }
 
+
 //                    $earn = $earn * (1 - 0.005);
 //                    $earn = $earn * (1 - 0.035);
 
