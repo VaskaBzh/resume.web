@@ -55,6 +55,11 @@ export default {
     }
 }
 .burger_link {
+    &-account {
+        @media (min-width: 991.98px) {
+            display: none;
+        }
+    }
     @media (max-width: 991.98px) {
         gap: 16px;
         font-size: 16px;
