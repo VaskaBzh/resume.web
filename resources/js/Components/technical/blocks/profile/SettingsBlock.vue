@@ -9,7 +9,7 @@
         <!--            >-->
         <!--                Изменить-->
         <!--            </span>-->
-        <span class="text">{{ this.value }}</span>
+        <span class="text text-black text-b">{{ this.value }}</span>
         <svg
             width="24"
             height="24"
@@ -85,9 +85,6 @@ export default {
     align-items: center;
     padding: 12px 16px;
     border-radius: 12px;
-}
-.text {
-    color: #343434;
 }
 .edit {
     width: 24px;

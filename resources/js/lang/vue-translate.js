@@ -90,6 +90,7 @@ const messages = {
                 accounts_title: "Accounts",
                 acc_admin: {
                     title: "Profile management",
+                    add: "Add a subaccount",
                     settings: "Settings",
                     logout: "Exit",
                 },
@@ -293,17 +294,16 @@ const messages = {
                     },
                 },
             },
+            // <a href="https://t.me/ailasmon">
             {
                 title: "Technical support and contact us.",
-                // <a href="mailto:support@all-btc.com">
-                // <a href="https://t.me/ailasmon">
                 list: {
                     0: {
                         title: "How to Contact Our Technical Support?",
                         text: `If you have any questions or issues, our technical support team is ready to assist you. To get in touch with us, you can use the following methods:
-                                            <ul class="list"><li class="list_item">Email: Send us an email at support@all-btc.com. We will strive to respond to you as soon as possible.</li>
+                                            <ul class="list"><li class="list_item">Email: Send us an email at mail We will strive to respond to you as soon as possible.</li>
                                             <li class="list_item">Website Chat: Visit our website and use the live chat feature to communicate with our support team in real-time.</li>
-                                            <li class="list_item">Telegram: Add us on Telegram via the link t.me/allbtc_support for quick communication and prompt support.</li>
+                                            <li class="list_item">Telegram: Add us on Telegram via the link telegram for quick communication and prompt support.</li>
                                             <li class="list_item">Feedback Form: On our website, you can fill out a feedback form, providing your name, email address, and message. We will get back to you promptly.</li></ul>
                                             Feel free to reach out to us with any questions or concerns. We are here to help and provide quality technical support.
                                             `,
@@ -729,6 +729,7 @@ const messages = {
                 accounts_title: "Аккаунты",
                 acc_admin: {
                     title: "Управление профилем",
+                    add: "Добавить субаккаунт",
                     settings: "Настройки",
                     logout: "Выход",
                 },
@@ -938,14 +939,15 @@ const messages = {
                 },
             },
             {
+                // support@all-btc.com t.me/allbtc_support
                 title: "Техническая поддержка и связь с нами",
                 list: {
                     0: {
                         title: "Как связаться с нашей технической поддержкой?",
                         text: `Если у вас возникли вопросы или проблемы, наша техническая поддержка готова помочь вам. Для связи с нами вы можете использовать следующие способы:
-                                            <ul class="list"><li class="list_item">Электронная почта: Отправьте нам письмо на нашу электронную почту support@all-btc.com. Мы постараемся ответить вам в кратчайшие сроки.</li>
+                                            <ul class="list"><li class="list_item">Электронная почта: Отправьте нам письмо на нашу электронную почту mail Мы постараемся ответить вам в кратчайшие сроки.</li>
                                             <li class="list_item">Чат на сайте: Посетите наш веб-сайт и воспользуйтесь функцией онлайн-чата для общения с нашей командой поддержки в режиме реального времени.</li>
-                                            <li class="list_item">Телеграм: Добавьте нас в Телеграм по ссылке t.me/allbtc_support для быстрой связи и получения оперативной поддержки.</li>
+                                            <li class="list_item">Телеграм: Добавьте нас в Телеграм по ссылке telegram для быстрой связи и получения оперативной поддержки.</li>
                                             <li class="list_item">Форма обратной связи: На нашем веб-сайте вы можете заполнить форму обратной связи, указав свое имя, адрес электронной почты и сообщение. Мы свяжемся с вами в ближайшее время.</li></ul>
                                             Не стесняйтесь обращаться к нам с любыми вопросами или проблемами. Мы готовы помочь вам и обеспечить качественную техническую поддержку.
                                             `,

@@ -4,29 +4,6 @@ import btccom from "@/api/btccom";
 
 export default {
     actions: {
-        async getDiff({ commit, state }, data) {
-            btccom
-                .fetch({
-                    data: {
-                        lang: "ru",
-                        puid: 781195,
-                    },
-                    path: "coins-income",
-                    method: "get",
-                    link_type: "",
-                })
-                .then((res) => {
-                    Object.values(res.data.data).forEach((el, i) => {
-                        if (Object.keys(res.data.data)[i] === "btc") {
-                            data.item.diff = el.diff;
-                        }
-                    });
-                    commit(`updateInfo`, {
-                        key: "btc".toLowerCase(),
-                        item: data.item,
-                    });
-                });
-        },
         async getConverter({ commit, state }) {
             difficulty
                 .fetch({
@@ -54,6 +31,7 @@ export default {
                         diff: 0,
                         diff_change: response.data.data.difficulty_change,
                         nextDiff: response.data.data.estimated_next_difficulty,
+                        fpps: response.data.data.fpps_mining_earnings,
                         time: 0,
                         network: Number(response.data.data.network_hashrate),
                         networkUnit: response.data.data.network_hashrate_unit,
@@ -72,16 +50,13 @@ export default {
                     await this.dispatch("getReward", {
                         item: converterModel,
                     });
-                    this.dispatch("getDiff", {
-                        item: converterModel,
-                    });
                 });
         },
         async getReward({ commit, state }, data) {
             difficulty
                 .fetch({
                     data: {
-                        list: "BTC,BCH",
+                        list: "BTC",
                     },
                     path: "https://api.minerstat.com/v2/coins",
                     method: "get",
@@ -90,7 +65,13 @@ export default {
                 .then((response) => {
                     response.data.forEach((el, i) => {
                         if (el.coin === "BTC") {
+                            data.item.diff = el.difficulty;
                             data.item.reward = el.reward_block;
+
+                            commit(`updateInfo`, {
+                                key: "btc".toLowerCase(),
+                                item: data.item,
+                            });
                         }
                     });
                 });

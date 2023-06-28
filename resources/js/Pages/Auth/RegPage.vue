@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="form__content">
-            <div class="form_row" :class="{ error: errors.email }">
+            <div class="form_row" :class="{ error: blinks('email') }">
                 <input
                     name="email"
                     v-model="form.email"
@@ -34,7 +34,7 @@
                     :placeholder="this.$t('auth.reg.placeholders[0]')"
                 />
             </div>
-            <div class="form_row" :class="{ error: errors.name }">
+            <div class="form_row" :class="{ error: blinks('name') }">
                 <input
                     name="name"
                     v-model="form.name"
@@ -43,7 +43,7 @@
                     :placeholder="this.$t('auth.reg.placeholders[1]')"
                 />
             </div>
-            <div class="form_row" :class="{ error: errors.password }">
+            <div class="form_row" :class="{ error: blinks('password') }">
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.reg.placeholders[2]')"
@@ -52,7 +52,7 @@
                     @change="form.password = $event"
                 ></main-password>
             </div>
-            <div class="form_row" :class="{ error: errors.password }">
+            <div class="form_row" :class="{ error: blinks('password') }">
                 <main-password
                     name="password_confirmation"
                     :placeholder="this.$t('auth.reg.placeholders[3]')"
@@ -141,6 +141,14 @@ export default {
             account_create,
             checkbox,
         };
+    },
+    methods: {
+        blinks(error) {
+            let bool = false;
+            error ? (bool = true) : (bool = false);
+            setTimeout(() => (bool = false), 1800);
+            return bool;
+        },
     },
     mounted() {
         document.title = "Регистрация";

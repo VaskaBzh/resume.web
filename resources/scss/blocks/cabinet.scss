@@ -35,8 +35,8 @@
         border-radius: 8px;
         gap: 9px;
         @media (max-width: 479.98px) {
-            justify-content: space-between;
             width: 100%;
+            gap: 24px;
         }
     }
     &_button {

@@ -190,6 +190,7 @@ export default {
         min-width: 200px;
     }
     @media (max-width: 767.98px) {
+        position: fixed;
         bottom: 10px;
         left: 50% !important;
         transform: translateX(-50%);

@@ -35,9 +35,7 @@
                 :viewportWidth="viewportWidth"
             ></select-theme>
 
-            <account-menu
-                v-show="is_auth && $page.url.startsWith('/profile')"
-            ></account-menu>
+            <account-menu v-if="is_auth && accountLink"></account-menu>
             <Link
                 :href="route('login')"
                 v-show="viewportWidth >= 991.98 && !is_auth"
@@ -48,11 +46,7 @@
             </Link>
             <Link
                 :href="route('statistic')"
-                v-show="
-                    viewportWidth >= 991.98 &&
-                    !$page.url.startsWith('/profile') &&
-                    is_auth
-                "
+                v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
                 class="nav__button"
                 @mousedown="this.linkChanger"
             >
@@ -136,9 +130,9 @@ export default defineComponent({
             remember: false,
         });
 
-        const reverify = () => {
-            form.post("/reverify", {});
-        };
+        // const reverify = () => {
+        //     form.post("/reverify", {});
+        // };
 
         return {
             runCallbacksOnInit: {},
@@ -150,6 +144,12 @@ export default defineComponent({
     },
     computed: {
         ...mapGetters(["getIncome", "allAccounts", "getActive", "getTheme"]),
+        accountLink() {
+            let url = this.$page.url.startsWith("http")
+                ? new URL(this.$page.url).pathname
+                : this.$page.url;
+            return url.startsWith("/profile");
+        },
     },
     methods: {
         handleResize() {
@@ -159,9 +159,9 @@ export default defineComponent({
             if (this.viewportWidth < 991.98) {
                 this.is_open = !this.is_open;
                 this.is_open === true
-                    ? (document.querySelector("body").style.overflowY = "auto")
-                    : (document.querySelector("body").style.overflowY =
-                          "hidden");
+                    ? (document.querySelector("body").style.overflowY =
+                          "hidden")
+                    : (document.querySelector("body").style.overflowY = "auto");
             }
         },
     },
@@ -223,7 +223,7 @@ nav.nav__container {
         gap: 15px;
         height: 80px;
         width: 100vw;
-        padding: 16px 32px;
+        padding: 16px 0;
         &::before {
             content: "";
             position: absolute;
@@ -243,6 +243,9 @@ nav.nav__container {
                 #e8ecf2 19.07%
             );
         }
+    }
+    @media (max-width: 767.98px) {
+        padding: 16px 15px;
     }
     @media (max-width: 479.98px) {
         padding: 13px 16px;

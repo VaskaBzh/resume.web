@@ -115,11 +115,6 @@ export default {
                 }
                 const time = this.graphData.dates[nearestIndex];
 
-                let topPos = 0;
-
-                if (this.$refs.tooltip?.clientHeight)
-                    topPos = this.$refs.tooltip.clientHeight + 8;
-
                 const verticalLineX = this.mouseX;
 
                 this.svg

@@ -34,7 +34,7 @@ export default {
     justify-content: space-between;
     padding: 4px 8px;
     border-radius: 8px;
-    background: #fafafa;
+    background: transparent;
     transition: all 0.3s ease 0s;
     color: #818c99;
     font-size: 16px;
@@ -42,6 +42,7 @@ export default {
     min-height: 40px;
     &.active {
         background: #ecf2fc;
+        color: #333639;
         .radio_button {
             background: #5389e1;
             &:after {

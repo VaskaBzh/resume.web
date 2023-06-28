@@ -206,6 +206,8 @@ import BlueButton from "@/Components/UI/BlueButton.vue";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 
+import { Profit } from "/resources/js/Scripts/profit.js";
+
 export default {
     props: ["errors", "message", "user", "auth_user"],
     components: {
@@ -324,83 +326,34 @@ export default {
             }
             return obj;
         },
-        earn() {
-            if (this.$store.getters.getIncome[this.getActive]) {
-                return Number(
-                    this.$store.getters.getIncome[this.getActive].accruals
-                );
-            } else {
-                return 0;
-            }
-        },
         todayEarn() {
-            let val = 0;
-            // if (this.all) {
-            //     if (Object.values(this.allAccounts)[0]) {
-            //         let arr = Object.fromEntries(
-            //             Object.entries(this.allHistory).map(([key, value]) => {
-            //                 Object.values(this.allHistory).forEach((el) => {
-            //                     if (Object.keys(el).includes(key)) {
-            //                         value.push(...el[key]);
-            //                     }
-            //                 });
-            //                 return [key, value];
-            //             })
-            //         );
-            //         // Object.values(this.allHistory).map((elem) => {
-            //         //     console.log(elem[0]);
-            //         // });
-            //         val =
-            //             (arr[0].shares1m *
-            //                 Math.pow(10, 12) *
-            //                 86400 *
-            //                 this.btcInfo.btc.reward) /
-            //             (this.btcInfo.btc.diff * Math.pow(2, 32));
-            //         return val * (1 - 0.035);
-            //     }
-            // }
             if (this.btcInfo) {
                 if (this.allAccounts[this.getActive]) {
-                    val =
-                        (this.allAccounts[this.getActive].shares1m *
-                            Math.pow(10, 12) *
-                            86400 *
-                            this.btcInfo.btc.reward) /
-                        (this.btcInfo.btc.diff * Math.pow(2, 32));
-                    val = val * (1 - 0.035);
+                    let val = new Profit(
+                        this.allAccounts[this.getActive].shares1d,
+                        this.btcInfo.btc.fpps,
+                        this.btcInfo.btc.diff,
+                        this.btcInfo.btc.reward
+                    );
+                    return val.amount();
                 }
             }
-            if (typeof val === "number") {
-                return val;
-            } else {
-                return 0;
-            }
+            return 0;
         },
         yesterdayEarn() {
-            let val = 0;
-            // if (this.all) {
-            //     if (Object.values(this.allIncomeHistory)[0]) {
-            //         let arr = Object.values(this.allIncomeHistory).flat();
-            //         return Number(arr[1]["amount"]);
-            //     }
-            // }
             if (this.allIncomeHistory[this.getActive]) {
                 if (
                     Object.values(this.allIncomeHistory[this.getActive]) &&
                     Object.values(this.allIncomeHistory[this.getActive])[1]
                 ) {
-                    val = Number(
+                    return Number(
                         Object.values(this.allIncomeHistory[this.getActive])[1][
                             "amount"
                         ]
                     );
                 }
             }
-            if (typeof val === "number") {
-                return val;
-            } else {
-                return 0;
-            }
+            return 0;
         },
         ...mapGetters([
             "getTable",

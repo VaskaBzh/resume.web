@@ -773,6 +773,7 @@ export default {
     &__image {
         min-width: 65%;
         object-fit: contain;
+        position: relative;
         @media (max-width: 1320.98px) {
             min-width: 55%;
         }

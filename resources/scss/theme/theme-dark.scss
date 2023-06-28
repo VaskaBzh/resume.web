@@ -1,15 +1,11 @@
-$theme-transition: 0.8s;
-
 body {
     &[color-scheme="dark"] {
         #app {
             .checkbox {
-                transition: all $theme-transition ease 0s;
                 background: #283955;
             }
             .app_back {
                 &::before {
-                    transition: all $theme-transition ease 0s;
                     opacity: 0;
                 }
             }
@@ -19,7 +15,6 @@ body {
             backdrop-filter: blur(1.5px);
         }
         .statistic .title .checkbox {
-            transition: all $theme-transition ease 0s;
             background: transparent !important;
             color: #989898;
             &:after {
@@ -65,13 +60,50 @@ body {
 
                 &__links_con {
                     background: #040d15;
+                    .button {
+                        .button {
+                            &_name {
+                                &:hover {
+                                    background: #1a345a;
+                                    border: 1px solid #1a345a;
+                                }
+                            }
+                            &__menu {
+                                background: #040d15;
+                                .select_title .name,
+                                a {
+                                    color: #989898;
+                                    svg {
+                                        fill: #79a3e8;
+                                    }
+                                }
+                                button {
+                                    svg {
+                                        fill: #ef4e4d;
+                                    }
+                                }
+                                .select {
+                                    &_option {
+                                        &.active {
+                                            .main_select {
+                                                color: #cacaca;
+                                            }
+                                        }
+                                        .main_select {
+                                            color: #989898;
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
 
                     .button {
                         &_name {
-                            color: #3f7bdd;
-
+                            color: #5389e1;
+                            background: #112137;
                             svg path {
-                                fill: #3f7bdd !important;
+                                fill: #5389e1;
                             }
                         }
                     }
@@ -87,20 +119,18 @@ body {
                         }
 
                         &__links {
-                            background: #101d2b;
-
                             .burger {
                                 &_link {
-                                    border-bottom: 0.5px solid #343434;
                                     background: transparent;
                                     color: #818c99;
 
                                     &-active {
-                                        color: #3f7bdd;
+                                        color: #5389e1;
+                                        border-color: #3f7bdd;
                                     }
 
                                     svg {
-                                        fill: #3f7bdd;
+                                        fill: #4182ec;
                                     }
                                 }
                             }
@@ -112,7 +142,6 @@ body {
         .search {
             box-shadow: 0px 4px 10px 0px rgba(35, 38, 63, 0.15);
             input {
-                transition: all $theme-transition ease 0s;
                 border: 1px solid #484848 !important;
                 color: #cacaca !important;
                 background: #101d2b !important;
@@ -121,30 +150,31 @@ body {
         .blue-button {
             &.add {
                 svg {
-                    transition: all $theme-transition ease 0s;
                     fill: #c6d1e9;
+                }
+            }
+            &.button {
+                &-light {
+                    background: #112137;
+                    box-shadow: none;
                 }
             }
         }
         .faq {
             .section__block-light {
-                transition: all $theme-transition ease 0s;
                 background: #101d2b;
                 box-shadow: 0px 4px 10px rgba(85, 85, 85, 0.1);
             }
             .accordion_title svg path {
-                transition: all $theme-transition ease 0s;
                 fill: #cacaca !important;
             }
             .accordion {
                 &:not(:last-child) {
-                    transition: all $theme-transition ease 0s;
                     border-color: #333639;
                 }
             }
             &_title {
                 color: #3f7bdd;
-                transition: all $theme-transition ease 0s;
             }
         }
         .settings__column {
@@ -163,6 +193,21 @@ body {
                 }
             }
         }
+        .radio {
+            &.active {
+                background: #16212b;
+                color: #d9d9d9;
+                .radio_button {
+                    background: #79a3e8;
+                    &:after {
+                        background: #c6d8f5;
+                    }
+                }
+            }
+            &_button {
+                border-color: #79a3e8;
+            }
+        }
         nav {
             &.nav {
                 &__container {
@@ -176,7 +221,6 @@ body {
                         }
                     }
                     &:before {
-                        transition: all $theme-transition ease 0s;
                         background: #0f1924;
                         box-shadow: 0 8px 20px rgba(34, 34, 35, 0.07);
                     }
@@ -205,14 +249,18 @@ body {
                                 }
                             }
                             &__menu {
-                                background: #101d2b;
-                                box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
+                                background: #040d15;
                                 .select_title .name,
                                 a {
-                                    color: #cacaca;
+                                    color: #989898;
+                                    svg {
+                                        fill: #79a3e8;
+                                    }
                                 }
-                                svg:last-child {
-                                    fill: #cacaca;
+                                button {
+                                    svg {
+                                        fill: #ef4e4d;
+                                    }
                                 }
                                 .select {
                                     &_option {
@@ -233,35 +281,28 @@ body {
             }
         }
         .description {
-            transition: all $theme-transition ease 0s;
             color: #989898;
             &-xs {
-                transition: all $theme-transition ease 0s;
                 color: #989898;
             }
         }
         .subtitle {
-            transition: all $theme-transition ease 0s;
             color: #79a3e8;
         }
         .info {
             .card {
-                transition: all $theme-transition ease 0s;
                 background: #101d2b;
                 box-shadow: 0px 4px 10px rgba(85, 85, 85, 0.1);
             }
         }
         h3.title {
-            transition: all $theme-transition ease 0s;
             color: #f1f1f1;
         }
         h4.title {
-            transition: all $theme-transition ease 0s;
             color: #cacaca;
         }
         .button {
             &-blue {
-                transition: all $theme-transition ease 0s;
                 box-shadow: 0px 10px 50px rgba(112, 165, 236, 0.1);
             }
         }
@@ -311,7 +352,6 @@ body {
             &__content {
                 .list {
                     &_icon {
-                        transition: all $theme-transition ease 0s;
                         background: radial-gradient(
                                     63.11% 63.11% at 31.97% 19.67%,
                                     rgba(255, 255, 255, 0.7) 0%,
@@ -326,16 +366,13 @@ body {
         }
         .section {
             &__block {
-                transition: all $theme-transition ease 0s;
                 box-shadow: 0px 4px 10px 0px rgba(35, 38, 63, 0.15);
                 &-light {
-                    transition: all $theme-transition ease 0s;
                     background: #101d2b;
                 }
             }
         }
         .no-info {
-            transition: all $theme-transition ease 0s;
             background: #101d2b;
             span {
                 color: #fafafa;
@@ -343,74 +380,60 @@ body {
         }
         .input {
             &-lg {
-                transition: all $theme-transition ease 0s;
                 background: #e1e1e1;
                 border: 1px solid rgba(0, 0, 0, 0.16);
                 &::placeholder {
-                    transition: all $theme-transition ease 0s;
                     color: #989898;
                 }
             }
             &-white {
-                transition: all $theme-transition ease 0s;
                 background: #e1e1e1 !important;
                 color: #989898 !important;
                 &::placeholder {
-                    transition: all $theme-transition ease 0s;
                     color: #989898 !important;
                 }
             }
         }
         .quote {
-            transition: all $theme-transition ease 0s;
             color: #989898;
         }
         .contacts {
             &_item {
                 a {
-                    transition: all $theme-transition ease 0s;
                     color: #f1f1f1;
                 }
             }
         }
         .socials {
             &_link {
-                transition: all $theme-transition ease 0s;
-                background: #79A3E8;
+                background: #79a3e8;
                 svg {
-                    transition: all $theme-transition ease 0s;
                     fill: #040d15;
                 }
                 &:after {
-                    transition: all $theme-transition ease 0s;
-                    background: #5389E1;
+                    background: #5389e1;
                 }
             }
         }
         .platform-c__title {
             &.title-blue {
-                transition: all $theme-transition ease 0s;
                 color: #cacaca;
             }
         }
         .home-im__image {
             .container-chart {
                 .main-line {
-                    transition: all $theme-transition ease 0s;
                     fill: rgba(233, 192, 88, 0.2) !important;
                 }
                 .band {
-                    transition: all $theme-transition ease 0s;
                     fill: #262626 !important;
                 }
             }
         }
         .home-im__content_item {
             .subtitle-value {
-                transition: all $theme-transition ease 0s;
                 color: #fff;
                 span {
-                    transition: all $theme-transition ease 0s;
                     color: #fff;
                 }
             }
@@ -418,7 +441,6 @@ body {
                 .subtitle-value {
                     span {
                         &:last-child {
-                            transition: all $theme-transition ease 0s;
                             color: #fff;
                         }
                     }
@@ -446,39 +468,32 @@ body {
         .cabinet {
             &_title {
                 .checkbox {
-                    transition: all $theme-transition ease 0s;
                     background: transparent !important;
                     color: #989898;
                     &:after {
-                        transition: all $theme-transition ease 0s;
                         background-color: #989898;
                     }
                     &:before {
-                        transition: all $theme-transition ease 0s;
                         background: #dde1e6;
                     }
                 }
             }
             &__block {
                 &-light {
-                    transition: all $theme-transition ease 0s;
                     background: #101d2b;
                 }
                 .title {
                     &-blue {
-                        transition: all $theme-transition ease 0s;
                         color: #7994ca;
                     }
                 }
             }
             &_button {
-                transition: all $theme-transition ease 0s;
                 color: #333639;
                 &.active {
-                    transition: all $theme-transition ease 0s;
                     color: #3f7bdd;
-                    background: rgba(40, 57, 85, 0.5);
-                    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+                    background: #172436;
+                    box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
                 }
                 &:hover {
                     color: #3f7bdd;
@@ -487,22 +502,18 @@ body {
         }
         .title {
             &.headline {
-                transition: all $theme-transition ease 0s;
                 color: #989898;
             }
         }
         .main {
             &__number {
-                transition: all $theme-transition ease 0s;
                 color: #e1e1e1;
                 span {
-                    transition: all $theme-transition ease 0s;
                     color: #989898;
                 }
             }
         }
         .statistic__list li .statistic_info {
-            transition: all $theme-transition ease 0s;
             color: #e1e1e1;
         }
         .container-chart {
@@ -510,14 +521,12 @@ body {
                 g {
                     g {
                         &.tick {
-                            transition: all $theme-transition ease 0s;
                             color: #606060;
                         }
                     }
                 }
             }
             .tooltip {
-                transition: all $theme-transition ease 0s;
                 background: rgba(40, 57, 85, 0.65);
                 &.complexity {
                     background: #152d4f;
@@ -528,11 +537,9 @@ body {
                     }
                 }
                 .tooltip-wrapper {
-                    transition: all $theme-transition ease 0s;
                     background: rgba(40, 57, 85, 0.65);
                     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
                     span {
-                        transition: all $theme-transition ease 0s;
                         color: #cacaca;
                     }
                 }
@@ -541,7 +548,6 @@ body {
         .profile__body-block {
             .description {
                 &:last-child {
-                    transition: all $theme-transition ease 0s;
                     color: #e1e1e1;
                 }
             }
@@ -550,7 +556,6 @@ body {
             .row {
                 &-main {
                     td {
-                        transition: all $theme-transition ease 0s;
                         color: #7994ca;
                         background: transparent;
                     }
@@ -558,7 +563,6 @@ body {
                 &-income {
                     td {
                         span {
-                            transition: all $theme-transition ease 0s;
                             color: #989898 !important;
                         }
                     }
@@ -566,17 +570,14 @@ body {
             }
             tbody {
                 td {
-                    transition: all $theme-transition ease 0s;
                     background: #0b1621;
                     &.main__number {
-                        transition: all $theme-transition ease 0s;
                         color: #989898;
                     }
                 }
             }
             thead {
                 .description {
-                    transition: all $theme-transition ease 0s;
                     color: #606060;
                 }
             }
@@ -585,18 +586,15 @@ body {
             &__block {
                 .title.headline,
                 .text-b {
-                    transition: all $theme-transition ease 0s;
                     color: #cacaca;
                 }
             }
             &_row {
-                transition: all $theme-transition ease 0s;
                 background: #101d2b;
                 color: #989898;
                 box-shadow: 0 4px 10px rgba(35, 38, 63, 0.15);
             }
             &_button {
-                transition: all $theme-transition ease 0s;
                 fill: #989898;
             }
         }
@@ -604,7 +602,6 @@ body {
             .title {
                 .wallets {
                     &__filter {
-                        transition: all $theme-transition ease 0s;
                         background: transparent !important;
                         color: #989898;
                         &:after {
@@ -618,31 +615,24 @@ body {
             }
             &__block {
                 &-wallet {
-                    transition: all $theme-transition ease 0s;
                     background: #101d2b;
                 }
                 &_name {
-                    transition: all $theme-transition ease 0s;
                     border-bottom: 1px solid #333639;
                     span {
-                        transition: all $theme-transition ease 0s;
                         color: #cacaca;
                     }
                 }
                 &_doths {
                     div {
-                        transition: all $theme-transition ease 0s;
                         background: #c5c5c5;
                     }
                 }
                 .main__number {
-                    transition: all $theme-transition ease 0s;
                     color: #818c99;
                     .row {
-                        transition: all $theme-transition ease 0s;
                         color: #818c99;
                         span {
-                            transition: all $theme-transition ease 0s;
                             color: #818c99;
                         }
                     }
@@ -674,38 +664,31 @@ body {
             }
             &__slides {
                 a {
-                    transition: all $theme-transition ease 0s;
                     color: #606060 !important;
                     &.active {
-                        transition: all $theme-transition ease 0s;
                     }
                 }
             }
             &__button {
-                transition: all $theme-transition ease 0s;
                 background: #0b1621;
                 svg {
-                    transition: all $theme-transition ease 0s;
                     stroke: #606060;
                 }
             }
         }
         .popup {
             &__content {
-                transition: all $theme-transition ease 0s;
                 background: #0b1015;
                 box-shadow: 0 10px 10px rgba(16, 16, 16, 0.12);
             }
             &__close {
                 svg {
-                    transition: all $theme-transition ease 0s;
                     fill: #333639;
                 }
             }
         }
         .form {
             h3 {
-                transition: all $theme-transition ease 0s;
                 color: #e1e1e1 !important;
             }
             @keyframes error1Placeholder {
@@ -757,6 +740,9 @@ body {
                     &_link {
                         color: #3f7bdd;
                     }
+                    &_message {
+                        background: transparent;
+                    }
                 }
                 input[type="checkbox"] {
                     & + label {
@@ -781,454 +767,17 @@ body {
             }
         }
         .input {
-            transition: all $theme-transition ease 0s;
             background: #161b20;
             color: #e1e1e1;
             &::placeholder {
-                transition: all $theme-transition ease 0s;
                 color: #e1e1e1;
             }
             &:disabled {
-                transition: all $theme-transition ease 0s;
                 color: #989898;
             }
         }
         .main__label {
-            transition: all $theme-transition ease 0s;
             color: #989898;
         }
-    }
-    .search {
-        input {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .blue-button {
-        &.add {
-            svg {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .faq {
-        .section__block-light {
-            transition: all $theme-transition ease 0s;
-        }
-        .accordion_title svg path {
-            transition: all $theme-transition ease 0s;
-        }
-        .accordion {
-            &:not(:last-child) {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-        &_title {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    #app {
-        .checkbox {
-            transition: all $theme-transition ease 0s;
-        }
-        .app_back {
-            &::before {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    nav {
-        &.nav {
-            &__container {
-                .back {
-                    transition: all $theme-transition ease 0s;
-                    &_link {
-                        transition: all $theme-transition ease 0s;
-                        svg {
-                            transition: all $theme-transition ease 0s;
-                        }
-                    }
-                }
-                &:before {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-    }
-    .description {
-        transition: all $theme-transition ease 0s;
-        &-xs {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .subtitle {
-        transition: all $theme-transition ease 0s;
-    }
-    .info {
-        .card {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    h3.title {
-        transition: all $theme-transition ease 0s;
-    }
-    h4.title {
-        transition: all $theme-transition ease 0s;
-    }
-    .button {
-        &-blue {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .interface {
-        &__content {
-            .list {
-                &_icon {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-    }
-    .section {
-        &__block {
-            transition: all $theme-transition ease 0s;
-            &-light {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .no-info {
-        transition: all $theme-transition ease 0s;
-    }
-    .input {
-        &-lg {
-            transition: all $theme-transition ease 0s;
-            &::placeholder {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    @media (max-width: 991.98px) {
-        .nav {
-            &__menu {
-                &_item {
-                    padding: 0 10px;
-                    display: inline-flex;
-                    align-items: center;
-                }
-            }
-        }
-    }
-    .quote {
-        transition: all $theme-transition ease 0s;
-    }
-    .contacts {
-        &_item {
-            a {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .socials {
-        &_link {
-            transition: all $theme-transition ease 0s;
-            svg {
-                transition: all $theme-transition ease 0s;
-            }
-            &:after {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .platform-c__title {
-        &.title-blue {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .home-im__content_item {
-        .subtitle-value {
-            transition: all $theme-transition ease 0s;
-            span {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-        &:last-child {
-            .subtitle-value {
-                span {
-                    &:last-child {
-                        transition: all $theme-transition ease 0s;
-                    }
-                }
-            }
-        }
-    }
-    .nav-tabs {
-        &__tab {
-            transition: color $theme-transition ease 0s,
-                background $theme-transition ease 0s;
-            &.router-link-active {
-                transition: color $theme-transition ease 0s,
-                    background $theme-transition ease 0s;
-            }
-        }
-        &_link-back {
-            transition: background $theme-transition ease 0s;
-            svg {
-                transition: stroke $theme-transition ease 0s;
-            }
-        }
-    }
-    .cabinet {
-        &_title {
-            .checkbox {
-                transition: all $theme-transition ease 0s;
-                &:after {
-                    transition: all $theme-transition ease 0s;
-                }
-                &:before {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-        &__block {
-            &-light {
-                transition: all $theme-transition ease 0s;
-            }
-            .title {
-                &-blue {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-        &_button {
-            transition: all $theme-transition ease 0s;
-            &.active {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .title {
-        &.headline {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .main {
-        &__number {
-            transition: all $theme-transition ease 0s;
-            span {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .statistic__list li .statistic_info {
-        transition: all $theme-transition ease 0s;
-    }
-    .container-chart {
-        svg {
-            g {
-                g {
-                    &.tick {
-                        transition: all $theme-transition ease 0s;
-                    }
-                }
-            }
-        }
-        .tooltip {
-            transition: all $theme-transition ease 0s;
-            .tooltip-wrapper {
-                transition: all $theme-transition ease 0s;
-                span {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-    }
-    .profile__body-block {
-        .description {
-            &:last-child {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .table {
-        .row {
-            &-main {
-                td {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-            &-income {
-                td {
-                    span {
-                        transition: all $theme-transition ease 0s;
-                    }
-                }
-            }
-        }
-        tbody {
-            td {
-                transition: all $theme-transition ease 0s;
-                &.main__number {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-        thead {
-            .description {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .copy {
-        &__block {
-            .title.headline,
-            .text-b {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-        &_row {
-            transition: all $theme-transition ease 0s;
-        }
-        &_button {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .wallets {
-        .title {
-            .wallets {
-                &__filter {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-        &__block {
-            &-wallet {
-                transition: all $theme-transition ease 0s;
-            }
-            &_name {
-                transition: all $theme-transition ease 0s;
-                span {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-            &_doths {
-                div {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-            .main__number {
-                transition: all $theme-transition ease 0s;
-                .row {
-                    transition: all $theme-transition ease 0s;
-                    span {
-                        transition: all $theme-transition ease 0s;
-                    }
-                }
-            }
-        }
-    }
-    .slider {
-        &__nav {
-            &_info {
-                transition: all $theme-transition ease 0s;
-            }
-            &-rows {
-                transition: all $theme-transition ease 0s;
-                input {
-                    transition: all $theme-transition ease 0s;
-                }
-                &__buttons {
-                    &:before {
-                        transition: all $theme-transition ease 0s;
-                    }
-                    svg {
-                        transition: all $theme-transition ease 0s;
-                        &:hover {
-                            transition: all $theme-transition ease 0s;
-                        }
-                    }
-                }
-            }
-        }
-        &__slides {
-            a {
-                transition: all $theme-transition ease 0s;
-                &.active {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-        &__button {
-            transition: all $theme-transition ease 0s;
-            svg {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .popup {
-        &__content {
-            transition: all $theme-transition ease 0s;
-        }
-        &__close {
-            svg {
-                transition: all $theme-transition ease 0s;
-            }
-        }
-    }
-    .form {
-        h3 {
-            transition: all $theme-transition ease 0s;
-        }
-        &-auth {
-            .form {
-                &_row {
-                    &.error {
-                        .input {
-                            transition: all $theme-transition ease 0s;
-                        }
-                        svg {
-                            transition: all $theme-transition ease 0s;
-                        }
-                    }
-                    svg {
-                        transition: all $theme-transition ease 0s;
-                    }
-                }
-                &_link {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-            input[type="checkbox"] {
-                & + label {
-                    transition: all $theme-transition ease 0s;
-                    &:before {
-                        transition: all $theme-transition ease 0s;
-                    }
-                    svg {
-                        transition: all $theme-transition ease 0s;
-                    }
-                }
-            }
-            .text {
-                transition: all $theme-transition ease 0s;
-            }
-            .input {
-                transition: all $theme-transition ease 0s;
-                &::placeholder {
-                    transition: all $theme-transition ease 0s;
-                }
-            }
-        }
-    }
-    .input {
-        transition: all $theme-transition ease 0s;
-        &::placeholder {
-            transition: all $theme-transition ease 0s;
-        }
-        &:disabled {
-            transition: all $theme-transition ease 0s;
-        }
-    }
-    .main__label {
-        transition: all $theme-transition ease 0s;
     }
 }

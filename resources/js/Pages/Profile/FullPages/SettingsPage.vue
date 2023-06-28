@@ -54,7 +54,7 @@
             </div>
             <div class="settings__column">
                 <div class="cabinet__block cabinet__block-light">
-                    <span class="text"
+                    <span class="text text-black text-b"
                         >{{
                             this.$t(
                                 "settings.block.settings_block.income.title"
@@ -100,21 +100,6 @@
                         </blue-button>
                     </div>
                 </div>
-                <!--                <main-title class="headline" tag="h4">{{-->
-                <!--                    $t("settings.block.titles[1]")-->
-                <!--                }}</main-title>-->
-                <!--                    <settings-block-->
-                <!--                        data-remove-->
-                <!--                        :val="this.sms"-->
-                <!--                        name="СМС авторизация"-->
-                <!--                        text="Включив его, вы сможете войти в систему с помощью SMS. Но в целях безопасности в некоторых случаях вы можете включить его."-->
-                <!--                    ></settings-block>-->
-                <!--                    <settings-block-->
-                <!--                        data-remove-->
-                <!--                        :val="this.fac"-->
-                <!--                        name="2х факторная аутентификация"-->
-                <!--                        text="Двухфакторная аутентификация добавляет дополнительный уровень безопасности вашей учетной записи."-->
-                <!--                    ></settings-block>-->
             </div>
         </div>
     </div>
@@ -445,12 +430,18 @@ export default {
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
+                .blue-button {
+                    border-radius: 8px;
+                }
                 .text {
                     &:first-child {
                         display: flex;
                         justify-content: space-between;
                         width: 100%;
                         align-items: center;
+                        @media (max-width: 479.98px) {
+                            font-size: 16px;
+                        }
                         .success {
                             display: inline-flex;
                             gap: 8px;

@@ -73,7 +73,7 @@
                     $t("accounts.block.titles[2]")
                 }}</span>
                 <span class="description description-xs">
-                    {{ todayProfit }} BTC</span
+                    {{ todayEarn }} BTC</span
                 >
             </div>
             <div class="profile__body-block">
@@ -89,16 +89,14 @@
 </template>
 <script>
 import { router } from "@inertiajs/vue3";
-import MainMenu from "@/Components/UI/MainMenu.vue";
 import { mapGetters } from "vuex";
+
+import { Profit } from "@/Scripts/profit";
+
 export default {
     emits: ["changeActive", "click"],
-    components: {
-        MainMenu,
-    },
     props: {
         accountInfo: Object,
-        profit: Object,
     },
     data() {
         return {
@@ -127,7 +125,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["getActive"]),
+        ...mapGetters(["getActive", "btcInfo"]),
         options() {
             return [
                 {
@@ -185,12 +183,19 @@ export default {
                 },
             ];
         },
-        todayProfit() {
-            if (isNaN(this.profit[this.accountInfo.id])) {
-                return "0.00000000";
-            } else {
-                return Number(this.profit[this.accountInfo.id]).toFixed(8);
+        todayEarn() {
+            if (this.btcInfo) {
+                if (this.accountInfo) {
+                    let val = new Profit(
+                        this.accountInfo.shares1d,
+                        this.btcInfo.btc.fpps,
+                        this.btcInfo.btc.diff,
+                        this.btcInfo.btc.reward
+                    );
+                    return val.amount().toFixed(8);
+                }
             }
+            return 0;
         },
         myPayment() {
             return Number(this.account.myPayment).toFixed(8);

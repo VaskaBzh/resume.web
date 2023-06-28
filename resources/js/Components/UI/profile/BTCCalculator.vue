@@ -2,7 +2,7 @@
     <div class="BTC__block">
         <span class="text text-md">{{ title }}</span>
         <div class="BTC__value text text-md text-blue">
-            <b>{{ clearBTC.toFixed(8) }} BTC</b>
+            <b>{{ Number(clearBTC).toFixed(8) }} BTC</b>
             <span class="text text-md">{{ dollarCalc.toFixed(2) }} $</span>
             <span class="text text-md" v-if="this.$i18n.locale === 'ru'"
                 >{{ rubleCalc.toFixed(2) }} ₽</span
