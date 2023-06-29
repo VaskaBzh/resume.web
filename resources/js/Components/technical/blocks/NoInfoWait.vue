@@ -12,7 +12,7 @@
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <g>
+                <g opacity="0.5">
                     <path
                         d="M79.9996 54.0179C79.9996 57.3108 78.422 60.5404 75.4708 62.5246C70.773 65.6979 64.3988 64.4666 61.2152 59.7664L54.6509 50.0425H54.6438L54.6157 49.9932L54.3339 49.5781C53.3408 48.1146 52.1505 46.8269 50.7982 45.7575C50.7771 45.7363 50.77 45.7223 50.7419 45.7012C50.7207 45.6801 50.7066 45.673 50.6855 45.666C47.9245 43.4988 44.5297 42.2042 40.9658 42.0001C40.6488 41.979 40.3319 41.972 40.0009 41.972C39.3106 41.972 38.6133 42.0072 37.9301 42.0986H37.9231C36.0637 42.3308 34.0775 42.9289 32.4082 43.717C32.5491 43.6185 32.8942 43.4566 33.0491 43.3722C38.6274 40.2622 47.6851 38.074 58.1373 38.074H58.9825C66.6949 38.074 73.9213 41.9016 78.2318 48.2975C79.4291 50.0425 79.9996 52.0407 79.9996 54.0179Z"
                         fill="url(#paint0_linear_117_1027)"
@@ -50,7 +50,6 @@
                 </defs>
             </svg>
 
-            <span>{{ progressPercentage }}%</span>
             <svg
                 class="preloader"
                 width="75"
@@ -95,73 +94,13 @@
             </svg>
         </div>
     </div>
-    <div v-scroll="'opacity'" class="no-info" v-if="empty && !wait">
-        <img src="../../../../assets/img/img_no-info.webp" alt="no_info" />
-        <span>{{ $t("no_info") }}</span>
-    </div>
 </template>
 
 <script>
 export default {
-    name: "no-info",
+    name: "no-info-wait",
     props: {
         wait: Boolean,
-        end: Boolean,
-        empty: {
-            type: Boolean,
-            default: false,
-        },
-        interval: {
-            type: Number,
-            default: 15,
-        },
-    },
-    data() {
-        return {
-            progressPercentage: 0,
-            intervalId: null,
-        };
-    },
-    watch: {
-        end: {
-            deep: true,
-            handler(val) {
-                if (val) {
-                    clearInterval(this.intervalId);
-                    this.intervalId = setInterval(() => {
-                        if (this.progressPercentage < 100) {
-                            this.progressPercentage += 1;
-                        } else {
-                            clearInterval(this.intervalId);
-                        }
-                    }, 200 / (100 - this.progressPercentage));
-                }
-            },
-        },
-        progressPercentage: {
-            deep: true,
-            handler(val) {
-                if (this.progressPercentage >= 79) {
-                    this.intervalId = setInterval(() => {
-                        if (val < 98) {
-                            this.progressPercentage += 1;
-                        }
-                    }, 500);
-                }
-            },
-        },
-    },
-    created() {
-        this.intervalId = setInterval(() => {
-            if (this.progressPercentage < 80) {
-                this.progressPercentage += 1;
-            } else {
-                clearInterval(this.intervalId);
-            }
-        }, this.interval);
-    },
-    beforeUnmount() {
-        clearInterval(this.intervalId);
     },
 };
 </script>
@@ -176,10 +115,7 @@ export default {
     transition: all 1.5s ease 0s;
     &.no-bg {
         background: transparent !important;
-    }
-    img {
-        width: 150px;
-        height: 150px;
+        box-shadow: none;
     }
 }
 </style>

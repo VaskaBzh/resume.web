@@ -37,7 +37,9 @@
                 </div>
             </div>
             <div
-                class="wrap_row" v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'">
+                class="wrap_row"
+                v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'"
+            >
                 <div
                     ref="block"
                     @click="this.visualType = 'block'"
@@ -58,67 +60,56 @@
                 </div>
             </div>
         </div>
-        <div class="no-info" v-if="this.bool">
-            <div class="propeller"></div>
-        </div>
-        <div class="no-info" v-else-if="this.boolFalse">
-            <img src="../../../assets/img/img_no-info.webp" alt="no_info" />
-            <span>{{ $t("no_info") }}</span>
-        </div>
-        <div
-            class="cabinet__block-scroll"
-            v-else-if="
-                (this.title === 'Воркеры' && this.visualType === 'block') ||
-                (this.type === 'Воркеры' && this.visualType === 'block')
-            "
-        >
+        <no-info
+            :wait="waitTable"
+            :interval="120"
+            :end="endTable"
+            :empty="emptyTable"
+        ></no-info>
+        <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
             <workers-table
+                v-if="
+                    (this.title === 'Воркеры' && this.visualType === 'block') ||
+                    (this.type === 'Воркеры' && this.visualType === 'block')
+                "
                 :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 @graph_render="this.graphRender"
             />
-        </div>
-        <div
-            class="cabinet__block-scroll"
-            v-else-if="this.title === 'Воркеры' || this.type === 'Воркеры'"
-        >
             <workers-table
+                v-else-if="this.title === 'Воркеры' || this.type === 'Воркеры'"
                 :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 @graph_render="this.graphRender"
             />
-        </div>
-        <div
-            class="cabinet__block-scroll"
-            v-else-if="this.first >= 0 && this.visualType === 'block'"
-        >
             <payment-table
+                v-else-if="this.first >= 0 && this.visualType === 'block'"
                 :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 :first="this.first"
                 :rows-val="this.rowsVal"
             />
-        </div>
-        <div class="cabinet__block-scroll" v-else-if="this.first >= 0">
             <payment-table
+                v-else-if="this.first >= 0"
                 :key="this.boolFalse + this.allIncomeHistory"
                 :table="this.table"
                 :visualType="this.visualType"
                 :first="this.first"
                 :rows-val="this.rowsVal"
             />
-        </div>
-        <div
-            class="cabinet__block-scroll"
-            v-else-if="this.visualType === 'block'"
-        >
-            <payment-table :table="this.table" :visualType="this.visualType" />
-        </div>
-        <div class="cabinet__block-scroll" v-else>
-            <payment-table :table="this.table" :visualType="this.visualType" />
+            <payment-table
+                v-else-if="this.visualType === 'block'"
+                :table="this.table"
+                :visualType="this.visualType"
+            />
+            <payment-table
+                v-else
+                :table="this.table"
+                :visualType="this.visualType"
+            />
         </div>
         <Link
             class="main__link"
@@ -141,10 +132,11 @@ import PaymentTable from "@/Components/tables/PaymentTable.vue";
 import MainTitle from "@/components/UI/MainTitle.vue";
 import WorkersTable from "@/Components/tables/WorkersTable.vue";
 import { mapGetters } from "vuex";
+import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 
 export default {
+    components: { WorkersTable, MainTitle, PaymentTable, Link, NoInfo },
     emits: ["graph_render"],
-    components: { WorkersTable, MainTitle, PaymentTable, Link },
     props: {
         table: Object,
         legend: Boolean,
@@ -164,10 +156,17 @@ export default {
             viewportWidth: 0,
             index: localStorage.active,
             accounts: [],
+            waitTable: true,
         };
     },
     computed: {
-        ...mapGetters(["allIncomeHistory"]),
+        ...mapGetters(["allIncomeHistory", "getActive"]),
+        endTable() {
+            return this.wait[this.getActive];
+        },
+        emptyTable() {
+            return this.wait[this.getActive]?.length === 0;
+        },
         bool() {
             if (!this.boolFalse) {
                 return this.table.rows.length === 0;
@@ -257,6 +256,16 @@ export default {
     },
     mounted() {
         this.vsType();
+        if (this.wait[this.getActive]) this.waitTable = false;
+    },
+    watch: {
+        wait: {
+            deep: true,
+            handler(val) {
+                if (val[this.getActive])
+                    setTimeout(() => (this.waitTable = false), 300);
+            },
+        },
     },
     updated() {
         this.vsType();

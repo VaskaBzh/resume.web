@@ -10,10 +10,7 @@
             <!--                <blue-button class="wallets__button wallets__button-history">-->
             <!--                    <Link :href="route('income')"> Доходы </Link>-->
             <!--                </blue-button>-->
-            <main-checkbox
-                class="wallets__filter"
-                @is_checked="checkboxer"
-            >
+            <main-checkbox class="wallets__filter" @is_checked="checkboxer">
                 {{ $t("wallets.block.filter") }}
             </main-checkbox>
             <blue-button class="add" data-popup="#addWallet">
@@ -39,15 +36,12 @@
         </main-title>
         <div ref="wallets" class="wrap">
             <no-info
-                ref="noInfo"
-                :wait="getWallet"
-                :empty="wallets"
+                :wait="waitWallet"
+                :interval="70"
+                :end="endWallet"
+                :empty="emptyWallet"
             ></no-info>
-            <div
-                ref="list"
-                class="wallets__list"
-                v-if="wallets.length > 0"
-            >
+            <div ref="list" class="wallets__list" v-if="!waitWallet">
                 <wallet-block
                     v-for="(wallet, i) in wallets"
                     :key="i"
@@ -60,11 +54,7 @@
         </div>
     </div>
     <main-popup id="changeWallet" :wait="wait" :closed="closed">
-        <div
-            v-for="(error, i) in errs"
-            :key="i"
-            class="form_wrapper-message"
-        >
+        <div v-for="(error, i) in errs" :key="i" class="form_wrapper-message">
             <div class="form_message" v-if="error">
                 <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -374,6 +364,12 @@ export default {
             }
             return arr;
         },
+        endWallet() {
+            return this.wallets.length > 0;
+        },
+        emptyWallet() {
+            return this.wallets.length === 0;
+        },
     },
     created() {
         window.addEventListener("resize", this.handleResize);
@@ -387,6 +383,7 @@ export default {
             err: {},
             mess: "",
             wait: false,
+            waitWallet: true,
             form: {
                 name: "",
                 wallet: "",
@@ -530,9 +527,14 @@ export default {
             this.viewportWidth = window.innerWidth;
         },
     },
+    beforeUpdate() {
+        if (this.wallets.length > 0)
+            setTimeout(() => (this.waitWallet = false), 300);
+    },
     mounted() {
         document.title = "Кошельки";
         this.$refs.page.style.opacity = 1;
+        if (this.wallets.length > 0) this.waitWallet = false;
     },
     props: ["errors", "message", "user", "auth_user"],
 };

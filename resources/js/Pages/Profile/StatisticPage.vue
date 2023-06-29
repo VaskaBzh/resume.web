@@ -8,12 +8,17 @@
                 <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
                 <!--                >-->
             </main-title>
+            <no-info
+                :wait="waitHistory"
+                :interval="80"
+                :end="endHistory"
+            ></no-info>
             <div
                 class="cabinet"
                 v-if="
-                    this.allHistory[this.getActive] &&
-                    this.allHistory[this.getActive]?.filter((a) => a.hash > 0)
-                        .length !== 0
+                    !waitHistory &&
+                    allHistory[getActive]?.filter((a) => a.hash > 0).length !==
+                        0
                 "
             >
                 <div class="cabinet__head">
@@ -35,11 +40,12 @@
                 <div
                     class="cabinet__block cabinet__block-graph cabinet__block-light"
                 >
-                    <div class="no-info no-bg" v-if="id !== val">
-                        <div class="propeller"></div>
-                    </div>
+                    <no-info-wait
+                        class="no-bg"
+                        :wait="id !== val"
+                    ></no-info-wait>
                     <statistic-chart
-                        v-else
+                        v-if="id === val"
                         class="no-title"
                         :val="val"
                         :graphs="graphs"
@@ -48,7 +54,14 @@
                     />
                 </div>
             </div>
-            <div class="cabinet" v-else>
+            <div
+                class="cabinet"
+                v-if="
+                    endHistory &&
+                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
+                        0
+                "
+            >
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>
@@ -65,7 +78,7 @@
                 <div class="statistic__row">
                     <div
                         class="cabinet__block cabinet__block-light hash__block"
-                        v-if="Object.values(this.allAccounts).length > 0"
+                        v-if="!waitAccounts"
                     >
                         <Link class="title title-blue" :href="route(`workers`)"
                             >{{ $t("statistic.info_blocks.workers.title") }}
@@ -125,9 +138,11 @@
                             </li>
                         </ul>
                     </div>
-                    <div class="no-info" v-else>
-                        <div class="propeller"></div>
-                    </div>
+                    <no-info
+                        :wait="waitAccounts"
+                        :interval="50"
+                        :end="endAccounts"
+                    ></no-info>
                     <div
                         class="statistic__info cabinet__block cabinet__block-light"
                     >
@@ -205,6 +220,8 @@ import { mapGetters } from "vuex";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
+import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
+import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 
 import { Profit } from "/resources/js/Scripts/profit.js";
 
@@ -219,10 +236,14 @@ export default {
         BlueButton,
         BtcCalculator,
         MainCheckbox,
+        NoInfoWait,
+        NoInfo,
     },
     layout: profileLayoutView,
     data() {
         return {
+            waitHistory: true,
+            waitAccounts: true,
             viewportWidth: 0,
             profit: {},
             linkAddress: "btc.all-btc.com:4444",
@@ -257,8 +278,6 @@ export default {
                     rows: [],
                 },
             },
-            active: false,
-            hover: false,
             activeHistory: null,
             all: false,
         };
@@ -268,25 +287,27 @@ export default {
         this.handleResize();
     },
     computed: {
+        endHistory() {
+            return !!this.allHistory[this.getActive];
+        },
+        endAccounts() {
+            return !!this.allAccounts[this.getActive];
+        },
         clearProfitDay() {
-            let val = 0;
             if (this.btcInfo) {
                 if (this.allAccounts[this.getActive]) {
-                    val = Number(this.clearProfit);
-                    val = val / 30;
+                    return Number(this.clearProfit) / 30;
                 }
             }
-            return val;
+            return 0;
         },
         clearBTCMounth() {
-            let val = 0;
             if (this.btcInfo) {
                 if (this.allAccounts[this.getActive]) {
-                    val = this.todayEarn;
-                    val = val * 30;
+                    return this.todayEarn * 30;
                 }
             }
-            return val;
+            return 0;
         },
         copyObject() {
             return [
@@ -308,23 +329,17 @@ export default {
             ];
         },
         workers() {
-            let obj = {
-                hash: 0,
-                hash24: 0,
-                active: 0,
-                unStable: 0,
-                inActive: 0,
-                all: 0,
-            };
             if (Object.values(this.allAccounts).length > 0) {
-                obj.hash = this.allAccounts[this.getActive].shares1m;
-                obj.hash24 = this.allAccounts[this.getActive].shares1d;
-                obj.active = this.allAccounts[this.getActive].workersActive;
-                obj.unStable = this.allAccounts[this.getActive].workersDead;
-                obj.inActive = this.allAccounts[this.getActive].workersInActive;
-                obj.all = this.allAccounts[this.getActive].workersAll;
+                return {
+                    hash: this.allAccounts[this.getActive].shares1m,
+                    hash24: this.allAccounts[this.getActive].shares1d,
+                    active: this.allAccounts[this.getActive].workersActive,
+                    unStable: this.allAccounts[this.getActive].workersDead,
+                    inActive: this.allAccounts[this.getActive].workersInActive,
+                    all: this.allAccounts[this.getActive].workersAll,
+                };
             }
-            return obj;
+            return null;
         },
         todayEarn() {
             if (this.btcInfo) {
@@ -439,6 +454,9 @@ export default {
                 unit: unit.reverse(),
             });
 
+            setTimeout(() => {
+                this.end = true;
+            }, 10);
             setTimeout(this.changeId, 700);
         },
     },
@@ -447,84 +465,25 @@ export default {
         if (this.allHistory[this.getActive]) {
             this.setActive();
             this.renderChart();
+            this.waitHistory = false;
         }
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }
+        if (this.allAccounts[this.getActive]) this.waitAccounts = false;
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
             this.setActive();
             this.renderChart();
+            setTimeout(() => (this.waitHistory = false), 300);
         }
+        if (this.allAccounts[this.getActive])
+            setTimeout(() => (this.waitAccounts = false), 300);
     },
 };
 </script>
 <style lang="scss" scoped>
-//.hover {
-//    background: rgba(#4182ec, 0.4);
-//    border-radius: 21px;
-//    position: absolute;
-//    left: 0;
-//    top: 0;
-//    display: flex;
-//    align-items: center;
-//    justify-content: center;
-//    width: 100%;
-//    height: 100%;
-//    transition: all 0.3s ease 0s;
-//    opacity: 0;
-//    box-shadow: 0 0 6px 4px rgba(#4182ec, 0.4);
-//    -webkit-backdrop-filter: blur(1.5px);
-//    backdrop-filter: blur(1.5px);
-//    &.hover_event {
-//        opacity: 1;
-//    }
-//    &.active {
-//        opacity: 1;
-//        .hover {
-//            &_wrap {
-//                background: #4182ec;
-//                svg {
-//                    path {
-//                        &:nth-child(1) {
-//                            transform: translate(1px, -1px);
-//                        }
-//                        &:nth-child(2) {
-//                            transform: translate(1px, -1px);
-//                        }
-//                        &:nth-child(3) {
-//                            transform: translate(-1px, 1px);
-//                        }
-//                        &:nth-child(4) {
-//                            transform: translate(-1px, 1px);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    &_wrap {
-//        background: rgba(#000034, 0.6);
-//        border-radius: 14px;
-//        padding: 6px;
-//        transition: all 0.3s ease 0s;
-//
-//        svg {
-//            min-width: 30px;
-//            height: 30px;
-//
-//            path {
-//                fill: #fff;
-//                transition: all 0.3s ease 0s;
-//            }
-//
-//            @media (min-width: 479.98px) {
-//                display: none;
-//            }
-//        }
-//    }
-//}
 .statistic {
     &__row {
         display: grid;
@@ -607,242 +566,6 @@ export default {
             }
         }
     }
-    //.wrap {
-    //    overflow: visible;
-    //    .title {
-    //        width: 100%;
-    //    }
-    //    &__row,
-    //    &_list {
-    //        display: flex;
-    //        flex-direction: column;
-    //        .wrap_title,
-    //        a {
-    //            margin-bottom: 0;
-    //            margin-top: 0;
-    //            font-weight: 400;
-    //            font-size: 20px;
-    //            line-height: 23px;
-    //            text-align: left;
-    //            font-family: AmpleSoftPro, serif;
-    //            @media (max-width: 479.98px) {
-    //                font-size: 16px;
-    //                line-height: 20px;
-    //            }
-    //            @media (max-width: 320.98px) {
-    //                font-weight: 500;
-    //                font-size: 16px;
-    //                line-height: 18px;
-    //            }
-    //        }
-    //        .wrap_hash,
-    //        li {
-    //            color: #000034;
-    //            font-weight: 500;
-    //            font-size: 18px;
-    //            line-height: 26px;
-    //            @media (max-width: 479.98px) {
-    //                font-size: 16px;
-    //                line-height: 16px;
-    //            }
-    //            span {
-    //                font-weight: 400;
-    //                font-size: 16px;
-    //                line-height: 23px;
-    //                //margin-top: auto
-    //                @media (max-width: 479.98px) {
-    //                    font-size: 16px;
-    //                    line-height: 16px;
-    //                }
-    //                @media (max-width: 320.98px) {
-    //                    font-size: 16px;
-    //                    line-height: 18px;
-    //                }
-    //            }
-    //        }
-    //    }
-    //    &__row {
-    //        gap: 8px;
-    //        @media (max-width: 991.98px) {
-    //            gap: 4px;
-    //        }
-    //    }
-    //    &__head {
-    //        gap: 8px;
-    //        .buttons {
-    //            display: flex;
-    //            align-items: center;
-    //            gap: 8px;
-    //            @media (max-width: 767.98px) {
-    //                gap: 1px;
-    //                position: absolute;
-    //                top: calc(100% + 40px);
-    //                left: 0;
-    //                width: 100%;
-    //            }
-    //        }
-    //        .button {
-    //            white-space: nowrap;
-    //            padding: 2px 12px;
-    //            border-radius: 16px;
-    //            min-height: 36px;
-    //            color: #99acd3;
-    //            font-weight: 400;
-    //            font-size: 17px;
-    //            line-height: 20px;
-    //            background: transparent;
-    //            width: fit-content;
-    //            transition: all 0.3s ease 0s;
-    //            @media (max-width: 767.98px) {
-    //                border-radius: 12px;
-    //                padding: 2px 20px;
-    //                font-weight: 400;
-    //                font-size: 16px;
-    //                line-height: 18px;
-    //                min-height: 26px;
-    //            }
-    //            @media (max-width: 479.98px) {
-    //                font-size: 16px;
-    //                line-height: 18px;
-    //            }
-    //            &.active {
-    //                color: #181847;
-    //                background: #ffffff;
-    //            }
-    //        }
-    //        .title {
-    //            @media (max-width: 767.98px) {
-    //                margin-bottom: 8px;
-    //            }
-    //        }
-    //        &-graph {
-    //            align-items: center;
-    //            grid-column-start: 1;
-    //            grid-column-end: 3;
-    //            position: relative;
-    //            .title {
-    //                margin-bottom: 0;
-    //                &:after {
-    //                    content: none;
-    //                }
-    //            }
-    //            @media (max-width: 767.98px) {
-    //                grid-column-end: 2;
-    //                margin-bottom: calc(26px + 48px);
-    //                &:after {
-    //                    content: "";
-    //                    height: 1px;
-    //                    position: absolute;
-    //                    bottom: -20px;
-    //                    left: 0;
-    //                    width: 100%;
-    //                    background-color: #d7d8d9;
-    //                }
-    //            }
-    //            @media (max-width: 479.98px) {
-    //                flex-wrap: wrap;
-    //            }
-    //        }
-    //    }
-    //    &_list {
-    //        gap: 4px;
-    //        li {
-    //            display: inline-flex;
-    //            align-items: center;
-    //            gap: 8px;
-    //            span {
-    //                display: inline-flex;
-    //                gap: 4px;
-    //                align-items: center;
-    //            }
-    //        }
-    //    }
-    //    &__block {
-    //        min-height: 325px;
-    //        overflow: visible;
-    //        &:not(.wrap__column) {
-    //            min-height: 0;
-    //            @media (min-width: 991.98px) {
-    //                align-items: center;
-    //            }
-    //        }
-    //        &:not(.wrap__block-graph) {
-    //            &:last-child {
-    //                @media (max-width: 998.98px) {
-    //                    flex-direction: column;
-    //                }
-    //                @media (max-width: 767.98px) {
-    //                    flex-direction: row;
-    //                }
-    //            }
-    //        }
-    //        &-connect {
-    //            width: 100%;
-    //            height: 100%;
-    //            padding: 0 0 4px 12px;
-    //            .title {
-    //                margin-bottom: 12px;
-    //                @media (max-width: 767.98px) {
-    //                    margin-bottom: 40px;
-    //                }
-    //            }
-    //        }
-    //        @media (max-width: 767.98px) {
-    //            padding: 15px;
-    //            grid-column-start: 1;
-    //            grid-column-end: 2;
-    //            display: grid;
-    //            grid-template-columns: repeat(2, 1fr);
-    //            min-height: 100px;
-    //            &-graph {
-    //                order: 3;
-    //                position: relative;
-    //                padding: 24px !important;
-    //                display: flex;
-    //                align-items: center;
-    //                justify-content: center;
-    //                .propeller {
-    //                    margin: auto auto auto auto !important;
-    //                }
-    //            }
-    //        }
-    //        @media (max-width: 479.98px) {
-    //            min-height: 100px;
-    //            &-graph {
-    //                order: 3;
-    //                padding: 15px !important;
-    //                display: flex;
-    //                align-items: center;
-    //                justify-content: center;
-    //                .propeller {
-    //                    margin: auto auto auto auto !important;
-    //                }
-    //            }
-    //        }
-    //        .wrap {
-    //            &_head {
-    //                display: flex;
-    //                justify-content: flex-start;
-    //                flex-direction: column;
-    //                gap: 8px;
-    //                padding: 0 !important;
-    //            }
-    //        }
-    //        .propeller {
-    //            margin: auto;
-    //        }
-    //        &-graph {
-    //            padding: 24px;
-    //            &:active {
-    //                @media (max-width: 479.98px) {
-    //                    .hover {
-    //                        opacity: 1;
-    //                    }
-    //                }
-    //            }
-    //        }
-    //    }
-    //}
     &__title {
         margin-bottom: 16px;
         @media (max-width: 479.98px) {

@@ -35,10 +35,7 @@
                     </svg>
                 </blue-button>
             </main-title>
-            <div
-                class="accounts__content"
-                v-if="Object.values(allAccounts).length > 0"
-            >
+            <div class="accounts__content" v-if="!waitAccounts">
                 <account-profile
                     @getId="setId"
                     v-for="(account, i) in allAccounts"
@@ -47,7 +44,11 @@
                     :accountInfo="account"
                 />
             </div>
-            <no-info :wait="allAccounts"></no-info>
+            <no-info
+                :wait="waitAccounts"
+                :interval="50"
+                :end="endAccounts"
+            ></no-info>
         </div>
         <teleport to="body">
             <main-popup id="edit" :wait="wait" :closed="closed">
@@ -142,13 +143,22 @@ export default {
     props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
+            waitAccounts: true,
             profit: {},
             id: null,
             closed: false,
         };
     },
     computed: {
-        ...mapGetters(["allAccounts", "allHistoryForDays", "btcInfo"]),
+        ...mapGetters([
+            "allAccounts",
+            "allHistoryForDays",
+            "btcInfo",
+            "getActive",
+        ]),
+        endAccounts() {
+            return !!this.allAccounts[this.getActive];
+        },
         errs() {
             let obj = this.$page.props.errors;
             obj = Object.values(obj).filter((err) => err !== "");
@@ -200,6 +210,11 @@ export default {
     mounted() {
         document.title = "Аккаунты";
         document.querySelector("html").removeAttribute("class");
+        if (this.allAccounts[this.getActive]) this.waitAccounts = false;
+    },
+    beforeUpdate() {
+        if (this.allAccounts[this.getActive])
+            setTimeout(() => (this.waitAccounts = false), 300);
     },
 };
 </script>
