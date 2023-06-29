@@ -1,27 +1,43 @@
 .propeller {
-    width: 118px;
-    height: 118px;
+    display: flex;
+    width: 150px;
+    height: 150px;
     position: relative;
-
-    &::before {
-        content: "";
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    svg.preloader {
+        transform-origin: bottom right;
+        width: 50%;
+        height: 50%;
         position: absolute;
-        width: 118px;
-        height: 118px;
-        background-image: url("/resources/assets/img/4k.gif");
-        background-position: center;
-        background-size: cover;
-        background-repeat: no-repeat;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+        left: 0;
+        top: 0;
     }
-    @media (max-width: 767.98px) {
-        width: 100px;
-        height: 100px;
-        &::before {
-            width: 100px;
-            height: 100px;
-        }
-    }
+    //width: 118px;
+    //height: 118px;
+    //position: relative;
+    //
+    //&::before {
+    //    content: "";
+    //    position: absolute;
+    //    width: 118px;
+    //    height: 118px;
+    //    background-image: url("/resources/assets/img/4k.gif");
+    //    background-position: center;
+    //    background-size: cover;
+    //    background-repeat: no-repeat;
+    //    top: 50%;
+    //    left: 50%;
+    //    transform: translate(-50%, -50%);
+    //}
+    //@media (max-width: 767.98px) {
+    //    width: 100px;
+    //    height: 100px;
+    //    &::before {
+    //        width: 100px;
+    //        height: 100px;
+    //    }
+    //}
 }
