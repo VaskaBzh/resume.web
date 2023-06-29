@@ -12,6 +12,7 @@
                 :wait="waitHistory"
                 :interval="80"
                 :end="endHistory"
+                class="cabinet"
             ></no-info>
             <div
                 class="cabinet"
@@ -397,17 +398,43 @@ export default {
         //     if (this.allHistory[this.getActive]) {
         //         if (bool) {
         //             let allArrays = Object.values(this.allHistory);
-        //             this.activeHistory = allArrays.flat();
+        //             this.activeHistory = allArrays.reduce((a, b) => {
+        //                 let arr, another;
+        //                 if (a.length > b.length) {
+        //                     arr = a;
+        //                     another = b;
+        //                 } else {
+        //                     arr = b;
+        //                     another = a;
+        //                 }
+        //                 return arr.map((el, i) => {
+        //                     let hash = el.hash + another[i].hash || 0;
+        //                     return {
+        //                         hash: hash,
+        //                         unit:
+        //                             hash < 1000
+        //                                 ? "T"
+        //                                 : hash < 1000000
+        //                                 ? "P"
+        //                                 : "E",
+        //                         amount: el.amount + another[i].amount || 0,
+        //                     };
+        //                 });
+        //             });
         //             this.all = true;
         //         } else {
         //             this.setActive();
         //             this.all = false;
         //         }
-        //         let id = this.id;
-        //         this.changeGraph(1);
-        //         this.changeId();
-        //         this.renderChart();
-        //         this.changeGraph(id);
+        //         try {
+        //             let id = this.id;
+        //             this.changeGraph(1);
+        //             this.changeId();
+        //             this.renderChart();
+        //             this.changeGraph(id);
+        //         } catch (err) {
+        //             console.error(err);
+        //         }
         //     }
         // },
         setActive() {
@@ -474,7 +501,9 @@ export default {
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
-            this.setActive();
+            if (!this.all) {
+                this.setActive();
+            }
             this.renderChart();
             setTimeout(() => (this.waitHistory = false), 300);
         }
@@ -595,7 +624,6 @@ export default {
             }
         }
         .no-info {
-            padding: 12px;
             display: flex;
             align-items: center;
             justify-content: center;

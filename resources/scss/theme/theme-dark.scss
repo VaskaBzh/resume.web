@@ -691,26 +691,6 @@ body {
             h3 {
                 color: #e1e1e1 !important;
             }
-            @keyframes error1Placeholder {
-                from {
-                    color: #ef4e4d;
-                }
-                to {
-                    color: #989898;
-                }
-            }
-            @keyframes error1 {
-                from {
-                    color: #ef4e4d;
-                    border-color: #ef4e4d;
-                    fill: #ef4e4d;
-                }
-                to {
-                    color: #e1e1e1;
-                    border-color: transparent;
-                    fill: #989898;
-                }
-            }
             &_message {
                 background: #0b1015;
                 color: #ef4e4d;
@@ -723,14 +703,15 @@ body {
                     &_row {
                         &.error {
                             .input {
-                                animation: error1 5s ease forwards 0s;
+                                color: #ef4e4d;
+                                border-color: #ef4e4d;
                                 &::placeholder {
-                                    animation: error1Placeholder 5s ease
-                                        forwards 0s;
+                                    color: #ef4e4d;
                                 }
                             }
-                            svg {
-                                animation: error1 5s ease forwards 0s;
+                            svg,
+                            svg path {
+                                fill: #ef4e4d;
                             }
                         }
                         svg {

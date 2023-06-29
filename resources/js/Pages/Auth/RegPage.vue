@@ -25,7 +25,7 @@
             </div>
         </div>
         <div class="form__content">
-            <div class="form_row" :class="{ error: blinks('email') }">
+            <div class="form_row" :class="{ error: errs.email }">
                 <input
                     name="email"
                     v-model="form.email"
@@ -34,7 +34,7 @@
                     :placeholder="this.$t('auth.reg.placeholders[0]')"
                 />
             </div>
-            <div class="form_row" :class="{ error: blinks('name') }">
+            <div class="form_row" :class="{ error: errs.name }">
                 <input
                     name="name"
                     v-model="form.name"
@@ -43,16 +43,87 @@
                     :placeholder="this.$t('auth.reg.placeholders[1]')"
                 />
             </div>
-            <div class="form_row" :class="{ error: blinks('password') }">
+            <div class="form_row" :class="{ error: errs.password }">
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.reg.placeholders[2]')"
                     :model="form.password"
                     :errors="errors"
-                    @change="form.password = $event"
+                    @change="passwordProcess($event)"
                 ></main-password>
             </div>
-            <div class="form_row" :class="{ error: blinks('password') }">
+            <transition name="validate">
+                <ul class="form_row validate" v-if="validate">
+                    <li
+                        class="validate_val"
+                        :class="
+                            !validate.length
+                                ? 'validate_val-complete'
+                                : 'validate_val-reject'
+                        "
+                    >
+                        Длина от 10 до 50 символов
+                    </li>
+                    <ul class="validate__list">
+                        <span
+                            class="validate_val"
+                            :class="
+                                !(
+                                    validate.lower ||
+                                    validate.upper ||
+                                    validate.symbol ||
+                                    validate.number
+                                )
+                                    ? 'validate_val-complete'
+                                    : 'validate_val-reject'
+                            "
+                        >
+                            Пароль должен включать:</span
+                        >
+                        <li
+                            class="validate_val"
+                            :class="
+                                !validate.lower
+                                    ? 'validate_val-complete'
+                                    : 'validate_val-reject'
+                            "
+                        >
+                            Строчную букву (a-z)
+                        </li>
+                        <li
+                            class="validate_val"
+                            :class="
+                                !validate.upper
+                                    ? 'validate_val-complete'
+                                    : 'validate_val-reject'
+                            "
+                        >
+                            Заглавную букву (A-Z)
+                        </li>
+                        <li
+                            class="validate_val"
+                            :class="
+                                !validate.symbol
+                                    ? 'validate_val-complete'
+                                    : 'validate_val-reject'
+                            "
+                        >
+                            Спецсимвол (!, ?, %, $ и др.)
+                        </li>
+                        <li
+                            class="validate_val"
+                            :class="
+                                !validate.number
+                                    ? 'validate_val-complete'
+                                    : 'validate_val-reject'
+                            "
+                        >
+                            Цифру (0-9)
+                        </li>
+                    </ul>
+                </ul>
+            </transition>
+            <div class="form_row" :class="{ error: errs.password }">
                 <main-password
                     name="password_confirmation"
                     :placeholder="this.$t('auth.reg.placeholders[3]')"
@@ -117,10 +188,12 @@ export default {
     data() {
         return {
             pdf,
+            errs: {},
         };
     },
     setup() {
         let checkbox = ref(false);
+        let validate = ref(null);
         let form = useForm({
             email: "",
             name: "",
@@ -131,23 +204,54 @@ export default {
         const account_create = () => {
             checkbox.value = false;
             if (form.checkbox) {
-                form.post("/register", {});
+                if (!validate.value) {
+                    form.post("/register", {});
+                }
             } else {
                 checkbox.value = true;
+            }
+        };
+        const passwordProcess = (event) => {
+            form.password = event;
+            validate.value = {};
+            if (form.password.length <= 10 || form.password.length >= 50) {
+                validate.value.length = true;
+            }
+
+            if (!/[a-z]/.test(form.password)) {
+                validate.value.lower = true;
+            }
+
+            if (!/[A-Z]/.test(form.password)) {
+                validate.value.upper = true;
+            }
+
+            if (!/[0-9]/.test(form.password)) {
+                validate.value.number = true;
+            }
+
+            if (!/[!@#\$%\^&\*]/.test(form.password)) {
+                validate.value.symbol = true;
+            }
+
+            if (form.password.length === 0) {
+                validate.value = null;
             }
         };
         return {
             form,
             account_create,
             checkbox,
+            passwordProcess,
+            validate,
         };
     },
-    methods: {
-        blinks(error) {
-            let bool = false;
-            error ? (bool = true) : (bool = false);
-            setTimeout(() => (bool = false), 1800);
-            return bool;
+    watch: {
+        errors(newVal) {
+            this.errs = newVal;
+            setTimeout(() => {
+                this.errs = {};
+            }, 1500);
         },
     },
     mounted() {
@@ -156,4 +260,61 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+.validate {
+    width: 100%;
+    padding: 16px;
+    border-radius: 12px;
+    background: #fafafa;
+    box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
+    &.validate,
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &_val {
+        color: rgba(124, 124, 124, 0.7);
+        font-size: 18px;
+        font-weight: 400;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 135%;
+        transition: all 0.5s ease 0s;
+        &:before {
+            content: "";
+            background: linear-gradient(
+                    179deg,
+                    #e6eaf0 0%,
+                    #e6eaf1 20.89%,
+                    #e7ebf1 42.88%,
+                    #eaeef4 76.04%,
+                    #e8ecf2 100%
+                ),
+                no-repeat, center / cover;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            transition: all 0.5s ease 0s;
+        }
+        &-complete {
+            color: #0fb468;
+            &:before {
+                background: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10.525 16.55L17.6 9.475L16.45 8.35L10.525 14.275L7.525 11.275L6.4 12.4L10.525 16.55ZM12 22C10.6333 22 9.34167 21.7375 8.125 21.2125C6.90833 20.6875 5.84583 19.9708 4.9375 19.0625C4.02917 18.1542 3.3125 17.0917 2.7875 15.875C2.2625 14.6583 2 13.3667 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.02917 5.825 4.9375 4.925C5.84583 4.025 6.90833 3.3125 8.125 2.7875C9.34167 2.2625 10.6333 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3667 21.7375 14.6583 21.2125 15.875C20.6875 17.0917 19.975 18.1542 19.075 19.0625C18.175 19.9708 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20.5C14.3667 20.5 16.375 19.6708 18.025 18.0125C19.675 16.3542 20.5 14.35 20.5 12C20.5 9.63333 19.675 7.625 18.025 5.975C16.375 4.325 14.3667 3.5 12 3.5C9.65 3.5 7.64583 4.325 5.9875 5.975C4.32917 7.625 3.5 9.63333 3.5 12C3.5 14.35 4.32917 16.3542 5.9875 18.0125C7.64583 19.6708 9.65 20.5 12 20.5Z' fill='%230FB468'/%3E%3C/svg%3E%0A");
+            }
+        }
+        &-reject {
+            color: #e5403f;
+            &:before {
+                background: url("data:image/svg+xml,%3Csvg width='24' height='24' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.25 16.8L12 13.05L15.75 16.8L16.8 15.75L13.05 12L16.8 8.25L15.75 7.2L12 10.95L8.25 7.2L7.2 8.25L10.95 12L7.2 15.75L8.25 16.8ZM12 22C10.6333 22 9.34167 21.7375 8.125 21.2125C6.90833 20.6875 5.84583 19.9708 4.9375 19.0625C4.02917 18.1542 3.3125 17.0917 2.7875 15.875C2.2625 14.6583 2 13.3667 2 12C2 10.6167 2.2625 9.31667 2.7875 8.1C3.3125 6.88333 4.02917 5.825 4.9375 4.925C5.84583 4.025 6.90833 3.3125 8.125 2.7875C9.34167 2.2625 10.6333 2 12 2C13.3833 2 14.6833 2.2625 15.9 2.7875C17.1167 3.3125 18.175 4.025 19.075 4.925C19.975 5.825 20.6875 6.88333 21.2125 8.1C21.7375 9.31667 22 10.6167 22 12C22 13.3667 21.7375 14.6583 21.2125 15.875C20.6875 17.0917 19.975 18.1542 19.075 19.0625C18.175 19.9708 17.1167 20.6875 15.9 21.2125C14.6833 21.7375 13.3833 22 12 22ZM12 20.5C14.3667 20.5 16.375 19.6708 18.025 18.0125C19.675 16.3542 20.5 14.35 20.5 12C20.5 9.63333 19.675 7.625 18.025 5.975C16.375 4.325 14.3667 3.5 12 3.5C9.65 3.5 7.64583 4.325 5.9875 5.975C4.32917 7.625 3.5 9.63333 3.5 12C3.5 14.35 4.32917 16.3542 5.9875 18.0125C7.64583 19.6708 9.65 20.5 12 20.5Z' fill='%23E5403F'/%3E%3C/svg%3E%0A");
+            }
+        }
+    }
+    .validate__list {
+        li {
+            padding-left: 27px;
+        }
+    }
+}
+</style>

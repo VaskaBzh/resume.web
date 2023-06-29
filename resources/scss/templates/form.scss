@@ -156,7 +156,7 @@
     }
     &_row {
         gap: 8px;
-        height: 48px;
+        min-height: 48px;
         display: flex;
         position: relative;
         //@media (max-width: $mobileSmall) {
@@ -213,6 +213,7 @@
         .input {
             &::placeholder {
                 color: rgba(124, 124, 124, 0.7);
+                transition: all 0.5s ease 0s;
             }
             width: 100%;
             color: #343434;
@@ -378,19 +379,23 @@
                 }
                 &.error {
                     input {
-                        animation: error 5s ease forwards 0s;
+                        color: #e5403f;
+                        border-color: #e5403f;
                         &::placeholder {
-                            animation: errorPlaceholder 5s ease forwards 0s;
+                            color: rgba(124, 124, 124, 0.7);
                         }
                     }
-                    svg {
-                        animation: error 5s ease forwards 0s;
+                    svg,
+                    svg path {
+                        fill: #e5403f;
                     }
                 }
-                svg {
+                svg,
+                svg path {
                     width: 32px;
                     height: 32px;
                     fill: rgba(124, 124, 124, 0.7);
+                    transition: all 0.5s ease 0s;
                 }
             }
             &_message {
@@ -433,25 +438,5 @@
     }
     to {
         opacity: 1;
-    }
-}
-@keyframes errorPlaceholder {
-    from {
-        color: rgba(124, 124, 124, 0.7);
-    }
-    to {
-        color: #e5403f;
-    }
-}
-@keyframes error {
-    from {
-        color: #e5403f;
-        border-color: #e5403f;
-        fill: #e5403f;
-    }
-    to {
-        color: #343434;
-        border-color: transparent;
-        fill: rgba(124, 124, 124, 0.7);
     }
 }
