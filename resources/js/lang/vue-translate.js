@@ -106,7 +106,7 @@ const messages = {
             login: {
                 title: "Authorize yourself!",
                 hash: "Average hashrate / 1 hour",
-                workers: "Number of workers",
+                workers: "Workers",
                 text: "Login or register to start mining!",
                 buttons: {
                     login: "Login",
@@ -460,7 +460,7 @@ const messages = {
             block: {
                 titles: [
                     "Avg.hashrate / 1h",
-                    "Number of workers",
+                    "Workers",
                     "Projected earnings for today",
                     "Total paid out",
                 ],
@@ -753,7 +753,7 @@ const messages = {
             login: {
                 title: "Авторизируйтесь!",
                 hash: "Средний хэшрейт / 1ч",
-                workers: "Количество воркеров",
+                workers: "Воркеры",
                 text: "Войдите или зарегистрируйтесь, чтобы начать майнинг!",
                 buttons: {
                     login: "Войти",
@@ -1113,7 +1113,7 @@ const messages = {
             block: {
                 titles: [
                     "Ср.хешрейт / 1ч",
-                    "Количество воркеров",
+                    "Воркеры",
                     "Прогноз на сегодня",
                     "Всего выплачено",
                 ],

@@ -21,6 +21,7 @@
                 :is_auth="is_auth"
                 :viewportWidth="viewportWidth"
                 :is_open="is_open"
+                :errors="errors"
             />
         </teleport>
 
@@ -34,7 +35,11 @@
                 :viewportWidth="viewportWidth"
             ></select-theme>
 
-            <account-menu v-if="is_auth && accountLink"></account-menu>
+            <account-menu
+                :errors="errors"
+                :viewportWidth="viewportWidth"
+                v-if="is_auth && accountLink"
+            ></account-menu>
             <Link
                 :href="route('login')"
                 v-show="viewportWidth >= 991.98 && !is_auth"

@@ -418,6 +418,19 @@ h6 {
         display: inline-flex;
     }
 }
+.statistic {
+    .no-info {
+        margin-bottom: 40px;
+        @media (max-width: $mobile) {
+            margin-bottom: 32px;
+        }
+    }
+    .cabinet {
+        .no-info {
+            margin-bottom: 0;
+        }
+    }
+}
 .home-im__image {
     .container-chart {
         padding-bottom: 40px;

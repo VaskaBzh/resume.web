@@ -9,14 +9,15 @@
                 <!--                >-->
             </main-title>
             <no-info
+                class="cabinet"
                 :wait="waitHistory"
                 :interval="80"
                 :end="endHistory"
-                class="cabinet"
             ></no-info>
             <div
                 class="cabinet"
                 v-if="
+                    endHistory &&
                     !waitHistory &&
                     allHistory[getActive]?.filter((a) => a.hash > 0).length !==
                         0
@@ -55,14 +56,7 @@
                     />
                 </div>
             </div>
-            <div
-                class="cabinet"
-                v-if="
-                    endHistory &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
-                        0
-                "
-            >
+            <div class="cabinet" v-if="!endHistory && !waitHistory">
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>
@@ -530,6 +524,9 @@ export default {
             display: flex;
             flex-direction: column;
             gap: 8px;
+            .no-info {
+                margin-bottom: 0;
+            }
         }
     }
     &__info {

@@ -1,21 +1,7 @@
 <template>
     <div class="income" ref="page">
-        <main-title
-            class="profile cabinet_title"
-            v-if="this.viewportWidth > 767.98"
-            tag="h3"
-        >
+        <main-title class="profile cabinet_title" tag="h3">
             {{ $t("income.title") }}
-            <!--                <blue-button class="income__button">-->
-            <!--                    <Link :href="route('wallets')"> Кошельки </Link>-->
-            <!--                </blue-button>-->
-        </main-title>
-
-        <main-title class="profile cabinet_title" v-else tag="h3">
-            {{ $t("income.title") }}
-            <!--                <blue-button class="income__button">-->
-            <!--                    <Link :href="route('wallets')"> Кошельки</Link>-->
-            <!--                </blue-button>-->
         </main-title>
         <div class="income__column">
             <div class="cabinet__head">
@@ -84,8 +70,8 @@
         <!--        </div>-->
         <main-slider
             class="wrap-no-overflow"
-            :wait="this.allIncomeHistory"
-            :table="this.incomeInfo"
+            :wait="allIncomeHistory"
+            :table="incomeInfo"
             type="Платежи"
             rowsNum="25"
         ></main-slider>

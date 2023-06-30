@@ -151,6 +151,11 @@ body {
                                 }
                             }
                         }
+                        &__row {
+                            .checkbox {
+                                background: #283955;
+                            }
+                        }
                     }
                 }
             }
@@ -569,7 +574,8 @@ body {
             }
         }
         .profile__body-block {
-            .description {
+            .text-md {
+                color: #989898;
                 &:last-child {
                     color: #e1e1e1;
                 }
@@ -686,7 +692,8 @@ body {
                 }
             }
             &__slides {
-                a {
+                a,
+                span {
                     color: #606060 !important;
                     &.active {
                     }

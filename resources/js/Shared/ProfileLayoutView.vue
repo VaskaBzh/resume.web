@@ -1,6 +1,6 @@
 <template>
     <div class="app_back">
-        <header-component :is_auth="auth_user" />
+        <header-component :errors="errors" :is_auth="auth_user" />
         <div class="page">
             <div class="hint">
                 <div class="hint_item" v-hide="this.getMessage !== ''">
@@ -35,6 +35,7 @@ export default {
             type: Boolean,
             default: false,
         },
+        errors: Object,
         message: {
             type: String,
         },

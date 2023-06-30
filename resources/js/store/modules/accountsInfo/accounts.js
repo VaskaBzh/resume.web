@@ -57,6 +57,7 @@ export default {
                                         this.dispatch("getAllIncome", group);
                                     }
                                     this.dispatch("getHistoryHash", group);
+                                    this.dispatch("get_history_hash", group);
                                 });
                                 commit("setValid");
                             }

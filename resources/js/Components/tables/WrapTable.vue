@@ -165,7 +165,9 @@ export default {
             return this.wait[this.getActive];
         },
         emptyTable() {
-            return this.wait[this.getActive]?.length === 0;
+            return this.empty
+                ? this.empty?.length === 0
+                : this.wait[this.getActive]?.length === 0;
         },
         bool() {
             if (!this.boolFalse) {

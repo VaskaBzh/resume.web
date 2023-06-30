@@ -2,7 +2,11 @@
     <blue-button class="feedback" data-popup="#feedback">
         <a class="all-link">{{ $t("footer.feedback.button") }}</a>
     </blue-button>
-    <main-popup id="feedback" :wait="this.wait">
+    <main-popup
+        id="feedback"
+        :wait="this.wait"
+        :errors="errors"
+    >
         <form
             @submit.prevent="this.sendFeedback"
             class="form form-popup popup__form"
@@ -245,6 +249,9 @@ import { mapGetters } from "vuex";
 export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
+    props: {
+        errors: Object,
+    },
     computed: {
         ...mapGetters(["getTheme"]),
     },

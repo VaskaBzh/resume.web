@@ -6,6 +6,7 @@
                 :is_auth="is_auth"
                 @clicked="open"
                 v-if="is_auth"
+                :errors="errors"
             ></account-menu>
             <div class="nav__column" v-show="!is_auth">
                 <blue-button class="button button-md button-light">
@@ -86,6 +87,7 @@ export default {
     props: {
         viewportWidth: Number,
         is_open: Boolean,
+        errors: Object,
         is_auth: {
             type: Boolean,
             default: false,
