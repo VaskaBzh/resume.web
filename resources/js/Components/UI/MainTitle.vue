@@ -29,11 +29,11 @@ h1 {
     font-weight: 500;
     font-size: 64px;
     line-height: 107.6%;
-    @media (max-width: 767.98px) {
+    @media (max-width: 991.98px) {
         font-size: 56px;
         line-height: 100%;
     }
-    @media (max-width: 479.98px) {
+    @media (max-width: 767.98px) {
         font-size: 40px;
         line-height: 100%;
     }

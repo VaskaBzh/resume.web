@@ -2,9 +2,9 @@
     <div class="faq">
         <div class="faq__container">
             <div class="faq__main">
-                <main-title tag="h1" class="title-blue faq_title"
-                    >FAQ</main-title
-                >
+                <main-title tag="h1" class="title-blue faq_title">
+                    FAQ
+                </main-title>
 
                 <div class="search">
                     <input
@@ -82,6 +82,7 @@ export default {
                 .map((section) => {
                     const filteredList = Object.fromEntries(
                         Object.entries(section.list).filter(
+                            // eslint-disable-next-line no-unused-vars
                             ([_, item]) =>
                                 item.title.toLowerCase().includes(query) ||
                                 item.text.toLowerCase().includes(query)
@@ -175,17 +176,20 @@ export default {
 .faq {
     &_title {
         margin-top: 100px;
-        @media (max-width: 479.98px) {
-            margin-top: 55px;
+        @media (max-width: 991.98px) {
+            margin-top: 48px;
+        }
+        @media (max-width: 767.98px) {
+            margin-top: 32px;
         }
     }
     .search {
-        margin: 72px 0 56px;
-        @media (max-width: 767.98px) {
-            margin: 72px 0 48px;
+        margin: 56px 0 48px;
+        @media (max-width: 991.98px) {
+            margin: 40px 0;
         }
-        @media (max-width: 479.98px) {
-            margin: 32px 0;
+        @media (max-width: 767.98px) {
+            margin: 24px 0 32px;
         }
     }
     &__list {

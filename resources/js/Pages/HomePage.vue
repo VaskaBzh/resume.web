@@ -537,7 +537,7 @@ export default {
     // .home__background
     &__background {
         position: relative;
-        top: -29em;
+        top: -25em;
         @media (max-width: 1320.98px) {
             top: -6em;
             left: -21em;

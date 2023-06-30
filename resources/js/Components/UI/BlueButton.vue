@@ -119,7 +119,7 @@ export default {
     }
     &-light {
         background: #d2def2;
-        color: #5389E1;
+        color: #5389e1;
     }
 
     &-reverce {
