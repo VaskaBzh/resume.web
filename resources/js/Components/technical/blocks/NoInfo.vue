@@ -143,7 +143,7 @@ export default {
             handler(val) {
                 if (this.progressPercentage >= 79) {
                     this.intervalId = setInterval(() => {
-                        if (val < 98) {
+                        if (this.progressPercentage < 98) {
                             this.progressPercentage += 1;
                         }
                     }, 500);

@@ -43,7 +43,7 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 130%;
-        color: #C5C5C5;
+        color: #c5c5c5;
         background: transparent;
         height: 100%;
         padding: 2px 12px;
@@ -53,11 +53,11 @@
         border-radius: 8px;
         transition: all 0.5s ease 0s;
         &:hover {
-            color: #79A3E8;
+            color: #79a3e8;
         }
         &.active {
-            background: #FAFAFA;
-            color: #79A3E8;
+            background: #fafafa;
+            color: #79a3e8;
         }
     }
     &__block {
@@ -74,13 +74,23 @@
             position: relative;
             padding: 60px 40px 44px 28px;
             @media (max-width: 767.98px) {
-                padding: 44px 16px 44px 14px;
+                padding: 0 0 0 24px;
+                display: flex;
+                gap: 5px;
+                .y-axis-container {
+                    bottom: 42px !important;
+                    gap: 0;
+                }
             }
             @media (max-width: 479.98px) {
-                padding: 30px 15px 24px 15px;
-                overflow-x: scroll;
-                .graph {
-                    width: 320%;
+            }
+            .container-chart {
+                @media (min-width: $mobile) {
+                    margin-left: 55px !important;
+                    width: calc(100% - 55px) !important;
+                }
+                @media (max-width: 767.98px) {
+                    margin: 0 0 0 auto;
                 }
             }
         }

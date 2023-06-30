@@ -69,17 +69,33 @@ body {
                                 }
                             }
                             &__menu {
-                                background: #040d15;
+                                background: #101d2b;
+                                .radio {
+                                    color: #818c99;
+                                    &_button {
+                                        border-color: #5389e1;
+                                    }
+                                    &.active {
+                                        background: #283955;
+                                        color: #cacaca;
+                                        .radio {
+                                            &_button {
+                                                background: #5389e1;
+                                            }
+                                        }
+                                    }
+                                }
                                 .select_title .name,
                                 a {
-                                    color: #989898;
+                                    color: #818c99;
                                     svg {
-                                        fill: #79a3e8;
+                                        fill: #3f7bdd;
                                     }
                                 }
                                 button {
+                                    color: #e5403f;
                                     svg {
-                                        fill: #ef4e4d;
+                                        fill: #e5403f;
                                     }
                                 }
                                 .select {
@@ -420,13 +436,15 @@ body {
                 color: #cacaca;
             }
         }
+        .container-chart {
+            .band {
+                fill: #262626 !important;
+            }
+        }
         .home-im__image {
             .container-chart {
                 .main-line {
                     fill: rgba(233, 192, 88, 0.2) !important;
-                }
-                .band {
-                    fill: #262626 !important;
                 }
             }
         }
@@ -515,6 +533,11 @@ body {
         }
         .statistic__list li .statistic_info {
             color: #e1e1e1;
+        }
+        .y-axis-container {
+            .tick {
+                color: #606060;
+            }
         }
         .container-chart {
             svg {
@@ -699,6 +722,23 @@ body {
                 }
             }
             &-auth {
+                .validate {
+                    background: #333639;
+                    box-shadow: 0 4px 10px 0 rgba(35, 38, 63, 0.15);
+                    &_val {
+                        color: #cacaca;
+                        &:before {
+                            background-image: none;
+                            background-color: #cacaca;
+                        }
+                        &-reject {
+                            color: #ef4e4d;
+                        }
+                        &-complete {
+                            color: #86ff83;
+                        }
+                    }
+                }
                 .form {
                     &_row {
                         &.error {

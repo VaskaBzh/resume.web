@@ -1,5 +1,5 @@
 <template>
-    <div class="nav__links_con" :class="{ open: is_open }">
+    <div class="nav__links_con" :class="{ open: is_opened }">
         <div class="nav__header" id="burger_head" v-if="viewportWidth < 991.98">
             <account-menu
                 :viewportWidth="viewportWidth"
@@ -8,17 +8,13 @@
                 v-if="is_auth"
             ></account-menu>
             <div class="nav__column" v-show="!is_auth">
-                <blue-button
-                    @click="openPopup(false)"
-                    class="button button-md button-light"
-                >
+                <blue-button class="button button-md button-light">
                     <Link :href="route('login')" class="all-link">
                         {{ $t("header.login.buttons.login") }}
                     </Link>
                 </blue-button>
                 <blue-button
                     class="button button-md button-reverce button-reverce-border"
-                    @click="openPopup(true)"
                 >
                     <Link :href="route('registration')" class="all-link">
                         {{ $t("header.login.buttons.registration") }}
@@ -59,8 +55,9 @@
             <transition name="shadow">
                 <div
                     class="shadow_container"
-                    v-show="is_open && viewportWidth <= 991.98"
+                    v-show="is_opened && viewportWidth <= 991.98"
                     id="shadow_container"
+                    @click="closeBurger"
                 ></div>
             </transition>
         </teleport>
@@ -99,22 +96,12 @@ export default {
             is_opened: false,
         };
     },
+    watch: {
+        is_open(newVal) {
+            this.is_opened = newVal;
+        },
+    },
     methods: {
-        openPopup(type) {
-            this.$emit("auth", type);
-        },
-        popup_open() {
-            setTimeout(() => {
-                document.querySelector(`[data-popup='#addAcc']`).click();
-            }, 300);
-            this.close();
-        },
-        close() {
-            this.is_opened = false;
-        },
-        open() {
-            this.is_opened = true;
-        },
         change_index(data) {
             this.$store.commit("updateActive", data);
         },
@@ -122,8 +109,22 @@ export default {
             await Inertia.post("/logout");
         },
         closeBurger() {
-            this.$emit("clicked", null);
+            this.is_opened = false;
+            this.$emit("closed", this.is_opened);
         },
+        key_event(e) {
+            if (e.keyCode === 27) {
+                this.closeBurger();
+            }
+        },
+    },
+    mounted() {
+        // document.addEventListener("click", this.close);
+        document.addEventListener("keydown", this.key_event);
+    },
+    unmounted() {
+        // document.removeEventListener("click", this.close);
+        document.removeEventListener("keydown", this.key_event);
     },
     computed: {
         ...mapGetters(["allAccounts", "getActive"]),
@@ -271,7 +272,7 @@ export default {
 <style lang="scss">
 .shadow-enter-active,
 .shadow-leave-active {
-    transition: all 0.3s ease 0s, visibility 0.3s ease 0s;
+    transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
     visibility: visible;
     opacity: 1;
 }
@@ -282,7 +283,7 @@ export default {
 }
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.5s ease;
+    transition: opacity 0.8s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
@@ -319,7 +320,7 @@ export default {
             width: 100%;
             height: 100vh;
             top: 80px;
-            right: -100vw;
+            right: -110vw;
             z-index: 99;
             display: flex;
             flex-direction: column;
@@ -332,7 +333,7 @@ export default {
             padding: 32px 16px 24px;
             max-width: 100%;
         }
-        transition: all 0.5s ease 0s;
+        transition: all 0.8s ease 0s;
 
         &.open {
             right: 0;

@@ -98,4 +98,10 @@ export default {
 .fade-leave-to {
     opacity: 0;
 }
+svg {
+    @media (max-width: 479.98px) {
+        width: 20px !important;
+        height: 20px !important;
+    }
+}
 </style>

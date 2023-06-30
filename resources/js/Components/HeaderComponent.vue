@@ -17,8 +17,7 @@
 
         <teleport to="body" :disabled="viewportWidth >= 991.98">
             <nav-links
-                @clicked="burgerAction"
-                @auth="changeSlide"
+                @closed="burgerClose"
                 :is_auth="is_auth"
                 :viewportWidth="viewportWidth"
                 :is_open="is_open"
@@ -158,10 +157,16 @@ export default defineComponent({
         burgerAction() {
             if (this.viewportWidth < 991.98) {
                 this.is_open = !this.is_open;
-                this.is_open === true
+                this.is_open
                     ? (document.querySelector("body").style.overflowY =
                           "hidden")
                     : (document.querySelector("body").style.overflowY = "auto");
+            }
+        },
+        burgerClose() {
+            if (this.viewportWidth < 991.98) {
+                this.is_open = false;
+                document.querySelector("body").style.overflowY = "auto";
             }
         },
     },
@@ -230,9 +235,9 @@ nav.nav__container {
             z-index: 100;
             width: 100vw;
             height: 100%;
-            top: 50%;
+            top: 0;
             left: 50%;
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, 0);
             filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
             background: linear-gradient(
                 179.87deg,

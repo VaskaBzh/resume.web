@@ -17,12 +17,12 @@
                         <div class="page__content">
                             <Link :href="route('home')">
                                 <img
-                                    v-if="!isDark"
+                                    v-show="!isDark"
                                     src="../../assets/img/logo_high_quality-lg.svg"
                                     alt="logo"
                                 />
                                 <img
-                                    v-else
+                                    v-show="isDark"
                                     src="../../assets/img/logo_high_quality-lg-dark.svg"
                                     alt="logo"
                                 />
@@ -102,7 +102,6 @@ export default {
     }
     &__image {
         order: 0;
-        transform: translateX(-3%);
         img {
             max-width: 1255px;
         }

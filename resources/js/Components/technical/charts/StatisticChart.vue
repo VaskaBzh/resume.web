@@ -11,30 +11,21 @@
                 <!--                    <button class="graph__button">30 дней</button>-->
                 <!--                </div>-->
             </div>
-            <div class="graph__list">
-                <div
-                    v-for="graph in graphs"
-                    :key="graph.id"
-                    class="graph__item"
-                >
-                    <div class="graph__con">
-                        <!--                        <div class="graph__title">{{ graph.title[0] }}</div>-->
-                        <line-graph-statistic
-                            :graphData="graph"
-                            :height="height"
-                            :redraw="redraw"
-                            :viewportWidth="viewportWidth"
-                            :tooltip="tooltip"
-                            lineColor="#3F7BDD"
-                            :lineWidth="2.5"
-                            mouseLineColor="#3F7BDD"
-                            circleColor="#79A3E8"
-                            circleBorder="#3F7BDD"
-                            :bandColor="bandColor"
-                            graphType="statistic"
-                        ></line-graph-statistic>
-                    </div>
-                </div>
+            <div class="graph__list" ref="graph">
+                <line-graph-statistic
+                    :graphData="graphs[0]"
+                    :height="height"
+                    :redraw="redraw"
+                    :viewportWidth="viewportWidth"
+                    :tooltip="tooltip"
+                    lineColor="#3F7BDD"
+                    :lineWidth="2.5"
+                    mouseLineColor="#3F7BDD"
+                    circleColor="#79A3E8"
+                    circleBorder="#3F7BDD"
+                    :bandColor="bandColor"
+                    graphType="statistic"
+                ></line-graph-statistic>
             </div>
         </div>
     </div>
@@ -79,8 +70,16 @@ export default {
             this.height = this.getHeight;
         },
     },
+    beforeUpdate() {
+        if (this.$refs.graph && this.viewportWidth <= 767.98) {
+            this.$refs.graph.scrollLeft = this.$refs.graph.scrollWidth;
+        }
+    },
     mounted() {
         this.height = this.getHeight;
+        if (this.$refs.graph && this.viewportWidth <= 767.98) {
+            this.$refs.graph.scrollLeft = this.$refs.graph.scrollWidth;
+        }
     },
     components: {
         MainTitle,
@@ -97,11 +96,11 @@ export default {
         },
         getHeight() {
             if (!this.heightVal) {
-                if (this.viewportWidth < 479.98) return 260;
-                else if (this.viewportWidth < 767.98) return 280;
-                else if (this.viewportWidth < 991.98) return 300;
-                else if (this.viewportWidth < 1320.98) return 320;
-                else return 360;
+                if (this.viewportWidth < 479.98) return 338;
+                else if (this.viewportWidth < 767.98) return 338;
+                else if (this.viewportWidth < 991.98) return 338;
+                else if (this.viewportWidth < 1320.98) return 338;
+                else return 338;
             } else {
                 return this.heightVal;
             }
@@ -122,10 +121,6 @@ export default {
     }
 }
 .graph {
-    @media (max-width: 991.98px) {
-        padding-bottom: 12px;
-    }
-    // .graph__main
     // .grapth__head
     &__head {
         width: 100%;
@@ -176,23 +171,6 @@ export default {
             color: #181847;
         }
     }
-    // .graph__con
-    &__con {
-        display: flex;
-        align-items: center;
-        position: relative;
-        margin: 0 0 23px;
-        @media (max-width: 991.98px) {
-            margin: 0 0 calc(34px - 24px);
-        }
-        @media (max-width: 767.98px) {
-            //padding: 20px 10px;
-            flex-direction: column;
-        }
-        @media (max-width: 478.98px) {
-            align-items: flex-start;
-        }
-    }
     // .graph__graph
     &__graph {
         flex: 1 1 auto;
@@ -238,82 +216,12 @@ export default {
     // .graph__list
     &__list {
         display: flex;
-        gap: 17px;
-        @media (max-width: 991.98px) {
-            flex-direction: column;
-        }
+        margin: 0 0 12px;
         @media (max-width: 767.98px) {
-            gap: 35px;
-        }
-    }
-    // .graph__item
-    &__item {
-        flex: 0 1 100%;
-    }
-}
-.graph-ia {
-    margin-top: 24px;
-    @media (max-width: 767.98px) {
-        margin-top: 9px;
-    }
-    // .graph-ia__list
-    &__list {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        @media (max-width: 767.98px) {
-            padding: 0 23px 25px;
-        }
-        @media (max-width: 479.98px) {
-            gap: 12px;
-        }
-    }
-    // .graph-ia__item
-    &__item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        gap: 7px;
-        @media (max-width: 479.98px) {
-            flex-direction: column;
-            align-items: start;
-        }
-        // .graph-ia__item_title
-        &_title {
-            flex: 1 0 50%;
-            font-style: normal;
-            font-weight: 300;
-            font-size: 16px;
-            line-height: 158.1%;
-            color: #000000;
-            max-width: 230px;
-            @media (max-width: 767.98px) {
-                font-size: 15px;
-                line-height: 158.1%;
-            }
-        }
-        // .graph-ia__item_text
-        &_text {
-            font-family: "AmpleSoftPro";
-            font-style: normal;
-            font-weight: 500;
-            font-size: 17px;
-            line-height: 143.1%;
-            color: #000034;
-            display: flex;
-            column-gap: 8px;
-            flex-wrap: wrap;
-            justify-content: end;
-            @media (max-width: 767.98px) {
-                font-size: 15px;
-                line-height: 158.1%;
-            }
-
-            & span {
-                font-family: "AmpleSoftPro";
-                color: #e9c058;
-                white-space: nowrap;
-            }
+            overflow-x: scroll;
+            overflow-y: visible;
+            margin-left: 38px;
+            padding: 48px 24px 36px 12px;
         }
     }
 }

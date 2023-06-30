@@ -9,6 +9,7 @@
             Tooltip
         </div>
     </div>
+    <div class="y-axis-container"></div>
 </template>
 
 <script>
@@ -38,6 +39,8 @@ export default {
             svg: null,
             mouseX: null,
             clientX: null,
+            axis: null,
+            tooltip: null,
             containerWidth: 0,
             containerHeight: 0,
         };
@@ -66,12 +69,12 @@ export default {
         ...mapGetters(["isDark"]),
         getPosition() {
             if (this.mouseX) {
-                // const isLeft =
-                //     this.mouseX <
-                //     this.$refs.chart.clientWidth -
-                //         this.$refs.tooltip.clientWidth;
-                const isRigth =
-                    this.mouseX < this.$refs.tooltip.clientWidth - 8;
+                const isLeft = this.mouseX < this.$refs.tooltip.clientWidth - 8;
+                const isRight =
+                    this.mouseX >
+                    this.$refs.chart.clientWidth -
+                        this.$refs.tooltip.clientWidth -
+                        8;
                 let width = this.$refs.tooltip.clientWidth;
                 if (this.graphType === "complexity") {
                     width = this.$refs.tooltip.clientWidth / 2 - 8;
@@ -79,8 +82,10 @@ export default {
 
                 return {
                     side: "left",
-                    position: isRigth
+                    position: isLeft
                         ? this.mouseX + 8
+                        : isRight
+                        ? this.mouseX - 8 - this.$refs.tooltip.clientWidth
                         : this.mouseX - 8 - width,
                 };
             }
@@ -90,13 +95,15 @@ export default {
         dropGraph() {
             if (this.svg) {
                 this.svg.selectAll("*").remove();
+                this.axis.selectAll("*").remove();
+                this.tooltip.selectAll("*").remove();
                 this.svg._groups[0][0].remove();
             }
         },
-        tooltipInit(event, tooltip, x, adjustValue, formatNumber, posy) {
+        tooltipInit(event, x, adjustValue, formatNumber) {
             try {
                 let formatNumberWithUnit = (num, i) =>
-                    formatNumber(adjustValue(num, this.graphData.unit[i]).val) +
+                    adjustValue(num, this.graphData.unit[i]).val +
                     " " +
                     adjustValue(num, this.graphData.unit[i]).unit +
                     "H";
@@ -175,7 +182,7 @@ export default {
                 }
 
                 if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
-                    tooltip
+                    this.tooltip
                         .style("opacity", 1)
                         .style(
                             this.getPosition?.side,
@@ -189,7 +196,7 @@ export default {
         },
 
         graphInit() {
-            let isMobile = this.viewportWidth <= 479.98;
+            let isMobile = this.viewportWidth <= 767.98;
 
             this.containerHeight = this.height;
 
@@ -320,34 +327,33 @@ export default {
             let xAxis = null;
 
             let yAxis = null;
+
+            this.axis = d3.select(".y-axis-container");
             if (isMobile) {
                 if (this.graphType === "statistic") {
                     yAxis = d3
                         .axisLeft(y)
-                        .ticks(12)
+                        .ticks(6)
                         .tickFormat((d, i) => formatNumberWithUnit(d, i));
                 } else {
                     yAxis = d3.axisLeft(y).ticks(12).tickFormat(formatNumber);
                 }
                 xAxis = d3
                     .axisBottom(x)
-                    .ticks(12)
+                    .ticks(6)
                     .tickFormat((d) => formatTime(new Date(d)));
             } else {
                 if (this.graphType === "statistic") {
                     yAxis = d3
                         .axisLeft(y)
-                        .ticks(isMobile ? 6 : 10)
+                        .ticks(10)
                         .tickFormat((d, i) => formatNumberWithUnit(d, i));
                 } else {
-                    yAxis = d3
-                        .axisLeft(y)
-                        .ticks(isMobile ? 6 : 10)
-                        .tickFormat(formatNumber);
+                    yAxis = d3.axisLeft(y).ticks(10).tickFormat(formatNumber);
                 }
                 xAxis = d3
                     .axisBottom(x)
-                    .ticks(isMobile ? 4 : this.viewportWidth <= 991.98 ? 8 : 12)
+                    .ticks(this.viewportWidth <= 991.98 ? 8 : 12)
                     .tickFormat((d) => formatTime(new Date(d)));
             }
 
@@ -428,14 +434,32 @@ export default {
             this.svg
                 .append("g")
                 .attr("transform", `translate(0, ${this.containerHeight + 5})`)
-                .call(xAxis);
+                .call(xAxis)
+                .select(".domain")
+                .remove();
 
-            this.svg
-                .append("g")
-                .attr("transform", `translate(-5, 0)`)
-                .call(yAxis);
+            if (!isMobile) {
+                this.svg
+                    .append("g")
+                    .attr("transform", `translate(-5, 0)`)
+                    .call(yAxis)
+                    .select(".domain")
+                    .remove();
+            } else {
+                let axisHeight;
+                if (this.graphType === "statistic") {
+                    axisHeight = this.containerHeight + 5;
+                } else {
+                    axisHeight = this.containerHeight - 15;
+                }
+                this.axis
+                    .attr("style", `height: ${axisHeight}px`)
+                    .call(yAxis)
+                    .select(".domain")
+                    .remove();
+            }
 
-            const tooltip = d3.select(this.$refs.tooltip);
+            this.tooltip = d3.select(this.$refs.tooltip);
 
             if (isMobile) {
                 this.svg.on("touchstart", (event) => {
@@ -445,7 +469,6 @@ export default {
                     const position = this.getClosestPoint(touchX);
                     this.updateDotAndTooltip(
                         event,
-                        tooltip,
                         x,
                         adjustValue,
                         formatNumber,
@@ -461,7 +484,6 @@ export default {
                     const position = this.getClosestPoint(touchX);
                     this.updateDotAndTooltip(
                         event,
-                        tooltip,
                         x,
                         adjustValue,
                         formatNumber,
@@ -471,7 +493,7 @@ export default {
                 });
 
                 this.svg.on("touchend", () => {
-                    tooltip.style("opacity", 0);
+                    this.tooltip.style("opacity", 0);
                     this.svg.selectAll(".vertical-line").style("opacity", 0);
                     this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
                 });
@@ -481,7 +503,6 @@ export default {
                     const position = this.getClosestPoint(mouseX);
                     this.updateDotAndTooltip(
                         event,
-                        tooltip,
                         x,
                         adjustValue,
                         formatNumber,
@@ -491,17 +512,21 @@ export default {
                 });
 
                 this.svg.on("mouseleave", () => {
-                    tooltip.style("opacity", 0);
+                    this.tooltip.style("opacity", 0);
 
                     this.svg.selectAll(".vertical-line").style("opacity", 0);
 
-                    tooltip.style("opacity", 0);
+                    this.tooltip.style("opacity", 0);
 
                     this.svg.selectAll(".vertical-line").style("opacity", 0);
                     this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
                 });
-                tooltip.on("mousemove", () => tooltip.style("opacity", 1));
-                tooltip.on("mouseleave", () => tooltip.style("opacity", 0));
+                this.tooltip.on("mousemove", () =>
+                    this.tooltip.style("opacity", 1)
+                );
+                this.tooltip.on("mouseleave", () =>
+                    this.tooltip.style("opacity", 0)
+                );
             }
         },
         getClosestPoint(touchX) {
@@ -528,7 +553,6 @@ export default {
         },
         updateDotAndTooltip(
             event,
-            tooltip,
             x,
             adjustValue,
             formatNumber,
@@ -544,7 +568,6 @@ export default {
 
             this.tooltipInit(
                 event,
-                tooltip,
                 x,
                 adjustValue,
                 formatNumber,
@@ -552,7 +575,7 @@ export default {
                 position.y
             );
 
-            tooltip
+            this.tooltip
                 .style(
                     "top",
                     position.y - this.$refs.tooltip.clientHeight - 7 + "px"
@@ -588,7 +611,31 @@ export default {
 <style lang="scss" scoped>
 .container-chart {
     text-align: right;
-    margin: 0 0 0 55px;
-    width: calc(100% - 55px);
+    margin: 0 0 0 15px;
+    width: calc(100% - 15px);
+    @media (max-width: 767.98px) {
+        min-width: 200%;
+        overflow-x: hidden;
+        overflow-y: visible;
+        width: 200%;
+        margin: 0;
+    }
+}
+.y-axis-container {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+    height: 100%;
+    width: fit-content;
+    justify-content: space-between;
+    order: -1;
+    @media (max-width: 767.98px) {
+        position: absolute;
+        left: 12px;
+        bottom: 73px;
+    }
+    .tick {
+        max-width: 24px;
+    }
 }
 </style>

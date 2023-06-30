@@ -152,7 +152,7 @@
                             >
                         </blue-button>
                         <!--                        class="home-im__image"-->
-                        <div class="home-im__image">
+                        <div class="home-im__image" ref="image">
                             <line-graph-statistic
                                 v-if="Object.values(btcHistory).length > 0"
                                 :graphData="graph"
@@ -485,9 +485,18 @@ export default {
             this.viewportWidth = window.innerWidth;
         },
     },
+    beforeUpdate() {
+        if (this.$refs.image) {
+            this.$refs.image.scrollLeft = this.$refs.image.scrollWidth;
+        }
+    },
     mounted() {
         document.title = "Главная";
         this.height = this.getHeight;
+
+        if (this.$refs.image) {
+            this.$refs.image.scrollLeft = this.$refs.image.scrollWidth;
+        }
     },
 };
 </script>
@@ -773,7 +782,8 @@ export default {
     &__image {
         min-width: 65%;
         object-fit: contain;
-        position: relative;
+        display: flex;
+        gap: 15px;
         @media (max-width: 1320.98px) {
             min-width: 55%;
         }
@@ -784,9 +794,10 @@ export default {
             min-width: 100%;
             overflow-x: scroll;
             overflow-y: visible;
-            padding-bottom: 40px;
+            padding-right: 24px;
+            margin: 0 0 0 24px;
             .container-chart {
-                min-width: 200%;
+                padding-bottom: 40px;
             }
         }
     }
@@ -949,7 +960,7 @@ export default {
             width: 30%;
         }
         @media (max-width: 479.98px) {
-            display: none;
+            display: none !important;
         }
         &.mon {
             display: flex;

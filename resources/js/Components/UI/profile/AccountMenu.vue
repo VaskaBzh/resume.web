@@ -51,7 +51,7 @@
                     {{ $t("header.menu.acc_admin.add") }}
                 </a>
             </div>
-            <div class="button__row">
+            <div class="button__row" v-if="viewportWidth >= 991.98">
                 <Link class="settings" :href="route('settings')"
                     ><svg
                         width="16"
