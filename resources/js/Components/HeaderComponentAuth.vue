@@ -85,7 +85,7 @@ nav.nav__container {
     width: 100%;
     box-sizing: border-box !important;
     padding: 22px 0;
-    position: fixed;
+    position: absolute;
     top: 0;
     left: 50%;
     transform: translateX(-50%) translateY(0);
@@ -99,7 +99,7 @@ nav.nav__container {
     }
     @media (max-width: 991.98px) {
         padding: 20px 15px 15px;
-        position: fixed;
+        position: absolute;
         left: 50%;
         top: 0;
         transform: translate(-50%, 0);

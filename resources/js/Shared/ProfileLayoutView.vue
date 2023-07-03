@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <footer-component />
+        <footer-component :errors="errors" />
     </div>
 </template>
 <script>

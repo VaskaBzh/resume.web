@@ -15,7 +15,7 @@
                 <slot :errors="errors"></slot>
             </keep-alive>
         </div>
-        <footer-component />
+        <footer-component :errors="errors" />
     </div>
 </template>
 
@@ -74,7 +74,6 @@ export default {
 </script>
 
 <style lang="scss">
-
 .nav__logo {
     max-width: 170px;
     @media (max-width: 767.98px) {

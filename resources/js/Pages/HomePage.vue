@@ -53,64 +53,84 @@
                 </div>
 
                 <div v-if="viewportWidth >= 991.98" class="home__background">
-                    <img
+                    <div
                         v-if="!getTheme"
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1.webp"
+                    >
+                        <div class="home__background__content">
+                            <img
+                                src="../../assets/img/main_an_img_bitcoin.webp"
+                                alt=""
+                                class="bitcoin"
+                            />
+                            <img
+                                src="../../assets/img/main_an_img_1.svg"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                    <div
+                        v-else
+                        class="home__background_image home__background_1"
+                    >
+                        <div class="home__background__content">
+                            <img
+                                src="../../assets/img/main_an_img_bitcoin.webp"
+                                alt=""
+                                class="bitcoin"
+                            />
+                            <img
+                                src="../../assets/img/main_an_img_1-dark.svg"
+                                alt=""
+                            />
+                        </div>
+                    </div>
+                    <img
+                        v-if="!getTheme"
+                        class="home__background_image home__background_2"
+                        src="../../assets/img/main_an_img_2.svg"
                         alt=""
                     />
                     <img
                         v-else
-                        class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1-dark.webp"
-                        alt=""
-                    />
-                    <img
-                        v-if="!getTheme"
                         class="home__background_image home__background_2"
-                        src="../../assets/img/main_an_img_2.webp"
-                        alt=""
-                    />
-                    <img
-                        v-else
-                        class="home__background_image home__background_2"
-                        src="../../assets/img/main_an_img_2-dark.webp"
+                        src="../../assets/img/main_an_img_2-dark.svg"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_3"
-                        src="../../assets/img/main_an_img_3.webp"
+                        src="../../assets/img/main_an_img_3.svg"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_3"
-                        src="../../assets/img/main_an_img_3-dark.webp"
+                        src="../../assets/img/main_an_img_3-dark.svg"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_4"
-                        src="../../assets/img/main_an_img_4.webp"
+                        src="../../assets/img/main_an_img_4.svg"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_4"
-                        src="../../assets/img/main_an_img_4-dark.webp"
+                        src="../../assets/img/main_an_img_4-dark.svg"
                         alt=""
                     />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_5"
-                        src="../../assets/img/main_an_img_5.webp"
+                        src="../../assets/img/main_an_img_5.svg"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_5"
-                        src="../../assets/img/main_an_img_5-dark.webp"
+                        src="../../assets/img/main_an_img_5-dark.svg"
                         alt=""
                     />
                 </div>
@@ -118,13 +138,13 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full.webp"
+                        src="../../assets/img/main_an_img_full.png"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full-dark.webp"
+                        src="../../assets/img/main_an_img_full-dark.png"
                         alt=""
                     />
                 </div>
@@ -566,9 +586,25 @@ export default {
                 width: 160%;
             }
         }
+        // .home__background__content
+        &__content {
+            width: 100%;
+            position: relative;
+            .bitcoin {
+                position: absolute;
+                width: 24%;
+                top: 5%;
+                left: 7.38%;
+            }
+            img:not(.bitcoin) {
+                width: 100%;
+            }
+        }
         // .home__background_1
         &_1 {
+            width: 100%;
             @media (min-width: 1320.98px) {
+                width: 72.43vw;
                 left: 0;
                 top: 0;
                 will-change: transform;

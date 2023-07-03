@@ -11,6 +11,7 @@
                 :slides-per-view="2"
                 :space-between="1"
                 :pagination="pagination"
+                ref="swiper"
             >
                 <slot name="mobile"></slot>
             </swiper>
@@ -21,6 +22,7 @@
                 :slides-per-view="1"
                 :space-between="9"
                 :pagination="pagination"
+                ref="swiper"
             >
                 <slot name="mobile"></slot>
             </swiper>
@@ -57,10 +59,32 @@ export default {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
+    watch: {
+        viewportWidth() {
+            if (this.$refs.swiper) {
+                this.setHeight();
+            }
+        },
+    },
     methods: {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        setHeight() {
+            let slides = this.$refs.swiper.$el.querySelectorAll(".card.sm");
+            let heightArr = [];
+            slides.forEach((slide) => heightArr.push(slide.offsetHeight));
+
+            slides.forEach((slide) => {
+                slide.style.minHeight = Math.max.apply(null, heightArr) + "px";
+                console.dir(slide);
+            });
+        },
+    },
+    mounted() {
+        if (this.$refs.swiper) {
+            this.setHeight();
+        }
     },
 };
 </script>

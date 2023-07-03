@@ -4,28 +4,29 @@
     width: 100%;
     gap: 16px;
     position: relative;
-    [type="password"] {
-        letter-spacing: normal;
-        &::placeholder {
-            letter-spacing: normal;
-        }
-    }
-    [type="text"] {
-        letter-spacing: normal;
-    }
-    [type="number"] {
-        &::-webkit-outer-spin-button,
-        &::-webkit-inner-spin-button {
-            /* display: none; <- Crashes Chrome on hover */
-            -webkit-appearance: none;
-            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
-        }
-    }
     textarea {
         resize: none;
-        padding: 14px 20px;
+        padding: 12px 12px;
         &::-webkit-scrollbar {
             width: 0;
+        }
+    }
+    input {
+        [type="password"] {
+            letter-spacing: normal;
+            &::placeholder {
+                letter-spacing: normal;
+            }
+        }
+        [type="text"] {
+            letter-spacing: normal;
+        }
+        [type="number"] {
+            &::-webkit-outer-spin-button,
+            &::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
         }
     }
     &-popup {
@@ -46,12 +47,6 @@
                 font-weight: 700;
                 font-size: 18px;
                 line-height: 107.6%;
-                //@media (max-width: $mobileSmall) {
-                //    min-height: 48px;
-                //    font-weight: 700;
-                //    font-size: 16px;
-                //    line-height: 20px;
-                //}
             }
         }
     }

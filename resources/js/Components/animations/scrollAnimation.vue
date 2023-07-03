@@ -17,7 +17,7 @@ export default {
     mounted(el, binding) {
         el.classList.add("transition");
         binding.value.split(" ").forEach((item, i) => {
-            if (i == 0) {
+            if (i === 0) {
                 el.classList.add(item + "-before-enter");
                 animationObserverFunction(el, item);
             } else {

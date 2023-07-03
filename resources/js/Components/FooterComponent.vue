@@ -2,11 +2,7 @@
     <blue-button class="feedback" data-popup="#feedback">
         <a class="all-link">{{ $t("footer.feedback.button") }}</a>
     </blue-button>
-    <main-popup
-        id="feedback"
-        :wait="this.wait"
-        :errors="errors"
-    >
+    <main-popup id="feedback" :wait="this.wait" :errors="errors">
         <form
             @submit.prevent="this.sendFeedback"
             class="form form-popup popup__form"
@@ -22,7 +18,6 @@
             />
             <textarea
                 v-model="form.message"
-                required
                 autofocus
                 type="text"
                 class="input popup__input"
@@ -243,9 +238,9 @@ import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import { useForm } from "@inertiajs/vue3";
-import axios from "axios";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
+
 export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
@@ -269,17 +264,15 @@ export default {
 
         const sendFeedback = () => {
             wait.value = true;
-            axios
-                .post("/send_message", form)
-                .then(() => {
+            form.post("/send_message", {
+                onFinish() {
+                    wait.value = false;
+                },
+                onSuccess() {
                     form.message = "";
                     form.contacts = "";
-                    wait.value = false;
-                })
-                .catch((err) => {
-                    wait.value = false;
-                    console.log(err);
-                });
+                },
+            });
         };
 
         return {
