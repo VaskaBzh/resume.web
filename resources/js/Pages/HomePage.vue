@@ -53,38 +53,18 @@
                 </div>
 
                 <div v-if="viewportWidth >= 991.98" class="home__background">
-                    <div
+                    <img
                         v-if="!getTheme"
                         class="home__background_image home__background_1"
-                    >
-                        <div class="home__background__content">
-                            <img
-                                src="../../assets/img/main_an_img_bitcoin.webp"
-                                alt=""
-                                class="bitcoin"
-                            />
-                            <img
-                                src="../../assets/img/main_an_img_1.svg"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                    <div
+                        src="../../assets/img/main_an_img_1.svg"
+                        alt=""
+                    />
+                    <img
                         v-else
                         class="home__background_image home__background_1"
-                    >
-                        <div class="home__background__content">
-                            <img
-                                src="../../assets/img/main_an_img_bitcoin.webp"
-                                alt=""
-                                class="bitcoin"
-                            />
-                            <img
-                                src="../../assets/img/main_an_img_1-dark.svg"
-                                alt=""
-                            />
-                        </div>
-                    </div>
+                        src="../../assets/img/main_an_img_1-dark.svg"
+                        alt=""
+                    />
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_2"
@@ -138,13 +118,13 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full.png"
+                        src="../../assets/img/main_an_img_full.svg"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full-dark.png"
+                        src="../../assets/img/main_an_img_full-dark.svg"
                         alt=""
                     />
                 </div>
@@ -527,7 +507,7 @@ export default {
     &__main {
         display: flex;
         @media (min-width: 991.98px) {
-            margin-bottom: 388px;
+            margin-bottom: 295px;
         }
     }
     // .home__content
@@ -573,6 +553,9 @@ export default {
         &_image {
             position: absolute;
             top: 40%;
+            @media (min-width: 1500.98px) {
+                width: auto !important;
+            }
             @media (max-width: 991.98px) {
                 top: 0;
                 position: relative;
@@ -586,25 +569,9 @@ export default {
                 width: 160%;
             }
         }
-        // .home__background__content
-        &__content {
-            width: 100%;
-            position: relative;
-            .bitcoin {
-                position: absolute;
-                width: 24%;
-                top: 5%;
-                left: 7.38%;
-            }
-            img:not(.bitcoin) {
-                width: 100%;
-            }
-        }
         // .home__background_1
         &_1 {
-            width: 100%;
             @media (min-width: 1320.98px) {
-                width: 72.43vw;
                 left: 0;
                 top: 0;
                 will-change: transform;
@@ -617,8 +584,8 @@ export default {
         // .home__background_2
         &_2 {
             @media (min-width: 1320.98px) {
-                top: 31em;
-                right: -15em;
+                top: 24em;
+                right: -14em;
                 will-change: transform;
                 animation-name: keyshow2;
                 animation-duration: 1.7s;
@@ -632,8 +599,8 @@ export default {
         // .home__background_3
         &_3 {
             @media (min-width: 1320.98px) {
-                top: 42.6em;
-                right: -31.4em;
+                top: 33.8em;
+                right: -24.8em;
                 will-change: transform;
                 animation-name: keyshow3;
                 animation-duration: 1.7s;
@@ -647,8 +614,8 @@ export default {
         // .home__background_4
         &_4 {
             @media (min-width: 1320.98px) {
-                top: 46.6em;
-                right: -12.3em;
+                top: 36.9em;
+                right: -9.8em;
                 will-change: transform;
                 animation-name: keyshow4;
                 animation-duration: 1.7s;
@@ -661,8 +628,8 @@ export default {
         }
         // .home__background_5
         &_5 {
-            top: 25.3em;
-            right: -34.9em;
+            top: 19.3em;
+            right: -33.9em;
             will-change: transform;
             animation: keyshow5 1.7s ease forwards,
                 imag5 12s 1.7s infinite linear;
