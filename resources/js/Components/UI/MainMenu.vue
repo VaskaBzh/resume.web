@@ -4,7 +4,6 @@
             <div
                 class="shadow_container"
                 v-show="open && viewportWidth <= 767.98"
-                id="shadow_container"
             ></div>
         </transition>
     </teleport>
