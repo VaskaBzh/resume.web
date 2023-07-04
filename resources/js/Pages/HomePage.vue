@@ -56,13 +56,13 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1.svg"
+                        src="../../assets/img/main_an_img_1.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1-dark.svg"
+                        src="../../assets/img/main_an_img_1-dark.webp"
                         alt=""
                     />
                     <img
@@ -118,13 +118,13 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full.svg"
+                        src="../../assets/img/main_an_img_full.webp"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image"
-                        src="../../assets/img/main_an_img_full-dark.svg"
+                        src="../../assets/img/main_an_img_full-dark.webp"
                         alt=""
                     />
                 </div>
@@ -571,6 +571,7 @@ export default {
         }
         // .home__background_1
         &_1 {
+            max-width: 905px;
             @media (min-width: 1320.98px) {
                 left: 0;
                 top: 0;

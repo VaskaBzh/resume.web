@@ -46,12 +46,12 @@ export default {
             return [
                 {
                     name: this.$t("language.ru"),
-                    img: "ru.webp",
+                    img: "ru.svg",
                     value: "ru",
                 },
                 {
                     name: this.$t("language.en"),
-                    img: "en.webp",
+                    img: "en.svg",
                     value: "en",
                 },
             ];

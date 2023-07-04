@@ -45,7 +45,8 @@ export default {
         }
         img {
             filter: drop-shadow(0px 10px 50px rgba(112, 165, 236, 0.25));
-            @media (max-width: 767.98px) {
+            max-width: 300px;
+            @media (max-width: 991.98px) {
                 max-width: 200px;
             }
             @media (max-width: 600.98px) {

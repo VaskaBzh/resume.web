@@ -1671,9 +1671,9 @@ export default {
         }
         flex-direction: column;
         &-back {
-            background: rgba(255, 255, 255, 0.29)
-                url("../../../assets/img/ref_img_back.webp") no-repeat right
-                center;
+            //background: rgba(255, 255, 255, 0.29)
+            //    url("../../../assets/img/ref_img_back.webp") no-repeat right
+            //    center;
             @media (max-width: 1270px) {
                 order: -1;
             }

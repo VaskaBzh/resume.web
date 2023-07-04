@@ -1,4 +1,12 @@
 <template>
+    <transition name="shadow">
+        <div
+            class="shadow_container"
+            v-show="is_opened && viewportWidth <= 991.98"
+            id="shadow_container"
+            @click="closeBurger"
+        ></div>
+    </transition>
     <div class="nav__links_con" :class="{ open: is_opened }">
         <div class="nav__header" id="burger_head" v-if="viewportWidth < 991.98">
             <account-menu
@@ -52,16 +60,6 @@
             </div>
             <div class="quote">© 2023 Allbtc Pool</div>
         </div>
-        <teleport to="body">
-            <transition name="shadow">
-                <div
-                    class="shadow_container"
-                    v-show="is_opened && viewportWidth <= 991.98"
-                    id="shadow_container"
-                    @click="closeBurger"
-                ></div>
-            </transition>
-        </teleport>
     </div>
 </template>
 

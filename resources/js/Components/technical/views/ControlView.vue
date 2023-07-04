@@ -20,7 +20,7 @@
                     <transition name="sun-moon">
                         <img
                             v-show="!getTheme"
-                            src="../../../../assets/img/light.webp"
+                            src="../../../../assets/img/light.svg"
                             alt="light"
                             class="light"
                         />
@@ -28,7 +28,7 @@
                     <transition name="sun-moon">
                         <img
                             v-show="getTheme"
-                            src="../../../../assets/img/dark.webp"
+                            src="../../../../assets/img/dark.svg"
                             alt="dark"
                             class="dark"
                         />
@@ -602,8 +602,6 @@ export default {
             text-align: center;
         }
         img {
-            width: 120px;
-            height: 120px;
             position: absolute;
             bottom: 0;
             left: 50%;

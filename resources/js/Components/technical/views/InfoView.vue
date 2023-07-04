@@ -77,7 +77,6 @@ export default {
 
             slides.forEach((slide) => {
                 slide.style.minHeight = Math.max.apply(null, heightArr) + "px";
-                console.dir(slide);
             });
         },
     },

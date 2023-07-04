@@ -1,5 +1,6 @@
 <template>
-    <div class="app_back">
+    <div class="app_back app_back-profile">
+        <div class="app_back_elem-blur"></div>
         <header-component :errors="errors" :is_auth="auth_user" />
         <div class="page">
             <div class="hint">

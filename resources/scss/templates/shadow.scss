@@ -10,3 +10,15 @@
         backdrop-filter: blur(5px);
     }
 }
+
+.shadow-enter-active,
+.shadow-leave-active {
+    transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
+    visibility: visible;
+    opacity: 1;
+}
+.shadow-enter-from,
+.shadow-leave-to {
+    visibility: hidden;
+    opacity: 0;
+}

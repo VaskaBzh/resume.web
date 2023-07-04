@@ -85,12 +85,12 @@ export default {
             return [
                 {
                     name: "Светлая",
-                    img: "light.webp",
+                    img: "light.svg",
                     value: "light",
                 },
                 {
                     name: "Темная",
-                    img: "dark.webp",
+                    img: "dark.svg",
                     value: "dark",
                 },
             ];

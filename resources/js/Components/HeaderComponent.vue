@@ -15,15 +15,13 @@
             />
         </Link>
 
-        <teleport to="body" :disabled="viewportWidth >= 991.98">
-            <nav-links
-                @closed="burgerClose"
-                :is_auth="is_auth"
-                :viewportWidth="viewportWidth"
-                :is_open="is_open"
-                :errors="errors"
-            />
-        </teleport>
+        <nav-links
+            @closed="burgerClose"
+            :is_auth="is_auth"
+            :viewportWidth="viewportWidth"
+            :is_open="is_open"
+            :errors="errors"
+        />
 
         <div class="nav__buttons" v-show="viewportWidth >= 991.78">
             <select-language

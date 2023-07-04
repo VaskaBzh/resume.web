@@ -157,6 +157,9 @@ export default {
         }
     }
     &__image {
+        img {
+            min-width: 897px;
+        }
         @media (max-width: 991.98px) {
             margin: 40px 0 0;
             display: flex;
