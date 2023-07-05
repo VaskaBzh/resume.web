@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\Subs\SubController;
 use App\Providers\RouteServiceProvider;
 use App\Models\User;
@@ -61,29 +62,54 @@ class RegisterController extends Controller
     public function register(Request $request)
     {
         $this->validator($request->all())->validate();
-
-        new Registered($user = $this->create($request->all()));
-
-        $this->guard()->login($user);
 //        $user->sendEmailVerificationNotification();
 
         $data = [
             "puid" => 781195,
-            "group_name" => $user->name,
+            "group_name" => $request->input("name"),
         ];
 
         try {
             $subController = new SubController();
-            $data['user_id'] = $user->id;
+            $requestController = new RequestController();
 
-            $subController->create(new Request($data));
+            $response = $requestController->proxy([
+                "puid" => "781195",
+                "page" => 1,
+                "page_size" => 52,
+            ], "worker/groups", "get");
 
-            if (app()->getLocale() === 'ru') {
+            foreach (json_decode($response->getContent())->data->list  as $index => $group) {
+                if ($index > 1) {
+                    if ($group->name === $request->input("name")) {
+                        if (app()->getLocale() === 'ru') {
+                            return back()->withErrors([
+                                'name' => 'Аккаунт с таким именем уже существует',
+                            ]);
+                        } else if (app()->getLocale() === 'en') {
+                            return back()->withErrors([
+                                'name' => 'An account with that name already exists.',
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            if (!$subController->check_users($data)) {
+                new Registered($user = $this->create($request->all()));
+
+                $this->guard()->login($user);
+                $data['user_id'] = $user->id;
+
+                $subController->create(new Request($data));
+
+                if (app()->getLocale() === 'ru') {
 //                $message = 'Пользователь успешно создан! Подтвердите почту.';
-                $message = 'Пользователь успешно создан!';
-            } else if (app()->getLocale() === 'en') {
+                    $message = 'Пользователь успешно создан!';
+                } else if (app()->getLocale() === 'en') {
 //                $message = 'The user has been successfully created! Confirm your email.';
-                $message = 'The user has been successfully created!';
+                    $message = 'The user has been successfully created!';
+                }
             }
         } catch (Exception $e) {
             // Обработка ошибок

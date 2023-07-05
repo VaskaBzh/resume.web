@@ -148,7 +148,6 @@ export default {
                 titles: [
                     this.$t("workers.table.thead[0]"),
                     this.$t("workers.table.thead[1]"),
-                    // "Ср.хешрейт /1ч",
                     this.$t("workers.table.thead[2]"),
                     this.$t("workers.table.thead[3]"),
                 ],
@@ -158,53 +157,32 @@ export default {
                     this.$t("workers.table.thead_short[2]"),
                     this.$t("workers.table.thead_short[3]"),
                 ],
-                rows: [],
-                mainRow: {
-                    hash: this.$t("workers.table.sub_thead"),
-                    hashRate: 0,
-                    // hashAvarage: 0,
-                    hashAvarage24: 0,
-                    rejectRate: 0,
-                },
-                mainShortRow: {
-                    hash: this.$t("workers.table.sub_thead"),
-                    hashRate: 0,
-                    // hashAvarage: 0,
-                    hashAvarage24: 0,
-                    rejectRate: 0,
-                },
+                rows: [{}],
             };
+
+            if (this.allAccounts[this.getActive]) {
+                obj.rows[0] = {
+                    class: "main",
+                    hash: this.$t("workers.table.sub_thead"),
+                    hashRate: this.allAccounts[this.getActive].shares1m,
+                    hashRate24: this.allAccounts[this.getActive].shares1d,
+                    rejectRate: this.allAccounts[this.getActive].rejectRate,
+                };
+            }
 
             if (this.allHash[this.getActive]) {
                 Object.values(this.allHash[this.getActive]).forEach((el, i) => {
                     let workersRowModel = {
-                        hashClass: el.status.toLowerCase(),
+                        class: el.status.toLowerCase(),
                         hash: el.name,
                         hashRate: el.shares1m,
-                        // hashAvarage: el.shares1h,
-                        hashAvarage24: el.shares1d,
+                        hash24: el.shares1d,
                         rejectRate: el.persent,
                         graphId: el.workerId,
+                        data: "#seeChart",
                     };
-                    Vue.set(obj.rows, i, workersRowModel);
+                    Vue.set(obj.rows, i + 1, workersRowModel);
                 });
-            }
-
-            if (this.allAccounts[this.getActive]) {
-                obj.mainRow.hashRate =
-                    this.allAccounts[this.getActive].shares1m;
-                // this.table.mainRow.hashAvarage = acc.shares1h;
-                obj.mainRow.hashAvarage24 =
-                    this.allAccounts[this.getActive].shares1d;
-                obj.mainRow.rejectRate =
-                    this.allAccounts[this.getActive].rejectRate;
-                obj.mainShortRow.hashRate =
-                    this.allAccounts[this.getActive].shares1m;
-                // this.table.mainShortRow.hashAvarage = acc.shares1h;
-                obj.mainShortRow.hashAvarage24 =
-                    this.allAccounts[this.getActive].shares1d;
-                obj.mainShortRow.rejectRate =
-                    this.allAccounts[this.getActive].rejectRate;
             }
             return obj;
         },

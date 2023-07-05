@@ -1,64 +1,9 @@
 <template>
     <div>
-        <div
-            class="cabinet__head"
-            v-if="
-                this.title ||
-                (this.viewportWidth < 767.98 && this.type !== 'Платежи') ||
-                (this.viewportWidth < 767.98 && this.type !== 'Платежи')
-            "
-        >
-            <main-title tag="h3" v-if="this.title"
-                >{{ this.title }}
+        <div class="cabinet__head" v-if="title">
+            <main-title tag="h3" v-if="title"
+                >{{ title }}
             </main-title>
-            <span
-                v-else-if="
-                    this.viewportWidth < 767.98 && this.type !== 'Платежи'
-                "
-                class="description-xs description"
-                >Отображать в виде</span
-            >
-            <div
-                class="legend"
-                v-if="this.viewportWidth > 767.98 && this.legend"
-            >
-                <div class="legend_elem legend_elem-active">
-                    {{ $t("worker_statuses.active") }}: {{ this.active }}
-                </div>
-                <div class="legend_elem legend_elem-unstable">
-                    {{ $t("worker_statuses.unstable") }}: {{ this.unstable }}
-                </div>
-                workers
-                <div class="legend_elem legend_elem-unActive">
-                    {{ $t("worker_statuses.inactive") }}: {{ this.unActive }}
-                </div>
-                <div class="legend_elem legend_elem-all">
-                    {{ $t("worker_statuses.all") }}: {{ this.all }}
-                </div>
-            </div>
-            <div
-                class="wrap_row"
-                v-if="this.viewportWidth < 767.98 && this.type !== 'Платежи'"
-            >
-                <div
-                    ref="block"
-                    @click="this.visualType = 'block'"
-                    class="usability_elem"
-                >
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <div
-                    ref="table"
-                    @click="this.visualType = 'table'"
-                    class="usability_elem"
-                >
-                    <span></span>
-                    <span></span>
-                </div>
-            </div>
         </div>
         <no-info
             :wait="waitTable"
@@ -67,84 +12,22 @@
             :empty="emptyTable"
         ></no-info>
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
-            <workers-table
-                v-if="
-                    (this.title === 'Воркеры' && this.visualType === 'block') ||
-                    (this.type === 'Воркеры' && this.visualType === 'block')
-                "
-                :key="this.boolFalse + this.allIncomeHistory"
-                :table="this.table"
-                :visualType="this.visualType"
-                @graph_render="this.graphRender"
-            />
-            <workers-table
-                v-else-if="this.title === 'Воркеры' || this.type === 'Воркеры'"
-                :key="this.boolFalse + this.allIncomeHistory"
-                :table="this.table"
-                :visualType="this.visualType"
-                @graph_render="this.graphRender"
-            />
-            <payment-table
-                v-else-if="this.first >= 0 && this.visualType === 'block'"
-                :key="this.boolFalse + this.allIncomeHistory"
-                :table="this.table"
-                :visualType="this.visualType"
-                :first="this.first"
-                :rows-val="this.rowsVal"
-            />
-            <payment-table
-                v-else-if="this.first >= 0"
-                :key="this.boolFalse + this.allIncomeHistory"
-                :table="this.table"
-                :visualType="this.visualType"
-                :first="this.first"
-                :rows-val="this.rowsVal"
-            />
-            <payment-table
-                v-else-if="this.visualType === 'block'"
-                :table="this.table"
-                :visualType="this.visualType"
-            />
-            <payment-table
-                v-else
-                :table="this.table"
-                :visualType="this.visualType"
-            />
+            <main-table :table="table"></main-table>
         </div>
-        <Link
-            class="main__link"
-            v-if="!this.table.rows"
-            :href="route(`${this.link}`)"
-        >
-        </Link>
-        <Link
-            class="main__link"
-            v-else-if="this.link"
-            :href="route(`${this.link}`)"
-        >
-            Расширенная страница {{ this.linkText }}
-        </Link>
     </div>
 </template>
 <script>
-import { Link, router } from "@inertiajs/vue3";
-import PaymentTable from "@/Components/tables/PaymentTable.vue";
 import MainTitle from "@/components/UI/MainTitle.vue";
-import WorkersTable from "@/Components/tables/WorkersTable.vue";
 import { mapGetters } from "vuex";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import MainTable from "@/Components/tables/MainTable.vue";
 
 export default {
-    components: { WorkersTable, MainTitle, PaymentTable, Link, NoInfo },
+    components: { MainTitle, NoInfo, MainTable },
     emits: ["graph_render"],
     props: {
         table: Object,
-        legend: Boolean,
-        legendVal: Array,
         title: String,
-        type: String,
-        link: String,
-        linkText: String,
         first: Number,
         rowsVal: Number,
         wait: Object,
@@ -152,9 +35,7 @@ export default {
     },
     data() {
         return {
-            visualType: "table",
             viewportWidth: 0,
-            index: localStorage.active,
             accounts: [],
             waitTable: true,
         };
@@ -169,39 +50,12 @@ export default {
                 ? this.empty?.length === 0
                 : this.wait[this.getActive]?.length === 0;
         },
-        bool() {
-            if (!this.boolFalse) {
-                return this.table.rows.length === 0;
-            }
-            return false;
-        },
-        boolFalse() {
-            if (
-                this.table.rows.length === 0 &&
-                this.wait &&
-                Object.keys(this.wait).length
-            ) {
-                return Object.keys(this.wait).length > 0;
-            }
-            return false;
-        },
         active() {
             let val = 0;
             if (this.legendVal.length > 0) {
                 this.accounts.forEach((acc) => {
                     if (acc.indexWorker == this.index) {
                         val = acc.workersActive;
-                    }
-                });
-            }
-            return val;
-        },
-        unActive() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersInActive;
                     }
                 });
             }
@@ -231,25 +85,8 @@ export default {
         },
     },
     methods: {
-        graphRender(key) {
-            this.$emit("graph_render", key);
-        },
-        router() {
-            return router;
-        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
-        },
-        vsType() {
-            if (this.viewportWidth < 767.98 && this.type !== "Платежи") {
-                if (this.visualType === "block") {
-                    this.$refs.block.classList.add("active");
-                    this.$refs.table.classList.remove("active");
-                } else {
-                    this.$refs.table.classList.add("active");
-                    this.$refs.block.classList.remove("active");
-                }
-            }
         },
     },
     created() {
@@ -257,7 +94,6 @@ export default {
         this.handleResize();
     },
     mounted() {
-        this.vsType();
         if (this.wait[this.getActive]) this.waitTable = false;
     },
     watch: {
@@ -268,9 +104,6 @@ export default {
                     setTimeout(() => (this.waitTable = false), 300);
             },
         },
-    },
-    updated() {
-        this.vsType();
     },
 };
 </script>

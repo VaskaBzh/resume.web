@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
 use App\Models\Worker;
 use Illuminate\Bus\Queueable;
@@ -32,7 +33,9 @@ class UpdateWorkersHashesJob implements ShouldQueue
     public function handle()
     {
         $workers = Worker::all();
+        $requestController = new RequestController();
         $maximum_records = 128;
+        dump($workers);
 
         foreach ($workers as $worker) {
             $extra_records = Worker::where('group_id', $worker->group_id)
@@ -48,28 +51,26 @@ class UpdateWorkersHashesJob implements ShouldQueue
                 }
             }
 
-            $opts = array(
-                "http" => array(
-                    "method" => "GET",
-                    "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
-                        "Content-Type: application/json; charset=utf-8",
-                )
-            );
-            $context = stream_context_create($opts);
-            $req_url = 'https://pool.api.btc.com/v1/worker?group=' . $worker->group_id . '&puid=781195';
-            $response_json = file_get_contents($req_url, false, $context);
+            $response_json = $requestController->proxy([
+                "puid" => "781195",
+                "group" => $worker->group_id,
+            ], "worker", "get");
             $shares = 0;
             $unit = "T";
             if(false !== $response_json) {
                 try {
-                    $responseData = json_decode($response_json, true);
-                    foreach ($responseData['data']['data'] as $item) {
-                        if ($item['worker_id'] == $worker->worker_id) {
-                            $shares = $item['shares_1m'];
-                            $unit = $item['shares_unit'];
+                    $responseEncode = json_decode($response_json->getContent());
+                    foreach ($responseEncode->data->data as $item) {
+                        if ($item->worker_id == $worker->worker_id) {
+                            $shares = $item->shares_1m;
+                            $unit = $item->shares_unit;
                             break;
                         }
                     }
+//                    dump($shares);
+//                    dump($unit);
+//                    dump($worker->worker_id);
+//                    dump($worker->group_id);
 
                     $sub = Sub::where('group_id', $worker->group_id)->first();
                     $sub->workers()->create([

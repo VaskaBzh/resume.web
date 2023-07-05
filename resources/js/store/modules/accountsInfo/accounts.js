@@ -56,6 +56,7 @@ export default {
                                         );
                                         this.dispatch("getAllIncome", group);
                                     }
+                                    console.log(group);
                                     this.dispatch("getHistoryHash", group);
                                     this.dispatch("get_history_hash", group);
                                 });

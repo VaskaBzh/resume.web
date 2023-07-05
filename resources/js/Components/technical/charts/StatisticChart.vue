@@ -1,16 +1,6 @@
 <template>
     <div class="graph">
         <div class="graph__main">
-            <div class="graph__head">
-                <main-title tag="h3">{{ graphs[0].title[0] }}</main-title>
-                <!--                <div class="graph__buttons">-->
-                <!--                    <button class="graph__button graph__button-active">-->
-                <!--                        1 день-->
-                <!--                    </button>-->
-                <!--                    <button class="graph__button">7 дней</button>-->
-                <!--                    <button class="graph__button">30 дней</button>-->
-                <!--                </div>-->
-            </div>
             <div class="graph__list" ref="graph">
                 <line-graph-statistic
                     :graphData="graphs[0]"
@@ -113,25 +103,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.popup_graph {
-    .graph {
-        &__item {
-            padding: 25px 0 0;
-        }
-    }
-}
 .graph {
-    // .grapth__head
-    &__head {
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        margin-bottom: 14px;
-        @media (max-width: 479.98px) {
-            flex-direction: column;
-            margin-bottom: 10px;
-        }
-    }
     // .graph__buttons
     &__buttons {
         display: flex;

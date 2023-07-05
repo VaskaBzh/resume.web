@@ -1,5 +1,6 @@
 <template>
     <div class="app_back">
+        <!--        <main-preloader></main-preloader>-->
         <header-component :errors="errors" :is_auth="auth_user" />
         <div class="page">
             <div class="hint">

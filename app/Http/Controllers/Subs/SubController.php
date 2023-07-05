@@ -27,7 +27,7 @@ class SubController extends Controller
                 if ($group->name === $groupName) {
                     if (app()->getLocale() === 'ru') {
                         return back()->withErrors([
-                            'name' => 'Аккаунт с таким имененм уже существует',
+                            'name' => 'Аккаунт с таким именем уже существует',
                         ], 201);
                     } else if (app()->getLocale() === 'en') {
                         return back()->withErrors([

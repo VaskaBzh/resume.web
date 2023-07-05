@@ -115,7 +115,6 @@
                 :columns="row"
                 :key="i"
                 :class="row.hashClass"
-                data-popup="#seeChart"
                 @click="this.indexChanger(row.graphId)"
             />
         </tbody>

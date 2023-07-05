@@ -18,8 +18,6 @@ class Worker extends Model
     protected $fillable = [
         'worker_id',
         'group_id',
-        'hash',
-        'unit',
     ];
 
     public function sub()
@@ -27,9 +25,9 @@ class Worker extends Model
         return $this->belongsTo(Sub::class, 'group_id', 'group_id');
     }
 
-    public function hash()
+    public function worker_hashrate()
     {
-        return $this->belongsTo(Hash::class, 'group_id', 'group_id');
+        return $this->belongsTo(WorkerHashrate::class, 'worker_id', 'worker_id');
     }
 
     protected static function boot()

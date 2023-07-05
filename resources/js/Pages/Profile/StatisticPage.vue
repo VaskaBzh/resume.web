@@ -56,12 +56,12 @@
                     />
                 </div>
             </div>
-            <div class="cabinet" v-if="!endHistory && !waitHistory">
+            <div class="cabinet" v-if="endHistory && !waitHistory">
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>
                 <copy-block
-                    v-for="(object, i) in this.copyObject"
+                    v-for="(object, i) in copyObject"
                     :key="i"
                     :copyObject="object"
                 ></copy-block>

@@ -7,12 +7,10 @@ export default {
             await btccom
                 .fetch_accounts_hash(data)
                 .then((res) => {
-                    if (res.data?.length > 0) {
-                        commit("updateHistory", {
-                            historyItem: Object.values(res.data),
-                            key: data.group_id,
-                        });
-                    }
+                    commit("updateHistory", {
+                        historyItem: Object.values(res.data),
+                        key: data.group_id,
+                    });
                 })
                 .catch((err) => console.log(err));
         },
