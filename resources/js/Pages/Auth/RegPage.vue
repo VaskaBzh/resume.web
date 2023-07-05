@@ -211,70 +211,59 @@ import MainPassword from "@/Components/UI/MainPassword.vue";
 import { ref } from "vue";
 
 export default {
-  layout: authLayoutView,
-  name: "reg-page",
-  props: ["errors"],
-  components: {
-    MainTitle,
-    BlueButton,
-    Link,
-    MainPassword,
-  },
-  data() {
-    return {
-      pdf,
-      errs: {},
-    };
-  },
-  setup() {
-    let checkbox = ref(false);
-    let validate = ref(null);
-    let form = useForm({
-      email: "",
-      name: "",
-      password: "",
-      ["password_confirmation"]: "",
-      checkbox: false,
-    });
-    const account_create = () => {
-      checkbox.value = false;
-      if (form.checkbox) {
-        if (!validate.value) {
-          form.post("/register", {});
-        }
-      } else {
-        checkbox.value = true;
-      }
-    };
-    const passwordProcess = (event) => {
-      form.password = event;
-      validate.value = {};
-      if (form.password?.length <= 10 || form.password?.length >= 50) {
-        validate.value.length = true;
-      }
+    layout: authLayoutView,
+    name: "reg-page",
+    props: ["errors"],
+    components: {
+        MainTitle,
+        BlueButton,
+        Link,
+        MainPassword,
+    },
+    data() {
+        return {
+            pdf,
+            errs: {},
+        };
+    },
+    setup() {
+        let checkbox = ref(false);
+        let validate = ref({});
+        let form = useForm({
+            email: "",
+            name: "",
+            password: "",
+            ["password_confirmation"]: "",
+            checkbox: false,
+        });
+        const account_create = () => {
+            checkbox.value = false;
+            if (form.checkbox) {
+                if (Object.entries(validate.value).length === 0) {
+                    form.post("/register", {});
+                }
+            } else {
+                checkbox.value = true;
+            }
+        };
+        const passwordProcess = (event) => {
+            form.password = event;
+            validate.value = {};
 
-      if (!/[a-z]/.test(form.password)) {
-        validate.value.lower = true;
-      }
+            if (form.password?.length <= 10 || form.password?.length >= 50)
+                validate.value.length = true;
 
-      if (!/[A-Z]/.test(form.password)) {
-        validate.value.upper = true;
-      }
+            if (!/[a-z]/.test(form.password)) validate.value.lower = true;
 
-      if (!/[0-9]/.test(form.password)) {
-        validate.value.number = true;
-      }
+            if (!/[A-Z]/.test(form.password)) validate.value.upper = true;
 
-      if (!/[!@#\$%\^&\*]/.test(form.password)) {
-        validate.value.symbol = true;
-      }
+            if (!/[0-9]/.test(form.password)) validate.value.number = true;
 
-      if (form.password?.length === 0) {
-        validate.value = null;
-      }
-    };
+            if (!/[!@#\$%\^&\*]/.test(form.password))
+                validate.value.symbol = true;
 
-    passwordProcess();
+            if (form.password.length === 0) validate.value = {};
+        };
 
     return {
       form,

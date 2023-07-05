@@ -5,6 +5,7 @@ namespace App\Jobs;
 use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
 use App\Models\Worker;
+use App\Models\WorkerHashrate;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -37,8 +38,7 @@ class UpdateWorkersHashesJob implements ShouldQueue
         $maximum_records = 128;
 
         foreach ($workers as $worker) {
-            $extra_records = Worker::where('group_id', $worker->group_id)
-                ->where('worker_id', $worker->worker_id)
+            $extra_records = WorkerHashrate::where('worker_id', $worker->worker_id)
                 ->oldest('created_at')
                 ->offset($maximum_records)
                 ->limit(PHP_INT_MAX)
@@ -67,9 +67,7 @@ class UpdateWorkersHashesJob implements ShouldQueue
                         }
                     }
 
-                    $sub = Sub::where('group_id', $worker->group_id)->first();
-                    $sub->workers()->create([
-                        'group_id' => $worker->group_id,
+                    $worker->worker_hashrate()->create([
                         'worker_id' => $worker->worker_id,
                         'hash' => $shares,
                         'unit' => $unit,

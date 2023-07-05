@@ -22,7 +22,6 @@
             />
         </tbody>
     </table>
-
     <teleport to="body">
         <main-popup
             v-if="Object.values(allHistoryMiner).length > 0"
