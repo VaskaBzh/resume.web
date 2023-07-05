@@ -28,11 +28,11 @@ class SubController extends Controller
                     if (app()->getLocale() === 'ru') {
                         return back()->withErrors([
                             'name' => 'Аккаунт с таким именем уже существует',
-                        ], 201);
+                        ]);
                     } else if (app()->getLocale() === 'en') {
                         return back()->withErrors([
                             'name' => 'An account with that name already exists.',
-                        ], 201);
+                        ]);
                     }
                 } elseif ($index === count(json_decode($response->getContent())->data->list) - 1) {
                     return false;

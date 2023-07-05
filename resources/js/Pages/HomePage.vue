@@ -508,6 +508,7 @@ export default {
         display: flex;
         @media (min-width: 991.98px) {
             margin-bottom: 295px;
+            margin-top: 240px;
         }
     }
     // .home__content

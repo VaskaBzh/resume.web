@@ -35,7 +35,6 @@ class UpdateWorkersHashesJob implements ShouldQueue
         $workers = Worker::all();
         $requestController = new RequestController();
         $maximum_records = 128;
-        dump($workers);
 
         foreach ($workers as $worker) {
             $extra_records = Worker::where('group_id', $worker->group_id)
@@ -67,10 +66,6 @@ class UpdateWorkersHashesJob implements ShouldQueue
                             break;
                         }
                     }
-//                    dump($shares);
-//                    dump($unit);
-//                    dump($worker->worker_id);
-//                    dump($worker->group_id);
 
                     $sub = Sub::where('group_id', $worker->group_id)->first();
                     $sub->workers()->create([
