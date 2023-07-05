@@ -1,53 +1,62 @@
 <template>
-    <div class="app_back app_back-auth">
-        <header-component-auth :errors="errors" :is_auth="auth_user" />
-        <div class="page">
-            <div class="hint">
-                <div class="hint_item" v-hide="this.getMessage !== ''">
-                    {{ this.getMessage }}
-                </div>
-                <div class="hint_item" v-hide="this.message !== null">
-                    {{ this.message }}
-                </div>
-            </div>
-            <div class="observer_block"></div>
-            <div class="section">
-                <div class="page__container">
-                    <div class="page__main">
-                        <div class="page__content">
-                            <Link :href="route('home')">
-                                <img
-                                    v-show="!isDark"
-                                    src="../../assets/img/logo_high_quality-lg.svg"
-                                    alt="logo"
-                                />
-                                <img
-                                    v-show="isDark"
-                                    src="../../assets/img/logo_high_quality-lg-dark.svg"
-                                    alt="logo"
-                                />
-                            </Link>
-                            <keep-alive>
-                                <slot :errors="errors"></slot>
-                            </keep-alive>
-                        </div>
-                        <div class="page__image">
-                            <img
-                                v-show="!isDark"
-                                src="../../assets/img/auth_img-back.webp"
-                                alt=""
-                            />
-                            <img
-                                v-show="isDark"
-                                src="../../assets/img/auth_img-back-dark.webp"
-                                alt=""
-                            />
-                        </div>
-                    </div>
-                </div>
-            </div>
+  <div class="app_back app_back-auth">
+    <header-component-auth
+      :errors="errors"
+      :is_auth="auth_user"
+    />
+    <div class="page auth">
+      <div class="hint">
+        <div
+          class="hint_item"
+          v-hide="this.getMessage !== ''"
+        >
+          {{ this.getMessage }}
         </div>
+        <div
+          class="hint_item"
+          v-hide="this.message !== null"
+        >
+          {{ this.message }}
+        </div>
+      </div>
+      <div class="observer_block"></div>
+      <div class="auth__con">
+        <div class="page__container">
+          <div class="auth__main">
+            <div class="page__content">
+              <Link :href="route('home')">
+              <img
+                v-show="!isDark"
+                src="../../assets/img/logo_high_quality-lg.svg"
+                alt="logo"
+              />
+              <img
+                v-show="isDark"
+                src="../../assets/img/logo_high_quality-lg-dark.svg"
+                alt="logo"
+              />
+              </Link>
+              <keep-alive>
+                <slot :errors="errors"></slot>
+              </keep-alive>
+            </div>
+            <div class="page__image">
+              <img
+                v-show="!isDark"
+                src="../../assets/img/auth_img-back.svg"
+                alt=""
+              />
+              <img
+                v-show="isDark"
+                src="../../assets/img/auth_img-back-dark.svg"
+                alt=""
+              />
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -56,73 +65,99 @@ import { mapGetters } from "vuex";
 import { Link } from "@inertiajs/vue3";
 
 export default {
-    props: {
-        auth_user: {
-            type: Boolean,
-            default: false,
-        },
-        message: {
-            type: String,
-        },
-        errors: {
-            type: Object,
-        },
+  props: {
+    auth_user: {
+      type: Boolean,
+      default: false,
     },
-    components: { HeaderComponentAuth, Link },
-    computed: {
-        ...mapGetters(["getMessage", "isDark"]),
+    message: {
+      type: String,
     },
+    errors: {
+      type: Object,
+    },
+  },
+  components: { HeaderComponentAuth, Link },
+  computed: {
+    ...mapGetters(["getMessage", "isDark"]),
+  },
 };
 </script>
 
 <style lang="scss" scoped>
-.page {
-    &__content {
-        flex: 1 0 55%;
-        @media (max-width: 991.98px) {
-            flex: 1 0 100%;
+.page.auth {
+  padding: 0;
+}
+.auth {
+  display: flex;
+  justify-content: center;
+  // .auth__con
+  &__con {
+    & .page {
+      // .page__container
+      &__container {
+        height: 100%;
+      }
+      // .page__content
+      &__content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex: 1 0 40%;
+
+        & a {
+          display: block;
+          margin-bottom: 88px;
+          @media (max-width: 1550px) {
+            margin-bottom: 48px;
+            & img {
+              max-width: 300px;
+            }
+          }
+          @media (max-width: 991.98px) {
+            text-align: center;
+          }
+          @media (max-width: 767.98px) {
+            & img {
+              max-width: 250px;
+            }
+          }
+          @media (max-width: 479.98px) {
+            & img {
+              max-width: 150px;
+            }
+          }
         }
-        img {
-            margin: 0 0 88px;
-            @media (max-width: 991.98px) {
-                margin: 100px 0 88px;
-            }
-            @media (max-width: 767.98px) {
-                max-width: 326px;
-            }
-            @media (max-width: 479.98px) {
-                max-width: 146px;
-                margin: 80px 0 72px;
-            }
+      }
+      // .page__image
+      &__image {
+        & img {
+          max-width: unset;
+          @media (max-width: 1550px) {
+            max-width: 900px;
+          }
+          @media (max-width: 991.98px) {
+            display: none;
+          }
         }
+      }
     }
-    &__main {
-        flex-direction: row;
-        align-items: flex-start;
+  }
+  // .auth__main
+  &__main {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    padding: 56px 0 100px;
+    gap: 100px;
+    @media (max-width: 1550px) {
+      padding: 40px 0 56px;
     }
-    &__image {
-        order: 0;
-        img {
-            max-width: 1255px;
-        }
-        @media (max-width: 991.98px) {
-            transform: translateX(-40%);
-            img {
-                max-width: 756px;
-            }
-        }
-        @media (max-width: 767.98px) {
-            transform: translateX(-25%);
-            img {
-                max-width: 600px;
-            }
-        }
-        @media (max-width: 479.98px) {
-            transform: translateX(-50%);
-            img {
-                max-width: 376px;
-            }
-        }
+    @media (max-width: 991.98px) {
+      gap: 0;
+      justify-content: start;
     }
+  }
 }
 </style>

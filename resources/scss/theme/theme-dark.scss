@@ -381,6 +381,12 @@ body {
                 }
             }
         }
+        .sign__navigation {
+            &:before {
+                background: #0f1924;
+                box-shadow: 0px 8px 20px 0px rgba(34, 34, 35, 0.07);
+            }
+        }
         .description {
             color: #989898;
             &-xs {
@@ -853,13 +859,18 @@ body {
                     }
                 }
                 input[type="checkbox"] {
+                    &:checked + label {
+                        & .fake svg {
+                            & path {
+                                fill: #e1e1e1;
+                            }
+                        }
+                    }
+
                     & + label {
                         color: #e1e1e1;
-                        &:before {
-                            border-color: #cacaca;
-                        }
-                        svg {
-                            fill: #cacaca;
+                        & .fake svg rect {
+                            stroke: #e1e1e1;
                         }
                     }
                 }

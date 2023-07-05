@@ -141,7 +141,6 @@ export default {
     }
     .page__content {
         @media (max-width: 991.98px) {
-
             margin-top: 70px;
         }
     }
