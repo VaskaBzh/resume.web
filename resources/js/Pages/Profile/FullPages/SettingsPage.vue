@@ -203,27 +203,27 @@ export default {
         let fac = ref(null);
 
         async function get_login() {
-            axios.get(route("get_login")).then((res) => {
+            await axios.get(route("get_login")).then((res) => {
                 login.value = res.data;
             });
         }
         async function get_email() {
-            axios.get(route("get_email")).then((res) => {
+            await axios.get(route("get_email")).then((res) => {
                 email.value = res.data;
             });
         }
         async function get_phone() {
-            axios.get(route("get_phone")).then((res) => {
+            await axios.get(route("get_phone")).then((res) => {
                 phone.value = res.data;
             });
         }
         async function get_sms() {
-            axios.get(route("get_sms")).then((res) => {
+            await axios.get(route("get_sms")).then((res) => {
                 res.data === 0 ? (sms.value = false) : (sms.value = true);
             });
         }
         async function get_2fac() {
-            axios.get(route("get_fac")).then((res) => {
+            await axios.get(route("get_fac")).then((res) => {
                 res.data === 0 ? (fac.value = false) : (fac.value = true);
             });
         }

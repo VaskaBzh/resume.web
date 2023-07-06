@@ -18,8 +18,6 @@ class SubController extends Controller
 
         $response = $requestController->proxy([
             "puid" => "781195",
-            "page" => 1,
-            "page_size" => 52,
         ], "worker/groups", "get");
 
         foreach (json_decode($response->getContent())->data->list  as $index => $group) {
@@ -72,6 +70,7 @@ class SubController extends Controller
                 $request->validate([
                     'user_id' => 'required|integer|exists:users,id',
                 ]);
+
 
                 // Создание новой записи о выводе
                 $sub = new Sub([

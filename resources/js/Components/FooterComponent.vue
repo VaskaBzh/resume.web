@@ -268,9 +268,9 @@ export default {
             contacts: "",
         });
 
-        const sendFeedback = () => {
+        const sendFeedback = async () => {
             wait.value = true;
-            form.post("/send_message", {
+            await form.post("/send_message", {
                 onFinish() {
                     wait.value = false;
                 },

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Workers;
 use App\Http\Controllers\Controller;
 use App\Models\Sub;
 use App\Models\Worker;
+use App\Models\WorkerHashrate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 
@@ -48,6 +49,6 @@ class WorkerController extends Controller
             'worker_id' => 'required',
         ]);
 
-        return Worker::all()->where('worker_id', $request->input('worker_id'));
+        return WorkerHashrate::all()->where('worker_id', $request->input('worker_id'));
     }
 }

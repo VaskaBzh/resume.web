@@ -50,6 +50,8 @@ export default {
                                 shares1d: hash24,
                                 persent: worker.reject_percent,
                                 status: worker.status,
+                                unit: worker.shares_unit,
+                                unit1d: worker.shares_1d_unit,
                                 name: name,
                                 workerId: worker.worker_id,
                                 createdAt: data.el.created_at,

@@ -4,14 +4,18 @@ import tippy from "tippy.js";
 
 export default {
     beforeMount(el, binding, vnode, oldVnode) {
-        tippy(el, {
-            content: binding.value.message,
-        });
+        if (binding.value) {
+            tippy(el, {
+                content: binding.value.message,
+            });
+        }
     },
     beforeUpdate(el, binding, vnode, oldVnode) {
-        tippy(el, {
-            content: binding.value.message,
-        });
+        if (binding.value) {
+            tippy(el, {
+                content: binding.value.message,
+            });
+        }
     },
 };
 </script>

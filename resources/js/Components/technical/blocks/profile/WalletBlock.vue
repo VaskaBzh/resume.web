@@ -183,9 +183,9 @@ export default {
         changeWalletObj(wallet) {
             this.$emit("getWallet", wallet);
         },
-        remove(wallet) {
+        async remove(wallet) {
             wallet.group_id = this.getActive;
-            axios
+            await axios
                 .post("/wallet_delete", wallet)
                 .then((res) => {
                     this.$emit("getMessage", res.data.message);

@@ -27,6 +27,8 @@
 @import "./templates/text";
 @import "./templates/description";
 @import "./templates/subtitle";
+@import "./templates/label";
+@import "./templates/status";
 @import "./templates/link";
 @import "./templates/button";
 @import "./templates/icon";
@@ -304,10 +306,6 @@ h6 {
         font-size: 14px;
         line-height: 150%;
         color: #7c7c7c;
-
-        &-select {
-            color: #000034;
-        }
 
         &-check {
             font-size: 16px;
@@ -756,7 +754,6 @@ h6 {
         opacity: 0;
         transition: all 0.3s ease 0s;
     }
-    
 }
 
 // Кастомные стили графиков

@@ -116,10 +116,9 @@ export default {
                 const nearestIndex = Math.round(x.invert(this.mouseX));
                 const d = this.graphData.values[nearestIndex];
                 const u = this.graphData.unit[nearestIndex];
-                let a = null;
-                if (this.graphType === "statistic") {
-                    a = this.graphData.amount[nearestIndex];
-                }
+                let a = this.graphData.amount
+                    ? this.graphData.amount[nearestIndex]
+                    : null;
                 const time = this.graphData.dates[nearestIndex];
 
                 const verticalLineX = this.mouseX;
@@ -133,6 +132,11 @@ export default {
                     .style("opacity", 1);
 
                 let contentTooltip = null;
+                let workers = a
+                    ? `<span>${this.$t(
+                          "tooltip.workers"
+                      )} <span class="value">${a}</span></span>`
+                    : ``;
 
                 if (this.graphType === "statistic") {
                     contentTooltip = `<div class="tooltip-wrapper">
@@ -142,9 +146,7 @@ export default {
                         d,
                         u
                     )}</span></span>
-                                <span>${this.$t(
-                                    "tooltip.workers"
-                                )} <span class="value">${a}</span></span>
+                                ${workers}
                                 <span>${this.$t(
                                     "tooltip.rejected"
                                 )} <span class="value">0.000%</span></span>

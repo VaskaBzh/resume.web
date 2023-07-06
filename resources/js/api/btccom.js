@@ -24,7 +24,7 @@ export default {
     async fetch_subs() {
         let response, error;
         const config = {
-            headers: header, // Ваши заголовки
+            headers: header,
         };
 
         try {
@@ -39,7 +39,7 @@ export default {
         let response, error;
         const config = {
             params: data,
-            headers: header, // Ваши заголовки
+            headers: header,
         };
 
         try {
@@ -54,7 +54,7 @@ export default {
         let response, error;
         const config = {
             params: data,
-            headers: header, // Ваши заголовки
+            headers: header,
         };
 
         try {
@@ -69,7 +69,7 @@ export default {
         let response, error;
         const config = {
             params: data,
-            headers: header, // Ваши заголовки
+            headers: header,
         };
 
         try {
@@ -86,7 +86,7 @@ export default {
             params: {
                 group_id: data.group_id,
             },
-            headers: header, // Ваши заголовки
+            headers: header,
         };
 
         try {
@@ -101,7 +101,7 @@ export default {
         let response, error;
         const config = {
             params: { id: data.el.gid },
-            headers: header, // Ваши заголовки
+            headers: header,
         };
 
         try {

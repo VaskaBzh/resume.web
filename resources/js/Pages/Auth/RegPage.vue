@@ -207,11 +207,11 @@ export default {
             ["password_confirmation"]: "",
             checkbox: false,
         });
-        const account_create = () => {
+        const account_create = async () => {
             checkbox.value = false;
             if (form.checkbox) {
                 if (Object.entries(validate.value).length === 0) {
-                    form.post("/register", {});
+                    await form.post("/register", {});
                 }
             } else {
                 checkbox.value = true;

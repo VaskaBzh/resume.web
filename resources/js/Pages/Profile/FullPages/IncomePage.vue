@@ -124,15 +124,6 @@ export default {
                     this.$t("income.table.thead[5]"),
                     this.$t("income.table.thead[6]"),
                 ],
-                shortTitles: [
-                    this.$t("income.table.thead_short[0]"),
-                    this.$t("income.table.thead_short[1]"),
-                    this.$t("income.table.thead_short[2]"),
-                    this.$t("income.table.thead_short[3]"),
-                    this.$t("income.table.thead_short[4]"),
-                    this.$t("income.table.thead_short[5]"),
-                    this.$t("income.table.thead_short[6]"),
-                ],
                 rows: [],
             };
             if (
@@ -225,16 +216,21 @@ export default {
                         let rowModel = {
                             date: date.join("").split("-").reverse().join("."),
                             payDate: datePay,
-                            time: time.join(""),
-                            earn: row["amount"],
-                            payment: row["payment"],
-                            percent: percent,
-                            diff: row["diff"],
                             hash: `${row["hash"]} ${row["unit"]}H/s`,
-                            status: row["status"],
+                            earn: `${row["amount"]}BTC`,
+                            payment: `${row["payment"]}BTC`,
+                            wallet: wallet,
+                            percent: `${percent}%`,
+                            status:
+                                row["status"] === "fullfill"
+                                    ? this.$t("income.table.status.fullfill")
+                                    : row["status"] === "rejected"
+                                    ? this.$t("income.table.status.rejected")
+                                    : this.$t("income.table.status.pending"),
+                            class: row["status"],
                             txid: txid,
                             message: message,
-                            wallet: wallet,
+                            data: "#fullpage",
                         };
                         Vue.set(obj.rows, i, rowModel);
                     }

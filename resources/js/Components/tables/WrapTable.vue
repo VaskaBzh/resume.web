@@ -1,9 +1,7 @@
 <template>
     <div>
         <div class="cabinet__head" v-if="title">
-            <main-title tag="h3" v-if="title"
-                >{{ title }}
-            </main-title>
+            <main-title tag="h3" v-if="title">{{ title }} </main-title>
         </div>
         <no-info
             :wait="waitTable"
@@ -12,7 +10,10 @@
             :empty="emptyTable"
         ></no-info>
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
-            <main-table :table="table"></main-table>
+            <main-table
+                :viewportWidth="viewportWidth"
+                :table="table"
+            ></main-table>
         </div>
     </div>
 </template>

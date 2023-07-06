@@ -1,0 +1,39 @@
+.status {
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 135%;
+    display: inline-flex;
+    align-items: center;
+    @media (max-width: 479.98px) {
+        font-size: 16px;
+    }
+    &:before {
+        content: "";
+        margin-right: 8px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        @media (max-width: 479.98px) {
+            width: 8px;
+            height: 8px;
+        }
+    }
+    &.active {
+        color: #13D60E;
+        &:before {
+            background: #13D60E;
+        }
+    }
+    &.inactive {
+        color: #ff0000;
+        &:before {
+            background: #ff0000;
+        }
+    }
+    &.unActive {
+        color: #e9c058;
+        &:before {
+            background: #e9c058;
+        }
+    }
+}

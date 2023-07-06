@@ -97,10 +97,10 @@ export default {
         toggle() {
             this.opened = !this.opened;
         },
-        setLanguage() {
+        async setLanguage() {
             if (localStorage.getItem("location")) {
                 this.$i18n.locale = localStorage.getItem("location");
-                axios.post(
+                await axios.post(
                     "/set_location",
                     {
                         location: this.$i18n.locale,

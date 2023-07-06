@@ -15,9 +15,11 @@
             <table-row
                 v-for="(row, i) in table.rows"
                 :columns="row"
+                :titles="table.titles"
                 :key="i"
+                :viewportWidth="viewportWidth"
                 :class="row.class || ''"
-                @openGraph="indexChanger"
+                @openGraph="getUser"
                 :data-popup="row.data || ''"
             />
         </tbody>
@@ -30,18 +32,67 @@
             ref="chart"
             typePopup="graph"
             @closed="dropIndex"
-            @opened="setIndex"
             :animationEnd="10300"
         >
-            <statistic-chart
-                class="graph"
-                :graphs="graphs"
-                :redraw="redraw"
-                :viewportWidth="viewportWidth"
-                :heightVal="height"
-                :tooltip="true"
-                :key="graphs[0].values[graphs[0].values.length - 1]"
-            />
+            <div class="popup__head">
+                <main-title tag="h4" class="title-blue">
+                    {{ activeWorker.hash }}
+                </main-title>
+                <span class="status popup_status" :class="activeWorker.class">
+                    {{
+                        activeWorker.class === "active"
+                            ? $t("workers.statuses[0]")
+                            : activeWorker.class === "inactive"
+                            ? $t("workers.statuses[1]")
+                            : $t("workers.statuses[2]")
+                    }}
+                </span>
+            </div>
+            <div class="popup__main">
+                <div class="popup__info">
+                    <div class="popup__info_block">
+                        <span class="label popup__info_block_label">
+                            {{ $t("workers.table.thead[1]") }}</span
+                        >
+                        <span class="text text-black">
+                            <b> {{ activeWorker.hashRate }}</b>
+                        </span>
+                    </div>
+                    <div class="popup__info_block">
+                        <span class="label popup__info_block_label">{{
+                            $t("workers.table.thead[2]")
+                        }}</span>
+                        <span class="text text-black">
+                            <b> {{ activeWorker.hashRate }}</b></span
+                        >
+                    </div>
+                    <div class="popup__info_block">
+                        <span class="label popup__info_block_label">{{
+                            $t("workers.table.thead[3]")
+                        }}</span>
+                        <span class="text text-black">
+                            <b> {{ activeWorker.hashRate24 }}</b></span
+                        >
+                    </div>
+                    <div class="popup__info_block">
+                        <span class="label popup__info_block_label">{{
+                            $t("workers.table.thead[4]")
+                        }}</span>
+                        <span class="text text-black">
+                            <b> {{ activeWorker.rejectRate }}</b></span
+                        >
+                    </div>
+                </div>
+                <statistic-chart
+                    class="popup-graph__graph"
+                    :graphs="graphs"
+                    :redraw="redraw"
+                    :viewportWidth="viewportWidth"
+                    :heightVal="height"
+                    :tooltip="true"
+                    :key="graphs[0].values[graphs[0].values.length - 1]"
+                />
+            </div>
         </main-popup>
     </teleport>
 </template>
@@ -51,6 +102,7 @@ import TableRow from "@/Components/tables/row/TableRow.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
     name: "main-table",
@@ -58,7 +110,7 @@ export default {
         viewportWidth: Number,
         table: Object,
     },
-    components: { MainPopup, StatisticChart, TableRow },
+    components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
         ...mapGetters(["allHistoryMiner"]),
     },
@@ -75,13 +127,15 @@ export default {
                 },
             ],
             redraw: true,
-            height: 287,
+            height: 360,
+            indexWorker: 0,
+            activeWorker: {},
         };
     },
     watch: {
         viewportWidth() {
             if (this.viewportWidth >= 991.98) {
-                this.height = 287;
+                this.height = 360;
             }
             if (this.viewportWidth < 991.98) {
                 this.height = 352;
@@ -94,9 +148,12 @@ export default {
         },
     },
     methods: {
+        getUser(data) {
+            this.indexChanger(data.id);
+            this.activeWorker = data.info;
+        },
         indexChanger(key) {
             setTimeout(() => {
-                console.log(key);
                 if (this.indexWorker !== key) {
                     this.graphs = [
                         {
@@ -134,7 +191,7 @@ export default {
             });
 
             if (historyValues) {
-                const [values, amount, unit] = historyValues
+                const [values, unit] = historyValues
                     .slice(-24)
                     .reverse()
                     .reduce(
@@ -143,7 +200,6 @@ export default {
                             if (el.unit === "P") hash *= 1000;
                             else if (el.unit === "E") hash *= 1000000;
                             acc[0].push(Number(hash));
-                            el.amount ? acc[1].push(el.amount) : acc[1].push(0);
                             acc[2].push(el.unit ?? "T");
 
                             return acc;
@@ -153,13 +209,11 @@ export default {
 
                 while (values.length < 24) {
                     values.push(0);
-                    amount.push(0);
                     unit.push("T");
                 }
 
                 await Object.assign(this.graphs[0], {
                     values: values.reverse(),
-                    amount: amount.map(String).reverse(),
                     unit: unit.reverse(),
                 });
 
@@ -176,9 +230,23 @@ export default {
     border-spacing: 0 8px;
     text-indent: 0;
     border-collapse: separate;
+    @media (max-width: 767.98px) {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+    }
+    &__body {
+        @media (max-width: 767.98px) {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+    }
     &_column {
-        height: 48px;
-        padding-right: 16px;
+        @media (min-width: 767.98px) {
+            height: 48px;
+            padding-right: 16px;
+        }
         &:first-child {
             border-radius: 8px 0 0 8px;
         }
@@ -187,6 +255,9 @@ export default {
         }
     }
     &__head {
+        @media (max-width: 767.98px) {
+            display: none;
+        }
         .table {
             &_column {
                 color: #818c99;

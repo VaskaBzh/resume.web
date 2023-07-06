@@ -148,14 +148,8 @@ export default {
                 titles: [
                     this.$t("workers.table.thead[0]"),
                     this.$t("workers.table.thead[1]"),
-                    this.$t("workers.table.thead[2]"),
                     this.$t("workers.table.thead[3]"),
-                ],
-                shortTitles: [
-                    this.$t("workers.table.thead_short[0]"),
-                    this.$t("workers.table.thead_short[1]"),
-                    this.$t("workers.table.thead_short[2]"),
-                    this.$t("workers.table.thead_short[3]"),
+                    this.$t("workers.table.thead[4]"),
                 ],
                 rows: [{}],
             };
@@ -165,7 +159,9 @@ export default {
                     class: "main",
                     hash: this.$t("workers.table.sub_thead"),
                     hashRate: this.allAccounts[this.getActive].shares1m,
+                    unit: this.allAccounts[this.getActive].unit,
                     hashRate24: this.allAccounts[this.getActive].shares1d,
+                    unit24: this.allAccounts[this.getActive].unit,
                     rejectRate: this.allAccounts[this.getActive].rejectRate,
                 };
             }
@@ -176,7 +172,9 @@ export default {
                         class: el.status.toLowerCase(),
                         hash: el.name,
                         hashRate: el.shares1m,
-                        hash24: el.shares1d,
+                        hashRate24: el.shares1d,
+                        unit: el.unit,
+                        unit24: el.unit1d,
                         rejectRate: el.persent,
                         graphId: el.workerId,
                         data: "#seeChart",

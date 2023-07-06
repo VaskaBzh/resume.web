@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
 import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 import { mapGetters } from "vuex";
 
@@ -72,7 +71,6 @@ export default {
         }
     },
     components: {
-        MainTitle,
         LineGraphStatistic,
     },
     computed: {

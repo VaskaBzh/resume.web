@@ -56,7 +56,15 @@
                     />
                 </div>
             </div>
-            <div class="cabinet" v-if="endHistory && !waitHistory">
+            <div
+                class="cabinet"
+                v-if="
+                    endHistory &&
+                    !waitHistory &&
+                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
+                        0
+                "
+            >
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>

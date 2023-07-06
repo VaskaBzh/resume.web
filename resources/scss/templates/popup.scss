@@ -87,6 +87,7 @@ body::after {
         .popup__content {
             visibility: visible;
             opacity: 1;
+            overflow: hidden;
             transform: translateY(200px);
             animation: mainAnimation forwards 0.8s ease 0.5s !important;
             &_logo {
@@ -99,6 +100,41 @@ body::after {
         }
     }
     &-graph {
+        @media (max-width: 767.98px) {
+            .popup {
+                &__content_block {
+                    padding-bottom: 5px;
+                }
+                &__main {
+                    gap: 0;
+                }
+            }
+        }
+        &__graph {
+            @media (min-width: 767.98px) {
+                padding: 4px 18px 0 38px;
+            }
+            padding: 0 0 0 42px;
+        }
+        .graph {
+            .graph {
+                &__main {
+                    @media (max-width: 767.98px) {
+                        margin: 0 -20px 0 0;
+                    }
+                    @media (max-width: 479.98px) {
+                        margin: 0 -20px 0 32px;
+                    }
+                }
+                &__list {
+                    padding: 0;
+                    margin: 0;
+                    @media (max-width: 767.98px) {
+                        padding-right: 20px;
+                    }
+                }
+            }
+        }
         @media (max-width: $mobileSmall) {
             &.popup {
                 &_show {
@@ -114,9 +150,11 @@ body::after {
             .graph {
                 padding: 0 !important;
                 margin: 0 !important;
-                .graph__head {
-                    padding: 0;
-                    margin: 0;
+                .graph {
+                    &__head {
+                        padding: 0;
+                        margin: 0;
+                    }
                 }
                 .graph {
                     &__con {
@@ -140,14 +178,6 @@ body::after {
                     &_block {
                         overflow: visible;
                         padding: 15px 0 0;
-
-                        .title {
-                            margin-bottom: 20px;
-                            &:after,
-                            &:before {
-                                content: none;
-                            }
-                        }
                     }
                 }
             }
@@ -161,50 +191,6 @@ body::after {
         flex: 1 1 auto;
         width: 100%;
         justify-content: center;
-    }
-    &_slide {
-        height: fit-content !important;
-    }
-    &__slider {
-        overflow: visible !important;
-        opacity: 0;
-        transition: all 0.5s ease 0s;
-        .swiper-wrapper {
-            transition: all 0.3s ease 0s;
-        }
-        .form {
-            animation: none !important;
-            opacity: 1 !important;
-            width: 100% !important;
-            overflow-x: hidden;
-        }
-        .swiper-horizontal > .swiper-pagination-bullets,
-        .swiper-pagination-bullets.swiper-pagination-horizontal {
-            bottom: auto !important;
-            top: -27px !important;
-            @media (max-width: $mobileSmall) {
-                top: -15px !important;
-            }
-            .swiper-pagination-bullet {
-                height: 5px;
-                width: 5px;
-                border-radius: 5px;
-                background: linear-gradient(
-                    84.14deg,
-                    #3f7bdd 8.75%,
-                    #4282ec 92.01%
-                );
-                transition: all 0.3s ease 0s;
-                position: relative;
-                &:before,
-                &:after {
-                    content: none;
-                }
-                &-active {
-                    width: 20px;
-                }
-            }
-        }
     }
     .loading {
         form,
@@ -233,6 +219,57 @@ body::after {
                         }
                     }
                 }
+            }
+        }
+    }
+    &__head {
+        margin-bottom: 24px;
+        display: flex;
+        @media (max-width: 479.98px) {
+            margin-bottom: 10px;
+            margin-top: 32px;
+        }
+    }
+    &_status {
+        margin-left: 24px;
+        @media (max-width: 479.98px) {
+            margin-left: auto;
+        }
+    }
+    &__main {
+        display: flex;
+        gap: 24px;
+        @media (max-width: 991.98px) {
+            flex-direction: column;
+        }
+    }
+    &__info {
+        display: flex;
+        justify-content: space-between;
+        gap: 8px;
+        @media (min-width: 991.98px) {
+            flex-direction: column;
+        }
+        @media (max-width: 767.98px) {
+            flex-direction: column;
+            gap: 10px;
+        }
+        &_block {
+            display: flex;
+            gap: 8px;
+            width: 100%;
+            justify-content: space-between;
+            @media (min-width: 991.98px) {
+                padding: 16px;
+                min-width: 175px;
+            }
+            @media (min-width: 767.98px) {
+                min-height: 82px;
+                flex-direction: column;
+                padding: 16px 12px;
+                border-radius: 16px;
+                background: #fff;
+                box-shadow: 0 2px 6px 0 rgba(35, 38, 63, 0.1);
             }
         }
     }
@@ -288,18 +325,31 @@ body::after {
             margin: auto;
             transition: all 0.8s ease 0s;
         }
+        .popup {
+            &__info,
+            &__head {
+                opacity: 0;
+            }
+        }
         .graph {
             width: 100%;
             opacity: 0;
             margin: 0 !important;
 
             &__main {
-                padding: 0 !important;
-                width: 100% !important;
-                margin: 0 !important;
                 .container-chart {
-                    margin-bottom: 25px !important;
-                    width: 200% !important;
+                    margin-bottom: 25px;
+                    @media (max-width: 767.98px) {
+                        margin-bottom: 33px;
+                        overflow: visible;
+                        margin-top: 24px;
+                    }
+                    @media (max-width: 479.98px) {
+                        margin-bottom: 35px;
+                    }
+                }
+                .y-axis-container {
+                    bottom: 32px;
                 }
             }
             &__graph,
@@ -310,6 +360,15 @@ body::after {
             }
         }
         &.opened {
+            .popup {
+                &__info,
+                &__head {
+                    animation: contentAnimation forwards 1.3s ease 0.8s !important;
+                    @media (max-width: $mobile) {
+                        animation: contentAnimation forwards 0.3s ease 0.7s !important;
+                    }
+                }
+            }
             .graph {
                 animation: contentAnimation forwards 1.3s ease 0.8s !important;
                 @media (max-width: $mobile) {

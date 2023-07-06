@@ -386,14 +386,14 @@ export default {
                 ? (this.formChg.name = wallet.name)
                 : (this.formChg.name = wallet.fullName);
         },
-        change() {
+        async change() {
             this.wait = true;
             let wallet = this.walletObj;
             wallet.group_id = this.getActive;
             wallet.percent = this.formChg.percent;
             wallet.minWithdrawal = this.formChg.minWithdrawal;
             wallet.name = this.formChg.name;
-            axios
+            await axios
                 .post("/wallet_change", wallet)
                 .then((res) => {
                     this.mess = res.data.message;
@@ -427,7 +427,7 @@ export default {
             const { name, value } = event.target;
             this.form[name] = this.removeLetters(value);
         },
-        addWallet() {
+        async addWallet() {
             if (this.wallets && this.getActive !== -1) {
                 this.wait = true;
                 let per = 0;
@@ -437,7 +437,7 @@ export default {
                 let obj = this.form;
                 per = per + Number(obj.percent);
                 obj.group_id = this.getActive;
-                axios
+                await axios
                     .post("/wallet_create", this.form)
                     .then((res) => {
                         this.wait = false;

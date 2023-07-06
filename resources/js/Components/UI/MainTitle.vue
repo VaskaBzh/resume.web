@@ -68,8 +68,8 @@ h4 {
     font-size: 24px;
     line-height: 107.6%;
     @media (max-width: 767.98px) {
-        font-size: 20px;
-        line-height: 100%;
+        font-size: 18px;
+        line-height: 135%;
     }
 }
 .title {

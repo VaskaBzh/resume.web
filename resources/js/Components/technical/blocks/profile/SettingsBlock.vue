@@ -47,13 +47,13 @@ export default {
         }
     },
     methods: {
-        checkbox_changes(data) {
+        async checkbox_changes(data) {
             if (this.val !== null) {
                 let form = useForm({
                     item: data,
                     type: this.name,
                 });
-                form.post(route("change"), {});
+                await form.post(route("change"), {});
             }
         },
         get_val(pas) {

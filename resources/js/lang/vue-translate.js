@@ -488,12 +488,14 @@ const messages = {
             title: "Workers",
             select_label: "Status",
             select: ["All", "Active", "Inactive"],
+            statuses: ["Active", "Unstable", "Inactive"],
             table: {
                 thead: [
                     "Worker name",
                     "Current hashrate",
-                    "Avg.hashrate / 24",
-                    "Failure rate / 24",
+                    "Hashrate/1h",
+                    "Hashrate/24h",
+                    "Failure rate/24h",
                 ],
                 thead_short: [
                     "Name",
@@ -1141,12 +1143,14 @@ const messages = {
             title: "Воркеры",
             select_label: "Статус",
             select: ["Все", "Активные", "Неактивные"],
+            statuses: ["Активный", "Нестабильный", "Неактивный"],
             table: {
                 thead: [
                     "Имя воркера",
                     "Текущий",
-                    "Ср.хешрейт / 24",
-                    "Частота отказов / 24",
+                    "Хешрейт/1ч",
+                    "Хешрейт/24ч",
+                    "Частота отказов/24ч",
                 ],
                 thead_short: ["Имя", "Текущий", "Ср.хешрейт/1д", "Отказы/1д"],
                 sub_thead: "Общий хешрейт",
