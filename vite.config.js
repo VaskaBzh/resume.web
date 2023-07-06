@@ -18,6 +18,13 @@ export default defineConfig(({ command }) => {
                 },
             }),
         ],
+        css: {
+            preprocessorOptions: {
+                scss: {
+                    additionalData: `@import "resources/scss/mixins.scss"; @import "resources/scss/consts.scss";`,
+                },
+            },
+        },
         server: {
             cors: {
                 origin: "*",

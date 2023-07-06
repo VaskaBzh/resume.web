@@ -104,6 +104,7 @@ export default {
         flex-direction: column;
         justify-content: space-between;
         flex: 1 0 40%;
+        z-index: 2;
 
         & a {
           display: block;
@@ -131,14 +132,22 @@ export default {
       }
       // .page__image
       &__image {
+        position: fixed;
+        right: -10%;
+        top: 50%;
+        transform: translate(0, -50%);
         & img {
-          max-width: unset;
-          @media (max-width: 1550px) {
-            max-width: 900px;
+          
+          //max-width: unset;
+        }
+        @media (max-width: 1550px) {
+          & img {
+            //max-width: 1000px;
           }
-          @media (max-width: 991.98px) {
-            display: none;
-          }
+          right: -12%;
+        }
+        @media (max-width: 991.98px) {
+          display: none;
         }
       }
     }
@@ -151,6 +160,16 @@ export default {
     height: 100%;
     padding: 56px 0 100px;
     gap: 100px;
+    position: relative;
+    &::after {
+      content: "";
+      flex: 1 0 auto;
+      min-width: 1000px;
+      @media (max-width: 991.98px) {
+        display: none;
+      }
+    }
+
     @media (max-width: 1550px) {
       padding: 40px 0 56px;
     }
