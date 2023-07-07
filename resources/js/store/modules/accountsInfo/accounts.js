@@ -29,11 +29,11 @@ export default {
                                 for (const el of resp.data.data.list) {
                                     const i = resp.data.data.list.indexOf(el);
                                     if (i === 1) {
-                                        await this.dispatch("workerChecker", {
-                                            arr: arr,
-                                            el: el,
-                                            groupName: state.groupName,
-                                        });
+                                        // await this.dispatch("workerChecker", {
+                                        //     arr: arr,
+                                        //     el: el,
+                                        //     groupName: state.groupName,
+                                        // });
                                     } else if (i > 1) {
                                         await this.dispatch("get_acc_group", {
                                             arr: arr,
@@ -105,7 +105,7 @@ export default {
                     if (data.el.name == state.groupName) {
                         let obj = data.el;
                         obj.updateId = state.updateId;
-                        this.dispatch("update_group", obj);
+                        // this.dispatch("update_group", obj);
                         state.updateId = {};
                     }
                     commit("setHash", {

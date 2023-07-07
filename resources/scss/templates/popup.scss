@@ -96,7 +96,7 @@ body::after {
         .popup__content {
             visibility: visible;
             opacity: 1;
-            overflow: hidden;
+            overflow: visible;
             transform: translateY(200px);
             animation: mainAnimation forwards 0.8s ease 0.5s !important;
             &_logo {

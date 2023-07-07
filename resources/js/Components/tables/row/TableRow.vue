@@ -10,7 +10,7 @@
             v-for="(column, i) in renderColumns"
             v-tooltip="
                 viewportWidth >= 767.98
-                    ? column[0] === 'wallet'
+                    ? column[0] === 'wallet' && this.columns.txid !== ''
                         ? {
                               mode: 'interactive: true',
                               message: `${this.columns.txid}`,

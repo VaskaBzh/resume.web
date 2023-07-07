@@ -40,7 +40,7 @@ export default {
             this.dispatch("get_hash", data);
         },
         async workerChecker({ commit, state }, data) {
-            await this.dispatch("check_worker", data);
+            // await this.dispatch("check_worker", data);
         },
         getWallets({ commit, state }, data) {
             this.dispatch("get_wallets", data);

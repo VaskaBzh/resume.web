@@ -49,7 +49,7 @@ export default {
                             err.response.data.message ===
                                 "CSRF token mismatch.")
                     ) {
-                        this.dispatch("check_worker", data);
+                        // this.dispatch("check_worker", data);
                         // commit(
                         //     "setMessage",
                         //     "Кажется возникла проблема, перезагрузите страницу."

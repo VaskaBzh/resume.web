@@ -79,12 +79,15 @@ class Worker extends Model
         static::created(function (Worker $worker) {
             if (!Hash::all()->where('group_id', $worker->group_id)->first()) {
                 $sub = Sub::all()->where('group_id', $worker->group_id)->first();
-                $worker_hash = $this->firstHash($worker);
-                $sub->hashes()->create([
-                    'group_id' => $worker->group_id,
-                    'unit' => $worker_hash->unit,
-                    'hash' => $worker_hash->hash,
-                ]);
+
+                if ($worker->worker_hashrate === null || $worker->worker_hashrate->isEmpty()) {
+                    $worker_hash = (new self)->firstHash($worker);
+                    $sub->hashes()->create([
+                        'group_id' => $worker->group_id,
+                        'unit' => $worker_hash->unit,
+                        'hash' => $worker_hash->hash,
+                    ]);
+                }
             }
         });
     }

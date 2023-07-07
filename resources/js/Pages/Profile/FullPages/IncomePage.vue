@@ -219,7 +219,10 @@ export default {
                             hash: `${row["hash"]} ${row["unit"]}H/s`,
                             earn: `${row["amount"]}BTC`,
                             payment: `${row["payment"]}BTC`,
-                            wallet: wallet,
+                            wallet:
+                                wallet.substr(0, 4) +
+                                "..." +
+                                wallet.substr(wallet.length - 4, wallet.length),
                             percent: `${percent}%`,
                             status:
                                 row["status"] === "fullfill"

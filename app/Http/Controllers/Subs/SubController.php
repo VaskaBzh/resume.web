@@ -72,6 +72,9 @@ class SubController extends Controller
                 ]);
 
 
+                if (!isset(json_decode($responseCreate->getContent())->data->gid)) {
+                    return back()->withErrors(["error" => "Ошибка внешнего сервиса"]);
+                }
                 // Создание новой записи о выводе
                 $sub = new Sub([
                     'user_id' => $request->input('user_id'),
@@ -79,6 +82,13 @@ class SubController extends Controller
                     'sub' => $request->input('group_name'),
                 ]);
             } else {
+                if (!isset(json_decode($responseCreate->getContent())->data->gid)) {
+                    if (app()->getLocale() === 'ru') {
+                        return back()->withErrors(["error" => "Ошибка внешнего сервиса"]);
+                    } else if (app()->getLocale() === 'en') {
+                        return back()->withErrors(["error" => "External service error"]);
+                    }
+                }
                 // Создание новой записи о выводе
                 $sub = new Sub([
                     'user_id' => Auth::user()->id,

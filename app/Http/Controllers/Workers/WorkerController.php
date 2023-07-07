@@ -17,8 +17,8 @@ class WorkerController extends Controller
     {
         // Валидация входных данных
         $request->validate([
-            'group_id' => 'required|string',
-            'worker_id' => 'required|string',
+            'group_id' => 'required',
+            'worker_id' => 'required',
         ]);
 
         $newWorker = new Worker([
