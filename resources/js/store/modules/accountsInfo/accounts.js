@@ -89,7 +89,8 @@ export default {
                         name: data.el.name,
                         hashRate: "",
                         workersActive: data.el.workers_active,
-                        workersAll: data.el.workers_total,
+                        workersAll:
+                            data.el.workers_total + data.el.workers_dead,
                         workersInActive: data.el.workers_inactive,
                         workersDead: data.el.workers_dead,
                         todayProfit: "",

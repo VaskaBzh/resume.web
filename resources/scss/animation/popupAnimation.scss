@@ -15,6 +15,21 @@
             transform: translateY(0px);
         }
     }
+    @keyframes mainAnimationCard {
+        0% {
+            transform: translateY(100px);
+        }
+        50% {
+            max-width: 328px;
+            max-height: 120px;
+            transform: translateY(0px);
+        }
+        100% {
+            max-width: 328px;
+            max-height: 300px;
+            transform: translateY(0px);
+        }
+    }
     @keyframes mainAnimationGraph {
         0% {
             transform: translateY(200px);
@@ -38,6 +53,21 @@
     @keyframes backMainAnimation {
         0% {
             max-width: 412px;
+            transform: translateY(0px);
+        }
+        50% {
+            max-width: 255px;
+            transform: translateY(0px);
+        }
+        100% {
+            max-width: 120px;
+            max-height: 120px;
+            transform: translateY(100px);
+        }
+    }
+    @keyframes backMainAnimationCard {
+        0% {
+            max-width: 328px;
             transform: translateY(0px);
         }
         50% {
@@ -89,6 +119,36 @@
 //}
 // анимация на мобилке
 @media (max-width: 479.98px) {
+    @keyframes mainAnimationCard {
+        0% {
+            transform: translateY(100px);
+        }
+        50% {
+            max-width: 328px;
+            max-height: 120px;
+            transform: translateY(0px);
+        }
+        100% {
+            max-width: 328px;
+            max-height: 300px;
+            transform: translateY(0px);
+        }
+    }
+    @keyframes backMainAnimationCard {
+        0% {
+            max-width: 328px;
+            transform: translateY(0px);
+        }
+        50% {
+            max-width: 255px;
+            transform: translateY(0px);
+        }
+        100% {
+            max-width: 120px;
+            max-height: 120px;
+            transform: translateY(200px);
+        }
+    }
     @keyframes mainAnimation {
         0% {
             transform: translateY(200px);

@@ -617,8 +617,6 @@ export default {
     width: calc(100% - 15px);
     @media (max-width: 767.98px) {
         min-width: 200%;
-        overflow-x: hidden;
-        overflow-y: visible;
         width: 200%;
         margin: 0;
     }

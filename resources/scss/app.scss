@@ -207,6 +207,21 @@ h6 {
     width: 100%;
 }
 
+.income {
+    .table {
+        &_column {
+            &:first-child {
+                .label {
+                    @media (max-width: $mobile) {
+                        color: #5389e1;
+                        font-weight: 500;
+                    }
+                }
+            }
+        }
+    }
+}
+
 // Кастомные стили
 .main {
     // .main__text
@@ -549,7 +564,7 @@ h6 {
     .tooltip-wrapper {
         position: relative;
         font-family: Ubuntu, serif;
-        font-size: 12px;
+        font-size: 14px;
         line-height: 130%;
         padding: 5px;
         color: #79a3e8;
@@ -578,7 +593,7 @@ h6 {
             font-weight: 300;
             margin-top: 8px;
             line-height: 120%;
-            font-size: 10px;
+            font-size: 12px;
             color: #818c99;
         }
     }

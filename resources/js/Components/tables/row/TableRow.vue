@@ -22,7 +22,7 @@
             "
         >
             <span class="label" v-show="viewportWidth <= 767.98">{{
-                titles[i]
+                renderTitles[i]
             }}</span>
             <span>{{ column[1] }}</span>
         </td>
@@ -52,9 +52,26 @@ export default {
             }
             return {};
         },
+        renderTitles() {
+            if (this.titles) {
+                if (this.viewportWidth <= 767.98 && this.updatedColumns.txid) {
+                    return [
+                        this.updatedColumns.wallet !== "..."
+                            ? this.updatedColumns.wallet
+                            : this.updatedColumns.txid,
+                        this.titles[0],
+                        this.titles[2],
+                        this.titles[3],
+                    ];
+                }
+                return this.titles;
+            }
+            return [];
+        },
         renderColumns() {
+            let obj = {};
             if (this.columns) {
-                return Object.entries(this.updatedColumns).filter(
+                obj = Object.entries(this.updatedColumns).filter(
                     (col) =>
                         col[0] !== "class" &&
                         col[0] !== "graphId" &&
@@ -65,17 +82,26 @@ export default {
                         col[0] !== "message" &&
                         col[0] !== "txid"
                 );
+                if (this.viewportWidth <= 767.98 && this.updatedColumns.txid) {
+                    obj = obj.filter(
+                        (col) =>
+                            col[0] !== "wallet" &&
+                            col[0] !== "payDate" &&
+                            col[0] !== "percent"
+                    );
+                    obj.unshift(obj[3]);
+                    obj.pop();
+                }
             }
-            return {};
+            return obj;
         },
     },
     methods: {
         openPopup() {
-            if (this.columns?.graphId)
-                this.$emit("openGraph", {
-                    id: this.columns.graphId,
-                    info: this.updatedColumns,
-                });
+            this.$emit("openGraph", {
+                id: this.columns.graphId || null,
+                info: this.updatedColumns,
+            });
         },
     },
 };
@@ -163,15 +189,29 @@ export default {
         &.rejected,
         &.fullfill,
         &.pending {
-            .table_column:last-child span:last-child::before {
-                display: inline-flex;
-                content: "";
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                margin-right: 8px;
-                background: transparent;
-                transition: all 0.5s ease 0s;
+            .table_column {
+                @media (min-width: 767.98px) {
+                    &:last-child span:last-child::before {
+                        display: inline-flex;
+                        content: "";
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        margin-right: 8px;
+                        transition: all 0.5s ease 0s;
+                    }
+                }
+                @media (max-width: 767.98px) {
+                    &:first-child span:last-child::before {
+                        display: inline-flex;
+                        content: "";
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        margin-right: 8px;
+                        transition: all 0.5s ease 0s;
+                    }
+                }
             }
         }
         &.active {
@@ -180,8 +220,17 @@ export default {
             }
         }
         &.fullfill {
-            .table_column:last-child span:last-child:before {
-                background: #13d60e;
+            .table_column {
+                @media (min-width: 767.98px) {
+                    &:last-child span:last-child:before {
+                        background: #13d60e;
+                    }
+                }
+                @media (max-width: 767.98px) {
+                    &:first-child span:last-child:before {
+                        background: #13d60e;
+                    }
+                }
             }
         }
         &.inactive {
@@ -190,8 +239,17 @@ export default {
             }
         }
         &.rejected {
-            .table_column:last-child span:last-child:before {
-                background: #ff0000;
+            .table_column {
+                @media (min-width: 767.98px) {
+                    &:last-child span:last-child:before {
+                        background: #ff0000;
+                    }
+                }
+                @media (max-width: 767.98px) {
+                    &:first-child span:last-child:before {
+                        background: #ff0000;
+                    }
+                }
             }
         }
         &.unstable {
@@ -200,8 +258,17 @@ export default {
             }
         }
         &.pending {
-            .table_column:last-child span:last-child:before {
-                background: #e9c058;
+            .table_column {
+                @media (min-width: 767.98px) {
+                    &:last-child span:last-child:before {
+                        background: #e9c058;
+                    }
+                }
+                @media (max-width: 767.98px) {
+                    &:first-child span:last-child:before {
+                        background: #e9c058;
+                    }
+                }
             }
         }
     }

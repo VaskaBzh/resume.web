@@ -13,9 +13,6 @@
     &-md {
         font-size: 14px;
         line-height: 130%;
-        @media (max-width: $mobileSmall) {
-            font-size: 12px;
-        }
     }
     &-b {
         font-weight: 500;

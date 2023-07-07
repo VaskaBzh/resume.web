@@ -31,8 +31,7 @@
             id="seeChart"
             ref="chart"
             typePopup="graph"
-            @closed="dropIndex"
-            :animationEnd="10300"
+            @closed="dropUser"
         >
             <div class="popup__head">
                 <main-title tag="h4" class="title-blue">
@@ -92,6 +91,47 @@
                     :tooltip="true"
                     :key="graphs[0].values[graphs[0].values.length - 1]"
                 />
+            </div>
+        </main-popup>
+        <main-popup
+            v-if="
+                viewportWidth <= 767.98 && table.rows[0] && table.rows[0].status
+            "
+            class="popup-card"
+            id="fullpage"
+        >
+            <div class="table__row" :class="activeWorker.class">
+                <div class="table_column">
+                    <span class="label">{{
+                        activeWorker.wallet !== "..."
+                            ? activeWorker.wallet
+                            : activeWorker.txid
+                    }}</span>
+                    <span>{{ activeWorker.status }}</span>
+                </div>
+                <div class="table_column">
+                    <span class="label"></span>
+                    <span>{{ activeWorker.date }}</span>
+                </div>
+                <div class="table_column">
+                    <span class="label"></span>
+                    <span>{{ activeWorker.payDate }}</span>
+                </div>
+                <div class="table_column">
+                    <span class="label"></span>
+                    <span>{{ activeWorker.hashRate }}</span>
+                </div>
+                <div class="table_column">
+                    <span class="label"></span>
+                    <span>{{ activeWorker.earn }}</span>
+                </div>
+                <div class="table_column">
+                    <span class="label"></span>
+                    <span> {{ activeWorker.percent }}</span>
+                </div>
+                <div class="table_column" v-show="activeWorker.message">
+                    <span class="table_column-center">{{ activeWorker.message }}</span>
+                </div>
             </div>
         </main-popup>
     </teleport>
@@ -154,7 +194,7 @@ export default {
         },
         indexChanger(key) {
             setTimeout(() => {
-                if (this.indexWorker !== key) {
+                if (this.indexWorker !== key && key) {
                     this.graphs = [
                         {
                             id: 1,
@@ -175,10 +215,11 @@ export default {
         setIndex(index) {
             this.indexWorker = index;
         },
-        dropIndex() {
+        dropUser() {
             setTimeout(() => {
                 this.indexWorker = -1;
             }, 100);
+            this.activeWorker = {};
         },
         async renderChart(index) {
             const interval = 60 * 60 * 1000;
@@ -266,6 +307,21 @@ export default {
                 line-height: 130%;
                 text-align: left;
                 background: transparent;
+            }
+        }
+    }
+    &_column {
+        @media (max-width: 767.98px) {
+            display: inline-flex;
+            width: 100%;
+            justify-content: space-between;
+            span {
+                &:last-child {
+                    font-weight: 500;
+                }
+            }
+            &-center {
+                text-align: right;
             }
         }
     }

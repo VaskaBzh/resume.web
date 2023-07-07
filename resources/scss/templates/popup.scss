@@ -23,6 +23,9 @@ body::after {
         &-graph {
             animation: backMainAnimationGraph forwards 0.3s ease 0s;
         }
+        &-card {
+            animation: backMainAnimationCard forwards 0.3s ease 0s;
+        }
         &-сonnect {
             animation: backMainAnimationConnect forwards 0.3s ease 0s;
         }
@@ -80,6 +83,12 @@ body::after {
                     }
                 }
             }
+            &-card {
+                .popup__content {
+                    transform: translateY(100px);
+                    animation: mainAnimationCard forwards 1s ease 0.5s !important;
+                }
+            }
             &-connect {
                 animation: mainAnimationConnect forwards 0.8s ease 0.5s !important;
             }
@@ -95,6 +104,79 @@ body::after {
                 opacity: 1;
                 @media (max-width: $mobile) {
                     animation: logoAnimation forwards 0.2s ease 0.5s;
+                }
+            }
+        }
+    }
+    &-card {
+        .popup {
+            &__content {
+                padding: 0 16px;
+                &_block {
+                    padding: 48px 0 16px;
+                }
+            }
+        }
+        .table {
+            &_column {
+                &:first-child {
+                    .label {
+                        @media (max-width: $mobile) {
+                            color: #5389e1;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+            &__row {
+                @media (max-width: 767.98px) {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                &.rejected,
+                &.fullfill,
+                &.pending {
+                    .table_column {
+                        @media (max-width: 767.98px) {
+                            &:first-child span:last-child::before {
+                                display: inline-flex;
+                                content: "";
+                                width: 12px;
+                                height: 12px;
+                                border-radius: 50%;
+                                margin-right: 8px;
+                                transition: all 0.5s ease 0s;
+                            }
+                        }
+                    }
+                }
+                &.fullfill {
+                    .table_column {
+                        @media (max-width: 767.98px) {
+                            &:first-child span:last-child:before {
+                                background: #13d60e;
+                            }
+                        }
+                    }
+                }
+                &.rejected {
+                    .table_column {
+                        @media (max-width: 767.98px) {
+                            &:first-child span:last-child:before {
+                                background: #ff0000;
+                            }
+                        }
+                    }
+                }
+                &.pending {
+                    .table_column {
+                        @media (max-width: 767.98px) {
+                            &:first-child span:last-child:before {
+                                background: #e9c058;
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -369,6 +451,9 @@ body::after {
                     }
                 }
             }
+            .table__row {
+                animation: contentAnimation forwards 0.3s ease 0.7s;
+            }
             .graph {
                 animation: contentAnimation forwards 1.3s ease 0.8s !important;
                 @media (max-width: $mobile) {
@@ -419,6 +504,9 @@ body::after {
                 .title {
                     max-width: calc(100% - 30px);
                 }
+            }
+            .table__row {
+                opacity: 0;
             }
         }
         @media (max-width: $mobileSmall) {

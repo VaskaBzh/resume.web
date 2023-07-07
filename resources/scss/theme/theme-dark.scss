@@ -413,30 +413,6 @@ body {
                 box-shadow: 0px 10px 50px rgba(112, 165, 236, 0.1);
             }
         }
-        .table {
-            tr {
-                th {
-                    color: #7994ca;
-                }
-            }
-            .row-main_elem {
-                color: #fafafa !important;
-            }
-            .main__number {
-                color: #989898 !important;
-            }
-            &-block {
-                &_block {
-                    background: #0b1621;
-                    .main__number {
-                        color: #fafafa !important;
-                    }
-                }
-                &_column {
-                    color: #989898;
-                }
-            }
-        }
         .menu {
             background: #0b1621 !important;
             &_elem {
@@ -667,36 +643,6 @@ body {
                 }
             }
         }
-        .table {
-            .row {
-                &-main {
-                    td {
-                        color: #7994ca;
-                        background: transparent;
-                    }
-                }
-                &-income {
-                    td {
-                        span {
-                            color: #989898 !important;
-                        }
-                    }
-                }
-            }
-            tbody {
-                td {
-                    background: #0b1621;
-                    &.main__number {
-                        color: #989898;
-                    }
-                }
-            }
-            thead {
-                .description {
-                    color: #606060;
-                }
-            }
-        }
         .copy {
             &__block {
                 .title.headline,
@@ -897,6 +843,11 @@ body {
         }
         .main__label {
             color: #989898;
+        }
+        .table {
+            &_column {
+
+            }
         }
     }
 }
