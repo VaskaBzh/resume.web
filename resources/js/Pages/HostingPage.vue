@@ -158,7 +158,9 @@ export default {
     }
     &__image {
         img {
-            min-width: 897px;
+            @media (min-width: 767.98px) {
+                min-width: 897px;
+            }
         }
         @media (max-width: 991.98px) {
             margin: 40px 0 0;

@@ -165,7 +165,7 @@ export default {
         first: Number,
         rowsVal: {
             type: Number,
-            default: 1,
+            default: 10,
         },
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
@@ -173,8 +173,8 @@ export default {
         ...mapGetters(["allHistoryMiner"]),
         showRows() {
             let showInfo = {};
-            if (this.rowsVal > this.table.rows.length) {
-                for (let i = this.first; i < this.table.rows.length; i++) {
+            if (this.rowsVal || 999 > this.table.rows.length) {
+                for (let i = this.first || 0; i < this.table.rows.length; i++) {
                     Reflect.set(
                         showInfo,
                         Reflect.ownKeys(this.table.rows)[i],
@@ -185,7 +185,7 @@ export default {
                     );
                 }
             } else {
-                for (let i = this.first; i < this.rowsVal; i++) {
+                for (let i = this.first || 0; i < this.rowsVal || 999; i++) {
                     Reflect.set(
                         showInfo,
                         Reflect.ownKeys(this.table.rows)[i],
