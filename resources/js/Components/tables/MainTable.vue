@@ -13,7 +13,7 @@
         </thead>
         <tbody class="table__body">
             <table-row
-                v-for="(row, i) in table.rows"
+                v-for="(row, i) in showRows"
                 :columns="row"
                 :titles="table.titles"
                 :key="i"
@@ -110,27 +110,40 @@
                     <span>{{ activeWorker.status }}</span>
                 </div>
                 <div class="table_column">
-                    <span class="label"></span>
+                    <span class="label">
+                        {{ this.$t("income.table.thead[0]") }}</span
+                    >
                     <span>{{ activeWorker.date }}</span>
                 </div>
                 <div class="table_column">
-                    <span class="label"></span>
+                    <span class="label">
+                        {{ this.$t("income.table.thead[1]") }}</span
+                    >
                     <span>{{ activeWorker.payDate }}</span>
                 </div>
                 <div class="table_column">
-                    <span class="label"></span>
-                    <span>{{ activeWorker.hashRate }}</span>
+                    <span class="label">
+                        {{ this.$t("income.table.thead[2]") }}</span
+                    >
+                    <span>{{ activeWorker.hash }}</span>
                 </div>
                 <div class="table_column">
-                    <span class="label"></span>
+                    <span class="label">
+                        {{ this.$t("income.table.thead[3]") }}</span
+                    >
                     <span>{{ activeWorker.earn }}</span>
                 </div>
                 <div class="table_column">
-                    <span class="label"></span>
+                    <span class="label">
+                        {{ this.$t("income.table.thead[5]") }}</span
+                    >
                     <span> {{ activeWorker.percent }}</span>
                 </div>
-                <div class="table_column" v-show="activeWorker.message">
-                    <span class="table_column-center">{{ activeWorker.message }}</span>
+                <div
+                    class="table_column table_column-margin"
+                    v-show="activeWorker.message"
+                >
+                    <span>{{ activeWorker.message }}</span>
                 </div>
             </div>
         </main-popup>
@@ -149,10 +162,42 @@ export default {
     props: {
         viewportWidth: Number,
         table: Object,
+        first: Number,
+        rowsVal: {
+            type: Number,
+            default: 1,
+        },
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
         ...mapGetters(["allHistoryMiner"]),
+        showRows() {
+            let showInfo = {};
+            if (this.rowsVal > this.table.rows.length) {
+                for (let i = this.first; i < this.table.rows.length; i++) {
+                    Reflect.set(
+                        showInfo,
+                        Reflect.ownKeys(this.table.rows)[i],
+                        Reflect.get(
+                            this.table.rows,
+                            Reflect.ownKeys(this.table.rows)[i]
+                        )
+                    );
+                }
+            } else {
+                for (let i = this.first; i < this.rowsVal; i++) {
+                    Reflect.set(
+                        showInfo,
+                        Reflect.ownKeys(this.table.rows)[i],
+                        Reflect.get(
+                            this.table.rows,
+                            Reflect.ownKeys(this.table.rows)[i]
+                        )
+                    );
+                }
+            }
+            return showInfo;
+        },
     },
     data() {
         return {
@@ -320,8 +365,8 @@ export default {
                     font-weight: 500;
                 }
             }
-            &-center {
-                text-align: right;
+            &-margin {
+                margin-top: 8px;
             }
         }
     }

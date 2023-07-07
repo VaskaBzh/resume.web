@@ -5,10 +5,8 @@
 </template>
 
 <script>
-import PaymentTable from "@/Components/tables/PaymentTable.vue";
 export default {
     name: "blue-button",
-    components: { PaymentTable },
 };
 </script>
 

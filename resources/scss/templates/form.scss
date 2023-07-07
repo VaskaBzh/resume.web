@@ -215,9 +215,7 @@
             }
             width: 100%;
             color: #343434;
-            // font-size: 24px;
-            // @include adaptiv-value('font-size', 40, 5, 0);
-            font-size: calc(5px + 35 * ((100vw - 320px) / 1600px));
+            font-size: 24px;
             font-family: AmpleSoftPro, serif;
             line-height: 135%;
             border-radius: 8px;
@@ -235,7 +233,7 @@
             );
             @media (max-width: 479.98px) {
                 color: rgba(124, 124, 124, 0.7);
-                // font-size: 14px;
+                font-size: 14px;
                 font-family: Ubuntu, serif;
                 line-height: 130%;
                 min-height: 40px;
@@ -315,6 +313,11 @@
                 line-height: 135%;
                 margin: 16px 0 40px;
                 position: relative;
+                .form_link {
+                    @media (max-width: $tablet) {
+                        display: block;
+                    }
+                }
                 @media (max-width: 1550px) {
                     margin: 16px 0 32px;
                 }
@@ -326,8 +329,7 @@
                     font-family: Ubuntu, serif;
                     line-height: 130%;
                     .form_link {
-                        font-size: 11px;
-                        font-family: Ubuntu, serif;
+                        font-size: inherit;
                         line-height: 130%;
                     }
                 }

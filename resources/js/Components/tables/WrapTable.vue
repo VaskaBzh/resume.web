@@ -13,6 +13,8 @@
             <main-table
                 :viewportWidth="viewportWidth"
                 :table="table"
+                :first="first"
+                :rowsVal="rowsVal"
             ></main-table>
         </div>
     </div>
