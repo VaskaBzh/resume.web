@@ -115,6 +115,7 @@ class UpdateIncomesCommand extends Command
         if ($incomes->count() > 0) {
             foreach ($incomes as $pending) {
                 $pending["status"] = "completed";
+                $pending["message"] = "completed";
                 $pending->save();
             }
         }

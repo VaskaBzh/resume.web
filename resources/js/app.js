@@ -5,10 +5,10 @@ import { i18n } from "./lang/vue-translate.js";
 
 import Layout from "./Shared/LayoutView.vue";
 import store from "./store/index.js";
-import scrollAnimation from "@/Components/animations/scrollAnimation.vue";
-import scrollValueAnimation from "@/Components/animations/scrollValueAnimation.vue";
-import tippyAnimation from "@/Components/animations/tippyAnimation.vue";
-import hideAnimation from "@/Components/animations/hideAnimation.vue";
+import scrollAnimation from "@/Components/directives/animations/scrollAnimation.vue";
+import scrollValueAnimation from "@/Components/directives/animations/scrollValueAnimation.vue";
+import tippyAnimation from "@/Components/directives/tippyAnimation.vue";
+import hideAnimation from "@/Components/directives/hideAnimation.vue";
 
 createInertiaApp({
     resolve: (name) => {

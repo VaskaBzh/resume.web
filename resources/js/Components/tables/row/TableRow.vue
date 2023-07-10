@@ -187,7 +187,7 @@ export default {
             }
         }
         &.rejected,
-        &.fullfill,
+        &.completed,
         &.pending {
             .table_column {
                 @media (min-width: 767.98px) {
@@ -219,7 +219,7 @@ export default {
                 background: #13d60e;
             }
         }
-        &.fullfill {
+        &.completed {
             .table_column {
                 @media (min-width: 767.98px) {
                     &:last-child span:last-child:before {
