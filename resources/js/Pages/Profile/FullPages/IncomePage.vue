@@ -225,7 +225,7 @@ export default {
                                 wallet.substr(wallet.length - 4, wallet.length),
                             percent: `${percent}%`,
                             status:
-                                row["status"] === "fullfill"
+                                row["status"] === "completed"
                                     ? this.$t("income.table.status.fullfill")
                                     : row["status"] === "rejected"
                                     ? this.$t("income.table.status.rejected")

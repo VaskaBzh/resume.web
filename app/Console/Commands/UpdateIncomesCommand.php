@@ -65,9 +65,6 @@ class UpdateIncomesCommand extends Command
                                 'method' => 'sendtoaddress',
                                 'params' => [$wallet->wallet, $limitedBalance]
                             ]);
-                        $this->info($balance); // Выводит содержимое ответа
-                        $this->info($response->body()); // Выводит содержимое ответа
-                        $this->info($response->status()); // Выводит HTTP-статус ответа
 
                         if ($response->successful()) {
                             $income["status"] = 'completed';
@@ -81,18 +78,9 @@ class UpdateIncomesCommand extends Command
                             $sub->payments = $sumPayments;
                             $wallet->save();
                             $sub->save();
-                            if ($pendingIncomes->count() > 0) {
-                                foreach ($pendingIncomes as $pending) {
-                                    $pending["status"] = "completed";
-                                    $pending->save();
-                                }
-                            }
-                            if ($rejectedIncomes->count() > 0) {
-                                foreach ($rejectedIncomes as $pending) {
-                                    $pending["status"] = "completed";
-                                    $pending->save();
-                                }
-                            }
+
+                            $this->completer($pendingIncomes);
+                            $this->completer($rejectedIncomes);
 
                             $income["message"] = 'completed';
                         } else {
@@ -114,12 +102,22 @@ class UpdateIncomesCommand extends Command
                 }
             }
         }
-
-        $sub->incomes()->create($income);
+        Income::create($income);
+//        $sub->incomes()->create($income);
 
         $sub->accruals = $sumAccruals;
         $sub->unPayments = $sub->accruals - $sub->payments;
         $sub->save();
+    }
+
+    public function completer($incomes)
+    {
+        if ($incomes->count() > 0) {
+            foreach ($incomes as $pending) {
+                $pending["status"] = "completed";
+                $pending->save();
+            }
+        }
     }
 
     /**
@@ -147,6 +145,7 @@ class UpdateIncomesCommand extends Command
             $response_hash = $requestController->proxy([
                 "puid" => "781195",
                 "group" => $sub->group_id,
+                "page_size" => "1000",
             ], "worker", "get");
             $response_diff = $requestController->proxy([], "pool/status", "get");
 //
@@ -160,8 +159,9 @@ class UpdateIncomesCommand extends Command
                     $response_hash_encode = json_decode($response_hash->getContent());
                     $response_diff_encode = json_decode($response_diff->getContent());
 //                    $response_list_encode = json_decode($response_list->getContent());
+                    $share = 0;
+                    $unit = "T";
                     if ($response_hash_encode->data->data) {
-                        $share = 0;
                         $share = array_reduce($response_hash_encode->data->data, function ($carry, $item) {
                             foreach ($item as $key => $value) {
                                 if ($key == "shares_1d") {
@@ -177,9 +177,6 @@ class UpdateIncomesCommand extends Command
                                 }
                             }
                             return $carry;}, ['shares_unit' => ''])['shares_unit'];
-                    } else {
-                        $share = 0;
-                        $unit = "T";
                     }
 
                     if ($share > 0) {

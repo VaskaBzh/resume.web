@@ -6,6 +6,7 @@ export default {
             let query = {};
             query.group = data.el.gid;
             query.puid = "781195";
+            query.page_size = "1000";
             await btccom
                 .fetch({
                     data: query,
