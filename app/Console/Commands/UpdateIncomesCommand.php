@@ -49,13 +49,24 @@ class UpdateIncomesCommand extends Command
                 $income["payment"] = $balance;
 
                 if ($balance >= $min) {
+                    $token = config('token.secret_token');
+
+                    info('Secret token dump', [
+                        'token' => $token
+                    ]);
+
                     $unlock = Http::withBasicAuth('bituser', '111')
                         ->post('http://92.205.163.43:8332', [
                             'jsonrpc' => '1.0',
                             'id' => 'unlock',
                             'method' => 'walletpassphrase',
-                            'params' => [env('WALLET_PASSPHRASE'), 60],
+                            'params' => [$token, 60],
                         ]);
+
+                    info('Unlock info', [
+                        'Unlock' => $unlock
+                    ]);
+
                     if ($unlock->successful()) {
                         $limitedBalance = number_format($balance, 8, '.', '');
                         $response = Http::withBasicAuth('bituser', '111')
@@ -177,11 +188,15 @@ class UpdateIncomesCommand extends Command
                                     $carry["shares_unit"] = $value;
                                 }
                             }
-                            return $carry;}, ['shares_unit' => ''])['shares_unit'];
+                            return $carry;
+                        }, ['shares_unit' => ''])['shares_unit'];
                     }
 
                     if ($share > 0) {
-                        $earn = ($share * pow(10, 12) * 86400 * ($response_stat_encode[0]->reward_block + $response_diff_encode->data->fpps_mining_earnings)) / ($response_stat_encode[0]->difficulty * pow(2,32));
+                        $earn = ($share * pow(10, 12)
+                                * 86400
+                                * ($response_stat_encode[0]->reward_block + $response_diff_encode->data->fpps_mining_earnings)
+                            ) / ($response_stat_encode[0]->difficulty * pow(2, 32));
                     } else {
                         $earn = 0;
                     }
@@ -215,9 +230,7 @@ class UpdateIncomesCommand extends Command
                             $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
                         } else {
                             foreach ($wallets as $wallet) {
-                                if ($income["amount"] > 0) {
-                                    $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
-                                }
+                                $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
                             }
                         }
                     }
