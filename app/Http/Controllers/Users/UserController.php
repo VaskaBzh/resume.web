@@ -190,9 +190,18 @@ class UserController extends Controller
         if ($request->input("type") === 'пароль') {
             $resetController = new ResetPasswordController();
 
-            $errors = $resetController->changePassword($request)->getSession()->get("errors")->all();
-            if ($errors[0]) {
-                return back()->withErrors($errors);
+            $session = $resetController->changePassword($request)->getSession();
+            if ($session->get("errors")) {
+                $errors = $session->all();
+                if ($errors[0]) {
+                    return back()->withErrors($errors);
+                }
+            } else {
+                if (app()->getLocale() === 'ru') {
+                    $message = 'Пароль успешно изменен.';
+                } else if (app()->getLocale() === 'en') {
+                    $message = 'The password has been successfully changed.';
+                }
             }
         }
 

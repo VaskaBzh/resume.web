@@ -120,7 +120,7 @@
                     } ${form.type}`
                 }}</main-title>
                 <input
-                    v-model="mainModel"
+                    v-model="form.item"
                     autofocus
                     :type="form.type === 'пароль' ? 'password' : 'text'"
                     class="input popup__input"
@@ -219,8 +219,9 @@
                         :placeholder="`${$t(
                             'settings.block.settings_block.popup.placeholders.password_confirmation'
                         )} ${form.type}`"
-                        :model="password_confirmation"
+                        :model="form.password_confirmation"
                         :errors="errors"
+                        @change="form.password_confirmation = $event"
                     ></main-password>
                 </div>
                 <blue-button>
@@ -327,6 +328,7 @@ export default {
         }
 
         const ajax = () => {
+            wait.value = true;
             form.post(route("change"), {
                 onFinish() {
                     wait.value = false;
@@ -335,10 +337,9 @@ export default {
         };
 
         const ajaxChange = (bool) => {
-            wait.value = true;
-
             if (bool) {
                 if (Object.entries(validate.value).length === 0) {
+                    form.old_password = form.item;
                     ajax();
                 }
             } else {
@@ -401,12 +402,6 @@ export default {
             ],
         };
     },
-    computed: {
-        mainModel() {
-            return this.form.type === "пароль"
-                ? this.form.old_password : this.form.item;
-        },
-    },
     watch: {
         profit(newValue) {
             this.profit = newValue.replace(/[^0-9]/g, "");
@@ -422,7 +417,7 @@ export default {
             this.clearProfit = this.profit;
         },
         getHtml(data) {
-            this.form.item = data.val;
+            this.form.item = data.name === "пароль" ? "" : data.val;
             this.form.type = data.name;
         },
     },
