@@ -53,7 +53,7 @@
                     <!--                            {{ error.replace(" Подтвердите адрес.", "") }}-->
                     <!--                            <span class="main__link" @click="reverify">-->
                     <!--                                {{-->
-                    <!--                                    $t("header.popup.errors.link_email_confirm")-->
+                    <!--           `                         $t("header.popup.errors.link_email_confirm")-->
                     <!--                                }}</span-->
                     <!--                            >-->
                     <!--                        </div>-->
