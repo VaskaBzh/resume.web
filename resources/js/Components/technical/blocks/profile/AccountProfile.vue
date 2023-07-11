@@ -49,7 +49,7 @@
                 <span class="text-md">{{
                     $t("accounts.block.titles[0]")
                 }}</span>
-                <span class="text-md">
+                <span class="text-md" v-hash>
                     {{ hashRate }} {{ accountInfo.unit }}H/s</span
                 >
             </div>

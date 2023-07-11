@@ -141,6 +141,11 @@ body {
                 &__links_con {
                     background: #040d15;
                     .button {
+                        &__row {
+                            &:after {
+                                background: transparent;
+                            }
+                        }
                         .button {
                             &_name {
                                 &:hover {
@@ -342,6 +347,11 @@ body {
                 }
                 &__buttons {
                     .button {
+                        &__row {
+                            &:after {
+                                background: transparent;
+                            }
+                        }
                         .button {
                             &_name {
                                 &:hover {
@@ -775,6 +785,7 @@ body {
                 &_block {
                     @media (min-width: 767.98px) {
                         background: #152336;
+                        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.10);
                     }
                     .text-black {
                         color: #cacaca;

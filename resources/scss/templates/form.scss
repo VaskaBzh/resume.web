@@ -77,6 +77,9 @@
         bottom: calc(100% + 22px);
         width: 412px;
         min-height: 58px;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
         @media (max-width: $mobileSmall) {
             width: 100%;
         }

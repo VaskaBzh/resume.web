@@ -26,8 +26,8 @@ body::after {
         &-card {
             animation: backMainAnimationCard forwards 0.3s ease 0s;
         }
-        &-сonnect {
-            animation: backMainAnimationConnect forwards 0.3s ease 0s;
+        &-changes {
+            animation: backChangeAnimation forwards 0.3s ease 0s;
         }
     }
 }
@@ -81,6 +81,11 @@ body::after {
                     .container-chart .title {
                         animation: fadeIn forwards 0.8s ease 0.8s;
                     }
+                }
+            }
+            &-changes {
+                .popup__content {
+                    animation: mainAnimationChange forwards 1s ease 0.5s !important;
                 }
             }
             &-card {
@@ -327,7 +332,6 @@ body::after {
     }
     &__info {
         display: flex;
-        justify-content: space-between;
         gap: 8px;
         @media (min-width: 991.98px) {
             flex-direction: column;
@@ -344,6 +348,7 @@ body::after {
             @media (min-width: 991.98px) {
                 padding: 16px;
                 min-width: 175px;
+                box-shadow: 0 2px 6px 0 rgba(35, 38, 63, 0.1);
             }
             @media (min-width: 767.98px) {
                 min-height: 82px;
@@ -452,7 +457,7 @@ body::after {
                 }
             }
             .table__row {
-                animation: contentAnimation forwards 0.3s ease 0.7s;
+                animation: contentAnimation forwards 0.3s ease 1s;
             }
             .graph {
                 animation: contentAnimation forwards 1.3s ease 0.8s !important;
@@ -461,7 +466,7 @@ body::after {
                 }
             }
             .form {
-                animation: contentAnimation forwards 0.3s ease 0.7s;
+                animation: contentAnimation forwards 0.3s ease 0.9s;
                 &_message {
                     animation: fadeIn forwards 0.3s ease 0s;
                 }

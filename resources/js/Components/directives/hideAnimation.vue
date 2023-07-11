@@ -1,13 +1,20 @@
 <script>
+function hintProcess(el, binding) {
+    if (binding.value) {
+        el.style.visibility = "visible";
+        el.style.opacity = 1;
+        setTimeout(() => {
+            el.removeAttribute("style");
+        }, 2700);
+    }
+}
 export default {
+    methods: {},
     updated(el, binding) {
-        if (binding.value) {
-            el.style.visibility = "visible";
-            el.style.opacity = 1;
-            setTimeout(() => {
-                el.removeAttribute("style");
-            }, 2700);
-        }
+        hintProcess(el, binding);
+    },
+    mounted(el, binding) {
+        hintProcess(el, binding);
     },
 };
 </script>

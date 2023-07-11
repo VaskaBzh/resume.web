@@ -9,6 +9,7 @@ import scrollAnimation from "@/Components/directives/animations/scrollAnimation.
 import scrollValueAnimation from "@/Components/directives/animations/scrollValueAnimation.vue";
 import tippyAnimation from "@/Components/directives/tippyAnimation.vue";
 import hideAnimation from "@/Components/directives/hideAnimation.vue";
+import hashRender from "@/Components/directives/hashRender.vue";
 
 createInertiaApp({
     resolve: (name) => {
@@ -30,6 +31,7 @@ createInertiaApp({
             .directive("value-scroll", scrollValueAnimation)
             .directive("tooltip", tippyAnimation)
             .directive("hide", hideAnimation)
+            .directive("hash", hashRender)
             .mount(el);
     },
     progress: {

@@ -96,58 +96,133 @@
     <teleport to="body">
         <main-popup
             id="changes"
+            class="popup-changes"
             :wait="wait"
-            v-if="popupHtml !== ''"
+            v-if="form.type !== ''"
             :closed="closed"
             :errors="errors"
         >
             <form
                 @submit.prevent="
-                    popupHtml.password
-                        ? ajaxChange(false, getInfo)
-                        : ajaxChange(true, getInfo)
+                    form.type === 'пароль'
+                        ? ajaxChange(true)
+                        : ajaxChange(false)
                 "
                 class="form form-popup popup__form"
             >
                 <main-title tag="h3">{{
                     `${
-                        popupHtml.name !== "почту"
+                        form.type !== "почту"
                             ? $t("settings.block.settings_block.popup.title")
-                            : $t("settings.block.settings_block.popup.title_email")
-                    } ${popupHtml.name}`
+                            : $t(
+                                  "settings.block.settings_block.popup.title_email"
+                              )
+                    } ${form.type}`
                 }}</main-title>
                 <input
-                    v-model="form.item"
-                    required
+                    v-model="mainModel"
                     autofocus
-                    :type="popupHtml.name === 'пароль' ? 'password' : 'text'"
+                    :type="form.type === 'пароль' ? 'password' : 'text'"
                     class="input popup__input"
                     :placeholder="`${$t(
                         'settings.block.settings_block.popup.placeholders.placeholder'
-                    )} ${popupHtml.name}`"
+                    )} ${form.type}`"
                 />
-                <input
-                    v-model="pass"
-                    v-if="popupHtml.password"
-                    required
-                    autofocus
-                    type="password"
-                    class="input popup__input"
-                    :placeholder="`${$t(
-                        'settings.block.settings_block.popup.placeholders.password_new'
-                    )} ${popupHtml.name}`"
-                />
-                <input
-                    v-model="password_confirmation"
-                    v-if="popupHtml.password"
-                    required
-                    autofocus
-                    type="password"
-                    class="input popup__input"
-                    :placeholder="`${$t(
-                        'settings.block.settings_block.popup.placeholders.password_confirmation'
-                    )} ${popupHtml.name}`"
-                />
+                <div class="form_row" v-if="form.type === 'пароль'">
+                    <main-password
+                        name="password"
+                        :placeholder="`${$t(
+                            'settings.block.settings_block.popup.placeholders.password_new'
+                        )} ${form.type}`"
+                        :model="form.password"
+                        :errors="errors"
+                        @change="passwordProcess($event)"
+                    ></main-password>
+                </div>
+                <transition name="validate">
+                    <ul
+                        class="form_row validate"
+                        v-if="Object.entries(validate).length > 0"
+                    >
+                        <li
+                            class="validate_val"
+                            :class="
+                                !validate.length
+                                    ? 'validate_val-complete'
+                                    : 'validate_val-reject'
+                            "
+                        >
+                            {{ this.$t("auth.reg.validate[0]") }}
+                        </li>
+                        <ul class="validate__list">
+                            <span
+                                class="validate_val"
+                                :class="
+                                    !(
+                                        validate.lower ||
+                                        validate.upper ||
+                                        validate.symbol ||
+                                        validate.number
+                                    )
+                                        ? 'validate_val-complete'
+                                        : 'validate_val-reject'
+                                "
+                            >
+                                {{ this.$t("auth.reg.validate[1]") }}
+                            </span>
+                            <li
+                                class="validate_val"
+                                :class="
+                                    !validate.lower
+                                        ? 'validate_val-complete'
+                                        : ''
+                                "
+                            >
+                                {{ this.$t("auth.reg.validate[2]") }}
+                            </li>
+                            <li
+                                class="validate_val"
+                                :class="
+                                    !validate.upper
+                                        ? 'validate_val-complete'
+                                        : ''
+                                "
+                            >
+                                {{ this.$t("auth.reg.validate[3]") }}
+                            </li>
+                            <li
+                                class="validate_val"
+                                :class="
+                                    !validate.symbol
+                                        ? 'validate_val-complete'
+                                        : ''
+                                "
+                            >
+                                {{ this.$t("auth.reg.validate[4]") }}
+                            </li>
+                            <li
+                                class="validate_val"
+                                :class="
+                                    !validate.number
+                                        ? 'validate_val-complete'
+                                        : ''
+                                "
+                            >
+                                {{ this.$t("auth.reg.validate[5]") }}
+                            </li>
+                        </ul>
+                    </ul>
+                </transition>
+                <div class="form_row" v-if="form.type === 'пароль'">
+                    <main-password
+                        name="password"
+                        :placeholder="`${$t(
+                            'settings.block.settings_block.popup.placeholders.password_confirmation'
+                        )} ${form.type}`"
+                        :model="password_confirmation"
+                        :errors="errors"
+                    ></main-password>
+                </div>
                 <blue-button>
                     <button type="submit" class="all-link">
                         <svg
@@ -168,7 +243,7 @@
                             />
                         </svg>
                         {{ $t("settings.block.settings_block.popup.button") }}
-                        {{ this.popupHtml.name }}
+                        {{ form.type }}
                     </button>
                 </blue-button>
             </form>
@@ -184,6 +259,7 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
+import MainPassword from "@/Components/UI/MainPassword.vue";
 
 export default {
     layout: profileLayoutView,
@@ -192,6 +268,7 @@ export default {
         BlueButton,
         SettingsBlock,
         MainPopup,
+        MainPassword,
     },
     props: ["errors", "message", "user", "auth_user"],
     setup() {
@@ -199,41 +276,86 @@ export default {
         let email = ref("...");
         let phone = ref("...");
         let password = ref("*********");
-        let sms = ref(null);
-        let fac = ref(null);
+        // let sms = ref(null);
+        // let fac = ref(null);
+        let closed = ref(false);
+        let wait = ref(false);
 
-        async function get_login() {
-            await axios.get(route("get_login")).then((res) => {
-                login.value = res.data;
-            });
-        }
-        async function get_email() {
-            await axios.get(route("get_email")).then((res) => {
-                email.value = res.data;
-            });
-        }
-        async function get_phone() {
-            await axios.get(route("get_phone")).then((res) => {
-                phone.value = res.data;
-            });
-        }
-        async function get_sms() {
-            await axios.get(route("get_sms")).then((res) => {
-                res.data === 0 ? (sms.value = false) : (sms.value = true);
-            });
-        }
-        async function get_2fac() {
-            await axios.get(route("get_fac")).then((res) => {
-                res.data === 0 ? (fac.value = false) : (fac.value = true);
-            });
-        }
+        let form = useForm({
+            item: "",
+            type: "",
+            old_password: "",
+            password: "",
+            password_confirmation: "",
+        });
+
+        let validate = ref({});
+
+        const passwordProcess = (event) => {
+            form.password = event;
+            validate.value = {};
+
+            if (form.password?.length <= 10 || form.password?.length >= 50)
+                validate.value.length = true;
+
+            if (!/[a-z]/.test(form.password)) validate.value.lower = true;
+
+            if (!/[A-Z]/.test(form.password)) validate.value.upper = true;
+
+            if (!/[0-9]/.test(form.password)) validate.value.number = true;
+
+            if (!/[!@#\$%\^&\*]/.test(form.password))
+                validate.value.symbol = true;
+
+            if (form.password.length === 0) validate.value = {};
+        };
+
         async function getInfo() {
-            get_login();
-            get_email();
-            get_phone();
-            get_sms();
-            get_2fac();
+            let getVal = {
+                login: login,
+                email: email,
+                phone: phone,
+            };
+
+            Object.entries(getVal).forEach((el) => {
+                axios.get(route(`get_${el[0]}`)).then((res) => {
+                    el[1].value = res.data;
+                });
+            });
+            // get_sms();
+            // get_2fac();
         }
+
+        const ajax = () => {
+            form.post(route("change"), {
+                onFinish() {
+                    wait.value = false;
+                },
+            });
+        };
+
+        const ajaxChange = (bool) => {
+            wait.value = true;
+
+            if (bool) {
+                if (Object.entries(validate.value).length === 0) {
+                    ajax();
+                }
+            } else {
+                ajax();
+            }
+        };
+
+        // async function get_sms() {
+        //     await axios.get(route("get_sms")).then((res) => {
+        //         res.data === 0 ? (sms.value = false) : (sms.value = true);
+        //     });
+        // }
+        // async function get_2fac() {
+        //     await axios.get(route("get_fac")).then((res) => {
+        //         res.data === 0 ? (fac.value = false) : (fac.value = true);
+        //     });
+        // }
 
         getInfo();
 
@@ -242,35 +364,21 @@ export default {
             email,
             phone,
             password,
-            sms,
-            fac,
-            getInfo,
+            // sms,
+            // fac,
+            passwordProcess,
+            validate,
+            form,
+            closed,
+            wait,
+            ajaxChange,
         };
     },
     data() {
         return {
             is_checked: true,
             notification: true,
-            popupHtml: ``,
-            form: {
-                item: "",
-                type: "",
-            },
-            wait: false,
-            pass: "",
             password_confirmation: "",
-            checkboxes: [
-                { title: "Выплаты за майнинг", isChecked: true },
-                { title: "Изменение реферального уровня", isChecked: true },
-                { title: "Начисления за майнинг", isChecked: true },
-                { title: "Подключение воркера ", isChecked: true },
-                { title: "Вывод с депозита", isChecked: false },
-                { title: "Отключение воркера", isChecked: false },
-                { title: "Реферальное вознаграждение", isChecked: false },
-                { title: "Новости", isChecked: false },
-                { title: "Mining", isChecked: false },
-                { title: "Промоакции", isChecked: false },
-            ],
             clearProfit: "",
             profit: "",
             svgs: [
@@ -294,10 +402,9 @@ export default {
         };
     },
     computed: {
-        errs() {
-            let errs = this.errors || {};
-            errs = Object.values(errs).filter((el) => el !== "");
-            return errs;
+        mainModel() {
+            return this.form.type === "пароль"
+                ? this.form.old_password : this.form.item;
         },
     },
     watch: {
@@ -315,49 +422,9 @@ export default {
             this.clearProfit = this.profit;
         },
         getHtml(data) {
-            this.popupHtml = data;
+            this.form.item = data.val;
+            this.form.type = data.name;
         },
-        async ajaxChange(bool, func) {
-            let form = useForm(this.form);
-
-            form.type = this.popupHtml.name;
-
-            if (bool) {
-                form.password = this.password;
-                form.password_confirmation = this.password_confirmation;
-            }
-            this.wait = true;
-
-            await form.post(route("change"), {
-                async onFinish() {
-                    this.form = {
-                        item: "",
-                        type: "",
-                    };
-                    this.pass = "";
-                    this.password_confirmation = "";
-
-                    this.wait = false;
-                    await func();
-
-                    setTimeout(() => {
-                        this.closed = true;
-                    }, 300);
-                    setTimeout(() => {
-                        this.closed = false;
-                    }, 600);
-                },
-            });
-        },
-        // checker() {
-        //     if (!this.is_checked) {
-        //         this.$refs.checkbox.classList.add("checked");
-        //         this.is_checked = true;
-        //     } else {
-        //         this.$refs.checkbox.classList.remove("checked");
-        //         this.is_checked = false;
-        //     }
-        // },
     },
     mounted() {
         document.title = "Настройки";
