@@ -27,6 +27,7 @@
     <teleport to="body">
         <main-popup
             v-if="Object.values(allHistoryMiner).length > 0"
+            :errors="errors"
             class="popup-graph"
             id="seeChart"
             ref="chart"
@@ -159,6 +160,7 @@ export default {
             type: Number,
             default: 10,
         },
+        errors: Object,
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {

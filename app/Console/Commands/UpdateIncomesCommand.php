@@ -102,7 +102,7 @@ class UpdateIncomesCommand extends Command
                 }
             }
         }
-        Income::create($income);
+        Income::firstOrCreate($income);
 //        $sub->incomes()->create($income);
 
         $sub->accruals = $sumAccruals;
@@ -185,7 +185,6 @@ class UpdateIncomesCommand extends Command
                     } else {
                         $earn = 0;
                     }
-
 
 //                    $earn = $earn * (1 - 0.005);
 //                    $earn = $earn * (1 - 0.035);

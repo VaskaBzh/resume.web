@@ -75,12 +75,11 @@ class RegisterController extends Controller
 
             $response = $requestController->proxy([
                 "puid" => "781195",
-                "page" => 1,
-                "page_size" => 52,
+                "page_size" => 1000,
             ], "worker/groups", "get");
 
-            foreach (json_decode($response->getContent())->data->list  as $index => $group) {
-                if ($index > 1) {
+            foreach (json_decode($response->getContent())->data->list as $index => $group) {
+                if ($index > 0) {
                     if ($group->name === $request->input("name")) {
                         if (app()->getLocale() === 'ru') {
                             return back()->withErrors([

@@ -21,7 +21,8 @@ class SubController extends Controller
         ], "worker/groups", "get");
 
         foreach (json_decode($response->getContent())->data->list  as $index => $group) {
-            if ($index > 1) {
+            if ($index > 0) {
+
                 if ($group->name === $groupName) {
                     if (app()->getLocale() === 'ru') {
                         return back()->withErrors([

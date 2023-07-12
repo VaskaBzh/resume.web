@@ -74,6 +74,7 @@
             :table="incomeInfo"
             type="Платежи"
             rowsNum="25"
+            :errors="errors"
         ></main-slider>
     </div>
 </template>

@@ -43,7 +43,9 @@ class AddWorkerJob implements ShouldQueue
 
         $subs = Sub::all();
 
+
         foreach ($subs as $sub) {
+            dump($sub);
             foreach($responseUngroup->data->data as $worker) {
                 if ($this->workerChecker($worker->worker_name, $sub->sub)) {
                     $data = [
@@ -63,6 +65,7 @@ class AddWorkerJob implements ShouldQueue
 
 
     public function workerChecker($str, $substr) {
+        dump($str, $substr);
         $regExp = "/{$substr}/";
 
         if (preg_match($regExp, $str)) {

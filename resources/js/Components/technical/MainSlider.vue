@@ -7,6 +7,7 @@
             :first="firstRow"
             :wait="this.wait"
             :rowsVal="rows"
+            :errors="errors"
         ></wrap-table>
         <div class="slider__nav" v-if="this.table.rows">
             <span class="slider__nav_info" v-if="this.pages === 0">
@@ -163,6 +164,7 @@ export default {
             type: Number,
             default: 10,
         },
+        errors: Object,
     },
     watch: {
         rowsNumber(newValue, oldValue) {

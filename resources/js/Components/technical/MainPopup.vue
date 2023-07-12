@@ -14,7 +14,7 @@
             >
                 <div
                     class="form_wrapper-message"
-                    v-if="Object.entries(errors)[0]"
+                    v-if="errors && Object.entries(errors)[0]"
                 >
                     <div
                         v-for="(error, i) in errors"

@@ -63,15 +63,15 @@ class WalletController extends Controller
 
         if ($percentSum + $request->input("percent") > 100) {
             if (app()->getLocale() === 'ru') {
-                return response()->json(["errors" => ["create_error" => ["Суммарный процент вывода больше 100."]]], 500);
+                return back()->withErrors(["create_error" => "Суммарный процент вывода больше 100."]);
             } else if (app()->getLocale() === 'en') {
-                return response()->json(["errors" => ["create_error" => ["The total percentage of withdrawal is more than 100."]]], 500);
+                return back()->withErrors(["create_error" => "The total percentage of withdrawal is more than 100."]);
             }
         }
 
         if ($request->input('minWithdrawal')) {
             $request->validate([
-                'minWithdrawal' => 'numeric|gt:0.004',
+                'minWithdrawal' => 'numeric|gt:0.0049',
             ], $messages);
 
             $wallet->minWithdrawal = $request->input('minWithdrawal');

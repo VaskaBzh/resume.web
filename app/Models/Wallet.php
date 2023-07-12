@@ -16,6 +16,7 @@ class Wallet extends Model
     protected $fillable = [
         'group_id',
         'minWithdrawal',
+        'name',
         'wallet',
         'percent',
     ];

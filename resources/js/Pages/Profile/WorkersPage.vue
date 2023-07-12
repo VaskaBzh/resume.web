@@ -56,6 +56,7 @@
                 type="Воркеры"
                 :wait="this.allAccounts"
                 :empty="this.table.rows"
+                :errors="errors"
             />
         </div>
     </div>
