@@ -106,7 +106,6 @@ export default {
     },
     watch: {
         endTable(val) {
-            console.log(val);
             if (val) setTimeout(() => (this.waitTable = false), 300);
         },
     },
