@@ -163,6 +163,11 @@ export default {
     beforeUnmount() {
         clearInterval(this.intervalId);
     },
+    beforeUpdate() {
+        console.log(this.wait + " wait");
+        console.dir(this.empty + " empty");
+        console.dir(this.end + " end");
+    },
 };
 </script>
 

@@ -329,8 +329,14 @@ body {
                     }
                     &:before {
                         background: #0f1924;
-                        box-shadow: 0 8px 20px rgba(34, 34, 35, 0.07);
+                        border-bottom: none;
+                        box-shadow: 0 8px 20px 0 rgba(34, 34, 35, 0.07);
                     }
+                }
+                &:before {
+                    background: #0f1924;
+                    border-bottom: none;
+                    box-shadow: 0 8px 20px 0 rgba(34, 34, 35, 0.07);
                 }
             }
             .nav {
@@ -786,7 +792,7 @@ body {
                 &_block {
                     @media (min-width: 767.98px) {
                         background: #152336;
-                        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.10);
+                        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
                     }
                     .text-black {
                         color: #cacaca;

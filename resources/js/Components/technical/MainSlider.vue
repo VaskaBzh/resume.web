@@ -2,10 +2,11 @@
     <div class="slider">
         <wrap-table
             ref="list"
-            :type="this.type"
-            :table="this.table"
+            :type="type"
+            :table="table"
             :first="firstRow"
-            :wait="this.wait"
+            :wait="wait"
+            :empty="empty"
             :rowsVal="rows"
             :errors="errors"
         ></wrap-table>
@@ -160,6 +161,7 @@ export default {
         table: Object,
         type: String,
         wait: Object,
+        empty: Object,
         rowsNum: {
             type: Number,
             default: 10,

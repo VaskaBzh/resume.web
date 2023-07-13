@@ -305,9 +305,6 @@ export default {
     width: 100%;
     gap: 42px;
     justify-content: flex-start;
-    @media (min-width: 1320.98px) {
-        min-width: 580px;
-    }
     @media (max-width: 1320.98px) {
         gap: 15px;
     }

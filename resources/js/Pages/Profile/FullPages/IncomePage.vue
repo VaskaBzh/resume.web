@@ -71,6 +71,7 @@
         <main-slider
             class="wrap-no-overflow"
             :wait="allIncomeHistory"
+            :empty="incomeInfo.rows"
             :table="incomeInfo"
             type="Платежи"
             rowsNum="25"
@@ -237,6 +238,7 @@ export default {
                             data: "#fullpage",
                         };
                         Vue.set(obj.rows, i, rowModel);
+                        console.log(obj);
                     }
                 );
             }

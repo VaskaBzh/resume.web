@@ -191,7 +191,7 @@ export default {
             }
         }
         &.active,
-        &.inactie,
+        &.inactive,
         &.unstable {
             .table_column:first-child span:last-child::before {
                 display: inline-flex;
