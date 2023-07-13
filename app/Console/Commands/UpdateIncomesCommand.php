@@ -104,11 +104,16 @@ class UpdateIncomesCommand extends Command
             }
         }
 
-        Income::updateOrCreate([
-            'group_id' => $income['group_id'],
-            'created_at' => now()->subDay()
-        ], $income);
-//        $sub->incomes()->create($income);
+        $previousIncome = $sub->incomes()
+            ->where('group_id', $income['group_id'])
+            ->orderByDesc('created_at')
+            ->first();
+
+        if ($previousIncome?->created_at->diffInDays(now()) < 1) {
+            $previousIncome->update($income);
+        } else {
+            $sub->incomes()->create($income);
+        }
 
         $sub->accruals = $sumAccruals;
         $sub->unPayments = $sub->accruals - $sub->payments;
