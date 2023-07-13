@@ -27,6 +27,7 @@
     <teleport to="body">
         <main-popup
             v-if="Object.values(allHistoryMiner).length > 0"
+            :errors="errors"
             class="popup-graph"
             id="seeChart"
             ref="chart"
@@ -56,14 +57,6 @@
                         <span class="text text-black">
                             <b> {{ activeWorker.hashRate }}</b>
                         </span>
-                    </div>
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">{{
-                            $t("workers.table.thead[2]")
-                        }}</span>
-                        <span class="text text-black">
-                            <b> {{ activeWorker.hashRate }}</b></span
-                        >
                     </div>
                     <div class="popup__info_block">
                         <span class="label popup__info_block_label">{{
@@ -167,6 +160,7 @@ export default {
             type: Number,
             default: 10,
         },
+        errors: Object,
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
@@ -353,6 +347,40 @@ export default {
                 text-align: left;
                 background: transparent;
             }
+        }
+    }
+    &__row {
+        position: relative;
+        &[data-popup="#seeChart"] {
+            td {
+                transition: all 0.3s ease 0s;
+            }
+            svg {
+                @media (min-width: 767.98px) {
+                    display: inline;
+                }
+            }
+            &:hover,
+            &:active {
+                background: #c6d8f5;
+                @media (min-width: 767.98px) {
+                    td {
+                        background: #c6d8f5;
+                    }
+                    svg {
+                        stroke: #343434;
+                    }
+                }
+            }
+        }
+        svg {
+            transition: all 0.3s ease 0s;
+            display: none;
+            stroke: #818c99;
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
         }
     }
     &_column {

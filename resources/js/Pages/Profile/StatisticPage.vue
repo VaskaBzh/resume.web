@@ -118,7 +118,7 @@
                             <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[0]") }}
                                 <span class="statistic_info text-blue"
-                                    ><b
+                                    ><b v-hash
                                         >{{
                                             Number(this.workers.hash).toFixed(2)
                                         }}
@@ -129,7 +129,7 @@
                             <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[1]") }}
                                 <span class="statistic_info text-blue"
-                                    ><b
+                                    ><b v-hash
                                         >{{
                                             Number(this.workers.hash24).toFixed(
                                                 2
@@ -365,9 +365,9 @@ export default {
                     Object.values(this.allIncomeHistory[this.getActive])[1]
                 ) {
                     return Number(
-                        Object.values(this.allIncomeHistory[this.getActive])[1][
-                            "amount"
-                        ]
+                        Object.values(
+                            this.allIncomeHistory[this.getActive]
+                        ).reverse()[1]["amount"]
                     );
                 }
             }

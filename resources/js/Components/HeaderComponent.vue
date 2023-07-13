@@ -1,42 +1,45 @@
 <template>
-    <nav class="nav__container">
-        <Link :href="route('home')">
-            <img
-                v-if="!getTheme"
-                class="nav__logo headder"
-                src="../../assets/img/logo_high_quality.svg"
-                alt="logo"
-            />
-            <img
-                v-else
-                class="nav__logo headder"
-                src="../../assets/img/logo_high_quality-dark.svg"
-                alt="logo"
-            />
-        </Link>
+    <nav class="nav">
+        <div class="nav__container">
+            <Link :href="route('home')">
+                <img
+                    v-if="!getTheme"
+                    class="nav__logo"
+                    src="../../assets/img/logo_high_quality.svg"
+                    alt="logo"
+                />
+                <img
+                    v-else
+                    class="nav__logo"
+                    src="../../assets/img/logo_high_quality-dark.svg"
+                    alt="logo"
+                />
+            </Link>
 
-        <nav-links
-            @closed="burgerClose"
-            :is_auth="is_auth"
-            :viewportWidth="viewportWidth"
-            :is_open="is_open"
-            :errors="errors"
-        />
+            <nav-links
+                @closed="burgerClose"
+                :is_auth="is_auth"
+                :viewportWidth="viewportWidth"
+                :is_open="is_open"
+                :errors="errors"
+            />
 
-        <div class="nav__buttons" v-show="viewportWidth >= 991.78">
-            <select-language
-                v-if="viewportWidth >= 991.78"
-                :viewportWidth="viewportWidth"
-            ></select-language>
-            <select-theme
-                v-if="viewportWidth >= 991.78"
-                :viewportWidth="viewportWidth"
-            ></select-theme>
+            <div class="nav__buttons" v-show="viewportWidth >= 991.78">
+                <select-language
+                    v-if="viewportWidth >= 991.78"
+                    :viewportWidth="viewportWidth"
+                ></select-language>
+                <select-theme
+                    v-if="viewportWidth >= 991.78"
+                    :viewportWidth="viewportWidth"
+                ></select-theme>
+            </div>
 
             <account-menu
                 :errors="errors"
                 :viewportWidth="viewportWidth"
-                v-if="is_auth && accountLink"
+                v-if="is_auth && accountLink && viewportWidth >= 991.78"
+                class="nav__button"
             ></account-menu>
             <Link
                 :href="route('login')"
@@ -54,21 +57,22 @@
             >
                 {{ $t("header.login_button") }}
             </Link>
-        </div>
 
-        <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
-            <select-language
-                v-show="viewportWidth > 479.98"
-                :viewportWidth="viewportWidth"
-            ></select-language>
-            <select-theme
-                v-show="viewportWidth > 479.98"
-                :viewportWidth="viewportWidth"
-            ></select-theme>
+            <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
+                <select-language
+                    v-show="viewportWidth > 479.98"
+                    :viewportWidth="viewportWidth"
+                ></select-language>
+                <select-theme
+                    v-show="viewportWidth > 479.98"
+                    :viewportWidth="viewportWidth"
+                ></select-theme>
+            </div>
             <div
                 @click="burgerAction"
                 class="nav__burger"
-                :class="{ active: is_open }"
+                :class="{ 'nav__burger-active': is_open }"
+                v-show="viewportWidth < 991.98"
             >
                 <div class="nav__burger_con">
                     <span></span>
@@ -177,34 +181,15 @@ export default defineComponent({
 </script>
 
 <style lang="scss" scoped>
-.all-link {
-    padding: 2px 40px;
-}
-.nav__logo {
-    max-width: 170px;
-    @media (max-width: 991.98px) {
-        &.headder {
-            position: relative;
-            z-index: 100;
-        }
-    }
-    @media (max-width: 479.98px) {
-        max-width: 138px;
-    }
-}
-nav.nav__container {
+.nav {
     z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 15px;
     width: 100%;
-    box-sizing: border-box !important;
-    padding: 21px 0;
+    height: 84px;
     position: fixed;
     top: 0;
     left: 50%;
-    transform: translateX(-50%) translateY(0);
+    transform: translateX(-50%);
+    transition: all 0.3s ease 0s;
     &:before {
         transition: all 0.3s ease 0s;
         left: 50%;
@@ -212,79 +197,115 @@ nav.nav__container {
         transform: translateX(-50%);
         top: 0;
         width: 100vw;
-        height: 84px;
-        z-index: -1;
-        position: fixed;
+        height: 100%;
+        position: absolute;
         background: #eef1f5;
-        box-shadow: 0 8px 24px rgba(129, 135, 189, 0.15);
-    }
-    @media (min-width: 1320.98px) {
-        transition: all 0.3s ease 0s;
-        width: 100vw;
+        box-shadow: 0 8px 24px 0 rgba(129, 135, 189, 0.15);
         z-index: 100;
+        @media (min-width: 991.98px) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            z-index: -1;
+        }
     }
     @media (max-width: 991.98px) {
-        position: fixed;
-        left: 50%;
-        top: 0;
-        transform: translate(-50%, 0);
-        gap: 15px;
         height: 80px;
-        width: 100vw;
-        padding: 16px 0;
-        &::before {
-            content: "";
-            position: absolute;
-            z-index: 100;
-            width: 100vw;
-            height: 100%;
-            top: 0;
-            left: 50%;
-            transform: translate(-50%, 0);
-            filter: drop-shadow(0px 1px 1px rgba(0, 0, 0, 0.1));
-            background: linear-gradient(
-                179.87deg,
-                #e6eaf0 1.02%,
-                #e6eaf1 4.79%,
-                #e7ebf1 8.76%,
-                #eaeef4 14.75%,
-                #e8ecf2 19.07%
-            );
-        }
-    }
-    @media (max-width: 767.98px) {
-        padding: 16px 15px;
     }
     @media (max-width: 479.98px) {
-        padding: 13px 16px;
-        height: 59px;
-        &:before {
-            box-shadow: 0px 8px 24px 0px rgba(129, 135, 189, 0.15);
-        }
+        height: 60px;
     }
-}
-
-.nav__buttons_mobile {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    position: relative;
-    z-index: 100;
-
-    & .nav__burger {
-        background: transparent;
-        border-radius: 14px;
-        gap: 4px;
-        width: 38px;
-        height: 38px;
-        transition: all 0.3s ease 0s;
-        margin-left: 28px;
-        @media (max-width: 767.98px) {
-            margin-left: 48px;
+    &__logo {
+        max-width: 170px;
+        @media (min-width: 991.98px) {
+            margin-right: 100px;
         }
         @media (max-width: 479.98px) {
-            margin-left: 0;
+            max-width: 138px;
         }
+    }
+    a,
+    div,
+    span {
+        @media (max-width: 991.98px) {
+            z-index: 100;
+        }
+    }
+    &__container {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        height: 100%;
+    }
+    &__buttons {
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        margin-left: auto;
+        &_mobile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            position: relative;
+            margin-left: auto;
+            @media (max-width: 991.98px) {
+                z-index: 100;
+            }
+        }
+    }
+    &__button {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%;
+        color: #3f7bdd;
+        border-radius: 8px;
+        border: 1px solid #3f7bdd;
+        background: transparent;
+        min-height: 40px;
+        padding: 0 24px;
+        display: inline-flex;
+        align-items: center;
+        white-space: nowrap;
+        transition: all 0.3s ease 0s;
+        cursor: pointer;
+        margin-left: 40px;
+        @media (any-hover: hover) {
+            &:hover {
+                border: 1px solid #c6d8f5;
+                background: #c6d8f5;
+            }
+        }
+        &_mobile {
+            background: rgba(194, 213, 242, 0.61);
+            border-radius: 14px;
+            min-width: 65px;
+            width: 60px;
+            height: 45px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            white-space: nowrap;
+            transition: all 0.3s ease 0s;
+            &:hover {
+                background: rgba(194, 213, 242);
+            }
+        }
+        &_link {
+            padding: 0 20px;
+            width: 100%;
+            height: 100%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+    }
+    &__burger {
+        background: transparent;
+        gap: 4px;
+        width: 48px;
+        height: 48px;
+        transition: all 0.3s ease 0s;
+        margin-left: 40px;
 
         &:active {
             box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -348,97 +369,6 @@ nav.nav__container {
                     transition: all 0.3s ease 0s;
                     right: -100%;
                 }
-            }
-        }
-    }
-}
-.nav__buttons {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    .button,
-    .nav__button {
-        margin-left: 28px;
-        @media (max-width: 767.98px) {
-            margin-left: 48px;
-        }
-    }
-}
-.nav__button {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 17px;
-    line-height: 143.1%;
-    color: #3f7bdd;
-    background: rgba(194, 213, 242, 0.61);
-    border-radius: 14px;
-    padding: 11px 36px;
-    white-space: nowrap;
-    transition: all 0.3s ease 0s;
-    cursor: pointer;
-    @media (any-hover: hover) {
-        &:hover {
-            background: rgba(194, 213, 242);
-        }
-    }
-
-    &_mobile {
-        background: rgba(194, 213, 242, 0.61);
-        border-radius: 14px;
-        min-width: 65px;
-        width: 60px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        white-space: nowrap;
-        transition: all 0.3s ease 0s;
-        &:hover {
-            background: rgba(194, 213, 242);
-        }
-    }
-    &_link {
-        padding: 0 20px;
-        width: 100%;
-        height: 100%;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 10px;
-    }
-}
-.nav__button {
-    font-style: normal;
-    font-weight: 400;
-    color: #3f7bdd;
-    background: transparent;
-    border: 1px solid #3f7bdd;
-    padding: 8px 24px;
-    white-space: nowrap;
-    transition: all 0.3s ease 0s;
-    border-radius: 8px;
-    font-size: 17px;
-    line-height: 140%;
-    @media (any-hover: hover) {
-        &:hover {
-            background: #c6d8f5;
-            border: 1px solid #c6d8f5;
-        }
-    }
-
-    &_mobile {
-        background: rgba(194, 213, 242, 0.61);
-        border-radius: 5px;
-        width: 60px;
-        height: 45px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        white-space: nowrap;
-        transition: all 0.3s ease 0s;
-        @media (any-hover: hover) {
-            &:hover {
-                background: rgba(194, 213, 242);
             }
         }
     }

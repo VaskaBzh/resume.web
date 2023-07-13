@@ -2,14 +2,16 @@
     <div class="app_back app_back-auth">
         <header-component-auth :errors="errors" :is_auth="auth_user" />
         <div class="page auth">
-            <div class="hint">
-                <div class="hint_item" v-hide="this.getMessage !== ''">
-                    {{ this.getMessage }}
-                </div>
-                <div class="hint_item" v-hide="this.message !== null">
-                    {{ this.message }}
-                </div>
-            </div>
+            <teleport to="body">
+                <div class="hint">
+                    <div class="hint_item" v-hide="this.getMessage !== ''">
+                        {{ this.getMessage }}
+                    </div>
+                    <div class="hint_item" v-hide="this.message !== null">
+                        {{ this.message }}
+                    </div>
+                </div></teleport
+            >
             <div class="observer_block"></div>
             <div class="auth__con">
                 <div class="page__container">

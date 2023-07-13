@@ -1,5 +1,6 @@
 body {
     &[color-scheme="dark"] {
+        background: #040d15;
         #app {
             .checkbox {
                 background: #283955;
@@ -141,6 +142,11 @@ body {
                 &__links_con {
                     background: #040d15;
                     .button {
+                        &__row {
+                            &:after {
+                                background: transparent;
+                            }
+                        }
                         .button {
                             &_name {
                                 &:hover {
@@ -309,73 +315,82 @@ body {
                 border-color: #79a3e8;
             }
         }
-        nav {
-            &.nav {
-                &__container {
-                    .back {
-                        color: rgba(202, 202, 202, 1);
-                        &_link {
-                            border: 1px solid #79a3e8;
+        .nav {
+            &__container {
+                .back {
+                    color: rgba(202, 202, 202, 1);
+                    &_link {
+                        border: 1px solid #79a3e8;
+                        svg {
+                            fill: #79a3e8;
+                        }
+                    }
+                }
+                &:before {
+                    background: #0f1924;
+                    border-bottom: none;
+                    box-shadow: 0 8px 20px 0 rgba(34, 34, 35, 0.07);
+                }
+                .button {
+                    &_name {
+                        background: #0f1924;
+                        box-shadow: 0 8px 20px 0 rgba(34, 34, 35, 0.07);
+                        &:hover {
+                            background: #1a345a;
+                            border: 1px solid #1a345a;
+                        }
+                    }
+                    &__menu {
+                        background: #040d15;
+                        .select_title .name,
+                        a {
+                            color: #989898;
                             svg {
                                 fill: #79a3e8;
                             }
                         }
-                    }
-                    &:before {
-                        background: #0f1924;
-                        box-shadow: 0 8px 20px rgba(34, 34, 35, 0.07);
+                        button {
+                            svg {
+                                fill: #ef4e4d;
+                            }
+                        }
+                        .select {
+                            &_option {
+                                &.active {
+                                    .main_select {
+                                        color: #cacaca;
+                                    }
+                                }
+                                .main_select {
+                                    color: #989898;
+                                }
+                            }
+                        }
                     }
                 }
             }
-            .nav {
-                &__link {
-                    color: #989898;
-                    &.active {
-                        color: #4182ec;
-                    }
+            &:before {
+                background: #0f1924;
+                border-bottom: none;
+                box-shadow: 0 8px 20px 0 rgba(34, 34, 35, 0.07);
+            }
+            &__link {
+                color: #989898;
+                &.active {
+                    color: #4182ec;
                 }
-                &__button {
-                    &:hover {
-                        background: #1a345a;
-                        border: 1px solid #1a345a;
-                    }
+            }
+            &__button {
+                &:hover {
+                    background: #1a345a;
+                    border: 1px solid #1a345a;
                 }
-                &__buttons {
-                    .button {
-                        .button {
-                            &_name {
-                                &:hover {
-                                    background: #1a345a;
-                                    border: 1px solid #1a345a;
-                                }
-                            }
-                            &__menu {
-                                background: #040d15;
-                                .select_title .name,
-                                a {
-                                    color: #989898;
-                                    svg {
-                                        fill: #79a3e8;
-                                    }
-                                }
-                                button {
-                                    svg {
-                                        fill: #ef4e4d;
-                                    }
-                                }
-                                .select {
-                                    &_option {
-                                        &.active {
-                                            .main_select {
-                                                color: #cacaca;
-                                            }
-                                        }
-                                        .main_select {
-                                            color: #989898;
-                                        }
-                                    }
-                                }
-                            }
+            }
+            &__buttons {
+                .button {
+                    &__row {
+                        &:after {
+                            background: transparent;
                         }
                     }
                 }
@@ -775,6 +790,7 @@ body {
                 &_block {
                     @media (min-width: 767.98px) {
                         background: #152336;
+                        box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.1);
                     }
                     .text-black {
                         color: #cacaca;

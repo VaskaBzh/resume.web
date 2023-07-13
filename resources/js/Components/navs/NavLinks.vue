@@ -8,57 +8,68 @@
         ></div>
     </transition>
     <div class="nav__links_con" :class="{ open: is_opened }">
-        <div class="nav__header" id="burger_head" v-if="viewportWidth < 991.98">
-            <account-menu
-                :viewportWidth="viewportWidth"
-                :is_auth="is_auth"
-                @clicked="open"
-                v-if="is_auth"
-                :errors="errors"
-            ></account-menu>
-            <div class="nav__column" v-show="!is_auth">
-                <blue-button class="button button-md button-light">
-                    <Link :href="route('login')" class="all-link">
-                        {{ $t("header.login.buttons.login") }}
-                    </Link>
-                </blue-button>
-                <blue-button
-                    class="button button-md button-reverce button-reverce-border"
-                >
-                    <Link :href="route('registration')" class="all-link">
-                        {{ $t("header.login.buttons.registration") }}
-                    </Link>
-                </blue-button>
-            </div>
-        </div>
-        <div class="nav__links" id="links" v-if="is_auth" @click="closeBurger">
-            <main-link
-                v-for="(link, i) in linksAccount"
-                :link="link"
-                :key="i"
-                class="burger_link-account"
-                :class="{
-                    'burger_link-active': $page.url === link.page,
-                }"
-                :viewportWidth="viewportWidth"
-            ></main-link>
-        </div>
-        <div class="nav__links" id="links" @click="closeBurger">
-            <main-link
-                v-for="(link, i) in linksMain"
-                :link="link"
-                :key="i"
-                :viewportWidth="viewportWidth"
-            ></main-link>
-        </div>
-        <div class="nav__footer" v-show="viewportWidth <= 479.98">
-            <div class="nav__row">
-                <select-language
+        <div class="nav__links_wrapper">
+            <div
+                class="nav__header"
+                id="burger_head"
+                v-if="viewportWidth < 991.98"
+            >
+                <account-menu
                     :viewportWidth="viewportWidth"
-                ></select-language>
-                <select-theme :viewportWidth="viewportWidth"></select-theme>
+                    :is_auth="is_auth"
+                    @clicked="open"
+                    v-if="is_auth"
+                    :errors="errors"
+                ></account-menu>
+                <div class="nav__column" v-show="!is_auth">
+                    <blue-button class="button button-md button-light">
+                        <Link :href="route('login')" class="all-link">
+                            {{ $t("header.login.buttons.login") }}
+                        </Link>
+                    </blue-button>
+                    <blue-button
+                        class="button button-md button-reverce button-reverce-border"
+                    >
+                        <Link :href="route('registration')" class="all-link">
+                            {{ $t("header.login.buttons.registration") }}
+                        </Link>
+                    </blue-button>
+                </div>
             </div>
-            <div class="quote">© 2023 Allbtc Pool</div>
+            <div
+                class="nav__links"
+                id="links"
+                v-if="is_auth"
+                @click="closeBurger"
+            >
+                <main-link
+                    v-for="(link, i) in linksAccount"
+                    :link="link"
+                    :key="i"
+                    class="burger_link-account"
+                    :class="{
+                        'burger_link-active': $page.url === link.page,
+                    }"
+                    :viewportWidth="viewportWidth"
+                ></main-link>
+            </div>
+            <div class="nav__links" id="links" @click="closeBurger">
+                <main-link
+                    v-for="(link, i) in linksMain"
+                    :link="link"
+                    :key="i"
+                    :viewportWidth="viewportWidth"
+                ></main-link>
+            </div>
+            <div class="nav__footer" v-show="viewportWidth <= 479.98">
+                <div class="nav__row">
+                    <select-language
+                        :viewportWidth="viewportWidth"
+                    ></select-language>
+                    <select-theme :viewportWidth="viewportWidth"></select-theme>
+                </div>
+                <div class="quote">© 2023 Allbtc Pool</div>
+            </div>
         </div>
     </div>
 </template>
@@ -294,9 +305,6 @@ export default {
     width: 100%;
     gap: 42px;
     justify-content: flex-start;
-    @media (min-width: 1320.98px) {
-        min-width: 580px;
-    }
     @media (max-width: 1320.98px) {
         gap: 15px;
     }
@@ -310,22 +318,27 @@ export default {
         width: 100%;
     }
 
+    &_wrapper {
+        @media (max-width: 991.98px) {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+    }
+
     &_con {
         @media (max-width: 991.98px) {
             position: fixed;
             background: #fafafa;
-            box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
-            overflow-y: scroll;
+            box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
             max-width: 384px;
+            overflow: scroll;
             width: 100%;
             height: 100vh;
             top: 80px;
             right: -110vw;
             z-index: 99;
-            display: flex;
-            flex-direction: column;
             padding: 40px 32px;
-            gap: 40px;
         }
         @media (max-width: 479.98px) {
             gap: 32px;

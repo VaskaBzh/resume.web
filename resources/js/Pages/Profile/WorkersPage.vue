@@ -51,11 +51,12 @@
             <!--                </div>-->
             <!--            </div>-->
             <wrap-table
-                :table="this.table"
-                :key="Object.values(this.allAccounts).length + this.getActive"
+                :table="table"
+                :key="Object.values(allAccounts).length + getActive"
                 type="Воркеры"
-                :wait="this.allAccounts"
-                :empty="this.table.rows"
+                :wait="allAccounts"
+                :empty="table.rows"
+                :errors="errors"
             />
         </div>
     </div>

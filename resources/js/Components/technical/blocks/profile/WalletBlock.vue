@@ -1,14 +1,12 @@
 <template>
     <div class="wallets__block wallets__block-wallet">
         <div class="wallets__block_name">
-            <span
-                v-if="wallet.fullName === '' && wallet.name === ''"
-                >{{ wallet.wallet }}</span
-            >
-            <span
-                v-else-if="wallet.fullName === '' && wallet.name !== ''"
-                >{{ wallet.name }}</span
-            >
+            <span v-if="wallet.fullName === '' && wallet.name === ''">{{
+                wallet.wallet
+            }}</span>
+            <span v-else-if="wallet.fullName === '' && wallet.name !== ''">{{
+                wallet.name
+            }}</span>
             <span
                 v-else-if="wallet.fullName !== '' && wallet.name !== ''"
                 v-tooltip="{ message: wallet.fullName }"
@@ -185,16 +183,10 @@ export default {
         },
         async remove(wallet) {
             wallet.group_id = this.getActive;
-            await axios
-                .post("/wallet_delete", wallet)
-                .then((res) => {
-                    this.$emit("getMessage", res.data.message);
-                    this.$store.dispatch("getWallets", wallet);
-                })
-                .catch((err) =>
-                    this.$emit("getMessage", err.response.data.message)
-                );
-            setTimeout(() => this.$emit("getMessage", ""), 3000);
+            await axios.post("/wallet_delete", wallet).then((res) => {
+                this.$store.dispatch("getWallets", wallet);
+                this.$store.dispatch("getMessage", res.data.message);
+            });
         },
     },
 };

@@ -21,7 +21,8 @@ class SubController extends Controller
         ], "worker/groups", "get");
 
         foreach (json_decode($response->getContent())->data->list  as $index => $group) {
-            if ($index > 1) {
+            if ($index > 0) {
+
                 if ($group->name === $groupName) {
                     if (app()->getLocale() === 'ru') {
                         return back()->withErrors([
@@ -45,16 +46,17 @@ class SubController extends Controller
             $messages = [
                 "group_name.max" => "Максимальное количество символов 16.",
                 "group_name.min" => "Минимальное количество символов 3.",
+                "group_name.regex" => "Использование спецсимволов и русского языка запрещено.",
             ];
         } else if (app()->getLocale() === 'en') {
             $messages = [
                 "group_name.max" => "Maximum of 16 characters allowed.",
-                "group_name.min" => "Minimum of 3 characters required."
+                "group_name.min" => "Minimum of 3 characters required.",
+                "group_name.regex" => "The use of wildcards and russian language is prohibited."
             ];
         }
-        // Валидация входных данных
         $request->validate([
-            "group_name" => 'required|string|min:3|max:16',
+            "group_name" => 'required|string|min:3|max:16|regex:/^[A-Za-z0-9]*$/',
         ], $messages);
 
         $requestController = new RequestController();

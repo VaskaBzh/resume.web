@@ -206,12 +206,12 @@ export default {
                 this.containerHeight = 380;
             }
             let adjustValue = (num) => {
-                if (num / 1000 >= 1) {
-                    return { val: num / 1000, unit: "P" };
-                } else if (num / 1000000 > 1) {
-                    return { val: num / 1000000, unit: "E" };
+                if (num / 1000000 > 1) {
+                    return { val: (num / 1000000).toFixed(2), unit: "E" };
+                } else if (num / 1000 >= 1) {
+                    return { val: (num / 1000).toFixed(2), unit: "P" };
                 } else {
-                    return { val: num, unit: "T" };
+                    return { val: Number(num).toFixed(2), unit: "T" };
                 }
             };
 
