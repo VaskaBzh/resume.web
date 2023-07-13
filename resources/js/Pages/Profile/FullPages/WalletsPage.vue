@@ -280,7 +280,7 @@ export default {
                             };
 
                             if (this.isChecked) {
-                                if (wal.payment !== 0) {
+                                if (wal.payment && wal.payment !== 0) {
                                     Vue.set(arr, i, walletModel);
                                 }
                             } else {

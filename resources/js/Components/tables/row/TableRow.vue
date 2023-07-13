@@ -155,6 +155,7 @@ export default {
         }
     }
     &__row {
+        border-radius: 8px;
         @media (max-width: 767.98px) {
             display: flex;
             flex-direction: column;

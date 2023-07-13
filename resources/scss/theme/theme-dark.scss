@@ -89,7 +89,6 @@ body {
                 //        display: none;
                 //    }
                 //}
-
             }
         }
         &::after {
@@ -908,6 +907,22 @@ body {
                 &:not(.main) {
                     @media (max-width: $mobile) {
                         background: #0b1621;
+                    }
+                }
+                &[data-popup="#seeChart"] {
+                    &:hover {
+                        @media (max-width: $mobile) {
+                            background: #283955;
+                        }
+                        .table_column {
+                            background: #283955;
+                        }
+                        svg {
+                            stroke: #989898;
+                        }
+                    }
+                    svg {
+                        stroke: #606060;
                     }
                 }
                 &.main {
