@@ -2,20 +2,21 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Sub\Create;
+use App\Dto\SubData;
+use App\Dto\UserData;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\Subs\SubController;
-use App\Providers\RouteServiceProvider;
 use App\Models\User;
+use App\Providers\RouteServiceProvider;
+use App\Services\External\BtcComService;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Auth\Events\Registered;
-use Illuminate\Http\Request;
-use Illuminate\Validation\ValidationException;
 use Illuminate\Support\MessageBag;
-use Illuminate\Support\Facades\Config;
+use Illuminate\Validation\ValidationException;
 
 class RegisterController extends Controller
 {
@@ -59,72 +60,43 @@ class RegisterController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function register(Request $request)
-    {
+    public function register(
+        Request $request,
+        BtcComService $btcComService
+    ) {
         $this->validator($request->all())->validate();
-//        $user->sendEmailVerificationNotification();
-
-        $data = [
-            "puid" => 781195,
-            "group_name" => $request->input("name"),
-        ];
+        $userData = UserData::fromRequest($request->all());
 
         try {
-            $subController = new SubController();
-            $requestController = new RequestController();
-
-            $response = $requestController->proxy([
-                "puid" => "781195",
-                "page" => 1,
-                "page_size" => 52,
-            ], "worker/groups", "get");
-
-            foreach (json_decode($response->getContent())->data->list  as $index => $group) {
-                if ($index > 1) {
-                    if ($group->name === $request->input("name")) {
-                        if (app()->getLocale() === 'ru') {
-                            return back()->withErrors([
-                                'name' => 'Аккаунт с таким именем уже существует',
-                            ]);
-                        } else if (app()->getLocale() === 'en') {
-                            return back()->withErrors([
-                                'name' => 'An account with that name already exists.',
-                            ]);
-                        }
-                    }
-                }
+            if ($btcComService->btcHasUser(
+                userData: UserData::fromRequest($request->all())
+            )) {
+                return back()->withErrors([
+                    'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
+                ]);
             }
 
-            if (!$subController->check_users($data)) {
-                new Registered($user = $this->create($request->all()));
+            new Registered(
+                $user = $this->create(userData: $userData)
+            );
+            $this->guard()->login($user);
 
-                $this->guard()->login($user);
-                $data['user_id'] = $user->id;
+            $btcSubAccount = $btcComService->createSub(
+                userData: $userData
+            );
 
-                $subController->create(new Request($data));
-
-                if (app()->getLocale() === 'ru') {
-//                $message = 'Пользователь успешно создан! Подтвердите почту.';
-                    $message = 'Пользователь успешно создан!';
-                } else if (app()->getLocale() === 'en') {
-//                $message = 'The user has been successfully created! Confirm your email.';
-                    $message = 'The user has been successfully created!';
-                }
-            }
-        } catch (Exception $e) {
-            // Обработка ошибок
-            if (app()->getLocale() === 'ru') {
-                $message = 'Произошла ошибка при создании пользователя. Пожалуйста, попробуйте снова.';
-            } else if (app()->getLocale() === 'en') {
-                $message = 'An error occurred when creating a user. Please try again.';
-            }
+            Create::execute(
+                subData: SubData::fromRequest([
+                    'user_id' => $user->id,
+                    'group_id' => $btcSubAccount['gid'],
+                    'userName' => $user->name,
+                ])
+            );
+        } catch (\Exception $e) {
+            report($e);
         }
 
         return redirect("/profile/accounts");
-
-//        return back()->with([
-//            'message' => $message,
-//        ]);
     }
 
     public function isUserAuthorizedForVerification(Request $request, User $user)
@@ -176,12 +148,12 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(UserData $userData)
     {
         return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+            'name' => $userData->name,
+            'email' => $userData->email,
+            'password' => Hash::make($userData->password),
         ]);
     }
 

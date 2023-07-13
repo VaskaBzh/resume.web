@@ -14,7 +14,10 @@ use Illuminate\Queue\SerializesModels;
 
 class HourlyHashesUpdate implements ShouldQueue
 {
-    use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
+    use Dispatchable,
+        InteractsWithQueue,
+        Queueable,
+        SerializesModels;
 
     /**
      * Create a new job instance.
