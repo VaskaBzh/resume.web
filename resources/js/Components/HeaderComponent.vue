@@ -270,8 +270,8 @@ export default defineComponent({
         margin-left: 40px;
         @media (any-hover: hover) {
             &:hover {
-                border: 1px solid #1a345a;
-                background: #1a345a;
+                border: 1px solid #c6d8f5;
+                background: #c6d8f5;
             }
         }
         &_mobile {
