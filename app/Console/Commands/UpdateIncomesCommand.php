@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Helper;
 use App\Http\Controllers\Requests\RequestController;
 use App\Models\Income;
 use App\Models\Sub;
@@ -102,7 +103,11 @@ class UpdateIncomesCommand extends Command
                 }
             }
         }
-        Income::create($income);
+
+        Income::updateOrCreate([
+            'group_id' => $income['group_id'],
+            'created_at' => now()->subDay()
+        ], $income);
 //        $sub->incomes()->create($income);
 
         $sub->accruals = $sumAccruals;
@@ -177,11 +182,18 @@ class UpdateIncomesCommand extends Command
                                     $carry["shares_unit"] = $value;
                                 }
                             }
-                            return $carry;}, ['shares_unit' => ''])['shares_unit'];
+                            return $carry;
+                        },
+                            ['shares_unit' => ''])['shares_unit'];
                     }
 
-                    if ($share > 0) {
-                        $earn = ($share * pow(10, 12) * 86400 * ($response_stat_encode[0]->reward_block + $response_diff_encode->data->fpps_mining_earnings)) / ($response_stat_encode[0]->difficulty * pow(2,32));
+                    if ($share > 1) {
+                        $earn = Helper::calculateEarn(
+                            share: $share,
+                            rewardBlock: $response_stat_encode[0]->reward_block,
+                            fppsMminingEarnings: $response_diff_encode->data->fpps_mining_earnings,
+                            difficulty: $response_stat_encode[0]->difficulty
+                        );
                     } else {
                         $earn = 0;
                     }
@@ -203,6 +215,7 @@ class UpdateIncomesCommand extends Command
                         'message' => "",
                         'txid' => "",
                     ];
+
                     $income["payment"] = $income["amount"] * ($income["percent"] / 100);
 
                     $sumAccruals = $earn;
@@ -215,9 +228,7 @@ class UpdateIncomesCommand extends Command
                             $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
                         } else {
                             foreach ($wallets as $wallet) {
-                                if ($income["amount"] > 0) {
-                                    $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
-                                }
+                                $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
                             }
                         }
                     }
