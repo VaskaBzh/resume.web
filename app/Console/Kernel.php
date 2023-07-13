@@ -27,8 +27,8 @@ class Kernel extends ConsoleKernel
 //        $schedule->command('update:payments')->dailyAt('5:10');
         $schedule->job(new HourlyHashesUpdate())->hourly();
         $schedule->job(new UpdateWorkersHashesJob())->hourly();
-
-       $schedule->job(new AddWorkerJob())->everyMinute();;
+        $schedule->job(new AddWorkerJob())
+            ->everyMinute();
         // $schedule->command('inspire')->hourly();
     }
 
