@@ -182,7 +182,7 @@ class WalletController extends Controller
         $request->validate([
             'group_id' => 'required',
         ]);
-
+        dump(env('APP_URL'));
         return Sub::all()->where('group_id', $request->input('group_id'))->first()->wallets;
     }
 }
