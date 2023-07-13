@@ -200,7 +200,6 @@ export default {
         gap: 16px;
         &.no-info {
             display: flex;
-            gap: 28px;
         }
         @media (max-width: 1320.98px) {
             grid-template-columns: 1fr;

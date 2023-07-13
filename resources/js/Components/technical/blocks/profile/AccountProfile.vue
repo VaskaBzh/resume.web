@@ -8,11 +8,17 @@
             <span class="profile_name">{{ account.name }}</span>
             <span
                 class="profile_status active"
-                v-if="accountInfo.id === getActive"
+                v-if="
+                    Object.entries(allAccounts).length > 0 &&
+                    accountInfo.id === getActive
+                "
             >
                 {{ this.$t("accounts.toggle[0]") }}
             </span>
-            <span class="profile_status" v-else>
+            <span
+                class="profile_status"
+                v-else-if="Object.entries(allAccounts).length > 0"
+            >
                 {{ this.$t("accounts.toggle[1]") }}</span
             >
             <!--            <div class="profile__settings" @click="toggleOpen">-->
@@ -119,7 +125,7 @@ export default {
         // },
     },
     computed: {
-        ...mapGetters(["getActive", "btcInfo"]),
+        ...mapGetters(["getActive", "btcInfo", "allAccounts"]),
         // options() {
         //     return [
         //         {
