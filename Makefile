@@ -16,8 +16,6 @@ key:
 	$(ARTISAN) key:gen --ansi
 npm:
 	$(COMPOSE) $(APP) npm install
-migrate:
-	$(ARISAN) migrate
 dev:
 	$(COMPOSE) $(APP) npm run dev
 front:

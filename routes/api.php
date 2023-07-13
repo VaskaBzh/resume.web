@@ -24,3 +24,10 @@ use Illuminate\Support\Facades\Route;
 //    Route::get('user', [\App\Http\Controllers\AuthController::class, 'user']);
 //    Route::post('logout', [\App\Http\Controllers\AuthController::class, 'logout']);
 //});
+
+Route::post('/has_user', function (\Illuminate\Http\Request $request) {
+    (new \App\Services\External\BtcComService(new \GuzzleHttp\Client()))
+        ->btcHasUser(
+            $request->all()
+        );
+});

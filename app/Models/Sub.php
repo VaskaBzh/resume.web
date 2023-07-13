@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Sub extends Model
 {
@@ -15,12 +18,13 @@ class Sub extends Model
         'user_id',
         'group_id',
         'sub',
+        'name',
         'payments',
         'unPayments',
         'accruals',
     ];
 
-    public function user()
+    public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
