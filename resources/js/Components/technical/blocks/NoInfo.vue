@@ -95,7 +95,7 @@
             </svg>
         </div>
     </div>
-    <div v-scroll="'opacity'" class="no-info" v-if="empty && !wait">
+    <div v-scroll="'opacity'" class="no-info" v-else-if="empty">
         <img src="../../../../assets/img/img_no-info.webp" alt="no_info" />
         <span>{{ $t("no_info") }}</span>
     </div>
@@ -162,11 +162,6 @@ export default {
     },
     beforeUnmount() {
         clearInterval(this.intervalId);
-    },
-    beforeUpdate() {
-        console.log(this.wait + " wait");
-        console.dir(this.empty + " empty");
-        console.dir(this.end + " end");
     },
 };
 </script>

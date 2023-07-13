@@ -49,6 +49,11 @@ export default {
             return this.wait[this.getActive];
         },
         emptyTable() {
+            if (this.empty && this.empty[0]?.class === "main") {
+                return this.empty
+                    ? this.empty?.length === 1
+                    : this.wait[this.getActive]?.length === 1;
+            }
             return this.empty
                 ? this.empty?.length === 0
                 : this.wait[this.getActive]?.length === 0;
@@ -100,12 +105,9 @@ export default {
         if (this.wait[this.getActive]) this.waitTable = false;
     },
     watch: {
-        wait: {
-            deep: true,
-            handler(val) {
-                if (val[this.getActive])
-                    setTimeout(() => (this.waitTable = false), 300);
-            },
+        endTable(val) {
+            console.log(val);
+            if (val) setTimeout(() => (this.waitTable = false), 300);
         },
     },
 };
