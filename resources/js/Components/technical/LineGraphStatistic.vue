@@ -161,7 +161,10 @@ export default {
                         .ticks(6)
                         .tickFormat((d, i) => this.formatNumberWithUnit(d, i));
                 } else {
-                    yAxis = d3.axisLeft(y).ticks(12).tickFormat(this.formatSi);
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(12)
+                        .tickFormat((d) => this.formatSi(d));
                 }
                 xAxis = d3
                     .axisBottom(x)
@@ -174,7 +177,10 @@ export default {
                         .ticks(6)
                         .tickFormat((d, i) => this.formatNumberWithUnit(d, i));
                 } else {
-                    yAxis = d3.axisLeft(y).ticks(6).tickFormat(this.formatSi);
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(12)
+                        .tickFormat((d) => this.formatSi(d));
                 }
                 xAxis = d3
                     .axisBottom(x)
@@ -269,24 +275,26 @@ export default {
             }
         },
         adjustValue(num) {
-            if (num / 100000 > 1) {
+            if (num / 900000 > 1) {
                 return { val: (num / 1000000).toFixed(2), unit: "E" };
-            } else if (num / 100 >= 1) {
+            } else if (num / 900 >= 1) {
                 return { val: (num / 1000).toFixed(2), unit: "P" };
             } else {
                 return { val: Number(num).toFixed(2), unit: "T" };
             }
         },
-        formatSi() {
-            d3.format(".2s");
+        formatSi(num) {
+            let formatSi = d3.format(".2s");
+            return formatSi(num);
         },
         formatNumberWithUnit(num, i) {
+            let val = this.adjustValue(num, this.graphData.unit[i]);
             return (
-                Number(
-                    this.adjustValue(num, this.graphData.unit[i]).val
-                ).toFixed(1) +
+                (String(val.val).split(".")[1] === "00"
+                    ? Number(val.val).toFixed(0)
+                    : Number(val.val).toFixed(1)) +
                 " " +
-                this.adjustValue(num, this.graphData.unit[i]).unit +
+                val.unit +
                 "H"
             );
         },
@@ -601,8 +609,8 @@ export default {
     margin: 0 0 0 15px;
     width: calc(100% - 15px);
     @media (max-width: 767.98px) {
-        min-width: 200%;
-        width: 200%;
+        min-width: 725px;
+        width: 725px;
         margin: 0;
     }
 }
