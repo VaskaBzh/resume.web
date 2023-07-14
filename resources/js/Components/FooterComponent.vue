@@ -377,7 +377,6 @@ export default {
             }
             @media (max-width: 479.98px) {
                 flex-direction: column;
-                gap: 28px;
                 align-items: center;
                 & img {
                     max-width: 170px;

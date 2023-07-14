@@ -109,7 +109,7 @@ export default {
 .no-info {
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    gap: 8px;
     transition: all 1.5s ease 0s;
     &.no-bg {
         background: transparent !important;

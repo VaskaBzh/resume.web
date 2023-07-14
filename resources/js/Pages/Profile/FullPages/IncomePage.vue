@@ -238,7 +238,6 @@ export default {
                             data: "#fullpage",
                         };
                         Vue.set(obj.rows, i, rowModel);
-                        console.log(obj);
                     }
                 );
             }

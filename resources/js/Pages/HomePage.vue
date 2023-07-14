@@ -732,7 +732,7 @@ export default {
         }
         .subtitle-value {
             display: inline-flex;
-            gap: 18px;
+            gap: 6px;
             & span {
                 &:last-child {
                     color: #e9c058;
@@ -955,14 +955,18 @@ export default {
         position: relative;
         width: 30%;
         height: 100%;
+        margin: auto 5px;
         @media (max-width: 1320.98px) {
             width: 56%;
         }
         @media (max-width: 991.98px) {
-            width: 25%;
+            max-width: 25%;
+            min-width: 25%;
+            width: auto;
         }
         @media (max-width: 767.98px) {
-            width: 30%;
+            max-width: 30%;
+            min-width: 30%;
         }
         @media (max-width: 479.98px) {
             display: none !important;
@@ -971,10 +975,6 @@ export default {
             display: flex;
             align-items: center;
             justify-content: center;
-            margin: auto 0;
-
-            img {
-            }
         }
         &.asic {
             display: flex;

@@ -354,6 +354,9 @@ export default {
         &[data-popup="#seeChart"] {
             td {
                 transition: all 0.3s ease 0s;
+                &:nth-child(4) {
+                    border-radius: 0 8px 8px 0;
+                }
             }
             svg {
                 @media (min-width: 767.98px) {
@@ -362,7 +365,9 @@ export default {
             }
             &:hover,
             &:active {
-                background: #c6d8f5;
+                @media (max-width: 767.98px) {
+                    background: #c6d8f5;
+                }
                 @media (min-width: 767.98px) {
                     td {
                         background: #c6d8f5;
