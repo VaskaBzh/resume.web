@@ -464,15 +464,19 @@ export default {
                         else if (el.unit === "E") hash *= 1000000;
                         acc[0].push(Number(hash));
                         el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                        acc[2].push(el.unit ?? "T");
+                        acc[2].push("T");
 
                         return acc;
                     },
                     [[], [], []]
                 );
 
+            let randomize = (min, max) => {
+                return Math.random() * (max - min) + min;
+            };
+
             while (values.length < this.val) {
-                values.push(0);
+                values.push(randomize(1000000, 1220000));
                 amount.push("0");
                 unit.push("T");
             }
