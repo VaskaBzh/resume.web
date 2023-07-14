@@ -6,7 +6,7 @@ namespace App;
 
 class Helper
 {
-    public static function calculateEarn($share, $rewardBlock, $fppsMminingEarnings, $difficulty): int
+    public static function calculateEarn($share, $rewardBlock, $fppsMminingEarnings, $difficulty): float
     {
         return (
                 $share

@@ -109,7 +109,7 @@ class UpdateIncomesCommand extends Command
             ->orderByDesc('created_at')
             ->first();
 
-        $previousIncome?->created_at->diffInDays(now()) < 1
+        $previousIncome?->created_at->diffInHours(now()) < 12
             ? $previousIncome->update($income)
             : $sub->incomes()->create($income);
 
