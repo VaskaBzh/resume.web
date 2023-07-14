@@ -43,6 +43,7 @@ export default {
             tooltip: null,
             containerWidth: 0,
             containerHeight: 0,
+            isMobile: this.viewportWidth <= 767.98,
         };
     },
     watch: {
@@ -92,6 +93,203 @@ export default {
         },
     },
     methods: {
+        graphInit() {
+            this.containerHeight = this.height;
+
+            if (this.isMobile && this.tooltip) {
+                this.containerHeight = 380;
+            }
+
+            let formatTime = (date, i) => {
+                const hours = date.getHours().toString().padStart(2, "0");
+                if (this.graphData.dates.length > 24) {
+                    const day = date.getDate().toString().padStart(2, "0");
+                    return `${day}/${(date.getUTCMonth() + 1)
+                        .toString()
+                        .padStart(2, "0")}`;
+                } else {
+                    return `${hours.toString().padStart(2, "0")}:00`;
+                }
+            };
+
+            this.svg = d3
+                .select(this.$refs.chart)
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", this.containerHeight);
+
+            this.gradientInit();
+
+            let x = d3
+                .scaleLinear()
+                .domain(d3.extent(this.graphData.dates, (d) => new Date(d)))
+                .range([0, this.$refs.chart.offsetWidth]);
+
+            let y = null;
+            if (this.graphType === "statistic") {
+                y = d3
+                    .scaleLinear()
+                    .domain([
+                        0,
+                        d3.max(this.graphData.values) !== 0
+                            ? d3.max(this.graphData.values) +
+                              d3.max(this.graphData.values) * 0.1
+                            : 120,
+                    ])
+                    .range([this.containerHeight, 0]);
+            } else {
+                y = d3
+                    .scaleLinear()
+                    .domain([
+                        d3.min(this.graphData.values) -
+                            d3.min(this.graphData.values) * 0.6,
+                        d3.max(this.graphData.values) +
+                            d3.max(this.graphData.values) * 0.2,
+                    ])
+                    .range([this.containerHeight, 0]);
+            }
+
+            let xAxis = null;
+
+            let yAxis = null;
+
+            this.axis = d3.select(".y-axis-container");
+            if (this.isMobile) {
+                if (this.graphType === "statistic") {
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(6)
+                        .tickFormat((d, i) => this.formatNumberWithUnit(d, i));
+                } else {
+                    yAxis = d3.axisLeft(y).ticks(12).tickFormat(this.formatSi);
+                }
+                xAxis = d3
+                    .axisBottom(x)
+                    .ticks(12)
+                    .tickFormat((d) => formatTime(new Date(d)));
+            } else {
+                if (this.graphType === "statistic") {
+                    yAxis = d3
+                        .axisLeft(y)
+                        .ticks(6)
+                        .tickFormat((d, i) => this.formatNumberWithUnit(d, i));
+                } else {
+                    yAxis = d3.axisLeft(y).ticks(6).tickFormat(this.formatSi);
+                }
+                xAxis = d3
+                    .axisBottom(x)
+                    .ticks(this.viewportWidth <= 991.98 ? 8 : 12)
+                    .tickFormat((d) => formatTime(new Date(d)));
+            }
+
+            x = d3
+                .scaleLinear()
+                .domain(d3.extent(this.graphData.dates, (d, i) => i))
+                .range([0, this.containerWidth]);
+
+            const lineGenerator = d3
+                .line()
+                .x((d, i) => x(i))
+                .y((d) => y(d))
+                .curve(d3.curveBasis);
+
+            const areaGenerator = d3
+                .area()
+                .x((d, i) => x(i))
+                .y0(this.containerHeight)
+                .y1((d) => y(d))
+                .curve(d3.curveBasis);
+
+            const yBand = d3
+                .scaleBand()
+                .domain(yAxis.scale().ticks())
+                .range([this.containerHeight, 0]);
+
+            let width = 3;
+
+            this.graphAppends(
+                yBand,
+                areaGenerator,
+                width,
+                lineGenerator,
+                xAxis,
+                yAxis,
+                y
+            );
+
+            this.graphType === "statistic" ? (width = 1) : (width = 3);
+
+            this.tooltip = d3.select(this.$refs.tooltip);
+
+            if (this.isMobile) {
+                this.svg.on("touchstart", (event) => {
+                    const touchX =
+                        event.touches[0].clientX -
+                        this.svg.node().getBoundingClientRect().left;
+                    const position = this.getClosestPoint(touchX);
+                    this.updateDotAndTooltip(event, x, position);
+                });
+
+                this.svg.on("touchmove", (event) => {
+                    const touchX =
+                        event.touches[0].clientX -
+                        this.svg.node().getBoundingClientRect().left;
+                    const position = this.getClosestPoint(touchX);
+                    this.updateDotAndTooltip(event, x, position);
+                });
+
+                this.svg.on("touchend", () => {
+                    this.tooltip.style("opacity", 0);
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+                    this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+                });
+            } else {
+                this.svg.on("mousemove", (event) => {
+                    const mouseX = d3.pointer(event)[0];
+                    const position = this.getClosestPoint(mouseX);
+                    this.updateDotAndTooltip(event, x, position);
+                });
+
+                this.svg.on("mouseleave", () => {
+                    this.tooltip.style("opacity", 0);
+
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+
+                    this.tooltip.style("opacity", 0);
+
+                    this.svg.selectAll(".vertical-line").style("opacity", 0);
+                    this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+                });
+                this.tooltip.on("mousemove", () =>
+                    this.tooltip.style("opacity", 1)
+                );
+                this.tooltip.on("mouseleave", () =>
+                    this.tooltip.style("opacity", 0)
+                );
+            }
+        },
+        adjustValue(num) {
+            if (num / 100000 > 1) {
+                return { val: (num / 1000000).toFixed(2), unit: "E" };
+            } else if (num / 100 >= 1) {
+                return { val: (num / 1000).toFixed(2), unit: "P" };
+            } else {
+                return { val: Number(num).toFixed(2), unit: "T" };
+            }
+        },
+        formatSi() {
+            d3.format(".2s");
+        },
+        formatNumberWithUnit(num, i) {
+            return (
+                Number(
+                    this.adjustValue(num, this.graphData.unit[i]).val
+                ).toFixed(1) +
+                " " +
+                this.adjustValue(num, this.graphData.unit[i]).unit +
+                "H"
+            );
+        },
         dropGraph() {
             if (this.svg) {
                 this.svg.selectAll("*").remove();
@@ -100,14 +298,8 @@ export default {
                 this.svg._groups[0][0].remove();
             }
         },
-        tooltipInit(event, x, adjustValue, formatNumber) {
+        tooltipInit(event, x) {
             try {
-                let formatNumberWithUnit = (num, i) =>
-                    adjustValue(num, this.graphData.unit[i]).val +
-                    " " +
-                    adjustValue(num, this.graphData.unit[i]).unit +
-                    "H";
-
                 event.touches
                     ? (this.clientX = event.touches[0].clientX)
                     : (this.clientX = event.clientX);
@@ -130,6 +322,19 @@ export default {
                     .attr("y1", 0)
                     .attr("y2", this.containerHeight)
                     .style("opacity", 1);
+
+                const formatNumberWithUnit = (num, i) => {
+                    return (
+                        this.adjustValue(num, this.graphData.unit[i]).val +
+                        " " +
+                        this.adjustValue(num, this.graphData.unit[i]).unit +
+                        "H"
+                    );
+                };
+
+                const formatNumber = (num) => {
+                    return String(num).slice(0, 2) + " T";
+                };
 
                 let contentTooltip = null;
                 let workers = a
@@ -167,7 +372,7 @@ export default {
                                     "tooltip.difficulty"
                                 )}: <span class="value">${
                         this.graphType === "statistic"
-                            ? formatNumberWithUnit(d, u)
+                            ? this.formatNumberWithUnit(d, u)
                             : formatNumber(d)
                     }</span></span>
                                 <span class="time">${
@@ -196,38 +401,7 @@ export default {
                 console.error(error);
             }
         },
-
-        graphInit() {
-            let isMobile = this.viewportWidth <= 767.98;
-
-            this.containerHeight = this.height;
-
-            if (isMobile && this.tooltip) {
-                this.containerHeight = 380;
-            }
-            let adjustValue = (num) => {
-                if (num / 1000000 > 1) {
-                    return { val: (num / 1000000).toFixed(2), unit: "E" };
-                } else if (num / 1000 >= 1) {
-                    return { val: (num / 1000).toFixed(2), unit: "P" };
-                } else {
-                    return { val: Number(num).toFixed(2), unit: "T" };
-                }
-            };
-
-            let formatSi = d3.format(".2s");
-            let formatNumber = (num) =>
-                formatSi(num)
-                    .replace("G", "B")
-                    .replace("T", "T")
-                    .replace("P", "Q");
-
-            this.svg = d3
-                .select(this.$refs.chart)
-                .append("svg")
-                .attr("width", "100%")
-                .attr("height", this.containerHeight);
-
+        gradientInit() {
             const gradient = this.svg
                 .append("defs")
                 .append("linearGradient")
@@ -270,118 +444,16 @@ export default {
                         .attr("stop-color", "rgba(255, 255, 255, 0.26)");
                 }
             }
-
-            let x = d3
-                .scaleLinear()
-                .domain(d3.extent(this.graphData.dates, (d) => new Date(d)))
-                .range([0, this.$refs.chart.offsetWidth]);
-
-            let formatNumberWithUnit = (num, i) =>
-                formatNumber(adjustValue(num, this.graphData.unit[i]).val) +
-                " " +
-                adjustValue(num, this.graphData.unit[i]).unit +
-                "H";
-
-            let y = null;
-            if (this.graphType === "statistic") {
-                y = d3
-                    .scaleLinear()
-                    .domain([
-                        d3.min(this.graphData.values) <= 40
-                            ? 0
-                            : d3.min(this.graphData.values) - 20,
-                        d3.max(this.graphData.values) !== 0
-                            ? d3.max(this.graphData.values) + 20
-                            : 120,
-                    ])
-                    .range([this.containerHeight, 0]);
-            } else {
-                y = d3
-                    .scaleLinear()
-                    .domain([
-                        d3.min(this.graphData.values) - 4000000000000,
-                        d3.max(this.graphData.values) + 4000000000000,
-                    ])
-                    .range([this.containerHeight, 0]);
-            }
-
-            let formatTime = (date, i) => {
-                const hours = date.getHours().toString().padStart(2, "0");
-                // const minutes = date.getMinutes().toString().padStart(2, "0");
-                if (this.graphData.dates.length > 24) {
-                    const day = date.getDate().toString().padStart(2, "0");
-                    return `${day}/${(date.getUTCMonth() + 1)
-                        .toString()
-                        .padStart(2, "0")}`;
-                    // ${hours
-                    //     .toString()
-                    //     .padStart(2, "0")}:${minutes
-                    //     .toString()
-                    //     .padStart(2, "0")}`;
-                } else {
-                    return `${hours.toString().padStart(2, "0")}:00`;
-                    // ${minutes
-                    //     .toString()
-                    //     .padStart(2, "0")}`;
-                }
-            };
-
-            let xAxis = null;
-
-            let yAxis = null;
-
-            this.axis = d3.select(".y-axis-container");
-            if (isMobile) {
-                if (this.graphType === "statistic") {
-                    yAxis = d3
-                        .axisLeft(y)
-                        .ticks(6)
-                        .tickFormat((d, i) => formatNumberWithUnit(d, i));
-                } else {
-                    yAxis = d3.axisLeft(y).ticks(12).tickFormat(formatNumber);
-                }
-                xAxis = d3
-                    .axisBottom(x)
-                    .ticks(6)
-                    .tickFormat((d) => formatTime(new Date(d)));
-            } else {
-                if (this.graphType === "statistic") {
-                    yAxis = d3
-                        .axisLeft(y)
-                        .ticks(10)
-                        .tickFormat((d, i) => formatNumberWithUnit(d, i));
-                } else {
-                    yAxis = d3.axisLeft(y).ticks(10).tickFormat(formatNumber);
-                }
-                xAxis = d3
-                    .axisBottom(x)
-                    .ticks(this.viewportWidth <= 991.98 ? 8 : 12)
-                    .tickFormat((d) => formatTime(new Date(d)));
-            }
-
-            x = d3
-                .scaleLinear()
-                .domain(d3.extent(this.graphData.dates, (d, i) => i))
-                .range([0, this.containerWidth]);
-
-            const lineGenerator = d3
-                .line()
-                .x((d, i) => x(i))
-                .y((d) => y(d))
-                .curve(d3.curveBasis);
-
-            const areaGenerator = d3
-                .area()
-                .x((d, i) => x(i))
-                .y0(this.containerHeight)
-                .y1((d) => y(d))
-                .curve(d3.curveBasis);
-
-            const yBand = d3
-                .scaleBand()
-                .domain(yAxis.scale().ticks())
-                .range([this.containerHeight, 0]);
-
+        },
+        graphAppends(
+            yBand,
+            areaGenerator,
+            width,
+            lineGenerator,
+            xAxis,
+            yAxis,
+            y
+        ) {
             this.svg
                 .selectAll(".band")
                 .data(yBand.domain())
@@ -399,9 +471,6 @@ export default {
                 .attr("d", areaGenerator)
                 .attr("width", "100%")
                 .attr("fill", "url(#gradient)");
-
-            let width = 3;
-            this.graphType === "statistic" ? (width = 1) : (width = 3);
 
             this.svg
                 .append("line")
@@ -440,7 +509,7 @@ export default {
                 .select(".domain")
                 .remove();
 
-            if (!isMobile) {
+            if (!this.isMobile) {
                 this.svg
                     .append("g")
                     .attr("transform", `translate(-5, 0)`)
@@ -459,76 +528,6 @@ export default {
                     .call(yAxis)
                     .select(".domain")
                     .remove();
-            }
-
-            this.tooltip = d3.select(this.$refs.tooltip);
-
-            if (isMobile) {
-                this.svg.on("touchstart", (event) => {
-                    const touchX =
-                        event.touches[0].clientX -
-                        this.svg.node().getBoundingClientRect().left;
-                    const position = this.getClosestPoint(touchX);
-                    this.updateDotAndTooltip(
-                        event,
-                        x,
-                        adjustValue,
-                        formatNumber,
-                        formatSi,
-                        position
-                    );
-                });
-
-                this.svg.on("touchmove", (event) => {
-                    const touchX =
-                        event.touches[0].clientX -
-                        this.svg.node().getBoundingClientRect().left;
-                    const position = this.getClosestPoint(touchX);
-                    this.updateDotAndTooltip(
-                        event,
-                        x,
-                        adjustValue,
-                        formatNumber,
-                        formatSi,
-                        position
-                    );
-                });
-
-                this.svg.on("touchend", () => {
-                    this.tooltip.style("opacity", 0);
-                    this.svg.selectAll(".vertical-line").style("opacity", 0);
-                    this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
-                });
-            } else {
-                this.svg.on("mousemove", (event) => {
-                    const mouseX = d3.pointer(event)[0];
-                    const position = this.getClosestPoint(mouseX);
-                    this.updateDotAndTooltip(
-                        event,
-                        x,
-                        adjustValue,
-                        formatNumber,
-                        formatSi,
-                        position
-                    );
-                });
-
-                this.svg.on("mouseleave", () => {
-                    this.tooltip.style("opacity", 0);
-
-                    this.svg.selectAll(".vertical-line").style("opacity", 0);
-
-                    this.tooltip.style("opacity", 0);
-
-                    this.svg.selectAll(".vertical-line").style("opacity", 0);
-                    this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
-                });
-                this.tooltip.on("mousemove", () =>
-                    this.tooltip.style("opacity", 1)
-                );
-                this.tooltip.on("mouseleave", () =>
-                    this.tooltip.style("opacity", 0)
-                );
             }
         },
         getClosestPoint(touchX) {
@@ -553,14 +552,7 @@ export default {
 
             return position;
         },
-        updateDotAndTooltip(
-            event,
-            x,
-            adjustValue,
-            formatNumber,
-            formatSi,
-            position
-        ) {
+        updateDotAndTooltip(event, x, position) {
             // Обновляем позицию точки на линии графика
             this.svg
                 .selectAll(".dot")
@@ -568,14 +560,7 @@ export default {
                 .attr("cy", position.y)
                 .style("opacity", 1);
 
-            this.tooltipInit(
-                event,
-                x,
-                adjustValue,
-                formatNumber,
-                formatSi,
-                position.y
-            );
+            this.tooltipInit(event, x, position.y);
 
             this.tooltip
                 .style(
