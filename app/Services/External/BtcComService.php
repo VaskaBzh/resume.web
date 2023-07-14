@@ -5,6 +5,9 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Dto\UserData;
+use App\Dto\WorkerData;
+use App\Models\Sub;
+use App\Models\Worker;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Facades\Http;
 
@@ -64,6 +67,39 @@ class BtcComService
         ]), [
             'puid' => self::PU_ID,
             'group_name' => $userData->name
+        ])->throw();
+
+        return $response['data'];
+    }
+
+    /**
+     * Получить список воркеров
+     */
+    public function getWorkerList(): array
+    {
+        $response = $this->client->get(implode('/', [
+            'worker'
+        ]), [
+            'puid' => self::PU_ID,
+            'group_id' -1,
+            'page_size' => self::DEFAULT_PAGE_SIZE
+        ])->throw();
+
+        return $response['data'];
+    }
+
+    /**
+     * Обновить воркер
+     */
+    public function updateWorker(WorkerData $workerData): array
+    {
+        $response = $this->client->post(implode('/', [
+            'worker',
+            'update'
+        ]), [
+            'puid' => self::PU_ID,
+            'group_id' => $workerData->group_id,
+            'worker_id' => $workerData->worker_id
         ])->throw();
 
         return $response['data'];

@@ -37,7 +37,6 @@ Route::controller(HashController::class)->group(function () {
 });
 
 Route::middleware('auth')->group(function () {
-
     Route::group([
         'prefix' => '',
         'controller' => SubController::class
@@ -52,6 +51,16 @@ Route::middleware('auth')->group(function () {
     ],function () {
         Route::post('/worker_create', 'create')->name('worker_create');
         Route::get('/worker_process', 'visual')->name('worker_process');
+    });
+
+    Route::group([
+        'prefix' => '',
+        'controller' => WalletController::class
+    ],function () {
+        Route::post('/wallet_create', 'create')->name('wallet_create');
+        Route::post('/wallet_delete', 'delete')->name('wallet_delete');
+        Route::post('/wallet_change', 'change')->name('wallet_change');
+        Route::get('/wallet_process', 'visual')->name('wallet_process');
     });
 });
 
@@ -128,12 +137,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(IncomeController::class)->group(function () {
         Route::get('/income_process', 'visual')->name('income_process');
     });
-    Route::controller(WalletController::class)->group(function () {
-        Route::post('/wallet_create', 'create')->name('wallet_create');
-        Route::post('/wallet_delete', 'delete')->name('wallet_delete');
-        Route::post('/wallet_change', 'change')->name('wallet_change');
-        Route::get('/wallet_process', 'visual')->name('wallet_process');
-    });
+
     Route::controller(UserController::class)->group(function () {
         Route::get('/get_login', 'login')->name('get_login');
         Route::get('/get_email', 'email')->name('get_email');

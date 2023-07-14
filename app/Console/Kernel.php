@@ -2,6 +2,8 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SyncWorkerCommand;
+use App\Console\Commands\UpdateIncomesCommand;
 use App\Jobs\AddWorkerJob;
 use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
@@ -12,32 +14,27 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         // ...
-        Commands\UpdateIncomesCommand::class,
+        UpdateIncomesCommand::class,
+        SyncWorkerCommand::class,
     ];
     /**
      * Define the application's command schedule.
-     *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->command('update:incomes')->dailyAt('5:00');
+        $schedule->command('sync:worker')->everyMinute();
 
 //        $schedule->command('update:payments')->dailyAt('5:10');
         $schedule->job(new HourlyHashesUpdate())->hourly();
         $schedule->job(new UpdateWorkersHashesJob())->hourly();
-        $schedule->job(new AddWorkerJob())
-            ->everyMinute();
         // $schedule->command('inspire')->hourly();
     }
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 

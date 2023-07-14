@@ -1,18 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Wallet extends Model
 {
     use HasFactory;
 
-    // Указываем, что таблицей для этой модели является 'withdrawals'
     protected $table = 'wallets';
 
-    // Защищенные поля, которые могут быть массово присвоены
     protected $fillable = [
         'group_id',
         'minWithdrawal',
@@ -20,7 +21,7 @@ class Wallet extends Model
         'percent',
     ];
 
-    public function sub()
+    public function sub(): BelongsTo
     {
         return $this->belongsTo(Sub::class, 'group_id', 'group_id');
     }

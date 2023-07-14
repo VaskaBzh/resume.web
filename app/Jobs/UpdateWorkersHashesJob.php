@@ -67,7 +67,7 @@ class UpdateWorkersHashesJob implements ShouldQueue
                         }
                     }
 
-                    $worker->worker_hashrate()->create([
+                    $worker->worker_hashrates()->create([
                         'worker_id' => $worker->worker_id,
                         'hash' => $shares,
                         'unit' => $unit,

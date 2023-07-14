@@ -3,7 +3,6 @@
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Requests\RequestController;
-use App\Models\Income;
 use App\Models\Sub;
 use Exception;
 use Illuminate\Console\Command;

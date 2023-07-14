@@ -38,12 +38,14 @@ export default {
     async fetch_miner_history(data) {
         let response, error;
         const config = {
-            params: data,
             headers: header,
         };
 
         try {
-            response = await axios.get("/worker_process", config);
+            response = await axios.get(
+                "/worker_process?worker_id=" + data.worker_id,
+            config
+        );
         } catch (err) {
             error = err;
         }
