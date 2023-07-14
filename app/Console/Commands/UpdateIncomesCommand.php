@@ -50,13 +50,25 @@ class UpdateIncomesCommand extends Command
                 $income["payment"] = $balance;
 
                 if ($balance >= $min) {
+
+                    $token = config('token.secret_token');
+
+                    info('Secret token dump', [
+                        'token' => $token
+                    ]);
+
                     $unlock = Http::withBasicAuth('bituser', '111')
                         ->post('http://92.205.163.43:8332', [
                             'jsonrpc' => '1.0',
                             'id' => 'unlock',
                             'method' => 'walletpassphrase',
-                            'params' => [env('WALLET_PASSPHRASE'), 60],
+                            'params' => [$token, 60],
                         ]);
+
+                    info('Unlock info', [
+                        'Unlock' => $unlock
+                    ]);
+
                     if ($unlock->successful()) {
                         $limitedBalance = number_format($balance, 8, '.', '');
                         $response = Http::withBasicAuth('bituser', '111')
