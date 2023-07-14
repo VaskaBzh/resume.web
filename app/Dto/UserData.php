@@ -1,13 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Dto;
+
+use Illuminate\Support\Arr;
 
 readonly class UserData
 {
     public function __construct(
         public string $name,
-        public string $email,
-        public string $password
+        public ?string $email,
+        public ?string $password
     )
     {
     }
@@ -16,8 +20,8 @@ readonly class UserData
     {
         return new self(
             name: $requestData['name'],
-            email: $requestData['email'],
-            password: $requestData['password'],
+            email: Arr::get($requestData, 'email'),
+            password: Arr::get($requestData, 'password'),
         );
     }
 }

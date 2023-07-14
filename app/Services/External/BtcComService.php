@@ -16,7 +16,7 @@ class BtcComService
 
     public function __construct()
     {
-        $this->client = Http::baseUrl(config('api.btc'))
+        $this->client = Http::baseUrl(config('api.btc.uri'))
             ->withHeaders([
                 'Authorization' => config('api.btc.token'),
             ]);
@@ -25,7 +25,7 @@ class BtcComService
     /**
      * Проверка на существование пользователя на стороне btc.com
      * Убираем первые две группы ("Все группы", "Разгруппировано")
-     * Проверяем на наличие имени в группах
+     * В группах проверяем на наличие пользователя по имени
      */
     public function btcHasUser(UserData $userData): bool
     {

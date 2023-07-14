@@ -14,7 +14,7 @@ class Create
         Sub::create([
             'user_id' => $subData->userId,
             'group_id' => $subData->groupId,
-            'sub' => $subData->userName,
+            'sub' => $subData->groupName,
             'payments' => $subData->payments,
             'unPayments' => $subData->unPayments,
             'accruals' => $subData->accruals,

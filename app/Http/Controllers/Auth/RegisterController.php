@@ -6,12 +6,12 @@ use App\Actions\Sub\Create;
 use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Subs\SubController;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
 use App\Services\External\BtcComService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -42,7 +42,7 @@ class RegisterController extends Controller
     /**
      * Get a validator for an incoming registration request.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \Illuminate\Contracts\Validation\Validator
      */
     protected function validator(array $data)
@@ -57,20 +57,21 @@ class RegisterController extends Controller
     /**
      * Handle a registration request for the application.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function register(
-        Request $request,
+        Request       $request,
         BtcComService $btcComService
-    ) {
+    ): RedirectResponse
+    {
         $this->validator($request->all())->validate();
         $userData = UserData::fromRequest($request->all());
 
         try {
-            if ($btcComService->btcHasUser(
+            $isExist = $btcComService->btcHasUser(
                 userData: UserData::fromRequest($request->all())
-            )) {
+            );
+
+            if ($isExist) {
                 return back()->withErrors([
                     'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
                 ]);
@@ -101,11 +102,11 @@ class RegisterController extends Controller
 
     public function isUserAuthorizedForVerification(Request $request, User $user)
     {
-        if (!hash_equals((string) $user->getKey(), (string) $request->route('id'))) {
+        if (!hash_equals((string)$user->getKey(), (string)$request->route('id'))) {
             return false;
         }
 
-        if (!hash_equals(sha1($user->getEmailForVerification()), (string) $request->route('hash'))) {
+        if (!hash_equals(sha1($user->getEmailForVerification()), (string)$request->route('hash'))) {
             return false;
         }
 
@@ -145,7 +146,7 @@ class RegisterController extends Controller
     /**
      * Create a new user instance after a valid registration.
      *
-     * @param  array  $data
+     * @param array $data
      * @return \App\Models\User
      */
     protected function create(UserData $userData)
