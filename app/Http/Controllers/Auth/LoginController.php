@@ -61,7 +61,7 @@ class LoginController extends Controller
         }
 
         $user = auth()->getProvider()->retrieveByCredentials($credentials);
-        dd($request->has('remember'));
+
         auth()->login($user, $request->get('remember'));
 
         return $this->authenticated($request, $user);
