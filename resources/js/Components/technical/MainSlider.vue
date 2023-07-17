@@ -2,11 +2,13 @@
     <div class="slider">
         <wrap-table
             ref="list"
-            :type="this.type"
-            :table="this.table"
+            :type="type"
+            :table="table"
             :first="firstRow"
-            :wait="this.wait"
+            :wait="wait"
+            :empty="empty"
             :rowsVal="rows"
+            :errors="errors"
         ></wrap-table>
         <div class="slider__nav" v-if="this.table.rows">
             <span class="slider__nav_info" v-if="this.pages === 0">
@@ -159,10 +161,12 @@ export default {
         table: Object,
         type: String,
         wait: Object,
+        empty: Object,
         rowsNum: {
             type: Number,
             default: 10,
         },
+        errors: Object,
     },
     watch: {
         rowsNumber(newValue, oldValue) {

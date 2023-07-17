@@ -24,8 +24,23 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span>{{ column[1] }}</span>
+            <span v-hash>{{ column[1] }}</span>
         </td>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            v-if="!!this.columns.graphId"
+        >
+            <path
+                d="M10 6L16 12L10 18"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+            />
+        </svg>
     </tr>
 </template>
 
@@ -82,7 +97,10 @@ export default {
                         col[0] !== "message" &&
                         col[0] !== "txid"
                 );
-                if (this.viewportWidth <= 767.98 && this.updatedColumns.txid) {
+                if (
+                    this.viewportWidth <= 767.98 &&
+                    !!this.updatedColumns.txid
+                ) {
                     obj = obj.filter(
                         (col) =>
                             col[0] !== "wallet" &&
@@ -137,6 +155,7 @@ export default {
         }
     }
     &__row {
+        border-radius: 8px;
         @media (max-width: 767.98px) {
             display: flex;
             flex-direction: column;
@@ -173,7 +192,7 @@ export default {
             }
         }
         &.active,
-        &.inactie,
+        &.inactive,
         &.unstable {
             .table_column:first-child span:last-child::before {
                 display: inline-flex;

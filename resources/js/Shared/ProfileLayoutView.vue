@@ -3,14 +3,16 @@
         <div class="app_back_elem-blur"></div>
         <header-component :errors="errors" :is_auth="auth_user" />
         <div class="page">
-            <div class="hint">
-                <div class="hint_item" v-hide="this.getMessage !== ''">
-                    {{ this.getMessage }}
+            <teleport to="body">
+                <div class="hint">
+                    <div class="hint_item" v-hide="this.getMessage !== ''">
+                        {{ this.getMessage }}
+                    </div>
+                    <div class="hint_item" v-hide="this.message !== null">
+                        {{ this.message }}
+                    </div>
                 </div>
-                <div class="hint_item" v-hide="this.message !== null">
-                    {{ this.message }}
-                </div>
-            </div>
+            </teleport>
             <div class="observer_block"></div>
             <div class="account">
                 <div class="account__container">

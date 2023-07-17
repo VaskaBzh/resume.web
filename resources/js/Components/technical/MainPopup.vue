@@ -13,16 +13,12 @@
                 }"
             >
                 <div
-                    v-for="(error, i) in errors"
-                    :key="i"
                     class="form_wrapper-message"
+                    v-if="errors && Object.entries(errors)[0]"
                 >
                     <div
-                        v-if="
-                            error &&
-                            error !==
-                                'Ваша электронная почта еще не подтверждена. Подтвердите адрес.'
-                        "
+                        v-for="(error, i) in errors"
+                        :key="i"
                         class="form_message form_message-error"
                     >
                         <svg
@@ -57,7 +53,7 @@
                     <!--                            {{ error.replace(" Подтвердите адрес.", "") }}-->
                     <!--                            <span class="main__link" @click="reverify">-->
                     <!--                                {{-->
-                    <!--                                    $t("header.popup.errors.link_email_confirm")-->
+                    <!--           `                         $t("header.popup.errors.link_email_confirm")-->
                     <!--                                }}</span-->
                     <!--                            >-->
                     <!--                        </div>-->

@@ -49,8 +49,8 @@ class Sub extends Model
         return $this->hasMany(Wallet::class, 'group_id', 'group_id');
     }
 
-    public function clients()
-    {
-        return $this->hasMany(Client::class);
-    }
+//    public function clients()
+//    {
+//        return $this->hasMany(Client::class);
+//    }
 }

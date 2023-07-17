@@ -71,9 +71,11 @@
         <main-slider
             class="wrap-no-overflow"
             :wait="allIncomeHistory"
+            :empty="incomeInfo.rows"
             :table="incomeInfo"
             type="Платежи"
             rowsNum="25"
+            :errors="errors"
         ></main-slider>
     </div>
 </template>
@@ -216,7 +218,7 @@ export default {
                         let rowModel = {
                             date: date.join("").split("-").reverse().join("."),
                             payDate: datePay,
-                            hash: `${row["hash"]} ${row["unit"]}H/s`,
+                            hash: `${row["hash"]} ${row["unit"]}h/s`,
                             earn: `${row["amount"]}BTC`,
                             payment: `${row["payment"]}BTC`,
                             wallet:

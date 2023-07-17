@@ -1,9 +1,27 @@
 <template>
-    <blue-button class="feedback" data-popup="#feedback">
-        <a class="all-link">{{ $t("footer.feedback.button") }}</a>
+    <blue-button
+        class="feedback"
+        :data-popup="{
+            '#feedback': !this.$page.url.startsWith('/profile'),
+        }"
+    >
+        <a
+            class="all-link"
+            :href="
+                this.$page.url.startsWith('/profile')
+                    ? 'https://t.me/ailasmon'
+                    : '#'
+            "
+            >{{ $t("footer.feedback.button") }}</a
+        >
     </blue-button>
     <teleport to="body">
-        <main-popup id="feedback" :wait="this.wait" :errors="errors">
+        <main-popup
+            id="feedback"
+            v-show="!this.$page.url.startsWith('/profile')"
+            :wait="this.wait"
+            :errors="errors"
+        >
             <form
                 @submit.prevent="this.sendFeedback"
                 class="form form-popup popup__form"
@@ -72,7 +90,7 @@
                     </a>
                     <div class="footer__social socials">
                         <a
-                            href="#"
+                            href="https://t.me/ailasmon"
                             class="footer__social_link socials_link teleg"
                         >
                             <svg
@@ -359,7 +377,6 @@ export default {
             }
             @media (max-width: 479.98px) {
                 flex-direction: column;
-                gap: 28px;
                 align-items: center;
                 & img {
                     max-width: 170px;

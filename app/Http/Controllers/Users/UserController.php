@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Users;
 
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -64,27 +65,26 @@ class UserController extends Controller
 
     public function change(Request $request)
     {
-        $request->validate([
-            'item' => 'required',
-            'type' => 'required',
-        ]);
-
         $user = auth()->user();
+
+        $message = "";
 
         if ($request->input("type") === 'логин') {
             if (app()->getLocale() === 'ru') {
                 $messages = [
                     'item.min' => 'Минимум 3 символа в логине.',
                     'item.unique' => 'Этот логин уже зарегистрирован.',
+                    'item.required' => 'Необходимо ввести логин.',
                 ];
             } else if (app()->getLocale() === 'en') {
                 $messages = [
                     'item.min' => 'Minimum of 3 characters in login.',
                     'item.unique' => 'This login is already registered.',
+                    'item.required' => 'A login must be entered.',
                 ];
             }
             $request->validate([
-                'item' => 'unique:users,name|min:3',
+                'item' => 'unique:users,name|min:3|required',
             ], $messages);
 
             $user->name = $request->input("item");
@@ -101,15 +101,17 @@ class UserController extends Controller
                 $messages = [
                     'item.email' => 'Новый адрес электронной почты должен быть действительным.',
                     'item.unique' => 'Этот адрес электронной почты уже зарегистрирован.',
+                    'item.required' => 'Необходимо ввести email.',
                 ];
             } else if (app()->getLocale() === 'en') {
                 $messages = [
                     'item.email' => 'The new email address must be valid.',
                     'item.unique' => 'This email address is already registered.',
+                    'item.required' => 'A email must be entered.',
                 ];
             }
             $request->validate([
-                'item' => 'unique:users,email|email',
+                'item' => 'unique:users,email|email|required',
             ], $messages);
 
             $user->email = $request->input("item");
@@ -126,16 +128,18 @@ class UserController extends Controller
                 $messages = [
                     'item.regex' => 'Ваш номер телефона должен быть действительным.',
                     'item.unique' => 'Этот номер телефона уже зарегистрирован.',
+                    'item.required' => 'Необходимо ввести номер телефона.',
                 ];
             } else if (app()->getLocale() === 'en') {
                 $messages = [
                     'item.regex' => 'Your phone number must be valid.',
                     'item.unique' => 'This phone number is already registered.',
+                    'item.required' => 'A phone must be entered.',
                 ];
             }
 
             $request->validate([
-                'item' => 'unique:users,phone|regex:/^\+?(\d[\d\-. ]+)?(\([\d\-. ]+\))?[\d\-. ]+\d$/',
+                'item' => 'unique:users,phone|regex:/^\+?(\d[\d\-. ]+)?(\([\d\-. ]+\))?[\d\-. ]+\d$/|required',
             ], $messages);
 
             $user->phone = $request->input("item");
@@ -182,6 +186,25 @@ class UserController extends Controller
                 }
             }
         }
+
+        if ($request->input("type") === 'пароль') {
+            $resetController = new ResetPasswordController();
+
+            $session = $resetController->changePassword($request)->getSession();
+            if ($session->get("errors")) {
+                $errors = $session->all();
+                if ($errors[0]) {
+                    return back()->withErrors($errors);
+                }
+            } else {
+                if (app()->getLocale() === 'ru') {
+                    $message = 'Пароль успешно изменен.';
+                } else if (app()->getLocale() === 'en') {
+                    $message = 'The password has been successfully changed.';
+                }
+            }
+        }
+
 
         $user->save();
 

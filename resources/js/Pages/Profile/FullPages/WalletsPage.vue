@@ -48,7 +48,6 @@
                     v-scroll="'top'"
                     :wallet="wallet"
                     @getWallet="changeWallet(wallet)"
-                    @getMessage="setMessage"
                 ></wallet-block>
             </div>
         </div>
@@ -58,14 +57,14 @@
             id="changeWallet"
             :wait="wait"
             :closed="closed"
-            :errors="err"
+            :errors="errors"
         >
             <form @submit.prevent="change" class="form form-popup popup__form">
                 <main-title tag="h3">
                     {{ $t("wallets.popups.change.title") }}
                 </main-title>
                 <input
-                    v-model="formChg.wallet"
+                    v-model="form.wallet"
                     autofocus
                     disabled
                     type="text"
@@ -75,7 +74,7 @@
                     "
                 />
                 <input
-                    v-model="formChg.name"
+                    v-model="form.name"
                     autofocus
                     type="text"
                     class="input popup__input"
@@ -88,13 +87,12 @@
                         }}</label>
                         <input
                             name="percent"
-                            @input="handleInputChange"
-                            v-model="formChg.percent"
+                            v-model="form.percent"
                             id="percent"
                             autofocus
                             type="text"
                             class="input popup__input"
-                            placeholder="100%"
+                            placeholder="100"
                         />
                     </div>
                     <div class="form_column">
@@ -103,8 +101,7 @@
                         }}</label>
                         <input
                             name="minWithdrawal"
-                            @input="handleInputChange"
-                            v-model="formChg.minWithdrawal"
+                            v-model="form.minWithdrawal"
                             id="min"
                             autofocus
                             type="text"
@@ -137,9 +134,14 @@
                 </blue-button>
             </form>
         </main-popup>
-        <main-popup id="addWallet" :wait="wait" :closed="closed" :errors="err">
+        <main-popup
+            id="addWallet"
+            :wait="wait"
+            :closed="closed"
+            :errors="errors"
+        >
             <form
-                @submit.prevent="addWallet"
+                @submit.prevent="add(wallets)"
                 class="form form-popup popup__form"
             >
                 <main-title tag="h3">{{
@@ -167,13 +169,12 @@
                         }}</label>
                         <input
                             name="percent"
-                            @input="handleInputChange"
                             v-model="form.percent"
                             id="percentChg"
                             autofocus
                             type="text"
                             class="input popup__input"
-                            placeholder="100%"
+                            placeholder="100"
                         />
                     </div>
                     <div class="form_column">
@@ -182,7 +183,6 @@
                         }}</label>
                         <input
                             name="minWithdrawal"
-                            @input="handleInputChange"
                             v-model="form.minWithdrawal"
                             id="minChg"
                             autofocus
@@ -219,7 +219,6 @@
     </teleport>
 </template>
 <script>
-import axios from "axios";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
@@ -229,6 +228,9 @@ import { mapGetters } from "vuex";
 import Vue from "lodash";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
+import { useForm } from "@inertiajs/vue3";
+import { ref } from "vue";
+import store from "../../../store";
 
 export default {
     components: {
@@ -254,86 +256,39 @@ export default {
                 this.getWallet[this.getActive] &&
                 Object.values(this.getWallet[this.getActive]).length > 0
             ) {
-                if (this.isChecked) {
-                    Object.values(this.getWallet[this.getActive]).forEach(
-                        (wal, i) => {
-                            let val = 0;
-                            if (wal) {
-                                if (wal.payment) {
-                                    val = wal.payment;
-                                }
-                                if (val > 0) {
-                                    let name = wal.wallet;
-                                    if (wal.name) {
-                                        name = wal.name;
-                                    }
-                                    let fullName = "";
-                                    if (name.length > 11) {
-                                        fullName = name;
-                                        name =
-                                            name.substr(0, 4) +
-                                            "..." +
-                                            name.substr(
-                                                name.length - 4,
-                                                name.length
-                                            );
-                                    }
-                                    let walletModel = {
-                                        img: "bitcoin_img.webp",
-                                        name: name,
-                                        wallet: wal.wallet,
-                                        fullName: fullName,
-                                        shortName: "BTC",
-                                        value: val,
-                                        dollarValue: 0,
-                                        rubleValue: 0,
-                                        percent: wal.percent,
-                                    };
+                Object.values(this.getWallet[this.getActive]).forEach(
+                    (wal, i) => {
+                        if (wal) {
+                            let name = wal.wallet;
+                            if (wal.name) {
+                                name = wal.name;
+                            }
+                            let walletModel = {
+                                img: "bitcoin_img.webp",
+                                fullName: name,
+                                name:
+                                    name.substr(0, 4) +
+                                    "..." +
+                                    name.substr(name.length - 4, name.length),
+                                wallet: wal.wallet,
+                                shortName: "BTC",
+                                value: Number(wal.payment).toFixed(8),
+                                dollarValue: 0,
+                                rubleValue: 0,
+                                percent: wal.percent,
+                                minWithdrawal: wal.minWithdrawal,
+                            };
+
+                            if (this.isChecked) {
+                                if (wal.payment && wal.payment !== 0) {
                                     Vue.set(arr, i, walletModel);
                                 }
-                            }
-                        }
-                    );
-                } else {
-                    Object.values(this.getWallet[this.getActive]).forEach(
-                        (wal, i) => {
-                            let val = 0;
-                            if (wal) {
-                                if (wal.payment) {
-                                    val = wal.payment;
-                                }
-                                let name = wal.wallet;
-                                if (wal.name) {
-                                    name = wal.name;
-                                }
-                                let fullName = "";
-                                if (name.length > 11) {
-                                    fullName = name;
-                                    name =
-                                        name.substr(0, 4) +
-                                        "..." +
-                                        name.substr(
-                                            name.length - 4,
-                                            name.length
-                                        );
-                                }
-                                let walletModel = {
-                                    img: "bitcoin_img.webp",
-                                    name: name,
-                                    wallet: wal.wallet,
-                                    fullName: fullName,
-                                    shortName: "BTC",
-                                    value: val,
-                                    dollarValue: 0,
-                                    rubleValue: 0,
-                                    percent: wal.percent,
-                                    minWithdrawal: wal.minWithdrawal,
-                                };
+                            } else {
                                 Vue.set(arr, i, walletModel);
                             }
                         }
-                    );
-                }
+                    }
+                );
             }
             return arr;
         },
@@ -350,151 +305,114 @@ export default {
     },
     data() {
         return {
-            miningCash: 0,
             isChecked: false,
             viewportWidth: 0,
-            err: {},
             mess: "",
-            wait: false,
             waitWallet: true,
-            form: {
-                name: "",
-                wallet: "",
-                percent: 100,
-                minWithdrawal: 0.005,
-            },
-            formChg: {
-                name: "",
-                percent: 100,
-                minWithdrawal: 0.005,
-            },
-            walletObj: {},
-            closed: false,
         };
     },
-    methods: {
-        setMessage(message) {
-            this.mess = message;
-            setTimeout(() => (this.mess = ""), 3000);
-        },
-        changeWallet(wallet) {
-            this.walletObj = wallet;
-            this.formChg.percent = wallet.percent;
-            this.formChg.minWithdrawal = wallet.minWithdrawal;
-            this.formChg.wallet = wallet.wallet;
-            wallet.fullName === ""
-                ? (this.formChg.name = wallet.name)
-                : (this.formChg.name = wallet.fullName);
-        },
-        async change() {
-            this.wait = true;
-            let wallet = this.walletObj;
-            wallet.group_id = this.getActive;
-            wallet.percent = this.formChg.percent;
-            wallet.minWithdrawal = this.formChg.minWithdrawal;
-            wallet.name = this.formChg.name;
-            await axios
-                .post("/wallet_change", wallet)
-                .then((res) => {
-                    this.mess = res.data.message;
-                    this.$store.dispatch("getWallets", wallet);
-                    this.wait = false;
-                    this.formChg.percent = "";
-                    this.formChg.minWithdrawal = "";
-                    this.formChg.name = "";
+    setup() {
+        let wait = ref(false);
+        let mess = ref("");
+        let closed = ref(false);
+        let form = ref(
+            useForm({
+                name: "",
+                wallet: "",
+                percent: "",
+                minWithdrawal: "",
+                group_id: "",
+            })
+        );
+        const clearObj = () => {
+            Object.values(form.value).forEach((el) => (el = ""));
+        };
+
+        const change = async () => {
+            wait.value = true;
+            await form.value.post("/wallet_change", {
+                onSuccess(res) {
+                    mess.value = res.data.message;
+                    store.dispatch("getMessage", mess.value);
+                    store.dispatch("getWallets", form.value);
+                    store.dispatch("getMessage", mess.value);
+                    clearObj();
                     setTimeout(() => {
-                        this.closed = true;
+                        closed.value = true;
                     }, 300);
                     setTimeout(() => {
-                        this.closed = false;
+                        closed.value = false;
                     }, 600);
-                })
-                .catch((err) => {
-                    this.wait = false;
-                    this.err = err.response.data.message;
-                });
-            setTimeout(() => (this.mess = ""), 3000);
-        },
-        removeLetters(input) {
-            const letterRegExp = /[a-zA-Z]/g;
-            let fin = input.replace(letterRegExp, "");
-            if (fin[0] === "0" && fin[1] !== "." && fin[1] !== undefined) {
-                fin = "0.";
-            }
-            return fin;
-        },
-        handleInputChange(event) {
-            const { name, value } = event.target;
-            this.form[name] = this.removeLetters(value);
-        },
-        async addWallet() {
-            if (this.wallets && this.getActive !== -1) {
-                this.wait = true;
+                },
+            });
+            wait.value = false;
+        };
+
+        const add = async (wallets) => {
+            if (
+                store.getters.getActive !== -1 &&
+                store.getters.getWallet[store.getters.getActive]
+            ) {
+                wait.value = true;
                 let per = 0;
-                this.wallets.forEach((wal) => {
+                wallets.forEach((wal) => {
                     per = per + wal["percent"];
                 });
-                let obj = this.form;
-                per = per + Number(obj.percent);
-                obj.group_id = this.getActive;
-                await axios
-                    .post("/wallet_create", this.form)
-                    .then((res) => {
-                        this.wait = false;
-                        let group = this.allAccounts[this.getActive];
-                        group.group_id = this.allAccounts[this.getActive].id;
-                        this.$store.dispatch("getWallets", group);
+                per = per + Number(form.value.percent);
+                form.value.group_id = store.getters.getActive;
+                await form.value.post("/wallet_create", {
+                    onSuccess() {
+                        let group =
+                            store.getters.allAccounts[store.getters.getActive];
+                        group.group_id =
+                            store.getters.allAccounts[
+                                store.getters.getActive
+                            ].id;
+                        store.dispatch("getWallets", group);
+                        clearObj();
                         setTimeout(() => {
-                            this.closed = true;
+                            closed.value = true;
                         }, 300);
                         setTimeout(() => {
-                            this.closed = false;
+                            closed.value = false;
                         }, 600);
-                    })
-                    .catch((err) => {
-                        this.wait = false;
-                        if (err.response) {
-                            this.err = {};
-                            this.err = err.response.data.errors;
-                        }
-                    });
+                    },
+                });
+                wait.value = false;
             } else {
-                this.err = {};
-                this.err = { 0: "Попробуйте через 5 секунд" };
+                store.dispatch("getMessage", "Подождите 5 секунд.");
             }
+        };
+
+        return { form, wait, closed, add, change, clearObj };
+    },
+    watch: {
+        getActive(newVal) {
+            this.form.group_id = newVal;
+        },
+        "form.percent"(newVal) {
+            this.form.percent = String(newVal).replace(
+                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
+                ""
+            );
+        },
+        "form.minWithdrawal"(newVal) {
+            this.form.minWithdrawal = newVal.replace(
+                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
+                ""
+            );
+        },
+    },
+    methods: {
+        changeWallet(wallet) {
+            this.form.percent = wallet.percent;
+            this.form.minWithdrawal = wallet.minWithdrawal;
+            this.form.wallet = wallet.wallet;
+            this.form.name = wallet.fullName;
+            console.log(wallet);
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
-            // setTimeout(() => {
-            //     if (this.$refs.list) {
-            //         if (this.viewportWidth > 768) {
-            //             setTimeout(() => {
-            //                 this.$refs.wallets.style.height =
-            //                     48 + 46 + this.$refs.list.offsetHeight + "px";
-            //             }, 1);
-            //         } else {
-            //             setTimeout(() => {
-            //                 this.$refs.wallets.style.height =
-            //                     40 + 132 + this.$refs.list.offsetHeight + "px";
-            //             }, 1);
-            //         }
-            //     } else {
-            //         if (this.viewportWidth > 768) {
-            //             setTimeout(() => {
-            //                 this.$refs.wallets.style.height =
-            //                     48 + 46 + this.$refs.noInfo.offsetHeight + "px";
-            //             }, 1);
-            //         } else {
-            //             setTimeout(() => {
-            //                 this.$refs.wallets.style.height =
-            //                     40 +
-            //                     132 +
-            //                     this.$refs.noInfo.offsetHeight +
-            //                     "px";
-            //             }, 1);
-            //         }
-            //     }
-            // }, 100);
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;

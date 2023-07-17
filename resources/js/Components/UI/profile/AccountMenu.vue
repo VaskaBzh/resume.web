@@ -89,7 +89,6 @@
     </div>
     <teleport to="body">
         <main-popup id="addAcc" :wait="wait" :closed="closed" :errors="errors">
-
             <form @submit.prevent="addAcc" class="form form-popup popup__form">
                 <main-title tag="h3">{{
                     $t("accounts.popups.add.title")
@@ -280,8 +279,11 @@ export default {
 <style scoped lang="scss">
 .button {
     position: relative;
-    width: 100%;
     min-width: 160px;
+    width: fit-content;
+    @media (min-width: 991.98px) {
+        margin-left: 40px;
+    }
     @media (max-width: 991.98px) {
         min-width: 100%;
         display: flex;

@@ -19,6 +19,7 @@ class Wallet extends Model
         'name',
         'group_id',
         'minWithdrawal',
+        'name',
         'wallet',
         'percent',
     ];

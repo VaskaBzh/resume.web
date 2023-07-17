@@ -61,10 +61,11 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
-                        0
+                    Object.values(this.allHash[this.getActive]).length === 0
                 "
             >
+                <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
+                <!--                0-->
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>
@@ -118,7 +119,7 @@
                             <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[0]") }}
                                 <span class="statistic_info text-blue"
-                                    ><b
+                                    ><b v-hash
                                         >{{
                                             Number(this.workers.hash).toFixed(2)
                                         }}
@@ -129,7 +130,7 @@
                             <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[1]") }}
                                 <span class="statistic_info text-blue"
-                                    ><b
+                                    ><b v-hash
                                         >{{
                                             Number(this.workers.hash24).toFixed(
                                                 2
@@ -365,9 +366,9 @@ export default {
                     Object.values(this.allIncomeHistory[this.getActive])[1]
                 ) {
                     return Number(
-                        Object.values(this.allIncomeHistory[this.getActive])[1][
-                            "amount"
-                        ]
+                        Object.values(
+                            this.allIncomeHistory[this.getActive]
+                        ).reverse()[1]["amount"]
                     );
                 }
             }
@@ -464,12 +465,16 @@ export default {
                         else if (el.unit === "E") hash *= 1000000;
                         acc[0].push(Number(hash));
                         el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                        acc[2].push(el.unit ?? "T");
+                        acc[2].push("T");
 
                         return acc;
                     },
                     [[], [], []]
                 );
+
+            let randomize = (min, max) => {
+                return Math.random() * (max - min) + min;
+            };
 
             while (values.length < this.val) {
                 values.push(0);
