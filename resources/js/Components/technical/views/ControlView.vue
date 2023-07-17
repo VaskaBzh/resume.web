@@ -36,7 +36,10 @@
                 </div>
                 <div class="control__asics" ref="asic_container">
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -65,7 +68,10 @@
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -94,7 +100,10 @@
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -123,7 +132,10 @@
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -152,7 +164,10 @@
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -181,7 +196,10 @@
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -210,7 +228,10 @@
                         </transition>
                     </div>
                     <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -292,7 +313,10 @@ export default {
                     // asic.style.top = topPos[3] + "px";
                     asic.style.marginTop = topPos[3] + "px";
                     asic.style.transform = "translateX(-50%)";
-                    asic.style.transition = "all 0.5s ease 0s";
+                    setTimeout(
+                        () => (asic.style.transition = "all 0.5s ease 0s"),
+                        300
+                    );
                 });
                 setTimeout(() => {
                     asics[0].style.transform = "none";
@@ -301,12 +325,16 @@ export default {
                     asics[4].style.transform = "none";
                     asics[5].style.transform = "none";
                     asics[6].style.transform = "none";
-                    asics[0].style.left = leftPos[2] + 30 + "px";
-                    asics[1].style.left = leftPos[2] + 30 + "px";
+                    asics[0].style.left =
+                        leftPos[2] + asics[0].scrollWidth / 4 + "px";
+                    asics[1].style.left =
+                        leftPos[2] + asics[1].scrollWidth / 4 + "px";
                     asics[2].style.left = leftPos[2] + "px";
                     asics[4].style.left = leftPos[4] + "px";
-                    asics[5].style.left = leftPos[4] + 30 + "px";
-                    asics[6].style.left = leftPos[4] + 30 + "px";
+                    asics[5].style.left =
+                        leftPos[4] + asics[5].scrollWidth / 4 + "px";
+                    asics[6].style.left =
+                        leftPos[4] + asics[6].scrollWidth / 4 + "px";
                     asics[0].style.marginTop = topPos[2] + "px";
                     asics[1].style.marginTop = topPos[2] + "px";
                     asics[2].style.marginTop = topPos[2] + "px";
@@ -315,10 +343,12 @@ export default {
                     asics[6].style.marginTop = topPos[4] + "px";
                 }, 1000);
                 setTimeout(() => {
-                    asics[0].style.left = leftPos[1] + 30 + "px";
+                    asics[0].style.left =
+                        leftPos[1] + asics[0].scrollWidth / 4 + "px";
                     asics[1].style.left = leftPos[1] + "px";
                     asics[5].style.left = leftPos[5] + "px";
-                    asics[6].style.left = leftPos[5] + 30 + "px";
+                    asics[6].style.left =
+                        leftPos[5] + asics[6].scrollWidth / 4 + "px";
                     asics[0].style.marginTop = topPos[1] + "px";
                     asics[1].style.marginTop = topPos[1] + "px";
                     asics[5].style.marginTop = topPos[5] + "px";
@@ -334,6 +364,7 @@ export default {
                     asics.forEach((asic) => {
                         asic.style.transition = "none";
                         asic.removeAttribute("style");
+                        this.$refs.asic_container.removeAttribute("style");
                     });
                 }, 3000);
             }
@@ -394,8 +425,20 @@ export default {
         opacity: 1;
     }
     to {
-        transform: translate(-100vw, 500px);
+        transform: translate(-100vw, 385px);
         opacity: 0;
+    }
+}
+@media (max-width: 767.98px) {
+    @keyframes outAnim {
+        from {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+        to {
+            transform: translate(-100vw, 200px);
+            opacity: 0;
+        }
     }
 }
 @keyframes opacityIn {
@@ -416,12 +459,24 @@ export default {
 }
 @keyframes inAnim {
     from {
-        transform: translate(100vw, 500px);
+        transform: translate(100vw, 385px);
         opacity: 0;
     }
     to {
         transform: translate(-50%, 0);
         opacity: 1;
+    }
+}
+@media (max-width: 767.98px) {
+    @keyframes inAnim {
+        from {
+            transform: translate(100vw, 200px);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
     }
 }
 @keyframes fadeGreen {

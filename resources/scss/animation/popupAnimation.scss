@@ -218,8 +218,9 @@
             transform: translateY(0);
             max-width: 160px;
         }
-        80% {
+        60% {
             max-height: 120px;
+            max-width: 100%;
         }
         99% {
             overflow: hidden;

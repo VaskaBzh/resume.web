@@ -146,7 +146,15 @@ const messages = {
             bitcoin_block: {
                 network: "Network difficulty",
                 next_diff: "Expected next difficulty",
-                date_diff: ["Next difficulty date", "Days", "Hours"],
+                date_diff: [
+                    "Next difficulty date",
+                    "Days",
+                    "Days",
+                    "Days",
+                    "Hours",
+                    "Hours",
+                    "Hours",
+                ],
                 button: "Start Mining",
             },
             promo_blocks: {
@@ -565,6 +573,7 @@ const messages = {
         },
         wallets: {
             title: "Your wallets",
+            no_info: "Add Wallet",
             block: {
                 title: "Wallets list",
                 filter: "Hide with zero balance",
@@ -795,7 +804,15 @@ const messages = {
             bitcoin_block: {
                 network: "Мощность сети",
                 next_diff: "Ожидаемая следующая сложность",
-                date_diff: ["Дата следующей сложности", "Дней", "Часов"],
+                date_diff: [
+                    "Дата следующей сложности",
+                    "День",
+                    "Дня",
+                    "Дней",
+                    "Час",
+                    "Часа",
+                    "Часов",
+                ],
                 button: "Начать майнинг",
             },
             promo_blocks: {
@@ -1215,6 +1232,7 @@ const messages = {
         },
         wallets: {
             title: "Мои кошельки",
+            no_info: "Добавить кошелек",
             block: {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",

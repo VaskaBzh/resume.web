@@ -65,6 +65,12 @@ export default {
                 this.graphInit();
             }
         },
+        bandColor() {
+            if (this.$refs.chart && this.graphData.values?.length > 0) {
+                this.dropGraph();
+                this.graphInit();
+            }
+        },
     },
     computed: {
         ...mapGetters(["isDark"]),
@@ -276,10 +282,7 @@ export default {
         },
         adjustValue(num) {
             if (num === 0) {
-                if (
-                    d3.max(Object.values(this.graphData.values)) / 900000 >
-                    1
-                ) {
+                if (d3.max(Object.values(this.graphData.values)) / 900000 > 1) {
                     return { val: (num / 1000000).toFixed(2), unit: "E" };
                 } else if (
                     d3.max(Object.values(this.graphData.values)) / 900 >=
@@ -385,9 +388,10 @@ export default {
                         "."
                     }${(new Date(time).getMonth() + 1)
                         .toString()
-                        .padStart(2, "0")} ${new Date(
-                        time
-                    ).toLocaleTimeString()}</span>
+                        .padStart(2, "0")} ${new Date(time)
+                        .getUTCHours()
+                        .toString()
+                        .padStart(2, "0")}:00</span>
                             </div>`;
                 } else if (this.graphType === "complexity") {
                     contentTooltip = `<div class="tooltip-wrapper">
@@ -405,9 +409,7 @@ export default {
                         "."
                     }${(new Date(time).getMonth() + 1)
                         .toString()
-                        .padStart(2, "0")} ${new Date(
-                        time
-                    ).toLocaleTimeString()}</span>
+                        .padStart(2, "0")}</span>
                             </div>`;
                 }
 

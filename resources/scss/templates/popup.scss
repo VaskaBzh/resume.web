@@ -226,10 +226,10 @@ body::after {
             &.popup {
                 &_show {
                     .popup__content {
-                        animation: mainAnimationGraph forwards 0.8s ease 0s !important;
+                        animation: mainAnimationGraph forwards 1.3s ease 0s !important;
                         .container-chart,
                         .title {
-                            animation: fadeIn forwards 0.3s ease 0.7s;
+                            animation: fadeIn forwards 2s ease 0.7s;
                         }
                     }
                 }

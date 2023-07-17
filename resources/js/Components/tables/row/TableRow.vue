@@ -2,7 +2,7 @@
     <tr
         class="table__row"
         :class="{ 'table__row-cursor': columns?.graphId }"
-        @click="openPopup"
+        @mousedown="openPopup"
     >
         <td
             class="table_column"
@@ -69,7 +69,10 @@ export default {
         },
         renderTitles() {
             if (this.titles) {
-                if (this.viewportWidth <= 767.98 && this.updatedColumns.txid) {
+                if (
+                    this.viewportWidth <= 767.98 &&
+                    this.updatedColumns.wallet
+                ) {
                     return [
                         this.updatedColumns.wallet !== "..."
                             ? this.updatedColumns.wallet
@@ -99,7 +102,7 @@ export default {
                 );
                 if (
                     this.viewportWidth <= 767.98 &&
-                    !!this.updatedColumns.txid
+                    this.updatedColumns.status
                 ) {
                     obj = obj.filter(
                         (col) =>

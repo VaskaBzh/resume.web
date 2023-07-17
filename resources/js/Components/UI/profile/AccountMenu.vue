@@ -174,6 +174,7 @@ export default {
     },
     setup() {
         let wait = ref(false);
+        let closed = ref(false);
         const form = useForm({
             group_name: "",
         });
@@ -183,6 +184,9 @@ export default {
             await form.post(route("sub_create"), {
                 onFinish() {
                     wait.value = false;
+                },
+                onSuccess() {
+                    closed.value = true;
                 },
             });
         };
@@ -196,6 +200,7 @@ export default {
             form,
             addAcc,
             wait,
+            closed,
         };
     },
     computed: {
@@ -370,14 +375,7 @@ export default {
                 content: "";
                 width: 100%;
                 height: 1px;
-                background: linear-gradient(
-                    179.87deg,
-                    #e6eaf0 1.02%,
-                    #e6eaf1 4.79%,
-                    #e7ebf1 8.76%,
-                    #eaeef4 14.75%,
-                    #e8ecf2 19.07%
-                );
+                background: #c5c5c5;
                 position: absolute;
                 left: 0;
                 bottom: 0;
