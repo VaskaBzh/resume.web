@@ -61,10 +61,11 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
-                        0
+                    Object.values(this.allHash[this.getActive]).length > 0
                 "
             >
+                <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
+                <!--                0-->
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>
