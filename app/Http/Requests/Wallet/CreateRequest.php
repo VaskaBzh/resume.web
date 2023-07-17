@@ -2,11 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Wallet;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
-class WalletCreateRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -16,11 +17,12 @@ class WalletCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'wallet' => 'required|string|min:20',
+            'wallet' => 'required|string|min:20|' . Rule::unique('wallets')
+                    ->where(fn ($query) => $query->where('group_id', $this->group_id)),
             'group_id' => 'required',
-            'percentage' => 'required|integer|min:1|max:100',
+            'percent' => 'required|integer|min:1|max:100',
             'minWithdrawal' => 'required|numeric|gt:0.004',
-            'name' => 'required|string|min:3'
+            'name' => 'required|string|min:3',
         ];
     }
 
@@ -29,7 +31,9 @@ class WalletCreateRequest extends FormRequest
         return [
             'wallet.required' => trans('validation.required', ['attribute' => 'адрес кошелька']),
             'wallet.min' => trans('validation.min.string', ['attribute' => 'адрес кошелька', 'min' => 1]),
+            'wallet.unique' => trans('validation.unique', ['attribute' => 'адрес кошелька']),
             'percent.integer' => trans('validation.integer', ['attribute' => 'Процент']),
+            'percent.required'=> trans('validation.required', ['attribute' => 'Процент']),
             'percent.min' => trans('validation.min.numeric', [
                 'attribute' => 'Процент', 'min' =>  1
             ]),

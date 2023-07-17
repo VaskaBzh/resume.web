@@ -43,7 +43,7 @@
                 ></main-password>
             </div>
         </div>
-        <input type="checkbox" id="checkbox" v-model="form.remember" checked />
+        <input type="checkbox" id="checkbox" v-model="form.remember"/>
         <label for="checkbox">
             <div class="fake">
                 <svg

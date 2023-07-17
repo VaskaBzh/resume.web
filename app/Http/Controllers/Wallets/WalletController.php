@@ -4,87 +4,57 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Wallets;
 
+use App\Actions\Wallet\Create;
+use App\Actions\Wallet\Delete;
+use App\Dto\WalletData;
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\Requests\RequestController;
-use App\Http\Requests\WalletCreateRequest;
+use App\Http\Requests\Wallet\CreateRequest;
+use App\Http\Requests\Wallet\DeleteRequest;
 use App\Models\Sub;
 use App\Models\Wallet;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Config;
 
 class WalletController extends Controller
 {
-    public function create(WalletCreateRequest $request)
+    public function create(CreateRequest $request): JsonResponse
     {
-dd($request);
-        $percentSum = 0;
-        foreach (Wallet::all()->where('group_id', $request->input('group_id')) as $wallet) {
-            $percentSum = $percentSum + $wallet->percent;
+        $walletData = WalletData::fromRequest($request->all());
+
+        if (Wallet::isExceeded(
+            groupId: $walletData->groupId,
+            percent: $walletData->percent
+        )) {
+            return response()->json([
+                'errors' => [
+                    'create_error' => [trans('actions.validation_percent_exceeded')]
+                ]
+            ], 422);
         }
 
-        $wallet = new Wallet([
-            'group_id' => $request->input("group_id"),
-            'wallet' => $request->input("wallet"),
+        Create::execute($walletData);
+
+        return response()->json([
+            'success' => [
+                'create_success' => [trans('actions.wallet_create')]
+            ],
         ]);
-
-        if ($request->input('percent')) {
-            $request->validate([
-                'percent' => 'integer|min:1|max:100',
-            ], $messages);
-
-            $wallet->percent = $request->input('percent');
-        }
-
-        if ($percentSum + $request->input("percent") > 100) {
-            if (app()->getLocale() === 'ru') {
-                return response()->json(["errors" => ["create_error" => ["Суммарный процент вывода больше 100."]]], 500);
-            } else if (app()->getLocale() === 'en') {
-                return response()->json(["errors" => ["create_error" => ["The total percentage of withdrawal is more than 100."]]], 500);
-            }
-        }
-
-        if ($request->input('minWithdrawal')) {
-            $request->validate([
-                'minWithdrawal' => 'numeric|gt:0.004',
-            ], $messages);
-
-            $wallet->minWithdrawal = $request->input('minWithdrawal');
-        }
-        if ($request->input('name')) {
-            $request->validate([
-                'name' => 'min:3',
-            ], $messages);
-
-            $wallet->name = $request->input("name");
-        }
-        $wallet->save();
     }
-    public function delete(Request $request)
+
+    public function delete(DeleteRequest $request): JsonResponse
     {
-        $request->validate([
-            'group_id' => 'required',
-            'wallet' => 'required',
-        ]);
-
-        $wallets = Sub::all()->firstWhere("group_id", $request->input("group_id"))->wallets;
-        $wallet = $wallets->firstWhere("wallet", $request->input("wallet"));
-
-        if (count($wallets) > 1) {
-            $wallet->delete();
-            if (app()->getLocale() === 'ru') {
-                return response()->json(['message' => 'Кошелек успешно удален.'], 200);
-            } else if (app()->getLocale() === 'en') {
-                return response()->json(['message' => 'The wallet has been successfully deleted.'], 200);
-            }
+        $walletData = WalletData::fromRequest($request->all());
+        if (Wallet::isLast($walletData->groupId)) {
+            return response()->json(['message' => trans('actions.wallet_prevent_last_delete')]);
         }
 
-        if (app()->getLocale() === 'ru') {
-            return response()->json(['message' => 'Нельзя удалять единственный кошелек.'], 200);
-        } else if (app()->getLocale() === 'en') {
-            return response()->json(['message' => 'You cannot delete the only wallet.'], 200);
-        }
+        Delete::execute(
+            wallet: Wallet::getByAddress(address: $walletData->walletAddress)->first()
+        );
+
+        return response()->json(['message' => trans('actions.wallet_delete')]);
     }
+
     public function change(Request $request)
     {
         if (app()->getLocale() === 'ru') {
