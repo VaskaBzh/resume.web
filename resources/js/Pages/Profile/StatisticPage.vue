@@ -61,7 +61,7 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    Object.values(this.allHash[this.getActive]).length > 0
+                    Object.values(this.allHash[this.getActive]).length === 0
                 "
             >
                 <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
