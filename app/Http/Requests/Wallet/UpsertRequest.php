@@ -7,8 +7,16 @@ namespace App\Http\Requests\Wallet;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class CreateRequest extends FormRequest
+class UpsertRequest extends FormRequest
 {
+//    protected function prepareForValidation()
+//    {
+//        dd($this->routeIs('wallet_create')
+//            ? Rule::unique('wallets')
+//                ->where(fn ($query) => $query->where('group_id', $this->group_id))
+//            : '');
+//    }
+
     public function authorize(): bool
     {
         return true;
@@ -17,8 +25,15 @@ class CreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'wallet' => 'required|string|min:20|' . Rule::unique('wallets')
-                    ->where(fn ($query) => $query->where('group_id', $this->group_id)),
+            'wallet' => [
+                'required',
+                'string',
+                'min:20',
+                $this->routeIs('wallet_create')
+                ? Rule::unique('wallets')
+                    ->where(fn ($query) => $query->where('group_id', $this->group_id))
+                : ''
+            ],
             'group_id' => 'required',
             'percent' => 'required|integer|min:1|max:100',
             'minWithdrawal' => 'required|numeric|gt:0.004',

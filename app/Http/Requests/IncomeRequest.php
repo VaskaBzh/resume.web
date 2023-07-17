@@ -6,8 +6,9 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class WorkerRequest extends FormRequest
+class IncomeRequest extends FormRequest
 {
+
     public function authorize(): bool
     {
         return true;
@@ -16,7 +17,6 @@ class WorkerRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'worker_id' => 'required',
             'group_id' => 'required',
         ];
     }

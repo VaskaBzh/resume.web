@@ -31,7 +31,9 @@ class SubController extends Controller
 
             if ($isExists) {
                 return back()->withErrors([
-                    'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
+                    'name' => trans('validation.unique', [
+                        'attribute' => 'Аккаунт'
+                    ])
                 ]);
             }
 

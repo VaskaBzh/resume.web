@@ -9,8 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class
-Wallet extends Model
+class Wallet extends Model
 {
     use HasFactory;
 
@@ -24,8 +23,9 @@ Wallet extends Model
         'percent',
     ];
 
-    /* Relations */
-
+    /*
+     * Relations
+    */
     public function sub(): BelongsTo
     {
         return $this->belongsTo(
@@ -36,7 +36,9 @@ Wallet extends Model
     }
     /* end relations */
 
-    /* Создаем кастомный билдер */
+    /*
+     * Создаем кастомный билдер
+    */
     public function newEloquentBuilder($query): WalletBuilder
     {
         return new WalletBuilder($query);

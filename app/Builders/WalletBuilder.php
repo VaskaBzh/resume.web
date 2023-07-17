@@ -11,9 +11,12 @@ class WalletBuilder extends Builder
 {
     private const MAX_PERCENT = 100;
 
+    /**
+     * Проверка суммы процентов всех кошельков на превышение допустимого лимита
+     */
     public function isExceeded(int $groupId, int $percent): bool
     {
-        $percentSum = Wallet::where('group_id', $groupId)
+        $percentSum = $this->where('group_id', $groupId)
             ->sum('percent');
 
         if ($percentSum + $percent > self::MAX_PERCENT) {
@@ -23,13 +26,27 @@ class WalletBuilder extends Builder
         return false;
     }
 
-    public function isLast(int $groupId): bool
+    /**
+     * Проверка кошельков на множество
+     */
+    public function isOne(int $groupId): bool
     {
-        return Wallet::where('group_id', $groupId)->count() === 1;
+        return $this->where('group_id', $groupId)->count() === 1;
     }
 
+    /**
+     * Фильтрация по адресу кошелька
+     */
     public function getByAddress(string $address): Builder
     {
-        return Wallet::where('wallet', $address);
+        return $this->where('wallet', $address);
+    }
+
+    /**
+     * Фильтрация по группе
+     */
+    public function getByGroupId(int $groupId): Builder
+    {
+        return $this->where('group_id', $groupId);
     }
 }

@@ -62,6 +62,13 @@ Route::middleware('auth')->group(function () {
         Route::post('/wallet_change', 'change')->name('wallet_change');
         Route::get('/wallet_process', 'visual')->name('wallet_process');
     });
+
+    Route::group([
+        'prefix' => '',
+        'controller' => IncomeController::class
+    ], function () {
+        Route::get('/income_process', 'visual')->name('income_process');
+    });
 });
 
 
