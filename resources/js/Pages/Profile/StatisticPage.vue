@@ -476,7 +476,7 @@ export default {
             };
 
             while (values.length < this.val) {
-                values.push(randomize(1000000, 1220000));
+                values.push(0);
                 amount.push("0");
                 unit.push("T");
             }
