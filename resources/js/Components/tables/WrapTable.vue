@@ -20,7 +20,7 @@
     </div>
 </template>
 <script>
-import MainTitle from "@/components/UI/MainTitle.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
