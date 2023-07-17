@@ -133,7 +133,7 @@ export default {
                         0,
                         d3.max(this.graphData.values) !== 0
                             ? d3.max(this.graphData.values) +
-                              d3.max(this.graphData.values) * 0.1
+                              d3.max(this.graphData.values) * 0.2
                             : 120,
                     ])
                     .range([this.containerHeight, 0]);
@@ -275,6 +275,21 @@ export default {
             }
         },
         adjustValue(num) {
+            if (num === 0) {
+                if (
+                    d3.max(Object.values(this.graphData.values)) / 900000 >
+                    1
+                ) {
+                    return { val: (num / 1000000).toFixed(2), unit: "E" };
+                } else if (
+                    d3.max(Object.values(this.graphData.values)) / 900 >=
+                    1
+                ) {
+                    return { val: (num / 1000).toFixed(2), unit: "P" };
+                } else {
+                    return { val: Number(num).toFixed(2), unit: "T" };
+                }
+            }
             if (num / 900000 > 1) {
                 return { val: (num / 1000000).toFixed(2), unit: "E" };
             } else if (num / 900 >= 1) {
