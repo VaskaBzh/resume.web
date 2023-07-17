@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console\Commands;
 
 use App\Http\Controllers\Requests\RequestController;
@@ -118,10 +120,9 @@ class UpdateIncomesCommand extends Command
             ->orderByDesc('created_at')
             ->first();
 
-        $previousIncome?->created_at->diffInHours(now()) < 12
-            ? $previousIncome->update($income)
-            : $sub->incomes()->create($income);
-
+        if ($previousIncome?->created_at->diffInHours(now()) < 12) {
+            $sub->incomes()->create($income);
+        }
 
         $sub->accruals = $sumAccruals;
         $sub->unPayments = $sub->accruals - $sub->payments;

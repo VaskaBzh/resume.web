@@ -1,9 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Wallets;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Requests\RequestController;
+use App\Http\Requests\WalletCreateRequest;
 use App\Models\Sub;
 use App\Models\Wallet;
 use Illuminate\Http\Request;
@@ -12,37 +15,9 @@ use Illuminate\Support\Facades\Config;
 
 class WalletController extends Controller
 {
-    public function create(Request $request)
+    public function create(WalletCreateRequest $request)
     {
-        if (app()->getLocale() === 'ru') {
-            $messages = [
-                'wallet.required' => 'Введите адрес на кошелека',
-                'wallet.min' => 'Неправильный адрес кошелька',
-                'percent.integer' => 'Процент должен быть числом.',
-                'percent.min' => 'Процент должен быть больше 1.',
-                'percent.max' => 'Процент не может быть больше 100.',
-                'minWithdrawal.numeric' => 'Вывод должен быть числом.',
-                'minWithdrawal.gt' => 'Вывод должен быть больше 0.005.',
-                'name.min' => 'Имя должно иметь больше трех букв',
-            ];
-        } else if (app()->getLocale() === 'en') {
-            $messages = [
-                'wallet.required' => 'Enter the wallet address',
-                'wallet.min' => 'Incorrect wallet address',
-                'percent.integer' => 'The percentage must be a number.',
-                'percent.min' => 'Percentage must be greater than 1.',
-                'percent.max' => 'Percentage cannot be more than 100.',
-                'minWithdrawal.numeric' => 'Withdrawal must be a number.',
-                'minWithdrawal.gt' => 'Withdrawal must be greater than 0.005.',
-                'name.min' => 'The name must have more than three letters',
-            ];
-        }
-
-        $request->validate([
-           'group_id' => 'required',
-           'wallet' => 'required|min:20',
-        ], $messages);
-
+dd($request);
         $percentSum = 0;
         foreach (Wallet::all()->where('group_id', $request->input('group_id')) as $wallet) {
             $percentSum = $percentSum + $wallet->percent;

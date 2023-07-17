@@ -1,10 +1,11 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use App\Console\Commands\SyncWorkerCommand;
 use App\Console\Commands\UpdateIncomesCommand;
-use App\Jobs\AddWorkerJob;
 use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
