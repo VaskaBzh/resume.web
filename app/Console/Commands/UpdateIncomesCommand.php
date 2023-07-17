@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
+use App\Services\External\MinerStatService;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -145,22 +146,14 @@ class UpdateIncomesCommand extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(MinerStatService $minerStatService)
     {
         $subs = Sub::all();
         foreach ($subs as $sub) {
             $requestController = new RequestController();
 
-            $opts = array(
-                "http" => array(
-                    "method" => "GET",
-                    "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
-                        "Content-Type: application/json; charset=utf-8",
-                )
-            );
-            $context = stream_context_create($opts);
-            $url = "https://api.minerstat.com/v2/coins?list=BTC";
-            $response_stat = file_get_contents($url, false, $context);
+            $minerStats = $minerStatService->getStats();
+            dd($minerStats);
 
             $response_hash = $requestController->proxy([
                 "puid" => "781195",

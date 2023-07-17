@@ -2,8 +2,11 @@
 
 return [
     'btc' => [
-        'uri' => env('BTC_API_URI', false),
-        'token' => env('BTC_AUTH_TOKEN', false)
+        'uri' => env('BTC_API_URI'),
+        'token' => env('BTC_AUTH_TOKEN')
     ],
-    'minerstat' => env('MINERSTAT_API_URI', false),
+    'minerstat' => [
+        'uri' => env('MINERSTAT_API_URI'),
+        'token' => env('MINERSTAT_API_AUTH')
+    ],
 ];

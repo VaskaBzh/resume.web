@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace App\Builders;
 
-use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
 
-class WalletBuilder extends Builder
+class WalletBuilder extends BaseBuilder
 {
     private const MAX_PERCENT = 100;
 
@@ -40,13 +39,5 @@ class WalletBuilder extends Builder
     public function getByAddress(string $address): Builder
     {
         return $this->where('wallet', $address);
-    }
-
-    /**
-     * Фильтрация по группе
-     */
-    public function getByGroupId(int $groupId): Builder
-    {
-        return $this->where('group_id', $groupId);
     }
 }
