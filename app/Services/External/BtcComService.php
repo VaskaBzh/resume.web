@@ -81,7 +81,7 @@ class BtcComService
             'worker'
         ]), [
             'puid' => self::PU_ID,
-            'group_id' -1,
+            'group_id' => -1,
             'page_size' => self::DEFAULT_PAGE_SIZE
         ])->throw();
 

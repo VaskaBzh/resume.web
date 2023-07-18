@@ -14,10 +14,7 @@ class MinerStatService
 
     public function __construct()
     {
-        $this->client = Http::baseUrl(config('api.minerstat.uri'))
-            ->withHeaders([
-                'Authorization' => config('api.minerstat.token'),
-            ]);
+        $this->client = Http::baseUrl(config('api.minerstat.uri'));
     }
 
     public function getStats(): Response
@@ -27,7 +24,7 @@ class MinerStatService
         ]), [
             'list' => 'BTC'
         ])->throw();
-        
+        dd($response->body());
         return $response['data'];
     }
 }

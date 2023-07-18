@@ -26,10 +26,17 @@ class SyncWorkerCommand extends Command
 
         foreach ($subs as $sub) {
             foreach($workers['data'] as $worker) {
-                if (head(explode('.', $worker->worker_name)) === $sub->sub) {
-                    $workerData = WorkerData::fromRequest($worker);
+                if (head(explode('.', $worker['worker_name'])) === $sub->sub) {
 
-                    $btcComService->updateWorker(workerData: $workerData);
+                    $workerData = WorkerData::fromRequest(requestData: [
+                        'group_id' => (int) $sub->group_id,
+                        'worker_id' => (int) $worker['worker_id'],
+                    ]);
+
+                    try {
+                        $btcComService->updateWorker(workerData: $workerData);
+                    } catch ()
+
 
                     Create::execute(
                         workerData: $workerData
