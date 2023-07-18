@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
@@ -51,20 +52,21 @@ class LoginController extends Controller
         return redirect('/');
     }
 
-    protected function attemptLogin(Request $request)
+    protected function attemptLogin(Request $request): RedirectResponse
     {
         $credentials = $this->credentials($request);
 
-        if(!auth()->validate($credentials)) {
-            return redirect()->to('login')
-                ->withErrors(trans('auth.failed'));
-        }
-
         $user = auth()->getProvider()->retrieveByCredentials($credentials);
 
-        auth()->login($user, $request->get('remember'));
+        if ($user && auth()->validate($credentials)) {
+            auth()->login($user);
 
-        return $this->authenticated($request, $user);
+            return redirect()->to('profile/accounts');
+        }
+
+        return redirect()->back()->withErrors([
+            'email' => 'Неверный email или пароль.',
+        ]);
     }
 
     protected function verify(Request $request)

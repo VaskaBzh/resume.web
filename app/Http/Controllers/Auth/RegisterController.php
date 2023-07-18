@@ -90,7 +90,7 @@ class RegisterController extends Controller
                 subData: SubData::fromRequest([
                     'user_id' => $user->id,
                     'group_id' => $btcSubAccount['gid'],
-                    'userName' => $user->name,
+                    'group_name' => $user->name,
                 ])
             );
         } catch (\Exception $e) {
