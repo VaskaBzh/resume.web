@@ -9,7 +9,7 @@ import scrollAnimation from "@/Components/directives/animations/scrollAnimation.
 import scrollValueAnimation from "@/Components/directives/animations/scrollValueAnimation.vue";
 import tippyAnimation from "@/Components/directives/tippyAnimation.vue";
 import hideAnimation from "@/Components/directives/hideAnimation.vue";
-import hashRender from "@/Components/directives/HashRender.vue";
+import hashRender from "@/Components/directives/hashRender.vue";
 
 createInertiaApp({
     resolve: (name) => {

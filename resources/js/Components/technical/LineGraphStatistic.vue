@@ -326,17 +326,19 @@ export default {
         },
         tooltipInit(event, x) {
             try {
-                event.touches
+                event?.touches
                     ? (this.clientX = event.touches[0].clientX)
                     : (this.clientX = event.clientX);
                 this.mouseX =
                     this.clientX - this.svg.node().getBoundingClientRect().left;
                 const nearestIndex = Math.round(x.invert(this.mouseX));
                 const d = this.graphData.values[nearestIndex];
-                const u = this.graphData.unit[nearestIndex];
+                const u = this.graphData.unit
+                    ? this.graphData.unit[nearestIndex]
+                    : "null";
                 let a = this.graphData.amount
                     ? this.graphData.amount[nearestIndex]
-                    : null;
+                    : "0";
                 const time = this.graphData.dates[nearestIndex];
 
                 const verticalLineX = this.mouseX;

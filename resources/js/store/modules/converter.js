@@ -1,10 +1,23 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
 import btccom from "@/api/btccom";
+import axios from "axios";
 
 export default {
     actions: {
         async getConverter({ commit, state }) {
+            const header = {
+                "Content-Type": "application/json; charset=utf-8",
+                "X-CSRF-TOKEN": document
+                    .querySelector('meta[name="csrf-token"]')
+                    .getAttribute("content"),
+                "X-Requested-With": "XMLHttpRequest",
+            };
+            // axios
+            //     .get("https://whattomine.com/coins.json", {
+            //         headers: header,
+            //     })
+            //     .then((res) => console.log(res));
             difficulty
                 .fetch({
                     data: {
