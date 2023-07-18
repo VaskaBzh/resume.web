@@ -52,33 +52,20 @@ class LoginController extends Controller
     }
 
     protected function attemptLogin(Request $request)
-    {
-        $credentials = $this->credentials($request);
+    { 
+	$credentials = $this->credentials($request);
 
-        if ($this->guard()->attempt($credentials, $request->filled('remember'))) {
-            $user = $this->guard()->getLastAttempted();
-
-            return true;
-//            if ($user->hasVerifiedEmail()) {
-//                return true;
-//            } else {
-//                $this->guard()->logout();
-//                $request->session()->invalidate();
-//                $request->session()->regenerateToken();
-//
-//                    if (app()->getLocale() === 'ru') {
-//                        throw ValidationException::withMessages([
-//                            $this->username() => [trans('Ваша электронная почта еще не подтверждена. Подтвердите адрес.')],
-//                        ]);
-//                    } else if (app()->getLocale() === 'en') {
-//                        throw ValidationException::withMessages([
-//                            $this->username() => [trans('Your email has not been verified yet. Please verify your email address.')],
-//                        ]);
-//                    }
-//            }
+        if(!auth()->validate($credentials)) {
+            return redirect()->to('login')
+                ->withErrors(trans('auth.failed'));
         }
 
-        return false;
+        $user = auth()->getProvider()->retrieveByCredentials($credentials);
+
+        auth()->login($user, $request->get('remember'));
+
+        return $this->authenticated($request, $user);
+
     }
 
     protected function verify(Request $request)
