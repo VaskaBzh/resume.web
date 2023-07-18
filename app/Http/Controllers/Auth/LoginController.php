@@ -60,12 +60,10 @@ class LoginController extends Controller
         if ($user && auth()->validate($credentials)) {
             auth()->login($user);
 
-            return redirect()->to('profile/accounts');
+            return true;
         }
 
-        return redirect()->back()->withErrors([
-            'email' => 'Неверный email или пароль.',
-        ]);
+        return false;
     }
 
     protected function verify(Request $request)
