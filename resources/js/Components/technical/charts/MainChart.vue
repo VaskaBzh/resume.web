@@ -1,5 +1,5 @@
 <template>
-    <div class="wrap">
+    <div class="section__block section__block-light">
         <div
             v-for="graph in graphs"
             :key="graph.id"
@@ -7,11 +7,20 @@
         >
             <div class="graph" v-show="graph.values">
                 <div class="graph_title">{{ graph.title }}</div>
-                <line-graph
+                <line-graph-statistic
                     :graphData="graph"
                     :height="height"
+                    :redraw="redraw"
                     :viewportWidth="viewportWidth"
-                ></line-graph>
+                    :tooltip="tooltip"
+                    lineColor="#3F7BDD"
+                    :lineWidth="2.5"
+                    mouseLineColor="#3F7BDD"
+                    circleColor="#79A3E8"
+                    circleBorder="#3F7BDD"
+                    :bandColor="bandColor"
+                    graphType="complexity"
+                ></line-graph-statistic>
             </div>
             <div class="graph__item_about graph-ia">
                 <ul class="graph-ia__list">
@@ -36,22 +45,32 @@
 
 <script>
 import Vue from "lodash";
-import LineGraph from "@/Components/technical/LineGraph.vue";
+import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
 
 export default {
     components: {
-        LineGraph,
+        LineGraphStatistic,
     },
     props: {
+        heightVal: Number,
         graphs: {
             type: Array,
             required: true,
+        },
+        redraw: {
+            type: Boolean,
+            default: true,
+        },
+        tooltip: {
+            type: Boolean,
+            default: false,
         },
     },
     data() {
         return {
             viewportWidth: 0,
-            height: 300,
+            height: 360,
+            bandColor: "#E6EAF0",
         };
     },
     created: function () {
@@ -62,20 +81,26 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        getHeight() {
+            if (!this.heightVal) {
+                if (this.viewportWidth < 479.98) return 338;
+                else if (this.viewportWidth < 767.98) return 338;
+                else if (this.viewportWidth < 991.98) return 338;
+                else if (this.viewportWidth < 1320.98) return 338;
+                else return 338;
+            } else {
+                return this.heightVal;
+            }
+        },
     },
     watch: {
         viewportWidth() {
-            if (this.viewportWidth >= 1320.98) {
-                this.height = 300;
-            }
-            if (this.viewportWidth < 1320.98) {
-                this.height = 260;
-            }
-            if (this.viewportWidth < 991.98) {
-                this.height = 240;
-            }
-            if (this.viewportWidth < 767.98) {
-                this.height = 200;
+            this.height = this.getHeight();
+        },
+        isDark(newVal) {
+            this.bandColor = "#E6EAF0";
+            if (newVal) {
+                this.bandColor = "#262626";
             }
         },
     },

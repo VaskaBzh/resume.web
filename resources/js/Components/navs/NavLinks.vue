@@ -167,6 +167,11 @@ export default {
                     page: "/hosting",
                     name: this.$t("header.links.hosting"),
                 },
+                // {
+                //     link: "complexity",
+                //     page: "/complexity",
+                //     name: this.$t("header.links.complexity"),
+                // },
                 {
                     link: "help",
                     page: "/help",
