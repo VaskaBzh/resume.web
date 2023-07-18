@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
+use App\Services\External\BtcComService;
 use App\Services\External\MinerStatService;
 use Exception;
 use Illuminate\Console\Command;
@@ -146,20 +147,18 @@ class UpdateIncomesCommand extends Command
      *
      * @return int
      */
-    public function handle(MinerStatService $minerStatService)
+    public function handle(
+        MinerStatService $minerStatService,
+        BtcComService $btcComService,
+    )
     {
         $subs = Sub::all();
         foreach ($subs as $sub) {
             $requestController = new RequestController();
 
             $minerStats = $minerStatService->getStats();
-            dd($minerStats);
+            $workers = $btcComService->getWorkerList(groupId: $sub->group_id);
 
-            $response_hash = $requestController->proxy([
-                "puid" => "781195",
-                "group" => $sub->group_id,
-                "page_size" => "1000",
-            ], "worker", "get");
             $response_diff = $requestController->proxy([], "pool/status", "get");
 //
 //            $response_list = $requestController->proxy([

@@ -6,9 +6,8 @@ namespace App\Services\External;
 
 use App\Dto\UserData;
 use App\Dto\WorkerData;
-use App\Models\Sub;
-use App\Models\Worker;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 
 class BtcComService
@@ -16,6 +15,7 @@ class BtcComService
     private PendingRequest $client;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
+    private const UNGROUPED_ID = -1;
 
     public function __construct()
     {
@@ -74,14 +74,16 @@ class BtcComService
 
     /**
      * Получить список воркеров
+     * Следует обратить внимание, метод принимает в строке запроса
+     * параметр group (не group_id)
      */
-    public function getWorkerList(): array
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): array
     {
         $response = $this->client->get(implode('/', [
             'worker'
         ]), [
             'puid' => self::PU_ID,
-            'group_id' => -1,
+            'group' => $groupId,
             'page_size' => self::DEFAULT_PAGE_SIZE
         ])->throw();
 
@@ -91,17 +93,17 @@ class BtcComService
     /**
      * Обновить воркер
      */
-    public function updateWorker(WorkerData $workerData): array
+    public function updateWorker(WorkerData $workerData): void
     {
-        $response = $this->client->post(implode('/', [
+        $this->client->post(implode('/', [
             'worker',
             'update'
         ]), [
             'puid' => self::PU_ID,
             'group_id' => $workerData->group_id,
-            'worker_id' => $workerData->worker_id
-        ])->throw();
-
-        return $response['data'];
+            'worker_id' => (string) $workerData->worker_id
+        ])->throwIf(fn (Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
     }
 }
