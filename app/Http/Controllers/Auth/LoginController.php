@@ -58,7 +58,7 @@ class LoginController extends Controller
         $user = auth()->getProvider()->retrieveByCredentials($credentials);
 
         if ($user && auth()->validate($credentials)) {
-            auth()->login($user);
+            auth()->login($user, $request->get('remember'));
 
             return true;
         }
