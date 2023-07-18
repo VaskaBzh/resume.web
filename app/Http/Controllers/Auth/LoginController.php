@@ -52,20 +52,20 @@ class LoginController extends Controller
     }
 
     protected function attemptLogin(Request $request)
-    { 
-	$credentials = $this->credentials($request);
-
-        if(!auth()->validate($credentials)) {
-            return redirect()->to('login')
-                ->withErrors(trans('auth.failed'));
-        }
+    {
+        $credentials = $this->credentials($request);
 
         $user = auth()->getProvider()->retrieveByCredentials($credentials);
 
-        auth()->login($user, $request->get('remember'));
+        if ($user && auth()->validate($credentials)) {
+            auth()->login($user);
 
-        return $this->authenticated($request, $user);
+            return redirect()->to('profile/accounts');
+        }
 
+        return redirect()->back()->withErrors([
+            'email' => 'Неверный email или пароль.',
+        ]);
     }
 
     protected function verify(Request $request)
