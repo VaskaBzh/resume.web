@@ -185,6 +185,9 @@ export default {
             cursor: pointer;
         }
         &.main {
+            .more {
+                display: none;
+            }
             .table_column {
                 background: transparent;
                 color: #5389e1;

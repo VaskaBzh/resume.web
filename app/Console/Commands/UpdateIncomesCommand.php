@@ -36,8 +36,8 @@ class UpdateIncomesCommand extends Command
                 $income["wallet"] = $wallet->wallet;
                 $balance = $earn;
                 $min = 0.005;
-                $pendingIncomes = $sub->incomes->where("status", "pending");
-                $rejectedIncomes = $sub->incomes->where("status", "rejected");
+                $pendingIncomes = $sub->incomes->where("status", "pending")->where("wallet", $wallet->wallet);
+                $rejectedIncomes = $sub->incomes->where("status", "rejected")->where("wallet", $wallet->wallet);
 
                 $balance = $balance + $sub->unPayments;
                 if ($wallet->minWithdrawal) {

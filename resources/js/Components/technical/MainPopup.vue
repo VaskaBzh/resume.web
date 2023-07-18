@@ -172,6 +172,8 @@ export default {
         destroyFunc() {
             document.removeEventListener("mousedown", this.clickClosed, true);
             document.removeEventListener("keydown", this.keyClosed);
+
+            this.close();
         },
     },
     mounted() {
