@@ -107,7 +107,10 @@ export default {
         }
     }
     &__image {
-        width: 100%;
+        max-width: calc(50% - 84px);
+        @media (max-width: 991.98px) {
+            max-width: 100%;
+        }
     }
 }
 </style>

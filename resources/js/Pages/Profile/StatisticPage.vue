@@ -364,13 +364,13 @@ export default {
         yesterdayEarn() {
             if (this.allIncomeHistory[this.getActive]) {
                 if (
-                    Object.values(this.allIncomeHistory[this.getActive]) &&
-                    Object.values(this.allIncomeHistory[this.getActive])[1]
+                    Object.values(this.allIncomeHistory[this.getActive])
+                        ?.length > 0
                 ) {
                     return Number(
                         Object.values(
                             this.allIncomeHistory[this.getActive]
-                        ).reverse()[1]["amount"]
+                        ).reverse()[0]["amount"]
                     );
                 }
             }

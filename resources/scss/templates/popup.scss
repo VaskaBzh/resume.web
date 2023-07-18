@@ -17,19 +17,22 @@ body::after {
     body::after {
         opacity: 1;
     }
-
-    .popup__content {
-        animation: backMainAnimation forwards 0.3s ease 0s;
-        &-graph {
-            animation: backMainAnimationGraph forwards 0.3s ease 0s;
-        }
-        &-card {
-            animation: backMainAnimationCard forwards 0.3s ease 0s;
-        }
-        &-changes {
-            animation: backChangeAnimation forwards 0.3s ease 0s;
-        }
-    }
+    //.popup__content {
+    //    animation-name: backMainAnimation;
+    //    animation-duration: 0.3s;
+    //    animation-delay: 0s;
+    //    animation-fill-mode: forwards;
+    //    animation-timing-function: ease;
+    //    &-graph {
+    //        animation-name: backMainAnimationGraph;
+    //    }
+    //    &-card {
+    //        animation-name: backMainAnimationCard;
+    //    }
+    //    &-changes {
+    //        animation-name: backChangeAnimation;
+    //    }
+    //}
 }
 @keyframes rotate {
     from {
@@ -75,11 +78,27 @@ body::after {
         overflow: auto;
         pointer-events: auto;
         &.popup {
+            .popup {
+                &__content {
+                    visibility: visible;
+                    opacity: 1;
+                    overflow: visible;
+                    transform: translateY(200px);
+                    animation-name: mainAnimation;
+                    animation-duration: 0.8s;
+                    animation-delay: 0.5s;
+                    animation-fill-mode: forwards;
+                    animation-timing-function: ease;
+                    &_logo {
+                        opacity: 0;
+                    }
+                }
+            }
             &-graph {
                 .popup__content {
                     animation: mainAnimationGraph forwards 1s ease 0.5s !important;
                     .container-chart .title {
-                        animation: fadeIn forwards 0.8s ease 0.8s;
+                        opacity: 1;
                     }
                 }
             }
@@ -96,20 +115,6 @@ body::after {
             }
             &-connect {
                 animation: mainAnimationConnect forwards 0.8s ease 0.5s !important;
-            }
-        }
-        .popup__content {
-            visibility: visible;
-            opacity: 1;
-            overflow: visible;
-            transform: translateY(200px);
-            animation: mainAnimation forwards 0.8s ease 0.5s !important;
-            &_logo {
-                animation: logoAnimation forwards 0.5s ease 0.5s;
-                opacity: 1;
-                @media (max-width: $mobile) {
-                    animation: logoAnimation forwards 0.2s ease 0.5s;
-                }
             }
         }
     }
@@ -248,6 +253,7 @@ body::after {
                         .container-chart,
                         .title {
                             opacity: 0;
+                            transition: all 0.8s ease 0.8s;
                         }
                         padding: 10px 0;
                         margin: 0 0 10px;
@@ -407,15 +413,22 @@ body::after {
             position: absolute;
             left: 50%;
             top: 50%;
-            opacity: 0;
+            opacity: 1;
             transform: translate(-50%, -50%);
             margin: auto;
-            transition: all 0.8s ease 0s;
+            transition: all 0.5s ease 0.5s;
+            @media (max-width: $mobile) {
+                transition: 0.2s ease 0.5s;
+            }
         }
         .popup {
             &__info,
             &__head {
                 opacity: 0;
+                transition: all 1.3s ease 0.8s;
+                @media ($mobileSmall) {
+                    transition: all 0.3s ease 0.7s;
+                }
             }
         }
         .graph {
@@ -450,14 +463,11 @@ body::after {
             .popup {
                 &__info,
                 &__head {
-                    animation: contentAnimation forwards 1.3s ease 0.8s !important;
-                    @media (max-width: $mobile) {
-                        animation: contentAnimation forwards 0.3s ease 0.7s !important;
-                    }
+                    opacity: 1;
                 }
             }
             .table__row {
-                animation: contentAnimation forwards 0.3s ease 1s;
+                opacity: 1;
             }
             .graph {
                 animation: contentAnimation forwards 1.3s ease 0.8s !important;
@@ -512,6 +522,7 @@ body::after {
             }
             .table__row {
                 opacity: 0;
+                transition: all 0.3s ease 1s;
             }
         }
         @media (max-width: $mobileSmall) {

@@ -4,6 +4,7 @@ import { createI18n } from "vue-i18n";
 // Ready translated locale messages
 const messages = {
     en: {
+        more: "More",
         auth: {
             error: "",
             login: {
@@ -660,6 +661,7 @@ const messages = {
         },
     },
     ru: {
+        more: "Подробнее",
         auth: {
             login: {
                 title: "Войти в аккаунт Allbtc",
@@ -1075,7 +1077,7 @@ const messages = {
             wallets: "Кошельки",
         },
         days: "Дней",
-        hours: "Часов",
+        hours: "Часа",
         chart: {
             buttons: {
                 day: "24 часа",
