@@ -6,11 +6,7 @@ namespace App;
 
 class Helper
 {
-    /**
-     * FPPS settlement income = ∑ (difficulty each time a miner is assigned/the difficulty of the entire network ->
-     *  -> when the miner submits computing power each time) * fixed block explosion income (1 + $fppsPercent) *
-     * (1 - miner handling fee rate)
-     *
+    /**     *
      * $earnTime - время добычи блока с заданным хешрейтом ($share * pow(10, 12))
      * @param $share - хешрейт
      * @param $rewardBlock - награда за блок
@@ -25,9 +21,11 @@ class Helper
     ): float
     {
         $secondsPerDay = 86400;
+        $btcComFee = 0.5;
+        $allBtcFee = 1.5;
         $earnTime = ($difficulty * pow("2", "32")) / (($share * pow("10", "12")) * $secondsPerDay);
 
         $total = $rewardBlock / $earnTime;
-        return $total + $total * (($fppsPercent - 0.5 - 3.5) / 100);
+        return $total + $total * (($fppsPercent - $btcComFee - $allBtcFee) / 100);
     }
 }

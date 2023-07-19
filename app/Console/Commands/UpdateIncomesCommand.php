@@ -224,7 +224,6 @@ class UpdateIncomesCommand extends Command
                         $sumAccruals = $sumAccruals + $sub->accruals;
                     }
 
-                    $this->info(count($wallets));
                     if ($income["amount"] > 0) {
                         if (count($wallets) === 0) {
                             $income["message"] = 'no wallet';
@@ -245,9 +244,6 @@ class UpdateIncomesCommand extends Command
                     // Обработка ошибки разбора JSON
                     $this->error('Error parsing JSON response for user: ' . $sub->id . ' - ' . $e->getMessage());
                 }
-            } else {
-                // Обработка ошибки при выполнении запроса
-                $this->error('Error parsing JSON response for user: ' . $sub->id . ' - ' . $e->getMessage());
             }
         }
     }
