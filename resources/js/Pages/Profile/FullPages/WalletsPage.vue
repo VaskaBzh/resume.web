@@ -460,7 +460,6 @@ export default {
             this.form.minWithdrawal = wallet.minWithdrawal;
             this.form.wallet = wallet.wallet;
             this.form.name = wallet.fullName;
-            console.log(wallet);
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;

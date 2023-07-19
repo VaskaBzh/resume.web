@@ -134,6 +134,7 @@ body::after {
             &-changes {
                 .popup__content {
                     animation-name: mainAnimationChange;
+                    animation-duration: 1.5s;
                 }
             }
             &-card {
