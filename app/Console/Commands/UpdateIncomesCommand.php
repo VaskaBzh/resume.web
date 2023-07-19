@@ -244,6 +244,11 @@ class UpdateIncomesCommand extends Command
                         } else {
                             foreach ($wallets as $wallet) {
                                 $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
+
+                                info('DEBUG_INCOME_REPETITION', [
+                                    'sub' => $sub,
+                                    'wallet' => $wallet
+                                ]);
                             }
                         }
                     }
