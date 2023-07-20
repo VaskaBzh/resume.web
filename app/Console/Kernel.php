@@ -6,6 +6,7 @@ namespace App\Console;
 
 use App\Console\Commands\SyncWorkerCommand;
 use App\Console\Commands\UpdateIncomesCommand;
+use App\Console\Commands\UpdateMiningStatCommand;
 use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
         // ...
         UpdateIncomesCommand::class,
         SyncWorkerCommand::class,
+        UpdateMiningStatCommand::class,
     ];
     /**
      * Define the application's command schedule.
