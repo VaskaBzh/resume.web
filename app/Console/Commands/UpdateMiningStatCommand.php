@@ -13,14 +13,17 @@ class UpdateMiningStatCommand extends Command
 
     protected $description = 'Command description';
 
-    public function handle(BtcComService $btcComService): void
+    public function handle(): void
     {
-        $stats = $btcComService->getPoolData();
+        $stats = Http::get('https://pool.api.btc.com/v1/pool/status')
+            ->collect()['data'];
         $difficulty = Http::get('https://blockchain.info/q/getdifficulty')
             ->collect()
             ->first();
 
-        $minerstat = MinerStat::create([
+        $minerstat = MinerStat::updateOrCreate(
+            ['network_unit' => 'E'],
+            [
             'network_hashrate' => $stats['network_hashrate'],
             'network_unit' => $stats['network_hashrate_unit'],
             'network_difficulty' => $difficulty,
@@ -32,7 +35,9 @@ class UpdateMiningStatCommand extends Command
         ]);
 
         if ($minerstat) {
-            info('Miner stats created', $minerstat);
+            info('Miner stats created', [
+                'minerstats' => $minerstat
+            ]);
         }
 
         info('Miner stats not created', [

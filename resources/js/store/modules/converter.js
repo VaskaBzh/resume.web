@@ -21,20 +21,22 @@ export default {
                 .catch((err) => console.log(err));
         },
         async getMiningStat({ commit, state }) {
-            axios.get("mining_stat").then(async (response) => {
+            axios.get("miner_stat").then(async (response) => {
+                let minerstats = response.data.minerstats;
+
                 let converterModel = {
-                    diff: response.network_difficulty,
-                    diff_change: response.change_difficulty,
-                    nextDiff: response.next_difficulty,
-                    time: response.time_remain,
-                    network: response.network_hashrate,
-                    networkUnit: response.network_unit,
-                    reward: response.reward_block,
-                    price: response.price_USD,
+                    diff: minerstats.network_difficulty,
+                    diff_change: minerstats.change_difficulty,
+                    nextDiff: minerstats.next_difficulty,
+                    time: minerstats.time_remain,
+                    network: Number(minerstats.network_hashrate),
+                    networkUnit: minerstats.network_unit,
+                    reward: minerstats.reward_block,
+                    price: minerstats.price_USD,
                 };
 
                 converterModel.time = (
-                    (response.time_remain - (Date.now() / 1000).toFixed(0)) /
+                    (minerstats.time_remain - (Date.now() / 1000).toFixed(0)) /
                     60 /
                     60
                 ).toFixed(0);

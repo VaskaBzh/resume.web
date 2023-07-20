@@ -49,6 +49,7 @@ export default {
     },
     async created() {
         await this.$store.dispatch("getMiningStat");
+        await this.$store.dispatch("getGraph");
         if (this.auth_user && this.$store.getters.getValid) {
             await this.$store.dispatch("getAccounts");
         }
