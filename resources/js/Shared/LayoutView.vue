@@ -48,7 +48,7 @@ export default {
         ...mapGetters(["getMessage", "allAccounts"]),
     },
     async created() {
-        await this.$store.dispatch("getConverter");
+        await this.$store.dispatch("getMiningStat");
         if (this.auth_user && this.$store.getters.getValid) {
             await this.$store.dispatch("getAccounts");
         }

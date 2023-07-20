@@ -1,23 +1,10 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
-import btccom from "@/api/btccom";
 import axios from "axios";
 
 export default {
     actions: {
-        async getConverter({ commit, state }) {
-            const header = {
-                "Content-Type": "application/json; charset=utf-8",
-                "X-CSRF-TOKEN": document
-                    .querySelector('meta[name="csrf-token"]')
-                    .getAttribute("content"),
-                "X-Requested-With": "XMLHttpRequest",
-            };
-            // axios
-            //     .get("https://whattomine.com/coins.json", {
-            //         headers: header,
-            //     })
-            //     .then((res) => console.log(res));
+        async getGraph({ commit }) {
             difficulty
                 .fetch({
                     data: {
@@ -32,62 +19,31 @@ export default {
                     commit(`updateHistoryDiff`, res.data.values);
                 })
                 .catch((err) => console.log(err));
-            btccom
-                .fetch({
-                    data: {},
-                    path: "pool/status",
-                    method: "get",
-                    link_type: "",
-                })
-                .then(async (response) => {
-                    let converterModel = {
-                        diff: 0,
-                        diff_change: response.data.data.difficulty_change,
-                        nextDiff: response.data.data.estimated_next_difficulty,
-                        fpps: response.data.data.fpps_mining_earnings,
-                        time: 0,
-                        network: Number(response.data.data.network_hashrate),
-                        networkUnit: response.data.data.network_hashrate_unit,
-                        price: Number(response.data.data.exchange_rate.BTC2USD),
-                    };
-                    if (response.data.data.time_remain !== "-") {
-                        converterModel.time = (
-                            (response.data.data.time_remain -
-                                (Date.now() / 1000).toFixed(0)) /
-                            60 /
-                            60
-                        ).toFixed(0);
-                    } else {
-                        converterModel.time = response.data.data.time_remain;
-                    }
-                    await this.dispatch("getReward", {
-                        item: converterModel,
-                    });
-                });
         },
-        async getReward({ commit, state }, data) {
-            difficulty
-                .fetch({
-                    data: {
-                        list: "BTC",
-                    },
-                    path: "https://api.minerstat.com/v2/coins",
-                    method: "get",
-                    link_type: "",
-                })
-                .then((response) => {
-                    response.data.forEach((el, i) => {
-                        if (el.coin === "BTC") {
-                            data.item.diff = el.difficulty;
-                            data.item.reward = el.reward_block;
+        async getMiningStat({ commit, state }) {
+            axios.get("mining_stat").then(async (response) => {
+                let converterModel = {
+                    diff: response.network_difficulty,
+                    diff_change: response.change_difficulty,
+                    nextDiff: response.next_difficulty,
+                    time: response.time_remain,
+                    network: response.network_hashrate,
+                    networkUnit: response.network_unit,
+                    reward: response.reward_block,
+                    price: response.price_USD,
+                };
 
-                            commit(`updateInfo`, {
-                                key: "btc".toLowerCase(),
-                                item: data.item,
-                            });
-                        }
-                    });
+                converterModel.time = (
+                    (response.time_remain - (Date.now() / 1000).toFixed(0)) /
+                    60 /
+                    60
+                ).toFixed(0);
+
+                commit(`updateInfo`, {
+                    key: "btc".toLowerCase(),
+                    item: converterModel,
                 });
+            });
         },
     },
     mutations: {
