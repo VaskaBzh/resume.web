@@ -19,7 +19,6 @@ return new class extends Migration {
             $table->decimal('reward_block', 8, 7);
             $table->unsignedBigInteger('price_USD');
 
-            $table->unsignedBigInteger('price_USD');
             $table->timestamps();
         });
     }
