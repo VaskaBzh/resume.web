@@ -9,6 +9,6 @@ use Illuminate\Database\Eloquent\Model;
 class MinerStat extends Model
 {
     protected $fillable = [
-        
+
     ];
 }
