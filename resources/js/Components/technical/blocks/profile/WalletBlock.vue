@@ -26,12 +26,12 @@
             </div>
         </div>
         <div class="main__number">
-            {{ wallet.value }}
+            {{ val?.BTC.toFixed(8) || "0.00000000" }}
             <div class="unit">{{ wallet.shortName }}</div>
             <div class="row">
-                <span> ≈ {{ (wallet.value * dollar).toFixed(2) }} $</span>
-                <span v-if="this.$i18n.locale === 'ru'">
-                    ≈ {{ ((wallet.value * dollar) / ruble).toFixed(2) }} ₽</span
+                <span> ≈ {{ val?.usd.toFixed(2) || "0.00" }} $</span>
+                <span v-if="$i18n.locale === 'ru'">
+                    ≈ {{ val?.rub.toFixed(2) || "0.00" }} ₽</span
                 >
             </div>
         </div>
@@ -69,20 +69,20 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 import MainMenu from "@/Components/UI/MainMenu.vue";
+import { Converter } from "@/Scripts/converter";
 
 export default {
     name: "wallet-block",
-    props: ["wallet"],
+    props: { wallet: Object },
     data() {
         return {
-            ruble: 0,
-            dollar: 0,
             opened: false,
+            val: null,
         };
     },
     components: { MainMenu },
     computed: {
-        ...mapGetters(["getActive"]),
+        ...mapGetters(["getActive", "btcInfo"]),
         options() {
             return [
                 {
@@ -143,13 +143,15 @@ export default {
             ];
         },
     },
-    mounted() {
+    async mounted() {
         document.addEventListener("click", this.close.bind(this), true);
         document.addEventListener("keydown", (e) => {
             if (e.keyCode === 27) {
                 this.close();
             }
         });
+
+        this.val = await this.getVal();
     },
     unmounted() {
         // document.removeEventListener("click", this.hideSelect.bind(this), true);
@@ -159,17 +161,17 @@ export default {
             }
         });
     },
-    created() {
-        axios
-            .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
-            .then((response) => (this.dollar = response.data[0].price));
-        setTimeout(() => {
-            axios
-                .get("https://www.cbr-xml-daily.ru/latest.js")
-                .then((response) => (this.ruble = response.data.rates.USD));
-        }, 100);
-    },
     methods: {
+        async getVal() {
+            if (this.btcInfo?.btc) {
+                let converter = new Converter(
+                    0.00344434,
+                    this.btcInfo.btc.price
+                );
+                return await converter.coverted();
+            }
+            return {};
+        },
         toggleOpen() {
             this.opened = !this.opened;
         },
