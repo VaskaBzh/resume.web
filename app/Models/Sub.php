@@ -7,6 +7,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sub extends Model
 {
@@ -24,33 +25,37 @@ class Sub extends Model
         'accruals',
     ];
 
+    /* Relations */
+
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function workers()
+    public function finances(): HasMany
+    {
+        return $this->hasMany(Finance::class, 'group_id', 'group_id');
+    }
+
+    public function workers(): HasMany
     {
         return $this->hasMany(Worker::class, 'group_id', 'group_id');
     }
 
-    public function hashes()
+    public function hashes(): HasMany
     {
         return $this->hasMany(Hash::class, 'group_id', 'group_id');
     }
 
-    public function incomes()
+    public function incomes(): HasMany
     {
         return $this->hasMany(Income::class, 'group_id', 'group_id');
     }
 
-    public function wallets()
+    public function wallets(): HasMany
     {
         return $this->hasMany(Wallet::class, 'group_id', 'group_id');
     }
 
-//    public function clients()
-//    {
-//        return $this->hasMany(Client::class);
-//    }
+    /* end relations */
 }

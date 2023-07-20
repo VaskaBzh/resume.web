@@ -93,7 +93,7 @@ class Worker extends Model
         parent::boot();
 
         static::created(function (Worker $worker) {
-            dd($worker);
+
             if (!Hash::all()->where('group_id', $worker->group_id)->first()) {
                 $sub = Sub::all()->where('group_id', $worker->group_id)->first();
 

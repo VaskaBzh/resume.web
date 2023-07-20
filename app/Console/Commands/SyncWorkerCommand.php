@@ -6,6 +6,7 @@ namespace App\Console\Commands;
 
 use App\Actions\Worker\Create;
 use App\Dto\WorkerData;
+use App\Models\Finance;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
@@ -21,7 +22,7 @@ class SyncWorkerCommand extends Command
      */
     public function handle(BtcComService $btcComService): void
     {
-
+        dd(Finance::first()->sub);
         $workers = $btcComService->getWorkerList();
         $progressBar = $this->output->createProgressBar($workers['total_count']);
         $subs = Sub::all();
