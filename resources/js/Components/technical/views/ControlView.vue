@@ -94,6 +94,8 @@ export default {
             setTheme: true,
             asics: null,
             timeouts: [],
+            topPos: [],
+            leftPos: [],
         };
     },
     computed: {
@@ -102,32 +104,14 @@ export default {
     watch: {
         animated(newBool) {
             if (newBool) {
-                let leftPos = [
-                    this.asics[0].offsetLeft,
-                    this.asics[1].offsetLeft,
-                    this.asics[2].offsetLeft,
-                    this.asics[3].offsetLeft,
-                    this.asics[4].offsetLeft,
-                    this.asics[5].offsetLeft,
-                    this.asics[6].offsetLeft,
-                ];
-                let topPos = [
-                    this.asics[0].offsetTop,
-                    this.asics[1].offsetTop,
-                    this.asics[2].offsetTop,
-                    this.asics[3].offsetTop,
-                    this.asics[4].offsetTop,
-                    this.asics[5].offsetTop,
-                    this.asics[6].offsetTop,
-                ];
                 this.$refs.asic_container.style.minHeight =
-                    this.asics[3].clientHeight + topPos[3] + "px";
+                    this.asics[3].clientHeight + this.topPos[3] + "px";
                 this.asics.forEach((asic) => {
                     asic.style.transition = "all 0s ease 0s";
                     asic.style.position = "absolute";
                     asic.style.left = "50%";
-                    // asic.style.top = topPos[3] + "px";
-                    asic.style.marginTop = topPos[3] + "px";
+                    // asic.style.top = this.topPos[3] + "px";
+                    asic.style.marginTop = this.topPos[3] + "px";
                     asic.style.transform = "translateX(-50%)";
                     setTimeout(
                         () => (asic.style.transition = "all 0.5s ease 0s"),
@@ -143,43 +127,55 @@ export default {
                         this.asics[5].style.transform = "none";
                         this.asics[6].style.transform = "none";
                         this.asics[0].style.left =
-                            leftPos[2] + this.asics[0].scrollWidth / 4 + "px";
+                            this.leftPos[2] +
+                            this.asics[0].scrollWidth / 4 +
+                            "px";
                         this.asics[1].style.left =
-                            leftPos[2] + this.asics[1].scrollWidth / 4 + "px";
-                        this.asics[2].style.left = leftPos[2] + "px";
-                        this.asics[4].style.left = leftPos[4] + "px";
+                            this.leftPos[2] +
+                            this.asics[1].scrollWidth / 4 +
+                            "px";
+                        this.asics[2].style.left = this.leftPos[2] + "px";
+                        this.asics[4].style.left = this.leftPos[4] + "px";
                         this.asics[5].style.left =
-                            leftPos[4] + this.asics[5].scrollWidth / 4 + "px";
+                            this.leftPos[4] +
+                            this.asics[5].scrollWidth / 4 +
+                            "px";
                         this.asics[6].style.left =
-                            leftPos[4] + this.asics[6].scrollWidth / 4 + "px";
-                        this.asics[0].style.marginTop = topPos[2] + "px";
-                        this.asics[1].style.marginTop = topPos[2] + "px";
-                        this.asics[2].style.marginTop = topPos[2] + "px";
-                        this.asics[4].style.marginTop = topPos[4] + "px";
-                        this.asics[5].style.marginTop = topPos[4] + "px";
-                        this.asics[6].style.marginTop = topPos[4] + "px";
+                            this.leftPos[4] +
+                            this.asics[6].scrollWidth / 4 +
+                            "px";
+                        this.asics[0].style.marginTop = this.topPos[2] + "px";
+                        this.asics[1].style.marginTop = this.topPos[2] + "px";
+                        this.asics[2].style.marginTop = this.topPos[2] + "px";
+                        this.asics[4].style.marginTop = this.topPos[4] + "px";
+                        this.asics[5].style.marginTop = this.topPos[4] + "px";
+                        this.asics[6].style.marginTop = this.topPos[4] + "px";
                     }, 1000)
                 );
                 this.timeouts.push(
                     setTimeout(() => {
                         this.asics[0].style.left =
-                            leftPos[1] + this.asics[0].scrollWidth / 4 + "px";
-                        this.asics[1].style.left = leftPos[1] + "px";
-                        this.asics[5].style.left = leftPos[5] + "px";
+                            this.leftPos[1] +
+                            this.asics[0].scrollWidth / 4 +
+                            "px";
+                        this.asics[1].style.left = this.leftPos[1] + "px";
+                        this.asics[5].style.left = this.leftPos[5] + "px";
                         this.asics[6].style.left =
-                            leftPos[5] + this.asics[6].scrollWidth / 4 + "px";
-                        this.asics[0].style.marginTop = topPos[1] + "px";
-                        this.asics[1].style.marginTop = topPos[1] + "px";
-                        this.asics[5].style.marginTop = topPos[5] + "px";
-                        this.asics[6].style.marginTop = topPos[5] + "px";
+                            this.leftPos[5] +
+                            this.asics[6].scrollWidth / 4 +
+                            "px";
+                        this.asics[0].style.marginTop = this.topPos[1] + "px";
+                        this.asics[1].style.marginTop = this.topPos[1] + "px";
+                        this.asics[5].style.marginTop = this.topPos[5] + "px";
+                        this.asics[6].style.marginTop = this.topPos[5] + "px";
                     }, 1500)
                 );
                 this.timeouts.push(
                     setTimeout(() => {
-                        this.asics[0].style.left = leftPos[0] + "px";
-                        this.asics[6].style.left = leftPos[6] + "px";
-                        this.asics[0].style.marginTop = topPos[0] + "px";
-                        this.asics[6].style.marginTop = topPos[6] + "px";
+                        this.asics[0].style.left = this.leftPos[0] + "px";
+                        this.asics[6].style.left = this.leftPos[6] + "px";
+                        this.asics[0].style.marginTop = this.topPos[0] + "px";
+                        this.asics[6].style.marginTop = this.topPos[6] + "px";
                     }, 2000)
                 );
                 this.timeouts.push(
@@ -188,6 +184,7 @@ export default {
                             asic.style.transition = "none";
                             asic.removeAttribute("style");
                         });
+                        this.$refs.asic_container?.removeAttribute("style");
                     }, 3000)
                 );
             }
@@ -233,6 +230,32 @@ export default {
     mounted() {
         this.animationInit();
         this.asics = this.$refs.asic_container.querySelectorAll(".asic");
+        this.leftPos = [
+            this.asics[0].offsetLeft,
+            this.asics[1].offsetLeft,
+            this.asics[2].offsetLeft,
+            this.asics[3].offsetLeft,
+            this.asics[4].offsetLeft,
+            this.asics[5].offsetLeft,
+            this.asics[6].offsetLeft,
+        ];
+        this.topPos = [
+            this.asics[0].offsetTop,
+            this.asics[1].offsetTop,
+            this.asics[2].offsetTop,
+            this.asics[3].offsetTop,
+            this.asics[4].offsetTop,
+            this.asics[5].offsetTop,
+            this.asics[6].offsetTop,
+        ];
+        this.asics.forEach((asic) => {
+            asic.style.transition = "all 0s ease 0s";
+            asic.style.position = "absolute";
+            asic.style.left = "50%";
+            // asic.style.top = this.topPos[3] + "px";
+            asic.style.marginTop = this.topPos[3] + "px";
+            asic.style.transform = "translateX(-50%)";
+        });
     },
 };
 </script>
@@ -519,8 +542,6 @@ export default {
             height: fit-content;
             width: 8%;
             position: relative;
-            box-shadow: 0 8.499305725097656px 67.99444580078125px 0
-                rgba(27, 27, 27, 0.15);
             z-index: 0;
             &-dark {
                 box-shadow: none;

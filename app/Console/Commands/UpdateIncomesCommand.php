@@ -28,91 +28,86 @@ class UpdateIncomesCommand extends Command
 
     private function sendBalance($sub, $income, $wallet, $earn, $sumAccruals)
     {
-        if (empty($wallet)) {
-            $income["message"] = 'no wallet';
-            $income["txid"] = 'no wallet';
-        } else {
-            if ($wallet->wallet) {
-                $income["wallet"] = $wallet->wallet;
-                $balance = $earn;
-                $min = 0.005;
-                $pendingIncomes = $sub->incomes->where("status", "pending");
-                $rejectedIncomes = $sub->incomes->where("status", "rejected");
+        if ($wallet->wallet) {
+            $income["wallet"] = $wallet->wallet;
+            $balance = $earn;
+            $min = 0.005;
+            $pendingIncomes = $sub->incomes->where("status", "pending")->where("wallet", $wallet->wallet);
+            $rejectedIncomes = $sub->incomes->where("status", "rejected")->where("wallet", $wallet->wallet);
 
-                $balance = $balance + $sub->unPayments;
-                if ($wallet->minWithdrawal) {
-                    $min = $wallet->minWithdrawal;
-                }
-                if ($wallet->percent) {
-                    $income["percent"] = $wallet->percent;
-                }
-                $balance = $balance * ($income["percent"] / 100);
-                $income["payment"] = $balance;
+            $balance = $balance + $sub->unPayments;
+            if ($wallet->minWithdrawal) {
+                $min = $wallet->minWithdrawal;
+            }
+            if ($wallet->percent) {
+                $income["percent"] = $wallet->percent;
+            }
+            $balance = $balance * ($income["percent"] / 100);
+            $income["payment"] = $balance;
 
-                if ($balance >= $min) {
+            if ($balance >= $min) {
 
-                    $token = config('token.secret_token');
+                $token = config('token.secret_token');
 
-                    info('Secret token dump', [
-                        'token' => $token
+                info('Secret token dump', [
+                    'token' => $token
+                ]);
+
+                $unlock = Http::withBasicAuth('bituser', '111')
+                    ->post('http://92.205.163.43:8332', [
+                        'jsonrpc' => '1.0',
+                        'id' => 'unlock',
+                        'method' => 'walletpassphrase',
+                        'params' => [$token, 60],
                     ]);
 
-                    $unlock = Http::withBasicAuth('bituser', '111')
+                info('Unlock info', [
+                    'Unlock' => $unlock
+                ]);
+
+                if ($unlock->successful()) {
+                    $limitedBalance = number_format($balance, 8, '.', '');
+                    $response = Http::withBasicAuth('bituser', '111')
                         ->post('http://92.205.163.43:8332', [
                             'jsonrpc' => '1.0',
-                            'id' => 'unlock',
-                            'method' => 'walletpassphrase',
-                            'params' => [$token, 60],
+                            'id' => 'withdrawal',
+                            'method' => 'sendtoaddress',
+                            'params' => [$wallet->wallet, $limitedBalance]
                         ]);
 
-                    info('Unlock info', [
-                        'Unlock' => $unlock
-                    ]);
+                    if ($response->successful()) {
+                        $income["status"] = 'completed';
+                        $income["txid"] = $response->json()['result'];
+                        $wallet["payment"] = $balance;
 
-                    if ($unlock->successful()) {
-                        $limitedBalance = number_format($balance, 8, '.', '');
-                        $response = Http::withBasicAuth('bituser', '111')
-                            ->post('http://92.205.163.43:8332', [
-                                'jsonrpc' => '1.0',
-                                'id' => 'withdrawal',
-                                'method' => 'sendtoaddress',
-                                'params' => [$wallet->wallet, $limitedBalance]
-                            ]);
-
-                        if ($response->successful()) {
-                            $income["status"] = 'completed';
-                            $income["txid"] = $response->json()['result'];
-                            $wallet["payment"] = $balance;
-
-                            $sumPayments = $balance;
-                            if ($sub->payments !== null) {
-                                $sumPayments = $sumPayments + $sub->payments;
-                            }
-                            $sub->payments = $sumPayments;
-                            $wallet->save();
-                            $sub->save();
-
-                            $this->completer($pendingIncomes);
-                            $this->completer($rejectedIncomes);
-
-                            $income["message"] = 'completed';
-                        } else {
-                            $income["message"] = 'error payout';
+                        $sumPayments = $balance;
+                        if ($sub->payments !== null) {
+                            $sumPayments = $sumPayments + $sub->payments;
                         }
-                        Http::withBasicAuth('bituser', '111')
-                            ->post('http://92.205.163.43:8332', [
-                                'jsonrpc' => '1.0',
-                                'id' => 'lock',
-                                'method' => 'walletlock',
-                            ]);
+                        $sub->payments = $sumPayments;
+                        $wallet->save();
+                        $sub->save();
+
+                        $this->completer($pendingIncomes);
+                        $this->completer($rejectedIncomes);
+
+                        $income["message"] = 'completed';
                     } else {
-                        // Обработка ошибки разблокировки кошелька
-                        $income["message"] = 'error';
+                        $income["message"] = 'error payout';
                     }
+                    Http::withBasicAuth('bituser', '111')
+                        ->post('http://92.205.163.43:8332', [
+                            'jsonrpc' => '1.0',
+                            'id' => 'lock',
+                            'method' => 'walletlock',
+                        ]);
                 } else {
-                    $income["message"] = 'less minWithdrawal';
-                    $income["status"] = "pending";
+                    // Обработка ошибки разблокировки кошелька
+                    $income["message"] = 'error';
                 }
+            } else {
+                $income["message"] = 'less minWithdrawal';
+                $income["status"] = "pending";
             }
         }
 
@@ -148,38 +143,29 @@ class UpdateIncomesCommand extends Command
      */
     public function handle()
     {
-        $subs = Sub::all();
-        foreach ($subs as $sub) {
-            $requestController = new RequestController();
+        $requestController = new RequestController();
 
-            $opts = array(
-                "http" => array(
-                    "method" => "GET",
-                    "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
-                        "Content-Type: application/json; charset=utf-8",
-                )
-            );
-            $context = stream_context_create($opts);
-            $url = "https://api.minerstat.com/v2/coins?list=BTC";
-            $response_stat = file_get_contents($url, false, $context);
+        $response_fpps = $requestController->proxy([
+            "puid" => "781195",
+            "page_size" => "1",
+        ], "account/earn-history", "get");
+
+        $subs = Sub::all();
+
+        $response_fpps_encode = json_decode($response_fpps->getContent());
+        foreach ($subs as $sub) {
 
             $response_hash = $requestController->proxy([
                 "puid" => "781195",
                 "group" => $sub->group_id,
                 "page_size" => "1000",
             ], "worker", "get");
-            $response_diff = $requestController->proxy([], "pool/status", "get");
-//
-//            $response_list = $requestController->proxy([
-//                "puid" => "781195",
-//            ], "worker/groups", "get");
-            if (false !== $response_hash) {
+
+            if (count(json_decode($response_hash->getContent())->data->data) > 0) {
                 try {
                     $wallets = $sub->wallets;
-                    $response_stat_encode = json_decode($response_stat);
                     $response_hash_encode = json_decode($response_hash->getContent());
-                    $response_diff_encode = json_decode($response_diff->getContent());
-//                    $response_list_encode = json_decode($response_list->getContent());
+
                     $share = 0;
                     $unit = "T";
                     if ($response_hash_encode->data->data) {
@@ -191,28 +177,18 @@ class UpdateIncomesCommand extends Command
                             }
                             return $carry;
                         }, $share);
-                        $unit = array_reduce($response_hash_encode->data->data, function ($carry, $item) {
-                            foreach ($item as $key => $value) {
-                                if ($key == "shares_unit") {
-                                    $carry["shares_unit"] = $value;
-                                }
-                            }
-                            return $carry;
-                        },
-                            ['shares_unit' => ''])['shares_unit'];
                     }
 
                     if ($share > 1) {
                         $earn = Helper::calculateEarn(
                             share: $share,
-                            rewardBlock: $response_stat_encode[0]->reward_block,
-                            fppsMminingEarnings: $response_diff_encode->data->fpps_mining_earnings,
-                            difficulty: $response_stat_encode[0]->difficulty
+                            rewardBlock: 6.25,
+                            fppsPercent: $response_fpps_encode->data->list[0]->more_than_pps96_rate,
+                            difficulty: $response_fpps_encode->data->list[0]->diff
                         );
                     } else {
                         $earn = 0;
                     }
-
 
 //                    $earn = $earn * (1 - 0.005);
 //                    $earn = $earn * (1 - 0.035);
@@ -221,17 +197,15 @@ class UpdateIncomesCommand extends Command
                         'group_id' => $sub->group_id,
                         'wallet' => "",
                         'amount' => number_format($earn, 8, ".", ""),
-                        'payment' => 0,
+                        'payment' => number_format($earn, 8, ".", "") * 100,
                         'percent' => 100,
-                        'diff' => $response_stat_encode[0]->difficulty,
+                        'diff' => $response_fpps_encode->data->list[0]->diff,
                         'unit' => $unit,
                         'hash' => number_format($share, 2, ".", ""),
                         'status' => "rejected",
                         'message' => "",
                         'txid' => "",
                     ];
-
-                    $income["payment"] = $income["amount"] * ($income["percent"] / 100);
 
                     $sumAccruals = $earn;
                     if ($sub->accruals !== null) {
@@ -240,6 +214,8 @@ class UpdateIncomesCommand extends Command
 
                     if ($income["amount"] > 0) {
                         if (count($wallets) === 0) {
+                            $income["message"] = 'no wallet';
+                            $income["txid"] = 'no wallet';
                             $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
                         } else {
                             foreach ($wallets as $wallet) {
@@ -256,9 +232,6 @@ class UpdateIncomesCommand extends Command
                     // Обработка ошибки разбора JSON
                     $this->error('Error parsing JSON response for user: ' . $sub->id . ' - ' . $e->getMessage());
                 }
-            } else {
-                // Обработка ошибки при выполнении запроса
-                $this->error('Error parsing JSON response for user: ' . $sub->id . ' - ' . $e->getMessage());
             }
         }
     }

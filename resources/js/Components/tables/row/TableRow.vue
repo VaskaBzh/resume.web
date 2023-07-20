@@ -26,6 +26,9 @@
             }}</span>
             <span v-hash>{{ column[1] }}</span>
         </td>
+        <span class="more" v-if="viewportWidth <= 767.98">{{
+            $t("more")
+        }}</span>
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -169,12 +172,22 @@ export default {
                 background: #fafafa;
                 border-radius: 16px;
                 box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
+                .more {
+                    margin-top: 11px;
+                    font-size: 14px;
+                    font-weight: 400;
+                    color: #3f7bdd;
+                    line-height: 135%;
+                }
             }
         }
         &-cursor {
             cursor: pointer;
         }
         &.main {
+            .more {
+                display: none;
+            }
             .table_column {
                 background: transparent;
                 color: #5389e1;

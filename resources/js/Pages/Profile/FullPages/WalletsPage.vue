@@ -460,7 +460,6 @@ export default {
             this.form.minWithdrawal = wallet.minWithdrawal;
             this.form.wallet = wallet.wallet;
             this.form.name = wallet.fullName;
-            console.log(wallet);
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
@@ -482,27 +481,28 @@ export default {
 };
 </script>
 <style lang="scss">
-.no-info {
-    .wallets {
-        &__block {
-            display: inline-flex;
-            cursor: pointer;
-            gap: 8px;
-            align-items: center;
-            justify-content: center;
-            min-height: 140px;
-            font-size: 18px;
-            font-weight: 400;
-            line-height: 135%;
-            color: #3f7bdd;
-            transition: all 0.5s ease 0s;
-        }
-    }
-}
 .wallets {
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
+    .no-info.no-bg {
+        padding: 0;
+        .wallets {
+            &__block {
+                display: inline-flex;
+                cursor: pointer;
+                gap: 8px;
+                align-items: center;
+                justify-content: center;
+                min-height: 140px;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 135%;
+                color: #3f7bdd;
+                transition: all 0.5s ease 0s;
+            }
+        }
+    }
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
