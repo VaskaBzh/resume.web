@@ -21,7 +21,7 @@ export default {
                 .catch((err) => console.log(err));
         },
         async getMiningStat({ commit, state }) {
-            axios.get("miner_stat").then(async (response) => {
+            axios.get("/miner_stat").then(async (response) => {
                 let minerstats = response.data.minerstats;
 
                 let converterModel = {
