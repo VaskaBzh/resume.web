@@ -143,41 +143,29 @@ class UpdateIncomesCommand extends Command
      */
     public function handle()
     {
-        $subs = Sub::all();
-        foreach ($subs as $sub) {
-            $requestController = new RequestController();
+        $requestController = new RequestController();
 
-            $opts = array(
-                "http" => array(
-                    "method" => "GET",
-                    "header" => "Authorization: sBfOHsJLY6tZdoo4eGxjrGm9wHuzT17UMhDQQn4N\r\n" .
-                        "Content-Type: application/json; charset=utf-8",
-                )
-            );
-            $context = stream_context_create($opts);
-            $url = "https://api.minerstat.com/v2/coins?list=BTC";
-            $response_stat = file_get_contents($url, false, $context);
+        $response_fpps = $requestController->proxy([
+            "puid" => "781195",
+            "page_size" => "1",
+        ], "account/earn-history", "get");
+
+        $subs = Sub::all();
+
+        $response_fpps_encode = json_decode($response_fpps->getContent());
+        foreach ($subs as $sub) {
 
             $response_hash = $requestController->proxy([
                 "puid" => "781195",
                 "group" => $sub->group_id,
                 "page_size" => "1000",
             ], "worker", "get");
-            $response_fpps = $requestController->proxy([
-                "puid" => "781195",
-                "page_size" => "1",
-            ], "account/earn-history", "get");
-//
-//            $response_list = $requestController->proxy([
-//                "puid" => "781195",
-//            ], "worker/groups", "get");
+
             if (count(json_decode($response_hash->getContent())->data->data) > 0) {
                 try {
                     $wallets = $sub->wallets;
-                    $response_stat_encode = json_decode($response_stat);
                     $response_hash_encode = json_decode($response_hash->getContent());
-                    $response_fpps_encode = json_decode($response_fpps->getContent());
-//                    $response_list_encode = json_decode($response_list->getContent());
+
                     $share = 0;
                     $unit = "T";
                     if ($response_hash_encode->data->data) {
@@ -194,9 +182,9 @@ class UpdateIncomesCommand extends Command
                     if ($share > 1) {
                         $earn = Helper::calculateEarn(
                             share: $share,
-                            rewardBlock: $response_stat_encode[0]->reward_block,
+                            rewardBlock: 6.25,
                             fppsPercent: $response_fpps_encode->data->list[0]->more_than_pps96_rate,
-                            difficulty: $response_stat_encode[0]->difficulty
+                            difficulty: $response_fpps_encode->data->list[0]->diff
                         );
                     } else {
                         $earn = 0;
@@ -211,7 +199,7 @@ class UpdateIncomesCommand extends Command
                         'amount' => number_format($earn, 8, ".", ""),
                         'payment' => number_format($earn, 8, ".", "") * 100,
                         'percent' => 100,
-                        'diff' => $response_stat_encode[0]->difficulty,
+                        'diff' => $response_fpps_encode->data->list[0]->diff,
                         'unit' => $unit,
                         'hash' => number_format($share, 2, ".", ""),
                         'status' => "rejected",
