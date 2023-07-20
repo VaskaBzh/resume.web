@@ -7,12 +7,14 @@ use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use App\Console\Commands\UpdateMiningStatCommand;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
         // ...
         Commands\UpdateIncomesCommand::class,
+        UpdateMiningStatCommand::class,
     ];
     /**
      * Define the application's command schedule.

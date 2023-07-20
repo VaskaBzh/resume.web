@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::create('minerstats', function (Blueprint $table) {
+        Schema::create('miner_stats', function (Blueprint $table) {
             $table->id();
             $table->decimal('network_hashrate', 5);
             $table->string('network_unit');
@@ -19,13 +19,13 @@ return new class extends Migration {
             $table->decimal('reward_block', 8, 7);
             $table->unsignedBigInteger('price_USD');
 
-            $table->timestamp('time_remain');
+            $table->unsignedBigInteger('price_USD');
             $table->timestamps();
         });
     }
 
     public function down(): void
     {
-        Schema::dropIfExists('minerstats');
+        Schema::dropIfExists('miner_stats');
     }
 };
