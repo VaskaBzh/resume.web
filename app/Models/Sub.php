@@ -19,22 +19,22 @@ class Sub extends Model
         'user_id',
         'group_id',
         'sub',
-        'name',
         'payments',
         'unPayments',
         'accruals',
+        'percent',
     ];
 
     /* Relations */
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
     public function finances(): HasMany
     {
         return $this->hasMany(Finance::class, 'group_id', 'group_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 
     public function workers(): HasMany

@@ -65,7 +65,8 @@ export default {
     },
     async created() {
         if (this.$store.getters.getValid) {
-            this.$store.dispatch("getConverter");
+            this.$store.dispatch("getMiningStat");
+            this.$store.dispatch("getGraph");
             await this.$store.dispatch("getAccounts");
         }
         this.interval = setInterval(() => {

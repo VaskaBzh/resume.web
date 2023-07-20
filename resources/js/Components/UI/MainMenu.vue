@@ -11,7 +11,7 @@
         <transition name="options">
             <div class="menu" :class="className" v-show="open">
                 <button
-                    @click="
+                    @mousedown="
                         option.class === 'remove'
                             ? this.$emit('remove', option)
                             : this.$emit('clicked', option)

@@ -1,10 +1,10 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
-import btccom from "@/api/btccom";
+import axios from "axios";
 
 export default {
     actions: {
-        async getConverter({ commit, state }) {
+        async getGraph({ commit }) {
             difficulty
                 .fetch({
                     data: {
@@ -19,62 +19,33 @@ export default {
                     commit(`updateHistoryDiff`, res.data.values);
                 })
                 .catch((err) => console.log(err));
-            btccom
-                .fetch({
-                    data: {},
-                    path: "pool/status",
-                    method: "get",
-                    link_type: "",
-                })
-                .then(async (response) => {
-                    let converterModel = {
-                        diff: 0,
-                        diff_change: response.data.data.difficulty_change,
-                        nextDiff: response.data.data.estimated_next_difficulty,
-                        fpps: response.data.data.fpps_mining_earnings,
-                        time: 0,
-                        network: Number(response.data.data.network_hashrate),
-                        networkUnit: response.data.data.network_hashrate_unit,
-                        price: Number(response.data.data.exchange_rate.BTC2USD),
-                    };
-                    if (response.data.data.time_remain !== "-") {
-                        converterModel.time = (
-                            (response.data.data.time_remain -
-                                (Date.now() / 1000).toFixed(0)) /
-                            60 /
-                            60
-                        ).toFixed(0);
-                    } else {
-                        converterModel.time = response.data.data.time_remain;
-                    }
-                    await this.dispatch("getReward", {
-                        item: converterModel,
-                    });
-                });
         },
-        async getReward({ commit, state }, data) {
-            difficulty
-                .fetch({
-                    data: {
-                        list: "BTC",
-                    },
-                    path: "https://api.minerstat.com/v2/coins",
-                    method: "get",
-                    link_type: "",
-                })
-                .then((response) => {
-                    response.data.forEach((el, i) => {
-                        if (el.coin === "BTC") {
-                            data.item.diff = el.difficulty;
-                            data.item.reward = el.reward_block;
+        async getMiningStat({ commit, state }) {
+            axios.get("/miner_stat").then(async (response) => {
+                let minerstats = response.data.minerstats;
 
-                            commit(`updateInfo`, {
-                                key: "btc".toLowerCase(),
-                                item: data.item,
-                            });
-                        }
-                    });
+                let converterModel = {
+                    diff: minerstats.network_difficulty,
+                    diff_change: minerstats.change_difficulty,
+                    nextDiff: minerstats.next_difficulty,
+                    time: minerstats.time_remain,
+                    network: Number(minerstats.network_hashrate),
+                    networkUnit: minerstats.network_unit,
+                    reward: minerstats.reward_block,
+                    price: minerstats.price_USD,
+                };
+
+                converterModel.time = (
+                    (minerstats.time_remain - (Date.now() / 1000).toFixed(0)) /
+                    60 /
+                    60
+                ).toFixed(0);
+
+                commit(`updateInfo`, {
+                    key: "btc".toLowerCase(),
+                    item: converterModel,
                 });
+            });
         },
     },
     mutations: {

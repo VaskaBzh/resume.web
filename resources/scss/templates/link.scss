@@ -11,10 +11,4 @@
     &-white {
         color: #fff;
     }
-    &:after {
-        content: "";
-        background-image: url("data:image/svg+xml,%3Csvg width='14' height='14' viewBox='0 0 14 14' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M4.83748 3.08752C5.06529 2.85972 5.43463 2.85972 5.66244 3.08752L9.16244 6.58752C9.39024 6.81533 9.39024 7.18467 9.16244 7.41248L5.66244 10.9125C5.43463 11.1403 5.06529 11.1403 4.83748 10.9125C4.60967 10.6847 4.60967 10.3153 4.83748 10.0875L7.925 7L4.83748 3.91248C4.60967 3.68467 4.60967 3.31533 4.83748 3.08752Z' fill='%234181EA' stroke='%234181EA' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E%0A");
-        width: 14px;
-        height: 14px;
-    }
 }

@@ -52,11 +52,18 @@ export default {
     data() {
         return {
             height: 360,
+            bandColor: "#E6EAF0",
         };
     },
     watch: {
         viewportWidth() {
             this.height = this.getHeight;
+        },
+        isDark(newVal) {
+            this.bandColor = "#E6EAF0";
+            if (newVal) {
+                this.bandColor = "#262626";
+            }
         },
     },
     beforeUpdate() {
@@ -75,13 +82,6 @@ export default {
     },
     computed: {
         ...mapGetters(["isDark"]),
-        bandColor() {
-            let color = "#E6EAF0";
-            if (this.isDark) {
-                color = "#262626";
-            }
-            return color;
-        },
         getHeight() {
             if (!this.heightVal) {
                 if (this.viewportWidth < 479.98) return 338;

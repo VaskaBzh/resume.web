@@ -1,5 +1,5 @@
 <template>
-    <div class="control section" :class="{ animated: animated }">
+    <div class="control section" :class="{ animated: animated || !setTheme }">
         <div class="control__container">
             <div class="control__content">
                 <div class="control__head">
@@ -35,182 +35,16 @@
                     </transition>
                 </div>
                 <div class="control__asics" ref="asic_container">
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
-                        <div class="blinks blinks-red">
-                            <div class="red"></div>
-                            <div class="red"></div>
-                            <div class="red"></div>
-                        </div>
-                        <div class="blinks blinks-green">
-                            <div class="green"></div>
-                            <div class="green"></div>
-                            <div class="green"></div>
-                        </div>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                    </div>
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
-                        <div class="blinks blinks-red">
-                            <div class="red"></div>
-                            <div class="red"></div>
-                            <div class="red"></div>
-                        </div>
-                        <div class="blinks blinks-green">
-                            <div class="green"></div>
-                            <div class="green"></div>
-                            <div class="green"></div>
-                        </div>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                    </div>
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
-                        <div class="blinks blinks-red">
-                            <div class="red"></div>
-                            <div class="red"></div>
-                            <div class="red"></div>
-                        </div>
-                        <div class="blinks blinks-green">
-                            <div class="green"></div>
-                            <div class="green"></div>
-                            <div class="green"></div>
-                        </div>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                    </div>
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
-                        <div class="blinks blinks-red">
-                            <div class="red"></div>
-                            <div class="red"></div>
-                            <div class="red"></div>
-                        </div>
-                        <div class="blinks blinks-green">
-                            <div class="green"></div>
-                            <div class="green"></div>
-                            <div class="green"></div>
-                        </div>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                    </div>
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
-                        <div class="blinks blinks-red">
-                            <div class="red"></div>
-                            <div class="red"></div>
-                            <div class="red"></div>
-                        </div>
-                        <div class="blinks blinks-green">
-                            <div class="green"></div>
-                            <div class="green"></div>
-                            <div class="green"></div>
-                        </div>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                    </div>
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
-                        <div class="blinks blinks-red">
-                            <div class="red"></div>
-                            <div class="red"></div>
-                            <div class="red"></div>
-                        </div>
-                        <div class="blinks blinks-green">
-                            <div class="green"></div>
-                            <div class="green"></div>
-                            <div class="green"></div>
-                        </div>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="!getTheme"
-                                src="../../../../assets/img/asic-sun.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                        <transition name="asic-shadow">
-                            <img
-                                v-show="getTheme"
-                                src="../../../../assets/img/asic-moon.webp"
-                                alt="asic"
-                                class="asic-shadow"
-                            />
-                        </transition>
-                    </div>
-                    <div class="asic">
-                        <img src="../../../../assets/img/ASIC.webp" alt="asic" />
+                    <div
+                        :key="i"
+                        class="asic"
+                        :class="{ 'asic-dark': getTheme }"
+                        v-for="(_, i) in [1, 1, 1, 1, 1, 1, 1]"
+                    >
+                        <img
+                            src="../../../../assets/img/ASIC.webp"
+                            alt="asic"
+                        />
                         <div class="blinks blinks-red">
                             <div class="red"></div>
                             <div class="red"></div>
@@ -256,6 +90,12 @@ export default {
     data() {
         return {
             animated: false,
+            animationObserver: null,
+            setTheme: true,
+            asics: null,
+            timeouts: [],
+            topPos: [],
+            leftPos: [],
         };
     },
     computed: {
@@ -264,109 +104,158 @@ export default {
     watch: {
         animated(newBool) {
             if (newBool) {
-                const asics =
-                    this.$refs.asic_container.querySelectorAll(".asic");
-                let leftPos = [
-                    asics[0].offsetLeft,
-                    asics[1].offsetLeft,
-                    asics[2].offsetLeft,
-                    asics[3].offsetLeft,
-                    asics[4].offsetLeft,
-                    asics[5].offsetLeft,
-                    asics[6].offsetLeft,
-                ];
-                let topPos = [
-                    asics[0].offsetTop,
-                    asics[1].offsetTop,
-                    asics[2].offsetTop,
-                    asics[3].offsetTop,
-                    asics[4].offsetTop,
-                    asics[5].offsetTop,
-                    asics[6].offsetTop,
-                ];
-                asics.forEach((asic) => {
-                    this.$refs.asic_container.style.minHeight =
-                        asics[3].clientHeight + topPos[3] + "px";
+                this.$refs.asic_container.style.minHeight =
+                    this.asics[3].clientHeight + this.topPos[3] + "px";
+                this.asics.forEach((asic) => {
+                    asic.style.transition = "all 0s ease 0s";
                     asic.style.position = "absolute";
                     asic.style.left = "50%";
-                    // asic.style.top = topPos[3] + "px";
-                    asic.style.marginTop = topPos[3] + "px";
+                    // asic.style.top = this.topPos[3] + "px";
+                    asic.style.marginTop = this.topPos[3] + "px";
                     asic.style.transform = "translateX(-50%)";
-                    asic.style.transition = "all 0.5s ease 0s";
+                    setTimeout(
+                        () => (asic.style.transition = "all 0.5s ease 0s"),
+                        300
+                    );
                 });
-                setTimeout(() => {
-                    asics[0].style.transform = "none";
-                    asics[1].style.transform = "none";
-                    asics[2].style.transform = "none";
-                    asics[4].style.transform = "none";
-                    asics[5].style.transform = "none";
-                    asics[6].style.transform = "none";
-                    asics[0].style.left = leftPos[2] + 30 + "px";
-                    asics[1].style.left = leftPos[2] + 30 + "px";
-                    asics[2].style.left = leftPos[2] + "px";
-                    asics[4].style.left = leftPos[4] + "px";
-                    asics[5].style.left = leftPos[4] + 30 + "px";
-                    asics[6].style.left = leftPos[4] + 30 + "px";
-                    asics[0].style.marginTop = topPos[2] + "px";
-                    asics[1].style.marginTop = topPos[2] + "px";
-                    asics[2].style.marginTop = topPos[2] + "px";
-                    asics[4].style.marginTop = topPos[4] + "px";
-                    asics[5].style.marginTop = topPos[4] + "px";
-                    asics[6].style.marginTop = topPos[4] + "px";
-                }, 1000);
-                setTimeout(() => {
-                    asics[0].style.left = leftPos[1] + 30 + "px";
-                    asics[1].style.left = leftPos[1] + "px";
-                    asics[5].style.left = leftPos[5] + "px";
-                    asics[6].style.left = leftPos[5] + 30 + "px";
-                    asics[0].style.marginTop = topPos[1] + "px";
-                    asics[1].style.marginTop = topPos[1] + "px";
-                    asics[5].style.marginTop = topPos[5] + "px";
-                    asics[6].style.marginTop = topPos[5] + "px";
-                }, 1500);
-                setTimeout(() => {
-                    asics[0].style.left = leftPos[0] + "px";
-                    asics[6].style.left = leftPos[6] + "px";
-                    asics[0].style.marginTop = topPos[0] + "px";
-                    asics[6].style.marginTop = topPos[6] + "px";
-                }, 2000);
-                setTimeout(() => {
-                    asics.forEach((asic) => {
-                        asic.style.transition = "none";
-                        asic.removeAttribute("style");
-                    });
-                }, 3000);
+                this.timeouts.push(
+                    setTimeout(() => {
+                        this.asics[0].style.transform = "none";
+                        this.asics[1].style.transform = "none";
+                        this.asics[2].style.transform = "none";
+                        this.asics[4].style.transform = "none";
+                        this.asics[5].style.transform = "none";
+                        this.asics[6].style.transform = "none";
+                        this.asics[0].style.left =
+                            this.leftPos[2] +
+                            this.asics[0].scrollWidth / 4 +
+                            "px";
+                        this.asics[1].style.left =
+                            this.leftPos[2] +
+                            this.asics[1].scrollWidth / 4 +
+                            "px";
+                        this.asics[2].style.left = this.leftPos[2] + "px";
+                        this.asics[4].style.left = this.leftPos[4] + "px";
+                        this.asics[5].style.left =
+                            this.leftPos[4] +
+                            this.asics[5].scrollWidth / 4 +
+                            "px";
+                        this.asics[6].style.left =
+                            this.leftPos[4] +
+                            this.asics[6].scrollWidth / 4 +
+                            "px";
+                        this.asics[0].style.marginTop = this.topPos[2] + "px";
+                        this.asics[1].style.marginTop = this.topPos[2] + "px";
+                        this.asics[2].style.marginTop = this.topPos[2] + "px";
+                        this.asics[4].style.marginTop = this.topPos[4] + "px";
+                        this.asics[5].style.marginTop = this.topPos[4] + "px";
+                        this.asics[6].style.marginTop = this.topPos[4] + "px";
+                    }, 1000)
+                );
+                this.timeouts.push(
+                    setTimeout(() => {
+                        this.asics[0].style.left =
+                            this.leftPos[1] +
+                            this.asics[0].scrollWidth / 4 +
+                            "px";
+                        this.asics[1].style.left = this.leftPos[1] + "px";
+                        this.asics[5].style.left = this.leftPos[5] + "px";
+                        this.asics[6].style.left =
+                            this.leftPos[5] +
+                            this.asics[6].scrollWidth / 4 +
+                            "px";
+                        this.asics[0].style.marginTop = this.topPos[1] + "px";
+                        this.asics[1].style.marginTop = this.topPos[1] + "px";
+                        this.asics[5].style.marginTop = this.topPos[5] + "px";
+                        this.asics[6].style.marginTop = this.topPos[5] + "px";
+                    }, 1500)
+                );
+                this.timeouts.push(
+                    setTimeout(() => {
+                        this.asics[0].style.left = this.leftPos[0] + "px";
+                        this.asics[6].style.left = this.leftPos[6] + "px";
+                        this.asics[0].style.marginTop = this.topPos[0] + "px";
+                        this.asics[6].style.marginTop = this.topPos[6] + "px";
+                    }, 2000)
+                );
+                this.timeouts.push(
+                    setTimeout(() => {
+                        this.asics.forEach((asic) => {
+                            asic.style.transition = "none";
+                            asic.removeAttribute("style");
+                        });
+                        this.$refs.asic_container?.removeAttribute("style");
+                    }, 3000)
+                );
             }
         },
     },
     methods: {
         animationInit() {
             let bool = true;
-            const animationObserver = new IntersectionObserver((entries) => {
+            this.animationObserver = new IntersectionObserver((entries) => {
                 entries.forEach((entry) => {
-                    if (
-                        entry.isIntersecting &&
-                        entry.boundingClientRect.bottom >
-                            entry.boundingClientRect.height &&
-                        bool
-                    ) {
+                    if (entry.isIntersecting && bool) {
                         this.animated = true;
                         bool = false;
                         setTimeout(() => {
-                            this.$store.dispatch("theme", !this.getTheme);
-                            this.$store.dispatch("SetThemeVal", this.getTheme);
+                            if (this.setTheme) {
+                                this.$store.dispatch("theme", !this.getTheme);
+                                this.$store.dispatch(
+                                    "SetThemeVal",
+                                    this.getTheme
+                                );
+                            }
                         }, 2000);
                     }
-                    // else if (entry.isIntersecting) {
-                    //     this.animated = false;
-                    // }
+                    if (!bool && !entry.isIntersecting) {
+                        this.stopAnimation();
+                    }
                 });
             });
-            animationObserver.observe(this.$refs.asic_container);
+            this.animationObserver.observe(this.$refs.asic_container);
+        },
+        stopAnimation() {
+            this.setTheme = false;
+            this.asics.forEach((asic) => {
+                asic.style.transition = "all 0s linear 0s";
+                asic.removeAttribute("style");
+            });
+            this.$refs.asic_container?.removeAttribute("style");
+            this.animationObserver.disconnect();
+            this.timeouts.forEach((timeoutId) => clearTimeout(timeoutId));
+            this.timeouts = [];
         },
     },
     mounted() {
         this.animationInit();
+        this.asics = this.$refs.asic_container.querySelectorAll(".asic");
+        this.leftPos = [
+            this.asics[0].offsetLeft,
+            this.asics[1].offsetLeft,
+            this.asics[2].offsetLeft,
+            this.asics[3].offsetLeft,
+            this.asics[4].offsetLeft,
+            this.asics[5].offsetLeft,
+            this.asics[6].offsetLeft,
+        ];
+        this.topPos = [
+            this.asics[0].offsetTop,
+            this.asics[1].offsetTop,
+            this.asics[2].offsetTop,
+            this.asics[3].offsetTop,
+            this.asics[4].offsetTop,
+            this.asics[5].offsetTop,
+            this.asics[6].offsetTop,
+        ];
+        this.asics.forEach((asic) => {
+            asic.style.transition = "all 0s ease 0s";
+            asic.style.position = "absolute";
+            asic.style.left = "50%";
+            // asic.style.top = this.topPos[3] + "px";
+            asic.style.marginTop = this.topPos[3] + "px";
+            asic.style.transform = "translateX(-50%)";
+        });
     },
 };
 </script>
@@ -394,8 +283,20 @@ export default {
         opacity: 1;
     }
     to {
-        transform: translate(-100vw, 500px);
+        transform: translate(-100vw, 385px);
         opacity: 0;
+    }
+}
+@media (max-width: 767.98px) {
+    @keyframes outAnim {
+        from {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
+        to {
+            transform: translate(-100vw, 200px);
+            opacity: 0;
+        }
     }
 }
 @keyframes opacityIn {
@@ -416,12 +317,24 @@ export default {
 }
 @keyframes inAnim {
     from {
-        transform: translate(100vw, 500px);
+        transform: translate(100vw, 385px);
         opacity: 0;
     }
     to {
         transform: translate(-50%, 0);
         opacity: 1;
+    }
+}
+@media (max-width: 767.98px) {
+    @keyframes inAnim {
+        from {
+            transform: translate(100vw, 200px);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, 0);
+            opacity: 1;
+        }
     }
 }
 @keyframes fadeGreen {
@@ -628,9 +541,11 @@ export default {
         .asic {
             height: fit-content;
             width: 8%;
-            filter: drop-shadow(0px 5.94951px 47.5961px rgba(27, 27, 27, 0.25));
             position: relative;
             z-index: 0;
+            &-dark {
+                box-shadow: none;
+            }
             img {
                 width: 100%;
             }

@@ -166,12 +166,14 @@ export default {
             if (e.keyCode === 27) this.close(e);
         },
         initFunc() {
-            document.addEventListener("click", this.clickClosed, true);
+            document.addEventListener("mousedown", this.clickClosed, true);
             document.addEventListener("keydown", this.keyClosed);
         },
         destroyFunc() {
-            document.removeEventListener("click", this.clickClosed, true);
+            document.removeEventListener("mousedown", this.clickClosed, true);
             document.removeEventListener("keydown", this.keyClosed);
+
+            this.close();
         },
     },
     mounted() {

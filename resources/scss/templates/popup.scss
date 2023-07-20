@@ -17,17 +17,27 @@ body::after {
     body::after {
         opacity: 1;
     }
-
-    .popup__content {
-        animation: backMainAnimation forwards 0.3s ease 0s;
-        &-graph {
-            animation: backMainAnimationGraph forwards 0.3s ease 0s;
+    .popup {
+        .popup {
+            &__content {
+                animation-name: backMainAnimation;
+                animation-duration: 0.3s;
+                animation-fill-mode: forwards;
+                animation-timing-function: ease;
+                &-graph {
+                    animation-name: backMainAnimationGraph;
+                }
+            }
         }
         &-card {
-            animation: backMainAnimationCard forwards 0.3s ease 0s;
+            .popup__content {
+                animation-name: backMainAnimationCard;
+            }
         }
         &-changes {
-            animation: backChangeAnimation forwards 0.3s ease 0s;
+            .popup__content {
+                animation-name: backChangeAnimation;
+            }
         }
     }
 }
@@ -69,216 +79,6 @@ body::after {
             opacity: 1 !important;
         }
     }
-    &_show {
-        z-index: 150;
-        visibility: visible;
-        overflow: auto;
-        pointer-events: auto;
-        &.popup {
-            &-graph {
-                .popup__content {
-                    animation: mainAnimationGraph forwards 1s ease 0.5s !important;
-                    .container-chart .title {
-                        animation: fadeIn forwards 0.8s ease 0.8s;
-                    }
-                }
-            }
-            &-changes {
-                .popup__content {
-                    animation: mainAnimationChange forwards 1s ease 0.5s !important;
-                }
-            }
-            &-card {
-                .popup__content {
-                    transform: translateY(100px);
-                    animation: mainAnimationCard forwards 1s ease 0.5s !important;
-                }
-            }
-            &-connect {
-                animation: mainAnimationConnect forwards 0.8s ease 0.5s !important;
-            }
-        }
-        .popup__content {
-            visibility: visible;
-            opacity: 1;
-            overflow: visible;
-            transform: translateY(200px);
-            animation: mainAnimation forwards 0.8s ease 0.5s !important;
-            &_logo {
-                animation: logoAnimation forwards 0.5s ease 0.5s;
-                opacity: 1;
-                @media (max-width: $mobile) {
-                    animation: logoAnimation forwards 0.2s ease 0.5s;
-                }
-            }
-        }
-    }
-    &-card {
-        .popup {
-            &__content {
-                padding: 0 16px;
-                &_block {
-                    padding: 48px 0 16px;
-                }
-            }
-        }
-        .table {
-            &_column {
-                &:first-child {
-                    .label {
-                        @media (max-width: $mobile) {
-                            color: #5389e1;
-                            font-weight: 500;
-                        }
-                    }
-                }
-            }
-            &__row {
-                @media (max-width: 767.98px) {
-                    display: flex;
-                    flex-direction: column;
-                    gap: 10px;
-                }
-                &.rejected,
-                &.completed,
-                &.pending {
-                    .table_column {
-                        @media (max-width: 767.98px) {
-                            &:first-child span:last-child::before {
-                                display: inline-flex;
-                                content: "";
-                                width: 12px;
-                                height: 12px;
-                                border-radius: 50%;
-                                margin-right: 8px;
-                                transition: all 0.5s ease 0s;
-                            }
-                        }
-                    }
-                }
-                &.completed {
-                    .table_column {
-                        @media (max-width: 767.98px) {
-                            &:first-child span:last-child:before {
-                                background: #13d60e;
-                            }
-                        }
-                    }
-                }
-                &.rejected {
-                    .table_column {
-                        @media (max-width: 767.98px) {
-                            &:first-child span:last-child:before {
-                                background: #ff0000;
-                            }
-                        }
-                    }
-                }
-                &.pending {
-                    .table_column {
-                        @media (max-width: 767.98px) {
-                            &:first-child span:last-child:before {
-                                background: #e9c058;
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-    &-graph {
-        @media (max-width: 767.98px) {
-            .popup {
-                &__content_block {
-                    padding-bottom: 5px;
-                }
-                &__main {
-                    gap: 0;
-                }
-            }
-        }
-        &__graph {
-            @media (min-width: 767.98px) {
-                padding: 4px 18px 0 38px;
-            }
-            padding: 0 0 0 42px;
-        }
-        .graph {
-            .graph {
-                &__main {
-                    @media (max-width: 767.98px) {
-                        margin: 0 -20px 0 0;
-                    }
-                    @media (max-width: 479.98px) {
-                        margin: 0 -20px 0 32px;
-                    }
-                }
-                &__list {
-                    padding: 0;
-                    margin: 0;
-                    @media (max-width: 767.98px) {
-                        padding-right: 20px;
-                    }
-                }
-            }
-        }
-        @media (max-width: $mobileSmall) {
-            &.popup {
-                &_show {
-                    .popup__content {
-                        animation: mainAnimationGraph forwards 0.8s ease 0s !important;
-                        .container-chart,
-                        .title {
-                            animation: fadeIn forwards 0.3s ease 0.7s;
-                        }
-                    }
-                }
-            }
-            .graph {
-                padding: 0 !important;
-                margin: 0 !important;
-                .graph {
-                    &__head {
-                        padding: 0;
-                        margin: 0;
-                    }
-                }
-                .graph {
-                    &__con {
-                        .container-chart,
-                        .title {
-                            opacity: 0;
-                        }
-                        padding: 10px 0;
-                        margin: 0 0 10px;
-                        overflow-x: scroll;
-                        overflow-y: hidden;
-                        .container-chart {
-                            margin: 0 10px 0 60px;
-                        }
-                    }
-                }
-            }
-            .popup {
-                &__content {
-                    transition: all 0.5s ease 0s;
-                    &_block {
-                        overflow: visible;
-                        padding: 15px 0 0;
-                    }
-                }
-            }
-        }
-    }
-    &__wrapper {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        min-height: 100%;
-        flex: 1 1 auto;
-        width: 100%;
-        justify-content: center;
-    }
     .loading {
         form,
         .swiper {
@@ -309,6 +109,50 @@ body::after {
             }
         }
     }
+    &_show {
+        z-index: 150;
+        visibility: visible;
+        overflow: auto;
+        pointer-events: auto;
+        &.popup {
+            .popup {
+                &__content {
+                    visibility: visible;
+                    animation-name: mainAnimation;
+                    animation-duration: 1.5s;
+                    animation-delay: 0.5s;
+                    animation-fill-mode: forwards;
+                    animation-timing-function: ease;
+                    &-graph {
+                        animation-name: mainAnimationGraph;
+                    }
+                    &_logo {
+                        animation: fadeOut forwards 0.5s ease 0.5s;
+                    }
+                }
+            }
+            &-changes {
+                .popup__content {
+                    animation-name: mainAnimationChange;
+                    animation-duration: 1.5s;
+                }
+            }
+            &-card {
+                .popup__content {
+                    animation-name: mainAnimationCard;
+                }
+            }
+        }
+    }
+    &__wrapper {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        min-height: 100%;
+        flex: 1 1 auto;
+        width: 100%;
+        justify-content: center;
+    }
     &__head {
         margin-bottom: 24px;
         display: flex;
@@ -336,7 +180,7 @@ body::after {
         @media (min-width: 991.98px) {
             flex-direction: column;
         }
-        @media (max-width: 767.98px) {
+        @media (max-width: $mobile) {
             flex-direction: column;
             gap: 10px;
         }
@@ -350,7 +194,7 @@ body::after {
                 min-width: 175px;
                 box-shadow: 0 2px 6px 0 rgba(35, 38, 63, 0.1);
             }
-            @media (min-width: 767.98px) {
+            @media (min-width: $mobile) {
                 min-height: 82px;
                 flex-direction: column;
                 padding: 16px 12px;
@@ -364,69 +208,43 @@ body::after {
         cursor: default;
         visibility: hidden;
         background: #fafafa;
-        box-shadow: 0px 10px 10px rgba(16, 16, 16, 0.12);
+        box-shadow: 0 10px 10px rgba(16, 16, 16, 0.12);
         padding: 0 32px;
-        min-width: 255px;
-        min-height: 120px;
         max-height: 120px;
         max-width: 255px;
         width: 100%;
         border-radius: 16px;
         position: relative;
-        opacity: 0;
-        transform: translateY(400px);
-        transition: all 0.5s ease 0s;
-        @media (max-width: $pc) {
-            padding: 0 20px;
+        transform: translateY(200px);
+        overflow: hidden;
+        @media (max-width: $tablet) {
+            padding: 0 24px;
         }
         @media (max-width: $mobile) {
-            padding: 0 15px;
-        }
-        .no-info {
-            position: absolute;
-            display: flex;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            border-radius: 21px;
-            background-color: rgba(#fff, 0.5);
-            z-index: 999;
-            align-items: center;
-            justify-content: center;
+            padding: 0 16px;
         }
         @media (max-width: $mobileSmall) {
-            transform: translateY(200px);
-            min-width: 120px;
-            min-height: 120px;
             max-height: 120px;
-            max-width: 120px;
+            max-width: 210px;
+        }
+        &-graph {
+            @media (min-width: $mobile) {
+                border-radius: 24px;
+            }
         }
         &_logo {
             max-width: 170px;
             position: absolute;
             left: 50%;
             top: 50%;
-            opacity: 0;
             transform: translate(-50%, -50%);
-            margin: auto;
-            transition: all 0.8s ease 0s;
-        }
-        .popup {
-            &__info,
-            &__head {
-                opacity: 0;
-            }
         }
         .graph {
             width: 100%;
-            opacity: 0;
-            margin: 0 !important;
-
             &__main {
                 .container-chart {
                     margin-bottom: 25px;
-                    @media (max-width: 767.98px) {
+                    @media (max-width: $mobile) {
                         margin-bottom: 33px;
                         overflow: visible;
                         margin-top: 33px;
@@ -439,70 +257,38 @@ body::after {
                     bottom: 32px;
                 }
             }
-            &__graph,
-            &__list,
-            &__item,
-            &__con {
-                width: 100%;
-            }
         }
         &.opened {
-            .popup {
-                &__info,
-                &__head {
-                    animation: contentAnimation forwards 1.3s ease 0.8s !important;
-                    @media (max-width: $mobile) {
-                        animation: contentAnimation forwards 0.3s ease 0.7s !important;
-                    }
-                }
-            }
-            .table__row {
-                animation: contentAnimation forwards 0.3s ease 1s;
-            }
-            .graph {
-                animation: contentAnimation forwards 1.3s ease 0.8s !important;
-                @media (max-width: $mobile) {
-                    animation: contentAnimation forwards 0.3s ease 0.7s !important;
-                }
-            }
             .form {
-                animation: contentAnimation forwards 0.3s ease 0.9s;
                 &_message {
                     animation: fadeIn forwards 0.3s ease 0s;
                 }
             }
             .popup__content {
                 &_block {
-                    animation: wrapperAnimation forwards 0.4s ease 0.5s;
                     width: 100%;
+                    transition: opacity 1s ease 1s;
+                    opacity: 1;
                     .popup__close {
-                        animation: fadeIn forwards 0.3s ease 0.5s;
-                    }
-                    .swiper {
-                        animation: contentAnimation forwards 0.3s ease 0.7s;
+                        opacity: 1;
+                        transition: opacity 0.3s ease 0.5s;
                     }
                 }
             }
         }
         &_block {
-            transition: all 0.8s ease 0s;
-            overflow-x: hidden;
-            overflow-y: hidden;
+            overflow: hidden;
             padding: 32px 0;
+            opacity: 0;
+            transition: opacity 0.3s ease 0s;
             @media (max-width: $pc) {
-                padding: 20px 0;
+                padding: 24px 0;
             }
             @media (max-width: $mobile) {
-                padding: 15px 0;
-            }
-            .popup__close {
-                opacity: 0;
-                transition: all 0.5s ease 1.5s;
+                padding: 16px 0;
             }
             .form {
                 padding-left: 5px;
-                opacity: 0;
-                transition: all 0.5s ease 0s;
                 .form {
                     padding-left: 0;
                 }
@@ -510,19 +296,6 @@ body::after {
                     max-width: calc(100% - 30px);
                 }
             }
-            .table__row {
-                opacity: 0;
-            }
-        }
-        @media (max-width: $mobileSmall) {
-            padding: 0 20px;
-            min-width: 210px;
-            max-width: 210px;
-            min-height: 100px;
-            max-height: 100px;
-        }
-        .lock & {
-            visibility: visible;
         }
     }
     &__close {
@@ -534,25 +307,17 @@ body::after {
         fill: #c5c5c5;
         z-index: 10;
         outline: none;
+        opacity: 0;
+        transition: opacity 0.3s ease 0s;
         @media (max-width: $pc) {
             top: 20px;
             right: 20px;
         }
         @media (max-width: $mobile) {
-            top: 15px;
-            right: 15px;
-        }
-    }
-    &__text {
-        font-size: 18px;
-        line-height: 26px;
-        color: #595a5c;
-        @media (max-width: $mobile) {
-            font-size: 16px;
-            line-height: 20px;
-        }
-        @media (max-width: $mobileSmall) {
-            font-size: 16px;
+            top: 16px;
+            right: 16px;
+            width: 16px;
+            height: 16px;
         }
     }
     .blue-button {
@@ -566,28 +331,125 @@ body::after {
             font-size: 16px;
             line-height: 120%;
         }
-        //@media (max-width: $mobileSmall) {
-        //    min-height: 48px;
-        //    font-weight: 700;
-        //    font-size: 16px;
-        //    line-height: 20px;
-        //}
-        //@media (max-width: $mobile) {
-        //    .all-link {
-        //        font-size: 16px;
-        //        padding: 0;
-        //        line-height: 20px;
-        //    }
-        //}
-        //@media (max-width: $mobileSmall) {
-        //    height: 40px;
-        //    min-height: 40px !important;
-        //}
-        &.back {
-            background: #dae6f7 !important;
-            padding: 0;
-            .all-link {
-                border-radius: 12px !important;
+    }
+
+    /* ========================================= */
+
+    &-card {
+        .popup {
+            &__content {
+                padding: 0 16px;
+                transform: translateY(100px);
+                border-right: 8px;
+                box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
+                &_block {
+                    padding: 40px 0 16px;
+                }
+            }
+        }
+        .table {
+            &_column {
+                &:first-child {
+                    .label {
+                        @media (max-width: $mobile) {
+                            color: #5389e1;
+                            font-weight: 500;
+                        }
+                    }
+                }
+            }
+            &__row {
+                @media (max-width: $mobile) {
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                &.rejected,
+                &.completed,
+                &.pending {
+                    .table_column {
+                        @media (max-width: $mobile) {
+                            &:first-child span:last-child::before {
+                                display: inline-flex;
+                                content: "";
+                                width: 12px;
+                                height: 12px;
+                                border-radius: 50%;
+                                margin-right: 8px;
+                                transition: all 0.5s ease 0s;
+                            }
+                        }
+                    }
+                }
+                &.completed {
+                    .table_column {
+                        @media (max-width: $mobile) {
+                            &:first-child span:last-child:before {
+                                background: #13d60e;
+                            }
+                        }
+                    }
+                }
+                &.rejected {
+                    .table_column {
+                        @media (max-width: $mobile) {
+                            &:first-child span:last-child:before {
+                                background: #ff0000;
+                            }
+                        }
+                    }
+                }
+                &.pending {
+                    .table_column {
+                        @media (max-width: $mobile) {
+                            &:first-child span:last-child:before {
+                                background: #e9c058;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    &-graph {
+        @media (max-width: $mobile) {
+            .popup {
+                &__content_block {
+                    padding-bottom: 5px;
+                }
+                &__main {
+                    gap: 0;
+                }
+            }
+        }
+        &__graph {
+            @media (min-width: $mobile) {
+                padding: 4px 18px 0 38px;
+            }
+            padding: 0 0 0 42px;
+        }
+        .graph {
+            .graph {
+                &__main {
+                    @media (max-width: $mobile) {
+                        margin: 0 -20px 0 0;
+                    }
+                    @media (max-width: 479.98px) {
+                        margin: 0 -20px 0 32px;
+                    }
+                }
+                &__list {
+                    padding: 0;
+                    margin: 0;
+                    @media (max-width: $mobile) {
+                        padding-right: 20px;
+                    }
+                }
+            }
+        }
+        @media (max-width: $mobileSmall) {
+            .graph {
+                padding: 0;
             }
         }
     }

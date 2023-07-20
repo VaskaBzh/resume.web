@@ -4,7 +4,7 @@
         <div class="complexity__container">
             <div class="page__main">
                 <div class="page__content">
-                    <main-title tag="h1" class="page__title">
+                    <main-title tag="h1" class="page__title title-blue">
                         {{ $t("complexity.title") }}
                     </main-title>
                     <div class="description">
@@ -12,10 +12,21 @@
                     </div>
                 </div>
                 <div class="page__image">
-                    <img src="../../assets/img/compl-main-img.webp" alt="" />
+                    <img
+                        v-show="!isDark"
+                        src="../../assets/img/graph_img-back.svg"
+                        alt=""
+                    />
+                    <img
+                        v-show="isDark"
+                        src="../../assets/img/graph_img-back-dark.svg"
+                        alt=""
+                    />
                 </div>
             </div>
-            <MainChart :graphs="graphs" :key="this.time" />
+            <div class="section">
+                <MainChart :graphs="graphs" :key="this.time" />
+            </div>
         </div>
     </div>
 </template>
@@ -33,56 +44,51 @@ export default {
         Head,
     },
     computed: {
-        ...mapGetters(["btcInfo", "btcHistory"]),
+        ...mapGetters(["btcInfo", "btcHistory", "isDark"]),
         changeDiff() {
             let string = "...";
-            if (this.btcInfo.btc) {
-                string = `(${this.btcInfo.btc.diff_change})`;
-                string += ` /  ${(
-                    (Number(this.btcInfo.btc.nextDiff) -
-                        Number(this.btcInfo.btc.diff)) /
-                    1000000000000
-                ).toFixed(2)} T`;
-            }
+            if (!this.btcInfo.btc) return string;
+            string = `(${this.btcInfo.btc.diff_change})`;
+            string += ` /  ${(
+                (Number(this.btcInfo.btc.nextDiff) -
+                    Number(this.btcInfo.btc.diff)) /
+                1000000000000
+            ).toFixed(2)} T`;
             return string;
         },
         network() {
             let string = "...";
-            if (this.btcInfo.btc) {
-                string = this.btcInfo.btc.network.toFixed(2);
-                string += ` ${this.btcInfo.btc.networkUnit}H/s`;
-            }
+            if (!this.btcInfo.btc) return string;
+            string = this.btcInfo.btc.network.toFixed(2);
+            string += ` ${this.btcInfo.btc.networkUnit}H/s`;
             return string;
         },
         diff() {
             let string = "...";
-            if (this.btcInfo.btc) {
-                string = this.btcInfo.btc.diff;
-            }
+            if (!this.btcInfo.btc) return string;
+            string = this.btcInfo.btc.diff;
             return string;
         },
         nextDiff() {
             let string = "...";
-            if (this.btcInfo.btc) {
-                string = this.btcInfo.btc.nextDiff;
-            }
+            if (!this.btcInfo.btc) return string;
+            string = this.btcInfo.btc.nextDiff;
             return string;
         },
         time() {
             let string = "...";
-            if (this.btcInfo.btc) {
-                this.btcInfo.btc.time % 24 !== 0
-                    ? (string = `${String(this.btcInfo.btc.time / 24).substr(
-                          0,
-                          1
-                      )} ${this.$t("days")} ${
-                          this.btcInfo.btc.time % 24
-                      } ${this.$t("hours")}`)
-                    : (string = `${String(this.btcInfo.btc.time / 24).substr(
-                          0,
-                          1
-                      )} ${this.$t("days")}`);
-            }
+            if (!this.btcInfo.btc) return string;
+            this.btcInfo.btc.time % 24 !== 0
+                ? (string = `${String(this.btcInfo.btc.time / 24).substr(
+                      0,
+                      1
+                  )} ${this.$t("days")} ${this.btcInfo.btc.time % 24} ${this.$t(
+                      "hours"
+                  )}`)
+                : (string = `${String(this.btcInfo.btc.time / 24).substr(
+                      0,
+                      1
+                  )} ${this.$t("days")}`);
             return string;
         },
         graphs() {
@@ -129,13 +135,18 @@ export default {
         },
     },
     mounted() {
-        document.title = "Сложность";
+        document.title = this.$t("complexity.title");
     },
 };
 </script>
 
 <style lang="scss" scoped>
 .complexity {
+    .section {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+    }
     &__main {
         align-items: center;
     }

@@ -251,9 +251,26 @@
                                                 ).substr(0, 1)
                                             }}
                                             {{
-                                                $t(
-                                                    "home.bitcoin_block.date_diff[1]"
-                                                )
+                                                String(
+                                                    this.btcInfo.btc.time / 24
+                                                ).substr(0, 1) === 1
+                                                    ? $t(
+                                                          "home.bitcoin_block.date_diff[1]"
+                                                      )
+                                                    : String(
+                                                          this.btcInfo.btc
+                                                              .time / 24
+                                                      ).substr(0, 1) > 1 &&
+                                                      String(
+                                                          this.btcInfo.btc
+                                                              .time / 24
+                                                      ).substr(0, 1) <= 4
+                                                    ? $t(
+                                                          "home.bitcoin_block.date_diff[2]"
+                                                      )
+                                                    : $t(
+                                                          "home.bitcoin_block.date_diff[3]"
+                                                      )
                                             }}</span
                                         >
                                         <span
@@ -262,9 +279,22 @@
                                             "
                                             >{{ this.btcInfo.btc.time % 24 }}
                                             {{
-                                                $t(
-                                                    "home.bitcoin_block.date_diff[2]"
-                                                )
+                                                this.btcInfo.btc.time % 24 === 1
+                                                    ? $t(
+                                                          "home.bitcoin_block.date_diff[4]"
+                                                      )
+                                                    : this.btcInfo.btc.time %
+                                                          24 >
+                                                          1 &&
+                                                      this.btcInfo.btc.time %
+                                                          24 <=
+                                                          4
+                                                    ? $t(
+                                                          "home.bitcoin_block.date_diff[5]"
+                                                      )
+                                                    : $t(
+                                                          "home.bitcoin_block.date_diff[6]"
+                                                      )
                                             }}</span
                                         >
                                     </div>
