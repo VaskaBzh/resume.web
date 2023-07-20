@@ -4,8 +4,8 @@ namespace App\Console\Commands;
 
 use App\Helper;
 use App\Http\Controllers\Requests\RequestController;
-use App\Models\Income;
 use App\Models\Sub;
+use App\Models\Wallet;
 use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
@@ -216,7 +216,7 @@ class UpdateIncomesCommand extends Command
                         if (count($wallets) === 0) {
                             $income["message"] = 'no wallet';
                             $income["txid"] = 'no wallet';
-                            $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
+                            $this->sendBalance($sub, $income, new Wallet(), $earn, $sumAccruals);
                         } else {
                             foreach ($wallets as $wallet) {
                                 $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
