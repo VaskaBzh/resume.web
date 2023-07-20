@@ -36,12 +36,12 @@
                         <div class="page__image">
                             <img
                                 v-show="!isDark"
-                                src="../../assets/img/auth_img-back.svg"
+                                src="../../assets/img/graph_img-back.svg"
                                 alt=""
                             />
                             <img
                                 v-show="isDark"
-                                src="../../assets/img/auth_img-back-dark.svg"
+                                src="../../assets/img/graph_img-back-dark.svg"
                                 alt=""
                             />
                         </div>

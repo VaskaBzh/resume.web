@@ -45,7 +45,6 @@ class AddWorkerJob implements ShouldQueue
 
 
         foreach ($subs as $sub) {
-            dump($sub);
             foreach($responseUngroup->data->data as $worker) {
                 if ($this->workerChecker($worker->worker_name, $sub->sub)) {
                     $data = [

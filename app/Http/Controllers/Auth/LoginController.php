@@ -55,16 +55,15 @@ class LoginController extends Controller
     {
         $credentials = $this->credentials($request);
 
-        if(!auth()->validate($credentials)) {
-            return redirect()->to('login')
-                ->withErrors(trans('auth.failed'));
+        $user = auth()->getProvider()->retrieveByCredentials($credentials);
+
+        if ($user && auth()->validate($credentials)) {
+            auth()->login($user, $request->get('remember'));
+
+            return true;
         }
 
-        $user = auth()->getProvider()->retrieveByCredentials($credentials);
-        dd($request->has('remember'));
-        auth()->login($user, $request->get('remember'));
-
-        return $this->authenticated($request, $user);
+        return false;
     }
 
     protected function verify(Request $request)

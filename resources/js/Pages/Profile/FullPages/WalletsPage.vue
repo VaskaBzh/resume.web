@@ -40,7 +40,58 @@
                 :interval="70"
                 :end="endWallet"
                 :empty="emptyWallet"
-            ></no-info>
+            >
+                <div class="wallets__list">
+                    <div class="wallets__block" data-popup="#addWallet">
+                        <svg
+                            width="40"
+                            height="40"
+                            viewBox="0 0 40 40"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M11.0703 20.0703C11.0703 19.518 11.518 19.0703 12.0703 19.0703H28.0703C28.6226 19.0703 29.0703 19.518 29.0703 20.0703C29.0703 20.6226 28.6226 21.0703 28.0703 21.0703H12.0703C11.518 21.0703 11.0703 20.6226 11.0703 20.0703Z"
+                                fill="url(#paint0_linear_1243_39061)"
+                            />
+                            <path
+                                fill-rule="evenodd"
+                                clip-rule="evenodd"
+                                d="M20.0703 11.0703C20.6226 11.0703 21.0703 11.518 21.0703 12.0703V28.0703C21.0703 28.6226 20.6226 29.0703 20.0703 29.0703C19.518 29.0703 19.0703 28.6226 19.0703 28.0703V12.0703C19.0703 11.518 19.518 11.0703 20.0703 11.0703Z"
+                                fill="url(#paint1_linear_1243_39061)"
+                            />
+                            <defs>
+                                <linearGradient
+                                    id="paint0_linear_1243_39061"
+                                    x1="13.8715"
+                                    y1="22.2233"
+                                    x2="22.7908"
+                                    y2="13.9877"
+                                    gradientUnits="userSpaceOnUse"
+                                >
+                                    <stop stop-color="#3F7BDD" />
+                                    <stop offset="1" stop-color="#4282EC" />
+                                </linearGradient>
+                                <linearGradient
+                                    id="paint1_linear_1243_39061"
+                                    x1="17.9174"
+                                    y1="13.8715"
+                                    x2="26.1529"
+                                    y2="22.7908"
+                                    gradientUnits="userSpaceOnUse"
+                                >
+                                    <stop stop-color="#3F7BDD" />
+                                    <stop offset="1" stop-color="#4282EC" />
+                                </linearGradient>
+                            </defs>
+                        </svg>
+
+                        {{ $t("wallets.no_info") }}
+                    </div>
+                </div>
+            </no-info>
             <div ref="list" class="wallets__list" v-if="!waitWallet">
                 <wallet-block
                     v-for="(wallet, i) in wallets"
@@ -409,7 +460,6 @@ export default {
             this.form.minWithdrawal = wallet.minWithdrawal;
             this.form.wallet = wallet.wallet;
             this.form.name = wallet.fullName;
-            console.log(wallet);
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
@@ -435,6 +485,24 @@ export default {
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
+    .no-info.no-bg {
+        padding: 0;
+        .wallets {
+            &__block {
+                display: inline-flex;
+                cursor: pointer;
+                gap: 8px;
+                align-items: center;
+                justify-content: center;
+                min-height: 140px;
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 135%;
+                color: #3f7bdd;
+                transition: all 0.5s ease 0s;
+            }
+        }
+    }
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
@@ -462,16 +530,16 @@ export default {
         @media (max-width: 1320.98px) {
             grid-template-columns: repeat(3, 1fr);
         }
-        @media (max-width: 767.98px) {
+        @media (max-width: 991.98px) {
             grid-template-columns: repeat(2, 1fr);
             gap: 20px;
+        }
+        @media (max-width: 767.98px) {
+            grid-template-columns: repeat(1, 1fr);
             .wallets__block {
                 border-radius: 12px;
                 border: none;
             }
-        }
-        @media (max-width: 479.98px) {
-            grid-template-columns: repeat(1, 1fr);
         }
     }
 
@@ -501,8 +569,8 @@ export default {
 
     &__block {
         padding: 16px;
-        background-color: #fff;
-        border-radius: 13px;
+        background: #fafafa;
+        border-radius: 12px;
         width: 100%;
         @media (max-width: 767.98px) {
             padding: 10px 0 10px;

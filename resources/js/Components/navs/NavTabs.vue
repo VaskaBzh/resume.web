@@ -446,6 +446,7 @@ export default {
         @media (min-width: 991.98px) {
             color: #5389e1;
             background: #dce4f1;
+            font-weight: 500;
         }
     }
 }

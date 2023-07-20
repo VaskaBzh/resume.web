@@ -61,7 +61,9 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    Object.values(this.allHash[this.getActive]).length === 0
+                    Object.values(this.allHash[this.getActive]).length === 0 &&
+                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
+                        0
                 "
             >
                 <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
@@ -350,7 +352,6 @@ export default {
                 if (this.allAccounts[this.getActive]) {
                     let val = new Profit(
                         this.allAccounts[this.getActive].shares1d,
-                        this.btcInfo.btc.fpps,
                         this.btcInfo.btc.diff,
                         this.btcInfo.btc.reward
                     );
@@ -362,13 +363,13 @@ export default {
         yesterdayEarn() {
             if (this.allIncomeHistory[this.getActive]) {
                 if (
-                    Object.values(this.allIncomeHistory[this.getActive]) &&
-                    Object.values(this.allIncomeHistory[this.getActive])[1]
+                    Object.values(this.allIncomeHistory[this.getActive])
+                        ?.length > 0
                 ) {
                     return Number(
                         Object.values(
                             this.allIncomeHistory[this.getActive]
-                        ).reverse()[1]["amount"]
+                        ).reverse()[0]["amount"]
                     );
                 }
             }

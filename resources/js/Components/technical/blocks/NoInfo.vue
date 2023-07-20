@@ -59,14 +59,14 @@
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
             >
-                <animateTransform
-                    attributeName="transform"
-                    type="rotate"
-                    from="0 0 0"
-                    to="360 0 0"
-                    dur="1.2s"
-                    repeatCount="indefinite"
-                ></animateTransform>
+                <!--                <animateTransform-->
+                <!--                    attributeName="transform"-->
+                <!--                    type="rotate"-->
+                <!--                    from="0 0 0"-->
+                <!--                    to="360 0 0"-->
+                <!--                    dur="1.2s"-->
+                <!--                    repeatCount="indefinite"-->
+                <!--                ></animateTransform>-->
                 <mask id="path-1-inside-1_117_1032" fill="white">
                     <path
                         d="M75 0C65.1509 0 55.3982 1.93993 46.2987 5.70903C37.1993 9.47813 28.9314 15.0026 21.967 21.967C15.0026 28.9314 9.47814 37.1993 5.70903 46.2987C1.93993 55.3982 -4.3052e-07 65.1509 0 75H3.75C3.75 65.6433 5.59294 56.3783 9.17358 47.7338C12.7542 39.0894 18.0025 31.2348 24.6186 24.6186C31.2348 18.0025 39.0894 12.7542 47.7338 9.17358C56.3783 5.59294 65.6433 3.75 75 3.75L75 0Z"
@@ -94,6 +94,13 @@
                 </defs>
             </svg>
         </div>
+    </div>
+    <div
+        v-scroll="'opacity'"
+        class="no-info no-bg"
+        v-else-if="empty && Object.entries($slots).length > 0"
+    >
+        <slot />
     </div>
     <div v-scroll="'opacity'" class="no-info" v-else-if="empty">
         <img src="../../../../assets/img/img_no-info.svg" alt="no_info" />

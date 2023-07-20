@@ -36,12 +36,12 @@ class IndexController extends Controller
         ]);
     }
 
-    public function complexity()
-    {
-        return Inertia::render('ComplexityPage', [
-            'auth_user' => Auth::check(),
-        ]);
-    }
+//    public function complexity()
+//    {
+//        return Inertia::render('ComplexityPage', [
+//            'auth_user' => Auth::check(),
+//        ]);
+//    }
 
     public function hosting()
     {

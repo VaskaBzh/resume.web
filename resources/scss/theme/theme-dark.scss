@@ -144,7 +144,7 @@ body {
                     .button {
                         &__row {
                             &:after {
-                                background: transparent;
+                                background: #333639;
                             }
                         }
                         .button {
@@ -340,6 +340,11 @@ body {
                             border: 1px solid #1a345a;
                         }
                     }
+                    &__row {
+                        &:after {
+                            background: #333639;
+                        }
+                    }
                     &__menu {
                         background: #040d15;
                         .select_title .name,
@@ -474,6 +479,9 @@ body {
             background: #101d2b;
             span {
                 color: #fafafa;
+            }
+            .wallets__block {
+                background: #101D2B;
             }
         }
         .input {
