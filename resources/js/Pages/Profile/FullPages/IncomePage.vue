@@ -292,7 +292,8 @@ export default {
         yesterdayProfit() {
             if (
                 this.allIncomeHistory &&
-                Object.values(this.allIncomeHistory).length > 0
+                Object.values(this.allIncomeHistory).length > 0 &&
+                Object.values(this.allIncomeHistory[this.getActive])[0]
             ) {
                 return Number(
                     Object.values(
