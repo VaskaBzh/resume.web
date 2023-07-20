@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Http\Controllers\Requests\RequestController;
+use App\Dto\IncomeData;
+use App\Helper;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use App\Services\External\MinerStatService;
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 
@@ -52,7 +52,7 @@ class UpdateIncomesCommand extends Command
                 $income["payment"] = $balance;
 
                 if ($balance >= $min) {
-                    $token = config('token.secret_token');
+                    $token = config('api.wallet.walletpassphrase');
 
                     info('Secret token dump', [
                         'token' => $token
@@ -148,98 +148,77 @@ class UpdateIncomesCommand extends Command
      */
     public function handle(
         MinerStatService $minerStatService,
-        BtcComService $btcComService,
+        BtcComService    $btcComService,
     )
     {
-        $subs = Sub::all();
-        foreach ($subs as $sub) {
-            $requestController = new RequestController();
+        $minerStats = $minerStatService->getStats();
+        $poolData = $btcComService->getPoolData();
 
-            $minerStats = $minerStatService->getStats();
+        foreach (Sub::all() as $sub) {
             $workers = $btcComService->getWorkerList(groupId: $sub->group_id);
 
-            $response_diff = $requestController->proxy([], "pool/status", "get");
-//
-//            $response_list = $requestController->proxy([
-//                "puid" => "781195",
-//            ], "worker/groups", "get");
-            if (false !== $response_hash) {
-                try {
-                    $wallets = $sub->wallets;
-                    $response_stat_encode = json_decode($response_stat);
-                    $response_hash_encode = json_decode($response_hash->getContent());
-                    $response_diff_encode = json_decode($response_diff->getContent());
-//                    $response_list_encode = json_decode($response_list->getContent());
-                    $share = 0;
-                    $unit = "T";
-                    if ($response_hash_encode->data->data) {
-                        $share = array_reduce($response_hash_encode->data->data, function ($carry, $item) {
-                            foreach ($item as $key => $value) {
-                                if ($key == "shares_1d") {
-                                    $carry += floatval($value);
-                                }
-                            }
-                            return $carry;
-                        }, $share);
-                        $unit = array_reduce($response_hash_encode->data->data, function ($carry, $item) {
-                            foreach ($item as $key => $value) {
-                                if ($key == "shares_unit") {
-                                    $carry["shares_unit"] = $value;
-                                }
-                            }
-                            return $carry;
-                        }, ['shares_unit' => ''])['shares_unit'];
-                    }
+            if (filled($workers['data'])) {
+                $wallets = $sub->wallets;
+                $unit = "T";
 
-                    if ($share > 0) {
-                        $earn = ($share * pow(10, 12)
-                                * 86400
-                                * ($response_stat_encode[0]->reward_block + $response_diff_encode->data->fpps_mining_earnings)
-                            ) / ($response_stat_encode[0]->difficulty * pow(2, 32));
-                    } else {
-                        $earn = 0;
-                    }
-
-
-//                    $earn = $earn * (1 - 0.005);
-//                    $earn = $earn * (1 - 0.035);
-
-                    $income = [
-                        'group_id' => $sub->group_id,
-                        'wallet' => "",
-                        'amount' => number_format($earn, 8, ".", ""),
-                        'payment' => 0,
-                        'percent' => 100,
-                        'diff' => $response_stat_encode[0]->difficulty,
-                        'unit' => $unit,
-                        'hash' => number_format($share, 2, ".", ""),
-                        'status' => "rejected",
-                        'message' => "",
-                        'txid' => "",
-                    ];
-                    $income["payment"] = $income["amount"] * ($income["percent"] / 100);
-
-                    $sumAccruals = $earn;
-                    if ($sub->accruals !== null) {
-                        $sumAccruals = $sumAccruals + $sub->accruals;
-                    }
-
-                    if ($income["amount"] > 0) {
-                        if (count($wallets) === 0) {
-                            $this->sendBalance($sub, $income, [], $earn, $sumAccruals);
-                        } else {
-                            foreach ($wallets as $wallet) {
-                                $this->sendBalance($sub, $income, $wallet, $earn, $sumAccruals);
-                            }
+                $share = array_reduce($workers['data'], function ($carry, $item) {
+                    foreach ($item as $key => $value) {
+                        if ($key == "shares_1d") {
+                            $carry += floatval($value);
                         }
                     }
-                } catch (Exception $e) {
-                    // Обработка ошибки разбора JSON
-                    $this->error('Error parsing JSON response for user: ' . $sub->id . ' - ' . $e->getMessage());
+                    return $carry;
+                }, 0);
+
+                $earn = $share > 0
+                    ? Helper::calculateEarn(
+                        share: $share,
+                        rewardBlock: $minerStats->pluck('reward_block')->first(),
+                        fppsMminingEarnings: $poolData['fpps_mining_earnings'],
+                        difficulty: $minerStats->pluck('difficulty')->first()
+                    )
+                    : 0;
+
+                $incomeData = IncomeData::fromRequest([
+                    'group_id' => $sub->group_id,
+                    'wallet' => "",
+                    'amount' => number_format($earn, 8, ".", ""),
+                    'payment' => number_format($earn, 8, ".", "") * 1,
+                    'percent' => 100,
+                    'diff' => $minerStats->pluck('difficulty')->first(),
+                    'unit' => $unit,
+                    'hash' => number_format($share, 2, ".", ""),
+                    'status' => "rejected",
+                    'message' => "",
+                    'txid' => "",
+                ]);
+
+                $sumAccruals = $earn;
+                if ($sub->accruals !== null) {
+                    $sumAccruals = $sumAccruals + $sub->accruals;
                 }
-            } else {
-                // Обработка ошибки при выполнении запроса
-                $this->error('Error parsing JSON response for user: ' . $sub->id . ' - ' . $e->getMessage());
+
+                if ($incomeData->amount > 0) {
+                    if (count($wallets) === 0) {
+                        $this->sendBalance(
+                            sub: $sub,
+                            income: $incomeData,
+                            wallet: [],
+                            earn: $earn,
+                            sumAccruals: $sumAccruals
+                        );
+                    } else {
+                        foreach ($wallets as $wallet) {
+                            $this->sendBalance(
+                                sub: $sub,
+                                income: $incomeData,
+                                wallet: $wallet,
+                                earn: $earn,
+                                sumAccruals: $sumAccruals
+                            );
+                        }
+                    }
+                }
             }
         }
     }

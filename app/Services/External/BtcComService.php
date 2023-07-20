@@ -26,9 +26,10 @@ class BtcComService
     }
 
     /**
-     * Проверка на существование пользователя на стороне btc.com
+     * Проверка наличия пользователя на стороне btc.com
+     *
      * Убираем первые две группы ("Все группы", "Разгруппировано")
-     * В группах проверяем на наличие пользователя по имени
+     * В группах проверяем наличие пользователя по имени
      */
     public function btcHasUser(UserData $userData): bool
     {
@@ -51,7 +52,9 @@ class BtcComService
         ]), [
             'puid' => self::PU_ID,
             "page_size" => self::DEFAULT_PAGE_SIZE,
-        ])->throw();
+        ])->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
 
         return $response['data'];
     }
@@ -67,7 +70,9 @@ class BtcComService
         ]), [
             'puid' => self::PU_ID,
             'group_name' => $userData->name
-        ])->throw();
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
 
         return $response['data'];
     }
@@ -85,7 +90,9 @@ class BtcComService
             'puid' => self::PU_ID,
             'group' => $groupId,
             'page_size' => self::DEFAULT_PAGE_SIZE
-        ])->throw();
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
 
         return $response['data'];
     }
@@ -101,9 +108,24 @@ class BtcComService
         ]), [
             'puid' => self::PU_ID,
             'group_id' => $workerData->group_id,
-            'worker_id' => (string) $workerData->worker_id
-        ])->throwIf(fn (Response $response) => $response->clientError() || $response->serverError(),
+            'worker_id' => (string)$workerData->worker_id
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
+    }
+
+    /**
+     * 
+     */
+    public function getPoolData(): array
+    {
+        $response = $this->client->get(implode('/', [
+            'pool',
+            'status'
+        ]))->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return $response['data'];
     }
 }
