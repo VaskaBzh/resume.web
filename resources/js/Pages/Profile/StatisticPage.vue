@@ -352,7 +352,6 @@ export default {
                 if (this.allAccounts[this.getActive]) {
                     let val = new Profit(
                         this.allAccounts[this.getActive].shares1d,
-                        this.btcInfo.btc.fpps,
                         this.btcInfo.btc.diff,
                         this.btcInfo.btc.reward
                     );
