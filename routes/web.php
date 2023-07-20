@@ -8,6 +8,7 @@ use App\Http\Controllers\Hashes\HashController;
 use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LocationController;
+use App\Http\Controllers\MinerStat\MinerStatController;
 use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
@@ -42,6 +43,8 @@ Route::controller(SubController::class)->group(function () {
 Route::controller(SendMessageConroller::class)->group(function () {
     Route::post('/send_message', 'send_message')->name('send_message');
 });
+
+Route::get("/miner_stat", [MinerStatController::class, 'visual'])->name('miner_stat');
 
 Route::controller(IndexController::class)
     ->group(function () {
