@@ -165,7 +165,7 @@ export default {
         async getVal() {
             if (this.btcInfo?.btc) {
                 let converter = new Converter(
-                    0.00344434,
+                    this.wallet.payload,
                     this.btcInfo.btc.price
                 );
                 return await converter.coverted();
