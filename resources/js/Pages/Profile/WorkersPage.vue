@@ -187,7 +187,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Воркеры";
+        document.title = this.$t("header.links.workers");
     },
     created() {
         window.addEventListener("resize", this.handleResize);

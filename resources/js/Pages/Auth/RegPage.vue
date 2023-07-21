@@ -253,7 +253,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Регистрация";
+        document.title = this.$t("auth.reg.head");
     },
 };
 </script>

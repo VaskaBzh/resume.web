@@ -496,7 +496,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Статистика";
+        document.title = this.$t("header.links.statistic");
         if (this.allHistory[this.getActive]) {
             this.setActive();
             this.renderChart();

@@ -8,6 +8,7 @@ const messages = {
         auth: {
             error: "",
             login: {
+                head: "Log in",
                 title: "Log into Allbtc account",
                 placeholders: ["Enter e-mail", "Enter password"],
                 checkbox: "Remember me",
@@ -16,6 +17,7 @@ const messages = {
                 link: ["Don't have an account?", "Sign up"],
             },
             reg: {
+                head: "Registration",
                 title: "Create Allbtc account",
                 placeholders: [
                     "Enter e-mail",
@@ -664,6 +666,7 @@ const messages = {
         more: "Подробнее",
         auth: {
             login: {
+                head: "Вход",
                 title: "Войти в аккаунт Allbtc",
                 placeholders: ["Введите e-mail", "Введите пароль"],
                 checkbox: "Запомнить меня",
@@ -672,6 +675,7 @@ const messages = {
                 link: ["Нет аккаунта?", "Зарегистрироваться"],
             },
             reg: {
+                head: "Регистрация",
                 title: "Создать аккаунт Allbtc",
                 placeholders: [
                     "Введите e-mail",

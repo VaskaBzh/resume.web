@@ -422,7 +422,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Настройки";
+        document.title = this.$t("header.links.settings");
         this.$refs.page.style.opacity = 1;
         this.setProfits();
     },

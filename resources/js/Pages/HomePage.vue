@@ -56,13 +56,13 @@
                     <img
                         v-if="!getTheme"
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1.webp"
+                        src="../../assets/img/main_an_img_1.svg"
                         alt=""
                     />
                     <img
                         v-else
                         class="home__background_image home__background_1"
-                        src="../../assets/img/main_an_img_1-dark.webp"
+                        src="../../assets/img/main_an_img_1-dark.svg"
                         alt=""
                     />
                     <img
@@ -521,7 +521,7 @@ export default {
         }
     },
     mounted() {
-        document.title = "Главная";
+        document.title = this.$t("header.links.home");
         this.height = this.getHeight;
 
         if (this.$refs.image) {

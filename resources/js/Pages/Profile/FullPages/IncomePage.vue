@@ -354,7 +354,7 @@ export default {
         this.handleResize();
     },
     mounted() {
-        document.title = "История";
+        document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
     },
 };

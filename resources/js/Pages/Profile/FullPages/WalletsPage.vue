@@ -470,7 +470,7 @@ export default {
             setTimeout(() => (this.waitWallet = false), 300);
     },
     mounted() {
-        document.title = "Кошельки";
+        document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
         if (this.getWallet[this.getActive]) this.waitWallet = false;
     },

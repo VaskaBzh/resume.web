@@ -128,7 +128,7 @@ export default {
         };
     },
     mounted() {
-        document.title = "Вход";
+        document.title = this.$t("auth.login.head");
     },
 };
 </script>
