@@ -290,7 +290,10 @@ export default {
             return Number(sum).toFixed(8) + " BTC";
         },
         yesterdayProfit() {
-            if (this.allIncomeHistory[this.getActive]) {
+            if (
+                this.allIncomeHistory[this.getActive] &&
+                Object.entries(this.allIncomeHistory[this.getActive]).length > 0
+            ) {
                 return Number(
                     Object.values(
                         this.allIncomeHistory[this.getActive]
