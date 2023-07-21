@@ -81,11 +81,11 @@
 </template>
 <script>
 import MainSlider from "@/Components/technical/MainSlider.vue";
-import MainSelect from "@/Components/UI/MainSelect.vue";
+// import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
-import MainDate from "@/Components/UI/MainDate.vue";
-import { Link, router } from "@inertiajs/vue3";
+// import BlueButton from "@/Components/UI/BlueButton.vue";
+// import MainDate from "@/Components/UI/MainDate.vue";
+import { router } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import Vue from "lodash";
@@ -93,11 +93,11 @@ import Vue from "lodash";
 export default {
     components: {
         MainSlider,
-        MainSelect,
+        // MainSelect,
         MainTitle,
-        BlueButton,
-        MainDate,
-        Link,
+        // BlueButton,
+        // MainDate,
+        // Link,
     },
     props: ["errors", "message", "user"],
     data() {
