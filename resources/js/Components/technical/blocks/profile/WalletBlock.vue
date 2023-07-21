@@ -26,7 +26,7 @@
             </div>
         </div>
         <div class="main__number">
-            {{ val?.BTC.toFixed(8) || "0.00000000" }}
+            {{ Number(val?.BTC).toFixed(8) || "0.00000000" }}
             <div class="unit">{{ wallet.shortName }}</div>
             <div class="row">
                 <span> ≈ {{ val?.usd.toFixed(2) || "0.00" }} $</span>
@@ -165,7 +165,7 @@ export default {
         async getVal() {
             if (this.btcInfo?.btc) {
                 let converter = new Converter(
-                    this.wallet.payload,
+                    this.wallet.value,
                     this.btcInfo.btc.price
                 );
                 return await converter.coverted();
