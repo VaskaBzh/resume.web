@@ -1,7 +1,7 @@
 <template>
     <div class="hint">
-        <div class="hint_item" v-hide="mess !== ''">
-            {{ this.mess }}
+        <div class="hint_item" v-hide="message !== ''">
+            {{ message }}
         </div>
     </div>
     <div class="wallets" ref="page">
@@ -358,13 +358,11 @@ export default {
         return {
             isChecked: false,
             viewportWidth: 0,
-            mess: "",
             waitWallet: true,
         };
     },
     setup() {
         let wait = ref(false);
-        let mess = ref("");
         let closed = ref(false);
         let form = ref(
             useForm({
@@ -382,8 +380,7 @@ export default {
         const change = async () => {
             wait.value = true;
             await form.value.post("/wallet_change", {
-                onSuccess(res) {
-                    mess.value = res.data.message;
+                onSuccess() {
                     store.dispatch("getMessage", mess.value);
                     store.dispatch("getWallets", form.value);
                     store.dispatch("getMessage", mess.value);

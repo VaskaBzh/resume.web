@@ -123,6 +123,8 @@ body::after {
                     animation-delay: 0.5s;
                     animation-fill-mode: forwards;
                     animation-timing-function: ease;
+                    overflow: visible;
+                    transition: hidden 0.3s ease 1.5s;
                     &-graph {
                         animation-name: mainAnimationGraph;
                     }
@@ -217,6 +219,7 @@ body::after {
         position: relative;
         transform: translateY(200px);
         overflow: hidden;
+        transition: hidden 0.3s ease 0s;
         @media (max-width: $tablet) {
             padding: 0 24px;
         }
@@ -278,9 +281,9 @@ body::after {
         }
         &_block {
             overflow: hidden;
+            transition: opacity 0.3s ease 0s;
             padding: 32px 0;
             opacity: 0;
-            transition: opacity 0.3s ease 0s;
             @media (max-width: $pc) {
                 padding: 24px 0;
             }

@@ -155,7 +155,10 @@ export default {
     props: {
         viewportWidth: Number,
         table: Object,
-        first: Number,
+        first: {
+            type: Number,
+            default: 0,
+        },
         rowsVal: {
             type: Number,
             default: 10,

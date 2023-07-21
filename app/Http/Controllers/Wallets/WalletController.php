@@ -165,9 +165,9 @@ class WalletController extends Controller
             $wallet->save();
 
             if (app()->getLocale() === 'ru') {
-                return response()->json(['message' => 'Кошелек успешно изменен.'], 200);
+                return back()->with('message', 'Кошелек успешно изменен.');
             } else if (app()->getLocale() === 'en') {
-                return response()->json(['message' => 'The wallet has been successfully changed.'], 200);
+                return back()->with('message', 'The wallet has been successfully changed.');
             }
         } else {
             if (app()->getLocale() === 'ru') {
