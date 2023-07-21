@@ -290,15 +290,13 @@ export default {
             return Number(sum).toFixed(8) + " BTC";
         },
         yesterdayProfit() {
-            if (
-                this.allIncomeHistory[this.getActive] &&
-                Object.entries(this.allIncomeHistory[this.getActive]).length > 0
-            ) {
-                return Number(
-                    Object.values(
-                        this.allIncomeHistory[this.getActive]
-                    ).reverse()[0]["amount"]
-                );
+            if (this.allIncomeHistory[this.getActive]) {
+                let reversedArray = Object.values(
+                    this.allIncomeHistory[this.getActive]
+                ).reverse();
+                if (reversedArray.length > 0 && reversedArray[0]) {
+                    return Number(reversedArray[0]["amount"]);
+                }
             }
             return "0.00000000";
         },
