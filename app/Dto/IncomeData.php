@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
+use App\Models\Wallet;
+use Illuminate\Support\Arr;
+use Message;
+use Status;
+
 readonly class IncomeData
 {
     public function __construct(
@@ -27,14 +32,14 @@ readonly class IncomeData
     {
         return new self(
             groupId: $requestData['group_id'],
-            percent: $requestData['percent'],
-            txid: $requestData['txid'],
+            percent: Arr::get($requestData, 'percent', Wallet::DEFAULT_PERCENTAGE),
+            txid: Arr::get($requestData,'txid'),
             wallet: $requestData['wallet'],
             payment: $requestData['payment'],
             amount: $requestData['amount'],
-            unit: $requestData['unit'],
-            status: $requestData['status'],
-            message: $requestData['message'],
+            unit: Arr::get($requestData, 'unit', 'T'),
+            status: Arr::get($requestData, 'status', Status::REJECTED),
+            message: Arr::get($requestData, 'message', Message::NO_WALLET),
             hash: $requestData['hash'],
             diff: $requestData['diff'],
         );
