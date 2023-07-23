@@ -28,4 +28,21 @@ class Helper
         $total = $rewardBlock / $earnTime;
         return $total + $total * (($fppsPercent - $btcComFee - $allBtcFee) / 100);
     }
+
+    /**
+     * ----
+     */
+    public static function calculateBalance(float $payment, ?int $percent = 100): float
+    {
+        return $payment * ($percent / 100);
+    }
+
+    public static function sumTotalPayment(float $payments, ?float $payment): ?float
+    {
+        if (!$payment) {
+            return null;
+        }
+
+        return $payments + $payment;
+    }
 }

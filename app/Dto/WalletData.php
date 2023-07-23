@@ -13,7 +13,8 @@ readonly class WalletData
         public string $walletAddress,
         public int $groupId,
         public ?int $percent,
-        public ?float $minWithdrawal
+        public ?float $minWithdrawal,
+        public ?float $payment,
     )
     {
     }
@@ -25,7 +26,8 @@ readonly class WalletData
             walletAddress: $requestData['wallet'],
             groupId: (int) $requestData['group_id'],
             percent: (int) Arr::get($requestData, 'percent'),
-            minWithdrawal: (float) Arr::get($requestData, 'minWithdrawal')
+            minWithdrawal: (float) Arr::get($requestData, 'minWithdrawal'),
+            payment: Arr::get($requestData, 'payment')
         );
     }
 }

@@ -8,6 +8,7 @@ use App\Dto\UserData;
 use App\Dto\WorkerData;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class BtcComService
@@ -82,7 +83,7 @@ class BtcComService
      * Следует обратить внимание, метод принимает в строке запроса
      * параметр group (не group_id)
      */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): array
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID)
     {
         $response = $this->client->get(implode('/', [
             'worker'
@@ -94,7 +95,7 @@ class BtcComService
             new \Exception('Ошибка при выполнении запроса')
         );
 
-        return $response['data'];
+        return collect($response['data']['data']);
     }
 
     /**
@@ -115,7 +116,7 @@ class BtcComService
     }
 
     /**
-     * 
+     *
      */
     public function getPoolData(): array
     {
@@ -123,6 +124,21 @@ class BtcComService
             'pool',
             'status'
         ]))->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return $response['data'];
+    }
+
+    public function getEarnHistory(): array
+    {
+        $response = $this->client->get(implode('/', [
+            'account',
+            'earn-history'
+        ]), [
+            'puid' => self::PU_ID,
+            "page_size" => "1",
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
 
