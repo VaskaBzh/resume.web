@@ -2,10 +2,10 @@
 
 namespace App\Console\Commands;
 
-use App\Models\MinerStat;
-use App\Services\External\BtcComService;
+use App\Actions\MinerStat\Upsert;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class UpdateMiningStatCommand extends Command
 {
@@ -21,28 +21,18 @@ class UpdateMiningStatCommand extends Command
             ->collect()
             ->first();
 
-        $minerstat = MinerStat::updateOrCreate(
-            ['network_unit' => 'E'],
-            [
-            'network_hashrate' => $stats['network_hashrate'],
-            'network_unit' => $stats['network_hashrate_unit'],
-            'network_difficulty' => $difficulty,
-            'next_difficulty' => $stats['estimated_next_difficulty'],
-            'change_difficulty' => $stats['difficulty_change'],
-            'reward_block' => MinerStat::REWARD_BLOCK,
-            'price_USD' => $stats['exchange_rate']['BTC2USD'],
-            'time_remain' => $stats['time_remain'] * 1000,
-        ]);
+        if (empty($stats) && !$difficulty) {
+            Log::error('Mining stats request is empty');
 
-        if ($minerstat) {
-            info('Miner stats created', [
-                'minerstats' => $minerstat
-            ]);
+            return;
         }
 
-        info('Miner stats not created', [
-            'stats' => $stats,
-            'difficulty' => $difficulty
+        $minerstat = Upsert::execute(stats: $stats, difficulty: $difficulty);
+
+        info('Miner stats created', [
+            'minerstats' => $minerstat
         ]);
+
+        $this->line('Miner stats created');
     }
 }

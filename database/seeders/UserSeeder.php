@@ -15,12 +15,10 @@ class UserSeeder extends Seeder
          * Заполнит базу тестовым пользователем
          *
         */
-
         User::create([
-            'name' => "admin",
-            'email' => 'admin@example.ru',
+            'name' => "MainTest",
+            'email' => 'forest@gmail.com',
             'password' => bcrypt('12345678'),
-            'groups' => ['MyWorker', 'myWorker', 'login'],
         ]);
     }
 }

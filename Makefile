@@ -37,3 +37,7 @@ clear:
 	$(ARTISAN) view:clear
 tinker:
 	$(ARTISAN) tinker
+
+# app commands
+incomes:
+	$(ARTISAN) update:incomes

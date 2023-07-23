@@ -18,6 +18,7 @@ use App\Models\Wallet;
 use App\Services\External\BtcComService;
 use App\Services\External\MinerStatService;
 use App\Services\External\WalletService;
+use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Message;
@@ -156,41 +157,31 @@ class UpdateIncomesCommand extends Command
         WalletService $walletService,
     )
     {
-        $minerStat = MinerStat::first();
-
-        $fppsData = collect($btcComService->getEarnHistory()['list']);
-        $fppsPercent = $fppsData
-            ->pluck('more_than_pps96_rate')
-            ->first();
-        $difficulty = $fppsData
-            ->pluck('diff')
-            ->first();
-
-
+        $incomeService = IncomeService::buildWithParams(
+            params: $btcComService->getEarnHistory()['list']
+        );
+        
         foreach (Sub::all() as $sub) {
-            $workers = $btcComService->getWorkerList(groupId: $sub->group_id);
-            $share = $workers->sum('shares_1d');
 
-            if ($share < 0) {
+            if (!$incomeService->setHashRate($sub)) {
+
                 continue;
             }
 
+            try {
+                $earn = $incomeService->getEarn();
 
-            $earn = Helper::calculateEarn(
-                share: $share,
-                rewardBlock: $minerStat->reward_block,
-                fppsPercent: $fppsPercent,
-                difficulty: $difficulty
-            );
+                $incomeService
+                    ->setData('group_id', $sub->group_id)
+                    ->setData('amount', $earn)
+                    ->setData('payment', $earn * 100);
 
-            $requestIncomeData = [
-                'group_id' => $sub->group_id,
-                'amount' => $earn,
-                'hash' => $share,
-                'accruals' => $earn + $sub->accruals,
-            ];
+                dd($incomeService->getParams());
+            } catch (\Exception $e) {
+                report($e);
 
-            $requestSubData = [];
+                continue;
+            }
 
             $sumAccruals = $sub->accruals + $earn;
             $wallets = $sub->wallets;
@@ -213,14 +204,6 @@ class UpdateIncomesCommand extends Command
                                 percent: $wallet->percent
                             )
                         );
-
-                        $requestIncomeData = array_merge($requestIncomeData, [
-                            'status' => Status::COMPLETED,
-                            'message' => Message::COMPLETED,
-                            'txid' => $txId,
-                            'wallet' => $wallet->wallet,
-                            'payment' => $earn * Wallet::DEFAULT_PERCENTAGE,
-                        ]);
 
                         Upsert::execute(
                             walletData: WalletData::fromRequest([

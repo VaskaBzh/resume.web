@@ -22,15 +22,16 @@ class SyncWorkerCommand extends Command
      */
     public function handle(BtcComService $btcComService): void
     {
-        dd(Finance::first()->sub);
         $workers = $btcComService->getWorkerList();
-        $progressBar = $this->output->createProgressBar($workers['total_count']);
+
+        $progressBar = $this->output->createProgressBar($workers->count());
         $subs = Sub::all();
 
         foreach ($subs as $sub) {
-            foreach($workers['data'] as $worker) {
+            foreach($workers as $worker) {
 
                 if (head(explode('.', $worker['worker_name'])) === $sub->sub) {
+
                     $workerData = WorkerData::fromRequest(requestData: [
                         'group_id' => (int) $sub->group_id,
                         'worker_id' => (int) $worker['worker_id'],

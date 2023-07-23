@@ -7,7 +7,7 @@ use Illuminate\Http\JsonResponse;
 
 class MinerStatController
 {
-    public function visual()
+    public function visual(): JsonResponse
     {
         return new JsonResponse([
             'minerstats' => MinerStat::first(),

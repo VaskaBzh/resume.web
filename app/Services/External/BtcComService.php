@@ -17,6 +17,7 @@ class BtcComService
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
+    public const FEE = 0.5;
 
     public function __construct()
     {
