@@ -5,12 +5,10 @@ import income_getter from "@/store/modules/accountsInfo/income";
 import income_history from "@/store/modules/accountsInfo/incomeHistory";
 import minerHashHistory from "@/store/modules/accountsInfo/minerHashHistory";
 import wallets from "@/store/modules/accountsInfo/wallets";
-import addWorkers from "@/store/modules/workersProcess/addWorkers";
 
 export default {
     modules: {
         accounts_getter,
-        addWorkers,
         accountHashHistory,
         hashrate,
         income_getter,

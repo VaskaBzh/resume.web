@@ -139,6 +139,19 @@ class WalletController extends Controller
         $wallets = Sub::all()->firstWhere("group_id", $request->input("group_id"))->wallets;
         $wallet = $wallets->firstWhere("wallet", $request->input("wallet"));
 
+        $percentSum = 0;
+        foreach (Wallet::all()->where('group_id', $request->input('group_id')) as $walletObj) {
+            $percentSum = $percentSum + $walletObj->percent;
+        }
+
+        if ($percentSum + $request->input("percent") > 100) {
+            if (app()->getLocale() === 'ru') {
+                return back()->withErrors(["create_error" => "Суммарный процент вывода больше 100."]);
+            } else if (app()->getLocale() === 'en') {
+                return back()->withErrors(["create_error" => "The total percentage of withdrawal is more than 100."]);
+            }
+        }
+
         if ($request->input("minWithdrawal") || $request->input("percent") || $request->input("name")) {
             if ($request->input("percent")) {
                 $request->validate([

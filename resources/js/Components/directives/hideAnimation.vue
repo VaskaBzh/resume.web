@@ -1,6 +1,6 @@
 <script>
 function hintProcess(el, binding) {
-    if (binding.value) {
+    if (binding.value && el.textContent !== "") {
         el.style.visibility = "visible";
         el.style.opacity = 1;
         setTimeout(() => {

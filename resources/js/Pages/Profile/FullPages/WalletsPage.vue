@@ -1,9 +1,4 @@
 <template>
-    <div class="hint">
-        <div class="hint_item" v-hide="message !== ''">
-            {{ message }}
-        </div>
-    </div>
     <div class="wallets" ref="page">
         <main-title class="profile cabinet_title" tag="h3"
             >{{ $t("wallets.title") }}
@@ -370,20 +365,19 @@ export default {
                 wallet: "",
                 percent: "",
                 minWithdrawal: "",
-                group_id: "",
+                group_id: store.getters.getActive,
             })
         );
         const clearObj = () => {
-            Object.values(form.value).forEach((el) => (el = ""));
+            Object.values(form.value).forEach((el) => {
+                el = "";
+            });
         };
 
         const change = async () => {
             wait.value = true;
             await form.value.post("/wallet_change", {
                 onSuccess() {
-                    store.dispatch("getMessage", mess.value);
-                    store.dispatch("getWallets", form.value);
-                    store.dispatch("getMessage", mess.value);
                     clearObj();
                     setTimeout(() => {
                         closed.value = true;
