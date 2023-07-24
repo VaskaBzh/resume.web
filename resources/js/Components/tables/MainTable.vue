@@ -217,6 +217,7 @@ export default {
     },
     methods: {
         getUser(data) {
+            console.log(data)
             this.indexChanger(data.id);
             this.activeWorker = data.info;
         },

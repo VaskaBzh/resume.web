@@ -122,6 +122,7 @@ export default {
     },
     methods: {
         openPopup() {
+            
             this.$emit("openGraph", {
                 id: this.columns.graphId || null,
                 info: this.updatedColumns,

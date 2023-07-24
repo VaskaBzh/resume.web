@@ -46,6 +46,7 @@ export default {
                             this.dollarCalc / response.data[0].price;
                     }
                 });
+
             setTimeout(() => {
                 axios
                     .get("https://www.cbr-xml-daily.ru/latest.js")

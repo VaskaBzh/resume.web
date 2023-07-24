@@ -210,6 +210,7 @@
                             "
                             :BTC="this.todayEarn"
                         />
+                        <span>USD : {{ currentUSD }} ₽</span>
                     </div>
                 </div>
             </div>
@@ -228,6 +229,8 @@ import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+
+import axios from "axios";
 
 import { Profit } from "/resources/js/Scripts/profit.js";
 
@@ -286,6 +289,7 @@ export default {
             },
             activeHistory: null,
             all: false,
+            currentUSD: null,
         };
     },
     created: function () {
@@ -399,6 +403,13 @@ export default {
         router() {
             return router;
         },
+        getUSD() {
+            axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
+            .then((response) => {
+                this.currentUSD = response.data.Valute.USD.Value
+                console.log(this.currentUSD)
+            })
+        },
         // allStat(bool) {
         //     if (this.allHistory[this.getActive]) {
         //         if (bool) {
@@ -497,6 +508,7 @@ export default {
         },
     },
     mounted() {
+        this.getUSD();
         document.title = this.$t("header.links.statistic");
         if (this.allHistory[this.getActive]) {
             this.setActive();
