@@ -12,9 +12,9 @@ readonly class SubData
         public int $userId,
         public int $groupId,
         public string $groupName,
-        public ?int $payments,
-        public ?int $unPayments,
-        public ?int $accruals,
+        public ?float $payments,
+        public ?float $unPayments,
+        public ?float $accruals,
     )
     {
     }

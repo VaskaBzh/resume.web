@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Enums\Income;
+
 enum Message: string
 {
     case NO_WALLET = 'no wallet';

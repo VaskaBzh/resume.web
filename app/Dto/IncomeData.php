@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
+use App\Enums\Income\Message;
+use App\Enums\Income\Status;
 use App\Models\Wallet;
 use Illuminate\Support\Arr;
-use Message;
-use Status;
 
 readonly class IncomeData
 {
@@ -17,16 +17,14 @@ readonly class IncomeData
         public ?string $txid,
         public ?string $wallet,
         public ?float $payment,
-        public string $amount,
+        public float $amount,
         public string $unit,
         public string $status,
         public ?string $message,
-        public string $hash,
+        public float $hash,
         public int $diff,
 
-    )
-    {
-    }
+    ){}
 
     public static function fromRequest(array $requestData): IncomeData
     {
@@ -38,8 +36,8 @@ readonly class IncomeData
             payment: $requestData['payment'],
             amount: $requestData['amount'],
             unit: Arr::get($requestData, 'unit', 'T'),
-            status: Arr::get($requestData, 'status', Status::REJECTED),
-            message: Arr::get($requestData, 'message', Message::NO_WALLET),
+            status: Arr::get($requestData, 'status', Status::REJECTED->value),
+            message: Arr::get($requestData, 'message', Message::NO_WALLET->value),
             hash: $requestData['hash'],
             diff: $requestData['diff'],
         );

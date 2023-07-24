@@ -12,7 +12,7 @@ class Create
     public static function execute(IncomeData $incomeData): void
     {
         Income::create([
-            'groupId:' => $incomeData->groupId,
+            'group_id' => $incomeData->groupId,
             'percent' => $incomeData->percent,
             'txid' => $incomeData->txid,
             'wallet' => $incomeData->wallet,

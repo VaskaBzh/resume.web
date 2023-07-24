@@ -11,8 +11,8 @@ class Update
 {
     public static function execute(SubData $subData, Sub $sub): void
     {
+
         $sub->update(
-            ['group_id' => $subData->groupId],
             [
                 'sub' => $subData->groupName,
                 'payments' => $subData->payments ?? $sub->payments,

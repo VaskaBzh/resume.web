@@ -78,9 +78,11 @@ class WalletService
     {
         Upsert::execute(
             walletData: WalletData::fromRequest([
-                'walletAddress' => $this->wallet->wallet,
+                'wallet' => $this->wallet->wallet,
                 'group_id' => $this->wallet->group_id,
-                'payment' => $payment
+                'payment' => $payment + $this->wallet->payment,
+                'percent' => $this->wallet->percent,
+                'minWithdrawal' => $this->wallet->minWithdrawal
             ])
         );
     }

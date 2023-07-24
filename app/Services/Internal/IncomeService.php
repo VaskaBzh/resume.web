@@ -32,8 +32,7 @@ class IncomeService
     private function __construct(
         private array $params,
     )
-    {
-    }
+    {}
 
     public static function buildWithParams(array $params = []): IncomeService
     {
@@ -67,18 +66,7 @@ class IncomeService
 
     public function setPercent(): IncomeService
     {
-        $this->incomeData['percent'] = $this->wallet->min_bit_withdrawal ?? Wallet::DEFAULT_PERCENTAGE;
-
-        return $this;
-    }
-
-    public function setPayment(float $earn): IncomeService
-    {
-        $balance = $earn + $this->sub->unPayments;
-        $this->incomeData['payment'] = $balance * ($this->incomeData['percent'] / 100);
-        $this->subData['payments'] = $balance + $this->sub->payments;
-        $this->subData['accruals'] = $balance + $this->sub->accruals;
-        $this->subData['unPayments'] = $this->sub->accruals - $this->sub->payments;
+        $this->incomeData['percent'] = $this->wallet->percent_withdrawal ?? Wallet::DEFAULT_PERCENTAGE;
 
         return $this;
     }
@@ -107,6 +95,13 @@ class IncomeService
         $this->wallet = $wallet;
     }
 
+    /**
+     *
+     * Проверяем хеш рейт
+     * Устанавливаем херщрейт и сложность сети в свойство IncomeData
+     *
+     * @return bool
+     */
     public function setHashRate(): bool
     {
         $hashRate = resolve(BtcComService::class)
@@ -124,13 +119,18 @@ class IncomeService
         return false;
     }
 
+    /**
+     * Обновляем запись локального саб-аккаунта
+     *
+     * @return void
+     */
     public function updateLocalSub(): void
     {
         Update::execute(
             subData: SubData::fromRequest([
                 'user_id' => $this->sub->user_id,
                 'group_id' => $this->sub->group_id,
-                'group_name' => $this->sub->group_name,
+                'group_name' => $this->sub->sub,
                 'payments' => $this->subData['payments'],
                 'unPayments' => $this->subData['unPayments'],
                 'accruals' => $this->subData['accruals']
@@ -139,13 +139,19 @@ class IncomeService
         );
     }
 
+    /**
+     *
+     * Создаем обьект DTO для Income
+     *
+     * @return IncomeData
+     */
     private function buildDto(): IncomeData
     {
         return IncomeData::fromRequest([
-            'group_id' => $this->incomeData['group_id'],
+            'group_id' => $this->sub->group_id,
             'percent' => $this->incomeData['percent'],
-            'txid' => $this->incomeData['txid'],
-            'wallet' => $this->incomeData['wallet'],
+            'txid' => Arr::get($this->incomeData, 'txid'),
+            'wallet' => $this->wallet->wallet,
             'payment' => $this->incomeData['payment'],
             'amount' => $this->incomeData['amount'],
             'unit' => $this->incomeData['unit'],
@@ -163,12 +169,15 @@ class IncomeService
         );
     }
 
+    /**
+     * Меняем статусы и сообщения на "completed"
+     */
     public function complete(): void
     {
         $incomes = Income::getNotCompleted(
             groupId: $this->sub->group_id,
             walletUid: $this->wallet->wallet
-        );
+        )->get();
 
         if ($incomes) {
             Complete::execute(
@@ -183,9 +192,9 @@ class IncomeService
         $income = $this->getIncome();
 
         if ($income) {
-            if ($income->created_at->diffInHours(now()) > 12) {
+//            if ($income->created_at->diffInHours(now()) > 12) {
                 $this->create();
-            }
+//            }
         } else {
             $this->create();
         }
@@ -193,8 +202,12 @@ class IncomeService
 
     public function getIncome(): ?Income
     {
-        return Income::getPreviuus($this->sub->group_id)
-            ->get();
+        return Income::getPrevious(
+            groupId: $this->sub->group_id,
+            walletUid: $this->wallet->wallet
+        )
+            ->get()
+            ->first();
     }
 
     /**
