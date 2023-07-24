@@ -79,10 +79,7 @@ class UpdateIncomesCommand extends Command
 
                     if ($walletService->unlock()) {
                         $txId = $walletService->sendBalance(
-                            balance: Helper::calculateBalance(
-                                payment: $incomeService->getIncomeParam('payment'),
-                                percent: $incomeService->getIncomeParam('percent')
-                            )
+                            balance: $incomeService->getIncomeParam('payment')
                         );
 
                         if (!$txId) {

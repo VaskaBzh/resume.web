@@ -208,10 +208,10 @@ class IncomeService
      */
     public function getEarn(): float|\Exception
     {
-        return match (false) {
-            isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
-            isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
-            isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
+        return match (true) {
+            !isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
+            !isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
+            !isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
             default => $this->calculate()
         };
     }
