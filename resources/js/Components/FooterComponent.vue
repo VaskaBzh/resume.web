@@ -7,6 +7,7 @@
     >
         <a
             class="all-link"
+            target="_blank"
             :href="
                 this.$page.url.startsWith('/profile')
                     ? 'https://t.me/ailasmon'
