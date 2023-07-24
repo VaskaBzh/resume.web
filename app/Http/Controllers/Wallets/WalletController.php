@@ -139,7 +139,7 @@ class WalletController extends Controller
         $wallets = Sub::all()->firstWhere("group_id", $request->input("group_id"))->wallets;
         $wallet = $wallets->firstWhere("wallet", $request->input("wallet"));
 
-        $percentSum = 0;
+        $percentSum = -$wallet->percent;
         foreach (Wallet::all()->where('group_id', $request->input('group_id')) as $walletObj) {
             $percentSum = $percentSum + $walletObj->percent;
         }

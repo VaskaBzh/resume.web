@@ -368,6 +368,9 @@ export default {
                 group_id: store.getters.getActive,
             })
         );
+        let group = store.getters.allAccounts[store.getters.getActive];
+        group.group_id = store.getters.allAccounts[store.getters.getActive].id;
+
         const clearObj = () => {
             Object.values(form.value).forEach((el) => {
                 el = "";
@@ -378,6 +381,7 @@ export default {
             wait.value = true;
             await form.value.post("/wallet_change", {
                 onSuccess() {
+                    store.dispatch("getWallets", group);
                     clearObj();
                     setTimeout(() => {
                         closed.value = true;
@@ -401,15 +405,8 @@ export default {
                     per = per + wal["percent"];
                 });
                 per = per + Number(form.value.percent);
-                form.value.group_id = store.getters.getActive;
                 await form.value.post("/wallet_create", {
                     onSuccess() {
-                        let group =
-                            store.getters.allAccounts[store.getters.getActive];
-                        group.group_id =
-                            store.getters.allAccounts[
-                                store.getters.getActive
-                            ].id;
                         store.dispatch("getWallets", group);
                         clearObj();
                         setTimeout(() => {
