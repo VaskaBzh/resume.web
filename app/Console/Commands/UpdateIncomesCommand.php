@@ -4,18 +4,14 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Wallet\Upsert;
-use App\Dto\WalletData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Helper;
 use App\Models\Sub;
-use App\Models\Wallet;
 use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 
 class UpdateIncomesCommand extends Command
 {
@@ -32,17 +28,6 @@ class UpdateIncomesCommand extends Command
      * @var string
      */
     protected $description = 'Обновление базы доходов в 5:00';
-
-    public function completer($incomes)
-    {
-        if ($incomes->count() > 0) {
-            foreach ($incomes as $pending) {
-                $pending["status"] = "completed";
-                $pending["message"] = "completed";
-                $pending->save();
-            }
-        }
-    }
 
     /**
      * Execute the console command.
