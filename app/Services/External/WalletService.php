@@ -69,7 +69,7 @@ class WalletService
         return $response['result'];
     }
 
-    public function setWallet(Wallet $wallet)
+    public function setWallet(Wallet $wallet): void
     {
         $this->wallet = $wallet;
     }

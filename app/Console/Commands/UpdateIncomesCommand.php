@@ -6,7 +6,6 @@ namespace App\Console\Commands;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
-use App\Helper;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
@@ -36,8 +35,7 @@ class UpdateIncomesCommand extends Command
     public function handle(
         BtcComService $btcComService,
         WalletService $walletService,
-    )
-    {
+    ): void {
         $incomeService = IncomeService::buildWithParams(
             params: $btcComService->getEarnHistory()['list']
         );
@@ -46,7 +44,6 @@ class UpdateIncomesCommand extends Command
             $incomeService->setSub($sub);
 
             if (!$incomeService->setHashRate()) {
-
                 continue;
             }
 
