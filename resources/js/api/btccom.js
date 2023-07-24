@@ -97,21 +97,6 @@ export default {
 
         return response || error;
     },
-    async check_workers(data) {
-        let response, error;
-        const config = {
-            params: { id: data.el.gid },
-            headers: header,
-        };
-
-        try {
-            response = await axios.get("/worker", config);
-        } catch (err) {
-            error = err;
-        }
-
-        return response || error;
-    },
     async worker_create(data) {
         await axios.post("/worker_create", data);
     },
@@ -124,7 +109,6 @@ export default {
                     data: data.data,
                     path: data.path,
                     type: data.method,
-                    link_type: data.link_type,
                 },
                 header
             )
