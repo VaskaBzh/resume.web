@@ -66,10 +66,12 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mapGetters } from "vuex";
 import MainMenu from "@/Components/UI/MainMenu.vue";
 import { Converter } from "@/Scripts/converter";
+import { useForm } from "@inertiajs/vue3";
+import store from "@/store";
+import { ref } from "vue";
 
 export default {
     name: "wallet-block",
@@ -78,6 +80,29 @@ export default {
         return {
             opened: false,
             val: null,
+        };
+    },
+    setup() {
+        let removeForm = ref(
+            useForm({
+                name: "",
+                wallet: "",
+                percent: "",
+                minWithdrawal: "",
+                group_id: store.getters.getActive,
+            })
+        );
+
+        const remove = async (wallet) => {
+            removeForm.value.wallet = wallet.wallet;
+            await removeForm.value.post("/wallet_delete", {
+                onSuccess() {
+                    store.dispatch("getWallets", removeForm.value);
+                },
+            });
+        };
+        return {
+            remove,
         };
     },
     components: { MainMenu },
@@ -182,13 +207,6 @@ export default {
         },
         changeWalletObj(wallet) {
             this.$emit("getWallet", wallet);
-        },
-        async remove(wallet) {
-            wallet.group_id = this.getActive;
-            await axios.post("/wallet_delete", wallet).then((res) => {
-                this.$store.dispatch("getWallets", wallet);
-                this.$store.dispatch("getMessage", res.data.message);
-            });
         },
     },
 };

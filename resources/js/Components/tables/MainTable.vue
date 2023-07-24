@@ -18,9 +18,9 @@
                 :titles="table.titles"
                 :key="i"
                 :viewportWidth="viewportWidth"
-                :class="row.class || ''"
+                :class="row.class ?? null"
                 @openGraph="getUser"
-                :data-popup="row.data || ''"
+                :data-popup="row.data ?? null"
             />
         </tbody>
     </table>
@@ -149,6 +149,7 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
 import MainTitle from "@/Components/UI/MainTitle.vue";
+import Vue from "lodash";
 
 export default {
     name: "main-table",
@@ -170,28 +171,13 @@ export default {
         ...mapGetters(["allHistoryMiner"]),
         showRows() {
             let showInfo = {};
-            if (this.rowsVal > this.table.rows.length) {
-                for (let i = this.first; i < this.table.rows.length; i++) {
-                    Reflect.set(
-                        showInfo,
-                        Reflect.ownKeys(this.table.rows)[i],
-                        Reflect.get(
-                            this.table.rows,
-                            Reflect.ownKeys(this.table.rows)[i]
-                        )
-                    );
-                }
-            } else {
-                for (let i = this.first; i < this.rowsVal; i++) {
-                    Reflect.set(
-                        showInfo,
-                        Reflect.ownKeys(this.table.rows)[i],
-                        Reflect.get(
-                            this.table.rows,
-                            Reflect.ownKeys(this.table.rows)[i]
-                        )
-                    );
-                }
+            let entries = Object.entries(this.table.rows);
+            let length =
+                this.rowsVal > this.table.rows.length
+                    ? this.table.rows.length
+                    : this.rowsVal;
+            for (let i = this.first; i < length; i++) {
+                Vue.set(showInfo, entries[i][0], entries[i][1]);
             }
             return showInfo;
         },
@@ -234,6 +220,15 @@ export default {
             this.indexChanger(data.id);
             this.activeWorker = data.info;
         },
+        dropUser() {
+            setTimeout(() => {
+                this.indexWorker = -1;
+            }, 100);
+            this.activeWorker = {};
+        },
+        setIndex(index) {
+            this.indexWorker = index;
+        },
         indexChanger(key) {
             setTimeout(() => {
                 if (this.indexWorker !== key && key) {
@@ -253,15 +248,6 @@ export default {
                     this.renderChart(key);
                 }
             }, 10);
-        },
-        setIndex(index) {
-            this.indexWorker = index;
-        },
-        dropUser() {
-            setTimeout(() => {
-                this.indexWorker = -1;
-            }, 100);
-            this.activeWorker = {};
         },
         async renderChart(index) {
             const interval = 60 * 60 * 1000;
@@ -299,8 +285,6 @@ export default {
                     values: values.reverse(),
                     unit: unit.reverse(),
                 });
-
-                this.safeIndex = index;
             }
         },
     },

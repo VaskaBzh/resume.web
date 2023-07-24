@@ -62,9 +62,8 @@
     </div>
 </template>
 <script>
-import { Link, router } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
@@ -76,7 +75,6 @@ export default {
     components: {
         WrapTable,
         MainTitle,
-        MainSelect,
         Head,
         BlueButton,
         Link,

@@ -98,16 +98,16 @@ class WalletController extends Controller
         if (count($wallets) > 1) {
             $wallet->delete();
             if (app()->getLocale() === 'ru') {
-                return response()->json(['message' => 'Кошелек успешно удален.'], 200);
+                return back()->with('message', 'Кошелек успешно удален.');
             } else if (app()->getLocale() === 'en') {
-                return response()->json(['message' => 'The wallet has been successfully deleted.'], 200);
+                return back()->with('message', 'The wallet has been successfully deleted.');
             }
         }
 
         if (app()->getLocale() === 'ru') {
-            return response()->json(['message' => 'Нельзя удалять единственный кошелек.'], 200);
+            return back()->with('message', 'Нельзя удалять единственный кошелек.');
         } else if (app()->getLocale() === 'en') {
-            return response()->json(['message' => 'You cannot delete the only wallet.'], 200);
+            return back()->with('message', 'You cannot delete the only wallet.');
         }
     }
     public function change(Request $request)

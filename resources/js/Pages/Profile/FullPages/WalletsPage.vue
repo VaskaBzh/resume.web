@@ -368,16 +368,21 @@ export default {
                 group_id: store.getters.getActive,
             })
         );
-        let group = store.getters.allAccounts[store.getters.getActive];
-        group.group_id = store.getters.allAccounts[store.getters.getActive].id;
 
         const clearObj = () => {
-            Object.values(form.value).forEach((el) => {
-                el = "";
+            form.value = useForm({
+                name: "",
+                wallet: "",
+                percent: "",
+                minWithdrawal: "",
+                group_id: store.getters.getActive,
             });
         };
 
         const change = async () => {
+            let group = store.getters.allAccounts[store.getters.getActive];
+            group.group_id =
+                store.getters.allAccounts[store.getters.getActive].id;
             wait.value = true;
             await form.value.post("/wallet_change", {
                 onSuccess() {
@@ -399,6 +404,9 @@ export default {
                 store.getters.getActive !== -1 &&
                 store.getters.getWallet[store.getters.getActive]
             ) {
+                let group = store.getters.allAccounts[store.getters.getActive];
+                group.group_id =
+                    store.getters.allAccounts[store.getters.getActive].id;
                 wait.value = true;
                 let per = 0;
                 wallets.forEach((wal) => {
