@@ -136,6 +136,7 @@ import { Inertia } from "@inertiajs/inertia";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
+import store from '../../../store'
 import { ref } from "vue";
 
 export default {
@@ -187,6 +188,7 @@ export default {
                 },
                 onSuccess() {
                     closed.value = true;
+                    store.dispatch("getAccounts")
                 },
             });
         };

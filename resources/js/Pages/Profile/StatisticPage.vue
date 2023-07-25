@@ -407,7 +407,6 @@ export default {
             axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
             .then((response) => {
                 this.currentUSD = response.data.Valute.USD.Value
-                console.log(this.currentUSD)
             })
         },
         // allStat(bool) {
