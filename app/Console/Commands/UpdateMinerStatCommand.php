@@ -7,7 +7,7 @@ use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
-class UpdateMiningStatCommand extends Command
+class UpdateMinerStatCommand extends Command
 {
     protected $signature = 'update:stats';
 

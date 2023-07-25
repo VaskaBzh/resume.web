@@ -18,7 +18,7 @@ export class Converter {
         await currency().then((res) => (ruble = res.data.rates.USD));
         await this.getDollar();
 
-        this.rub = this.usd / ruble || 1;
+        this.rub = this.usd / (ruble || 1);
     }
 
     async coverted() {

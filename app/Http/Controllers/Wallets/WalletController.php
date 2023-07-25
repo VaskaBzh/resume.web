@@ -13,11 +13,12 @@ use App\Http\Requests\Wallet\DeleteRequest;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class WalletController extends Controller
 {
-    public function create(UpsertRequest $request): JsonResponse
+    public function create(UpsertRequest $request): RedirectResponse
     {
         $walletData = WalletData::fromRequest($request->all());
 
@@ -25,41 +26,30 @@ class WalletController extends Controller
             groupId: $walletData->groupId,
             percent: $walletData->percent
         )) {
-            return response()->json([
-                'errors' => [
-                    'create_error' => [trans('actions.validation_percent_exceeded')]
-                ]
-            ], 422);
+            return back()->withErrors(['create_error' => trans('actions.validation_percent_exceeded')]);
         }
 
         Upsert::execute($walletData);
 
-        return response()->json([
-            'success' => [
-                'create_success' => [trans('actions.wallet_create')]
-            ],
-        ]);
+        return back()->with('message', trans('actions.wallet_create'));
     }
 
-    public function delete(DeleteRequest $request): JsonResponse
+    public function delete(DeleteRequest $request): RedirectResponse
     {
         $walletData = WalletData::fromRequest($request->all());
+
         if (Wallet::isOne($walletData->groupId)) {
-            return response()->json([
-                'message' => trans('actions.wallet_prevent_last_delete')
-            ]);
+            return back()->with('message', trans('actions.wallet_prevent_last_delete'));
         }
 
         Delete::execute(
             wallet: Wallet::getByAddress(address: $walletData->walletAddress)->first()
         );
 
-        return response()->json([
-            'message' => trans('actions.wallet_delete')
-        ]);
+        return back()->with('message', trans('actions.wallet_delete'));
     }
 
-    public function change(UpsertRequest $request): JsonResponse
+    public function change(UpsertRequest $request): RedirectResponse
     {
         $walletData = WalletData::fromRequest($request->all());
 
@@ -67,20 +57,12 @@ class WalletController extends Controller
             groupId: $walletData->groupId,
             percent: $walletData->percent
         )) {
-            return response()->json([
-                'errors' => [
-                    'create_error' => [trans('actions.validation_percent_exceeded')]
-                ]
-            ], 422);
+            return back()->withErrors(['change_error' => trans('actions.validation_percent_exceeded')]);
         }
 
         Upsert::execute($walletData);
 
-        return response()->json([
-            'success' => [
-                'create_success' => [trans('actions.wallet_update')]
-            ],
-        ]);
+        return back()->with('message', trans('actions.wallet_update'));
     }
 
     public function visual(Request $request): Collection

@@ -55,16 +55,14 @@ class WalletService
      * Отправить баланс в сервис кошелька
      * @param float $balance - баланс кошелька
      */
-    public function sendBalance(float $balance): string
+    public function sendBalance(float $balance): ?string
     {
         $response = $this->client->post(config('api.wallet.ip'), [
             'jsonrpc' => '1.0',
             'id' => 'withdrawal',
             'method' => 'sendtoaddress',
             'params' => [$this->wallet->wallet, $balance]
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса зачисления на кошелек')
-        );
+        ]);
 
         return $response['result'];
     }

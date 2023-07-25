@@ -8,7 +8,7 @@ use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\UpdateMiningStatCommand;
+use App\Console\Commands\UpdateMinerStatCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -26,8 +26,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('update:incomes')->dailyAt('5:00');
+        $schedule->command('update:incomes')->dailyAt('10:00');
         $schedule->command('update:stats')->hourly();
+        $schedule->command('sync:worker')->everyMinute();
+
         $schedule->job(new HourlyHashesUpdate())->hourly();
         $schedule->job(new UpdateWorkersHashesJob())->hourly();
     }

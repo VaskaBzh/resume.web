@@ -29,6 +29,7 @@ class UpsertRequest extends FormRequest
                 'required',
                 'string',
                 'min:20',
+                'max:191',
                 $this->routeIs('wallet_create')
                 ? Rule::unique('wallets')
                     ->where(fn ($query) => $query->where('group_id', $this->group_id))
@@ -36,17 +37,18 @@ class UpsertRequest extends FormRequest
             ],
             'group_id' => 'required',
             'percent' => 'required|integer|min:1|max:100',
-            'minWithdrawal' => 'required|numeric|gt:0.004',
-            'name' => 'required|string|min:3',
+            'minWithdrawal' => 'required|numeric|gt:0.0049',
+            'name' => 'string|min:3|nullable',
         ];
     }
 
     public function messages(): array
     {
         return [
-            'wallet.required' => trans('validation.required', ['attribute' => 'адрес кошелька']),
-            'wallet.min' => trans('validation.min.string', ['attribute' => 'адрес кошелька', 'min' => 1]),
-            'wallet.unique' => trans('validation.unique', ['attribute' => 'адрес кошелька']),
+            'wallet.required' => trans('validation.required', ['attribute' => 'Aдрес кошелька']),
+            'wallet.min' => trans('validation.min.string', ['attribute' => 'Aдрес кошелька']),
+            'wallet.max' => trans('validation.max.string', ['attribute' => 'Aдрес кошелька']),
+            'wallet.unique' => trans('validation.unique', ['attribute' => 'Aдрес кошелька']),
             'percent.integer' => trans('validation.integer', ['attribute' => 'Процент']),
             'percent.required'=> trans('validation.required', ['attribute' => 'Процент']),
             'percent.min' => trans('validation.min.numeric', [

@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'success_sub_create' => ':attribute успешно создан',
+    'success_sub_create' => 'Сабаккаунт успешно создан',
     'fail_sub_create' => 'Что-то пошло не так',
     'success_worker_create' => 'Worker успешно создан',
     'validation_percent_exceeded' => 'Суммарный процент вывода больше 100',

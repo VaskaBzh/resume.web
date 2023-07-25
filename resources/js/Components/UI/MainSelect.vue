@@ -74,8 +74,10 @@ export default {
             let obj = [];
             for (let i = 0; i < this.options.length; i++) {
                 obj.push(
-                    "http://127.0.0.1:5173" +
-                        `/resources/assets/img/${this.options[i].img}`
+                    new URL(
+                        `/resources/assets/img/${this.options[i].img}`,
+                        import.meta.url
+                    )
                 );
             }
             return obj;
@@ -84,8 +86,10 @@ export default {
     methods: {
         selectOptions(optionTitle, optionImg, optionValue) {
             this.baseOption = optionTitle;
-            this.baseImg =
-                "http://127.0.0.1:5173" + `/resources/assets/img/${optionImg}`;
+            this.baseImg = new URL(
+                `/resources/assets/img/${optionImg}`,
+                import.meta.url
+            );
             this.$emit("getCoin", optionValue);
         },
         hideSelect() {
@@ -149,9 +153,10 @@ export default {
         initBase() {
             this.baseOption = this.options[0].title;
             if (this.options[0].img) {
-                this.baseImg =
-                    "http://127.0.0.1:5173" +
-                    `/resources/assets/img/${this.options[0].img}`;
+                this.baseImg = new URL(
+                    `/resources/assets/img/${this.options[0].img}`,
+                    import.meta.url
+                );
             }
         },
     },

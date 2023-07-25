@@ -305,7 +305,7 @@ export default {
 
             if (!/[0-9]/.test(form.password)) validate.value.number = true;
 
-            if (!/[!@#\$%\^&\*]/.test(form.password))
+            if (!/[!@#\$%\^&\*,.?]/.test(form.password))
                 validate.value.symbol = true;
 
             if (form.password.length === 0) validate.value = {};
@@ -422,7 +422,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Настройки";
+        document.title = this.$t("header.links.settings");
         this.$refs.page.style.opacity = 1;
         this.setProfits();
     },

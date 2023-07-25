@@ -19,7 +19,6 @@ export default {
                     data: data.data,
                     path: data.path,
                     type: data.method,
-                    link_type: data.link_type,
                 },
                 header
             )

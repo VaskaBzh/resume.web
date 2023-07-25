@@ -189,7 +189,8 @@ export default {
                     let val = new Profit(
                         this.accountInfo.shares1d,
                         this.btcInfo.btc.diff,
-                        this.btcInfo.btc.reward
+                        this.btcInfo.btc.reward,
+                        this.btcInfo.fpps
                     );
                     return val.amount().toFixed(8);
                 }

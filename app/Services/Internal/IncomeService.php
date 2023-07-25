@@ -66,7 +66,7 @@ class IncomeService
 
     public function setPercent(): IncomeService
     {
-        $this->incomeData['percent'] = $this->wallet?->percent_withdrawal ?? Wallet::DEFAULT_PERCENTAGE;
+        $this->incomeData['percent'] = $this->wallet?->percent ?? Wallet::DEFAULT_PERCENTAGE;
 
         return $this;
     }

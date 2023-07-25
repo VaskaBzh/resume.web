@@ -1,9 +1,4 @@
 <template>
-    <div class="hint">
-        <div class="hint_item" v-hide="mess !== ''">
-            {{ this.mess }}
-        </div>
-    </div>
     <div class="wallets" ref="page">
         <main-title class="profile cabinet_title" tag="h3"
             >{{ $t("wallets.title") }}
@@ -303,10 +298,7 @@ export default {
         ]),
         wallets() {
             let arr = [];
-            if (
-                this.getWallet[this.getActive] &&
-                Object.values(this.getWallet[this.getActive]).length > 0
-            ) {
+            if (this.getWallet[this.getActive]) {
                 Object.values(this.getWallet[this.getActive]).forEach(
                     (wal, i) => {
                         if (wal) {
@@ -358,35 +350,41 @@ export default {
         return {
             isChecked: false,
             viewportWidth: 0,
-            mess: "",
             waitWallet: true,
         };
     },
     setup() {
         let wait = ref(false);
-        let mess = ref("");
         let closed = ref(false);
         let form = ref(
             useForm({
                 name: "",
                 wallet: "",
-                percent: "",
-                minWithdrawal: "",
-                group_id: "",
+                percent: "100",
+                minWithdrawal: "0.005",
+                group_id: store.getters.getActive,
             })
         );
+
         const clearObj = () => {
-            Object.values(form.value).forEach((el) => (el = ""));
+            form.value = {
+                ...form.value,
+                name: "",
+                wallet: "",
+                percent: "100",
+                minWithdrawal: "0.005",
+                group_id: store.getters.getActive,
+            };
         };
 
         const change = async () => {
+            let group = store.getters.allAccounts[store.getters.getActive];
+            group.group_id =
+                store.getters.allAccounts[store.getters.getActive].id;
             wait.value = true;
             await form.value.post("/wallet_change", {
-                onSuccess(res) {
-                    mess.value = res.data.message;
-                    store.dispatch("getMessage", mess.value);
-                    store.dispatch("getWallets", form.value);
-                    store.dispatch("getMessage", mess.value);
+                onSuccess() {
+                    store.dispatch("getWallets", group);
                     clearObj();
                     setTimeout(() => {
                         closed.value = true;
@@ -404,21 +402,17 @@ export default {
                 store.getters.getActive !== -1 &&
                 store.getters.getWallet[store.getters.getActive]
             ) {
+                let group = store.getters.allAccounts[store.getters.getActive];
+                group.group_id =
+                    store.getters.allAccounts[store.getters.getActive].id;
                 wait.value = true;
                 let per = 0;
                 wallets.forEach((wal) => {
                     per = per + wal["percent"];
                 });
                 per = per + Number(form.value.percent);
-                form.value.group_id = store.getters.getActive;
                 await form.value.post("/wallet_create", {
                     onSuccess() {
-                        let group =
-                            store.getters.allAccounts[store.getters.getActive];
-                        group.group_id =
-                            store.getters.allAccounts[
-                                store.getters.getActive
-                            ].id;
                         store.dispatch("getWallets", group);
                         clearObj();
                         setTimeout(() => {
@@ -456,10 +450,13 @@ export default {
     },
     methods: {
         changeWallet(wallet) {
-            this.form.percent = wallet.percent;
-            this.form.minWithdrawal = wallet.minWithdrawal;
-            this.form.wallet = wallet.wallet;
-            this.form.name = wallet.fullName;
+            this.form = {
+                ...this.form,
+                percent: wallet.percent,
+                minWithdrawal: wallet.minWithdrawal,
+                wallet: wallet.wallet,
+                name: wallet.fullName,
+            };
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
@@ -473,7 +470,7 @@ export default {
             setTimeout(() => (this.waitWallet = false), 300);
     },
     mounted() {
-        document.title = "Кошельки";
+        document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
         if (this.getWallet[this.getActive]) this.waitWallet = false;
     },
