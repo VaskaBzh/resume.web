@@ -131,7 +131,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Хостингам";
+        document.title = this.$t("header.links.hosting");
     },
 };
 </script>

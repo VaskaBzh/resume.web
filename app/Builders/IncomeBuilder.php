@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Builder;
 
 class IncomeBuilder extends BaseBuilder
 {
-    public function getPrevious(int $groupId, string $walletUid): Builder
+    public function getPrevious(int $groupId, ?string $walletUid): Builder
     {
         $incomeQuery = $this->where('group_id', $groupId);
         $incomeHasWalletQuery = $incomeQuery->where('wallet', $walletUid);
@@ -23,10 +23,12 @@ class IncomeBuilder extends BaseBuilder
 
     public function getNotCompleted(int $groupId, string $walletUid): Builder
     {
-        return $this
+        $query =  $this
             ->where('group_id', $groupId)
             ->where('wallet', $walletUid)
             ->where('status', Status::PENDING->value)
             ->orWhere('status', Status::REJECTED->value);
+
+        dd($query->get());
     }
 }

@@ -59,7 +59,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Подключение";
+        document.title = this.$t("header.links.connecting");
     },
 };
 </script>

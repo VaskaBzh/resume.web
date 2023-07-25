@@ -291,11 +291,12 @@ export default {
         },
         yesterdayProfit() {
             if (this.allIncomeHistory[this.getActive]) {
-                return Number(
-                    Object.values(
-                        this.allIncomeHistory[this.getActive]
-                    ).reverse()[0]["amount"]
-                );
+                let reversedArray = Object.values(
+                    this.allIncomeHistory[this.getActive]
+                ).reverse();
+                if (reversedArray.length > 0 && reversedArray[0]) {
+                    return Number(reversedArray[0]["amount"]);
+                }
             }
             return "0.00000000";
         },
@@ -353,7 +354,7 @@ export default {
         this.handleResize();
     },
     mounted() {
-        document.title = "История";
+        document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
     },
 };

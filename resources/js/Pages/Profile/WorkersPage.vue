@@ -62,9 +62,8 @@
     </div>
 </template>
 <script>
-import { Link, router } from "@inertiajs/vue3";
+import { Link } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
-import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
@@ -76,7 +75,6 @@ export default {
     components: {
         WrapTable,
         MainTitle,
-        MainSelect,
         Head,
         BlueButton,
         Link,
@@ -187,7 +185,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Воркеры";
+        document.title = this.$t("header.links.workers");
     },
     created() {
         window.addEventListener("resize", this.handleResize);

@@ -90,8 +90,8 @@ return [
     'max' => [
         'array' => 'The :attribute must not have more than :max items.',
         'file' => 'The :attribute must not be greater than :max kilobytes.',
-        'numeric' => ':attribute должен быть больше :max.',
-        'string' => ':attribute должен быть больше :max символов.',
+        'numeric' => ':attribute должен быть не более :max.',
+        'string' => ':attribute должен быть не более :max символов.',
     ],
     'max_digits' => 'The :attribute must not have more than :max digits.',
     'mimes' => 'The :attribute must be a file of type: :values.',
@@ -99,8 +99,8 @@ return [
     'min' => [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'numeric' => ':attribute должен быть меньше :min.',
-        'string' => ':attribute должен быть меньше :min сомволов.',
+        'numeric' => ':attribute должен быть не менее :min.',
+        'string' => ':attribute должен быть не менее :min символов.',
     ],
     'min_digits' => 'The :attribute must have at least :min digits.',
     'multiple_of' => 'The :attribute must be a multiple of :value.',

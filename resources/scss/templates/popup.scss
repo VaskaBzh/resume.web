@@ -216,7 +216,6 @@ body::after {
         border-radius: 16px;
         position: relative;
         transform: translateY(200px);
-        overflow: hidden;
         @media (max-width: $tablet) {
             padding: 0 24px;
         }
@@ -267,7 +266,7 @@ body::after {
             .popup__content {
                 &_block {
                     width: 100%;
-                    transition: opacity 1s ease 1s;
+                    transition: opacity 0.5s ease 1.25s;
                     opacity: 1;
                     .popup__close {
                         opacity: 1;
@@ -278,9 +277,9 @@ body::after {
         }
         &_block {
             overflow: hidden;
+            transition: opacity 0.3s ease 0s;
             padding: 32px 0;
             opacity: 0;
-            transition: opacity 0.3s ease 0s;
             @media (max-width: $pc) {
                 padding: 24px 0;
             }

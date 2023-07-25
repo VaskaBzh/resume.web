@@ -1,10 +1,28 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
+import btccom from "@/api/btccom";
 import axios from "axios";
 
 export default {
     actions: {
-        async getGraph({ commit }) {
+        getLastFpps({ commit }) {
+            btccom
+                .fetch({
+                    data: {
+                        puid: "781195",
+                        page_size: "1",
+                    },
+                    path: "account/earn-history",
+                    method: "get",
+                })
+                .then((res) => {
+                    commit(
+                        "setFpps",
+                        res.data.data.list[0].more_than_pps96_rate
+                    );
+                });
+        },
+        getGraph({ commit }) {
             difficulty
                 .fetch({
                     data: {
@@ -13,15 +31,14 @@ export default {
                     },
                     path: "https://api.blockchain.info/charts/difficulty",
                     method: "get",
-                    link_type: "",
                 })
                 .then((res) => {
                     commit(`updateHistoryDiff`, res.data.values);
                 })
                 .catch((err) => console.log(err));
         },
-        async getMiningStat({ commit, state }) {
-            axios.get("/miner_stat").then(async (response) => {
+        getMiningStat({ commit, state }) {
+            axios.get("/miner_stat").then((response) => {
                 let minerstats = response.data.minerstats;
 
                 let converterModel = {
@@ -49,6 +66,9 @@ export default {
         },
     },
     mutations: {
+        setFpps(state, item) {
+            Vue.set(state.convertInfo, "fpps", item);
+        },
         updateInfo(state, data) {
             Vue.set(state.convertInfo, data.key, data.item);
         },

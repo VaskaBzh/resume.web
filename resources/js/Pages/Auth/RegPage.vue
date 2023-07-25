@@ -230,7 +230,7 @@ export default {
 
             if (!/[0-9]/.test(form.password)) validate.value.number = true;
 
-            if (!/[!@#\$%\^&\*]/.test(form.password))
+            if (!/[!@#\$%\^&\*,.?]/.test(form.password))
                 validate.value.symbol = true;
 
             if (form.password.length === 0) validate.value = {};
@@ -253,7 +253,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Регистрация";
+        document.title = this.$t("auth.reg.head");
     },
 };
 </script>

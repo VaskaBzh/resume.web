@@ -25,12 +25,12 @@ class IncomeService
         'unit' => 'T',
     ];
     private Sub $sub;
-    private Wallet $wallet;
 
     private array $subData = [];
 
     private function __construct(
         private array $params,
+        private ?Wallet $wallet = null,
     )
     {}
 
@@ -66,7 +66,7 @@ class IncomeService
 
     public function setPercent(): IncomeService
     {
-        $this->incomeData['percent'] = $this->wallet->percent_withdrawal ?? Wallet::DEFAULT_PERCENTAGE;
+        $this->incomeData['percent'] = $this->wallet?->percent ?? Wallet::DEFAULT_PERCENTAGE;
 
         return $this;
     }
@@ -90,9 +90,11 @@ class IncomeService
         return $this;
     }
 
-    public function setWallet(Wallet $wallet): void
+    public function setWallet(Wallet $wallet): IncomeService
     {
         $this->wallet = $wallet;
+
+        return $this;
     }
 
     /**
@@ -151,7 +153,7 @@ class IncomeService
             'group_id' => $this->sub->group_id,
             'percent' => $this->incomeData['percent'],
             'txid' => Arr::get($this->incomeData, 'txid'),
-            'wallet' => $this->wallet->wallet,
+            'wallet' => $this->wallet?->wallet,
             'payment' => $this->incomeData['payment'],
             'amount' => $this->incomeData['amount'],
             'unit' => $this->incomeData['unit'],
@@ -192,6 +194,7 @@ class IncomeService
         $income = $this->getIncome();
 
         if ($income) {
+            // НЕ ЗАБЫТЬ
 //            if ($income->created_at->diffInHours(now()) > 12) {
                 $this->create();
 //            }
@@ -204,7 +207,7 @@ class IncomeService
     {
         return Income::getPrevious(
             groupId: $this->sub->group_id,
-            walletUid: $this->wallet->wallet
+            walletUid: $this->wallet?->wallet
         )
             ->get()
             ->first();

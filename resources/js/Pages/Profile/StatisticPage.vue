@@ -353,7 +353,8 @@ export default {
                     let val = new Profit(
                         this.allAccounts[this.getActive].shares1d,
                         this.btcInfo.btc.diff,
-                        this.btcInfo.btc.reward
+                        this.btcInfo.btc.reward,
+                        this.btcInfo.fpps
                     );
                     return val.amount();
                 }
@@ -496,7 +497,7 @@ export default {
         },
     },
     mounted() {
-        document.title = "Статистика";
+        document.title = this.$t("header.links.statistic");
         if (this.allHistory[this.getActive]) {
             this.setActive();
             this.renderChart();
