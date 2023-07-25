@@ -7,7 +7,6 @@ export default {
             commit("destroy_acc");
         },
         async accounts_all({ commit, state }) {
-            state.groupName = "";
             let arr;
 
             await btccom
@@ -99,8 +98,6 @@ export default {
     mutations: {
         destroy_acc(state) {
             state.accounts = {};
-            state.updateId = {};
-            state.groupName = "";
             state.checkFive = 0;
         },
         updateActive(state, index) {
@@ -115,20 +112,12 @@ export default {
                 state.active = data.account.id;
             }
         },
-        updateGroupName(state, data) {
-            state.groupName = data.name;
-        },
-        updateUpdateId(state, data) {
-            Vue.set(state.updateId, data.item, data.item);
-        },
     },
     state: {
         checkFive: 0,
         valid: true,
         active: -1,
         accounts: {},
-        groupName: "",
-        updateId: {},
     },
     getters: {
         allAccounts(state) {

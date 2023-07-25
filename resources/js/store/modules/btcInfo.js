@@ -18,7 +18,6 @@ export default {
     },
     actions: {
         destroyer({ commit }) {
-            commit("destroy");
             this.dispatch("destroy_accounts");
             this.dispatch("destroy_hashrate");
             this.dispatch("destroy_income");
@@ -47,13 +46,5 @@ export default {
         getMinerHistoryHash({ commit, state }, data) {
             this.dispatch("get_miner_history_hash", data);
         },
-    },
-    mutations: {
-        destroy(state) {
-            state.groupName = "";
-        },
-    },
-    state: {
-        groupName: "",
     },
 };

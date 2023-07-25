@@ -298,10 +298,7 @@ export default {
         ]),
         wallets() {
             let arr = [];
-            if (
-                this.getWallet[this.getActive] &&
-                Object.values(this.getWallet[this.getActive]).length > 0
-            ) {
+            if (this.getWallet[this.getActive]) {
                 Object.values(this.getWallet[this.getActive]).forEach(
                     (wal, i) => {
                         if (wal) {
@@ -363,20 +360,21 @@ export default {
             useForm({
                 name: "",
                 wallet: "",
-                percent: "",
-                minWithdrawal: "",
+                percent: "100",
+                minWithdrawal: "0.005",
                 group_id: store.getters.getActive,
             })
         );
 
         const clearObj = () => {
-            form.value = useForm({
+            form.value = {
+                ...form.value,
                 name: "",
                 wallet: "",
-                percent: "",
-                minWithdrawal: "",
+                percent: "100",
+                minWithdrawal: "0.005",
                 group_id: store.getters.getActive,
-            });
+            };
         };
 
         const change = async () => {
@@ -452,10 +450,13 @@ export default {
     },
     methods: {
         changeWallet(wallet) {
-            this.form.percent = wallet.percent;
-            this.form.minWithdrawal = wallet.minWithdrawal;
-            this.form.wallet = wallet.wallet;
-            this.form.name = wallet.fullName;
+            this.form = {
+                ...this.form,
+                percent: wallet.percent,
+                minWithdrawal: wallet.minWithdrawal,
+                wallet: wallet.wallet,
+                name: wallet.fullName,
+            };
         },
         checkboxer(is_checked) {
             this.isChecked = is_checked;
