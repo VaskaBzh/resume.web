@@ -29,6 +29,10 @@ class Wallet extends Model
         'percent',
     ];
 
+    protected $casts = [
+        'payment' => 'float',
+    ];
+
     /*
      * Relations
     */

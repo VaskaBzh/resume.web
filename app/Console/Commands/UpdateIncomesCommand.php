@@ -69,18 +69,19 @@ class UpdateIncomesCommand extends Command
                     $incomeService->setWallet($wallet);
                     $incomeService->setIncomeData('payment', ($earn + $sub->unPayments) * ($wallet->percent / 100));
                     $walletService->setWallet($wallet);
-
+//                    !$incomeService->canWithdraw()
                     if (false) {
                         $incomeService->setIncomeData('message', Message::LESS_MIN_WITHDRAWAL->value);
                         $incomeService->setIncomeData('status', Status::PENDING->value);
 
                         continue;
                     }
-
+//                    $walletService->unlock()
                     if (true) {
-                        $txId = $walletService->sendBalance(
-                            balance: $incomeService->getIncomeParam('payment')
-                        );
+                        $txId = "123123123";
+//                            $walletService->sendBalance(
+//                            balance: $incomeService->getIncomeParam('payment')
+//                        );
 
                         if (!$txId) {
                             $incomeService->setIncomeData('message', Message::ERROR->value);

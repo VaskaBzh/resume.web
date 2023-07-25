@@ -25,6 +25,12 @@ class Sub extends Model
         'percent',
     ];
 
+    protected $casts = [
+        'accruals' => 'float',
+        'payments' => 'float',
+        'unPayments' => 'float',
+    ];
+
     /* Relations */
 
     public function finances(): HasMany
