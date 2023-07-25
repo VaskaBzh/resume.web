@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Services\Internal;
 
 use App\Actions\Income\Complete;
-use App\Actions\Income\Create;
+use App\Actions\Income\Create as IncomeCreate;
+use App\Actions\Finance\Create as FinanceCreate;
 use App\Actions\Sub\Update;
+use App\Dto\FinanceData;
 use App\Dto\IncomeData;
 use App\Dto\SubData;
 use App\Enums\Income\Status;
@@ -166,9 +168,25 @@ class IncomeService
      */
     public function createLocalIncome(): void
     {
-        Create::execute(
+        IncomeCreate::execute(
             incomeData: $this->buildDto()
         );
+    }
+
+    public function createFinance(float $earn): IncomeService
+    {
+        $profit = $this->calculateProfit($earn);
+
+        FinanceCreate::execute(
+            financeData: FinanceData::fromRequest([
+                'group_id' => $this->sub->group_id,
+                'earn' => $earn,
+                'user_total' => $earn - $profit,
+                'profit' => $profit
+            ])
+        );
+
+        return $this;
     }
 
     /**
@@ -199,6 +217,11 @@ class IncomeService
         $total = $this->params['reward_block'] / $earnTime;
 
         return $total + $total * (($this->params['fppsPercent'] - BtcComService::FEE - self::ALLBTC_FEE) / 100);
+    }
+
+    private function calculateProfit(float $earn): float
+    {
+        return ($earn / 100) * self::ALLBTC_FEE;
     }
 
     private function buildDto(): IncomeData

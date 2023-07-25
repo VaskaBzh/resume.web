@@ -4,8 +4,11 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Dto\FinanceData;
+use App\Dto\IncomeData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
+use App\Events\IncomeCompleteEvent;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
@@ -110,6 +113,8 @@ class UpdateIncomesCommand extends Command
                 $walletService->upsertLocalWallet(
                     payment: $incomeService->getIncomeParam('payment')
                 );
+
+                event(new IncomeCompleteEvent(sub: $sub, earn: $earn));
 
                 $incomeService->complete();
             } else {

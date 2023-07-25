@@ -22,13 +22,6 @@ class WalletController extends Controller
     {
         $walletData = WalletData::fromRequest($request->all());
 
-        if (Wallet::isExceeded(
-            groupId: $walletData->groupId,
-            percent: $walletData->percent
-        )) {
-            return back()->withErrors(['create_error' => trans('actions.validation_percent_exceeded')]);
-        }
-
         Upsert::execute($walletData);
 
         return back()->with('message', trans('actions.wallet_create'));

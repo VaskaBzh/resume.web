@@ -9,14 +9,6 @@ use Illuminate\Validation\Rule;
 
 class UpsertRequest extends FormRequest
 {
-//    protected function prepareForValidation()
-//    {
-//        dd($this->routeIs('wallet_create')
-//            ? Rule::unique('wallets')
-//                ->where(fn ($query) => $query->where('group_id', $this->group_id))
-//            : '');
-//    }
-
     public function authorize(): bool
     {
         return true;
@@ -30,12 +22,8 @@ class UpsertRequest extends FormRequest
                 'string',
                 'min:20',
                 'max:191',
-                $this->routeIs('wallet_create')
-                ? Rule::unique('wallets')
-                    ->where(fn ($query) => $query->where('group_id', $this->group_id))
-                : ''
             ],
-            'group_id' => 'required',
+            'group_id' => 'required|unique:wallets',
             'percent' => 'required|integer|min:1|max:100',
             'minWithdrawal' => 'required|numeric|gt:0.0049',
             'name' => 'string|min:3|nullable',
@@ -58,6 +46,7 @@ class UpsertRequest extends FormRequest
             'minWithdrawal.numeric' => trans('validation.numeric', ['attribute' => 'Вывод']),
             'minWithdrawal.gt' => trans('validation.gt.numeric', ['attribute' => 'Вывод', 'gt' => 0.005]),
             'name.min' => trans('validation.min.string', ['attribute' => 'Имя', 'min' => 3]),
+            'group_id.unique' => trans('validation.exists', ['attribute' => 'Кошелек'])
         ];
     }
 }
