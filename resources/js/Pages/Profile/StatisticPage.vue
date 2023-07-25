@@ -86,9 +86,9 @@
                         class="cabinet__block cabinet__block-light hash__block"
                         v-if="!waitAccounts"
                     >
-                        <Link class="title title-blue" :href="route(`workers`)"
+                        <main-title class="title title-blue" :href="route(`workers`)"
                             >{{ $t("statistic.info_blocks.workers.title") }}
-                        </Link>
+                        </main-title>
                         <ul class="statistic__list">
                             <li class="active text text-md">
                                 <span>
