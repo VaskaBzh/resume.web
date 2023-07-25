@@ -124,7 +124,6 @@ export default {
                     this.$t("income.table.thead[3]"),
                     this.$t("income.table.thead[4]"),
                     this.$t("income.table.thead[5]"),
-                    this.$t("income.table.thead[6]"),
                 ],
                 rows: [],
             };
@@ -141,14 +140,10 @@ export default {
                         time.length = 8;
                         date.length = 10;
                         dateUpdate.length = 10;
-                        let percent = 0;
                         let datePay = "...";
                         let wallet = "...";
                         let message = "...";
                         let txid = row["txid"];
-                        if (row["percent"]) {
-                            percent = row["percent"];
-                        }
                         if (row["status"] === "completed") {
                             datePay = dateUpdate
                                 .join("")
@@ -225,7 +220,6 @@ export default {
                                 wallet.substr(0, 4) +
                                 "..." +
                                 wallet.substr(wallet.length - 4, wallet.length),
-                            percent: `${percent}%`,
                             status:
                                 row["status"] === "completed"
                                     ? this.$t("income.table.status.fullfill")

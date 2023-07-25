@@ -332,7 +332,7 @@ export default {
                 font-size: 14px;
                 font-weight: 400;
                 line-height: 130%;
-                text-align: left;
+                // text-align: left;
                 background: transparent;
             }
         }

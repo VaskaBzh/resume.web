@@ -538,7 +538,6 @@ const messages = {
                     "Hashrate",
                     "Accrual amount",
                     "Wallet",
-                    "Withdrawal percentage",
                     "Status",
                 ],
                 thead_short: [
@@ -548,7 +547,6 @@ const messages = {
                     "Average Hashrate",
                     "Amount of accruals",
                     "Wallet",
-                    "Withdrawal percentage",
                     "Status",
                 ],
                 messages: {
@@ -1200,7 +1198,6 @@ const messages = {
                     "Хешрейт",
                     "Сумма начислений",
                     "Кошелек",
-                    "Процент вывода",
                     "Статус",
                 ],
                 thead_short: [
@@ -1210,7 +1207,6 @@ const messages = {
                     "Средний Хешрейт",
                     "Сумма начислений",
                     "Кошелек",
-                    "Процент вывода",
                     "Статус",
                 ],
                 messages: {
