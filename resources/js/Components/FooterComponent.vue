@@ -404,7 +404,7 @@ export default {
         margin-bottom: 28px;
         @media (max-width: 479.98px) {
             margin-top: 30px;
-            margin-bottom: 50px;
+            margin-bottom: 96px;
         }
     }
 }

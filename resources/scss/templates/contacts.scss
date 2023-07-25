@@ -16,6 +16,8 @@
     @media (max-width: $mobileSmall) {
         display: block;
         width: fit-content;
+        position: relative;
+        left: 1rem;
     }
     &_img {
         width: 40px;

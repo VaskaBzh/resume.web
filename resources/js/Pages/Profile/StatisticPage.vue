@@ -210,7 +210,7 @@
                             "
                             :BTC="this.todayEarn"
                         />
-                        <span>USD : {{ currentUSD }} ₽</span>
+                        <span v-if="isRu">USD : {{ currentUSD }} ₽</span>
                     </div>
                 </div>
             </div>
@@ -290,6 +290,7 @@ export default {
             activeHistory: null,
             all: false,
             currentUSD: null,
+            isRu: false,
         };
     },
     created: function () {
@@ -404,10 +405,16 @@ export default {
             return router;
         },
         getUSD() {
-            axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
-            .then((response) => {
-                this.currentUSD = response.data.Valute.USD.Value
+            if(this.$i18n.locale === 'ru'){
+                this.isRu = true
+                axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
+                .then((response) => {
+                    this.currentUSD = response.data.Valute.USD.Value
             })
+            }
+            else{
+                this.isRu = false
+            }
         },
         // allStat(bool) {
         //     if (this.allHistory[this.getActive]) {
@@ -520,6 +527,7 @@ export default {
         if (this.allAccounts[this.getActive]) this.waitAccounts = false;
     },
     beforeUpdate() {
+        this.getUSD();
         if (this.allHistory[this.getActive]) {
             if (!this.all) {
                 this.setActive();
