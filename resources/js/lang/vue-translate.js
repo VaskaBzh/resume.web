@@ -526,7 +526,7 @@ const messages = {
             },
         },
         income: {
-            title: "Earnings history",
+            title: "Income",
             income_info: {
                 title: "Earnings",
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
@@ -1186,7 +1186,7 @@ const messages = {
             },
         },
         income: {
-            title: "История платежей",
+            title: "Доходы",
             income_info: {
                 title: "Платежи",
                 titles: ["Оплачено", "Неоплачено", "Вчерашний доход"],
