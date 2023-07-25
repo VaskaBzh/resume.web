@@ -2,7 +2,7 @@
 
 namespace App\Console;
 
-use App\Jobs\AddWorkerJob;
+use App\Console\Commands\UpdateIncomesCommand;
 use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
@@ -13,7 +13,7 @@ class Kernel extends ConsoleKernel
 {
     protected $commands = [
         // ...
-        Commands\UpdateIncomesCommand::class,
+        UpdateIncomesCommand::class,
         UpdateMiningStatCommand::class,
     ];
     /**
@@ -26,13 +26,8 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('update:incomes')->dailyAt('5:00');
         $schedule->command('update:stats')->hourly();
-
-//        $schedule->command('update:payments')->dailyAt('5:10');
         $schedule->job(new HourlyHashesUpdate())->hourly();
         $schedule->job(new UpdateWorkersHashesJob())->hourly();
-
-       $schedule->job(new AddWorkerJob())->everyMinute();;
-        // $schedule->command('inspire')->hourly();
     }
 
     /**
