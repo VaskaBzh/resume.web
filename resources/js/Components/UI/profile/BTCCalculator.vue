@@ -1,18 +1,20 @@
 <template>
-    <div class="BTC__block">
+    <div class="btc__block">
         <span class="text text-md">{{ title }}</span>
-        <div class="BTC__value text text-md text-blue">
-            <b>{{ Number(clearBTC).toFixed(8) }} BTC</b>
-            <span class="text text-md">{{ dollarCalc.toFixed(2) }} $</span>
-            <span class="text text-md" v-if="this.$i18n.locale === 'ru'"
-                >{{ rubleCalc.toFixed(2) }} ₽</span
+        <div class="btc__value text text-md text-blue">
+            <b>{{ converter.btc }} BTC</b>
+            <span class="text text-md">{{ converter.usd }} $</span>
+            <span class="text text-md" v-if="$i18n.locale === 'ru'"
+                >{{ converter.rub }} ₽</span
             >
         </div>
     </div>
 </template>
 <script>
-import axios from "axios";
+import { Converter } from "@/Scripts/converter";
+import { mapGetters } from "vuex";
 export default {
+    name: "btc-calculator",
     props: {
         BTC: {
             type: Number,
@@ -21,52 +23,44 @@ export default {
         title: String,
         clearProfit: Number,
     },
+    computed: {
+        ...mapGetters(["btcInfo"]),
+    },
     data() {
         return {
-            dollarCalc: 0,
-            rubleCalc: 0,
-            clearBTC: 0,
+            converter: null,
         };
     },
-    watch: {
-        BTC() {
-            this.calculator();
-        },
-    },
     methods: {
-        calculator() {
-            this.clearBTC = this.BTC;
-            axios
-                .get("https://api.minerstat.com/v2/coins?list=BTC,BCH,BSV")
-                .then((response) => {
-                    this.dollarCalc = this.BTC * response.data[0].price;
-                    if (this.clearProfit && this.BTC !== 0) {
-                        this.dollarCalc = this.dollarCalc - this.clearProfit;
-                        this.clearBTC =
-                            this.dollarCalc / response.data[0].price;
-                    }
-                });
-            setTimeout(() => {
-                axios
-                    .get("https://www.cbr-xml-daily.ru/latest.js")
-                    .then((response) => {
-                        this.rubleCalc =
-                            this.dollarCalc / response.data.rates.USD;
-                    });
-            }, 200);
+        async updateConversion() {
+            this.converter = new Converter(
+                this.BTC,
+                this.btcInfo?.btc ? this.btcInfo.btc.price : 0
+            );
+            await this.converter.convert();
         },
     },
-    mounted() {
-        this.calculator();
+    created() {
+        this.updateConversion();
     },
-    // updated() {
-    //     this.calculator();
-    // },
-    name: "btc-calculator",
+    watch: {
+        btcInfo: {
+            immediate: true,
+            handler() {
+                this.updateConversion();
+            },
+        },
+        BTC: {
+            immediate: true,
+            handler() {
+                this.updateConversion();
+            },
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>
-.BTC {
+.btc {
     &__block {
         display: flex;
         flex-direction: column;
