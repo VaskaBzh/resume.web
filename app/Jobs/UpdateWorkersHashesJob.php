@@ -27,7 +27,11 @@ class UpdateWorkersHashesJob implements ShouldQueue
     }
 
     /**
-     * Execute the job.
+     * Записываать данные воркера в таблицу хешррейт_воркера
+     * период два месяца
+     *
+     * старые удалить
+     *
      *
      * @return void
      */

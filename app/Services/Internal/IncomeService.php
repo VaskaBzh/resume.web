@@ -66,7 +66,7 @@ class IncomeService
 
     public function setPercent(): IncomeService
     {
-        $this->incomeData['percent'] = $this->wallet?->percent ?? Wallet::DEFAULT_PERCENTAGE;
+        $this->incomeData['percent'] = Wallet::DEFAULT_PERCENTAGE;
 
         return $this;
     }
@@ -167,19 +167,7 @@ class IncomeService
     public function createLocalIncome(): void
     {
         Create::execute(
-            incomeData: IncomeData::fromRequest([
-                'group_id' => $this->sub->group_id,
-                'percent' => $this->incomeData['percent'],
-                'txid' => Arr::get($this->incomeData, 'txid'),
-                'wallet' => $this->wallet?->wallet,
-                'payment' => $this->incomeData['payment'],
-                'amount' => $this->incomeData['amount'],
-                'unit' => $this->incomeData['unit'],
-                'status' => $this->incomeData['status'],
-                'message' => $this->incomeData['message'],
-                'hash' => $this->incomeData['hash'],
-                'diff' => $this->incomeData['diff'],
-            ])
+            incomeData: $this->buildDto()
         );
     }
 
@@ -211,5 +199,22 @@ class IncomeService
         $total = $this->params['reward_block'] / $earnTime;
 
         return $total + $total * (($this->params['fppsPercent'] - BtcComService::FEE - self::ALLBTC_FEE) / 100);
+    }
+
+    private function buildDto(): IncomeData
+    {
+        return IncomeData::fromRequest([
+            'group_id' => $this->sub->group_id,
+            'percent' => $this->incomeData['percent'],
+            'txid' => Arr::get($this->incomeData, 'txid'),
+            'wallet' => $this->wallet?->wallet,
+            'payment' => $this->incomeData['payment'],
+            'amount' => $this->incomeData['amount'],
+            'unit' => $this->incomeData['unit'],
+            'status' => $this->incomeData['status'],
+            'message' => $this->incomeData['message'],
+            'hash' => $this->incomeData['hash'],
+            'diff' => $this->incomeData['diff'],
+        ]);
     }
 }

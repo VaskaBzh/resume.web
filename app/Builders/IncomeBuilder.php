@@ -14,7 +14,8 @@ class IncomeBuilder extends BaseBuilder
         return $this
             ->where('group_id', $groupId)
             ->where('wallet', $walletUid)
-            ->where('status', Status::PENDING->value)
-            ->orWhere('status', Status::REJECTED->value);
+            ->groupBy('id', 'status')
+            ->having('status', Status::PENDING->value)
+            ->orHaving('status', Status::REJECTED->value);
     }
 }

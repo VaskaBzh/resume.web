@@ -75,8 +75,8 @@ class UpdateIncomesCommand extends Command
             $incomeService
                 ->setWallet($wallet)
                 ->setPercent()
-                ->setIncomeData('payment', 0.0001);
-//                    ($earn + $sub->unPayments) * ($wallet->percent / 100)
+                ->setIncomeData('payment', ($earn + $sub->unPayments) * ($wallet->percent / 100));
+
             $walletService->setWallet($wallet);
 
             if (!$incomeService->canWithdraw()) {
@@ -120,9 +120,8 @@ class UpdateIncomesCommand extends Command
             $incomeService->createLocalIncome();
 
         } else {
-
-            $incomeService->setIncomeData('message', Message::NO_WALLET->value);
             $incomeService
+                ->setIncomeData('message', Message::NO_WALLET->value)
                 ->setPercent()
                 ->createLocalIncome();
         }
@@ -130,9 +129,8 @@ class UpdateIncomesCommand extends Command
         $walletService->lock();
 
         $incomeService
-            ->setSubData('unPayments', $earn + $sub->accruals - ($earn + $sub->unPayments + $sub->payments));
-
-        $incomeService->updateLocalSub();
+            ->setSubData('unPayments', $earn + $sub->accruals - ($earn + $sub->unPayments + $sub->payments))
+            ->updateLocalSub();
 
         sleep(1);
     }
