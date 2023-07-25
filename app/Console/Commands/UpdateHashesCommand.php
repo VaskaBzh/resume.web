@@ -1,40 +1,21 @@
 <?php
 
-namespace App\Jobs;
+namespace App\Console\Commands;
 
-use App\Models\Sub;
-use App\Models\Worker;
 use App\Http\Controllers\Requests\RequestController;
-use Exception;
-use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Foundation\Bus\Dispatchable;
-use Illuminate\Queue\InteractsWithQueue;
-use Illuminate\Queue\SerializesModels;
+use App\Models\Sub;
+use App\Services\External\BtcComService;
+use Illuminate\Console\Command;
 
-class HourlyHashesUpdate implements ShouldQueue
+class UpdateHashesCommand extends Command
 {
-    use Dispatchable,
-        InteractsWithQueue,
-        Queueable,
-        SerializesModels;
+    protected $signature = 'update:hashes';
 
-    /**
-     * Create a new job instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        //
-    }
+    protected $description = 'Command description';
 
-    /**
-     * Execute the job.
-     *
-     * @return void
-     */
-    public function handle()
+    public function handle(
+        BtcComService $btcComService
+    ): void
     {
         // Получите список пользователей или другие данные, необходимые для выполнения запроса
         $subs = Sub::all();
@@ -59,7 +40,7 @@ class HourlyHashesUpdate implements ShouldQueue
                 "puid" => "781195",
             ];
 
-            $response_json = json_decode($requestController->proxy($data,"groups/" . $sub->group_id, "get")->getContent());
+            $response_json = $btcComService->getGroup($sub->group_id);
 
             if (false !== $response_json) {
                 try {

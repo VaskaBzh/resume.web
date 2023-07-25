@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\UpdateHashesCommand;
 use App\Console\Commands\UpdateIncomesCommand;
 use App\Jobs\HourlyHashesUpdate;
 use App\Jobs\UpdateWorkersHashesJob;
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
         // ...
         UpdateIncomesCommand::class,
         UpdateMiningStatCommand::class,
+        UpdateHashesCommand::class,
     ];
     /**
      * Define the application's command schedule.

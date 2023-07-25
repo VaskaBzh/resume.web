@@ -14,18 +14,9 @@ use Illuminate\Console\Command;
 
 class UpdateIncomesCommand extends Command
 {
-    /**
-     * The name and signature of the console command.
-     *
-     * @var string
-     */
+
     protected $signature = 'update:incomes';
 
-    /**
-     * The console command description.
-     *
-     * @var string
-     */
     protected $description = 'Обновление базы доходов в 5:00';
 
     /**
@@ -33,89 +24,116 @@ class UpdateIncomesCommand extends Command
      *
      */
     public function handle(
-        BtcComService $btcComService,
-        WalletService $walletService,
-    ): void {
-        $incomeService = IncomeService::buildWithParams(
-            params: $btcComService->getEarnHistory()['list']
-        );
+        BtcComService $btcComService
+    ): void
+    {
+
+        $params = $btcComService->getEarnHistory()['list'];
 
         foreach (Sub::all() as $sub) {
-            $incomeService->setSub($sub);
+            $this->process(
+                incomeService: IncomeService::buildWithParams(
+                    params: $params
+                ),
+                walletService: resolve(WalletService::class),
+                sub: $sub
+            );
+        }
+    }
 
-            if (!$incomeService->setHashRate()) {
-                continue;
-            }
+    private function process(
+        IncomeService $incomeService,
+        WalletService $walletService,
+        Sub           $sub
+    ): void
+    {
+        $incomeService
+            ->setSub($sub);
 
-            try {
-                $earn = $incomeService->getEarn();
+        if (!$incomeService->setHashRate()) {
+            return;
+        }
 
-                $incomeService
-                    ->setIncomeData('amount', $earn)
-                    ->setPercent()
-                    ->setSubData('payments', $sub->payments)
-                    ->setSubData('accruals', $sub->accruals + $earn);
-            } catch (\Exception $e) {
-                report($e);
-
-                continue;
-            }
-
-            $incomeService->setIncomeData('payment', $earn + $sub->unPayments);
-
-            $wallets = $sub->wallets;
-            if ($wallets) {
-                foreach ($wallets as $wallet) {
-                    $incomeService->setWallet($wallet);
-                    $incomeService->setIncomeData('payment', ($earn + $sub->unPayments) * ($wallet->percent / 100));
-                    $walletService->setWallet($wallet);
-
-                    if (false) {
-                        $incomeService->setIncomeData('message', Message::LESS_MIN_WITHDRAWAL->value);
-                        $incomeService->setIncomeData('status', Status::PENDING->value);
-
-                        continue;
-                    }
-
-                    if (true) {
-                        $txId = $walletService->sendBalance(
-                            balance: $incomeService->getIncomeParam('payment')
-                        );
-
-                        if (!$txId) {
-                            $incomeService->setIncomeData('message', Message::ERROR->value);
-
-                            continue;
-                        }
-
-                        $incomeService
-                            ->setIncomeData('txid', $txId)
-                            ->setIncomeData('status', Status::COMPLETED->value)
-                            ->setIncomeData('message', Message::COMPLETED->value)
-                            ->setSubData('payments', $earn + $sub->unPayments + $sub->payments);
-
-                        $walletService->upsertLocalWallet(
-                            payment: $incomeService->getIncomeParam('payment')
-                        );
-
-                        $incomeService->complete();
-                    } else {
-                        $incomeService->setIncomeData('message', Message::ERROR->value);
-                    }
-
-                    $walletService->lock();
-                }
-            } else {
-                $incomeService->setIncomeData('message', Message::NO_WALLET->value);
-            }
+        try {
+            $earn = $incomeService->getEarn();
 
             $incomeService
-                ->setSubData('unPayments', $earn + $sub->accruals - ($earn + $sub->unPayments + $sub->payments));
+                ->setIncomeData('amount', $earn)
+                ->setSubData('payments', $sub->payments)
+                ->setSubData('accruals', $sub->accruals + $earn);
+        } catch (\Exception $e) {
+            report($e);
 
-            $incomeService->updateLocalSub();
+            return;
+        }
+
+        $incomeService->setIncomeData('payment', $earn + $sub->unPayments);
+
+        $wallet = $sub->wallets?->first();
+
+        if ($wallet) {
+            $incomeService
+                ->setWallet($wallet)
+                ->setPercent()
+                ->setIncomeData('payment', 0.0001);
+//                    ($earn + $sub->unPayments) * ($wallet->percent / 100)
+            $walletService->setWallet($wallet);
+
+            if (!$incomeService->canWithdraw()) {
+                $incomeService
+                    ->setIncomeData('message', Message::LESS_MIN_WITHDRAWAL->value)
+                    ->setIncomeData('status', Status::PENDING->value)
+                    ->createLocalIncome();
+
+                return;
+            }
+
+            if ($walletService->unlock()) {
+                $txId = $walletService->sendBalance(
+                    balance: $incomeService->getIncomeParam('payment')
+                );
+
+                if (!$txId) {
+                    $incomeService
+                        ->setIncomeData('message', Message::ERROR->value)
+                        ->createLocalIncome();
+
+                    return;
+                }
+
+                $incomeService
+                    ->setIncomeData('txid', $txId)
+                    ->setIncomeData('status', Status::COMPLETED->value)
+                    ->setIncomeData('message', Message::COMPLETED->value)
+                    ->setSubData('payments', $earn + $sub->unPayments + $sub->payments);
+
+                $walletService->upsertLocalWallet(
+                    payment: $incomeService->getIncomeParam('payment')
+                );
+
+                $incomeService->complete();
+            } else {
+
+                $incomeService->setIncomeData('message', Message::ERROR->value);
+            }
+
             $incomeService->createLocalIncome();
 
-            sleep(2);
+        } else {
+
+            $incomeService->setIncomeData('message', Message::NO_WALLET->value);
+            $incomeService
+                ->setPercent()
+                ->createLocalIncome();
         }
+
+        $walletService->lock();
+
+        $incomeService
+            ->setSubData('unPayments', $earn + $sub->accruals - ($earn + $sub->unPayments + $sub->payments));
+
+        $incomeService->updateLocalSub();
+
+        sleep(1);
     }
 }

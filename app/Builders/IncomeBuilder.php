@@ -9,18 +9,6 @@ use Illuminate\Database\Eloquent\Builder;
 
 class IncomeBuilder extends BaseBuilder
 {
-    public function getPrevious(int $groupId, string $walletUid): Builder
-    {
-        $incomeQuery = $this->where('group_id', $groupId);
-        $incomeHasWalletQuery = $incomeQuery->where('wallet', $walletUid);
-
-        if ($incomeHasWalletQuery) {
-            return $incomeHasWalletQuery->latest();
-        }
-
-        return $incomeQuery->latest();
-    }
-
     public function getNotCompleted(int $groupId, string $walletUid): Builder
     {
         return $this
