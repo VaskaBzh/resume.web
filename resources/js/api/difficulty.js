@@ -23,9 +23,20 @@ export default {
                 header
             )
             .then(async (res) => {
-                response = res;
+                response = res.data;
             })
-            .catch((err) => (error = err));
-        return response || error;
+            .catch((err) => (error = err.response ?? err));
+        return response ?? error;
+    },
+    async fetch_minerstat() {
+        let response = null;
+        let error = null;
+        await axios
+            .get("/miner_stat")
+            .then(async (res) => {
+                response = res.data;
+            })
+            .catch((err) => (error = err.response ?? err));
+        return response ?? error;
     },
 };

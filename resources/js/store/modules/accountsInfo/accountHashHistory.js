@@ -4,15 +4,11 @@ import btccom from "@/api/btccom";
 export default {
     actions: {
         async get_history_hash({ commit }, data) {
-            await btccom
-                .fetch_accounts_hash(data)
-                .then((res) => {
-                    commit("updateHistory", {
-                        historyItem: Object.values(res.data),
-                        key: data.group_id,
-                    });
-                })
-                .catch((err) => console.log(err));
+            let subs_hash_history = await btccom.fetch_accounts_hash(data);
+            commit("updateHistory", {
+                historyItem: Object.values(subs_hash_history),
+                key: data.group_id,
+            });
         },
     },
     mutations: {

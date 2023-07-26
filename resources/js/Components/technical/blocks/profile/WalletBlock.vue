@@ -26,12 +26,12 @@
             </div>
         </div>
         <div class="main__number">
-            {{ Number(val?.BTC).toFixed(8) || "0.00000000" }}
+            {{ converter.btc }}
             <div class="unit">{{ wallet.shortName }}</div>
             <div class="row">
-                <span> ≈ {{ val?.usd.toFixed(2) || "0.00" }} $</span>
+                <span> ≈ {{ converter.usd }} $</span>
                 <span v-if="$i18n.locale === 'ru'">
-                    ≈ {{ val?.rub.toFixed(2) || "0.00" }} ₽</span
+                    ≈ {{ converter.rub }} ₽</span
                 >
             </div>
         </div>
@@ -79,7 +79,7 @@ export default {
     data() {
         return {
             opened: false,
-            val: null,
+            converter: null,
         };
     },
     setup() {
@@ -175,8 +175,6 @@ export default {
                 this.close();
             }
         });
-
-        this.val = await this.getVal();
     },
     unmounted() {
         // document.removeEventListener("click", this.hideSelect.bind(this), true);
@@ -186,16 +184,30 @@ export default {
             }
         });
     },
+    created() {
+        this.updateConversion();
+    },
+    watch: {
+        btcInfo: {
+            immediate: true,
+            handler() {
+                this.updateConversion();
+            },
+        },
+        "wallet.value": {
+            immediate: true,
+            handler() {
+                this.updateConversion();
+            },
+        },
+    },
     methods: {
-        async getVal() {
-            if (this.btcInfo?.btc) {
-                let converter = new Converter(
-                    this.wallet.value,
-                    this.btcInfo.btc.price
-                );
-                return await converter.coverted();
-            }
-            return {};
+        async updateConversion() {
+            this.converter = new Converter(
+                this.wallet.value,
+                this.btcInfo?.btc ? this.btcInfo.btc.price : 0
+            );
+            await this.converter.convert();
         },
         toggleOpen() {
             this.opened = !this.opened;
