@@ -26,17 +26,12 @@ class MakeWorkerHashesCommand extends Command
      */
     public function handle(BtcComService $btcComService): void
     {
-        dd(WorkerHashrate::all());
         Worker::all()->each(static function (Worker $worker) use ($btcComService) {
-//            $hashRates = WorkerHashrate::oldestThan(
-//                groupId: $worker->group_id,
-//                date: now()->subMonths(2)->toDateTimeString()
-//            )->get();
-            dd(WorkerHashrate::first()->worker);
-dd( WorkerHashrate::oldestThan(
-    groupId: $worker->group_id,
-    date: now()->subMonths(2)->toDateTimeString()
-)->toSql());
+            $hashRates = WorkerHashrate::oldestThan(
+                workerId: $worker->worker_id,
+                date: now()->subMonths(2)->toDateTimeString()
+            )->get();
+
             if ($hashRates->isNotEmpty()) {
                 BulkDelete::execute($hashRates);
             }
