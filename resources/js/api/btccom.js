@@ -9,18 +9,6 @@ const header = {
 };
 
 export default {
-    async fetch_accounts() {
-        let response, error;
-        await axios
-            .get("/accountsAll", {
-                header,
-            })
-            .then(async (res) => {
-                response = res;
-            })
-            .catch((err) => (error = err));
-        return response || error;
-    },
     async fetch_subs() {
         let response, error;
         const config = {
@@ -28,12 +16,13 @@ export default {
         };
 
         try {
-            response = await axios.get(route("sub_process"), config);
+            response =
+                (await axios.get(route("sub_process"), config)).data ?? [];
         } catch (err) {
             error = err;
         }
 
-        return response || error;
+        return response ?? error;
     },
     async fetch_miner_history(data) {
         let response, error;
@@ -43,12 +32,12 @@ export default {
         };
 
         try {
-            response = await axios.get("/worker_process", config);
+            response = (await axios.get("/worker_process", config)).data ?? [];
         } catch (err) {
             error = err;
         }
 
-        return response || error;
+        return response ?? error;
     },
     async fetch_income(data) {
         let response, error;
@@ -58,12 +47,12 @@ export default {
         };
 
         try {
-            response = await axios.get("/income_process", config);
+            response = (await axios.get("/income_process", config)).data ?? [];
         } catch (err) {
             error = err;
         }
 
-        return response || error;
+        return response ?? error;
     },
     async fetch_wallets(data) {
         let response, error;
@@ -73,12 +62,12 @@ export default {
         };
 
         try {
-            response = await axios.get("/wallet_process", config);
+            response = (await axios.get("/wallet_process", config)).data ?? [];
         } catch (err) {
             error = err;
         }
 
-        return response || error;
+        return response ?? error;
     },
     async fetch_accounts_hash(data) {
         let response, error;
@@ -90,15 +79,12 @@ export default {
         };
 
         try {
-            response = await axios.get("/hash_process", config);
+            response = (await axios.get("/hash_process", config)).data ?? [];
         } catch (err) {
             error = err;
         }
 
-        return response || error;
-    },
-    async worker_create(data) {
-        await axios.post("/worker_create", data);
+        return response ?? error;
     },
     async fetch(data) {
         let response, error;
@@ -113,9 +99,9 @@ export default {
                 header
             )
             .then(async (res) => {
-                response = res;
+                response = res.data.data ?? res.data;
             })
-            .catch((err) => (error = err));
-        return response || error;
+            .catch((err) => (error = err.response ?? err));
+        return response ?? error;
     },
 };
