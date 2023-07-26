@@ -9,7 +9,17 @@ export default {
         async accounts_all({ commit, state }) {
             let subs = await btccom.fetch_subs();
 
-            Object.values(subs).forEach(async (group, i) => {
+            for (const group of Object.values(subs)) {
+                group.index = Object.values(subs).indexOf(group);
+                if (state.valid) {
+                    this.dispatch("getWallets", group);
+                    this.dispatch("getAllIncome", group);
+                    group.length = subs.length;
+                    this.dispatch("getIncomeHistory", group);
+                }
+                this.dispatch("getHistoryHash", group);
+                this.dispatch("get_history_hash", group);
+
                 let group_data = await btccom.fetch({
                     data: {
                         puid: "781195",
@@ -27,19 +37,7 @@ export default {
                 } catch (err) {
                     console.error("Catch btc.com error: \n" + err);
                 }
-            });
-            Object.values(subs).forEach((group, i) => {
-                group.index = i;
-                if (state.valid) {
-                    let group_with_length = group;
-                    group_with_length.length = subs.length;
-                    this.dispatch("getWallets", group);
-                    this.dispatch("getIncomeHistory", group_with_length);
-                    this.dispatch("getAllIncome", group);
-                }
-                this.dispatch("getHistoryHash", group);
-                this.dispatch("get_history_hash", group);
-            });
+            }
             commit("setValid");
         },
         get_acc_group({ commit, state }, data) {
