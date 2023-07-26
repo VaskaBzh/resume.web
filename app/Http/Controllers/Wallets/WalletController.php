@@ -8,17 +8,17 @@ use App\Actions\Wallet\Upsert;
 use App\Actions\Wallet\Delete;
 use App\Dto\WalletData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Wallet\UpsertRequest;
+use App\Http\Requests\Wallet\CreateRequest;
 use App\Http\Requests\Wallet\DeleteRequest;
+use App\Http\Requests\Wallet\UpdateRequest;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class WalletController extends Controller
 {
-    public function create(UpsertRequest $request): RedirectResponse
+    public function create(CreateRequest $request): RedirectResponse
     {
         $walletData = WalletData::fromRequest($request->all());
 
@@ -42,18 +42,11 @@ class WalletController extends Controller
         return back()->with('message', trans('actions.wallet_delete'));
     }
 
-    public function change(UpsertRequest $request): RedirectResponse
+    public function change(UpdateRequest $request): RedirectResponse
     {
-        $walletData = WalletData::fromRequest($request->all());
-
-        if (Wallet::isExceeded(
-            groupId: $walletData->groupId,
-            percent: $walletData->percent
-        )) {
-            return back()->withErrors(['change_error' => trans('actions.validation_percent_exceeded')]);
-        }
-
-        Upsert::execute($walletData);
+        Upsert::execute(
+            walletData: WalletData::fromRequest($request->all())
+        );
 
         return back()->with('message', trans('actions.wallet_update'));
     }

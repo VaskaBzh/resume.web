@@ -7,7 +7,7 @@ namespace App\Http\Requests\Wallet;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class UpsertRequest extends FormRequest
+class CreateRequest extends FormRequest
 {
     public function authorize(): bool
     {
@@ -17,12 +17,7 @@ class UpsertRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'wallet' => [
-                'required',
-                'string',
-                'min:20',
-                'max:191',
-            ],
+            'wallet' => 'required|string|min:20|max:191',
             'group_id' => 'required|unique:wallets',
             'percent' => 'required|integer|min:1|max:100',
             'minWithdrawal' => 'required|numeric|gt:0.0049',
