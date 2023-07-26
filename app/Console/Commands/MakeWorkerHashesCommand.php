@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\WorkerHashRate\BulkDelete;
+use App\Actions\WorkerHashRate\DeleteOldWorkerHashrates;
 use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcComService;
@@ -27,14 +27,13 @@ class MakeWorkerHashesCommand extends Command
     public function handle(BtcComService $btcComService): void
     {
         Worker::all()->each(static function (Worker $worker) use ($btcComService) {
-            $hashRates = WorkerHashrate::oldestThan(
-                workerId: $worker->worker_id,
-                date: now()->subMonths(2)->toDateTimeString()
-            )->get();
 
-            if ($hashRates->isNotEmpty()) {
-                BulkDelete::execute($hashRates);
-            }
+            DeleteOldWorkerHashrates::execute(
+                query: WorkerHashrate::oldestThan(
+                    workerId: $worker->worker_id,
+                    date: now()->subMonths(2)->toDateTimeString()
+                )
+            );
 
             try {
                 $btcWorker = $btcComService->getWorker($worker->worker_id);

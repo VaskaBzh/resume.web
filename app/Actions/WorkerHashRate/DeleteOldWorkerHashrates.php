@@ -5,12 +5,13 @@ declare(strict_types=1);
 namespace App\Actions\WorkerHashRate;
 
 use App\Models\WorkerHashrate;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
-class BulkDelete
+class DeleteOldWorkerHashrates
 {
-    public static function execute(Collection $hashRates)
+    public static function execute(Builder $query): void
     {
-        $hashRates->each(static fn(WorkerHashrate $hashrate) => $hashrate->delete());
+        $query->delete();
     }
 }

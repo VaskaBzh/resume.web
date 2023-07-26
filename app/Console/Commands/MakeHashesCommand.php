@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Hashes\BulkDelete;
+use App\Actions\Hashes\DeleteOldHashrates;
 use App\Models\Hash;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
@@ -26,15 +26,13 @@ class MakeHashesCommand extends Command
     ): void
     {
         Sub::all()->each(static function(Sub $sub) use ($btcComService) {
-            $hashes = Hash::oldestThan(
-                groupId: $sub->group_id,
-                date: now()->subMonths(2)->toDateTimeString()
-            )->get();
 
-
-            if ($hashes->isNotEmpty()) {
-                BulkDelete::execute($hashes);
-            }
+            DeleteOldHashrates::execute(
+                query: Hash::oldestThan(
+                    groupId: $sub->group_id,
+                    date: now()->subMonths(2)->toDateTimeString()
+                )
+            );
 
             try {
                 $subInfo = $btcComService->getSub($sub->group_id);
