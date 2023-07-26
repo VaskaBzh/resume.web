@@ -38,13 +38,9 @@ class Worker extends Model
         );
     }
 
-    public function worker_hashrates(): HasMany
+    public function workerHashrates(): HasMany
     {
-        return $this->hasMany(
-            WorkerHashrate::class,
-            'worker_id',
-            'worker_id'
-        );
+        return $this->hasMany(WorkerHashrate::class);
     }
 
     public function firstHash($worker)

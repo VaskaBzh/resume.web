@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Builders\SubBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -64,4 +65,11 @@ class Sub extends Model
     }
 
     /* end relations */
+
+    /* Custom builder */
+
+    public function newEloquentBuilder($query): SubBuilder
+    {
+        return new SubBuilder($query);
+    }
 }

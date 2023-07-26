@@ -2,10 +2,12 @@
 
 namespace App\Jobs;
 
+use App\Actions\WorkerHashRate\BulkDelete;
 use App\Http\Controllers\Requests\RequestController;
 use App\Models\Sub;
 use App\Models\Worker;
 use App\Models\WorkerHashrate;
+use App\Services\External\BtcComService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -26,61 +28,5 @@ class UpdateWorkersHashesJob implements ShouldQueue
         //
     }
 
-    /**
-     * Записываать данные воркера в таблицу хешррейт_воркера
-     * период два месяца
-     *
-     * старые удалить
-     *
-     *
-     * @return void
-     */
-    public function handle()
-    {
-        $workers = Worker::all();
-        $requestController = new RequestController();
-        $maximum_records = 128;
 
-        foreach ($workers as $worker) {
-            $extra_records = WorkerHashrate::where('worker_id', $worker->worker_id)
-                ->oldest('created_at')
-                ->offset($maximum_records)
-                ->limit(PHP_INT_MAX)
-                ->get();
-
-            if ($extra_records->count() > 0) {
-                foreach ($extra_records as $extra_record) {
-                    $extra_record->delete();
-                }
-            }
-
-            $response_json = $requestController->proxy([
-                "puid" => "781195",
-                "group" => $worker->group_id,
-            ], "worker", "get");
-            $shares = 0;
-            $unit = "T";
-            if(false !== $response_json) {
-                try {
-                    $responseEncode = json_decode($response_json->getContent());
-                    foreach ($responseEncode->data->data as $item) {
-                        if ($item->worker_id == $worker->worker_id) {
-                            $shares = $item->shares_1m;
-                            $unit = $item->shares_unit;
-                            break;
-                        }
-                    }
-
-                    $worker->worker_hashrates()->create([
-                        'worker_id' => $worker->worker_id,
-                        'hash' => $shares,
-                        'unit' => $unit,
-                    ]);
-                } catch(Exception $e) {
-                    // Handle JSON parse error...
-//                    $this->release(10);
-                }
-            }
-        }
-    }
 }

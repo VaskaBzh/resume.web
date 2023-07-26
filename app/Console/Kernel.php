@@ -2,7 +2,8 @@
 
 namespace App\Console;
 
-use App\Console\Commands\UpdateHashesCommand;
+use App\Console\Commands\MakeHashRatesCommand;
+use App\Console\Commands\MakeHashesCommand;
 use App\Console\Commands\UpdateIncomesCommand;
 use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
@@ -12,25 +13,22 @@ use App\Console\Commands\UpdateMinerStatCommand;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        // ...
         UpdateIncomesCommand::class,
         UpdateMinerStatCommand::class,
-        UpdateHashesCommand::class,
+        MakeHashesCommand::class,
+        MakeHashRatesCommand::class,
     ];
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
         $schedule->command('update:incomes')->dailyAt('10:00');
         $schedule->command('update:stats')->hourly();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('update:hashes')->hourly();
-
-        $schedule->job(new UpdateWorkersHashesJob())->hourly();
+        $schedule->command('make:hashes')->hourly();
+        $schedule->command('make:hashes-rates')->hourly();
     }
 
     /**
@@ -38,7 +36,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 
