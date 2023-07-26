@@ -7,15 +7,11 @@ export default {
             commit("destroy_incHist");
         },
         async get_income_history({ commit, state }, data) {
-            await btccom
-                .fetch_income(data)
-                .then((res) => {
-                    commit("updateIncomeHistory", {
-                        historyItem: Object.values(res.data),
-                        key: data.group_id,
-                    });
-                })
-                .catch((err) => console.log(err));
+            let incomes = await btccom.fetch_income(data);
+            commit("updateIncomeHistory", {
+                historyItem: Object.values(incomes),
+                key: data.group_id,
+            });
         },
     },
     mutations: {

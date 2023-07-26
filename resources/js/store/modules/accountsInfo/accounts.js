@@ -7,90 +7,69 @@ export default {
             commit("destroy_acc");
         },
         async accounts_all({ commit, state }) {
-            let arr;
+            let subs = await btccom.fetch_subs();
 
-            await btccom
-                .fetch_subs()
-                .then((response) => {
-                    if (response.data !== "") {
-                        arr = response.data;
-                        Object.values(arr).forEach(async (group, i) => {
-                            await btccom
-                                .fetch({
-                                    data: {
-                                        puid: "781195",
-                                        group_id: group.group_id,
-                                    },
-                                    path: `groups/${group.group_id}`,
-                                    method: "get",
-                                })
-                                .then(async (resp) => {
-                                    this.dispatch("get_acc_group", {
-                                        el: resp.data.data,
-                                        group: group,
-                                    });
-                                })
-                                .catch((err) => console.error(err));
-                        });
-                        Object.values(arr).forEach((group, i) => {
-                            group.index = i;
-                            if (state.valid) {
-                                let group_with_length = group;
-                                group_with_length.length = arr.length;
-                                this.dispatch("getWallets", group);
-                                this.dispatch(
-                                    "getIncomeHistory",
-                                    group_with_length
-                                );
-                                this.dispatch("getAllIncome", group);
-                            }
-                            this.dispatch("getHistoryHash", group);
-                            this.dispatch("get_history_hash", group);
-                        });
-                        commit("setValid");
-                    }
-                })
-                .catch((err) => {
-                    console.log(err);
-                    if (state.checkFive <= 5) {
-                        this.dispatch("getAccounts");
-                    } else {
-                        state.checkFive = 0;
-                    }
+            Object.values(subs).forEach(async (group, i) => {
+                let group_data = await btccom.fetch({
+                    data: {
+                        puid: "781195",
+                        group_id: group.group_id,
+                    },
+                    path: `groups/${group.group_id}`,
+                    method: "get",
                 });
+
+                try {
+                    this.dispatch("get_acc_group", {
+                        group_data: group_data,
+                        group: group,
+                    });
+                } catch (err) {
+                    console.error("Catch btc.com error: \n" + err);
+                }
+            });
+            Object.values(subs).forEach((group, i) => {
+                group.index = i;
+                if (state.valid) {
+                    let group_with_length = group;
+                    group_with_length.length = subs.length;
+                    this.dispatch("getWallets", group);
+                    this.dispatch("getIncomeHistory", group_with_length);
+                    this.dispatch("getAllIncome", group);
+                }
+                this.dispatch("getHistoryHash", group);
+                this.dispatch("get_history_hash", group);
+            });
+            commit("setValid");
         },
         get_acc_group({ commit, state }, data) {
             let accountModel = {
                 img: "profile.webp",
-                name: data.el.name,
+                name: data.group_data.name,
                 hashRate: "",
-                workersActive: data.el.workers_active,
-                workersAll: data.el.workers_total + data.el.workers_dead,
-                workersInActive: data.el.workers_inactive,
-                workersDead: data.el.workers_dead,
+                workersActive: data.group_data.workers_active,
+                workersAll:
+                    data.group_data.workers_total +
+                    data.group_data.workers_dead,
+                workersInActive: data.group_data.workers_inactive,
+                workersDead: data.group_data.workers_dead,
                 todayProfit: "",
                 myPayment: "",
-                rejectRate: data.el.reject_percent,
-                shares1m: data.el.shares_1m,
+                rejectRate: data.group_data.reject_percent,
+                shares1m: data.group_data.shares_1m,
                 shares1h: 0,
                 shares1d: 0,
                 id: data.group.group_id,
-                unit: data.el.shares_unit,
+                unit: data.group_data.shares_unit,
             };
-            if (data.el.name === state.groupName) {
-                let obj = data.el;
-                obj.updateId = state.updateId;
-                // this.dispatch("update_group", obj);
-                state.updateId = {};
-            }
             commit("setHash", {
                 hash: {},
                 key: accountModel.id,
             });
             this.dispatch("getHash", {
-                groupId: data.el.gid,
+                groupId: data.group_data.gid,
                 accountModel: accountModel,
-                el: data.el,
+                group_data: data.group_data,
                 response: data.response,
             });
         },

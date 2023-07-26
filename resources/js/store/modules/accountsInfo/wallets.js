@@ -7,16 +7,11 @@ export default {
             commit("destroy_wal");
         },
         async get_wallets({ commit, state }, data) {
-            await btccom
-                .fetch_wallets(data)
-                .then((res) => {
-                    commit("updateWallet", {
-                        historyItem: Object.values(res.data),
-                        key: data.group_id,
-                    });
-                })
-                .catch((err) => console.log(err));
-            // axios.post("/wallet_update", data);
+            let wallets = await btccom.fetch_wallets(data);
+            commit("updateWallet", {
+                historyItem: Object.values(wallets),
+                key: data.group_id,
+            });
         },
     },
     mutations: {
