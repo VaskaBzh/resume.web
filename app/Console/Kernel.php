@@ -2,10 +2,9 @@
 
 namespace App\Console;
 
-use App\Console\Commands\MakeHashRatesCommand;
+use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
 use App\Console\Commands\UpdateIncomesCommand;
-use App\Jobs\UpdateWorkersHashesJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\UpdateMinerStatCommand;
@@ -16,7 +15,7 @@ class Kernel extends ConsoleKernel
         UpdateIncomesCommand::class,
         UpdateMinerStatCommand::class,
         MakeHashesCommand::class,
-        MakeHashRatesCommand::class,
+        MakeWorkerHashesCommand::class,
     ];
     /**
      * Define the application's command schedule.
@@ -27,8 +26,8 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:incomes')->dailyAt('10:00');
         $schedule->command('update:stats')->hourly();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('make:hashes')->hourly();
-        $schedule->command('make:hashes-rates')->hourly();
+        $schedule->command('make:sub-hashes')->hourly();
+        $schedule->command('make:worker-hashes')->hourly();
     }
 
     /**

@@ -13,4 +13,16 @@ class BaseBuilder extends Builder
     {
         return $this->where('group_id', $groupId);
     }
+
+    /**
+     * Фильтрация по дате
+     *
+     */
+    public function oldestThan(int $groupId, string $date): Builder
+    {
+        return $this
+            ->getByGroupId($groupId)
+            ->whereDate('created_at', '<=', $date);
+    }
+
 }

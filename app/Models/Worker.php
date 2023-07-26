@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\WorkerBuilder;
 use App\Http\Controllers\Hashes\HashController;
 use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\Workers\WorkerController;
@@ -38,9 +39,16 @@ class Worker extends Model
         );
     }
 
+    /* Custom builder */
+
+    public function newEloquentBuilder($query): WorkerBuilder
+    {
+        return new WorkerBuilder($query);
+    }
+
     public function workerHashrates(): HasMany
     {
-        return $this->hasMany(WorkerHashrate::class);
+        return $this->hasMany(WorkerHashrate::class, 'worker_id', 'worker_id');
     }
 
     public function firstHash($worker)

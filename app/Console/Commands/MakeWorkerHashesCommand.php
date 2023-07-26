@@ -6,12 +6,13 @@ namespace App\Console\Commands;
 
 use App\Actions\WorkerHashRate\BulkDelete;
 use App\Models\Worker;
+use App\Models\WorkerHashrate;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
 
-class MakeHashRatesCommand extends Command
+class MakeWorkerHashesCommand extends Command
 {
-    protected $signature = 'make:hash-rates';
+    protected $signature = 'make:worker-hashes';
 
     protected $description = 'Command description';
 
@@ -25,29 +26,31 @@ class MakeHashRatesCommand extends Command
      */
     public function handle(BtcComService $btcComService): void
     {
+        dd(WorkerHashrate::all());
         Worker::all()->each(static function (Worker $worker) use ($btcComService) {
-            $hashRates = $worker->oldestHashRatesThan(
-                date: now()->subMonths(2)->toDateTimeString()
-            )->get();
-
+//            $hashRates = WorkerHashrate::oldestThan(
+//                groupId: $worker->group_id,
+//                date: now()->subMonths(2)->toDateTimeString()
+//            )->get();
+            dd(WorkerHashrate::first()->worker);
+dd( WorkerHashrate::oldestThan(
+    groupId: $worker->group_id,
+    date: now()->subMonths(2)->toDateTimeString()
+)->toSql());
             if ($hashRates->isNotEmpty()) {
                 BulkDelete::execute($hashRates);
             }
 
             try {
-                $btcWorkers = $btcComService->getWorkerList($worker->group_id);
+                $btcWorker = $btcComService->getWorker($worker->worker_id);
 
-                if (filled($btcWorkers)) {
-                    $btcWorker = $btcWorkers->firstWhere('worker_id', $worker->worker_id);
-
-                    $worker->worker_hashrates()->create([
+                if ($btcWorker->isNotEmpty()) {
+                    WorkerHashrate::create([
                         'worker_id' => $worker->worker_id,
-                        'hash' => $btcWorker->shares_1m ?? 0,
-                        'unit' => $item->shares_unit ?? 'T',
+                        'hash' => $btcWorker['shares_1m'] ?? 0,
+                        'unit' => $btcWorker['shares_unit'] ?? 'T',
                     ]);
                 }
-
-
             } catch (\Exception $e) {
                 report($e);
             }

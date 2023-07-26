@@ -64,12 +64,14 @@ class BtcComService
     /**
      * Инвормация о сабаккаунте
      */
-    public function getGroup(int $groupId): array
+    public function getSub(int $groupId): array
     {
         $response = $this->client->get(implode('/', [
-                'groups',
-                $groupId
-            ])
+            'groups',
+            $groupId
+        ]), [
+                'puid' => self::PU_ID,
+            ]
         )->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
@@ -108,6 +110,20 @@ class BtcComService
             'puid' => self::PU_ID,
             'group' => $groupId,
             'page_size' => self::DEFAULT_PAGE_SIZE
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return collect($response['data']['data']);
+    }
+
+    public function getWorker($workerId): Collection
+    {
+        $response = $this->client->get(implode('/', [
+            'worker',
+            $workerId
+        ]), [
+            'puid' => self::PU_ID,
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );

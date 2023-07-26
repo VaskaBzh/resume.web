@@ -1,9 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use App\Http\Controllers\Hashes\HashController;
-use App\Http\Controllers\Workers\WorkerController;
+use App\Builders\WorkerHashRateBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -27,6 +28,13 @@ class WorkerHashrate extends Model
 
     public function worker(): BelongsTo
     {
-        return $this->belongsTo(Worker::class);
+        return $this->belongsTo(Worker::class, 'worker_id', 'worker_id');
+    }
+
+    /* Custom builder */
+
+    public function newEloquentBuilder($query): WorkerHashRateBuilder
+    {
+        return new WorkerHashRateBuilder($query);
     }
 }

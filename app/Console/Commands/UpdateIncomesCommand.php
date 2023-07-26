@@ -98,7 +98,7 @@ class UpdateIncomesCommand extends Command
 
                 if (!$txId) {
                     $incomeService
-                        ->setIncomeData('message', Message::ERROR->value)
+                        ->setIncomeData('message', Message::ERROR_PAYOUT->value)
                         ->createLocalIncome();
 
                     return;
@@ -118,7 +118,6 @@ class UpdateIncomesCommand extends Command
 
                 $incomeService->complete();
             } else {
-
                 $incomeService->setIncomeData('message', Message::ERROR->value);
             }
 
