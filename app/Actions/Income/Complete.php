@@ -15,7 +15,6 @@ class Complete
             $income->update([
                 'message' => $incomeData->message,
                 'status' => $incomeData->status,
-                'txid' => $incomeData->txid,
             ]);
         }
     }
