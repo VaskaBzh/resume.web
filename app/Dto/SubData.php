@@ -8,6 +8,14 @@ use Illuminate\Support\Arr;
 
 readonly class SubData
 {
+    /**
+     * @param int $userId - id пользователя allbtc.com
+     * @param int $groupId - id сабаккаунта
+     * @param string $groupName - имя сабаккаунта
+     * @param float|null $payments - сумма вывода средств за все время со всех кошельков
+     * @param float|null $unPayments - доход не превысивший допстимый порог вывода средств
+     * @param float|null $accruals - сумма начисления средств за все время со всех кошельков
+     */
     public function __construct(
         public int $userId,
         public int $groupId,

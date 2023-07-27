@@ -32,7 +32,7 @@ class IncomeService
     private array $subData = [];
 
     private function __construct(
-        private array $params,
+        private array   $params,
         private ?Wallet $wallet = null
     )
     {
@@ -226,18 +226,15 @@ class IncomeService
 
     private function buildDto(): IncomeData
     {
-        return IncomeData::fromRequest([
-            'group_id' => $this->sub->group_id,
-            'percent' => $this->incomeData['percent'],
-            'txid' => Arr::get($this->incomeData, 'txid'),
-            'wallet' => $this->wallet?->wallet,
-            'payment' => $this->incomeData['payment'],
-            'amount' => $this->incomeData['amount'],
-            'unit' => $this->incomeData['unit'],
-            'status' => $this->incomeData['status'],
-            'message' => $this->incomeData['message'],
-            'hash' => $this->incomeData['hash'],
-            'diff' => $this->incomeData['diff'],
-        ]);
+        return IncomeData::fromRequest(
+            array_merge(
+                [
+                    'group_id' => $this->sub->group_id,
+                    'wallet' => $this->wallet?->wallet,
+                    'txid' => Arr::get($this->incomeData, 'txid'),
+                ],
+                $this->incomeData
+            )
+        );
     }
 }

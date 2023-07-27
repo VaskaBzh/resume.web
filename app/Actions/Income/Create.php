@@ -21,8 +21,8 @@ class Create
             'unit' => $incomeData->unit,
             'status' => $incomeData->status,
             'message' => $incomeData->message,
-            'hash' => $incomeData->hash,
-            'diff' => $incomeData->diff,
+            'hash' => $incomeData->hashrate,
+            'diff' => $incomeData->difficulty,
         ]);
     }
 }

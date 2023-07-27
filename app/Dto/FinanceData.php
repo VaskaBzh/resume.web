@@ -6,6 +6,13 @@ namespace App\Dto;
 
 readonly class FinanceData
 {
+    /**
+     * @param int $groupId - id сабаккаунта
+     * @param float $earn - общая добыча
+     * @param float $userTotal доход сабаккаунта после вычета таксы
+     * @param float $percent - величина таксы
+     * @param float $profit - доход allbtc
+     */
     public function __construct(
         public int $groupId,
         public float $earn,

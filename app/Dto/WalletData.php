@@ -8,6 +8,14 @@ use Illuminate\Support\Arr;
 
 readonly class WalletData
 {
+    /**
+     * @param string|null $name - имя кошелшька
+     * @param string $walletAddress - адрес кошелька
+     * @param int $groupId - id сабаккаунта
+     * @param int|null $percent - процент кошелька
+     * @param float|null $minWithdrawal - минимальая сумма вывода средств
+     * @param float|null $payment - сумма выплаты на кошелек за все время
+     */
     public function __construct(
         public ?string $name,
         public string $walletAddress,

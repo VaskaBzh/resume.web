@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Dto\FinanceData;
-use App\Dto\IncomeData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\IncomeCompleteEvent;
