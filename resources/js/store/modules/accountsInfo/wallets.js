@@ -1,5 +1,5 @@
 import Vue from "lodash";
-import btccom from "@/api/btccom";
+import api from "@/api/api";
 
 export default {
     actions: {
@@ -7,16 +7,13 @@ export default {
             commit("destroy_wal");
         },
         async get_wallets({ commit, state }, data) {
-            await btccom
-                .fetch_wallets(data)
-                .then((res) => {
-                    commit("updateWallet", {
-                        historyItem: Object.values(res.data),
-                        key: data.group_id,
-                    });
-                })
-                .catch((err) => console.log(err));
-            // axios.post("/wallet_update", data);
+            let wallets = (await api.get("/wallet_process", {
+                params: data,
+            })).data;
+            commit("updateWallet", {
+                historyItem: Object.values(wallets),
+                key: data.group_id,
+            });
         },
     },
     mutations: {

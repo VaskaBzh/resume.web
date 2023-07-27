@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-use App\Http\Controllers\Hashes\HashController;
-use App\Jobs\HourlyHashesUpdate;
+use App\Builders\HashBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Hash extends Model
 {
@@ -19,12 +22,24 @@ class Hash extends Model
         'unit',
         'amount',
     ];
-    public function sub()
+
+    /** Relations */
+    public function sub(): BelongsTo
     {
         return $this->belongsTo(Sub::class, 'group_id', 'group_id');
     }
-    public function workers()
+
+    public function workers(): HasMany
     {
         return $this->hasMany(Worker::class, 'group_id', 'group_id');
+    }
+    /* end relations */
+
+    /*
+     * Создаем кастомный билдер
+     */
+    public function newEloquentBuilder($query): HashBuilder
+    {
+        return new HashBuilder($query);
     }
 }

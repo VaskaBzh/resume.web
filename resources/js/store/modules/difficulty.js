@@ -1,46 +1,45 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
+import api from "@/api/api";
 import btccom from "@/api/btccom";
-import axios from "axios";
 
 export default {
     actions: {
-        getLastFpps({ commit }) {
-            btccom
-                .fetch({
-                    data: {
-                        puid: "781195",
-                        page_size: "1",
-                    },
-                    path: "account/earn-history",
-                    method: "get",
-                })
-                .then((res) => {
-                    commit(
-                        "setFpps",
-                        res.data.data.list[0].more_than_pps96_rate
-                    );
-                });
+        async getLastFpps({ commit }) {
+            let earn_list = await btccom.fetch({
+                data: {
+                    puid: "781195",
+                    page_size: "1",
+                },
+                path: "account/earn-history",
+                method: "get",
+            });
+            try {
+                commit("setFpps", earn_list.list[0].more_than_pps96_rate);
+            } catch (err) {
+                console.error("Catch btc.com error: \n" + err);
+            }
         },
-        getGraph({ commit }) {
-            difficulty
-                .fetch({
-                    data: {
-                        format: "json",
-                        timespan: "all",
-                    },
-                    path: "https://api.blockchain.info/charts/difficulty",
-                    method: "get",
-                })
-                .then((res) => {
-                    commit(`updateHistoryDiff`, res.data.values);
-                })
-                .catch((err) => console.log(err));
-        },
-        getMiningStat({ commit, state }) {
-            axios.get("/miner_stat").then((response) => {
-                let minerstats = response.data.minerstats;
+        async getGraph({ commit }) {
+            let difficulty_chart = await difficulty.fetch({
+                data: {
+                    format: "json",
+                    timespan: "all",
+                },
+                path: "https://api.blockchain.info/charts/difficulty",
+                method: "get",
+            });
 
+            try {
+                commit(`updateHistoryDiff`, difficulty_chart.values);
+            } catch (err) {
+                console.error("Catch blockchain error: \n" + err);
+            }
+        },
+        async getMiningStat({ commit, state }) {
+            let minerstats = (await api.get("/miner_stat")).data.minerstats;
+
+            try {
                 let converterModel = {
                     diff: minerstats.network_difficulty,
                     diff_change: minerstats.change_difficulty,
@@ -62,7 +61,9 @@ export default {
                     key: "btc".toLowerCase(),
                     item: converterModel,
                 });
-            });
+            } catch (err) {
+                console.error("Catch miner_stat error: \n" + err);
+            }
         },
     },
     mutations: {

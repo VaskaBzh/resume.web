@@ -57,6 +57,7 @@ class UserController extends Controller
     }
 
     public function fac()
+
     {
         if (Auth::user() && Auth::user()->auth_2fac !== null) {
             return Auth::user()->auth_2fac;

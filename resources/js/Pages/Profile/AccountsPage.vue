@@ -139,7 +139,7 @@ export default {
         },
         changeName() {
             let form = useForm({
-                group_name: this.form.name,
+                name: this.form.name,
                 group_id: String(this.id),
                 puid: "781195",
             });

@@ -2,37 +2,32 @@
 
 namespace App\Console;
 
-use App\Jobs\AddWorkerJob;
-use App\Jobs\HourlyHashesUpdate;
-use App\Jobs\UpdateWorkersHashesJob;
+use App\Console\Commands\MakeWorkerHashesCommand;
+use App\Console\Commands\MakeHashesCommand;
+use App\Console\Commands\UpdateIncomesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\UpdateMiningStatCommand;
+use App\Console\Commands\UpdateMinerStatCommand;
 
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        // ...
-        Commands\UpdateIncomesCommand::class,
-        UpdateMiningStatCommand::class,
+        UpdateIncomesCommand::class,
+        UpdateMinerStatCommand::class,
+        MakeHashesCommand::class,
+        MakeWorkerHashesCommand::class,
     ];
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
-     * @return void
      */
-    protected function schedule(Schedule $schedule)
+    protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('update:incomes')->dailyAt('5:00');
-        $schedule->command('update:stats')->hourly();
-
-//        $schedule->command('update:payments')->dailyAt('5:10');
-        $schedule->job(new HourlyHashesUpdate())->hourly();
-        $schedule->job(new UpdateWorkersHashesJob())->hourly();
-
-       $schedule->job(new AddWorkerJob())->everyMinute();;
-        // $schedule->command('inspire')->hourly();
+        $schedule->command('update:incomes')->dailyAt('10:00');
+        $schedule->command('update:stats')->everyTwoHours();
+        $schedule->command('sync:worker')->everyMinute();
+        $schedule->command('make:sub-hashes')->hourly();
+        $schedule->command('make:worker-hashes')->hourly();
     }
 
     /**
@@ -40,7 +35,7 @@ class Kernel extends ConsoleKernel
      *
      * @return void
      */
-    protected function commands()
+    protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
 

@@ -11,6 +11,7 @@ return new class extends Migration {
             $table->float('percent')
                 ->after('accruals')
                 ->default(0);
+
         });
     }
 

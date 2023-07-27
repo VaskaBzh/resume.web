@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 namespace App\Models;
+
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -19,7 +20,7 @@ class Finance extends Model
     public function sub(): BelongsTo
     {
         return $this->belongsTo(
-            Sub::class,
+            Sub::class, 
             'group_id',
             'group_id'
         );

@@ -94,7 +94,7 @@
                     $t("accounts.popups.add.title")
                 }}</main-title>
                 <input
-                    v-model="form.group_name"
+                    v-model="form.name"
                     required
                     autofocus
                     type="text"
@@ -177,7 +177,7 @@ export default {
         let wait = ref(false);
         let closed = ref(false);
         const form = useForm({
-            group_name: "",
+            name: "",
         });
 
         const addAcc = async () => {

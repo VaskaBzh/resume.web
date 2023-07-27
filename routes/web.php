@@ -37,9 +37,43 @@ Route::controller(HashController::class)->group(function () {
     Route::put('/hash_create', 'create')->name('hash_create');
 });
 
-Route::controller(SubController::class)->group(function () {
-    Route::post('/sub_create', 'create')->name('sub_create');
+Route::middleware('auth')->group(function () {
+    Route::group([
+        'prefix' => '',
+        'controller' => SubController::class
+    ], function () {
+        Route::post('/sub_create', 'create')->name('sub_create');
+        Route::get('/sub_process', 'visual')->name('sub_process');
+    });
+
+    Route::group([
+        'prefix' => '',
+        'controller' => WorkerController::class
+    ],function () {
+        Route::post('/worker_create', 'create')->name('worker_create');
+        Route::get('/worker_process', 'visual')->name('worker_process');
+    });
+
+    Route::group([
+        'prefix' => '',
+        'controller' => WalletController::class
+    ],function () {
+        Route::post('/wallet_create', 'create')->name('wallet_create');
+        Route::post('/wallet_delete', 'delete')->name('wallet_delete');
+        Route::post('/wallet_change', 'change')->name('wallet_change');
+        Route::get('/wallet_process', 'visual')->name('wallet_process');
+    });
+
+    Route::group([
+        'prefix' => '',
+        'controller' => IncomeController::class
+    ], function () {
+        Route::get('/income_process', 'visual')->name('income_process');
+    });
 });
+
+
+
 Route::controller(SendMessageConroller::class)->group(function () {
     Route::post('/send_message', 'send_message')->name('send_message');
 });
@@ -49,15 +83,11 @@ Route::get("/miner_stat", [MinerStatController::class, 'visual'])->name('miner_s
 Route::controller(IndexController::class)
     ->group(function () {
         Route::get('/', 'index')->name('home');
-//        Route::get('/help', 'help')->name('help');
-//        Route::get('/about', 'about')->name('about');
         Route::get('/help', 'help')->name('help');
 //        Route::get('/complexity', 'complexity')->name('complexity');
         Route::get('/hosting', 'hosting')->name('hosting');
-
         Route::get('/registration', 'registration')->name('registration');
         Route::get('/login', 'login')->name('login');
-//        Route::get('/confirm', 'confirm')->name('confirm');
     });
 
 Route::controller(RegisterController::class)->group(function () {
@@ -109,28 +139,15 @@ Route::middleware('auth')->group(function () {
         Route::post('/password/reset', 'changePassword');
     });
 
-    Route::controller(WorkerController::class)->group(function () {
-        Route::post('/worker_create', 'create')->name('worker_create');
-        Route::get('/worker_process', 'visual')->name('worker_process');
-    });
+
     Route::controller(HashController::class)->group(function () {
         Route::get('/hash_process', 'visual')->name('hash_process');
     });
-    Route::controller(SubController::class)->group(function () {
-        Route::get('/sub_process', 'visual')->name('sub_process');
-        Route::put('/sub_change', 'change_name')->name('sub_change');
-        Route::get('/sub_strong_delete', 'delete')->name('sub_strong_delete');
-        Route::put('/sub_delete', 'remove')->name('sub_delete');
-    });
+
     Route::controller(IncomeController::class)->group(function () {
         Route::get('/income_process', 'visual')->name('income_process');
     });
-    Route::controller(WalletController::class)->group(function () {
-        Route::post('/wallet_create', 'create')->name('wallet_create');
-        Route::post('/wallet_delete', 'delete')->name('wallet_delete');
-        Route::post('/wallet_change', 'change')->name('wallet_change');
-        Route::get('/wallet_process', 'visual')->name('wallet_process');
-    });
+
     Route::controller(UserController::class)->group(function () {
         Route::get('/get_login', 'login')->name('get_login');
         Route::get('/get_email', 'email')->name('get_email');

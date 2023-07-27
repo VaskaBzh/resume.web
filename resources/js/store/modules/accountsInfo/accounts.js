@@ -1,5 +1,7 @@
 import Vue from "lodash";
 import btccom from "@/api/btccom";
+import api from "@/api/api";
+import { AccountService } from "@/services/accountService";
 
 export default {
     actions: {
@@ -7,90 +9,75 @@ export default {
             commit("destroy_acc");
         },
         async accounts_all({ commit, state }) {
-            let arr;
+            let accountService = new AccountService(this);
 
-            await btccom
-                .fetch_subs()
-                .then((response) => {
-                    if (response.data !== "") {
-                        arr = response.data;
-                        Object.values(arr).forEach(async (group, i) => {
-                            await btccom
-                                .fetch({
-                                    data: {
-                                        puid: "781195",
-                                        group_id: group.group_id,
-                                    },
-                                    path: `groups/${group.group_id}`,
-                                    method: "get",
-                                })
-                                .then(async (resp) => {
-                                    this.dispatch("get_acc_group", {
-                                        el: resp.data.data,
-                                        group: group,
-                                    });
-                                })
-                                .catch((err) => console.error(err));
-                        });
-                        Object.values(arr).forEach((group, i) => {
-                            group.index = i;
-                            if (state.valid) {
-                                let group_with_length = group;
-                                group_with_length.length = arr.length;
-                                this.dispatch("getWallets", group);
-                                this.dispatch(
-                                    "getIncomeHistory",
-                                    group_with_length
-                                );
-                                this.dispatch("getAllIncome", group);
-                            }
-                            this.dispatch("getHistoryHash", group);
-                            this.dispatch("get_history_hash", group);
-                        });
-                        commit("setValid");
-                    }
+            let subs = (await api.get(route("sub_process"))).data;
+            let subsList = (
+                await btccom.fetch({
+                    data: {
+                        puid: "781195",
+                        page_size: "1000",
+                    },
+                    path: `worker/groups`,
+                    method: "get",
                 })
-                .catch((err) => {
-                    console.log(err);
-                    if (state.checkFive <= 5) {
-                        this.dispatch("getAccounts");
-                    } else {
-                        state.checkFive = 0;
-                    }
-                });
+            ).list;
+
+            subsList = subsList.filter((btcSub) =>
+                accountService.checkName(btcSub, subs)
+            );
+
+            for (const sub of subs) {
+                let i = subs.indexOf(sub);
+                sub.index = i;
+
+                if (state.valid) {
+                    accountService
+                        .fillTable("getWallets", sub)
+                        .fillTable("getAllIncome", sub);
+                    sub.length = subs.length;
+                    accountService.fillTable("getIncomeHistory", sub);
+                }
+                accountService.fillTable("getHistoryHash", sub);
+
+                try {
+                    this.dispatch("get_acc_sub", {
+                        sub_data: subsList[i],
+                        sub: sub,
+                    });
+                } catch (err) {
+                    console.error("Catch btc.com error: \n" + err);
+                }
+            }
+            commit("setValid");
         },
-        get_acc_group({ commit, state }, data) {
+        get_acc_sub({ commit, state }, data) {
             let accountModel = {
                 img: "profile.webp",
-                name: data.el.name,
+                name: data.sub_data.name,
                 hashRate: "",
-                workersActive: data.el.workers_active,
-                workersAll: data.el.workers_total + data.el.workers_dead,
-                workersInActive: data.el.workers_inactive,
-                workersDead: data.el.workers_dead,
+                workersActive: data.sub_data.workers_active,
+                workersAll:
+                    data.sub_data.workers_total + data.sub_data.workers_dead,
+                workersInActive: data.sub_data.workers_inactive,
+                workersDead: data.sub_data.workers_dead,
                 todayProfit: "",
                 myPayment: "",
-                rejectRate: data.el.reject_percent,
-                shares1m: data.el.shares_1m,
+                rejectRate: data.sub_data.reject_percent,
+                shares1m: data.sub_data.shares_1m,
                 shares1h: 0,
                 shares1d: 0,
-                id: data.group.group_id,
-                unit: data.el.shares_unit,
+                id: data.sub.group_id,
+                unit: data.sub_data.shares_unit,
             };
-            if (data.el.name === state.groupName) {
-                let obj = data.el;
-                obj.updateId = state.updateId;
-                // this.dispatch("update_group", obj);
-                state.updateId = {};
-            }
             commit("setHash", {
                 hash: {},
                 key: accountModel.id,
             });
             this.dispatch("getHash", {
-                groupId: data.el.gid,
+                groupId: data.sub_data.gid,
                 accountModel: accountModel,
-                el: data.el,
+                group_data: data.sub_data,
                 response: data.response,
             });
         },

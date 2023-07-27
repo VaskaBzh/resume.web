@@ -2,11 +2,15 @@
 
 namespace App\Models;
 
+use App\Builders\WorkerBuilder;
 use App\Http\Controllers\Hashes\HashController;
 use App\Http\Controllers\Requests\RequestController;
 use App\Http\Controllers\Workers\WorkerController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Worker extends Model
 {
@@ -21,14 +25,30 @@ class Worker extends Model
         'group_id',
     ];
 
-    public function sub()
+    public function getRouteKeyName(): string
     {
-        return $this->belongsTo(Sub::class, 'group_id', 'group_id');
+        return 'worker_id';
     }
 
-    public function worker_hashrate()
+    public function sub(): BelongsTo
     {
-        return $this->belongsTo(WorkerHashrate::class, 'worker_id', 'worker_id');
+        return $this->belongsTo(
+            Sub::class,
+            'group_id',
+            'group_id'
+        );
+    }
+
+    /* Custom builder */
+
+    public function newEloquentBuilder($query): WorkerBuilder
+    {
+        return new WorkerBuilder($query);
+    }
+
+    public function workerHashrates(): HasMany
+    {
+        return $this->hasMany(WorkerHashrate::class, 'worker_id', 'worker_id');
     }
 
     public function firstHash($worker)
@@ -77,10 +97,11 @@ class Worker extends Model
         parent::boot();
 
         static::created(function (Worker $worker) {
+
             if (!Hash::all()->where('group_id', $worker->group_id)->first()) {
                 $sub = Sub::all()->where('group_id', $worker->group_id)->first();
 
-                if ($worker->worker_hashrate === null || $worker->worker_hashrate->isEmpty()) {
+                if ($worker->worker_hashrates === null || $worker->worker_hashrate->isEmpty()) {
                     $worker_hash = (new self)->firstHash($worker);
                     $sub->hashes()->create([
                         'group_id' => $worker->group_id,

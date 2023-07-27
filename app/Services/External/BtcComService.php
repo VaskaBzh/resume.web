@@ -4,10 +4,13 @@ declare(strict_types=1);
 
 namespace App\Services\External;
 
+use App\Actions\Sub\Create;
+use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class BtcComService
@@ -16,6 +19,7 @@ class BtcComService
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
+    public const FEE = 0.5;
 
     public function __construct()
     {
@@ -60,10 +64,38 @@ class BtcComService
     }
 
     /**
+     * Инвормация о сабаккаунте
+     */
+    public function getSub(int $groupId): array
+    {
+        $response = $this->client->get(implode('/', [
+            'groups',
+            $groupId
+        ]), [
+                'puid' => self::PU_ID,
+            ]
+        )->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return $response['data'];
+    }
+
+    /**
      * Создать sub аккаунт по имени пользователя
      */
     public function createSub(UserData $userData): array
     {
+        if ($this->btcHasUser(userData: $userData)) {
+            return [
+                'errors' => [
+                    'name' => trans('validation.unique', [
+                        'attribute' => 'Аккаунт'
+                    ])
+                ]
+            ];
+        }
+
         $response = $this->client->post(implode('/', [
             'groups',
             'create'
@@ -74,6 +106,8 @@ class BtcComService
             new \Exception('Ошибка при выполнении запроса')
         );
 
+        $this->createLocalSub(userData: $userData, groupId: $response['data']['gid']);
+
         return $response['data'];
     }
 
@@ -82,7 +116,7 @@ class BtcComService
      * Следует обратить внимание, метод принимает в строке запроса
      * параметр group (не group_id)
      */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): array
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID)
     {
         $response = $this->client->get(implode('/', [
             'worker'
@@ -94,7 +128,21 @@ class BtcComService
             new \Exception('Ошибка при выполнении запроса')
         );
 
-        return $response['data'];
+        return collect($response['data']['data']);
+    }
+
+    public function getWorker($workerId): Collection
+    {
+        $response = $this->client->get(implode('/', [
+            'worker',
+            $workerId
+        ]), [
+            'puid' => self::PU_ID,
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return collect($response['data']['data']);
     }
 
     /**
@@ -114,18 +162,30 @@ class BtcComService
         );
     }
 
-    /**
-     *
-     */
-    public function getPoolData(): array
+
+    public function getEarnHistory(): array
     {
         $response = $this->client->get(implode('/', [
-            'pool',
-            'status'
-        ]))->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+            'account',
+            'earn-history'
+        ]), [
+            'puid' => self::PU_ID,
+            "page_size" => "1",
+        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
 
         return $response['data'];
+    }
+
+    private function createLocalSub(UserData $userData, $groupId): void
+    {
+        Create::execute(
+            subData: SubData::fromRequest([
+                'user_id' => auth()->user()->id,
+                'group_id' => $groupId,
+                'group_name' => $userData->name,
+            ])
+        );
     }
 }
