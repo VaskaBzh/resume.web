@@ -323,6 +323,7 @@ export default {
         }
     }
     &__head {
+
         @media (max-width: 767.98px) {
             display: none;
         }
@@ -339,6 +340,7 @@ export default {
     }
     &__row {
         position: relative;
+        text-align: left;
         &[data-popup="#seeChart"] {
             td {
                 transition: all 0.3s ease 0s;

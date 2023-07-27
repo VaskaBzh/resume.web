@@ -1,14 +1,14 @@
 <template>
     <div class="income" ref="page">
-        <main-title class="profile cabinet_title" tag="h3">
+        <div class="main-header-container">
+            <main-title class="profile cabinet_title" tag="h3">
             {{ $t("income.title") }}
         </main-title>
+        <CurrentExchangeRate />
+        </div>
+
+
         <div class="income__column">
-            <div class="cabinet__head">
-                <main-title tag="h4" class="headline">
-                    {{ $t("income.income_info.title") }}:
-                </main-title>
-            </div>
             <div class="income__row">
                 <div class="cabinet__block cabinet__block-light">
                     <span class="text"
@@ -39,8 +39,14 @@
                 </div>
             </div>
         </div>
+        <div class="cabinet__head">
+            <main-title tag="h4" class="headline">
+                {{ $t("income.table.title") }}
+            </main-title>
+        </div>
+        <!-- <blue-button></blue-button> -->
 
-        <!--        <div class="income__filter">-->
+               <!-- <div class="income__filter">-->
         <!--                <div-->
         <!--                    class="income__filter_block"-->
         <!--                    v-show="this.walletOptions[1]"-->
@@ -67,12 +73,34 @@
         <!--                    :placeholder="$t('date.placeholder')"-->
         <!--                ></main-date>-->
         <!--            </div>-->
-        <!--        </div>-->
+        <!--        </div> -->
+        <article class="income-table-block">
+            <div class="tabs-block-container">
+                <button class="btn-table tabs-active" @click="changeActiveTab('All')">
+                    {{ $t("income.table.tabs[0]") }}
+                </button>
+                <button class="btn-table" @click="changeActiveTab('Payots')">
+                    {{ $t("income.table.tabs[1]") }}
+                </button>
+            </div>
+            <div class="filter-block-container">
+
+               <!-- <div class="income__filter"> -->
+                   <div class="filter_block">
+                       <main-date
+                           v-model="date"
+                           :placeholder="$t('date.placeholder')"
+                       ></main-date>
+                   </div>
+               <!-- </div> -->
+            </div>
+        </article>
+
         <main-slider
             class="wrap-no-overflow"
             :wait="allIncomeHistory"
-            :empty="incomeInfo.rows"
-            :table="incomeInfo"
+            :empty="newArr.rows"
+            :table="newArr"
             type="Платежи"
             rowsNum="25"
             :errors="errors"
@@ -85,6 +113,7 @@ import MainSelect from "@/Components/UI/MainSelect.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainDate from "@/Components/UI/MainDate.vue";
+import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import { Link, router } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
@@ -98,6 +127,7 @@ export default {
         BlueButton,
         MainDate,
         Link,
+        CurrentExchangeRate
     },
     props: ["errors", "message", "user"],
     data() {
@@ -111,6 +141,7 @@ export default {
                 { title: "Выполнено", value: "completed" },
             ],
             date: {},
+            newArr: [],
         };
     },
     layout: profileLayoutView,
@@ -228,6 +259,7 @@ export default {
                                     : this.$t("income.table.status.pending"),
                             class: row["status"],
                             txid: txid,
+                            validate: row['message'],
                             message: message,
                             data: "#fullpage",
                         };
@@ -295,6 +327,13 @@ export default {
             return "0.00000000";
         },
     },
+    watch: {
+        'incomeInfo.rows'(newItem) {
+            if (newItem.length > 0 && this.newArr.length === 0) {
+                this.changeActiveTab("All");
+            }
+        }
+    },
     methods: {
         router() {
             return router;
@@ -341,6 +380,33 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        changeActiveTab(tabName) {
+            switch(tabName){
+                case 'Payots': {
+                    this.newArr.titles = [
+                    this.$t("income.table.thead[1]"),
+                    this.$t("income.table.thead[3]"),
+                    'TxID',
+                    this.$t("income.table.thead[4]"),
+                    this.$t("income.table.thead[5]"),
+                    ]
+                    // console.log(this.newArr.titles = this.incomeInfo.titles)
+                    this.newArr.rows = this.newArr.rows.filter((item) => {
+                        return item.validate == 'completed' || item.validate == 'error payout'
+                    })
+                    this.newArr.rows.map((item) => {
+                        delete item.hash
+                    })
+                    // console.log(test)
+                    this.openAllTable = false; break
+                }
+                case 'All': {
+                    this.newArr = this.incomeInfo;
+                    console.log(this.newArr)
+                    this.openAllTable = true; break
+                }
+            }
+        },  
     },
     async created() {
         // await this.$store.dispatch("getAccounts");
@@ -501,6 +567,46 @@ export default {
                 }
             }
         }
+    }
+    .btn-table{
+        // padding: 12px 49.8px;
+        padding: 12px ;
+        // width: 32%;
+        border-radius: 8px;
+        color: rgba(129, 140, 153, 1);
+        font-size: 18px;
+    }
+    .tabs-active{
+        color: rgba(121, 163, 232, 1);
+        background: rgba(250, 250, 250, 1);
+        box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
+    }
+    .filter_block{
+        width: 100%;
+        box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
+        border-radius: 8px;
+    }
+    .income-table-block{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 24px 0 8px;
+
+    }
+    .filter-block-container{
+        width: 32%;
+        border: none;
+    }
+    .tabs-block-container{
+        width: 28%;
+        display: flex;
+        // justify-content: space-between;
+        gap: 10px;
+        align-items: center;
+    }
+    .main-header-container{
+        display: flex;
+        align-items: baseline;
     }
 }
 </style>

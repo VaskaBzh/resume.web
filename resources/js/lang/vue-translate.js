@@ -98,7 +98,7 @@ const messages = {
                     all: "Full earn",
                     button: "Earnings",
                 },
-                accounts_title: "Accounts",
+                accounts_title: "Subaccounts",
                 acc_admin: {
                     title: "Profile management",
                     add: "Add a subaccount",
@@ -122,7 +122,7 @@ const messages = {
             },
             links: {
                 statistic: "Statistics",
-                accounts: "Accounts",
+                accounts: "Subaccounts",
                 workers: "Workers",
                 income: "Earnings",
                 connection: "Connection",
@@ -407,7 +407,7 @@ const messages = {
         },
         tabs: {
             statistic: "Statistics",
-            accounts: "Accounts",
+            accounts: "Subaccounts",
             workers: "Workers",
             income: "Earnings",
             connection: "Connection",
@@ -466,7 +466,7 @@ const messages = {
             },
         },
         accounts: {
-            title: "Accounts",
+            title: "Subaccounts",
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
@@ -532,12 +532,14 @@ const messages = {
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
             },
             table: {
+                title: 'Transaction history',
+                tabs: ['All transaction', 'Payouts'],
                 thead: [
                     "Accrual date",
                     "Payout date",
                     "Hashrate",
-                    "Accrual amount",
-                    "Wallet",
+                    "Amount and payouts",
+                    "Wallet address",
                     "Status",
                 ],
                 thead_short: [
@@ -545,8 +547,8 @@ const messages = {
                     "Payout date",
                     "Hashrate",
                     "Average Hashrate",
-                    "Amount of accruals",
-                    "Wallet",
+                    "Amount and payouts",
+                    "Wallet address",
                     "Status",
                 ],
                 messages: {
@@ -757,7 +759,7 @@ const messages = {
                     all: "Всего",
                     button: "Доходы",
                 },
-                accounts_title: "Аккаунты",
+                accounts_title: "Субаккаунты",
                 acc_admin: {
                     title: "Управление профилем",
                     add: "Добавить субаккаунт",
@@ -781,7 +783,7 @@ const messages = {
             },
             links: {
                 statistic: "Статистика",
-                accounts: "Аккаунты",
+                accounts: "Субаккаунты",
                 workers: "Воркеры",
                 income: "Доходы",
                 connection: "Подключение",
@@ -1072,7 +1074,7 @@ const messages = {
         },
         tabs: {
             statistic: "Статистика",
-            accounts: "Аккаунты",
+            accounts: "Субаккаунты",
             workers: "Воркеры",
             income: "Доходы",
             connection: "Подключение",
@@ -1090,7 +1092,7 @@ const messages = {
         },
         date: {
             label: "Дата",
-            placeholder: "За все время",
+            placeholder: "Выбрать период",
         },
         swiper: {
             or: "из",
@@ -1131,7 +1133,7 @@ const messages = {
             },
         },
         accounts: {
-            title: "Аккаунты",
+            title: "Субаккаунты",
             toggle: ["Активный", "Переключить"],
             block: {
                 titles: [
@@ -1192,12 +1194,14 @@ const messages = {
                 titles: ["Оплачено", "Неоплачено", "Вчерашний доход"],
             },
             table: {
+                title: 'История транзакций',
+                tabs: ['Все', 'Выплаты', 'Начисления'],
                 thead: [
                     "Дата начисления",
                     "Дата вылпаты",
                     "Хешрейт",
-                    "Сумма начислений",
-                    "Кошелек",
+                    "Сумма и выплаты",
+                    "Адрес кошелька",
                     "Статус",
                 ],
                 thead_short: [
@@ -1205,8 +1209,8 @@ const messages = {
                     "Дата выплаты",
                     "Хешрейт",
                     "Средний Хешрейт",
-                    "Сумма начислений",
-                    "Кошелек",
+                    "Сумма и выплаты",
+                    "Адрес кошелька",
                     "Статус",
                 ],
                 messages: {

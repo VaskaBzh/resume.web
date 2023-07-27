@@ -2,12 +2,16 @@
     <Head :title="$t('statistic.title')" />
     <div class="statistic profile">
         <div class="statistic__wrapper">
-            <main-title tag="h3" class="cabinet_title">
-                {{ $t("statistic.title") }}
-                <!--                <main-checkbox @is_checked="allStat">-->
-                <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
-                <!--                >-->
-            </main-title>
+            <div class="main-header-container">
+                <main-title tag="h3" class="cabinet_title">
+                    {{ $t("statistic.title") }}
+                    <!--                <main-checkbox @is_checked="allStat">-->
+                    <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
+                    <!--                >-->
+                </main-title>
+                <CurrentExchangeRate />
+            </div>
+
             <no-info
                 class="cabinet"
                 :wait="waitHistory"
@@ -210,7 +214,6 @@
                             "
                             :BTC="this.todayEarn"
                         />
-                        <span v-if="isRu">USD : {{ currentUSD }} ₽</span>
                     </div>
                 </div>
             </div>
@@ -229,6 +232,7 @@ import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 
 import axios from "axios";
 
@@ -247,6 +251,7 @@ export default {
         MainCheckbox,
         NoInfoWait,
         NoInfo,
+        CurrentExchangeRate
     },
     layout: profileLayoutView,
     data() {
@@ -289,8 +294,6 @@ export default {
             },
             activeHistory: null,
             all: false,
-            currentUSD: null,
-            isRu: false,
         };
     },
     created: function () {
@@ -381,6 +384,14 @@ export default {
             }
             return 0;
         },
+        isUSD() {
+            if(this.currentUSD){
+                return true
+            }
+            else{
+                return false
+            }
+        },
         ...mapGetters([
             "getTable",
             "getActive",
@@ -409,6 +420,7 @@ export default {
                 this.isRu = true
                 axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
                 .then((response) => {
+                    console.log(response)
                     this.currentUSD = response.data.Valute.USD.Value
             })
             }
@@ -679,6 +691,10 @@ export default {
         @media (max-width: 479.98px) {
             grid-template-columns: 1fr;
         }
+    }
+    .main-header-container{
+        display: flex;
+        align-items: baseline;
     }
 }
 </style>

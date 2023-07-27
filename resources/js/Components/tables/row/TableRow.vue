@@ -101,7 +101,8 @@ export default {
                         col[0] !== "unit24" &&
                         col[0] !== "payment" &&
                         col[0] !== "message" &&
-                        col[0] !== "txid"
+                        col[0] !== "txid" &&
+                        col[0] !== "validate"
                 );
                 if (
                     this.viewportWidth <= 767.98 &&
@@ -140,7 +141,7 @@ export default {
         line-height: 135%;
         color: #343434;
         white-space: nowrap;
-        text-align: center;
+        // text-align: center;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
@@ -159,6 +160,11 @@ export default {
         &:first-child {
             @media (min-width: 767.98px) {
                 padding-left: 16px;
+            }
+        }
+        &:last-child {
+            @media (min-width: 767.98px) {
+                width: 172px;
             }
         }
     }
