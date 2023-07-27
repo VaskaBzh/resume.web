@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Log;
 
 class IncomeService
 {
-    public const ALLBTC_FEE = 1.5;
+    public const ALLBTC_FEE = 3.5;
     private array $incomeData = [
         'status' => Status::REJECTED->value,
         'unit' => 'T',
