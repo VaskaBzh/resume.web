@@ -63,6 +63,19 @@ class BtcComService
         return $response['data'];
     }
 
+    public function getGroup(int $groupId): array
+    {
+        $response = $this->client->get(implode('/', [
+                'groups',
+                $groupId
+            ])
+        )->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return $response['data'];
+    }
+
     /**
      * Инвормация о сабаккаунте
      */
