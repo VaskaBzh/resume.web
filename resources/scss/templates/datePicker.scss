@@ -35,11 +35,19 @@
     @media(max-width:$pc){
       width: calc(970px * 0.32);
     }
+    // @media(max-width:$tablet){
+    //   width: calc(750px * 0.32);
+    // }
+    // @media(max-width:$pc){
+    //   width: calc(750px * 0.45);
+    // }
     @media(max-width:$tablet){
-      width: calc(750px * 0.32);
+      width: calc(750px * 0.45);
+    }
+    @media (max-width: $mobile) {
+      width: calc(100% - 15px);
     }
     border-radius: 8px !important;
-    // width: 32%;
     box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
   }
   &__month{
@@ -114,7 +122,7 @@
           padding: 5px 10px;
         }
         @media (max-width: $mobileSmall) {
-          height: 34px;
+          height: 40px;
           font-size: 16px;
           line-height: 16px;
         }
@@ -155,4 +163,7 @@
       width: auto !important;
     }
   }
+  .history-transaction{
+    color: rgba(202, 202, 202, 1);
+}
 }

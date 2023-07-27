@@ -40,7 +40,7 @@
             </div>
         </div>
         <div class="cabinet__head">
-            <main-title tag="h4" class="headline">
+            <main-title tag="h4" class="headline history-transaction">
                 {{ $t("income.table.title") }}
             </main-title>
         </div>
@@ -591,6 +591,7 @@ export default {
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
         border-radius: 8px;
     }
+ 
     .income-table-block{
         display: flex;
         justify-content: space-between;
@@ -602,6 +603,12 @@ export default {
         width: 32%;
         border: none;
     }
+
+    @media(max-width: 991px){
+        .filter-block-container{
+            width: 45%;
+        }
+    }
     .tabs-block-container{
         width: 28%;
         display: flex;
@@ -612,6 +619,21 @@ export default {
     .main-header-container{
         display: flex;
         align-items: baseline;
+    }
+    @media(max-width: 760px){
+        .main-header-container{
+            flex-direction: column;
+            margin-bottom: 24px;
+        }
+        .income-table-block{
+            flex-direction: column-reverse;
+            align-items: flex-start;
+            gap: 16px;
+            margin: 24px 0;
+        }
+        .filter-block-container{
+            width: 100%;
+        }
     }
 }
 </style>
