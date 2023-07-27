@@ -28,7 +28,14 @@ class WorkerHashrate extends Model
 
     public function worker(): BelongsTo
     {
-        return $this->belongsTo(Worker::class);
+        return $this->belongsTo(Worker::class, 'worker_id', 'worker_id');
+    }
+
+    /* Custom builder */
+
+    public function newEloquentBuilder($query): WorkerHashRateBuilder
+    {
+        return new WorkerHashRateBuilder($query);
     }
 
     /* Custom builder */
