@@ -85,6 +85,13 @@ class IncomeService
         return $this;
     }
 
+    public function setSubUnPayments(): IncomeService
+    {
+        $this->subData["unPayments"] = $this->subData["accruals"] - $this->subData["payments"];
+
+        return $this;
+    }
+
     public function setSub(Sub $sub): IncomeService
     {
         $this->sub = $sub;
@@ -231,7 +238,7 @@ class IncomeService
     {
         $secondsPerDay = 86400;
         $earnTime = ($this->params['difficulty'] * pow("2", "32"))
-            / ((1 * pow("10", "12")) * $secondsPerDay);
+            / (($this->params['hashRate'] * pow("10", "12")) * $secondsPerDay);
 
         $total = $this->params['reward_block'] / $earnTime;
 

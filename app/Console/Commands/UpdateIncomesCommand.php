@@ -28,7 +28,6 @@ class UpdateIncomesCommand extends Command
         BtcComService $btcComService
     ): void
     {
-
         $params = $btcComService->getEarnHistory()['list'];
 
         foreach (Sub::all() as $sub) {
@@ -40,6 +39,8 @@ class UpdateIncomesCommand extends Command
                 sub: $sub
             );
         }
+
+        resolve(WalletService::class)->lock();
     }
 
     private function process(
@@ -61,7 +62,9 @@ class UpdateIncomesCommand extends Command
             $incomeService
                 ->setIncomeData('amount', $amount)
                 ->setSubData('payments', $sub->payments)
-                ->setSubData('accruals', $sub->accruals + $amount);
+                ->setSubData('accruals', $sub->accruals + $amount)
+                ->setSubUnPayments()
+                ->updateLocalSub();
         } catch (\Exception $e) {
             report($e);
 
@@ -99,6 +102,8 @@ class UpdateIncomesCommand extends Command
                         ->setIncomeData('message', Message::ERROR_PAYOUT->value)
                         ->createLocalIncome();
 
+                    $walletService->lock();
+
                     return;
                 }
 
@@ -106,7 +111,9 @@ class UpdateIncomesCommand extends Command
                     ->setIncomeData('txid', $txId)
                     ->setIncomeData('status', Status::COMPLETED->value)
                     ->setIncomeData('message', Message::COMPLETED->value)
-                    ->setSubData('payments', $amount + $sub->unPayments + $sub->payments);
+                    ->setSubData('payments', $sub->unPayments + $sub->payments)
+                    ->setSubUnPayments()
+                    ->updateLocalSub();
 
                 $walletService->upsertLocalWallet(
                     payment: $incomeService->getIncomeParam('payment')
@@ -129,10 +136,6 @@ class UpdateIncomesCommand extends Command
         }
 
         $walletService->lock();
-
-        $incomeService
-            ->setSubData('unPayments', $amount + $sub->accruals - ($amount + $sub->unPayments + $sub->payments))
-            ->updateLocalSub();
 
         sleep(1);
     }
