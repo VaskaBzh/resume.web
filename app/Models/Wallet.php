@@ -53,4 +53,19 @@ class Wallet extends Model
     {
         return new WalletBuilder($query);
     }
+
+
+    /* Attributes */
+
+    /**
+     * Минимальная выплата в биткоинах
+     */
+    public function minBitWithdrawal(): Attribute
+    {
+        return Attribute::make(
+            get: fn (): float => $this->minWithdrawal ?? self::MIN_BITCOIN_WITHDRAWAL
+        );
+    }
+
+    /* end attributes */
 }
