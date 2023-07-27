@@ -28,7 +28,7 @@ class WorkerHashrate extends Model
 
     public function worker(): BelongsTo
     {
-        return $this->belongsTo(Worker::class, 'worker_id', 'worker_id');
+        return $this->belongsTo(Worker::class);
     }
 
     /* Custom builder */
