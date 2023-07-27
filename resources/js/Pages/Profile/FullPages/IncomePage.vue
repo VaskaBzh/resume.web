@@ -2,11 +2,10 @@
     <div class="income" ref="page">
         <div class="main-header-container">
             <main-title class="profile cabinet_title" tag="h3">
-            {{ $t("income.title") }}
-        </main-title>
-        <CurrentExchangeRate />
+                {{ $t("income.title") }}
+            </main-title>
+            <CurrentExchangeRate />
         </div>
-
 
         <div class="income__column">
             <div class="income__row">
@@ -46,7 +45,7 @@
         </div>
         <!-- <blue-button></blue-button> -->
 
-               <!-- <div class="income__filter">-->
+        <!-- <div class="income__filter">-->
         <!--                <div-->
         <!--                    class="income__filter_block"-->
         <!--                    v-show="this.walletOptions[1]"-->
@@ -74,38 +73,45 @@
         <!--                ></main-date>-->
         <!--            </div>-->
         <!--        </div> -->
-        <article class="income-table-block">
-            <div class="tabs-block-container">
-                <button class="btn-table" :class="{'tabs-active' : openAllTable}" @click="changeActiveTab('All')">
-                    {{ $t("income.table.tabs[0]") }}
-                </button>
-                <button class="btn-table" :class="{'tabs-active' : !openAllTable}" @click="changeActiveTab('Payots')">
-                    {{ $t("income.table.tabs[1]") }}
-                </button>
-            </div>
-            <div class="filter-block-container">
-
-               <!-- <div class="income__filter"> -->
-                   <div class="filter_block">
-                       <main-date
-                           v-model="date"
-                           :placeholder="$t('date.placeholder')"
-                           @calendarChange="filterTable"
-                       ></main-date>
-                   </div>
-               <!-- </div> -->
-            </div>
-        </article>
-
-        <main-slider
-            class="wrap-no-overflow"
-            :wait="allIncomeHistory"
-            :empty="newArr.rows"
-            :table="newArr"
-            type="Платежи"
-            rowsNum="25"
-            :errors="errors"
-        ></main-slider>
+        <!--        <article class="income-table-block">-->
+        <!--            <div class="tabs-block-container">-->
+        <!--                <button-->
+        <!--                    class="btn-table"-->
+        <!--                    :class="{ 'tabs-active': openAllTable }"-->
+        <!--                    @click="changeActiveTab('All')"-->
+        <!--                >-->
+        <!--                    {{ $t("income.table.tabs[0]") }}-->
+        <!--                </button>-->
+        <!--                <button-->
+        <!--                    class="btn-table"-->
+        <!--                    :class="{ 'tabs-active': !openAllTable }"-->
+        <!--                    @click="changeActiveTab('Payots')"-->
+        <!--                >-->
+        <!--                    {{ $t("income.table.tabs[1]") }}-->
+        <!--                </button>-->
+        <!--            </div>-->
+        <!--            <div class="filter-block-container">-->
+        <!--                &lt;!&ndash; <div class="income__filter"> &ndash;&gt;-->
+        <!--                <div class="filter_block">-->
+        <!--                    <main-date-->
+        <!--                        v-model="date"-->
+        <!--                        :placeholder="$t('date.placeholder')"-->
+        <!--                        @calendarChange="filterTable"-->
+        <!--                    ></main-date>-->
+        <!--                </div>-->
+        <!--                &lt;!&ndash; </div> &ndash;&gt;-->
+        <!--            </div>-->
+        <!--        </article>-->
+        {{ newArr }}
+        <!--        <main-slider-->
+        <!--            class="wrap-no-overflow"-->
+        <!--            :wait="allIncomeHistory"-->
+        <!--            :empty="newArr.rows"-->
+        <!--            :table="newArr"-->
+        <!--            type="Платежи"-->
+        <!--            rowsNum="25"-->
+        <!--            :errors="errors"-->
+        <!--        ></main-slider>-->
     </div>
 </template>
 <script>
@@ -120,6 +126,8 @@ import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import Vue from "lodash";
 
+import { incomeService } from "@/services/incomeService";
+
 export default {
     components: {
         MainSlider,
@@ -128,7 +136,7 @@ export default {
         BlueButton,
         MainDate,
         Link,
-        CurrentExchangeRate
+        CurrentExchangeRate,
     },
     props: ["errors", "message", "user"],
     data() {
@@ -148,130 +156,130 @@ export default {
     },
     layout: profileLayoutView,
     computed: {
-        incomeInfo() {
-            let obj = {
-                titles: [
-                    this.$t("income.table.thead[0]"),
-                    this.$t("income.table.thead[1]"),
-                    this.$t("income.table.thead[2]"),
-                    this.$t("income.table.thead[3]"),
-                    this.$t("income.table.thead[4]"),
-                    this.$t("income.table.thead[5]"),
-                ],
-                rows: [],
-            };
-            if (
-                this.allIncomeHistory &&
-                this.allIncomeHistory[this.getActive]
-            ) {
-                obj.rows.length = 0;
-                Object.values(this.allIncomeHistory[this.getActive]).forEach(
-                    (row, i) => {
-                        let date = row["created_at"].split("");
-                        let dateUpdate = row["updated_at"].split("");
-                        let time = row["created_at"].substr(11).split("");
-                        time.length = 8;
-                        date.length = 10;
-                        dateUpdate.length = 10;
-                        let datePay = "...";
-                        let wallet = "...";
-                        let message = "...";
-                        let txid = row["txid"];
-                        if (row["status"] === "completed") {
-                            datePay = dateUpdate
-                                .join("")
-                                .split("-")
-                                .reverse()
-                                .join(".");
-                        }
-                        if (row["wallet"]) {
-                            wallet = row["wallet"];
-                        }
-                        if (
-                            new RegExp("Введите кошелек").test(row["txid"]) ||
-                            row["txid"] === "no wallet"
-                        ) {
-                            txid = this.$t(
-                                "income.table.messages.no_wallet_txid"
-                            );
-                        }
-                        if (
-                            new RegExp(
-                                "Настройте аккаунт для вывода (введите кошелек)."
-                            ).test(row["message"]) ||
-                            row["message"] === "no wallet"
-                        ) {
-                            message = this.$t(
-                                "income.table.messages.no_wallet"
-                            );
-                        }
-                        if (
-                            new RegExp(
-                                "Недостаточно средств для вывода. Минимальное значение"
-                            ).test(row["message"]) ||
-                            row["message"] === "less minWithdrawal"
-                        ) {
-                            message = this.$t(
-                                "income.table.messages.less_minWithdrawal"
-                            );
-                        }
-                        if (
-                            new RegExp(
-                                "Произошла ошибка при выполнении выплаты."
-                            ).test(row["message"]) ||
-                            row["message"] === "error"
-                        ) {
-                            message = this.$t("income.table.messages.error");
-                        }
-                        if (
-                            new RegExp(
-                                "Произошла ошибка при выполнении выплаты."
-                            ).test(row["message"]) ||
-                            row["message"] === "error payout"
-                        ) {
-                            message = this.$t(
-                                "income.table.messages.error_payout"
-                            );
-                        }
-                        if (
-                            new RegExp("Выплата успешно выполнена.").test(
-                                row["message"]
-                            ) ||
-                            row["message"] === "completed"
-                        ) {
-                            message = this.$t(
-                                "income.table.messages.completed"
-                            );
-                        }
-                        let rowModel = {
-                            date: date.join("").split("-").reverse().join("."),
-                            payDate: datePay,
-                            hash: `${row["hash"]} ${row["unit"]}h/s`,
-                            earn: `${row["amount"]}BTC`,
-                            payment: `${row["payment"]}BTC`,
-                            wallet:
-                                wallet.substr(0, 4) +
-                                "..." +
-                                wallet.substr(wallet.length - 4, wallet.length),
-                            status:
-                                row["status"] === "completed"
-                                    ? this.$t("income.table.status.fullfill")
-                                    : row["status"] === "rejected"
-                                    ? this.$t("income.table.status.rejected")
-                                    : this.$t("income.table.status.pending"),
-                            class: row["status"],
-                            txid: txid,
-                            validate: row['message'],
-                            message: message,
-                            data: "#fullpage",
-                        };
-                        Vue.set(obj.rows, i, rowModel);
-                    }
-                );
-            }
-            obj.rows = obj.rows.reverse();
-            return obj;
-        },
+        // incomeInfo() {
+        //     let obj = {
+        //         titles: [
+        //             this.$t("income.table.thead[0]"),
+        //             this.$t("income.table.thead[1]"),
+        //             this.$t("income.table.thead[2]"),
+        //             this.$t("income.table.thead[3]"),
+        //             this.$t("income.table.thead[4]"),
+        //             this.$t("income.table.thead[5]"),
+        //         ],
+        //         rows: [],
+        //     };
+        //     if (
+        //         this.allIncomeHistory &&
+        //         this.allIncomeHistory[this.getActive]
+        //     ) {
+        //         obj.rows.length = 0;
+        //         Object.values(this.allIncomeHistory[this.getActive]).forEach(
+        //             (row, i) => {
+        //                 let date = row["created_at"].split("");
+        //                 let dateUpdate = row["updated_at"].split("");
+        //                 let time = row["created_at"].substr(11).split("");
+        //                 time.length = 8;
+        //                 date.length = 10;
+        //                 dateUpdate.length = 10;
+        //                 let datePay = "...";
+        //                 let wallet = "...";
+        //                 let message = "...";
+        //                 let txid = row["txid"];
+        //                 if (row["status"] === "completed") {
+        //                     datePay = dateUpdate
+        //                         .join("")
+        //                         .split("-")
+        //                         .reverse()
+        //                         .join(".");
+        //                 }
+        //                 if (row["wallet"]) {
+        //                     wallet = row["wallet"];
+        //                 }
+        //                 if (
+        //                     new RegExp("Введите кошелек").test(row["txid"]) ||
+        //                     row["txid"] === "no wallet"
+        //                 ) {
+        //                     txid = this.$t(
+        //                         "income.table.messages.no_wallet_txid"
+        //                     );
+        //                 }
+        //                 if (
+        //                     new RegExp(
+        //                         "Настройте аккаунт для вывода (введите кошелек)."
+        //                     ).test(row["message"]) ||
+        //                     row["message"] === "no wallet"
+        //                 ) {
+        //                     message = this.$t(
+        //                         "income.table.messages.no_wallet"
+        //                     );
+        //                 }
+        //                 if (
+        //                     new RegExp(
+        //                         "Недостаточно средств для вывода. Минимальное значение"
+        //                     ).test(row["message"]) ||
+        //                     row["message"] === "less minWithdrawal"
+        //                 ) {
+        //                     message = this.$t(
+        //                         "income.table.messages.less_minWithdrawal"
+        //                     );
+        //                 }
+        //                 if (
+        //                     new RegExp(
+        //                         "Произошла ошибка при выполнении выплаты."
+        //                     ).test(row["message"]) ||
+        //                     row["message"] === "error"
+        //                 ) {
+        //                     message = this.$t("income.table.messages.error");
+        //                 }
+        //                 if (
+        //                     new RegExp(
+        //                         "Произошла ошибка при выполнении выплаты."
+        //                     ).test(row["message"]) ||
+        //                     row["message"] === "error payout"
+        //                 ) {
+        //                     message = this.$t(
+        //                         "income.table.messages.error_payout"
+        //                     );
+        //                 }
+        //                 if (
+        //                     new RegExp("Выплата успешно выполнена.").test(
+        //                         row["message"]
+        //                     ) ||
+        //                     row["message"] === "completed"
+        //                 ) {
+        //                     message = this.$t(
+        //                         "income.table.messages.completed"
+        //                     );
+        //                 }
+        //                 let rowModel = {
+        //                     date: date.join("").split("-").reverse().join("."),
+        //                     payDate: datePay,
+        //                     hash: `${row["hash"]} ${row["unit"]}h/s`,
+        //                     earn: `${row["amount"]}BTC`,
+        //                     payment: `${row["payment"]}BTC`,
+        //                     wallet:
+        //                         wallet.substr(0, 4) +
+        //                         "..." +
+        //                         wallet.substr(wallet.length - 4, wallet.length),
+        //                     status:
+        //                         row["status"] === "completed"
+        //                             ? this.$t("income.table.status.fullfill")
+        //                             : row["status"] === "rejected"
+        //                             ? this.$t("income.table.status.rejected")
+        //                             : this.$t("income.table.status.pending"),
+        //                     class: row["status"],
+        //                     txid: txid,
+        //                     validate: row["message"],
+        //                     message: message,
+        //                     data: "#fullpage",
+        //                 };
+        //                 Vue.set(obj.rows, i, rowModel);
+        //             }
+        //         );
+        //     }
+        //     obj.rows = obj.rows.reverse();
+        //     return obj;
+        // },
         ...mapGetters([
             "allIncomeHistory",
             "getActive",
@@ -330,11 +338,23 @@ export default {
         },
     },
     watch: {
-        'incomeInfo.rows'(newItem) {
+        "incomeInfo.rows"(newItem) {
             if (newItem.length > 0 && this.newArr.length === 0) {
                 this.changeActiveTab("All");
             }
-        }
+        },
+        getActive(oldValue, newValue) {
+            if (newValue === -1) {
+                this.newArr = new incomeService(
+                    this.getActive,
+                    this.$t,
+                    [0, 1, 2, 3, 4, 5]
+                );
+            } else {
+                this.newArr.setId(newValue);
+            }
+            this.changeActiveTab("All");
+        },
     },
     methods: {
         router() {
@@ -362,56 +382,61 @@ export default {
         //         }
         //     }
         // },
-        filter(data) {
-            this.incomeInfo.rows.length = 0;
-            if (data !== "all") {
-                Object.values(this.allIncomeHistory[this.getActive]).forEach(
-                    (row) => {
-                        if (row["status"] === data) {
-                            this.setRows(row);
-                        }
-                        if (row["wallet"] === data) {
-                            this.setRows(row);
-                        }
-                    }
-                );
-            } else {
-                this.getIncomeInfo();
-            }
-        },
+        // filter(data) {
+        //     this.incomeInfo.rows.length = 0;
+        //     if (data !== "all") {
+        //         Object.values(this.allIncomeHistory[this.getActive]).forEach(
+        //             (row) => {
+        //                 if (row["status"] === data) {
+        //                     this.setRows(row);
+        //                 }
+        //                 if (row["wallet"] === data) {
+        //                     this.setRows(row);
+        //                 }
+        //             }
+        //         );
+        //     } else {
+        //         this.getIncomeInfo();
+        //     }
+        // },
         filterTable(e) {
-            console.log(e)
+            console.log(e);
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
         changeActiveTab(tabName) {
-            switch(tabName){
-                case 'Payots': {
-                    this.newArr.titles = [
-                    this.$t("income.table.thead[1]"),
-                    this.$t("income.table.thead[3]"),
-                    'TxID',
-                    this.$t("income.table.thead[4]"),
-                    this.$t("income.table.thead[5]"),
-                    ]
-                    // console.log(this.newArr.titles = this.incomeInfo.titles)
-                    this.newArr.rows = this.newArr.rows.filter((item) => {
-                        return item.validate == 'completed' || item.validate == 'error payout'
-                    })
-                    this.newArr.rows.map((item) => {
-                        delete item.hash
-                    })
-                    // console.log(test)
-                    this.openAllTable = false; break
+            switch (tabName) {
+                case "Payots": {
+                    // this.newArr.titles = [
+                    //     this.$t("income.table.thead[1]"),
+                    //     this.$t("income.table.thead[3]"),
+                    //     "TxID",
+                    //     this.$t("income.table.thead[4]"),
+                    //     this.$t("income.table.thead[5]"),
+                    // ];
+                    // // console.log(this.newArr.titles = this.incomeInfo.titles)
+                    // this.newArr.rows = this.newArr.rows.filter((item) => {
+                    //     return (
+                    //         item.validate == "completed" ||
+                    //         item.validate == "error payout"
+                    //     );
+                    // });
+                    // this.newArr.rows.map((item) => {
+                    //     delete item.hash;
+                    // });
+                    // // console.log(test)
+                    // this.openAllTable = false;
+                    break;
                 }
-                case 'All': {
-                    this.newArr = this.incomeInfo;
-                    console.log(this.newArr)
-                    this.openAllTable = true; break
+                case "All": {
+                    // this.newArr = this.incomeInfo;
+                    // console.log(this.newArr);
+                    // this.openAllTable = true;
+                    break;
                 }
             }
-        },  
+        },
     },
     async created() {
         // await this.$store.dispatch("getAccounts");
@@ -573,43 +598,42 @@ export default {
             }
         }
     }
-    .btn-table{
+    .btn-table {
         // padding: 12px 49.8px;
-        padding: 12px ;
+        padding: 12px;
         // width: 32%;
         border-radius: 8px;
         color: rgba(129, 140, 153, 1);
         font-size: 18px;
     }
-    .tabs-active{
+    .tabs-active {
         color: rgba(121, 163, 232, 1);
         background: rgba(250, 250, 250, 1);
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     }
-    .filter_block{
+    .filter_block {
         width: 100%;
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
         border-radius: 8px;
     }
-    .income-table-block{
+    .income-table-block {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 24px 0 8px;
-
     }
-    .filter-block-container{
+    .filter-block-container {
         width: 32%;
         border: none;
     }
-    .tabs-block-container{
+    .tabs-block-container {
         width: 28%;
         display: flex;
         // justify-content: space-between;
         gap: 10px;
         align-items: center;
     }
-    .main-header-container{
+    .main-header-container {
         display: flex;
         align-items: baseline;
     }
