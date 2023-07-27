@@ -238,7 +238,7 @@ class IncomeService
     {
         $secondsPerDay = 86400;
         $earnTime = ($this->params['difficulty'] * pow("2", "32"))
-            / (($this->params['hashRate'] * pow("10", "12")) * $secondsPerDay);
+            / ((1 * pow("10", "12")) * $secondsPerDay);
 
         $total = $this->params['reward_block'] / $earnTime;
 
