@@ -63,6 +63,9 @@ class BtcComService
         return $response['data'];
     }
 
+    /**
+     * Инвормация о сабаккаунте
+     */
     public function getGroup(int $groupId): array
     {
         $response = $this->client->get(implode('/', [
