@@ -17,35 +17,18 @@ class SubController extends Controller
 {
     public function create(
         SubCreateRequest $request,
-        BtcComService $btcComService,
+        BtcComService    $btcComService,
     ): RedirectResponse
     {
-        $userData = UserData::fromRequest(
-            requestData: $request->all()
-        );
-
         try {
-            $isExists = $btcComService->btcHasUser(
-                userData: $userData
+            $result = $btcComService->createSub(
+                userData: UserData::fromRequest(requestData: $request->all())
             );
 
-            if ($isExists) {
-                return back()->withErrors([
-                    'name' => trans('validation.unique', [
-                        'attribute' => 'Аккаунт'
-                    ])
-                ]);
+            if (isset($result['errors'])) {
+                return back()->withErrors($result['errors']);
             }
 
-            $btcSub = $btcComService->createSub(userData: $userData);
-
-            Create::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => auth()->user()->id,
-                    'group_id' => $btcSub['gid'],
-                    'group_name' => $userData->name,
-                ])
-            );
         } catch (\Exception $e) {
             report($e);
 

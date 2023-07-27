@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace App\Services\External;
 
+use App\Actions\Sub\Create;
+use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
 use Illuminate\Http\Client\PendingRequest;
@@ -84,6 +86,16 @@ class BtcComService
      */
     public function createSub(UserData $userData): array
     {
+        if ($this->btcHasUser(userData: $userData)) {
+            return [
+                'errors' => [
+                    'name' => trans('validation.unique', [
+                        'attribute' => 'Аккаунт'
+                    ])
+                ]
+            ];
+        }
+
         $response = $this->client->post(implode('/', [
             'groups',
             'create'
@@ -93,6 +105,8 @@ class BtcComService
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
+
+        $this->createLocalSub(userData: $userData, groupId: $response['data']['gid']);
 
         return $response['data'];
     }
@@ -162,5 +176,16 @@ class BtcComService
         );
 
         return $response['data'];
+    }
+
+    private function createLocalSub(UserData $userData, $groupId): void
+    {
+        Create::execute(
+            subData: SubData::fromRequest([
+                'user_id' => auth()->user()->id,
+                'group_id' => $groupId,
+                'group_name' => $userData->name,
+            ])
+        );
     }
 }
