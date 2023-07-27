@@ -37,11 +37,11 @@ export default defineConfig(({ command }) => {
             cors: {
                 origin: "*",
             },
-            host: '0.0.0.0',
-            port: 5173,
-            hmr: {
-                host: '127.0.0.1',
-            }
+            // host: '0.0.0.0',
+            // port: 5173,
+            // hmr: {
+            //     host: '127.0.0.1',
+            // }
         },
         build: {
             base: command === "build" ? "/" : "/",

@@ -1,5 +1,5 @@
 import Vue from "lodash";
-import btccom from "@/api/btccom";
+import api from "@/api/api";
 
 export default {
     actions: {
@@ -7,7 +7,9 @@ export default {
             commit("destroy_incHist");
         },
         async get_income_history({ commit, state }, data) {
-            let incomes = await btccom.fetch_income(data);
+            let incomes = (await api.get("/income_process", {
+                params: data,
+            })).data;
             commit("updateIncomeHistory", {
                 historyItem: Object.values(incomes),
                 key: data.group_id,

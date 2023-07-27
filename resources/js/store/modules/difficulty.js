@@ -1,8 +1,7 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
+import api from "@/api/api";
 import btccom from "@/api/btccom";
-import axios from "axios";
-import statisticChart from "@/Components/technical/charts/StatisticChart.vue";
 
 export default {
     actions: {
@@ -38,7 +37,7 @@ export default {
             }
         },
         async getMiningStat({ commit, state }) {
-            let minerstats = (await difficulty.fetch_minerstat()).minerstats;
+            let minerstats = (await api.get("/miner_stat")).data.minerstats;
 
             try {
                 let converterModel = {

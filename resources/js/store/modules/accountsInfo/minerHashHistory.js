@@ -1,5 +1,5 @@
 import Vue from "lodash";
-import btccom from "@/api/btccom";
+import api from "@/api/api";
 
 export default {
     actions: {
@@ -7,7 +7,9 @@ export default {
             commit("destroy_histMiners");
         },
         get_miner_history_hash: async function ({ commit, state }, data) {
-            let miner_hash = await btccom.fetch_miner_history(data);
+            let miner_hash = (await api.get("/worker_process", {
+                params: data
+            })).data;
             commit("updateHistoryMiners", {
                 historyItem: Object.values(miner_hash),
                 key: data.worker_id,
