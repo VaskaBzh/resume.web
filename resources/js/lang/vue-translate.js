@@ -533,7 +533,7 @@ const messages = {
             },
             table: {
                 title: 'Transaction history',
-                tabs: ['All transaction', 'Payouts'],
+                tabs: ['Accruals', 'Payouts'],
                 thead: [
                     "Accrual date",
                     "Payout date",
@@ -1195,7 +1195,7 @@ const messages = {
             },
             table: {
                 title: 'История транзакций',
-                tabs: ['Все', 'Выплаты', 'Начисления'],
+                tabs: ['Начисления', 'Выплаты'],
                 thead: [
                     "Дата начисления",
                     "Дата вылпаты",
