@@ -15,18 +15,6 @@ use Illuminate\Http\Request;
 
 class WorkerController extends Controller
 {
-    public function create(WorkerRequest $request)
-    {
-        Create::execute(
-            workerData: WorkerData::fromRequest($request->all())
-        );
-
-        return new JsonResponse([
-            'success' => true,
-            'message' => trans('actions.success_worker_create'),
-        ]);
-    }
-
     public function visual(Request $request): Collection
     {
         return Worker::where('worker_id', $request->worker_id)->get();
