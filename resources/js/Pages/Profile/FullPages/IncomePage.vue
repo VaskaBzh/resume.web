@@ -616,12 +616,7 @@ export default {
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
         border-radius: 8px;
     }
-<<<<<<< HEAD
-    .income-table-block {
-=======
- 
     .income-table-block{
->>>>>>> e646c9e03e0d0bac9188dd7566c3a9060e89d6b2
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -631,9 +626,6 @@ export default {
         width: 32%;
         border: none;
     }
-<<<<<<< HEAD
-    .tabs-block-container {
-=======
 
     @media(max-width: 991px){
         .filter-block-container{
@@ -641,7 +633,6 @@ export default {
         }
     }
     .tabs-block-container{
->>>>>>> e646c9e03e0d0bac9188dd7566c3a9060e89d6b2
         width: 28%;
         display: flex;
         // justify-content: space-between;
