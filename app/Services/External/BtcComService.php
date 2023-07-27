@@ -29,6 +29,11 @@ class BtcComService
             ]);
     }
 
+   /* public function call(string $uri, string $method = 'get', array $params = [])
+    {
+        (new Client())
+    }*/
+
     /**
      * Проверка наличия пользователя на стороне btc.com
      *

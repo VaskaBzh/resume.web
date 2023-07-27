@@ -21,6 +21,6 @@ class IncomeListController extends Controller
         $collection = Income::getList($sub->group_id, $filterData->hasTxId)
             ->paginate($filterData->perPage);
 
-        return new IncomeCollection($collection);
+        return new IncomeCollection($collection, $filterData->hasTxId);
     }
 }

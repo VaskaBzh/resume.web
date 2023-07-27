@@ -10,21 +10,32 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 /** @see \App\Models\Income */
 class IncomeCollection extends ResourceCollection
 {
+    public function __construct($resource, private ?bool $filter)
+    {
+        parent::__construct($resource);
+    }
+
     public function toArray($request): array
     {
         return [
-            'data' => $this->collection->map(static fn(Income $income) => [
-                'txid' => $income->txid,
-                'wallet' => $income->wallet,
-                'payment' => $income->payment,
-                'amount' => $income->amount,
-                'unit' => $income->unit,
-                'status' => $income->statis,
-                'message' => $income->message,
-                'hash' => $income->hash,
-                'created_at' => $income->created_at,
-                'updated_at' => $income->updated_at
-            ]),
+            'data' => $this->collection->map(fn(Income $income) => $this->filter
+                ? [
+                    'payment' => $income->payment,
+                    'txid' => $income->txid,
+                    'wallet' => $income->wallet,
+                    'updated_at' => $income->updated_at
+                ] :
+                [
+                    'wallet' => $income->wallet,
+                    'amount' => $income->amount,
+                    'hash' => $income->hash,
+                    'unit' => $income->unit,
+                    'status' => $income->status,
+                    'message' => $income->message,
+                    'created_at' => $income->created_at,
+                    'updated_at' => $income->updated_at,
+                ]
+            ),
         ];
     }
 }
