@@ -9,6 +9,20 @@ use Illuminate\Database\Eloquent\Builder;
 
 class IncomeBuilder extends BaseBuilder
 {
+    public function getList(int $groupId, ?bool $hasTxId): Builder
+    {
+        $query = $this
+            ->getByGroupId($groupId);
+
+        if ($hasTxId) {
+
+            return $query
+                ->whereNot('txid', '')
+                ->whereNotNull('txid');
+        }
+
+        return $query;
+    }
     public function getNotCompleted(int $groupId): Builder
     {
         return $this

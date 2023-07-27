@@ -32,6 +32,11 @@ class Sub extends Model
         'unPayments' => 'float',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'group_id';
+    }
+
     /* Relations */
 
     public function finances(): HasMany
