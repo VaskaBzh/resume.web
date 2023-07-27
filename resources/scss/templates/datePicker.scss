@@ -62,12 +62,6 @@
       padding: 32px;
     }
   }
-  //?????
-  // &__menu{
-  //   &_index{
-  //     border-radius: 13px;
-  //   }
-  // }
   &__inner{
     &_nav{
       color: rgba(63, 123, 221, 1) !important;
@@ -154,6 +148,11 @@
           }
         }
       }
+    }
+  }
+  &__cell{
+    &_inner{
+      width: auto !important;
     }
   }
 }

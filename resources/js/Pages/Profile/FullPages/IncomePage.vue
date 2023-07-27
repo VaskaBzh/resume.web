@@ -76,10 +76,10 @@
         <!--        </div> -->
         <article class="income-table-block">
             <div class="tabs-block-container">
-                <button class="btn-table tabs-active" @click="changeActiveTab('All')">
+                <button class="btn-table" :class="{'tabs-active' : openAllTable}" @click="changeActiveTab('All')">
                     {{ $t("income.table.tabs[0]") }}
                 </button>
-                <button class="btn-table" @click="changeActiveTab('Payots')">
+                <button class="btn-table" :class="{'tabs-active' : !openAllTable}" @click="changeActiveTab('Payots')">
                     {{ $t("income.table.tabs[1]") }}
                 </button>
             </div>
@@ -90,6 +90,7 @@
                        <main-date
                            v-model="date"
                            :placeholder="$t('date.placeholder')"
+                           @calendarChange="filterTable"
                        ></main-date>
                    </div>
                <!-- </div> -->
@@ -142,6 +143,7 @@ export default {
             ],
             date: {},
             newArr: [],
+            openAllTable: true,
         };
     },
     layout: profileLayoutView,
@@ -376,6 +378,9 @@ export default {
             } else {
                 this.getIncomeInfo();
             }
+        },
+        filterTable(e) {
+            console.log(e)
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;

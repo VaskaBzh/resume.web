@@ -42,7 +42,8 @@ export default {
     },
     name: "main-date",
     methods: {
-        iconRemover() {
+        iconRemover(e) {
+            this.$emit("calendarChange", e)
             return this.$refs.icon.style.display = this.date !== null ? "none" : "inline"
         },
         opener() {

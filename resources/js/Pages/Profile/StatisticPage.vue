@@ -386,14 +386,6 @@ export default {
             }
             return 0;
         },
-        isUSD() {
-            if(this.currentUSD){
-                return true
-            }
-            else{
-                return false
-            }
-        },
         ...mapGetters([
             "getTable",
             "getActive",
@@ -416,19 +408,6 @@ export default {
         },
         router() {
             return router;
-        },
-        getUSD() {
-            if(this.$i18n.locale === 'ru'){
-                this.isRu = true
-                axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
-                .then((response) => {
-                    console.log(response)
-                    this.currentUSD = response.data.Valute.USD.Value
-            })
-            }
-            else{
-                this.isRu = false
-            }
         },
         // allStat(bool) {
         //     if (this.allHistory[this.getActive]) {
