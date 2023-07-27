@@ -149,8 +149,7 @@ class IncomeService
     public function complete(): void
     {
         $incomes = Income::getNotCompleted(
-            groupId: $this->sub->group_id,
-            walletUid: $this->wallet->wallet
+            groupId: $this->sub->group_id
         )->get();
 
         if ($incomes) {
@@ -189,6 +188,26 @@ class IncomeService
         return $this;
     }
 
+    public function getUserAmount(): float|\Exception
+    {
+        return match (true) {
+            !isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
+            !isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
+            !isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
+            default => $this->calculateUserAmount()
+        };
+    }
+
+    public function getEarn(): float|\Exception
+    {
+        return match (true) {
+            !isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
+            !isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
+            !isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
+            default => $this->calculateEarn()
+        };
+    }
+
     /**
      * Посчитать добычу саб-аккаунта
      *
@@ -198,25 +217,25 @@ class IncomeService
      * $this->>difficulty - сложность сети биткоина
      * $this->>fppsPercent - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
      */
-    public function getEarn(): float|\Exception
+    private function calculateUserAmount(): float
     {
-        return match (true) {
-            !isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
-            !isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
-            !isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
-            default => $this->calculate()
-        };
+        $total = $this->calculateEarn();
+
+        return $total - $total * (self::ALLBTC_FEE / 100);
     }
 
-    private function calculate(): float
+    /**
+     * Посчитать добычу
+     */
+    private function calculateEarn(): float
     {
         $secondsPerDay = 86400;
         $earnTime = ($this->params['difficulty'] * pow("2", "32"))
-            / (($this->params['hashRate'] * pow("10", "12")) * $secondsPerDay);
+            / ((1 * pow("10", "12")) * $secondsPerDay);
 
         $total = $this->params['reward_block'] / $earnTime;
 
-        return $total + $total * (($this->params['fppsPercent'] - BtcComService::FEE - self::ALLBTC_FEE) / 100);
+        return $total + $total * (($this->params['fppsPercent'] - BtcComService::FEE) / 100);
     }
 
     private function calculateProfit(float $earn): float

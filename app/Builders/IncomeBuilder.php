@@ -9,11 +9,10 @@ use Illuminate\Database\Eloquent\Builder;
 
 class IncomeBuilder extends BaseBuilder
 {
-    public function getNotCompleted(int $groupId, string $walletUid): Builder
+    public function getNotCompleted(int $groupId): Builder
     {
         return $this
             ->where('group_id', $groupId)
-            ->where('wallet', $walletUid)
             ->groupBy('id', 'status')
             ->having('status', Status::PENDING->value)
             ->orHaving('status', Status::REJECTED->value);
