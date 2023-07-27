@@ -82,24 +82,6 @@ class BtcComService
     }
 
     /**
-     * Инвормация о сабаккаунте
-     */
-    public function getSub(int $groupId): array
-    {
-        $response = $this->client->get(implode('/', [
-            'groups',
-            $groupId
-        ]), [
-                'puid' => self::PU_ID,
-            ]
-        )->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
-
-        return $response['data'];
-    }
-
-    /**
      * Создать sub аккаунт по имени пользователя
      */
     public function createSub(UserData $userData): array

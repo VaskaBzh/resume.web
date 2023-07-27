@@ -86,7 +86,9 @@
                         class="cabinet__block cabinet__block-light hash__block"
                         v-if="!waitAccounts"
                     >
-                        <main-title class="title title-blue" :href="route(`workers`)"
+                        <main-title
+                            class="title title-blue"
+                            :href="route(`workers`)"
                             >{{ $t("statistic.info_blocks.workers.title") }}
                         </main-title>
                         <ul class="statistic__list">
@@ -405,15 +407,15 @@ export default {
             return router;
         },
         getUSD() {
-            if(this.$i18n.locale === 'ru'){
-                this.isRu = true
-                axios.get('https://www.cbr-xml-daily.ru/daily_json.js')
-                .then((response) => {
-                    this.currentUSD = response.data.Valute.USD.Value
-            })
-            }
-            else{
-                this.isRu = false
+            if (this.$i18n.locale === "ru") {
+                this.isRu = true;
+                axios
+                    .get("https://www.cbr-xml-daily.ru/daily_json.js")
+                    .then((response) => {
+                        this.currentUSD = response.data.Valute.USD.Value;
+                    });
+            } else {
+                this.isRu = false;
             }
         },
         // allStat(bool) {
