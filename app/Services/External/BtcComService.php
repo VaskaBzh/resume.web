@@ -29,10 +29,15 @@ class BtcComService
             ]);
     }
 
-   /* public function call(string $uri, string $method = 'get', array $params = [])
+    public function call(array $segments, string $method = 'get', array $params = [])
     {
-        (new Client())
-    }*/
+        $response = $this->client->$method(implode('/', $segments), $params)
+            ->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
+            new \Exception('Ошибка при выполнении запроса')
+        );
+
+        return $response['data'];
+    }
 
     /**
      * Проверка наличия пользователя на стороне btc.com
