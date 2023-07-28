@@ -329,6 +329,7 @@ export default {
         }
         .table {
             &_column {
+                position: relative;
                 color: #818c99;
                 font-size: 14px;
                 font-weight: 400;
@@ -339,7 +340,6 @@ export default {
         }
     }
     &__row {
-        position: relative;
         text-align: left;
         &[data-popup="#seeChart"] {
             td {
@@ -374,7 +374,7 @@ export default {
             stroke: #818c99;
             position: absolute;
             right: 12px;
-            top: 50%;
+            bottom: 7px;
             transform: translateY(-50%);
         }
     }
