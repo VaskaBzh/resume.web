@@ -15,16 +15,16 @@ class IncomeCompleteEvent
 
     public function __construct(
         private readonly Sub $sub,
-        private readonly float $earn
+        private readonly float $payment
     ) {
-        $profit = ($earn / 100) * IncomeService::ALLBTC_FEE;
+        $earn = $payment / (100 - IncomeService::ALLBTC_FEE) * 100;
 
         $this->financeData = FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
             'earn' => $earn,
-            'user_total' => $earn - $profit,
+            'user_total' => $payment,
             'percent' => IncomeService::ALLBTC_FEE,
-            'profit' => $profit
+            'profit' => $earn - $payment
         ]);
     }
 }

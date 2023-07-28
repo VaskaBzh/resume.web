@@ -174,9 +174,11 @@ class IncomeService
      */
     public function createLocalIncome(): void
     {
-        IncomeCreate::execute(
+        $income = IncomeCreate::execute(
             incomeData: $this->buildDto()
         );
+
+        info('INCOME CREATE', $income->toArray());
     }
 
     public function createFinance(float $earn): IncomeService
