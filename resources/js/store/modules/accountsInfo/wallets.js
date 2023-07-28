@@ -7,9 +7,11 @@ export default {
             commit("destroy_wal");
         },
         async get_wallets({ commit, state }, data) {
-            let wallets = (await api.get("/wallet_process", {
-                params: data,
-            })).data;
+            let wallets = (
+                await api.get("/wallet_process", {
+                    params: data,
+                })
+            ).data;
             commit("updateWallet", {
                 historyItem: Object.values(wallets),
                 key: data.group_id,
