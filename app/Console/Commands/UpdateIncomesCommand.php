@@ -12,6 +12,7 @@ use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UpdateIncomesCommand extends Command
 {
@@ -49,7 +50,8 @@ class UpdateIncomesCommand extends Command
         Sub           $sub
     ): void
     {
-        info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+        Log::channel('incomes')
+            ->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
 
         $incomeService
             ->setSub($sub);
@@ -96,7 +98,7 @@ class UpdateIncomesCommand extends Command
 
             if ($walletService->unlock()) {
 
-                info('WALLET UNLOCKED', [
+                Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
@@ -107,7 +109,7 @@ class UpdateIncomesCommand extends Command
 
                 if (!$txId) {
 
-                    info('TXID IS EMPTY', [
+                    Log::channel('incomes')->info('TXID IS EMPTY', [
                         'sub' => $sub->id,
                         'wallet' => $wallet->id
                     ]);
@@ -137,13 +139,13 @@ class UpdateIncomesCommand extends Command
 
                 $incomeService->complete();
 
-                info('INCOME COMPLETE', [
+                Log::channel('incomes')->info('INCOME COMPLETE', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
             } else
             {
-                info('WALLET UNLOCK ERROR', [
+                Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
@@ -162,7 +164,7 @@ class UpdateIncomesCommand extends Command
 
         $walletService->lock();
 
-        info('WALLET LOCKED', [
+        Log::channel('incomes')->info('WALLET LOCKED', [
             'sub' => $sub->id,
         ]);
 

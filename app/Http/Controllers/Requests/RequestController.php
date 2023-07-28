@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Requests;
 
 use App\Services\External\BtcComService;
+use App\Services\Internal\IncomeService;
 use Exception;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
@@ -36,28 +38,28 @@ class RequestController extends Controller
             ->header('Access-Control-Allow-Credentials', 'true');
     }
 
-    public function proxy_front(Request $request, BtcComService $btcComService)
+    public function proxy_front(
+        Request $request,
+        BtcComService $btcComService,
+    )
     {
-
-
+dd($request->all());
         $request->validate([
             "path" => "required",
             "type" => "required",
         ]);
 
-        $data = $btcComService->call(
-            segments: explode('/', $request->path),
-            method: $request->type,
-            params: $request->data,
+        $result = IncomeService::buildWithParams(
+            params: $btcComService->getEarnHistory()['list']
         );
 
-        dd($data);
-
-        return $this->proxy(
-            $request->input("data"),
-            $request->input("path"),
-            $request->input("type")
-        )->getContent();
+        return new JsonResponse([
+            'data' => $btcComService->call(
+                segments: explode('/', $request->path),
+                method: $request->type,
+                params: $request->data,
+            )
+        ]);
     }
 
     public function proxy_diff(Request $request)

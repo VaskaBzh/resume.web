@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
+use App\Console\Commands\SyncSubsCommand;
 use App\Console\Commands\UpdateIncomesCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -16,6 +17,7 @@ class Kernel extends ConsoleKernel
         UpdateMinerStatCommand::class,
         MakeHashesCommand::class,
         MakeWorkerHashesCommand::class,
+        SyncSubsCommand::class,
     ];
     /**
      * Define the application's command schedule.

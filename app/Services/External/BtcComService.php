@@ -8,8 +8,11 @@ use App\Actions\Sub\Create;
 use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
+use App\Models\Sub;
+use App\Models\User;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
@@ -33,24 +36,54 @@ class BtcComService
     {
         $response = $this->client->$method(implode('/', $segments), $params)
             ->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
+                new \Exception('Ошибка при выполнении запроса')
+            );
 
         return $response['data'];
+    }
+
+    public function transformSubCollection(Collection $subs): Collection
+    {
+        return $this
+            ->filterUngrouped()
+            ->whereIn('gid', $subs->pluck('group_id')->toArray())
+            ->map(static function (array $btcComSub) use ($subs) {
+                foreach ($subs as $sub) {
+                    if (in_array($sub->group_id, $btcComSub)) {
+                        return [
+                            'sub' => $sub->sub,
+                            'group_id' => $sub->group_id,
+                            'workers_count_active' => $btcComSub['workers_active'],
+                            'workers_count_in_active' => $btcComSub['workers_inactive'],
+                            'workers_count_unstable' => $btcComSub['workers_dead'],
+                            'hash_per_min' => $btcComSub['shares_1m'],
+                            'unit' => $btcComSub['shares_unit'],
+                            'payments' => $sub->payments
+                        ];
+                    }
+                }
+            });
+    }
+
+    /**
+     * Фильтровать -1 и 0 группы
+     *
+     * @return Collection
+     */
+    public function filterUngrouped(): Collection
+    {
+        return collect($this->getGroupList())
+            ->filter(static fn(array $groups, int $index) => $index > 1);
     }
 
     /**
      * Проверка наличия пользователя на стороне btc.com
      *
-     * Убираем первые две группы ("Все группы", "Разгруппировано")
-     * В группах проверяем наличие пользователя по имени
+     * @return bool
      */
     public function btcHasUser(UserData $userData): bool
     {
-        $data = $this->getGroupList();
-
-        return collect($data['list'])
-            ->filter(static fn(array $groups, int $index) => $index > 1)
+        return $this->filterUngrouped()
             ->pluck('name')
             ->contains($userData->name);
     }
@@ -58,19 +91,17 @@ class BtcComService
     /**
      * Получить коллекцию групп
      */
-    public function getGroupList(): array
+    public function getGroupList(): Collection
     {
-        $response = $this->client->get(implode('/', [
-            'worker',
-            'groups',
-        ]), [
-            'puid' => self::PU_ID,
-            "page_size" => self::DEFAULT_PAGE_SIZE,
-        ])->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
+        $response = $this->call(
+            segments: ['worker', 'groups'],
+            params: [
+                'puid' => self::PU_ID,
+                "page_size" => self::DEFAULT_PAGE_SIZE,
+            ]
         );
 
-        return $response['data'];
+        return collect($response['list']);
     }
 
     /**
@@ -175,6 +206,7 @@ class BtcComService
 
     public function getEarnHistory(): array
     {
+        dd('s');
         $response = $this->client->get(implode('/', [
             'account',
             'earn-history'
@@ -184,7 +216,7 @@ class BtcComService
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
-
+        dd($response);
         return $response['data'];
     }
 
