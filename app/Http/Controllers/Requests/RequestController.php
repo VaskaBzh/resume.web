@@ -45,14 +45,6 @@ class RequestController extends Controller
             "type" => "required",
         ]);
 
-        $data = $btcComService->call(
-            segments: explode('/', $request->path),
-            method: $request->type,
-            params: $request->data,
-        );
-
-        dd($data);
-
         return $this->proxy(
             $request->input("data"),
             $request->input("path"),
