@@ -49,7 +49,7 @@ class UpdateIncomesCommand extends Command
         Sub           $sub
     ): void
     {
-        info('INIT UPDATE INCOME PROCESS');
+        info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
 
         $incomeService
             ->setSub($sub);
@@ -133,7 +133,7 @@ class UpdateIncomesCommand extends Command
                     payment: $incomeService->getIncomeParam('payment')
                 );
 
-                event(new IncomeCompleteEvent(sub: $sub, earn: $incomeService->getEarn()));
+                event(new IncomeCompleteEvent(sub: $sub, payment: $incomeService->getIncomeParam('payment')));
 
                 $incomeService->complete();
 
