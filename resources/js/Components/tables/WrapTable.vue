@@ -13,8 +13,6 @@
             <main-table
                 :viewportWidth="viewportWidth"
                 :table="table"
-                :first="first"
-                :rowsVal="rowsVal"
             ></main-table>
         </div>
     </div>
@@ -45,7 +43,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["allIncomeHistory", "getActive"]),
+        ...mapGetters(["getActive"]),
         endTable() {
             return this.wait[this.getActive];
         },
@@ -58,39 +56,6 @@ export default {
             return this.empty
                 ? this.empty?.length === 0
                 : this.wait[this.getActive]?.length === 0;
-        },
-        active() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersActive;
-                    }
-                });
-            }
-            return val;
-        },
-        unstable() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersDead;
-                    }
-                });
-            }
-            return val;
-        },
-        all() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersAll;
-                    }
-                });
-            }
-            return val;
         },
     },
     methods: {

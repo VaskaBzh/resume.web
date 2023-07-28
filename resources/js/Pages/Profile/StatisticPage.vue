@@ -236,7 +236,6 @@ import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 
-
 import { Profit } from "/resources/js/Scripts/profit.js";
 
 export default {
@@ -252,7 +251,7 @@ export default {
         MainCheckbox,
         NoInfoWait,
         NoInfo,
-        CurrentExchangeRate
+        CurrentExchangeRate,
     },
     layout: profileLayoutView,
     data() {
@@ -506,8 +505,6 @@ export default {
         },
     },
     mounted() {
-        this.getUSD();
-        document.title = this.$t("header.links.statistic");
         if (this.allHistory[this.getActive]) {
             this.setActive();
             this.renderChart();
@@ -519,7 +516,6 @@ export default {
         if (this.allAccounts[this.getActive]) this.waitAccounts = false;
     },
     beforeUpdate() {
-        this.getUSD();
         if (this.allHistory[this.getActive]) {
             if (!this.all) {
                 this.setActive();
@@ -672,7 +668,7 @@ export default {
             grid-template-columns: 1fr;
         }
     }
-    .main-header-container{
+    .main-header-container {
         display: flex;
         align-items: baseline;
     }

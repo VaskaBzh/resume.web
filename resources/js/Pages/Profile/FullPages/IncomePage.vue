@@ -73,41 +73,41 @@
         <!--                ></main-date>-->
         <!--            </div>-->
         <!--        </div> -->
-        <!--        <article class="income-table-block">-->
-        <!--            <div class="tabs-block-container">-->
-        <!--                <button-->
-        <!--                    class="btn-table"-->
-        <!--                    :class="{ 'tabs-active': openAllTable }"-->
-        <!--                    @click="changeActiveTab('All')"-->
-        <!--                >-->
-        <!--                    {{ $t("income.table.tabs[0]") }}-->
-        <!--                </button>-->
-        <!--                <button-->
-        <!--                    class="btn-table"-->
-        <!--                    :class="{ 'tabs-active': !openAllTable }"-->
-        <!--                    @click="changeActiveTab('Payots')"-->
-        <!--                >-->
-        <!--                    {{ $t("income.table.tabs[1]") }}-->
-        <!--                </button>-->
-        <!--            </div>-->
-        <!--            <div class="filter-block-container">-->
-        <!--                &lt;!&ndash; <div class="income__filter"> &ndash;&gt;-->
-        <!--                <div class="filter_block">-->
-        <!--                    <main-date-->
-        <!--                        v-model="date"-->
-        <!--                        :placeholder="$t('date.placeholder')"-->
-        <!--                        @calendarChange="filterTable"-->
-        <!--                    ></main-date>-->
-        <!--                </div>-->
-        <!--                &lt;!&ndash; </div> &ndash;&gt;-->
-        <!--            </div>-->
-        <!--        </article>-->
+        <article class="income-table-block">
+            <div class="tabs-block-container">
+                <button
+                    class="btn-table"
+                    :class="{ 'tabs-active': openAllTable }"
+                    @click="changeActiveTab('All')"
+                >
+                    {{ $t("income.table.tabs[0]") }}
+                </button>
+                <button
+                    class="btn-table"
+                    :class="{ 'tabs-active': !openAllTable }"
+                    @click="changeActiveTab('Payots')"
+                >
+                    {{ $t("income.table.tabs[1]") }}
+                </button>
+            </div>
+            <div class="filter-block-container">
+                <!-- <div class="income__filter"> -->
+                <div class="filter_block">
+                    <main-date
+                        v-model="date"
+                        :placeholder="$t('date.placeholder')"
+                        @calendarChange="filterTable"
+                    ></main-date>
+                </div>
+                <!-- </div> -->
+            </div>
+        </article>
         {{ newArr }}
         <!--        <main-slider-->
         <!--            class="wrap-no-overflow"-->
         <!--            :wait="allIncomeHistory"-->
-        <!--            :empty="newArr.rows"-->
-        <!--            :table="newArr"-->
+        <!--            :empty="newArr.incomeList?.get('rows')"-->
+        <!--            :table="newArr.incomeList"-->
         <!--            type="Платежи"-->
         <!--            rowsNum="25"-->
         <!--            :errors="errors"-->
@@ -124,7 +124,6 @@ import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRa
 import { Link, router } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import Vue from "lodash";
 
 import { incomeService } from "@/services/incomeService";
 
@@ -286,22 +285,22 @@ export default {
             "getIncome",
             "getWallet",
         ]),
-        walletOptions() {
-            let arr = [{ title: "Любой", value: "all" }];
-            if (this.getWallet && this.getWallet[this.getActive]) {
-                this.getWallet[this.getActive].forEach((el) => {
-                    let walletModel = {
-                        value: el.wallet,
-                        title: el.wallet,
-                    };
-                    if (el.name !== "") {
-                        walletModel.title = el.name;
-                    }
-                    arr.push(walletModel);
-                });
-            }
-            return arr;
-        },
+        // walletOptions() {
+        //     let arr = [{ title: "Любой", value: "all" }];
+        //     if (this.getWallet && this.getWallet[this.getActive]) {
+        //         this.getWallet[this.getActive].forEach((el) => {
+        //             let walletModel = {
+        //                 value: el.wallet,
+        //                 title: el.wallet,
+        //             };
+        //             if (el.name !== "") {
+        //                 walletModel.title = el.name;
+        //             }
+        //             arr.push(walletModel);
+        //         });
+        //     }
+        //     return arr;
+        // },
         unPayment() {
             let sum = 0;
             if (this.getIncome[this.getActive]) {
@@ -327,12 +326,7 @@ export default {
         },
         yesterdayProfit() {
             if (this.allIncomeHistory[this.getActive]) {
-                let reversedArray = Object.values(
-                    this.allIncomeHistory[this.getActive]
-                ).reverse();
-                if (reversedArray.length > 0 && reversedArray[0]) {
-                    return Number(reversedArray[0]["amount"]);
-                }
+                return Number(this.allIncomeHistory[this.getActive]["amount"]);
             }
             return "0.00000000";
         },
@@ -343,22 +337,24 @@ export default {
                 this.changeActiveTab("All");
             }
         },
-        getActive(oldValue, newValue) {
-            if (newValue === -1) {
-                this.newArr = new incomeService(
-                    this.getActive,
-                    this.$t,
-                    [0, 1, 2, 3, 4, 5]
-                );
-            } else {
-                this.newArr.setId(newValue);
-            }
+        getActive() {
+            this.incomeInit();
+
             this.changeActiveTab("All");
         },
     },
     methods: {
         router() {
             return router;
+        },
+        async incomeInit() {
+            this.newArr = new incomeService(
+                this.getActive,
+                this.$t,
+                [0, 1, 2, 3, 4, 5]
+            );
+            await this.newArr.setId(this.getActive).setRows("", 1, 25);
+            this.newArr.setTable();
         },
         // filterDate() {
         //     if (this.date && Object.values(this.date).length !== 0) {
@@ -444,6 +440,8 @@ export default {
         this.handleResize();
     },
     mounted() {
+        if (this.getActive !== -1) this.incomeInit();
+
         document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
     },
@@ -616,7 +614,7 @@ export default {
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
         border-radius: 8px;
     }
-    .income-table-block{
+    .income-table-block {
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -627,12 +625,12 @@ export default {
         border: none;
     }
 
-    @media(max-width: 991px){
-        .filter-block-container{
+    @media (max-width: 991px) {
+        .filter-block-container {
             width: 45%;
         }
     }
-    .tabs-block-container{
+    .tabs-block-container {
         width: 28%;
         display: flex;
         // justify-content: space-between;
@@ -643,18 +641,18 @@ export default {
         display: flex;
         align-items: baseline;
     }
-    @media(max-width: 760px){
-        .main-header-container{
+    @media (max-width: 760px) {
+        .main-header-container {
             flex-direction: column;
             margin-bottom: 24px;
         }
-        .income-table-block{
+        .income-table-block {
             flex-direction: column-reverse;
             align-items: flex-start;
             gap: 16px;
             margin: 24px 0;
         }
-        .filter-block-container{
+        .filter-block-container {
             width: 100%;
         }
     }
