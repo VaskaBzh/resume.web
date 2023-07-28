@@ -49,6 +49,8 @@ class UpdateIncomesCommand extends Command
         Sub           $sub
     ): void
     {
+        info('INIT UPDATE INCOME PROCESS');
+
         $incomeService
             ->setSub($sub);
 
@@ -93,11 +95,23 @@ class UpdateIncomesCommand extends Command
             }
 
             if ($walletService->unlock()) {
+
+                info('WALLET UNLOCKED', [
+                    'sub' => $sub->id,
+                    'wallet' => $wallet->id
+                ]);
+
                 $txId = $walletService->sendBalance(
                     balance: $incomeService->getIncomeParam('payment')
                 );
 
                 if (!$txId) {
+
+                    info('TXID IS EMPTY', [
+                        'sub' => $sub->id,
+                        'wallet' => $wallet->id
+                    ]);
+
                     $incomeService
                         ->setIncomeData('message', Message::ERROR_PAYOUT->value)
                         ->createLocalIncome();
@@ -122,7 +136,18 @@ class UpdateIncomesCommand extends Command
                 event(new IncomeCompleteEvent(sub: $sub, earn: $incomeService->getEarn()));
 
                 $incomeService->complete();
-            } else {
+
+                info('INCOME COMPLETE', [
+                    'sub' => $sub->id,
+                    'wallet' => $wallet->id
+                ]);
+            } else
+            {
+                info('WALLET UNLOCK ERROR', [
+                    'sub' => $sub->id,
+                    'wallet' => $wallet->id
+                ]);
+
                 $incomeService->setIncomeData('message', Message::ERROR->value);
             }
 
@@ -136,6 +161,10 @@ class UpdateIncomesCommand extends Command
         }
 
         $walletService->lock();
+
+        info('WALLET LOCKED', [
+            'sub' => $sub->id,
+        ]);
 
         sleep(1);
     }
