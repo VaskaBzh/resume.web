@@ -4,7 +4,7 @@
         range
         :placeholder="this.placeholder"
         auto-apply
-        locale="ru"
+        :locale='[$i18n.locale == "ru" ? "ru" : "en"]'
         position="center"
         :hide-navigation="['time']"
         :enable-time-picker="false"
@@ -50,7 +50,8 @@ export default {
             this.isOpen = true;
             document.querySelector(".dp__input_wrap input").focus();
         },
-    },  
+        //Может сделать teleport-center для мобилки ? то есть где-то фиксировать ширину экрана и 
+    },
 }
 
 </script>

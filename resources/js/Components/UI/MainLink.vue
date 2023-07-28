@@ -53,6 +53,9 @@ export default {
         }
     }
 }
+.nav__link:hover{
+    color: #7C7C7C;
+}
 .burger_link {
     &-account {
         @media (min-width: 991.98px) {

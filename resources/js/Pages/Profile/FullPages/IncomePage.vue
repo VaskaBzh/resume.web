@@ -395,19 +395,16 @@ export default {
                     this.$t("income.table.thead[4]"),
                     this.$t("income.table.thead[5]"),
                     ]
-                    // console.log(this.newArr.titles = this.incomeInfo.titles)
                     this.newArr.rows = this.newArr.rows.filter((item) => {
                         return item.validate == 'completed' || item.validate == 'error payout'
                     })
                     this.newArr.rows.map((item) => {
                         delete item.hash
                     })
-                    // console.log(test)
                     this.openAllTable = false; break
                 }
                 case 'All': {
                     this.newArr = this.incomeInfo;
-                    console.log(this.newArr)
                     this.openAllTable = true; break
                 }
             }

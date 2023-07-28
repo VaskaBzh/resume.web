@@ -236,7 +236,6 @@ import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 
-import axios from "axios";
 
 import { Profit } from "/resources/js/Scripts/profit.js";
 
