@@ -28,7 +28,14 @@ class UpdateIncomesCommand extends Command
         BtcComService $btcComService
     ): void
     {
-        $params = $btcComService->getEarnHistory()['list'];
+
+        try {
+            $params = $btcComService->getEarnHistory()['list'];
+        } catch (\Exception $e) {
+            report($e);
+
+            return;
+        }
 
         foreach (Sub::all() as $sub) {
             $this->process(
@@ -41,6 +48,10 @@ class UpdateIncomesCommand extends Command
         }
 
         resolve(WalletService::class)->lock();
+
+        info('WALLET LOCKED', [
+            'sub' => $sub->id,
+        ]);
     }
 
     private function process(
@@ -63,6 +74,7 @@ class UpdateIncomesCommand extends Command
 
             $incomeService
                 ->setIncomeData('amount', $amount)
+                ->setIncomeData('payment', $amount + $sub->unPayments)
                 ->setSubData('payments', $sub->payments)
                 ->setSubData('accruals', $sub->accruals + $amount)
                 ->setSubUnPayments()
@@ -72,8 +84,6 @@ class UpdateIncomesCommand extends Command
 
             return;
         }
-
-        $incomeService->setIncomeData('payment', $amount + $sub->unPayments);
 
         $wallet = $sub->wallets?->first();
 
@@ -116,8 +126,6 @@ class UpdateIncomesCommand extends Command
                         ->setIncomeData('message', Message::ERROR_PAYOUT->value)
                         ->createLocalIncome();
 
-                    $walletService->lock();
-
                     return;
                 }
 
@@ -159,12 +167,6 @@ class UpdateIncomesCommand extends Command
                 ->setPercent()
                 ->createLocalIncome();
         }
-
-        $walletService->lock();
-
-        info('WALLET LOCKED', [
-            'sub' => $sub->id,
-        ]);
 
         sleep(1);
     }

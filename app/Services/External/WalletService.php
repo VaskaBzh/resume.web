@@ -34,7 +34,7 @@ class WalletService
             'jsonrpc' => '1.0',
             'id' => 'unlock',
             'method' => 'walletpassphrase',
-            'params' => [config('api.wallet.walletpassphrase'), 60]
+            'params' => [config('api.wallet.walletpassphrase'), 10]
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса разблокировки кошелька')
         )->successful();
@@ -62,6 +62,11 @@ class WalletService
             'id' => 'withdrawal',
             'method' => 'sendtoaddress',
             'params' => [$this->wallet->wallet, $balance]
+        ]);
+
+        info('WALLET RESPONSE', [
+            'wallet' => $this->wallet->id,
+            'response' => $response
         ]);
 
         return $response['result'];
