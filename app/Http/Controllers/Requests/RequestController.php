@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Requests;
 
+use App\Services\External\BtcComService;
 use Exception;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -35,8 +36,10 @@ class RequestController extends Controller
             ->header('Access-Control-Allow-Credentials', 'true');
     }
 
-    public function proxy_front(Request $request)
+    public function proxy_front(Request $request, BtcComService $btcComService)
     {
+
+
         $request->validate([
             "path" => "required",
             "type" => "required",
