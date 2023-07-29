@@ -34,12 +34,7 @@ export default {
                     reward: minerstats.reward_block,
                     price: minerstats.price_USD,
                 };
-
-                converterModel.time = (
-                    (minerstats.time_remain - (Date.now() / 1000).toFixed(0)) /
-                    60 /
-                    60
-                ).toFixed(0);
+                converterModel.time = minerstats.time_remain - Date.now();
 
                 commit(`updateInfo`, {
                     key: "btc".toLowerCase(),

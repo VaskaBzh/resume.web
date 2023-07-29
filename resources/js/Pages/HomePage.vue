@@ -241,30 +241,15 @@
                                     >
                                         <span
                                             v-if="
-                                                String(
-                                                    this.btcInfo.btc.time / 24
-                                                ).substr(0, 1) !== '0'
+                                                days !== '0'
                                             "
-                                            >{{
-                                                String(
-                                                    this.btcInfo.btc.time / 24
-                                                ).substr(0, 1)
-                                            }}
+                                            >{{ days }}
                                             {{
-                                                String(
-                                                    this.btcInfo.btc.time / 24
-                                                ).substr(0, 1) === 1
+                                                days === 1
                                                     ? $t(
                                                           "home.bitcoin_block.date_diff[1]"
                                                       )
-                                                    : String(
-                                                          this.btcInfo.btc
-                                                              .time / 24
-                                                      ).substr(0, 1) > 1 &&
-                                                      String(
-                                                          this.btcInfo.btc
-                                                              .time / 24
-                                                      ).substr(0, 1) <= 4
+                                                    : days > 1 && days <= 4
                                                     ? $t(
                                                           "home.bitcoin_block.date_diff[2]"
                                                       )
@@ -275,20 +260,15 @@
                                         >
                                         <span
                                             v-if="
-                                                this.btcInfo.btc.time % 24 !== 0
+                                                hours !== 0
                                             "
-                                            >{{ this.btcInfo.btc.time % 24 }}
+                                            >{{ hours }}
                                             {{
-                                                this.btcInfo.btc.time % 24 === 1
+                                                hours === 1
                                                     ? $t(
                                                           "home.bitcoin_block.date_diff[4]"
                                                       )
-                                                    : this.btcInfo.btc.time %
-                                                          24 >
-                                                          1 &&
-                                                      this.btcInfo.btc.time %
-                                                          24 <=
-                                                          4
+                                                    : hours > 1 && hours <= 4
                                                     ? $t(
                                                           "home.bitcoin_block.date_diff[5]"
                                                       )
@@ -467,6 +447,20 @@ export default {
     },
     computed: {
         ...mapGetters(["btcInfo", "btcHistory", "getTheme"]),
+        days() {
+            if (this.btcInfo.btc)
+                return Math.floor(
+                    this.btcInfo.btc.time / (1000 * 60 * 60 * 24)
+                );
+            return "...";
+        },
+        hours() {
+            if (this.btcInfo.btc)
+                return Math.floor(
+                    (this.btcInfo.btc.time / (1000 * 60 * 60)) % 24
+                );
+            return "...";
+        },
         getHeight() {
             if (this.viewportWidth < 479.98) return 366;
             else if (this.viewportWidth < 767.98) return 370;
