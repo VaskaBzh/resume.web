@@ -61,7 +61,10 @@ class WalletService
             'jsonrpc' => '1.0',
             'id' => 'withdrawal',
             'method' => 'sendtoaddress',
-            'params' => [$this->wallet->wallet, $balance]
+            'params' => [
+                $this->wallet->wallet,
+                (float) number_format($balance, 8, '.', ' ')
+            ]
         ]);
 
         info('WALLET RESPONSE', [
