@@ -57,6 +57,7 @@
                 :wait="allAccounts"
                 :empty="table.rows"
                 :errors="errors"
+                :rowsVal="1000"
             />
         </div>
     </div>
