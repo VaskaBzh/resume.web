@@ -592,14 +592,14 @@ const messages = {
                 add: {
                     title: "Add wallet",
                     placeholders: {
-                        wallet: "Please enter the wallet *",
-                        name: "Please enter the wallet's name",
+                        wallet: "Wallet address",
+                        name: "Wallet label",
                     },
                     labels: {
                         percent: "Percent *",
-                        minWithdrawal: "Min. withdrawal *",
+                        minWithdrawal: "Minimum withdrawal",
                     },
-                    button: "+ Add",
+                    button: "Add",
                 },
                 change: {
                     title: "Change wallet",
@@ -609,7 +609,7 @@ const messages = {
                     },
                     labels: {
                         percent: "Percent",
-                        minWithdrawal: "Min. withdrawal",
+                        minWithdrawal: "Minimum withdrawal",
                     },
                     button: "Change",
                 },
@@ -980,7 +980,7 @@ const messages = {
                 },
             },
             {
-                // support@all-btc.com t.me/allbtc_support
+                // allbtc_support.com t.me/allbtc_support
                 title: "Техническая поддержка и связь с нами",
                 list: {
                     0: {
@@ -1151,7 +1151,7 @@ const messages = {
                     placeholders: {
                         name: "Введите имя",
                     },
-                    button: "+ Добавить",
+                    button: "Добавить",
                 },
                 change: {
                     title: "Измените имя субаккаунта",
@@ -1251,14 +1251,14 @@ const messages = {
                 add: {
                     title: "Добавить кошелек",
                     placeholders: {
-                        wallet: "Введите кошелек *",
-                        name: "Введите имя кошелька",
+                        wallet: "Адрес кошелька",
+                        name: "Метка кошелька",
                     },
                     labels: {
                         percent: "Процент *",
-                        minWithdrawal: "Мин. вывод *",
+                        minWithdrawal: "Минимальный вывод",
                     },
-                    button: "+ Добавить",
+                    button: "Добавить",
                 },
                 change: {
                     title: "Измените кошелек",
@@ -1268,7 +1268,7 @@ const messages = {
                     },
                     labels: {
                         percent: "Процент *",
-                        minWithdrawal: "Мин. вывод *",
+                        minWithdrawal: "Минимальный вывод",
                     },
                     button: "Изменить",
                 },

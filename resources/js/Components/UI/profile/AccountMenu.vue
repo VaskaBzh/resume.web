@@ -35,9 +35,8 @@
                     :getActive="getActive"
                 ></main-radio>
             </div>
-            <div class="button__row">
-                <a data-popup="#addAcc"
-                    ><svg
+            <Link :href="route('accounts')" data-popup="#addAcc" class="button__row" @click="testClick">
+                    <svg
                         width="22"
                         height="22"
                         viewBox="0 0 22 22"
@@ -49,8 +48,7 @@
                         />
                     </svg>
                     {{ $t("header.menu.acc_admin.add") }}
-                </a>
-            </div>
+            </Link>
             <div class="button__row" v-if="viewportWidth >= 991.98">
                 <Link class="settings" :href="route('settings')"
                     ><svg
@@ -102,7 +100,7 @@
                     :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
                 <blue-button>
-                    <button type="submit" class="all-link">
+                    <button type="submit" class="all-link" >
                         <svg
                             width="24"
                             height="24"
@@ -181,6 +179,7 @@ export default {
         });
 
         const addAcc = async () => {
+
             wait.value = true;
             await form.post(route("sub_create"), {
                 onFinish() {
@@ -192,6 +191,9 @@ export default {
                 },
             });
         };
+        const redirectPage = () => {
+            console.log('sdf')
+        }
 
         const logout = async () => {
             await Inertia.post("/logout");
@@ -203,6 +205,7 @@ export default {
             addAcc,
             wait,
             closed,
+            redirectPage
         };
     },
     computed: {
@@ -243,6 +246,9 @@ export default {
         },
     },
     methods: {
+        testClick(){
+            console.log(this.target)
+        },
         change_height() {
             if (this.target) {
                 this.$nextTick(() => {

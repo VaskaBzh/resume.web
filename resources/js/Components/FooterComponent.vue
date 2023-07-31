@@ -215,7 +215,7 @@
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
                         <a 
-                            href="mailto:support@all-btc.com"
+                            href="mailto:allbtc_support.com"
                             target="_blank"
                         >
                             <span class="contacts_img">
@@ -231,7 +231,7 @@
                                         fill="#5389E1"
                                     />
                                 </svg> </span
-                            >support@all-btc.com</a
+                            >@allbtc_support.com</a
                         >
                     </li>
                     <li class="footer__contacts_item contacts_item">

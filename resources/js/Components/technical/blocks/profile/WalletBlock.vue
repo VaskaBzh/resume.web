@@ -10,7 +10,7 @@
             <span
                 v-else-if="wallet.fullName !== '' && wallet.name !== ''"
                 v-tooltip="{ message: wallet.fullName }"
-                >{{ wallet.name }}</span
+                >{{ wallet.fullName }}</span
             >
             <div class="wallets__block_doths" @click="toggleOpen">
                 <div></div>

@@ -287,6 +287,10 @@ body {
                 &_offset{
                     color: rgba(96, 96, 96, 1);
                 }
+                &_inner{
+                    border: none;
+                    transition: all 0.4s ease 0s;
+                }
             }
             &__calendar{
                 &_item{
@@ -297,7 +301,7 @@ body {
                 &_between{
                     background: rgba(121, 148, 202, 1) !important;
                     border: none;
-
+                    transition: all 0.4s ease 0s;
                 }
             }
         }
@@ -355,9 +359,6 @@ body {
                     color: rgba(202, 202, 202, 1);
                     &_link {
                         border: 1px solid #79a3e8;
-                        svg {
-                            fill: #79a3e8;
-                        }
                     }
                 }
                 &:before {
@@ -803,6 +804,11 @@ body {
                     box-shadow: 0px 4px 10px 0px rgba(35, 38, 63, 0.15);
                 }
             }
+            input::placeholder { 
+                color: rgba(152, 152, 152, 1);
+                font-size: 16px;
+                font-weight: 400;
+            }
             &__content {
                 background: #0b1015;
                 box-shadow: 0 10px 10px rgba(16, 16, 16, 0.12);
@@ -928,8 +934,10 @@ body {
         .input {
             background: #161b20;
             color: #e1e1e1;
+            
             &::placeholder {
                 color: #e1e1e1;
+                
             }
             &:disabled {
                 color: #989898;
@@ -987,6 +995,11 @@ body {
         }
         .history-transaction{
             color: rgba(202, 202, 202, 1) !important;
+        }
+        .wallet-input::placeholder { 
+            color: rgba(152, 152, 152, 1);
+            font-size: 16px;
+            font-weight: 400;
         }
     }
 }

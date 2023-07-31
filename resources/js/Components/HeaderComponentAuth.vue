@@ -143,6 +143,8 @@ export default {
     &_link {
         width: 40px;
         height: 40px;
+        // padding: 6px;
+
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -159,4 +161,5 @@ export default {
         }
     }
 }
+
 </style>

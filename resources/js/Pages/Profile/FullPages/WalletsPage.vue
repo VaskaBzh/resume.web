@@ -209,7 +209,7 @@
                     :placeholder="$t('wallets.popups.add.placeholders.name')"
                 />
                 <div class="form_row form_row-non-height">
-                    <div class="form_column">
+                    <!-- <div class="form_column">
                         <label for="percent" class="main__label">{{
                             $t("wallets.popups.add.labels.percent")
                         }}</label>
@@ -222,7 +222,7 @@
                             class="input popup__input"
                             placeholder="100"
                         />
-                    </div>
+                    </div> -->
                     <div class="form_column">
                         <label for="min" class="main__label">{{
                             $t("wallets.popups.add.labels.minWithdrawal")
@@ -238,8 +238,8 @@
                         />
                     </div>
                 </div>
-                <blue-button>
-                    <button type="submit" class="all-link">
+                <blue-button class="wallets-popup-btn">
+                    <button type="submit" class="all-link ">
                         <svg
                             width="24"
                             height="24"
@@ -607,4 +607,12 @@ export default {
         }
     }
 }
+.wallets-popup-btn{
+    margin-top: 25px;
+}
+// .wallet-input::placeholder { 
+//             color: rgba(152, 152, 152, 1);
+//             font-size: 16px;
+//             font-weight: 400;
+// }
 </style>

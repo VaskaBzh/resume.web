@@ -71,8 +71,12 @@
       background-color: rgba(198, 216, 245, 1) !important; 
       color: rgba(63, 123, 221, 1) !important;
     }
+    // &_start:hover, &_end:hover{
+    //   transition: all 0.8s ease 0s;
+    // }
     &_between {
       background-color: rgba(236, 242, 252, 1)!important; 
+      transition: all 0.4s ease 0s;
     }
 
   }
@@ -152,6 +156,7 @@
   &__cell{
     &_inner{
       width: auto !important;
+      transition: all 0.4s ease 0s;
     }
   }
 }

@@ -506,7 +506,6 @@ export default {
         },
     },
     mounted() {
-        this.getUSD();
         document.title = this.$t("header.links.statistic");
         if (this.allHistory[this.getActive]) {
             this.setActive();
@@ -519,7 +518,6 @@ export default {
         if (this.allAccounts[this.getActive]) this.waitAccounts = false;
     },
     beforeUpdate() {
-        this.getUSD();
         if (this.allHistory[this.getActive]) {
             if (!this.all) {
                 this.setActive();

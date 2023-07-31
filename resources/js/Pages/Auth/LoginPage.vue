@@ -26,6 +26,16 @@
         </div>
         <div class="form__content">
             <div class="form_row" :class="{ error: errs.email }">
+                <!-- <div class="input-content" @click="moveLabelFor('email')">
+                    <label class="input-label" :class="{'move-label': isActiveLabelEmail}">{{ this.$t('auth.login.placeholders[0]') }}</label>
+                    <input
+                        type="text"
+                        class="input"
+                        name="email"
+                        v-model="form.email"
+                        :placeholder="this.$t('auth.login.placeholders[0]')"
+                    />
+                </div> -->
                 <input
                     type="text"
                     class="input"
@@ -103,8 +113,18 @@ export default {
     data() {
         return {
             errs: {},
+            // isActiveLabelEmail: false,
+            // isActiveLabelPassword: false
         };
     },
+    // methods: {
+    //     moveLabelFor(name){
+    //     switch(name){
+    //         case 'email': this.isActiveLabelEmail = true; break
+    //         case 'password': isActiveLabelPassword = true;break
+    //     }
+    //     }
+    // },
     watch: {
         errors(newVal) {
             this.errs = newVal;
@@ -133,4 +153,20 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+// .input-content{
+//     position: relative;
+// }
+// .input-label{
+//     position: absolute;
+//     top: 13px;
+//     left: 15px;
+// }
+// .move-label{
+//   transform: translate(-11px,-11px);
+//   font-size: 12px;
+//   transition-timing-function: ease-in-out;
+//   transition-duration: 0.3s;
+//   font-size: 10px;
+// }
+</style>
