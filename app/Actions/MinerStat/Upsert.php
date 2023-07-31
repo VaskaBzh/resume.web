@@ -21,6 +21,7 @@ class Upsert
                 'reward_block' => MinerStat::REWARD_BLOCK,
                 'price_USD' => $stats['exchange_rate']['BTC2USD'],
                 'time_remain' => $stats['time_remain'] * 1000,
+                'fpps_rate' => $stats['more_than_pps96_rate']
             ]);
     }
 }

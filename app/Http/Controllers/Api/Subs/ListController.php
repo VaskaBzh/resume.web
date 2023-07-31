@@ -15,7 +15,7 @@ class ListController extends Controller
     public function __invoke(User $user, BtcComService $btcComService): ResourceCollection
     {
         $subCollection = $btcComService->transformSubCollection(subs: $user->subs()->get());
-
+dd($subCollection);
         return new SubCollection($subCollection);
     }
 }
