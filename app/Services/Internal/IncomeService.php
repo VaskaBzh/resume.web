@@ -18,6 +18,7 @@ use App\Models\Sub;
 use App\Models\Wallet;
 use App\Services\External\BtcComService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 class IncomeService
 {
@@ -39,18 +40,20 @@ class IncomeService
     }
 
     public static function buildWithParams(array $params = []): IncomeService
-    {
+    {;
         $params = self::prepareParams($params);
-
+        dd($params);
         return new self($params);
     }
 
     private static function prepareParams(array $params): array
     {
+        $stats = MinerStat::first();
+
         return collect($params)->flatMap(static fn(array $param) => [
             'fppsPercent' => $param['more_than_pps96_rate'],
             'difficulty' => $param['diff'],
-            'reward_block' => MinerStat::first()->reward_block,
+            'reward_block' => $stats->reward_block,
         ])->toArray();
     }
 
@@ -174,9 +177,12 @@ class IncomeService
      */
     public function createLocalIncome(): void
     {
-        IncomeCreate::execute(
+        $income = IncomeCreate::execute(
             incomeData: $this->buildDto()
         );
+
+        Log::channel('incomes')
+            ->info('INCOME CREATE', $income->toArray());
     }
 
     public function createFinance(float $earn): IncomeService

@@ -12,6 +12,7 @@ use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UpdateIncomesCommand extends Command
 {
@@ -49,6 +50,9 @@ class UpdateIncomesCommand extends Command
         Sub           $sub
     ): void
     {
+        Log::channel('incomes')
+            ->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+
         $incomeService
             ->setSub($sub);
 
@@ -93,11 +97,23 @@ class UpdateIncomesCommand extends Command
             }
 
             if ($walletService->unlock()) {
+
+                Log::channel('incomes')->info('WALLET UNLOCKED', [
+                    'sub' => $sub->id,
+                    'wallet' => $wallet->id
+                ]);
+
                 $txId = $walletService->sendBalance(
                     balance: $incomeService->getIncomeParam('payment')
                 );
 
                 if (!$txId) {
+
+                    Log::channel('incomes')->info('TXID IS EMPTY', [
+                        'sub' => $sub->id,
+                        'wallet' => $wallet->id
+                    ]);
+
                     $incomeService
                         ->setIncomeData('message', Message::ERROR_PAYOUT->value)
                         ->createLocalIncome();
@@ -119,10 +135,21 @@ class UpdateIncomesCommand extends Command
                     payment: $incomeService->getIncomeParam('payment')
                 );
 
-                event(new IncomeCompleteEvent(sub: $sub, earn: $incomeService->getEarn()));
+                event(new IncomeCompleteEvent(sub: $sub, payment: $incomeService->getIncomeParam('payment')));
 
                 $incomeService->complete();
-            } else {
+
+                Log::channel('incomes')->info('INCOME COMPLETE', [
+                    'sub' => $sub->id,
+                    'wallet' => $wallet->id
+                ]);
+            } else
+            {
+                Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
+                    'sub' => $sub->id,
+                    'wallet' => $wallet->id
+                ]);
+
                 $incomeService->setIncomeData('message', Message::ERROR->value);
             }
 
@@ -136,6 +163,10 @@ class UpdateIncomesCommand extends Command
         }
 
         $walletService->lock();
+
+        Log::channel('incomes')->info('WALLET LOCKED', [
+            'sub' => $sub->id,
+        ]);
 
         sleep(1);
     }
