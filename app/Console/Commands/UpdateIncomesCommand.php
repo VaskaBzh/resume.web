@@ -25,17 +25,11 @@ class UpdateIncomesCommand extends Command
      * Execute the console command.
      *
      */
-    public function handle(
-        BtcComService $btcComService
-    ): void
+    public function handle(): void
     {
-        $params = $btcComService->getEarnHistory()['list'];
-
         foreach (Sub::all() as $sub) {
             $this->process(
-                incomeService: IncomeService::buildWithParams(
-                    params: $params
-                ),
+                incomeService: resolve(IncomeService::class),
                 walletService: resolve(WalletService::class),
                 sub: $sub
             );

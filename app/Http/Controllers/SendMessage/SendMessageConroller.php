@@ -8,10 +8,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Config;
 
-
 class SendMessageConroller extends Controller
 {
-    public function send_message(Request $request)
+    public function __invoke(Request $request)
     {
         if (app()->getLocale() === 'ru') {
             $messages = [

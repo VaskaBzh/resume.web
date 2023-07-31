@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Builders\SubBuilder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -38,7 +39,6 @@ class Sub extends Model
     }
 
     /* Relations */
-
     public function finances(): HasMany
     {
         return $this->hasMany(Finance::class, 'group_id', 'group_id');
@@ -68,13 +68,24 @@ class Sub extends Model
     {
         return $this->hasMany(Wallet::class, 'group_id', 'group_id');
     }
-
     /* end relations */
 
     /* Custom builder */
-
     public function newEloquentBuilder($query): SubBuilder
     {
         return new SubBuilder($query);
+    }
+
+    /* Attributes */
+
+    public function dailyHashRate(): Attribute
+    {
+
+        return Attribute::make(
+            get: function () {
+
+                dd($this->workers()->with('workerHashrates'));
+            }
+        );
     }
 }

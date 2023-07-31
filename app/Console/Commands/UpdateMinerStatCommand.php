@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Actions\MinerStat\Upsert;
+use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -13,10 +14,11 @@ class UpdateMinerStatCommand extends Command
 
     protected $description = 'Command description';
 
-    public function handle(): void
+    public function handle(
+        BtcComService $btcComService
+    ): void
     {
-        $stats = Http::get('https://pool.api.btc.com/v1/pool/status')
-            ->collect()['data'];
+        $stats = $btcComService->getStats();
         $difficulty = Http::get('https://blockchain.info/q/getdifficulty')
             ->collect()
             ->first();

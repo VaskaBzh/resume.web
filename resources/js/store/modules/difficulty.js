@@ -37,7 +37,7 @@ export default {
             }
         },
         async getMiningStat({ commit, state }) {
-            let minerstats = (await api.get("/miner_stat")).data.minerstats;
+            let minerstats = (await api.get("/api/miner_stat")).data.minerstats;
 
             try {
                 let converterModel = {

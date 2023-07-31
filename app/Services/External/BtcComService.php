@@ -5,11 +5,17 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Actions\Sub\Create;
+use App\Builders\WorkerBuilder;
 use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
+use app\Helper;
+use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
+use App\Models\Worker;
+use App\Models\WorkerHashrate;
+use App\Services\Internal\IncomeService;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Arr;
@@ -44,25 +50,45 @@ class BtcComService
 
     public function transformSubCollection(Collection $subs): Collection
     {
+        $stats = MinerStat::first();
+
         return $this
             ->filterUngrouped()
             ->whereIn('gid', $subs->pluck('group_id')->toArray())
-            ->map(static function (array $btcComSub) use ($subs) {
+            ->map(function (array $btcComSub) use ($subs, $stats) {
+
                 foreach ($subs as $sub) {
+                    $hashPerDay = $this->getSubApproximateHashRate(sub: $sub);
+
                     if (in_array($sub->group_id, $btcComSub)) {
                         return [
                             'sub' => $sub->sub,
+                            'accruals' => $sub->accruals,
                             'group_id' => $sub->group_id,
                             'workers_count_active' => $btcComSub['workers_active'],
                             'workers_count_in_active' => $btcComSub['workers_inactive'],
                             'workers_count_unstable' => $btcComSub['workers_dead'],
                             'hash_per_min' => $btcComSub['shares_1m'],
+                            'hash_per_day' => $hashPerDay,
+                            'today_forecast' => Helper::calculateEarn($stats, $hashPerDay),
+                            'reject_percent' => 0.000,
                             'unit' => $btcComSub['shares_unit'],
-                            'payments' => $sub->payments
+                            'payments' => $sub->payments,
                         ];
                     }
                 }
             });
+    }
+
+    public function getSubApproximateHashRate(Sub $sub): float
+    {
+        $workers = Worker::getByGroupId($sub->group_id)->get();
+
+        return $workers->reduce(function (int $acc, Worker $worker) {
+            $workerDalyHashRates = WorkerHashrate::dailyHashRates($worker->worker_id)->get();
+
+            return $workerDalyHashRates->sum('hash') / $workerDalyHashRates->count();
+        }, 0);
     }
 
     /**
@@ -159,17 +185,16 @@ class BtcComService
      */
     public function getWorkerList(?int $groupId = self::UNGROUPED_ID)
     {
-        $response = $this->client->get(implode('/', [
-            'worker'
-        ]), [
-            'puid' => self::PU_ID,
-            'group' => $groupId,
-            'page_size' => self::DEFAULT_PAGE_SIZE
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
+        $response = $this->call(
+            segments: ['worker'],
+            params: [
+                'puid' => self::PU_ID,
+                'group' => $groupId,
+                'page_size' => self::DEFAULT_PAGE_SIZE
+            ]
         );
 
-        return collect($response['data']['data']);
+        return collect($response['data']);
     }
 
     public function getWorker($workerId): Collection
@@ -203,10 +228,21 @@ class BtcComService
         );
     }
 
+    public function getStats(): array
+    {
+        $stats = $this->call(['pool', 'status']);
+        $fppsRate = $this->call(['account', 'earn-history'], params: [
+            'puid' => self::PU_ID,
+            "page_size" => "1",
+        ])['list'];
+
+        return array_merge($stats, [
+            'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
+        ]);
+    }
 
     public function getEarnHistory(): array
     {
-        dd('s');
         $response = $this->client->get(implode('/', [
             'account',
             'earn-history'
@@ -216,7 +252,7 @@ class BtcComService
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса')
         );
-        dd($response);
+
         return $response['data'];
     }
 
