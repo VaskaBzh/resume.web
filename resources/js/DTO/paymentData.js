@@ -1,7 +1,7 @@
 export class paymentData {
-    constructor(datePay, payment, wallet, txid, className) {
-        this.datePay = `${datePay} BTC`;
-        this.payment = payment;
+    constructor(datePay, payment, wallet, txid, status, className) {
+        this.datePay = datePay;
+        this.payment = `${payment} BTC`;
         this.txid = txid;
         this.wallet = wallet;
         this.class = className;

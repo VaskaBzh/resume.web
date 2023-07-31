@@ -12,8 +12,8 @@ export class incomeData {
     ) {
         this.date = date;
         this.datePay = datePay;
-        this.hash = `${hash} ${unit}`;
-        this.earn = earn;
+        this.hash = `${hash} ${unit}h/s`;
+        this.earn = `${earn} BTC`;
         this.wallet = wallet;
         this.status = status;
         this.message = message;

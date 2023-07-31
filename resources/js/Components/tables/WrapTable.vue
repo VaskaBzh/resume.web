@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="cabinet__head" v-if="title">
-            <main-title tag="h3" v-if="title">{{ title }} </main-title>
+            <main-title tag="h3" v-if="title">{{ title }}</main-title>
         </div>
         <no-info
             :wait="waitTable"
@@ -45,17 +45,13 @@ export default {
     computed: {
         ...mapGetters(["getActive"]),
         endTable() {
-            return this.wait[this.getActive];
+            return this.wait;
         },
         emptyTable() {
             if (this.empty && this.empty[0]?.class === "main") {
-                return this.empty
-                    ? this.empty?.length === 1
-                    : this.wait[this.getActive]?.length === 1;
+                return this.empty ? this.empty?.length === 1 : this.wait;
             }
-            return this.empty
-                ? this.empty?.length === 0
-                : this.wait[this.getActive]?.length === 0;
+            return this.empty ? this.empty?.length === 0 : this.wait;
         },
     },
     methods: {
@@ -68,7 +64,7 @@ export default {
         this.handleResize();
     },
     mounted() {
-        if (this.wait[this.getActive]) this.waitTable = false;
+        if (this.wait) this.waitTable = false;
     },
     watch: {
         endTable(val) {

@@ -4,7 +4,7 @@
             <tr class="table__row">
                 <th
                     class="table_column"
-                    v-for="(title, i) in table.get('titles')"
+                    v-for="(title, i) in table?.get('titles')"
                     :key="i"
                 >
                     {{ title }}
@@ -13,9 +13,9 @@
         </thead>
         <tbody class="table__body">
             <table-row
-                v-for="(row, i) in table.get('rows')"
+                v-for="(row, i) in table?.get('rows')"
                 :columns="row"
-                :titles="table.get('titles')"
+                :titles="table?.get('titles')"
                 :key="i"
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"

@@ -4,7 +4,7 @@ import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 
 export class incomeService {
-    constructor(id, translate, titleIndexes = [0, 1, 2, 3, 4, 5]) {
+    constructor(id, translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {
         this.incomeList = new Map();
         this.incomeRows = [];
 
@@ -69,8 +69,12 @@ export class incomeService {
 
     setter(income, filter) {
         let datePay = "...";
-        if (income["status"] === "completed") {
+        if (filter) {
             datePay = this.dateFormatter(income["updated_at"]);
+        } else {
+            if (income["status"] === "completed") {
+                datePay = this.dateFormatter(income["updated_at"]);
+            }
         }
         let wallet = "...";
         if (income["wallet"]) {
@@ -83,7 +87,7 @@ export class incomeService {
                   income["payment"],
                   this.getCutted(wallet),
                   this.getCutted(income["txid"]),
-                  income["message"]
+                  income["status"]
               )
             : new incomeData(
                   this.dateFormatter(income["created_at"]),
@@ -94,7 +98,7 @@ export class incomeService {
                   this.getCutted(wallet),
                   this.setStatus(income["status"]),
                   this.setMessage(income["message"]),
-                  income["message"]
+                  income["status"]
               );
     }
 
@@ -112,6 +116,14 @@ export class incomeService {
 
     async setRows(filter, page = 1, per_page = 15) {
         let response = await this.fetch(filter, page, per_page);
+
+        this.meta = response.data;
+
+        if (filter) {
+            this.incomeTitles = this.useTranslater([1, 4, 5, 6]);
+        } else {
+            this.incomeTitles = this.useTranslater([0, 1, 2, 3, 6, 7]);
+        }
 
         this.incomeRows = await response.data.data.map((income) => {
             return this.setter(income, filter);

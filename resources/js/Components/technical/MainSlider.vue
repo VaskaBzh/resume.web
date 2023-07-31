@@ -2,7 +2,6 @@
     <div class="slider">
         <wrap-table
             ref="list"
-            :type="type"
             :table="table"
             :wait="wait"
             :empty="empty"
@@ -26,7 +25,7 @@
             <!--                {{ this.table.rows.length }}-->
             <!--            </span>-->
             <div class="slider__nav-slides">
-                <button class="slider__button" @click="slider(-1)">
+                <button class="slider__button" @click="ajax(meta.links.prev)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -42,19 +41,20 @@
                         />
                     </svg>
                 </button>
-                <!--                <div class="slider__slides" v-if="this.pages === 0">-->
-                <!--                    <span>...</span>-->
-                <!--                </div>-->
-                <!--                <div class="slider__slides" v-else-if="this.pages <= 8">-->
-                <!--                    <a-->
-                <!--                        ref="page"-->
-                <!--                        v-for="(page, index) in this.pages"-->
-                <!--                        :key="index"-->
-                <!--                        @click="pagination(page)"-->
-                <!--                        :class="{ active: this.page === page }"-->
-                <!--                        >{{ page }}</a-->
-                <!--                    >-->
-                <!--                </div>-->
+                <div class="slider__slides" v-if="!meta?.meta.current_page">
+                    <span>...</span>
+                </div>
+                <div class="slider__slides" v-else>
+                    <a
+                        @click="ajax(link.url)"
+                        v-for="(link, i) in links"
+                        :key="i"
+                        :class="{
+                            active: link.active,
+                        }"
+                        >{{ link.label }}</a
+                    >
+                </div>
                 <!--                <div class="slider__slides" v-else-if="this.booler">-->
                 <!--                    <a-->
                 <!--                        @click="pagination(page)"-->
@@ -102,7 +102,7 @@
                 <!--                        >{{ page }}</a-->
                 <!--                    >-->
                 <!--                </div>-->
-                <button class="slider__button" @click="slider(1)">
+                <button class="slider__button" @click="ajax(meta.links.next)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -157,7 +157,6 @@ export default {
     components: { WrapTable },
     props: {
         table: Object,
-        type: String,
         wait: Object,
         empty: Object,
         rowsNum: {
@@ -165,62 +164,56 @@ export default {
             default: 10,
         },
         errors: Object,
+        meta: Object,
     },
-    // watch: {
-    //     rowsNumber(newValue, oldValue) {
-    //         if (
-    //             String(this.rowsNumber).length < 3 &&
-    //             String(this.rowsNumber).length > 0 &&
-    //             Number(this.rowsNumber) !== 0
-    //         ) {
-    //             this.rowsNumber = newValue.replace(/[^0-9]/g, "");
-    //         } else {
-    //             this.rowsNumber = oldValue;
-    //         }
-    //         this.rows = Number(this.firstRow) + Number(this.rowsNumber);
-    //     },
-    // },
+    watch: {
+        meta(newValue) {
+            if (newValue?.meta.links) {
+                this.links = newValue?.meta.links;
+                this.dropButtonLinks();
+                if (this.links.length > 8) {
+                    let index = this.filteredActiveLink;
+                    // if (index > )
+                }
+            }
+        },
+        rowsNumber(newVal) {
+            this.$emit("changePerPage", newVal);
+        },
+    },
     data() {
         return {
             viewportWidth: 0,
             rowsNumber: this.rowsNum,
+            links: [],
         };
     },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
+    computed: {
+        filteredActiveLink() {
+            return this.links.filter((el, i) => {
+                if (el.active) {
+                    return i;
+                }
+            });
+        },
+    },
     methods: {
+        dropButtonLinks() {
+            this.links.splice(0, 1);
+            this.links.splice(this.links.length - 1, 1);
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        slider(slides = 1) {
-            console.log(slides);
-            // let newPage = this.page + slides;
-            //
-            // if (newPage < 1) newPage = this.pages;
-            // else if (newPage > this.pages) newPage = 1;
-            //
-            // this.page = newPage;
-            // this.firstRow = (newPage - 1) * this.rowsNumber;
-            // this.rows = Number(this.firstRow) + Number(this.rowsNumber);
-            //
-            // if (this.rows > this.table.rows.length) {
-            //     this.rows = this.table.rows.length;
-            // }
-        },
-        pagination(page) {
-            console.log(page);
-            // if (page < 1) page = 1;
-            // else if (page > this.pages) page = this.pages;
-            //
-            // this.page = page;
-            // this.firstRow = (page - 1) * this.rowsNumber;
-            // this.rows = Number(this.firstRow) + Number(this.rowsNumber);
-            //
-            // if (this.rows > this.table.rows.length) {
-            //     this.rows = this.table.rows.length;
-            // }
+        ajax(url) {
+            if (url) {
+                let link = url.split("=");
+                this.$emit("changePage", link[link.length - 1]);
+            }
         },
     },
 };
