@@ -8,7 +8,7 @@
             :empty="empty"
             :errors="errors"
         ></wrap-table>
-        <div class="slider__nav" v-if="this.table?.get('rows')">
+        <div class="slider__nav" v-if="table?.get('rows')">
             <!--            <span class="slider__nav_info" v-if="this.pages === 0">-->
             <!--                0 {{ $t("swiper.or") }}-->
             <!--                {{ this.table.rows.length }}-->

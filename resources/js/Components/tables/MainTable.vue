@@ -4,7 +4,7 @@
             <tr class="table__row">
                 <th
                     class="table_column"
-                    v-for="(title, i) in table.titles"
+                    v-for="(title, i) in table.get('titles')"
                     :key="i"
                 >
                     {{ title }}

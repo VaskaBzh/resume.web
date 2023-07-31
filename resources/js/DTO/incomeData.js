@@ -7,7 +7,8 @@ export class incomeData {
         earn,
         wallet,
         status,
-        message
+        message,
+        className
     ) {
         this.date = date;
         this.datePay = datePay;
@@ -16,5 +17,6 @@ export class incomeData {
         this.wallet = wallet;
         this.status = status;
         this.message = message;
+        this.class = className;
     }
 }

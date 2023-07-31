@@ -102,16 +102,15 @@
                 <!-- </div> -->
             </div>
         </article>
-        {{ newArr }}
-        <!--        <main-slider-->
-        <!--            class="wrap-no-overflow"-->
-        <!--            :wait="allIncomeHistory"-->
-        <!--            :empty="newArr.incomeList?.get('rows')"-->
-        <!--            :table="newArr.incomeList"-->
-        <!--            type="Платежи"-->
-        <!--            rowsNum="25"-->
-        <!--            :errors="errors"-->
-        <!--        ></main-slider>-->
+        <main-slider
+            class="wrap-no-overflow"
+            :wait="allIncomeHistory"
+            :empty="newArr.incomeList?.get('rows')"
+            :table="newArr.incomeList"
+            type="Платежи"
+            rowsNum="25"
+            :errors="errors"
+        ></main-slider>
     </div>
 </template>
 <script>

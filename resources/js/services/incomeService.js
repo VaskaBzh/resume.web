@@ -50,6 +50,17 @@ export class incomeService {
         }
     }
 
+    setStatus(status) {
+        switch (status) {
+            case "completed":
+                return this.translate("income.table.status.fullfill");
+            case "rejected":
+                return this.translate("income.table.status.rejected");
+            case "pending":
+                return this.translate("income.table.status.pending");
+        }
+    }
+
     dateFormatter(date) {
         let d = date.split("");
         d.length = 10;
@@ -71,7 +82,8 @@ export class incomeService {
                   datePay,
                   income["payment"],
                   this.getCutted(wallet),
-                  this.getCutted(income["txid"])
+                  this.getCutted(income["txid"]),
+                  income["message"]
               )
             : new incomeData(
                   this.dateFormatter(income["created_at"]),
@@ -80,8 +92,9 @@ export class incomeService {
                   income["unit"],
                   income["amount"],
                   this.getCutted(wallet),
-                  income["status"],
-                  this.setMessage(income["message"])
+                  this.setStatus(income["status"]),
+                  this.setMessage(income["message"]),
+                  income["message"]
               );
     }
 
@@ -109,7 +122,7 @@ export class incomeService {
 
     setTable() {
         this.incomeList.set("titles", this.incomeTitles);
-        this.incomeList.set("incomes", this.incomeRows);
+        this.incomeList.set("rows", this.incomeRows);
 
         return this;
     }
