@@ -12,7 +12,7 @@
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
             <main-table
                 :viewportWidth="viewportWidth"
-                :table="table"
+                :table="tableValue"
             ></main-table>
         </div>
     </div>
@@ -44,6 +44,9 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive"]),
+        tableValue() {
+            return this.table;
+        },
         endTable() {
             return this.wait;
         },

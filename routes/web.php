@@ -9,7 +9,7 @@ use App\Http\Controllers\Income\IncomeController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MinerStat\MinerStatController;
-use App\Http\Controllers\Requests\RequestController;
+use App\Http\Controllers\RequestController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Subs\SubController;
 use App\Http\Controllers\Users\UserController;

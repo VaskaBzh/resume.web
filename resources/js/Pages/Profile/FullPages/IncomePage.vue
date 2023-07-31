@@ -77,14 +77,14 @@
             <div class="tabs-block-container">
                 <button
                     class="btn-table"
-                    :class="{ 'tabs-active': openAllTable }"
+                    :class="{ 'tabs-active': !filter }"
                     @click="changeActiveTab('All')"
                 >
                     {{ $t("income.table.tabs[0]") }}
                 </button>
                 <button
                     class="btn-table"
-                    :class="{ 'tabs-active': !openAllTable }"
+                    :class="{ 'tabs-active': filter }"
                     @click="changeActiveTab('Payots')"
                 >
                     {{ $t("income.table.tabs[1]") }}
@@ -104,13 +104,13 @@
         </article>
         <main-slider
             :wait="waitAjax"
-            :empty="newArr.incomeList?.get('rows')"
-            :table="newArr.incomeList"
+            :empty="incomes.incomeList?.get('rows')"
+            :table="incomes.incomeList"
             :rowsNum="per_page"
             :errors="errors"
-            :meta="newArr.meta"
+            :meta="incomes.meta"
             @changePerPage="per_page = $event"
-            @changePage="incomeInit('', $event)"
+            @changePage="page = $event"
         ></main-slider>
     </div>
 </template>
@@ -119,7 +119,6 @@ import MainSlider from "@/Components/technical/MainSlider.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import MainDate from "@/Components/UI/MainDate.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
-import { router } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
@@ -144,10 +143,11 @@ export default {
                 { title: "Выполнено", value: "completed" },
             ],
             date: {},
-            newArr: [],
-            openAllTable: true,
             waitAjax: false,
             per_page: 2,
+            page: 1,
+            filter: "",
+            incomes: {},
         };
     },
     layout: profileLayoutView,
@@ -189,38 +189,37 @@ export default {
         },
     },
     watch: {
-        per_page() {
-            this.incomeInit();
+        page() {
+            this.initIncomes();
         },
-        "incomeInfo.rows"(newItem) {
-            if (newItem.length > 0 && this.newArr.length === 0) {
-                this.changeActiveTab("All");
-            }
+        filter() {
+            this.initIncomes();
+        },
+        per_page() {
+            this.initIncomes();
         },
         getActive() {
-            this.incomeInit();
-
-            this.changeActiveTab("All");
+            this.initIncomes();
         },
     },
     methods: {
-        router() {
-            return router;
+        initIncomes() {
+            if (this.getActive !== -1) {
+                this.incomes = new incomeService(
+                    this.getActive,
+                    this.$t,
+                    [0, 1, 2, 3, 4, 5]
+                );
+
+                this.ajaxSend();
+            }
         },
-        async incomeInit(filter = "", page = 1) {
-            this.newArr = new incomeService(
-                this.getActive,
-                this.$t,
-                [0, 1, 2, 3, 4, 5]
-            );
-
-            this.waitAjax = true;
-            await this.newArr
-                .setId(this.getActive)
-                .setRows(filter, page, this.per_page);
+        async ajaxSend() {
+            if (this.page === 1) this.waitAjax = true;
+            this.incomes.setId(this.getActive);
+            await this.incomes.setRows(this.filter, this.page, this.per_page);
+            this.incomes.setTable();
             this.waitAjax = false;
-
-            this.newArr.setTable();
         },
         // filterDate() {
         //     if (this.date && Object.values(this.date).length !== 0) {
@@ -270,13 +269,13 @@ export default {
         changeActiveTab(tabName) {
             switch (tabName) {
                 case "Payots": {
-                    this.incomeInit(true);
-                    this.openAllTable = false;
+                    this.filter = true;
+                    this.page = 1;
                     break;
                 }
                 case "All": {
-                    this.incomeInit();
-                    this.openAllTable = true;
+                    this.filter = "";
+                    this.page = 1;
                     break;
                 }
             }
@@ -288,10 +287,9 @@ export default {
         this.handleResize();
     },
     mounted() {
-        if (this.getActive !== -1) this.incomeInit();
-
         document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
+        this.initIncomes();
     },
 };
 </script>

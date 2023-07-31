@@ -29,7 +29,7 @@
                 <account-profile
                     @getId="setId"
                     v-for="(account, i) in allAccounts"
-                    :key="i + account.name + getActive"
+                    :key="i + account.sub + getActive"
                     :accKey="i"
                     :accountInfo="account"
                 />
@@ -149,7 +149,7 @@ export default {
             form.put("/sub_change", {
                 onFinish: () => {
                     if (this.errs?.length === 0) {
-                        this.$store.dispatch("getAccounts");
+                        this.$store.dispatch("getAccounts", this.user.id);
                         this.form.name = "";
                         this.wait = false;
 

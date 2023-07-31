@@ -42,7 +42,7 @@ class IncomeService
     public static function buildWithParams(array $params = []): IncomeService
     {;
         $params = self::prepareParams($params);
-        dd($params);
+
         return new self($params);
     }
 

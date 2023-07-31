@@ -1,7 +1,7 @@
 <template>
     <div class="app_back">
         <!--        <main-preloader></main-preloader>-->
-        <header-component :errors="errors" :is_auth="auth_user" />
+        <header-component :errors="errors" :user="user" :is_auth="auth_user" />
         <div class="page">
             <div class="hint">
                 <div class="hint_item" v-hide="this.getMessage !== ''">
@@ -37,6 +37,9 @@ export default {
         errors: {
             type: Object,
         },
+        user: {
+            type: Object,
+        },
     },
     data() {
         return {
@@ -52,11 +55,11 @@ export default {
         await this.$store.dispatch("getLastFpps");
         await this.$store.dispatch("getGraph");
         if (this.auth_user && this.$store.getters.getValid) {
-            await this.$store.dispatch("getAccounts");
+            await this.$store.dispatch("getAccounts", this.user.id);
         }
         if (this.auth_user) {
             this.interval = setInterval(() => {
-                this.$store.dispatch("getAccounts");
+                this.$store.dispatch("getAccounts", this.user.id);
             }, 60000);
         }
         // if (!localStorage.getItem("location")) {

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\IncomeListController;
-use App\Http\Controllers\Api\SubListController;
+use App\Http\Controllers\Api\Subs\ListController;
 use Illuminate\Support\Facades\Route;
 
 //
@@ -27,5 +27,5 @@ Route::group([
     'prefix' => 'subs',
     'middleware' => 'throttle:api'
 ], function () {
-    Route::get('{user}', SubListController::class)->name('sub.list');
+    Route::get('{user}', ListController::class)->name('sub.list');
 });

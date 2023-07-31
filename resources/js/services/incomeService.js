@@ -69,7 +69,7 @@ export class incomeService {
 
     setter(income, filter) {
         let datePay = "...";
-        if (filter) {
+        if (!!filter) {
             datePay = this.dateFormatter(income["updated_at"]);
         } else {
             if (income["status"] === "completed") {
@@ -86,8 +86,7 @@ export class incomeService {
                   datePay,
                   income["payment"],
                   this.getCutted(wallet),
-                  this.getCutted(income["txid"]),
-                  income["status"]
+                  this.getCutted(income["txid"])
               )
             : new incomeData(
                   this.dateFormatter(income["created_at"]),

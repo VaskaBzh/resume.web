@@ -2,20 +2,16 @@
     <table class="table">
         <thead class="table__head">
             <tr class="table__row">
-                <th
-                    class="table_column"
-                    v-for="(title, i) in table?.get('titles')"
-                    :key="i"
-                >
+                <th class="table_column" v-for="(title, i) in titles" :key="i">
                     {{ title }}
                 </th>
             </tr>
         </thead>
         <tbody class="table__body">
             <table-row
-                v-for="(row, i) in table?.get('rows')"
+                v-for="(row, i) in rows"
                 :columns="row"
-                :titles="table?.get('titles')"
+                :titles="titles"
                 :key="i"
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
@@ -106,6 +102,12 @@ export default {
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
         ...mapGetters(["allHistoryMiner"]),
+        rows() {
+            return this.table.get("rows");
+        },
+        titles() {
+            return this.table.get("titles");
+        },
     },
     data() {
         return {

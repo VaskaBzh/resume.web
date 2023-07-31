@@ -2,12 +2,12 @@
     <div class="slider">
         <wrap-table
             ref="list"
-            :table="table"
+            :table="saveTable"
             :wait="wait"
             :empty="empty"
             :errors="errors"
         ></wrap-table>
-        <div class="slider__nav" v-if="table?.get('rows')">
+        <div class="slider__nav">
             <!--            <span class="slider__nav_info" v-if="this.pages === 0">-->
             <!--                0 {{ $t("swiper.or") }}-->
             <!--                {{ this.table.rows.length }}-->
@@ -25,7 +25,7 @@
             <!--                {{ this.table.rows.length }}-->
             <!--            </span>-->
             <div class="slider__nav-slides">
-                <button class="slider__button" @click="ajax(meta.links.prev)">
+                <button class="slider__button" @click="ajax(meta?.links.prev)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -41,7 +41,7 @@
                         />
                     </svg>
                 </button>
-                <div class="slider__slides" v-if="!meta?.meta.current_page">
+                <div class="slider__slides" v-if="!meta?.meta.to">
                     <span>...</span>
                 </div>
                 <div class="slider__slides" v-else>
@@ -102,7 +102,7 @@
                 <!--                        >{{ page }}</a-->
                 <!--                    >-->
                 <!--                </div>-->
-                <button class="slider__button" @click="ajax(meta.links.next)">
+                <button class="slider__button" @click="ajax(meta?.links.next)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -176,9 +176,14 @@ export default {
                     // if (index > )
                 }
             }
+            this.cacheTable(newValue);
         },
         rowsNumber(newVal) {
-            this.$emit("changePerPage", newVal);
+            this.rowsNumber = newVal.replace(
+                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
+                ""
+            );
+            this.$emit("changePerPage", this.rowsNumber);
         },
     },
     data() {
@@ -186,6 +191,7 @@ export default {
             viewportWidth: 0,
             rowsNumber: this.rowsNum,
             links: [],
+            saveTable: {},
         };
     },
     created() {
@@ -202,6 +208,11 @@ export default {
         },
     },
     methods: {
+        cacheTable(meta) {
+            if (meta?.meta.to) {
+                this.saveTable = this.table;
+            }
+        },
         dropButtonLinks() {
             this.links.splice(0, 1);
             this.links.splice(this.links.length - 1, 1);

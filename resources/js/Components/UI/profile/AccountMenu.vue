@@ -136,7 +136,7 @@ import { Inertia } from "@inertiajs/inertia";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import store from '../../../store'
+import store from "../../../store";
 import { ref } from "vue";
 
 export default {
@@ -149,6 +149,9 @@ export default {
         Link,
     },
     props: {
+        user: {
+            type: Object,
+        },
         errors: Object,
         is_auth: {
             type: Boolean,
@@ -173,7 +176,7 @@ export default {
         document.removeEventListener("click", this.hideMenu, true);
         document.removeEventListener("keydown", this.hideKey);
     },
-    setup() {
+    setup(props) {
         let wait = ref(false);
         let closed = ref(false);
         const form = useForm({
@@ -188,7 +191,7 @@ export default {
                 },
                 onSuccess() {
                     closed.value = true;
-                    store.dispatch("getAccounts")
+                    store.dispatch("getAccounts", props.user.id);
                 },
             });
         };
@@ -213,8 +216,8 @@ export default {
                 arr.length = 0;
                 Object.values(this.allAccounts).forEach((acc) => {
                     arr.push({
-                        title: acc.name,
-                        value: acc.id,
+                        title: acc.sub,
+                        value: acc.group_id,
                     });
                 });
             }
@@ -223,7 +226,7 @@ export default {
         name() {
             let name = "...";
             if (this.allAccounts[this.getActive]) {
-                name = this.allAccounts[this.getActive].name;
+                name = this.allAccounts[this.getActive].sub;
             }
             return name;
         },

@@ -1,7 +1,7 @@
 <template>
     <div class="app_back app_back-profile">
         <div class="app_back_elem-blur"></div>
-        <header-component :errors="errors" :is_auth="auth_user" />
+        <header-component :user="user" :errors="errors" :is_auth="auth_user" />
         <div class="page">
             <teleport to="body">
                 <div class="hint">
@@ -38,6 +38,9 @@ export default {
             type: Boolean,
             default: false,
         },
+        user: {
+            type: Object,
+        },
         errors: Object,
         message: {
             type: String,
@@ -68,10 +71,10 @@ export default {
             this.$store.dispatch("getMiningStat");
             this.$store.dispatch("getLastFpps");
             this.$store.dispatch("getGraph");
-            await this.$store.dispatch("getAccounts");
+            await this.$store.dispatch("getAccounts", this.user.id);
         }
         this.interval = setInterval(() => {
-            this.$store.dispatch("getAccounts");
+            this.$store.dispatch("getAccounts", this.user.id);
         }, 60000);
         // if (!localStorage.getItem("location")) {
         //     axios.get("/get_location").then((res) => {
