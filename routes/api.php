@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ChartController;
+use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\IncomeListController;
 use App\Http\Controllers\Api\Subs\ListController;
 use App\Http\Controllers\Api\Subs\ShowController;
@@ -37,6 +38,11 @@ Route::group([
     Route::get('{sub}', ShowController::class)->name('sub.show');
 });
 
+Route::group([
+    'prefix' => 'hashrate',
+], function () {
+    Route::get('{sub}', HashRateListController::class)->name('hashrate.list');
+});
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
