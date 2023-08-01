@@ -4,6 +4,7 @@ namespace app;
 
 use App\Models\MinerStat;
 use App\Services\External\BtcComService;
+use App\Services\Internal\IncomeService;
 
 class Helper
 {
@@ -25,6 +26,6 @@ class Helper
 
         $total = $stats->reward_block / $earnTime;
 
-        return $total + $total * (($stats->fpps_rate - BtcComService::FEE) / 100);
+        return $total + $total * (($stats->fpps_rate - BtcComService::FEE - IncomeService::ALLBTC_FEE) / 100);
     }
 }

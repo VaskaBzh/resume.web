@@ -216,16 +216,6 @@ class IncomeService
 
     public function getUserAmount(): float
     {
-        $total = Helper::calculateEarn(
-            stats: $this->stat,
-            hashRate: $this->incomeData['hash']
-        );
-
-        return $total - $total * (self::ALLBTC_FEE / 100);
-    }
-
-    public function getEarn(): float
-    {
         return Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->incomeData['hash']
