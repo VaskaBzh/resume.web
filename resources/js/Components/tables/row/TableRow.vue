@@ -154,11 +154,6 @@ export default {
                 padding-left: 16px;
             }
         }
-        &:last-child {
-            @media (min-width: 767.98px) {
-                width: 172px;
-            }
-        }
     }
     &__row {
         border-radius: 8px;

@@ -41,7 +41,7 @@
                         />
                     </svg>
                 </button>
-                <div class="slider__slides" v-if="!meta?.meta.to">
+                <div class="slider__slides" v-if="!haveMeta">
                     <span>...</span>
                 </div>
                 <div class="slider__slides" v-else>
@@ -55,53 +55,6 @@
                         >{{ link.label }}</a
                     >
                 </div>
-                <!--                <div class="slider__slides" v-else-if="this.booler">-->
-                <!--                    <a-->
-                <!--                        @click="pagination(page)"-->
-                <!--                        ref="page"-->
-                <!--                        v-for="(page, index) in this.firstPages"-->
-                <!--                        :key="index"-->
-                <!--                        :class="{ active: this.page === page }"-->
-                <!--                        >{{ page }}</a-->
-                <!--                    >-->
-                <!--                    <span>...</span>-->
-                <!--                    <a-->
-                <!--                        @click="pagination(page)"-->
-                <!--                        ref="page"-->
-                <!--                        v-for="(page, index) in this.overPages"-->
-                <!--                        :key="index"-->
-                <!--                        :class="{ active: this.page === page }"-->
-                <!--                        >{{ page }}</a-->
-                <!--                    >-->
-                <!--                    <span>...</span>-->
-                <!--                    <a-->
-                <!--                        @click="pagination(page)"-->
-                <!--                        ref="page"-->
-                <!--                        v-for="(page, index) in this.lastPages"-->
-                <!--                        :key="index"-->
-                <!--                        :class="{ active: this.page === page }"-->
-                <!--                        >{{ page }}</a-->
-                <!--                    >-->
-                <!--                </div>-->
-                <!--                <div class="slider__slides slider__slides-full" v-else>-->
-                <!--                    <a-->
-                <!--                        @click="pagination(page)"-->
-                <!--                        ref="page"-->
-                <!--                        v-for="(page, index) in this.firstPages"-->
-                <!--                        :key="index"-->
-                <!--                        :class="{ active: this.page === page }"-->
-                <!--                        >{{ page }}</a-->
-                <!--                    >-->
-                <!--                    <span>...</span>-->
-                <!--                    <a-->
-                <!--                        @click="pagination(page)"-->
-                <!--                        ref="page"-->
-                <!--                        v-for="(page, index) in this.lastPages"-->
-                <!--                        :key="index"-->
-                <!--                        :class="{ active: this.page === page }"-->
-                <!--                        >{{ page }}</a-->
-                <!--                    >-->
-                <!--                </div>-->
                 <button class="slider__button" @click="ajax(meta?.links.next)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -168,15 +121,20 @@ export default {
     },
     watch: {
         meta(newValue) {
+            this.getMeta(newValue);
             if (newValue?.meta.links) {
                 this.links = newValue?.meta.links;
                 this.dropButtonLinks();
-                if (this.links.length > 8) {
-                    let index = this.filteredActiveLink;
-                    // if (index > )
+                let lastIndex = Number(
+                    this.links[Object.values(this.links).length - 1].label
+                );
+                if (lastIndex > 9) {
+                    let index = this.filteredActiveLink?.label ?? 1;
+                    index = Number(index);
+                    this.setLinks(index, lastIndex);
                 }
             }
-            this.cacheTable(newValue);
+            this.cache(newValue);
         },
         rowsNumber(newVal) {
             this.rowsNumber = newVal.replace(
@@ -192,6 +150,7 @@ export default {
             rowsNumber: this.rowsNum,
             links: [],
             saveTable: {},
+            haveMeta: false,
         };
     },
     created() {
@@ -204,18 +163,64 @@ export default {
                 if (el.active) {
                     return i;
                 }
-            });
+            })[0];
         },
     },
     methods: {
-        cacheTable(meta) {
-            if (meta?.meta.to) {
+        getMeta(meta) {
+            let bool = !!meta?.meta.to;
+            if (bool) {
+                this.haveMeta = bool;
+            } else {
+                setTimeout(() => {
+                    if (bool) {
+                        this.haveMeta = bool;
+                    }
+                }, 200);
+            }
+        },
+        cache(meta) {
+            if (meta?.meta) {
+                this.saveTable = this.table;
                 this.saveTable = this.table;
             }
         },
         dropButtonLinks() {
             this.links.splice(0, 1);
             this.links.splice(this.links.length - 1, 1);
+        },
+        setLinks(index, lastIndex) {
+            let links = [];
+            if (index <= 4) {
+                links = links.concat(
+                    this.mapLinks(0, 4),
+                    ["..."],
+                    this.mapLinks(lastIndex - 2, lastIndex)
+                );
+            }
+            console.log(this.mapLinks(index - 1, index + 1));
+            if (index > 4 && index <= lastIndex - 5) {
+                links = links.concat(
+                    this.mapLinks(0, 3),
+                    ["..."],
+                    this.mapLinks(index - 2, index),
+                    ["..."],
+                    this.mapLinks(lastIndex - 2, lastIndex)
+                );
+            }
+            if (index > lastIndex - 5 && index <= lastIndex) {
+                links = links.concat(
+                    this.mapLinks(0, 3),
+                    ["..."],
+                    this.mapLinks(lastIndex - 5, lastIndex)
+                );
+            }
+            this.links = links;
+        },
+        mapLinks(numStart, numEnd) {
+            return this.links.filter((link, i) => {
+                if (i >= numStart && i <= numEnd) return link;
+            });
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;

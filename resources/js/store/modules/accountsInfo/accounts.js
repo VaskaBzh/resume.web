@@ -15,8 +15,13 @@ export default {
         async accounts_all({ commit, state }, user_id) {
             let subsList = (await api.get(`/api/subs/${user_id}`)).data.data;
 
-            commit("updateAccounts", subsList);
-            this.dispatch("set_active", Object.values(subsList)[0].group_id);
+            if (state.active === -1) {
+                commit("updateAccounts", subsList);
+                this.dispatch(
+                    "set_active",
+                    Object.values(subsList)[0].group_id
+                );
+            }
         },
     },
     mutations: {

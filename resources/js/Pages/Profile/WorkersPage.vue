@@ -121,6 +121,7 @@ export default {
             "allAccounts",
             "allHash",
             "allHistoryMiner",
+            "getAccount",
         ]),
         copyObject() {
             return [
@@ -153,15 +154,15 @@ export default {
                 rows: [{}],
             };
 
-            if (this.allAccounts[this.getActive]) {
+            if (this.getAccount) {
                 obj.rows[0] = {
                     class: "main",
                     hash: this.$t("workers.table.sub_thead"),
-                    hashRate: this.allAccounts[this.getActive].shares1m,
-                    unit: this.allAccounts[this.getActive].unit,
-                    hashRate24: this.allAccounts[this.getActive].shares1d,
-                    unit24: this.allAccounts[this.getActive].unit,
-                    rejectRate: this.allAccounts[this.getActive].rejectRate,
+                    hashRate: this.getAccount.hash_per_min,
+                    unit: this.getAccount.unit,
+                    hashRate24: this.getAccount.hash_per_day,
+                    unit24: this.getAccount.unit,
+                    rejectRate: this.getAccount.reject_percent,
                 };
             }
 
