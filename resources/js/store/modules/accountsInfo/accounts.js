@@ -8,7 +8,7 @@ export default {
         async set_active({ commit }, index) {
             commit("updateActive", index);
 
-            let sub = (await api.get(`/api/sub/${index}`)).data;
+            let sub = (await api.get(`/api/sub/${index}`)).data.data;
 
             commit("updateActiveAccount", sub);
         },

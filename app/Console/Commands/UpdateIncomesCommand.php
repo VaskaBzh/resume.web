@@ -8,7 +8,6 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\IncomeCompleteEvent;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
@@ -61,8 +60,7 @@ class UpdateIncomesCommand extends Command
                 ->setAmount($amount)
                 ->setSubClearPayments()
                 ->setSubAccruals($amount)
-                ->setSubClearUnPayments()
-                ->updateLocalSub();
+                ->setSubUnPayments();
         } catch (\Exception $e) {
             report($e);
 
@@ -70,7 +68,8 @@ class UpdateIncomesCommand extends Command
         }
 
         $incomeService
-            ->setPayment($amount);
+            ->setPayment($amount)
+            ->updateLocalSub();
 
         $wallet = $sub->wallets?->first();
 
@@ -138,8 +137,7 @@ class UpdateIncomesCommand extends Command
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
-            } else
-            {
+            } else {
                 Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id

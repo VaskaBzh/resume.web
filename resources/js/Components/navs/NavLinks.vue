@@ -141,8 +141,8 @@ export default {
         ...mapGetters(["allAccounts", "getActive"]),
         name() {
             let name = "...";
-            if (this.allAccounts[this.getActive]) {
-                name = this.allAccounts[this.getActive].name;
+            if (this.getAccount) {
+                name = this.getAccount.name;
             }
             return name;
         },

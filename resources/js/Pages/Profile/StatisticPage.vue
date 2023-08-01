@@ -202,19 +202,15 @@
                         }}</main-title>
                         <btc-calculator
                             :title="
-                                this.$t(
-                                    'statistic.info_blocks.payment.titles[0]'
-                                )
+                                $t('statistic.info_blocks.payment.titles[0]')
                             "
-                            :BTC="this.yesterdayEarn"
+                            :BTC="yesterdayEarn"
                         />
                         <btc-calculator
                             :title="
-                                this.$t(
-                                    'statistic.info_blocks.payment.titles[1]'
-                                )
+                                $t('statistic.info_blocks.payment.titles[1]')
                             "
-                            :BTC="this.todayEarn"
+                            :BTC="todayEarn"
                         />
                     </div>
                 </div>
@@ -305,11 +301,11 @@ export default {
             return !!this.allHistory[this.getActive];
         },
         endAccounts() {
-            return !!this.allAccounts[this.getActive];
+            return !!this.getAccount;
         },
         clearProfitDay() {
             if (this.btcInfo) {
-                if (this.allAccounts[this.getActive]) {
+                if (this.getAccount) {
                     return Number(this.clearProfit) / 30;
                 }
             }
@@ -317,7 +313,7 @@ export default {
         },
         clearBTCMounth() {
             if (this.btcInfo) {
-                if (this.allAccounts[this.getActive]) {
+                if (this.getAccount) {
                     return this.todayEarn * 30;
                 }
             }
@@ -343,31 +339,18 @@ export default {
             ];
         },
         workers() {
-            if (Object.values(this.allAccounts).length > 0) {
-                return {
-                    hash: this.allAccounts[this.getActive].shares1m,
-                    hash24: this.allAccounts[this.getActive].shares1d,
-                    active: this.allAccounts[this.getActive].workersActive,
-                    unStable: this.allAccounts[this.getActive].workersDead,
-                    inActive: this.allAccounts[this.getActive].workersInActive,
-                    all: this.allAccounts[this.getActive].workersAll,
-                };
-            }
-            return null;
+            return {
+                hash: this.getAccount.hash_per_min ?? 0,
+                hash24: this.getAccount.hash_per_dey ?? 0,
+                active: this.getAccount.workers_count_active ?? 0,
+                unStable: this.getAccount.workers_count_unstable ?? 0,
+                inActive: this.getAccount.workers_count_in_active ?? 0,
+                all: this.getAccount.workersAll ?? 0,
+            };
         },
         todayEarn() {
-            if (this.btcInfo) {
-                if (this.allAccounts[this.getActive]) {
-                    let val = new Profit(
-                        this.allAccounts[this.getActive].shares1d,
-                        this.btcInfo.btc.diff,
-                        this.btcInfo.btc.reward,
-                        this.btcInfo.fpps
-                    );
-                    return val.amount();
-                }
-            }
-            return 0;
+            let val = this.getAccount?.today_forecast || 0;
+            return Number(val).toFixed(8);
         },
         yesterdayEarn() {
             if (this.allIncomeHistory[this.getActive]) {
@@ -388,6 +371,7 @@ export default {
             "getTable",
             "getActive",
             "allAccounts",
+            "getAccount",
             "allHistory",
             "allHash",
             "allIncomeHistory",
@@ -513,7 +497,7 @@ export default {
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }
-        if (this.allAccounts[this.getActive]) this.waitAccounts = false;
+        if (this.getAccount) this.waitAccounts = false;
     },
     beforeUpdate() {
         if (this.allHistory[this.getActive]) {
@@ -523,8 +507,7 @@ export default {
             this.renderChart();
             setTimeout(() => (this.waitHistory = false), 300);
         }
-        if (this.allAccounts[this.getActive])
-            setTimeout(() => (this.waitAccounts = false), 300);
+        if (this.getAccount) setTimeout(() => (this.waitAccounts = false), 300);
     },
 };
 </script>

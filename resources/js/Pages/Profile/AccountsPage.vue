@@ -131,7 +131,7 @@ export default {
             "getAccount",
         ]),
         endAccounts() {
-            return !!this.allAccounts[this.getActive];
+            return !!this.getAccount;
         },
     },
     methods: {

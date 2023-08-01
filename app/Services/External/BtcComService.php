@@ -12,7 +12,6 @@ use App\Helper;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Worker;
-use App\Models\WorkerHashrate;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
@@ -44,6 +43,39 @@ class BtcComService
         return $response['data'];
     }
 
+    private static function transform(
+        MinerStat $stats,
+        Sub       $sub,
+        float     $hashPerDay,
+        array     $btcComSub
+    ): array
+    {
+        return [
+            'sub' => $sub->sub,
+            'accruals' => $sub->accruals,
+            'group_id' => $sub->group_id,
+            'workers_count_active' => $btcComSub['workers_active'],
+            'workers_count_in_active' => $btcComSub['workers_inactive'],
+            'workers_count_unstable' => $btcComSub['workers_dead'],
+            'hash_per_min' => $btcComSub['shares_1m'],
+            'hash_per_day' => $hashPerDay,
+            'today_forecast' => number_format(Helper::calculateEarn($stats, $hashPerDay), 8, '.', ' '),
+            'reject_percent' => $btcComSub['reject_percent'],
+            'unit' => $btcComSub['shares_unit'],
+            'payments' => $sub->payments,
+        ];
+    }
+
+    public function transformSub(Sub $sub): array
+    {
+        return self::transform(
+            stats: MinerStat::first(),
+            sub: $sub,
+            hashPerDay: $this->getSubHashRate(sub: $sub),
+            btcComSub: $this->getSub($sub->group_id)
+        );
+    }
+
     public function transformSubCollection(Collection $subs): Collection
     {
         $stats = MinerStat::first();
@@ -54,44 +86,24 @@ class BtcComService
             ->map(function (array $btcComSub) use ($subs, $stats) {
 
                 foreach ($subs as $sub) {
-                    $hashPerDay = $this->getSubApproximateHashRate(sub: $sub);
+                    $hashPerDay = $this->getSubHashRate(sub: $sub);
 
                     if (in_array($sub->group_id, $btcComSub)) {
-                        return [
-                            'sub' => $sub->sub,
-                            'accruals' => $sub->accruals,
-                            'group_id' => $sub->group_id,
-                            'workers_count_active' => $btcComSub['workers_active'],
-                            'workers_count_in_active' => $btcComSub['workers_inactive'],
-                            'workers_count_unstable' => $btcComSub['workers_dead'],
-                            'hash_per_min' => $btcComSub['shares_1m'],
-                            'hash_per_day' => $hashPerDay,
-                            'today_forecast' => Helper::calculateEarn($stats, $hashPerDay),
-                            'reject_percent' => 0.000,
-                            'unit' => $btcComSub['shares_unit'],
-                            'payments' => $sub->payments,
-                        ];
+                        return self::transform(
+                            stats: $stats,
+                            sub: $sub,
+                            hashPerDay: $hashPerDay,
+                            btcComSub: $btcComSub
+                        );
                     }
                 }
             });
     }
 
-    public function getSubApproximateHashRate(Sub $sub): float
+    public function getSubHashRate(Sub $sub): float
     {
-        $workers = Worker::getByGroupId($sub->group_id)->get();
-
-        if (!filled($workers)) {
-            return 0;
-        }
-
-        return $workers->reduce(function (int $acc, Worker $worker) {
-            $workerDalyHashRates = WorkerHashrate::dailyHashRates($worker->worker_id)->get();
-
-            if (!filled($workerDalyHashRates)) {
-                return 0;
-            }
-            return $workerDalyHashRates->sum('hash') / $workerDalyHashRates->count();
-        }, 0);
+        return Worker::getByGroupId($sub->group_id)
+            ->sum('approximate_hash_rate');
     }
 
     /**
@@ -138,17 +150,9 @@ class BtcComService
      */
     public function getSub(int $groupId): array
     {
-        $response = $this->client->get(implode('/', [
-            'groups',
-            $groupId
-        ]), [
-                'puid' => self::PU_ID,
-            ]
-        )->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
-
-        return $response['data'];
+        return $this->call(['groups', $groupId], params: [
+            'puid' => self::PU_ID,
+        ]);
     }
 
     /**

@@ -4,6 +4,7 @@ namespace App;
 
 use App\Models\MinerStat;
 use App\Services\External\BtcComService;
+use App\Services\Internal\IncomeService;
 
 class Helper
 {
@@ -18,6 +19,10 @@ class Helper
      */
     public static function calculateEarn(MinerStat $stats, float $hashRate): float
     {
+        if ($hashRate <= 0) {
+            return 0;
+        }
+
         $secondsPerDay = 86400;
 
         $hashRate = $hashRate <= 0 ? 1 : $hashRate;
@@ -27,6 +32,6 @@ class Helper
 
         $total = $stats->reward_block / $earnTime;
 
-        return $total + $total * (($stats->fpps_rate - BtcComService::FEE) / 100);
+        return $total + $total * (($stats->fpps_rate - BtcComService::FEE - IncomeService::ALLBTC_FEE) / 100);
     }
 }
