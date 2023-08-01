@@ -1001,5 +1001,32 @@ body {
             font-size: 16px;
             font-weight: 400;
         }
+        .input-wallet{
+            background: rgba(11, 16, 21, 1);
+            color: rgba(202, 202, 202, 1);
+            border: 1px solid rgba(96, 96, 96, 1)
+
+        }
+        .move-label{
+            background: rgba(11, 16, 21, 1);
+        }
+        .input-label{
+            color: rgba(152, 152, 152, 1);
+        }
+        .input-btc-text{
+            color: rgba(152, 152, 152, 1);
+
+        }
+        .input-wallet:focus{
+            border: 1px solid rgba(83, 137, 225, 1);
+        }
+        .error-input{
+            border: 1px solid rgba(239, 78, 77, 1);
+            transition: all 0.4s ease;
+        }
+        .input-error{
+            color: rgba(239, 78, 77, 1);
+            transition: all 0.4s ease;
+        }
     }
 }

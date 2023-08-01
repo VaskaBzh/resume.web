@@ -8,7 +8,7 @@
             <main-checkbox class="wallets__filter" @is_checked="checkboxer">
                 {{ $t("wallets.block.filter") }}
             </main-checkbox>
-            <blue-button class="add" data-popup="#addWallet">
+            <blue-button class="add" data-popup="#addWallet" @click="console.log(1)">
                 <svg
                     width="24"
                     height="24"
@@ -184,31 +184,72 @@
             id="addWallet"
             :wait="wait"
             :closed="closed"
-            :errors="errors"
         >
             <form
                 @submit.prevent="add(wallets)"
-                class="form form-popup popup__form"
+                class="form form-popup popup__form form-wallet"
+                @click.capture="(returnLabelfor('email') || returnLabelfor('name') || returnLabelfor('minWithdrawal'))"
             >
                 <main-title tag="h3">{{
                     $t("wallets.popups.add.title")
                 }}</main-title>
-                <input
+                                    <!-- <input
                     v-model="form.wallet"
                     required
                     autofocus
                     type="text"
                     class="input popup__input"
                     :placeholder="$t('wallets.popups.add.placeholders.wallet')"
-                />
-                <input
+                /> -->
+                <!-- <input
                     v-model="form.name"
                     autofocus
                     type="text"
                     class="input popup__input"
                     :placeholder="$t('wallets.popups.add.placeholders.name')"
+                /> -->
+                <div class="input-container">
+                    <input
+                    @click="moveLabelFor('email')"
+                    v-model="form.wallet"
+                    autofocus
+                    type="text"
+                    class="input-wallet popup__input"
+                    :class="{'error-input' : errors.wallet}"
                 />
-                <div class="form_row form_row-non-height">
+                <label class="input-label" :class="{'move-label': isActiveLabelEmail}">{{ $t('wallets.popups.add.placeholders.wallet') }}</label>
+                <div class="input-error">{{ errors.wallet }}</div>
+                
+                </div>
+                <div class="input-container">
+                    <input
+                    @click="moveLabelFor('name')"
+                    v-model="form.name"
+                    autofocus
+                    type="text"
+                    class="input-wallet popup__input"
+                    />
+                    <label class="input-label" :class="{'move-label': isActiveLabelName}">{{ $t('wallets.popups.add.placeholders.name') }}</label>
+                <!-- {{ errors.wallet }}  -->
+                </div>
+                <div class="input-container">
+                    <input
+                            @click="moveLabelFor('minWithdrawal')"
+                            name="minWithdrawal"
+                            v-model="form.minWithdrawal"
+                            id="minChg"
+                            autofocus
+                            type="text"
+                            class="input-wallet input-minWithdrawal popup__input"
+                            :class="{'error-input' : errors.minWithdrawal}"
+                        />
+                    <label class="input-label" :class="{'move-label': isActiveLabelMinWithdrawal}">{{ $t("wallets.popups.add.labels.minWithdrawal") }}</label>
+                    <div class="input-btc-text">{{ 'BTC' }}</div>
+                <div class="input-error">{{ errors.minWithdrawal }}</div>
+
+                    
+                </div>
+                <!-- <div class="form_row form_row-non-height"> -->
                     <!-- <div class="form_column">
                         <label for="percent" class="main__label">{{
                             $t("wallets.popups.add.labels.percent")
@@ -223,7 +264,8 @@
                             placeholder="100"
                         />
                     </div> -->
-                    <div class="form_column">
+
+                    <!-- <div class="form_column">
                         <label for="min" class="main__label">{{
                             $t("wallets.popups.add.labels.minWithdrawal")
                         }}</label>
@@ -236,8 +278,8 @@
                             class="input popup__input"
                             placeholder="0.005"
                         />
-                    </div>
-                </div>
+                    </div> -->
+                <!-- </div> -->
                 <blue-button class="wallets-popup-btn">
                     <button type="submit" class="all-link ">
                         <svg
@@ -351,6 +393,9 @@ export default {
             isChecked: false,
             viewportWidth: 0,
             waitWallet: true,
+            isActiveLabelEmail: false,
+            isActiveLabelName: false,
+            isActiveLabelMinWithdrawal: false,
         };
     },
     setup() {
@@ -361,7 +406,7 @@ export default {
                 name: "",
                 wallet: "",
                 percent: "100",
-                minWithdrawal: "0.005",
+                minWithdrawal: "0.0005",
                 group_id: store.getters.getActive,
             })
         );
@@ -464,6 +509,19 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        moveLabelFor(name){
+            switch(name){
+                case 'email': this.isActiveLabelEmail = true; break
+                case 'name': this.isActiveLabelName = true;break
+                case 'minWithdrawal': this.isActiveLabelMinWithdrawal = true;break
+            }
+        },
+        returnLabelfor(name){
+            switch(name){
+                case 'email': if (this.form.wallet === '') return this.isActiveLabelEmail = false
+                case 'name':  if (this.form.name === '') return this.isActiveLabelName = false
+                case 'minWithdrawal':  if (this.form.minWithdrawal === '') return this.isActiveLabelMinWithdrawal = false
+            }}
     },
     beforeUpdate() {
         if (this.getWallet[this.getActive])
@@ -610,9 +668,89 @@ export default {
 .wallets-popup-btn{
     margin-top: 25px;
 }
-// .wallet-input::placeholder { 
-//             color: rgba(152, 152, 152, 1);
-//             font-size: 16px;
-//             font-weight: 400;
-// }
+.input-container{
+    position: relative;
+}
+.input-label{
+    position: absolute;
+    top: 17px;
+    left: 15px;
+    z-index: 1;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    color: rgba(197, 197, 197, 1);
+}
+.move-label{
+  transform: translate(-1px,-21px);
+  font-size: 12px;
+  transition-timing-function: ease-in-out;
+  transition-duration: 0.3s;
+  font-size: 10px;
+  background: rgba(250, 250, 250, 1);
+}
+.input-wallet{
+    width: 100%;
+    padding: 0 12px;
+    border-radius: 8px;
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 115%;
+    outline: none;
+    display: inline-flex;
+    align-items: center;
+    min-height: 48px;
+    background: rgba(250, 250, 250, 1);
+    border: 1px solid rgba(197, 197, 197, 1);
+    color: black;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    &:focus {
+        & + .move-label {
+            color:rgba(83, 137, 225, 1);
+        }
+    }
+}
+.input-minWithdrawal{
+    text-align: end;
+    padding-right: 40px;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+}
+.input-minWithdrawal:focus{
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.5s;
+    padding-right: 80%;
+}
+.input-btc-text{
+    position: absolute;
+    right: 10px;
+    top: 17px;
+}
+input:focus{
+    border: 1px solid rgba(83, 137, 225, 1);
+    background: rgba(250, 250, 250, 1);
+}
+.input-error{
+    color: red;
+    font-size: 12px;
+    margin-top: 4px;
+    transition: all 0.4s ease;
+}
+.error-input{
+    border: 1px solid rgba(237, 24, 24, 1);
+    transition: all 0.4s ease;
+    animation: shake 0.5s;
+}
+@keyframes shake {
+  0% { transform: translate(1px, 1px) rotate(0deg); 
+     box-shadow: 0 0 0px red;}
+  10% { transform: translate(0px, -1px) rotate(-1deg); }
+  20% { transform: translate(-2px, 1px) rotate(1deg); }
+  30% { transform: translate(1px, 0px) rotate(0deg);
+        box-shadow: 0 0 7px red
+ }
+}
+.form-wallet{
+    padding: 5px;
+}
 </style>

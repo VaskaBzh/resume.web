@@ -35,7 +35,7 @@
                     :getActive="getActive"
                 ></main-radio>
             </div>
-            <Link :href="route('accounts')" data-popup="#addAcc" class="button__row" @click="testClick">
+            <Link :href="route('accounts')" data-popup="#addAcc" class="button__row">
                     <svg
                         width="22"
                         height="22"
@@ -246,9 +246,6 @@ export default {
         },
     },
     methods: {
-        testClick(){
-            console.log(this.target)
-        },
         change_height() {
             if (this.target) {
                 this.$nextTick(() => {
