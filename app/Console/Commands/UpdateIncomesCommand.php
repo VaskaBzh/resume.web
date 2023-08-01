@@ -8,7 +8,6 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\IncomeCompleteEvent;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;

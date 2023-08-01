@@ -19,6 +19,10 @@ class Helper
      */
     public static function calculateEarn(MinerStat $stats, float $hashRate): float
     {
+        if ($hashRate <= 0) {
+            return 0;
+        }
+
         $secondsPerDay = 86400;
 
         $earnTime = ($stats->network_difficulty * pow("2", "32"))
