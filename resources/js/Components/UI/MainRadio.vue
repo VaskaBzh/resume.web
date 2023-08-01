@@ -21,7 +21,7 @@ export default {
     methods: {
         ...mapGetters(["getActive"]),
         checked() {
-            this.$store.commit("updateActive", this.options.value);
+            this.$store.dispatch("set_active", this.options.value);
         },
     },
 };

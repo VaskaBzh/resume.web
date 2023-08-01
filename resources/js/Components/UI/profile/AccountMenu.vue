@@ -209,7 +209,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getIncome", "allAccounts", "getActive"]),
+        ...mapGetters(["getIncome", "getAccount", "allAccounts", "getActive"]),
         accounts() {
             let arr = [];
             if (this.allAccounts && Object.values(this.allAccounts)[0]) {
@@ -225,8 +225,8 @@ export default {
         },
         name() {
             let name = "...";
-            if (this.allAccounts[this.getActive]) {
-                name = this.allAccounts[this.getActive].sub;
+            if (this.getAccount) {
+                name = this.getAccount.sub;
             }
             return name;
         },
@@ -263,7 +263,7 @@ export default {
             }
         },
         change_index(data) {
-            this.$store.commit("updateActive", data);
+            this.$store.dispatch("set_active", data);
         },
         hideKey(e) {
             if (e.keyCode === 27) {

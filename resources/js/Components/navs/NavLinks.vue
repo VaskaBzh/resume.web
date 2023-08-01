@@ -114,7 +114,7 @@ export default {
     },
     methods: {
         change_index(data) {
-            this.$store.commit("updateActive", data);
+            this.$store.dispatch("set_active", data);
         },
         async logout() {
             await Inertia.post("/logout");

@@ -1,4 +1,3 @@
-import Vue from "lodash";
 import api from "@/api/api";
 
 export default {
@@ -6,25 +5,24 @@ export default {
         async destroy_accounts({ commit, state }) {
             commit("destroy_acc");
         },
+        async set_active({ commit }, index) {
+            commit("updateActive", index);
+
+            let sub = (await api.get(`/api/sub/${index}`)).data;
+
+            commit("updateActiveAccount", sub);
+        },
         async accounts_all({ commit, state }, user_id) {
             let subsList = (await api.get(`/api/subs/${user_id}`)).data.data;
 
-            for (const sub of Object.values(subsList)) {
-                try {
-                    commit("updateAccounts", sub);
-                    if (state.active === -1) {
-                        commit("updateActive", sub.group_id);
-                    }
-                } catch (err) {
-                    console.error("Catch btc.com error: \n" + err);
-                }
-            }
+            commit("updateAccounts", subsList);
+            this.dispatch("set_active", Object.values(subsList)[0].group_id);
         },
     },
     mutations: {
         destroy_acc(state) {
             state.accounts = {};
-            state.checkFive = 0;
+            state.activeAccount = {};
         },
         updateActive(state, index) {
             state.active = index;
@@ -32,19 +30,25 @@ export default {
         setValid(state) {
             state.valid = false;
         },
-        updateAccounts(state, account) {
-            Vue.set(state.accounts, account.group_id, account);
+        updateAccounts(state, accounts) {
+            state.accounts = { ...accounts };
+        },
+        updateActiveAccount(state, account) {
+            state.activeAccount = { ...account };
         },
     },
     state: {
-        checkFive: 0,
         valid: true,
         active: -1,
         accounts: {},
+        activeAccount: {},
     },
     getters: {
         allAccounts(state) {
             return state.accounts;
+        },
+        getAccount(state) {
+            return state.activeAccount;
         },
         getValid(state) {
             return state.valid;

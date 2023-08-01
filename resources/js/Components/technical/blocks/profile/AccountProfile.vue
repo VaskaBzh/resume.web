@@ -113,7 +113,7 @@ export default {
             return router;
         },
         chageActive() {
-            this.$store.commit("updateActive", this.accountInfo.group_id);
+            this.$store.dispatch("set_active", this.accountInfo.group_id);
         },
     },
     computed: {

@@ -128,6 +128,7 @@ export default {
             "allHistoryForDays",
             "btcInfo",
             "getActive",
+            "getAccount",
         ]),
         endAccounts() {
             return !!this.allAccounts[this.getActive];
@@ -136,32 +137,6 @@ export default {
     methods: {
         setId(id) {
             this.id = id;
-        },
-        changeName() {
-            let form = useForm({
-                name: this.form.name,
-                group_id: String(this.id),
-                puid: "781195",
-            });
-
-            this.wait = true;
-
-            form.put("/sub_change", {
-                onFinish: () => {
-                    if (this.errs?.length === 0) {
-                        this.$store.dispatch("getAccounts", this.user.id);
-                        this.form.name = "";
-                        this.wait = false;
-
-                        setTimeout(() => {
-                            this.closed = true;
-                        }, 300);
-                        setTimeout(() => {
-                            this.closed = false;
-                        }, 600);
-                    }
-                },
-            });
         },
     },
     setup() {
