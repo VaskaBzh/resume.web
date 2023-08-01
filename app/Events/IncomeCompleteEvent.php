@@ -17,7 +17,7 @@ class IncomeCompleteEvent
         private readonly Sub $sub,
         private readonly float $payment
     ) {
-        $earn = $payment / (100 - IncomeService::ALLBTC_FEE) * 100;
+        $earn = ($payment / (100 - IncomeService::ALLBTC_FEE)) * 100;
 
         $this->financeData = FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
