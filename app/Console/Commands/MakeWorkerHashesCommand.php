@@ -49,7 +49,7 @@ class MakeWorkerHashesCommand extends Command
 
                     $workerDalyHashRates = WorkerHashrate::dailyHashRates($worker->worker_id)->get();
 
-                    Update::execute(workerData: WorkerData::fromRequest([
+                    Update::execute($worker, workerData: WorkerData::fromRequest([
                         'worker_id' => $worker->worker_id,
                         'group_id' => $worker->group_id,
                         'approximate_hash_rate' => $workerDalyHashRates->sum('hash') / $workerDalyHashRates->count()

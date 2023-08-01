@@ -23,6 +23,7 @@ class Worker extends Model
     protected $fillable = [
         'worker_id',
         'group_id',
+        'approximate_hash_rate',
     ];
 
     public function getRouteKeyName(): string

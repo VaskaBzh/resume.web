@@ -58,7 +58,7 @@ class BtcComService
             ->map(function (array $btcComSub) use ($subs, $stats) {
 
                 foreach ($subs as $sub) {
-                    $hashPerDay = $this->getSubApproximateHashRate(sub: $sub);
+                    $hashPerDay = $this->getSubHashRate(sub: $sub);
 
                     if (in_array($sub->group_id, $btcComSub)) {
                         return [
@@ -80,11 +80,10 @@ class BtcComService
             });
     }
 
-    public function getSubApproximateHashRate(Sub $sub): float
+    public function getSubHashRate(Sub $sub): float
     {
-        $workers = Worker::getByGroupId($sub->group_id)->get();
-
-        return $workers->sum('approximate_hash_rate') / $workers->count();
+       return Worker::getByGroupId($sub->group_id)
+           ->sum('approximate_hash_rate');
     }
 
     /**

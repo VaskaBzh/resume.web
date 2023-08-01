@@ -60,7 +60,7 @@ class IncomeService
 
     public function calculatePayment(float $amount): IncomeService
     {
-        $this->incomeData['payment'] = ($amount + $this->sub->unPayments) * ($this->wallet->percent / 100);
+        $this->incomeData['payment'] = ($amount + $this->subData['unPayments']) * ($this->wallet->percent / 100);
 
         return $this;
     }
@@ -119,13 +119,6 @@ class IncomeService
         return $this;
     }
 
-    public function setSubClearUnPayments(): IncomeService
-    {
-        $this->subData["unPayments"] = $this->sub->accruals - $this->subData["payments"];
-
-        return $this;
-    }
-
     public function setSubUnPayments(): IncomeService
     {
         $this->subData["unPayments"] = $this->subData["accruals"] - $this->subData["payments"];
@@ -157,7 +150,7 @@ class IncomeService
     public function setHashRate(): bool
     {
         $hashRate = resolve(BtcComService::class)
-            ->getSubApproximateHashRate($this->sub);
+            ->getSubHashRate($this->sub);
 
         if ($hashRate > 0) {
             $this->incomeData['hash'] = $hashRate;

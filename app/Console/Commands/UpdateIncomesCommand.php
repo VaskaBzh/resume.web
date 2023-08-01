@@ -61,8 +61,7 @@ class UpdateIncomesCommand extends Command
                 ->setAmount($amount)
                 ->setSubClearPayments()
                 ->setSubAccruals($amount)
-                ->setSubClearUnPayments()
-                ->updateLocalSub();
+                ->setSubUnPayments();
         } catch (\Exception $e) {
             report($e);
 
@@ -70,7 +69,8 @@ class UpdateIncomesCommand extends Command
         }
 
         $incomeService
-            ->setPayment($amount);
+            ->setPayment($amount)
+            ->updateLocalSub();
 
         $wallet = $sub->wallets?->first();
 
