@@ -38,6 +38,9 @@ class UpdateIncomesCommand extends Command
         }
 
         foreach (Sub::all() as $sub) {
+            if ($sub->group_id == 6002482) {
+                continue;
+            }
             $this->process(
                 incomeService: IncomeService::buildWithParams(
                     params: $params
@@ -73,17 +76,19 @@ class UpdateIncomesCommand extends Command
             $amount = $incomeService->getUserAmount();
 
             $incomeService
-                ->setIncomeData('amount', $amount)
-                ->setIncomeData('payment', $amount + $sub->unPayments)
-                ->setSubData('payments', $sub->payments)
-                ->setSubData('accruals', $sub->accruals + $amount)
-                ->setSubUnPayments()
-                ->updateLocalSub();
+                ->setAmount($amount)
+                ->setSubClearPayments()
+                ->setSubAccruals($amount)
+                ->setSubUnPayments();
         } catch (\Exception $e) {
             report($e);
 
             return;
         }
+
+        $incomeService
+            ->setPayment($amount)
+            ->updateLocalSub();
 
         $wallet = $sub->wallets?->first();
 
@@ -91,7 +96,7 @@ class UpdateIncomesCommand extends Command
             $incomeService
                 ->setWallet($wallet)
                 ->setPercent()
-                ->setIncomeData('payment', ($amount + $sub->unPayments) * ($wallet->percent / 100));
+                ->calculatePayment($amount);
 
             $walletService->setWallet($wallet);
 
@@ -131,9 +136,9 @@ class UpdateIncomesCommand extends Command
 
                 $incomeService
                     ->setIncomeData('txid', $txId)
-                    ->setIncomeData('status', Status::COMPLETED->value)
-                    ->setIncomeData('message', Message::COMPLETED->value)
-                    ->setSubData('payments', $sub->unPayments + $sub->payments)
+                    ->setStatus(Status::COMPLETED)
+                    ->setMessage(Message::COMPLETED)
+                    ->setSubPayments()
                     ->setSubUnPayments()
                     ->updateLocalSub();
 
