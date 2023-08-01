@@ -39,6 +39,55 @@ class IncomeService
         $this->stat = MinerStat::first();
     }
 
+    public function setAmount(float $amount): IncomeService
+    {
+        $this->incomeData['amount'] = $amount;
+
+        return $this;
+    }
+
+    public function setSubClearPayments(): IncomeService
+    {
+        $this->subData['payments'] = $this->sub->payments;
+
+        return $this;
+    }
+
+    public function setSubAccruals(float $amount = 0): IncomeService
+    {
+        $this->subData['accruals'] = $this->sub->accruals + $amount;
+
+        return $this;
+    }
+
+    public function calculatePayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = ($this->subData['unPayments']) * ($this->wallet->percent / 100);
+
+        return $this;
+    }
+
+    public function setStatus(Status $status): IncomeService
+    {
+        $this->incomeData['status'] = $status->value;
+
+        return $this;
+    }
+
+    public function setMessage(Message $message): IncomeService
+    {
+        $this->incomeData['message'] = $message->value;
+
+        return $this;
+    }
+
+    public function setSubPayments(): IncomeService
+    {
+        $this->subData['payments'] = $this->sub->payments + $this->sub->unPayments;
+
+        return $this;
+    }
+
     public function getIncomeParam(string $key)
     {
         return Arr::get($this->incomeData, $key);
@@ -129,6 +178,13 @@ class IncomeService
     public function setSub(Sub $sub): IncomeService
     {
         $this->sub = $sub;
+
+        return $this;
+    }
+
+    public function setPayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = $this->subData["unPayments"];
 
         return $this;
     }
