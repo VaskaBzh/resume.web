@@ -244,21 +244,6 @@ class BtcComService
         ]);
     }
 
-    public function getEarnHistory(): array
-    {
-        $response = $this->client->get(implode('/', [
-            'account',
-            'earn-history'
-        ]), [
-            'puid' => self::PU_ID,
-            "page_size" => "1",
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
-
-        return $response['data'];
-    }
-
     private function createLocalSub(UserData $userData, $groupId): void
     {
         Create::execute(

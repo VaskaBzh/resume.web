@@ -9,6 +9,7 @@ use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\IncomeData;
 use App\Dto\SubData;
+use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Helper;
 use App\Models\Income;
@@ -43,6 +44,48 @@ class IncomeService
         return Arr::get($this->incomeData, $key);
     }
 
+    public function setAmount(float $amount): IncomeService
+    {
+        $this->incomeData['amount'] = $amount;
+
+        return $this;
+    }
+
+    public function setPayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = $amount + $this->sub->unPayments;
+
+        return $this;
+    }
+
+    public function calculatePayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = ($amount + $this->sub->unPayments) * ($this->wallet->percent / 100);
+
+        return $this;
+    }
+
+    public function setTxId(string $txId): IncomeService
+    {
+        $this->incomeData['txId'] = $txId;
+
+        return $this;
+    }
+
+    public function setMessage(Message $message): IncomeService
+    {
+        $this->incomeData['message'] = $message->value;
+
+        return $this;
+    }
+
+    public function setStatus(Status $status): IncomeService
+    {
+        $this->incomeData['status'] = $status->value;
+
+        return $this;
+    }
+
     public function setIncomeData(string $key, $value): IncomeService
     {
         $this->incomeData[$key] = $value;
@@ -62,9 +105,37 @@ class IncomeService
         return $this->incomeData['payment'] >= Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
+    public function setSubClearPayments(): IncomeService
+    {
+        $this->subData['payments'] = $this->sub->payments;
+
+        return $this;
+    }
+
+    public function setSubPayments(): IncomeService
+    {
+        $this->subData['payments'] = $this->sub->payments + $this->sub->unPayments;
+
+        return $this;
+    }
+
+    public function setSubAccruals(float $amount = 0): IncomeService
+    {
+        $this->subData['accruals'] = $this->sub->accruals + $amount;
+
+        return $this;
+    }
+
     public function setSubData(string $key, $value): IncomeService
     {
         $this->subData[$key] = $value;
+
+        return $this;
+    }
+
+    public function setSubClearUnPayments(): IncomeService
+    {
+        $this->subData["unPayments"] = $this->sub->accruals - $this->subData["payments"];
 
         return $this;
     }

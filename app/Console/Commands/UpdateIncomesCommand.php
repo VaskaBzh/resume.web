@@ -58,10 +58,10 @@ class UpdateIncomesCommand extends Command
             $amount = $incomeService->getUserAmount();
 
             $incomeService
-                ->setIncomeData('amount', $amount)
-                ->setSubData('payments', $sub->payments)
-                ->setSubData('accruals', $sub->accruals + $amount)
-                ->setSubUnPayments()
+                ->setAmount($amount)
+                ->setSubClearPayments()
+                ->setSubAccruals($amount)
+                ->setSubClearUnPayments()
                 ->updateLocalSub();
         } catch (\Exception $e) {
             report($e);
@@ -69,7 +69,8 @@ class UpdateIncomesCommand extends Command
             return;
         }
 
-        $incomeService->setIncomeData('payment', $amount + $sub->unPayments);
+        $incomeService
+            ->setPayment($amount);
 
         $wallet = $sub->wallets?->first();
 
@@ -77,14 +78,14 @@ class UpdateIncomesCommand extends Command
             $incomeService
                 ->setWallet($wallet)
                 ->setPercent()
-                ->setIncomeData('payment', ($amount + $sub->unPayments) * ($wallet->percent / 100));
+                ->calculatePayment($amount);
 
             $walletService->setWallet($wallet);
 
             if (!$incomeService->canWithdraw()) {
                 $incomeService
-                    ->setIncomeData('message', Message::LESS_MIN_WITHDRAWAL->value)
-                    ->setIncomeData('status', Status::PENDING->value)
+                    ->setMessage(Message::LESS_MIN_WITHDRAWAL)
+                    ->setStatus(Status::PENDING)
                     ->createLocalIncome();
 
                 return;
@@ -109,7 +110,7 @@ class UpdateIncomesCommand extends Command
                     ]);
 
                     $incomeService
-                        ->setIncomeData('message', Message::ERROR_PAYOUT->value)
+                        ->setMessage(Message::ERROR_PAYOUT)
                         ->createLocalIncome();
 
                     $walletService->lock();
@@ -118,10 +119,10 @@ class UpdateIncomesCommand extends Command
                 }
 
                 $incomeService
-                    ->setIncomeData('txid', $txId)
-                    ->setIncomeData('status', Status::COMPLETED->value)
-                    ->setIncomeData('message', Message::COMPLETED->value)
-                    ->setSubData('payments', $sub->unPayments + $sub->payments)
+                    ->setTxId($txId)
+                    ->setStatus(Status::COMPLETED)
+                    ->setMessage(Message::COMPLETED)
+                    ->setSubPayments()
                     ->setSubUnPayments()
                     ->updateLocalSub();
 
@@ -144,14 +145,14 @@ class UpdateIncomesCommand extends Command
                     'wallet' => $wallet->id
                 ]);
 
-                $incomeService->setIncomeData('message', Message::ERROR->value);
+                $incomeService->setMessage(Message::ERROR);
             }
 
             $incomeService->createLocalIncome();
 
         } else {
             $incomeService
-                ->setIncomeData('message', Message::NO_WALLET->value)
+                ->setMessage(Message::NO_WALLET)
                 ->setPercent()
                 ->createLocalIncome();
         }
