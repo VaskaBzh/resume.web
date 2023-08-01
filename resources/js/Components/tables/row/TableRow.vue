@@ -191,6 +191,8 @@ export default {
         }
         &-cursor {
             cursor: pointer;
+            position: relative;
+
         }
         &.main {
             .more {

@@ -311,6 +311,7 @@ export default {
         }
     }
     &_column {
+        position: relative;
         @media (min-width: 767.98px) {
             height: 48px;
             padding-right: 16px;
@@ -374,7 +375,7 @@ export default {
             stroke: #818c99;
             position: absolute;
             right: 12px;
-            bottom: 7px;
+            margin-top: 25px;
             transform: translateY(-50%);
         }
     }
