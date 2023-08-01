@@ -84,11 +84,7 @@ class BtcComService
     {
         $workers = Worker::getByGroupId($sub->group_id)->get();
 
-        return $workers->reduce(function (int $acc, Worker $worker) {
-            $workerDalyHashRates = WorkerHashrate::dailyHashRates($worker->worker_id)->get();
-
-            return $workerDalyHashRates->sum('hash') / $workerDalyHashRates->count();
-        }, 0);
+        return $workers->sum('approximate_hash_rate') / $workers->count();
     }
 
     /**
@@ -239,21 +235,6 @@ class BtcComService
         return array_merge($stats, [
             'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
         ]);
-    }
-
-    public function getEarnHistory(): array
-    {
-        $response = $this->client->get(implode('/', [
-            'account',
-            'earn-history'
-        ]), [
-            'puid' => self::PU_ID,
-            "page_size" => "1",
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
-
-        return $response['data'];
     }
 
     private function createLocalSub(UserData $userData, $groupId): void

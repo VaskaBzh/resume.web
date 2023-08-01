@@ -6,13 +6,12 @@ namespace App\Services\Internal;
 
 use App\Actions\Income\Complete;
 use App\Actions\Income\Create as IncomeCreate;
-use App\Actions\Finance\Create as FinanceCreate;
 use App\Actions\Sub\Update;
-use App\Dto\FinanceData;
 use App\Dto\IncomeData;
 use App\Dto\SubData;
+use App\Enums\Income\Message;
 use App\Enums\Income\Status;
-use app\Helper;
+use App\Helper;
 use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
@@ -45,9 +44,44 @@ class IncomeService
         return Arr::get($this->incomeData, $key);
     }
 
-    public function setIncomeData(string $key, $value): IncomeService
+    public function setAmount(float $amount): IncomeService
     {
-        $this->incomeData[$key] = $value;
+        $this->incomeData['amount'] = $amount;
+
+        return $this;
+    }
+
+    public function setPayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = $amount + $this->sub->unPayments;
+
+        return $this;
+    }
+
+    public function calculatePayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = ($amount + $this->sub->unPayments) * ($this->wallet->percent / 100);
+
+        return $this;
+    }
+
+    public function setTxId(string $txId): IncomeService
+    {
+        $this->incomeData['txId'] = $txId;
+
+        return $this;
+    }
+
+    public function setMessage(Message $message): IncomeService
+    {
+        $this->incomeData['message'] = $message->value;
+
+        return $this;
+    }
+
+    public function setStatus(Status $status): IncomeService
+    {
+        $this->incomeData['status'] = $status->value;
 
         return $this;
     }
@@ -64,9 +98,30 @@ class IncomeService
         return $this->incomeData['payment'] >= Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
-    public function setSubData(string $key, $value): IncomeService
+    public function setSubClearPayments(): IncomeService
     {
-        $this->subData[$key] = $value;
+        $this->subData['payments'] = $this->sub->payments;
+
+        return $this;
+    }
+
+    public function setSubPayments(): IncomeService
+    {
+        $this->subData['payments'] = $this->sub->payments + $this->sub->unPayments;
+
+        return $this;
+    }
+
+    public function setSubAccruals(float $amount = 0): IncomeService
+    {
+        $this->subData['accruals'] = $this->sub->accruals + $amount;
+
+        return $this;
+    }
+
+    public function setSubClearUnPayments(): IncomeService
+    {
+        $this->subData["unPayments"] = $this->sub->accruals - $this->subData["payments"];
 
         return $this;
     }
@@ -106,7 +161,7 @@ class IncomeService
 
         if ($hashRate > 0) {
             $this->incomeData['hash'] = $hashRate;
-            $this->incomeData['diff'] = $this->params['difficulty'];
+            $this->incomeData['diff'] = $this->stat->network_difficulty;
 
             return true;
         }
@@ -168,14 +223,20 @@ class IncomeService
 
     public function getUserAmount(): float
     {
-        $total = Helper::calculateEarn($this->stat);
+        $total = Helper::calculateEarn(
+            stats: $this->stat,
+            hashRate: $this->incomeData['hash']
+        );
 
         return $total - $total * (self::ALLBTC_FEE / 100);
     }
 
-    public function getEarn(): float|\Exception
+    public function getEarn(): float
     {
-        return Helper::calculateEarn($this->stat);
+        return Helper::calculateEarn(
+            stats: $this->stat,
+            hashRate: $this->incomeData['hash']
+        );
     }
 
     private function calculateProfit(float $earn): float
