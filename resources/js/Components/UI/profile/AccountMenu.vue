@@ -191,7 +191,7 @@ export default {
                 },
                 onSuccess() {
                     closed.value = true;
-                    store.dispatch("getAccounts", props.user.id);
+                    store.dispatch("accounts_all", props.user.id);
                 },
             });
         };

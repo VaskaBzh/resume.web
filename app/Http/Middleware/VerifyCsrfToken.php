@@ -12,6 +12,11 @@ class VerifyCsrfToken extends Middleware
      * @var array<int, string>
      */
     protected $except = [
-        '/worker_process'
+        '/worker_process',
+        '/wallet_create',
+        '/wallet_delete',
+        '/wallet_change',
+        '/wallet_process',
+        '/set_location',
     ];
 }

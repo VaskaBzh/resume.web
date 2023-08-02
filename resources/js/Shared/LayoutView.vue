@@ -55,10 +55,12 @@ export default {
         await this.$store.dispatch("getGraph");
         if (this.auth_user && this.$store.getters.getValid) {
             await this.$store.dispatch("accounts_all", this.user.id);
+            this.$store.dispatch("set_active", this.getActive);
         }
         if (this.auth_user) {
-            this.interval = setInterval(() => {
-                this.$store.dispatch("accounts_all", this.user.id);
+            this.interval = setInterval(async () => {
+                await this.$store.dispatch("accounts_all", this.user.id);
+                this.$store.dispatch("set_active", this.getActive);
             }, 60000);
         }
         // if (!localStorage.getItem("location")) {
