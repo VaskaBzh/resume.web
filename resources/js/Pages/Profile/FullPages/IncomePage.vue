@@ -174,8 +174,7 @@ export default {
         },
         yesterdayProfit() {
             if (this.incomes.incomeList?.get("rows")) {
-                console.log(this.incomes.incomeList?.get("rows")[0].earn);
-                return this.incomes.incomeList?.get("rows")[0].earn;
+                return this.incomes.incomeList?.get("rows")[0]?.earn;
             }
             return "0.00000000 BTC";
         },
