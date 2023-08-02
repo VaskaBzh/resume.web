@@ -2,9 +2,10 @@ import api from "@/api/api";
 
 import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
+import store from "@/store";
 
 export class IncomeService {
-    constructor(id, translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {
+    constructor(translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {
         this.incomeList = new Map();
         this.incomeRows = [];
 
@@ -12,19 +13,13 @@ export class IncomeService {
 
         this.incomeTitles = this.useTranslater(titleIndexes);
 
-        this.activeId = id;
+        this.activeId = store.getters.getActive;
     }
 
     useTranslater(indexes) {
         return indexes.map((index) =>
             this.translate(`income.table.thead[${index}]`)
         );
-    }
-
-    setId(id) {
-        this.activeId = id;
-
-        return this;
     }
 
     async fetch(filter, page = 1, per_page = 15) {
@@ -69,7 +64,7 @@ export class IncomeService {
 
     setter(income, filter) {
         let datePay = "...";
-        if (!!filter) {
+        if (filter) {
             datePay = this.dateFormatter(income["updated_at"]);
         } else {
             if (income["status"] === "completed") {
@@ -81,7 +76,7 @@ export class IncomeService {
             wallet = income["wallet"];
         }
 
-        return !!filter
+        return filter
             ? new paymentData(
                   datePay,
                   income["payment"],
@@ -114,21 +109,23 @@ export class IncomeService {
     }
 
     async setRows(filter, page = 1, per_page = 15) {
-        let response = await this.fetch(filter, page, per_page);
+        if (store.getters.getActive !== -1) {
+            let response = await this.fetch(filter, page, per_page);
 
-        this.meta = response.data;
+            this.meta = response.data;
 
-        if (filter) {
-            this.incomeTitles = this.useTranslater([1, 4, 5, 6]);
-        } else {
-            this.incomeTitles = this.useTranslater([0, 1, 2, 3, 6, 7]);
+            if (filter) {
+                this.incomeTitles = this.useTranslater([1, 4, 5, 6]);
+            } else {
+                this.incomeTitles = this.useTranslater([0, 1, 2, 3, 6, 7]);
+            }
+
+            this.incomeRows = await response.data.data.map((income) => {
+                return this.setter(income, filter);
+            });
+
+            return this;
         }
-
-        this.incomeRows = await response.data.data.map((income) => {
-            return this.setter(income, filter);
-        });
-
-        return this;
     }
 
     setTable() {

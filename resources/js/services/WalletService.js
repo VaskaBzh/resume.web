@@ -1,99 +1,133 @@
 import api from "@/api/api";
 
 import { walletData } from "@/DTO/walletData";
+import { useForm } from "@inertiajs/vue3";
+import store from "@/store";
 
 export class WalletService {
-    constructor(group_id, translate, titles) {
-        this.group_id = group_id;
-        this.titles = titles;
+    constructor() {
+        this.group_id = store.getters.getActive;
 
-        this.translate = translate;
+        this.form = useForm({
+            name: "",
+            wallet: "",
+            percent: "100",
+            minWithdrawal: "0.005",
+            group_id: this.group_id,
+        });
+
+        this.waitWallets = true;
+        this.wait = false;
+        this.closed = false;
     }
 
-
-//     if (this.isChecked) {
-//     if (wal.payment && wal.payment !== 0) {
-//     Vue.set(arr, i, walletModel);
-// }
-// } else {
-//     Vue.set(arr, i, walletModel);
-// }
-
-    setTitles() {
-        return this.titles.map((title) =>
-            this.translate(`chart.labels[${title}]`)
+    substring(name) {
+        return (
+            name.substr(0, 4) +
+            "..." +
+            name.substr(name.length - 4, name.length)
         );
     }
 
-    setDates() {
-        const currentTime = new Date().getTime();
-        const interval = 60 * 60 * 1000;
-
-        return Array.from({ length: this.offset }, (_, i) => {
-            const date = new Date(
-                currentTime - (this.offset - 1 - i) * interval
-            );
-            return date.getTime();
-        });
+    getName(name, wallet) {
+        return name ? this.substring(name) : this.substring(wallet);
     }
 
-    setDefaultKeys() {
-        this.graph = {
-            ...this.graph,
-            title: this.setTitles(),
-            dates: this.setDates(),
+    clearForm(form) {
+        this.form = {
+            ...form,
+            name: "",
+            wallet: "",
+            percent: "100",
+            minWithdrawal: "0.005",
+            group_id: store.getters.getActive,
         };
     }
 
-    randomizeTest(min, max) {
-        return Math.random() * (max - min) + min;
+    setForm(wallet) {
+        this.form = {
+            ...this.form,
+            name: wallet.fullName,
+            wallet: wallet.wallet_address,
+            percent: wallet.percent,
+            minWithdrawal: wallet.minWithdrawal,
+            group_id: store.getters.getActive,
+        };
     }
 
-    async makeFullValues() {
-        const [values, amount, unit] = this.records.slice(-this.offset).reduce(
-            (acc, el) => {
-                let hashrate = el.hashrate ?? 0;
-                if (el.unit === "P") hashrate *= 1000;
-                else if (el.unit === "E") hashrate *= 1000000;
-                acc[0].push(Number(hashrate));
-                el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                acc[2].push("T");
+    closePopup() {
+        setTimeout(() => {
+            this.closed = true;
+        }, 300);
+        setTimeout(() => {
+            this.closed = false;
+        }, 600);
+    }
 
-                return acc;
-            },
-            [[], [], []]
-        );
-
-        while (values.length < this.offset) {
-            values.push(0);
-            amount.push("0");
-            unit.push("T");
+    async addWallet() {
+        if (store.getters.getActive !== -1) {
+            this.wait = true;
+            await this.form.post("/wallet_create", {
+                onSuccess() {
+                    this.index();
+                    this.clearForm();
+                    this.closePopup();
+                },
+            });
+            this.wait = false;
+        } else {
+            store.dispatch("getMessage", "Подождите 5 секунд.");
         }
+    }
 
-        Object.assign(this.graph, {
-            values: values.reverse(),
-            amount: amount.map(String).reverse(),
-            unit: unit.reverse(),
+    async changeWallet() {
+        this.wait = true;
+        await this.form.post("/wallet_change", {
+            onSuccess() {
+                this.index();
+                this.clearForm();
+                this.closePopup();
+            },
+        });
+        this.wait = false;
+    }
+
+    async removeWallet(wallet) {
+        this.setForm(wallet);
+        await this.form.post("/wallet_delete", {
+            onSuccess() {
+                this.index();
+            },
         });
     }
 
+    // async filter(needDrop) {
+    //     if (this.wallets) {
+    //         if (needDrop) {
+    //             this.wallets.filter((wallet) => wallet.payment !== 0);
+    //         } else {
+    //             this.index();
+    //         }
+    //     }
+    // }
+
     async fetch() {
-        return await api.get(
-            `/api/hashrate/${this.group_id}?offset=${this.offset}`
-        );
+        return await api.get(`/api/wallets/${this.group_id}`);
     }
 
     async index() {
-        this.waitHashrate = true;
+        if (store.getters.getActive !== -1) {
+            this.waitWallets = true;
 
-        this.setDefaultKeys();
+            this.wallets = (await this.fetch()).data.data.map((el) => {
+                return new walletData({
+                    ...el,
+                    name: this.getName(el.name, el.wallet),
+                    fullName: el.name ?? el.wallet,
+                });
+            });
 
-        this.records = (await this.fetch()).data.data.map((el) => {
-            return new subHashrateData(el);
-        });
-
-        await this.makeFullValues();
-
-        this.waitHashrate = false;
+            this.waitWallets = false;
+        }
     }
 }

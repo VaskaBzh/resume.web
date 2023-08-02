@@ -204,19 +204,12 @@ export default {
     },
     methods: {
         initIncomes() {
-            if (this.getActive !== -1) {
-                this.incomes = new IncomeService(
-                    this.getActive,
-                    this.$t,
-                    [0, 1, 2, 3, 4, 5]
-                );
+            this.incomes = new IncomeService(this.$t, [0, 1, 2, 3, 4, 5]);
 
-                this.ajaxSend();
-            }
+            this.ajaxSend();
         },
         async ajaxSend() {
             if (this.page === 1) this.waitAjax = true;
-            this.incomes.setId(this.getActive);
             await this.incomes.setRows(this.filter, this.page, this.per_page);
             this.incomes.setTable();
             this.waitAjax = false;

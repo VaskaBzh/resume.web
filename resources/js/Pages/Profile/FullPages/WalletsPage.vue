@@ -5,9 +5,9 @@
             <!--                <blue-button class="wallets__button wallets__button-history">-->
             <!--                    <Link :href="route('income')"> Доходы </Link>-->
             <!--                </blue-button>-->
-            <main-checkbox class="wallets__filter" @is_checked="checkboxer">
-                {{ $t("wallets.block.filter") }}
-            </main-checkbox>
+            <!--            <main-checkbox class="wallets__filter" @is_checked="wallets.filter">-->
+            <!--                {{ $t("wallets.block.filter") }}-->
+            <!--            </main-checkbox>-->
             <blue-button class="add" data-popup="#addWallet">
                 <svg
                     width="24"
@@ -31,7 +31,7 @@
         </main-title>
         <div ref="wallets" class="wrap">
             <no-info
-                :wait="waitWallet"
+                :wait="wallets.waitWallets"
                 :interval="70"
                 :end="endWallet"
                 :empty="emptyWallet"
@@ -87,13 +87,14 @@
                     </div>
                 </div>
             </no-info>
-            <div ref="list" class="wallets__list" v-if="!waitWallet">
+            <div ref="list" class="wallets__list" v-if="!wallets.waitWallets">
                 <wallet-block
-                    v-for="(wallet, i) in wallets"
+                    v-for="(wallet, i) in wallets.wallets"
                     :key="i"
                     v-scroll="'top'"
                     :wallet="wallet"
-                    @getWallet="changeWallet(wallet)"
+                    @getWallet="wallets.setForm(wallet)"
+                    @remove="wallets.removeWallet(wallet)"
                 ></wallet-block>
             </div>
         </div>
@@ -101,16 +102,21 @@
     <teleport to="body">
         <main-popup
             id="changeWallet"
-            :wait="wait"
-            :closed="closed"
+            :wait="wallets.wait"
+            :closed="wallets.closed"
             :errors="errors"
+            @closed="wallets.clearForm(wallets.form)"
+            v-if="wallets.form"
         >
-            <form @submit.prevent="change" class="form form-popup popup__form">
+            <form
+                @submit.prevent="wallets.changeWallet"
+                class="form form-popup popup__form"
+            >
                 <main-title tag="h3">
                     {{ $t("wallets.popups.change.title") }}
                 </main-title>
                 <input
-                    v-model="form.wallet"
+                    v-model="wallets.form.wallet"
                     autofocus
                     disabled
                     type="text"
@@ -120,7 +126,7 @@
                     "
                 />
                 <input
-                    v-model="form.name"
+                    v-model="wallets.form.name"
                     autofocus
                     type="text"
                     class="input popup__input"
@@ -133,7 +139,7 @@
                         }}</label>
                         <input
                             name="percent"
-                            v-model="form.percent"
+                            v-model="wallets.form.percent"
                             id="percent"
                             autofocus
                             type="text"
@@ -147,7 +153,7 @@
                         }}</label>
                         <input
                             name="minWithdrawal"
-                            v-model="form.minWithdrawal"
+                            v-model="wallets.form.minWithdrawal"
                             id="min"
                             autofocus
                             type="text"
@@ -182,19 +188,21 @@
         </main-popup>
         <main-popup
             id="addWallet"
-            :wait="wait"
-            :closed="closed"
+            :wait="wallets.wait"
+            :closed="wallets.closed"
             :errors="errors"
+            @closed="wallets.clearForm(wallets.form)"
+            v-if="wallets.form"
         >
             <form
-                @submit.prevent="add(wallets)"
+                @submit.prevent="wallets.addWallet"
                 class="form form-popup popup__form"
             >
                 <main-title tag="h3">{{
                     $t("wallets.popups.add.title")
                 }}</main-title>
                 <input
-                    v-model="form.wallet"
+                    v-model="wallets.form.wallet"
                     required
                     autofocus
                     type="text"
@@ -202,7 +210,7 @@
                     :placeholder="$t('wallets.popups.add.placeholders.wallet')"
                 />
                 <input
-                    v-model="form.name"
+                    v-model="wallets.form.name"
                     autofocus
                     type="text"
                     class="input popup__input"
@@ -215,7 +223,7 @@
                         }}</label>
                         <input
                             name="percent"
-                            v-model="form.percent"
+                            v-model="wallets.form.percent"
                             id="percentChg"
                             autofocus
                             type="text"
@@ -229,7 +237,7 @@
                         }}</label>
                         <input
                             name="minWithdrawal"
-                            v-model="form.minWithdrawal"
+                            v-model="wallets.form.minWithdrawal"
                             id="minChg"
                             autofocus
                             type="text"
@@ -273,9 +281,6 @@ import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import { useForm } from "@inertiajs/vue3";
-import { ref } from "vue";
-import store from "../../../store";
 
 import { WalletService } from "@/services/WalletService";
 
@@ -290,18 +295,12 @@ export default {
     },
     layout: profileLayoutView,
     computed: {
-        ...mapGetters([
-            "getIncome",
-            "allAccounts",
-            "allHistoryForDays",
-            "getActive",
-            "getWallet",
-        ]),
+        ...mapGetters(["getActive"]),
         endWallet() {
-            return this.wallets.length > 0;
+            return this.wallets.wallets?.length > 0;
         },
         emptyWallet() {
-            return this.wallets.length === 0;
+            return this.wallets.wallets?.length === 0;
         },
     },
     created() {
@@ -310,102 +309,24 @@ export default {
     },
     data() {
         return {
-            isChecked: false,
+            // isChecked: false,
             viewportWidth: 0,
             waitWallet: true,
             wallets: [],
         };
     },
-    setup() {
-        let wait = ref(false);
-        let closed = ref(false);
-        let form = ref(
-            useForm({
-                name: "",
-                wallet: "",
-                percent: "100",
-                minWithdrawal: "0.005",
-                group_id: store.getters.getActive,
-            })
-        );
-
-        const clearObj = () => {
-            form.value = {
-                ...form.value,
-                name: "",
-                wallet: "",
-                percent: "100",
-                minWithdrawal: "0.005",
-                group_id: store.getters.getActive,
-            };
-        };
-
-        const change = async () => {
-            let group = store.getters.allAccounts[store.getters.getActive];
-            group.group_id =
-                store.getters.allAccounts[store.getters.getActive].id;
-            wait.value = true;
-            await form.value.post("/wallet_change", {
-                onSuccess() {
-                    store.dispatch("getWallets", group);
-                    clearObj();
-                    setTimeout(() => {
-                        closed.value = true;
-                    }, 300);
-                    setTimeout(() => {
-                        closed.value = false;
-                    }, 600);
-                },
-            });
-            wait.value = false;
-        };
-
-        const add = async (wallets) => {
-            if (
-                store.getters.getActive !== -1 &&
-                store.getters.getWallet[store.getters.getActive]
-            ) {
-                let group = store.getters.allAccounts[store.getters.getActive];
-                group.group_id =
-                    store.getters.allAccounts[store.getters.getActive].id;
-                wait.value = true;
-                let per = 0;
-                wallets.forEach((wal) => {
-                    per = per + wal["percent"];
-                });
-                per = per + Number(form.value.percent);
-                await form.value.post("/wallet_create", {
-                    onSuccess() {
-                        store.dispatch("getWallets", group);
-                        clearObj();
-                        setTimeout(() => {
-                            closed.value = true;
-                        }, 300);
-                        setTimeout(() => {
-                            closed.value = false;
-                        }, 600);
-                    },
-                });
-                wait.value = false;
-            } else {
-                store.dispatch("getMessage", "Подождите 5 секунд.");
-            }
-        };
-
-        return { form, wait, closed, add, change, clearObj };
-    },
     watch: {
-        getActive(newVal) {
-            this.form.group_id = newVal;
+        getActive() {
+            this.walletInit();
         },
-        "form.percent"(newVal) {
-            this.form.percent = String(newVal).replace(
+        "wallets.form.percent"(newVal) {
+            this.wallets.form.percent = String(newVal).replace(
                 /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
                 ""
             );
         },
-        "form.minWithdrawal"(newVal) {
-            this.form.minWithdrawal = newVal.replace(
+        "wallets.form.minWithdrawal"(newVal) {
+            this.wallets.form.minWithdrawal = newVal.replace(
                 /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
                 ""
             );
@@ -414,34 +335,18 @@ export default {
     methods: {
         walletInit() {
             this.wallets = new WalletService();
-        },
-        changeWallet(wallet) {
-            this.form = {
-                ...this.form,
-                percent: wallet.percent,
-                minWithdrawal: wallet.minWithdrawal,
-                wallet: wallet.wallet,
-                name: wallet.fullName,
-            };
-        },
-        checkboxer(is_checked) {
-            this.isChecked = is_checked;
+
+            this.wallets.index();
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
     },
-    beforeUpdate() {
-        if (this.wallets?.records)
-            setTimeout(() => (this.waitWallet = false), 300);
-    },
     mounted() {
-        if (this.getActive) {
-            this.walletInit();
-        }
+        this.wallets = new WalletService();
+        this.walletInit();
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
-        if (this.wallets?.records) this.waitWallet = false;
     },
     props: ["errors", "message", "user", "auth_user"],
 };

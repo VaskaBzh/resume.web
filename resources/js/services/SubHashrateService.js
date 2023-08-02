@@ -1,10 +1,11 @@
 import api from "@/api/api";
 
 import { subHashrateData } from "@/DTO/subHashrateData";
+import store from "@/store";
 
 export class SubHashrateService {
-    constructor(group_id, translate, titles, offset = 24) {
-        this.group_id = group_id;
+    constructor(translate, titles, offset = 24) {
+        this.group_id = store.getters.getActive;
         this.offset = offset;
         this.titles = titles;
 
@@ -78,16 +79,18 @@ export class SubHashrateService {
     }
 
     async index() {
-        this.waitHashrate = true;
+        if (store.getters.getActive !== -1) {
+            this.waitHashrate = true;
 
-        this.setDefaultKeys();
+            this.setDefaultKeys();
 
-        this.records = (await this.fetch()).data.data.map((el) => {
-            return new subHashrateData(el);
-        });
+            this.records = (await this.fetch()).data.data.map((el) => {
+                return new subHashrateData(el);
+            });
 
-        await this.makeFullValues();
+            await this.makeFullValues();
 
-        this.waitHashrate = false;
+            this.waitHashrate = false;
+        }
     }
 }

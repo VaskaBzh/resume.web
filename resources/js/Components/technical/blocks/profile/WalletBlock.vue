@@ -20,14 +20,14 @@
                     className="wallets__block_doths_menu"
                     :options="options"
                     :opened="opened"
-                    @remove="remove(wallet)"
+                    @remove="$emit('remove', wallet)"
                     @clicked="changeWalletObj(wallet)"
                 ></main-menu>
             </div>
         </div>
         <div class="main__number">
             {{ converter.btc }}
-            <div class="unit">{{ wallet.shortName }}</div>
+            <div class="unit">{{ wallet.currency }}</div>
             <div class="row">
                 <span> ≈ {{ converter.usd }} $</span>
                 <span v-if="$i18n.locale === 'ru'">
@@ -80,29 +80,6 @@ export default {
         return {
             opened: false,
             converter: null,
-        };
-    },
-    setup() {
-        let removeForm = ref(
-            useForm({
-                name: "",
-                wallet: "",
-                percent: "",
-                minWithdrawal: "",
-                group_id: store.getters.getActive,
-            })
-        );
-
-        const remove = async (wallet) => {
-            removeForm.value.wallet = wallet.wallet;
-            await removeForm.value.post("/wallet_delete", {
-                onSuccess() {
-                    store.dispatch("getWallets", removeForm.value);
-                },
-            });
-        };
-        return {
-            remove,
         };
     },
     components: { MainMenu },
@@ -204,7 +181,7 @@ export default {
     methods: {
         async updateConversion() {
             this.converter = new Converter(
-                this.wallet.value,
+                this.wallet.payment,
                 this.btcInfo?.btc ? this.btcInfo.btc.price : 0
             );
             await this.converter.convert();

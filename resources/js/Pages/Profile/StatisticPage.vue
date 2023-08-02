@@ -18,9 +18,6 @@
                 :interval="20"
                 :end="endHistory"
             ></no-info>
-            {{ endHistory }}
-            {{ !waitHistory }}
-            {{ hashrates.records?.filter((a) => a.hashrate > 0).length !== 0 }}
             <div
                 class="cabinet"
                 v-if="
@@ -61,8 +58,8 @@
                         :viewportWidth="viewportWidth"
                         :key="
                             hashrates.graph?.values[
-                                hashrates.graph?.values.length - 1
-                            ]
+                                hashrates.graph.values?.length - 1
+                            ] || 1
                         "
                     />
                 </div>
@@ -394,7 +391,6 @@ export default {
         async initHashrate(needUpdate = false) {
             needUpdate ? (this.waitHistory = true) : (this.waitHistory = false);
             this.hashrates = new SubHashrateService(
-                this.getActive,
                 this.$t,
                 [0, 1],
                 this.offset
@@ -419,9 +415,7 @@ export default {
         },
     },
     async mounted() {
-        if (this.getActive !== -1) {
-            await this.initHashrate(true);
-        }
+        await this.initHashrate(true);
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }
