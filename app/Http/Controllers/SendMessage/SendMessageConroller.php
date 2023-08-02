@@ -28,9 +28,9 @@ class SendMessageConroller extends Controller
         ], $messages);
 
         if ($request->input("contacts")) {
-            Mail::to("allbtc_support.com")->send(new MailMessage($request->input('message'), $request->input('contacts')));
+            Mail::to("support@all-btc.com")->send(new MailMessage($request->input('message'), $request->input('contacts')));
         } else {
-            Mail::to("allbtc_support.com")->send(new MailMessage($request->input('message')));
+            Mail::to("support@all-btc.com")->send(new MailMessage($request->input('message')));
         }
     }
 }

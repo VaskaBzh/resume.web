@@ -10,7 +10,7 @@
             target="_blank"
             :href="
                 this.$page.url.startsWith('/profile')
-                    ? 'https://t.me/ailasmon'
+                    ? 'https://t.me/allbtc_support'
                     : '#'
             "
             >{{ $t("footer.feedback.button") }}</a
@@ -92,7 +92,7 @@
                     <div class="footer__social socials">
                         <a
                             target="_blank"
-                            href="https://t.me/ailasmon"
+                            href="https://t.me/allbtc_support"
                             class="footer__social_link socials_link teleg"
                         >
                             <svg
@@ -215,7 +215,7 @@
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
                         <a 
-                            href="mailto:allbtc_support.com"
+                            href="mailto:support@all-btc.com"
                             target="_blank"
                         >
                             <span class="contacts_img">
@@ -231,7 +231,7 @@
                                         fill="#5389E1"
                                     />
                                 </svg> </span
-                            >@allbtc_support.com</a
+                            >support@all-btc.com</a
                         >
                     </li>
                     <li class="footer__contacts_item contacts_item">

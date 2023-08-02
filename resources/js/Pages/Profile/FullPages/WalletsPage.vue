@@ -128,20 +128,6 @@
                 />
                 <div class="form_row form_row-non-height">
                     <div class="form_column">
-                        <label for="percent" class="main__label">{{
-                            $t("wallets.popups.change.labels.percent")
-                        }}</label>
-                        <input
-                            name="percent"
-                            v-model="form.percent"
-                            id="percent"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="100"
-                        />
-                    </div>
-                    <div class="form_column">
                         <label for="min" class="main__label">{{
                             $t("wallets.popups.change.labels.minWithdrawal")
                         }}</label>

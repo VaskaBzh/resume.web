@@ -313,7 +313,7 @@ const messages = {
                     },
                 },
             },
-            // <a href="https://t.me/ailasmon">
+            // <a href="https://t.me/allbtc_support">
             {
                 title: "Technical support and contact us.",
                 list: {
@@ -980,7 +980,7 @@ const messages = {
                 },
             },
             {
-                // allbtc_support.com t.me/allbtc_support
+                // support@all-btc.com t.me/allbtc_support
                 title: "Техническая поддержка и связь с нами",
                 list: {
                     0: {
