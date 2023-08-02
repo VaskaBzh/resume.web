@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Workers;
 
 use App\Http\Controllers\Controller;
-use App\Models\Sub;
+use App\Models\Worker;
 use App\Services\External\BtcComService;
 use Illuminate\Http\JsonResponse;
 
-class ListController extends Controller
+class ShowController extends Controller
 {
-    public function __invoke(Sub $sub, BtcComService $btcComService): JsonResponse
+    public function __invoke(Worker $worker, BtcComService $btcComService): JsonResponse
     {
         return new JsonResponse([
-            'data' => $btcComService->getWorkerList($sub->group_id)
+            'data' => $btcComService->getWorker($worker->worker_id)
         ]);
     }
 }
