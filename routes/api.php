@@ -67,7 +67,5 @@ Route::group([
     Route::get('{sub}', WalletListController::class)->name('wallet.list');
 });
 
-
-
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
