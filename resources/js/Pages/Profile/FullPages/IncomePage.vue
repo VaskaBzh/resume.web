@@ -109,7 +109,7 @@
             :rowsNum="per_page"
             :errors="errors"
             :meta="incomes.meta"
-            @changePerPage="per_page = $event"
+            @changePerPage="changePerPage"
             @changePage="page = $event"
         ></main-slider>
     </div>
@@ -122,7 +122,7 @@ import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRa
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
-import { incomeService } from "@/services/incomeService";
+import { IncomeService } from "@/services/IncomeService";
 
 export default {
     components: {
@@ -144,7 +144,7 @@ export default {
             ],
             date: {},
             waitAjax: false,
-            per_page: 2,
+            per_page: 25,
             page: 1,
             filter: "",
             incomes: {},
@@ -205,7 +205,7 @@ export default {
     methods: {
         initIncomes() {
             if (this.getActive !== -1) {
-                this.incomes = new incomeService(
+                this.incomes = new IncomeService(
                     this.getActive,
                     this.$t,
                     [0, 1, 2, 3, 4, 5]
@@ -265,6 +265,10 @@ export default {
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
+        },
+        changePerPage($event) {
+            this.per_page = $event;
+            this.page = 1;
         },
         changeActiveTab(tabName) {
             switch (tabName) {

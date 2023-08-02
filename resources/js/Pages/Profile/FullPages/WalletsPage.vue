@@ -271,12 +271,13 @@ import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import { mapGetters } from "vuex";
-import Vue from "lodash";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref } from "vue";
 import store from "../../../store";
+
+import { WalletService } from "@/services/WalletService";
 
 export default {
     components: {
@@ -296,45 +297,6 @@ export default {
             "getActive",
             "getWallet",
         ]),
-        wallets() {
-            let arr = [];
-            if (this.getWallet[this.getActive]) {
-                Object.values(this.getWallet[this.getActive]).forEach(
-                    (wal, i) => {
-                        if (wal) {
-                            let name = wal.wallet;
-                            if (wal.name) {
-                                name = wal.name;
-                            }
-                            let walletModel = {
-                                img: "bitcoin_img.webp",
-                                fullName: name,
-                                name:
-                                    name.substr(0, 4) +
-                                    "..." +
-                                    name.substr(name.length - 4, name.length),
-                                wallet: wal.wallet,
-                                shortName: "BTC",
-                                value: Number(wal.payment).toFixed(8),
-                                dollarValue: 0,
-                                rubleValue: 0,
-                                percent: wal.percent,
-                                minWithdrawal: wal.minWithdrawal,
-                            };
-
-                            if (this.isChecked) {
-                                if (wal.payment && wal.payment !== 0) {
-                                    Vue.set(arr, i, walletModel);
-                                }
-                            } else {
-                                Vue.set(arr, i, walletModel);
-                            }
-                        }
-                    }
-                );
-            }
-            return arr;
-        },
         endWallet() {
             return this.wallets.length > 0;
         },
@@ -351,6 +313,7 @@ export default {
             isChecked: false,
             viewportWidth: 0,
             waitWallet: true,
+            wallets: [],
         };
     },
     setup() {
@@ -449,6 +412,9 @@ export default {
         },
     },
     methods: {
+        walletInit() {
+            this.wallets = new WalletService();
+        },
         changeWallet(wallet) {
             this.form = {
                 ...this.form,
@@ -466,13 +432,16 @@ export default {
         },
     },
     beforeUpdate() {
-        if (this.getWallet[this.getActive])
+        if (this.wallets?.records)
             setTimeout(() => (this.waitWallet = false), 300);
     },
     mounted() {
+        if (this.getActive) {
+            this.walletInit();
+        }
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
-        if (this.getWallet[this.getActive]) this.waitWallet = false;
+        if (this.wallets?.records) this.waitWallet = false;
     },
     props: ["errors", "message", "user", "auth_user"],
 };

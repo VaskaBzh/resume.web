@@ -3,7 +3,7 @@
         <div class="graph__main">
             <div class="graph__list" ref="graph">
                 <line-graph-statistic
-                    :graphData="graphs[0]"
+                    :graphData="graph"
                     :height="height"
                     :redraw="redraw"
                     :viewportWidth="viewportWidth"
@@ -28,15 +28,15 @@ import { mapGetters } from "vuex";
 export default {
     props: {
         heightVal: Number,
-        graphs: {
-            type: Array,
+        graph: {
+            type: Object,
             required: true,
         },
         viewportWidth: {
             type: Number,
             default: 1980,
         },
-        val: {
+        offset: {
             type: Number,
             default: 24,
         },

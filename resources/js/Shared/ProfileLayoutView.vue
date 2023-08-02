@@ -66,7 +66,7 @@ export default {
             "getMessage",
         ]),
     },
-    async created() {
+    async mounted() {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getMiningStat");
             this.$store.dispatch("getGraph");
@@ -74,6 +74,7 @@ export default {
         }
         this.interval = setInterval(() => {
             this.$store.dispatch("getAccounts", this.user.id);
+            this.$store.dispatch("set_active", this.getActive);
         }, 60000);
         // if (!localStorage.getItem("location")) {
         //     axios.get("/get_location").then((res) => {

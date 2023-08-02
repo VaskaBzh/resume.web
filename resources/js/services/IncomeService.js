@@ -3,7 +3,7 @@ import api from "@/api/api";
 import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 
-export class incomeService {
+export class IncomeService {
     constructor(id, translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {
         this.incomeList = new Map();
         this.incomeRows = [];

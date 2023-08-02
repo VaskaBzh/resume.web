@@ -15,15 +15,19 @@
             <no-info
                 class="cabinet"
                 :wait="waitHistory"
-                :interval="80"
+                :interval="20"
                 :end="endHistory"
             ></no-info>
+            {{ endHistory }}
+            {{ !waitHistory }}
+            {{ hashrates.records?.filter((a) => a.hashrate > 0).length !== 0 }}
             <div
                 class="cabinet"
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    hashrates.filter((a) => a.hash > 0).length !== 0
+                    hashrates.records?.filter((a) => a.hashrate > 0).length !==
+                        0
                 "
             >
                 <div class="cabinet__head">
@@ -35,7 +39,7 @@
                             class="cabinet_button"
                             :key="button.title + i"
                             v-for="(button, i) in buttons"
-                            :class="{ active: button.value === this.val }"
+                            :class="{ active: button.value === offset }"
                             @click="changeGraph(button.value)"
                         >
                             {{ button.title }}
@@ -47,15 +51,19 @@
                 >
                     <no-info-wait
                         class="no-bg"
-                        :wait="waitAjax"
+                        :wait="hashrates.waitHashrate"
                     ></no-info-wait>
                     <statistic-chart
-                        v-if="!waitAjax"
+                        v-if="!hashrates.waitHashrate"
                         class="no-title"
-                        :val="val"
-                        :graphs="graphs"
+                        :offset="offset"
+                        :graph="hashrates.graph"
                         :viewportWidth="viewportWidth"
-                        :key="graphs[0].values[graphs[0].values.length - 1]"
+                        :key="
+                            hashrates.graph?.values[
+                                hashrates.graph?.values.length - 1
+                            ]
+                        "
                     />
                 </div>
             </div>
@@ -65,7 +73,8 @@
                     endHistory &&
                     !waitHistory &&
                     !!getAccount &&
-                    hashrate?.filter((a) => a.hash > 0).length === 0
+                    hashrates.records?.filter((a) => a.hashrate > 0).length ===
+                        0
                 "
             >
                 <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
@@ -150,7 +159,7 @@
                     </div>
                     <no-info
                         :wait="waitAccounts"
-                        :interval="50"
+                        :interval="20"
                         :end="endAccounts"
                     ></no-info>
                     <div
@@ -231,6 +240,7 @@ import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 
 import api from "@/api/api";
+import { SubHashrateService } from "@/services/SubHashrateService";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
@@ -260,15 +270,10 @@ export default {
             linkAddress2: "btc.all-btc.com:2222",
             visualType: "table",
             interval: null,
-            hash: 0,
-            hash24: 0,
-            reject: 0,
-            workersActive: 0,
-            workersUnActive: 0,
-            workersInActive: 0,
-            val: 24,
+            intervalRender: null,
+            offset: 24,
             clearProfit: null,
-            hashrates: [],
+            hashrates: {},
             graphs: [
                 {
                     id: 1,
@@ -297,11 +302,11 @@ export default {
     },
     watch: {
         async getActive() {
-            await this.renderChart();
+            await this.initHashrate();
         },
-        async val() {
-            await this.renderChart();
-        }
+        async offset() {
+            await this.initHashrate();
+        },
     },
     computed: {
         endHistory() {
@@ -348,7 +353,7 @@ export default {
         workers() {
             return {
                 hash: this.getAccount.hash_per_min ?? 0,
-                hash24: this.getAccount.hash_per_dey ?? 0,
+                hash24: this.getAccount.hash_per_day ?? 0,
                 active: this.getAccount.workers_count_active ?? 0,
                 unStable: this.getAccount.workers_count_unstable ?? 0,
                 inActive: this.getAccount.workers_count_in_active ?? 0,
@@ -386,123 +391,47 @@ export default {
         ]),
     },
     methods: {
+        async initHashrate(needUpdate = false) {
+            needUpdate ? (this.waitHistory = true) : (this.waitHistory = false);
+            this.hashrates = new SubHashrateService(
+                this.getActive,
+                this.$t,
+                [0, 1],
+                this.offset
+            );
+
+            await this.hashrates.index();
+
+            this.intervalRender = setInterval(() => {
+                this.hashrates.index();
+            }, 60000);
+
+            this.waitHistory = false;
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
         changeGraph(val) {
-            this.val = val;
+            this.offset = val;
         },
         router() {
             return router;
         },
-        // allStat(bool) {
-        //     if (this.allHistory[this.getActive]) {
-        //         if (bool) {
-        //             let allArrays = Object.values(this.allHistory);
-        //             this.activeHistory = allArrays.reduce((a, b) => {
-        //                 let arr, another;
-        //                 if (a.length > b.length) {
-        //                     arr = a;
-        //                     another = b;
-        //                 } else {
-        //                     arr = b;
-        //                     another = a;
-        //                 }
-        //                 return arr.map((el, i) => {
-        //                     let hash = el.hash + another[i].hash || 0;
-        //                     return {
-        //                         hash: hash,
-        //                         unit:
-        //                             hash < 1000
-        //                                 ? "T"
-        //                                 : hash < 1000000
-        //                                 ? "P"
-        //                                 : "E",
-        //                         amount: el.amount + another[i].amount || 0,
-        //                     };
-        //                 });
-        //             });
-        //             this.all = true;
-        //         } else {
-        //             this.setActive();
-        //             this.all = false;
-        //         }
-        //         try {
-        //             let id = this.id;
-        //             this.changeGraph(1);
-        //             this.changeId();
-        //             this.renderChart();
-        //             this.changeGraph(id);
-        //         } catch (err) {
-        //             console.error(err);
-        //         }
-        //     }
-        // },
-        async renderChart() {
-            const interval = 60 * 60 * 1000;
-            const currentTime = new Date().getTime();
-            this.waitAjax = true;
-            this.hashrates = (
-                await api.get(`/api/hashrate/${this.getActive}`)
-            ).data.data;
-
-            this.graphs[0].dates = Array.from({ length: this.val }, (_, i) => {
-                const date = new Date(
-                    currentTime - (this.val - 1 - i) * interval
-                );
-                return date.getTime();
-            });
-
-            const [values, amount, unit] = this.hashrates
-                .slice(-this.val)
-                .reverse()
-                .reduce(
-                    (acc, el) => {
-                        let hash = el.hash ?? 0;
-                        if (el.unit === "P") hash *= 1000;
-                        else if (el.unit === "E") hash *= 1000000;
-                        acc[0].push(Number(hash));
-                        el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                        acc[2].push("T");
-
-                        return acc;
-                    },
-                    [[], [], []]
-                );
-
-            let randomize = (min, max) => {
-                return Math.random() * (max - min) + min;
-            };
-
-            while (values.length < this.val) {
-                values.push(0);
-                amount.push("0");
-                unit.push("T");
-            }
-
-            Object.assign(this.graphs[0], {
-                values: values.reverse(),
-                amount: amount.map(String).reverse(),
-                unit: unit.reverse(),
-            });
-
-            setTimeout(this.changeId, 700);
-
-            this.waitHistory = false;
-            this.waitAjax = false;
-        },
     },
-    mounted() {
+    async mounted() {
         if (this.getActive !== -1) {
-            this.renderChart();
+            await this.initHashrate(true);
         }
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }
-        if (this.getAccount) this.waitAccounts = false;
+        if (Object.keys(this.getAccount).length > 0) this.waitAccounts = false;
+    },
+    unmounted() {
+        clearInterval(this.intervalRender);
     },
     beforeUpdate() {
-        if (this.getAccount) setTimeout(() => (this.waitAccounts = false), 300);
+        if (Object.keys(this.getAccount).length > 0) this.waitAccounts = false;
     },
 };
 </script>
