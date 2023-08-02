@@ -33,7 +33,6 @@
                     </span>
                     <span class="main__number">
                         {{ this.yesterdayProfit }}
-                        BTC
                     </span>
                 </div>
             </div>
@@ -155,37 +154,30 @@ export default {
         ...mapGetters([
             "allIncomeHistory",
             "getActive",
+            "getAccount",
             "getIncome",
             "getWallet",
         ]),
         unPayment() {
             let sum = 0;
-            if (this.getIncome[this.getActive]) {
-                sum = this.getIncome[this.getActive].unPayments;
+            if (this.getAccount) {
+                sum = this.getAccount.accruals - this.getAccount.payments;
             }
             return Number(sum).toFixed(8);
         },
         payed() {
             let sum = 0;
-            if (this.getIncome[this.getActive]) {
-                sum = this.getIncome[this.getActive].payments;
+            if (this.getAccount) {
+                sum = this.getAccount.payments;
             }
             return Number(sum).toFixed(8);
         },
-        result() {
-            let sum = 0;
-            if (this.getIncome[this.getActive]) {
-                sum =
-                    this.getIncome[this.getActive].unPayments *
-                    (Number(this.amount.replace("%", "")) / 100);
-            }
-            return Number(sum).toFixed(8) + " BTC";
-        },
         yesterdayProfit() {
-            if (this.allIncomeHistory[this.getActive]) {
-                return Number(this.allIncomeHistory[this.getActive]["amount"]);
+            if (this.incomes.incomeList?.get("rows")) {
+                console.log(this.incomes.incomeList?.get("rows")[0].earn);
+                return this.incomes.incomeList?.get("rows")[0].earn;
             }
-            return "0.00000000";
+            return "0.00000000 BTC";
         },
     },
     watch: {

@@ -70,10 +70,11 @@ export default {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getMiningStat");
             this.$store.dispatch("getGraph");
-            await this.$store.dispatch("getAccounts", this.user.id);
+            await this.$store.dispatch("accounts_all", this.user.id);
+            this.$store.dispatch("set_active", this.getActive);
         }
-        this.interval = setInterval(() => {
-            this.$store.dispatch("getAccounts", this.user.id);
+        this.interval = setInterval(async () => {
+            await this.$store.dispatch("accounts_all", this.user.id);
             this.$store.dispatch("set_active", this.getActive);
         }, 60000);
         // if (!localStorage.getItem("location")) {

@@ -97,7 +97,6 @@ export default {
                         col[0] !== "message" &&
                         col[0] !== "validate"
                 );
-                console.log(obj);
                 if (
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
