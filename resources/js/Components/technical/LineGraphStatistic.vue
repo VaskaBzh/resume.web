@@ -48,25 +48,25 @@ export default {
     },
     watch: {
         height() {
-            if (this.$refs.chart && this.graphData.values?.length > 0) {
+            if (this.$refs.chart && this.graphData?.values?.length > 0) {
                 this.dropGraph();
                 this.graphInit();
             }
         },
         containerWidth() {
-            if (this.$refs.chart && this.graphData.values?.length > 0) {
+            if (this.$refs.chart && this.graphData?.values?.length > 0) {
                 this.dropGraph();
                 this.graphInit();
             }
         },
         isDark() {
-            if (this.$refs.chart && this.graphData.values?.length > 0) {
+            if (this.$refs.chart && this.graphData?.values?.length > 0) {
                 this.dropGraph();
                 this.graphInit();
             }
         },
         bandColor() {
-            if (this.$refs.chart && this.graphData.values?.length > 0) {
+            if (this.$refs.chart && this.graphData?.values?.length > 0) {
                 this.dropGraph();
                 this.graphInit();
             }
@@ -605,7 +605,7 @@ export default {
         },
     },
     mounted() {
-        if (this.$refs.chart && this.graphData.values?.length > 0) {
+        if (this.$refs.chart && this.graphData?.values?.length > 0) {
             setInterval(() => {
                 if (
                     this.$refs.chart?.offsetWidth &&

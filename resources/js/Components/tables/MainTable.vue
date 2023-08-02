@@ -15,14 +15,14 @@
                 :key="i"
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
-                :data-popup="row.data ?? null"
+                :data-popup="row.data"
+                @openGraph="getUser"
             />
-            <!--                @openGraph="getUser"-->
         </tbody>
     </table>
     <teleport to="body">
         <main-popup
-            v-if="Object.values(allHistoryMiner).length > 0"
+            v-if="!!worker_service"
             :errors="errors"
             class="popup-graph"
             id="seeChart"
@@ -32,13 +32,16 @@
         >
             <div class="popup__head">
                 <main-title tag="h4" class="title-blue">
-                    {{ activeWorker.hash }}
+                    {{ worker_service.target_worker?.name }}
                 </main-title>
-                <span class="status popup_status" :class="activeWorker.class">
+                <span
+                    class="status popup_status"
+                    :class="worker_service.target_worker?.class"
+                >
                     {{
-                        activeWorker.class === "active"
+                        worker_service.target_worker?.class === "ACTIVE"
                             ? $t("workers.statuses[0]")
-                            : activeWorker.class === "inactive"
+                            : worker_service.target_worker?.class === "INACTIVE"
                             ? $t("workers.statuses[1]")
                             : $t("workers.statuses[2]")
                     }}
@@ -51,7 +54,7 @@
                             {{ $t("workers.table.thead[1]") }}</span
                         >
                         <span class="text text-black">
-                            <b> {{ activeWorker.hashRate }}</b>
+                            <b> {{ worker_service.target_worker?.hashrate }}</b>
                         </span>
                     </div>
                     <div class="popup__info_block">
@@ -59,7 +62,12 @@
                             $t("workers.table.thead[3]")
                         }}</span>
                         <span class="text text-black">
-                            <b> {{ activeWorker.hashRate24 }}</b></span
+                            <b>
+                                {{
+                                    worker_service.target_worker
+                                        ?.hashrate_per_day
+                                }}</b
+                            ></span
                         >
                     </div>
                     <div class="popup__info_block">
@@ -67,18 +75,22 @@
                             $t("workers.table.thead[4]")
                         }}</span>
                         <span class="text text-black">
-                            <b> {{ activeWorker.rejectRate }}</b></span
+                            <b>
+                                {{
+                                    worker_service.target_worker?.reject_percent
+                                }}</b
+                            ></span
                         >
                     </div>
                 </div>
                 <statistic-chart
                     class="popup-graph__graph"
-                    :graphs="graphs"
+                    :graph="worker_service.graph"
                     :redraw="redraw"
                     :viewportWidth="viewportWidth"
                     :heightVal="height"
                     :tooltip="true"
-                    :key="graphs[0].values[graphs[0].values.length - 1]"
+                    :key="graph[0]?.values[graph[0]?.values.length - 1]"
                 />
             </div>
         </main-popup>
@@ -98,6 +110,10 @@ export default {
         viewportWidth: Number,
         table: Object,
         errors: Object,
+        worker_service: {
+            type: Object,
+            default: {},
+        },
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
@@ -111,23 +127,17 @@ export default {
     },
     data() {
         return {
-            graphs: [
-                {
-                    id: 1,
-                    title: [
-                        this.$t("chart.labels[0]"),
-                        this.$t("chart.labels[1]"),
-                    ],
-                    values: [],
-                },
-            ],
             redraw: true,
             height: 360,
             indexWorker: 0,
-            activeWorker: {},
+            graph: {},
         };
     },
     watch: {
+        "worker_service.graph"() {
+            this.redraw = false;
+            this.redraw = true;
+        },
         viewportWidth() {
             if (this.viewportWidth >= 991.98) {
                 this.height = 360;
@@ -144,75 +154,12 @@ export default {
     },
     methods: {
         getUser(data) {
-            this.indexChanger(data.id);
-            this.activeWorker = data.info;
+            data.id ? this.worker_service?.getPopup(data.id) : null;
         },
         dropUser() {
-            setTimeout(() => {
-                this.indexWorker = -1;
-            }, 100);
-            this.activeWorker = {};
-        },
-        setIndex(index) {
-            this.indexWorker = index;
-        },
-        indexChanger(key) {
-            setTimeout(() => {
-                if (this.indexWorker !== key && key) {
-                    this.graphs = [
-                        {
-                            id: 1,
-                            title: [
-                                this.$t("chart.labels[0]"),
-                                this.$t("chart.labels[1]"),
-                            ],
-                            values: [],
-                        },
-                    ];
-
-                    this.setIndex(key);
-
-                    this.renderChart(key);
-                }
-            }, 10);
-        },
-        async renderChart(index) {
-            const interval = 60 * 60 * 1000;
-            const currentTime = new Date().getTime();
-            const historyValues = this.allHistoryMiner[index];
-
-            this.graphs[0].dates = Array.from({ length: 24 }, (_, i) => {
-                const date = new Date(currentTime - (24 - 1 - i) * interval);
-                return date.getTime();
-            });
-
-            if (historyValues) {
-                const [values, unit] = historyValues
-                    .slice(-24)
-                    .reverse()
-                    .reduce(
-                        (acc, el) => {
-                            let hash = el.hash ?? 0;
-                            if (el.unit === "P") hash *= 1000;
-                            else if (el.unit === "E") hash *= 1000000;
-                            acc[0].push(Number(hash));
-                            acc[2].push(el.unit ?? "T");
-
-                            return acc;
-                        },
-                        [[], [], []]
-                    );
-
-                while (values.length < 24) {
-                    values.push(0);
-                    unit.push("T");
-                }
-
-                await Object.assign(this.graphs[0], {
-                    values: values.reverse(),
-                    unit: unit.reverse(),
-                });
-            }
+            Object.values(this.worker_service).length > 0
+                ? this.worker_service.clearWorkerId()
+                : null;
         },
     },
 };
@@ -278,20 +225,20 @@ export default {
                     display: inline;
                 }
             }
-            //&:hover,
-            //&:active {
-            //    @media (max-width: 767.98px) {
-            //        background: #c6d8f5;
-            //    }
-            //    @media (min-width: 767.98px) {
-            //        td {
-            //            background: #c6d8f5;
-            //        }
-            //        svg {
-            //            stroke: #343434;
-            //        }
-            //    }
-            //}
+            &:hover,
+            &:active {
+                @media (max-width: 767.98px) {
+                    background: #c6d8f5;
+                }
+                @media (min-width: 767.98px) {
+                    td {
+                        background: #c6d8f5;
+                    }
+                    svg {
+                        stroke: #343434;
+                    }
+                }
+            }
         }
         svg {
             transition: all 0.3s ease 0s;

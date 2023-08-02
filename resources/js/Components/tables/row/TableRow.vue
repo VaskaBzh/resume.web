@@ -117,8 +117,7 @@ export default {
     methods: {
         openPopup() {
             this.$emit("openGraph", {
-                id: this.columns.graphId || null,
-                info: this.updatedColumns,
+                id: this.columns.graphId,
             });
         },
     },
@@ -176,9 +175,9 @@ export default {
                 }
             }
         }
-        //&-cursor {
-        //    cursor: pointer;
-        //}
+        &-cursor {
+            cursor: pointer;
+        }
         &.main {
             .more {
                 display: none;

@@ -13,6 +13,7 @@
             <main-table
                 :viewportWidth="viewportWidth"
                 :table="table"
+                :worker_service="worker_service"
             ></main-table>
         </div>
     </div>
@@ -34,6 +35,10 @@ export default {
         rowsVal: Number,
         wait: Boolean,
         empty: Object,
+        worker_service: {
+            type: Object,
+            default: {},
+        },
     },
     data() {
         return {
