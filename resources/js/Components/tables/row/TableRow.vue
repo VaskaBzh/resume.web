@@ -95,8 +95,10 @@ export default {
                         col[0] !== "unit" &&
                         col[0] !== "unit24" &&
                         col[0] !== "message" &&
-                        col[0] !== "validate"
+                        col[0] !== "validate" &&
+                        col[0] !== "status"
                 );
+                console.log(obj);
                 if (
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
@@ -176,9 +178,9 @@ export default {
                 }
             }
         }
-        &-cursor {
-            cursor: pointer;
-        }
+        //&-cursor {
+        //    cursor: pointer;
+        //}
         &.main {
             .more {
                 display: none;

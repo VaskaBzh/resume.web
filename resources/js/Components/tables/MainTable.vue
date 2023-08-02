@@ -15,9 +15,9 @@
                 :key="i"
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
-                @openGraph="getUser"
                 :data-popup="row.data ?? null"
             />
+            <!--                @openGraph="getUser"-->
         </tbody>
     </table>
     <teleport to="body">
@@ -278,20 +278,20 @@ export default {
                     display: inline;
                 }
             }
-            &:hover,
-            &:active {
-                @media (max-width: 767.98px) {
-                    background: #c6d8f5;
-                }
-                @media (min-width: 767.98px) {
-                    td {
-                        background: #c6d8f5;
-                    }
-                    svg {
-                        stroke: #343434;
-                    }
-                }
-            }
+            //&:hover,
+            //&:active {
+            //    @media (max-width: 767.98px) {
+            //        background: #c6d8f5;
+            //    }
+            //    @media (min-width: 767.98px) {
+            //        td {
+            //            background: #c6d8f5;
+            //        }
+            //        svg {
+            //            stroke: #343434;
+            //        }
+            //    }
+            //}
         }
         svg {
             transition: all 0.3s ease 0s;
