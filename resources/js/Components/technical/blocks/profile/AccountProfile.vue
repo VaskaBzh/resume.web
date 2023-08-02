@@ -128,13 +128,14 @@ export default {
         todayEarn() {
             if (this.btcInfo) {
                 if (this.accountInfo) {
-                    let val = new Profit(
-                        this.accountInfo.hash_per_min,
-                        this.btcInfo.btc.diff,
-                        this.btcInfo.btc.reward,
-                        this.btcInfo.fpps
-                    );
-                    return val.amount().toFixed(8);
+                    return this.accountInfo.today_forecast;
+                    // let val = new Profit(
+                    //     this.accountInfo.hash_per_min,
+                    //     this.btcInfo.btc.diff,
+                    //     this.btcInfo.btc.reward,
+                    //     this.btcInfo.fpps
+                    // );
+                    // return val.amount().toFixed(8);
                 }
             }
             return 0;
