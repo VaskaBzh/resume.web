@@ -95,8 +95,7 @@ export default {
                         col[0] !== "unit" &&
                         col[0] !== "unit24" &&
                         col[0] !== "message" &&
-                        col[0] !== "validate" &&
-                        col[0] !== "status"
+                        col[0] !== "validate"
                 );
                 console.log(obj);
                 if (
