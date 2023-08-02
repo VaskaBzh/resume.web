@@ -1,6 +1,6 @@
 export class workerData {
     constructor(workerRecord) {
-        this.status = workerRecord.status;
+        // this.status = workerRecord.status;
         this.class = this.status;
         this.name = workerRecord.worker_name;
         this.name = String(this.name).split(".")[1];
