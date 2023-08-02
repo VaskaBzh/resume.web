@@ -1,25 +1,9 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
 import api from "@/api/api";
-import btccom from "@/api/btccom";
 
 export default {
     actions: {
-        async getLastFpps({ commit }) {
-            let earn_list = await btccom.fetch({
-                data: {
-                    puid: "781195",
-                    page_size: "1",
-                },
-                path: "account/earn-history",
-                method: "get",
-            });
-            try {
-                commit("setFpps", earn_list.list[0].more_than_pps96_rate);
-            } catch (err) {
-                console.error("Catch btc.com error: \n" + err);
-            }
-        },
         async getGraph({ commit }) {
             let difficulty_chart = await difficulty.fetch({
                 data: {
@@ -67,9 +51,6 @@ export default {
         },
     },
     mutations: {
-        setFpps(state, item) {
-            Vue.set(state.convertInfo, "fpps", item);
-        },
         updateInfo(state, data) {
             Vue.set(state.convertInfo, data.key, data.item);
         },

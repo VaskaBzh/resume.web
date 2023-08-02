@@ -69,7 +69,6 @@ export default {
     async created() {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getMiningStat");
-            this.$store.dispatch("getLastFpps");
             this.$store.dispatch("getGraph");
             await this.$store.dispatch("getAccounts", this.user.id);
         }

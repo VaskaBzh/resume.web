@@ -23,8 +23,7 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length !==
-                        0
+                    hashrates.filter((a) => a.hash > 0).length !== 0
                 "
             >
                 <div class="cabinet__head">
@@ -48,10 +47,10 @@
                 >
                     <no-info-wait
                         class="no-bg"
-                        :wait="id !== val"
+                        :wait="waitAjax"
                     ></no-info-wait>
                     <statistic-chart
-                        v-if="id === val"
+                        v-if="!waitAjax"
                         class="no-title"
                         :val="val"
                         :graphs="graphs"
@@ -65,9 +64,8 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    Object.values(this.allHash[this.getActive]).length === 0 &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
-                        0
+                    !!getAccount &&
+                    hashrate?.filter((a) => a.hash > 0).length === 0
                 "
             >
                 <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
@@ -232,7 +230,7 @@ import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 
-import { Profit } from "/resources/js/Scripts/profit.js";
+import api from "@/api/api";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
@@ -254,6 +252,7 @@ export default {
         return {
             waitHistory: true,
             waitAccounts: true,
+            waitAjax: true,
             viewportWidth: 0,
             profit: {},
             linkAddress: "btc.all-btc.com:4444",
@@ -267,9 +266,9 @@ export default {
             workersActive: 0,
             workersUnActive: 0,
             workersInActive: 0,
-            id: 0,
             val: 24,
             clearProfit: null,
+            hashrates: [],
             graphs: [
                 {
                     id: 1,
@@ -296,9 +295,17 @@ export default {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
+    watch: {
+        async getActive() {
+            await this.renderChart();
+        },
+        async val() {
+            await this.renderChart();
+        }
+    },
     computed: {
         endHistory() {
-            return !!this.allHistory[this.getActive];
+            return !!this.hashrates;
         },
         endAccounts() {
             return !!this.getAccount;
@@ -385,9 +392,6 @@ export default {
         changeGraph(val) {
             this.val = val;
         },
-        changeId() {
-            this.id = this.val;
-        },
         router() {
             return router;
         },
@@ -434,13 +438,13 @@ export default {
         //         }
         //     }
         // },
-        setActive() {
-            this.activeHistory = this.allHistory[this.getActive];
-        },
-        renderChart() {
+        async renderChart() {
             const interval = 60 * 60 * 1000;
             const currentTime = new Date().getTime();
-            const historyValues = Object.values(this.activeHistory);
+            this.waitAjax = true;
+            this.hashrates = (
+                await api.get(`/api/hashrate/${this.getActive}`)
+            ).data.data;
 
             this.graphs[0].dates = Array.from({ length: this.val }, (_, i) => {
                 const date = new Date(
@@ -449,7 +453,7 @@ export default {
                 return date.getTime();
             });
 
-            const [values, amount, unit] = historyValues
+            const [values, amount, unit] = this.hashrates
                 .slice(-this.val)
                 .reverse()
                 .reduce(
@@ -482,17 +486,15 @@ export default {
                 unit: unit.reverse(),
             });
 
-            setTimeout(() => {
-                this.end = true;
-            }, 10);
             setTimeout(this.changeId, 700);
+
+            this.waitHistory = false;
+            this.waitAjax = false;
         },
     },
     mounted() {
-        if (this.allHistory[this.getActive]) {
-            this.setActive();
+        if (this.getActive !== -1) {
             this.renderChart();
-            this.waitHistory = false;
         }
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
@@ -500,13 +502,6 @@ export default {
         if (this.getAccount) this.waitAccounts = false;
     },
     beforeUpdate() {
-        if (this.allHistory[this.getActive]) {
-            if (!this.all) {
-                this.setActive();
-            }
-            this.renderChart();
-            setTimeout(() => (this.waitHistory = false), 300);
-        }
         if (this.getAccount) setTimeout(() => (this.waitAccounts = false), 300);
     },
 };
