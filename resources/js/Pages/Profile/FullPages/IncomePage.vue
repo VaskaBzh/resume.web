@@ -89,17 +89,17 @@
                     {{ $t("income.table.tabs[1]") }}
                 </button>
             </div>
-            <div class="filter-block-container">
-                <!-- <div class="income__filter"> -->
-                <div class="filter_block">
-                    <main-date
-                        v-model="date"
-                        :placeholder="$t('date.placeholder')"
-                        @calendarChange="filterTable"
-                    ></main-date>
-                </div>
-                <!-- </div> -->
-            </div>
+            <!--            <div class="filter-block-container">-->
+            <!--                &lt;!&ndash; <div class="income__filter"> &ndash;&gt;-->
+            <!--                <div class="filter_block">-->
+            <!--                    <main-date-->
+            <!--                        v-model="date"-->
+            <!--                        :placeholder="$t('date.placeholder')"-->
+            <!--                        @calendarChange="filterTable"-->
+            <!--                    ></main-date>-->
+            <!--                </div>-->
+            <!--                &lt;!&ndash; </div> &ndash;&gt;-->
+            <!--            </div>-->
         </article>
         <main-slider
             :wait="waitAjax"
