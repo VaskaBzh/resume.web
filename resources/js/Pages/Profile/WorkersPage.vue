@@ -32,7 +32,7 @@
                 :table="worker_list.table"
                 :key="getActive"
                 type="Воркеры"
-                :wait="worker_list.rows?.length > 0"
+                :wait="!worker_list.rows?.length > 0"
                 :empty="worker_list.table?.get('rows')"
                 :errors="errors"
                 :rowsVal="1000"

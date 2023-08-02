@@ -101,13 +101,15 @@
             <!--                &lt;!&ndash; </div> &ndash;&gt;-->
             <!--            </div>-->
         </article>
+
         <main-slider
-            :wait="waitAjax"
-            :empty="incomes.incomeList?.get('rows')"
-            :table="incomes.incomeList"
+            :wait="incomes.waitTable"
+            :empty="incomes.rows"
+            :table="incomes.table"
             :rowsNum="per_page"
             :errors="errors"
             :meta="incomes.meta"
+            :key="getActive"
             @changePerPage="changePerPage"
             @changePage="page = $event"
         ></main-slider>
@@ -142,7 +144,6 @@ export default {
                 { title: "Выполнено", value: "completed" },
             ],
             date: {},
-            waitAjax: false,
             per_page: 25,
             page: 1,
             filter: "",
@@ -174,10 +175,10 @@ export default {
         },
         yesterdayProfit() {
             if (
-                this.incomes.incomeList?.get("rows") &&
-                this.incomes.incomeList?.get("rows")[0]?.earn
+                this.incomes.table?.get("rows") &&
+                this.incomes.table?.get("rows")[0]?.earn
             ) {
-                return this.incomes.incomeList?.get("rows")[0]?.earn;
+                return this.incomes.table?.get("rows")[0]?.earn;
             }
             return "0.00000000 BTC";
         },
@@ -197,16 +198,10 @@ export default {
         },
     },
     methods: {
-        initIncomes() {
+        async initIncomes() {
             this.incomes = new IncomeService(this.$t, [0, 1, 2, 3, 4, 5]);
 
-            this.ajaxSend();
-        },
-        async ajaxSend() {
-            if (this.page === 1) this.waitAjax = true;
-            await this.incomes.setRows(this.filter, this.page, this.per_page);
-            this.incomes.setTable();
-            this.waitAjax = false;
+            await this.incomes.setTable(this.filter, this.page, this.per_page);
         },
         // filterDate() {
         //     if (this.date && Object.values(this.date).length !== 0) {

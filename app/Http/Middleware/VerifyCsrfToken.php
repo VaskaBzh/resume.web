@@ -18,5 +18,8 @@ class VerifyCsrfToken extends Middleware
         '/wallet_change',
         '/wallet_process',
         '/set_location',
+        '/logout',
+        '/login',
+        '/register',
     ];
 }

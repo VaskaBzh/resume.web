@@ -78,7 +78,7 @@
                     <a href="/">
                         <img
                             class="nav__logo"
-                            v-if="!this.getTheme"
+                            v-if="!getTheme"
                             src="../../assets/img/logo_high_quality.svg"
                             alt="logo"
                         />
@@ -214,10 +214,7 @@
 
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
-                        <a 
-                            href="mailto:support@all-btc.com"
-                            target="_blank"
-                        >
+                        <a href="mailto:support@all-btc.com" target="_blank">
                             <span class="contacts_img">
                                 <svg
                                     width="26"
@@ -235,7 +232,7 @@
                         >
                     </li>
                     <li class="footer__contacts_item contacts_item">
-                        <a 
+                        <a
                             href="https://goo.gl/maps/N7xFJENqJkuomqvYA"
                             target="_blank"
                         >
@@ -260,10 +257,7 @@
             </div>
             <div class="footer__quote quote">
                 © 2022-2023 Allbtc Pool
-                <a 
-                    :href="pdf"
-                    target="_blank"
-                >{{ $t("footer.confidence") }}</a>
+                <a :href="pdf" target="_blank">{{ $t("footer.confidence") }}</a>
             </div>
         </div>
     </footer>
