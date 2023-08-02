@@ -13,7 +13,6 @@ export default {
             commit("updateActiveAccount", sub);
         },
         async accounts_all({ commit, state }, user_id) {
-            console.log(user_id);
             let subsList = (await api.get(`/api/subs/${user_id}`)).data.data;
 
             if (state.active === -1) {
