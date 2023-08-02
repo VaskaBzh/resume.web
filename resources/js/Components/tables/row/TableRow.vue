@@ -10,12 +10,7 @@
             v-for="(column, i) in renderColumns"
             v-tooltip="
                 viewportWidth >= 767.98
-                    ? column[0] === 'wallet' && this.columns.txid !== ''
-                        ? {
-                              mode: 'interactive: true',
-                              message: `${this.columns.txid}`,
-                          }
-                        : column[0] === 'status'
+                    ? column[0] === 'status'
                         ? { message: this.columns.message }
                         : null
                     : null
@@ -99,10 +94,11 @@ export default {
                         col[0] !== "data" &&
                         col[0] !== "unit" &&
                         col[0] !== "unit24" &&
-                        col[0] !== "payment" &&
                         col[0] !== "message" &&
-                        col[0] !== "txid"
+                        col[0] !== "validate" &&
+                        col[0] !== "status"
                 );
+                console.log(obj);
                 if (
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
@@ -139,6 +135,7 @@ export default {
         line-height: 135%;
         color: #343434;
         white-space: nowrap;
+        // text-align: center;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
@@ -181,9 +178,9 @@ export default {
                 }
             }
         }
-        &-cursor {
-            cursor: pointer;
-        }
+        //&-cursor {
+        //    cursor: pointer;
+        //}
         &.main {
             .more {
                 display: none;

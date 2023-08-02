@@ -13,7 +13,7 @@ export default {
                 })
             ).data;
             commit("updateIncomeHistory", {
-                historyItem: Object.values(incomes),
+                historyItem: Object.values(incomes).reverse()[0],
                 key: data.group_id,
             });
         },

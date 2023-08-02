@@ -2,26 +2,22 @@
     <table class="table">
         <thead class="table__head">
             <tr class="table__row">
-                <th
-                    class="table_column"
-                    v-for="(title, i) in table.titles"
-                    :key="i"
-                >
+                <th class="table_column" v-for="(title, i) in titles" :key="i">
                     {{ title }}
                 </th>
             </tr>
         </thead>
         <tbody class="table__body">
             <table-row
-                v-for="(row, i) in showRows"
+                v-for="(row, i) in rows"
                 :columns="row"
-                :titles="table.titles"
+                :titles="titles"
                 :key="i"
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
-                @openGraph="getUser"
                 :data-popup="row.data ?? null"
             />
+            <!--                @openGraph="getUser"-->
         </tbody>
     </table>
     <teleport to="body">
@@ -86,60 +82,6 @@
                 />
             </div>
         </main-popup>
-        <main-popup
-            v-if="
-                viewportWidth <= 767.98 && table.rows[0] && table.rows[0].status
-            "
-            class="popup-card"
-            id="fullpage"
-        >
-            <div class="table__row" :class="activeWorker.class">
-                <div class="table_column">
-                    <span class="label">{{
-                        activeWorker.wallet !== "..."
-                            ? activeWorker.wallet
-                            : activeWorker.txid
-                    }}</span>
-                    <span>{{ activeWorker.status }}</span>
-                </div>
-                <div class="table_column">
-                    <span class="label">
-                        {{ this.$t("income.table.thead[0]") }}</span
-                    >
-                    <span>{{ activeWorker.date }}</span>
-                </div>
-                <div class="table_column">
-                    <span class="label">
-                        {{ this.$t("income.table.thead[1]") }}</span
-                    >
-                    <span>{{ activeWorker.payDate }}</span>
-                </div>
-                <div class="table_column">
-                    <span class="label">
-                        {{ this.$t("income.table.thead[2]") }}</span
-                    >
-                    <span>{{ activeWorker.hash }}</span>
-                </div>
-                <div class="table_column">
-                    <span class="label">
-                        {{ this.$t("income.table.thead[3]") }}</span
-                    >
-                    <span>{{ activeWorker.earn }}</span>
-                </div>
-                <div class="table_column">
-                    <span class="label">
-                        {{ this.$t("income.table.thead[5]") }}</span
-                    >
-                    <span> {{ activeWorker.percent }}</span>
-                </div>
-                <div
-                    class="table_column table_column-margin"
-                    v-show="activeWorker.message"
-                >
-                    <span>{{ activeWorker.message }}</span>
-                </div>
-            </div>
-        </main-popup>
     </teleport>
 </template>
 
@@ -149,37 +91,22 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import Vue from "lodash";
 
 export default {
     name: "main-table",
     props: {
         viewportWidth: Number,
         table: Object,
-        first: {
-            type: Number,
-            default: 0,
-        },
-        rowsVal: {
-            type: Number,
-            default: 10,
-        },
         errors: Object,
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
         ...mapGetters(["allHistoryMiner"]),
-        showRows() {
-            let showInfo = {};
-            let entries = Object.entries(this.table.rows);
-            let length =
-                this.rowsVal > this.table.rows.length
-                    ? this.table.rows.length
-                    : this.rowsVal;
-            for (let i = this.first; i < length; i++) {
-                Vue.set(showInfo, entries[i][0], entries[i][1]);
-            }
-            return showInfo;
+        rows() {
+            return this.table.get("rows");
+        },
+        titles() {
+            return this.table.get("titles");
         },
     },
     data() {
@@ -327,17 +254,18 @@ export default {
         }
         .table {
             &_column {
+                position: relative;
                 color: #818c99;
                 font-size: 14px;
                 font-weight: 400;
                 line-height: 130%;
-                text-align: left;
+                // text-align: left;
                 background: transparent;
             }
         }
     }
     &__row {
-        position: relative;
+        text-align: left;
         &[data-popup="#seeChart"] {
             td {
                 transition: all 0.3s ease 0s;
@@ -350,20 +278,20 @@ export default {
                     display: inline;
                 }
             }
-            &:hover,
-            &:active {
-                @media (max-width: 767.98px) {
-                    background: #c6d8f5;
-                }
-                @media (min-width: 767.98px) {
-                    td {
-                        background: #c6d8f5;
-                    }
-                    svg {
-                        stroke: #343434;
-                    }
-                }
-            }
+            //&:hover,
+            //&:active {
+            //    @media (max-width: 767.98px) {
+            //        background: #c6d8f5;
+            //    }
+            //    @media (min-width: 767.98px) {
+            //        td {
+            //            background: #c6d8f5;
+            //        }
+            //        svg {
+            //            stroke: #343434;
+            //        }
+            //    }
+            //}
         }
         svg {
             transition: all 0.3s ease 0s;
@@ -371,7 +299,7 @@ export default {
             stroke: #818c99;
             position: absolute;
             right: 12px;
-            top: 50%;
+            bottom: 7px;
             transform: translateY(-50%);
         }
     }

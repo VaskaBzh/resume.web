@@ -7,6 +7,7 @@
     >
         <a
             class="all-link"
+            target="_blank"
             :href="
                 this.$page.url.startsWith('/profile')
                     ? 'https://t.me/ailasmon'
@@ -90,6 +91,7 @@
                     </a>
                     <div class="footer__social socials">
                         <a
+                            target="_blank"
                             href="https://t.me/ailasmon"
                             class="footer__social_link socials_link teleg"
                         >
@@ -140,6 +142,7 @@
                           </svg>
                         </a> -->
                         <a
+                            target="_blank"
                             href="#"
                             class="footer__social_link socials_link inst"
                         >
@@ -174,6 +177,7 @@
                             </svg>
                         </a>
                         <a
+                            target="_blank"
                             href="#"
                             class="footer__social_link socials_link youtube"
                         >
@@ -210,7 +214,10 @@
 
                 <ul class="footer__contacts contacts">
                     <li class="footer__contacts_item contacts_item">
-                        <a href="mailto:support@all-btc.com">
+                        <a 
+                            href="mailto:support@all-btc.com"
+                            target="_blank"
+                        >
                             <span class="contacts_img">
                                 <svg
                                     width="26"
@@ -228,7 +235,10 @@
                         >
                     </li>
                     <li class="footer__contacts_item contacts_item">
-                        <a href="https://goo.gl/maps/N7xFJENqJkuomqvYA">
+                        <a 
+                            href="https://goo.gl/maps/N7xFJENqJkuomqvYA"
+                            target="_blank"
+                        >
                             <span class="contacts_img">
                                 <svg
                                     width="19"
@@ -250,7 +260,10 @@
             </div>
             <div class="footer__quote quote">
                 © 2022-2023 Allbtc Pool
-                <a :href="pdf">{{ $t("footer.confidence") }}</a>
+                <a 
+                    :href="pdf"
+                    target="_blank"
+                >{{ $t("footer.confidence") }}</a>
             </div>
         </div>
     </footer>
@@ -391,7 +404,7 @@ export default {
         margin-bottom: 28px;
         @media (max-width: 479.98px) {
             margin-top: 30px;
-            margin-bottom: 50px;
+            margin-bottom: 96px;
         }
     }
 }

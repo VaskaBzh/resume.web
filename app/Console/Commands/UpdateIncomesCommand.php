@@ -8,10 +8,10 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\IncomeCompleteEvent;
 use App\Models\Sub;
-use App\Services\External\BtcComService;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class UpdateIncomesCommand extends Command
 {
@@ -24,37 +24,17 @@ class UpdateIncomesCommand extends Command
      * Execute the console command.
      *
      */
-    public function handle(
-        BtcComService $btcComService
-    ): void
+    public function handle(): void
     {
-
-        try {
-            $params = $btcComService->getEarnHistory()['list'];
-        } catch (\Exception $e) {
-            report($e);
-
-            return;
-        }
-
         foreach (Sub::all() as $sub) {
-            if ($sub->group_id == 6002482) {
-                continue;
-            }
             $this->process(
-                incomeService: IncomeService::buildWithParams(
-                    params: $params
-                ),
+                incomeService: resolve(IncomeService::class),
                 walletService: resolve(WalletService::class),
                 sub: $sub
             );
         }
 
         resolve(WalletService::class)->lock();
-
-        info('WALLET LOCKED', [
-            'sub' => $sub->id,
-        ]);
     }
 
     private function process(
@@ -63,7 +43,8 @@ class UpdateIncomesCommand extends Command
         Sub           $sub
     ): void
     {
-        info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+        Log::channel('incomes')
+            ->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
 
         $incomeService
             ->setSub($sub);
@@ -102,8 +83,8 @@ class UpdateIncomesCommand extends Command
 
             if (!$incomeService->canWithdraw()) {
                 $incomeService
-                    ->setIncomeData('message', Message::LESS_MIN_WITHDRAWAL->value)
-                    ->setIncomeData('status', Status::PENDING->value)
+                    ->setMessage(Message::LESS_MIN_WITHDRAWAL)
+                    ->setStatus(Status::PENDING)
                     ->createLocalIncome();
 
                 return;
@@ -111,7 +92,7 @@ class UpdateIncomesCommand extends Command
 
             if ($walletService->unlock()) {
 
-                info('WALLET UNLOCKED', [
+                Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
@@ -122,20 +103,22 @@ class UpdateIncomesCommand extends Command
 
                 if (!$txId) {
 
-                    info('TXID IS EMPTY', [
+                    Log::channel('incomes')->info('TXID IS EMPTY', [
                         'sub' => $sub->id,
                         'wallet' => $wallet->id
                     ]);
 
                     $incomeService
-                        ->setIncomeData('message', Message::ERROR_PAYOUT->value)
+                        ->setMessage(Message::ERROR_PAYOUT)
                         ->createLocalIncome();
+
+                    $walletService->lock();
 
                     return;
                 }
 
                 $incomeService
-                    ->setIncomeData('txid', $txId)
+                    ->setTxId($txId)
                     ->setStatus(Status::COMPLETED)
                     ->setMessage(Message::COMPLETED)
                     ->setSubPayments()
@@ -150,28 +133,33 @@ class UpdateIncomesCommand extends Command
 
                 $incomeService->complete();
 
-                info('INCOME COMPLETE', [
+                Log::channel('incomes')->info('INCOME COMPLETE', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
-            } else
-            {
-                info('WALLET UNLOCK ERROR', [
+            } else {
+                Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
-                $incomeService->setIncomeData('message', Message::ERROR->value);
+                $incomeService->setMessage(Message::ERROR);
             }
 
             $incomeService->createLocalIncome();
 
         } else {
             $incomeService
-                ->setIncomeData('message', Message::NO_WALLET->value)
+                ->setMessage(Message::NO_WALLET)
                 ->setPercent()
                 ->createLocalIncome();
         }
+
+        $walletService->lock();
+
+        Log::channel('incomes')->info('WALLET LOCKED', [
+            'sub' => $sub->id,
+        ]);
 
         sleep(1);
     }

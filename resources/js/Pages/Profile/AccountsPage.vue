@@ -29,7 +29,7 @@
                 <account-profile
                     @getId="setId"
                     v-for="(account, i) in allAccounts"
-                    :key="i + account.name + getActive"
+                    :key="i + account.sub + getActive"
                     :accKey="i"
                     :accountInfo="account"
                 />
@@ -128,40 +128,15 @@ export default {
             "allHistoryForDays",
             "btcInfo",
             "getActive",
+            "getAccount",
         ]),
         endAccounts() {
-            return !!this.allAccounts[this.getActive];
+            return !!this.getAccount;
         },
     },
     methods: {
         setId(id) {
             this.id = id;
-        },
-        changeName() {
-            let form = useForm({
-                name: this.form.name,
-                group_id: String(this.id),
-                puid: "781195",
-            });
-
-            this.wait = true;
-
-            form.put("/sub_change", {
-                onFinish: () => {
-                    if (this.errs?.length === 0) {
-                        this.$store.dispatch("getAccounts");
-                        this.form.name = "";
-                        this.wait = false;
-
-                        setTimeout(() => {
-                            this.closed = true;
-                        }, 300);
-                        setTimeout(() => {
-                            this.closed = false;
-                        }, 600);
-                    }
-                },
-            });
         },
     },
     setup() {

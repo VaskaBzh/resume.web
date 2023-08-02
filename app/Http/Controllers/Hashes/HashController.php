@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 
 class HashController extends Controller
 {
-    public function visual(Request $request): Collection
+    public function __invoke(Request $request): Collection
     {
         $request->validate([
             'group_id' => 'required',

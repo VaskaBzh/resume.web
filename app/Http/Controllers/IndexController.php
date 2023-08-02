@@ -12,6 +12,7 @@ class IndexController extends Controller
         return Inertia::render('HomePage', [
             'title' => 'Allbtc',
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -19,6 +20,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Auth/ConfirmPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -26,6 +28,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Auth/LoginPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -33,6 +36,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Auth/RegPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -40,6 +44,7 @@ class IndexController extends Controller
     {
         return Inertia::render('HostingPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -47,6 +52,7 @@ class IndexController extends Controller
     {
         return Inertia::render('FaqPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -54,6 +60,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/ProfilePage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -61,6 +68,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/AccountsPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -68,6 +76,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/StatisticPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -75,6 +84,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/WorkersPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -82,6 +92,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/ConnectingPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -89,6 +100,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/FullPages/WalletsPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -96,6 +108,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/FullPages/IncomePage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 
@@ -103,6 +116,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/FullPages/SettingsPage', [
             'auth_user' => Auth::check(),
+            'user' => auth()->user()
         ]);
     }
 }

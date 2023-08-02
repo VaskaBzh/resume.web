@@ -6,19 +6,19 @@ namespace App\Services\Internal;
 
 use App\Actions\Income\Complete;
 use App\Actions\Income\Create as IncomeCreate;
-use App\Actions\Finance\Create as FinanceCreate;
 use App\Actions\Sub\Update;
-use App\Dto\FinanceData;
 use App\Dto\IncomeData;
 use App\Dto\SubData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
+use App\Helper;
 use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
 use App\Services\External\BtcComService;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 class IncomeService
 {
@@ -29,30 +29,14 @@ class IncomeService
     ];
 
     private Sub $sub;
-
     private array $subData = [];
 
-    private function __construct(
-        private array   $params,
+    public function __construct(
+        private MinerStat $stat,
         private ?Wallet $wallet = null
     )
     {
-    }
-
-    public static function buildWithParams(array $params = []): IncomeService
-    {
-        $params = self::prepareParams($params);
-
-        return new self($params);
-    }
-
-    private static function prepareParams(array $params): array
-    {
-        return collect($params)->flatMap(static fn(array $param) => [
-            'fppsPercent' => $param['more_than_pps96_rate'],
-            'difficulty' => $param['diff'],
-            'reward_block' => MinerStat::first()->reward_block,
-        ])->toArray();
+        $this->stat = MinerStat::first();
     }
 
     public function setAmount(float $amount): IncomeService
@@ -109,9 +93,44 @@ class IncomeService
         return Arr::get($this->incomeData, $key);
     }
 
-    public function setIncomeData(string $key, $value): IncomeService
+    public function setAmount(float $amount): IncomeService
     {
-        $this->incomeData[$key] = $value;
+        $this->incomeData['amount'] = $amount;
+
+        return $this;
+    }
+
+    public function setPayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = $amount + $this->sub->unPayments;
+
+        return $this;
+    }
+
+    public function calculatePayment(float $amount): IncomeService
+    {
+        $this->incomeData['payment'] = ($amount + $this->subData['unPayments']) * ($this->wallet->percent / 100);
+
+        return $this;
+    }
+
+    public function setTxId(string $txId): IncomeService
+    {
+        $this->incomeData['txId'] = $txId;
+
+        return $this;
+    }
+
+    public function setMessage(Message $message): IncomeService
+    {
+        $this->incomeData['message'] = $message->value;
+
+        return $this;
+    }
+
+    public function setStatus(Status $status): IncomeService
+    {
+        $this->incomeData['status'] = $status->value;
 
         return $this;
     }
@@ -128,9 +147,23 @@ class IncomeService
         return $this->incomeData['payment'] >= Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
-    public function setSubData(string $key, $value): IncomeService
+    public function setSubClearPayments(): IncomeService
     {
-        $this->subData[$key] = $value;
+        $this->subData['payments'] = $this->sub->payments;
+
+        return $this;
+    }
+
+    public function setSubPayments(): IncomeService
+    {
+        $this->subData['payments'] = $this->sub->payments + $this->sub->unPayments;
+
+        return $this;
+    }
+
+    public function setSubAccruals(float $amount = 0): IncomeService
+    {
+        $this->subData['accruals'] = $this->sub->accruals + $amount;
 
         return $this;
     }
@@ -173,13 +206,11 @@ class IncomeService
     public function setHashRate(): bool
     {
         $hashRate = resolve(BtcComService::class)
-            ->getWorkerList($this->sub->group_id)
-            ->sum('shares_1d');
+            ->getSubHashRate($this->sub);
 
         if ($hashRate > 0) {
-            $this->params['hashRate'] = $hashRate;
             $this->incomeData['hash'] = $hashRate;
-            $this->incomeData['diff'] = $this->params['difficulty'];
+            $this->incomeData['diff'] = $this->stat->network_difficulty;
 
             return true;
         }
@@ -235,73 +266,16 @@ class IncomeService
             incomeData: $this->buildDto()
         );
 
-        info('INCOME CREATE', $income->toArray());
+        Log::channel('incomes')
+            ->info('INCOME CREATE', $income->toArray());
     }
 
-    public function createFinance(float $earn): IncomeService
+    public function getUserAmount(): float
     {
-        $profit = $this->calculateProfit($earn);
-
-        FinanceCreate::execute(
-            financeData: FinanceData::fromRequest([
-                'group_id' => $this->sub->group_id,
-                'earn' => $earn,
-                'user_total' => $earn - $profit,
-                'profit' => $profit
-            ])
+        return Helper::calculateEarn(
+            stats: $this->stat,
+            hashRate: $this->incomeData['hash']
         );
-
-        return $this;
-    }
-
-    public function getUserAmount(): float|\Exception
-    {
-        return match (true) {
-            !isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
-            !isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
-            !isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
-            default => $this->calculateUserAmount()
-        };
-    }
-
-    public function getEarn(): float|\Exception
-    {
-        return match (true) {
-            !isset($this->params['difficulty']) => throw new \Exception('Не указана сложность сети'),
-            !isset($this->params['hashRate']) => throw new \Exception('Не указан хэшрейт'),
-            !isset($this->params['reward_block']) => throw new \Exception('Не указана награда за блок'),
-            default => $this->calculateEarn()
-        };
-    }
-
-    /**
-     * Посчитать добычу саб-аккаунта
-     *
-     * $earnTime - время добычи блока с заданным хешрейтом ($share * pow(10, 12))
-     * $this->>hashRate - хешрейт
-     * $this->>rewardBlock - награда за блок
-     * $this->>difficulty - сложность сети биткоина
-     * $this->>fppsPercent - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
-     */
-    private function calculateUserAmount(): float
-    {
-        $total = $this->calculateEarn();
-
-        return $total - $total * (self::ALLBTC_FEE / 100);
-    }
-
-    /**
-     * Посчитать добычу
-     */
-    private function calculateEarn(): float
-    {
-        $secondsPerDay = 86400;
-        $earnTime = ($this->params['difficulty'] * pow("2", "32"))
-            / (($this->params['hashRate'] * pow("10", "12")) * $secondsPerDay);
-
-        $total = $this->params['reward_block'] / $earnTime;
-
-        return $total + $total * (($this->params['fppsPercent'] - BtcComService::FEE) / 100);
     }
 
     private function calculateProfit(float $earn): float

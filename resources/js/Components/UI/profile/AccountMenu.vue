@@ -136,6 +136,7 @@ import { Inertia } from "@inertiajs/inertia";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
+import store from "../../../store";
 import { ref } from "vue";
 
 export default {
@@ -148,6 +149,9 @@ export default {
         Link,
     },
     props: {
+        user: {
+            type: Object,
+        },
         errors: Object,
         is_auth: {
             type: Boolean,
@@ -172,7 +176,7 @@ export default {
         document.removeEventListener("click", this.hideMenu, true);
         document.removeEventListener("keydown", this.hideKey);
     },
-    setup() {
+    setup(props) {
         let wait = ref(false);
         let closed = ref(false);
         const form = useForm({
@@ -187,6 +191,7 @@ export default {
                 },
                 onSuccess() {
                     closed.value = true;
+                    store.dispatch("getAccounts", props.user.id);
                 },
             });
         };
@@ -204,15 +209,15 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getIncome", "allAccounts", "getActive"]),
+        ...mapGetters(["getIncome", "getAccount", "allAccounts", "getActive"]),
         accounts() {
             let arr = [];
             if (this.allAccounts && Object.values(this.allAccounts)[0]) {
                 arr.length = 0;
                 Object.values(this.allAccounts).forEach((acc) => {
                     arr.push({
-                        title: acc.name,
-                        value: acc.id,
+                        title: acc.sub,
+                        value: acc.group_id,
                     });
                 });
             }
@@ -220,8 +225,8 @@ export default {
         },
         name() {
             let name = "...";
-            if (this.allAccounts[this.getActive]) {
-                name = this.allAccounts[this.getActive].name;
+            if (this.getAccount) {
+                name = this.getAccount.sub;
             }
             return name;
         },
@@ -258,7 +263,7 @@ export default {
             }
         },
         change_index(data) {
-            this.$store.commit("updateActive", data);
+            this.$store.dispatch("set_active", data);
         },
         hideKey(e) {
             if (e.keyCode === 27) {

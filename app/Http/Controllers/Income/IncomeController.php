@@ -15,7 +15,7 @@ use Illuminate\Http\Request;
 
 class IncomeController extends Controller
 {
-    public function visual(IncomeRequest $request): Collection
+    public function __invoke(IncomeRequest $request): Collection
     {
         return Income::getByGroupId($request->group_id)->get();
     }

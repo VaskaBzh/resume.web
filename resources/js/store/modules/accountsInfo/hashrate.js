@@ -62,10 +62,6 @@ export default {
                     data.accountModel.shares1h = 0;
                     data.accountModel.shares1d = 0;
                 }
-                commit("updateAccounts", {
-                    account: data.accountModel,
-                    groupIndex: data.accountModel.id,
-                });
             } catch (err) {
                 console.error("Catch btc.com error: \n" + err);
             }

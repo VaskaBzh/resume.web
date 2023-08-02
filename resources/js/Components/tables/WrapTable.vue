@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="cabinet__head" v-if="title">
-            <main-title tag="h3" v-if="title">{{ title }} </main-title>
+            <main-title tag="h3" v-if="title">{{ title }}</main-title>
         </div>
         <no-info
             :wait="waitTable"
@@ -12,9 +12,7 @@
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
             <main-table
                 :viewportWidth="viewportWidth"
-                :table="table"
-                :first="first"
-                :rowsVal="rowsVal"
+                :table="tableValue"
             ></main-table>
         </div>
     </div>
@@ -45,52 +43,18 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["allIncomeHistory", "getActive"]),
+        ...mapGetters(["getActive"]),
+        tableValue() {
+            return this.table;
+        },
         endTable() {
-            return this.wait[this.getActive];
+            return this.wait;
         },
         emptyTable() {
             if (this.empty && this.empty[0]?.class === "main") {
-                return this.empty
-                    ? this.empty?.length === 1
-                    : this.wait[this.getActive]?.length === 1;
+                return this.empty ? this.empty?.length === 1 : this.wait;
             }
-            return this.empty
-                ? this.empty?.length === 0
-                : this.wait[this.getActive]?.length === 0;
-        },
-        active() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersActive;
-                    }
-                });
-            }
-            return val;
-        },
-        unstable() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersDead;
-                    }
-                });
-            }
-            return val;
-        },
-        all() {
-            let val = 0;
-            if (this.legendVal.length > 0) {
-                this.accounts.forEach((acc) => {
-                    if (acc.indexWorker == this.index) {
-                        val = acc.workersAll;
-                    }
-                });
-            }
-            return val;
+            return this.empty ? this.empty?.length === 0 : this.wait;
         },
     },
     methods: {
@@ -103,7 +67,7 @@ export default {
         this.handleResize();
     },
     mounted() {
-        if (this.wait[this.getActive]) this.waitTable = false;
+        if (this.wait) this.waitTable = false;
     },
     watch: {
         endTable(val) {

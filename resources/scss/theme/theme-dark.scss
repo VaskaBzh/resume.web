@@ -267,6 +267,40 @@ body {
                 }
             }
         }
+        .filter_block{
+            background: rgba(11, 22, 33, 1);
+        }
+        .tabs-active{
+            background: rgba(11, 22, 33, 1) !important;
+            color: rgba(121, 163, 232, 1) !important;
+        }
+        .dp{
+            &__input{
+                background: rgba(11, 22, 33, 1);
+                color: rgba(202, 202, 202, 1);
+            }
+            &__menu{
+                background: rgba(16, 29, 43, 1);
+                border: none;
+            }
+            &__cell{
+                &_offset{
+                    color: rgba(96, 96, 96, 1);
+                }
+            }
+            &__calendar{
+                &_item{
+                    color: rgba(202, 202, 202, 1);
+                }
+            }
+            &__range{
+                &_between{
+                    background: rgba(121, 148, 202, 1) !important;
+                    border: none;
+
+                }
+            }
+        }
         .faq {
             .section__block-light {
                 background: #101d2b;
@@ -950,6 +984,9 @@ body {
                     }
                 }
             }
+        }
+        .history-transaction{
+            color: rgba(202, 202, 202, 1) !important;
         }
     }
 }

@@ -2,33 +2,30 @@
     <div class="slider">
         <wrap-table
             ref="list"
-            :type="type"
-            :table="table"
-            :first="firstRow"
+            :table="saveTable"
             :wait="wait"
             :empty="empty"
-            :rowsVal="rows"
             :errors="errors"
         ></wrap-table>
-        <div class="slider__nav" v-if="this.table.rows">
-            <span class="slider__nav_info" v-if="this.pages === 0">
-                0 {{ $t("swiper.or") }}
-                {{ this.table.rows.length }}
-            </span>
-            <span
-                class="slider__nav_info"
-                v-else-if="this.rows > this.table.rows.length"
-            >
-                {{ this.startRow }}-{{ this.table.rows.length }}
-                {{ $t("swiper.or") }}
-                {{ this.table.rows.length }}
-            </span>
-            <span class="slider__nav_info" v-else>
-                {{ this.startRow }}-{{ this.rows }} {{ $t("swiper.or") }}
-                {{ this.table.rows.length }}
-            </span>
+        <div class="slider__nav">
+            <!--            <span class="slider__nav_info" v-if="this.pages === 0">-->
+            <!--                0 {{ $t("swiper.or") }}-->
+            <!--                {{ this.table.rows.length }}-->
+            <!--            </span>-->
+            <!--            <span-->
+            <!--                class="slider__nav_info"-->
+            <!--                v-else-if="this.rows > this.table.rows.length"-->
+            <!--            >-->
+            <!--                {{ this.startRow }}-{{ this.table.rows.length }}-->
+            <!--                {{ $t("swiper.or") }}-->
+            <!--                {{ this.table.rows.length }}-->
+            <!--            </span>-->
+            <!--            <span class="slider__nav_info" v-else>-->
+            <!--                {{ this.startRow }}-{{ this.rows }} {{ $t("swiper.or") }}-->
+            <!--                {{ this.table.rows.length }}-->
+            <!--            </span>-->
             <div class="slider__nav-slides">
-                <button class="slider__button" @click="slider(-1)">
+                <button class="slider__button" @click="ajax(meta?.links.prev)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -44,67 +41,21 @@
                         />
                     </svg>
                 </button>
-                <div class="slider__slides" v-if="this.pages === 0">
+                <div class="slider__slides" v-if="!haveMeta">
                     <span>...</span>
                 </div>
-                <div class="slider__slides" v-else-if="this.pages <= 8">
+                <div class="slider__slides" v-else>
                     <a
-                        ref="page"
-                        v-for="(page, index) in this.pages"
-                        :key="index"
-                        @click="pagination(page)"
-                        :class="{ active: this.page === page }"
-                        >{{ page }}</a
+                        @click="ajax(link.url)"
+                        v-for="(link, i) in links"
+                        :key="i"
+                        :class="{
+                            active: link.active,
+                        }"
+                        >{{ link.label }}</a
                     >
                 </div>
-                <div class="slider__slides" v-else-if="this.booler">
-                    <a
-                        @click="pagination(page)"
-                        ref="page"
-                        v-for="(page, index) in this.firstPages"
-                        :key="index"
-                        :class="{ active: this.page === page }"
-                        >{{ page }}</a
-                    >
-                    <span>...</span>
-                    <a
-                        @click="pagination(page)"
-                        ref="page"
-                        v-for="(page, index) in this.overPages"
-                        :key="index"
-                        :class="{ active: this.page === page }"
-                        >{{ page }}</a
-                    >
-                    <span>...</span>
-                    <a
-                        @click="pagination(page)"
-                        ref="page"
-                        v-for="(page, index) in this.lastPages"
-                        :key="index"
-                        :class="{ active: this.page === page }"
-                        >{{ page }}</a
-                    >
-                </div>
-                <div class="slider__slides slider__slides-full" v-else>
-                    <a
-                        @click="pagination(page)"
-                        ref="page"
-                        v-for="(page, index) in this.firstPages"
-                        :key="index"
-                        :class="{ active: this.page === page }"
-                        >{{ page }}</a
-                    >
-                    <span>...</span>
-                    <a
-                        @click="pagination(page)"
-                        ref="page"
-                        v-for="(page, index) in this.lastPages"
-                        :key="index"
-                        :class="{ active: this.page === page }"
-                        >{{ page }}</a
-                    >
-                </div>
-                <button class="slider__button" @click="slider(1)">
+                <button class="slider__button" @click="ajax(meta?.links.next)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
                         width="24"
@@ -159,7 +110,6 @@ export default {
     components: { WrapTable },
     props: {
         table: Object,
-        type: String,
         wait: Object,
         empty: Object,
         rowsNum: {
@@ -167,31 +117,40 @@ export default {
             default: 10,
         },
         errors: Object,
+        meta: Object,
     },
     watch: {
-        rowsNumber(newValue, oldValue) {
-            if (
-                String(this.rowsNumber).length < 3 &&
-                String(this.rowsNumber).length > 0 &&
-                Number(this.rowsNumber) !== 0
-            ) {
-                this.rowsNumber = newValue.replace(/[^0-9]/g, "");
-            } else {
-                this.rowsNumber = oldValue;
+        meta(newValue) {
+            this.getMeta(newValue);
+            if (newValue?.meta.links) {
+                this.links = newValue?.meta.links;
+                this.dropButtonLinks();
+                let lastIndex = Number(
+                    this.links[Object.values(this.links).length - 1].label
+                );
+                if (lastIndex > 9) {
+                    let index = this.filteredActiveLink?.label ?? 1;
+                    index = Number(index);
+                    this.setLinks(index, lastIndex);
+                }
             }
-            this.rows = Number(this.firstRow) + Number(this.rowsNumber);
+            this.cache(newValue);
+        },
+        rowsNumber(newVal) {
+            this.rowsNumber = newVal.replace(
+                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
+                ""
+            );
+            this.$emit("changePerPage", this.rowsNumber);
         },
     },
     data() {
         return {
             viewportWidth: 0,
-            firstRow: 0,
-            slides: 1,
-            slide: 1,
-            key: 0,
             rowsNumber: this.rowsNum,
-            rows: this.rowsNum,
-            page: 1,
+            links: [],
+            saveTable: {},
+            haveMeta: false,
         };
     },
     created() {
@@ -199,72 +158,77 @@ export default {
         this.handleResize();
     },
     computed: {
-        startRow() {
-            return Number(this.firstRow) + 1;
-        },
-        pages() {
-            return Math.ceil(this.table.rows.length / this.rowsNumber);
-        },
-        firstPages() {
-            if (this.page <= 4) {
-                return Array.from(
-                    { length: Math.min(5, this.pages) },
-                    (_, i) => i + 1
-                );
-            }
-            return [1, 2];
-        },
-        lastPages() {
-            if (this.page >= this.pages - 3) {
-                return Array.from(
-                    { length: Math.min(5, this.pages) },
-                    (_, i) => this.pages - i
-                ).reverse();
-            }
-            return [this.pages - 1, this.pages].filter((page) => page > 0);
-        },
-        overPages() {
-            if (this.page > 4 && this.page < this.pages - 3) {
-                let pages = [];
-                for (let i = this.page - 1; i <= this.page + 1; i++) {
-                    pages.push(i);
+        filteredActiveLink() {
+            return this.links.filter((el, i) => {
+                if (el.active) {
+                    return i;
                 }
-                return pages;
-            }
-            return [];
-        },
-        booler() {
-            return this.page > 4 && this.page < this.pages - 3;
+            })[0];
         },
     },
     methods: {
+        getMeta(meta) {
+            let bool = !!meta?.meta.to;
+            if (bool) {
+                this.haveMeta = bool;
+            } else {
+                setTimeout(() => {
+                    if (bool) {
+                        this.haveMeta = bool;
+                    }
+                }, 200);
+            }
+        },
+        cache(meta) {
+            if (meta?.meta) {
+                this.saveTable = this.table;
+                this.saveTable = this.table;
+            }
+        },
+        dropButtonLinks() {
+            this.links.splice(0, 1);
+            this.links.splice(this.links.length - 1, 1);
+        },
+        setLinks(index, lastIndex) {
+            let links = [];
+            if (index <= 4) {
+                links = links.concat(
+                    this.mapLinks(0, 4),
+                    ["..."],
+                    this.mapLinks(lastIndex - 2, lastIndex)
+                );
+            }
+            console.log(this.mapLinks(index - 1, index + 1));
+            if (index > 4 && index <= lastIndex - 5) {
+                links = links.concat(
+                    this.mapLinks(0, 3),
+                    ["..."],
+                    this.mapLinks(index - 2, index),
+                    ["..."],
+                    this.mapLinks(lastIndex - 2, lastIndex)
+                );
+            }
+            if (index > lastIndex - 5 && index <= lastIndex) {
+                links = links.concat(
+                    this.mapLinks(0, 3),
+                    ["..."],
+                    this.mapLinks(lastIndex - 5, lastIndex)
+                );
+            }
+            this.links = links;
+        },
+        mapLinks(numStart, numEnd) {
+            return this.links.filter((link, i) => {
+                if (i >= numStart && i <= numEnd) return link;
+            });
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        slider(slides = 1) {
-            let newPage = this.page + slides;
-
-            if (newPage < 1) newPage = this.pages;
-            else if (newPage > this.pages) newPage = 1;
-
-            this.page = newPage;
-            this.firstRow = (newPage - 1) * this.rowsNumber;
-            this.rows = Number(this.firstRow) + Number(this.rowsNumber);
-
-            if (this.rows > this.table.rows.length) {
-                this.rows = this.table.rows.length;
-            }
-        },
-        pagination(page) {
-            if (page < 1) page = 1;
-            else if (page > this.pages) page = this.pages;
-
-            this.page = page;
-            this.firstRow = (page - 1) * this.rowsNumber;
-            this.rows = Number(this.firstRow) + Number(this.rowsNumber);
-
-            if (this.rows > this.table.rows.length) {
-                this.rows = this.table.rows.length;
+        ajax(url) {
+            if (url) {
+                let link = url.split("=");
+                this.$emit("changePage", link[link.length - 1]);
             }
         },
     },

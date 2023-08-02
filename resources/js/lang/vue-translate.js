@@ -98,7 +98,7 @@ const messages = {
                     all: "Full earn",
                     button: "Earnings",
                 },
-                accounts_title: "Accounts",
+                accounts_title: "Subaccounts",
                 acc_admin: {
                     title: "Profile management",
                     add: "Add a subaccount",
@@ -122,7 +122,7 @@ const messages = {
             },
             links: {
                 statistic: "Statistics",
-                accounts: "Accounts",
+                accounts: "Subaccounts",
                 workers: "Workers",
                 income: "Earnings",
                 connection: "Connection",
@@ -407,7 +407,7 @@ const messages = {
         },
         tabs: {
             statistic: "Statistics",
-            accounts: "Accounts",
+            accounts: "Subaccounts",
             workers: "Workers",
             income: "Earnings",
             connection: "Connection",
@@ -466,7 +466,7 @@ const messages = {
             },
         },
         accounts: {
-            title: "Accounts",
+            title: "Subaccounts",
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
@@ -526,29 +526,22 @@ const messages = {
             },
         },
         income: {
-            title: "Earnings history",
+            title: "Income",
             income_info: {
                 title: "Earnings",
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
             },
             table: {
+                title: "Transaction history",
+                tabs: ["Accruals", "Payouts"],
                 thead: [
                     "Accrual date",
                     "Payout date",
                     "Hashrate",
-                    "Accrual amount",
-                    "Wallet",
-                    "Withdrawal percentage",
-                    "Status",
-                ],
-                thead_short: [
-                    "Accrual date",
-                    "Payout date",
-                    "Hashrate",
-                    "Average Hashrate",
-                    "Amount of accruals",
-                    "Wallet",
-                    "Withdrawal percentage",
+                    "Accruals",
+                    "Payments",
+                    "TxID",
+                    "Wallet address",
                     "Status",
                 ],
                 messages: {
@@ -759,7 +752,7 @@ const messages = {
                     all: "Всего",
                     button: "Доходы",
                 },
-                accounts_title: "Аккаунты",
+                accounts_title: "Субаккаунты",
                 acc_admin: {
                     title: "Управление профилем",
                     add: "Добавить субаккаунт",
@@ -783,7 +776,7 @@ const messages = {
             },
             links: {
                 statistic: "Статистика",
-                accounts: "Аккаунты",
+                accounts: "Субаккаунты",
                 workers: "Воркеры",
                 income: "Доходы",
                 connection: "Подключение",
@@ -1074,7 +1067,7 @@ const messages = {
         },
         tabs: {
             statistic: "Статистика",
-            accounts: "Аккаунты",
+            accounts: "Субаккаунты",
             workers: "Воркеры",
             income: "Доходы",
             connection: "Подключение",
@@ -1092,7 +1085,7 @@ const messages = {
         },
         date: {
             label: "Дата",
-            placeholder: "За все время",
+            placeholder: "Выбрать период",
         },
         swiper: {
             or: "из",
@@ -1133,7 +1126,7 @@ const messages = {
             },
         },
         accounts: {
-            title: "Аккаунты",
+            title: "Субаккаунты",
             toggle: ["Активный", "Переключить"],
             block: {
                 titles: [
@@ -1188,29 +1181,22 @@ const messages = {
             },
         },
         income: {
-            title: "История платежей",
+            title: "Доходы",
             income_info: {
                 title: "Платежи",
                 titles: ["Оплачено", "Неоплачено", "Вчерашний доход"],
             },
             table: {
+                title: "История транзакций",
+                tabs: ["Начисления", "Выплаты"],
                 thead: [
                     "Дата начисления",
                     "Дата вылпаты",
                     "Хешрейт",
-                    "Сумма начислений",
-                    "Кошелек",
-                    "Процент вывода",
-                    "Статус",
-                ],
-                thead_short: [
-                    "Дата начисления",
-                    "Дата выплаты",
-                    "Хешрейт",
-                    "Средний Хешрейт",
-                    "Сумма начислений",
-                    "Кошелек",
-                    "Процент вывода",
+                    "Начисления",
+                    "Выплаты",
+                    "TxID",
+                    "Адрес кошелька",
                     "Статус",
                 ],
                 messages: {
