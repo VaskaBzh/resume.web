@@ -5,6 +5,8 @@ use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\IncomeListController;
 use App\Http\Controllers\Api\Subs\ListController;
 use App\Http\Controllers\Api\Subs\ShowController;
+use App\Http\Controllers\Api\WalletListController;
+use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\MinerStat\MinerStatController;
 use Illuminate\Support\Facades\Route;
 
@@ -43,6 +45,20 @@ Route::group([
 ], function () {
     Route::get('{sub}', HashRateListController::class)->name('hashrate.list');
 });
+
+Route::group([
+    'prefix' => 'workerhashrate',
+], function () {
+    Route::get('{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
+});
+
+Route::group([
+    'prefix' => 'wallets',
+], function () {
+    Route::get('{sub}', WalletListController::class)->name('wallet.list');
+});
+
+
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
