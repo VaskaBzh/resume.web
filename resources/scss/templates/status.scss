@@ -18,19 +18,19 @@
             height: 8px;
         }
     }
-    &.active {
+    &.ACTIVE {
         color: #13D60E;
         &:before {
             background: #13D60E;
         }
     }
-    &.inactive {
+    &.INACTIVE {
         color: #ff0000;
         &:before {
             background: #ff0000;
         }
     }
-    &.unActive {
+    &.DEAD {
         color: #e9c058;
         &:before {
             background: #e9c058;

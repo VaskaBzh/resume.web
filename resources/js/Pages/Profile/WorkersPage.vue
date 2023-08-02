@@ -29,11 +29,12 @@
             </main-title>
 
             <wrap-table
-                :table="worker_list.table"
+                :table="worker_service.table"
                 :key="getActive"
                 type="Воркеры"
-                :wait="!worker_list.rows?.length > 0"
-                :empty="worker_list.table?.get('rows')"
+                :wait="!worker_service.rows?.length > 0"
+                :empty="worker_service.table?.get('rows')"
+                :worker_service="worker_service"
                 :errors="errors"
                 :rowsVal="1000"
             />
@@ -66,7 +67,7 @@ export default {
             workersInActive: 0,
             workersDead: 0,
             viewportWidth: 0,
-            worker_list: {},
+            worker_service: {},
         };
     },
     watch: {
@@ -76,9 +77,9 @@ export default {
     },
     methods: {
         async initWorkers() {
-            this.worker_list = new WorkerService(this.$t, [0, 1, 3, 4]);
+            this.worker_service = new WorkerService(this.$t, [0, 1, 3, 4]);
 
-            await this.worker_list.fillTable();
+            await this.worker_service.fillTable();
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
