@@ -20,4 +20,11 @@ class WorkerHashRateBuilder extends BaseBuilder
         return $this->where('worker_id', $workerId)
             ->where('created_at', '>=', now()->subDay());
     }
+
+    public function getByOffset(int $workerId, ?int $count = 24): Builder
+    {
+        return $this->where('worker_id', $workerId)
+            ->latest()
+            ->take($count);
+    }
 }

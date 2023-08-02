@@ -3,10 +3,11 @@
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\IncomeListController;
-use App\Http\Controllers\Api\Subs\ListController;
+use App\Http\Controllers\Api\Subs\ListController as SubListController;
 use App\Http\Controllers\Api\Subs\ShowController;
 use App\Http\Controllers\Api\WalletListController;
 use App\Http\Controllers\Api\WorkerHashRateController;
+use App\Http\Controllers\Api\Workers\ListController as WorkerListController;
 use App\Http\Controllers\MinerStat\MinerStatController;
 use Illuminate\Support\Facades\Route;
 
@@ -31,13 +32,20 @@ Route::group([
 Route::group([
     'prefix' => 'subs',
 ], function () {
-    Route::get('{user}', ListController::class)->name('sub.list');
+    Route::get('{user}', SubListController::class)->name('sub.list');
 });
 
 Route::group([
     'prefix' => 'sub',
 ], function () {
+    Route::get('{sub}/workers', WorkerListController::class)->name('sub.worker.list');
     Route::get('{sub}', ShowController::class)->name('sub.show');
+});
+
+Route::group([
+    'prefix' => 'worker',
+], function () {
+
 });
 
 Route::group([
