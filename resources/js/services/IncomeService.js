@@ -1,27 +1,12 @@
 import api from "@/api/api";
 
+import { TableService } from "./extends/TableService";
+
 import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
 
-export class IncomeService {
-    constructor(translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {
-        this.incomeList = new Map();
-        this.incomeRows = [];
-
-        this.translate = translate;
-
-        this.incomeTitles = this.useTranslater(titleIndexes);
-
-        this.activeId = store.getters.getActive;
-    }
-
-    useTranslater(indexes) {
-        return indexes.map((index) =>
-            this.translate(`income.table.thead[${index}]`)
-        );
-    }
-
+export class IncomeService extends TableService {
     async fetch(filter, page = 1, per_page = 15) {
         return await api.get(
             `/api/incomes/${this.activeId}?filter[txid]=${filter}&page=${page}&per_page=${per_page}`
@@ -108,29 +93,37 @@ export class IncomeService {
         );
     }
 
-    async setRows(filter, page = 1, per_page = 15) {
+    async index(filter, page = 1, per_page = 15) {
         if (store.getters.getActive !== -1) {
+            this.waitTable = true;
+
             let response = await this.fetch(filter, page, per_page);
 
             this.meta = response.data;
 
-            if (filter) {
-                this.incomeTitles = this.useTranslater([1, 4, 5, 6]);
-            } else {
-                this.incomeTitles = this.useTranslater([0, 1, 2, 3, 6, 7]);
-            }
-
-            this.incomeRows = await response.data.data.map((income) => {
-                return this.setter(income, filter);
+            this.rows = response.data.data.map((el) => {
+                return this.setter(el, filter);
             });
+
+            if (filter) {
+                this.titles = this.useTranslater([1, 4, 5, 6]);
+            } else {
+                this.titles = this.useTranslater([0, 1, 2, 3, 6, 7]);
+            }
 
             return this;
         }
     }
 
-    setTable() {
-        this.incomeList.set("titles", this.incomeTitles);
-        this.incomeList.set("rows", this.incomeRows);
+    async setTable(filter, page = 1, per_page = 15) {
+        await this.index(filter, page, per_page);
+
+        this.table.set("titles", this.titles);
+        this.table.set("rows", this.rows);
+
+        if (store.getters.getActive !== -1) {
+            this.waitTable = false;
+        }
 
         return this;
     }

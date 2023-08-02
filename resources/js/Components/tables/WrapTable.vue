@@ -12,7 +12,7 @@
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
             <main-table
                 :viewportWidth="viewportWidth"
-                :table="tableValue"
+                :table="table"
             ></main-table>
         </div>
     </div>
@@ -32,7 +32,7 @@ export default {
         title: String,
         first: Number,
         rowsVal: Number,
-        wait: Object,
+        wait: Boolean,
         empty: Object,
     },
     data() {
@@ -44,17 +44,14 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive"]),
-        tableValue() {
-            return this.table;
-        },
         endTable() {
-            return this.wait;
+            return !this.wait;
         },
         emptyTable() {
             if (this.empty && this.empty[0]?.class === "main") {
-                return this.empty ? this.empty?.length === 1 : this.wait;
+                return this.empty ? this.empty?.length === 1 : !this.wait;
             }
-            return this.empty ? this.empty?.length === 0 : this.wait;
+            return this.empty ? this.empty?.length === 0 : !this.wait;
         },
     },
     methods: {
@@ -67,7 +64,7 @@ export default {
         this.handleResize();
     },
     mounted() {
-        if (this.wait) this.waitTable = false;
+        if (!this.wait) this.waitTable = false;
     },
     watch: {
         endTable(val) {

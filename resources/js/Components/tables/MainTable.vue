@@ -103,10 +103,10 @@ export default {
     computed: {
         ...mapGetters(["allHistoryMiner"]),
         rows() {
-            return this.table.get("rows");
+            return this.table?.get("rows");
         },
         titles() {
-            return this.table.get("titles");
+            return this.table?.get("titles");
         },
     },
     data() {
