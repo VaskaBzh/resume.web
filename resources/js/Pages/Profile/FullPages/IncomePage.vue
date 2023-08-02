@@ -173,7 +173,10 @@ export default {
             return Number(sum).toFixed(8);
         },
         yesterdayProfit() {
-            if (this.incomes.incomeList?.get("rows") && this.incomes.incomeList?.get("rows")[0]?.ear) {
+            if (
+                this.incomes.incomeList?.get("rows") &&
+                this.incomes.incomeList?.get("rows")[0]?.earn
+            ) {
                 return this.incomes.incomeList?.get("rows")[0]?.earn;
             }
             return "0.00000000 BTC";
