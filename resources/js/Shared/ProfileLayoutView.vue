@@ -71,11 +71,9 @@ export default {
             this.$store.dispatch("getMiningStat");
             this.$store.dispatch("getGraph");
             await this.$store.dispatch("accounts_all", this.user.id);
-            this.$store.dispatch("set_active", this.getActive);
         }
         this.interval = setInterval(async () => {
             await this.$store.dispatch("accounts_all", this.user.id);
-            this.$store.dispatch("set_active", this.getActive);
         }, 60000);
         // if (!localStorage.getItem("location")) {
         //     axios.get("/get_location").then((res) => {
