@@ -52,7 +52,7 @@ export default {
         updateHistoryDiff(state, data) {
             let hist = data.reverse();
             hist = hist.map((el, i) => {
-                if (i < 60) {
+                if (i < 120) {
                     return el;
                 }
             });
