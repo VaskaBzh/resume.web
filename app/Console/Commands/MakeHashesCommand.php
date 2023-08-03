@@ -40,14 +40,14 @@ class MakeHashesCommand extends Command
                 if ($subInfo) {
                     $hashRate = $subInfo['shares_1m'];
                     $unit = $subInfo['shares_unit'];
-                    $amountWorkers = $subInfo['workers_active'];
+                    $workerCount = $subInfo['workers_active'];
                 }
 
                 Hash::create([
                     'group_id' => $sub->group_id,
                     'hash' => $hashRate ?? 0,
                     'unit' => $unit ?? 'T',
-                    'amount' => (int) $amountWorkers ?? 0,
+                    'worker_count' => (int) $workerCount ?? 0,
                 ]);
             } catch (\Exception $e) {
                 report($e);
