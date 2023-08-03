@@ -130,6 +130,16 @@ class UpdateIncomesCommand extends Command
                     'wallet' => $wallet->id
                 ]);
 
+                $incomeService
+                    ->accumulateAmount($sub->un_payments)
+                    ->setMessage(Message::ERROR_PAYOUT)
+                    ->createLocalIncome(
+                        sub: $sub,
+                        wallet: $wallet
+                    );
+
+                $incomeService->updateLocalSub(sub: $sub);
+
                 $incomeService->setMessage(Message::ERROR);
             }
         } else {
