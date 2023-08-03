@@ -13,7 +13,7 @@ class SubResource extends JsonResource
     {
         return [
             "sub" => $this['sub'],
-            "accruals" => $this['accruals'],
+            "total_amount" => $this['total_amount'],
             "group_id" => $this['group_id'],
             "workers_count_active" => $this['workers_count_active'],
             "workers_count_in_active" => $this['workers_count_in_active'],
@@ -23,7 +23,7 @@ class SubResource extends JsonResource
             "today_forecast" => $this['today_forecast'],
             "reject_percent" => $this['reject_percent'],
             "unit" => $this['unit'],
-            "payments" => $this['payments'],
+            "total_payment" => $this['total_payment'],
         ];
     }
 }
