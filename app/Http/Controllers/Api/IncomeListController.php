@@ -17,6 +17,7 @@ class IncomeListController extends Controller
     public function __invoke(Sub $sub, Request $request): JsonResource
     {
         $collection = Income::getByGroupId($sub->group_id)
+            ->orderByDesc('created_at')
             ->paginate($request->per_page ?? 15);
 
         return new IncomeCollection($collection);
