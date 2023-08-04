@@ -13,7 +13,7 @@
                 />
             </svg>
 
-            {{ this.name }}
+            {{ name }}
             <svg
                 width="20"
                 height="20"
@@ -36,7 +36,7 @@
                 ></main-radio>
             </div>
             <div class="button__row">
-                <a data-popup="#addAcc"
+                <a @click.prevent="openAddPopup"
                     ><svg
                         width="22"
                         height="22"
@@ -88,7 +88,13 @@
         </div>
     </div>
     <teleport to="body">
-        <main-popup id="addAcc" :wait="wait" :closed="closed" :errors="errors">
+        <main-popup
+            id="addAcc"
+            :openedOff="openedAddPopup"
+            :wait="wait"
+            :closed="closed"
+            :errors="errors"
+        >
             <form @submit.prevent="addAcc" class="form form-popup popup__form">
                 <main-title tag="h3">{{
                     $t("accounts.popups.add.title")
@@ -166,6 +172,8 @@ export default {
         return {
             target: false,
             open: false,
+            openedAddPopup: false,
+            linkAddClicked: false,
         };
     },
     mounted() {
@@ -244,8 +252,31 @@ export default {
         accounts() {
             this.change_height();
         },
+        "$page.url"(newUrl) {
+            if (newUrl.startsWith("/profile/accounts") && this.linkAddClicked) {
+                this.linkAddClicked = false;
+                setTimeout(() => {
+                    this.openedAddPopup = true;
+                }, 50);
+                setTimeout(() => {
+                    this.openedAddPopup = false;
+                }, 100);
+            }
+        },
     },
     methods: {
+        async openAddPopup() {
+            if (!this.$page.url.startsWith("/profile/accounts")) {
+                await this.$inertia.visit(route("accounts"));
+
+                this.linkAddClicked = true;
+            } else {
+                this.openedAddPopup = true;
+                setTimeout(() => {
+                    this.openedAddPopup = false;
+                }, 100);
+            }
+        },
         change_height() {
             if (this.target) {
                 this.$nextTick(() => {
