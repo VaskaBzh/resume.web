@@ -47,7 +47,7 @@ export default {
     &_row {
         background: inherit;
         border: 1px solid #c5c5c5;
-        borderstep push + -radius: 4px;
+        border-radius: 4px;
         position: relative;
         transition: all 0.5s ease 0s;
         &-error {
