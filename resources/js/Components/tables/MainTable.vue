@@ -83,7 +83,6 @@
                         >
                     </div>
                 </div>
-                {{ worker_service.graph }}
                 <statistic-chart
                     class="popup-graph__graph"
                     :graph="worker_service.graph"

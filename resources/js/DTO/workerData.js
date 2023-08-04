@@ -1,7 +1,7 @@
 export class workerData {
     constructor(workerRecord) {
         // this.status = workerRecord.status;
-        this.class = workerRecord.status;
+        this.class = workerRecord.status || workerRecord.worker_status;
         this.name = workerRecord.worker_name;
         this.name = String(this.name).split(".")[1];
         this.hashrate = `${workerRecord.shares_1m} ${workerRecord.shares_unit}h/s`;

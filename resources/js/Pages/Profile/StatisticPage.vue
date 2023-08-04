@@ -362,19 +362,8 @@ export default {
             return Number(val).toFixed(8);
         },
         yesterdayEarn() {
-            if (this.allIncomeHistory[this.getActive]) {
-                if (
-                    Object.values(this.allIncomeHistory[this.getActive])
-                        ?.length > 0
-                ) {
-                    return Number(
-                        Object.values(
-                            this.allIncomeHistory[this.getActive]
-                        ).reverse()[0]["amount"]
-                    );
-                }
-            }
-            return 0;
+            let val = this.getAccount?.yesterday_amount || 0;
+            return Number(val).toFixed(8);
         },
         ...mapGetters([
             "getTable",

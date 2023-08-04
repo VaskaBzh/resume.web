@@ -1,17 +1,15 @@
 <template>
     <div class="wallets__block wallets__block-wallet">
         <div class="wallets__block_name">
-            <span v-if="wallet.fullName === '' && wallet.name === ''">{{
-                wallet.wallet
-            }}</span>
-            <span v-else-if="wallet.fullName === '' && wallet.name !== ''">{{
-                wallet.name
-            }}</span>
-            <span
-                v-else-if="wallet.fullName !== '' && wallet.name !== ''"
-                v-tooltip="{ message: wallet.fullName }"
-                >{{ wallet.fullName }}</span
-            >
+            <span>{{ wallet.wallet_address }}</span>
+            <!--            <span v-else-if="wallet.fullName === '' && wallet.name !== ''">{{-->
+            <!--                wallet.name-->
+            <!--            }}</span>-->
+            <!--            <span-->
+            <!--                v-else-if="wallet.fullName !== '' && wallet.name !== ''"-->
+            <!--                v-tooltip="{ message: wallet.fullName }"-->
+            <!--                >{{ wallet.fullName }}</span-->
+            <!--            >-->
             <div class="wallets__block_doths" @click="toggleOpen">
                 <div></div>
                 <div></div>

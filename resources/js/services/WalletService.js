@@ -92,29 +92,6 @@ export class WalletService {
         this.wait = false;
     }
 
-    async removeWallet(wallet) {
-        this.setForm(wallet);
-        await this.form.post("/wallet_delete", {
-            onSuccess() {
-                this.index();
-            },
-        });
-    }
-
-    // async filter(needDrop) {
-    //     if (this.wallets) {
-    //         if (needDrop) {
-    //             this.wallets.filter((wallet) => wallet.payment !== 0);
-    //         } else {
-    //             this.index();
-    //         }
-    //     }
-    // }
-
-    async fetch() {
-        return await api.get(`/api/wallets/${this.group_id}`);
-    }
-
     async index() {
         if (store.getters.getActive !== -1) {
             this.waitWallets = true;
@@ -129,5 +106,25 @@ export class WalletService {
 
             this.waitWallets = false;
         }
+    }
+
+    async removeWallet(wallet) {
+        this.setForm(wallet);
+        await this.form.post("/wallet_delete", {});
+        this.index();
+    }
+
+    // async filter(needDrop) {
+    //     if (this.wallets) {
+    //         if (needDrop) {
+    //             this.wallets.filter((wallet) => wallet.payment !== 0);
+    //         } else {
+    //             this.index();
+    //         }
+    //     }
+    // }
+
+    async fetch() {
+        return await api.get(`/api/wallets/${this.group_id}`);
     }
 }

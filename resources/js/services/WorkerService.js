@@ -36,7 +36,7 @@ export class WorkerService {
                 store.getters.getAccount.unit +
                 "h/s",
             // unit24: store.getters.getAccount.unit,
-            rejectRate: store.getters.getAccount.reject_percent,
+            rejectRate: store.getters.getAccount.reject_percent + " %",
         };
     }
 
@@ -78,6 +78,7 @@ export class WorkerService {
                     ...el,
                 });
             });
+
             this.rows.unshift(this.setFirstRow());
 
             this.waitWorkers = false;

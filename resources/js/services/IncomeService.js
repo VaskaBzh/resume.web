@@ -15,7 +15,7 @@ export class IncomeService extends TableService {
 
     async fetchPayout(page = 1, per_page = 15) {
         return await api.get(
-            `/api/payout/${this.activeId}?page=${page}&per_page=${per_page}`
+            `/api/payouts/${this.activeId}?page=${page}&per_page=${per_page}`
         );
     }
 
