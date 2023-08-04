@@ -225,29 +225,29 @@
                     >
                     <div class="input-error">{{ errors.wallet }}</div>
                 </div>
-                <main-input
-                    inputName="addWalletName"
-                    :inputLabel="$t('wallets.popups.add.placeholders.name')"
-                    :inputValue="wallets.form.name"
-                    :error="errors.name"
-                ></main-input>
-                <!--                <div class="input-container">-->
-                <!--                    <input-->
-                <!--                        @click="moveLabelFor('name')"-->
-                <!--                        v-model="wallets.form.name"-->
-                <!--                        autofocus-->
-                <!--                        id="addWalletName"-->
-                <!--                        type="text"-->
-                <!--                        class="input-wallet popup__input"-->
-                <!--                    />-->
-                <!--                    <label-->
-                <!--                        class="input-label"-->
-                <!--                        for="addWalletName"-->
-                <!--                        :class="{ 'move-label': isActiveLabelName }"-->
-                <!--                        >{{ $t("wallets.popups.add.placeholders.name") }}</label-->
-                <!--                    >-->
-                <!--                    &lt;!&ndash; {{ errors.wallet }}  &ndash;&gt;-->
-                <!--                </div>-->
+                <!--                <main-input-->
+                <!--                    inputName="addWalletName"-->
+                <!--                    :inputLabel="$t('wallets.popups.add.placeholders.name')"-->
+                <!--                    :inputValue="wallets.form.name"-->
+                <!--                    :error="errors.name"-->
+                <!--                ></main-input>-->
+                <div class="input-container">
+                    <input
+                        @click="moveLabelFor('name')"
+                        v-model="wallets.form.name"
+                        autofocus
+                        id="addWalletName"
+                        type="text"
+                        class="input-wallet popup__input"
+                    />
+                    <label
+                        class="input-label"
+                        for="addWalletName"
+                        :class="{ 'move-label': isActiveLabelName }"
+                        >{{ $t("wallets.popups.add.placeholders.name") }}</label
+                    >
+                    <!--                     {{ errors.wallet }}  -->
+                </div>
                 <div class="input-container">
                     <input
                         @click="moveLabelFor('minWithdrawal')"

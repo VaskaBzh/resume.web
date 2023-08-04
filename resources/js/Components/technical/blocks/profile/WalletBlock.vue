@@ -67,9 +67,6 @@
 import { mapGetters } from "vuex";
 import MainMenu from "@/Components/UI/MainMenu.vue";
 import { Converter } from "@/Scripts/converter";
-import { useForm } from "@inertiajs/vue3";
-import store from "@/store";
-import { ref } from "vue";
 
 export default {
     name: "wallet-block",
@@ -179,7 +176,7 @@ export default {
     methods: {
         async updateConversion() {
             this.converter = new Converter(
-                this.wallet.payment,
+                this.wallet.total_payout,
                 this.btcInfo?.btc ? this.btcInfo.btc.price : 0
             );
             await this.converter.convert();
