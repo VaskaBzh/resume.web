@@ -28,6 +28,10 @@ class UpdateIncomesCommand extends Command
     public function handle(): void
     {
         foreach (Sub::all() as $sub) {
+            if (in_array($sub->group_id, [6002482, 6002507, 6002559])) {
+                continue;
+            }
+
             $this->process(
                 incomeService: resolve(IncomeService::class),
                 walletService: resolve(WalletService::class),
