@@ -259,7 +259,7 @@ import SettingsBlock from "@/Components/technical/blocks/profile/SettingsBlock.v
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import axios from "axios";
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 
 export default {
@@ -281,6 +281,7 @@ export default {
         // let fac = ref(null);
         let closed = ref(false);
         let wait = ref(false);
+        const { props } = usePage();
 
         let form = useForm({
             item: "",
@@ -288,6 +289,7 @@ export default {
             old_password: "",
             password: "",
             password_confirmation: "",
+
         });
 
         let validate = ref({});
@@ -330,7 +332,7 @@ export default {
         const ajax = () => {
             wait.value = true;
             form.post(route("change"), {
-                onFinish() {
+                onFinish: () => {
                     wait.value = false;
                 },
             });

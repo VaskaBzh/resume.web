@@ -70,7 +70,7 @@ import { Converter } from "@/Scripts/converter";
 
 export default {
     name: "wallet-block",
-    props: { wallet: Object },
+    props: {wallet: Object },
     data() {
         return {
             opened: false,

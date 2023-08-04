@@ -86,7 +86,7 @@
 </template>
 
 <script>
-import { Link, useForm } from "@inertiajs/vue3";
+import {Link, useForm, usePage} from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/Components/navs/NavLinks.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
@@ -131,10 +131,13 @@ export default defineComponent({
         let noInfo = ref(false);
         let closed = ref(false);
 
+        const { props } = usePage();
+
         const form = useForm({
             email: "",
             password: "",
             remember: false,
+
         });
 
         // const reverify = () => {

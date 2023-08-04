@@ -64,31 +64,6 @@ export class WalletService {
         }, 600);
     }
 
-    async addWallet() {
-        if (store.getters.getActive !== -1) {
-            this.wait = true;
-            await this.form.post("/wallet_create", {
-                onSuccess() {
-                    this.index();
-                    this.clearForm();
-                    this.closePopup();
-                },
-            });
-            this.wait = false;
-        } else {
-            store.dispatch("getMessage", "Подождите 5 секунд.");
-        }
-    }
-
-    async changeWallet() {
-        this.wait = true;
-        await this.form.post("/wallet_change", {});
-        this.index();
-        this.clearForm();
-        this.closePopup();
-        this.wait = false;
-    }
-
     async index() {
         if (store.getters.getActive !== -1) {
             this.waitWallets = true;
@@ -102,6 +77,40 @@ export class WalletService {
             });
 
             this.waitWallets = false;
+        }
+    }
+
+    async addWallet() {
+        if (store.getters.getActive !== -1) {
+            this.wait = true;
+
+            await this.form.post("/wallet_create", {
+                onSuccess: (res) => {
+                    this.index();
+                    this.clearForm();
+                    this.closePopup();
+                },
+            });
+            this.wait = false;
+        } else {
+            store.dispatch("getMessage", "Подождите 5 секунд.");
+        }
+    }
+
+    async changeWallet() {
+        if (store.getters.getActive !== -1) {
+            this.wait = true;
+
+            await this.form.post("/wallet_change", {
+                onSuccess: (res) => {
+                    this.index();
+                    this.clearForm();
+                    this.closePopup();
+                },
+            });
+            this.wait = false;
+        } else {
+            store.dispatch("getMessage", "Подождите 5 секунд.");
         }
     }
 

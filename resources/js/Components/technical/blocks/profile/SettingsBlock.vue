@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 
 export default {
     name: "settings-block",
@@ -50,10 +50,13 @@ export default {
     },
     methods: {
         async checkbox_changes(data) {
+            const { props } = usePage();
+
             if (this.val !== null) {
                 let form = useForm({
                     item: data,
                     type: this.name,
+
                 });
                 await form.post(route("change"), {});
             }

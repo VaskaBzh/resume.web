@@ -43,7 +43,7 @@
                 ></main-password>
             </div>
         </div>
-        <input type="checkbox" id="checkbox" v-model="form.remember"/>
+        <input type="checkbox" id="checkbox" v-model="form.remember" />
         <label for="checkbox">
             <div class="fake">
                 <svg
@@ -85,7 +85,7 @@
 
 <script>
 import authLayoutView from "@/Shared/AuthLayoutView.vue";
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
@@ -114,10 +114,13 @@ export default {
         },
     },
     setup() {
+        const { props } = usePage();
+
         let form = useForm({
             email: "",
             password: "",
             remember: true,
+
         });
         const submit = async () => {
             await form.post("/login", {});

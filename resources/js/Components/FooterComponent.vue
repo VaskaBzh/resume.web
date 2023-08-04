@@ -268,7 +268,7 @@ import pdf from "@/../assets/files/policy.pdf";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
 
@@ -287,19 +287,22 @@ export default {
         };
     },
     setup() {
+        const { props } = usePage();
+
         let wait = ref(false);
         let form = useForm({
             message: "",
             contacts: "",
+
         });
 
         const sendFeedback = async () => {
             wait.value = true;
             await form.post("/send_message", {
-                onFinish() {
+                onFinish: () => {
                     wait.value = false;
                 },
-                onSuccess() {
+                onSuccess: () => {
                     form.message = "";
                     form.contacts = "";
                 },

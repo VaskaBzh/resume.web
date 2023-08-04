@@ -190,87 +190,63 @@
             id="addWallet"
             :wait="wallets.wait"
             :closed="wallets.closed"
+            :errors="errors"
             @closed="wallets.clearForm(wallets.form)"
             v-if="wallets.form"
         >
             <form
                 @submit.prevent="wallets.addWallet"
                 class="form form-popup popup__form"
-                @click.capture="
-                    returnLabelfor('email') ||
-                        returnLabelfor('name') ||
-                        returnLabelfor('minWithdrawal')
-                "
             >
                 <main-title tag="h3">{{
                     $t("wallets.popups.add.title")
                 }}</main-title>
-                <div class="input-container">
-                    <input
-                        @click="moveLabelFor('email')"
-                        v-model="wallets.form.wallet"
-                        autofocus
-                        id="addWalletAddress"
-                        type="text"
-                        class="input-wallet popup__input"
-                        :class="{ 'error-input': errors.wallet }"
-                    />
-                    <label
-                        class="input-label"
-                        for="addWalletAddress"
-                        :class="{ 'move-label': isActiveLabelEmail }"
-                        >{{
-                            $t("wallets.popups.add.placeholders.wallet")
-                        }}</label
-                    >
-                    <div class="input-error">{{ errors.wallet }}</div>
-                </div>
-                <!--                <main-input-->
-                <!--                    inputName="addWalletName"-->
-                <!--                    :inputLabel="$t('wallets.popups.add.placeholders.name')"-->
-                <!--                    :inputValue="wallets.form.name"-->
-                <!--                    :error="errors.name"-->
-                <!--                ></main-input>-->
-                <div class="input-container">
-                    <input
-                        @click="moveLabelFor('name')"
-                        v-model="wallets.form.name"
-                        autofocus
-                        id="addWalletName"
-                        type="text"
-                        class="input-wallet popup__input"
-                    />
-                    <label
-                        class="input-label"
-                        for="addWalletName"
-                        :class="{ 'move-label': isActiveLabelName }"
-                        >{{ $t("wallets.popups.add.placeholders.name") }}</label
-                    >
-                    <!--                     {{ errors.wallet }}  -->
-                </div>
-                <div class="input-container">
-                    <input
-                        @click="moveLabelFor('minWithdrawal')"
-                        name="minWithdrawal"
-                        v-model="wallets.form.minWithdrawal"
-                        id="minChg"
-                        autofocus
-                        type="text"
-                        class="input-wallet input-minWithdrawal popup__input"
-                        :class="{ 'error-input': errors.minWithdrawal }"
-                    />
-                    <label
-                        class="input-label"
-                        for="minChg"
-                        :class="{ 'move-label': isActiveLabelMinWithdrawal }"
-                        >{{
+                <input
+                    v-model="wallets.form.wallet"
+                    required
+                    autofocus
+                    type="text"
+                    class="input popup__input"
+                    :placeholder="$t('wallets.popups.add.placeholders.wallet')"
+                />
+                <input
+                    v-model="wallets.form.name"
+                    autofocus
+                    type="text"
+                    class="input popup__input"
+                    :placeholder="$t('wallets.popups.add.placeholders.name')"
+                />
+                <div class="form_row form_row-non-height">
+                    <div class="form_column">
+                        <label for="percent" class="main__label">{{
+                            $t("wallets.popups.add.labels.percent")
+                        }}</label>
+                        <input
+                            name="percent"
+                            v-model="wallets.form.percent"
+                            id="percentChg"
+                            autofocus
+                            type="text"
+                            class="input popup__input"
+                            placeholder="100"
+                        />
+                    </div>
+                    <div class="form_column">
+                        <label for="min" class="main__label">{{
                             $t("wallets.popups.add.labels.minWithdrawal")
-                        }}</label
-                    >
-                    <div class="input-btc-text">{{ "BTC" }}</div>
-                    <div class="input-error">{{ errors.minWithdrawal }}</div>
+                        }}</label>
+                        <input
+                            name="minWithdrawal"
+                            v-model="wallets.form.minWithdrawal"
+                            id="minChg"
+                            autofocus
+                            type="text"
+                            class="input popup__input"
+                            placeholder="0.005"
+                        />
+                    </div>
                 </div>
-                <blue-button class="wallets-popup-btn">
+                <blue-button>
                     <button type="submit" class="all-link">
                         <svg
                             width="24"
@@ -308,6 +284,7 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainInput from "@/Components/UI/inputs/MainInput.vue";
 
 import { WalletService } from "@/services/WalletService";
+import {usePage} from "@inertiajs/vue3";
 
 export default {
     components: {
@@ -388,17 +365,21 @@ export default {
                 case "email":
                     if (this.wallets.form.wallet === "")
                         return (this.isActiveLabelEmail = false);
+                    break;
                 case "name":
                     if (this.wallets.form.name === "")
                         return (this.isActiveLabelName = false);
+                    break;
                 case "minWithdrawal":
                     if (this.wallets.form.minWithdrawal === "")
                         return (this.isActiveLabelMinWithdrawal = false);
+                    break;
             }
         },
     },
     mounted() {
-        this.wallets = new WalletService();
+        const { props } = usePage();
+        this.wallets = new WalletService(props.csrf);
         this.walletInit();
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
