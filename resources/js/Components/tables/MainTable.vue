@@ -188,13 +188,14 @@ export default {
         position: relative;
         @media (min-width: 767.98px) {
             height: 48px;
-            padding-right: 16px;
+            padding-left: 16px;
         }
         &:first-child {
             border-radius: 8px 0 0 8px;
         }
         &:last-child {
-            border-radius: 0 8px 8px 0;        }
+            border-radius: 0 8px 8px 0;
+        }
     }
     &__head {
         @media (max-width: 767.98px) {
