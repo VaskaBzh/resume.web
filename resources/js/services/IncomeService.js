@@ -7,9 +7,15 @@ import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
 
 export class IncomeService extends TableService {
-    async fetch(filter, page = 1, per_page = 15) {
+    async fetchIncomes(page = 1, per_page = 15) {
         return await api.get(
-            `/api/incomes/${this.activeId}?filter[txid]=${filter}&page=${page}&per_page=${per_page}`
+            `/api/incomes/${this.activeId}?page=${page}&per_page=${per_page}`
+        );
+    }
+
+    async fetchPayout(page = 1, per_page = 15) {
+        return await api.get(
+            `/api/payout/${this.activeId}?page=${page}&per_page=${per_page}`
         );
     }
 
@@ -49,8 +55,9 @@ export class IncomeService extends TableService {
 
     setter(income, filter) {
         let datePay = "...";
+
         if (filter) {
-            datePay = this.dateFormatter(income["updated_at"]);
+            datePay = this.dateFormatter(income["created_at"]);
         } else {
             if (income["status"] === "completed") {
                 datePay = this.dateFormatter(income["updated_at"]);
@@ -60,8 +67,6 @@ export class IncomeService extends TableService {
         if (income["wallet"]) {
             wallet = income["wallet"];
         }
-
-        console.log(income);
 
         return filter
             ? new paymentData(
@@ -99,7 +104,13 @@ export class IncomeService extends TableService {
         if (store.getters.getActive !== -1) {
             this.waitTable = true;
 
-            let response = await this.fetch(filter, page, per_page);
+            let response;
+
+            if (filter) {
+                response = await this.fetchPayout(page, per_page);
+            } else {
+                response = await this.fetchIncomes(page, per_page);
+            }
 
             this.meta = response.data;
 

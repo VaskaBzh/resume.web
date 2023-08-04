@@ -224,7 +224,7 @@ export default {
                 arr.length = 0;
                 Object.values(this.allAccounts).forEach((acc) => {
                     arr.push({
-                        title: acc.sub,
+                        title: acc.name,
                         value: acc.group_id,
                     });
                 });
@@ -234,7 +234,7 @@ export default {
         name() {
             let name = "...";
             if (this.getAccount) {
-                name = this.getAccount.sub;
+                name = this.getAccount.name;
             }
             return name;
         },

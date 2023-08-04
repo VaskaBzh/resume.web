@@ -5,7 +5,7 @@
         @click="chageActive"
     >
         <div class="profile__head">
-            <span class="profile_name">{{ account.sub }}</span>
+            <span class="profile_name">{{ account.name || "subName" }}</span>
             <span
                 class="profile_status active"
                 v-if="
@@ -134,12 +134,12 @@ export default {
             return 0;
         },
         myPayment() {
-            return (
-                Number(this.account.total_payment).toFixed(8) || "0.00000000"
-            );
+            let val = Number(this.account.total_payout);
+            return val ? val.toFixed(8) : "0.00000000";
         },
         hashRate() {
-            return Number(this.accountInfo.hash_per_min).toFixed(2);
+            let val = Number(this.accountInfo.hash_per_min);
+            return val ? val.toFixed(8) : "0.00000000";
         },
     },
 };

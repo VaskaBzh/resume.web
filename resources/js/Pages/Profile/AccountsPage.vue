@@ -29,7 +29,7 @@
                 <account-profile
                     @getId="setId"
                     v-for="(account, i) in allAccounts"
-                    :key="i + account.sub + getActive"
+                    :key="i + account.name + getActive"
                     :accKey="i"
                     :accountInfo="account"
                 />

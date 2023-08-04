@@ -162,27 +162,23 @@ export default {
         unPayment() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
-                sum =
-                    this.getAccount.total_amount -
-                    this.getAccount.total_payment;
+                sum = this.getAccount.pending_amount;
             }
             return Number(sum).toFixed(8);
         },
         payed() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
-                sum = this.getAccount.total_payment;
+                sum = this.getAccount.total_payout;
             }
             return Number(sum).toFixed(8);
         },
         yesterdayProfit() {
-            if (
-                this.incomes.table?.get("rows") &&
-                this.incomes.table?.get("rows")[0]?.earn
-            ) {
-                return this.incomes.table?.get("rows")[0]?.earn;
+            let sum = 0;
+            if (Object.values(this.getAccount).length > 0) {
+                sum = this.getAccount.yesterday_amount;
             }
-            return "0.00000000 BTC";
+            return Number(sum).toFixed(8);
         },
     },
     watch: {

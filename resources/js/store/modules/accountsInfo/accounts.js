@@ -1,5 +1,7 @@
 import api from "@/api/api";
 
+import { accountData } from "@/DTO/accountData";
+
 export default {
     actions: {
         async destroy_accounts({ commit, state }) {
@@ -8,7 +10,10 @@ export default {
         async set_active({ commit, state }, index) {
             commit("updateActive", index);
 
-            let sub = (await api.get(`/api/sub/${index}`)).data.data;
+            let sub = new accountData(
+                (await api.get(`/api/sub/${index}`)).data.data
+            );
+
             // let sub = Object.values(state.accounts).filter(
             //     (el) => el.group_id === index
             // )
@@ -16,7 +21,11 @@ export default {
             commit("updateActiveAccount", sub);
         },
         async accounts_all({ commit, state }, user_id) {
-            let subsList = (await api.get(`/api/subs/${user_id}`)).data.data;
+            let subsList = (
+                await api.get(`/api/subs/${user_id}`)
+            ).data.data.map((el) => {
+                return new accountData(el);
+            });
 
             if (state.active === -1) {
                 commit("updateAccounts", subsList);

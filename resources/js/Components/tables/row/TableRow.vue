@@ -154,13 +154,11 @@ export default {
             }
         }
 
-        &:nth-last-child(-n+2):has(+ svg)
-         {
+        &:nth-last-child(-n + 2):has(+ svg) {
             @media (min-width: 767.98px) {
                 border-radius: 0 8px 8px 0;
             }
         }
-
     }
     &__row {
         border-radius: 8px;
@@ -211,7 +209,10 @@ export default {
         }
         &.active,
         &.inactive,
-        &.unstable {
+        &.unstable,
+        &.ACTIVE,
+        &.INACTIVE,
+        &.UNSTABLE {
             .table_column:first-child span:last-child::before {
                 display: inline-flex;
                 content: "";
@@ -251,7 +252,8 @@ export default {
                 }
             }
         }
-        &.active {
+        &.active,
+        &.ACTIVE {
             .table_column:first-child span:last-child:before {
                 background: #13d60e;
             }
@@ -270,7 +272,8 @@ export default {
                 }
             }
         }
-        &.inactive {
+        &.inactive,
+        &.INACTIVE {
             .table_column:first-child span:last-child:before {
                 background: #ff0000;
             }
@@ -289,7 +292,8 @@ export default {
                 }
             }
         }
-        &.unstable {
+        &.unstable,
+        &.UNSTABLE {
             .table_column:first-child span:last-child:before {
                 background: #e9c058;
             }
