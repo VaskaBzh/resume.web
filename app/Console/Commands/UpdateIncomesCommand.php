@@ -67,17 +67,17 @@ class UpdateIncomesCommand extends Command
             }
 
             try {
-                $walletService->unlock();
+//                $walletService->unlock();
 
                 Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
-                $txId = $walletService->sendBalance(
+                $txId = '123'; /*$walletService->sendBalance(
                     wallet: $wallet,
                     balance: $incomeService->getPayout()
-                );
+                );*/
 
                 if (!$txId) {
                     Log::channel('incomes')->info('TXID IS EMPTY', [

@@ -12,8 +12,7 @@ class SubResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            "sub" => $this['sub'],
-            "total_amount" => $this['total_amount'],
+            "name" => $this['sub'],
             "group_id" => $this['group_id'],
             "workers_count_active" => $this['workers_count_active'],
             "workers_count_in_active" => $this['workers_count_in_active'],
@@ -23,7 +22,9 @@ class SubResource extends JsonResource
             "today_forecast" => $this['today_forecast'],
             "reject_percent" => $this['reject_percent'],
             "unit" => $this['unit'],
-            "total_payment" => $this['total_payment'],
+            "total_payout" => $this['total_payout'],
+            "yesterday_amount" => $this['yesterday_amount'],
+            'pending_amount' => $this['pending_amount']
         ];
     }
 }

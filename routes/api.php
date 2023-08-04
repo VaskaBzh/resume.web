@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\IncomeListController;
+use App\Http\Controllers\Api\PayoutListController;
 use App\Http\Controllers\Api\Subs\ListController as SubListController;
 use App\Http\Controllers\Api\Subs\ShowController as SubShowController;
 use App\Http\Controllers\Api\Workers\ShowController as WorkerShowController;
@@ -28,6 +29,12 @@ Route::group([
     'prefix' => 'incomes',
 ], function () {
    Route::get('{sub}', IncomeListController::class)->name('income.list');
+});
+
+Route::group([
+    'prefix' => 'payouts',
+], function () {
+    Route::get('{sub}', PayoutListController::class)->name('payout.list');
 });
 
 Route::group([
