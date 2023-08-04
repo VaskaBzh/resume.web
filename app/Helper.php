@@ -25,8 +25,6 @@ class Helper
 
         $secondsPerDay = 86400;
 
-        $hashRate = $hashRate <= 0 ? 1 : $hashRate;
-
         $earnTime = ($stats->network_difficulty * pow("2", "32"))
             / (($hashRate * pow("10", "12")) * $secondsPerDay);
 
