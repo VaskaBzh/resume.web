@@ -246,8 +246,7 @@ export default {
             border-radius: 8px 0 0 8px;
         }
         &:last-child {
-            border-radius: 0 8px 8px 0;
-        }
+            border-radius: 0 8px 8px 0;        }
     }
     &__head {
         @media (max-width: 767.98px) {
@@ -296,7 +295,7 @@ export default {
         }
         svg {
             transition: all 0.3s ease 0s;
-            display: none;
+            // display: none;
             stroke: #818c99;
             position: absolute;
             right: 12px;

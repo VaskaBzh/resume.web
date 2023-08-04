@@ -156,6 +156,12 @@ export default {
                 padding-left: 16px;
             }
         }
+        &:nth-last-child(-n+2){
+            @media (min-width: 767.98px) {
+                border-radius: 0 8px 8px 0;
+            }
+        }
+
     }
     &__row {
         border-radius: 8px;
@@ -178,9 +184,10 @@ export default {
                 }
             }
         }
-        //&-cursor {
+        
+        // &-cursor {
         //    cursor: pointer;
-        //}
+        // }
         &.main {
             .more {
                 display: none;
