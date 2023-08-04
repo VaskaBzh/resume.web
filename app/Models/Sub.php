@@ -80,4 +80,21 @@ class Sub extends Model
     }
 
     /* Attributes */
+
+    public function totalPayout(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->payouts()->sum('payout')
+        );
+    }
+
+    public function yesterdayAmount(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => Income::getYesterDayIncome($this->group_id)
+                ->latest()
+                ->first()
+                ?->daily_amount
+        );
+    }
 }

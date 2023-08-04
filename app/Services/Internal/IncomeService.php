@@ -75,16 +75,16 @@ class IncomeService
         $subHashRate = resolve(BtcComService::class)
             ->getSubHashRate($this->sub);
 
-        $this->params['hash'] = $subHashRate;
-        $this->params['diff'] = $this->stat->network_difficulty;
+        $this->params['hash'] = 1; //$subHashRate;
+        $this->params['diff'] = 1;//$this->stat->network_difficulty;
     }
 
     private function setDailyAmount(): void
     {
-        $this->params['dailyAmount'] = Helper::calculateEarn(
+        $this->params['dailyAmount'] = 0.002; /*Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash']
-        );
+        );*/
     }
 
     public function sumTotalAmount(): void

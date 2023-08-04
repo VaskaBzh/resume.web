@@ -52,7 +52,7 @@ class BtcComService
     {
         return [
             'sub' => $sub->sub,
-            'total_amount' => $sub->total_amount,
+            'pending_amount' => $sub->pending_amount,
             'group_id' => $sub->group_id,
             'workers_count_active' => $btcComSub['workers_active'],
             'workers_count_in_active' => $btcComSub['workers_inactive'],
@@ -62,7 +62,8 @@ class BtcComService
             'today_forecast' => number_format(Helper::calculateEarn($stats, $hashPerDay), 8, '.', ' '),
             'reject_percent' => $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
-            'total_payment' => $sub->total_payment,
+            'total_payout' => $sub->total_payout,
+            'yesterday_amount' => $sub->yesterday_amount,
         ];
     }
 
