@@ -22,7 +22,6 @@ class Upsert
                 'wallet' => $walletData->walletAddress,
                 'minWithdrawal' => $walletData->minWithdrawal,
                 'percent' => $walletData->percent,
-                'payment' => $walletData->payment,
             ]);
     }
 }

@@ -90,7 +90,11 @@
                     :viewportWidth="viewportWidth"
                     :heightVal="height"
                     :tooltip="true"
-                    :key="graph[0]?.values[graph[0]?.values.length - 1]"
+                    :key="
+                        worker_service.graph?.values[
+                            worker_service.graph?.values?.length - 1
+                        ]
+                    "
                 />
             </div>
         </main-popup>
@@ -112,7 +116,6 @@ export default {
         errors: Object,
         worker_service: {
             type: Object,
-            default: {},
         },
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
@@ -130,7 +133,6 @@ export default {
             redraw: true,
             height: 360,
             indexWorker: 0,
-            graph: {},
         };
     },
     watch: {

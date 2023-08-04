@@ -5,7 +5,7 @@
         </div>
         <no-info
             :wait="waitTable"
-            :interval="120"
+            :interval="35"
             :end="endTable"
             :empty="emptyTable"
         ></no-info>

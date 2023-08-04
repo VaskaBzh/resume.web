@@ -68,8 +68,6 @@ export class IncomeService extends TableService {
             wallet = income["wallet"];
         }
 
-        console.log(income);
-
         return filter
             ? new paymentData(
                   datePay,

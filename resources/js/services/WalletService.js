@@ -82,13 +82,10 @@ export class WalletService {
 
     async changeWallet() {
         this.wait = true;
-        await this.form.post("/wallet_change", {
-            onSuccess() {
-                this.index();
-                this.clearForm();
-                this.closePopup();
-            },
-        });
+        await this.form.post("/wallet_change", {});
+        this.index();
+        this.clearForm();
+        this.closePopup();
         this.wait = false;
     }
 
