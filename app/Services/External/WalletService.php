@@ -22,19 +22,18 @@ class WalletService
     /**
      * Разблокировать кошелек
      *
-     * @return bool
      * @throws RequestException
      */
-    public function unlock(): bool
+    public function unlock(): void
     {
-        return $this->client->post(config('api.wallet.ip'), [
+        $this->client->post(config('api.wallet.ip'), [
             'jsonrpc' => '1.0',
             'id' => 'unlock',
             'method' => 'walletpassphrase',
             'params' => [config('api.wallet.walletpassphrase'), 10]
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса разблокировки кошелька')
-        )->successful();
+        );
     }
 
     public function lock(): void

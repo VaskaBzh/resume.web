@@ -25,7 +25,7 @@ class IncomeCollection extends ResourceCollection
                     'updated_at' => $income->updated_at
                 ] :
                 [
-                    'wallet' => $income->wallet,
+                    'wallet' => $income->wallet?->wallet,
                     'amount' => $income->daily_amount,
                     'hash' => $income->hash,
                     'status' => $income->status,

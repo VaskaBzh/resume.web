@@ -13,6 +13,7 @@ use App\Dto\IncomeData;
 use App\Dto\SubData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
+use App\Helper;
 use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
@@ -74,16 +75,16 @@ class IncomeService
         $subHashRate = resolve(BtcComService::class)
             ->getSubHashRate($this->sub);
 
-        $this->params['hash'] = 1;
-        $this->params['diff'] = 1;
+        $this->params['hash'] = $subHashRate;
+        $this->params['diff'] = $this->stat->network_difficulty;
     }
 
     private function setDailyAmount(): void
     {
-        $this->params['dailyAmount'] = 0.002/*Helper::calculateEarn(
+        $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash']
-        )*/;
+        );
     }
 
     public function sumTotalAmount(): void

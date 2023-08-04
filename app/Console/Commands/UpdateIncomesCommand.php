@@ -11,6 +11,7 @@ use App\Models\Sub;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Log;
 
 class UpdateIncomesCommand extends Command
@@ -65,16 +66,18 @@ class UpdateIncomesCommand extends Command
                 return;
             }
 
-            if (true) {
+            try {
+                $walletService->unlock();
+
                 Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
-                $txId = '123'; /*$walletService->sendBalance(
+                $txId = $walletService->sendBalance(
                     wallet: $wallet,
                     balance: $incomeService->getPayout()
-                );*/
+                );
 
                 if (!$txId) {
                     Log::channel('incomes')->info('TXID IS EMPTY', [
@@ -83,10 +86,12 @@ class UpdateIncomesCommand extends Command
                     ]);
 
                     $incomeService
-                        ->setMessage(message: Message::ERROR_PAYOUT)
-                        ->createLocalIncome(wallet: $wallet);
+                        ->setMessage(message: Message::ERROR_PAYOUT);
 
+                    $incomeService->createFinance();
+                    $incomeService->createLocalIncome(wallet: $wallet);
                     $incomeService->updateLocalSub();
+
                     $walletService->lock();
 
                     return;
@@ -110,18 +115,19 @@ class UpdateIncomesCommand extends Command
                 $incomeService->createLocalIncome(wallet: $wallet);
 
                 $incomeService->complete(wallet: $wallet);
-            } else {
+
+            } catch (RequestException) {
                 Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
                 $incomeService
-                    ->setMessage(Message::ERROR_PAYOUT)
-                    ->createLocalIncome(wallet: $wallet);
+                    ->setMessage(Message::ERROR_PAYOUT);
 
                 $incomeService->createFinance();
                 $incomeService->updateLocalSub();
+                $incomeService->createLocalIncome(wallet: $wallet);
             }
         } else {
             $incomeService
