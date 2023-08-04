@@ -58,16 +58,16 @@ class IncomeService
         return $this;
     }
 
-    public function calculatePayment(float $amount): IncomeService
+    public function calculatePayment(): IncomeService
     {
-        $this->incomeData['payment'] = ($amount + $this->subData['unPayments']) * ($this->wallet->percent / 100);
+        $this->incomeData['payment'] = $this->subData['unPayments'];
 
         return $this;
     }
 
     public function setTxId(string $txId): IncomeService
     {
-        $this->incomeData['txId'] = $txId;
+        $this->incomeData['txid'] = $txId;
 
         return $this;
     }
@@ -98,16 +98,9 @@ class IncomeService
         return $this->incomeData['payment'] >= Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
-    public function setSubClearPayments(): IncomeService
+    public function setSubPayments(float $amount = 0): IncomeService
     {
-        $this->subData['payments'] = $this->sub->payments;
-
-        return $this;
-    }
-
-    public function setSubPayments(): IncomeService
-    {
-        $this->subData['payments'] = $this->sub->payments + $this->sub->unPayments;
+        $this->subData['payments'] = $this->sub->payments + $amount;
 
         return $this;
     }
@@ -119,9 +112,16 @@ class IncomeService
         return $this;
     }
 
-    public function setSubUnPayments(): IncomeService
+    public function setSubUnPayments(float $amount): IncomeService
     {
-        $this->subData["unPayments"] = $this->subData["accruals"] - $this->subData["payments"];
+        $this->subData["unPayments"] = $this->sub->unPayments + $amount;
+
+        return $this;
+    }
+
+    public function clearUnPayments(): IncomeService
+    {
+        $this->subData['unPayments'] = 0;
 
         return $this;
     }
@@ -220,11 +220,6 @@ class IncomeService
             stats: $this->stat,
             hashRate: $this->incomeData['hash']
         );
-    }
-
-    private function calculateProfit(float $earn): float
-    {
-        return ($earn / 100) * self::ALLBTC_FEE;
     }
 
     private function buildDto(): IncomeData
