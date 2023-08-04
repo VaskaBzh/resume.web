@@ -18,7 +18,7 @@ class WalletResource extends JsonResource
             'minWithdrawal' => $this->minWithdrawal,
             'wallet' => $this->wallet,
             'name' => $this->name,
-            'payment' => $this->payment,
+            'total_payout' => $this->total_payout,
         ];
     }
 }
