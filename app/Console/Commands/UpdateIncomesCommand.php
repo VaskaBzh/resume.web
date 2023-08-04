@@ -27,6 +27,11 @@ class UpdateIncomesCommand extends Command
     public function handle(): void
     {
         foreach (Sub::all() as $sub) {
+
+            if (in_array($sub->group_id, [])) {
+                continue;
+            }
+
             $this->process(
                 incomeService: resolve(IncomeService::class),
                 walletService: resolve(WalletService::class),
@@ -58,48 +63,44 @@ class UpdateIncomesCommand extends Command
 
             $incomeService
                 ->setAmount($amount)
-                ->setSubClearPayments()
                 ->setSubAccruals($amount)
-                ->setSubUnPayments();
+                ->setPayment($amount)
+                ->setSubUnPayments($amount)
+                ->setPercent()
+                ->setSubPayments()
+                ->updateLocalSub();
+
         } catch (\Exception $e) {
             report($e);
 
             return;
         }
 
-        $incomeService
-            ->setPayment($amount)
-            ->updateLocalSub();
-
         $wallet = $sub->wallets?->first();
 
         if ($wallet) {
             $incomeService
                 ->setWallet($wallet)
-                ->setPercent()
-                ->calculatePayment($amount);
+                ->calculatePayment();
 
             $walletService->setWallet($wallet);
 
-            if (!$incomeService->canWithdraw()) {
-                $incomeService
-                    ->setMessage(Message::LESS_MIN_WITHDRAWAL)
-                    ->setStatus(Status::PENDING)
-                    ->createLocalIncome();
+            if (false) {
 
-                return;
+
             }
 
-            if ($walletService->unlock()) {
+            if (true) {
 
                 Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
-                $txId = $walletService->sendBalance(
-                    balance: $incomeService->getIncomeParam('payment')
-                );
+                $txId = "123";
+//                    $walletService->sendBalance(
+//                    balance: $incomeService->getIncomeParam('payment')
+//                );
 
                 if (!$txId) {
 
@@ -121,8 +122,8 @@ class UpdateIncomesCommand extends Command
                     ->setTxId($txId)
                     ->setStatus(Status::COMPLETED)
                     ->setMessage(Message::COMPLETED)
-                    ->setSubPayments()
-                    ->setSubUnPayments()
+                    ->setSubPayments($amount)
+                    ->clearUnPayments()
                     ->updateLocalSub();
 
                 $walletService->upsertLocalWallet(
