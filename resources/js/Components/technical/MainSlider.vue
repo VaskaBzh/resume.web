@@ -110,7 +110,7 @@ export default {
     components: { WrapTable },
     props: {
         table: Object,
-        wait: Object,
+        wait: Boolean,
         empty: Object,
         rowsNum: {
             type: Number,
@@ -182,7 +182,6 @@ export default {
         cache(meta) {
             if (meta?.meta) {
                 this.saveTable = this.table;
-                this.saveTable = this.table;
             }
         },
         dropButtonLinks() {
@@ -198,7 +197,6 @@ export default {
                     this.mapLinks(lastIndex - 2, lastIndex)
                 );
             }
-            console.log(this.mapLinks(index - 1, index + 1));
             if (index > 4 && index <= lastIndex - 5) {
                 links = links.concat(
                     this.mapLinks(0, 3),

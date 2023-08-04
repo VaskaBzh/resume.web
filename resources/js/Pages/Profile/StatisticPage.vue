@@ -58,8 +58,8 @@
                         :viewportWidth="viewportWidth"
                         :key="
                             hashrates.graph?.values[
-                                hashrates.graph.values?.length - 1
-                            ] || 1
+                                hashrates.graph?.values?.length - 1
+                            ]
                         "
                     />
                 </div>

@@ -12,17 +12,17 @@ readonly class SubData
      * @param int $userId - id пользователя allbtc.com
      * @param int $groupId - id сабаккаунта
      * @param string $groupName - имя сабаккаунта
-     * @param float|null $payments - сумма вывода средств за все время со всех кошельков
-     * @param float|null $unPayments - доход не превысивший допстимый порог вывода средств
-     * @param float|null $accruals - сумма начисления средств за все время со всех кошельков
+     * @param float|null $totalPayment - сумма вывода средств за все время со всех кошельков
+     * @param float|null $accumulateAmount - доход не превысивший допстимый порог вывода средств
+     * @param float|null $totalAmount - сумма добычи за все время
      */
     public function __construct(
         public int $userId,
         public int $groupId,
         public string $groupName,
-        public ?float $payments,
-        public ?float $unPayments,
-        public ?float $accruals,
+        public ?float $totalPayment,
+        public ?float $accumulateAmount,
+        public ?float $totalAmount,
     )
     {
     }
@@ -33,9 +33,9 @@ readonly class SubData
             userId: $requestData['user_id'],
             groupId: $requestData['group_id'],
             groupName: $requestData['group_name'],
-            payments: Arr::get($requestData, 'payments'),
-            unPayments: Arr::get($requestData, 'unPayments'),
-            accruals: Arr::get($requestData, 'accruals')
+            totalPayment: Arr::get($requestData, 'total_payment'),
+            accumulateAmount: Arr::get($requestData, 'accumulated_amount'),
+            totalAmount: Arr::get($requestData, 'total_amount')
         );
     }
 }

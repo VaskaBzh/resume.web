@@ -20,16 +20,14 @@ class IncomeCollection extends ResourceCollection
         return [
             'data' => $this->collection->map(fn(Income $income) => $this->filter
                 ? [
-                    'payment' => $income->payment,
                     'txid' => $income->txid,
                     'wallet' => $income->wallet,
                     'updated_at' => $income->updated_at
                 ] :
                 [
                     'wallet' => $income->wallet,
-                    'amount' => $income->amount,
+                    'amount' => $income->daily_amount,
                     'hash' => $income->hash,
-                    'unit' => $income->unit,
                     'status' => $income->status,
                     'message' => $income->message,
                     'created_at' => $income->created_at,

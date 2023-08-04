@@ -14,8 +14,8 @@ class Helper
      * $earnTime - время добычи блока с заданным хешрейтом ($share * pow(10, 12))
      * $this->>hashRate - хешрейт
      * $this->>rewardBlock - награда за блок
-     * $this->>difficulty - сложность сети биткоина
-     * $this->>fppsPercent - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
+     * $this->>network_difficulty - сложность сети биткоина
+     * $this->>fpps_rate - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
      */
     public static function calculateEarn(MinerStat $stats, float $hashRate): float
     {

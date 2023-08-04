@@ -201,7 +201,7 @@ export default {
         },
     },
     mounted() {
-        if (this.$refs.chart && this.graphData.values?.length > 0) {
+        if (this.$refs.chart && this.graphData?.values?.length > 0) {
             this.graphInit();
         }
     },

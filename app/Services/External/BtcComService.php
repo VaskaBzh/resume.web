@@ -52,7 +52,7 @@ class BtcComService
     {
         return [
             'sub' => $sub->sub,
-            'accruals' => $sub->accruals,
+            'total_amount' => $sub->total_amount,
             'group_id' => $sub->group_id,
             'workers_count_active' => $btcComSub['workers_active'],
             'workers_count_in_active' => $btcComSub['workers_inactive'],
@@ -62,7 +62,7 @@ class BtcComService
             'today_forecast' => number_format(Helper::calculateEarn($stats, $hashPerDay), 8, '.', ' '),
             'reject_percent' => $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
-            'payments' => $sub->payments,
+            'total_payment' => $sub->total_payment,
         ];
     }
 
@@ -206,16 +206,11 @@ class BtcComService
 
     public function getWorker($workerId): Collection
     {
-        $response = $this->client->get(implode('/', [
-            'worker',
-            $workerId
-        ]), [
+        $response = $this->call(['worker', $workerId], params: [
             'puid' => self::PU_ID,
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
+        ]);
 
-        return collect($response['data']['data']);
+        return collect($response['data']);
     }
 
     /**

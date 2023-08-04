@@ -34,12 +34,7 @@ export default {
                     reward: minerstats.reward_block,
                     price: minerstats.price_USD,
                 };
-
-                converterModel.time = (
-                    (minerstats.time_remain - (Date.now() / 1000).toFixed(0)) /
-                    60 /
-                    60
-                ).toFixed(0);
+                converterModel.time = minerstats.time_remain - Date.now();
 
                 commit(`updateInfo`, {
                     key: "btc".toLowerCase(),
@@ -57,7 +52,7 @@ export default {
         updateHistoryDiff(state, data) {
             let hist = data.reverse();
             hist = hist.map((el, i) => {
-                if (i < 60) {
+                if (i < 120) {
                     return el;
                 }
             });

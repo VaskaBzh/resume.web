@@ -53,12 +53,12 @@ export default {
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");
-        if (this.auth_user && this.$store.getters.getValid) {
-            await this.$store.dispatch("getAccounts", this.user.id);
+        if (this.auth_user) {
+            await this.$store.dispatch("accounts_all", this.user.id);
         }
         if (this.auth_user) {
-            this.interval = setInterval(() => {
-                this.$store.dispatch("getAccounts", this.user.id);
+            this.interval = setInterval(async () => {
+                await this.$store.dispatch("accounts_all", this.user.id);
             }, 60000);
         }
         // if (!localStorage.getItem("location")) {

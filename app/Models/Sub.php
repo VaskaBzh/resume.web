@@ -21,16 +21,16 @@ class Sub extends Model
         'user_id',
         'group_id',
         'sub',
-        'payments',
-        'unPayments',
-        'accruals',
+        'total_payment',
+        'un_payments',
+        'total_amount',
         'percent',
     ];
 
     protected $casts = [
-        'accruals' => 'float',
-        'payments' => 'float',
-        'unPayments' => 'float',
+        'total_payment' => 'float',
+        'un_payments' => 'float',
+        'total_amount' => 'float',
     ];
 
     public function getRouteKeyName(): string
@@ -77,15 +77,4 @@ class Sub extends Model
     }
 
     /* Attributes */
-
-    public function dailyHashRate(): Attribute
-    {
-
-        return Attribute::make(
-            get: function () {
-
-                dd($this->workers()->with('workerHashrates'));
-            }
-        );
-    }
 }

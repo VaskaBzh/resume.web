@@ -260,7 +260,7 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import axios from "axios";
 import { ref } from "vue";
 import { useForm } from "@inertiajs/vue3";
-import MainPassword from "@/Components/UI/MainPassword.vue";
+import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 
 export default {
     layout: profileLayoutView,

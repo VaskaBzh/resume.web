@@ -11,8 +11,6 @@ use Illuminate\Support\Facades\Http;
 
 class WalletService
 {
-    private Wallet $wallet;
-
     public function __construct()
     {
         $this->client = Http::withBasicAuth(
@@ -26,7 +24,6 @@ class WalletService
      *
      * @return bool
      * @throws RequestException
-     * @throw \Exception - бросаем исключение, если ошибка запроса
      */
     public function unlock(): bool
     {
@@ -34,7 +31,7 @@ class WalletService
             'jsonrpc' => '1.0',
             'id' => 'unlock',
             'method' => 'walletpassphrase',
-            'params' => [config('api.wallet.walletpassphrase'), 60]
+            'params' => [config('api.wallet.walletpassphrase'), 10]
         ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса разблокировки кошелька')
         )->successful();
@@ -55,32 +52,35 @@ class WalletService
      * Отправить баланс в сервис кошелька
      * @param float $balance - баланс кошелька
      */
-    public function sendBalance(float $balance): ?string
+    public function sendBalance(Wallet $wallet, float $balance): ?string
     {
         $response = $this->client->post(config('api.wallet.ip'), [
             'jsonrpc' => '1.0',
             'id' => 'withdrawal',
             'method' => 'sendtoaddress',
-            'params' => [$this->wallet->wallet, $balance]
+            'params' => [
+                $wallet->wallet,
+                (float) number_format($balance, 8, '.', ' ')
+            ]
+        ]);
+
+        info('WALLET RESPONSE', [
+            'wallet' => $wallet->id,
+            'response' => $response
         ]);
 
         return $response['result'];
     }
 
-    public function setWallet(Wallet $wallet): void
-    {
-        $this->wallet = $wallet;
-    }
-
-    public function upsertLocalWallet(float $payment): void
+    public function upsertLocalWallet(Wallet $wallet, float $payment): void
     {
         Upsert::execute(
             walletData: WalletData::fromRequest([
-                'wallet' => $this->wallet->wallet,
-                'group_id' => $this->wallet->group_id,
-                'payment' => $payment + $this->wallet->payment,
-                'percent' => $this->wallet->percent,
-                'minWithdrawal' => $this->wallet->minWithdrawal
+                'wallet' => $wallet->wallet,
+                'group_id' => $wallet->group_id,
+                'payment' => $payment + $wallet->payment,
+                'percent' => $wallet->percent,
+                'minWithdrawal' => $wallet->minWithdrawal
             ])
         );
     }

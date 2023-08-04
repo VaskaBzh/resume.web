@@ -88,7 +88,7 @@ import authLayoutView from "@/Shared/AuthLayoutView.vue";
 import { Link, useForm } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import MainPassword from "@/Components/UI/MainPassword.vue";
+import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 
 export default {
     layout: authLayoutView,
