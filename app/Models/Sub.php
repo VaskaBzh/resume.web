@@ -21,15 +21,13 @@ class Sub extends Model
         'user_id',
         'group_id',
         'sub',
-        'total_payment',
-        'un_payments',
+        'pending_amount',
         'total_amount',
         'percent',
     ];
 
     protected $casts = [
-        'total_payment' => 'float',
-        'un_payments' => 'float',
+        'pending_amount' => 'float',
         'total_amount' => 'float',
     ];
 
@@ -62,6 +60,11 @@ class Sub extends Model
     public function incomes(): HasMany
     {
         return $this->hasMany(Income::class, 'group_id', 'group_id');
+    }
+
+    public function payouts(): HasMany
+    {
+        return $this->hasMany(Payout::class, 'group_id', 'group_id');
     }
 
     public function wallets(): HasMany

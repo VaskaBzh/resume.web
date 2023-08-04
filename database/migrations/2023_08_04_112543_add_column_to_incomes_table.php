@@ -8,14 +8,16 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('incomes', function (Blueprint $table) {
-            $table->dropColumn('percent');
+            $table->unsignedInteger('wallet_id')
+                ->after('group_id')
+                ->nullable();
         });
     }
 
     public function down(): void
     {
         Schema::table('incomes', function (Blueprint $table) {
-            $table->float('percent');
+            $table->dropColumn('wallet_id');
         });
     }
 };

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\Events\IncomeCompleteEvent;
-use App\Listeners\IncomeCompleteListener;
+use App\Events\PayoutCompleteEvent;
+use App\Listeners\PayoutCompleteListener;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -19,8 +19,8 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        IncomeCompleteEvent::class => [
-            IncomeCompleteListener::class
+        PayoutCompleteEvent::class => [
+            PayoutCompleteListener::class
         ]
     ];
 

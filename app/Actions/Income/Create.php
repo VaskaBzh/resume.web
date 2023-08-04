@@ -13,10 +13,8 @@ class Create
     {
         return Income::create([
             'group_id' => $incomeData->groupId,
-            'txid' => $incomeData->txid,
-            'wallet' => $incomeData->wallet,
+            'wallet_id' => $incomeData->walletId,
             'daily_amount' => $incomeData->dailyAmount,
-            'unit' => $incomeData->unit,
             'status' => $incomeData->status,
             'message' => $incomeData->message,
             'hash' => $incomeData->hashrate,

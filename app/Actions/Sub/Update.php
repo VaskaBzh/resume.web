@@ -14,8 +14,7 @@ class Update
         $sub->update(
             [
                 'sub' => $subData->groupName,
-                'total_payment' => $subData->totalPayment ?? $sub->total_payment,
-                'un_payments' => $subData->accumulateAmount ?? $sub->un_payments,
+                'pending_amount' => $subData->pendingAmount ?? $sub->pending_amount,
                 'total_amount' => $subData->totalAmount ?? $sub->total_amount,
             ]
         );
