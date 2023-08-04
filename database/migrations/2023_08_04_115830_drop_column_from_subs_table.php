@@ -8,16 +8,14 @@ return new class extends Migration {
     public function up(): void
     {
         Schema::table('subs', function (Blueprint $table) {
-            $table->renameColumn('unPayments', 'pending_amount');
-            $table->renameColumn('accruals', 'total_amount');
+            $table->dropColumn('payments');
         });
     }
 
     public function down(): void
     {
         Schema::table('subs', function (Blueprint $table) {
-            $table->renameColumn('pending_amount', 'unPayments');
-            $table->renameColumn('total_amount', 'accruals');
+            $table->decimal('payments')->nullable();
         });
     }
 };

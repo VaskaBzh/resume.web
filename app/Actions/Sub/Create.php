@@ -15,8 +15,7 @@ class Create
             'user_id' => $subData->userId,
             'group_id' => $subData->groupId,
             'sub' => $subData->groupName,
-            'total_payment' => $subData->payments,
-            'un_payments' => $subData->accumulatedAmount,
+            'pending_amount' => $subData->pendingAmount,
             'total_amount' => $subData->totalAmount,
         ]);
     }

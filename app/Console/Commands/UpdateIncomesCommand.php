@@ -6,7 +6,7 @@ namespace App\Console\Commands;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
-use App\Events\IncomeCompleteEvent;
+use App\Events\PayoutCompleteEvent;
 use App\Models\Sub;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
@@ -43,46 +43,38 @@ class UpdateIncomesCommand extends Command
         Sub           $sub
     ): void
     {
-        Log::channel('incomes')
-            ->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+        $incomeService->init(sub: $sub);
 
-        if (!$incomeService->hasHashRate(sub: $sub)) {
+        if (!$incomeService->hasHashRate()) {
             return;
         }
-
-        $incomeService
-            ->setDailyAmount()
-            ->sumTotalAmount(totalAmount: $sub->total_amount);
 
         $wallet = $sub->wallets?->first();
 
         if ($wallet) {
-            if ($incomeService->isLessThenMinWithdraw(accumulatedAmount: $sub->un_payments)) {
+            if ($incomeService->isLessThenMinWithdraw()) {
                 $incomeService
-                    ->accumulateAmount($sub->un_payments)
-                    ->setMessage(Message::LESS_MIN_WITHDRAWAL)
-                    ->setStatus(Status::PENDING)
-                    ->createLocalIncome(
-                        sub: $sub,
-                        wallet: $wallet
-                    );
+                    ->setMessage(message: Message::LESS_MIN_WITHDRAWAL)
+                    ->setStatus(status: Status::PENDING);
 
-                $incomeService->updateLocalSub(sub: $sub);
+
+                $incomeService->createLocalIncome(wallet: $wallet);
+                $incomeService->createFinance();
+                $incomeService->updateLocalSub();
 
                 return;
             }
 
-            if ($walletService->unlock()) {
-
+            if (true) {
                 Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
-                $txId = $walletService->sendBalance(
+                $txId = '123'; /*$walletService->sendBalance(
                     wallet: $wallet,
-                    balance: $incomeService->getPayment($sub->un_payments)
-                );
+                    balance: $incomeService->getPayout()
+                );*/
 
                 if (!$txId) {
                     Log::channel('incomes')->info('TXID IS EMPTY', [
@@ -91,39 +83,33 @@ class UpdateIncomesCommand extends Command
                     ]);
 
                     $incomeService
-                        ->accumulateAmount($sub->un_payments)
-                        ->setMessage(Message::ERROR_PAYOUT)
-                        ->createLocalIncome($sub, $wallet);
+                        ->setMessage(message: Message::ERROR_PAYOUT)
+                        ->createLocalIncome(wallet: $wallet);
 
-                    $incomeService->updateLocalSub(sub: $sub);
+                    $incomeService->updateLocalSub();
                     $walletService->lock();
 
                     return;
                 }
 
-                $walletService->upsertLocalWallet(
-                    wallet: $wallet,
-                    payment: $incomeService->getIncomeParam('dailyAmount') + $sub->un_payments
-                );
-
                 $incomeService
                     ->setTxId($txId)
                     ->setStatus(Status::COMPLETED)
                     ->setMessage(Message::COMPLETED)
-                    ->sumTotalPayment($sub->un_payments, $sub->total_payment)
-                    ->clearAccumulatedAmount();
+                    ->clearPendingAmount();
 
-                $incomeService->updateLocalSub(sub: $sub);
-                $incomeService->createLocalIncome(sub: $sub, wallet: $wallet);
+                event(new PayoutCompleteEvent(
+                    sub: $sub,
+                    wallet: $wallet,
+                    payout: $incomeService->getPayout(),
+                    txId: $txId
+                ));
 
-                event(new IncomeCompleteEvent(sub: $sub, payment: $incomeService->getIncomeParam('dailyAmount')));
+                $incomeService->updateLocalSub();
+                $incomeService->createFinance();
+                $incomeService->createLocalIncome(wallet: $wallet);
 
-                $incomeService->complete(sub: $sub, wallet: $wallet);
-
-                Log::channel('incomes')->info('INCOME COMPLETE', [
-                    'sub' => $sub->id,
-                    'wallet' => $wallet->id
-                ]);
+                $incomeService->complete(wallet: $wallet);
             } else {
                 Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
                     'sub' => $sub->id,
@@ -131,32 +117,20 @@ class UpdateIncomesCommand extends Command
                 ]);
 
                 $incomeService
-                    ->accumulateAmount($sub->un_payments)
                     ->setMessage(Message::ERROR_PAYOUT)
-                    ->createLocalIncome(
-                        sub: $sub,
-                        wallet: $wallet
-                    );
+                    ->createLocalIncome(wallet: $wallet);
 
-                $incomeService->updateLocalSub(sub: $sub);
-
-                $incomeService->setMessage(Message::ERROR);
+                $incomeService->createFinance();
+                $incomeService->updateLocalSub();
             }
         } else {
-            Log::channel('incomes')->info('WALLET IS NULL', [
-                'sub' => $sub->id,
-            ]);
-
             $incomeService
-                ->accumulateAmount($sub->un_payments)
                 ->setMessage(Message::LESS_MIN_WITHDRAWAL)
-                ->setStatus(Status::PENDING)
-                ->createLocalIncome(
-                    sub: $sub,
-                    wallet: $wallet
-                );
+                ->setStatus(Status::PENDING);
 
-            $incomeService->updateLocalSub(sub: $sub);
+            $incomeService->createLocalIncome(null);
+            $incomeService->createFinance();
+            $incomeService->updateLocalSub();
         }
 
         $walletService->lock();

@@ -9,13 +9,21 @@ return new class extends Migration {
     {
         Schema::table('incomes', function (Blueprint $table) {
             $table->dropColumn('payment');
+            $table->dropColumn('wallet');
+            $table->dropColumn('percent');
+            $table->dropColumn('txid');
+            $table->dropColumn('unit');
         });
     }
 
     public function down(): void
     {
         Schema::table('incomes', function (Blueprint $table) {
-            $table->decimal('payment', 10, 8);
+            $table->decimal('payment', 10, 8)->nullable();
+            $table->string('wallet')->nullable();
+            $table->float('percent')->nullable();
+            $table->string('txid')->nullable();
+            $table->string('unit');
         });
     }
 };

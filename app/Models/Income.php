@@ -19,14 +19,12 @@ class Income extends Model
 
     protected $fillable = [
         'group_id',
-        'wallet',
+        'wallet_id',
         'daily_amount',
         'diff',
-        'unit',
         'hash',
         'status',
         'message',
-        'txid',
     ];
 
     /*
@@ -40,6 +38,12 @@ class Income extends Model
             'group_id'
         );
     }
+
+    public function wallet(): BelongsTo
+    {
+        return $this->belongsTo(Wallet::class);
+    }
+
     /* end relations */
 
     /* Создаем кастомный билдер */

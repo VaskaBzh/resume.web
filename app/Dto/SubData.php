@@ -12,16 +12,14 @@ readonly class SubData
      * @param int $userId - id пользователя allbtc.com
      * @param int $groupId - id сабаккаунта
      * @param string $groupName - имя сабаккаунта
-     * @param float|null $totalPayment - сумма вывода средств за все время со всех кошельков
-     * @param float|null $accumulateAmount - доход не превысивший допстимый порог вывода средств
+     * @param float|null $pendingAmount - доход не превысивший допстимый порог вывода средств и удержанный на балансе
      * @param float|null $totalAmount - сумма добычи за все время
      */
     public function __construct(
         public int $userId,
         public int $groupId,
         public string $groupName,
-        public ?float $totalPayment,
-        public ?float $accumulateAmount,
+        public ?float $pendingAmount,
         public ?float $totalAmount,
     )
     {
@@ -33,8 +31,7 @@ readonly class SubData
             userId: $requestData['user_id'],
             groupId: $requestData['group_id'],
             groupName: $requestData['group_name'],
-            totalPayment: Arr::get($requestData, 'total_payment'),
-            accumulateAmount: Arr::get($requestData, 'accumulated_amount'),
+            pendingAmount: Arr::get($requestData, 'pending_amount'),
             totalAmount: Arr::get($requestData, 'total_amount')
         );
     }
