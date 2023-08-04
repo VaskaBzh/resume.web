@@ -17,7 +17,7 @@ export default {
         wallets,
     },
     actions: {
-        destroyer({ _ }) {
+        destroyer() {
             this.dispatch("destroy_accounts");
             this.dispatch("destroy_hashrate");
             this.dispatch("destroy_income");
@@ -25,25 +25,25 @@ export default {
             this.dispatch("destroy_miner_history_hash");
             this.dispatch("destroy_wallets");
         },
-        getAccounts({ _ }, user_id) {
-            this.dispatch("accounts_all", user_id);
+        getAccounts() {
+            this.dispatch("accounts_all");
         },
-        getHash({ _ }, data) {
+        getHash(_, data) {
             this.dispatch("get_hash", data);
         },
-        getWallets({ _ }, data) {
+        getWallets(_, data) {
             this.dispatch("get_wallets", data);
         },
-        getIncomeHistory({ _ }, data) {
+        getIncomeHistory(_, data) {
             this.dispatch("get_income_history", data);
         },
-        getAllIncome({ _ }, data) {
+        getAllIncome(_, data) {
             this.dispatch("get_all_income", data);
         },
-        getHistoryHash({ _ }, data) {
+        getHistoryHash(_, data) {
             this.dispatch("get_history_hash", data);
         },
-        getMinerHistoryHash({ _ }, data) {
+        getMinerHistoryHash(_, data) {
             this.dispatch("get_miner_history_hash", data);
         },
     },

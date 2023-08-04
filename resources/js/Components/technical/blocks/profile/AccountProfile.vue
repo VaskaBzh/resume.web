@@ -129,19 +129,14 @@ export default {
             if (this.btcInfo) {
                 if (this.accountInfo) {
                     return this.accountInfo.today_forecast;
-                    // let val = new Profit(
-                    //     this.accountInfo.hash_per_min,
-                    //     this.btcInfo.btc.diff,
-                    //     this.btcInfo.btc.reward,
-                    //     this.btcInfo.fpps
-                    // );
-                    // return val.amount().toFixed(8);
                 }
             }
             return 0;
         },
         myPayment() {
-            return Number(this.account.payments).toFixed(8) || "0.00000000";
+            return (
+                Number(this.account.total_payment).toFixed(8) || "0.00000000"
+            );
         },
         hashRate() {
             return Number(this.accountInfo.hash_per_min).toFixed(2);
