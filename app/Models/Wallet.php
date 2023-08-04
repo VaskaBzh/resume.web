@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Wallet extends Model
 {
@@ -25,12 +26,7 @@ class Wallet extends Model
         'minWithdrawal',
         'name',
         'wallet',
-        'payment',
         'percent',
-    ];
-
-    protected $casts = [
-        'payment' => 'float',
     ];
 
     /*
@@ -44,6 +40,11 @@ class Wallet extends Model
             'group_id'
         );
     }
+
+    public function payouts(): HasMany
+    {
+        return $this->hasMany(Payout::class);
+    }
     /* end relations */
 
     /*
@@ -52,5 +53,12 @@ class Wallet extends Model
     public function newEloquentBuilder($query): WalletBuilder
     {
         return new WalletBuilder($query);
+    }
+
+    public function total_payout(): Attribute
+    {
+        return Attribute::make(
+            get: fn() => $this->payouts()->sum('payout')
+        );
     }
 }
