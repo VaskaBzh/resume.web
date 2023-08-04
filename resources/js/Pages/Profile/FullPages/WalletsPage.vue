@@ -196,54 +196,82 @@
             <form
                 @submit.prevent="wallets.addWallet"
                 class="form form-popup popup__form"
-                @click.capture="(returnLabelfor('email') || returnLabelfor('name') || returnLabelfor('minWithdrawal'))"
+                @click.capture="
+                    returnLabelfor('email') ||
+                        returnLabelfor('name') ||
+                        returnLabelfor('minWithdrawal')
+                "
             >
                 <main-title tag="h3">{{
                     $t("wallets.popups.add.title")
                 }}</main-title>
                 <div class="input-container">
                     <input
-                    @click="moveLabelFor('email')"
-                    v-model="wallets.form.wallet"
-                    autofocus
-                    type="text"
-                    class="input-wallet popup__input"
-                    :class="{'error-input' : errors.wallet}"
-                />
-                <label class="input-label" :class="{'move-label': isActiveLabelEmail}">{{ $t('wallets.popups.add.placeholders.wallet') }}</label>
-                <div class="input-error">{{ errors.wallet }}</div>
-                
-                </div>
-                <div class="input-container">
-                    <input
-                    @click="moveLabelFor('name')"
-                    v-model="wallets.form.name"
-                    autofocus
-                    type="text"
-                    class="input-wallet popup__input"
+                        @click="moveLabelFor('email')"
+                        v-model="wallets.form.wallet"
+                        autofocus
+                        id="addWalletAddress"
+                        type="text"
+                        class="input-wallet popup__input"
+                        :class="{ 'error-input': errors.wallet }"
                     />
-                    <label class="input-label" :class="{'move-label': isActiveLabelName}">{{ $t('wallets.popups.add.placeholders.name') }}</label>
-                <!-- {{ errors.wallet }}  -->
+                    <label
+                        class="input-label"
+                        for="addWalletAddress"
+                        :class="{ 'move-label': isActiveLabelEmail }"
+                        >{{
+                            $t("wallets.popups.add.placeholders.wallet")
+                        }}</label
+                    >
+                    <div class="input-error">{{ errors.wallet }}</div>
                 </div>
+                <main-input
+                    inputName="addWalletName"
+                    :inputLabel="$t('wallets.popups.add.placeholders.name')"
+                    :inputValue="wallets.form.name"
+                    :error="errors.name"
+                ></main-input>
+                <!--                <div class="input-container">-->
+                <!--                    <input-->
+                <!--                        @click="moveLabelFor('name')"-->
+                <!--                        v-model="wallets.form.name"-->
+                <!--                        autofocus-->
+                <!--                        id="addWalletName"-->
+                <!--                        type="text"-->
+                <!--                        class="input-wallet popup__input"-->
+                <!--                    />-->
+                <!--                    <label-->
+                <!--                        class="input-label"-->
+                <!--                        for="addWalletName"-->
+                <!--                        :class="{ 'move-label': isActiveLabelName }"-->
+                <!--                        >{{ $t("wallets.popups.add.placeholders.name") }}</label-->
+                <!--                    >-->
+                <!--                    &lt;!&ndash; {{ errors.wallet }}  &ndash;&gt;-->
+                <!--                </div>-->
                 <div class="input-container">
                     <input
-                            @click="moveLabelFor('minWithdrawal')"
-                            name="minWithdrawal"
-                            v-model="wallets.form.minWithdrawal"
-                            id="minChg"
-                            autofocus
-                            type="text"
-                            class="input-wallet input-minWithdrawal popup__input"
-                            :class="{'error-input' : errors.minWithdrawal}"
-                        />
-                    <label class="input-label" :class="{'move-label': isActiveLabelMinWithdrawal}">{{ $t("wallets.popups.add.labels.minWithdrawal") }}</label>
-                    <div class="input-btc-text">{{ 'BTC' }}</div>
-                <div class="input-error">{{ errors.minWithdrawal }}</div>
-
-                    
+                        @click="moveLabelFor('minWithdrawal')"
+                        name="minWithdrawal"
+                        v-model="wallets.form.minWithdrawal"
+                        id="minChg"
+                        autofocus
+                        type="text"
+                        class="input-wallet input-minWithdrawal popup__input"
+                        :class="{ 'error-input': errors.minWithdrawal }"
+                    />
+                    <label
+                        class="input-label"
+                        for="minChg"
+                        :class="{ 'move-label': isActiveLabelMinWithdrawal }"
+                        >{{
+                            $t("wallets.popups.add.labels.minWithdrawal")
+                        }}</label
+                    >
+                    <div class="input-btc-text">{{ "BTC" }}</div>
+                    <div class="input-error">{{ errors.minWithdrawal }}</div>
                 </div>
                 <blue-button class="wallets-popup-btn">
-                    <button type="submit" class="all-link ">
+                    <button type="submit" class="all-link">
                         <svg
                             width="24"
                             height="24"
@@ -277,6 +305,7 @@ import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainInput from "@/Components/UI/inputs/MainInput.vue";
 
 import { WalletService } from "@/services/WalletService";
 
@@ -288,6 +317,7 @@ export default {
         MainTitle,
         NoInfo,
         WalletBlock,
+        MainInput,
     },
     layout: profileLayoutView,
     computed: {
@@ -340,19 +370,32 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        moveLabelFor(name){
-            switch(name){
-                case 'email': this.isActiveLabelEmail = true; break
-                case 'name': this.isActiveLabelName = true;break
-                case 'minWithdrawal': this.isActiveLabelMinWithdrawal = true;break
+        moveLabelFor(name) {
+            switch (name) {
+                case "email":
+                    this.isActiveLabelEmail = true;
+                    break;
+                case "name":
+                    this.isActiveLabelName = true;
+                    break;
+                case "minWithdrawal":
+                    this.isActiveLabelMinWithdrawal = true;
+                    break;
             }
         },
-        returnLabelfor(name){
-            switch(name){
-                case 'email': if (this.wallets.form.wallet === '') return this.isActiveLabelEmail = false
-                case 'name':  if (this.wallets.form.name === '') return this.isActiveLabelName = false
-                case 'minWithdrawal':  if (this.wallets.form.minWithdrawal === '') return this.isActiveLabelMinWithdrawal = false
-            }}
+        returnLabelfor(name) {
+            switch (name) {
+                case "email":
+                    if (this.wallets.form.wallet === "")
+                        return (this.isActiveLabelEmail = false);
+                case "name":
+                    if (this.wallets.form.name === "")
+                        return (this.isActiveLabelName = false);
+                case "minWithdrawal":
+                    if (this.wallets.form.minWithdrawal === "")
+                        return (this.isActiveLabelMinWithdrawal = false);
+            }
+        },
     },
     mounted() {
         this.wallets = new WalletService();
@@ -405,8 +448,7 @@ export default {
     }
 
     &__list {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
+        display: flex;
         gap: 16px;
         transition: all 0.3s ease 0s;
         width: 100%;
@@ -493,30 +535,30 @@ export default {
         }
     }
 }
-.wallets-popup-btn{
+.wallets-popup-btn {
     margin-top: 25px;
 }
-.input-container{
+.input-container {
     position: relative;
 }
-.input-label{
+.input-label {
     position: absolute;
     top: 17px;
     left: 15px;
     z-index: 1;
     transition-timing-function: ease-in-out;
     transition-duration: 0.3s;
+    cursor: text;
     color: rgba(197, 197, 197, 1);
 }
-.move-label{
-  transform: translate(-1px,-21px);
-  font-size: 12px;
-  transition-timing-function: ease-in-out;
-  transition-duration: 0.3s;
-  font-size: 10px;
-  background: rgba(250, 250, 250, 1);
+.move-label {
+    transform: translate(-1px, -21px);
+    font-size: 12px;
+    transition-timing-function: ease-in-out;
+    transition-duration: 0.3s;
+    background: rgba(250, 250, 250, 1);
 }
-.input-wallet{
+.input-wallet {
     width: 100%;
     padding: 0 12px;
     border-radius: 8px;
@@ -534,51 +576,58 @@ export default {
     transition-duration: 0.3s;
     &:focus {
         & + .move-label {
-            color:rgba(83, 137, 225, 1);
+            color: rgba(83, 137, 225, 1);
         }
     }
 }
-.input-minWithdrawal{
+.input-minWithdrawal {
     text-align: end;
     padding-right: 40px;
     transition-timing-function: ease-in-out;
     transition-duration: 0.3s;
 }
-.input-minWithdrawal:focus{
+.input-minWithdrawal:focus {
     transition-timing-function: ease-in-out;
     transition-duration: 0.5s;
     padding-right: 80%;
 }
-.input-btc-text{
+.input-btc-text {
     position: absolute;
     right: 10px;
     top: 17px;
 }
-input:focus{
+input:focus {
     border: 1px solid rgba(83, 137, 225, 1);
     background: rgba(250, 250, 250, 1);
 }
-.input-error{
+.input-error {
     color: red;
     font-size: 12px;
     margin-top: 4px;
     transition: all 0.4s ease;
 }
-.error-input{
+.error-input {
     border: 1px solid rgba(237, 24, 24, 1);
     transition: all 0.4s ease;
     animation: shake 0.5s;
 }
 @keyframes shake {
-  0% { transform: translate(1px, 1px) rotate(0deg); 
-     box-shadow: 0 0 0px red;}
-  10% { transform: translate(0px, -1px) rotate(-1deg); }
-  20% { transform: translate(-2px, 1px) rotate(1deg); }
-  30% { transform: translate(1px, 0px) rotate(0deg);
-        box-shadow: 0 0 7px red
- }
+    0% {
+        transform: translate(1px, 1px) rotate(0deg);
+        box-shadow: 0 0 0px red;
+    }
+    10% {
+        transform: translate(0px, -1px) rotate(-1deg);
+    }
+    20% {
+        transform: translate(-2px, 1px) rotate(1deg);
+    }
+    30% {
+        transform: translate(1px, 0px) rotate(0deg);
+        box-shadow: 0 0 7px red;
+    }
 }
-.form-wallet{
+.form-wallet {
     padding: 5px;
 }
 </style>

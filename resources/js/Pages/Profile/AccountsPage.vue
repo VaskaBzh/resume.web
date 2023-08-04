@@ -139,17 +139,6 @@ export default {
             this.id = id;
         },
     },
-    setup() {
-        let wait = ref(false);
-        const form = useForm({
-            name: "",
-        });
-
-        return {
-            form,
-            wait,
-        };
-    },
     mounted() {
         document.title = this.$t("accounts.title");
         if (Object.values(this.allAccounts).length > 0)

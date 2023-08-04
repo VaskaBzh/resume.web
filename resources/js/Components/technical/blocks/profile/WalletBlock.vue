@@ -208,7 +208,7 @@ export default {
         padding: 16px;
         background-color: #fff;
         border-radius: 13px;
-        width: 100%;
+        width: fit-content;
 
         .main__number {
             padding: 16px 16px 0;
@@ -239,7 +239,6 @@ export default {
         }
 
         &-wallet {
-            width: 100%;
             padding: 12px 0;
             transition: all 0.5s ease;
             @media (max-width: 767.98px) {
@@ -262,6 +261,7 @@ export default {
             display: inline-flex;
             align-items: center;
             padding: 0 16px 16px;
+            gap: 16px;
             border-bottom: 1px solid #e8ecf2;
             @media (max-width: 767.98px) {
                 padding: 0 10px 10px;
