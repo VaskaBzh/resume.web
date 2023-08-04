@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Builders\PayoutBuilder;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
@@ -26,5 +27,12 @@ class Payout extends Model
     public function sub(): BelongsTo
     {
         return $this->belongsTo(Sub::class, 'group_id', 'group_id');
+    }
+
+    /* Custom builder */
+
+    public function newEloquentBuilder($query): PayoutBuilder
+    {
+        return new PayoutBuilder($query);
     }
 }
