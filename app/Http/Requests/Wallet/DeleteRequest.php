@@ -18,4 +18,11 @@ class DeleteRequest extends FormRequest
             'group_id' => 'required'
         ];
     }
+
+    public function messages()
+    {
+        return [
+            ''
+        ];
+    }
 }
