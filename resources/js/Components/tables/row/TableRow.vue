@@ -156,7 +156,8 @@ export default {
                 padding-left: 16px;
             }
         }
-        &:nth-last-child(-n+2){
+        &:nth-last-child(-n+2):has(+ svg)
+         {
             @media (min-width: 767.98px) {
                 border-radius: 0 8px 8px 0;
             }
@@ -185,9 +186,9 @@ export default {
             }
         }
         
-        // &-cursor {
+        //&-cursor {
         //    cursor: pointer;
-        // }
+        //}git
         &.main {
             .more {
                 display: none;
