@@ -29,17 +29,7 @@ class WalletController extends Controller
 
     public function delete(DeleteRequest $request): RedirectResponse
     {
-        $walletData = WalletData::fromRequest($request->all());
-
-        if (Wallet::isOne($walletData->groupId)) {
-            return back()->with('message', trans('actions.wallet_prevent_last_delete'));
-        }
-
-        Delete::execute(
-            wallet: Wallet::getByAddress(address: $walletData->walletAddress)->first()
-        );
-
-        return back()->with('message', trans('actions.wallet_delete'));
+        return back()->with('message', trans('actions.wallet_prevent_last_delete'));
     }
 
     public function change(UpdateRequest $request): RedirectResponse
