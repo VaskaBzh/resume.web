@@ -11,13 +11,12 @@ class Update
 {
     public static function execute(SubData $subData, Sub $sub): void
     {
-
         $sub->update(
             [
                 'sub' => $subData->groupName,
-                'payments' => $subData->payments ?? $sub->payments,
-                'unPayments' => $subData->unPayments ?? $sub->unPayments,
-                'accruals' => $subData->accruals ?? $sub->accruals,
+                'total_payment' => $subData->totalPayment ?? $sub->total_payment,
+                'un_payments' => $subData->accumulateAmount ?? $sub->un_payments,
+                'total_amount' => $subData->totalAmount ?? $sub->total_amount,
             ]
         );
     }

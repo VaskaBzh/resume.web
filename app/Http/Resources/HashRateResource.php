@@ -13,7 +13,7 @@ class HashRateResource extends JsonResource
         return [
             'hash' => $this->hash,
             'unit' => $this->unit,
-            'amount' => $this->amount,
+            'worker_count' => $this->worker_count,
         ];
     }
 }

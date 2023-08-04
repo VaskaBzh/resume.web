@@ -23,138 +23,100 @@ use Illuminate\Support\Facades\Log;
 class IncomeService
 {
     public const ALLBTC_FEE = 1.5;
-    private array $incomeData = [
+    private array $params = [
         'status' => Status::REJECTED->value,
         'unit' => 'T',
+        'totalPayment' => null,
     ];
-
-    private Sub $sub;
-    private array $subData = [];
 
     public function __construct(
         private MinerStat $stat,
-        private ?Wallet $wallet = null
     )
     {
         $this->stat = MinerStat::first();
     }
 
+    public function getPayment(float $accumulatedAmount): float
+    {
+        return $this->params['dailyAmount'] + $accumulatedAmount;
+    }
+
     public function getIncomeParam(string $key)
     {
-        return Arr::get($this->incomeData, $key);
+        return Arr::get($this->params, $key);
     }
 
-    public function setAmount(float $amount): IncomeService
+    public function sumTotalAmount(float $totalAmount): IncomeService
     {
-        $this->incomeData['amount'] = $amount;
-
-        return $this;
-    }
-
-    public function setPayment(float $amount): IncomeService
-    {
-        $this->incomeData['payment'] = $amount + $this->sub->unPayments;
-
-        return $this;
-    }
-
-    public function calculatePayment(): IncomeService
-    {
-        $this->incomeData['payment'] = $this->subData['unPayments'];
+        $this->params['totalAmount'] = $this->params['dailyAmount'] + $totalAmount;
 
         return $this;
     }
 
     public function setTxId(string $txId): IncomeService
     {
-        $this->incomeData['txid'] = $txId;
+        $this->params['txid'] = $txId;
 
         return $this;
     }
 
     public function setMessage(Message $message): IncomeService
     {
-        $this->incomeData['message'] = $message->value;
+        $this->params['message'] = $message->value;
+
+        return $this;
+    }
+
+    public function sumTotalPayment(float $accumulatedAmount, float $totalPayment): IncomeService
+    {
+        $this->params['totalPayment'] = $totalPayment
+            + $this->params['dailyAmount']
+            + $accumulatedAmount;
+
+        return $this;
+    }
+
+    public function clearAccumulatedAmount(): IncomeService
+    {
+        $this->params['accumulatedAmount'] = 0;
 
         return $this;
     }
 
     public function setStatus(Status $status): IncomeService
     {
-        $this->incomeData['status'] = $status->value;
+        $this->params['status'] = $status->value;
 
         return $this;
     }
 
-    public function setPercent(): IncomeService
+    public function accumulateAmount(float $accumulatedAmount): IncomeService
     {
-        $this->incomeData['percent'] = Wallet::DEFAULT_PERCENTAGE;
+        $this->params['accumulatedAmount'] = $accumulatedAmount + $this->params['dailyAmount'];
 
         return $this;
     }
 
-    public function canWithdraw(): bool
+    public function isLessThenMinWithdraw(float $accumulatedAmount): bool
     {
-        return $this->incomeData['payment'] >= Wallet::MIN_BITCOIN_WITHDRAWAL;
-    }
-
-    public function setSubPayments(float $amount = 0): IncomeService
-    {
-        $this->subData['payments'] = $this->sub->payments + $amount;
-
-        return $this;
-    }
-
-    public function setSubAccruals(float $amount = 0): IncomeService
-    {
-        $this->subData['accruals'] = $this->sub->accruals + $amount;
-
-        return $this;
-    }
-
-    public function setSubUnPayments(float $amount): IncomeService
-    {
-        $this->subData["unPayments"] = $this->sub->unPayments + $amount;
-
-        return $this;
-    }
-
-    public function clearUnPayments(): IncomeService
-    {
-        $this->subData['unPayments'] = 0;
-
-        return $this;
-    }
-
-    public function setSub(Sub $sub): IncomeService
-    {
-        $this->sub = $sub;
-
-        return $this;
-    }
-
-    public function setWallet(Wallet $wallet): IncomeService
-    {
-        $this->wallet = $wallet;
-
-        return $this;
+        return ($accumulatedAmount + $this->params['dailyAmount']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
     /**
      *
      * Проверяем хеш рейт
-     * Устанавливаем херщрейт и сложность сети в свойство IncomeData
+     * Устанавливаем херщрейт сабаккаунта и сложность сети в свойство IncomeData
      *
      * @return bool
      */
-    public function setHashRate(): bool
+    public function hasHashRate(Sub $sub): bool
     {
-        $hashRate = resolve(BtcComService::class)
-            ->getSubHashRate($this->sub);
+        $subHashRate = resolve(BtcComService::class)
+            ->getSubHashRate($sub);
 
-        if ($hashRate > 0) {
-            $this->incomeData['hash'] = $hashRate;
-            $this->incomeData['diff'] = $this->stat->network_difficulty;
+        if ($subHashRate > 0) {
+            $this->params['hash'] = 1;
+            $this->params['diff'] = 1;
 
             return true;
         }
@@ -167,34 +129,34 @@ class IncomeService
      *
      * @return void
      */
-    public function updateLocalSub(): void
+    public function updateLocalSub(Sub $sub): void
     {
         Update::execute(
             subData: SubData::fromRequest([
-                'user_id' => $this->sub->user_id,
-                'group_id' => $this->sub->group_id,
-                'group_name' => $this->sub->sub,
-                'payments' => $this->subData['payments'],
-                'unPayments' => $this->subData['unPayments'],
-                'accruals' => $this->subData['accruals']
+                'user_id' => $sub->user_id,
+                'group_id' => $sub->group_id,
+                'group_name' => $sub->sub,
+                'total_payment' => $this->params['totalPayment'] ?? $sub->total_payment,
+                'accumulated_amount' => $this->params['accumulatedAmount'],
+                'total_amount' => $this->params['totalAmount']
             ]),
-            sub: $this->sub
+            sub: $sub
         );
     }
 
     /**
      * Меняем статусы и сообщения на "completed"
      */
-    public function complete(): void
+    public function complete(Sub $sub, Wallet $wallet): void
     {
         $incomes = Income::getNotCompleted(
-            groupId: $this->sub->group_id
+            groupId: $sub->group_id
         )->get();
 
         if ($incomes) {
             Complete::execute(
                 incomes: $incomes,
-                incomeData: $this->buildDto()
+                incomeData: $this->buildDto(sub: $sub, wallet: $wallet)
             );
         }
     }
@@ -204,34 +166,36 @@ class IncomeService
      *
      * @return void
      */
-    public function createLocalIncome(): void
+    public function createLocalIncome(Sub $sub, ?Wallet $wallet): void
     {
         $income = IncomeCreate::execute(
-            incomeData: $this->buildDto()
+            incomeData: $this->buildDto($sub, $wallet)
         );
 
         Log::channel('incomes')
             ->info('INCOME CREATE', $income->toArray());
     }
 
-    public function getUserAmount(): float
+    public function setDailyAmount(): IncomeService
     {
-        return Helper::calculateEarn(
+        $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
-            hashRate: $this->incomeData['hash']
+            hashRate: $this->params['hash']
         );
+
+        return $this;
     }
 
-    private function buildDto(): IncomeData
+    private function buildDto(Sub $sub, ?Wallet $wallet): IncomeData
     {
         return IncomeData::fromRequest(
             array_merge(
                 [
-                    'group_id' => $this->sub->group_id,
-                    'wallet' => $this->wallet?->wallet,
-                    'txid' => Arr::get($this->incomeData, 'txid'),
+                    'group_id' => $sub->group_id,
+                    'wallet' => $wallet?->wallet,
+                    'txid' => Arr::get($this->params, 'txid'),
                 ],
-                $this->incomeData
+                $this->params
             )
         );
     }

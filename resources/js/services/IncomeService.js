@@ -64,7 +64,7 @@ export class IncomeService extends TableService {
         return filter
             ? new paymentData(
                   datePay,
-                  income["payment"],
+                  income["payout"],
                   this.getCutted(wallet),
                   this.getCutted(income["txid"])
               )
@@ -72,7 +72,7 @@ export class IncomeService extends TableService {
                   this.dateFormatter(income["created_at"]),
                   datePay,
                   income["hash"],
-                  income["unit"],
+                  "T",
                   income["amount"],
                   this.getCutted(wallet),
                   this.setStatus(income["status"]),

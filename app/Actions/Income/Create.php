@@ -13,11 +13,9 @@ class Create
     {
         return Income::create([
             'group_id' => $incomeData->groupId,
-            'percent' => $incomeData->percent,
             'txid' => $incomeData->txid,
             'wallet' => $incomeData->wallet,
-            'payment' => $incomeData->payment,
-            'amount' => $incomeData->amount,
+            'daily_amount' => $incomeData->dailyAmount,
             'unit' => $incomeData->unit,
             'status' => $incomeData->status,
             'message' => $incomeData->message,

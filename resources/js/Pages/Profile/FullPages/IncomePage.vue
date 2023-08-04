@@ -162,15 +162,16 @@ export default {
         unPayment() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
-                console.log(this.getAccount);
-                sum = this.getAccount.accruals - this.getAccount.payments;
+                sum =
+                    this.getAccount.total_amount -
+                    this.getAccount.total_payment;
             }
             return Number(sum).toFixed(8);
         },
         payed() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
-                sum = this.getAccount.payments;
+                sum = this.getAccount.total_payment;
             }
             return Number(sum).toFixed(8);
         },
