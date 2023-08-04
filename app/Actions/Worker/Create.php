@@ -15,7 +15,5 @@ class Create
             'group_id' => $workerData->group_id,
             'worker_id' => $workerData->worker_id
         ]);
-
-
     }
 }

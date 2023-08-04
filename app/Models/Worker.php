@@ -23,6 +23,7 @@ class Worker extends Model
     protected $fillable = [
         'worker_id',
         'group_id',
+        'approximate_hash_rate',
     ];
 
     public function getRouteKeyName(): string
@@ -39,16 +40,16 @@ class Worker extends Model
         );
     }
 
+    public function workerHashrates(): HasMany
+    {
+        return $this->hasMany(WorkerHashrate::class, 'worker_id', 'worker_id');
+    }
+
     /* Custom builder */
 
     public function newEloquentBuilder($query): WorkerBuilder
     {
         return new WorkerBuilder($query);
-    }
-
-    public function workerHashrates(): HasMany
-    {
-        return $this->hasMany(WorkerHashrate::class, 'worker_id', 'worker_id');
     }
 
     public function firstHash($worker)

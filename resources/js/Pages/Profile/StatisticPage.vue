@@ -15,7 +15,7 @@
             <no-info
                 class="cabinet"
                 :wait="waitHistory"
-                :interval="80"
+                :interval="20"
                 :end="endHistory"
             ></no-info>
             <div
@@ -23,7 +23,7 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length !==
+                    hashrates.records?.filter((a) => a.hashrate > 0).length !==
                         0
                 "
             >
@@ -36,7 +36,7 @@
                             class="cabinet_button"
                             :key="button.title + i"
                             v-for="(button, i) in buttons"
-                            :class="{ active: button.value === this.val }"
+                            :class="{ active: button.value === offset }"
                             @click="changeGraph(button.value)"
                         >
                             {{ button.title }}
@@ -48,15 +48,19 @@
                 >
                     <no-info-wait
                         class="no-bg"
-                        :wait="id !== val"
+                        :wait="hashrates.waitHashrate"
                     ></no-info-wait>
                     <statistic-chart
-                        v-if="id === val"
+                        v-if="!hashrates.waitHashrate"
                         class="no-title"
-                        :val="val"
-                        :graphs="graphs"
+                        :offset="offset"
+                        :graph="hashrates.graph"
                         :viewportWidth="viewportWidth"
-                        :key="graphs[0].values[graphs[0].values.length - 1]"
+                        :key="
+                            hashrates.graph?.values[
+                                hashrates.graph.values?.length - 1
+                            ] || 1
+                        "
                     />
                 </div>
             </div>
@@ -65,8 +69,8 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    Object.values(this.allHash[this.getActive]).length === 0 &&
-                    allHistory[getActive]?.filter((a) => a.hash > 0).length ===
+                    !!getAccount &&
+                    hashrates.records?.filter((a) => a.hashrate > 0).length ===
                         0
                 "
             >
@@ -152,7 +156,7 @@
                     </div>
                     <no-info
                         :wait="waitAccounts"
-                        :interval="50"
+                        :interval="20"
                         :end="endAccounts"
                     ></no-info>
                     <div
@@ -202,19 +206,15 @@
                         }}</main-title>
                         <btc-calculator
                             :title="
-                                this.$t(
-                                    'statistic.info_blocks.payment.titles[0]'
-                                )
+                                $t('statistic.info_blocks.payment.titles[0]')
                             "
-                            :BTC="this.yesterdayEarn"
+                            :BTC="yesterdayEarn"
                         />
                         <btc-calculator
                             :title="
-                                this.$t(
-                                    'statistic.info_blocks.payment.titles[1]'
-                                )
+                                $t('statistic.info_blocks.payment.titles[1]')
                             "
-                            :BTC="this.todayEarn"
+                            :BTC="todayEarn"
                         />
                     </div>
                 </div>
@@ -236,8 +236,8 @@ import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 
-
-import { Profit } from "/resources/js/Scripts/profit.js";
+import api from "@/api/api";
+import { SubHashrateService } from "@/services/SubHashrateService";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
@@ -252,13 +252,14 @@ export default {
         MainCheckbox,
         NoInfoWait,
         NoInfo,
-        CurrentExchangeRate
+        CurrentExchangeRate,
     },
     layout: profileLayoutView,
     data() {
         return {
             waitHistory: true,
             waitAccounts: true,
+            waitAjax: true,
             viewportWidth: 0,
             profit: {},
             linkAddress: "btc.all-btc.com:4444",
@@ -266,15 +267,10 @@ export default {
             linkAddress2: "btc.all-btc.com:2222",
             visualType: "table",
             interval: null,
-            hash: 0,
-            hash24: 0,
-            reject: 0,
-            workersActive: 0,
-            workersUnActive: 0,
-            workersInActive: 0,
-            id: 0,
-            val: 24,
+            intervalRender: null,
+            offset: 24,
             clearProfit: null,
+            hashrates: {},
             graphs: [
                 {
                     id: 1,
@@ -301,16 +297,24 @@ export default {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
+    watch: {
+        async getActive() {
+            await this.initHashrate();
+        },
+        async offset() {
+            await this.initHashrate();
+        },
+    },
     computed: {
         endHistory() {
-            return !!this.allHistory[this.getActive];
+            return !!this.hashrates;
         },
         endAccounts() {
-            return !!this.allAccounts[this.getActive];
+            return !!this.getAccount;
         },
         clearProfitDay() {
             if (this.btcInfo) {
-                if (this.allAccounts[this.getActive]) {
+                if (this.getAccount) {
                     return Number(this.clearProfit) / 30;
                 }
             }
@@ -318,7 +322,7 @@ export default {
         },
         clearBTCMounth() {
             if (this.btcInfo) {
-                if (this.allAccounts[this.getActive]) {
+                if (this.getAccount) {
                     return this.todayEarn * 30;
                 }
             }
@@ -344,31 +348,18 @@ export default {
             ];
         },
         workers() {
-            if (Object.values(this.allAccounts).length > 0) {
-                return {
-                    hash: this.allAccounts[this.getActive].shares1m,
-                    hash24: this.allAccounts[this.getActive].shares1d,
-                    active: this.allAccounts[this.getActive].workersActive,
-                    unStable: this.allAccounts[this.getActive].workersDead,
-                    inActive: this.allAccounts[this.getActive].workersInActive,
-                    all: this.allAccounts[this.getActive].workersAll,
-                };
-            }
-            return null;
+            return {
+                hash: this.getAccount.hash_per_min ?? 0,
+                hash24: this.getAccount.hash_per_day ?? 0,
+                active: this.getAccount.workers_count_active ?? 0,
+                unStable: this.getAccount.workers_count_unstable ?? 0,
+                inActive: this.getAccount.workers_count_in_active ?? 0,
+                all: this.getAccount.workersAll ?? 0,
+            };
         },
         todayEarn() {
-            if (this.btcInfo) {
-                if (this.allAccounts[this.getActive]) {
-                    let val = new Profit(
-                        this.allAccounts[this.getActive].shares1d,
-                        this.btcInfo.btc.diff,
-                        this.btcInfo.btc.reward,
-                        this.btcInfo.fpps
-                    );
-                    return val.amount();
-                }
-            }
-            return 0;
+            let val = this.getAccount?.today_forecast || 0;
+            return Number(val).toFixed(8);
         },
         yesterdayEarn() {
             if (this.allIncomeHistory[this.getActive]) {
@@ -389,6 +380,7 @@ export default {
             "getTable",
             "getActive",
             "allAccounts",
+            "getAccount",
             "allHistory",
             "allHash",
             "allIncomeHistory",
@@ -396,137 +388,44 @@ export default {
         ]),
     },
     methods: {
+        async initHashrate(needUpdate = false) {
+            needUpdate ? (this.waitHistory = true) : (this.waitHistory = false);
+            this.hashrates = new SubHashrateService(
+                this.$t,
+                [0, 1],
+                this.offset
+            );
+
+            await this.hashrates.index();
+
+            this.intervalRender = setInterval(() => {
+                this.hashrates.index();
+            }, 60000);
+
+            this.waitHistory = false;
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
         changeGraph(val) {
-            this.val = val;
-        },
-        changeId() {
-            this.id = this.val;
+            this.offset = val;
         },
         router() {
             return router;
         },
-        // allStat(bool) {
-        //     if (this.allHistory[this.getActive]) {
-        //         if (bool) {
-        //             let allArrays = Object.values(this.allHistory);
-        //             this.activeHistory = allArrays.reduce((a, b) => {
-        //                 let arr, another;
-        //                 if (a.length > b.length) {
-        //                     arr = a;
-        //                     another = b;
-        //                 } else {
-        //                     arr = b;
-        //                     another = a;
-        //                 }
-        //                 return arr.map((el, i) => {
-        //                     let hash = el.hash + another[i].hash || 0;
-        //                     return {
-        //                         hash: hash,
-        //                         unit:
-        //                             hash < 1000
-        //                                 ? "T"
-        //                                 : hash < 1000000
-        //                                 ? "P"
-        //                                 : "E",
-        //                         amount: el.amount + another[i].amount || 0,
-        //                     };
-        //                 });
-        //             });
-        //             this.all = true;
-        //         } else {
-        //             this.setActive();
-        //             this.all = false;
-        //         }
-        //         try {
-        //             let id = this.id;
-        //             this.changeGraph(1);
-        //             this.changeId();
-        //             this.renderChart();
-        //             this.changeGraph(id);
-        //         } catch (err) {
-        //             console.error(err);
-        //         }
-        //     }
-        // },
-        setActive() {
-            this.activeHistory = this.allHistory[this.getActive];
-        },
-        renderChart() {
-            const interval = 60 * 60 * 1000;
-            const currentTime = new Date().getTime();
-            const historyValues = Object.values(this.activeHistory);
-
-            this.graphs[0].dates = Array.from({ length: this.val }, (_, i) => {
-                const date = new Date(
-                    currentTime - (this.val - 1 - i) * interval
-                );
-                return date.getTime();
-            });
-
-            const [values, amount, unit] = historyValues
-                .slice(-this.val)
-                .reverse()
-                .reduce(
-                    (acc, el) => {
-                        let hash = el.hash ?? 0;
-                        if (el.unit === "P") hash *= 1000;
-                        else if (el.unit === "E") hash *= 1000000;
-                        acc[0].push(Number(hash));
-                        el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                        acc[2].push("T");
-
-                        return acc;
-                    },
-                    [[], [], []]
-                );
-
-            let randomize = (min, max) => {
-                return Math.random() * (max - min) + min;
-            };
-
-            while (values.length < this.val) {
-                values.push(0);
-                amount.push("0");
-                unit.push("T");
-            }
-
-            Object.assign(this.graphs[0], {
-                values: values.reverse(),
-                amount: amount.map(String).reverse(),
-                unit: unit.reverse(),
-            });
-
-            setTimeout(() => {
-                this.end = true;
-            }, 10);
-            setTimeout(this.changeId, 700);
-        },
     },
-    mounted() {
-        document.title = this.$t("header.links.statistic");
-        if (this.allHistory[this.getActive]) {
-            this.setActive();
-            this.renderChart();
-            this.waitHistory = false;
-        }
+    async mounted() {
+        await this.initHashrate(true);
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }
-        if (this.allAccounts[this.getActive]) this.waitAccounts = false;
+        if (Object.keys(this.getAccount).length > 0) this.waitAccounts = false;
+    },
+    unmounted() {
+        clearInterval(this.intervalRender);
     },
     beforeUpdate() {
-        if (this.allHistory[this.getActive]) {
-            if (!this.all) {
-                this.setActive();
-            }
-            this.renderChart();
-            setTimeout(() => (this.waitHistory = false), 300);
-        }
-        if (this.allAccounts[this.getActive])
-            setTimeout(() => (this.waitAccounts = false), 300);
+        if (Object.keys(this.getAccount).length > 0) this.waitAccounts = false;
     },
 };
 </script>
@@ -670,7 +569,7 @@ export default {
             grid-template-columns: 1fr;
         }
     }
-    .main-header-container{
+    .main-header-container {
         display: flex;
         align-items: baseline;
     }

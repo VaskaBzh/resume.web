@@ -19,5 +19,6 @@ class MinerStat extends Model
         'reward_block',
         'price_USD',
         'time_remain',
+        'fpps_rate'
     ];
 }

@@ -37,11 +37,4 @@ class WorkerHashrate extends Model
     {
         return new WorkerHashRateBuilder($query);
     }
-
-    /* Custom builder */
-
-    public function newEloquentBuilder($query): WorkerHashRateBuilder
-    {
-        return new WorkerHashRateBuilder($query);
-    }
 }

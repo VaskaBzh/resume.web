@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Actions\Worker\Update;
 use App\Actions\WorkerHashRate\DeleteOldWorkerHashrates;
+use App\Dto\WorkerData;
 use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcComService;
@@ -44,6 +46,14 @@ class MakeWorkerHashesCommand extends Command
                         'hash' => $btcWorker['shares_1m'] ?? 0,
                         'unit' => $btcWorker['shares_unit'] ?? 'T',
                     ]);
+
+                    $workerDalyHashRates = WorkerHashrate::dailyHashRates($worker->worker_id)->get();
+
+                    Update::execute($worker, workerData: WorkerData::fromRequest([
+                        'worker_id' => $worker->worker_id,
+                        'group_id' => $worker->group_id,
+                        'approximate_hash_rate' => $workerDalyHashRates->sum('hash') / $workerDalyHashRates->count()
+                    ]));
                 }
             } catch (\Exception $e) {
                 report($e);

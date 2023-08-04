@@ -38,6 +38,7 @@
             <account-menu
                 :errors="errors"
                 :viewportWidth="viewportWidth"
+                :user="user"
                 v-if="is_auth && accountLink && viewportWidth >= 991.78"
                 class="nav__button"
             ></account-menu>

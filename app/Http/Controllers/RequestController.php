@@ -1,14 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Requests;
+namespace App\Http\Controllers;
 
 use App\Services\External\BtcComService;
-use Exception;
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
-use GuzzleHttp\Client;
 
 class RequestController extends Controller
 {

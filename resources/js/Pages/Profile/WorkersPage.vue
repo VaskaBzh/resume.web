@@ -27,35 +27,13 @@
                     </blue-button>
                 </Link>
             </main-title>
-            <!--            <div class="workers__filter">-->
-            <!--                <div class="workers__filter_wrapper">-->
-            <!--                    <div class="workers__filter_block">-->
-            <!--                        <div class="workers__filter_label">Отображение</div>-->
-            <!--                        <main-select-->
-            <!--                            class="workers__select"-->
-            <!--                            :options="workersOptions"-->
-            <!--                        >-->
-            <!--                        </main-select>-->
-            <!--                    </div>-->
-            <!--                    <div class="workers__filter_block">-->
-            <!--                        <div class="workers__filter_label">-->
-            <!--                            {{ $t("workers.select_label") }}-->
-            <!--                        </div>-->
-            <!--                        <main-select-->
-            <!--                            class="workers__select"-->
-            <!--                            :options="statuses"-->
-            <!--                            @getCoin="useFilter"-->
-            <!--                        >-->
-            <!--                        </main-select>-->
-            <!--                    </div>-->
-            <!--                </div>-->
-            <!--            </div>-->
+
             <wrap-table
-                :table="table"
-                :key="Object.values(allAccounts).length + getActive"
+                :table="worker_list.table"
+                :key="getActive"
                 type="Воркеры"
-                :wait="allAccounts"
-                :empty="table.rows"
+                :wait="worker_list.rows?.length > 0"
+                :empty="worker_list.table?.get('rows')"
                 :errors="errors"
             />
         </div>
@@ -68,8 +46,8 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
-import Vue from "lodash";
 import BlueButton from "@/Components/UI/BlueButton.vue";
+import { WorkerService } from "@/services/WorkerService";
 
 export default {
     components: {
@@ -87,33 +65,23 @@ export default {
             workersInActive: 0,
             workersDead: 0,
             viewportWidth: 0,
+            worker_list: {},
         };
     },
+    watch: {
+        getActive() {
+            this.initWorkers();
+        },
+    },
     methods: {
+        async initWorkers() {
+            this.worker_list = new WorkerService(this.$t, [0, 1, 3, 4]);
+
+            await this.worker_list.fillTable();
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        // useFilter(data) {
-        //     this.table.rows.length = 0;
-        //     if (data !== "all") {
-        //         Object.values(this.allHash[this.getActive]).forEach((el) => {
-        //             if (el.status.toLowerCase() === data) {
-        //                 let workersRowModel = {
-        //                     hashClass: el.status.toLowerCase(),
-        //                     hash: el.name,
-        //                     hashRate: el.shares1m,
-        //                     // hashAvarage: el.shares1h,
-        //                     hashAvarage24: el.shares1d,
-        //                     rejectRate: el.persent,
-        //                     graphId: el.workerId,
-        //                 };
-        //                 this.table.rows.push(workersRowModel);
-        //             }
-        //         });
-        //     } else {
-        //         this.getWorker();
-        //     }
-        // },
     },
     computed: {
         ...mapGetters([
@@ -121,6 +89,7 @@ export default {
             "allAccounts",
             "allHash",
             "allHistoryMiner",
+            "getAccount",
         ]),
         copyObject() {
             return [
@@ -142,49 +111,9 @@ export default {
                 // { title: "Неактивные", value: "instable" },
             ];
         },
-        table() {
-            let obj = {
-                titles: [
-                    this.$t("workers.table.thead[0]"),
-                    this.$t("workers.table.thead[1]"),
-                    this.$t("workers.table.thead[3]"),
-                    this.$t("workers.table.thead[4]"),
-                ],
-                rows: [{}],
-            };
-
-            if (this.allAccounts[this.getActive]) {
-                obj.rows[0] = {
-                    class: "main",
-                    hash: this.$t("workers.table.sub_thead"),
-                    hashRate: this.allAccounts[this.getActive].shares1m,
-                    unit: this.allAccounts[this.getActive].unit,
-                    hashRate24: this.allAccounts[this.getActive].shares1d,
-                    unit24: this.allAccounts[this.getActive].unit,
-                    rejectRate: this.allAccounts[this.getActive].rejectRate,
-                };
-            }
-
-            if (this.allHash[this.getActive]) {
-                Object.values(this.allHash[this.getActive]).forEach((el, i) => {
-                    let workersRowModel = {
-                        class: el.status.toLowerCase(),
-                        hash: el.name,
-                        hashRate: el.shares1m,
-                        hashRate24: el.shares1d,
-                        unit: el.unit,
-                        unit24: el.unit1d,
-                        rejectRate: el.persent,
-                        graphId: el.workerId,
-                        data: "#seeChart",
-                    };
-                    Vue.set(obj.rows, i + 1, workersRowModel);
-                });
-            }
-            return obj;
-        },
     },
     mounted() {
+        this.initWorkers();
         document.title = this.$t("header.links.workers");
     },
     created() {

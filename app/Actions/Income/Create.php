@@ -9,9 +9,9 @@ use App\Models\Income;
 
 class Create
 {
-    public static function execute(IncomeData $incomeData): void
+    public static function execute(IncomeData $incomeData): Income
     {
-        Income::create([
+        return Income::create([
             'group_id' => $incomeData->groupId,
             'percent' => $incomeData->percent,
             'txid' => $incomeData->txid,
