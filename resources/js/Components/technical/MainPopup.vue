@@ -104,6 +104,10 @@ export default {
         wait: Boolean,
         id: String,
         animationEnd: Number,
+        openedOff: {
+            type: Boolean,
+            default: false,
+        },
         closed: {
             type: Boolean,
             default: false,
@@ -119,6 +123,11 @@ export default {
         closed(newBool) {
             if (newBool) {
                 this.close();
+            }
+        },
+        openedOff(newBool) {
+            if (newBool) {
+                this.open();
             }
         },
     },
