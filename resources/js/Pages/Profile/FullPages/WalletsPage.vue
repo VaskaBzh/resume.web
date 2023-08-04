@@ -32,7 +32,7 @@
         <div ref="wallets" class="wrap">
             <no-info
                 :wait="wallets.waitWallets"
-                :interval="70"
+                :interval="35"
                 :end="endWallet"
                 :empty="emptyWallet"
             >
@@ -284,7 +284,7 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainInput from "@/Components/UI/inputs/MainInput.vue";
 
 import { WalletService } from "@/services/WalletService";
-import {usePage} from "@inertiajs/vue3";
+import { usePage } from "@inertiajs/vue3";
 
 export default {
     components: {

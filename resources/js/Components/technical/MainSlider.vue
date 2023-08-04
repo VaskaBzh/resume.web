@@ -41,20 +41,26 @@
                         />
                     </svg>
                 </button>
+
                 <div class="slider__slides" v-if="!haveMeta">
                     <span>...</span>
                 </div>
                 <div class="slider__slides" v-else>
-                    <a
-                        @click="ajax(link.url)"
-                        v-for="(link, i) in links"
-                        :key="i"
-                        :class="{
-                            active: link.active,
-                        }"
-                        >{{ link.label }}</a
-                    >
+                    <span class="active">{{
+                        links.filter((link) => link.active)[0].label
+                    }}</span>
                 </div>
+                <!--                <div class="slider__slides" v-else>-->
+                <!--                    <a-->
+                <!--                        @click="ajax(link.url)"-->
+                <!--                        v-for="(link, i) in links"-->
+                <!--                        :key="i"-->
+                <!--                        :class="{-->
+                <!--                            active: link.active,-->
+                <!--                        }"-->
+                <!--                        >{{ link.label }}</a-->
+                <!--                    >-->
+                <!--                </div>-->
                 <button class="slider__button" @click="ajax(meta?.links.next)">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
