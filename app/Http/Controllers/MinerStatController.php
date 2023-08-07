@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\MinerStat;
+namespace App\Http\Controllers;
 
 use App\Models\MinerStat;
 use Illuminate\Http\JsonResponse;

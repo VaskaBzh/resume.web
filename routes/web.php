@@ -1,15 +1,23 @@
 <?php
 
 use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Controllers\Hashes\HashController;
-use App\Http\Controllers\Income\IncomeController;
+use App\Http\Controllers\ChartController;
+use App\Http\Controllers\Hashes\HashRateListController;
+use App\Http\Controllers\Income\ListController as IncomeListController;
 use App\Http\Controllers\IndexController;
-use App\Http\Controllers\RequestController;
+use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
-use App\Http\Controllers\Subs\SubController;
-use App\Http\Controllers\Users\UserController;
-use App\Http\Controllers\Wallets\WalletController;
-use App\Http\Controllers\Workers\WorkerController;
+use App\Http\Controllers\Sub\ListController as SubListController;
+use App\Http\Controllers\Sub\CreateController as SubCreateController;
+use App\Http\Controllers\Sub\ShowController as SubShowController;
+use App\Http\Controllers\Workers\ListController as WorkerListController;
+use App\Http\Controllers\Workers\ShowController as WorkerShowController;
+use App\Http\Controllers\WorkerHashRate\ListController as WorkerHashRateListController;
+use App\Http\Controllers\Wallet\ListController as WalletListController;
+use App\Http\Controllers\Wallet\CreateController as WalletCreateController;
+use App\Http\Controllers\Wallet\UpdateController as WalletUpdateController;
+use App\Http\Controllers\Payout\ListController as PayoutListController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -23,38 +31,50 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+/* Public routes */
+Route::group([
+    'prefix' => '',
+    'controller' => IndexController::class
+], function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/help', 'help')->name('help');
+    Route::get('/hosting', 'hosting')->name('hosting');
+    Route::get('/registration', 'registration')->name('registration');
+    Route::get('/login', 'login')->name('login');
+});
+
+/* Must auth web routes */
 Route::middleware('auth')->group(function () {
     Route::group([
-        'prefix' => '',
-        'controller' => SubController::class
+        'prefix' => 'subs',
     ], function () {
-        Route::post('/sub_create', 'create')->name('sub_create');
-        Route::get('/sub_process', 'visual')->name('sub_process');
+        Route::get('', SubListController::class)->name('sub.list');
+        Route::get('{sub}', SubShowController::class)->name('sub.show');
+        Route::post('/create', SubCreateController::class)->name('sub.create');
     });
 
     Route::group([
-        'prefix' => '',
-        'controller' => WorkerController::class
+        'prefix' => 'workers',
     ], function () {
-        Route::post('/worker_create', 'create')->name('worker_create');
-        Route::get('/worker_process', 'visual')->name('worker_process');
+        Route::get('{sub}', WorkerListController::class)->name('worker.list');
+        Route::post('{worker}', WorkerShowController::class)->name('worker.show');
     });
 
     Route::group([
-        'prefix' => '',
-        'controller' => WalletController::class
+        'prefix' => 'wallets',
     ], function () {
-        Route::post('/wallet_create', 'create')->name('wallet_create');
-        Route::post('/wallet_delete', 'delete')->name('wallet_delete');
-        Route::post('/wallet_change', 'change')->name('wallet_change');
-        Route::get('/wallet_process', 'visual')->name('wallet_process');
+        Route::get('{sub}', WalletListController::class)->name('wallet.list');
+        Route::post('/create', WalletCreateController::class)->name('wallet.create');
+        Route::post('/update', WalletUpdateController::class)->name('wallet.update');
     });
 
-    Route::controller(RequestController::class)
-        ->group(function () {
-            Route::put('/proxy', 'proxy_front')->name('proxy');
-            Route::put('/proxy_diff', 'proxy_diff')->name('proxy_diff');
-        });
+
+    Route::get('/payouts/{sub}', PayoutListController::class)->name('payout.list');
+    Route::get('/incomes/{sub}', IncomeListController::class)->name('income.list');
+    Route::get('/hasherate/{sub}', HashRateListController::class)->name('hash.list');
+    Route::get('workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
+    Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
+    Route::get('/chart', ChartController::class)->name('chart');
 
     Route::group([
         'prefix' => '',
@@ -88,8 +108,6 @@ Route::middleware('auth')->group(function () {
         Route::post('/change', 'change')->name('change');
     });
 
-    Route::get('/income_process', IncomeController::class)->name('income_process');
-    Route::get('/hash_process', HashController::class)->name('hash_process');
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');
     Route::post('/password/reset', [ResetPasswordController::class, 'changePassword']);
 });

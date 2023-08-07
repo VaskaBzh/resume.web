@@ -4,9 +4,10 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Worker\Create;
+use App\Actions\Worker\Create as WorkerCreate;
+use App\Actions\WorkerHashRate\Create as WorkerHashRateCreate;
 use App\Dto\WorkerData;
-use App\Models\Finance;
+use App\Dto\WorkerHashRateData;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
@@ -46,9 +47,22 @@ class SyncWorkerCommand extends Command
                     try {
                         $btcComService->updateWorker(workerData: $workerData);
 
-                        Create::execute(
+                        WorkerCreate::execute(
                             workerData: $workerData
                         );
+
+                        WorkerHashRateCreate::execute(
+                            workerHashRateData: WorkerHashRateData::fromRequest([
+                                'worker' => $worker,
+                                'hash' => (int)$worker['shares_1m'],
+                                'unit' => (int)$worker['shares_unit'],
+                            ]));
+
+                        $sub->hashes()->firstOrCreate([
+                            'group_id' => $sub->group_id,
+                            'unit' => (int)$worker['shares_unit'],
+                            'hash' => (int)$worker['shares_1m'],
+                        ]);
 
                         $progressBar->advance();
                     } catch (\Exception $e) {
