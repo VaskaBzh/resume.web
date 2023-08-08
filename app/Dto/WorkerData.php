@@ -19,9 +19,9 @@ readonly class WorkerData
     public static function fromRequest(array $requestData): WorkerData
     {
         return new self(
-            group_id: $requestData['group_id'],
-            worker_id: $requestData['worker_id'],
-            approximateHashRate: Arr::get($requestData, 'approximate_hash_rate'),
+            group_id: (int) $requestData['group_id'],
+            worker_id: (int) $requestData['worker_id'],
+            approximateHashRate: (float) Arr::get($requestData, 'approximate_hash_rate'),
         );
     }
 }

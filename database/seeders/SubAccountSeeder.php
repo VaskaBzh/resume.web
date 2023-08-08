@@ -12,7 +12,9 @@ class SubAccountSeeder extends Seeder
 {
     public function run(): void
     {
-        Sub::create([
+        Sub::updateOrcreate([
+            'group_id' => 6001912,
+        ],[
             'user_id' => User::find(1)->id,
             'group_id' => 6001912,
             'sub' => 'MainTest',

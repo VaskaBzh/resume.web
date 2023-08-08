@@ -60,7 +60,7 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'workers',
     ], function () {
         Route::get('{sub}', WorkerListController::class)->name('worker.list');
-        Route::post('{worker}', WorkerShowController::class)->name('worker.show');
+        Route::get('worker/{worker}', WorkerShowController::class)->name('worker.show');
     });
 
     Route::group([

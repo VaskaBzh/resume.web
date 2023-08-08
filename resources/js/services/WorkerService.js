@@ -58,7 +58,7 @@ export class WorkerService {
     }
 
     async fetchWorker() {
-        return await api.get(`/workers/${this.worker_id}`);
+        return await api.get(`/workers/worker/${this.worker_id}`);
     }
 
     async fetchWorkerGraph() {

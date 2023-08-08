@@ -20,7 +20,7 @@ readonly class WorkerHashRateData
         return new self(
             worker: $requestData['worker'],
             hash: $requestData['hash'],
-            unit: $requestData['uint'],
+            unit: $requestData['unit'],
         );
     }
 }

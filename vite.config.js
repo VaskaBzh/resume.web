@@ -3,24 +3,25 @@ import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-
 export default defineConfig(({ command , mode}) => {
     const env = loadEnv(mode, process.cwd(), '');
 
-    const serverConf = {
+    let serverConf = {
         cors: {
             origin: "*",
         },
     }
 
     if (loadEnv(mode, process.cwd(), '').APP_ENV === 'local') {
-        serverConf.host = '0.0.0.0';
-        serverConf.port = 5173;
-        serverConf.hmr = {
-            host: '127.0.0.1',
-        };
+        serverConf = { ...serverConf,
+            host: '0.0.0.0',
+            port: 5173,
+            hmr: {
+                host: '127.0.0.1',
+                port: 5173,
+            },
+        }
     }
-
     return {
         plugins: [
             laravel({
