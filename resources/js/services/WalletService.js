@@ -84,7 +84,7 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.wait = true;
 
-            await this.form.post("/wallet_create", {
+            await this.form.post("/wallets/create", {
                 onSuccess: (res) => {
                     this.index();
                     this.clearForm();
@@ -101,7 +101,7 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.wait = true;
 
-            await this.form.post("/wallet_change", {
+            await this.form.post("/wallets/update", {
                 onSuccess: (res) => {
                     this.index();
                     this.clearForm();
@@ -116,7 +116,7 @@ export class WalletService {
 
     async removeWallet(wallet) {
         this.setForm(wallet);
-        await this.form.post("/wallet_delete", {});
+        await this.form.post("walletswallet_delete", {});
         this.index();
     }
 
@@ -131,6 +131,6 @@ export class WalletService {
     // }
 
     async fetch() {
-        return await api.get(`/api/wallets/${this.group_id}`);
+        return await api.get(`/wallets/${this.group_id}`);
     }
 }

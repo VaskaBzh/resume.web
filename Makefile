@@ -37,7 +37,17 @@ clear:
 	$(ARTISAN) view:clear
 tinker:
 	$(ARTISAN) tinker
+remote_test:
+	ssh mainuser@92.205.188.112
 
 # app commands
+sub-hashes:
+	$(ARTISAN) make:sub-hashes
+worker-hashes:
+	$(ARTISAN) make:worker-hashes
+sync-workers:
+	$(ARTISAN) sync:worker
+stats:
+	$(ARTISAN) update:stats
 incomes:
 	$(ARTISAN) update:incomes

@@ -54,15 +54,15 @@ export class WorkerService {
     }
 
     async fetchList() {
-        return await api.get(`/api/sub/${this.group_id}/workers`);
+        return await api.get(`/workers/${this.group_id}`);
     }
 
     async fetchWorker() {
-        return await api.get(`/api/worker/${this.worker_id}`);
+        return await api.get(`/workers/${this.worker_id}`);
     }
 
     async fetchWorkerGraph() {
-        return await api.get(`/api/workerhashrate/${this.worker_id}`);
+        return await api.get(`/workerhashrate/${this.worker_id}`);
     }
 
     clearTable() {

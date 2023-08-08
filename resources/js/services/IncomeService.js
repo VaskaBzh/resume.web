@@ -9,13 +9,13 @@ import store from "@/store";
 export class IncomeService extends TableService {
     async fetchIncomes(page = 1, per_page = 15) {
         return await api.get(
-            `/api/incomes/${this.activeId}?page=${page}&per_page=${per_page}`
+            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`
         );
     }
 
     async fetchPayout(page = 1, per_page = 15) {
         return await api.get(
-            `/api/payouts/${this.activeId}?page=${page}&per_page=${per_page}`
+            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`
         );
     }
 

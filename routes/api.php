@@ -74,5 +74,5 @@ use Illuminate\Support\Facades\Route;
 //    Route::get('{sub}', WalletListController::class)->name('wallet.list');
 //});
 //
-//Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
-//Route::get('/chart', ChartController::class)->name('chart');
+Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
+Route::get('/chart', ChartController::class)->name('chart');

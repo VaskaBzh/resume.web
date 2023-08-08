@@ -43,12 +43,15 @@ Route::group([
     Route::get('/login', 'login')->name('login');
 });
 
+Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
+Route::get('/chart', ChartController::class)->name('chart');
+
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'subs',
     ], function () {
-        Route::get('', SubListController::class)->name('sub.list');
+        Route::get('{user}', SubListController::class)->name('sub.list');
         Route::get('{sub}', SubShowController::class)->name('sub.show');
         Route::post('/create', SubCreateController::class)->name('sub.create');
     });
@@ -71,10 +74,8 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/incomes/{sub}', IncomeListController::class)->name('income.list');
-    Route::get('/hasherate/{sub}', HashRateListController::class)->name('hash.list');
+    Route::get('/hashrate/{sub}', HashRateListController::class)->name('hash.list');
     Route::get('workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
-    Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
-    Route::get('/chart', ChartController::class)->name('chart');
 
     Route::group([
         'prefix' => '',

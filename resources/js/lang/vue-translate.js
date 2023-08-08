@@ -109,7 +109,7 @@ const messages = {
             login: {
                 title: "Authorize yourself!",
                 hash: "Average hashrate / 1 hour",
-                workers: "Workers",
+                workers: "Worker",
                 text: "Login or register to start mining!",
                 buttons: {
                     login: "Login",
@@ -123,7 +123,7 @@ const messages = {
             links: {
                 statistic: "Statistics",
                 accounts: "Subaccounts",
-                workers: "Workers",
+                workers: "Worker",
                 income: "Earnings",
                 connection: "Connection",
                 wallets: "Wallets",
@@ -396,7 +396,7 @@ const messages = {
                     text: "Take control of every detail of your financial streams with our customizable payout system.",
                 },
                 {
-                    title: "Workers management and monitoring",
+                    title: "Worker management and monitoring",
                     text: "Explore new horizons of efficiency in managing workflows and monitoring performance.",
                 },
                 {
@@ -408,7 +408,7 @@ const messages = {
         tabs: {
             statistic: "Statistics",
             accounts: "Subaccounts",
-            workers: "Workers",
+            workers: "Worker",
             income: "Earnings",
             connection: "Connection",
             wallets: "Wallets",
@@ -460,7 +460,7 @@ const messages = {
                     titles: ["Current hashrate", "Avg.hashrate / 24"],
                 },
                 workers: {
-                    title: "Workers",
+                    title: "Worker",
                     types: ["Active", "Unstable", "Inactive"],
                 },
             },
@@ -471,7 +471,7 @@ const messages = {
             block: {
                 titles: [
                     "Avg.hashrate / 1h",
-                    "Workers",
+                    "Worker",
                     "Projected earnings for today",
                     "Total paid out",
                 ],
@@ -496,7 +496,7 @@ const messages = {
             },
         },
         workers: {
-            title: "Workers",
+            title: "Worker",
             select_label: "Status",
             select: ["All", "Active", "Inactive"],
             statuses: ["Active", "Unstable", "Inactive"],
