@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\WorkerHashRateResource;
+use App\Http\Controllers\WorkerHashRate\Resources\WorkerHashRateResource;
 use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use Illuminate\Http\Request;

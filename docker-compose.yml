@@ -31,7 +31,7 @@ services:
             dockerfile: ./.docker/php/Dockerfile
         container_name: allbtc_app
         ports:
-            - "5173:5173"
+            - "5174:5174"
         volumes:
             - ./:/var/www/html
         depends_on:
@@ -40,6 +40,7 @@ services:
             - allbtc
 
     db:
+        platform: linux/x86_64
         image: mysql:5.7
         container_name: allbtc_db
         restart: unless-stopped
