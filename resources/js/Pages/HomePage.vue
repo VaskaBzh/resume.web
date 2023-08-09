@@ -403,7 +403,7 @@ import AboutPanelView from "@/Components/technical/views/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";
 import { SwiperSlide } from "swiper/vue";
-import lineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
+import lineGraphStatistic from "@/Components/technical/graphs/LineGraphStatistic.vue";
 
 export default {
     props: {

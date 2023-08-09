@@ -56,6 +56,14 @@ class IndexController extends Controller
         ]);
     }
 
+    public function calculator()
+    {
+        return Inertia::render('CalculatorPage', [
+            'auth_user' => Auth::check(),
+            'user' => auth()->user()
+        ]);
+    }
+
     public function profile()
     {
         return Inertia::render('Profile/ProfilePage', [

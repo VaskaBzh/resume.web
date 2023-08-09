@@ -56,11 +56,6 @@
                         :offset="offset"
                         :graph="hashrates.graph"
                         :viewportWidth="viewportWidth"
-                        :key="
-                            hashrates.graph?.values[
-                                hashrates.graph?.values?.length - 1
-                            ]
-                        "
                     />
                 </div>
             </div>
@@ -300,9 +295,17 @@ export default {
     watch: {
         async getActive() {
             await this.initHashrate();
+
+            this.waitHistory = this.getActive === -1
+                ? true
+                : false;
         },
         async offset() {
             await this.initHashrate();
+
+            this.waitHistory = this.getActive === -1
+                ? true
+                : false;
         },
     },
     computed: {
@@ -390,8 +393,6 @@ export default {
             this.intervalRender = setInterval(() => {
                 this.hashrates.index();
             }, 60000);
-
-            this.waitHistory = false;
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
@@ -404,7 +405,10 @@ export default {
         },
     },
     async mounted() {
-        await this.initHashrate(true);
+        await this.initHashrate(true)
+        this.waitHistory = this.getActive === -1
+            ? true
+            : false;
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }

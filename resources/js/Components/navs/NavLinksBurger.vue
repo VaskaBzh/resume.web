@@ -2,7 +2,7 @@
     <transition name="shadow">
         <div
             class="shadow_container"
-            v-show="is_opened && viewportWidth <= 991.98"
+            v-show="is_opened"
             id="shadow_container"
             @click="closeBurger"
         ></div>
@@ -12,7 +12,6 @@
             <div
                 class="nav__header"
                 id="burger_head"
-                v-if="viewportWidth < 991.98"
             >
                 <account-menu
                     :viewportWidth="viewportWidth"
@@ -313,16 +312,10 @@ export default {
 .nav__links {
     display: flex;
     width: 100%;
-    gap: 42px;
     justify-content: flex-start;
-    @media (max-width: 1320.98px) {
-        gap: 15px;
-    }
-    @media (max-width: 991.98px) {
-        flex-direction: column;
-        gap: 0;
-        overflow: hidden;
-    }
+    flex-direction: column;
+    gap: 0;
+    overflow: hidden;
     @media (max-width: 767.98px) {
         margin: 0;
         width: 100%;
@@ -337,26 +330,25 @@ export default {
     }
 
     &_con {
-        @media (max-width: 991.98px) {
-            position: fixed;
-            background: #fafafa;
-            box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
-            max-width: 384px;
-            overflow: scroll;
-            width: 100%;
-            height: 100vh;
-            top: 80px;
-            right: -110vw;
-            z-index: 99;
-            padding: 40px 32px;
-        }
+        position: fixed;
+        background: #fafafa;
+        box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
+        max-width: 384px;
+        overflow: scroll;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        right: -110vw;
+        z-index: 99;
+        padding: 40px 32px;
+        transition: all 0.8s ease 0s;
+
         @media (max-width: 479.98px) {
             gap: 32px;
             top: 59px;
             padding: 32px 16px 24px;
             max-width: 100%;
         }
-        transition: all 0.8s ease 0s;
 
         &.open {
             right: 0;

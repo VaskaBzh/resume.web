@@ -39,6 +39,7 @@ Route::group([
     Route::get('/', 'index')->name('home');
     Route::get('/help', 'help')->name('help');
     Route::get('/hosting', 'hosting')->name('hosting');
+    Route::get('/calculator', 'calculator')->name('calculator');
     Route::get('/registration', 'registration')->name('registration');
     Route::get('/login', 'login')->name('login');
 });

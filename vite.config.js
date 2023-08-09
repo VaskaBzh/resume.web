@@ -15,10 +15,10 @@ export default defineConfig(({ command , mode}) => {
     if (loadEnv(mode, process.cwd(), '').APP_ENV === 'local') {
         serverConf = { ...serverConf,
             host: '0.0.0.0',
-            port: 5174,
+            port: 5173,
             hmr: {
                 host: '127.0.0.1',
-                port: 5174,
+                port: 5173,
             },
         }
     }

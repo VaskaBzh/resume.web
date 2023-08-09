@@ -90,11 +90,6 @@
                     :viewportWidth="viewportWidth"
                     :heightVal="height"
                     :tooltip="true"
-                    :key="
-                        worker_service.graph?.values[
-                            worker_service.graph?.values?.length - 1
-                        ]
-                    "
                 />
             </div>
         </main-popup>
@@ -138,7 +133,7 @@ export default {
     watch: {
         "worker_service.graph"() {
             this.redraw = false;
-            this.redraw = true;
+            setTimeout(() => this.redraw = true, 1700);
         },
         viewportWidth() {
             if (this.viewportWidth >= 991.98) {
