@@ -239,7 +239,7 @@
                                         class="subtitle subtitle-value"
                                         v-if="this.btcInfo.btc"
                                     >
-                                        <span v-if="days !== '0'"
+                                        <span v-if="days !== 0"
                                             >{{ days }}
                                             {{
                                                 days === 1
