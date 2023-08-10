@@ -34,7 +34,7 @@ import { useForm, usePage } from "@inertiajs/vue3";
 
 export default {
     name: "settings-block",
-    props: ["val", "svg", "name"],
+    props: ["val", "svg", "name", "keyForm"],
     data() {
         return {
             value: this.val,
@@ -56,7 +56,6 @@ export default {
                 let form = useForm({
                     item: data,
                     type: this.name,
-
                 });
                 await form.post(route("change"), {});
             }
@@ -65,7 +64,8 @@ export default {
             // this.end_change();
             let data = {
                 name: this.name.toLowerCase(),
-                val: this.value,
+                val: this.value === "Добавьте телефон" ? "" : this.value,
+                key: this.keyForm,
             };
 
             if (pas) {

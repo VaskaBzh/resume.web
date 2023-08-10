@@ -15,6 +15,7 @@
                     "
                     :val="login"
                     :svg="svgs[0]"
+                    keyForm="name"
                 >
                 </settings-block>
                 <settings-block
@@ -24,6 +25,7 @@
                     "
                     :val="email"
                     :svg="svgs[1]"
+                    keyForm="email"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
@@ -32,6 +34,7 @@
                     "
                     :val="password"
                     :svg="svgs[2]"
+                    keyForm="password"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
@@ -40,6 +43,7 @@
                     "
                     :val="phone"
                     :svg="svgs[3]"
+                    keyForm="phone"
                 ></settings-block>
             </div>
             <div class="settings__column">
@@ -56,7 +60,7 @@
                                 height="20"
                                 viewBox="0 0 20 20"
                                 fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
+                           e     xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
                                     d="M9.99935 1.66663C5.40435 1.66663 1.66602 5.40496 1.66602 9.99996C1.66602 14.595 5.40435 18.3333 9.99935 18.3333C14.5943 18.3333 18.3327 14.595 18.3327 9.99996C18.3327 5.40496 14.5943 1.66663 9.99935 1.66663ZM9.99935 16.6666C6.32352 16.6666 3.33268 13.6758 3.33268 9.99996C3.33268 6.32413 6.32352 3.33329 9.99935 3.33329C13.6752 3.33329 16.666 6.32413 16.666 9.99996C16.666 13.6758 13.6752 16.6666 9.99935 16.6666Z"
@@ -98,7 +102,6 @@
             id="changes"
             class="popup-changes"
             :wait="wait"
-            v-if="form.type !== ''"
             :closed="closed"
             :errors="errors"
         >
@@ -272,25 +275,23 @@ export default {
         MainPassword,
     },
     props: ["errors", "message", "user", "auth_user"],
-    setup() {
-        let login = ref("...");
-        let email = ref("...");
-        let phone = ref("...");
+    setup(props) {
+        let login = ref(props.user.name);
+        let email = ref(props.user.email);
+        let phone = ref(props.user.phone || "Добавьте телефон");
         let password = ref("*********");
         // let sms = ref(null);
         // let fac = ref(null);
         let closed = ref(false);
         let wait = ref(false);
-        const { props } = usePage();
 
-        let form = useForm({
+        let form = {
             item: "",
             type: "",
             old_password: "",
             password: "",
             password_confirmation: "",
-
-        });
+        };
 
         let validate = ref({});
 
@@ -313,25 +314,12 @@ export default {
             if (form.password.length === 0) validate.value = {};
         };
 
-        async function getInfo() {
-            let getVal = {
-                login: login,
-                email: email,
-                phone: phone,
-            };
-
-            Object.entries(getVal).forEach((el) => {
-                axios.get(route(`get_${el[0]}`)).then((res) => {
-                    el[1].value = res.data;
-                });
-            });
-            // get_sms();
-            // get_2fac();
-        }
-
         const ajax = () => {
             wait.value = true;
-            form.post(route("change"), {
+            let sendForm = useForm({
+                [form.key]: form.item,
+            });
+            sendForm.post(route("change", props.user), {
                 onFinish: () => {
                     wait.value = false;
                 },
@@ -359,8 +347,6 @@ export default {
         //         res.data === 0 ? (fac.value = false) : (fac.value = true);
         //     });
         // }
-
-        getInfo();
 
         return {
             login,
@@ -421,6 +407,7 @@ export default {
         getHtml(data) {
             this.form.item = data.name === "пароль" ? "" : data.val;
             this.form.type = data.name;
+            this.form.key = data.key;
         },
     },
     mounted() {

@@ -16,10 +16,8 @@ class Worker extends Model
 {
     use HasFactory;
 
-    // Указываем, что таблицей для этой модели является 'withdrawals'
     protected $table = 'workers';
 
-    // Защищенные поля, которые могут быть массово присвоены
     protected $fillable = [
         'worker_id',
         'group_id',

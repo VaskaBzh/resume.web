@@ -45,7 +45,7 @@
 
 <script>
 import Vue from "lodash";
-import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
+import LineGraphStatistic from "@/Components/technical/graphs/LineGraphStatistic.vue";
 
 export default {
     components: {

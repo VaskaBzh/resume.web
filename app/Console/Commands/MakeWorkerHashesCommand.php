@@ -20,9 +20,7 @@ class MakeWorkerHashesCommand extends Command
 
     /**
      * Записываать данные воркера в таблицу хешррейт_воркера
-     *
      * старые (храним за два месяца) удалить
-     *
      *
      * @return void
      */

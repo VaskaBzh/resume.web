@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import LineGraphStatistic from "@/Components/technical/LineGraphStatistic.vue";
+import LineGraphStatistic from "@/Components/technical/graphs/LineGraphStatistic.vue";
 import { mapGetters } from "vuex";
 
 export default {

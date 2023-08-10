@@ -22,11 +22,6 @@ class ResetPasswordController extends Controller
      */
     protected $redirectTo = RouteServiceProvider::PROFILE;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Show the form to change the user's password.
      *
