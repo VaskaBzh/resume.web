@@ -289,7 +289,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .shadow-enter-active,
 .shadow-leave-active {
     transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
