@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Hashes;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\HashRateResource;
+use App\Http\Controllers\WorkerHashRate\Resources\HashRateResource;
 use App\Models\Hash;
 use App\Models\Sub;
 use Illuminate\Http\Request;

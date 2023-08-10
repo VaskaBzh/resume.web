@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Wallet;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\WalletResource;
+use App\Http\Controllers\WorkerHashRate\Resources\WalletResource;
 use App\Models\Sub;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 

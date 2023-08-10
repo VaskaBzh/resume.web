@@ -40,6 +40,7 @@ services:
             - allbtc
 
     db:
+        platform: linux/x86_64
         image: mysql:5.7
         container_name: allbtc_db
         restart: unless-stopped

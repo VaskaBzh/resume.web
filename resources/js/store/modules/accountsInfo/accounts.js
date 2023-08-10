@@ -9,11 +9,11 @@ export default {
             commit("destroy_acc");
         },
         async set_active({ commit, state }, index) {
-            commit("updateActive", index);
-
             let sub = new accountData(
                 (await api.get(`/subs/${index}`)).data.data[0]
             );
+
+            commit("updateActive", index);
 
             // let sub = Object.values(state.accounts).filter(
             //     (el) => el.group_id === index
