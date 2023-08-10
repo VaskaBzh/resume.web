@@ -18,6 +18,4 @@ yarn-error.log
 /.idea
 /.vscode
 filename
-
-vite.config.js
 docker-compose.yml
