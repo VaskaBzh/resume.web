@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -56,12 +57,9 @@ class IndexController extends Controller
         ]);
     }
 
-    public function profile()
+    public function profile(): RedirectResponse
     {
-        return Inertia::render('Profile/ProfilePage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
+        return redirect()->route('statistic');
     }
 
     public function accounts()
