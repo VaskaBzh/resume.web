@@ -61,12 +61,13 @@ export default {
     transition: all 0.8s ease 0.5s;
 }
 .swipe-leave-active {
-    transition: all 0.3s ease 0s;
+    transition: all 0.3s ease 0s, width 0s ease 0s;
 }
 .swipe-enter-from,
 .swipe-leave-to {
     opacity: 0;
     visibility: hidden;
+    width: 0;
 }
 .calculator {
     width: 100%;

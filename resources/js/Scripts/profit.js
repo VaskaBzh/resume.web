@@ -6,7 +6,7 @@ export class Profit {
         this.fppsPercent = fpps;
     }
 
-    amount(interval) {
+    lightCalculatorAmount(interval) {
         const seconds = 3600 * interval;
         const btcComFee = 0.5;
         const allBtcFee = 3.5;
@@ -16,8 +16,7 @@ export class Profit {
 
         let total = this.reward / earnTime;
         return (
-            (total +
-                total * ((this.fppsPercent - btcComFee - allBtcFee) / 100))
+            total + total * ((this.fppsPercent - btcComFee - allBtcFee) / 100)
         );
     }
 }
