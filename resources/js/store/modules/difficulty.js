@@ -33,6 +33,7 @@ export default {
                     networkUnit: minerstats.network_unit,
                     reward: minerstats.reward_block,
                     price: minerstats.price_USD,
+                    fpps: minerstats.fpps_rate,
                 };
                 converterModel.time = minerstats.time_remain - Date.now();
 

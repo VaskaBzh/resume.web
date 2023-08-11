@@ -46,7 +46,6 @@
                 :href="route('login')"
                 v-show="viewportWidth >= 991.98 && !is_auth"
                 class="nav__button"
-                @mousedown="this.linkChanger"
             >
                 {{ $t("header.login_button") }}
             </Link>
@@ -54,7 +53,6 @@
                 :href="route('statistic')"
                 v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
                 class="nav__button"
-                @mousedown="this.linkChanger"
             >
                 {{ $t("header.login_button") }}
             </Link>
@@ -86,7 +84,7 @@
 </template>
 
 <script>
-import {Link, useForm, usePage} from "@inertiajs/vue3";
+import { Link, useForm } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/Components/navs/NavLinks.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
@@ -131,13 +129,10 @@ export default defineComponent({
         let noInfo = ref(false);
         let closed = ref(false);
 
-        const { props } = usePage();
-
         const form = useForm({
             email: "",
             password: "",
             remember: false,
-
         });
 
         // const reverify = () => {
