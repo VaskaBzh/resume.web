@@ -1,58 +1,101 @@
 <template>
-    <div class="calculator__main">
-        <calculator-title class="title-white title-h1 calculator_title">
-            Рассчитайте свой
-            доход с помощью
-            калькулятора
-            доходности
-        </calculator-title>
-        <p class="calculator_text">
-            Позволяет оценить и спрогнозировать возможный приблизательный доход и прибыль за определенный период. Фактические доходы могут незначительно отличаться.
-        </p>
-        <calculator-button @click.prevent="$emit('swipePage', 'light')" class="calculator_button">
-            Калькулятор Pro
-        </calculator-button>
-        <p class="calculator_text calculator_text-md">
-            *Калькулятор Pro - это расширенная версия калькулятора, который на основе большего количество вводных данных позволит определить более точные прогнозы доходности
-        </p>
+    <div class="calculator__content">
+        <transition name="slide">
+            <calculator-title class="title-white title-h2 calculator_title">
+                Калькулятор Pro
+            </calculator-title>
+        </transition>
+        <form class="calculator__form">
+            <transition-group name="slide">
+                <calculator-input
+                    v-for="(input, i) in ProService.inputs"
+                    :key="i"
+                    :inputName="input.inputName"
+                    :inputLabel="input.inputLabel"
+                    :inputPlaceholder="input.inputPlaceholder"
+                    :inputValue="input.inputValue"
+                    :inputUnit="input.inputUnit"
+                    :disabled="input.disabled"
+                    @getValue="setValue(input.inputName, $event)"
+                />
+            </transition-group>
+        </form>
+        <a href="#" @click.prevent="$emit('changePro')" class="calculator_link">
+            Вернуться к Калькулятору Light
+        </a>
     </div>
 </template>
 
 <script>
 import CalculatorTitle from "../UI/CalculatorTitle.vue";
-import CalculatorButton from "../UI/CalculatorButton.vue";
+import CalculatorInput from "../UI/CalculatorInput.vue";
+
+import { ProCalculatorService } from "../../services/ProCalculatorService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "stats-calculator-view",
     components: {
-        CalculatorButton,
-        CalculatorTitle
-    }
-}
+        CalculatorTitle,
+        CalculatorInput,
+    },
+    computed: {
+        ...mapGetters(["btcInfo"]),
+    },
+    watch: {
+        "btcInfo.btc"(newValue) {
+            if (newValue) {
+                this.ProService.setInputs(newValue);
+            }
+        },
+    },
+    methods: {
+        setValue(name, value) {
+            console.log(name, value);
+        },
+    },
+    data() {
+        return {
+            ProService: new ProCalculatorService(),
+        };
+    },
+    mounted() {
+        if (this.btcInfo.btc) {
+            this.ProService.setInputs(this.btcInfo.btc);
+        }
+    },
+};
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .calculator {
     &_title {
-        max-width: 384px;
-        margin-bottom: 24px;
+        margin-bottom: 56px;
     }
-    &_text {
-        color: rgba(255, 255, 255, 0.50);
-        font-weight: 300;
-        margin-bottom: 72px;
-        max-width: 400px;
-        line-height: 130%;
-        &-md {
-            color: rgba(255, 255, 255, 0.30);
-            font-size: 14px;
-            font-weight: 400;
-            line-height: 150%;
-            max-width: 472px;
+    &__form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 32px 24px;
+        width: 100%;
+        margin-bottom: 56px;
+    }
+    &_link {
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 18px;
+        font-weight: 400;
+        line-height: 28px;
+        letter-spacing: 0.35px;
+        position: relative;
+        width: fit-content;
+        &:after {
+            content: "";
+            width: 100%;
+            position: absolute;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.7);
+            bottom: 0;
+            left: 0;
         }
-    }
-    &_button {
-        margin-bottom: 86px;
     }
 }
 </style>

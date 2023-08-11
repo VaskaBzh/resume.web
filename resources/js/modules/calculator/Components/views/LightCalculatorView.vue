@@ -119,24 +119,6 @@ export default {
     transform: translateX(30px);
 }
 .calculator {
-    &__content {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        width: 100%;
-        margin: 0 auto;
-        &:before {
-            content: "";
-            background: linear-gradient(137deg, #0049be 15.98%, #3597f9 97.76%);
-            box-shadow: -5px 4px 15px 10px rgba(9, 36, 68, 0.1);
-            position: absolute;
-            right: 0;
-            top: 0;
-            width: 50vw;
-            height: 100vh;
-            z-index: -1;
-        }
-    }
     &_title {
         margin-bottom: 48px;
     }

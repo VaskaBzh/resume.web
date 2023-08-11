@@ -99,6 +99,7 @@ export default {
         align-items: center;
         margin-right: auto;
         cursor: text;
+        white-space: nowrap;
         svg {
             margin-bottom: auto;
             cursor: pointer;
@@ -111,6 +112,7 @@ export default {
         font-weight: 400;
         line-height: 28px;
         letter-spacing: 0.35px;
+        white-space: nowrap;
     }
     &__input {
         color: #ffffff;
@@ -118,7 +120,7 @@ export default {
         font-size: 18px;
         font-weight: 500;
         line-height: 150%;
-        width: fit-content;
+        width: 100%;
         outline: none;
         border: none;
         background: transparent;

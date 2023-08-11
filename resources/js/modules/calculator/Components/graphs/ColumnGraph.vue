@@ -17,10 +17,7 @@ export default {
         drawGraph() {
             const parentWidth = this.$el.offsetWidth; // Получение ширины родительского элемента
             const height = 180;
-            const data = this.graphData.map((d) => ({
-                ...d,
-                value: parseFloat(d.value),
-            }));
+            const data = this.graphData;
 
             d3.select("#column-graph").html("");
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="calculator__main">
+    <div class="calculator__content">
         <calculator-title class="title-white title-h1 calculator_title">
             Рассчитайте свой доход с помощью калькулятора доходности
         </calculator-title>

@@ -4,10 +4,12 @@ import { InputData } from "../DTO/InputData";
 
 import currency from "@/api/currency";
 
-export class LightCalculatorService {
+export class ProCalculatorService {
     constructor() {
         this.btcInfo = {};
-        this.graph = [];
+        this.graphColumn = [];
+        this.graphCircle = [];
+        this.table = [];
         this.inputs = [];
     }
 
@@ -15,43 +17,98 @@ export class LightCalculatorService {
         this.btcInfo = btcInfo;
 
         this.inputs = [
-            new InputData("hash", "Хешрейт", "100", "0", "Th/ s", null, false),
-            new InputData(
-                "electro",
-                "Затраты",
-                "0.89",
-                "0",
-                "руб/kWh",
-                null,
-                false
-            ),
-            new InputData(
-                "power",
-                "Мощность устройств",
-                "1200",
-                "0",
-                "Вт",
-                null,
-                false
-            ),
-            new InputData(
-                "difficulty",
-                "Текущая сложность",
-                btcInfo.diff,
-                null,
-                null,
-                "USD",
-                false
-            ),
             new InputData(
                 "currency",
                 "Курс BTC",
                 btcInfo.price.toLocaleString("en-US"),
                 null,
                 "USD",
+                "USD",
+                true
+            ),
+            new InputData(
+                "halving",
+                "Дней до халвинга",
+                "120",
+                null,
+                null,
                 null,
                 true
             ),
+            new InputData(
+                "courseUp",
+                "Повышение курса BTC",
+                "0",
+                null,
+                "%",
+                "USD",
+                true
+            ),
+            new InputData("hash", "Хешрейт", "100", "0", "Th/ s", null, false),
+            new InputData(
+                "commission",
+                "Комиссия",
+                "4",
+                null,
+                "%",
+                "USD",
+                true
+            ),
+            new InputData(
+                "difficulty",
+                "Сложность",
+                btcInfo.diff,
+                null,
+                null,
+                null,
+                true
+            ),
+            new InputData(
+                "next_difficulty",
+                "Повышение сложности",
+                "0",
+                null,
+                "%",
+                "USD",
+                true
+            ),
+            new InputData(
+                "electro",
+                "Затраты",
+                "10,000",
+                "0",
+                "руб/мес",
+                null,
+                false
+            ),
+            new InputData("tax", "Налог на прибыль", "", "0", "%", null, false),
+            new InputData(
+                "price",
+                "Цена устр-ва",
+                "1000",
+                "0",
+                "USD",
+                "USD",
+                false
+            ),
+            new InputData(
+                "cash",
+                "Другие расходы",
+                "",
+                "0",
+                "USD/мес",
+                null,
+                false
+            ),
+            // new InputData(
+            //     "power",
+            //     "Мощность устройств",
+            //     "1200",
+            //     "0",
+            //     "Вт",
+            //     null,
+            //     false
+            // ),
         ];
     }
 

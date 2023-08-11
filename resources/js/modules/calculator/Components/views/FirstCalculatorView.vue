@@ -9,7 +9,7 @@
             незначительно отличаться.
         </p>
         <calculator-button
-            @click.prevent="$emit('swipePage')"
+            @click.prevent="$emit('changePro')"
             class="calculator_button"
         >
             Калькулятор Pro
@@ -38,22 +38,7 @@ export default {
 <style scoped lang="scss">
 .calculator {
     &__content {
-        display: flex;
-        flex-direction: column;
-        max-width: 600px;
-        width: 100%;
-        margin: 0 auto;
         padding-top: 76px;
-        &:before {
-            content: "";
-            background: #16181a;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 50vw;
-            height: 100vh;
-            z-index: -1;
-        }
     }
     &_title {
         max-width: 384px;
