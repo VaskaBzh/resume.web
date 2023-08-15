@@ -1,14 +1,17 @@
 <template>
     <div class="calculator__content">
         <transition name="slide">
-            <calculator-title class="title-white title-h2 calculator_title">
+            <calculator-title
+                v-show="lightService.inputs.length > 0"
+                class="title-white title-h2 calculator_title"
+            >
                 Калькулятор Light
             </calculator-title>
         </transition>
         <form class="calculator__form">
             <transition-group name="slide">
                 <calculator-input
-                    v-for="(input, i) in inputs.inputs"
+                    v-for="(input, i) in lightService.inputs"
                     :key="i"
                     :inputName="input.inputName"
                     :inputLabel="input.inputLabel"
@@ -20,17 +23,25 @@
                 />
             </transition-group>
         </form>
-        <div class="calculator__graph">
-            <calculator-tabs
-                :tabs="graphTabs"
-                :activeValue="graphValue"
-                @getDate="getDate"
-            ></calculator-tabs>
-            <column-graph
-                :graphData="inputs.graph"
-                v-if="inputs.graph"
-            ></column-graph>
-        </div>
+        <transition name="slide">
+            <div
+                class="calculator__graph"
+                v-if="lightService.inputs.length > 0"
+            >
+                <calculator-tabs
+                    :tabs="graphTabs"
+                    :activeValue="graphValue"
+                    @getDate="getDate"
+                ></calculator-tabs>
+                <!--            <column-graph-->
+                <!--                :graphData="inputs.graph"-->
+                <!--                v-if="inputs.graph"-->
+                <!--            ></column-graph>-->
+                <div class="calculator__result">
+                    <converted-result :bitcoinValue="lightService.profit" />
+                </div>
+            </div>
+        </transition>
     </div>
 </template>
 
@@ -40,7 +51,8 @@ import CalculatorInput from "../UI/CalculatorInput.vue";
 import { mapGetters } from "vuex";
 import { LightCalculatorService } from "../../services/LightCalculatorService.js";
 import CalculatorTabs from "../UI/CalculatorTabs.vue";
-import ColumnGraph from "../graphs/ColumnGraph.vue";
+import ConvertedResult from "../UI/ConvertedResult.vue";
+// import ColumnGraph from "../graphs/ColumnGraph.vue";
 
 export default {
     name: "light-calculator-view",
@@ -48,14 +60,15 @@ export default {
         CalculatorInput,
         CalculatorTitle,
         CalculatorTabs,
-        ColumnGraph,
+        // ColumnGraph,
+        ConvertedResult,
     },
     computed: {
         ...mapGetters(["btcInfo"]),
     },
     data() {
         return {
-            inputs: new LightCalculatorService(),
+            lightService: new LightCalculatorService(),
             graphValue: 1,
             graphTabs: [
                 {
@@ -81,28 +94,28 @@ export default {
         getDate(tabValue) {
             this.graphValue = tabValue;
 
-            this.inputs.getGraph(tabValue);
+            this.lightService.getGraph(tabValue);
         },
         setValue(inputName, newValue) {
-            this.inputs.setItem(inputName, newValue);
+            this.lightService.setItem(inputName, newValue);
 
-            this.inputs.getGraph(this.graphValue);
+            this.lightService.getGraph(this.graphValue);
         },
     },
     watch: {
         "btcInfo.btc"(newValue) {
             if (newValue) {
-                this.inputs.setInputs(newValue);
+                this.lightService.setInputs(newValue);
 
-                this.inputs.getGraph(this.graphValue);
+                this.lightService.getGraph(this.graphValue);
             }
         },
     },
     mounted() {
         if (this.btcInfo.btc) {
-            this.inputs.setInputs(this.btcInfo.btc);
+            this.lightService.setInputs(this.btcInfo.btc);
 
-            this.inputs.getGraph(this.graphValue);
+            this.lightService.getGraph(this.graphValue);
         }
     },
 };
@@ -127,6 +140,15 @@ export default {
         flex-direction: column;
         gap: 20px;
         margin-bottom: 40px;
+        .row {
+            transition-delay: 0.25s;
+            &:nth-child(2) {
+                transition-delay: 0.5s;
+            }
+            &:nth-child(3) {
+                transition-delay: 0.75s;
+            }
+        }
     }
     &__graph {
         padding: 16px;
@@ -137,6 +159,7 @@ export default {
         background: rgba(255, 255, 255, 0.1);
         box-shadow: 2px 4px 4px 0px rgba(24, 73, 169, 0.05);
         width: 100%;
+        transition-delay: 1s;
     }
 }
 </style>

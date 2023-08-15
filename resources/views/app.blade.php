@@ -17,7 +17,7 @@
 @inertia
 </body>
 <!-- Yandex.Metrika counter -->
-    @if(env('APP_ENV') === 'production')
+    @if(config('APP_ENV') === 'production')
         <script type="text/javascript">
             (function (m, e, t, r, i, k, a) {
                 m[i] = m[i] || function () {

@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use App\Models\Worker;
 
-readonly class WorkerHashRateData
+readonly final class WorkerHashRateData
 {
     public function __construct(
         public Worker $worker,

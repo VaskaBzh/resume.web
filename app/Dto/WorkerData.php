@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly class WorkerData
+readonly final class WorkerData
 {
     public function __construct(
         public int $group_id,

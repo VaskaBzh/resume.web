@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly class SubData
+readonly final class SubData
 {
     /**
      * @param int $userId - id пользователя allbtc.com
