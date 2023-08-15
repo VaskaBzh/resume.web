@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
@@ -89,6 +90,14 @@ Route::middleware('auth')->group(function () {
         Route::get('/full-page/income', 'income')->name('income');
         Route::get('/full-page/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
+    });
+
+    Route::group([
+        'prefix' => '2fac'
+    ], function () {
+        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
+        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
     });
 
     Route::post('/change/{user}', ProfileController::class)->name('change');
