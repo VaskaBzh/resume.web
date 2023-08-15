@@ -17,7 +17,6 @@ class Kernel extends ConsoleKernel
         UpdateMinerStatCommand::class,
         MakeHashesCommand::class,
         MakeWorkerHashesCommand::class,
-        SyncSubsCommand::class,
     ];
     /**
      * Define the application's command schedule.

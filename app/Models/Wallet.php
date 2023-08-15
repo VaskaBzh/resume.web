@@ -55,7 +55,7 @@ class Wallet extends Model
         return new WalletBuilder($query);
     }
 
-    public function total_payout(): Attribute
+    public function totalPayout(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->payouts()->sum('payout')

@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
          * Заполнит базу тестовым пользователем
          *
         */
-        User::create([
+        User::updateOrCreate(['email' => 'forest@gmail.com'], [
             'name' => "MainTest",
             'email' => 'forest@gmail.com',
             'password' => bcrypt('12345678'),

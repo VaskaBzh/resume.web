@@ -42,7 +42,7 @@ createInertiaApp({
         // The color of the progress bar.
         color: "#29d",
 
-        // Whether to include the default NProgress styles.
+        // Whether to include the default NProgress scss.
         includeCSS: true,
 
         // Whether the NProgress spinner will be shown.

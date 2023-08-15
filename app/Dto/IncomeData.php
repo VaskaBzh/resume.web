@@ -8,11 +8,11 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use Illuminate\Support\Arr;
 
-readonly class IncomeData
+readonly final class IncomeData
 {
     /**
      * @param int $groupId - id сабаккаунта
-     * @param string|null $walletId - кошелек
+     * @param int|null $walletId - кошелек
      * @param float $dailyAmount - доход пользователя за сутки
      * @param string $status - статус транзакции
      * @param string $message - сообщение транзакции

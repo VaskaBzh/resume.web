@@ -15,6 +15,7 @@
                     "
                     :val="login"
                     :svg="svgs[0]"
+                    keyForm="name"
                 >
                 </settings-block>
                 <settings-block
@@ -24,6 +25,7 @@
                     "
                     :val="email"
                     :svg="svgs[1]"
+                    keyForm="email"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
@@ -32,6 +34,7 @@
                     "
                     :val="password"
                     :svg="svgs[2]"
+                    keyForm="password"
                 ></settings-block>
                 <settings-block
                     @openPopup="getHtml"
@@ -40,7 +43,9 @@
                     "
                     :val="phone"
                     :svg="svgs[3]"
+                    keyForm="phone"
                 ></settings-block>
+                <button @click="send2Fac">2fac</button>
             </div>
             <div class="settings__column">
                 <div class="cabinet__block cabinet__block-light">
@@ -56,6 +61,7 @@
                                 height="20"
                                 viewBox="0 0 20 20"
                                 fill="none"
+                                e
                                 xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
@@ -98,7 +104,6 @@
             id="changes"
             class="popup-changes"
             :wait="wait"
-            v-if="form.type !== ''"
             :closed="closed"
             :errors="errors"
         >
@@ -257,14 +262,16 @@ import BlueButton from "@/Components/UI/BlueButton.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import SettingsBlock from "@/Components/technical/blocks/profile/SettingsBlock.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import axios from "axios";
 import { ref } from "vue";
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
+import MainCheckbox from "../../../Components/UI/MainCheckbox.vue";
+import axios from "axios";
 
 export default {
     layout: profileLayoutView,
     components: {
+        MainCheckbox,
         MainTitle,
         BlueButton,
         SettingsBlock,
@@ -272,23 +279,23 @@ export default {
         MainPassword,
     },
     props: ["errors", "message", "user", "auth_user"],
-    setup() {
-        let login = ref("...");
-        let email = ref("...");
-        let phone = ref("...");
+    setup(props) {
+        let login = ref(props.user.name);
+        let email = ref(props.user.email);
+        let phone = ref(props.user.phone || "Добавьте телефон");
         let password = ref("*********");
         // let sms = ref(null);
         // let fac = ref(null);
         let closed = ref(false);
         let wait = ref(false);
 
-        let form = useForm({
+        let form = {
             item: "",
             type: "",
             old_password: "",
             password: "",
             password_confirmation: "",
-        });
+        };
 
         let validate = ref({});
 
@@ -311,26 +318,13 @@ export default {
             if (form.password.length === 0) validate.value = {};
         };
 
-        async function getInfo() {
-            let getVal = {
-                login: login,
-                email: email,
-                phone: phone,
-            };
-
-            Object.entries(getVal).forEach((el) => {
-                axios.get(route(`get_${el[0]}`)).then((res) => {
-                    el[1].value = res.data;
-                });
-            });
-            // get_sms();
-            // get_2fac();
-        }
-
         const ajax = () => {
             wait.value = true;
-            form.post(route("change"), {
-                onFinish() {
+            let sendForm = useForm({
+                [form.key]: form.item,
+            });
+            sendForm.post(route("change", props.user), {
+                onFinish: () => {
                     wait.value = false;
                 },
             });
@@ -357,8 +351,6 @@ export default {
         //         res.data === 0 ? (fac.value = false) : (fac.value = true);
         //     });
         // }
-
-        getInfo();
 
         return {
             login,
@@ -408,6 +400,13 @@ export default {
         },
     },
     methods: {
+        send2Fac() {
+            let form = useForm({
+                "2fac": true,
+            });
+
+            form.post("/2fac/enable", {});
+        },
         setProfits() {
             this.profit = localStorage.getItem("clearProfit") || "";
             this.clearProfit = this.profit;
@@ -419,6 +418,7 @@ export default {
         getHtml(data) {
             this.form.item = data.name === "пароль" ? "" : data.val;
             this.form.type = data.name;
+            this.form.key = data.key;
         },
     },
     mounted() {

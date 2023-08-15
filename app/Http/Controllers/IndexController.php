@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 
@@ -56,12 +58,17 @@ class IndexController extends Controller
         ]);
     }
 
-    public function profile()
+    public function calculator()
     {
-        return Inertia::render('Profile/ProfilePage', [
+        return Inertia::render('CalculatorPage', [
             'auth_user' => Auth::check(),
             'user' => auth()->user()
         ]);
+    }
+
+    public function profile(): RedirectResponse
+    {
+        return redirect()->route('statistic');
     }
 
     public function accounts()
@@ -118,5 +125,18 @@ class IndexController extends Controller
             'auth_user' => Auth::check(),
             'user' => auth()->user()
         ]);
+    }
+
+    public function twoFactorAuth()
+    {
+        $rendered = Inertia::render('Auth/TwoFactorVerifyPage', [
+            'qrCode' => session()->get('qrCode'),
+            'secret' => session()->get('secret')
+        ]);
+
+        session()->forget('qrCode');
+        session()->forget('secret');
+
+        return $rendered;
     }
 }

@@ -15,4 +15,9 @@ class SubBuilder extends BaseBuilder
             : $query
         );
     }
+
+    public function hasWorker(): Builder
+    {
+       return $this->whereHas('workers');
+    }
 }

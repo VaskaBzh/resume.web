@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly class WalletData
+readonly final class WalletData
 {
     /**
      * @param string|null $name - имя кошелшька

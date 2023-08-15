@@ -31,6 +31,9 @@ import NavTabs from "@/Components/navs/NavTabs.vue";
 import HeaderComponent from "@/Components/HeaderComponent.vue";
 import FooterComponent from "@/Components/FooterComponent.vue";
 import { mapGetters } from "vuex";
+import { usePage } from "@inertiajs/vue3";
+import axios from "axios";
+import { Inertia } from "@inertiajs/inertia";
 
 export default {
     props: {

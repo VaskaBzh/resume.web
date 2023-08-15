@@ -28,6 +28,7 @@ class UpdateIncomesCommand extends Command
     public function handle(): void
     {
         foreach (Sub::all() as $sub) {
+
             $this->process(
                 incomeService: resolve(IncomeService::class),
                 walletService: resolve(WalletService::class),
@@ -67,17 +68,17 @@ class UpdateIncomesCommand extends Command
             }
 
             try {
-//                $walletService->unlock();
+                $walletService->unlock();
 
                 Log::channel('incomes')->info('WALLET UNLOCKED', [
                     'sub' => $sub->id,
                     'wallet' => $wallet->id
                 ]);
 
-                $txId = '123'; /*$walletService->sendBalance(
+                $txId = $walletService->sendBalance(
                     wallet: $wallet,
                     balance: $incomeService->getPayout()
-                );*/
+                );
 
                 if (!$txId) {
                     Log::channel('incomes')->info('TXID IS EMPTY', [

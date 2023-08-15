@@ -137,7 +137,7 @@
 <script>
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { mapGetters } from "vuex";
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
@@ -184,9 +184,12 @@ export default {
         document.removeEventListener("click", this.hideMenu, true);
         document.removeEventListener("keydown", this.hideKey);
     },
-    setup(props) {
+    setup() {
         let wait = ref(false);
         let closed = ref(false);
+
+        const { props } = usePage();
+
         const form = useForm({
             name: "",
         });
@@ -194,10 +197,10 @@ export default {
         const addAcc = async () => {
             wait.value = true;
             await form.post(route("sub_create"), {
-                onFinish() {
+                onFinish: () => {
                     wait.value = false;
                 },
-                onSuccess() {
+                onSuccess: () => {
                     closed.value = true;
                     store.dispatch("accounts_all", props.user.id);
                 },
@@ -205,7 +208,17 @@ export default {
         };
 
         const logout = async () => {
-            await Inertia.post("/logout");
+            await Inertia.post(
+                "/logout",
+                {},
+                {
+                    headers: {
+                        "X-CSRF-Token": document
+                            .querySelector('meta[name="csrf-token"]')
+                            .getAttribute("content"),
+                    },
+                }
+            );
         };
 
         return {

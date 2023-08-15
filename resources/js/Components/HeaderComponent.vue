@@ -46,7 +46,6 @@
                 :href="route('login')"
                 v-show="viewportWidth >= 991.98 && !is_auth"
                 class="nav__button"
-                @mousedown="this.linkChanger"
             >
                 {{ $t("header.login_button") }}
             </Link>
@@ -54,7 +53,6 @@
                 :href="route('statistic')"
                 v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
                 class="nav__button"
-                @mousedown="this.linkChanger"
             >
                 {{ $t("header.login_button") }}
             </Link>

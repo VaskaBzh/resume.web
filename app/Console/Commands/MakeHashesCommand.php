@@ -9,6 +9,7 @@ use App\Models\Hash;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Arr;
 
 class MakeHashesCommand extends Command
 {
@@ -25,7 +26,10 @@ class MakeHashesCommand extends Command
         BtcComService $btcComService
     ): void
     {
-        Sub::all()->each(static function(Sub $sub) use ($btcComService) {
+        $progress = $this->output->createProgressBar();
+
+        Sub::hasWorker()->each(static function (Sub $sub) use ($btcComService, $progress) {
+            $progress->advance();
 
             DeleteOldHashrates::execute(
                 query: Hash::oldestThan(
@@ -37,21 +41,18 @@ class MakeHashesCommand extends Command
             try {
                 $subInfo = $btcComService->getSub($sub->group_id);
 
-                if ($subInfo) {
-                    $hashRate = $subInfo['shares_1m'];
-                    $unit = $subInfo['shares_unit'];
-                    $workerCount = $subInfo['workers_active'];
-                }
-
                 Hash::create([
                     'group_id' => $sub->group_id,
-                    'hash' => $hashRate ?? 0,
-                    'unit' => $unit ?? 'T',
-                    'worker_count' => (int) $workerCount ?? 0,
+                    'hash' => Arr::get($subInfo , 'shares_1m', 0),
+                    'unit' => Arr::get($subInfo, 'shares_unit', 'T'),
+                    'worker_count' => Arr::get($subInfo, 'workers_active', 0)
                 ]);
             } catch (\Exception $e) {
+                dump('s');
                 report($e);
             }
         });
+
+        $progress->finish();
     }
 }

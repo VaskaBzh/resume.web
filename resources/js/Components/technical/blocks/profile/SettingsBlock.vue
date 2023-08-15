@@ -30,11 +30,11 @@
 </template>
 
 <script>
-import { useForm } from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 
 export default {
     name: "settings-block",
-    props: ["val", "svg", "name"],
+    props: ["val", "svg", "name", "keyForm"],
     data() {
         return {
             value: this.val,
@@ -50,6 +50,8 @@ export default {
     },
     methods: {
         async checkbox_changes(data) {
+            const { props } = usePage();
+
             if (this.val !== null) {
                 let form = useForm({
                     item: data,
@@ -62,7 +64,8 @@ export default {
             // this.end_change();
             let data = {
                 name: this.name.toLowerCase(),
-                val: this.value,
+                val: this.value === "Добавьте телефон" ? "" : this.value,
+                key: this.keyForm,
             };
 
             if (pas) {

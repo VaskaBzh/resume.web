@@ -177,7 +177,7 @@ import pdf from "@/../assets/files/policy.pdf";
 import authLayoutView from "@/Shared/AuthLayoutView.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import { Link, useForm } from "@inertiajs/vue3";
+import { Link, useForm, usePage } from "@inertiajs/vue3";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 import { ref } from "vue";
 
@@ -200,12 +200,15 @@ export default {
     setup() {
         let checkbox = ref(false);
         let validate = ref({});
+        const { props } = usePage();
+
         let form = useForm({
             email: "",
             name: "",
             password: "",
             ["password_confirmation"]: "",
             checkbox: false,
+
         });
         const account_create = () => {
             checkbox.value = false;

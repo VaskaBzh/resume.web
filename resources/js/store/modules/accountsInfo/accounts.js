@@ -2,17 +2,18 @@ import api from "@/api/api";
 
 import { accountData } from "@/DTO/accountData";
 
+const firstSubIndex = 0;
 export default {
     actions: {
         async destroy_accounts({ commit, state }) {
             commit("destroy_acc");
         },
         async set_active({ commit, state }, index) {
-            commit("updateActive", index);
-
             let sub = new accountData(
-                (await api.get(`/api/sub/${index}`)).data.data
+                (await api.get(`/subs/${index}`)).data.data[0]
             );
+
+            commit("updateActive", index);
 
             // let sub = Object.values(state.accounts).filter(
             //     (el) => el.group_id === index
@@ -22,7 +23,7 @@ export default {
         },
         async accounts_all({ commit, state }, user_id) {
             let subsList = (
-                await api.get(`/api/subs/${user_id}`)
+                await api.get(`/subs/${user_id}`)
             ).data.data.map((el) => {
                 return new accountData(el);
             });
@@ -31,7 +32,7 @@ export default {
                 commit("updateAccounts", subsList);
                 this.dispatch(
                     "set_active",
-                    Object.values(subsList)[0].group_id
+                    Object.values(subsList)[firstSubIndex].group_id
                 );
             }
         },

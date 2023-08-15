@@ -27,6 +27,7 @@
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
 import MainMenu from "@/Components/UI/MainMenu.vue";
+import { usePage } from "@inertiajs/vue3";
 
 export default {
     name: "select-language",
@@ -89,7 +90,13 @@ export default {
                     {
                         location: this.$i18n.locale,
                     },
-                    {}
+                    {
+                        headers: {
+                            ["X-XSRF-TOKEN"]: document
+                                .querySelector(`meta[name="csrf-token"]`)
+                                .getAttribute("content"),
+                        },
+                    }
                 );
                 Inertia.reload({ preserveScroll: true });
             }

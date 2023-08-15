@@ -20,9 +20,7 @@ class MakeWorkerHashesCommand extends Command
 
     /**
      * Записываать данные воркера в таблицу хешррейт_воркера
-     *
      * старые (храним за два месяца) удалить
-     *
      *
      * @return void
      */
@@ -47,12 +45,10 @@ class MakeWorkerHashesCommand extends Command
                         'unit' => $btcWorker['shares_unit'] ?? 'T',
                     ]);
 
-                    $workerDalyHashRates = WorkerHashrate::dailyHashRates($worker->worker_id)->get();
-
                     Update::execute($worker, workerData: WorkerData::fromRequest([
                         'worker_id' => $worker->worker_id,
                         'group_id' => $worker->group_id,
-                        'approximate_hash_rate' => $workerDalyHashRates->sum('hash') / $workerDalyHashRates->count()
+                        'approximate_hash_rate' => $btcWorker['shares_1d']
                     ]));
                 }
             } catch (\Exception $e) {

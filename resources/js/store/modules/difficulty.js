@@ -21,7 +21,7 @@ export default {
             }
         },
         async getMiningStat({ commit, state }) {
-            let minerstats = (await api.get("/api/miner_stat")).data.minerstats;
+            let minerstats = (await api.get("/miner_stat")).data.minerstats;
 
             try {
                 let converterModel = {
@@ -33,6 +33,7 @@ export default {
                     networkUnit: minerstats.network_unit,
                     reward: minerstats.reward_block,
                     price: minerstats.price_USD,
+                    fpps: minerstats.fpps_rate,
                 };
                 converterModel.time = minerstats.time_remain - Date.now();
 

@@ -1,9 +1,28 @@
-import { defineConfig } from "vite";
+import { defineConfig, loadEnv } from "vite";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
-export default defineConfig(({ command }) => {
+export default defineConfig(({ command, mode }) => {
+    const env = loadEnv(mode, process.cwd(), "");
+
+    let serverConf = {
+        cors: {
+            origin: "*",
+        },
+    };
+
+    if (loadEnv(mode, process.cwd(), "").APP_ENV === "local") {
+        serverConf = {
+            ...serverConf,
+            host: "0.0.0.0",
+            port: 5173,
+            hmr: {
+                host: "127.0.0.1",
+                port: 5173,
+            },
+        };
+    }
     return {
         plugins: [
             laravel({
@@ -33,16 +52,7 @@ export default defineConfig(({ command }) => {
                 },
             },
         },
-        server: {
-            cors: {
-                origin: "*",
-            },
-            host: '0.0.0.0',
-            port: 5173,
-            hmr: {
-                host: '127.0.0.1',
-            }
-        },
+        server: serverConf,
         build: {
             base: command === "build" ? "/" : "/",
             publicDir: "public",
