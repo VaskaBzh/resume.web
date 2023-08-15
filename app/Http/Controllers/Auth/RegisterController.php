@@ -68,33 +68,35 @@ class RegisterController extends Controller
 
         try {
 
-            $isExist = $btcComService->btcHasUser(
-                userData: UserData::fromRequest($request->all())
-            );
+            //            $isExist = $btcComService->btcHasUser(
+//                userData: UserData::fromRequest($request->all())
+//            );
 
-            if ($isExist) {
-                return back()->withErrors([
-                    'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
-                ]);
-            }
+//            if ($isExist) {
+//                return back()->withErrors([
+//                    'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
+//                ]);
+//            }
 
-            new Registered(
-                user: $user = $this->create(userData: $userData)
-            );
+            $user = $this->create(userData: $userData);
+
+            event(new Registered(
+                user: $user
+            ));
 
             $this->guard()->login($user);
 
-            $btcSubAccount = $btcComService->createSub(
-                userData: $userData
-            );
+//            $btcSubAccount = $btcComService->createSub(
+//                userData: $userData
+//            );
 
-            Create::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => $user->id,
-                    'group_id' => $btcSubAccount['gid'],
-                    'group_name' => $user->name,
-                ])
-            );
+//            Create::execute(
+//                subData: SubData::fromRequest([
+//                    'user_id' => $user->id,
+//                    'group_id' => $btcSubAccount['gid'],
+//                    'group_name' => $user->name,
+//                ])
+//            );
         } catch (\Exception $e) {
             report($e);
         }
