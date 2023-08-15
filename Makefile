@@ -6,6 +6,7 @@ up: down
 	docker-compose up -d
 down:
 	docker-compose down
+restart: down up
 build: install npm key
 install:
 	cp .env.example .env || true

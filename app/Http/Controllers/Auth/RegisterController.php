@@ -68,7 +68,7 @@ class RegisterController extends Controller
 
         try {
 
-//            $isExist = $btcComService->btcHasUser(
+            //            $isExist = $btcComService->btcHasUser(
 //                userData: UserData::fromRequest($request->all())
 //            );
 
