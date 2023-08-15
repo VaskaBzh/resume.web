@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly class UserData
+readonly final class UserData
 {
     public function __construct(
         public string $name,

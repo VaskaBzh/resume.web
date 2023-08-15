@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Api\Subs;
+namespace App\Http\Controllers\Api\Sub;
 
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\WorkerHashRate\Resources\SubResource;

@@ -4,7 +4,7 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly class FilterData
+readonly final class FilterData
 {
     public function __construct(
         public ?bool $hasTxId,

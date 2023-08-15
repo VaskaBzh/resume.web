@@ -45,6 +45,7 @@
                     :svg="svgs[3]"
                     keyForm="phone"
                 ></settings-block>
+                <button @click="send2Fac">2fac</button>
             </div>
             <div class="settings__column">
                 <div class="cabinet__block cabinet__block-light">
@@ -60,7 +61,8 @@
                                 height="20"
                                 viewBox="0 0 20 20"
                                 fill="none"
-                           e     xmlns="http://www.w3.org/2000/svg"
+                                e
+                                xmlns="http://www.w3.org/2000/svg"
                             >
                                 <path
                                     d="M9.99935 1.66663C5.40435 1.66663 1.66602 5.40496 1.66602 9.99996C1.66602 14.595 5.40435 18.3333 9.99935 18.3333C14.5943 18.3333 18.3327 14.595 18.3327 9.99996C18.3327 5.40496 14.5943 1.66663 9.99935 1.66663ZM9.99935 16.6666C6.32352 16.6666 3.33268 13.6758 3.33268 9.99996C3.33268 6.32413 6.32352 3.33329 9.99935 3.33329C13.6752 3.33329 16.666 6.32413 16.666 9.99996C16.666 13.6758 13.6752 16.6666 9.99935 16.6666Z"
@@ -260,14 +262,16 @@ import BlueButton from "@/Components/UI/BlueButton.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import SettingsBlock from "@/Components/technical/blocks/profile/SettingsBlock.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import axios from "axios";
 import { ref } from "vue";
-import {useForm, usePage} from "@inertiajs/vue3";
+import { useForm, usePage } from "@inertiajs/vue3";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
+import MainCheckbox from "../../../Components/UI/MainCheckbox.vue";
+import axios from "axios";
 
 export default {
     layout: profileLayoutView,
     components: {
+        MainCheckbox,
         MainTitle,
         BlueButton,
         SettingsBlock,
@@ -396,6 +400,13 @@ export default {
         },
     },
     methods: {
+        send2Fac() {
+            let form = useForm({
+                "2fac": true,
+            });
+
+            form.post("/2fac/enable", {});
+        },
         setProfits() {
             this.profit = localStorage.getItem("clearProfit") || "";
             this.clearProfit = this.profit;
