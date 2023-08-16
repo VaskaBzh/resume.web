@@ -1,5 +1,5 @@
 import { TabsData } from "../DTO/TabsData";
-import accounts from "../../../store/modules/accountsInfo/accounts";
+import { router } from "@inertiajs/vue3";
 
 export class TabsService {
     constructor() {
@@ -8,18 +8,22 @@ export class TabsService {
 
     setLinks() {
         this.links = [
-            new TabsData(
-                "statistic",
-                "statistic",
-                "tabs.statistic",
-                "statistic"
-            ),
+            new TabsData("statistic"),
             new TabsData("income"),
             new TabsData("wallets"),
-
             new TabsData("accounts"),
             new TabsData("workers"),
             new TabsData("connecting"),
+            new TabsData("ref"),
         ];
+    }
+
+    back() {
+        router.visit("/profile/statistic");
+        // if (window.history.length > 1) {
+        //     window.history.back();
+        // } else {
+        //     router.visit("/profile/statistic");
+        // }
     }
 }

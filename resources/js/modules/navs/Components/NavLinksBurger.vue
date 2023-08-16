@@ -256,7 +256,7 @@ export default {
                 </svg>`,
                     link: "connecting",
                     page: "/profile/connecting",
-                    name: this.$t("header.links.connection"),
+                    name: this.$t("header.links.connecting"),
                 },
                 {
                     svg: `<svg

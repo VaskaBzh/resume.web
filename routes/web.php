@@ -90,6 +90,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/full-page/income', 'income')->name('income');
         Route::get('/full-page/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
+        Route::get('/ref', 'ref')->name('ref');
     });
 
     Route::group([
