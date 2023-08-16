@@ -100,24 +100,24 @@ export class LightCalculatorService {
         return profit.lightCalculatorAmount(interval);
     }
 
-    // async converted(btc) {
-    //     const rubleCost = btc.toFixed(8);
-    //     const usdCourse = (await currency()).data.rates.USD || 0;
-    //     const btcCourse = this.btcInfo.price;
-    //     const btcCost = rubleCost * usdCourse;
-    //     const result = btcCost / btcCourse;
-    //
-    //     return result.toFixed(8);
-    // }
-    //
-    // async getCost(profit, interval) {
-    //     const power = this.inputs[2].inputValue;
-    //     const costPerKWh = this.inputs[1].inputValue;
-    //     const kw = power / 1000;
-    //
-    //     let result = interval * kw * costPerKWh;
-    //     result = await this.converted(result);
-    //
-    //     return result;
-    // }
+    async converted(btc) {
+        const rubleCost = btc.toFixed(8);
+        const usdCourse = (await currency()).data.rates.USD || 0;
+        const btcCourse = this.btcInfo.price;
+        const btcCost = rubleCost * usdCourse;
+        const result = btcCost / btcCourse;
+    
+        return result.toFixed(8);
+    }
+    
+    async getCost(profit, interval) {
+        const power = this.inputs[2].inputValue;
+        const costPerKWh = this.inputs[1].inputValue;
+        const kw = power / 1000;
+    
+        let result = interval * kw * costPerKWh;
+        result = await this.converted(result);
+    
+        return result;
+    }
 }
