@@ -22,7 +22,7 @@ export class CalculatorService {
             this.btcInfo.reward,
             this.btcInfo.fpps
         );
-        return (profit.lightCalculatorAmount(interval));
+        return (profit.lightCalculatorAmount(interval)).toFixed(8);
     }
 
     async converted(btc) {

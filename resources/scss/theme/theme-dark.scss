@@ -1029,5 +1029,14 @@ body {
         .main__label {
             color: #989898;
         }
+        .input-calc{
+            background: var(--dark-theme-second-bg, #101D2B);
+            color: #e1e1e1;
+        }
+        .img-text{
+            @media (max-width: $pc) {
+                background: #101d2b;
+            }
+        }
     }
 }
