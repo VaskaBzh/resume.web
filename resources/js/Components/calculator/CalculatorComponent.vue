@@ -1,5 +1,5 @@
 <template>
-  <article>
+  <article  v-scroll="'left delay--md'">
     <main-title
       tag="h2"
       class="home__title page__title title-blue"
@@ -8,9 +8,9 @@
       {{ $t("home.calculator.title") }}
     </main-title>  
     <div class="calculator-container">
-      <div class="input-block"  v-scroll="'left delay--md'">
+      <div class="input-block">
       <div
-       class="description description-sm"
+       class="description description-sm calculator-description"
       >
         {{ $t("home.calculator.text") }}
       </div>
@@ -20,7 +20,6 @@
             TH/s
         </span>
       </div>
-
       <div class="input-container">
         <input :placeholder='$t("home.calculator.placeholder[1]")'>
       </div>
@@ -31,7 +30,6 @@
           W
         </span>
       </div>
-
       <div class="input-container">
         <input :placeholder='$t("home.calculator.placeholder[3]")'>
         <span class="unit">
@@ -39,26 +37,29 @@
         </span>
       </div>
       <div class="button-container">
-        <button class="blue-button big">Расчитать</button>
+        <button class="blue-button big" @click="calculateYield">{{ $t("home.calculator.button") }}</button>
       </div>
     </div>
-    <div class="img-container" v-scroll="'left delay--md'">
+    <div class="img-container">
       <img src="./images/Calculator.png" class="calc-img">
-      <div class="img-text">
-        <p class="title-calc-img">Доход</p>
-        <div class="content-calc-img">
-          <div>
-            <span class="count-data-btc">0.0002269 BTC</span>
+      <div class="img-text" v-show="isCalculate"  v-scroll="'left delay--md'">
+        <div class="row-calc">
+          <p class="title-calc-img">{{ $t("home.calculator.img_title[0]") }}</p>
+          <div class="content-calc-img">
+            <div>
+              <span class="count-data-btc">0.0002269 BTC</span>
+            </div>
+            <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
           </div>
-          <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
         </div>
-
-        <p class="title-calc-img">Расходы</p>
-        <div class="content-calc-img">
-          <div>
-            <span class="count-data-btc">0.0002269 BTC</span>
+        <div class="row-calc">
+          <p class="title-calc-img">{{ $t("home.calculator.img_title[1]") }}</p>
+          <div class="content-calc-img">
+            <div>
+              <span class="count-data-btc">0.0002269 BTC</span>
+            </div>
+            <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
           </div>
-          <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
         </div>
       </div>
       </div>
@@ -74,7 +75,17 @@ export default {
     components: {
       MainTitle,
       CalculatorInput,
-},
+    },
+    data() {
+      return {
+        isCalculate: false
+      }
+    },
+    methods: {
+      calculateYield() {
+        this.isCalculate = true
+      }
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -88,7 +99,8 @@ export default {
     }
   }
   .input-block{
-    width: 49%;
+    width: 630px;
+    height: 208px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -114,6 +126,7 @@ export default {
     border-radius: 8px;
     background: #FFF;
     padding: 20px 16px;
+    border: 1px solid transparent;
     outline: none;
   }
   input::placeholder{
@@ -161,6 +174,7 @@ export default {
     font-weight: 400;
     line-height: 135%; /* 21.6px */
     opacity: 0.7;
+    padding-bottom: 8px;
   }
   .count-data-btc{
     color: #FFF;
@@ -174,4 +188,86 @@ export default {
     font-weight: 400;
     line-height: 135%; /* 18.9px */
   }
+  .calculator-description{
+    padding: 4px 0 48px;
+  }
+  .row-calc{
+    width: 100%;
+  }
+  .input-container{
+    @media (max-width: $pc) {
+      width: 49.4%;
+    }
+    @media (max-width: $mobile) {
+      width: 100%;
+    }
+  }
+  .calc-img{
+    @media (max-width: $pc) {
+      display: none;
+    }
+  }
+  .input-block{
+    @media (max-width: $pc) {
+      width: 100%;
+      height: auto;
+    }
+  }
+  .calculator-container{
+    @media (max-width: $pc) {
+      flex-direction: column;
+    }
+  }
+  .calculator-description{
+    @media (max-width: $pc) {
+      padding: 4px 0 24px;
+    }
+  }
+  .img-text{
+    @media (max-width: $pc) {
+      position:static;
+      flex-direction: row;
+      gap: 48px;
+      border-radius: 16px;
+      background: #FFF;
+      padding: 16px 24px;
+      box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.10);
+    }
+    @media (max-width: $mobile) {
+      flex-direction: column;
+      gap: 16px;
+    }
+  }
+  .img-container{
+    @media (max-width: $pc) {
+      width: 100%;
+      margin-right: 0;
+    }
+  }
+  .title-calc-img{
+    @media (max-width: $pc) {
+      color: var(--light-theme-text, #7C7C7C);
+    }
+  }
+  .count-data-btc{
+    @media (max-width: $pc) {
+      color: var(--light-theme-text, #7C7C7C);
+    }
+  }
+  .count-dara-ruble{
+    @media (max-width: $pc) {
+      color: var(--dark-theme-gray, #989898);
+  }
+  }
+  .content-calc-img{
+    @media (max-width: $pc) {
+      justify-content: flex-start;
+      gap: 40px;
+    }
+    @media (max-width: $mobile) {
+      justify-content: space-between;
+      gap: 40px;
+    }
+  }
+
 </style>
