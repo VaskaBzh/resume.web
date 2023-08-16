@@ -42,30 +42,27 @@
         <button class="blue-button big">Расчитать</button>
       </div>
     </div>
-    <div class="img-container">
+    <div class="img-container" v-scroll="'left delay--md'">
       <img src="./images/Calculator.png" class="calc-img">
       <div class="img-text">
-        <!-- <div class="income-inf-card"> -->
-        <p class="title-inf-card">Доход</p>
-        <div class="content-inf-card">
+        <p class="title-calc-img">Доход</p>
+        <div class="content-calc-img">
           <div>
-            <span class="count-data-btc">0.0002269</span>
-            <span class="count-title-btc"> BTC</span>
+            <span class="count-data-btc">0.0002269 BTC</span>
           </div>
           <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
         </div>
-        <p class="title-inf-card">Затраты*</p>
-        <div class="content-inf-card">
+
+        <p class="title-calc-img">Расходы</p>
+        <div class="content-calc-img">
           <div>
-            <span class="count-data-btc">0.0002269</span>
-            <span class="count-title-btc"> BTC</span>
+            <span class="count-data-btc">0.0002269 BTC</span>
           </div>
           <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
         </div>
-    </div>
+      </div>
       </div>
     </div>
-    <!-- </div> -->
 
   </article>
 </template>
@@ -143,53 +140,38 @@ export default {
     position: absolute;
     top: 0;
     width: 100%;
-    // border-radius: 24px;
-    background: var(--light-secondary-color-1, #FFF);
-    // box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05), 0px 4px 12px -4px rgba(29, 41, 57, 0.05);
     display: flex;
     margin: 12px 0 8px 0;
-    padding: 16px;
+    padding: 48px 59px;
     flex-direction: column;
     align-items: flex-start;
     gap: 8px;
     align-self: stretch;
     color: #F5FAFF;
   }
-//   .income-inf-card{
-
-// }
-.content-inf-card{
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.title-inf-card{
-  color: var(--gray-400, #98A2B3);
-  font-size: 11px;
-  font-weight: 400;
-  line-height: 13px; /* 118.182% */
-  letter-spacing: 0.066px;
-}
-.count-data-btc{
-  color: var(--light-gray-700, #344054);
-  font-size: 17px;
-  font-weight: 400;
-  line-height: 22px; /* 129.412% */
-  letter-spacing: -0.408px;
-}
-.count-title-btc{
-  color: var(--light-gray-700, #344054);
-font-size: 11px;
-font-weight: 600;
-line-height: 13px;
-letter-spacing: 0.06px;
-}
-.count-dara-ruble{
-  color: var(--light-gray-300, #D0D5DD);
-  font-size: 13px;
-  font-weight: 400;
-  line-height: 18px; /* 138.462% */
-  letter-spacing: -0.078px;
-}
+  .content-calc-img{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .title-calc-img{
+    color: #FFF;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 135%; /* 21.6px */
+    opacity: 0.7;
+  }
+  .count-data-btc{
+    color: #FFF;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 135%; /* 24.3px */
+  }
+  .count-dara-ruble{
+    color: var(--blue-10, #ECF2FC);
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 135%; /* 18.9px */
+  }
 </style>
