@@ -151,7 +151,8 @@ const messages = {
                 text: 'The mining profitability calculator will help you find out how much income the equipment will bring, taking into account the cost of electricity.',
                 placeholder: ['Your hashrate', 'Number of workers', 'Power', 'Costs'],
                 img_title: ['Income', 'Expenses'],
-                button: 'Calculate'
+                button: 'Calculate',
+                notification_calc: 'Fill in the field'
             },
             text: ["High income.", "Reliability.", "Efficiency."],
             button: "Start Mining",
@@ -815,7 +816,8 @@ const messages = {
                 text: 'Калькулятор доходности майнинга поможет узнать какой доход принесет оборудование с учетом затрат на электроэнергию.',
                 placeholder: ['Ваш хэшрейт', 'Кол-во воркеров', 'Мощность', 'Затраты'],
                 img_title: ['Доход', 'Расходы'],
-                button: 'Рассчитать'
+                button: 'Рассчитать',
+                notification_calc: 'Заполните поле'
             },
             text: ["Высокий доход.", "Надежность.", "Эффективность."],
             button: "Начать майнинг",
