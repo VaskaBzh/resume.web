@@ -15,29 +15,29 @@
         {{ $t("home.calculator.text") }}
       </div>
       <div class="input-container">
-        <input :placeholder='$t("home.calculator.placeholder[0]")'>
+        <input :placeholder='$t("home.calculator.placeholder[0]")' v-model="calculatorService.inputs[0]">
         <span class="unit">
             TH/s
         </span>
       </div>
       <div class="input-container">
-        <input :placeholder='$t("home.calculator.placeholder[1]")'>
+        <input :placeholder='$t("home.calculator.placeholder[1]")' v-model="calculatorService.inputs[1]">
       </div>
 
       <div class="input-container">
-        <input :placeholder='$t("home.calculator.placeholder[2]")'>
+        <input :placeholder='$t("home.calculator.placeholder[2]")' v-model="calculatorService.inputs[2]">
         <span class="unit">
           W
         </span>
       </div>
       <div class="input-container">
-        <input :placeholder='$t("home.calculator.placeholder[3]")'>
+        <input :placeholder='$t("home.calculator.placeholder[3]")' v-model="calculatorService.inputs[3]">
         <span class="unit">
           р/кВт
         </span>
       </div>
       <div class="button-container">
-        <button class="blue-button big" @click="calculateYield">{{ $t("home.calculator.button") }}</button>
+        <button class="blue-button big" @click="calculateYield(720)">{{ $t("home.calculator.button") }}</button>
       </div>
     </div>
     <div class="img-container">
@@ -47,7 +47,7 @@
           <p class="title-calc-img">{{ $t("home.calculator.img_title[0]") }}</p>
           <div class="content-calc-img">
             <div>
-              <span class="count-data-btc">0.0002269 BTC</span>
+              <span class="count-data-btc">{{ incomeValue }} BTC</span>
             </div>
             <p class="count-dara-ruble">$54.1 ≈ ₽4956.23</p>
           </div>
@@ -70,20 +70,39 @@
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import CalculatorInput from './CalculatorInput.vue'
-
+// import { LightCalculatorService } from '../../modules/calculator/services/LightCalculatorService'
+import { CalculatorService } from './CalculatorService'
+import { mapGetters } from "vuex";
 export default {
     components: {
       MainTitle,
       CalculatorInput,
+      CalculatorService
     },
     data() {
       return {
-        isCalculate: false
+        isCalculate: false,
+        calculatorService: new CalculatorService(),
+        incomeValue: null,
+        consumptionVulue: null,
       }
     },
+    computed: {
+      ...mapGetters(['btcInfo']),
+    },
+    watch: {
+        "btcInfo.btc"(newValue) {
+            if (newValue) {
+                this.calculatorService.setInputs(newValue);
+            }
+        },
+    },
     methods: {
-      calculateYield() {
+      async calculateYield(num) {
         this.isCalculate = true
+        this.incomeValue = await this.calculatorService.getProfit(num)
+        await this.calculatorService.getCost()
+        this.consumptionVulue = this.calculatorService.cost
       }
     },
 }
@@ -148,6 +167,7 @@ export default {
   .img-container{
     position: relative;
     margin-right: 70px;
+    top: -32px;
   }
   .img-text{
     position: absolute;
@@ -161,6 +181,9 @@ export default {
     gap: 8px;
     align-self: stretch;
     color: #F5FAFF;
+  }
+  .calc-img{
+    // filter: blur(50px);
   }
   .content-calc-img{
     width: 100%;
@@ -242,6 +265,7 @@ export default {
     @media (max-width: $pc) {
       width: 100%;
       margin-right: 0;
+      top: 0px;
     }
   }
   .title-calc-img{
