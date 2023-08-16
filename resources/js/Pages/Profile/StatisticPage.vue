@@ -9,7 +9,7 @@
                     <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
                     <!--                >-->
                 </main-title>
-                <CurrentExchangeRate />
+                <current-exchange-rate />
             </div>
 
             <no-info
@@ -17,7 +17,7 @@
                 :wait="waitHistory"
                 :interval="20"
                 :end="endHistory"
-            ></no-info>
+            />
             <div
                 class="cabinet"
                 v-if="
@@ -43,7 +43,7 @@
                     <no-info-wait
                         class="no-bg"
                         :wait="hashrates.waitHashrate"
-                    ></no-info-wait>
+                    />
                     <statistic-chart
                         v-if="!hashrates.waitHashrate"
                         class="no-title"
@@ -63,8 +63,6 @@
                         0
                 "
             >
-                <!--                allHistory[getActive]?.filter((a) => a.hash > 0).length ===-->
-                <!--                0-->
                 <main-title tag="h4" class="headline">{{
                     $t("statistic.chart.no_workers_title")
                 }}</main-title>
@@ -72,7 +70,7 @@
                     v-for="(object, i) in copyObject"
                     :key="i"
                     :copyObject="object"
-                ></copy-block>
+                />
             </div>
             <div class="cabinet">
                 <main-title tag="h4" class="headline">
@@ -147,7 +145,7 @@
                         :wait="waitAccounts"
                         :interval="20"
                         :end="endAccounts"
-                    ></no-info>
+                    />
                     <!--                    <div-->
                     <!--                        class="statistic__info cabinet__block cabinet__block-light"-->
                     <!--                    >-->
