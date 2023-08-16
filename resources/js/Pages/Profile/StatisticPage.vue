@@ -31,17 +31,11 @@
                     <main-title tag="h4" class="headline">
                         {{ $t("statistic.chart.title") }}
                     </main-title>
-                    <div class="cabinet__buttons">
-                        <button
-                            class="cabinet_button"
-                            :key="button.title + i"
-                            v-for="(button, i) in buttons"
-                            :class="{ active: button.value === offset }"
-                            @click="changeGraph(button.value)"
-                        >
-                            {{ button.title }}
-                        </button>
-                    </div>
+                    <main-tabs
+                        @getValue="changeGraph"
+                        :tabs="buttons"
+                        :active="offset"
+                    />
                 </div>
                 <div
                     class="cabinet__block cabinet__block-graph cabinet__block-light"
@@ -154,45 +148,45 @@
                         :interval="20"
                         :end="endAccounts"
                     ></no-info>
-<!--                    <div-->
-<!--                        class="statistic__info cabinet__block cabinet__block-light"-->
-<!--                    >-->
-<!--                        <main-title tag="h4" class="title title-blue">{{-->
-<!--                            this.$t("statistic.info_blocks.title_clear")-->
-<!--                        }}</main-title>-->
-<!--                        <p class="text text-md" v-if="!clearProfit">-->
-<!--                            {{ this.$t("statistic.info_blocks.text_clear") }}-->
-<!--                        </p>-->
-<!--                        <blue-button v-if="!clearProfit">-->
-<!--                            <Link-->
-<!--                                :href="route('settings')"-->
-<!--                                class="text text-md text-white"-->
-<!--                                ><b>-->
-<!--                                    {{-->
-<!--                                        this.$t(-->
-<!--                                            "statistic.info_blocks.button_clear"-->
-<!--                                        )-->
-<!--                                    }}</b-->
-<!--                                ></Link-->
-<!--                            >-->
-<!--                        </blue-button>-->
-<!--                        <btc-calculator-->
-<!--                            v-if="clearProfit"-->
-<!--                            :title="-->
-<!--                                this.$t('statistic.info_blocks.clear.titles[0]')-->
-<!--                            "-->
-<!--                            :BTC="todayEarn"-->
-<!--                            :clearProfit="clearProfitDay"-->
-<!--                        />-->
-<!--                        <btc-calculator-->
-<!--                            v-if="clearProfit"-->
-<!--                            :title="-->
-<!--                                this.$t('statistic.info_blocks.clear.titles[1]')-->
-<!--                            "-->
-<!--                            :BTC="clearBTCMounth"-->
-<!--                            :clearProfit="clearProfit"-->
-<!--                        />-->
-<!--                    </div>-->
+                    <!--                    <div-->
+                    <!--                        class="statistic__info cabinet__block cabinet__block-light"-->
+                    <!--                    >-->
+                    <!--                        <main-title tag="h4" class="title title-blue">{{-->
+                    <!--                            this.$t("statistic.info_blocks.title_clear")-->
+                    <!--                        }}</main-title>-->
+                    <!--                        <p class="text text-md" v-if="!clearProfit">-->
+                    <!--                            {{ this.$t("statistic.info_blocks.text_clear") }}-->
+                    <!--                        </p>-->
+                    <!--                        <blue-button v-if="!clearProfit">-->
+                    <!--                            <Link-->
+                    <!--                                :href="route('settings')"-->
+                    <!--                                class="text text-md text-white"-->
+                    <!--                                ><b>-->
+                    <!--                                    {{-->
+                    <!--                                        this.$t(-->
+                    <!--                                            "statistic.info_blocks.button_clear"-->
+                    <!--                                        )-->
+                    <!--                                    }}</b-->
+                    <!--                                ></Link-->
+                    <!--                            >-->
+                    <!--                        </blue-button>-->
+                    <!--                        <btc-calculator-->
+                    <!--                            v-if="clearProfit"-->
+                    <!--                            :title="-->
+                    <!--                                this.$t('statistic.info_blocks.clear.titles[0]')-->
+                    <!--                            "-->
+                    <!--                            :BTC="todayEarn"-->
+                    <!--                            :clearProfit="clearProfitDay"-->
+                    <!--                        />-->
+                    <!--                        <btc-calculator-->
+                    <!--                            v-if="clearProfit"-->
+                    <!--                            :title="-->
+                    <!--                                this.$t('statistic.info_blocks.clear.titles[1]')-->
+                    <!--                            "-->
+                    <!--                            :BTC="clearBTCMounth"-->
+                    <!--                            :clearProfit="clearProfit"-->
+                    <!--                        />-->
+                    <!--                    </div>-->
                     <div
                         class="statistic__info cabinet__block cabinet__block-light"
                     >
@@ -219,19 +213,17 @@
 </template>
 <script>
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
-import { Link, Head, router } from "@inertiajs/vue3";
+import { Head, router } from "@inertiajs/vue3";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
-import BlueButton from "@/Components/UI/BlueButton.vue";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
-import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
 import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
+import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
-import api from "@/api/api";
 import { SubHashrateService } from "@/services/SubHashrateService";
 
 export default {
@@ -240,14 +232,12 @@ export default {
         StatisticChart,
         MainTitle,
         Head,
-        Link,
         CopyBlock,
-        BlueButton,
         BtcCalculator,
-        MainCheckbox,
         NoInfoWait,
         NoInfo,
         CurrentExchangeRate,
+        MainTabs,
     },
     layout: profileLayoutView,
     data() {
@@ -296,16 +286,12 @@ export default {
         async getActive() {
             await this.initHashrate();
 
-            this.waitHistory = this.getActive === -1
-                ? true
-                : false;
+            this.waitHistory = this.getActive === -1 ? true : false;
         },
         async offset() {
             await this.initHashrate();
 
-            this.waitHistory = this.getActive === -1
-                ? true
-                : false;
+            this.waitHistory = this.getActive === -1 ? true : false;
         },
     },
     computed: {
@@ -405,10 +391,8 @@ export default {
         },
     },
     async mounted() {
-        await this.initHashrate(true)
-        this.waitHistory = this.getActive === -1
-            ? true
-            : false;
+        await this.initHashrate(true);
+        this.waitHistory = this.getActive === -1 ? true : false;
         if (localStorage.getItem("clearProfit")) {
             this.clearProfit = localStorage.getItem("clearProfit");
         }
