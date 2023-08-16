@@ -7,11 +7,12 @@
                 >
             </div>
             <div class="cabinet referral__cabinet">
-                <main-tabs
-                    @getValue="swapView"
-                    :tabs="buttons"
-                    :active="offset"
-                />
+                <!--                <main-tabs-->
+                <!--                    @getValue="swapView"-->
+                <!--                    :tabs=""-->
+                <!--                    :active="offset"-->
+                <!--                />-->
+                <cabinet-view />
             </div>
         </div>
     </div>
@@ -21,6 +22,7 @@
 import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainTitle from "../../Components/UI/MainTitle.vue";
 import MainTabs from "../../Components/UI/profile/MainTabs.vue";
+import CabinetView from "../../modules/referral/Components/views/CabinetView.vue";
 
 export default {
     name: "referral-page",
@@ -28,6 +30,7 @@ export default {
     components: {
         MainTitle,
         MainTabs,
+        CabinetView,
     },
     data() {
         return {
@@ -39,7 +42,7 @@ export default {
     },
     methods: {
         swapView(viewName) {
-            this.viewName = viewName
+            this.viewName = viewName;
         },
     },
 };
