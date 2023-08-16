@@ -20,7 +20,7 @@ class Hash extends Model
         'group_id',
         'hash',
         'unit',
-        'amount',
+        'worker_count',
     ];
 
     /** Relations */
