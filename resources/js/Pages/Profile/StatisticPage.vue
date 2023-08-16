@@ -154,45 +154,45 @@
                         :interval="20"
                         :end="endAccounts"
                     ></no-info>
-                    <div
-                        class="statistic__info cabinet__block cabinet__block-light"
-                    >
-                        <main-title tag="h4" class="title title-blue">{{
-                            this.$t("statistic.info_blocks.title_clear")
-                        }}</main-title>
-                        <p class="text text-md" v-if="!clearProfit">
-                            {{ this.$t("statistic.info_blocks.text_clear") }}
-                        </p>
-                        <blue-button v-if="!clearProfit">
-                            <Link
-                                :href="route('settings')"
-                                class="text text-md text-white"
-                                ><b>
-                                    {{
-                                        this.$t(
-                                            "statistic.info_blocks.button_clear"
-                                        )
-                                    }}</b
-                                ></Link
-                            >
-                        </blue-button>
-                        <btc-calculator
-                            v-if="clearProfit"
-                            :title="
-                                this.$t('statistic.info_blocks.clear.titles[0]')
-                            "
-                            :BTC="todayEarn"
-                            :clearProfit="clearProfitDay"
-                        />
-                        <btc-calculator
-                            v-if="clearProfit"
-                            :title="
-                                this.$t('statistic.info_blocks.clear.titles[1]')
-                            "
-                            :BTC="clearBTCMounth"
-                            :clearProfit="clearProfit"
-                        />
-                    </div>
+<!--                    <div-->
+<!--                        class="statistic__info cabinet__block cabinet__block-light"-->
+<!--                    >-->
+<!--                        <main-title tag="h4" class="title title-blue">{{-->
+<!--                            this.$t("statistic.info_blocks.title_clear")-->
+<!--                        }}</main-title>-->
+<!--                        <p class="text text-md" v-if="!clearProfit">-->
+<!--                            {{ this.$t("statistic.info_blocks.text_clear") }}-->
+<!--                        </p>-->
+<!--                        <blue-button v-if="!clearProfit">-->
+<!--                            <Link-->
+<!--                                :href="route('settings')"-->
+<!--                                class="text text-md text-white"-->
+<!--                                ><b>-->
+<!--                                    {{-->
+<!--                                        this.$t(-->
+<!--                                            "statistic.info_blocks.button_clear"-->
+<!--                                        )-->
+<!--                                    }}</b-->
+<!--                                ></Link-->
+<!--                            >-->
+<!--                        </blue-button>-->
+<!--                        <btc-calculator-->
+<!--                            v-if="clearProfit"-->
+<!--                            :title="-->
+<!--                                this.$t('statistic.info_blocks.clear.titles[0]')-->
+<!--                            "-->
+<!--                            :BTC="todayEarn"-->
+<!--                            :clearProfit="clearProfitDay"-->
+<!--                        />-->
+<!--                        <btc-calculator-->
+<!--                            v-if="clearProfit"-->
+<!--                            :title="-->
+<!--                                this.$t('statistic.info_blocks.clear.titles[1]')-->
+<!--                            "-->
+<!--                            :BTC="clearBTCMounth"-->
+<!--                            :clearProfit="clearProfit"-->
+<!--                        />-->
+<!--                    </div>-->
                     <div
                         class="statistic__info cabinet__block cabinet__block-light"
                     >
@@ -434,7 +434,7 @@ export default {
         }
         @media (max-width: 479.98px) {
             grid-template-columns: 1fr;
-            grid-template-rows: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
         }
         .cabinet__block {
             display: flex;

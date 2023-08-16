@@ -59,7 +59,7 @@
 import { Link } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import { mapGetters } from "vuex";
-import NavLinksBurger from "../../../Components/navs/NavLinksBurger.vue";
+import NavLinksBurger from "../../navs/Components/NavLinksBurger.vue";
 
 export default {
     name: "header-component-auth",
