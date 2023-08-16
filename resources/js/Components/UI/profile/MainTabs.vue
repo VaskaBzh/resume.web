@@ -2,12 +2,12 @@
     <div class="cabinet__buttons">
         <button
             class="cabinet_button"
-            :key="button.title + i"
-            v-for="(button, i) in buttons"
-            :class="{ active: button.value === active }"
-            @click="$emit('getValue', button.value)"
+            :key="tab.title + i"
+            v-for="(tab, i) in tabs"
+            :class="{ active: tab.value === active }"
+            @click="$emit('getValue', tab.value)"
         >
-            {{ button.title }}
+            {{ tab.title }}
         </button>
     </div>
 </template>
@@ -16,7 +16,7 @@
 export default {
     name: "main-tabs",
     props: {
-        buttons: Array,
+        tabs: Array,
         active: Number,
     },
 };
