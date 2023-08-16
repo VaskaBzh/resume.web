@@ -144,6 +144,11 @@ const messages = {
         },
         home: {
             title: "Earn from mining together with allbtc pool",
+            calculator:{
+                title: 'Calculator',
+                text: 'The mining profitability calculator will help you find out how much income the equipment will bring, taking into account the cost of electricity.',
+                placeholder: ['Your hashrate', 'Number of workers', 'Power', 'Costs']
+            },
             text: ["High income.", "Reliability.", "Efficiency."],
             button: "Start Mining",
             bitcoin_block: {
@@ -798,6 +803,11 @@ const messages = {
         },
         home: {
             title: "Зарабатывайте на майнинге вместе с allbtc pool",
+            calculator:{
+                title: 'Калькулятор',
+                text: 'Калькулятор доходности майнинга поможет узнать какой доход принесет оборудование с учетом затрат на электроэнергию.',
+                placeholder: ['Ваш хэшрейт', 'Кол-во воркеров', 'Мощность', 'Затраты']
+            },
             text: ["Высокий доход.", "Надежность.", "Эффективность."],
             button: "Начать майнинг",
             bitcoin_block: {
