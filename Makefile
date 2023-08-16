@@ -7,11 +7,12 @@ up: down
 down:
 	docker-compose down
 restart: down up
-build: install npm key
+build: install composer npm key
 install:
 	cp .env.example .env || true
 	docker-compose build
 	docker-compose up -d
+composer:
 	$(COMPOSE) $(APP) composer install
 key:
 	$(ARTISAN) key:gen --ansi
