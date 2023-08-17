@@ -18,7 +18,6 @@ use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
-use App\Services\External\BtcComService;
 use Illuminate\Support\Facades\Log;
 
 class IncomeService
@@ -52,6 +51,7 @@ class IncomeService
         $this->sub = $sub;
 
         $this->setHashRate();
+        $this->setNetworkDifficulty();
         $this->setDailyAmount();
         $this->setPendingAmount();
         $this->sumTotalAmount();
@@ -72,19 +72,25 @@ class IncomeService
 
     private function setHashRate(): void
     {
-        $subHashRate = resolve(BtcComService::class)
-            ->getSubHashRate($this->sub);
+        $subHashRate = $this
+            ->sub
+            ->workers()
+            ->sum('approximate_hash_rate');
 
         $this->params['hash'] = $subHashRate;
+    }
+
+    private function setNetworkDifficulty(): void
+    {
         $this->params['diff'] = $this->stat->network_difficulty;
     }
 
     private function setDailyAmount(): void
     {
-        $this->params['dailyAmount'] = Helper::calculateEarn(
+        $this->params['dailyAmount'] = 0.002; /*Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash']
-        );
+        );*/
     }
 
     public function sumTotalAmount(): void
