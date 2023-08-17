@@ -48,7 +48,8 @@
         <div class="row-calc">
           <div class="btc-container">
             <p class="title-calc-img">{{ $t("home.calculator.img_title[0]") }}</p>
-            <span class="count-data-btc">{{ incomeValue }} BTC</span>
+            <span class="count-data-btc">{{ incomeValue }}</span>
+            <span class="count-unit"> BTC</span>
           </div>
           <div class="count-data-ruble" v-if="$i18n.locale === 'ru'">
               <span class="count-data-text">${{  Number(converterIncome?.usd ).toFixed(2) }} ≈ </span>
@@ -58,7 +59,8 @@
         <div class="row-calc">
           <div>
             <p class="title-calc-img">{{ $t("home.calculator.img_title[1]") }}</p>
-            <span class="count-data-btc">{{ consumptionVulue }} BTC</span>
+            <span class="count-data-btc">{{ consumptionVulue }}</span>
+            <span class="count-unit"> BTC</span>
           </div>
           <div class="count-data-ruble" v-if="$i18n.locale === 'ru'">
               <span class="count-data-text">${{  Number(converterConsumption?.usd ).toFixed(2) }} ≈ </span>
@@ -140,7 +142,6 @@ export default {
           this.calculatorService.inputs[1]? this.isWorkers = false : this.isWorkers = true;
           this.calculatorService.inputs[2]? this.isPower = false : this.isPower = true;
           this.calculatorService.inputs[3]? this.isExpenses = false : this.isExpenses = true;
-
         }
     },
 }
@@ -259,7 +260,9 @@ export default {
   .calculator-description{
     padding: 4px 0 48px;
   }
-  
+  .count-unit{
+    font-size: 12px;
+  }
   .img-blur{
     position: absolute;
     bottom: -9px;
