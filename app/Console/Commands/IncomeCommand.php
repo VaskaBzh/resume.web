@@ -34,9 +34,9 @@ class IncomeCommand extends Command
             );
         }
 
-        if (config('app.env') === 'production') {
-            //$this->call('payout');
-        }
+        //if (config('app.env') === 'production') {
+            $this->call('payout');
+        //}
     }
 
     private function process(
@@ -70,7 +70,6 @@ class IncomeCommand extends Command
                 ->setStatus(status: Status::READY_TO_PAYOUT);
 
             $incomeService->createLocalIncome(wallet: $wallet);
-            $incomeService->updateLocalSub();
         } else {
             $incomeService
                 ->setMessage(Message::LESS_MIN_WITHDRAWAL)
@@ -78,8 +77,9 @@ class IncomeCommand extends Command
 
             $incomeService->createLocalIncome(wallet: null);
             $incomeService->createFinance();
-            $incomeService->updateLocalSub();
         }
+
+        $incomeService->updateLocalSub();
 
         sleep(1);
     }
