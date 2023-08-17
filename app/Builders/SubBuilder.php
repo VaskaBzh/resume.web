@@ -20,4 +20,11 @@ class SubBuilder extends BaseBuilder
     {
        return $this->whereHas('workers');
     }
+
+    public function withWallets(): Builder
+    {
+        return $this
+            ->with('wallets')
+            ->has('wallets');
+    }
 }
