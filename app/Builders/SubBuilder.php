@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Builders;
 
+use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
 
 class SubBuilder extends BaseBuilder
@@ -21,10 +22,11 @@ class SubBuilder extends BaseBuilder
        return $this->whereHas('workers');
     }
 
-    public function withWallets(): Builder
+    public function readyToPayout(): Builder
     {
         return $this
             ->with('wallets')
-            ->has('wallets');
+            ->has('wallets')
+            ->where('pending_amount', '>=', Wallet::MIN_BITCOIN_WITHDRAWAL);
     }
 }

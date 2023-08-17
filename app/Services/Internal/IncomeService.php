@@ -67,7 +67,7 @@ class IncomeService
      */
     public function getPayout(): float
     {
-        return $this->params['dailyAmount'] + $this->sub->pending_amount;
+        return $this->sub->pending_amount;
     }
 
     private function setHashRate(): void

@@ -8,6 +8,7 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\PayoutCompleteEvent;
 use App\Models\Sub;
+use App\Models\Wallet;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
@@ -22,7 +23,7 @@ class PayoutCommand extends Command
 
     public function handle(): void
     {
-        foreach (Sub::withWallets()->get() as $sub) {
+        foreach (Sub::readyToPayout()->get() as $sub) {
             $this->process(
                 incomeService: resolve(IncomeService::class),
                 walletService: resolve(WalletService::class),
@@ -37,12 +38,15 @@ class PayoutCommand extends Command
         Sub           $sub
     ): void
     {
+        $incomeService->init(sub: $sub);
+
         $wallet = $sub
             ->wallets
             ->first();
 
         try {
             $walletService->unlock();
+
             Log::channel('incomes')->info('WALLET UNLOCKED', [
                 'sub' => $sub->id,
                 'wallet' => $wallet->id
@@ -63,7 +67,6 @@ class PayoutCommand extends Command
                     ->setMessage(message: Message::ERROR_PAYOUT);
 
                 $incomeService->createFinance();
-                $incomeService->createLocalIncome(wallet: $wallet);
                 $incomeService->updateLocalSub();
 
                 $walletService->lock();
@@ -86,7 +89,6 @@ class PayoutCommand extends Command
 
             $incomeService->updateLocalSub();
             $incomeService->createFinance();
-            $incomeService->createLocalIncome(wallet: $wallet);
 
             $incomeService->complete(wallet: $wallet);
 
@@ -101,7 +103,6 @@ class PayoutCommand extends Command
 
             $incomeService->createFinance();
             $incomeService->updateLocalSub();
-            $incomeService->createLocalIncome(wallet: $wallet);
         }
 
         $walletService->lock();
