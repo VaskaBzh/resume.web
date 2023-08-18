@@ -17,7 +17,7 @@ class Helper
      * $this->>network_difficulty - сложность сети биткоина
      * $this->>fpps_rate - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
      */
-    public static function calculateEarn(MinerStat $stats, float $hashRate): float
+    public static function calculateEarn(MinerStat $stats, float $hashRate, float $allBtcFee): float
     {
         if ($hashRate <= 0) {
             return 0;
@@ -30,6 +30,6 @@ class Helper
 
         $total = $stats->reward_block / $earnTime;
 
-        return $total + $total * (($stats->fpps_rate - BtcComService::FEE - IncomeService::ALLBTC_FEE) / 100);
+        return $total + $total * (($stats->fpps_rate - BtcComService::FEE - $allBtcFee) / 100);
     }
 }

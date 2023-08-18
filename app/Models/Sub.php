@@ -9,13 +9,15 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Sub extends Model
 {
     use HasFactory;
 
-    protected $table = 'subs';
+    protected $primaryKey = 'group_id';
 
     protected $fillable = [
         'user_id',
@@ -27,8 +29,8 @@ class Sub extends Model
     ];
 
     protected $casts = [
-        'pending_amount' => 'float',
-        'total_amount' => 'float',
+        'pending_amount' => 'string',
+        'total_amount' => 'string',
     ];
 
     public function getRouteKeyName(): string
@@ -47,29 +49,41 @@ class Sub extends Model
         return $this->belongsTo(User::class);
     }
 
+    public function referrals(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            User::class,
+            'referrals',
+            'group_id',
+            'user_id'
+        )
+            ->withPivot('code', 'sub_profit_percent', 'user_discount_percent')
+            ->withTimestamps();
+    }
+
     public function workers(): HasMany
     {
-        return $this->hasMany(Worker::class, 'group_id', 'group_id');
+        return $this->hasMany(Worker::class, 'group_id');
     }
 
     public function hashes(): HasMany
     {
-        return $this->hasMany(Hash::class, 'group_id', 'group_id');
+        return $this->hasMany(Hash::class, 'group_id');
     }
 
     public function incomes(): HasMany
     {
-        return $this->hasMany(Income::class, 'group_id', 'group_id');
+        return $this->hasMany(Income::class, 'group_id');
     }
 
     public function payouts(): HasMany
     {
-        return $this->hasMany(Payout::class, 'group_id', 'group_id');
+        return $this->hasMany(Payout::class, 'group_id');
     }
 
     public function wallets(): HasMany
     {
-        return $this->hasMany(Wallet::class, 'group_id', 'group_id');
+        return $this->hasMany(Wallet::class, 'group_id');
     }
     /* end relations */
 
