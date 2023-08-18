@@ -7,12 +7,25 @@
                 >
             </div>
             <div class="cabinet referral__cabinet">
-                <!--                <main-tabs-->
-                <!--                    @getValue="swapView"-->
-                <!--                    :tabs=""-->
-                <!--                    :active="offset"-->
-                <!--                />-->
-                <cabinet-view />
+                <div class="referral__tabs">
+                    <main-tabs
+                        class="referral__tabs-list"
+                        @getValue="viewService.setView($event)"
+                        :tabs="viewService.tabs"
+                        :active="viewService.view"
+                    />
+                </div>
+                <transition name="page">
+                    <cabinet-view v-show="viewService.view === 'Cabinet'" />
+                </transition>
+                <transition name="page">
+                    <referrals-view v-show="viewService.view === 'Referrals'" />
+                </transition>
+                <transition name="page">
+                    <payment-view
+                        v-show="viewService.view === 'Referrals_income'"
+                    />
+                </transition>
             </div>
         </div>
     </div>
@@ -23,6 +36,10 @@ import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainTitle from "../../Components/UI/MainTitle.vue";
 import MainTabs from "../../Components/UI/profile/MainTabs.vue";
 import CabinetView from "../../modules/referral/Components/views/CabinetView.vue";
+import ReferralsView from "@/modules/referral/Components/views/ReferralsView.vue";
+import PaymentView from "@/modules/referral/Components/views/PaymentView.vue";
+
+import { ViewsService } from "@/modules/referral/services/ViewsService";
 
 export default {
     name: "referral-page",
@@ -31,24 +48,33 @@ export default {
         MainTitle,
         MainTabs,
         CabinetView,
+        PaymentView,
+        ReferralsView,
     },
     data() {
         return {
-            viewName: "Cabinet",
+            viewService: new ViewsService(),
         };
     },
     mounted() {
         document.title = this.$t("header.links.ref");
-    },
-    methods: {
-        swapView(viewName) {
-            this.viewName = viewName;
-        },
+
+        this.viewService.setTabs();
     },
 };
 </script>
 
 <style scoped lang="scss">
+.page-leave-active {
+    transition: all 0s ease 0s;
+}
+.page-enter-active {
+    transition: all 0.3s ease 0.3s;
+}
+.page-leave-to,
+.page-enter-from {
+    opacity: 0;
+}
 .referral {
     &__wrapper {
         display: flex;
@@ -60,6 +86,19 @@ export default {
     &__cabinet {
         gap: 24px;
         flex-direction: column;
+    }
+    &__tabs {
+        @media (max-width: $mobile) {
+            overflow-x: scroll;
+            padding: 0 15px;
+            margin: 0 -15px;
+            &::-webkit-scrollbar {
+                width: 0;
+            }
+        }
+        &-list {
+            min-width: fit-content;
+        }
     }
 }
 </style>

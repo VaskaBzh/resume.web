@@ -29,4 +29,7 @@
     &-white {
         color: #ffffff;
     }
+    &-gray {
+        color: var(--light-theme-gray-3, #818C99);
+    }
 }
