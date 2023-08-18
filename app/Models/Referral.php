@@ -25,20 +25,20 @@ class Referral extends Model
 
     /* Relations */
 
-    public function user(): BelongsTo
-    {
-        return $this->belongsTo(User::class);
-    }
-
-    public function sub(): BelongsTo
-    {
-        return $this->belongsTo(Sub::class, 'owner_group_id', 'group_id');
-    }
+//    public function users(): HasMany
+//    {
+//        return $this->hasMany(User::class);
+//    }
+//
+//    public function sub(): BelongsTo
+//    {
+//        return $this->belongsTo(Sub::class, 'owner_group_id', 'group_id');
+//    }
 
     public function incomes(): HasMany
     {
         return $this->hasMany(Income::class);
     }
 
-    /* end relations */
+    /*  */
 }

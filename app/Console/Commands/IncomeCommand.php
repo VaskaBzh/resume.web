@@ -7,6 +7,7 @@ namespace App\Console\Commands;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\PayoutCompleteEvent;
+use App\Models\Referral;
 use App\Models\Sub;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
@@ -27,7 +28,12 @@ class IncomeCommand extends Command
      */
     public function handle(): void
     {
-        foreach (Sub::all() as $sub) {
+        $count = 0;
+        foreach (Sub::with('user')->get() as $sub) {
+            if ($sub->sub === 'Pavel') {
+                break;
+            }
+
             $this->process(
                 incomeService: resolve(IncomeService::class),
                 sub: $sub
@@ -35,7 +41,7 @@ class IncomeCommand extends Command
         }
 
         //if (config('app.env') === 'production') {
-            $this->call('payout');
+            //$this->call('payout');
         //}
     }
 
@@ -44,9 +50,7 @@ class IncomeCommand extends Command
         Sub           $sub
     ): void
     {
-        $incomeService->init(sub: $sub);
-
-        if (!$incomeService->hasHashRate()) {
+        if (!$incomeService->init(sub: $sub)) {
             return;
         }
 
@@ -70,6 +74,7 @@ class IncomeCommand extends Command
                 ->setStatus(status: Status::READY_TO_PAYOUT);
 
             $incomeService->createLocalIncome(wallet: $wallet);
+            $incomeService->updateLocalSub();
         } else {
             $incomeService
                 ->setMessage(Message::LESS_MIN_WITHDRAWAL)
@@ -77,9 +82,8 @@ class IncomeCommand extends Command
 
             $incomeService->createLocalIncome(wallet: null);
             $incomeService->createFinance();
+            $incomeService->updateLocalSub();
         }
-
-        $incomeService->updateLocalSub();
 
         sleep(1);
     }

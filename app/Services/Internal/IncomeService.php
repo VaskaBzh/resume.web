@@ -23,8 +23,10 @@ use Illuminate\Support\Facades\Log;
 class IncomeService
 {
     private Sub $sub;
-    public const ALLBTC_FEE = 3.5;
+    private ?Sub $owner;
+
     private array $params = [
+        'allBtcFee' => 3.5,
         'status' => Status::REJECTED->value,
         'unit' => 'T',
         'totalPayment' => null,
@@ -44,20 +46,30 @@ class IncomeService
      * Устанавливаем общий сумму общего и дневного дохода
      *
      * @param Sub $sub
-     * @return void
+     * @return bool
      */
-    public function init(Sub $sub): void
+    public function init(Sub $sub): bool
     {
         $this->sub = $sub;
+        $this->owner = $sub->user->owner;
 
         $this->setHashRate();
+
+        if ($this->params['hash'] <= 0) {
+            return false;
+        }
+
         $this->setNetworkDifficulty();
+        $this->calculateFee();
         $this->setDailyAmount();
         $this->setPendingAmount();
         $this->sumTotalAmount();
+        $this->calculateOwnerProfit();
 
         Log::channel('incomes')
             ->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+
+        return true;
     }
 
     /**
@@ -87,10 +99,11 @@ class IncomeService
 
     private function setDailyAmount(): void
     {
-        $this->params['dailyAmount'] = 0.002; /*Helper::calculateEarn(
+        $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
-            hashRate: $this->params['hash']
-        );*/
+            hashRate: $this->params['hash'],
+            allBtcFee: $this->params['allBtcFee']
+        );
     }
 
     public function sumTotalAmount(): void
@@ -134,6 +147,28 @@ class IncomeService
     }
 
     /**
+     * Получаем камиссию allbtc с учетом дискаунта реферальной программы
+     *
+     * @return float
+     */
+    public function calculateFee(): void
+    {
+        $referralUserDiscount = $this
+            ->owner
+            ?->pivot
+            ->user_discount_percent ?? 0;
+
+        $this->params['allBtcFee'] = $this->params['allBtcFee'] - ($referralUserDiscount);
+    }
+
+    public function calculateOwnerProfit(): void
+    {
+        if ($this->owner) {
+            $this->params['ownerProfit'] = $this->params['dailyAmount'] * ($this->owner->pivot->sub_profit_percent / 100);
+        }
+    }
+
+    /**
      * Проверяем достигнуто ли минимальное значение для вывода средств
      *
      * @return bool
@@ -143,16 +178,6 @@ class IncomeService
         return ($this->sub->pending_amount + $this->params['dailyAmount']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
-    /**
-     *
-     * Проверяем хеш рейт
-     *
-     * @return bool
-     */
-    public function hasHashRate(): bool
-    {
-        return $this->params['hash'] > 0;
-    }
 
     private function buildDto(?Wallet $wallet): IncomeData
     {
@@ -170,6 +195,8 @@ class IncomeService
      */
     public function updateLocalSub(): void
     {
+        dump($this->sub);
+
         Update::execute(
             subData: SubData::fromRequest([
                 'user_id' => $this->sub->user_id,
@@ -180,6 +207,25 @@ class IncomeService
             ]),
             sub: $this->sub
         );
+
+        dump($this->sub);
+
+        if ($this->owner) {
+            dump($this->owner);
+            Update::execute(
+                subData: SubData::fromRequest([
+                    'user_id' => $this->owner->user_id,
+                    'group_id' => $this->owner->group_id,
+                    'group_name' => $this->owner->sub,
+                    'pending_amount' => $this->owner->pending_amount + $this->params['ownerProfit'],
+                    'total_amount' => $this->owner->total_amount + $this->params['ownerProfit'],
+                ]),
+                sub: $this->owner
+            );
+
+            sleep(3);
+            dump($this->owner);
+        }
     }
 
     /**
@@ -219,15 +265,20 @@ class IncomeService
             ->info('INCOME CREATE', $income->toArray());
     }
 
+    /**
+     * Создаем запись в таблице финансов
+     *
+     * @return void
+     */
     public function createFinance(): void
     {
-        $earn = ($this->params['dailyAmount'] / (100 - IncomeService::ALLBTC_FEE)) * 100;
+        $earn = ($this->params['dailyAmount'] / (100 - $this->params['allBtcFee'])) * 100;
 
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
             'earn' => $earn,
             'user_total' => $this->params['dailyAmount'],
-            'percent' => IncomeService::ALLBTC_FEE,
+            'percent' => $this->params['allBtcFee'],
             'profit' => $earn - $this->params['dailyAmount'],
         ]));
     }

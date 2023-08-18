@@ -17,7 +17,7 @@ return new class extends Migration {
     public function down(): void
     {
         Schema::table('incomes', function (Blueprint $table) {
-            //
+            $table->dropColumn('referral_id');
         });
     }
 };
