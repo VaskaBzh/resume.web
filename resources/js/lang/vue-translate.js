@@ -24,6 +24,7 @@ const messages = {
                     "Enter username",
                     "Enter password",
                     "Confirm password",
+                    "Ref. code (optional)",
                 ],
                 checkbox: ["I agree to the terms of", "Privacy Policy"],
                 validate: [
@@ -677,6 +678,7 @@ const messages = {
                     "Введите имя пользователя",
                     "Введите пароль",
                     "Введите пароль",
+                    "Реф. код (не обязательно)",
                 ],
                 checkbox: [
                     "Я согласен с условиями",

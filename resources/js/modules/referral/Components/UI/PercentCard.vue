@@ -1,0 +1,141 @@
+<template>
+    <div class="card">
+        <p class="card_text">Текущий процент - {{ percent }} %</p>
+        <svg
+            class="card_question"
+            @mouseover="openGradeList"
+            @mouseout="closeGradeList"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            v-if="percentSvg"
+            v-html="percentSvg"
+        ></svg>
+        <transition name="grade">
+            <svg
+                v-show="opened"
+                v-if="percentList"
+                class="card_arrow"
+                width="8"
+                height="16"
+                viewBox="0 0 8 16"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+            >
+                <path
+                    d="M-6.99382e-07 0L0 16L6.58579 9.41421C7.36683 8.63316 7.36683 7.36683 6.58579 6.58579L-6.99382e-07 0Z"
+                />
+            </svg>
+        </transition>
+        <transition name="grade">
+            <div class="card__list" v-if="percentList" v-show="opened">
+                <p class="card__list_text">
+                    Получаемый вами процент зависит от суммы хешрейта всех ваших
+                    рефералов.
+                </p>
+                <info-list :gradeList="percentList" />
+            </div>
+        </transition>
+    </div>
+</template>
+
+<script>
+import InfoList from "@/modules/referral/Components/blocks/InfoList.vue";
+
+export default {
+    name: "percent-card",
+    components: {
+        InfoList,
+    },
+    props: {
+        percent: Number,
+        percentSvg: {
+            type: Number,
+            default: null,
+        },
+        percentList: {
+            type: Array,
+            default: null,
+        },
+    },
+    data() {
+        return {
+            opened: false,
+        };
+    },
+    methods: {
+        openGradeList() {
+            this.opened = true;
+        },
+        closeGradeList() {
+            this.opened = false;
+        },
+    },
+};
+</script>
+
+<style scoped lang="scss">
+.grade-enter-active,
+.grade-leave-active {
+    transition: all 0.3s ease 0s;
+}
+.grade-enter-from,
+.grade-leave-to {
+    visibility: hidden;
+    opacity: 0;
+}
+.card {
+    display: flex;
+    min-height: 48px;
+    width: 100%;
+    padding: 0 16px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    background: #dce4f1;
+    position: relative;
+    gap: 10px;
+    &_text {
+        color: var(--blue-90, #5389e1);
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 135%;
+    }
+    &_question {
+        stroke: #99acd3;
+        cursor: pointer;
+        width: 24px;
+        height: 24px;
+    }
+    &_arrow {
+        fill: var(--dark-bg, #fff);
+        position: absolute;
+        right: 38px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 8px;
+        height: 16px;
+    }
+    &__list {
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+        position: absolute;
+        right: calc(38px + 8px);
+        top: 50%;
+        transform: translateY(-50%);
+        padding: 16px;
+        border-radius: 16px;
+        background: var(--dark-bg, #fff);
+        min-width: 350px;
+        &_text {
+            color: #818c99;
+            font-size: 12px;
+            font-weight: 400;
+            line-height: 130%;
+        }
+    }
+}
+</style>
