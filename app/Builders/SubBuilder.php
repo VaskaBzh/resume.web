@@ -17,9 +17,11 @@ class SubBuilder extends BaseBuilder
         );
     }
 
-    public function hasWorker(): Builder
+    public function hasWorkerHashRate(): Builder
     {
-       return $this->whereHas('workers');
+        return $this->whereHas('workers', fn(Builder $query) => $query
+            ->where('approximate_hash_rate', '>', 0)
+        );
     }
 
     public function readyToPayout(): Builder

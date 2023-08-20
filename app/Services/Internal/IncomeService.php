@@ -161,6 +161,11 @@ class IncomeService
         $this->params['allBtcFee'] = $this->params['allBtcFee'] - ($referralUserDiscount);
     }
 
+    /**
+     * Устанавливаем доход овнера от реферала
+     *
+     * @return void
+     */
     public function calculateOwnerProfit(): void
     {
         if ($this->owner) {
@@ -184,8 +189,8 @@ class IncomeService
         return IncomeData::fromRequest(requestData: array_merge([
             'group_id' => $this->sub->group_id,
             'wallet_id' => $wallet?->id,
-        ], $this->params
-        ));
+        ], $this->params)
+        );
     }
 
     /**
@@ -195,8 +200,6 @@ class IncomeService
      */
     public function updateLocalSub(): void
     {
-        dump($this->sub);
-
         Update::execute(
             subData: SubData::fromRequest([
                 'user_id' => $this->sub->user_id,
@@ -208,10 +211,7 @@ class IncomeService
             sub: $this->sub
         );
 
-        dump($this->sub);
-
         if ($this->owner) {
-            dump($this->owner);
             Update::execute(
                 subData: SubData::fromRequest([
                     'user_id' => $this->owner->user_id,
@@ -222,9 +222,6 @@ class IncomeService
                 ]),
                 sub: $this->owner
             );
-
-            sleep(3);
-            dump($this->owner);
         }
     }
 
@@ -260,6 +257,22 @@ class IncomeService
         $income = IncomeCreate::execute(
             incomeData: $this->buildDto($wallet)
         );
+
+        if ($this->owner) {
+            dd($this->owner->pivot);
+            IncomeCreate::execute(
+                incomeData: IncomeData::fromRequest([
+                    'group_id' => $this->sub->group_id,
+                    'wallet_id' => $wallet?->id,
+                    'referral_id' => $this->sub->pivot,
+                    'dailyAmount' => $this->params['ownerProfit'],
+                    'status' => $this->params['status'],
+                    'message' => $this->params['message'],
+                    'hash' => $this->params['hash'],
+                    'diff' => $this->params['diff']
+                ])
+            );
+        }
 
         Log::channel('incomes')
             ->info('INCOME CREATE', $income->toArray());

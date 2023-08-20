@@ -28,24 +28,22 @@ class IncomeCommand extends Command
      */
     public function handle(): void
     {
-        $count = 0;
-        foreach (Sub::with('user')->get() as $sub) {
-            if ($sub->sub === 'Pavel') {
-                break;
-            }
-
-            $this->process(
-                incomeService: resolve(IncomeService::class),
-                sub: $sub
-            );
-        }
+        Sub::hasWorkerHashRate()
+            ->with('user')
+            ->each(static function (Sub $sub) {
+                $sub->refresh();
+                self::process(
+                    incomeService: resolve(IncomeService::class),
+                    sub: $sub
+                );
+            });
 
         //if (config('app.env') === 'production') {
             //$this->call('payout');
         //}
     }
 
-    private function process(
+    private static function process(
         IncomeService $incomeService,
         Sub           $sub
     ): void
@@ -85,6 +83,6 @@ class IncomeCommand extends Command
             $incomeService->updateLocalSub();
         }
 
-        sleep(1);
+        sleep(3);
     }
 }
