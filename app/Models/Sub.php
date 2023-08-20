@@ -57,8 +57,12 @@ class Sub extends Model
             'group_id',
             'user_id'
         )
-            ->withPivot('code', 'sub_profit_percent', 'user_discount_percent')
-            ->withTimestamps();
+            ->withPivot(
+                'id',
+                'code',
+                'sub_profit_percent',
+                'user_discount_percent'
+            )->withTimestamps();
     }
 
     public function workers(): HasMany
