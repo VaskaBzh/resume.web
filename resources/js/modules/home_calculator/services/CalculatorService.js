@@ -9,6 +9,7 @@ export class CalculatorService {
         this.graph = [];
         this.inputs = [];
         this.const = 0;
+        this.multiplier = 1;
 
         this.translate = translate;
     }
@@ -51,7 +52,7 @@ export class CalculatorService {
                 "electro",
                 "",
                 "",
-                this.translate("home.calculator.placeholder[4]"),
+                this.translate("home.calculator.placeholder[3]"),
                 "/кВт",
                 null,
                 false,
@@ -60,15 +61,34 @@ export class CalculatorService {
         ];
     }
 
+    setItem(inputName, newValue) {
+        let changedInput = this.inputs.find(
+            (input) => input.inputName === inputName
+        );
+
+        changedInput.inputValue = newValue;
+    }
+
+    setMultiplier(multiplier) {
+        this.multiplier = multiplier;
+    }
+
     async getProfit(interval) {
-        const hashrate = this.inputs[0] * this.inputs[1];
+        const firstIndex = 0;
+        const secondIndex = 1;
+
+        const hashrate =
+            this.inputs[firstIndex].inputValue *
+            this.inputs[secondIndex].inputValue;
+
         const profit = new Profit(
             hashrate,
             this.btcInfo.diff,
             this.btcInfo.reward,
             this.btcInfo.fpps
         );
-        return profit.lightCalculatorAmount(interval).toFixed(8);
+
+        return profit.calculatorAmount(interval).toFixed(8);
     }
 
     async converted(btc) {
@@ -77,15 +97,20 @@ export class CalculatorService {
         const btcCourse = this.btcInfo.price;
         const btcCost = rubleCost * usdCourse;
         const result = btcCost / btcCourse;
+
         return result.toFixed(8);
     }
 
-    async getCost() {
-        const power = this.inputs[2];
-        const costPerKWh = this.inputs[3];
+    async getCost(interval) {
+        const thirdIndex = 2;
+        const fourthIndex = 3;
+
+        const power = this.inputs[thirdIndex].inputValue;
+        const costPerKWh = this.inputs[fourthIndex].inputValue;
         const kw = power / 1000;
-        let result = 720 * kw * costPerKWh;
+        let result = interval * kw * (costPerKWh * this.multiplier);
         result = await this.converted(result);
+
         this.cost = result;
     }
 }

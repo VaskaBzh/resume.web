@@ -2,150 +2,46 @@
     <div v-scroll="'left delay--md'" class="calculator section">
         <div class="calculator__container">
             <div class="calculator__content">
-                <main-title
-                    tag="h2"
-                    class="calculator_title title-blue"
-                    v-scroll="'left delay--md'"
-                >
-                    {{ $t("home.calculator.title") }}
-                </main-title>
-                <div class="calculator__block">
-                    <div
-                        class="description description-sm calculator-description"
-                    >
-                        {{ $t("home.calculator.text") }}
-                    </div>
-                    <p v-show="notificationCalc" class="notification-calc-red">
-                        {{ $t("home.calculator.notification_calc") }}
-                    </p>
-                    <form class="calculator__form">
-                        <calculator-input
-                            v-for="(input, i) in this.service.inputs"
-                            :key="i"
-                            :inputName="input.inputName"
-                            :inputValue="input.inputValue"
-                            :inputPlaceholder="input.inputPlaceholder"
-                            :inputUnit="input.inputUnit"
-                            :hasCurrency="input.currency"
-                        />
-                    </form>
-                    <div class="input-container">
-                        <input
-                            type="number"
-                            :placeholder="$t('home.calculator.placeholder[0]')"
-                            class="input-calc"
-                            :class="{ 'error-border': isHashrate }"
-                            v-model="service.inputs[0]"
-                        />
-                        <span class="unit"> TH/s </span>
-                    </div>
-                    <div class="input-container">
-                        <input
-                            type="number"
-                            :placeholder="$t('home.calculator.placeholder[1]')"
-                            class="input-calc"
-                            :class="{ 'error-border': isWorkers }"
-                            v-model="service.inputs[1]"
-                        />
-                    </div>
-
-                    <div class="input-container">
-                        <input
-                            type="number"
-                            :placeholder="$t('home.calculator.placeholder[2]')"
-                            class="input-calc"
-                            :class="{ 'error-border': isPower }"
-                            v-model="service.inputs[2]"
-                        />
-                        <span class="unit"> W </span>
-                    </div>
-                    <div class="input-container">
-                        <input
-                            type="number"
-                            :placeholder="$t('home.calculator.placeholder[3]')"
-                            class="input-calc"
-                            :class="{ 'error-border': isExpenses }"
-                            v-model="service.inputs[3]"
-                        />
-                        <span class="unit"> р/кВт </span>
-                    </div>
-                    <div class="button-container">
-                        <button
-                            class="blue-button big"
-                            @click="calculateYield(720)"
-                        >
-                            {{ $t("home.calculator.button") }}
-                        </button>
-                    </div>
-                </div>
-                <div class="img-container">
-                    <img src="../images/Calculator.png" class="calc-img" />
-                    <div
-                        class="img-text"
-                        v-show="isCalculate"
+                <div class="calculator__main">
+                    <main-title
+                        tag="h2"
+                        class="calculator_title title-blue"
                         v-scroll="'left delay--md'"
                     >
-                        <div class="row-calc">
-                            <div class="btc-container">
-                                <p class="title-calc-img">
-                                    {{ $t("home.calculator.img_title[0]") }}
-                                </p>
-                                <span class="count-data-btc">{{
-                                    incomeValue
-                                }}</span>
-                                <span class="count-unit"> BTC</span>
-                            </div>
-                            <div
-                                class="count-data-ruble"
-                                v-if="$i18n.locale === 'ru'"
-                            >
-                                <span class="count-data-text"
-                                    >${{
-                                        Number(converterIncome?.usd).toFixed(2)
-                                    }}
-                                    ≈
-                                </span>
-                                <span class="count-data-text">
-                                    ₽{{
-                                        Number(converterIncome?.rub).toFixed(2)
-                                    }}</span
-                                >
-                            </div>
+                        {{ $t("home.calculator.title") }}
+                    </main-title>
+                    <div class="calculator__block">
+                        <div
+                            class="description description-sm calculator_description"
+                        >
+                            {{ $t("home.calculator.text") }}
                         </div>
-                        <div class="row-calc">
-                            <div>
-                                <p class="title-calc-img">
-                                    {{ $t("home.calculator.img_title[1]") }}
-                                </p>
-                                <span class="count-data-btc">{{
-                                    consumptionVulue
-                                }}</span>
-                                <span class="count-unit"> BTC</span>
-                            </div>
-                            <div
-                                class="count-data-ruble"
-                                v-if="$i18n.locale === 'ru'"
+                        <form class="calculator__form">
+                            <calculator-input
+                                v-for="(input, i) in calculatorService.inputs"
+                                :key="i"
+                                :inputName="input.inputName"
+                                :inputValue="input.inputValue"
+                                :inputPlaceholder="input.inputPlaceholder"
+                                :inputUnit="input.inputUnit"
+                                :hasCurrency="input.currency"
+                                @getValue="setValue(input.inputName, $event)"
+                                @getCurrency="setMultiplier($event)"
+                            />
+                            <button
+                                class="calculator_button"
+                                @click.prevent="calculate"
                             >
-                                <span class="count-data-text"
-                                    >${{
-                                        Number(
-                                            converterConsumption?.usd
-                                        ).toFixed(2)
-                                    }}
-                                    ≈
-                                </span>
-                                <span class="count-data-text">
-                                    ₽{{
-                                        Number(
-                                            converterConsumption?.rub
-                                        ).toFixed(2)
-                                    }}</span
-                                >
-                            </div>
-                        </div>
+                                {{ $t("home.calculator.button") }}
+                            </button>
+                        </form>
                     </div>
-                    <div class="img-blur"></div>
                 </div>
+                <calculator-result
+                    :hasCalculate="hasCalculate"
+                    :income="incomeValue"
+                    :cost="calculatorService.cost"
+                />
             </div>
         </div>
     </div>
@@ -153,8 +49,10 @@
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import CalculatorInput from "../Componets/UI/CalculatorInput.vue";
+import CalculatorResult from "@/modules/home_calculator/views/CalculatorResult.vue";
+
 import { CalculatorService } from "../services/CalculatorService";
-import { Converter } from "@/Scripts/converter";
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -162,20 +60,13 @@ export default {
     components: {
         MainTitle,
         CalculatorInput,
+        CalculatorResult,
     },
     data() {
         return {
-            service: new CalculatorService(this.$t),
-            isCalculate: false,
+            calculatorService: new CalculatorService(this.$t),
+            hasCalculate: false,
             incomeValue: null,
-            consumptionVulue: null,
-            converterConsumption: null,
-            converterIncome: null,
-            isHashrate: false,
-            isWorkers: false,
-            isPower: false,
-            isExpenses: false,
-            notificationCalc: false,
         };
     },
     computed: {
@@ -184,54 +75,34 @@ export default {
     watch: {
         "btcInfo.btc"(newValue) {
             if (newValue) {
-                this.service.setInputs(newValue);
+                this.calculatorService.setInputs(newValue);
             }
         },
     },
     mounted() {
         if (this.btcInfo?.btc) {
-            this.service.setInputs(this.btcInfo.btc);
+            this.calculatorService.setInputs(this.btcInfo.btc);
         }
     },
     methods: {
-        async calculateYield(num) {
-            this.checkedInput();
-            if (Object.values(this.service.inputs).length == 4) {
-                this.notificationCalc = false;
-                this.isCalculate = true;
-                this.incomeValue = await this.service.getProfit(num);
-                await this.service.getCost();
-                this.consumptionVulue = this.service.cost;
-                this.initConverter();
-            } else {
-                this.notificationCalc = true;
-            }
+        calculate() {
+            this.hasCalculate = true;
         },
-        async initConverter() {
-            this.converterConsumption = new Converter(
-                this.consumptionVulue,
-                this.btcInfo.btc.price
-            );
-            this.converterIncome = new Converter(
-                this.incomeValue,
-                this.btcInfo.btc.price
-            );
-            await this.converterIncome.convert();
-            await this.converterConsumption.convert();
+        setValue(inputName, newValue) {
+            this.calculatorService.setItem(inputName, newValue);
+
+            this.calculatorProcess(720);
         },
-        checkedInput() {
-            this.service.inputs[0]
-                ? (this.isHashrate = false)
-                : (this.isHashrate = true);
-            this.service.inputs[1]
-                ? (this.isWorkers = false)
-                : (this.isWorkers = true);
-            this.service.inputs[2]
-                ? (this.isPower = false)
-                : (this.isPower = true);
-            this.service.inputs[3]
-                ? (this.isExpenses = false)
-                : (this.isExpenses = true);
+        setMultiplier(multiplier) {
+            this.calculatorService.setMultiplier(multiplier);
+
+            this.calculatorProcess(720);
+        },
+        async calculatorProcess(num) {
+            this.incomeValue = await this.calculatorService.getProfit(num);
+            await this.calculatorService.getCost(num);
+
+            this.initConverter();
         },
     },
 };
@@ -241,192 +112,59 @@ export default {
     &_title {
         margin-bottom: 24px;
     }
+    &_description {
+        margin-bottom: 48px;
+    }
     &__block {
-        width: 630px;
-        height: 208px;
+        max-width: 630px;
+        width: 100%;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        gap: 8px;
-    }
-}
-.button-container,
-button {
-    width: 100%;
-}
-.calculator-container {
-    display: flex;
-    width: 100%;
-    justify-content: space-between;
-}
-.img-container {
-    position: relative;
-    margin-right: 70px;
-    top: -32px;
-}
-.img-text {
-    position: absolute;
-    top: 0;
-    width: 100%;
-    display: flex;
-    margin: 12px 0 8px 0;
-    padding: 48px 59px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-    align-self: stretch;
-    color: #f5faff;
-}
-.content-calc-img {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: end;
-}
-.row-calc {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-}
-.title-calc-img {
-    color: #fff;
-    padding-bottom: 8px;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 135%; /* 21.6px */
-    opacity: 0.7;
-}
-.count-data-btc {
-    color: #fff;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 135%; /* 24.3px */
-}
-.count-data-ruble {
-    width: 50%;
-    display: flex;
-    justify-content: flex-end;
-    flex-direction: column;
-    text-align: end;
-    color: var(--blue-10, #ecf2fc);
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 135%; /* 18.9px */
-}
-.calculator-description {
-    padding: 4px 0 48px;
-}
-.count-unit {
-    font-size: 12px;
-}
-.img-blur {
-    position: absolute;
-    bottom: -9px;
-    width: 100%;
-    background: rgba(141, 141, 141, 0.5);
-    height: 68px;
-    filter: blur(50px);
-}
-.error-border {
-    border-radius: 8px;
-    border: 1px solid var(--light-theme-red, #ed1818);
-}
-.notification-calc-red {
-    width: 100%;
-    color: var(--light-theme-red, #ed1818);
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 135%; /* 21.6px */
-}
-.input-container {
-    @media (max-width: $pc) {
-        width: 49.4%;
-    }
-    @media (max-width: $mobile) {
-        width: 100%;
-    }
-}
-.calc-img,
-.img-blur {
-    @media (max-width: $pc) {
-        display: none;
-    }
-}
-.input-block {
-    @media (max-width: $pc) {
-        width: 100%;
-        height: auto;
-    }
-}
-.calculator-container {
-    @media (max-width: $pc) {
-        flex-direction: column;
-    }
-}
-.calculator-description {
-    @media (max-width: $pc) {
-        padding: 4px 0 24px;
-    }
-}
-.img-text {
-    @media (max-width: $pc) {
-        position: static;
-        flex-direction: row;
-        gap: 48px;
-        border-radius: 16px;
-        background: #fff;
-        padding: 16px 24px;
-        box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
-    }
-    @media (max-width: $mobile) {
-        flex-direction: column;
-        gap: 16px;
-    }
-}
-.img-container {
-    @media (max-width: $pc) {
-        width: 100%;
-        margin-right: 0;
-        top: 0px;
-    }
-}
-.title-calc-img {
-    @media (max-width: $pc) {
-        color: var(--light-theme-text, #7c7c7c);
-    }
-}
-.count-data-btc {
-    @media (max-width: $pc) {
-        color: var(--light-theme-text, #7c7c7c);
-    }
-}
-.count-data-text {
-    @media (max-width: $pc) {
-        color: var(--dark-theme-gray, #989898);
-    }
-}
-.count-data-ruble {
-    @media (max-width: $pc) {
         align-items: flex-end;
-        margin-bottom: 2px;
+        gap: 8px;
+        @media (max-width: $pc) {
+            max-width: 100%;
+            margin-bottom: 8px;
+        }
     }
-    @media (max-width: $mobile) {
-        flex-direction: column;
+    &__form {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        width: auto;
+        gap: 8px;
+        margin-bottom: 0;
+        @media (max-width: $pc) {
+            width: 100%;
+        }
+        @media (max-width: $mobile) {
+            display: flex;
+            flex-direction: column;
+        }
     }
-}
-.content-calc-img {
-    @media (max-width: $pc) {
-        justify-content: flex-start;
-        gap: 40px;
+    &_button {
+        grid-column: 1/3;
+        min-height: 64px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        border-radius: 8px;
+        background: linear-gradient(30deg, #3f7bdd 0%, #4282ec 100%);
+        box-shadow: 0px 10px 50px 0px rgba(112, 165, 236, 0.15);
+        color: var(--dark-bg, #fff);
+        text-align: center;
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 135%;
     }
-    @media (max-width: $mobile) {
+    &__content {
+        display: flex;
         justify-content: space-between;
-        gap: 40px;
-    }
-}
-.row-calc {
-    @media (max-width: $mobile) {
-        justify-content: space-between;
+        align-items: flex-end;
+        @media (max-width: $pc) {
+            flex-direction: column;
+        }
     }
 }
 </style>

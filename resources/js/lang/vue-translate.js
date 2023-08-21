@@ -146,13 +146,18 @@ const messages = {
         },
         home: {
             title: "Earn from mining together with allbtc pool",
-            calculator:{
-                title: 'Calculator',
-                text: 'The mining profitability calculator will help you find out how much income the equipment will bring, taking into account the cost of electricity.',
-                placeholder: ['Your hashrate', 'Number of workers', 'Power', 'Costs'],
-                img_title: ['Income', 'Expenses'],
-                button: 'Calculate',
-                notification_calc: 'Fill in the field'
+            calculator: {
+                title: "Calculator",
+                text: "The mining profitability calculator will help you find out how much income the equipment will bring, taking into account the cost of electricity.",
+                placeholder: [
+                    "Your hashrate",
+                    "Number of workers",
+                    "Power",
+                    "Costs",
+                ],
+                img_title: ["Income", "Expenses"],
+                button: "Calculate",
+                notification_calc: "Fill in the field",
             },
             text: ["High income.", "Reliability.", "Efficiency."],
             button: "Start Mining",
@@ -811,13 +816,18 @@ const messages = {
         },
         home: {
             title: "Зарабатывайте на майнинге вместе с allbtc pool",
-            calculator:{
-                title: 'Калькулятор',
-                text: 'Калькулятор доходности майнинга поможет узнать какой доход принесет оборудование с учетом затрат на электроэнергию.',
-                placeholder: ['Ваш хэшрейт', 'Кол-во воркеров', 'Мощность', 'Затраты'],
-                img_title: ['Доход', 'Расходы'],
-                button: 'Рассчитать',
-                notification_calc: 'Заполните поле'
+            calculator: {
+                title: "Калькулятор",
+                text: "Калькулятор доходности майнинга поможет узнать какой доход принесет оборудование с учетом затрат на электроэнергию.",
+                placeholder: [
+                    "Ваш хэшрейт",
+                    "Кол-во воркеров",
+                    "Мощность",
+                    "Затраты",
+                ],
+                img_title: ["Доход", "Расходы"],
+                button: "Рассчитать",
+                notification_calc: "Заполните поле",
             },
             text: ["Высокий доход.", "Надежность.", "Эффективность."],
             button: "Начать майнинг",
