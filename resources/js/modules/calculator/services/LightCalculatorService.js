@@ -110,7 +110,7 @@ export class LightCalculatorService {
             this.btcInfo.reward,
             this.btcInfo.fpps
         );
-        return profit.lightCalculatorAmount(interval);
+        return profit.calculatorAmount(interval);
     }
 
     async converted(btc) {

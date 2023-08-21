@@ -22,8 +22,8 @@ export class Converter {
         await this.getDollar();
         await this.getRuble();
 
-        this.rub = this.rub.toFixed(2);
-        this.usd = this.usd.toFixed(2);
+        this.rub = Number(this.rub).toFixed(2);
+        this.usd = Number(this.usd).toFixed(2);
         this.btc = Number(this.btc).toFixed(8);
     }
 }
