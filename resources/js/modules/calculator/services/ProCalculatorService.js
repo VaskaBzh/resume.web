@@ -147,48 +147,48 @@ export class ProCalculatorService {
         // ];
     }
 
-    // getPayback() {
-    //     /* Индексы для инпутов */
-    //     const hashrateIndex = 3;
-    //     const priceIndex = 9;
-    //
-    //     /* Множитель перевода секунд и месяцы */
-    //     const convertmultiplier = 3600 * 24 * 30;
-    //
-    //     /* fee (комиссия) */
-    //     const fee = 4;
-    //
-    //     /* Хешрейт */
-    //     const hashrate = this.inputs[hashrateIndex].inputValue;
-    //     /* Хешрейт в h/s для формулы */
-    //     const formulHashrate = hashrate * Math.pow(10, 12);
-    //
-    //     /* Сложность для формулы */
-    //     const formulDifficulty = this.btcInfo.diff * Math.pow(2, 32);
-    //
-    //     /* Награда за блок биткоина (в биткоинах) */
-    //     const bitcoinReward = this.btcInfo.reward;
-    //
-    //     /* Стоимость устройств пользователя */
-    //     const ownPrice = this.inputs[priceIndex].inputValue;
-    //
-    //     /* Стоимость устройств пользователя в биткоинах */
-    //     const bitcoinPrice = ownPrice / this.btcInfo.price;
-    //
-    //     /* Стоимость устройств пользователя в биткоинах с учетом комисий */
-    //     const bitcoinWithFee = bitcoinPrice + bitcoinPrice * (fee / 100);
-    //
-    //     /* Время на майнинг блока в секундах */
-    //     let earnTime = bitcoinReward / bitcoinWithFee;
-    //
-    //     /* Время на окупаемость в секундах */
-    //     const seconds = formulDifficulty / (formulHashrate * earnTime);
-    //
-    //     /* Время на окупаемость в месяцах */
-    //     console.log(seconds / convertmultiplier);
-    //
-    //     /* result: 4.898917437665151 */
-    // }
+    getPayback() {
+        /* Индексы для инпутов */
+        const hashrateIndex = 3;
+        const priceIndex = 9;
+
+        /* Множитель перевода секунд и месяцы */
+        const convertmultiplier = 3600 * 24 * 30;
+
+        /* fee (комиссия) */
+        const fee = 4;
+
+        /* Хешрейт */
+        const hashrate = this.inputs[hashrateIndex].inputValue;
+        /* Хешрейт в h/s для формулы */
+        const formulHashrate = hashrate * Math.pow(10, 12);
+
+        /* Сложность для формулы */
+        const formulDifficulty = this.btcInfo.diff * Math.pow(2, 32);
+
+        /* Награда за блок биткоина (в биткоинах) */
+        const bitcoinReward = this.btcInfo.reward;
+
+        /* Стоимость устройств пользователя */
+        const ownPrice = this.inputs[priceIndex].inputValue;
+
+        /* Стоимость устройств пользователя в биткоинах */
+        const bitcoinPrice = ownPrice / this.btcInfo.price;
+
+        /* Стоимость устройств пользователя в биткоинах с учетом комисий */
+        const bitcoinWithFee = bitcoinPrice + bitcoinPrice * (fee / 100);
+
+        /* Время на майнинг блока в секундах */
+        let earnTime = bitcoinReward / bitcoinWithFee;
+
+        /* Время на окупаемость в секундах */
+        const seconds = formulDifficulty / (formulHashrate * earnTime);
+
+        /* Время на окупаемость в месяцах */
+        console.log(seconds / convertmultiplier);
+
+        /* result: 4.898917437665151 */
+    }
 
     async getProfit(interval) {
         const hashrate = this.inputs[0].inputValue;
