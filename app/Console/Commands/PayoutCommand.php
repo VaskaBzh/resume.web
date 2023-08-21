@@ -11,6 +11,7 @@ use App\Models\Sub;
 use App\Models\Wallet;
 use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
+use App\Services\Internal\PayoutService;
 use Illuminate\Console\Command;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Log;
@@ -23,92 +24,49 @@ class PayoutCommand extends Command
 
     public function handle(): void
     {
-        foreach (Sub::readyToPayout()->get() as $sub) {
-            $this->process(
-                incomeService: resolve(IncomeService::class),
-                walletService: resolve(WalletService::class),
+        $readyToPayoutSubs = Sub::readyToPayout()->with('wallets')->get();
+
+        if (!filled($readyToPayoutSubs)) {
+            return;
+        }
+
+        $readyToPayoutSubs->each(static function (Sub $sub) {
+            self::process(
+                payoutService: resolve(PayoutService::class),
                 sub: $sub
             );
-        }
+        });
     }
 
-    public function process(
-        IncomeService $incomeService,
-        WalletService $walletService,
+    public static function process(
+        PayoutService $payoutService,
         Sub           $sub
     ): void
     {
-        $incomeService->init(sub: $sub);
+        $payoutService->init(sub: $sub);
+        $payoutService->unlockRemoteWallet();
+        $txId = $payoutService->payOut();
 
-        $wallet = $sub
-            ->wallets
-            ->first();
-
-        try {
-            $walletService->unlock();
-
-            Log::channel('incomes')->info('WALLET UNLOCKED', [
-                'sub' => $sub->id,
-                'wallet' => $wallet->id
+        if (!$txId) {
+            Log::channel('incomes')->info('TXID IS EMPTY', [
+                'sub' => $sub->group_id,
             ]);
 
-            $txId = $walletService->sendBalance(
-                wallet: $wallet,
-                balance: $incomeService->getPayout()
-            );
+            $payoutService->setMessage(Message::ERROR_PAYOUT->value);
+            $payoutService->complete();
 
-            if (!$txId) {
-                Log::channel('incomes')->info('TXID IS EMPTY', [
-                    'sub' => $sub->id,
-                    'wallet' => $wallet->id
-                ]);
-
-                $incomeService
-                    ->setMessage(message: Message::ERROR_PAYOUT);
-
-                $incomeService->createFinance();
-                $incomeService->updateLocalSub();
-
-                $walletService->lock();
-
-                return;
-            }
-
-            $incomeService
-                ->setTxId($txId)
-                ->setStatus(Status::COMPLETED)
-                ->setMessage(Message::COMPLETED)
-                ->clearPendingAmount();
-
-            event(new PayoutCompleteEvent(
-                sub: $sub,
-                wallet: $wallet,
-                payout: $incomeService->getPayout(),
-                txId: $txId
-            ));
-
-            $incomeService->updateLocalSub();
-            $incomeService->createFinance();
-
-            $incomeService->complete(wallet: $wallet);
-
-        } catch (RequestException) {
-            Log::channel('incomes')->info('WALLET UNLOCK ERROR', [
-                'sub' => $sub->id,
-                'wallet' => $wallet->id
-            ]);
-
-            $incomeService
-                ->setMessage(Message::ERROR_PAYOUT);
-
-            $incomeService->createFinance();
-            $incomeService->updateLocalSub();
+            return;
         }
 
-        $walletService->lock();
+        $payoutService
+            ->setStatus(Status::COMPLETED->value)
+            ->setMessage(Message::COMPLETED->value)
+            ->setTxId(txId: $txId);
 
-        Log::channel('incomes')->info('WALLET LOCKED', [
-            'sub' => $sub->id,
-        ]);
+
+        $payoutService->createPayout();
+        $payoutService->clearPendingAmount();
+        $payoutService->complete();
+        $payoutService->lock();
     }
 }

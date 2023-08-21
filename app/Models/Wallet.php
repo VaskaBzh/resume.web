@@ -15,10 +15,7 @@ class Wallet extends Model
 {
     use HasFactory;
 
-    protected $table = 'wallets';
-
     public const MIN_BITCOIN_WITHDRAWAL = 0.005;
-    public const DEFAULT_PERCENTAGE = 100;
 
     protected $fillable = [
         'name',
