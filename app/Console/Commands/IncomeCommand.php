@@ -30,6 +30,7 @@ class IncomeCommand extends Command
     {
         Sub::hasWorkerHashRate()
             ->with('user')
+            ->with('wallets')
             ->each(static function (Sub $sub) {
                 $sub->refresh();
                 self::process(
@@ -38,9 +39,9 @@ class IncomeCommand extends Command
                 );
             });
 
-        //if (config('app.env') === 'production') {
-            //$this->call('payout');
-        //}
+        if (config('app.env') === 'production') {
+            $this->call('payout');
+        }
     }
 
     private static function process(
@@ -82,7 +83,5 @@ class IncomeCommand extends Command
             $incomeService->createFinance();
             $incomeService->updateLocalSub();
         }
-
-        sleep(3);
     }
 }

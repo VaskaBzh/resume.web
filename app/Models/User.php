@@ -56,8 +56,12 @@ class User extends Authenticatable implements MustVerifyEmail
             'user_id',
             'group_id'
         )
-            ->withPivot('code', 'sub_profit_percent', 'user_discount_percent')
-            ->withTimestamps();
+            ->withPivot(
+                'id',
+                'code',
+                'sub_profit_percent',
+                'user_discount_percent'
+            )->withTimestamps();
     }
 
     public function owner(): Attribute

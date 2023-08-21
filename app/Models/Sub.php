@@ -29,8 +29,8 @@ class Sub extends Model
     ];
 
     protected $casts = [
-        'pending_amount' => 'string',
-        'total_amount' => 'string',
+        'pending_amount' => 'float',
+        'total_amount' => 'float',
     ];
 
     public function getRouteKeyName(): string

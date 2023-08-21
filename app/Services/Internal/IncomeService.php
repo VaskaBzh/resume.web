@@ -5,16 +5,14 @@ declare(strict_types=1);
 namespace App\Services\Internal;
 
 use App\Actions\Finance\Create;
-use App\Actions\Income\Complete;
 use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
-use App\Dto\IncomeData;
+use App\Dto\Income\IncomeCreateData;
 use App\Dto\SubData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Helper;
-use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
@@ -184,9 +182,9 @@ class IncomeService
     }
 
 
-    private function buildDto(?Wallet $wallet): IncomeData
+    private function buildDto(?Wallet $wallet): IncomeCreateData
     {
-        return IncomeData::fromRequest(requestData: array_merge([
+        return IncomeCreateData::fromRequest(requestData: array_merge([
             'group_id' => $this->sub->group_id,
             'wallet_id' => $wallet?->id,
         ], $this->params)
@@ -226,28 +224,6 @@ class IncomeService
     }
 
     /**
-     * Меняем статусы и сообщения на "completed"
-     */
-    public function complete(Wallet $wallet): void
-    {
-        $incomes = Income::getNotCompleted(
-            groupId: $this->sub->group_id
-        )->get();
-
-        if ($incomes) {
-            Complete::execute(
-                incomes: $incomes,
-                incomeData: $this->buildDto(wallet: $wallet)
-            );
-
-            Log::channel('incomes')->info('INCOMES STATUSES CHANGE TO COMPLETE', [
-                'sub' => $this->sub->id,
-                'wallet' => $wallet->id
-            ]);
-        }
-    }
-
-    /**
      * Создаем запись начисления
      *
      * @return void
@@ -255,16 +231,19 @@ class IncomeService
     public function createLocalIncome(?Wallet $wallet): void
     {
         $income = IncomeCreate::execute(
-            incomeData: $this->buildDto($wallet)
+            incomeCreateData: $this->buildDto($wallet)
         );
 
         if ($this->owner) {
-            dd($this->owner->pivot);
-            IncomeCreate::execute(
-                incomeData: IncomeData::fromRequest([
-                    'group_id' => $this->sub->group_id,
-                    'wallet_id' => $wallet?->id,
-                    'referral_id' => $this->sub->pivot,
+            $referralIncome = IncomeCreate::execute(
+                incomeCreateData: IncomeCreateData::fromRequest([
+                    'group_id' => $this->owner->group_id,
+                    'wallet_id' => $this
+                        ->owner
+                        ->wallets()
+                        ->first()
+                        ?->id,
+                    'referral_id' => $this->owner->pivot->id,
                     'dailyAmount' => $this->params['ownerProfit'],
                     'status' => $this->params['status'],
                     'message' => $this->params['message'],
@@ -272,10 +251,16 @@ class IncomeService
                     'diff' => $this->params['diff']
                 ])
             );
+
+            Log::channel('incomes')
+                ->info(
+                    message: "REFERRAL INCOME CREATE FROM {$this->sub->sub} to {$this->owner->sub}",
+                    context: $referralIncome->toArray()
+                );
         }
 
         Log::channel('incomes')
-            ->info('INCOME CREATE', $income->toArray());
+            ->info(message: 'INCOME CREATE', context: $income->toArray());
     }
 
     /**

@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Dto;
+namespace App\Dto\Income;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use Illuminate\Support\Arr;
 
-readonly final class IncomeData
+readonly final class IncomeCreateData
 {
     /**
      * @param int $groupId - id сабаккаунта
@@ -32,7 +32,7 @@ readonly final class IncomeData
 
     ){}
 
-    public static function fromRequest(array $requestData): IncomeData
+    public static function fromRequest(array $requestData): IncomeCreateData
     {
         return new self(
             groupId: $requestData['group_id'],
