@@ -373,11 +373,9 @@
                     </div>
                 </div>
             </div>
-            <div class="home section">
-                <CalculatorComponent/>
-            </div>
         </div>
     </div>
+    <calculator-view />
     <info-view class="info-home">
         <template v-slot:pc>
             <info-card
@@ -407,7 +405,7 @@ import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";
 import { SwiperSlide } from "swiper/vue";
 import lineGraphStatistic from "@/Components/technical/graphs/LineGraphStatistic.vue";
-import CalculatorComponent from "../Components/calculator/CalculatorComponent.vue";
+import CalculatorView from "../modules/home_calculator/views/CalculatorView.vue";
 
 export default {
     props: {
@@ -417,18 +415,18 @@ export default {
         },
     },
     components: {
-    MiningInfoView,
-    AboutPanelView,
-    InfoView,
-    InfoCard,
-    BlueButton,
-    MainTitle,
-    lineGraphStatistic,
-    Head,
-    Link,
-    SwiperSlide,
-    CalculatorComponent
-},
+        MiningInfoView,
+        AboutPanelView,
+        InfoView,
+        InfoCard,
+        BlueButton,
+        MainTitle,
+        lineGraphStatistic,
+        Head,
+        Link,
+        SwiperSlide,
+        CalculatorView,
+    },
     data() {
         return {
             viewportWidth: 0,

@@ -1,5 +1,14 @@
 export class InputData {
-    constructor(name, label, value, placeholder, unit, hint, disabled) {
+    constructor(
+        name,
+        label,
+        value,
+        placeholder,
+        unit,
+        hint,
+        disabled,
+        currency
+    ) {
         this.inputName = name;
         this.inputLabel = label;
         this.inputValue = value;
@@ -7,5 +16,6 @@ export class InputData {
         this.inputUnit = unit;
         this.inputHint = hint;
         this.disabled = disabled;
+        this.currency = currency;
     }
 }
