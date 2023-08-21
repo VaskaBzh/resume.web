@@ -1,6 +1,6 @@
 import { Profit } from "../../../Scripts/profit";
 
-import { InputData } from "../DTO/InputData";
+import { InputData } from "../../common/DTO/InputData";
 
 import currency from "@/api/currency";
 

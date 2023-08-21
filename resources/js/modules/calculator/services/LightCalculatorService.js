@@ -1,6 +1,6 @@
 import { Profit } from "../../../Scripts/profit";
 
-import { InputData } from "../DTO/InputData";
+import { InputData } from "../../common/DTO/InputData";
 
 // import currency from "@/api/currency";
 
@@ -15,7 +15,16 @@ export class LightCalculatorService {
         this.btcInfo = btcInfo;
 
         this.inputs = [
-            new InputData("hash", "Хешрейт", "100", "0", "Th/ s", null, false),
+            new InputData(
+                "hash",
+                "Хешрейт",
+                "100",
+                "0",
+                "Th/ s",
+                null,
+                false,
+                false
+            ),
             // new InputData(
             //     "electro",
             //     "Затраты",
@@ -23,6 +32,7 @@ export class LightCalculatorService {
             //     "0",
             //     "руб/kWh",
             //     null,
+            //     false,
             //     false
             // ),
             // new InputData(
@@ -32,6 +42,7 @@ export class LightCalculatorService {
             //     "0",
             //     "Вт",
             //     null,
+            //     false,
             //     false
             // ),
             // new InputData(
@@ -41,6 +52,7 @@ export class LightCalculatorService {
             //     null,
             //     null,
             //     "USD",
+            //     false,
             //     false
             // ),
             new InputData(
@@ -50,7 +62,8 @@ export class LightCalculatorService {
                 null,
                 "USD",
                 null,
-                true
+                true,
+                false
             ),
         ];
     }
@@ -106,18 +119,18 @@ export class LightCalculatorService {
         const btcCourse = this.btcInfo.price;
         const btcCost = rubleCost * usdCourse;
         const result = btcCost / btcCourse;
-    
+
         return result.toFixed(8);
     }
-    
+
     async getCost(profit, interval) {
         const power = this.inputs[2].inputValue;
         const costPerKWh = this.inputs[1].inputValue;
         const kw = power / 1000;
-    
+
         let result = interval * kw * costPerKWh;
         result = await this.converted(result);
-    
+
         return result;
     }
 }
