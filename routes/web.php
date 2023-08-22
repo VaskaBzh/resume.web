@@ -7,6 +7,7 @@ use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MinerStatController;
+use App\Http\Controllers\Referral\CodeController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Sub\ListController as SubListController;
 use App\Http\Controllers\Sub\CreateController as SubCreateController;
@@ -102,4 +103,10 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/change/{user}', ProfileController::class)->name('change');
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');
+
+    Route::group([
+        'prefix' => 'referrals'
+    ], function () {
+        Route::post('/generate/{user}', CodeController::class)->name('code');
+    });
 });

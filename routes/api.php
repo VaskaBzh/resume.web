@@ -11,7 +11,9 @@ use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Api\Workers\ListController as WorkerListController;
 use App\Http\Controllers\Api\Workers\ShowController as WorkerShowController;
 use App\Http\Controllers\MinerStatController;
+use App\Http\Controllers\Referral\CodeController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Referral\StatisticController as StatisticReferralController;
 
 //
 /*
@@ -24,6 +26,13 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+Route::group([
+    'prefix' => 'referrals'
+], function () {
+    Route::post('/generate/{user}', CodeController::class)->name('code');
+    Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
+});
 
 //Route::group([
 //    'prefix' => 'subs',

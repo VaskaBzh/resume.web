@@ -3,8 +3,11 @@
 namespace App;
 
 use App\Models\MinerStat;
+use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Services\Internal\IncomeService;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class Helper
 {
@@ -31,5 +34,18 @@ class Helper
         $total = $stats->reward_block / $earnTime;
 
         return $total + $total * (($stats->fpps_rate - BtcComService::FEE - $allBtcFee) / 100);
+    }
+
+    public static function generateUniqReferralCode(): string
+    {
+        $codeLength = 10;
+
+        $code = Str::random($codeLength);
+
+        if (!User::where('referral_code', $code)->first()) {
+            return $code;
+        }
+
+        return self::generateUniqReferralCode();
     }
 }
