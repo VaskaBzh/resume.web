@@ -70,16 +70,6 @@ class IncomeService
         return true;
     }
 
-    /**
-     * Получить сумму вывода на сервис кошелька
-     *
-     * @return float
-     */
-    public function getPayout(): float
-    {
-        return $this->sub->pending_amount;
-    }
-
     private function setHashRate(): void
     {
         $subHashRate = $this
@@ -109,23 +99,9 @@ class IncomeService
         $this->params['totalAmount'] = $this->params['dailyAmount'] + $this->sub->total_amount;
     }
 
-    public function setTxId(string $txId): IncomeService
-    {
-        $this->params['txid'] = $txId;
-
-        return $this;
-    }
-
     public function setMessage(Message $message): IncomeService
     {
         $this->params['message'] = $message->value;
-
-        return $this;
-    }
-
-    public function clearPendingAmount(): IncomeService
-    {
-        $this->params['pendingAmount'] = 0;
 
         return $this;
     }
@@ -180,7 +156,6 @@ class IncomeService
     {
         return ($this->sub->pending_amount + $this->params['dailyAmount']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
-
 
     private function buildDto(?Wallet $wallet): IncomeCreateData
     {

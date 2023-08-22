@@ -6,14 +6,9 @@ namespace App\Console\Commands;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
-use App\Events\PayoutCompleteEvent;
 use App\Models\Sub;
-use App\Models\Wallet;
-use App\Services\External\WalletService;
-use App\Services\Internal\IncomeService;
 use App\Services\Internal\PayoutService;
 use Illuminate\Console\Command;
-use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Log;
 
 class PayoutCommand extends Command
@@ -61,12 +56,10 @@ class PayoutCommand extends Command
         $payoutService
             ->setStatus(Status::COMPLETED->value)
             ->setMessage(Message::COMPLETED->value)
-            ->setTxId(txId: $txId);
-
-
-        $payoutService->createPayout();
-        $payoutService->clearPendingAmount();
-        $payoutService->complete();
-        $payoutService->lock();
+            ->setTxId(txId: $txId)
+            ->createPayout()
+            ->clearPendingAmount()
+            ->complete()
+            ->lock();
     }
 }

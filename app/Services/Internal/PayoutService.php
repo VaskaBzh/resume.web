@@ -85,10 +85,12 @@ class PayoutService
             return null;
         }
 
-        return '123'; /*$this->remoteWallet->sendBalance(
-            wallet: $this->sub->wallets()->first(),
-            balance: $this->sub->pending_amount
-        );*/
+        return $this
+            ->remoteWallet
+            ->sendBalance(
+                wallet: $this->sub->wallets()->first(),
+                balance: $this->sub->pending_amount
+            );
     }
 
     /**
@@ -96,7 +98,7 @@ class PayoutService
      *
      * @return void
      */
-    public function clearPendingAmount(): void
+    public function clearPendingAmount(): PayoutService
     {
         Update::execute(
             subData: SubData::fromRequest([
@@ -107,12 +109,14 @@ class PayoutService
             ]),
             sub: $this->sub
         );
+
+        return $this;
     }
 
     /**
      * Меняем статусы и сообщения
      */
-    public function complete(): void
+    public function complete(): PayoutService
     {
         $incomes = Income::getNotCompleted(
             groupId: $this->sub->group_id
@@ -132,9 +136,11 @@ class PayoutService
                 'wallet' => $this->wallet->id
             ]);
         }
+
+        return $this;
     }
 
-    public function createPayout(): void
+    public function createPayout(): PayoutService
     {
         event(new PayoutCompleteEvent(
             sub: $this->sub,
@@ -142,6 +148,8 @@ class PayoutService
             payout: $this->sub->pending_amount,
             txId: $this->params['txid'],
         ));
+
+        return $this;
     }
 
     public function lock(): void

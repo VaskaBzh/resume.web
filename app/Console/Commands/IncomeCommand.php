@@ -6,14 +6,9 @@ namespace App\Console\Commands;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
-use App\Events\PayoutCompleteEvent;
-use App\Models\Referral;
 use App\Models\Sub;
-use App\Services\External\WalletService;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Support\Facades\Log;
 
 class IncomeCommand extends Command
 {
