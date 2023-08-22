@@ -20,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'phone',
+        'referral_code->code',
+        'referral_code->group_id',
         'sms',
         'google2fa_secret'
     ];
@@ -41,6 +43,7 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'referral_code' => 'json'
     ];
 
     public function subs()
@@ -58,7 +61,8 @@ class User extends Authenticatable implements MustVerifyEmail
         )
             ->withPivot(
                 'id',
-                'code',
+                'user_id',
+                'group_id',
                 'sub_profit_percent',
                 'user_discount_percent'
             )->withTimestamps();
@@ -67,7 +71,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function owner(): Attribute
     {
         return Attribute::make(
-            get: fn (): ?Sub => $this->owners()->first()
+            get: fn(): ?Sub => $this->owners()->first()
         );
     }
 }

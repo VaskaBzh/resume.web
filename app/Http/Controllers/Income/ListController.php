@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Income;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\WorkerHashRate\Resources\IncomeCollection;
+use App\Http\Resources\IncomeCollection;
 use App\Models\Income;
 use App\Models\Sub;
 

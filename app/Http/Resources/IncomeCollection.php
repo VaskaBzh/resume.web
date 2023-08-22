@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\WorkerHashRate\Resources;
+namespace App\Http\Resources;
 
 use App\Models\Income;
 use Illuminate\Http\Resources\Json\ResourceCollection;

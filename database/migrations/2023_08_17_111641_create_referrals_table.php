@@ -14,7 +14,6 @@ return new class extends Migration {
             $table->unsignedInteger('user_id');
             $table->unsignedBigInteger('group_id');
             $table->unique(['user_id', 'group_id']);
-            $table->string('code');
             $table->float('sub_profit_percent');
             $table->float('user_discount_percent')->nullable();
             $table->timestamp('expired_at')->nullable();

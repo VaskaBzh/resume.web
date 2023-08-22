@@ -59,7 +59,8 @@ class Sub extends Model
         )
             ->withPivot(
                 'id',
-                'code',
+                'user_id',
+                'group_id',
                 'sub_profit_percent',
                 'user_discount_percent'
             )->withTimestamps();
