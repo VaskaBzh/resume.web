@@ -27,18 +27,29 @@ class ReferralService
 
     public static function getStatistic(User $user)
     {
-        $sub = Sub::getByGroupId($user->referral_code['group_id'])->first();
-        dd($sub->referrals()->each(function (User $user) {
-            dd($user->subs);
-        }));
-    }
+        $owner = Sub::getByGroupId($user->referral_code['group_id'])->first();
 
-    public static function transform(Sub $sub)
-    {
-        return [
-            'group_id' => $sub->group_id,
-            'attached_referrals_count' => $sub->referrals()->count(),
+        $statistic = [
+            'group_id' => $owner->group_id,
+            'referral_code' => $user->referral_code['code'],
+            'attached_referrals_count' => $owner->referrals()->count(),
             'active_referrals_count' => 0,
         ];
+
+        $activeReferralsStatistic = $owner->referrals->map(function (User $user) use ($statistic) {
+            $activeReferralSubs = Sub::whereIn('group_id',
+                $user->subs()->pluck('group_id')
+            )
+                ->hasWorkerHashRate()
+                ->get();
+
+            return array_merge($statistic, );
+            return [
+                'active_referrals_count' => $activeReferralSubs->count(),
+                'referrals_total_amount' => $activeReferralSubs->sum('total_amount')
+            ];
+        });
+
+        dd($activeReferralsStatistic->merge($statistic));
     }
 }
