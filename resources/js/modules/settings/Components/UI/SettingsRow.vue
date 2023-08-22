@@ -33,7 +33,7 @@
 import { useForm, usePage } from "@inertiajs/vue3";
 
 export default {
-    name: "settings-block",
+    name: "settings-row",
     props: ["val", "svg", "name", "keyForm"],
     data() {
         return {

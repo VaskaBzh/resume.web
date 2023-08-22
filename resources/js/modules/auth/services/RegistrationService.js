@@ -1,6 +1,7 @@
 import { useForm } from "@inertiajs/vue3";
-import { ValidateEnums } from "@/modules/auth/enums/ValidateEnums";
-import { FormData } from "@/modules/auth/FormData";
+import { FormData } from "@/modules/auth/DTO/FormData";
+
+import { ValidateSevice } from "@/modules/common/services/ValidateSevice";
 
 export class RegistrationService {
     constructor() {
@@ -8,6 +9,8 @@ export class RegistrationService {
         this.validate = {};
         this.checkbox = false;
         this.errors = {};
+
+        this.validateService = new ValidateSevice();
     }
 
     setForm() {
@@ -29,28 +32,7 @@ export class RegistrationService {
     }
 
     validateProcess(event) {
-        this.form.password = event;
-        this.validate = {};
-
-        if (
-            this.form.password?.length <= 10 ||
-            this.form.password?.length >= 50
-        )
-            this.validate = { ...this.validate, length: true };
-
-        if (!ValidateEnums.strokeLetters.test(this.form.password))
-            this.validate = { ...this.validate, lower: true };
-
-        if (!ValidateEnums.highLetters.test(this.form.password))
-            this.validate = { ...this.validate, upper: true };
-
-        if (!ValidateEnums.numbers.test(this.form.password))
-            this.validate = { ...this.validate, number: true };
-
-        if (!ValidateEnums.symbols.test(this.form.password))
-            this.validate = { ...this.validate, symbol: true };
-
-        if (this.form.password.length === 0) this.validate = {};
+        this.validateService.validateProcess(event, this.form, this.validate);
     }
 
     setErrors(errors) {
