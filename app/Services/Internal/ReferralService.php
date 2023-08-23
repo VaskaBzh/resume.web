@@ -9,6 +9,7 @@ use App\Dto\ReferralData;
 use App\Helper;
 use App\Models\Sub;
 use App\Models\User;
+use App\Services\External\BtcComService;
 use Illuminate\Support\Collection;
 
 class ReferralService
@@ -26,7 +27,7 @@ class ReferralService
         );
     }
 
-    public static function getStatistic(Collection $referrals): array
+    public static function getOwnerStatistic(Collection $referrals): array
     {
         return [
             'attached_referrals_count' => $referrals->count(),
@@ -39,5 +40,21 @@ class ReferralService
                 return $acc;
             }, ['active_referrals_count' => 0, 'referrals_total_amount' => 0])
         ];
+    }
+
+    public static function getReferralCollection(Sub $owner, BtcComService $btcComService): Collection
+    {
+        return $owner->referrals->map(function (User $user) use ($btcComService) {
+            $referralSubCollection = $btcComService
+                ->transformSubCollection($user->subs);
+
+            return [
+                'email' => $user->email,
+                'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
+                'workers_count_in_active' => $referralSubCollection->sum('workers_count_in_active'),
+                'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
+                'total_amount' => $user->subs()->sum('total_amount')
+            ];
+        });
     }
 }
