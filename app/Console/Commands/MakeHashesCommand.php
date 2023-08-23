@@ -28,7 +28,7 @@ class MakeHashesCommand extends Command
     {
         $progress = $this->output->createProgressBar();
 
-        Sub::hasWorker()->each(static function (Sub $sub) use ($btcComService, $progress) {
+        Sub::hasWorkerHashRate()->each(static function (Sub $sub) use ($btcComService, $progress) {
             $progress->advance();
 
             DeleteOldHashrates::execute(

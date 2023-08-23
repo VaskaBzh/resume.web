@@ -85,11 +85,11 @@ class BtcComService
             ->filterUngrouped()
             ->whereIn('gid', $subs->pluck('group_id')->toArray())
             ->map(function (array $btcComSub) use ($subs, $stats) {
-
                 foreach ($subs as $sub) {
                     $hashPerDay = $this->getSubHashRate(sub: $sub);
 
                     if (in_array($sub->group_id, $btcComSub)) {
+
                         return self::transform(
                             stats: $stats,
                             sub: $sub,
