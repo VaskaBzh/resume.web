@@ -14,6 +14,7 @@ use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\Referral\CodeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Referral\StatisticController as StatisticReferralController;
+use \App\Http\Controllers\Referral\ListController as ReferralListController;
 
 //
 /*
@@ -32,6 +33,7 @@ Route::group([
 ], function () {
     Route::post('/generate/{user}', CodeController::class)->name('code');
     Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
+    Route::get('{user}', ReferralListController::class)->name('referral.list');
 });
 
 Route::group([
