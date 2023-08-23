@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\WorkerHashRate\Resources\PayoutResource;
+use App\Http\Resources\PayoutResource;
 use App\Models\Payout;
 use App\Models\Sub;
 use Illuminate\Http\Request;

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -19,6 +20,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email',
         'password',
         'phone',
+        'referral_code->code',
+        'referral_code->group_id',
         'sms',
         'google2fa_secret'
     ];
@@ -40,10 +43,35 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'referral_code' => 'json'
     ];
 
     public function subs()
     {
         return $this->hasMany(Sub::class);
+    }
+
+    public function owners(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Sub::class,
+            'referrals',
+            'user_id',
+            'group_id'
+        )
+            ->withPivot(
+                'id',
+                'user_id',
+                'group_id',
+                'sub_profit_percent',
+                'user_discount_percent'
+            )->withTimestamps();
+    }
+
+    public function owner(): Attribute
+    {
+        return Attribute::make(
+            get: fn(): ?Sub => $this->owners()->first()
+        );
     }
 }

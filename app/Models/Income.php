@@ -8,6 +8,7 @@ use App\Builders\IncomeBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Http\RedirectResponse;
 
 class Income extends Model
 {
@@ -19,6 +20,7 @@ class Income extends Model
 
     protected $fillable = [
         'group_id',
+        'referral_id',
         'wallet_id',
         'daily_amount',
         'diff',
@@ -37,6 +39,11 @@ class Income extends Model
             'group_id',
             'group_id'
         );
+    }
+
+    public function referral(): BelongsTo
+    {
+        return $this->belongsTo(Referral::class);
     }
 
     public function wallet(): BelongsTo

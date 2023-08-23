@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Payout;
 
 use App\Http\Controllers\Controller;
-use App\Http\Controllers\WorkerHashRate\Resources\PayoutResource;
+use App\Http\Resources\PayoutResource;
 use App\Models\Payout;
 use App\Models\Sub;
 use Illuminate\Http\Request;

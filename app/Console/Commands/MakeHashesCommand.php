@@ -48,7 +48,6 @@ class MakeHashesCommand extends Command
                     'worker_count' => Arr::get($subInfo, 'workers_active', 0)
                 ]);
             } catch (\Exception $e) {
-                dump('s');
                 report($e);
             }
         });
