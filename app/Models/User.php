@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Builders\UserBuilder;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -75,4 +76,9 @@ class User extends Authenticatable implements MustVerifyEmail
             get: fn(): ?Sub => $this->owners()->first()
         );
     }
+
+/*    public function newEloquentBuilder($query): UserBuilder
+    {
+        return new UserBuilder($query);
+    }*/
 }
