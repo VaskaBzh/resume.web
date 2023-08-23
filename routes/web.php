@@ -19,6 +19,7 @@ use App\Http\Controllers\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Wallet\UpdateController as WalletUpdateController;
 use App\Http\Controllers\Payout\ListController as PayoutListController;
+use \App\Http\Controllers\Referral\ListController as ReferralListController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -109,5 +110,7 @@ Route::middleware('auth')->group(function () {
     ], function () {
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
+        Route::get('{user}', ReferralListController::class)->name('referral.list');
+        Route::get('/attach/', StatisticReferralController::class)->name('referral.attach');
     });
 });
