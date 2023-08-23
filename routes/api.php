@@ -10,6 +10,7 @@ use App\Http\Controllers\Api\WalletListController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
+use App\Http\Controllers\Referral\AttachController as AttachReferralController;
 use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\Referral\CodeController;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,7 @@ Route::group([
     Route::post('/generate/{user}', CodeController::class)->name('code');
     Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
     Route::get('{user}', ReferralListController::class)->name('referral.list');
+    Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
 });
 
 Route::group([
