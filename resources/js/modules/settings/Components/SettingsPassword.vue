@@ -109,8 +109,8 @@ export default {
     position: relative;
 }
 svg {
-    width: 32px;
-    height: 32px;
+    width: 24px;
+    height: 24px;
     fill: rgba(124, 124, 124, 0.7);
     transition: all 0.5s ease 0s;
     position: absolute;
@@ -118,9 +118,5 @@ svg {
     transform: translateY(-50%);
     right: 16px;
     cursor: pointer;
-    @media (max-width: 479.98px) {
-        width: 20px !important;
-        height: 20px !important;
-    }
 }
 </style>

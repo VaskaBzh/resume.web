@@ -101,6 +101,9 @@ export default {
             width: 100%;
             gap: 12px;
             display: flex;
+            @media (max-width: $mobileSmall) {
+                flex-direction: column;
+            }
         }
     }
     &_button {
@@ -108,6 +111,9 @@ export default {
         max-width: 140px;
         width: 100%;
         padding: 0;
+        @media (max-width: $mobileSmall) {
+            max-width: 100%;
+        }
     }
     &_text {
         &:first-child {
