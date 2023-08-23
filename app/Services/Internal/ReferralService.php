@@ -9,6 +9,7 @@ use App\Dto\ReferralData;
 use App\Helper;
 use App\Models\Sub;
 use App\Models\User;
+use Illuminate\Support\Collection;
 
 class ReferralService
 {
@@ -25,31 +26,18 @@ class ReferralService
         );
     }
 
-    public static function getStatistic(User $user)
+    public static function getStatistic(Collection $referrals): array
     {
-        $owner = Sub::getByGroupId($user->referral_code['group_id'])->first();
+        return [
+            'attached_referrals_count' => $referrals->count(),
+            ...$referrals->reduce(static function (array $acc, User $user) {
+                $activeReferralSubs = Sub::getActiveReferrals($user)->get();
 
-        $statistic = [
-            'group_id' => $owner->group_id,
-            'referral_code' => $user->referral_code['code'],
-            'attached_referrals_count' => $owner->referrals()->count(),
-            'active_referrals_count' => 0,
+                $acc['active_referrals_count'] += $activeReferralSubs->count();
+                $acc['referrals_total_amount'] += $activeReferralSubs->sum('total_amount');
+
+                return $acc;
+            }, ['active_referrals_count' => 0, 'referrals_total_amount' => 0])
         ];
-
-        $activeReferralsStatistic = $owner->referrals->map(function (User $user) use ($statistic) {
-            $activeReferralSubs = Sub::whereIn('group_id',
-                $user->subs()->pluck('group_id')
-            )
-                ->hasWorkerHashRate()
-                ->get();
-
-            return array_merge($statistic, );
-            return [
-                'active_referrals_count' => $activeReferralSubs->count(),
-                'referrals_total_amount' => $activeReferralSubs->sum('total_amount')
-            ];
-        });
-
-        dd($activeReferralsStatistic->merge($statistic));
     }
 }
