@@ -10,7 +10,7 @@
                 во вкладке “Мои рефералы”.
             </p>
             <div class="referral__row">
-                <main-copy class="referral_code" :code="code" />
+                <main-copy class="referral_code" :code="service.code" />
                 <percent-card :percent="percent" />
             </div>
         </div>
@@ -34,7 +34,11 @@
                 Укажите субаккаут на который будут начисляться вознаграждения за
                 рефералов.
             </p>
-            <referral-select :rows="service.accounts" />
+            <referral-select
+                :rows="service.accounts"
+                :activeSubId="service.activeSubId"
+                @changeSub="service.generateCode($event)"
+            />
         </div>
         <div
             class="cabinet__block cabinet__block-light referral__block referral__block-full"
@@ -72,14 +76,18 @@ export default {
         ReferralSelect,
         InfoList,
     },
+    props: {
+        user: Object,
+        errors: Object,
+        message: String,
+    },
     computed: {
         ...mapGetters(["allAccounts"]),
     },
     data() {
         return {
-            code: "123424",
             percent: 0.8,
-            service: new CabinetService(),
+            service: new CabinetService(this.user.id),
         };
     },
     watch: {
@@ -90,8 +98,8 @@ export default {
         },
     },
     mounted() {
-        this.service.getStatsCards();
         this.service.getGradeList();
+        this.service.index();
         if (this.allAccounts) this.service.getSelectAccounts();
     },
 };

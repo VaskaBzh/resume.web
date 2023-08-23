@@ -3,6 +3,7 @@ import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateSevice } from "@/modules/common/services/ValidateSevice";
 import { RowData } from "@/modules/settings/DTO/RowData";
+import api from "@/api/api";
 
 export class SettingsService {
     constructor(translate, user) {
@@ -15,10 +16,10 @@ export class SettingsService {
         this.validate = {};
         this.user = user;
 
-        this.login = user.name;
-        this.email = user.email;
-        this.password = "*********";
-        this.phone = user.phone ?? "Добавьте номер";
+        this.login = "";
+        this.email = "";
+        this.password = "";
+        this.phone = "";
 
         this.closed = false;
         this.waitAjax = false;
@@ -27,7 +28,18 @@ export class SettingsService {
     }
 
     validateProcess(event) {
-        this.validateService.validateProcess(event, this.form, this.validate);
+        this.validate = this.validateService.validateProcess(
+            event,
+            this.form,
+            this.validate
+        );
+    }
+
+    setUserData(user) {
+        this.login = user.name;
+        this.email = user.email;
+        this.password = "*********";
+        this.phone = user.phone ?? "Добавьте номер";
     }
 
     setRows() {
@@ -36,25 +48,25 @@ export class SettingsService {
                 this.translate("settings.block.settings_block.labels.login"),
                 "name",
                 this.login,
-                0
+                "name"
             ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.email"),
                 "email",
                 this.email,
-                1
+                "email"
             ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.password"),
                 "password",
                 this.password,
-                2
+                "password"
             ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.phone"),
                 "phone",
                 this.phone,
-                3
+                "phone"
             ),
         ];
     }
@@ -67,26 +79,37 @@ export class SettingsService {
         this.form = new FormData("", "", "", "", "");
     }
 
-    ajax() {
+    async ajax() {
         this.wait = true;
 
         let sendForm = useForm({
             [this.form.key]: this.form.item,
         });
 
-        sendForm.post(route("change", this.user), {
+        await sendForm.post(route("change", this.user), {
             onFinish: () => {
                 this.wait = false;
+
+                this.setRows();
+                // this.closed = false;
             },
         });
     }
 
-    setReferral() {
-        console.log("ref");
+    async setReferral() {
+        let result = await api.get(`/referrals/attach/${this.user.id}`);
+
+        console.log(result);
     }
 
-    ajaxChange = (bool) => {
-        if (bool) {
+    setValue(value) {
+        this.form.item = value;
+    }
+
+    ajaxChange = (data) => {
+        this.setValue(data.value);
+
+        if (data.bool) {
             if (Object.entries(this.validate).length === 0) {
                 this.form.old_password = this.form.item;
                 this.ajax();
@@ -115,9 +138,10 @@ export class SettingsService {
     }
 
     getHtml(data) {
+        // item: data.name === "пароль" ? "" : data.val,
         this.form = {
             ...this.form,
-            item: data.name === "пароль" ? "" : data.val,
+            item: data.name === "пароль" ? "Введите старый пароль" : data.val,
             type: data.name,
             key: data.key,
         };

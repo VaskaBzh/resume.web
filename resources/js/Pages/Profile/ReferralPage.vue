@@ -16,13 +16,22 @@
                     />
                 </div>
                 <transition name="page">
-                    <cabinet-view v-show="viewService.view === 'Cabinet'" />
+                    <cabinet-view
+                        :user="user"
+                        :message="message"
+                        :errors="errors"
+                        v-show="viewService.view === 'Cabinet'"
+                    />
                 </transition>
                 <transition name="page">
-                    <referrals-view v-show="viewService.view === 'Referrals'" />
+                    <referrals-view
+                        :user="user"
+                        v-show="viewService.view === 'Referrals'"
+                    />
                 </transition>
                 <transition name="page">
                     <payment-view
+                        :user="user"
                         v-show="viewService.view === 'Referrals_income'"
                     />
                 </transition>
@@ -50,6 +59,11 @@ export default {
         CabinetView,
         PaymentView,
         ReferralsView,
+    },
+    props: {
+        user: Object,
+        errors: Object,
+        message: String,
     },
     data() {
         return {

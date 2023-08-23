@@ -5,10 +5,7 @@ export class ValidateSevice {
         form.password = event;
         validate = {};
 
-        if (
-            form.password?.length <= 10 ||
-            form.password?.length >= 50
-        )
+        if (form.password?.length <= 10 || form.password?.length >= 50)
             validate = { ...validate, length: true };
 
         if (!ValidateEnums.strokeLetters.test(form.password))
@@ -24,5 +21,7 @@ export class ValidateSevice {
             validate = { ...validate, symbol: true };
 
         if (form.password.length === 0) validate = {};
+
+        return validate;
     }
 }

@@ -30,7 +30,13 @@
             </svg>
         </transition>
         <transition name="grade">
-            <div class="card__list" v-if="percentList" v-show="opened">
+            <div
+                class="card__list"
+                v-if="percentList"
+                v-show="opened"
+                @mouseover="openGradeList"
+                @mouseout="closeGradeList"
+            >
                 <p class="card__list_text">
                     Получаемый вами процент зависит от суммы хешрейта всех ваших
                     рефералов.

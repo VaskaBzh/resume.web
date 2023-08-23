@@ -32,7 +32,7 @@ export default {
     },
     methods: {
         copy() {
-            navigator.clipboard.writeText(this.copyObject.link);
+            navigator.clipboard.writeText(this.code);
         },
     },
 };

@@ -1,25 +1,64 @@
 import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
+import api from "@/api/api";
 
 export class CabinetService {
-    constructor() {
+    constructor(id) {
         this.statsCards = [];
         this.accounts = [];
         this.gradeList = [];
+        this.referrals = {};
+
+        this.code = "";
+        this.activeSubId = null;
+
+        this.user_id = id;
     }
 
-    getStatsCards() {
+    getStatsCards(data) {
         this.statsCards = [
             ...this.statsCards,
-            new SelectData("invite", "Приглашенные", "1000"),
-            new SelectData("active", "Активные", "521"),
-            new SelectData("profit", "Общая прибыль", "$5 302"),
+            new SelectData(
+                "invite",
+                "Приглашенные",
+                data.attached_referrals_count
+            ),
+            new SelectData("active", "Активные", data.active_referrals_count),
+            new SelectData(
+                "profit",
+                "Общая прибыль",
+                `$${data.referrals_total_amount}`
+            ),
         ];
     }
 
     getSelectAccounts() {
         this.accounts = store.getters.allAccounts;
+    }
+
+    async generateCode(id) {
+        await api.post(`/referrals/generate/${this.user_id}`, {
+            group_id: id,
+        });
+    }
+
+    setCode(code) {
+        this.code = code;
+    }
+
+    setActiveSub(group_id) {
+        this.activeSubId = group_id;
+    }
+
+    async index() {
+        let result = (await api.get(`/referrals/statistic/${this.user_id}`))
+            .data.data;
+
+        this.setCode(result.code);
+        this.setActiveSub(result.group_id);
+
+        this.getStatsCards(result);
     }
 
     getGradeList() {

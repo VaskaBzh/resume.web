@@ -5,8 +5,15 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
 
 import store from "@/store";
+import api from "@/api/api";
 
 export class ReferralsService extends TableService {
+    constructor(id, translate, titleIndexes) {
+        super(translate, titleIndexes);
+
+        this.user_id = id;
+    }
+
     setter(referral) {
         new ReferralsData(
             referral["email"],
@@ -19,24 +26,27 @@ export class ReferralsService extends TableService {
         );
     }
 
+    async fetchReferrals(page, per_page) {
+        let result = await api.get(`/referrals/${this.user_id}`);
+        console.log(result);
+    }
+
     async index(page = 1, per_page = 15) {
-        if (store.getters.getActive !== -1) {
-            this.waitTable = true;
+        this.waitTable = true;
 
-            let response;
+        let response;
 
-            response = await this.fetchIncomes(page, per_page);
+        response = await this.fetchReferrals(page, per_page);
 
-            this.meta = response.data;
+        this.meta = response.data;
 
-            this.rows = response.data.data.map((el) => {
-                return this.setter(el);
-            });
+        this.rows = response.data.data.map((el) => {
+            return this.setter(el);
+        });
 
-            this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+        this.titles = this.useTranslater([0, 1, 2, 3, 4]);
 
-            return this;
-        }
+        return this;
     }
 
     async setTable(page = 1, per_page = 15) {
