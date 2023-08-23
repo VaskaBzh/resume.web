@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
@@ -15,6 +14,7 @@ use App\Http\Controllers\Sub\ShowController as SubShowController;
 use App\Http\Controllers\Workers\ListController as WorkerListController;
 use App\Http\Controllers\Workers\ShowController as WorkerShowController;
 use App\Http\Controllers\WorkerHashRate\ListController as WorkerHashRateListController;
+use App\Http\Controllers\Referral\StatisticController as StatisticReferralController;
 use App\Http\Controllers\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Wallet\UpdateController as WalletUpdateController;
@@ -108,5 +108,6 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'referrals'
     ], function () {
         Route::post('/generate/{user}', CodeController::class)->name('code');
+        Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
     });
 });
