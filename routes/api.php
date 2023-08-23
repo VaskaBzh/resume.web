@@ -4,12 +4,12 @@ use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\IncomeListController;
 use App\Http\Controllers\Api\PayoutListController;
-use App\Http\Controllers\Api\Subs\ListController as SubListController;
-use App\Http\Controllers\Api\Subs\ShowController as SubShowController;
+use App\Http\Controllers\Api\Sub\ListController as SubListController;
+use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
 use App\Http\Controllers\Api\WalletListController;
 use App\Http\Controllers\Api\WorkerHashRateController;
-use App\Http\Controllers\Api\Workers\ListController as WorkerListController;
-use App\Http\Controllers\Api\Workers\ShowController as WorkerShowController;
+use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
+use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
 use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\Referral\CodeController;
 use Illuminate\Support\Facades\Route;
@@ -34,11 +34,11 @@ Route::group([
     Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
 });
 
-//Route::group([
-//    'prefix' => 'subs',
-//], function () {
-//    Route::get('{user}', SubListController::class)->name('sub.list');
-//});
+Route::group([
+    'prefix' => 'subs',
+], function () {
+    Route::get('{user}', SubListController::class)->name('sub.list');
+});
 //
 //Route::group([
 //    'prefix' => 'incomes',
