@@ -73,7 +73,7 @@
 
 <script>
 export default {
-    name: "main-password",
+    name: "settings-password",
     props: ["model", "placeholder"],
     data() {
         return {
@@ -105,60 +105,8 @@ export default {
 .fade-leave-to {
     opacity: 0;
 }
-.error {
-    input {
-        color: #e5403f;
-        border-color: #e5403f;
-        &::placeholder {
-            color: rgba(124, 124, 124, 0.7);
-        }
-    }
-    svg,
-    svg path {
-        fill: #e5403f;
-    }
-}
 .row {
     position: relative;
-    &_input {
-        letter-spacing: normal;
-        width: 100%;
-        color: #343434;
-        font-size: 24px;
-        font-family: AmpleSoftPro, serif;
-        line-height: 135%;
-        border-radius: 8px;
-        border: 1px solid transparent;
-        min-height: 56px;
-        transition: all 0.5s ease 0s;
-        padding: 0 16px;
-        background: linear-gradient(
-            179deg,
-            #e6eaf0 0%,
-            #e6eaf1 20.89%,
-            #e7ebf1 42.88%,
-            #eaeef4 76.04%,
-            #e8ecf2 100%
-        );
-        @media (max-width: 479.98px) {
-            color: rgba(124, 124, 124, 0.7);
-            font-size: 14px;
-            font-family: Ubuntu, serif;
-            line-height: 130%;
-            min-height: 40px;
-        }
-
-        &::placeholder {
-            color: rgba(124, 124, 124, 0.7);
-            transition: all 0.5s ease 0s;
-            letter-spacing: normal;
-        }
-
-        &:active,
-        &:focus {
-            border-color: #9fbdee;
-        }
-    }
 }
 svg {
     width: 32px;
@@ -169,6 +117,7 @@ svg {
     top: 50%;
     transform: translateY(-50%);
     right: 16px;
+    cursor: pointer;
     @media (max-width: 479.98px) {
         width: 20px !important;
         height: 20px !important;

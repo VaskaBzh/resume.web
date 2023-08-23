@@ -83,14 +83,23 @@ export default {
         "settingsService.profit"(newValue) {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },
+        user() {
+            this.settingsService.setUserData(this.user);
+        },
+    },
+    methods: {
+        settingsProcess() {
+            this.settingsService.setUserData(this.user);
+            this.settingsService.setForm();
+            this.settingsService.setRows();
+            this.settingsService.setProfits();
+        },
     },
     mounted() {
         document.title = this.$t("header.links.settings");
         this.$refs.page.style.opacity = 1;
 
-        this.settingsService.setForm();
-        this.settingsService.setRows();
-        this.settingsService.setProfits();
+        this.settingsProcess();
     },
 };
 </script>

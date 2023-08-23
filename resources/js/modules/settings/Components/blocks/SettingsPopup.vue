@@ -8,9 +8,7 @@
     >
         <form
             @submit.prevent="
-                form.type === 'пароль'
-                    ? $emit('ajaxChange', true)
-                    : $emit('ajaxChange', false)
+                form.type === 'пароль' ? getValue(true) : getValue(false)
             "
             class="form form-popup popup__form"
         >
@@ -26,33 +24,32 @@
                 autofocus
                 :type="form.type === 'пароль' ? 'password' : 'text'"
                 class="input popup__input"
-                :placeholder="`${$t(
-                    'settings.block.settings_block.popup.placeholders.placeholder'
-                )} ${form.type}`"
+                :placeholder="placeholder"
             />
-            <div class="form_row" v-if="form.type === 'пароль'">
-                <main-password
-                    name="password"
-                    :placeholder="`${$t(
-                        'settings.block.settings_block.popup.placeholders.password_new'
-                    )} ${form.type}`"
-                    :model="password"
-                    :errors="errors"
-                    @change="$emit('validate', $event)"
-                ></main-password>
-            </div>
+            <!--            :placeholder="`${$t(-->
+            <!--            'settings.block.settings_block.popup.placeholders.placeholder'-->
+            <!--            )} ${form.type}`"-->
+            <settings-password
+                v-if="form.type === 'пароль'"
+                name="password"
+                :placeholder="`${$t(
+                    'settings.block.settings_block.popup.placeholders.password_new'
+                )} ${form.type}`"
+                :model="password"
+                :errors="errors"
+                @change="$emit('validate', $event)"
+            />
             <main-validate :validate="validate" />
-            <div class="form_row" v-if="form.type === 'пароль'">
-                <main-password
-                    name="password"
-                    :placeholder="`${$t(
-                        'settings.block.settings_block.popup.placeholders.password_confirmation'
-                    )} ${form.type}`"
-                    :model="password_confirmation"
-                    :errors="errors"
-                    @change="password_confirmation = $event"
-                ></main-password>
-            </div>
+            <settings-password
+                v-if="form.type === 'пароль'"
+                name="password"
+                :placeholder="`${$t(
+                    'settings.block.settings_block.popup.placeholders.password_confirmation'
+                )} ${form.type}`"
+                :model="password_confirmation"
+                :errors="errors"
+                @change="password_confirmation = $event"
+            />
             <blue-button>
                 <button type="submit" class="all-link">
                     <popup-loading-icon />
@@ -66,10 +63,10 @@
 
 <script>
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainValidate from "@/modules/common/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
+import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
 
 export default {
     name: "settings-popup",
@@ -78,20 +75,32 @@ export default {
         form: Object,
         validate: Object,
         wait: Boolean,
+        closed: Boolean,
     },
     components: {
         MainPopup,
-        MainPassword,
+        SettingsPassword,
         BlueButton,
         MainValidate,
         PopupLoadingIcon,
     },
     data() {
         return {
-            item: this.form.item,
+            item: "",
+            placeholder: this.form.item,
             password_confirmation: this.form.password_confirmation,
             password: this.form.password,
         };
+    },
+    methods: {
+        getValue(bool) {
+            this.$emit("ajaxChange", { password: bool, value: this.item });
+        },
+    },
+    watch: {
+        "form.item"(newValue) {
+            this.placeholder = newValue;
+        },
     },
 };
 </script>

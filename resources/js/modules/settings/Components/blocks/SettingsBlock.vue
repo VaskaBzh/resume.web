@@ -88,6 +88,7 @@ export default {
         &-column {
             width: 100%;
             position: relative;
+
             span {
                 position: absolute;
                 top: 50%;
@@ -95,18 +96,11 @@ export default {
                 right: 16px;
             }
         }
+
         &-row {
             width: 100%;
             gap: 12px;
             display: flex;
-        }
-    }
-    &_input {
-        outline: none;
-        border: none;
-        &:focus {
-            border: none;
-            background: #ededed;
         }
     }
     &_button {

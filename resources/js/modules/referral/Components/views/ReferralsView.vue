@@ -34,6 +34,7 @@ export default {
     name: "referrals-view",
     props: {
         errors: Object,
+        user: Object,
     },
     components: {
         MainSearch,
@@ -42,12 +43,18 @@ export default {
     },
     data() {
         return {
-            service: new ReferralsService(this.$t, [0, 1, 2, 3, 4]),
+            service: new ReferralsService(
+                this.user.id,
+                this.$t,
+                [0, 1, 2, 3, 4]
+            ),
         };
     },
     mounted() {
         this.service.getGradeList();
         this.service.getPercent();
+
+        this.service.index();
     },
 };
 </script>

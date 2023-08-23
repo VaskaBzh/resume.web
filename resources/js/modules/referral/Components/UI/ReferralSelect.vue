@@ -27,7 +27,7 @@
                     class="select_row"
                     v-for="(row, i) in rows"
                     :key="i"
-                    @click="changeValue(row.name)"
+                    @click="changeValue(row.name, row.group_id)"
                 >
                     {{ row.name }}
                 </div>
@@ -41,6 +41,7 @@ export default {
     name: "referral-select",
     props: {
         rows: Array,
+        activeSubId: String,
     },
     data() {
         return {
@@ -58,10 +59,30 @@ export default {
                 document.removeEventListener("keydown", this.onEscapeKeydown);
             }
         },
+        activeSubId() {
+            this.setBaseName();
+        },
+        rows() {
+            this.setBaseName();
+        },
+    },
+    mounted() {
+        this.setBaseName();
     },
     methods: {
-        changeValue(targetName) {
-            this.baseName = targetName;
+        setBaseName() {
+            if (this.activeSubId && Object.entries(this.rows)?.length > 0) {
+                this.baseName = Object.values(this.rows).find(
+                    (el) => el.group_id === this.activeSubId
+                ).name;
+            }
+        },
+        changeValue(targetName, id) {
+            if (this.baseName !== targetName) {
+                this.baseName = targetName;
+
+                this.$emit("changeSub", id);
+            }
 
             this.closeSelect();
         },

@@ -32,7 +32,11 @@ export class RegistrationService {
     }
 
     validateProcess(event) {
-        this.validateService.validateProcess(event, this.form, this.validate);
+        this.validate = this.validateService.validateProcess(
+            event,
+            this.form,
+            this.validate
+        );
     }
 
     setErrors(errors) {
