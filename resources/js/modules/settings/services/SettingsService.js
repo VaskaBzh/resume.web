@@ -96,8 +96,10 @@ export class SettingsService {
         });
     }
 
-    async setReferral() {
-        let result = await api.get(`/referrals/attach/${this.user.id}`);
+    async setReferral(code) {
+        let result = await api.post(`/referrals/attach/${this.user.id}`, {
+            code: code,
+        });
 
         console.log(result);
     }

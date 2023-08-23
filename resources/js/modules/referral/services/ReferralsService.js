@@ -27,8 +27,8 @@ export class ReferralsService extends TableService {
     }
 
     async fetchReferrals(page, per_page) {
-        let result = await api.get(`/referrals/${this.user_id}`);
-        console.log(result);
+        return await api.get(`/referrals/${this.user_id}`);
+        // console.log(result);
     }
 
     async index(page = 1, per_page = 15) {

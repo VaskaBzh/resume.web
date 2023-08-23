@@ -9,24 +9,20 @@
                 class="referral_card"
             />
         </div>
-        <!--        <main-slider-->
-        <!--            :wait="service.waitTable"-->
-        <!--            :empty="service.rows"-->
-        <!--            :table="service.table"-->
-        <!--            :rowsNum="per_page"-->
-        <!--            :errors="errors"-->
-        <!--            :meta="service.meta"-->
-        <!--            :key="getActive"-->
-        <!--            @changePerPage="changePerPage"-->
-        <!--            @changePage="page = $event"-->
-        <!--        />-->
+        <wrap-table
+            :table="service.table"
+            :wait="!service.waitTable"
+            :empty="service.table?.get('rows')"
+            :errors="errors"
+            :rowsVal="1000"
+        />
     </div>
 </template>
 
 <script>
 import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
 import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
-// import MainSlider from "@/Components/technical/MainSlider.vue";
+import WrapTable from "@/Components/tables/WrapTable.vue";
 
 import { ReferralsService } from "@/modules/referral/services/ReferralsService";
 
@@ -38,8 +34,8 @@ export default {
     },
     components: {
         MainSearch,
-        // MainSlider,
         PercentCard,
+        WrapTable,
     },
     data() {
         return {
@@ -55,6 +51,7 @@ export default {
         this.service.getPercent();
 
         this.service.index();
+        this.service.setTable();
     },
 };
 </script>
