@@ -1,12 +1,12 @@
 <template>
     <div class="referral__content">
         <div class="referral__head">
-            <main-search :placeholder="$t('search.placeholder')" />
+            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />
             <percent-card
                 :percent="service.percent"
                 :percentSvg="service.percentSvg"
                 :percentList="service.gradeList"
-                class="referral_card"
+                class="referral__card referral__card-percent"
             />
         </div>
         <wrap-table
@@ -72,7 +72,7 @@ export default {
             gap: 24px;
         }
     }
-    &_card {
+    &__card {
         max-width: fit-content;
         @media (max-width: $mobile) {
             max-width: 100%;

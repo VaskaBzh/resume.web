@@ -126,6 +126,7 @@ export default {
         transform: translateY(-50%);
         width: 8px;
         height: 16px;
+        z-index: 10;
     }
     &__list {
         display: flex;
@@ -139,6 +140,7 @@ export default {
         border-radius: 16px;
         background: var(--dark-bg, #fff);
         min-width: 350px;
+        z-index: 10;
         &_text {
             color: #818c99;
             font-size: 12px;
