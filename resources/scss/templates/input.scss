@@ -3,17 +3,24 @@
     padding: 0 12px;
     border-radius: 8px;
     color: #7c7c7c;
-    background: #ededed;
+    background: #ededed !important;
     font-weight: 300;
     font-size: 14px;
     line-height: 115%;
-    border: none;
     outline: none;
     display: inline-flex;
     align-items: center;
     min-height: 48px;
+    border-width: 1px;
+    border-color: transparent;
+    border-style: solid;
+    transition: all 0.3s ease 0s;
     &::placeholder {
         color: #7c7c7c;
+    }
+    &:active,
+    &:focus {
+        border-color: #9fbdee;
     }
     &-lg {
         min-height: 64px;

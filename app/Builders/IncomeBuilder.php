@@ -16,6 +16,7 @@ class IncomeBuilder extends BaseBuilder
             ->where('group_id', $groupId)
             ->groupBy('id', 'status')
             ->having('status', Status::PENDING->value)
+            ->orHaving('status', Status::READY_TO_PAYOUT->value)
             ->orHaving('status', Status::REJECTED->value);
     }
 

@@ -8,10 +8,10 @@ use App\Actions\Sub\Create;
 use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
-use App\Helper;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Worker;
+use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
@@ -85,11 +85,11 @@ class BtcComService
             ->filterUngrouped()
             ->whereIn('gid', $subs->pluck('group_id')->toArray())
             ->map(function (array $btcComSub) use ($subs, $stats) {
-
                 foreach ($subs as $sub) {
                     $hashPerDay = $this->getSubHashRate(sub: $sub);
 
                     if (in_array($sub->group_id, $btcComSub)) {
+
                         return self::transform(
                             stats: $stats,
                             sub: $sub,

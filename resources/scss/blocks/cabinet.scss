@@ -46,7 +46,7 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 130%;
-        color: #c5c5c5;
+        color: var(--light-theme-gray-3, #818C99);
         background: transparent;
         height: 100%;
         padding: 2px 12px;
@@ -55,12 +55,13 @@
         justify-content: center;
         border-radius: 8px;
         transition: all 0.5s ease 0s;
+        white-space: nowrap;
         &:hover {
-            color: #79a3e8;
+            color: var(--blue-90, #5389E1);
         }
         &.active {
-            background: #fafafa;
-            color: #79a3e8;
+            background: var(--light-theme-second-bg, #FAFAFA);
+            color: var(--blue-90, #5389E1);
         }
     }
     &__block {
@@ -113,6 +114,33 @@
                 overflow-x: scroll;
                 width: 100vw;
                 margin: 0 -15px;
+            }
+        }
+    }
+}
+.referral {
+    &__tabs {
+        .cabinet {
+            &__buttons {
+                height: 48px;
+            }
+            &_button {
+                font-size: 18px;
+                font-weight: 400;
+                line-height: 135%;
+                border-radius: 8px;
+
+                &.active {
+                    background: var(--light-theme-second-bg, #FAFAFA);
+                    box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.05);
+                }
+            }
+        }
+    }
+    &_select {
+        .select {
+            &_name {
+                background: var(--light-theme-second-bg, #FAFAFA) !important;
             }
         }
     }

@@ -15,6 +15,12 @@ export class TableService {
         this.waitTable = true;
     }
 
+    dateFormatter(date) {
+        let d = date.split("");
+        d.length = 10;
+        return d.join("").split("-").reverse().join(".");
+    }
+
     useTranslater(indexes) {
         return indexes.map((index) =>
             this.translate(`income.table.thead[${index}]`)

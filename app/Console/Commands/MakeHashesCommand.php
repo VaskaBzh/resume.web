@@ -28,7 +28,7 @@ class MakeHashesCommand extends Command
     {
         $progress = $this->output->createProgressBar();
 
-        Sub::hasWorker()->each(static function (Sub $sub) use ($btcComService, $progress) {
+        Sub::hasWorkerHashRate()->each(static function (Sub $sub) use ($btcComService, $progress) {
             $progress->advance();
 
             DeleteOldHashrates::execute(
@@ -48,7 +48,6 @@ class MakeHashesCommand extends Command
                     'worker_count' => Arr::get($subInfo, 'workers_active', 0)
                 ]);
             } catch (\Exception $e) {
-                dump('s');
                 report($e);
             }
         });

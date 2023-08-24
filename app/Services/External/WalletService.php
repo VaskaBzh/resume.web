@@ -31,7 +31,7 @@ class WalletService
             'id' => 'unlock',
             'method' => 'walletpassphrase',
             'params' => [config('api.wallet.walletpassphrase'), 10]
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+        ])->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса разблокировки кошелька')
         );
     }
@@ -42,7 +42,7 @@ class WalletService
             'jsonrpc' => '1.0',
             'id' => 'lock',
             'method' => 'walletlock',
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
+        ])->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса блокировки кошелька')
         );
     }

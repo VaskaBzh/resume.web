@@ -249,6 +249,62 @@ body {
                         background: #101d2b !important;
                     }
                 }
+                .referral {
+                    &_code {
+                        background: #283955;
+                        svg {
+                            stroke: #80809A;
+                        }
+                    }
+                    &_select {
+                        &-cabinet {
+                            .select {
+                                &_name {
+                                    background: #283955 !important;
+                                    color: #eaeaea;
+                                    svg {
+                                        stroke: #80809A;
+                                    }
+                                }
+                                &_list {
+                                    background: #283955 !important;
+                                }
+                                &_item {
+                                    color: #eaeaea;
+                                    border-bottom-color: #80809A;
+                                }
+                            }
+                        }
+                    }
+                    &__card {
+                        &-percent {
+                            background: #4282EB;
+                            .card {
+                                &_text {
+                                    color: #eaeaea;
+                                }
+                                &__list {
+                                    background: var(--dark-theme-second-bg, #101D2B);
+                                }
+                                &_arrow {
+                                    stroke: var(--dark-theme-second-bg, #101D2B);
+                                }
+                            }
+                            svg {
+                                stroke: #eaeaea;
+                            }
+                        }
+                    }
+                    &_search {
+                        background: var(--dark-theme-table-bg, #0B1621);
+                        .search {
+                            &_input {
+                                background: transparent;
+                                border-color: transparent !important;
+                            }
+                        }
+                    }
+                }
                 .blue-button {
                     &.add {
                         svg {
@@ -627,7 +683,7 @@ body {
                         }
                     }
                     &_button {
-                        color: #333639;
+                        color: var(--dark-theme-subscribtion, #606060);
                         &.active {
                             color: #3f7bdd;
                             background: #172436;
