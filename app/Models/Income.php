@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Builders\IncomeBuilder;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
 
 class Income extends Model
 {
@@ -39,11 +41,6 @@ class Income extends Model
             'group_id',
             'group_id'
         );
-    }
-
-    public function referral(): BelongsTo
-    {
-        return $this->belongsTo(Referral::class);
     }
 
     public function wallet(): BelongsTo
