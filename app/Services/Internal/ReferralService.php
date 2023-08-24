@@ -7,10 +7,14 @@ namespace App\Services\Internal;
 use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
 use App\Helper;
+use App\Http\Resources\IncomeCollection;
+use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ReferralService
 {
@@ -56,5 +60,25 @@ class ReferralService
                 'total_amount' => $user->subs()->sum('total_amount')
             ];
         });
+    }
+
+    public static function getReferralIncomeCollection(int $groupId): LengthAwarePaginator
+    {
+
+        return DB::table('referrals')
+            ->where('referrals.group_id', $groupId)
+            ->join('incomes', 'referrals.id', 'incomes.referral_id')
+            ->join('users', 'referrals.user_id', 'users.id')
+            ->join('subs', 'referrals.user_id', 'subs.user_id')
+            ->join('workers', 'subs.group_id', 'workers.group_id')
+            ->selectRaw(
+                'users.email,
+                incomes.daily_amount,
+                incomes.hash,
+                incomes.created_at,
+                count(workers.id) as worker_count'
+            )
+            ->groupBy('incomes.id')
+            ->paginate();
     }
 }

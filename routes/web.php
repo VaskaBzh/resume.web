@@ -21,6 +21,7 @@ use App\Http\Controllers\Wallet\UpdateController as WalletUpdateController;
 use App\Http\Controllers\Payout\ListController as PayoutListController;
 use App\Http\Controllers\Referral\ListController as ListReferralController;
 use App\Http\Controllers\Referral\AttachController as AttachReferralController;
+use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -112,6 +113,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
         Route::get('{user}', ListReferralController::class)->name('referral.list');
-        Route::get('/attach/{user}', AttachReferralController::class)->name('referral.attach');
+        Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
+        Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });
 });
