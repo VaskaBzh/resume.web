@@ -112,6 +112,7 @@ Route::middleware('auth')->group(function () {
     ], function () {
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
+        Route::get('/incomes/{user}', StatisticReferralController::class)->name('referral.show');
         Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });
