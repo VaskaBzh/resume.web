@@ -26,7 +26,7 @@ class Hash extends Model
     /** Relations */
     public function sub(): BelongsTo
     {
-        return $this->belongsTo(Sub::class, 'group_id', 'group_id');
+        return $this->belongsTo(Sub::class);
     }
 
     public function workers(): HasMany

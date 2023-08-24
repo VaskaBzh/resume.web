@@ -24,6 +24,7 @@ const messages = {
                     "Enter username",
                     "Enter password",
                     "Confirm password",
+                    "Ref. code (optional)",
                 ],
                 checkbox: ["I agree to the terms of", "Privacy Policy"],
                 validate: [
@@ -125,13 +126,14 @@ const messages = {
                 accounts: "Subaccounts",
                 workers: "Worker",
                 income: "Earnings",
-                connection: "Connection",
+                connecting: "Connection",
                 wallets: "Wallets",
                 home: "Home",
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
                 hosting: "Hosting services",
                 settings: "Settings",
+                ref: "Ref. cabinet",
                 buttons: {
                     add: "Add a subaccount",
                     leave: "Exit",
@@ -410,8 +412,9 @@ const messages = {
             accounts: "Subaccounts",
             workers: "Worker",
             income: "Earnings",
-            connection: "Connection",
+            connecting: "Connection",
             wallets: "Wallets",
+            ref: "Ref. cabinet",
         },
         days: "Days",
         hours: "Hours",
@@ -675,6 +678,7 @@ const messages = {
                     "Введите имя пользователя",
                     "Введите пароль",
                     "Введите пароль",
+                    "Реф. код (не обязательно)",
                 ],
                 checkbox: [
                     "Я согласен с условиями",
@@ -779,13 +783,14 @@ const messages = {
                 accounts: "Субаккаунты",
                 workers: "Воркеры",
                 income: "Доходы",
-                connection: "Подключение",
+                connecting: "Подключение",
                 wallets: "Кошельки",
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
                 hosting: "Хостингам",
                 settings: "Настройки",
+                ref: "Реф. кабинет",
                 buttons: {
                     add: "Добавить сабаккаунт",
                     leave: "Выйти",
@@ -1070,8 +1075,9 @@ const messages = {
             accounts: "Субаккаунты",
             workers: "Воркеры",
             income: "Доходы",
-            connection: "Подключение",
+            connecting: "Подключение",
             wallets: "Кошельки",
+            ref: "Реф. кабинет",
         },
         days: "Дней",
         hours: "Часа",
@@ -1310,7 +1316,6 @@ const messages = {
 
 // Create VueI18n instance with options
 export const i18n = createI18n({
-    legacy: false, // you must specify 'legacy: false' option
-    locale: "en", // set locale
-    messages, // set locale messages
+    locale: "en",
+    messages,
 });

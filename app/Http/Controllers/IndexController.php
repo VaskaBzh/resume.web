@@ -111,6 +111,14 @@ class IndexController extends Controller
         ]);
     }
 
+    public function ref()
+    {
+        return Inertia::render('Profile/ReferralPage', [
+            'auth_user' => Auth::check(),
+            'user' => auth()->user()
+        ]);
+    }
+
     public function Income()
     {
         return Inertia::render('Profile/FullPages/IncomePage', [

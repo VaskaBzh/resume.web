@@ -4,8 +4,9 @@ namespace App\Console;
 
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
+use App\Console\Commands\PayoutCommand;
 use App\Console\Commands\SyncSubsCommand;
-use App\Console\Commands\UpdateIncomesCommand;
+use App\Console\Commands\IncomeCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\UpdateMinerStatCommand;
@@ -13,10 +14,11 @@ use App\Console\Commands\UpdateMinerStatCommand;
 class Kernel extends ConsoleKernel
 {
     protected $commands = [
-        UpdateIncomesCommand::class,
+        IncomeCommand::class,
         UpdateMinerStatCommand::class,
         MakeHashesCommand::class,
         MakeWorkerHashesCommand::class,
+        PayoutCommand::class,
     ];
     /**
      * Define the application's command schedule.
@@ -24,11 +26,11 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('update:incomes')->dailyAt('07:00');
+        $schedule->command('income')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('make:sub-hashes')->hourly();
         $schedule->command('make:worker-hashes')->hourly();
+        $schedule->command('make:sub-hashes')->hourly();
     }
 
     /**

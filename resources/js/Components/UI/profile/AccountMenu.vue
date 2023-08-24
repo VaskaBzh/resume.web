@@ -196,7 +196,7 @@ export default {
 
         const addAcc = async () => {
             wait.value = true;
-            await form.post(route("sub_create"), {
+            await form.post(route("sub.create"), {
                 onFinish: () => {
                     wait.value = false;
                 },

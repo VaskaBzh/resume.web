@@ -1,12 +1,12 @@
 <?php
 
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
 use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MinerStatController;
+use App\Http\Controllers\Referral\CodeController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Sub\ListController as SubListController;
 use App\Http\Controllers\Sub\CreateController as SubCreateController;
@@ -14,10 +14,14 @@ use App\Http\Controllers\Sub\ShowController as SubShowController;
 use App\Http\Controllers\Workers\ListController as WorkerListController;
 use App\Http\Controllers\Workers\ShowController as WorkerShowController;
 use App\Http\Controllers\WorkerHashRate\ListController as WorkerHashRateListController;
+use App\Http\Controllers\Referral\StatisticController as StatisticReferralController;
 use App\Http\Controllers\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Wallet\UpdateController as WalletUpdateController;
 use App\Http\Controllers\Payout\ListController as PayoutListController;
+use App\Http\Controllers\Referral\ListController as ListReferralController;
+use App\Http\Controllers\Referral\AttachController as AttachReferralController;
+use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
@@ -90,6 +94,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/full-page/income', 'income')->name('income');
         Route::get('/full-page/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
+        Route::get('/ref', 'ref')->name('ref');
     });
 
     Route::group([
@@ -102,4 +107,14 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/change/{user}', ProfileController::class)->name('change');
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');
+
+    Route::group([
+        'prefix' => 'referrals'
+    ], function () {
+        Route::post('/generate/{user}', CodeController::class)->name('code');
+        Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
+        Route::get('{user}', ListReferralController::class)->name('referral.list');
+        Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
+        Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
+    });
 });

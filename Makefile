@@ -6,11 +6,13 @@ up: down
 	docker-compose up -d
 down:
 	docker-compose down
-build: install npm key
+restart: down up
+build: install composer npm key
 install:
 	cp .env.example .env || true
 	docker-compose build
 	docker-compose up -d
+composer:
 	$(COMPOSE) $(APP) composer install
 key:
 	$(ARTISAN) key:gen --ansi
@@ -50,4 +52,8 @@ sync-workers:
 stats:
 	$(ARTISAN) update:stats
 income:
+<<<<<<< HEAD
 	$(ARTISAN) update:incomes
+=======
+	$(ARTISAN) income
+>>>>>>> 9a12e8636d4c23e50dd1989ed1d11c216f9fca88

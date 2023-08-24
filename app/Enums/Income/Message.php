@@ -11,4 +11,5 @@ enum Message: string
     case ERROR = 'error';
     case ERROR_PAYOUT = 'error payout';
     case COMPLETED = 'completed';
+    case READY_TO_PAYOUT = 'ready to payout';
 }
