@@ -4,10 +4,10 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Console\Commands\IncomeCommand;
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
 use App\Console\Commands\PayoutCommand;
-use App\Console\Commands\IncomeCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\UpdateMinerStatCommand;
@@ -27,9 +27,10 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        $schedule->command('income')->dailyAt('07:00');
+        $schedule->command('update:incomes')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
+        $schedule->command('make:sub-hashes')->hourly();
         $schedule->command('make:worker-hashes')->hourly();
     }
 
