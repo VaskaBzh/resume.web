@@ -37,16 +37,15 @@ export class CabinetService {
             ),
         ];
     }
-
     getSelectAccounts() {
         this.accounts = store.getters.allAccounts;
     }
-
     async generateCode(id) {
         await api.post(`/referrals/generate/${this.user_id}`, {
             group_id: id,
         });
-        this.index();
+
+        await this.index();
     }
 
     setCode(code) {

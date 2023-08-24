@@ -9,7 +9,7 @@
             </p>
             <div class="referral__row">
                 <main-copy class="referral_code" :code="service.code" />
-                <percent-card :percent="percent" />
+                <percent-card :percent="percent" class="referral__card-percent" />
             </div>
         </div>
         <div class="cabinet__block cabinet__block-light referral__block">
@@ -32,6 +32,7 @@
                 {{ $t("incomes.text") }}
             </p>
             <referral-select
+                class="referral_select-cabinet"
                 :rows="service.accounts"
                 :activeSubId="service.activeSubId"
                 @changeSub="service.generateCode($event)"
@@ -99,6 +100,7 @@ export default {
     },
     mounted() {
         this.service.getGradeList();
+
         this.service.index();
         if (this.allAccounts) this.service.getSelectAccounts();
     },

@@ -1,20 +1,19 @@
 <template>
     <div class="referral__content">
         <div class="referral__head">
-            <main-search :placeholder="$t('search.placeholder')" />
-            <referral-select class="referral_select" />
+            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />
+            <referral-select class="referral_select referral_select-cabinet" />
         </div>
-                <main-slider
-                    :wait="service.waitTable"
-                    :empty="service.rows"
-                    :table="service.table"
-                    :rowsNum="per_page"
-                    :errors="errors"
-                    :meta="service.meta"
-                    :key="getActive"
-                    @changePerPage="changePerPage"
-                    @changePage="page = $event"
-                />
+            <main-slider
+                :wait="service.waitTable"
+                :empty="service.rows"
+                :table="service.table"
+                :rowsNum="per_page"
+                :errors="errors"
+                :meta="service.meta"
+                @changePerPage="changePerPage"
+                @changePage="page = $event"
+            />
     </div>
 </template>
 
@@ -25,7 +24,6 @@ import MainSlider from "@/Components/technical/MainSlider.vue"
 
 import { PaymentService } from "@/modules/referral/services/PaymentService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
-import { mapGetters } from "vuex";
 
 export default {
     name: "payment-view",
@@ -48,11 +46,6 @@ export default {
             page: 1,
         };
     },
-    computed: {
-        ...mapGetters([
-            "getActive",
-        ]),
-    },
     watch: {
         page() {
             this.initIncomes();
@@ -61,9 +54,6 @@ export default {
             this.initIncomes();
         },
         per_page() {
-            this.initIncomes();
-        },
-        getActive() {
             this.initIncomes();
         },
     },
