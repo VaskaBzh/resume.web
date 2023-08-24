@@ -55,9 +55,7 @@ export class PaymentService extends TableService {
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 
-        if (store.getters.getActive !== -1) {
-            this.waitTable = false;
-        }
+        this.waitTable = false;
 
         return this;
     }

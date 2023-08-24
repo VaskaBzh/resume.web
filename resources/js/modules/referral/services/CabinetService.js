@@ -23,17 +23,17 @@ export class CabinetService {
             new SelectData(
                 "invite",
                 this.translate("stats.cards[0]"),
-                data.attached_referrals_count
+                data.attached_referrals_count || 0
             ),
             new SelectData(
                 "active",
                 this.translate("stats.cards[1]"),
-                data.active_referrals_count
+                data.active_referrals_count || 0
             ),
             new SelectData(
                 "profit",
                 this.translate("stats.cards[2]"),
-                `$${data.referrals_total_amount}`
+                `$${data.referrals_total_amount || 0}`
             ),
         ];
     }
