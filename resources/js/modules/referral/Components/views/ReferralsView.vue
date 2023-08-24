@@ -1,7 +1,7 @@
 <template>
     <div class="referral__content">
         <div class="referral__head">
-            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />
+<!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
             <percent-card
                 :percent="service.percent"
                 :percentSvg="service.percentSvg"
@@ -65,7 +65,8 @@ export default {
         margin-bottom: 24px;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        //justify-content: space-between;
+        justify-content: flex-end;
         @media (max-width: $mobile) {
             flex-direction: column;
             gap: 24px;

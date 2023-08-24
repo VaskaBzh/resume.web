@@ -6,12 +6,10 @@ namespace App\Services\Internal;
 
 use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
-use App\Helper;
-use App\Http\Resources\IncomeCollection;
-use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
+use App\Utils\Helper;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -35,14 +33,12 @@ class ReferralService
     {
         return [
             'attached_referrals_count' => $referrals->count(),
-            ...$referrals->reduce(static function (array $acc, User $user) {
-                $activeReferralSubs = Sub::getActiveReferrals($user)->get();
-
-                $acc['active_referrals_count'] += $activeReferralSubs->count();
-                $acc['referrals_total_amount'] += $activeReferralSubs->sum('total_amount');
-
-                return $acc;
-            }, ['active_referrals_count' => 0, 'referrals_total_amount' => 0])
+            'referrals_total_amount' =>  DB::table('referrals')
+                ->join('incomes', 'incomes.referral_id', 'referrals.id')
+                ->whereIn('referrals.user_id', $referrals->pluck('id'))
+                ->sum('incomes.daily_amount'),
+           'active_referrals_count' => $referrals->reduce(static fn (int $acc, User $user) => $acc += Sub::getActiveReferrals($user)
+               ->count(), 0)
         ];
     }
 
@@ -62,7 +58,7 @@ class ReferralService
         });
     }
 
-    public static function getReferralIncomeCollection(int $groupId): LengthAwarePaginator
+    public static function getReferralIncomeCollection(int $groupId, string $perPage = "15"): LengthAwarePaginator
     {
 
         return DB::table('referrals')
@@ -79,6 +75,6 @@ class ReferralService
                 count(workers.id) as worker_count'
             )
             ->groupBy('incomes.id')
-            ->paginate();
+            ->paginate($perPage);
     }
 }
