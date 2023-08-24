@@ -52,4 +52,4 @@ sync-workers:
 stats:
 	$(ARTISAN) update:stats
 income:
-	$(ARTISAN) income
+	$(ARTISAN) update:incomes
