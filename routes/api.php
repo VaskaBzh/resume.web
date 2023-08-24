@@ -30,7 +30,7 @@ use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListCont
 |
 */
 
-Route::group([
+/*Route::group([
     'prefix' => 'referrals'
 ], function () {
     Route::post('/generate/{user}', CodeController::class)->name('code');
@@ -39,7 +39,7 @@ Route::group([
     Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
 
-});
+});*/
 
 /*Route::group([
     'prefix' => 'subs',
@@ -47,11 +47,11 @@ Route::group([
     Route::get('{user}', SubListController::class)->name('sub.list');
 });*/
 //
-Route::group([
+/*Route::group([
     'prefix' => 'incomes',
 ], function () {
     Route::get('{sub}', IncomeListController::class)->name('income.list');
-});
+});*/
 //
 //Route::group([
 //    'prefix' => 'payouts',
