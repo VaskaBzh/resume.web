@@ -20,19 +20,19 @@
                         :user="user"
                         :message="message"
                         :errors="errors"
-                        v-show="viewService.view === 'Cabinet'"
+                        v-if="viewService.view === 'Cabinet'"
                     />
                 </transition>
                 <transition name="page">
                     <referrals-view
                         :user="user"
-                        v-show="viewService.view === 'Referrals'"
+                        v-if="viewService.view === 'Referrals'"
                     />
                 </transition>
                 <transition name="page">
                     <payment-view
                         :user="user"
-                        v-show="viewService.view === 'Referrals_income'"
+                        v-if="viewService.view === 'Referrals_income'"
                     />
                 </transition>
             </div>

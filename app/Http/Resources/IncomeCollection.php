@@ -15,6 +15,7 @@ class IncomeCollection extends ResourceCollection
         return [
             'data' => $this->collection->map(static fn(Income $income) => [
                     'wallet' => $income->wallet?->wallet,
+                    'user_email' => $income->user_email,
                     'amount' => $income->daily_amount,
                     'hash' => $income->hash,
                     'status' => $income->status,

@@ -16,6 +16,7 @@ use App\Http\Controllers\Referral\CodeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Referral\StatisticController as StatisticReferralController;
 use \App\Http\Controllers\Referral\ListController as ReferralListController;
+use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListController;
 
 //
 /*
@@ -29,20 +30,22 @@ use \App\Http\Controllers\Referral\ListController as ReferralListController;
 |
 */
 
-Route::group([
+/*Route::group([
     'prefix' => 'referrals'
 ], function () {
     Route::post('/generate/{user}', CodeController::class)->name('code');
     Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
     Route::get('{user}', ReferralListController::class)->name('referral.list');
     Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
-});
+    Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
 
-Route::group([
+});*/
+
+/*Route::group([
     'prefix' => 'subs',
 ], function () {
     Route::get('{user}', SubListController::class)->name('sub.list');
-});
+});*/
 //
 //Route::group([
 //    'prefix' => 'incomes',

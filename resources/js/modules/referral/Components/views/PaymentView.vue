@@ -4,42 +4,80 @@
             <main-search :placeholder="$t('search.placeholder')" />
             <referral-select class="referral_select" />
         </div>
-        <!--        <main-slider-->
-        <!--            :wait="service.waitTable"-->
-        <!--            :empty="service.rows"-->
-        <!--            :table="service.table"-->
-        <!--            :rowsNum="per_page"-->
-        <!--            :errors="errors"-->
-        <!--            :meta="service.meta"-->
-        <!--            :key="getActive"-->
-        <!--            @changePerPage="changePerPage"-->
-        <!--            @changePage="page = $event"-->
-        <!--        />-->
+                <main-slider
+                    :wait="service.waitTable"
+                    :empty="service.rows"
+                    :table="service.table"
+                    :rowsNum="per_page"
+                    :errors="errors"
+                    :meta="service.meta"
+                    :key="getActive"
+                    @changePerPage="changePerPage"
+                    @changePage="page = $event"
+                />
     </div>
 </template>
 
 <script>
 import ReferralSelect from "@/modules/referral/Components/UI/ReferralSelect.vue";
 import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
-// import MainSlider from "@/Components/technical/MainSlider.vue";
+import MainSlider from "@/Components/technical/MainSlider.vue"
 
 import { PaymentService } from "@/modules/referral/services/PaymentService";
-import { ReferralsMessage } from "../../lang/ReferralsMessage";
+import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
+import { mapGetters } from "vuex";
 
 export default {
     name: "payment-view",
     i18n: {
         sharedMessages: ReferralsMessage,
     },
+    props: {
+        user: Object,
+        errors: Object,
+    },
     components: {
         ReferralSelect,
         MainSearch,
-        // MainSlider,
+        MainSlider,
     },
     data() {
         return {
-            service: new PaymentService(this.$t, [0, 1, 2, 3, 4]),
+            service: new PaymentService(this.user.id, this.$t, [0, 1, 2, 3, 4]),
+            per_page: 10,
+            page: 1,
         };
+    },
+    computed: {
+        ...mapGetters([
+            "getActive",
+        ]),
+    },
+    watch: {
+        page() {
+            this.initIncomes();
+        },
+        filter() {
+            this.initIncomes();
+        },
+        per_page() {
+            this.initIncomes();
+        },
+        getActive() {
+            this.initIncomes();
+        },
+    },
+    methods: {
+        initIncomes() {
+            this.service.setTable(this.page, this.per_page);
+        },
+        changePerPage($event) {
+            this.per_page = $event;
+            this.page = 1;
+        },
+    },
+    mounted() {
+        this.initIncomes();
     },
 };
 </script>

@@ -5,14 +5,11 @@ export class ReferralsData {
         workers_inactive,
         hashrate,
         unit,
-        init_date,
         amount
     ) {
         this.mail = mail;
-        this.workersActive = workersActive;
-        this.workers_inactive = workers_inactive;
+        this.workers = workersActive;
         this.hashrate = `${hashrate} ${unit}h/s`;
-        this.init_date = init_date;
         this.amount = `${amount} BTC`;
     }
 }

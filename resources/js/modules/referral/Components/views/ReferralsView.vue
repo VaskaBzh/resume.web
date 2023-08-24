@@ -11,7 +11,7 @@
         </div>
         <wrap-table
             :table="service.table"
-            :wait="!service.waitTable"
+            :wait="!service.rows?.length > 0"
             :empty="service.table?.get('rows')"
             :errors="errors"
             :rowsVal="1000"
@@ -54,7 +54,6 @@ export default {
         this.service.getGradeList();
         this.service.getPercent();
 
-        this.service.index();
         this.service.setTable();
     },
 };

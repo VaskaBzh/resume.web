@@ -15,14 +15,14 @@ export class ReferralsService extends TableService {
     }
 
     setter(referral) {
-        new ReferralsData(
+        return new ReferralsData(
             referral["email"],
-            referral["workers_active"],
-            referral["workers_inactive"],
-            referral["hash"],
+            referral["referral_active_workers_count"],
+            referral["workers_count_in_active"],
+            referral["referral_hash_per_day"],
             "T",
-            this.dateFormatter(referral["created_at"]),
-            referral["amount"]
+            // this.dateFormatter(referral["created_at"]),
+            referral["total_amount"]
         );
     }
 
@@ -34,7 +34,6 @@ export class ReferralsService extends TableService {
 
     async fetchReferrals(page, per_page) {
         return await api.get(`/referrals/${this.user_id}`);
-        // console.log(result);
     }
 
     async index(page = 1, per_page = 15) {
@@ -50,7 +49,7 @@ export class ReferralsService extends TableService {
             return this.setter(el);
         });
 
-        this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+        this.titles = this.useTranslater([0, 1, 2, 4]);
 
         return this;
     }
