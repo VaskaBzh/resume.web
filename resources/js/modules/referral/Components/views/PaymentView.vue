@@ -1,7 +1,7 @@
 <template>
     <div class="referral__content">
         <div class="referral__head">
-            <main-search placeholder="Поиск реферала" />
+            <main-search :placeholder="$t('search.placeholder')" />
             <referral-select class="referral_select" />
         </div>
         <!--        <main-slider-->
@@ -24,9 +24,13 @@ import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
 // import MainSlider from "@/Components/technical/MainSlider.vue";
 
 import { PaymentService } from "@/modules/referral/services/PaymentService";
+import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
     name: "payment-view",
+    i18n: {
+        sharedMessages: ReferralsMessage,
+    },
     components: {
         ReferralSelect,
         MainSearch,

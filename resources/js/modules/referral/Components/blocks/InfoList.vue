@@ -12,6 +12,7 @@
 
 <script>
 import GradeRow from "@/modules/referral/Components/UI/GradeRow.vue";
+import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
     name: "info-list",
@@ -21,11 +22,14 @@ export default {
     props: {
         gradeList: Array,
     },
+    i18n: {
+        sharedMessages: ReferralsMessage,
+    },
     data() {
         return {
             mainRow: {
-                percent: "Ваш %",
-                hashrate: "Хешрейт (PH/s)",
+                percent: this.$t("grade.labels[0]"),
+                hashrate: this.$t("grade.labels[1]"),
             },
         };
     },

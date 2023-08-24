@@ -2,7 +2,7 @@
     <div class="settings" ref="page">
         <div class="settings__main">
             <main-title class="profile cabinet_title" tag="h3">{{
-                $t("settings.title")
+                $t("title")
             }}</main-title>
             <div class="settings__content">
                 <settings-list
@@ -12,22 +12,18 @@
                 />
                 <div class="settings__column">
                     <settings-block
-                        :title="
-                            $t('settings.block.settings_block.income.title')
-                        "
-                        :text="$t('settings.block.settings_block.income.text')"
-                        :button="
-                            $t('settings.block.settings_block.income.button')
-                        "
+                        :title="$t('cards.profit.title')"
+                        :text="$t('cards.profit.text')"
+                        :button="$t('cards.profit.button')"
                         :value="settingsService.profit"
                         :success="settingsService.clearProfit"
                         @clicked="settingsService.setClearProfit($event)"
                         :currency="true"
                     />
                     <settings-block
-                        title="Активировать реферальный код"
-                        button="Активировать"
-                        placeholder="Укажите реферальный код"
+                        :title="$t('cards.referral.title')"
+                        :placeholder="$t('cards.referral.placeholder')"
+                        :button="$t('cards.referral.button')"
                         @clicked="settingsService.setReferral($event)"
                     />
                 </div>
@@ -54,9 +50,13 @@ import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue"
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
 
 import { SettingsService } from "@/modules/settings/services/SettingsService";
+import { SettingsMessage } from "../../../modules/settings/lang/SettingsMessage";
 
 export default {
     layout: profileLayoutView,
+    i18n: {
+        sharedMessages: SettingsMessage,
+    },
     components: {
         MainTitle,
         SettingsBlock,

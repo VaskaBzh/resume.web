@@ -2,12 +2,10 @@
     <div class="referral_content">
         <div class="cabinet__block cabinet__block-light referral__block">
             <main-title tag="h4" class="title referral_title">
-                Реферальный код
+                {{ $t("referral.title") }}
             </main-title>
             <p class="text text-gray referral_text referral_text-mb">
-                Данный промокод необходимо указать рефералу при регистрации или
-                в настройках аккаунта. Ваши активные рефералы будут появляться
-                во вкладке “Мои рефералы”.
+                {{ $t("referral.text") }}
             </p>
             <div class="referral__row">
                 <main-copy class="referral_code" :code="service.code" />
@@ -16,7 +14,7 @@
         </div>
         <div class="cabinet__block cabinet__block-light referral__block">
             <main-title tag="h4" class="title referral_title">
-                Общая статистика
+                {{ $t("stats.title") }}
             </main-title>
             <div class="referral__row referral__row-bet">
                 <stats-card
@@ -28,11 +26,10 @@
         </div>
         <div class="cabinet__block cabinet__block-light referral__block">
             <main-title tag="h4" class="title referral_title">
-                Начисления за рефералов
+                {{ $t("incomes.title") }}
             </main-title>
             <p class="text text-gray referral_text">
-                Укажите субаккаут на который будут начисляться вознаграждения за
-                рефералов.
+                {{ $t("incomes.text") }}
             </p>
             <referral-select
                 :rows="service.accounts"
@@ -44,11 +41,10 @@
             class="cabinet__block cabinet__block-light referral__block referral__block-full"
         >
             <main-title tag="h4" class="title referral_title">
-                Грейд-лист
+                {{ $t("grade.title") }}
             </main-title>
             <p class="text text-gray referral_text">
-                Получаемый вами процент равен сумме хешрейта всех ваших
-                рефералов.
+                {{ $t("grade.text") }}
             </p>
             <info-list :gradeList="service.gradeList" />
         </div>
@@ -65,6 +61,7 @@ import InfoList from "@/modules/referral/Components/blocks/InfoList.vue";
 
 import { CabinetService } from "@/modules/referral/services/CabinetService";
 import { mapGetters } from "vuex";
+import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
     name: "cabinet-view",
@@ -75,6 +72,9 @@ export default {
         StatsCard,
         ReferralSelect,
         InfoList,
+    },
+    i18n: {
+        sharedMessages: ReferralsMessage,
     },
     props: {
         user: Object,
@@ -87,7 +87,7 @@ export default {
     data() {
         return {
             percent: 0.8,
-            service: new CabinetService(this.user.id),
+            service: new CabinetService(this.user.id, this.$t),
         };
     },
     watch: {
@@ -183,7 +183,7 @@ export default {
             flex-direction: column;
         }
         &-bet {
-            justify-content: space-between;
+            justify-content: space-around;
             @media (max-width: $pc) {
                 flex-direction: column;
                 gap: 16px;

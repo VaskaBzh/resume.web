@@ -1316,7 +1316,6 @@ const messages = {
 
 // Create VueI18n instance with options
 export const i18n = createI18n({
-    legacy: false, // you must specify 'legacy: false' option
-    locale: "en", // set locale
-    messages, // set locale messages
+    locale: "en",
+    messages,
 });

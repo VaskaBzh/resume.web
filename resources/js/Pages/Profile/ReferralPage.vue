@@ -2,9 +2,9 @@
     <div class="referral profile">
         <div class="referral__wrapper">
             <div class="cabinet__head">
-                <main-title tag="h3" class="cabinet_title"
-                    >Реферальный кабинет</main-title
-                >
+                <main-title tag="h3" class="cabinet_title">{{
+                    $t("title")
+                }}</main-title>
             </div>
             <div class="cabinet referral__cabinet">
                 <div class="referral__tabs">
@@ -49,6 +49,7 @@ import ReferralsView from "@/modules/referral/Components/views/ReferralsView.vue
 import PaymentView from "@/modules/referral/Components/views/PaymentView.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
+import { ReferralsMessage } from "../../modules/referral/lang/ReferralsMessage";
 
 export default {
     name: "referral-page",
@@ -60,6 +61,9 @@ export default {
         PaymentView,
         ReferralsView,
     },
+    i18n: {
+        sharedMessages: ReferralsMessage,
+    },
     props: {
         user: Object,
         errors: Object,
@@ -67,7 +71,7 @@ export default {
     },
     data() {
         return {
-            viewService: new ViewsService(),
+            viewService: new ViewsService(this.$t),
         };
     },
     mounted() {

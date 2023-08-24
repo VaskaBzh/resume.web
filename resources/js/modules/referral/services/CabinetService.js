@@ -4,11 +4,12 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
 
 export class CabinetService {
-    constructor(id) {
+    constructor(id, translate) {
         this.statsCards = [];
         this.accounts = [];
         this.gradeList = [];
         this.referrals = {};
+        this.translate = translate;
 
         this.code = "";
         this.activeSubId = null;
@@ -21,13 +22,17 @@ export class CabinetService {
             ...this.statsCards,
             new SelectData(
                 "invite",
-                "Приглашенные",
+                this.translate("stats.cards[0]"),
                 data.attached_referrals_count
             ),
-            new SelectData("active", "Активные", data.active_referrals_count),
+            new SelectData(
+                "active",
+                this.translate("stats.cards[1]"),
+                data.active_referrals_count
+            ),
             new SelectData(
                 "profit",
-                "Общая прибыль",
+                this.translate("stats.cards[2]"),
                 `$${data.referrals_total_amount}`
             ),
         ];
@@ -41,6 +46,7 @@ export class CabinetService {
         await api.post(`/referrals/generate/${this.user_id}`, {
             group_id: id,
         });
+        this.index();
     }
 
     setCode(code) {
