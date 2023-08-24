@@ -95,7 +95,7 @@ class UpdateIncomesCommand extends Command
                     $incomeService->createLocalIncome(wallet: $wallet);
                     $incomeService->updateLocalSub();
 
-                    $walletService->lock();
+                    //$walletService->lock();
 
                     return;
                 }

@@ -49,5 +49,5 @@ sync-workers:
 	$(ARTISAN) sync:worker
 stats:
 	$(ARTISAN) update:stats
-incomes:
+income:
 	$(ARTISAN) update:incomes
