@@ -21,7 +21,5 @@ class AttachController extends Controller
         $owner = Sub::find($groupId);
 
         AttachReferral::execute($user, $owner);
-
-
     }
 }

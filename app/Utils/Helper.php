@@ -1,12 +1,10 @@
 <?php
 
-namespace App;
+namespace App\Utils;
 
 use App\Models\MinerStat;
 use App\Models\User;
 use App\Services\External\BtcComService;
-use App\Services\Internal\IncomeService;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class Helper

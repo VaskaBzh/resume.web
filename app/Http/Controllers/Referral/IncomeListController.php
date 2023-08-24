@@ -8,11 +8,12 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class IncomeListController extends Controller
 {
-    public function __invoke(User $user)
+    public function __invoke(User $user, Request $request)
     {
         if (!$user->referral_code) {
             return new JsonResponse([
@@ -20,6 +21,6 @@ class IncomeListController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return ReferralService::getReferralIncomeCollection($user->referral_code['group_id']);
+        return ReferralService::getReferralIncomeCollection($user->referral_code['group_id'], $request->per_page ?? 15);
     }
 }
