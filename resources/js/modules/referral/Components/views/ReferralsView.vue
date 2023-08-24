@@ -1,7 +1,7 @@
 <template>
     <div class="referral__content">
         <div class="referral__head">
-            <main-search placeholder="Поиск реферала" />
+            <main-search :placeholder="$t('search.placeholder')" />
             <percent-card
                 :percent="service.percent"
                 :percentSvg="service.percentSvg"
@@ -25,9 +25,13 @@ import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 
 import { ReferralsService } from "@/modules/referral/services/ReferralsService";
+import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 
 export default {
     name: "referrals-view",
+    i18n: {
+        sharedMessages: ReferralsMessage,
+    },
     props: {
         errors: Object,
         user: Object,

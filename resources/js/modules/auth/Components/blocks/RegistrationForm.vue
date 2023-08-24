@@ -39,7 +39,7 @@
                     :model="service.form.password"
                     :errors="errors"
                     @change="service.validateProcess($event)"
-                ></main-password>
+                />
             </div>
             <main-validate :validate="service.validate" />
             <div
@@ -50,8 +50,12 @@
                     name="password_confirmation"
                     :placeholder="this.$t('auth.reg.placeholders[3]')"
                     :model="service.form.password_confirmation"
-                    @change="service.form.password_confirmation = $event"
-                ></main-password>
+                    @change="
+                        service.form.password_confirmation = !!$event.target
+                            ? $event.target.value
+                            : $event
+                    "
+                />
             </div>
             <auth-input
                 :error="service.errors.referral"
@@ -121,7 +125,7 @@ import pdf from "@/../assets/files/policy.pdf";
 import { Link } from "@inertiajs/vue3";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
-import MainValidate from "@/modules/common/Components/MainValidate.vue";
+import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";

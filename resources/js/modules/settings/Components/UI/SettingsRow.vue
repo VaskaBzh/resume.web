@@ -31,10 +31,14 @@
 
 <script>
 import { useForm, usePage } from "@inertiajs/vue3";
+import { SettingsMessage } from "../../lang/SettingsMessage";
 
 export default {
     name: "settings-row",
     props: ["val", "svg", "name", "keyForm"],
+    i18n: {
+        sharedMessages: SettingsMessage,
+    },
     data() {
         return {
             value: this.val,
@@ -64,7 +68,7 @@ export default {
             // this.end_change();
             let data = {
                 name: this.name.toLowerCase(),
-                val: this.value === "Добавьте телефон" ? "" : this.value,
+                val: this.value,
                 key: this.keyForm,
             };
 

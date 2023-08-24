@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/vue3";
 import { FormData } from "@/modules/auth/DTO/FormData";
 
-import { ValidateSevice } from "@/modules/common/services/ValidateSevice";
+import { ValidateService } from "@/modules/validate/services/ValidateService";
 
 export class RegistrationService {
     constructor() {
@@ -10,7 +10,7 @@ export class RegistrationService {
         this.checkbox = false;
         this.errors = {};
 
-        this.validateService = new ValidateSevice();
+        this.validateService = new ValidateService();
     }
 
     setForm() {

@@ -1,7 +1,7 @@
 import { useForm } from "@inertiajs/vue3";
 import { FormData } from "@/modules/settings/DTO/FormData";
 
-import { ValidateSevice } from "@/modules/common/services/ValidateSevice";
+import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
 
@@ -24,7 +24,7 @@ export class SettingsService {
         this.closed = false;
         this.waitAjax = false;
 
-        this.validateService = new ValidateSevice();
+        this.validateService = new ValidateService();
     }
 
     validateProcess(event) {
@@ -39,7 +39,7 @@ export class SettingsService {
         this.login = user.name;
         this.email = user.email;
         this.password = "*********";
-        this.phone = user.phone ?? "Добавьте номер";
+        this.phone = user.phone ?? this.translate("inputs.phone");
     }
 
     setRows() {
@@ -143,7 +143,7 @@ export class SettingsService {
         // item: data.name === "пароль" ? "" : data.val,
         this.form = {
             ...this.form,
-            item: data.name === "пароль" ? "Введите старый пароль" : data.val,
+            item: data.name === this.translate('inputs.password') ? this.translate('inputs.old_password') : data.val,
             type: data.name,
             key: data.key,
         };

@@ -120,6 +120,7 @@ export default {
 }
 .row {
     position: relative;
+    width: 100%;
     &_input {
         letter-spacing: normal;
         width: 100%;

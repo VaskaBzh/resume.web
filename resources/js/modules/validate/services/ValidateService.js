@@ -1,12 +1,12 @@
-import { ValidateEnums } from "@/modules/common/enums/ValidateEnums";
+import { ValidateEnums } from "@/modules/validate/enums/ValidateEnums";
 
-export class ValidateSevice {
+export class ValidateService {
     validateProcess(event, form, validate) {
         form.password = event;
         validate = {};
 
         if (form.password?.length <= 10 || form.password?.length >= 50)
-            validate = { ...validate, length: true };
+            validate = { ...validate, length: true };``
 
         if (!ValidateEnums.strokeLetters.test(form.password))
             validate = { ...validate, lower: true };

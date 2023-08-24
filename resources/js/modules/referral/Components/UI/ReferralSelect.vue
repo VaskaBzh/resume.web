@@ -37,15 +37,20 @@
 </template>
 
 <script>
+import {ReferralsMessage} from "../../lang/ReferralsMessage";
+
 export default {
     name: "referral-select",
     props: {
         rows: Array,
         activeSubId: String,
     },
+    i18n: {
+        sharedMessages: ReferralsMessage,
+    },
     data() {
         return {
-            baseName: "Субаккаунт",
+            baseName: this.$t("incomes.base_value"),
             opened: false,
         };
     },

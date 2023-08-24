@@ -1,17 +1,18 @@
 import { TabData } from "@/modules/referral/DTO/TabData";
 
 export class ViewsService {
-    constructor() {
+    constructor(translate) {
         this.tabs = [];
+        this.translate = translate;
         this.view = "Cabinet";
     }
 
     setTabs() {
         this.tabs = [
             ...this.tabs,
-            new TabData("Кабинет", "Cabinet"),
-            new TabData("Мои рефералы", "Referrals"),
-            new TabData("Вознаграждение", "Referrals_income"),
+            new TabData(this.translate("tabs[0]"), "Cabinet"),
+            new TabData(this.translate("tabs[1]"), "Referrals"),
+            new TabData(this.translate("tabs[2]"), "Referrals_income"),
         ];
     }
 

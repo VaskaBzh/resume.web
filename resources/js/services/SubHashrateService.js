@@ -1,6 +1,6 @@
 import api from "@/api/api";
 
-import { subHashrateData } from "@/DTO/subHashrateData";
+import { SubHashrateData } from "@/DTO/SubHashrateData";
 import store from "@/store";
 
 export class SubHashrateService {
@@ -85,7 +85,7 @@ export class SubHashrateService {
             this.setDefaultKeys();
 
             this.records = (await this.fetch()).data.data.map((el) => {
-                return new subHashrateData(el);
+                return new SubHashrateData(el);
             });
 
             await this.makeFullValues();

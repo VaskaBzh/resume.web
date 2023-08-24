@@ -26,6 +26,12 @@ export class ReferralsService extends TableService {
         );
     }
 
+    useTranslater(indexes) {
+        return indexes.map((index) =>
+            this.translate(`referrals_titles[${index}]`)
+        );
+    }
+
     async fetchReferrals(page, per_page) {
         return await api.get(`/referrals/${this.user_id}`);
         // console.log(result);

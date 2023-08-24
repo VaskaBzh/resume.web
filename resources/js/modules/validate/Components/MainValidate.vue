@@ -9,7 +9,7 @@
                         : 'validate_val-reject'
                 "
             >
-                {{ this.$t("auth.reg.validate[0]") }}
+                {{ this.$t("validate[0]") }}
             </li>
             <ul class="validate__list">
                 <span
@@ -25,31 +25,31 @@
                             : 'validate_val-reject'
                     "
                 >
-                    {{ this.$t("auth.reg.validate[1]") }}
+                    {{ this.$t("validate[1]") }}
                 </span>
                 <li
                     class="validate_val"
                     :class="!validate.lower ? 'validate_val-complete' : ''"
                 >
-                    {{ this.$t("auth.reg.validate[2]") }}
+                    {{ this.$t("validate[2]") }}
                 </li>
                 <li
                     class="validate_val"
                     :class="!validate.upper ? 'validate_val-complete' : ''"
                 >
-                    {{ this.$t("auth.reg.validate[3]") }}
+                    {{ this.$t("validate[3]") }}
                 </li>
                 <li
                     class="validate_val"
                     :class="!validate.symbol ? 'validate_val-complete' : ''"
                 >
-                    {{ this.$t("auth.reg.validate[4]") }}
+                    {{ this.$t("validate[4]") }}
                 </li>
                 <li
                     class="validate_val"
                     :class="!validate.number ? 'validate_val-complete' : ''"
                 >
-                    {{ this.$t("auth.reg.validate[5]") }}
+                    {{ this.$t("validate[5]") }}
                 </li>
             </ul>
         </ul>
@@ -57,10 +57,15 @@
 </template>
 
 <script>
+import { ValidateMessage } from "@/modules/validate/lang/ValidateMessage";
+
 export default {
     name: "main-validate",
     props: {
         validate: Object,
+    },
+    i18n: {
+        sharedMessages: ValidateMessage,
     },
 };
 </script>

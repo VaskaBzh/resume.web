@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <p class="card_text">Текущий процент - {{ percent }} %</p>
+        <p class="card_text">{{ $t("percent.text") }} - {{ percent }} %</p>
         <svg
             class="card_question"
             @mouseover="openGradeList"
@@ -49,11 +49,15 @@
 
 <script>
 import InfoList from "@/modules/referral/Components/blocks/InfoList.vue";
+import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
     name: "percent-card",
     components: {
         InfoList,
+    },
+    i18n: {
+        sharedMessages: ReferralsMessage,
     },
     props: {
         percent: Number,
@@ -85,11 +89,10 @@ export default {
 <style scoped lang="scss">
 .grade-enter-active,
 .grade-leave-active {
-    transition: all 0.3s ease 0s;
+    transition: all 0.7s ease 0s;
 }
 .grade-enter-from,
 .grade-leave-to {
-    visibility: hidden;
     opacity: 0;
 }
 .card {
