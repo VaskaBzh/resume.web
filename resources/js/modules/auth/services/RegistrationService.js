@@ -14,13 +14,11 @@ export class RegistrationService {
     }
 
     setForm() {
-        this.form = new FormData("", "", "", "", "", false);
+        this.form = useForm(new FormData("", "", "", "", "", false));
     }
 
     async account_create() {
         this.checkbox = false;
-
-        this.form = useForm(this.form);
 
         if (this.form.checkbox) {
             if (Object.entries(this.validate).length === 0) {

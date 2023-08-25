@@ -287,7 +287,8 @@ body {
                                     background: var(--dark-theme-second-bg, #101D2B);
                                 }
                                 &_arrow {
-                                    stroke: var(--dark-theme-second-bg, #101D2B);
+                                    fill: var(--dark-theme-second-bg, #101D2B);
+                                    stroke: none;
                                 }
                             }
                             svg {
@@ -373,18 +374,37 @@ body {
                         color: #3f7bdd;
                     }
                 }
-                .settings__column {
-                    .text {
-                        color: #cacaca;
-                    }
-
-                    .form {
-                        &_row {
+                .settings {
+                    &__block {
+                        &-column {
                             span {
-                                color: #989898;
+                                color: var(--dark-theme-gray, #989898);
                             }
-                            input {
-                                background: #283955;
+                        }
+                    }
+                    &__column {
+                        .text {
+                            color: #cacaca;
+                        }
+                        input {
+                            background: #283955;
+                        }
+
+                        .form {
+                            &_row {
+                                span {
+                                    color: #989898;
+                                }
+                                input {
+                                    background: #283955;
+                                }
+                            }
+                        }
+                    }
+                    &__content {
+                        .list {
+                            .text-black {
+                                color: var(--dark-theme-text, #CACACA);
                             }
                         }
                     }
@@ -935,7 +955,28 @@ body {
             background: rgba(9, 9, 9, 0.6);
             backdrop-filter: blur(1.5px);
         }
+        .row {
+            &_input {
+                background: var(--dark-theme-input, #333639) !important;
+                color: var(--dark-theme-text, #CACACA) !important;
+                &::placeholder {
+                    color: var(--dark-theme-text, #CACACA) !important;
+                }
+                &:focus {
+                    background: var(--dark-theme-input, #333639) !important;
+                }
+            }
+        }
         .popup {
+            .form {
+                input {
+                    background: #161B20 !important;
+                    color: var(--dark-theme-gray, #989898) !important;
+                    &::placeholder {
+                        color: var(--dark-theme-gray, #989898) !important;
+                    }
+                }
+            }
             &-card,
             &-graph {
                 .popup__content {
@@ -988,6 +1029,23 @@ body {
         .label {
             color: #989898;
         }
+        .validate {
+            background: #333639;
+            box-shadow: 0 4px 10px 0 rgba(35, 38, 63, 0.15);
+            &_val {
+                color: #cacaca;
+                &:before {
+                    background-image: none;
+                    background-color: #cacaca;
+                }
+                &-reject {
+                    color: #ef4e4d;
+                }
+                &-complete {
+                    color: #86ff83;
+                }
+            }
+        }
         .form {
             h3 {
                 color: #e1e1e1 !important;
@@ -1000,23 +1058,6 @@ body {
                 }
             }
             &-auth {
-                .validate {
-                    background: #333639;
-                    box-shadow: 0 4px 10px 0 rgba(35, 38, 63, 0.15);
-                    &_val {
-                        color: #cacaca;
-                        &:before {
-                            background-image: none;
-                            background-color: #cacaca;
-                        }
-                        &-reject {
-                            color: #ef4e4d;
-                        }
-                        &-complete {
-                            color: #86ff83;
-                        }
-                    }
-                }
                 .form {
                     &_row {
                         &.error {

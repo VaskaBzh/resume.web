@@ -18,6 +18,8 @@ export class CabinetService {
     }
 
     getStatsCards(data) {
+        this.statsCards.length = 0;
+
         this.statsCards = [
             ...this.statsCards,
             new SelectData(

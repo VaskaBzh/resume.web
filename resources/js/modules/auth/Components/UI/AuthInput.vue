@@ -64,6 +64,7 @@ export default {
             color: rgba(124, 124, 124, 0.7);
             transition: all 0.5s ease 0s;
         }
+        outline: none;
         width: 100%;
         color: #343434;
         font-size: 24px;
@@ -92,6 +93,14 @@ export default {
         &:active,
         &:focus {
             border-color: #9fbdee;
+            background: linear-gradient(
+                179deg,
+                #e6eaf0 0%,
+                #e6eaf1 20.89%,
+                #e7ebf1 42.88%,
+                #eaeef4 76.04%,
+                #e8ecf2 100%
+            ) !important;
         }
     }
     &_content {

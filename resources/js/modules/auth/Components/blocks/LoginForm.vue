@@ -1,30 +1,18 @@
 <template>
-    <form @submit.prevent="service.account_create" class="form-auth">
+    <form @submit.prevent="service.login" class="form-auth">
         <main-title tag="h3" class="form-auth_title">{{
-            this.$t("auth.reg.title")
+            this.$t("auth.login.title")
         }}</main-title>
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
                 :error="service.errors.email"
                 :model="service.form.email"
-                :placeholder="this.$t('auth.reg.placeholders[0]')"
+                :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
                 type="text"
                 @change="
                     service.form.email = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
-            />
-            <auth-input
-                :error="service.errors.name"
-                :model="service.form.name"
-                :placeholder="this.$t('auth.reg.placeholders[1]')"
-                name="name"
-                type="text"
-                @change="
-                    service.form.name = !!$event.target
                         ? $event.target.value
                         : $event
                 "
@@ -35,52 +23,24 @@
             >
                 <main-password
                     name="password"
-                    :placeholder="this.$t('auth.reg.placeholders[2]')"
+                    :placeholder="this.$t('auth.reg.placeholders[1]')"
                     :model="service.form.password"
                     :errors="errors"
                     @change="
-                        service.validateProcess(
-                            !!$event.target ? $event.target.value : $event
-                        )
-                    "
-                />
-            </div>
-            <main-validate :validate="service.validate" />
-            <div
-                class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
-            >
-                <main-password
-                    name="password_confirmation"
-                    :placeholder="this.$t('auth.reg.placeholders[3]')"
-                    :model="service.form.password_confirmation"
-                    @change="
-                        service.form.password_confirmation = !!$event.target
+                        service.form.password = !!$event.target
                             ? $event.target.value
                             : $event
                     "
                 />
             </div>
-            <auth-input
-                :error="service.errors.referral"
-                :model="service.form.referral"
-                :placeholder="this.$t('auth.reg.placeholders[4]')"
-                name="email"
-                type="text"
-                @change="
-                    service.form.referral = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
-            />
         </div>
         <input
             class="form-auth_checkbox"
             type="checkbox"
             id="checkbox"
-            v-model="service.form.checkbox"
+            v-model="service.form.remember"
         />
-        <label for="checkbox" :class="{ error: service.checkbox }">
+        <label for="checkbox">
             <div class="fake">
                 <svg
                     width="24"
@@ -103,23 +63,18 @@
                     />
                 </svg>
             </div>
-            <span
-                >{{ this.$t("auth.reg.checkbox[0]") }}
-                <a :href="pdf" class="form-auth_link">
-                    {{ this.$t("auth.reg.checkbox[1]") }}
-                </a>
-            </span>
+            <span>{{ this.$t("auth.login.checkbox") }}</span>
         </label>
         <blue-button class="form-auth_button auth" type="submit"
             ><a class="all-link">{{
-                this.$t("auth.reg.button")
+                this.$t("auth.login.button")
             }}</a></blue-button
         >
         <p class="text text-light form-auth_text">
-            {{ this.$t("auth.reg.link[0]") }}
-            <Link :href="route('login')" class="form-auth_link">{{
-                this.$t("auth.reg.link[1]")
-            }}</Link>
+            {{ this.$t("auth.login.link[0]") }}
+            <Link :href="route('registration')" class="form-auth_link">
+                {{ this.$t("auth.login.link[1]") }}</Link
+            >
         </p>
     </form>
 </template>
@@ -129,22 +84,20 @@ import pdf from "@/../assets/files/policy.pdf";
 import { Link } from "@inertiajs/vue3";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
-import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 
-import { RegistrationService } from "@/modules/auth/services/RegistrationService";
+import { LoginService } from "@/modules/auth/services/LoginService";
 
 export default {
-    name: "registration-form",
+    name: "login-form",
     props: {
         errors: Object,
     },
     components: {
         AuthInput,
         MainPassword,
-        MainValidate,
         AuthErrors,
         Link,
         MainTitle,
@@ -153,7 +106,7 @@ export default {
     data() {
         return {
             pdf,
-            service: new RegistrationService(),
+            service: new LoginService(),
         };
     },
     watch: {

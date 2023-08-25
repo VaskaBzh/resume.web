@@ -46,7 +46,7 @@ export const SettingsMessage = {
         inputs: {
             phone: "Добавьте номер",
             password: "пароль",
-            old_password: "Введите старыйй пароль",
+            old_password: "Введите старый пароль",
         },
         cards: {
             profit: {
