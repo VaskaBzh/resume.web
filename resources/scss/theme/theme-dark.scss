@@ -1,6 +1,40 @@
 body {
     &[color-scheme="dark"] {
         background: #040d15;
+        .container-chart {
+            .band {
+                fill: #262626 !important;
+            }
+        }
+        .container-chart {
+            svg {
+                g {
+                    g {
+                        &.tick {
+                            color: #606060;
+                        }
+                    }
+                }
+            }
+            .tooltip {
+                background: rgba(40, 57, 85, 0.65);
+                &.complexity {
+                    background: #152d4f;
+                    .tooltip-wrapper {
+                        span:not(.time) {
+                            color: rgba(83, 137, 225, 1);
+                        }
+                    }
+                }
+                .tooltip-wrapper {
+                    background: rgba(40, 57, 85, 0.65);
+                    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+                    span {
+                        color: #cacaca;
+                    }
+                }
+            }
+        }
         #app {
             .checkbox {
                 background: #283955;
@@ -632,11 +666,6 @@ body {
                         color: #cacaca;
                     }
                 }
-                .container-chart {
-                    .band {
-                        fill: #262626 !important;
-                    }
-                }
                 .home-im__image {
                     .container-chart {
                         .main-line {
@@ -733,35 +762,6 @@ body {
                 .y-axis-container {
                     .tick {
                         color: #606060;
-                    }
-                }
-                .container-chart {
-                    svg {
-                        g {
-                            g {
-                                &.tick {
-                                    color: #606060;
-                                }
-                            }
-                        }
-                    }
-                    .tooltip {
-                        background: rgba(40, 57, 85, 0.65);
-                        &.complexity {
-                            background: #152d4f;
-                            .tooltip-wrapper {
-                                span:not(.time) {
-                                    color: rgba(83, 137, 225, 1);
-                                }
-                            }
-                        }
-                        .tooltip-wrapper {
-                            background: rgba(40, 57, 85, 0.65);
-                            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-                            span {
-                                color: #cacaca;
-                            }
-                        }
                     }
                 }
                 .profile__body-block {

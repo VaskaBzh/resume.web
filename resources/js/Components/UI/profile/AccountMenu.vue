@@ -174,6 +174,7 @@ export default {
             open: false,
             openedAddPopup: false,
             linkAddClicked: false,
+            name: "...",
         };
     },
     mounted() {
@@ -244,13 +245,6 @@ export default {
             }
             return arr;
         },
-        name() {
-            let name = "...";
-            if (this.getAccount) {
-                name = this.getAccount.name;
-            }
-            return name;
-        },
         earnSum() {
             let sum = 0;
             if (Object.values(this.getIncome).length > 0) {
@@ -262,6 +256,9 @@ export default {
         },
     },
     watch: {
+        getAccount(newValue) {
+            this.name = newValue.name;
+        },
         accounts() {
             this.change_height();
         },

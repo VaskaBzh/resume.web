@@ -22,11 +22,11 @@ export default {
             commit("updateActiveAccount", sub);
         },
         async accounts_all({ commit, state }, user_id) {
-            let subsList = (
-                await api.get(`/subs/${user_id}`)
-            ).data.data.map((el) => {
-                return new accountData(el);
-            });
+            let subsList = (await api.get(`/subs/${user_id}`)).data.data.map(
+                (el) => {
+                    return new accountData(el);
+                }
+            );
 
             if (state.active === -1) {
                 commit("updateAccounts", subsList);
