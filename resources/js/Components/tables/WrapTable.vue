@@ -34,7 +34,7 @@ export default {
         first: Number,
         rowsVal: Number,
         wait: Boolean,
-        empty: Object,
+        empty: Array,
         worker_service: {
             type: Object,
             default: {},

@@ -112,11 +112,11 @@ export default {
     &_content {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 1fr);
+        grid-template-rows: repeat(3, auto);
         gap: 16px;
         @media (max-width: $pc) {
             grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(4, 1fr);
+            grid-template-rows: repeat(4, auto);
         }
         @media (max-width: $mobile) {
             display: flex;

@@ -26,17 +26,24 @@ export class PaymentService extends TableService {
         if (store.getters.getActive !== -1) {
             this.waitTable = true;
 
-            let response;
+        let response = {};
 
+        try {
             response = await this.fetchIncomes(page, per_page);
 
-            this.meta = response.data;
+            this.meta = { meta: response.data };
 
             this.rows = response.data.data.map((el) => {
                 return this.setter(el);
             });
+            this.rows = response.data.data.map((el) => {
+                return this.setter(el);
+            });
 
-            this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+            this.titles = this.useTranslater([0, 1, 2, 4]);
+        } catch(err) {
+            console.error(`FetchError: ${err}`);
+        }
 
             return this;
         }

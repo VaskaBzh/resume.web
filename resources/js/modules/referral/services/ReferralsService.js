@@ -4,7 +4,6 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 
 import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
 
-import store from "@/store";
 import api from "@/api/api";
 
 export class ReferralsService extends TableService {
@@ -40,17 +39,21 @@ export class ReferralsService extends TableService {
     async index(page = 1, per_page = 15) {
         this.waitTable = true;
 
-        let response;
+        let response = {};
 
-        response = await this.fetchReferrals(page, per_page);
+        try {
+            response = await this.fetchReferrals(page, per_page);
 
-        this.meta = response.data;
+            this.meta = response.data;
 
-        this.rows = response.data.data.map((el) => {
-            return this.setter(el);
-        });
+            this.rows = response.data.data.map((el) => {
+                return this.setter(el);
+            });
 
-        this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+            this.titles = this.useTranslater([0, 1, 2, 4]);
+        } catch(err) {
+            console.error(`FetchError: ${err}`);
+        }
 
         return this;
     }

@@ -19,6 +19,7 @@ export default {
     width: 100%;
     display: inline-flex;
     justify-content: space-between;
+    padding: 5px 0;
     &:not(.row-last) {
         border-bottom: 0.5px solid rgba(126, 126, 126, 0.3);
     }
@@ -36,7 +37,9 @@ export default {
         font-family: AmpleSoftPro, serif;
         font-size: 18px;
         font-weight: 400;
-        line-height: 130%;
+        display: inline-flex;
+        align-items: center;
+        line-height: 100%;
         text-align: left;
         min-height: 28px;
         &-full {
