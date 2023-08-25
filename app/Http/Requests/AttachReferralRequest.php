@@ -11,7 +11,6 @@ class AttachReferralRequest extends FormRequest
     {
         return [
             'code' => 'required|string|exists:users,referral_code->code',
-            'user_id' => new SelfAttachRule
         ];
     }
 
