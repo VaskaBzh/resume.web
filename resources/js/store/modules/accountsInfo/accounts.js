@@ -10,7 +10,7 @@ export default {
         },
         async set_active({ commit, state }, index) {
             let sub = new accountData(
-                (await api.get(`/subs/${index}`)).data.data[0]
+                (await api.get(`/subs/sub/${index}`)).data.data
             );
 
             commit("updateActive", index);
