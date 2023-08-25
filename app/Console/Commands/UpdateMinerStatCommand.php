@@ -31,7 +31,7 @@ class UpdateMinerStatCommand extends Command
 
         $minerstat = Upsert::execute(stats: $stats, difficulty: $difficulty);
 
-        info('MINER STATS COMMAND', [
+        Log::channel('commands')->info('MINER STATS COMMAND', [
             'minerstats' => $minerstat
         ]);
 
