@@ -3,6 +3,7 @@
         <div class="graph__main">
             <div class="graph__list" ref="graph">
                 <line-graph-statistic
+                    :key="graph ? Object.values(graph)?.length : 1"
                     :graphData="graph"
                     :height="height"
                     :redraw="redraw"
@@ -56,6 +57,9 @@ export default {
         };
     },
     watch: {
+        graph() {
+            console.log(this.graph);
+        },
         viewportWidth() {
             this.height = this.getHeight;
         },

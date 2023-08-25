@@ -133,7 +133,7 @@ export default {
     watch: {
         "worker_service.graph"() {
             this.redraw = false;
-            setTimeout(() => this.redraw = true, 1700);
+            setTimeout(() => (this.redraw = true), 1700);
         },
         viewportWidth() {
             if (this.viewportWidth >= 991.98) {
@@ -150,8 +150,8 @@ export default {
         },
     },
     methods: {
-        getUser(data) {
-            data.id ? this.worker_service?.getPopup(data.id) : null;
+        async getUser(data) {
+            data.id ? await this.worker_service?.getPopup(data.id) : null;
         },
         dropUser() {
             Object.values(this.worker_service).length > 0

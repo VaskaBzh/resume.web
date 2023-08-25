@@ -14,6 +14,7 @@ export class WorkerService {
         this.table = new Map();
 
         this.waitWorkers = true;
+        this.target_worker = {};
     }
 
     useTranslater(indexes) {
@@ -89,9 +90,12 @@ export class WorkerService {
         if (store.getters.getActive !== -1) {
             this.waitWorkers = true;
 
-            this.target_worker = new workerData({
-                ...(await this.fetchWorker()).data.data,
-            });
+            Object.assign(
+                this.target_worker,
+                new workerData({
+                    ...(await this.fetchWorker()).data.data,
+                })
+            );
 
             this.waitWorkers = false;
         }
