@@ -18,38 +18,54 @@ export class CabinetService {
     }
 
     getStatsCards(data) {
+        this.statsCards.length = 0;
+
         this.statsCards = [
             ...this.statsCards,
             new SelectData(
                 "invite",
                 this.translate("stats.cards[0]"),
-                data.attached_referrals_count
+                data.attached_referrals_count || 0
             ),
             new SelectData(
                 "active",
                 this.translate("stats.cards[1]"),
-                data.active_referrals_count
+                data.active_referrals_count || 0
             ),
             new SelectData(
                 "profit",
                 this.translate("stats.cards[2]"),
-                `$${data.referrals_total_amount}`
+                `$${data.referrals_total_amount || 0}`
             ),
         ];
     }
+
     getSelectAccounts() {
         this.accounts = store.getters.allAccounts;
     }
+
+    sendMessage(message) {
+        store.dispatch("getMessage", message);
+    }
+
     async generateCode(id) {
-        await api.post(`/referrals/generate/${this.user_id}`, {
-            group_id: id,
-        });
+        let result = {};
+
+        try {
+            result = await api.post(`/referrals/generate/${this.user_id}`, {
+                group_id: id,
+            });
+
+            this.sendMessage(result.data.message);
+        } catch (err) {
+            this.sendMessage(err.response.data.message);
+        }
 
         await this.index();
     }
 
     setCode(code) {
-        this.code = code;
+        this.code = code || "...";
     }
 
     setActiveSub(group_id) {
@@ -57,8 +73,16 @@ export class CabinetService {
     }
 
     async index() {
-        let result = (await api.get(`/referrals/statistic/${this.user_id}`))
-            .data.data;
+        let response = {};
+
+        try {
+            response = (await api.get(`/referrals/statistic/${this.user_id}`))
+                .data;
+        } catch (err) {
+            console.error(`FetchError: ${err}`);
+        }
+
+        const result = response?.data || response;
 
         this.setCode(result.code);
         this.setActiveSub(result.group_id);

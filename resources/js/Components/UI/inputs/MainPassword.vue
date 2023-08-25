@@ -89,8 +89,8 @@ export default {
         },
     },
     watch: {
-        value() {
-            this.$emit("change", this.value);
+        value(newValue) {
+            this.$emit("change", newValue);
         },
     },
 };
@@ -158,6 +158,14 @@ export default {
         &:active,
         &:focus {
             border-color: #9fbdee;
+            background: linear-gradient(
+                179deg,
+                #e6eaf0 0%,
+                #e6eaf1 20.89%,
+                #e7ebf1 42.88%,
+                #eaeef4 76.04%,
+                #e8ecf2 100%
+            );
         }
     }
 }

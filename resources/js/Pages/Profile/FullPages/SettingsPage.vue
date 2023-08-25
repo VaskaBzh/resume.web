@@ -38,7 +38,11 @@
             :wait="settingsService.waitAjax"
             :closed="settingsService.closed"
             @ajaxChange="settingsService.ajaxChange($event)"
-            @validate="settingsService.validateProcess($event)"
+            @validate="
+                settingsService.validateProcess(
+                    !!$event.target ? $event.target.value : $event
+                )
+            "
         />
     </teleport>
 </template>

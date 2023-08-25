@@ -34,17 +34,21 @@ export class PaymentService extends TableService {
     async index(page = 1, per_page = 15) {
         this.waitTable = true;
 
-        let response;
+        let response = {};
 
-        response = await this.fetchIncomes(page, per_page);
+        try {
+            response = await this.fetchIncomes(page, per_page);
 
-        this.meta = { meta: response.data };
+            this.meta = { meta: response.data };
 
-        this.rows = response.data.data.map((el) => {
-            return this.setter(el);
-        });
+            this.rows = response.data.data.map((el) => {
+                return this.setter(el);
+            });
 
-        this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+            this.titles = this.useTranslater([0, 1, 2, 4]);
+        } catch(err) {
+            console.error(`FetchError: ${err}`);
+        }
 
         return this;
     }
@@ -55,9 +59,7 @@ export class PaymentService extends TableService {
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 
-        if (store.getters.getActive !== -1) {
-            this.waitTable = false;
-        }
+        this.waitTable = false;
 
         return this;
     }

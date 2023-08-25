@@ -4,6 +4,7 @@ import { FormData } from "@/modules/settings/DTO/FormData";
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
+import store from "@/store";
 
 export class SettingsService {
     constructor(translate, user) {
@@ -96,12 +97,22 @@ export class SettingsService {
         });
     }
 
-    async setReferral(code) {
-        let result = await api.post(`/referrals/attach/${this.user.id}`, {
-            code: code,
-        });
+    sendMessage(message) {
+        store.dispatch("getMessage", message);
+    }
 
-        console.log(result);
+    async setReferral(code) {
+        let result = {};
+
+        try {
+            result = await api.post(`/referrals/attach/${this.user.id}`, {
+                code: code,
+            });
+
+            this.sendMessage(result.data.message);
+        } catch (err) {
+            this.sendMessage(err.response.data.message);
+        }
     }
 
     setValue(value) {
@@ -143,7 +154,10 @@ export class SettingsService {
         // item: data.name === "пароль" ? "" : data.val,
         this.form = {
             ...this.form,
-            item: data.name === this.translate('inputs.password') ? this.translate('inputs.old_password') : data.val,
+            item:
+                data.name === this.translate("inputs.password")
+                    ? this.translate("inputs.old_password")
+                    : data.val,
             type: data.name,
             key: data.key,
         };
