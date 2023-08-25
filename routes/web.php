@@ -58,7 +58,7 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'subs',
     ], function () {
         Route::get('{user}', SubListController::class)->name('sub.list');
-        Route::get('{sub}', SubShowController::class)->name('sub.show');
+        Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
         Route::post('/create', SubCreateController::class)->name('sub.create');
     });
 
@@ -111,10 +111,9 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'referrals'
     ], function () {
+        Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
-        Route::get('/incomes/{user}', StatisticReferralController::class)->name('referral.show');
-        Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
         Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });
