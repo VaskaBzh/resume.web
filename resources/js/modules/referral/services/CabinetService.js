@@ -39,13 +39,27 @@ export class CabinetService {
             ),
         ];
     }
+
     getSelectAccounts() {
         this.accounts = store.getters.allAccounts;
     }
+
+    sendMessage(message) {
+        store.dispatch("getMessage", message);
+    }
+
     async generateCode(id) {
-        await api.post(`/referrals/generate/${this.user_id}`, {
-            group_id: id,
-        });
+        let result = {};
+
+        try {
+            result = await api.post(`/referrals/generate/${this.user_id}`, {
+                group_id: id,
+            });
+
+            this.sendMessage(result.data.message);
+        } catch (err) {
+            this.sendMessage(err.response.data.message);
+        }
 
         await this.index();
     }
@@ -62,11 +76,11 @@ export class CabinetService {
         let response = {};
 
         try {
-            response = (await api.get(`/referrals/statistic/${this.user_id}`)).data;
-        } catch(err) {
+            response = (await api.get(`/referrals/statistic/${this.user_id}`))
+                .data;
+        } catch (err) {
             console.error(`FetchError: ${err}`);
         }
-
 
         const result = response?.data || response;
 
