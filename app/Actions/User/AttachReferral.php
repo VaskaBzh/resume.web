@@ -13,6 +13,6 @@ class AttachReferral
     {
         $owner
             ->referrals()
-            ->attach($referral, ['sub_profit_percent' => 1, 'user_discount_percent' => 1]);
+            ->attach($referral, ['sub_profit_percent' => 0.8, 'user_discount_percent' => 0.8]);
     }
 }
