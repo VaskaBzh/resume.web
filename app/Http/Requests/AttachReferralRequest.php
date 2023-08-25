@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Referral\SelfAttachRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AttachReferralRequest extends FormRequest
@@ -9,7 +10,8 @@ class AttachReferralRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'code' => 'string|exists:users,referral_code->code'
+            'code' => 'required|string|exists:users,referral_code->code',
+            'user_id' => new SelfAttachRule
         ];
     }
 

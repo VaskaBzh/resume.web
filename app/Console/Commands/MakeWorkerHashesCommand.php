@@ -55,5 +55,7 @@ class MakeWorkerHashesCommand extends Command
                 report($e);
             }
         });
+
+        $this->call('make:sub-hashes');
     }
 }

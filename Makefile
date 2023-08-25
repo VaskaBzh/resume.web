@@ -52,8 +52,4 @@ sync-workers:
 stats:
 	$(ARTISAN) update:stats
 income:
-<<<<<<< HEAD
-	$(ARTISAN) update:incomes
-=======
 	$(ARTISAN) income
->>>>>>> 9a12e8636d4c23e50dd1989ed1d11c216f9fca88

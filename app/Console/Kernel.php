@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use App\Console\Commands\IncomeCommand;
@@ -28,7 +30,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:incomes')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('make:sub-hashes')->hourly();
         $schedule->command('make:worker-hashes')->hourly();
     }
 
