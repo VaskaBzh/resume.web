@@ -11,6 +11,7 @@ use App\Dto\WorkerHashRateData;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class SyncWorkerCommand extends Command
 {
@@ -27,7 +28,7 @@ class SyncWorkerCommand extends Command
 
         if (!filled($workers)) {
 
-            $this->line('Все воркеры сгруппированны!');
+            $this->line('Добавление воркеров не требуется!');
 
             return;
         }
@@ -78,5 +79,7 @@ class SyncWorkerCommand extends Command
 
         $progressBar->finish();
         $this->line("\nДобавление воркеров завершено");
+
+        Log::channel('commands')->info('WORKER IMPORT COMPLETE: ' . $workers->count());
     }
 }

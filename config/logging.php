@@ -77,6 +77,20 @@ return [
             'days' => 14,
         ],
 
+        'payouts' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/payouts/payouts.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
+        'commands' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/commands/commands.log'),
+            'level' => 'debug',
+            'days' => 14,
+        ],
+
         'slack' => [
             'driver' => 'slack',
             'url' => env('LOG_SLACK_WEBHOOK_URL'),
