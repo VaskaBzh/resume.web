@@ -1,11 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Console;
 
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
 use App\Console\Commands\PayoutCommand;
-use App\Console\Commands\SyncSubsCommand;
 use App\Console\Commands\IncomeCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -29,7 +30,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('income')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('make:sub-hashes')->hourly();
         $schedule->command('make:worker-hashes')->hourly();
     }
 

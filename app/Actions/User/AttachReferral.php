@@ -9,8 +9,10 @@ use App\Models\User;
 
 class AttachReferral
 {
-    public static function execute(User $referral, Sub $owner)
+    public static function execute(User $referral, Sub $owner): void
     {
-        $owner->referrals()->attach($referral, ['sub_profit_percent' => 1, 'user_discount_percent' => 1]);
+        $owner
+            ->referrals()
+            ->attach($referral, ['sub_profit_percent' => 1, 'user_discount_percent' => 1]);
     }
 }
