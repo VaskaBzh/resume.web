@@ -11,6 +11,7 @@ use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 
 class MakeWorkerHashesCommand extends Command
 {
@@ -55,6 +56,8 @@ class MakeWorkerHashesCommand extends Command
                 report($e);
             }
         });
+
+        Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE');
 
         $this->call('make:sub-hashes');
     }

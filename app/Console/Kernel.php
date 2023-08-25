@@ -31,7 +31,6 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
         $schedule->command('make:worker-hashes')->hourly();
-        $schedule->command('make:sub-hashes')->hourly();
     }
 
     /**
