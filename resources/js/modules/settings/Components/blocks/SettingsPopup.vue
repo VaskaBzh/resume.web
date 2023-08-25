@@ -72,6 +72,7 @@ import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
     name: "settings-popup",
@@ -87,6 +88,7 @@ export default {
     },
     components: {
         MainPopup,
+        MainTitle,
         SettingsPassword,
         BlueButton,
         MainValidate,
