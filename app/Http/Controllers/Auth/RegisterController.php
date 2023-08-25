@@ -8,6 +8,7 @@ use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\User\OnlyEngNameRule;
 use App\Services\External\BtcComService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -48,9 +49,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'regex:/^[A-aZ-z0-9]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:10', 'max:50' ,'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
         ], $this->messages());
     }
 
@@ -64,6 +65,7 @@ class RegisterController extends Controller
     ): RedirectResponse
     {
         $this->validator($request->all())->validate();
+        dd('s');
         $userData = UserData::fromRequest($request->all());
 
         try {
@@ -133,12 +135,14 @@ class RegisterController extends Controller
     {
         if (app()->getLocale() === 'ru') {
             return [
+                'name.regex' => 'Имя должно быть на английском',
                 'password.required' => 'Поле "Пароль" обязательно для заполнения.',
                 'password.min' => 'Поле "Пароль" должно быть не менее 8 символов.',
                 'password.confirmed' => 'Подтверждение пароля не совпадает.',
             ];
         } else if (app()->getLocale() === 'en') {
             return [
+                'name.regex' => 'Name must be on english',
                 'password.required' => 'The "Password" field is required.',
                 'password.min' => 'The "Password" field must be at least 8 characters.',
                 'password.confirmed' => 'The password confirmation does not match.',
