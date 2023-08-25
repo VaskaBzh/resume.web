@@ -49,7 +49,7 @@ export class CabinetService {
     }
 
     setCode(code) {
-        this.code = code;
+        this.code = code || "...";
     }
 
     setActiveSub(group_id) {
@@ -57,8 +57,16 @@ export class CabinetService {
     }
 
     async index() {
-        let result = (await api.get(`/referrals/statistic/${this.user_id}`))
-            .data.data;
+        let response = {};
+
+        try {
+            response = (await api.get(`/referrals/statistic/${this.user_id}`)).data;
+        } catch(err) {
+            console.error(`FetchError: ${err}`);
+        }
+
+
+        const result = response?.data || response;
 
         this.setCode(result.code);
         this.setActiveSub(result.group_id);
