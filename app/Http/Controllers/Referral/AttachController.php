@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class AttachController extends Controller
 {
-    public function __invoke(User $user, AttachReferralRequest $request)
+    public function __invoke(User $user, AttachReferralRequest $request): JsonResponse
     {
         $owner = User::where('referral_code->code', $request->get('code'))
             ->first();
@@ -29,5 +29,9 @@ class AttachController extends Controller
             ->find($owner->referral_code['group_id']);
 
         AttachReferral::execute($user, $ownerSub);
+
+        return new JsonResponse([
+            'message' => 'Реферальная программа успешно принята'
+        ]);
     }
 }
