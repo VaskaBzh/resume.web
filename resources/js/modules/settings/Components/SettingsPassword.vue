@@ -89,8 +89,8 @@ export default {
         },
     },
     watch: {
-        value() {
-            this.$emit("change", this.value);
+        value(newValue) {
+            this.$emit("change", newValue);
         },
     },
 };
