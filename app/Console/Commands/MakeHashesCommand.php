@@ -10,6 +10,7 @@ use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Log;
 
 class MakeHashesCommand extends Command
 {
@@ -53,5 +54,7 @@ class MakeHashesCommand extends Command
         });
 
         $progress->finish();
+
+        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE');
     }
 }
