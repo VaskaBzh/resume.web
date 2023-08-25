@@ -39,6 +39,8 @@ clear:
 	$(ARTISAN) view:clear
 tinker:
 	$(ARTISAN) tinker
+test:
+	$(ARTISAN) test
 remote_test:
 	ssh mainuser@92.205.188.112
 

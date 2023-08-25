@@ -60,7 +60,6 @@ class ReferralService
 
     public static function getReferralIncomeCollection(int $groupId, string $perPage = "15"): LengthAwarePaginator
     {
-
         return DB::table('referrals')
             ->where('referrals.group_id', $groupId)
             ->join('incomes', 'referrals.id', 'incomes.referral_id')
