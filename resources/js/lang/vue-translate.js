@@ -475,6 +475,9 @@ const messages = {
                 hash: {
                     titles: ["Current hashrate", "Avg.hashrate / 24"],
                 },
+                hashrate: {
+                    title: "Total hash rate",
+                },
                 workers: {
                     title: "Worker",
                     types: ["Active", "Unstable", "Inactive"],
@@ -1150,6 +1153,9 @@ const messages = {
                 },
                 hash: {
                     titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
+                },
+                hashrate: {
+                    title: "Общий хешрейт",
                 },
                 workers: {
                     title: "Воркеры",

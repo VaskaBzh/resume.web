@@ -30,13 +30,15 @@ export default {
     },
     methods: {
         copy() {
-            navigator.clipboard.writeText(this.code);
+            if (this.code && this.code !== "...") {
+                navigator.clipboard.writeText(this.code);
 
-            this.copyAnimation();
+                this.copyAnimation();
+            }
         },
         copyAnimation() {
             this.hasCopy = true;
-            setTimeout(() => {this.hasCopy = false}, 2000)
+            setTimeout(() => {this.hasCopy = false}, 800)
         }
     },
 };
@@ -71,6 +73,14 @@ export default {
     position: relative;
     transition: all 0.5s ease 0s;
     overflow: hidden;
+    &:hover {
+        .copy {
+            &_tick,
+            &_icon {
+                stroke: #4182ec;
+            }
+        }
+    }
     //&-active {
     //}
     &_input {
@@ -93,6 +103,7 @@ export default {
         top: 50%;
         right: 16px;
         transform: translateY(-50%);
+        transition: all 0.3s ease;
     }
     &_icon {
         stroke: #aeaeb2;
@@ -102,6 +113,7 @@ export default {
         top: 50%;
         right: 16px;
         transform: translateY(-50%);
+        transition: all 0.3s ease;
     }
 }
 </style>

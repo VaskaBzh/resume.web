@@ -8,18 +8,18 @@
                 <settings-list
                     :rows="settingsService.rows"
                     @openPopup="settingsService.getHtml($event)"
-                    @send2fac="settingsService.send2Fac"
                 />
+                <!--                    @send2fac="settingsService.send2Fac"-->
                 <div class="settings__column">
-                    <settings-block
-                        :title="$t('cards.profit.title')"
-                        :text="$t('cards.profit.text')"
-                        :button="$t('cards.profit.button')"
-                        :value="settingsService.profit"
-                        :success="settingsService.clearProfit"
-                        @clicked="settingsService.setClearProfit($event)"
-                        :currency="true"
-                    />
+<!--                    <settings-block-->
+<!--                        :title="$t('cards.profit.title')"-->
+<!--                        :text="$t('cards.profit.text')"-->
+<!--                        :button="$t('cards.profit.button')"-->
+<!--                        :value="settingsService.profit"-->
+<!--                        :success="settingsService.clearProfit"-->
+<!--                        @clicked="settingsService.setClearProfit($event)"-->
+<!--                        :currency="true"-->
+<!--                    />-->
                     <settings-block
                         :title="$t('cards.referral.title')"
                         :placeholder="$t('cards.referral.placeholder')"

@@ -43,8 +43,9 @@
                 @mouseleave="closeGradeList"
             >
                 <p class="card__list_text">
-                    Получаемый вами процент зависит от суммы хешрейта всех ваших
-                    рефералов.
+                    {{
+                        $t('grade.hint')
+                    }}
                 </p>
                 <info-list :gradeList="percentList" />
             </div>

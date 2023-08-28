@@ -2,7 +2,12 @@
     <div class="select">
         <div
             class="select_name"
-            :class="{ 'select_name-active': opened }"
+            :class="
+                {
+                    'select_name-active': opened,
+                    'select_name-selected':   validateBaseName
+                }
+            "
             @click="toggleSelect"
         >
             {{ baseName }}
@@ -37,7 +42,7 @@
 </template>
 
 <script>
-import {ReferralsMessage} from "../../lang/ReferralsMessage";
+import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
     name: "referral-select",
@@ -73,6 +78,13 @@ export default {
     },
     mounted() {
         this.setBaseName();
+    },
+    computed: {
+        validateBaseName() {
+            return this.baseName === Object.values(this.rows).find(
+                (el) => el.group_id === this.activeSubId ?? 0
+            )?.name;
+        }
     },
     methods: {
         setBaseName() {
@@ -144,6 +156,9 @@ export default {
         background: #ededed;
         width: 100%;
         transition: all 0.3s ease 0s;
+        &-selected {
+            color: var(--light-theme-gray-3, #818C99);
+        }
         svg {
             position: absolute;
             top: 50%;

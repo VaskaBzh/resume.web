@@ -19,6 +19,7 @@ export const ReferralsMessage = {
             title: "Grade List",
             text: "The percentage you receive is equal to the sum of the hashrate of all your referrals.",
             labels: ["Your %", "Hashrate (PH/s)"],
+            hint: "The percentage you receive depends on the sum of the hashrate of all your referrals.",
         },
         search: {
             placeholder: "Searching for a referral",
@@ -61,6 +62,7 @@ export const ReferralsMessage = {
             title: "Грейд-лист",
             text: "Получаемый вами процент равен сумме хешрейта всех ваших рефералов.",
             labels: ["Ваш %", "Хешрейт (PH/s)"],
+            hint: "Получаемый вами процент зависит от суммы хешрейта всех ваших рефералов.",
         },
         search: {
             placeholder: "Поиск реферала",
