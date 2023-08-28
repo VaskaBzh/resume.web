@@ -1,8 +1,9 @@
 <template>
-    <div class="row">
+    <div class="row" @click.prevent="$refs.input.focus()">
         <input
             class="row_input"
             type="text"
+            ref="input"
             :placeholder="inputPlaceholder"
             :name="inputName"
             :id="inputName"
@@ -41,6 +42,7 @@ export default {
         inputPlaceholder: String,
         inputUnit: String,
         hasCurrency: Boolean,
+        watchValue: Number,
     },
     data() {
         return {
@@ -52,8 +54,31 @@ export default {
         };
     },
     watch: {
-        value(newValue) {
-            this.$emit("getValue", newValue);
+        value(newValue, oldValue) {
+            // this.value = newValue > this.watchValue
+            //     ? newValue
+            //     : oldValue
+            // console.log(newValue > this.watchValue)
+            // this.$emit("getValue", newValue);
+            // Регулярное выражение для проверки ввода: только числа и точка
+            const regex = /^[0-9]*\.?[0-9]*$/;
+
+            // Проверка соответствия регулярному выражению
+            if (regex.test(newValue)) {
+                const numValue = parseFloat(newValue);
+
+                // Проверка, что значение не больше watchValue
+                if (isNaN(numValue) || numValue <= this.watchValue) {
+                    console.log('Новое значение удовлетворяет всем условиям');
+                    // this.$emit("getValue", newValue);  // Эмитируем событие
+                } else {
+                    console.log('Новое значение больше watchValue');
+                    this.value = oldValue;  // Восстанавливаем старое значение
+                }
+            } else {
+                console.log('Новое значение не соответствует регулярному выражению');
+                this.value = oldValue;  // Восстанавливаем старое значение
+            }
         },
         inputValue(newVal) {
             this.value = newVal;
@@ -124,6 +149,7 @@ export default {
     display: flex;
     align-items: center;
     min-height: 64px;
+    cursor: text;
     &__list {
         position: absolute;
         top: calc(100% + 8px);
