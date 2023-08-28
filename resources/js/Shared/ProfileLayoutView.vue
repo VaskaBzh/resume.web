@@ -70,8 +70,8 @@ export default {
         if (this.$store.getters.getValid) {
             this.$store.dispatch("getMiningStat");
             this.$store.dispatch("getGraph");
-            await this.$store.dispatch("accounts_all", this.user.id);
         }
+        await this.$store.dispatch("accounts_all", this.user.id);
         this.interval = setInterval(async () => {
             await this.$store.dispatch("accounts_all", this.user.id);
         }, 60000);
