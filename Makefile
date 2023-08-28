@@ -40,13 +40,11 @@ clear:
 tinker:
 	$(ARTISAN) tinker
 test:
-	$(ARTISAN) test
+	$(ARTISAN) test --env=testing
 remote_test:
 	ssh mainuser@92.205.188.112
 
 # app commands
-sub-hashes:
-	$(ARTISAN) make:sub-hashes
 worker-hashes:
 	$(ARTISAN) make:worker-hashes
 sync-workers:

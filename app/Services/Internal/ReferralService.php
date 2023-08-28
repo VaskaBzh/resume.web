@@ -10,6 +10,7 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Utils\Helper;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
@@ -53,7 +54,9 @@ class ReferralService
                 'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
                 'workers_count_in_active' => $referralSubCollection->sum('workers_count_in_active'),
                 'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
-                'total_amount' => $user->subs()->sum('total_amount')
+                'total_amount' => DB::table('incomes')
+                    ->where('referral_id', $user->pivot->id)
+                    ->sum('daily_amount')
             ];
         });
     }
