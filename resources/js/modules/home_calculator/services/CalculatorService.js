@@ -1,7 +1,6 @@
 import { Profit } from "../../../Scripts/profit";
 import currency from "../../../api/currency";
-import { InputData } from "@/modules/common/DTO/InputData";
-// import { InputData } from "../DTO/InputData";
+import { CalculatorInputData } from "../DTO/CalculatorInputData";
 
 export class CalculatorService {
     constructor(translate) {
@@ -18,7 +17,7 @@ export class CalculatorService {
         this.btcInfo = btcInfo;
 
         this.inputs = [
-            new InputData(
+            new CalculatorInputData(
                 "hash",
                 "",
                 "",
@@ -26,9 +25,10 @@ export class CalculatorService {
                 "TH/s",
                 null,
                 false,
-                false
+                false,
+                260
             ),
-            new InputData(
+            new CalculatorInputData(
                 "count",
                 "",
                 "",
@@ -36,9 +36,11 @@ export class CalculatorService {
                 "",
                 null,
                 false,
-                false
+                false,
+                100000
+
             ),
-            new InputData(
+            new CalculatorInputData(
                 "power",
                 "",
                 "",
@@ -46,9 +48,10 @@ export class CalculatorService {
                 "W",
                 null,
                 false,
-                false
+                false,
+                260
             ),
-            new InputData(
+            new CalculatorInputData(
                 "electro",
                 "",
                 "",
@@ -56,7 +59,8 @@ export class CalculatorService {
                 "/кВт",
                 null,
                 false,
-                true
+                true,
+                260
             ),
         ];
     }

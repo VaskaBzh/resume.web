@@ -21,9 +21,9 @@
             }}</span>
             <span v-hash>{{ column[1] }}</span>
         </td>
-        <span class="more" v-if="viewportWidth <= 767.98">{{
-            $t("more")
-        }}</span>
+<!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
+<!--            $t("more")-->
+<!--        }}</span>-->
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -59,7 +59,7 @@ export default {
                     !new RegExp("h/s").test(obj.hashRate)
                 ) {
                     obj.hashRate = ` ${obj.hashRate} ${this.columns.unit}h/s`;
-                    obj.hashRate24 = `${obj.hashRate24} ${this.columns.unit24}h/s`;
+                    // obj.hashRate24 = `${obj.hashRate24} ${this.columns.unit24}h/s`;
                 }
                 return obj;
             }
@@ -76,6 +76,7 @@ export default {
                             ? this.updatedColumns.wallet
                             : this.updatedColumns.txid,
                         this.titles[0],
+                        this.titles[1],
                         this.titles[2],
                         this.titles[3],
                     ];

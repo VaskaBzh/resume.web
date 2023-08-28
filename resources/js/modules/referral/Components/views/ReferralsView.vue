@@ -62,18 +62,26 @@ export default {
 <style scoped lang="scss">
 .referral {
     &__head {
-        margin-bottom: 24px;
         display: flex;
         align-items: center;
         justify-content: space-between;
         @media (max-width: $mobile) {
+            margin-bottom: 24px;
             flex-direction: column;
             gap: 24px;
         }
     }
     &__card {
         max-width: fit-content;
+        margin-top: -9.5%;
+        @media (max-width: $pc) {
+            margin-top: -14%;
+        }
+        @media (max-width: $tablet) {
+            margin-top: -13%;
+        }
         @media (max-width: $mobile) {
+            margin-top: 0;
             max-width: 100%;
         }
     }
