@@ -1,44 +1,65 @@
 <template>
-    <div class="copy" @click="copy">
+    <div class="copy" :class="{ 'copy-active': hasCopy }" @click="copy">
         <p class="copy_input">{{ code }}</p>
-        <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <path
-                d="M16 12.9V17.1C16 20.6 14.6 22 11.1 22H6.9C3.4 22 2 20.6 2 17.1V12.9C2 9.4 3.4 8 6.9 8H11.1C14.6 8 16 9.4 16 12.9Z"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-            <path
-                d="M22 6.9V11.1C22 14.6 20.6 16 17.1 16H16V12.9C16 9.4 14.6 8 11.1 8H8V6.9C8 3.4 9.4 2 12.9 2H17.1C20.6 2 22 3.4 22 6.9Z"
-                stroke-width="1.5"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-            />
-        </svg>
+        <transition name="copy">
+            <copy-icon class="copy_icon" v-show="!hasCopy" />
+        </transition>
+        <transition name="tick">
+            <tick-icon class="copy_tick" v-show="hasCopy" />
+        </transition>
     </div>
 </template>
 
 <script>
+import CopyIcon from "../../modules/common/icons/CopyIcon.vue";
+import TickIcon from "../../modules/common/icons/TickIcon.vue";
+
 export default {
     name: "main-copy",
     props: {
         code: String,
     },
+    components: {
+        CopyIcon,
+        TickIcon,
+    },
+    data() {
+        return  {
+            hasCopy: false,
+        };
+    },
     methods: {
         copy() {
             navigator.clipboard.writeText(this.code);
+
+            this.copyAnimation();
         },
+        copyAnimation() {
+            this.hasCopy = true;
+            setTimeout(() => {this.hasCopy = false}, 2000)
+        }
     },
 };
 </script>
 
 <style scoped lang="scss">
+.copy-enter-active,
+.copy-leave-active {
+    transition: all 0.3s ease;
+}
+.tick-enter-active,
+.tick-leave-active {
+    transition: all 0.3s ease;
+}
+.copy-enter-from,
+.copy-leave-to {
+    opacity: 0;
+}
+.tick-enter-from,
+.tick-leave-to {
+    transform: translate(30px, -50%) !important;
+    opacity: 0;
+}
 .copy {
     min-height: 48px;
     width: 100%;
@@ -48,6 +69,10 @@ export default {
     background: #ededed;
     cursor: pointer;
     position: relative;
+    transition: all 0.5s ease 0s;
+    overflow: hidden;
+    //&-active {
+    //}
     &_input {
         width: 100%;
         height: 100%;
@@ -60,7 +85,16 @@ export default {
         background: transparent;
         padding: 0 0 0 16px;
     }
-    svg {
+    &_tick {
+        stroke: #3f7bdd;
+        width: 24px;
+        height: 24px;
+        position: absolute;
+        top: 50%;
+        right: 16px;
+        transform: translateY(-50%);
+    }
+    &_icon {
         stroke: #aeaeb2;
         width: 24px;
         height: 24px;
