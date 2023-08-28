@@ -97,13 +97,13 @@ Route::middleware('auth')->group(function () {
         Route::get('/ref', 'ref')->name('ref');
     });
 
-    Route::group([
-        'prefix' => '2fac'
-    ], function () {
-        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
-        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
-    });
+//    Route::group([
+//        'prefix' => '2fac'
+//    ], function () {
+//        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+//        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
+//        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+//    });
 
     Route::post('/change/{user}', ProfileController::class)->name('change');
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');

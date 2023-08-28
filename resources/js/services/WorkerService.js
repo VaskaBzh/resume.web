@@ -128,14 +128,13 @@ export class WorkerService {
     }
 
     async makeFullValues() {
-        const [values, amount, unit] = this.workers_graph.slice(-24).reduce(
+        const [values, unit] = this.workers_graph.slice(-24).reduce(
             (acc, el) => {
                 let hashrate = el.hashrate ?? 0;
                 if (el.unit === "P") hashrate *= 1000;
                 else if (el.unit === "E") hashrate *= 1000000;
                 acc[0].push(Number(hashrate));
-                el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                acc[2].push("T");
+                acc[1].push("T");
 
                 return acc;
             },
@@ -144,13 +143,11 @@ export class WorkerService {
 
         while (values.length < 24) {
             values.push(0);
-            amount.push("0");
             unit.push("T");
         }
 
         Object.assign(this.graph, {
             values: values.reverse(),
-            amount: amount.map(String).reverse(),
             unit: unit.reverse(),
         });
     }

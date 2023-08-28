@@ -372,7 +372,7 @@ export default {
                 };
 
                 let contentTooltip = null;
-                let workers = a
+                let workers = this.graphData.amount
                     ? `<span>${this.$t(
                           "tooltip.workers"
                       )} <span class="value">${a}</span></span>`

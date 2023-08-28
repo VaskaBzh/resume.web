@@ -12,7 +12,7 @@
             v-for="(row, i) in rows"
             :key="i"
         />
-        <button @click="$emit('send2fac')">2fac</button>
+<!--        <button @click="$emit('send2fac')">2fac</button>-->
     </div>
 </template>
 
