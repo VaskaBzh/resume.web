@@ -178,6 +178,8 @@ export default {
         };
     },
     mounted() {
+        this.name = this.getAccount === {} ? "..." : this.getAccount.name;
+
         document.addEventListener("click", this.hideMenu, true);
         document.addEventListener("keydown", this.hideKey);
     },

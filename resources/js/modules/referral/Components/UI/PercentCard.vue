@@ -3,16 +3,19 @@
         <p class="card_text">{{ $t("percent.text") }} - {{ percent }} %</p>
         <svg
             class="card_question"
-            @mouseover="openGradeList"
-            @mouseout="closeGradeList"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            @mouseenter="openGradeList"
+            @mouseleave="closeGradeList"
             v-if="percentSvg"
-            v-html="percentSvg"
-        ></svg>
+        >
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                v-html="percentSvg"
+            ></svg>
+        </div>
         <transition name="grade">
             <svg
                 v-show="opened"
@@ -23,6 +26,8 @@
                 viewBox="0 0 8 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                @mouseenter="openGradeList"
+                @mouseleave="closeGradeList"
             >
                 <path
                     d="M-6.99382e-07 0L0 16L6.58579 9.41421C7.36683 8.63316 7.36683 7.36683 6.58579 6.58579L-6.99382e-07 0Z"
@@ -34,8 +39,8 @@
                 class="card__list"
                 v-if="percentList"
                 v-show="opened"
-                @mouseover="openGradeList"
-                @mouseout="closeGradeList"
+                @mouseenter="openGradeList"
+                @mouseleave="closeGradeList"
             >
                 <p class="card__list_text">
                     Получаемый вами процент зависит от суммы хешрейта всех ваших
