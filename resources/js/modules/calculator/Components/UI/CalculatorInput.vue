@@ -39,12 +39,12 @@
             type="text"
             :disabled="disabled"
             :id="inputName"
+            :name="inputName"
             v-model="value"
-            @input="$emit('getValue', value)"
             class="row__input"
             :placeholder="inputPlaceholder"
         />
-        <span class="row__unit" v-show="inputUnit">{{ inputUnit }}</span>
+        <span class="row_unit" v-show="inputUnit">{{ inputUnit }}</span>
     </div>
 </template>
 
@@ -70,7 +70,7 @@ export default {
             this.$emit("getValue", newVal);
         },
         inputValue(newVal) {
-            this.value = this.inputValue;
+            this.value = newVal;
         },
     },
 };
@@ -105,7 +105,7 @@ export default {
             cursor: pointer;
         }
     }
-    &__unit {
+    &_unit {
         color: rgba(255, 255, 255, 0.7);
         text-align: right;
         font-size: 16px;

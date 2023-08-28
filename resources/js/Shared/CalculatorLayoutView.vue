@@ -43,7 +43,6 @@ export default {
     font-family: SFPro, serif;
     font-size: 18px;
     position: relative;
-    background: transparent;
     background: #16181a;
     &:before {
         content: none;

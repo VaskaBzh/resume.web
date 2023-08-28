@@ -1,18 +1,21 @@
 <template>
     <div class="card">
         <p class="card_text">{{ $t("percent.text") }} - {{ percent }} %</p>
-        <svg
+        <div
             class="card_question"
-            @mouseover="openGradeList"
-            @mouseout="closeGradeList"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            @mouseenter.prevent="openGradeList"
+            @mousleave="closeGradeList"
             v-if="percentSvg"
-            v-html="percentSvg"
-        ></svg>
+        >
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                v-html="percentSvg"
+            ></svg>
+        </div>
         <transition name="grade">
             <svg
                 v-show="opened"
@@ -89,7 +92,7 @@ export default {
 <style scoped lang="scss">
 .grade-enter-active,
 .grade-leave-active {
-    transition: all 0.7s ease 0s;
+    transition: all 0.5s ease 0s;
 }
 .grade-enter-from,
 .grade-leave-to {
