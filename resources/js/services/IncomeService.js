@@ -104,9 +104,8 @@ export class IncomeService extends TableService {
     }
 
     async index(filter, page = 1, per_page = 15) {
+        this.waitTable = true;
         if (store.getters.getActive !== -1) {
-            this.waitTable = true;
-
             let response;
 
             if (filter) {

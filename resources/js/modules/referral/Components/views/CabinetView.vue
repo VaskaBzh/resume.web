@@ -88,20 +88,22 @@ export default {
     data() {
         return {
             percent: 0.8,
-            service: new CabinetService(this.user.id, this.$t),
+            service: new CabinetService(this.user, this.$t),
         };
     },
     watch: {
-        allAccounts(newValue) {
+        async allAccounts(newValue) {
             if (newValue) {
-                this.service.getSelectAccounts();
+                await this.service.getSelectAccounts();
             }
         },
     },
-    mounted() {
+    async mounted() {
         this.service.getGradeList();
 
-        this.service.index();
+        this.service.getStatsCards({});
+        this.service.setCode();
+        await this.service.index();
         if (this.allAccounts) this.service.getSelectAccounts();
     },
 };
