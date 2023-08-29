@@ -74,10 +74,11 @@ export default {
         message: String,
         user: Object,
         auth_user: Boolean,
+        referral_code: String,
     },
     data() {
         return {
-            settingsService: new SettingsService(this.$t, this.user),
+            settingsService: new SettingsService(this.$t, this.user, this.referral_code),
             is_checked: true,
             notification: true,
             password_confirmation: "",
@@ -90,12 +91,12 @@ export default {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },
         user() {
-            this.settingsService.setUserData(this.user);
+            this.settingsService.setUserData();
         },
     },
     methods: {
         settingsProcess() {
-            this.settingsService.setUserData(this.user);
+            this.settingsService.setUserData();
             this.settingsService.setForm();
             this.settingsService.setRows();
             this.settingsService.setProfits();
