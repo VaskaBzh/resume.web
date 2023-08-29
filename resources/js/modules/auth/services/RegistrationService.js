@@ -20,6 +20,8 @@ export class RegistrationService {
     async account_create() {
         this.checkbox = false;
 
+        console.log(this.form);
+        return;
         if (this.form.checkbox) {
             if (Object.entries(this.validate).length === 0) {
                 this.form.post("/register", {});

@@ -28,12 +28,16 @@
                     :placeholder="placeholder"
                     v-model="valueModel"
                     class="settings_input input"
+                    :disabled="disabled"
                 />
                 <span v-show="currency">$</span>
             </div>
             <blue-button
                 class="settings_button"
-                @click="$emit('clicked', valueModel)"
+                :disabled="disabled"
+                @click="!disabled
+                    ? $emit('clicked', valueModel)
+                    : console.log()"
             >
                 <a href="#" class="all-link">{{ button }}</a>
             </blue-button>
@@ -60,6 +64,7 @@ export default {
             type: Boolean,
             default: false,
         },
+        disabled: Boolean,
     },
     components: {
         BlueButton,
@@ -84,6 +89,11 @@ export default {
     gap: 16px;
 }
 .settings {
+    &_input {
+        &:disabled {
+            pointer-events:none;
+        }
+    }
     &__block {
         &-column {
             width: 100%;
@@ -113,6 +123,10 @@ export default {
         padding: 0;
         @media (max-width: $mobileSmall) {
             max-width: 100%;
+        }
+        &:disabled {
+            pointer-events:none;
+            background: linear-gradient(84.14deg, rgba(#3f7bdd, 0.75) 8.75%, rgba(#4282ec, 0.75) 92.01%);
         }
     }
     &_text {
