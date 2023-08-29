@@ -74,11 +74,12 @@ export default {
                     return [
                         this.updatedColumns.wallet !== "..."
                             ? this.updatedColumns.wallet
-                            : this.updatedColumns.txid,
+                            : "...",
                         this.titles[0],
                         this.titles[1],
                         this.titles[2],
                         this.titles[3],
+                        this.titles[4],
                     ];
                 }
                 return this.titles;
@@ -105,10 +106,9 @@ export default {
                     obj = obj.filter(
                         (col) =>
                             col[0] !== "wallet" &&
-                            col[0] !== "payDate" &&
-                            col[0] !== "percent"
+                            col[0] !== "txid"
                     );
-                    obj.unshift(obj[3]);
+                    obj.unshift(obj[5]);
                     obj.pop();
                 }
             }
