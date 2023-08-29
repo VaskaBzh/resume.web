@@ -55,30 +55,19 @@ export default {
     },
     watch: {
         value(newValue, oldValue) {
-            // this.value = newValue > this.watchValue
-            //     ? newValue
-            //     : oldValue
-            // console.log(newValue > this.watchValue)
-            // this.$emit("getValue", newValue);
-            // Регулярное выражение для проверки ввода: только числа и точка
             const regex = /^[0-9]*\.?[0-9]*$/;
 
-            // Проверка соответствия регулярному выражению
             if (regex.test(newValue)) {
                 const numValue = parseFloat(newValue);
 
-                // Проверка, что значение не больше watchValue
-                if (isNaN(numValue) || numValue <= this.watchValue) {
-                    console.log('Новое значение удовлетворяет всем условиям');
-                    // this.$emit("getValue", newValue);  // Эмитируем событие
-                } else {
-                    console.log('Новое значение больше watchValue');
-                    this.value = oldValue;  // Восстанавливаем старое значение
+                if (!isNaN(numValue) || numValue > this.watchValue) {
+                    this.value = oldValue;
                 }
             } else {
-                console.log('Новое значение не соответствует регулярному выражению');
-                this.value = oldValue;  // Восстанавливаем старое значение
+                this.value = oldValue;
             }
+
+            this.$emit("getValue", newValue);
         },
         inputValue(newVal) {
             this.value = newVal;
