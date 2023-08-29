@@ -89,27 +89,17 @@ class RegisterController extends Controller
 
             $user = $this->create(userData: $userData);
 
-            if ($request->code) {
-                ReferralService::attach(user: $user, code: $request->code);
+            if ($request->referral_code) {
+                ReferralService::attach(user: $user, code: $request->referral_code);
             }
 
-        event(new Registered(
-            user: $user
-        ));
+            event(new Registered(
+                user: $user
+            ));
 
-        $this->guard()->login($user);
+            $btcComService->createSub(userData: $userData);
 
-        $btcSubAccount = $btcComService->createSub(
-           userData: $userData
-       );
-
-       Create::execute(
-               subData: SubData::fromRequest([
-                   'user_id' => $user->id,
-                   'group_id' => $btcSubAccount['gid'],
-                   'group_name' => $user->name,
-               ])
-           );
+            $this->guard()->login($user);
         } catch (\Exception $e) {
             report($e);
 
