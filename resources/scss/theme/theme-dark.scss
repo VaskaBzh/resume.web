@@ -288,6 +288,14 @@ body {
                         background: #283955;
                         svg {
                             stroke: #80809A;
+                            &:hover {
+                                stroke: #4182ec;
+                            }
+                        }
+                        &.copy-active {
+                            svg {
+                                stroke: #4182ec;
+                            }
                         }
                     }
                     &_select {
