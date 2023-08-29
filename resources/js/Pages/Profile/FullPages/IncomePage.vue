@@ -33,6 +33,7 @@
                     </span>
                     <span class="main__number">
                         {{ this.yesterdayProfit }}
+                        BTC
                     </span>
                 </div>
             </div>
