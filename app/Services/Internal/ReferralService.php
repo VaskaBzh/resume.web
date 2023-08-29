@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Actions\User\AttachReferral;
 use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
 use App\Models\Sub;
@@ -11,9 +12,11 @@ use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReferralService
 {
@@ -79,5 +82,20 @@ class ReferralService
             )
             ->groupBy('incomes.id')
             ->paginate($perPage);
+    }
+
+    public static function attach(User $user, string $code): void
+    {
+        $owner = User::where('referral_code->code', $code)
+            ->first();
+
+        if ($owner->id === $user->id) {
+            throw new \Exception('Нельзя добавить собственный аккаунт');
+        }
+
+        $ownerSub = Sub::with('user')
+            ->find($owner->referral_code['group_id']);
+
+        AttachReferral::execute($user, $ownerSub);
     }
 }

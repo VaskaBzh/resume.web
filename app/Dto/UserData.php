@@ -11,7 +11,8 @@ readonly final class UserData
     public function __construct(
         public string $name,
         public ?string $email,
-        public ?string $password
+        public ?string $password,
+        public ?string $referralCode
     )
     {
     }
@@ -22,6 +23,7 @@ readonly final class UserData
             name: $requestData['name'],
             email: Arr::get($requestData, 'email'),
             password: Arr::get($requestData, 'password'),
+            referralCode: Arr::get($requestData, 'referral_code')
         );
     }
 }
