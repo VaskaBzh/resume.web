@@ -258,7 +258,7 @@ export default {
             }
         }
         &.completed {
-            &:first-child span.status:before {
+            span.status:before {
                 background: #13d60e;
             }
         }
@@ -273,10 +273,8 @@ export default {
             }
         }
         &.rejected {
-            .table_column {
-                span.status:before {
-                   background: #ff0000;
-                }
+            span.status:before {
+               background: #ff0000;
             }
         }
         &.unstable {
@@ -290,10 +288,8 @@ export default {
             }
         }
         &.pending {
-            .table_column {
-                span.status:before {
-                    background: #e9c058;
-                }
+            span.status:before {
+                background: #e9c058;
             }
         }
     }

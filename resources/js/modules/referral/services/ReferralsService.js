@@ -20,8 +20,8 @@ export class ReferralsService extends TableService {
             referral["workers_inactive"],
             referral["hash"],
             "T",
-            this.dateFormatter(referral["created_at"]),
-            referral["amount"]
+            // this.dateFormatter(referral["created_at"]),
+            referral["total_amount"].toFixed(8)
         );
     }
 
