@@ -37,7 +37,7 @@ export default {
             this.active = true;
             setTimeout(() => {
                 this.active = false;
-            }, 1000);
+            }, 800);
         },
     },
 };

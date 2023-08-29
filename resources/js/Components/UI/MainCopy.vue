@@ -59,7 +59,7 @@ export default {
 }
 .tick-enter-from,
 .tick-leave-to {
-    transform: translate(30px, -50%) !important;
+    transform: translate(100%, -50%) !important;
     opacity: 0;
 }
 .copy {
@@ -79,10 +79,13 @@ export default {
             &_icon {
                 stroke: #4182ec;
             }
+            &_tick {
+                fill: #4182ec;
+            }
         }
+        //&-active {
+        //}
     }
-    //&-active {
-    //}
     &_input {
         width: 100%;
         height: 100%;
@@ -96,7 +99,8 @@ export default {
         padding: 0 0 0 16px;
     }
     &_tick {
-        stroke: #3f7bdd;
+        stroke: #4182ec;
+        fill: #4182ec;
         width: 24px;
         height: 24px;
         position: absolute;
