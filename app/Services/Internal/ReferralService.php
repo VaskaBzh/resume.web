@@ -89,6 +89,10 @@ class ReferralService
         $owner = User::where('referral_code->code', $code)
             ->first();
 
+        if (!$owner) {
+            throw new \Exception('Неверный код');
+        }
+
         if ($owner->id === $user->id) {
             throw new \Exception('Нельзя добавить собственный аккаунт');
         }
