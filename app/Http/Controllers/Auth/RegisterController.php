@@ -110,7 +110,7 @@ class RegisterController extends Controller
             report($e);
 
             return back()->withErrors([
-                'message' => $e->getMessage()
+                'message' => 'Something went wrong! Please contact with tech support'
             ]);
         }
 
