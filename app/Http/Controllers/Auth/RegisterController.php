@@ -97,9 +97,9 @@ class RegisterController extends Controller
                 user: $user
             ));
 
-            $btcComService->createSub(userData: $userData);
-
             $this->guard()->login($user);
+
+            $btcComService->createSub(userData: $userData);
         } catch (\Exception $e) {
             report($e);
 
