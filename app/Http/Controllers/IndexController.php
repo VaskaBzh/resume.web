@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Sub;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -129,9 +131,15 @@ class IndexController extends Controller
 
     public function settings()
     {
+        $user = auth()->user();
+
+        $ownerUser = User::whereNotNull('referral_code')
+            ->find($user?->owners->first()?->user_id);
+
         return Inertia::render('Profile/FullPages/SettingsPage', [
             'auth_user' => Auth::check(),
-            'user' => auth()->user()->with('owners'),
+            'user' => $user,
+            'referral_code' => $ownerUser->referral_code['code']
         ]);
     }
 
