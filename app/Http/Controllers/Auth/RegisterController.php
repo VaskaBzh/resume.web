@@ -55,7 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255', 'regex:/^[A-aZ-z0-9]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
-            'referral_code' => ['string', 'exists:users,referral_code->code']
+            'referral_code' => ['string', 'nullable']
         ], $this->messages());
     }
 
