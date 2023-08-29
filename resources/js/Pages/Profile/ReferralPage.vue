@@ -112,6 +112,7 @@ export default {
             margin: 0 -15px;
             &::-webkit-scrollbar {
                 width: 0;
+                display: none;
             }
         }
         &-list {

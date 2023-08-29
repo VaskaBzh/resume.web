@@ -25,6 +25,7 @@
                                 :inputPlaceholder="input.inputPlaceholder"
                                 :inputUnit="input.inputUnit"
                                 :hasCurrency="input.currency"
+                                :watchValue="input.watchValue"
                                 @getValue="setValue(input.inputName, $event)"
                                 @getCurrency="setMultiplier($event)"
                             />
@@ -101,8 +102,6 @@ export default {
         async calculatorProcess(num) {
             this.incomeValue = await this.calculatorService.getProfit(num);
             await this.calculatorService.getCost(num);
-
-            this.initConverter();
         },
     },
 };

@@ -1,8 +1,9 @@
 <template>
-    <div class="row">
+    <div class="row" @click.prevent="$refs.input.focus()">
         <input
             class="row_input"
             type="text"
+            ref="input"
             :placeholder="inputPlaceholder"
             :name="inputName"
             :id="inputName"
@@ -41,6 +42,7 @@ export default {
         inputPlaceholder: String,
         inputUnit: String,
         hasCurrency: Boolean,
+        watchValue: Number,
     },
     data() {
         return {
@@ -52,7 +54,19 @@ export default {
         };
     },
     watch: {
-        value(newValue) {
+        value(newValue, oldValue) {
+            const regex = /^[0-9]*\.?[0-9]*$/;
+
+            if (regex.test(newValue)) {
+                const numValue = parseFloat(newValue);
+
+                if (!isNaN(numValue) || numValue > this.watchValue) {
+                    this.value = oldValue;
+                }
+            } else {
+                this.value = oldValue;
+            }
+
             this.$emit("getValue", newValue);
         },
         inputValue(newVal) {
@@ -124,6 +138,7 @@ export default {
     display: flex;
     align-items: center;
     min-height: 64px;
+    cursor: text;
     &__list {
         position: absolute;
         top: calc(100% + 8px);

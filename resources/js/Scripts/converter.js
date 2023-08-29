@@ -2,7 +2,7 @@ import currency from "@/api/currency";
 
 export class Converter {
     constructor(value, price) {
-        this.btc = Number(value);
+        this.btc = Number(value).toFixed(8);
         this.price = price;
         this.rub = 0;
         this.usd = 0;

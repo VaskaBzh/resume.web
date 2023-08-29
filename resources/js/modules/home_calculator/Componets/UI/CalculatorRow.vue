@@ -4,14 +4,14 @@
             <p class="row_title">
                 {{ $t(`home.calculator.img_title[${titleIndex}]`) }}
             </p>
-            <span class="row_value">{{ bitcoinValue }} BTC</span>
+            <span class="row_value">{{ Number(converted?.btc) || "0.00000000" }} BTC</span>
         </div>
-        <div class="row__converter" v-if="$i18n.locale === 'ru'">
+        <div class="row__converter" v-show="!fixRender">
             <span class="row_value row_value-converter"
                 >${{ Number(converted?.usd).toFixed(2) }}
-                ≈
             </span>
-            <span class="row_value row_value-converter">
+            <span v-show="$i18n.locale === 'ru'" class="row_value row_value-converter"> ≈</span>
+            <span v-show="$i18n.locale === 'ru'" class="row_value row_value-converter">
                 ₽{{ Number(converted?.rub).toFixed(2) }}</span
             >
         </div>
@@ -32,27 +32,38 @@ export default {
     data() {
         return {
             converted: null,
+            fixRender: false,
         };
     },
     computed: {
         ...mapGetters(["btcInfo"]),
     },
     watch: {
-        bitcoinValue() {
-            this.initConverter();
+        bitcoinValue(newValue) {
+            this.initConverter(newValue);
         },
     },
     mounted() {
-        this.initConverter();
+        this.initConverter(this.bitcoinValue);
     },
     methods: {
-        async initConverter() {
-            this.converted = new Converter(
-                this.bitcoinValue,
-                this.btcInfo.btc.price
-            );
+        needFixRender() {
+            this.fixRender = true;
+        },
+        dropFixRender() {
+            this.fixRender = false;
+        },
+        async initConverter(bitcoinValue) {
+            if (this.btcInfo.btc && bitcoinValue?.length < 23) {
+                bitcoinValue.length > 12 ? this.needFixRender() : this.dropFixRender();
 
-            await this.converted.convert();
+                this.converted = new Converter(
+                    bitcoinValue,
+                    this.btcInfo.btc.price
+                );
+
+                await this.converted.convert();
+            }
         },
     },
 };
@@ -62,6 +73,7 @@ export default {
 .row {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     @media (max-width: $pc) {
         min-width: fit-content;
         gap: 40px;
@@ -92,8 +104,12 @@ export default {
             font-size: 14px;
             font-weight: 400;
             line-height: 135%;
+            height: fit-content;
             @media (max-width: $pc) {
                 color: var(--dark-theme-gray, #989898);
+            }
+            &:last-child {
+                width: 100%;
             }
         }
     }
@@ -102,11 +118,15 @@ export default {
         flex-direction: column;
         gap: 8px;
         width: fit-content;
+        &:first-child {
+            width: 100%;
+        }
     }
     &__converter {
         display: flex;
-        flex-direction: column;
+        flex-wrap: wrap;
         width: fit-content;
+        align-items: flex-end;
         justify-content: flex-end;
         @media (max-width: $pc) {
             flex-direction: row;
