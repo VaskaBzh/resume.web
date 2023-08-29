@@ -131,7 +131,7 @@ class IndexController extends Controller
     {
         return Inertia::render('Profile/FullPages/SettingsPage', [
             'auth_user' => Auth::check(),
-            'user' => auth()->user()
+            'user' => auth()->user()->with('owners'),
         ]);
     }
 
