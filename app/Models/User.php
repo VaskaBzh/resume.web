@@ -77,8 +77,8 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-/*    public function newEloquentBuilder($query): UserBuilder
+    public function newEloquentBuilder($query): UserBuilder
     {
         return new UserBuilder($query);
-    }*/
+    }
 }
