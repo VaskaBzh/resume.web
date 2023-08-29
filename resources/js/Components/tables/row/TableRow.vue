@@ -19,7 +19,7 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash>{{ column[1] }}</span>
+            <span v-hash :class="column[0]">{{ column[1] }}</span>
         </td>
 <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
 <!--            $t("more")-->
@@ -214,34 +214,28 @@ export default {
         &.ACTIVE,
         &.INACTIVE,
         &.UNSTABLE {
-            .table_column:first-child span:last-child::before {
-                display: inline-flex;
-                content: "";
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                margin-right: 8px;
-                background: transparent;
-                transition: all 0.5s ease 0s;
+            span {
+                &.status,
+                &.name {
+                    &::before {
+                        display: inline-flex;
+                        content: "";
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        margin-right: 8px;
+                        transition: all 0.5s ease 0s;
+                    }
+                }
             }
         }
         &.rejected,
         &.completed,
         &.pending {
-            .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child::before {
-                        display: inline-flex;
-                        content: "";
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                        margin-right: 8px;
-                        transition: all 0.5s ease 0s;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child::before {
+            span {
+                &.status,
+                &.name {
+                    &::before {
                         display: inline-flex;
                         content: "";
                         width: 12px;
@@ -253,63 +247,52 @@ export default {
                 }
             }
         }
-        &.active,
+        &.active {
+            span.status:before {
+                background: #13d60e;
+            }
+        }
         &.ACTIVE {
-            .table_column:first-child span:last-child:before {
+            span.name:before {
                 background: #13d60e;
             }
         }
         &.completed {
-            .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child:before {
-                        background: #13d60e;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child:before {
-                        background: #13d60e;
-                    }
-                }
+            &:first-child span.status:before {
+                background: #13d60e;
             }
         }
-        &.inactive,
+        &.inactive {
+            span.status:before {
+                background: #ff0000;
+            }
+        }
         &.INACTIVE {
-            .table_column:first-child span:last-child:before {
+            span.name:before {
                 background: #ff0000;
             }
         }
         &.rejected {
             .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child:before {
-                        background: #ff0000;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child:before {
-                        background: #ff0000;
-                    }
+                span.status:before {
+                   background: #ff0000;
                 }
             }
         }
-        &.unstable,
+        &.unstable {
+            span.status:before {
+                background: #e9c058;
+            }
+        }
         &.UNSTABLE {
-            .table_column:first-child span:last-child:before {
+            span.name:before {
                 background: #e9c058;
             }
         }
         &.pending {
             .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child:before {
-                        background: #e9c058;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child:before {
-                        background: #e9c058;
-                    }
+                span.status:before {
+                    background: #e9c058;
                 }
             }
         }
