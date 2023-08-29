@@ -11,7 +11,7 @@ export class FormData {
         this.name = name;
         this.password = password;
         this.password_confirmation = password_confirmation;
-        this.referral = referral;
+        this.referral_code = referral;
         this.checkbox = checkbox;
     }
 }

@@ -21,9 +21,6 @@ export class ValidateService {
             validate = { ...validate, symbol: true };
 
         if (form.password.length === 0) validate = {};
-        console.log(validate);
-        console.log(form.password);
-        console.log(event);
 
         return validate;
     }
