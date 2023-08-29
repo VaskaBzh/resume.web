@@ -36,12 +36,13 @@ export class SettingsService {
     }
 
     setUserData() {
+        console.log(this.referral_code)
         this.userData = new SettingsUserData(
             this.user.name,
             this.user.email,
             "*********",
             this.user.phone ?? this.translate("inputs.phone"),
-            this.referral_code || null
+            this.referral_code
         );
     }
 
