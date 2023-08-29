@@ -197,7 +197,7 @@ export default {
     },
     methods: {
         async initIncomes() {
-            this.incomes = new IncomeService(this.$t, [0, 1, 2, 3, 4, 5]);
+            this.incomes = new IncomeService(this.$t, [0, 1, 2, 3, 4, 5, 8]);
 
             await this.incomes.setTable(this.filter, this.page, this.per_page);
         },
