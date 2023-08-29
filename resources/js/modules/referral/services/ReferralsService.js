@@ -21,7 +21,9 @@ export class ReferralsService extends TableService {
             referral["referral_hash_per_day"],
             "T",
             // this.dateFormatter(referral["created_at"]),
-            referral["total_amount"]
+            referral["total_amount"] === 0
+                ? "0.00000000"
+                : referral["total_amount"]
         );
     }
 
