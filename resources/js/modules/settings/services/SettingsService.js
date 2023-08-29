@@ -41,6 +41,7 @@ export class SettingsService {
         this.email = user.email;
         this.password = "*********";
         this.phone = user.phone ?? this.translate("inputs.phone");
+        this.code = user.referral_code.code;
     }
 
     setRows() {
