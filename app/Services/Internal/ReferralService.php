@@ -34,12 +34,13 @@ class ReferralService
     {
         return [
             'attached_referrals_count' => $referrals->count(),
-            'referrals_total_amount' =>  DB::table('referrals')
+            'referrals_total_amount' => DB::table('referrals')
                 ->join('incomes', 'incomes.referral_id', 'referrals.id')
                 ->whereIn('referrals.user_id', $referrals->pluck('id'))
                 ->sum('incomes.daily_amount'),
-           'active_referrals_count' => $referrals->reduce(static fn (int $acc, User $user) => $acc += Sub::getActiveReferrals($user)
-               ->count(), 0)
+            'active_referrals_count' => $referrals->reduce(
+                static fn(int $acc, User $user) => $acc += Sub::getActiveReferrals($user)->count(),
+                0)
         ];
     }
 
