@@ -545,6 +545,7 @@ const messages = {
             },
         },
         income: {
+            types: ["Ref. Income", "Mining"],
             title: "Income",
             income_info: {
                 title: "Earnings",
@@ -554,6 +555,7 @@ const messages = {
                 title: "Transaction history",
                 tabs: ["Accruals", "Payouts"],
                 thead: [
+                    "Type of operation",
                     "Accrual date",
                     "Payout date",
                     "Hashrate",
@@ -1219,6 +1221,7 @@ const messages = {
             },
         },
         income: {
+            types: ["Реф. доход", "Майнинг"],
             title: "Доходы",
             income_info: {
                 title: "Платежи",
@@ -1228,6 +1231,7 @@ const messages = {
                 title: "История транзакций",
                 tabs: ["Начисления", "Выплаты"],
                 thead: [
+                    "Тип операции",
                     "Дата начисления",
                     "Дата вылпаты",
                     "Хешрейт",

@@ -76,6 +76,9 @@ export class IncomeService extends TableService {
                   this.getCutted(income["txid"])
               )
             : new incomeData(
+                  income["referral_id"]
+                      ? this.translate('income.types[0]')
+                      : this.translate('income.types[1]'),
                   this.dateFormatter(income["created_at"]),
                   datePay,
                   income["hash"],
@@ -121,7 +124,7 @@ export class IncomeService extends TableService {
             if (filter) {
                 this.titles = this.useTranslater([1, 4, 5, 6]);
             } else {
-                this.titles = this.useTranslater([0, 1, 2, 3, 6, 7]);
+                this.titles = this.useTranslater([0, 1, 2, 3, 4, 7, 8]);
             }
 
             return this;
