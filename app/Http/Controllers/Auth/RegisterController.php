@@ -85,8 +85,8 @@ class RegisterController extends Controller
 
             $user = $this->create(userData: $userData);
 
-            if ($request->code) {
-                ReferralService::attach(user: $user, code: $request->code);
+            if ($request->referral_code) {
+                ReferralService::attach(user: $user, code: $request->referral_code);
             }
 
             event(new Registered(
@@ -95,22 +95,12 @@ class RegisterController extends Controller
 
             $this->guard()->login($user);
 
-            $btcSubAccount = $btcComService->createSub(
-                userData: $userData
-            );
-
-            Create::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => $user->id,
-                    'group_id' => $btcSubAccount['gid'],
-                    'group_name' => $user->name,
-                ])
-            );
+            $btcComService->createSub(userData: $userData);
         } catch (\Exception $e) {
             report($e);
 
             return back()->withErrors([
-                'message' => $e->getMessage()
+                'message' => 'Something went wrong! Please contact with tech support'
             ]);
         }
 
