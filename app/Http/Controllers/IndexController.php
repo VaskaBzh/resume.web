@@ -113,7 +113,7 @@ class IndexController extends Controller
         ]);
     }
 
-    public function ref()
+    public function referral()
     {
         return Inertia::render('Profile/ReferralPage', [
             'auth_user' => Auth::check(),

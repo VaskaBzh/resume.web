@@ -15,7 +15,6 @@ class MainRoutesTest extends TestCase
      */
     public function test_main_page()
     {
-        dd(MinerStat::first());
         $this->get(route('home'))
             ->assertOk();
     }
