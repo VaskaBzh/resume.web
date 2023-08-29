@@ -36,7 +36,6 @@ export class SettingsService {
     }
 
     setUserData() {
-        console.log(this.referral_code)
         this.userData = new SettingsUserData(
             this.user.name,
             this.user.email,
