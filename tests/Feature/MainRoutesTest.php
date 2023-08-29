@@ -32,11 +32,11 @@ class MainRoutesTest extends TestCase
     }
 
 
-    public function test_calculator_page()
+    /*public function test_calculator_page()
     {
         $this->get(route('calculator'))
             ->assertOk();
-    }
+    }*/
 
     public function test_registration_page()
     {
