@@ -4,7 +4,7 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
 
 export class CabinetService {
-    constructor(id, translate) {
+    constructor(user, translate) {
         this.statsCards = [];
         this.accounts = [];
         this.gradeList = [];
@@ -14,7 +14,7 @@ export class CabinetService {
         this.code = "";
         this.activeSubId = null;
 
-        this.user_id = id;
+        this.user = user;
     }
 
     getStatsCards(data) {
@@ -25,17 +25,17 @@ export class CabinetService {
             new SelectData(
                 "invite",
                 this.translate("stats.cards[0]"),
-                data.attached_referrals_count || 0
+                data?.attached_referrals_count || 0
             ),
             new SelectData(
                 "active",
                 this.translate("stats.cards[1]"),
-                data.active_referrals_count || 0
+                data?.active_referrals_count || 0
             ),
             new SelectData(
                 "profit",
                 this.translate("stats.cards[2]"),
-                `$${data.referrals_total_amount || 0}`
+                `$${data?.referrals_total_amount || '0.00'}`
             ),
         ];
     }
@@ -52,7 +52,7 @@ export class CabinetService {
         let result = {};
 
         try {
-            result = await api.post(`/referrals/generate/${this.user_id}`, {
+            result = await api.post(`/referrals/generate/${this.user.id}`, {
                 group_id: id,
             });
 
@@ -64,8 +64,8 @@ export class CabinetService {
         await this.index();
     }
 
-    setCode(code) {
-        this.code = code || "...";
+    setCode() {
+        this.code = this.user.referral_code?.code || "...";
     }
 
     setActiveSub(group_id) {
@@ -76,7 +76,7 @@ export class CabinetService {
         let response = {};
 
         try {
-            response = (await api.get(`/referrals/statistic/${this.user_id}`))
+            response = (await api.get(`/referrals/statistic/${this.user.id}`))
                 .data;
         } catch (err) {
             console.error(`FetchError: ${err}`);
@@ -84,7 +84,6 @@ export class CabinetService {
 
         const result = response?.data || response;
 
-        this.setCode(result.code);
         this.setActiveSub(result.group_id);
 
         this.getStatsCards(result);

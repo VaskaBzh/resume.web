@@ -24,6 +24,8 @@
                         :title="$t('cards.referral.title')"
                         :placeholder="$t('cards.referral.placeholder')"
                         :button="$t('cards.referral.button')"
+                        :value="settingsService.code"
+                        :disabled="!!settingsService.code"
                         @clicked="settingsService.setReferral($event)"
                     />
                 </div>
