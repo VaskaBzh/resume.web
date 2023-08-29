@@ -139,7 +139,7 @@ class IndexController extends Controller
         return Inertia::render('Profile/FullPages/SettingsPage', [
             'auth_user' => Auth::check(),
             'user' => $user,
-            'referral_code' => $ownerUser->referral_code['code']
+            'referral_code' => $ownerUser?->referral_code['code']
         ]);
     }
 
