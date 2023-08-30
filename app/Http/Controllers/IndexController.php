@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Sub;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class IndexController extends Controller
@@ -113,28 +114,18 @@ class IndexController extends Controller
         ]);
     }
 
-    public function dashboard_referral()
+    public function referral(Request $request)
     {
-        return Inertia::render('Profile/Referral/DashboardReferralsPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function attached_referral()
-    {
-        return Inertia::render('Profile/Referral/AttachedReferralsPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function incomes_referral()
-    {
-        return Inertia::render('Profile/Referral/IncomeRefferralsPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
+        return match ($request->page) {
+            '' => redirect('/referral?page=overview'),
+            default => Inertia::render(
+                component: implode('/', ['Profile', 'Referral', ucfirst(Str::camel($request->page) . 'Page')]),
+                props: [
+                    'auth_user' => Auth::check(),
+                    'user' => auth()->user()
+                ]
+            )
+        };
     }
 
     public function Income()
