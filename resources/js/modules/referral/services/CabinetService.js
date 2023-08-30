@@ -36,7 +36,7 @@ export class CabinetService {
             new SelectData(
                 "profit",
                 this.translate("stats.cards[2]"),
-                `${data?.referrals_total_amount || "0.00000000"} BTC`
+                Number(data?.referrals_total_amount) || "0.00000000"
             ),
         ];
     }
