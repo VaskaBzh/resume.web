@@ -257,14 +257,14 @@ class IncomeService
      */
     public function createFinance(): void
     {
-        $earn = ($this->params['dailyAmount'] / (100 - $this->params['allBtcFee'])) * 100;
+        //$earn = ($this->params['dailyAmount'] / (100 - $this->params['allBtcFee'])) * 100;
 
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
-            'earn' => $earn,
+            'earn' => $this->dailyEarn,
             'user_total' => $this->params['dailyAmount'],
             'percent' => $this->params['allBtcFee'],
-            'profit' => $earn - $this->params['dailyAmount'],
+            'profit' => $this->dailyEarn - $this->params['dailyAmount'],
         ]));
     }
 }
