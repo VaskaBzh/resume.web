@@ -18,7 +18,7 @@ export class TabsService {
                 "connecting",
                 "connecting"
             ),
-            new TabsData("/profile/referral", "referral", "referral"),
+            new TabsData("referral.tabs", "referral", "referral", "referral"),
         ];
     }
 

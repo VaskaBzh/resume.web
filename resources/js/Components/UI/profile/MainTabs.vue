@@ -4,7 +4,12 @@
             class="cabinet_button"
             :key="tab.title + i"
             v-for="(tab, i) in tabs"
-            :class="{ active: tab.value === active }"
+            :class="{
+                active:
+                    (tab.value?.length
+                        ? tab.value[tab.value.length - 1]
+                        : tab.value) === active,
+            }"
             @click="$emit('getValue', tab.value)"
         >
             {{ tab.title }}
