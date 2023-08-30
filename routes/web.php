@@ -94,14 +94,8 @@ Route::middleware('auth')->group(function () {
         Route::get('/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
 
-        Route::group([
-            'prefix' => 'referrals'
-        ], function () {
-            Route::redirect('', 'referrals/dashboard')->name('referrals');
-            Route::get('/dashboard', 'dashboard_referral')->name('referral.dashboard');
-            Route::get('/attached-referrals', 'attached_referral')->name('referral.attached');
-            Route::get('/incomes', 'incomes_referral')->name('referral.incomes');
-        });
+//        Route::redirect('/referral', '/referral?page=overview');
+        Route::get('/referral', 'referral')->name('referral.tabs');
     });
 
 //    Route::group([
