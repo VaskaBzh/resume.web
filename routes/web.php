@@ -96,15 +96,6 @@ Route::middleware('auth')->group(function () {
 
 //        Route::redirect('/referral', '/referral?page=overview');
         Route::get('/referral', 'dispatch')->name('referral.tabs');
-
-        Route::group([
-            'prefix' => 'referrals'
-        ], function () {
-            Route::redirect('', 'referrals/dashboard')->name('referrals');
-            Route::get('/dashboard', 'dashboard_referral')->name('referral.dashboard');
-            Route::get('/attached-referrals', 'attached_referral')->name('referral.attached');
-            Route::get('/incomes', 'incomes_referral')->name('referral.incomes');
-        });
     });
 
 //    Route::group([
