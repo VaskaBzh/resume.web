@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
@@ -81,33 +82,20 @@ Route::middleware('auth')->group(function () {
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hash.list');
     Route::get('workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
 
-    Route::group([
-        'prefix' => 'profile',
-        'controller' => IndexController::class
-    ], function () {
-        Route::get('/profile', 'profile')->name('profile');
-        Route::get('/statistic', 'statistic')->name('statistic');
-        Route::get('/accounts', 'accounts')->name('accounts');
-        Route::get('/workers', 'workers')->name('workers');
-        Route::get('/settings', 'settings')->name('settings');
-        Route::get('/income', 'income')->name('income');
-        Route::get('/wallets', 'wallets')->name('wallets');
-        Route::get('/connecting', 'connecting')->name('connecting');
 
-<<<<<<< HEAD
+    Route::group([
+        'prefix' => 'profile'
+    ], function () {
+        Route::redirect('', '/profile/statistic');
+        Route::get('{page}', ProfileController::class)->name('profile.index');
+
         Route::group([
-            'prefix' => 'referrals'
+            'prefix' => 'referral'
         ], function () {
-            Route::redirect('', 'referrals/dashboard')->name('referrals');
-            Route::get('/dashboard', 'dashboard_referral')->name('referral.dashboard');
-            Route::get('/attached-referrals', 'attached_referral')->name('referral.attached');
-            Route::get('/incomes', 'incomes_referral')->name('referral.incomes');
+            Route::get('', [IndexController::class, 'referral'])->name('referral.tabs');
         });
-=======
-//        Route::redirect('/referral', '/referral?page=overview');
-        Route::get('/referral', 'referral')->name('referral.tabs');
->>>>>>> 025f84423240c099edd2de3c8acbe145014b5371
     });
+
 
 //    Route::group([
 //        'prefix' => '2fac'
@@ -117,7 +105,7 @@ Route::middleware('auth')->group(function () {
 //        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 //    });
 
-    Route::post('/change/{user}', ProfileController::class)->name('change');
+    Route::post('/change/{user}', AccountController::class)->name('change');
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');
 
     Route::group([

@@ -69,11 +69,6 @@ class IndexController extends Controller
         ]);
     }
 
-    public function profile(): RedirectResponse
-    {
-        return redirect()->route('statistic');
-    }
-
     public function accounts()
     {
         return Inertia::render('Profile/AccountsPage', [
@@ -115,17 +110,18 @@ class IndexController extends Controller
     }
 
     public function referral(Request $request)
-    {
-        return match ($request->page) {
-            null => redirect('/profile/referral?page=overview'),
-            default => Inertia::render(
-                component: implode('/', ['Profile', 'Referral', ucfirst(Str::camel($request->page) . 'Page')]),
-                props: [
-                    'auth_user' => Auth::check(),
-                    'user' => auth()->user()
-                ]
-            )
-        };
+    {dd($request);
+        if (!$request->page) {
+            return redirect('/profile/referral?page=overview');
+        }
+
+        return Inertia::render(
+            component: implode('/', ['Profile', 'Referral', ucfirst(Str::camel($request->page) . 'Page')]),
+            props: [
+                'auth_user' => Auth::check(),
+                'user' => auth()->user()
+            ]
+        );
     }
 
     public function Income()
