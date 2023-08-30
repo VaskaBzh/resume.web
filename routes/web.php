@@ -94,6 +94,9 @@ Route::middleware('auth')->group(function () {
         Route::get('/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
 
+//        Route::redirect('/referral', '/referral?page=overview');
+        Route::get('/referral', 'dispatch')->name('referral.tabs');
+
         Route::group([
             'prefix' => 'referrals'
         ], function () {
