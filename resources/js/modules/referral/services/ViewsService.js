@@ -11,18 +11,18 @@ export class ViewsService {
     setTabs() {
         this.tabs = [
             ...this.tabs,
-            new TabData(
-                this.translate("tabs[0]"),
-                "/profile/referral?page=overview"
-            ),
-            new TabData(
-                this.translate("tabs[1]"),
-                "/profile/referral?page=my-referral"
-            ),
-            new TabData(
-                this.translate("tabs[2]"),
-                "/profile/referral?page=earn-rewards"
-            ),
+            new TabData(this.translate("tabs[0]"), [
+                "referral.dashboard",
+                "overview",
+            ]),
+            new TabData(this.translate("tabs[1]"), [
+                "referral.attached",
+                "my-referral",
+            ]),
+            new TabData(this.translate("tabs[2]"), [
+                "referral.incomes",
+                "earn-rewards",
+            ]),
         ];
     }
 
@@ -31,7 +31,12 @@ export class ViewsService {
     }
 
     tabRoute(routeName) {
-        router.visit(routeName);
+        const firstIndex = 0;
+        const lastIndex = routeName.length - 1;
+        const name = routeName[firstIndex];
+        const param = routeName[lastIndex];
+
+        router.visit(name, { page: param });
 
         return this;
     }
