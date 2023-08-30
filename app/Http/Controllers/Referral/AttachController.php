@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Referral;
 
-use App\Actions\User\AttachReferral;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AttachReferralRequest;
-use App\Models\Sub;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;

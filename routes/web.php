@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
@@ -99,9 +98,9 @@ Route::middleware('auth')->group(function () {
             'prefix' => 'referrals'
         ], function () {
             Route::redirect('', 'referrals/dashboard')->name('referrals');
-            Route::get('/dashboard', [IndexController::class, 'dashboard_referral'])->name('referral.dashboard');
-            Route::get('/attached-referrals', [IndexController::class, 'attached_referral']);
-            Route::get('/incomes', [IndexController::class, 'incomes_referral'])->name('referral.incomes');
+            Route::get('/dashboard', 'dashboard_referral')->name('referral.dashboard');
+            Route::get('/attached-referrals', 'attached_referral');
+            Route::get('/incomes', 'incomes_referral')->name('referral.incomes');
         });
     });
 
