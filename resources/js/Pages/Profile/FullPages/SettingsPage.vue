@@ -11,15 +11,15 @@
                 />
                 <!--                    @send2fac="settingsService.send2Fac"-->
                 <div class="settings__column">
-<!--                    <settings-block-->
-<!--                        :title="$t('cards.profit.title')"-->
-<!--                        :text="$t('cards.profit.text')"-->
-<!--                        :button="$t('cards.profit.button')"-->
-<!--                        :value="settingsService.profit"-->
-<!--                        :success="settingsService.clearProfit"-->
-<!--                        @clicked="settingsService.setClearProfit($event)"-->
-<!--                        :currency="true"-->
-<!--                    />-->
+                    <!--                    <settings-block-->
+                    <!--                        :title="$t('cards.profit.title')"-->
+                    <!--                        :text="$t('cards.profit.text')"-->
+                    <!--                        :button="$t('cards.profit.button')"-->
+                    <!--                        :value="settingsService.profit"-->
+                    <!--                        :success="settingsService.clearProfit"-->
+                    <!--                        @clicked="settingsService.setClearProfit($event)"-->
+                    <!--                        :currency="true"-->
+                    <!--                    />-->
                     <settings-block
                         :title="$t('cards.referral.title')"
                         :placeholder="$t('cards.referral.placeholder')"
@@ -56,7 +56,7 @@ import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue"
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
 
 import { SettingsService } from "@/modules/settings/services/SettingsService";
-import { SettingsMessage } from "../../../modules/settings/lang/SettingsMessage";
+import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 
 export default {
     layout: profileLayoutView,
@@ -78,7 +78,11 @@ export default {
     },
     data() {
         return {
-            settingsService: new SettingsService(this.$t, this.user, this.referral_code),
+            settingsService: new SettingsService(
+                this.$t,
+                this.user,
+                this.referral_code
+            ),
             is_checked: true,
             notification: true,
             password_confirmation: "",
@@ -90,7 +94,9 @@ export default {
         "settingsService.profit"(newValue) {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },
-        user() {
+        user(newUserProp) {
+            this.settingsService.setUser(newUserProp);
+            this.settingsService.setCode(newUserProp.referral_code.code);
             this.settingsService.setUserData();
         },
     },
