@@ -119,6 +119,9 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'referrals'
     ], function () {
+        Route::get('', [IndexController::class, 'referral'])->name('referral');
+        Route::get('/attached-referrals', [IndexController::class, 'referral'])->name('referral.attached');
+        Route::get('/incomes', [IndexController::class, 'referral'])->name('referral.incomes');
         Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
