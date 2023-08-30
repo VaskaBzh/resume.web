@@ -95,7 +95,7 @@ Route::middleware('auth')->group(function () {
         Route::get('/connecting', 'connecting')->name('connecting');
 
 //        Route::redirect('/referral', '/referral?page=overview');
-        Route::get('/referral', 'dispatch')->name('referral.tabs');
+        Route::get('/referral', 'referral')->name('referral.tabs');
     });
 
 //    Route::group([
