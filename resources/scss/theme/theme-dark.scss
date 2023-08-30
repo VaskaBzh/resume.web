@@ -886,6 +886,11 @@ body {
                             background: #0b1621;
                         }
                         color: #989898;
+                        span {
+                            &.workers {
+                                color: var(--dark-theme-green, #86FF83);
+                            }
+                        }
                     }
                     &__row {
                         &:not(.main) {

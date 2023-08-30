@@ -4,7 +4,7 @@
         <div
             class="card_question"
             @mouseenter="openGradeList"
-            @mouseleave="closeGradeList"
+            @mouseleave="closeGradeList(true)"
             v-if="percentSvg"
         >
             <svg
@@ -26,7 +26,7 @@
                 viewBox="0 0 8 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                @mouseenter="openGradeList"
+                @mouseenter="unClose"
                 @mouseleave="closeGradeList"
             >
                 <path
@@ -39,13 +39,11 @@
                 class="card__list"
                 v-if="percentList"
                 v-show="opened"
-                @mouseenter="openGradeList"
+                @mouseenter="unClose"
                 @mouseleave="closeGradeList"
             >
                 <p class="card__list_text">
-                    {{
-                        $t('grade.hint')
-                    }}
+                    {{ $t("grade.hint") }}
                 </p>
                 <info-list :gradeList="percentList" />
             </div>
@@ -79,14 +77,24 @@ export default {
     data() {
         return {
             opened: false,
+            timeout: null,
+            wait: false,
         };
     },
     methods: {
         openGradeList() {
+            clearTimeout(this.timeout);
             this.opened = true;
+            this.wait = false;
         },
-        closeGradeList() {
-            this.opened = false;
+        closeGradeList(bool = false) {
+            this.wait = bool;
+            if (!this.wait) this.opened = false;
+            else this.timeout = setTimeout(() => (this.opened = false), 500);
+        },
+        unClose() {
+            clearTimeout(this.timeout);
+            if (!this.wait) this.opened = true;
         },
     },
 };

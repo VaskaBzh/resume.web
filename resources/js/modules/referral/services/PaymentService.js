@@ -1,6 +1,5 @@
 import { TableService } from "@/services/extends/TableService";
 
-import store from "@/store";
 import { PaymentData } from "@/modules/referral/DTO/PaymentData";
 import api from "@/api/api";
 
@@ -22,7 +21,9 @@ export class PaymentService extends TableService {
     }
 
     async fetchIncomes(page, per_page) {
-        return await api.get(`/referrals/incomes/${this.user_id}?page=${page}&per_page=${per_page}`)
+        return await api.get(
+            `/referrals/incomes/${this.user_id}?page=${page}&per_page=${per_page}`
+        );
     }
 
     useTranslater(indexes) {
@@ -45,8 +46,8 @@ export class PaymentService extends TableService {
                 return this.setter(el);
             });
 
-            this.titles = this.useTranslater([0, 1, 2, 4]);
-        } catch(err) {
+            this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+        } catch (err) {
             console.error(`FetchError: ${err}`);
         }
 
@@ -56,6 +57,7 @@ export class PaymentService extends TableService {
     async setTable(page = 1, per_page = 15) {
         await this.index(page, per_page);
 
+        console.log(this.titles);
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 
