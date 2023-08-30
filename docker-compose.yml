@@ -72,6 +72,7 @@ services:
         networks:
             - allbtc
 
+
     mailhog:
         image: 'mailhog/mailhog:latest'
         container_name: allbtc_smtp
