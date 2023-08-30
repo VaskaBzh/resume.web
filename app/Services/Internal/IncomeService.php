@@ -264,7 +264,7 @@ class IncomeService
             'earn' => $this->dailyEarn,
             'user_total' => $this->params['dailyAmount'],
             'percent' => $this->params['allBtcFee'],
-            'profit' => $this->dailyEarn - $this->params['dailyAmount'],
+            'profit' => $this->dailyEarn * ($this->params['allBtcFee'] / 100),
         ]));
     }
 }
