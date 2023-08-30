@@ -78,7 +78,9 @@ export default {
         fullPage() {
             const pageArr = this.$page.url.split("/");
             const fullPages = ["income", "settings", "wallets"];
-            return fullPages.find(page => page === pageArr[pageArr.length - 1]);
+            return fullPages.find(
+                (page) => page === pageArr[pageArr.length - 1]
+            );
         },
         links() {
             return this.service.links;

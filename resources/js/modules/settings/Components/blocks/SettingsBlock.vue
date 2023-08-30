@@ -35,9 +35,9 @@
             <blue-button
                 class="settings_button"
                 :disabled="disabled"
-                @click="!disabled
-                    ? $emit('clicked', valueModel)
-                    : console.log()"
+                @click="
+                    !disabled ? $emit('clicked', valueModel) : console.log()
+                "
             >
                 <a href="#" class="all-link">{{ button }}</a>
             </blue-button>
@@ -91,7 +91,8 @@ export default {
 .settings {
     &_input {
         &:disabled {
-            pointer-events:none;
+            pointer-events: none;
+            opacity: 0.5;
         }
     }
     &__block {
@@ -125,8 +126,8 @@ export default {
             max-width: 100%;
         }
         &:disabled {
-            pointer-events:none;
-            background: linear-gradient(84.14deg, rgba(#3f7bdd, 0.75) 8.75%, rgba(#4282ec, 0.75) 92.01%);
+            pointer-events: none;
+            opacity: 0.5;
         }
     }
     &_text {
