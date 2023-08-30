@@ -188,6 +188,7 @@ export default {
         border-radius: 12px;
         overflow: hidden;
         background: var(--dark-bg, #fff);
+        z-index: 2;
         width: 100%;
         left: 0;
         top: calc(100% + 8px);

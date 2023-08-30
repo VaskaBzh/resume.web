@@ -2,7 +2,7 @@
     <div class="card">
         <div class="card_icon" v-html="content.svg"></div>
         <p class="text text-gray card_text">{{ content.text }}</p>
-        <span class="card_value">{{ content.value }}</span>
+        <span class="card_value">{{ statValue }}</span>
     </div>
 </template>
 
@@ -11,6 +11,26 @@ export default {
     name: "stats-card",
     props: {
         content: Object,
+    },
+    data() {
+        return {
+            statValue: this.content.value,
+        };
+    },
+    watch: {
+        "content.value"(newValue, oldValue) {
+            this.statValue = newValue;
+            // let startValue = oldValue || 0;
+            // let intervalStep = 2000 / newValue;
+            // const interval = setInterval(function () {
+            //     if (startValue <= newValue) {
+            //         this.statValue = startValue;
+            //     } else {
+            //         clearInterval(interval);
+            //     }
+            //     startValue++;
+            // }, intervalStep);
+        },
     },
 };
 </script>
