@@ -4,21 +4,20 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Auth\ResetPasswordController;
-use App\Http\Requests\UserUpdateRequest;
-use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Inertia\Inertia;
 
-class ProfileController extends ResetPasswordController
+class ProfileController extends Controller
 {
-    public function __invoke(UserUpdateRequest $request, User $user): RedirectResponse
+    public function __invoke(string $page)
     {
-        if ($request->has('password')) {
-            $this->changePassword($request);
-        }
-
-        $user->update($request->all());
-
-        return back()->with('message', 'Аккаунт успешно обновлен');
+        return Inertia::render(
+            component: implode('/', ['Profile', ucfirst(Str::camel($page) . 'Page')]),
+            props: [
+                'auth_user' => Auth::check(),
+                'user' => auth()->user()
+            ]
+        );
     }
 }
