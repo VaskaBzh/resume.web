@@ -15,6 +15,7 @@ use App\Enums\Income\Status;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
+use App\Services\External\BtcComService;
 use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
 
@@ -22,6 +23,7 @@ class IncomeService
 {
     private Sub $sub;
     private ?Sub $owner;
+    private float $dailyEarn;
 
     private array $params = [
         'allBtcFee' => 3.5,
@@ -59,6 +61,7 @@ class IncomeService
 
         $this->setNetworkDifficulty();
         $this->calculateFee();
+        $this->setDailyEarn();
         $this->setDailyAmount();
         $this->setPendingAmount();
         $this->sumTotalAmount();
@@ -85,12 +88,21 @@ class IncomeService
         $this->params['diff'] = $this->stat->network_difficulty;
     }
 
+    private function setDailyEarn(): void
+    {
+        $this->dailyEarn = Helper::calculateEarn(
+            stats: $this->stat,
+            hashRate: $this->params['hash'],
+            fee: BtcComService::FEE
+        );
+    }
+
     private function setDailyAmount(): void
     {
         $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            allBtcFee: $this->params['allBtcFee']
+            fee: BtcComService::FEE - $this->params['allBtcFee']
         );
     }
 
@@ -143,7 +155,7 @@ class IncomeService
     public function calculateOwnerProfit(): void
     {
         if ($this->owner) {
-            $this->params['ownerProfit'] = $this->params['dailyAmount'] * ($this->owner->pivot->sub_profit_percent / 100);
+            $this->params['ownerProfit'] = $this->dailyEarn * ($this->owner->pivot->sub_profit_percent / 100);
         }
     }
 
