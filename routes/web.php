@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
