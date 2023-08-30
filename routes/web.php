@@ -110,9 +110,8 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'referrals'
     ], function () {
-        Route::redirect('', '/dashboard')->name('referral');
-        Route::get('/dashboard', [IndexController::class, 'referral'])->name('referral.dashboard');
-        Route::get('/attached-referrals', [IndexController::class, 'referral'])->name('referral.list');
+        Route::get('', [IndexController::class, 'referral'])->name('referral');
+        Route::get('/attached-referrals', [IndexController::class, 'referral'])->name('referral.attached');
         Route::get('/incomes', [IndexController::class, 'referral'])->name('referral.incomes');
         Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::post('/generate/{user}', CodeController::class)->name('code');
