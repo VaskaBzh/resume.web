@@ -302,18 +302,23 @@ body {
                         &-cabinet {
                             .select {
                                 &_name {
-                                    background: #283955 !important;
-                                    color: #eaeaea;
+                                    background: #283955;
+                                    color: #CACACA;
                                     svg {
                                         stroke: #80809A;
                                     }
                                 }
                                 &_list {
-                                    background: #283955 !important;
+                                    background: #283955;
+                                    box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05), 0px 4px 12px -4px rgba(29, 41, 57, 0.05);
                                 }
-                                &_item {
-                                    color: #eaeaea;
-                                    border-bottom-color: #80809A;
+                                &_row {
+                                    color: #CACACA;
+                                    border-bottom-color: #818C99;
+                                    &:hover,
+                                    &:focus {
+                                        background: #334461;
+                                    }
                                 }
                             }
                         }

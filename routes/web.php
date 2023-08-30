@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
@@ -90,11 +89,19 @@ Route::middleware('auth')->group(function () {
         Route::get('/statistic', 'statistic')->name('statistic');
         Route::get('/accounts', 'accounts')->name('accounts');
         Route::get('/workers', 'workers')->name('workers');
-        Route::get('/full-page/settings', 'settings')->name('settings');
-        Route::get('/full-page/income', 'income')->name('income');
-        Route::get('/full-page/wallets', 'wallets')->name('wallets');
+        Route::get('/settings', 'settings')->name('settings');
+        Route::get('/income', 'income')->name('income');
+        Route::get('/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
-        Route::get('/referral', 'referral')->name('ref');
+
+        Route::group([
+            'prefix' => 'referrals'
+        ], function () {
+            Route::redirect('', 'referrals/dashboard')->name('referrals');
+            Route::get('/dashboard', 'dashboard_referral')->name('referral.dashboard');
+            Route::get('/attached-referrals', 'attached_referral');
+            Route::get('/incomes', 'incomes_referral')->name('referral.incomes');
+        });
     });
 
 //    Route::group([

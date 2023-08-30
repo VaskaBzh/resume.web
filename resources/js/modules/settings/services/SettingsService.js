@@ -1,11 +1,11 @@
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
 import store from "@/store";
-import {SettingsUserData} from "../DTO/SettingsUserData";
+import { SettingsUserData } from "../DTO/SettingsUserData";
 
 export class SettingsService {
     constructor(translate, user, referral_code) {
@@ -33,6 +33,14 @@ export class SettingsService {
             this.form,
             this.validate
         );
+    }
+
+    setUser(user) {
+        this.user = user;
+    }
+
+    setCode(referral_code) {
+        this.referral_code = referral_code;
     }
 
     setUserData() {
@@ -112,6 +120,8 @@ export class SettingsService {
             });
 
             this.sendMessage(result.data.message);
+
+            router.reload();
         } catch (err) {
             this.sendMessage(err.response.data.message);
         }

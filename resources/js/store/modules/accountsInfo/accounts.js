@@ -28,8 +28,8 @@ export default {
                 }
             );
 
+            commit("updateAccounts", subsList);
             if (state.active === -1) {
-                commit("updateAccounts", subsList);
                 this.dispatch(
                     "set_active",
                     Object.values(subsList)[firstSubIndex].group_id
