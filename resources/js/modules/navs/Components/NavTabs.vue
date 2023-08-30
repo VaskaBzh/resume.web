@@ -76,10 +76,9 @@ export default {
     },
     computed: {
         fullPage() {
-            let url = this.$page.url.startsWith("http")
-                ? new URL(this.$page.url).pathname
-                : this.$page.url;
-            return url.startsWith("/profile/full-page");
+            const pageArr = this.$page.url.split("/");
+            const fullPages = ["income", "settings", "wallets"];
+            return fullPages.find(page => page === pageArr[pageArr.length - 1]);
         },
         links() {
             return this.service.links;
