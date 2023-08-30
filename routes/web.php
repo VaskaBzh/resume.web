@@ -94,6 +94,15 @@ Route::middleware('auth')->group(function () {
         Route::get('/income', 'income')->name('income');
         Route::get('/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
+
+        Route::group([
+            'prefix' => 'referrals'
+        ], function () {
+            Route::redirect('', 'referrals/dashboard')->name('referrals');
+            Route::get('/dashboard', [IndexController::class, 'dashboard_referral'])->name('referral.dashboard');
+            Route::get('/attached-referrals', [IndexController::class, 'attached_referral']);
+            Route::get('/incomes', [IndexController::class, 'incomes_referral'])->name('referral.incomes');
+        });
     });
 
 //    Route::group([
@@ -110,10 +119,6 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'referrals'
     ], function () {
-        Route::redirect('', '/dashboard')->name('referral');
-        Route::get('/dashboard', [IndexController::class, 'referral'])->name('referral.dashboard');
-        Route::get('/attached-referrals', [IndexController::class, 'referral'])->name('referral.list');
-        Route::get('/incomes', [IndexController::class, 'referral'])->name('referral.incomes');
         Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');

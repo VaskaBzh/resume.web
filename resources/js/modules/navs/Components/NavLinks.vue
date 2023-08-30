@@ -291,9 +291,9 @@ export default {
                         />"
                     </svg>
                     `,
-                    link: "ref",
-                    page: "/profile/ref",
-                    name: this.$t("header.links.ref"),
+                    link: "referrals",
+                    page: "/profile/referrals",
+                    name: this.$t("header.links.referrals"),
                 },
             ];
         },

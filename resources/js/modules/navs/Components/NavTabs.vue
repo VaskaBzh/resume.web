@@ -29,7 +29,9 @@
             :href="route(link.route)"
             :class="{
                 burger_link: this.viewportWidth < 991.98,
-                'router-link-active': $page.url === `/profile/${link.url}`,
+                'router-link-active': $page.url.startsWith(
+                    `/profile/${link.url}`
+                ),
             }"
             class="nav-tabs__tab"
         >
