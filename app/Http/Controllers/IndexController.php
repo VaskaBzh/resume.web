@@ -113,9 +113,25 @@ class IndexController extends Controller
         ]);
     }
 
-    public function referral()
+    public function dashboard_referral()
     {
-        return Inertia::render('Profile/ReferralPage', [
+        return Inertia::render('Profile/Referral/DashboardReferralsPage', [
+            'auth_user' => Auth::check(),
+            'user' => auth()->user()
+        ]);
+    }
+
+    public function attached_referral()
+    {
+        return Inertia::render('Profile/Referral/AttachedReferralsPage', [
+            'auth_user' => Auth::check(),
+            'user' => auth()->user()
+        ]);
+    }
+
+    public function incomes_referral()
+    {
+        return Inertia::render('Profile/Referral/IncomeRefferralsPage', [
             'auth_user' => Auth::check(),
             'user' => auth()->user()
         ]);

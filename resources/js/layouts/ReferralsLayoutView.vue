@@ -10,30 +10,13 @@
                 <div class="referral__tabs">
                     <main-tabs
                         class="referral__tabs-list"
-                        @getValue="viewService.setView($event)"
+                        @getValue="referralRouting($event)"
                         :tabs="viewService.tabs"
                         :active="viewService.view"
                     />
                 </div>
                 <transition name="page">
-                    <cabinet-view
-                        :user="user"
-                        :message="message"
-                        :errors="errors"
-                        v-if="viewService.view === 'Cabinet'"
-                    />
-                </transition>
-                <transition name="page">
-                    <referrals-view
-                        :user="user"
-                        v-if="viewService.view === 'Referrals'"
-                    />
-                </transition>
-                <transition name="page">
-                    <payment-view
-                        :user="user"
-                        v-if="viewService.view === 'Referrals_income'"
-                    />
+                    <slot />
                 </transition>
             </div>
         </div>
@@ -42,24 +25,17 @@
 
 <script>
 import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import MainTitle from "../../Components/UI/MainTitle.vue";
-import MainTabs from "../../Components/UI/profile/MainTabs.vue";
-import CabinetView from "../../modules/referral/Components/views/CabinetView.vue";
-import ReferralsView from "@/modules/referral/Components/views/ReferralsView.vue";
-import PaymentView from "@/modules/referral/Components/views/PaymentView.vue";
+import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
-import { ReferralsMessage } from "../../modules/referral/lang/ReferralsMessage";
+import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 
 export default {
-    name: "referral-page",
     layout: ProfileLayoutView,
     components: {
         MainTitle,
         MainTabs,
-        CabinetView,
-        PaymentView,
-        ReferralsView,
     },
     i18n: {
         sharedMessages: ReferralsMessage,
@@ -71,11 +47,16 @@ export default {
     },
     data() {
         return {
-            viewService: new ViewsService(this.$t),
+            viewService: new ViewsService(this.$t, this.$page),
         };
     },
+    methods: {
+        referralRouting(routeName) {
+            this.viewService.tabRoute(routeName).setView(this.$page);
+        },
+    },
     mounted() {
-        document.title = this.$t("header.links.ref");
+        document.title = this.$t("header.links.referrals");
 
         this.viewService.setTabs();
     },
