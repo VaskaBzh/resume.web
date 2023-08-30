@@ -42,14 +42,14 @@
 
 <script>
 import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
-import MainTitle from "../../Components/UI/MainTitle.vue";
-import MainTabs from "../../Components/UI/profile/MainTabs.vue";
-import CabinetView from "../../modules/referral/Components/views/CabinetView.vue";
+import MainTitle from "../../../Components/UI/MainTitle.vue";
+import MainTabs from "../../../Components/UI/profile/MainTabs.vue";
+import CabinetView from "../../../modules/referral/Components/views/CabinetView.vue";
 import ReferralsView from "@/modules/referral/Components/views/ReferralsView.vue";
 import PaymentView from "@/modules/referral/Components/views/PaymentView.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
-import { ReferralsMessage } from "../../modules/referral/lang/ReferralsMessage";
+import { ReferralsMessage } from "../../../modules/referral/lang/ReferralsMessage";
 
 export default {
     name: "referral-page",

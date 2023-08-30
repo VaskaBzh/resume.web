@@ -2,12 +2,10 @@
     <div class="select">
         <div
             class="select_name"
-            :class="
-                {
-                    'select_name-active': opened,
-                    'select_name-selected':   validateBaseName
-                }
-            "
+            :class="{
+                'select_name-active': opened,
+                'select_name-selected': validateBaseName,
+            }"
             @click="toggleSelect"
         >
             {{ baseName }}
@@ -81,10 +79,13 @@ export default {
     },
     computed: {
         validateBaseName() {
-            return this.baseName === Object.values(this.rows).find(
-                (el) => el.group_id === this.activeSubId ?? 0
-            )?.name;
-        }
+            return (
+                this.baseName ===
+                Object.values(this.rows).find(
+                    (el) => el.group_id === this.activeSubId ?? 0
+                )?.name
+            );
+        },
     },
     methods: {
         setBaseName() {
@@ -157,7 +158,8 @@ export default {
         width: 100%;
         transition: all 0.3s ease 0s;
         &-selected {
-            color: var(--light-theme-gray-3, #818C99);
+            background: #ededed;
+            color: #d6d6d6;
         }
         svg {
             position: absolute;
@@ -185,7 +187,7 @@ export default {
         flex-direction: column;
         border-radius: 12px;
         overflow: hidden;
-        background: #fafafa;
+        background: var(--dark-bg, #fff);
         width: 100%;
         left: 0;
         top: calc(100% + 8px);
@@ -198,6 +200,11 @@ export default {
         display: inline-flex;
         align-items: center;
         width: 100%;
+        transition: all 0.5s ease 0s;
+        &:hover,
+        &:focus {
+            background: #f2f4f7;
+        }
         &:not(:last-child) {
             border-bottom: 0.5px solid #e4e7ec;
         }
