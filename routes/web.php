@@ -99,7 +99,7 @@ Route::middleware('auth')->group(function () {
         ], function () {
             Route::redirect('', 'referrals/dashboard')->name('referrals');
             Route::get('/dashboard', 'dashboard_referral')->name('referral.dashboard');
-            Route::get('/attached-referrals', 'attached_referral');
+            Route::get('/attached-referrals', 'attached_referral')->name('referral.attached');
             Route::get('/incomes', 'incomes_referral')->name('referral.incomes');
         });
     });
