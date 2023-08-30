@@ -19,7 +19,7 @@ export class TabsService {
                 "connecting",
                 "connecting"
             ),
-            new TabsData("referrals", "referrals", "referrals", "referrals"),
+            new TabsData("referral", "referral", "referral", "referral"),
         ];
     }
 

@@ -13,15 +13,15 @@ export class ViewsService {
             ...this.tabs,
             new TabData(
                 this.translate("tabs[0]"),
-                "/profile/referrals/dashboard"
+                "/profile/referral?page=overview"
             ),
             new TabData(
                 this.translate("tabs[1]"),
-                "/profile/referrals/attached-referrals"
+                "/profile/referral?page=my-referral"
             ),
             new TabData(
                 this.translate("tabs[2]"),
-                "/profile/referrals/incomes"
+                "/profile/referral?page=earn-rewards"
             ),
         ];
     }
