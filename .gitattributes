@@ -10,5 +10,5 @@
 CHANGELOG.md export-ignore
 .styleci.yml export-ignore
 
-.docker/* merge=ours
+.docker/ merge=ours
 docker-compose.yml merge=ours

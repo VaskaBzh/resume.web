@@ -11,12 +11,9 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Utils\Helper;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
 
 class ReferralService
 {
