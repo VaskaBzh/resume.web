@@ -80,7 +80,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/incomes/{sub}', IncomeListController::class)->name('income.list');
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hash.list');
-    Route::get('/workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
+    Route::get('workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
+
+    Route::group([
+        'prefix' => 'profile',
+        'controller' => IndexController::class
+    ], function () {
+        Route::get('/profile', 'profile')->name('profile');
+        Route::get('/statistic', 'statistic')->name('statistic');
+        Route::get('/accounts', 'accounts')->name('accounts');
+        Route::get('/workers', 'workers')->name('workers');
+        Route::get('/settings', 'settings')->name('settings');
+        Route::get('/income', 'income')->name('income');
+        Route::get('/wallets', 'wallets')->name('wallets');
+        Route::get('/connecting', 'connecting')->name('connecting');
+
+//        Route::redirect('/referral', '/referral?page=overview');
+        Route::get('/referral', 'referral')->name('referral.tabs');
+    });
 
 //    Route::group([
 //        'prefix' => '2fac'
