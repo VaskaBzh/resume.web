@@ -23,6 +23,10 @@ return [
         'complexity' => 'ComplexityPage',
         'help' => 'FaqPage',
         'hosting' => 'HostingPage',
-        'overview' => 'Profile/Referral/OverviewPage'
+        'registration' => 'Auth/RegPage',
+        'login' => 'Auth/LoginPage',
+        'overview' => 'Profile/Referral/OverviewPage',
+        'my-referral' => 'Profile/Referral/MyReferralPage',
+        'earn-rewards' => 'Profile/Referral/EarnRewardsPage'
     ]
 ];
