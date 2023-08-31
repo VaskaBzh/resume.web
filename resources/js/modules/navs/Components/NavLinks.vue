@@ -23,14 +23,14 @@
                 ></account-menu>
                 <div class="nav__column" v-show="!is_auth">
                     <blue-button class="button button-md button-light">
-                        <Link :href="route('login')" class="all-link">
+                        <Link href="/login" class="all-link">
                             {{ $t("header.login.buttons.login") }}
                         </Link>
                     </blue-button>
                     <blue-button
                         class="button button-md button-reverce button-reverce-border"
                     >
-                        <Link :href="route('registration')" class="all-link">
+                        <Link href="/registration" class="all-link">
                             {{ $t("header.login.buttons.registration") }}
                         </Link>
                     </blue-button>
@@ -291,9 +291,9 @@ export default {
                         />"
                     </svg>
                     `,
-                    link: "referrals",
-                    page: "/profile/referrals",
-                    name: this.$t("header.links.referrals"),
+                    link: "referral.tabs",
+                    page: "/profile/referral",
+                    name: this.$t("header.links.referral"),
                 },
             ];
         },

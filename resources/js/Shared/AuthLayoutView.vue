@@ -17,7 +17,7 @@
                 <div class="page__container">
                     <div class="auth__main">
                         <div class="page__content">
-                            <Link :href="route('home')">
+                            <Link href="/home">
                                 <img
                                     v-show="!isDark"
                                     src="../../assets/img/logo_high_quality-lg.svg"

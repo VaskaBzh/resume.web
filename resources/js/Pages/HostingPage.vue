@@ -27,7 +27,7 @@
                         class="button button-lg button-with-propeller"
                         v-else
                     >
-                        <Link :href="route('registration')" class="all-link">
+                        <Link href="/registration" class="all-link">
                             {{ $t("hosting.button") }}
                             <div class="button_propeller"></div
                         ></Link>

@@ -92,7 +92,6 @@ export default {
     &_input {
         &:disabled {
             pointer-events: none;
-            opacity: 0.5;
         }
     }
     &__block {

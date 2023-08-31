@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="nav__container">
-            <Link :href="route('home')">
+            <Link href="/home">
                 <img
                     v-if="!getTheme"
                     class="nav__logo"
@@ -43,7 +43,7 @@
                 class="nav__button"
             ></account-menu>
             <Link
-                :href="route('login')"
+                href="/login"
                 v-show="viewportWidth >= 991.98 && !is_auth"
                 class="nav__button"
             >
