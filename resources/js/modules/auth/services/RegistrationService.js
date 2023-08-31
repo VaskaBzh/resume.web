@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import { FormData } from "@/modules/auth/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
@@ -14,7 +14,13 @@ export class RegistrationService {
     }
 
     setForm() {
-        this.form = useForm(new FormData("", "", "", "", "", false));
+        const { props } = usePage();
+
+        this.form = useForm({
+            ...new FormData("", "", "", "", "", false),
+            _token: props.token,
+
+        });
     }
 
     async account_create() {

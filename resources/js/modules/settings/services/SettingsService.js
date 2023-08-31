@@ -1,4 +1,4 @@
-import { router, useForm } from "@inertiajs/vue3";
+import {router, useForm, usePage} from "@inertiajs/vue3";
 import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
@@ -93,8 +93,11 @@ export class SettingsService {
     async ajax() {
         this.wait = true;
 
+        const { props } = usePage();
+
         let sendForm = useForm({
             [this.form.key]: this.form.item,
+            _token: props.token,
         });
 
         await sendForm.post(route("change", this.user), {
@@ -144,13 +147,13 @@ export class SettingsService {
         }
     };
 
-    async send2Fac() {
-        let form = useForm({
-            "2fac": true,
-        });
-
-        await form.post("/2fac/enable", {});
-    }
+    // async send2Fac() {
+    //     let form = useForm({
+    //         "2fac": true,
+    //     });
+    //
+    //     await form.post("/2fac/enable", {});
+    // }
 
     setProfits() {
         this.profit = localStorage.getItem("clearProfit") || "";

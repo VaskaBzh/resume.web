@@ -36,7 +36,8 @@ class PageController extends Controller
                 component: Arr::get(config('inertia.components'), $queryable ?? $page, 'HomePage'),
                 props: [
                     'auth_user' => Auth::check(),
-                    'user' => auth()->user()
+                    'user' => auth()->user(),
+                    "token" => csrf_token()
                 ]
             )
         };

@@ -33,7 +33,7 @@
                                 </svg>
                             </Link>
                             <Link
-                                :href="route('registration')"
+                                :href="route('page', { page: 'registration' })"
                                 v-else
                                 class="link link-white"
                             >

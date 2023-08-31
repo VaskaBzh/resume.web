@@ -23,6 +23,7 @@ use App\Http\Controllers\Referral\ListController as ListReferralController;
 use App\Http\Controllers\Referral\AttachController as AttachReferralController;
 use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -120,3 +121,4 @@ Route::middleware('auth')->group(function () {
         Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });
 });
+

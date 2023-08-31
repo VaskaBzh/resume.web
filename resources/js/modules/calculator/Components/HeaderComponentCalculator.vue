@@ -36,7 +36,7 @@
                 </div>
                 <div class="header-calculator__content">
                     <Link
-                        :href="route('login')"
+                        :href="route('page', { page: 'login' })"
                         v-show="viewportWidth >= 991.98 && !is_auth"
                         class="header-calculator_button"
                     >

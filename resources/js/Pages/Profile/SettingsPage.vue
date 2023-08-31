@@ -81,7 +81,7 @@ export default {
             settingsService: new SettingsService(
                 this.$t,
                 this.user,
-                this.referral_code
+                this.user.referral_code.code
             ),
             is_checked: true,
             notification: true,

@@ -340,7 +340,7 @@ export default {
     },
     methods: {
         walletInit() {
-            this.wallets = new WalletService();
+            this.wallets = new WalletService(this.$t);
 
             this.wallets.index();
         },
