@@ -18,15 +18,9 @@ return [
         'wallets' => 'Profile/WalletsPage',
         'workers' => 'Profile/WorkersPage',
         'about' => 'AboutPage',
-        'home' => 'HomePage',
         'calculator' => 'CalculatorPage',
         'complexity' => 'ComplexityPage',
-        'help' => 'FaqPage',
+        'faq' => 'FaqPage',
         'hosting' => 'HostingPage',
-        'overview' => 'Profile/Referral/OverviewPage',
-        'my-referral' => 'Profile/Referral/MyReferralPage',
-        'earn-rewards' => 'Profile/Referral/EarnRewardsPage',
-        'login' => 'Auth/LoginPage',
-        'registration' => 'Auth/RegPage',
     ]
 ];
