@@ -23,5 +23,6 @@ return [
         'complexity' => 'ComplexityPage',
         'help' => 'FaqPage',
         'hosting' => 'HostingPage',
+        'overview' => 'Profile/Referral/OverviewPage'
     ]
 ];
