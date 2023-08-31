@@ -27,6 +27,6 @@ return [
         'my-referral' => 'Profile/Referral/MyReferralPage',
         'earn-rewards' => 'Profile/Referral/EarnRewardsPage',
         'login' => 'Auth/LoginPage',
-        'registration' => 'Auth/RegPage'
+        'registration' => 'Auth/RegPage',
     ]
 ];
