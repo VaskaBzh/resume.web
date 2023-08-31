@@ -46,6 +46,8 @@ Route::group([
     'controller' => PageController::class
 ], function () {
     Route::get('/', 'index')->name('home');
+    Route::get('/login', 'login')->name('login');
+    Route::get('/registration', 'registration')->name('registration');
     Route::get('/{page}', 'show')->name('page');
 });
 
