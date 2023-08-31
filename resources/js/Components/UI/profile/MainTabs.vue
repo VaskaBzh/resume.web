@@ -5,17 +5,16 @@
             :key="tab.title + i"
             v-for="(tab, i) in tabs"
             :class="{
-                active:
-                    (tab.value?.length
-                        ? tab.value[tab.value.length - 1]
-                        : tab.value) === active,
+                active: activeCondition(tab)
             }"
-            @click="$emit('getValue', tab.value)"
+            @click="activeCondition(tab)
+                ? null
+                : $emit('getValue', tab.value)"
         >
             {{ tab.title }}
         </button>
     </div>
-</template>
+</template>pp
 
 <script>
 export default {
@@ -24,6 +23,13 @@ export default {
         tabs: Array,
         active: Number,
     },
+    methods: {
+        activeCondition(tab) {
+            return (tab.value?.length
+                ? tab.value[tab.value.length - 1]
+                : tab.value) === this.active;
+        }
+    }
 };
 </script>
 
