@@ -1,6 +1,6 @@
 <template>
     <Link
-        :href="route(link.link)"
+        :href="link.page"
         class="nav__link"
         :class="{
             burger_link: viewportWidth < 991.98,

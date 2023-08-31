@@ -35,7 +35,7 @@
                         v-if="this.auth_user"
                         v-scroll="'left'"
                     >
-                        <Link :href="route('accounts')" class="all-link">
+                        <Link href="/profile/accounts" class="all-link">
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
                         ></Link>
@@ -139,7 +139,7 @@
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
                         >
-                            <Link :href="route('accounts')" class="all-link">
+                            <Link href="/profile/accounts" class="all-link">
                                 {{ $t("home.button") }}</Link
                             >
                         </blue-button>
@@ -293,7 +293,7 @@
                                 v-if="viewportWidth >= 991.98 && this.auth_user"
                             >
                                 <Link
-                                    :href="route('accounts')"
+                                    href="/profile/accounts"
                                     class="all-link"
                                 >
                                     {{ $t("home.bitcoin_block.button") }}</Link
@@ -333,7 +333,7 @@
                                     {{ $t("home.promo_blocks.payment.text") }}
                                 </div>
                                 <Link
-                                    :href="route('accounts')"
+                                    href="/profile/accounts"
                                     v-if="this.auth_user"
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link") }}

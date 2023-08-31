@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="button__row" v-if="viewportWidth >= 991.98">
-                <Link class="settings" :href="route('settings')"
+                <Link class="settings" href='/profile/settings'
                     ><svg
                         width="16"
                         height="17"
@@ -282,7 +282,7 @@ export default {
     methods: {
         async openAddPopup() {
             if (!this.$page.url.startsWith("/profile/accounts")) {
-                await router.visit(route("accounts"));
+                await router.visit("/profile/accounts");
 
                 setTimeout(() => {
                     this.$refs.input.focus();

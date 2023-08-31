@@ -83,7 +83,6 @@
                     >
                         <main-title
                             class="title title-blue"
-                            :href="route(`workers`)"
                             >{{ $t("statistic.info_blocks.workers.title") }}
                         </main-title>
                         <ul class="statistic__list">
