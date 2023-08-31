@@ -14,7 +14,7 @@
             {{ tab.title }}
         </button>
     </div>
-</template>pp
+</template>
 
 <script>
 export default {

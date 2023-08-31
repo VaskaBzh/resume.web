@@ -196,6 +196,7 @@ export default {
 
         const form = useForm({
             name: "",
+            _token: props.token,
         });
 
         const addAcc = async () => {
@@ -214,16 +215,11 @@ export default {
         };
 
         const logout = async () => {
-            await Inertia.post(
+            await router.post(
                 "/logout",
-                {},
                 {
-                    headers: {
-                        "X-CSRF-Token": document
-                            .querySelector('meta[name="csrf-token"]')
-                            .getAttribute("content"),
+                        _token: props.token,
                     },
-                }
             );
         };
 

@@ -750,7 +750,7 @@ body {
                     }
                     &__block {
                         &-light {
-                            background: #101d2b;
+                            background: var(--dark-theme-table-bg, #0B1621);
                         }
                         .title {
                             &-blue {

@@ -55,13 +55,11 @@ export default {
             const regex = /^[0-9]*\.?[0-9]*$/;
 
             if (regex.test(newValue)) {
-                // const numValue = parseFloat(newValue);
-                // console.log(newValue)
-                // console.log(numValue)
-                //
-                // if (!isNaN(numValue) || numValue > this.watchValue) {
-                //     this.value = oldValue;
-                // }
+                const numValue = parseFloat(newValue);
+
+                if (numValue > this.watchValue) {
+                    this.value = oldValue;
+                }
             } else {
                 this.value = oldValue;
             }
@@ -181,6 +179,17 @@ export default {
         border: none;
         outline: none;
         width: 100%;
+        &:-webkit-autofill {
+            border: none;
+            background: transparent;
+            transition: background 5000s ease 0s;
+            &:hover,
+            &:focus {
+                border: none;
+                background: transparent;
+                transition: background 5000s ease 0s;
+            }
+        }
         &::placeholder {
             color: var(--light-theme-gray-3, #818c99);
         }

@@ -57,9 +57,12 @@ export default {
             const { props } = usePage();
 
             if (this.val !== null) {
+                const { props } = usePage();
+
                 let form = useForm({
                     item: data,
                     type: this.name,
+                  _token: props.token,
                 });
                 await form.post(route("change"), {});
             }
