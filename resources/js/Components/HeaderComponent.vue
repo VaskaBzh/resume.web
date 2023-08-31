@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="nav__container">
-            <Link :href="route('home')">
+            <Link href="/home">
                 <img
                     v-if="!getTheme"
                     class="nav__logo"
@@ -43,14 +43,14 @@
                 class="nav__button"
             ></account-menu>
             <Link
-                :href="route('login')"
+                href="/login"
                 v-show="viewportWidth >= 991.98 && !is_auth"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}
             </Link>
             <Link
-                :href="route('statistic')"
+                href="/profile/statistic"
                 v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
                 class="nav__button"
             >
@@ -84,14 +84,14 @@
 </template>
 
 <script>
-import { Link, useForm } from "@inertiajs/vue3";
+import {Link, useForm} from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
-import { defineComponent, ref } from "vue";
+import {defineComponent, ref} from "vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 
 export default defineComponent({
@@ -165,7 +165,7 @@ export default defineComponent({
                 this.is_open = !this.is_open;
                 this.is_open
                     ? (document.querySelector("body").style.overflowY =
-                          "hidden")
+                        "hidden")
                     : (document.querySelector("body").style.overflowY = "auto");
             }
         },
@@ -189,6 +189,7 @@ export default defineComponent({
     left: 50%;
     transform: translateX(-50%);
     transition: all 0.3s ease 0s;
+
     &:before {
         transition: all 0.3s ease 0s;
         left: 50%;
@@ -206,12 +207,14 @@ export default defineComponent({
             z-index: -1;
         }
     }
+
     @media (max-width: 991.98px) {
         height: 80px;
     }
     @media (max-width: 479.98px) {
         height: 60px;
     }
+
     &__logo {
         max-width: 170px;
         @media (min-width: 991.98px) {
@@ -221,6 +224,7 @@ export default defineComponent({
             max-width: 138px;
         }
     }
+
     a,
     div,
     span {
@@ -228,17 +232,20 @@ export default defineComponent({
             z-index: 100;
         }
     }
+
     &__container {
         display: flex;
         align-items: center;
         gap: 5px;
         height: 100%;
     }
+
     &__buttons {
         display: flex;
         gap: 12px;
         align-items: center;
         margin-left: auto;
+
         &_mobile {
             display: flex;
             align-items: center;
@@ -250,6 +257,7 @@ export default defineComponent({
             }
         }
     }
+
     &__button {
         font-size: 16px;
         font-style: normal;
@@ -273,6 +281,7 @@ export default defineComponent({
                 background: #c6d8f5;
             }
         }
+
         &_mobile {
             background: rgba(194, 213, 242, 0.61);
             border-radius: 14px;
@@ -284,10 +293,12 @@ export default defineComponent({
             align-items: center;
             white-space: nowrap;
             transition: all 0.3s ease 0s;
+
             &:hover {
                 background: rgba(194, 213, 242);
             }
         }
+
         &_link {
             padding: 0 20px;
             width: 100%;
@@ -298,6 +309,7 @@ export default defineComponent({
             gap: 10px;
         }
     }
+
     &__burger {
         background: transparent;
         gap: 4px;

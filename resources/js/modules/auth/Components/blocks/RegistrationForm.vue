@@ -117,7 +117,7 @@
         >
         <p class="text text-light form-auth_text">
             {{ this.$t("auth.reg.link[0]") }}
-            <Link :href="route('login')" class="form-auth_link">{{
+            <Link href="/login" class="form-auth_link">{{
                 this.$t("auth.reg.link[1]")
             }}</Link>
         </p>
