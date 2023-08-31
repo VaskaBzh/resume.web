@@ -12,7 +12,7 @@
                                 {{ $t("info.title") }}
                             </div>
                             <Link
-                                :href="route('accounts')"
+                                href="/profile/accounts"
                                 v-if="this.auth_user"
                                 class="link link-white"
                             >

@@ -6,13 +6,26 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Inertia\Inertia;
 
-class IndexController extends Controller
+class PageController extends Controller
 {
-    public function index()
+
+    public function __invoke(Request $request, string $page)
+    {
+        return Inertia::render(
+            component: Arr::get(config('inertia.components'), $page, 'HomePage'),
+            props: [
+                'auth_user' => Auth::check(),
+                'user' => auth()->user()
+            ]
+        );
+    }
+
+    /*public function index()
     {
         return Inertia::render('HomePage', [
             'title' => 'Allbtc',
@@ -69,69 +82,6 @@ class IndexController extends Controller
         ]);
     }
 
-    public function accounts()
-    {
-        return Inertia::render('Profile/AccountsPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function statistic()
-    {
-        return Inertia::render('Profile/StatisticPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function workers()
-    {
-        return Inertia::render('Profile/WorkersPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function connecting()
-    {
-        return Inertia::render('Profile/ConnectingPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function wallets()
-    {
-        return Inertia::render('Profile/FullPages/WalletsPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
-    public function referral(Request $request)
-    {dd($request);
-        if (!$request->page) {
-            return redirect('/profile/referral?page=overview');
-        }
-
-        return Inertia::render(
-            component: implode('/', ['Profile', 'Referral', ucfirst(Str::camel($request->page) . 'Page')]),
-            props: [
-                'auth_user' => Auth::check(),
-                'user' => auth()->user()
-            ]
-        );
-    }
-
-    public function Income()
-    {
-        return Inertia::render('Profile/FullPages/IncomePage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
-    }
-
     public function settings()
     {
         $user = auth()->user();
@@ -157,5 +107,5 @@ class IndexController extends Controller
         session()->forget('secret');
 
         return $rendered;
-    }
+    }*/
 }

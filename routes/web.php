@@ -4,8 +4,8 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
-use App\Http\Controllers\IndexController;
 use App\Http\Controllers\MinerStatController;
+use App\Http\Controllers\PageController;
 use App\Http\Controllers\Referral\CodeController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Sub\ListController as SubListController;
@@ -22,7 +22,6 @@ use App\Http\Controllers\Payout\ListController as PayoutListController;
 use App\Http\Controllers\Referral\ListController as ListReferralController;
 use App\Http\Controllers\Referral\AttachController as AttachReferralController;
 use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListController;
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -37,23 +36,31 @@ use Illuminate\Support\Facades\Route;
 */
 
 /* Public routes */
-Route::group([
-    'prefix' => '',
-    'controller' => IndexController::class
-], function () {
-    Route::get('/', 'index')->name('home');
-    Route::get('/help', 'help')->name('help');
-    Route::get('/hosting', 'hosting')->name('hosting');
+
+
+Route::get('/{page}', PageController::class)->name('page');
+
+/*Route::get('/', 'index')->name('home');
+Route::get('/help', 'help')->name('help');
+Route::get('/hosting', 'hosting')->name('hosting');
 //    Route::get('/calculator', 'calculator')->name('calculator');
-    Route::get('/registration', 'registration')->name('registration');
-    Route::get('/login', 'login')->name('login');
-});
+Route::get('/registration', 'registration')->name('registration');
+Route::get('/login', 'login')->name('login');*/
+
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
 
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
+
+    Route::group([
+        'prefix' => 'profile'
+    ], function () {
+        Route::redirect('', '/profile/statistic');
+        Route::get('/{page}', PageController::class)->name('profile.index');
+    });
+
     Route::group([
         'prefix' => 'subs',
     ], function () {
@@ -80,22 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/incomes/{sub}', IncomeListController::class)->name('income.list');
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hash.list');
-    Route::get('workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
-
-
-    Route::group([
-        'prefix' => 'profile'
-    ], function () {
-        Route::redirect('', '/profile/statistic');
-        Route::get('{page}', ProfileController::class)->name('profile.index');
-
-        Route::group([
-            'prefix' => 'referral'
-        ], function () {
-            Route::get('', [IndexController::class, 'referral'])->name('referral.tabs');
-        });
-    });
-
+    Route::get('/workerhashrate/{worker}', WorkerHashRateListController::class)->name('worker_hashrate.list');
 
 //    Route::group([
 //        'prefix' => '2fac'
@@ -111,7 +103,7 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'referrals'
     ], function () {
-        Route::get('{user}', ListReferralController::class)->name('referral.list');
+        Route::get('/{user}', ListReferralController::class)->name('referral.list');
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');

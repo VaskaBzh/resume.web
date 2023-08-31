@@ -1,5 +1,5 @@
-import { TabsData } from "../DTO/TabsData";
-import { router } from "@inertiajs/vue3";
+import {TabsData} from "../DTO/TabsData";
+import {router} from "@inertiajs/vue3";
 
 export class TabsService {
     constructor() {
@@ -8,18 +8,17 @@ export class TabsService {
 
     setLinks() {
         this.links = [
-            new TabsData("statistic", "statistic", "statistic", "statistic"),
-            new TabsData("income", "income", "income", "income"),
-            new TabsData("wallets", "wallets", "wallets", "wallets"),
-            new TabsData("accounts", "accounts", "accounts", "accounts"),
-            new TabsData("workers", "workers", "workers", "workers"),
+            new TabsData("/profile/statistic", "statistic", "statistic"),
+            new TabsData("/profile/income", "income", "income"),
+            new TabsData("/profile/wallets", "wallets", "wallets"),
+            new TabsData("/profile/accounts", "accounts", "accounts"),
+            new TabsData("/profile/workers", "workers", "workers"),
             new TabsData(
-                "connecting",
-                "connecting",
+                "/profile/connecting",
                 "connecting",
                 "connecting"
             ),
-            new TabsData("referral", "referral", "referral", "referral"),
+            new TabsData("/profile/referral", "referral", "referral"),
         ];
     }
 

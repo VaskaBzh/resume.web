@@ -26,11 +26,11 @@
         <Link
             v-for="(link, i) in links"
             :key="i"
-            :href="route(link.route)"
+            :href="link.url"
             :class="{
                 burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url.startsWith(
-                    `/profile/${link.url}`
+                    `${link.url}`
                 ),
             }"
             class="nav-tabs__tab"

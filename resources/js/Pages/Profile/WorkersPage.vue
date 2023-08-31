@@ -4,7 +4,7 @@
         <div class="workers__wrapper">
             <main-title tag="h3" class="cabinet_title">
                 {{ $t("workers.title") }}
-                <Link :href="route('connecting')">
+                <Link href="/profile/connecting">
                     <blue-button class="add">
                         <svg
                             width="24"
