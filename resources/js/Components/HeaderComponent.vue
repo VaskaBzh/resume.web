@@ -44,14 +44,14 @@
             ></account-menu>
             <Link
                 :href="route('page', { page: 'login' })"
-                v-show="viewportWidth >= 991.98 && !user.name"
+                v-show="viewportWidth >= 991.98 && !user?.name"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}
             </Link>
             <Link
                 href="/profile/statistic"
-                v-show="viewportWidth >= 991.98 && !accountLink && !!user.name"
+                v-show="viewportWidth >= 991.98 && !accountLink && !!user?.name"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}

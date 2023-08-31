@@ -1,6 +1,6 @@
 <template>
     <div @click="toggleMenu" class="button">
-        <div class="button_name" ref="name">
+        <div class="button_name" :class="{ 'button_name-target': target }" ref="name">
             <svg
                 width="22"
                 height="22"
@@ -181,11 +181,11 @@ export default {
     mounted() {
         this.name = this.getAccount === {} ? "..." : this.getAccount.name;
 
-        document.addEventListener("click", this.hideMenu, true);
+        document.addEventListener("click", this.hideMenuClick, true);
         document.addEventListener("keydown", this.hideKey);
     },
     unmounted() {
-        document.removeEventListener("click", this.hideMenu, true);
+        document.removeEventListener("click", this.hideMenuClick, true);
         document.removeEventListener("keydown", this.hideKey);
     },
     setup() {
@@ -326,6 +326,10 @@ export default {
             this.target = false;
             this.change_height();
         },
+        hideMenuClick(e) {
+            if (!e.target.closest(".nav__container .button .button_name") && !e.target.closest(".nav__container .button .button__row"))
+                this.hideMenu();
+        },
         toggleMenu() {
             this.target = !this.target;
             this.change_height();
@@ -368,8 +372,16 @@ export default {
         padding: 0 24px;
         min-height: 40px;
         border-radius: 8px;
+        &-target {
+            svg {
+                &:last-child {
+                    transform: rotate(180deg);
+                }
+            }
+        }
         svg {
             fill: #3f7bdd;
+            transition: all 0.5s ease 0s;
             &:last-child {
                 margin-left: auto;
             }
