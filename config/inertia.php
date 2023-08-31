@@ -18,9 +18,10 @@ return [
         'wallets' => 'Profile/WalletsPage',
         'workers' => 'Profile/WorkersPage',
         'about' => 'AboutPage',
+        'home' => 'HomePage',
         'calculator' => 'CalculatorPage',
         'complexity' => 'ComplexityPage',
-        'faq' => 'FaqPage',
+        'help' => 'FaqPage',
         'hosting' => 'HostingPage',
     ]
 ];
