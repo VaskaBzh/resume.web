@@ -47,22 +47,12 @@ Route::group([
 ], function () {
     Route::get('/', 'index')->name('home');
     Route::get('/{page}', 'show')->name('page');
-   /* Route::get('/help', 'help')->name('help');
-    Route::get('/hosting', 'hosting')->name('hosting');
-    Route::get('/calculator', 'calculator')->name('calculator');
-    Route::get('/registration', 'registration')->name('registration');
-    Route::get('/login', 'login')->name('login');*/
 });
 
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
 
-    Route::group([
-        'prefix' => 'profile'
-    ], function () {
-        Route::redirect('', '/profile/statistic');
-        Route::get('/{page}', [PageController::class, 'show'])->name('profile.index');
-    });
+    Route::get('/profile/{page}', [PageController::class, 'show'])->name('profile.index');
 
     Route::group([
         'prefix' => 'subs',
