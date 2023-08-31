@@ -59,7 +59,11 @@ class BtcComService
             'workers_count_unstable' => $btcComSub['workers_dead'],
             'hash_per_min' => $btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay,
-            'today_forecast' => number_format(Helper::calculateEarn($stats, $hashPerDay), 8, '.', ' '),
+            'today_forecast' => number_format(Helper::calculateEarn(
+                stats: $stats,
+                hashRate: $hashPerDay,
+                fee: BtcComService::FEE
+            ), 8, '.', ' '),
             'reject_percent' => $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
             'total_payout' => $sub->total_payout,

@@ -142,11 +142,18 @@ export default {
             }
             this.cache(newValue);
         },
-        rowsNumber(newVal) {
-            this.rowsNumber = newVal.replace(
-                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
-                ""
-            );
+        rowsNumber(newVal, oldVal) {
+            const regex = /^[0-9]*\.?[0-9]*$/;
+
+            this.rowsNumber =
+                (
+                    regex.test(newVal) &&
+                    newVal <= 100 &&
+                    newVal > 0
+                )
+                    ? newVal
+                    : oldVal;
+
             this.$emit("changePerPage", this.rowsNumber);
         },
     },

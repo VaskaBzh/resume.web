@@ -10,7 +10,7 @@ export default {
         },
         async set_active({ commit, state }, index) {
             let sub = new accountData(
-                (await api.get(`/subs/${index}`)).data.data[0]
+                (await api.get(`/subs/sub/${index}`)).data.data
             );
 
             commit("updateActive", index);
@@ -22,14 +22,14 @@ export default {
             commit("updateActiveAccount", sub);
         },
         async accounts_all({ commit, state }, user_id) {
-            let subsList = (
-                await api.get(`/subs/${user_id}`)
-            ).data.data.map((el) => {
-                return new accountData(el);
-            });
+            let subsList = (await api.get(`/subs/${user_id}`)).data.data.map(
+                (el) => {
+                    return new accountData(el);
+                }
+            );
 
+            commit("updateAccounts", subsList);
             if (state.active === -1) {
-                commit("updateAccounts", subsList);
                 this.dispatch(
                     "set_active",
                     Object.values(subsList)[firstSubIndex].group_id

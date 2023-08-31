@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 use Inertia\Inertia;
 
 class IndexController extends Controller
@@ -111,12 +114,18 @@ class IndexController extends Controller
         ]);
     }
 
-    public function ref()
+    public function referral(Request $request)
     {
-        return Inertia::render('Profile/ReferralPage', [
-            'auth_user' => Auth::check(),
-            'user' => auth()->user()
-        ]);
+        return match ($request->page) {
+            null => redirect('/profile/referral?page=overview'),
+            default => Inertia::render(
+                component: implode('/', ['Profile', 'Referral', ucfirst(Str::camel($request->page) . 'Page')]),
+                props: [
+                    'auth_user' => Auth::check(),
+                    'user' => auth()->user()
+                ]
+            )
+        };
     }
 
     public function Income()
@@ -129,9 +138,15 @@ class IndexController extends Controller
 
     public function settings()
     {
+        $user = auth()->user();
+
+        $ownerUser = User::whereNotNull('referral_code')
+            ->find($user?->owners->first()?->user_id);
+
         return Inertia::render('Profile/FullPages/SettingsPage', [
             'auth_user' => Auth::check(),
-            'user' => auth()->user()
+            'user' => $user,
+            'referral_code' => $ownerUser?->referral_code['code']
         ]);
     }
 

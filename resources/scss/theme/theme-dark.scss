@@ -1,6 +1,40 @@
 body {
     &[color-scheme="dark"] {
         background: #040d15;
+        .container-chart {
+            .band {
+                fill: #262626 !important;
+            }
+        }
+        .container-chart {
+            svg {
+                g {
+                    g {
+                        &.tick {
+                            color: #606060;
+                        }
+                    }
+                }
+            }
+            .tooltip {
+                background: rgba(40, 57, 85, 0.65);
+                &.complexity {
+                    background: #152d4f;
+                    .tooltip-wrapper {
+                        span:not(.time) {
+                            color: rgba(83, 137, 225, 1);
+                        }
+                    }
+                }
+                .tooltip-wrapper {
+                    background: rgba(40, 57, 85, 0.65);
+                    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
+                    span {
+                        color: #cacaca;
+                    }
+                }
+            }
+        }
         #app {
             .checkbox {
                 background: #283955;
@@ -254,24 +288,37 @@ body {
                         background: #283955;
                         svg {
                             stroke: #80809A;
+                            &:hover {
+                                stroke: #4182ec;
+                            }
+                        }
+                        &.copy-active {
+                            svg {
+                                stroke: #4182ec;
+                            }
                         }
                     }
                     &_select {
                         &-cabinet {
                             .select {
                                 &_name {
-                                    background: #283955 !important;
-                                    color: #eaeaea;
+                                    background: #283955;
+                                    color: #CACACA;
                                     svg {
                                         stroke: #80809A;
                                     }
                                 }
                                 &_list {
-                                    background: #283955 !important;
+                                    background: #283955;
+                                    box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05), 0px 4px 12px -4px rgba(29, 41, 57, 0.05);
                                 }
-                                &_item {
-                                    color: #eaeaea;
-                                    border-bottom-color: #80809A;
+                                &_row {
+                                    color: #CACACA;
+                                    border-bottom-color: #818C99;
+                                    &:hover,
+                                    &:focus {
+                                        background: #334461;
+                                    }
                                 }
                             }
                         }
@@ -632,11 +679,6 @@ body {
                         color: #cacaca;
                     }
                 }
-                .container-chart {
-                    .band {
-                        fill: #262626 !important;
-                    }
-                }
                 .home-im__image {
                     .container-chart {
                         .main-line {
@@ -735,35 +777,6 @@ body {
                         color: #606060;
                     }
                 }
-                .container-chart {
-                    svg {
-                        g {
-                            g {
-                                &.tick {
-                                    color: #606060;
-                                }
-                            }
-                        }
-                    }
-                    .tooltip {
-                        background: rgba(40, 57, 85, 0.65);
-                        &.complexity {
-                            background: #152d4f;
-                            .tooltip-wrapper {
-                                span:not(.time) {
-                                    color: rgba(83, 137, 225, 1);
-                                }
-                            }
-                        }
-                        .tooltip-wrapper {
-                            background: rgba(40, 57, 85, 0.65);
-                            box-shadow: 0 4px 4px rgba(0, 0, 0, 0.15);
-                            span {
-                                color: #cacaca;
-                            }
-                        }
-                    }
-                }
                 .profile__body-block {
                     .text-md {
                         color: #989898;
@@ -785,7 +798,7 @@ body {
                         box-shadow: 0 4px 10px rgba(35, 38, 63, 0.15);
                     }
                     &_button {
-                        fill: #989898;
+                        stroke: #989898;
                     }
                 }
                 .wallets {
@@ -873,6 +886,11 @@ body {
                             background: #0b1621;
                         }
                         color: #989898;
+                        span {
+                            &.workers {
+                                color: var(--dark-theme-green, #86FF83);
+                            }
+                        }
                     }
                     &__row {
                         &:not(.main) {
@@ -1125,6 +1143,15 @@ body {
         }
         .main__label {
             color: #989898;
+        }
+        .input-calc{
+            background: var(--dark-theme-second-bg, #101D2B);
+            color: #e1e1e1;
+        }
+        .img-text{
+            @media (max-width: $pc) {
+                background: #101d2b;
+            }
         }
     }
 }

@@ -114,38 +114,44 @@
                                 {{ this.workers.inActive }}
                             </li>
                         </ul>
-                        <ul class="statistic__list statistic__list-last">
-                            <li class="text text-md">
-                                {{ $t("statistic.info_blocks.hash.titles[0]") }}
-                                <span class="statistic_info text-blue"
-                                    ><b v-hash
-                                        >{{
-                                            Number(this.workers.hash).toFixed(2)
-                                        }}
-                                        TH/s</b
-                                    ></span
-                                >
-                            </li>
-                            <li class="text text-md">
-                                {{ $t("statistic.info_blocks.hash.titles[1]") }}
-                                <span class="statistic_info text-blue"
-                                    ><b v-hash
-                                        >{{
-                                            Number(this.workers.hash24).toFixed(
-                                                2
-                                            )
-                                        }}
-                                        TH/s</b
-                                    ></span
-                                >
-                            </li>
-                        </ul>
                     </div>
                     <no-info
                         :wait="waitAccounts"
                         :interval="20"
                         :end="endAccounts"
                     />
+                    <div class="cabinet__block cabinet__block-light hash__block">
+                        <main-title
+                            class="title title-blue"
+                        >{{ $t("statistic.info_blocks.hashrate.title") }}
+                        </main-title>
+                        <ul class="statistic__list statistic__list-last">
+                            <li class="text text-md">
+                                {{ $t("statistic.info_blocks.hash.titles[0]") }}
+                                <span class="statistic_info text-blue"
+                                ><b v-hash
+                                >{{
+                                        Number(this.workers.hash).toFixed(2)
+                                    }}
+                                        TH/s</b
+                                ></span
+                                >
+                            </li>
+                            <li class="text text-md">
+                                {{ $t("statistic.info_blocks.hash.titles[1]") }}
+                                <span class="statistic_info text-blue"
+                                ><b v-hash
+                                >{{
+                                        Number(this.workers.hash24).toFixed(
+                                            2
+                                        )
+                                    }}
+                                        TH/s</b
+                                ></span
+                                >
+                            </li>
+                        </ul>
+                    </div>
                     <!--                    <div-->
                     <!--                        class="statistic__info cabinet__block cabinet__block-light"-->
                     <!--                    >-->

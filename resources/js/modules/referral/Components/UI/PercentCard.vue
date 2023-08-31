@@ -1,18 +1,21 @@
 <template>
     <div class="card">
         <p class="card_text">{{ $t("percent.text") }} - {{ percent }} %</p>
-        <svg
+        <div
             class="card_question"
-            @mouseover="openGradeList"
-            @mouseout="closeGradeList"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
+            @mouseenter="openGradeList"
+            @mouseleave="closeGradeList(true)"
             v-if="percentSvg"
-            v-html="percentSvg"
-        ></svg>
+        >
+            <svg
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                v-html="percentSvg"
+            ></svg>
+        </div>
         <transition name="grade">
             <svg
                 v-show="opened"
@@ -23,6 +26,8 @@
                 viewBox="0 0 8 16"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                @mouseenter="unClose"
+                @mouseleave="closeGradeList"
             >
                 <path
                     d="M-6.99382e-07 0L0 16L6.58579 9.41421C7.36683 8.63316 7.36683 7.36683 6.58579 6.58579L-6.99382e-07 0Z"
@@ -34,12 +39,11 @@
                 class="card__list"
                 v-if="percentList"
                 v-show="opened"
-                @mouseover="openGradeList"
-                @mouseout="closeGradeList"
+                @mouseenter="unClose"
+                @mouseleave="closeGradeList"
             >
                 <p class="card__list_text">
-                    Получаемый вами процент зависит от суммы хешрейта всех ваших
-                    рефералов.
+                    {{ $t("grade.hint") }}
                 </p>
                 <info-list :gradeList="percentList" />
             </div>
@@ -73,14 +77,24 @@ export default {
     data() {
         return {
             opened: false,
+            timeout: null,
+            wait: false,
         };
     },
     methods: {
         openGradeList() {
+            clearTimeout(this.timeout);
             this.opened = true;
+            this.wait = false;
         },
-        closeGradeList() {
-            this.opened = false;
+        closeGradeList(bool = false) {
+            this.wait = bool;
+            if (!this.wait) this.opened = false;
+            else this.timeout = setTimeout(() => (this.opened = false), 500);
+        },
+        unClose() {
+            clearTimeout(this.timeout);
+            if (!this.wait) this.opened = true;
         },
     },
 };
@@ -89,7 +103,7 @@ export default {
 <style scoped lang="scss">
 .grade-enter-active,
 .grade-leave-active {
-    transition: all 0.7s ease 0s;
+    transition: all 0.5s ease 0s;
 }
 .grade-enter-from,
 .grade-leave-to {
@@ -126,7 +140,7 @@ export default {
         transform: translateY(-50%);
         width: 8px;
         height: 16px;
-        z-index: 10;
+        z-index: 101;
     }
     &__list {
         display: flex;
@@ -140,7 +154,7 @@ export default {
         border-radius: 16px;
         background: var(--dark-bg, #fff);
         min-width: 350px;
-        z-index: 10;
+        z-index: 101;
         &_text {
             color: #818c99;
             font-size: 12px;

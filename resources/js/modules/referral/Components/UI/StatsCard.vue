@@ -2,7 +2,9 @@
     <div class="card">
         <div class="card_icon" v-html="content.svg"></div>
         <p class="text text-gray card_text">{{ content.text }}</p>
-        <span class="card_value">{{ content.value }}</span>
+        <span class="card_value" ref="value" v-show="changeStep">{{
+            Number(cardValue) === 0 ? "-" : cardValue
+        }}</span>
     </div>
 </template>
 
@@ -11,6 +13,44 @@ export default {
     name: "stats-card",
     props: {
         content: Object,
+    },
+    data() {
+        return {
+            cardValue: this.content.value,
+            changeStep: true,
+            satoshi: null,
+            interval: null,
+        };
+    },
+    watch: {
+        "content.value"(newValue, oldValue) {
+            if (Number(oldValue) === 0) {
+                let startValue = Number(oldValue) || 0;
+                this.satoshi =
+                    newValue % 1 === 0 ? newValue : newValue * 10000000;
+                const intervalStep = 1000 / this.satoshi;
+
+                this.cardValue =
+                    newValue % 1 === 0
+                        ? startValue + 1
+                        : (startValue + 1 / 100000000).toFixed(8) + " BTC";
+
+                this.interval = setInterval(() => {
+                    if (startValue <= this.satoshi && startValue > 0) {
+                        this.cardValue =
+                            newValue % 1 === 0
+                                ? startValue
+                                : (startValue / 100000000).toFixed(8) + " BTC";
+                    } else if (startValue > this.satoshi) {
+                        clearInterval(this.interval);
+                    }
+                    startValue = startValue + 1;
+                }, intervalStep);
+            } else {
+                clearInterval(this.interval);
+                this.cardValue = 0;
+            }
+        },
     },
 };
 </script>

@@ -96,7 +96,7 @@ export default {
             right: 0;
             top: 0;
             width: 50vw;
-            height: 100vh;
+            height: 100%;
             z-index: 0;
             transition: all 0.5s ease 0.3s;
         }

@@ -62,13 +62,13 @@
                 />
             </div>
             <auth-input
-                :error="service.errors.referral"
-                :model="service.form.referral"
+                :error="service.errors.referral_code"
+                :model="service.form.referral_code"
                 :placeholder="this.$t('auth.reg.placeholders[4]')"
                 name="email"
                 type="text"
                 @change="
-                    service.form.referral = !!$event.target
+                    service.form.referral_code = !!$event.target
                         ? $event.target.value
                         : $event
                 "

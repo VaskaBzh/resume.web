@@ -8,15 +8,19 @@ use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Providers\RouteServiceProvider;
+use App\Rules\User\OnlyEngNameRule;
 use App\Services\External\BtcComService;
+use App\Services\Internal\ReferralService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\MessageBag;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
@@ -48,9 +52,10 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255', 'regex:/^[A-aZ-z0-9]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
+            'referral_code' => ['string', 'nullable']
         ], $this->messages());
     }
 
@@ -64,6 +69,7 @@ class RegisterController extends Controller
     ): RedirectResponse
     {
         $this->validator($request->all())->validate();
+
         $userData = UserData::fromRequest($request->all());
 
         try {
@@ -79,25 +85,23 @@ class RegisterController extends Controller
 
             $user = $this->create(userData: $userData);
 
+            if ($request->referral_code) {
+                ReferralService::attach(user: $user, code: $request->referral_code);
+            }
+
             event(new Registered(
                 user: $user
             ));
 
             $this->guard()->login($user);
 
-            $btcSubAccount = $btcComService->createSub(
-                userData: $userData
-            );
-
-            Create::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => $user->id,
-                    'group_id' => $btcSubAccount['gid'],
-                    'group_name' => $user->name,
-                ])
-            );
+            $btcComService->createSub(userData: $userData);
         } catch (\Exception $e) {
             report($e);
+
+            return back()->withErrors([
+                'message' => 'Something went wrong! Please contact with tech support'
+            ]);
         }
 
         return redirect("/profile/accounts");
@@ -133,15 +137,19 @@ class RegisterController extends Controller
     {
         if (app()->getLocale() === 'ru') {
             return [
+                'name.regex' => 'Имя должно быть на английском',
                 'password.required' => 'Поле "Пароль" обязательно для заполнения.',
                 'password.min' => 'Поле "Пароль" должно быть не менее 8 символов.',
                 'password.confirmed' => 'Подтверждение пароля не совпадает.',
+                'referral_code.exists' => 'Неверный реферральный код'
             ];
         } else if (app()->getLocale() === 'en') {
             return [
+                'name.regex' => 'Name must be on english',
                 'password.required' => 'The "Password" field is required.',
                 'password.min' => 'The "Password" field must be at least 8 characters.',
                 'password.confirmed' => 'The password confirmation does not match.',
+                'referral_code.exists' => 'referral code is incorrect'
             ];
         }
     }

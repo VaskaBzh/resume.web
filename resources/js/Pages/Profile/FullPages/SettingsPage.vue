@@ -8,22 +8,24 @@
                 <settings-list
                     :rows="settingsService.rows"
                     @openPopup="settingsService.getHtml($event)"
-                    @send2fac="settingsService.send2Fac"
                 />
+                <!--                    @send2fac="settingsService.send2Fac"-->
                 <div class="settings__column">
-                    <settings-block
-                        :title="$t('cards.profit.title')"
-                        :text="$t('cards.profit.text')"
-                        :button="$t('cards.profit.button')"
-                        :value="settingsService.profit"
-                        :success="settingsService.clearProfit"
-                        @clicked="settingsService.setClearProfit($event)"
-                        :currency="true"
-                    />
+                    <!--                    <settings-block-->
+                    <!--                        :title="$t('cards.profit.title')"-->
+                    <!--                        :text="$t('cards.profit.text')"-->
+                    <!--                        :button="$t('cards.profit.button')"-->
+                    <!--                        :value="settingsService.profit"-->
+                    <!--                        :success="settingsService.clearProfit"-->
+                    <!--                        @clicked="settingsService.setClearProfit($event)"-->
+                    <!--                        :currency="true"-->
+                    <!--                    />-->
                     <settings-block
                         :title="$t('cards.referral.title')"
                         :placeholder="$t('cards.referral.placeholder')"
                         :button="$t('cards.referral.button')"
+                        :value="settingsService.userData.code"
+                        :disabled="!!settingsService.userData.code"
                         @clicked="settingsService.setReferral($event)"
                     />
                 </div>
@@ -54,7 +56,7 @@ import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue"
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
 
 import { SettingsService } from "@/modules/settings/services/SettingsService";
-import { SettingsMessage } from "../../../modules/settings/lang/SettingsMessage";
+import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 
 export default {
     layout: profileLayoutView,
@@ -72,10 +74,15 @@ export default {
         message: String,
         user: Object,
         auth_user: Boolean,
+        referral_code: String,
     },
     data() {
         return {
-            settingsService: new SettingsService(this.$t, this.user),
+            settingsService: new SettingsService(
+                this.$t,
+                this.user,
+                this.referral_code
+            ),
             is_checked: true,
             notification: true,
             password_confirmation: "",
@@ -87,13 +94,15 @@ export default {
         "settingsService.profit"(newValue) {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },
-        user() {
-            this.settingsService.setUserData(this.user);
+        user(newUserProp) {
+            this.settingsService.setUser(newUserProp);
+            this.settingsService.setCode(newUserProp.referral_code.code);
+            this.settingsService.setUserData();
         },
     },
     methods: {
         settingsProcess() {
-            this.settingsService.setUserData(this.user);
+            this.settingsService.setUserData();
             this.settingsService.setForm();
             this.settingsService.setRows();
             this.settingsService.setProfits();

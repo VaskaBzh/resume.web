@@ -2,7 +2,10 @@
     <div class="select">
         <div
             class="select_name"
-            :class="{ 'select_name-active': opened }"
+            :class="{
+                'select_name-active': opened,
+                'select_name-selected': validateBaseName,
+            }"
             @click="toggleSelect"
         >
             {{ baseName }}
@@ -37,7 +40,7 @@
 </template>
 
 <script>
-import {ReferralsMessage} from "../../lang/ReferralsMessage";
+import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
     name: "referral-select",
@@ -73,6 +76,16 @@ export default {
     },
     mounted() {
         this.setBaseName();
+    },
+    computed: {
+        validateBaseName() {
+            return (
+                this.baseName ===
+                Object.values(this.rows).find(
+                    (el) => el.group_id === this.activeSubId ?? 0
+                )?.name
+            );
+        },
     },
     methods: {
         setBaseName() {
@@ -144,6 +157,10 @@ export default {
         background: #ededed;
         width: 100%;
         transition: all 0.3s ease 0s;
+        &-selected {
+            background: #ededed;
+            color: #d6d6d6;
+        }
         svg {
             position: absolute;
             top: 50%;
@@ -170,7 +187,8 @@ export default {
         flex-direction: column;
         border-radius: 12px;
         overflow: hidden;
-        background: #fafafa;
+        background: var(--dark-bg, #fff);
+        z-index: 2;
         width: 100%;
         left: 0;
         top: calc(100% + 8px);
@@ -183,6 +201,11 @@ export default {
         display: inline-flex;
         align-items: center;
         width: 100%;
+        transition: all 0.5s ease 0s;
+        &:hover,
+        &:focus {
+            background: #f2f4f7;
+        }
         &:not(:last-child) {
             border-bottom: 0.5px solid #e4e7ec;
         }

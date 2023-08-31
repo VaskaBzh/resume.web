@@ -1,13 +1,14 @@
-import { useForm } from "@inertiajs/vue3";
+import { router, useForm } from "@inertiajs/vue3";
 import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
 import store from "@/store";
+import { SettingsUserData } from "../DTO/SettingsUserData";
 
 export class SettingsService {
-    constructor(translate, user) {
+    constructor(translate, user, referral_code) {
         this.translate = translate;
         this.profit = "";
         this.clearProfit = null;
@@ -16,11 +17,9 @@ export class SettingsService {
         this.form = {};
         this.validate = {};
         this.user = user;
+        this.referral_code = referral_code;
 
-        this.login = "";
-        this.email = "";
-        this.password = "";
-        this.phone = "";
+        this.userData = "";
 
         this.closed = false;
         this.waitAjax = false;
@@ -36,11 +35,22 @@ export class SettingsService {
         );
     }
 
-    setUserData(user) {
-        this.login = user.name;
-        this.email = user.email;
-        this.password = "*********";
-        this.phone = user.phone ?? this.translate("inputs.phone");
+    setUser(user) {
+        this.user = user;
+    }
+
+    setCode(referral_code) {
+        this.referral_code = referral_code;
+    }
+
+    setUserData() {
+        this.userData = new SettingsUserData(
+            this.user.name,
+            this.user.email,
+            "*********",
+            this.user.phone ?? this.translate("inputs.phone"),
+            this.referral_code
+        );
     }
 
     setRows() {
@@ -48,25 +58,25 @@ export class SettingsService {
             new RowData(
                 this.translate("settings.block.settings_block.labels.login"),
                 "name",
-                this.login,
+                this.userData.login,
                 "name"
             ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.email"),
                 "email",
-                this.email,
+                this.userData.email,
                 "email"
             ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.password"),
                 "password",
-                this.password,
+                this.userData.password,
                 "password"
             ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.phone"),
                 "phone",
-                this.phone,
+                this.userData.phone,
                 "phone"
             ),
         ];
@@ -110,6 +120,8 @@ export class SettingsService {
             });
 
             this.sendMessage(result.data.message);
+
+            router.reload();
         } catch (err) {
             this.sendMessage(err.response.data.message);
         }

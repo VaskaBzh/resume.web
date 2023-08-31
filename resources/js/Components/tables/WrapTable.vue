@@ -6,7 +6,7 @@
         <no-info
             :wait="waitTable"
             :interval="35"
-            :end="endTable"
+            :end="!waitTable"
             :empty="emptyTable"
         ></no-info>
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
@@ -49,14 +49,12 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive"]),
-        endTable() {
-            return !this.wait;
-        },
         emptyTable() {
             if (this.empty && this.empty[0]?.class === "main") {
-                return this.empty ? this.empty?.length === 1 : !this.wait;
+                return this.empty ? this.empty?.length === 1 && !this.waitTable : !this.waitTable;
             }
-            return this.empty ? this.empty?.length === 0 : !this.wait;
+
+            return this.empty ? this.empty?.length === 0 && !this.waitTable : !this.waitTable;
         },
     },
     methods: {
@@ -68,13 +66,13 @@ export default {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
-    mounted() {
-        if (!this.wait) this.waitTable = false;
-    },
     watch: {
-        endTable(val) {
-            if (val) setTimeout(() => (this.waitTable = false), 300);
-        },
+        wait(newValue) {
+            this.waitTable = newValue ?? true;
+        }
+    },
+    mounted() {
+        if (!this.wait) this.waitTable = this.wait;
     },
 };
 </script>

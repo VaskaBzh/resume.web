@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\ChartController;
 use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
@@ -44,7 +43,7 @@ Route::group([
     Route::get('/', 'index')->name('home');
     Route::get('/help', 'help')->name('help');
     Route::get('/hosting', 'hosting')->name('hosting');
-    Route::get('/calculator', 'calculator')->name('calculator');
+//    Route::get('/calculator', 'calculator')->name('calculator');
     Route::get('/registration', 'registration')->name('registration');
     Route::get('/login', 'login')->name('login');
 });
@@ -58,7 +57,7 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'subs',
     ], function () {
         Route::get('{user}', SubListController::class)->name('sub.list');
-        Route::get('{sub}', SubShowController::class)->name('sub.show');
+        Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
         Route::post('/create', SubCreateController::class)->name('sub.create');
     });
 
@@ -90,20 +89,22 @@ Route::middleware('auth')->group(function () {
         Route::get('/statistic', 'statistic')->name('statistic');
         Route::get('/accounts', 'accounts')->name('accounts');
         Route::get('/workers', 'workers')->name('workers');
-        Route::get('/full-page/settings', 'settings')->name('settings');
-        Route::get('/full-page/income', 'income')->name('income');
-        Route::get('/full-page/wallets', 'wallets')->name('wallets');
+        Route::get('/settings', 'settings')->name('settings');
+        Route::get('/income', 'income')->name('income');
+        Route::get('/wallets', 'wallets')->name('wallets');
         Route::get('/connecting', 'connecting')->name('connecting');
-        Route::get('/ref', 'ref')->name('ref');
+
+//        Route::redirect('/referral', '/referral?page=overview');
+        Route::get('/referral', 'referral')->name('referral.tabs');
     });
 
-    Route::group([
-        'prefix' => '2fac'
-    ], function () {
-        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
-        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
-    });
+//    Route::group([
+//        'prefix' => '2fac'
+//    ], function () {
+//        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+//        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
+//        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+//    });
 
     Route::post('/change/{user}', ProfileController::class)->name('change');
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');
@@ -111,9 +112,9 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'referrals'
     ], function () {
+        Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::post('/generate/{user}', CodeController::class)->name('code');
         Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
-        Route::get('{user}', ListReferralController::class)->name('referral.list');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
         Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });

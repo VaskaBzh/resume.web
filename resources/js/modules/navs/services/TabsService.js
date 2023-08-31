@@ -8,13 +8,18 @@ export class TabsService {
 
     setLinks() {
         this.links = [
-            new TabsData("statistic"),
-            new TabsData("income"),
-            new TabsData("wallets"),
-            new TabsData("accounts"),
-            new TabsData("workers"),
-            new TabsData("connecting"),
-            new TabsData("ref"),
+            new TabsData("statistic", "statistic", "statistic", "statistic"),
+            new TabsData("income", "income", "income", "income"),
+            new TabsData("wallets", "wallets", "wallets", "wallets"),
+            new TabsData("accounts", "accounts", "accounts", "accounts"),
+            new TabsData("workers", "workers", "workers", "workers"),
+            new TabsData(
+                "connecting",
+                "connecting",
+                "connecting",
+                "connecting"
+            ),
+            new TabsData("referral.tabs", "referral", "referral", "referral"),
         ];
     }
 

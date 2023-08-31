@@ -15,6 +15,7 @@
 <script>
 import * as d3 from "d3";
 import { mapGetters } from "vuex";
+import gradeRow from "@/modules/referral/Components/UI/GradeRow.vue";
 
 export default {
     name: "line-graph",
@@ -47,6 +48,12 @@ export default {
         };
     },
     watch: {
+        graphData(newValue) {
+            if (this.$refs.chart && newValue.values?.length > 0) {
+                this.dropGraph();
+                this.graphInit();
+            }
+        },
         height() {
             if (this.$refs.chart && this.graphData?.values?.length > 0) {
                 this.dropGraph();
@@ -365,7 +372,7 @@ export default {
                 };
 
                 let contentTooltip = null;
-                let workers = a
+                let workers = this.graphData.amount
                     ? `<span>${this.$t(
                           "tooltip.workers"
                       )} <span class="value">${a}</span></span>`

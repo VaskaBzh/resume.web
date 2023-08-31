@@ -1,5 +1,6 @@
 export class incomeData {
     constructor(
+        type,
         date,
         datePay,
         hash,
@@ -10,6 +11,7 @@ export class incomeData {
         message,
         className
     ) {
+        this.type = type;
         this.date = date;
         this.datePay = datePay;
         this.hash = `${hash} ${unit}h/s`;

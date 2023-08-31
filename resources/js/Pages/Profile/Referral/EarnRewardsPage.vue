@@ -1,32 +1,45 @@
 <template>
-    <div class="referral__content">
-<!--        <div class="referral__head">-->
-<!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
-<!--            <referral-select class="referral_select referral_select-cabinet" />-->
-<!--        </div>-->
-        <main-slider
-            :wait="service.waitTable"
-            :empty="service.rows"
-            :table="service.table"
-            :rowsNum="per_page"
-            :errors="errors"
-            :meta="service.meta"
-            @changePerPage="changePerPage"
-            @changePage="page = $event"
-        />
-    </div>
+    <referrals-layout-view>
+        <div class="referral__content">
+            <!--        <div class="referral__head">-->
+            <!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
+            <!--            <referral-select class="referral_select referral_select-cabinet" />-->
+            <!--        </div>-->
+            <!--            <main-slider-->
+            <!--                :wait="service.waitTable"-->
+            <!--                :empty="service.rows"-->
+            <!--                :table="service.table"-->
+            <!--                :rowsNum="per_page"-->
+            <!--                :errors="errors"-->
+            <!--                :meta="service.meta"-->
+            <!--                @changePerPage="changePerPage"-->
+            <!--                @changePage="page = $event"-->
+            <!--            />-->
+            <wrap-table
+                :table="service.table"
+                :wait="service.waitTable"
+                :empty="service.rows"
+                :errors="errors"
+                :rowsVal="1000"
+            />
+        </div>
+    </referrals-layout-view>
 </template>
 
 <script>
 import ReferralSelect from "@/modules/referral/Components/UI/ReferralSelect.vue";
 import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
-import MainSlider from "@/Components/technical/MainSlider.vue"
+import MainSlider from "@/Components/technical/MainSlider.vue";
 
 import { PaymentService } from "@/modules/referral/services/PaymentService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
+import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
+import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
+import WrapTable from "@/Components/tables/WrapTable.vue";
 
 export default {
     name: "payment-view",
+    layout: ProfileLayoutView,
     i18n: {
         sharedMessages: ReferralsMessage,
     },
@@ -38,6 +51,8 @@ export default {
         ReferralSelect,
         MainSearch,
         MainSlider,
+        WrapTable,
+        ReferralsLayoutView,
     },
     data() {
         return {

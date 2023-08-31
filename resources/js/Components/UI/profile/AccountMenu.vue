@@ -100,6 +100,7 @@
                     $t("accounts.popups.add.title")
                 }}</main-title>
                 <input
+                    ref="input"
                     v-model="form.name"
                     required
                     autofocus
@@ -137,7 +138,7 @@
 <script>
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { mapGetters } from "vuex";
-import { Link, useForm, usePage } from "@inertiajs/vue3";
+import { Link, router, useForm, usePage } from "@inertiajs/vue3";
 import { Inertia } from "@inertiajs/inertia";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
@@ -174,9 +175,12 @@ export default {
             open: false,
             openedAddPopup: false,
             linkAddClicked: false,
+            name: "...",
         };
     },
     mounted() {
+        this.name = this.getAccount === {} ? "..." : this.getAccount.name;
+
         document.addEventListener("click", this.hideMenu, true);
         document.addEventListener("keydown", this.hideKey);
     },
@@ -196,9 +200,11 @@ export default {
 
         const addAcc = async () => {
             wait.value = true;
+
             await form.post(route("sub.create"), {
                 onFinish: () => {
                     wait.value = false;
+                    store.dispatch("accounts_all", props.user.id);
                 },
                 onSuccess: () => {
                     closed.value = true;
@@ -244,13 +250,6 @@ export default {
             }
             return arr;
         },
-        name() {
-            let name = "...";
-            if (this.getAccount) {
-                name = this.getAccount.name;
-            }
-            return name;
-        },
         earnSum() {
             let sum = 0;
             if (Object.values(this.getIncome).length > 0) {
@@ -262,6 +261,9 @@ export default {
         },
     },
     watch: {
+        getAccount(newValue) {
+            this.name = newValue.name;
+        },
         accounts() {
             this.change_height();
         },
@@ -280,11 +282,21 @@ export default {
     methods: {
         async openAddPopup() {
             if (!this.$page.url.startsWith("/profile/accounts")) {
-                await this.$inertia.visit(route("accounts"));
+                await router.visit(route("accounts"));
+
+                setTimeout(() => {
+                    this.$refs.input.focus();
+                }, 300);
 
                 this.linkAddClicked = true;
             } else {
                 this.openedAddPopup = true;
+
+                setTimeout(() => {
+                    this.$refs.input.focus();
+                    console.log("focussss");
+                }, 300);
+
                 setTimeout(() => {
                     this.openedAddPopup = false;
                 }, 100);

@@ -31,11 +31,9 @@
             <wrap-table
                 :table="worker_service.table"
                 :key="getActive"
-                type="Воркеры"
                 :wait="!worker_service.rows?.length > 0"
                 :empty="worker_service.table?.get('rows')"
                 :worker_service="worker_service"
-                :errors="errors"
                 :rowsVal="1000"
             />
         </div>

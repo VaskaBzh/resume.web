@@ -375,6 +375,7 @@
             </div>
         </div>
     </div>
+    <calculator-view />
     <info-view class="info-home">
         <template v-slot:pc>
             <info-card
@@ -404,6 +405,7 @@ import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";
 import { SwiperSlide } from "swiper/vue";
 import lineGraphStatistic from "@/Components/technical/graphs/LineGraphStatistic.vue";
+import CalculatorView from "../modules/home_calculator/views/CalculatorView.vue";
 
 export default {
     props: {
@@ -423,6 +425,7 @@ export default {
         Head,
         Link,
         SwiperSlide,
+        CalculatorView,
     },
     data() {
         return {

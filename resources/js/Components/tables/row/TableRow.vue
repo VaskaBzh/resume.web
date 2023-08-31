@@ -19,11 +19,11 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash>{{ column[1] }}</span>
+            <span v-hash :class="column[0]">{{ column[1] }}</span>
         </td>
-        <span class="more" v-if="viewportWidth <= 767.98">{{
-            $t("more")
-        }}</span>
+        <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
+        <!--            $t("more")-->
+        <!--        }}</span>-->
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -59,7 +59,7 @@ export default {
                     !new RegExp("h/s").test(obj.hashRate)
                 ) {
                     obj.hashRate = ` ${obj.hashRate} ${this.columns.unit}h/s`;
-                    obj.hashRate24 = `${obj.hashRate24} ${this.columns.unit24}h/s`;
+                    // obj.hashRate24 = `${obj.hashRate24} ${this.columns.unit24}h/s`;
                 }
                 return obj;
             }
@@ -74,10 +74,12 @@ export default {
                     return [
                         this.updatedColumns.wallet !== "..."
                             ? this.updatedColumns.wallet
-                            : this.updatedColumns.txid,
+                            : "...",
                         this.titles[0],
+                        this.titles[1],
                         this.titles[2],
                         this.titles[3],
+                        this.titles[4],
                     ];
                 }
                 return this.titles;
@@ -102,12 +104,9 @@ export default {
                     this.updatedColumns.status
                 ) {
                     obj = obj.filter(
-                        (col) =>
-                            col[0] !== "wallet" &&
-                            col[0] !== "payDate" &&
-                            col[0] !== "percent"
+                        (col) => col[0] !== "wallet" && col[0] !== "txid"
                     );
-                    obj.unshift(obj[3]);
+                    obj.unshift(obj[5]);
                     obj.pop();
                 }
             }
@@ -153,10 +152,14 @@ export default {
                 padding-left: 16px;
             }
         }
-
         &:nth-last-child(-n + 2):has(+ svg) {
             @media (min-width: 767.98px) {
                 border-radius: 0 8px 8px 0;
+            }
+        }
+        span {
+            &.workers {
+                color: #13d60e;
             }
         }
     }
@@ -213,34 +216,28 @@ export default {
         &.ACTIVE,
         &.INACTIVE,
         &.UNSTABLE {
-            .table_column:first-child span:last-child::before {
-                display: inline-flex;
-                content: "";
-                width: 12px;
-                height: 12px;
-                border-radius: 50%;
-                margin-right: 8px;
-                background: transparent;
-                transition: all 0.5s ease 0s;
+            span {
+                &.status,
+                &.name {
+                    &::before {
+                        display: inline-flex;
+                        content: "";
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        margin-right: 8px;
+                        transition: all 0.5s ease 0s;
+                    }
+                }
             }
         }
         &.rejected,
         &.completed,
         &.pending {
-            .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child::before {
-                        display: inline-flex;
-                        content: "";
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                        margin-right: 8px;
-                        transition: all 0.5s ease 0s;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child::before {
+            span {
+                &.status,
+                &.name {
+                    &::before {
                         display: inline-flex;
                         content: "";
                         width: 12px;
@@ -252,64 +249,49 @@ export default {
                 }
             }
         }
-        &.active,
+        &.active {
+            span.status:before {
+                background: #13d60e;
+            }
+        }
         &.ACTIVE {
-            .table_column:first-child span:last-child:before {
+            span.name:before {
                 background: #13d60e;
             }
         }
         &.completed {
-            .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child:before {
-                        background: #13d60e;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child:before {
-                        background: #13d60e;
-                    }
-                }
+            span.status:before {
+                background: #13d60e;
             }
         }
-        &.inactive,
+        &.inactive {
+            span.status:before {
+                background: #ff0000;
+            }
+        }
         &.INACTIVE {
-            .table_column:first-child span:last-child:before {
+            span.name:before {
                 background: #ff0000;
             }
         }
         &.rejected {
-            .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child:before {
-                        background: #ff0000;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child:before {
-                        background: #ff0000;
-                    }
-                }
+            span.status:before {
+                background: #ff0000;
             }
         }
-        &.unstable,
+        &.unstable {
+            span.status:before {
+                background: #e9c058;
+            }
+        }
         &.UNSTABLE {
-            .table_column:first-child span:last-child:before {
+            span.name:before {
                 background: #e9c058;
             }
         }
         &.pending {
-            .table_column {
-                @media (min-width: 767.98px) {
-                    &:last-child span:last-child:before {
-                        background: #e9c058;
-                    }
-                }
-                @media (max-width: 767.98px) {
-                    &:first-child span:last-child:before {
-                        background: #e9c058;
-                    }
-                }
+            span.status:before {
+                background: #e9c058;
             }
         }
     }

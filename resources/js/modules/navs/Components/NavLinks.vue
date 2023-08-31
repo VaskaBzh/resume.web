@@ -177,11 +177,11 @@ export default {
                     page: "/help",
                     name: "FAQ",
                 },
-                {
-                    link: "calculator",
-                    page: "/calculator",
-                    name: "Calculator",
-                },
+                // {
+                //     link: "calculator",
+                //     page: "/calculator",
+                //     name: "Calculator",
+                // },
             ];
         },
         linksAccount() {
@@ -291,9 +291,9 @@ export default {
                         />"
                     </svg>
                     `,
-                    link: "ref",
-                    page: "/profile/ref",
-                    name: this.$t("header.links.ref"),
+                    link: "referral.tabs",
+                    page: "/profile/referral",
+                    name: this.$t("header.links.referral"),
                 },
             ];
         },

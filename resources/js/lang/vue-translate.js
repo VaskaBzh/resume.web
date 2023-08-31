@@ -133,7 +133,7 @@ const messages = {
                 complexity: "Difficulty",
                 hosting: "Hosting services",
                 settings: "Settings",
-                ref: "Ref. cabinet",
+                referral: "Ref. cabinet",
                 buttons: {
                     add: "Add a subaccount",
                     leave: "Exit",
@@ -146,6 +146,19 @@ const messages = {
         },
         home: {
             title: "Earn from mining together with allbtc pool",
+            calculator: {
+                title: "Calculator",
+                text: "The mining profitability calculator will help you find out how much income the equipment will bring, taking into account the cost of electricity.",
+                placeholder: [
+                    "Your hashrate",
+                    "Number of workers",
+                    "Power",
+                    "Costs",
+                ],
+                img_title: ["Income", "Expenses"],
+                button: "Calculate",
+                notification_calc: "Fill in the field",
+            },
             text: ["High income.", "Reliability.", "Efficiency."],
             button: "Start Mining",
             bitcoin_block: {
@@ -414,7 +427,7 @@ const messages = {
             income: "Earnings",
             connecting: "Connection",
             wallets: "Wallets",
-            ref: "Ref. cabinet",
+            referral: "Ref. cabinet",
         },
         days: "Days",
         hours: "Hours",
@@ -461,6 +474,9 @@ const messages = {
                 },
                 hash: {
                     titles: ["Current hashrate", "Avg.hashrate / 24"],
+                },
+                hashrate: {
+                    title: "Total hash rate",
                 },
                 workers: {
                     title: "Worker",
@@ -529,6 +545,7 @@ const messages = {
             },
         },
         income: {
+            types: ["Ref. Income", "Mining"],
             title: "Income",
             income_info: {
                 title: "Earnings",
@@ -538,6 +555,7 @@ const messages = {
                 title: "Transaction history",
                 tabs: ["Accruals", "Payouts"],
                 thead: [
+                    "Type of operation",
                     "Accrual date",
                     "Payout date",
                     "Hashrate",
@@ -790,7 +808,7 @@ const messages = {
                 complexity: "Сложность",
                 hosting: "Хостингам",
                 settings: "Настройки",
-                ref: "Реф. кабинет",
+                referral: "Реф. кабинет",
                 buttons: {
                     add: "Добавить сабаккаунт",
                     leave: "Выйти",
@@ -803,6 +821,19 @@ const messages = {
         },
         home: {
             title: "Зарабатывайте на майнинге вместе с allbtc pool",
+            calculator: {
+                title: "Калькулятор",
+                text: "Калькулятор доходности майнинга поможет узнать какой доход принесет оборудование с учетом затрат на электроэнергию.",
+                placeholder: [
+                    "Ваш хэшрейт",
+                    "Кол-во воркеров",
+                    "Мощность",
+                    "Затраты",
+                ],
+                img_title: ["Доход", "Расходы"],
+                button: "Рассчитать",
+                notification_calc: "Заполните поле",
+            },
             text: ["Высокий доход.", "Надежность.", "Эффективность."],
             button: "Начать майнинг",
             bitcoin_block: {
@@ -1077,7 +1108,7 @@ const messages = {
             income: "Доходы",
             connecting: "Подключение",
             wallets: "Кошельки",
-            ref: "Реф. кабинет",
+            referral: "Реф. кабинет",
         },
         days: "Дней",
         hours: "Часа",
@@ -1124,6 +1155,9 @@ const messages = {
                 },
                 hash: {
                     titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
+                },
+                hashrate: {
+                    title: "Общий хешрейт",
                 },
                 workers: {
                     title: "Воркеры",
@@ -1187,6 +1221,7 @@ const messages = {
             },
         },
         income: {
+            types: ["Реф. доход", "Майнинг"],
             title: "Доходы",
             income_info: {
                 title: "Платежи",
@@ -1196,6 +1231,7 @@ const messages = {
                 title: "История транзакций",
                 tabs: ["Начисления", "Выплаты"],
                 thead: [
+                    "Тип операции",
                     "Дата начисления",
                     "Дата вылпаты",
                     "Хешрейт",

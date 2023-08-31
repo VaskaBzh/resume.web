@@ -21,7 +21,13 @@ class StatisticController extends Controller
 
         $owner = Sub::find($user->referral_code['group_id']);
 
-        $statistic = ReferralService::getOwnerStatistic(referrals: $owner->referrals()->get());
+        if (!$owner) {
+            return new JsonResponse(['message' => 'owner not found'], 422);
+        }
+
+        $statistic = ReferralService::getOwnerStatistic(
+            referrals: $owner->referrals()->get()
+        );
 
         return new ReferralStatisticResource($user, $statistic);
     }

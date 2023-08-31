@@ -25,12 +25,50 @@
 <script>
 import CalculatorTitle from "../UI/CalculatorTitle.vue";
 import CalculatorButton from "../UI/CalculatorButton.vue";
+import { ProCalculatorService } from "@/modules/calculator/services/ProCalculatorService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "first-calculator-view",
     components: {
         CalculatorButton,
         CalculatorTitle,
+    },
+    data() {
+        return {
+            proService: new ProCalculatorService(),
+        };
+    },
+    computed: {
+        ...mapGetters(["btcInfo"]),
+    },
+    methods: {
+        getDate(tabValue) {
+            this.graphValue = tabValue;
+
+            this.proService.getGraph(tabValue);
+        },
+        setValue(inputName, newValue) {
+            this.proService.setItem(inputName, newValue);
+
+            this.proService.getGraph(this.graphValue);
+        },
+    },
+    watch: {
+        "btcInfo.btc"(newValue) {
+            if (newValue) {
+                this.proService.setInputs(newValue);
+
+                this.proService.getGraph(this.graphValue);
+            }
+        },
+    },
+    mounted() {
+        if (this.btcInfo.btc) {
+            this.proService.setInputs(this.btcInfo.btc);
+
+            this.proService.getGraph(this.graphValue);
+        }
     },
 };
 </script>

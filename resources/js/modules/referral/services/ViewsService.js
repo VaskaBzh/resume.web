@@ -1,22 +1,43 @@
 import { TabData } from "@/modules/referral/DTO/TabData";
+import { router } from "@inertiajs/vue3";
 
 export class ViewsService {
-    constructor(translate) {
+    constructor(translate, page) {
         this.tabs = [];
         this.translate = translate;
-        this.view = "Cabinet";
+        this.view = null;
+
+        this.setView(page);
     }
 
     setTabs() {
         this.tabs = [
             ...this.tabs,
-            new TabData(this.translate("tabs[0]"), "Cabinet"),
-            new TabData(this.translate("tabs[1]"), "Referrals"),
-            new TabData(this.translate("tabs[2]"), "Referrals_income"),
+            new TabData(this.translate("tabs[0]"), ["referral", "overview"]),
+            new TabData(this.translate("tabs[1]"), ["referral", "my-referral"]),
+            new TabData(this.translate("tabs[2]"), [
+                "referral",
+                "earn-rewards",
+            ]),
         ];
     }
 
-    setView(viewName) {
-        this.view = viewName;
+    setView(page) {
+        const splitedUrl = page.url.split("?");
+        const lastIndexUrl = splitedUrl.length - 1;
+        const pageParams = splitedUrl[lastIndexUrl].split("=");
+        const lastIndexParams = splitedUrl.length - 1;
+        this.view = pageParams[lastIndexParams];
+    }
+
+    tabRoute(routeName) {
+        const firstIndex = 0;
+        const lastIndex = routeName.length - 1;
+        const name = routeName[firstIndex];
+        const param = routeName[lastIndex];
+
+        router.visit(name, { data: { page: param } });
+
+        return this;
     }
 }

@@ -30,13 +30,15 @@ export default {
     },
     methods: {
         copy() {
-            navigator.clipboard.writeText(this.code);
+            if (this.code && this.code !== "...") {
+                navigator.clipboard.writeText(this.code);
 
-            this.copyAnimation();
+                this.copyAnimation();
+            }
         },
         copyAnimation() {
             this.hasCopy = true;
-            setTimeout(() => {this.hasCopy = false}, 2000)
+            setTimeout(() => {this.hasCopy = false}, 800)
         }
     },
 };
@@ -57,7 +59,7 @@ export default {
 }
 .tick-enter-from,
 .tick-leave-to {
-    transform: translate(30px, -50%) !important;
+    transform: translate(100%, -50%) !important;
     opacity: 0;
 }
 .copy {
@@ -71,8 +73,19 @@ export default {
     position: relative;
     transition: all 0.5s ease 0s;
     overflow: hidden;
-    //&-active {
-    //}
+    &:hover {
+        .copy {
+            &_tick,
+            &_icon {
+                stroke: #4182ec;
+            }
+            &_tick {
+                fill: #4182ec;
+            }
+        }
+        //&-active {
+        //}
+    }
     &_input {
         width: 100%;
         height: 100%;
@@ -86,13 +99,15 @@ export default {
         padding: 0 0 0 16px;
     }
     &_tick {
-        stroke: #3f7bdd;
+        stroke: #4182ec;
+        fill: #4182ec;
         width: 24px;
         height: 24px;
         position: absolute;
         top: 50%;
         right: 16px;
         transform: translateY(-50%);
+        transition: all 0.3s ease;
     }
     &_icon {
         stroke: #aeaeb2;
@@ -102,6 +117,7 @@ export default {
         top: 50%;
         right: 16px;
         transform: translateY(-50%);
+        transition: all 0.3s ease;
     }
 }
 </style>
