@@ -38,18 +38,21 @@ use Illuminate\Support\Facades\Route;
 /* Public routes */
 
 
-Route::get('/{page}', PageController::class)->name('page');
-
-/*Route::get('/', 'index')->name('home');
-Route::get('/help', 'help')->name('help');
-Route::get('/hosting', 'hosting')->name('hosting');
-//    Route::get('/calculator', 'calculator')->name('calculator');
-Route::get('/registration', 'registration')->name('registration');
-Route::get('/login', 'login')->name('login');*/
-
-
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
+
+Route::group([
+    'prefix' => '',
+    'controller' => PageController::class
+], function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/{page}', 'show')->name('page');
+   /* Route::get('/help', 'help')->name('help');
+    Route::get('/hosting', 'hosting')->name('hosting');
+    Route::get('/calculator', 'calculator')->name('calculator');
+    Route::get('/registration', 'registration')->name('registration');
+    Route::get('/login', 'login')->name('login');*/
+});
 
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
@@ -58,7 +61,7 @@ Route::middleware('auth')->group(function () {
         'prefix' => 'profile'
     ], function () {
         Route::redirect('', '/profile/statistic');
-        Route::get('/{page}', PageController::class)->name('profile.index');
+        Route::get('/{page}', [PageController::class, 'show'])->name('profile.index');
     });
 
     Route::group([
