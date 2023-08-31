@@ -173,8 +173,8 @@ export default {
                 //     name: this.$t("header.links.complexity"),
                 // },
                 {
-                    link: "faq",
-                    page: "/faq",
+                    link: "help",
+                    page: "/help",
                     name: "FAQ",
                 },
                 // {

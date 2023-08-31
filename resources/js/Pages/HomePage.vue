@@ -364,7 +364,7 @@
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
                                 <Link
-                                    href="/faq"
+                                    href="/help"
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.fpps.link") }}
                                 </Link>

@@ -13,21 +13,10 @@
             class="row_unit"
             :class="{ 'row_unit-currency': hasCurrency }"
             v-show="inputUnit"
-            @click="toggleList"
+            @click="setValue(newCurrencyValue)"
         >
             <span v-if="hasCurrency">{{ baseValue }}</span>
             {{ inputUnit }}
-            <transition name="list">
-                <div v-if="hasCurrency" class="row__list" v-show="opened">
-                    <span
-                        @click="setValue(cur)"
-                        class="row_item"
-                        :key="i"
-                        v-for="(cur, i) in currency"
-                        >{{ cur }}</span
-                    >
-                </div>
-            </transition>
         </div>
     </div>
 </template>
@@ -48,21 +37,31 @@ export default {
         return {
             value: this.inputValue,
             currency: ["Р", "$"],
-            opened: false,
             baseValue: "",
             usd: 0,
         };
+    },
+    computed: {
+        newCurrencyValue() {
+            const firstIndex = 0;
+            const currency = this.currency.filter(cur => cur !== this.baseValue)[firstIndex];
+
+            this.getCurrency(currency);
+            return currency;
+        }
     },
     watch: {
         value(newValue, oldValue) {
             const regex = /^[0-9]*\.?[0-9]*$/;
 
             if (regex.test(newValue)) {
-                const numValue = parseFloat(newValue);
-
-                if (!isNaN(numValue) || numValue > this.watchValue) {
-                    this.value = oldValue;
-                }
+                // const numValue = parseFloat(newValue);
+                // console.log(newValue)
+                // console.log(numValue)
+                //
+                // if (!isNaN(numValue) || numValue > this.watchValue) {
+                //     this.value = oldValue;
+                // }
             } else {
                 this.value = oldValue;
             }
@@ -77,12 +76,6 @@ export default {
         },
     },
     methods: {
-        toggleList() {
-            this.opened = !this.opened;
-        },
-        closeList() {
-            this.opened = false;
-        },
         setBase() {
             const firstIndex = 0;
             const secondIndex = 1;
