@@ -81,6 +81,7 @@ class ReferralService
                 count(workers.id) as worker_count'
             )
             ->groupBy('incomes.id')
+            ->latest()
             ->paginate($perPage);
     }
 
