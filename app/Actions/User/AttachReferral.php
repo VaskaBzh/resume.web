@@ -11,10 +11,16 @@ class AttachReferral
 {
     public static function execute(User $referral, Sub $owner): void
     {
-        $owner
-            ->referrals()
-            ->attach($referral, ['referral_percent' => 0.8]);
+        try {
+            $owner
+                ->referrals()
+                ->attach($referral, ['referral_percent' => 0.8]);
 
-        $owner->update(['percent' => $owner->percent - 0.08]);
+            $owner->update(['percent' => $owner->percent - 0.08]);
+        } catch (\Exception $e) {
+            report($e);
+
+            throw new \Exception('Something went wrong');
+        }
     }
 }
