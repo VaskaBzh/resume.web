@@ -3,7 +3,7 @@
         <nav class="header-calculator__container">
             <div class="header-calculator__main">
                 <div class="header-calculator__content">
-                    <Link :href="route('home')">
+                    <Link href="/home">
                         <img
                             class="calculator__logo"
                             src="@/../assets/img/logo_high_quality-dark.svg"
@@ -36,14 +36,14 @@
                 </div>
                 <div class="header-calculator__content">
                     <Link
-                        :href="route('login')"
+                        :href="route('page', { page: 'login' })"
                         v-show="viewportWidth >= 991.98 && !is_auth"
                         class="header-calculator_button"
                     >
                         {{ $t("header.login_button") }}
                     </Link>
                     <Link
-                        :href="route('statistic')"
+                        href="/statistic"
                         v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
                         class="header-calculator_button"
                     >

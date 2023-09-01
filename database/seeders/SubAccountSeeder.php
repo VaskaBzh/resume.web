@@ -15,7 +15,7 @@ class SubAccountSeeder extends Seeder
         Sub::updateOrcreate([
             'group_id' => 6001912,
         ],[
-            'user_id' => User::whereEmail('forest@gmail.com')->id,
+            'user_id' => User::whereEmail('forest@gmail.com')->first()->id,
             'group_id' => 6001912,
             'sub' => 'MainTest',
         ]);

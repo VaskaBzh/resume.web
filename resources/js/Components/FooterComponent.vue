@@ -290,10 +290,11 @@ export default {
         const { props } = usePage();
 
         let wait = ref(false);
+
         let form = useForm({
             message: "",
             contacts: "",
-
+            _token: props.token,
         });
 
         const sendFeedback = async () => {

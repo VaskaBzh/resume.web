@@ -133,7 +133,7 @@ const messages = {
                 complexity: "Difficulty",
                 hosting: "Hosting services",
                 settings: "Settings",
-                referrals: "Ref. cabinet",
+                referral: "Ref. cabinet",
                 buttons: {
                     add: "Add a subaccount",
                     leave: "Exit",
@@ -427,7 +427,7 @@ const messages = {
             income: "Earnings",
             connecting: "Connection",
             wallets: "Wallets",
-            referrals: "Ref. cabinet",
+            referral: "Ref. cabinet",
         },
         days: "Days",
         hours: "Hours",
@@ -591,6 +591,7 @@ const messages = {
         wallets: {
             title: "Your wallets",
             no_info: "Add Wallet",
+            messages: ["Wait 5 seconds.", "You can delete your wallet through tech support."],
             block: {
                 title: "Wallets list",
                 filter: "Hide with zero balance",
@@ -808,7 +809,7 @@ const messages = {
                 complexity: "Сложность",
                 hosting: "Хостингам",
                 settings: "Настройки",
-                referrals: "Реф. кабинет",
+                referral: "Реф. кабинет",
                 buttons: {
                     add: "Добавить сабаккаунт",
                     leave: "Выйти",
@@ -1108,7 +1109,7 @@ const messages = {
             income: "Доходы",
             connecting: "Подключение",
             wallets: "Кошельки",
-            referrals: "Реф. кабинет",
+            referral: "Реф. кабинет",
         },
         days: "Дней",
         hours: "Часа",
@@ -1267,6 +1268,7 @@ const messages = {
         wallets: {
             title: "Мои кошельки",
             no_info: "Добавить кошелек",
+            messages: ["Подождите 5 секунд.", "Удалить кошелек можно через тех поддержку."],
             block: {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",

@@ -15,7 +15,7 @@
                     class="button button-lg button-with-propeller"
                     v-if="this.auth_user"
                 >
-                    <Link :href="route('accounts')" class="all-link">
+                    <Link href="/profile/accounts" class="all-link">
                         {{ $t("hosting.button") }}
                         <div class="button_propeller"></div
                     ></Link>
@@ -24,7 +24,7 @@
                     class="button button-lg button-with-propeller"
                     v-else
                 >
-                    <Link :href="route('registration')" class="all-link">
+                    <Link :href="route('page', { page: 'registration' })" class="all-link">
                         {{ $t("hosting.button") }}
                         <div class="button_propeller"></div
                     ></Link>

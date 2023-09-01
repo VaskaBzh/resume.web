@@ -56,7 +56,7 @@ export default {
         },
     },
     mounted() {
-        document.title = this.$t("header.links.referrals");
+        document.title = this.$t("header.links.referral");
 
         this.viewService.setTabs();
     },
