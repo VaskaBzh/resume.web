@@ -65,8 +65,7 @@ class User extends Authenticatable implements MustVerifyEmail
                 'id',
                 'user_id',
                 'group_id',
-                'sub_profit_percent',
-                'user_discount_percent'
+                'referral_percent'
             )->withTimestamps();
     }
 
