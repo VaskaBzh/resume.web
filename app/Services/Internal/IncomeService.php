@@ -155,7 +155,7 @@ class IncomeService
     public function calculateOwnerProfit(): void
     {
         if ($this->owner) {
-            $this->params['ownerProfit'] = $this->dailyEarn * ($this->owner->pivot->sub_profit_percent / 100);
+            $this->params['ownerProfit'] = $this->dailyEarn * ($this->owner->pivot->referral_percent / 100);
         }
     }
 

@@ -38,7 +38,6 @@ Route::group([
     Route::get('{user}', ReferralListController::class)->name('referral.list');
     Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
-
 });
 
 /*Route::group([
