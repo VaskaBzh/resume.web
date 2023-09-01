@@ -81,7 +81,7 @@ export default {
             settingsService: new SettingsService(
                 this.$t,
                 this.user,
-                this.user.referral_code.code
+                this.referral_code
             ),
             is_checked: true,
             notification: true,
@@ -96,8 +96,10 @@ export default {
         },
         user(newUserProp) {
             this.settingsService.setUser(newUserProp);
-            this.settingsService.setCode(newUserProp.referral_code.code);
             this.settingsService.setUserData();
+        },
+        referral_code(newCode) {
+            this.settingsService.setCode(newCode);
         },
     },
     methods: {
