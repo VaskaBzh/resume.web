@@ -135,16 +135,16 @@ class IncomeService
     /**
      * Получаем камиссию allbtc с учетом дискаунта реферальной программы
      *
-     * @return float
+     * @return void
      */
-/*    public function calculateFee(): void
+    /*public function calculateFee(): void
     {
         $referralUserDiscount = $this
             ->owner
             ?->pivot
             ->referral_percent ?? 0;
 
-        $this->params['allBtcFee'] = $this->owner->pe - ($referralUserDiscount);
+        $this->params['allBtcFee'] = $this->sub->percent - $referralUserDiscount;
     }*/
 
     /**
@@ -191,7 +191,7 @@ class IncomeService
                 'group_id' => $this->sub->group_id,
                 'group_name' => $this->sub->sub,
                 'pending_amount' => $this->params['pendingAmount'],
-                'total_amount' => $this->params['totalAmount']
+                'total_amount' => $this->params['totalAmount'],
             ]),
             sub: $this->sub
         );
