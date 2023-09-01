@@ -9,7 +9,7 @@ use App\Http\Requests\UserUpdateRequest;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 
-class ProfileController extends ResetPasswordController
+class AccountController extends ResetPasswordController
 {
     public function __invoke(UserUpdateRequest $request, User $user): RedirectResponse
     {

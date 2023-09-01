@@ -21,9 +21,9 @@
             }}</span>
             <span v-hash :class="column[0]">{{ column[1] }}</span>
         </td>
-<!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
-<!--            $t("more")-->
-<!--        }}</span>-->
+        <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
+        <!--            $t("more")-->
+        <!--        }}</span>-->
         <svg
             xmlns="http://www.w3.org/2000/svg"
             width="24"
@@ -104,9 +104,7 @@ export default {
                     this.updatedColumns.status
                 ) {
                     obj = obj.filter(
-                        (col) =>
-                            col[0] !== "wallet" &&
-                            col[0] !== "txid"
+                        (col) => col[0] !== "wallet" && col[0] !== "txid"
                     );
                     obj.unshift(obj[5]);
                     obj.pop();
@@ -134,6 +132,7 @@ export default {
         color: #343434;
         white-space: nowrap;
         // text-align: center;
+        pointer-events: none;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
@@ -154,10 +153,15 @@ export default {
                 padding-left: 16px;
             }
         }
-
         &:nth-last-child(-n + 2):has(+ svg) {
             @media (min-width: 767.98px) {
                 border-radius: 0 8px 8px 0;
+            }
+        }
+        span {
+            pointer-events: fill;
+            &.workers {
+                color: #13d60e;
             }
         }
     }
@@ -274,7 +278,7 @@ export default {
         }
         &.rejected {
             span.status:before {
-               background: #ff0000;
+                background: #ff0000;
             }
         }
         &.unstable {

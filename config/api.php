@@ -1,6 +1,17 @@
 <?php
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Api
+    |--------------------------------------------------------------------------
+    |
+    | This structure defines authorization tokens and API addresses that our application interacts with,
+    | as specified in the environment variables
+    |
+    */
+
     'btc' => [
         'uri' => env('BTC_API_URI'),
         'token' => env('BTC_AUTH_TOKEN'),

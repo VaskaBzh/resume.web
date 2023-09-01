@@ -83,7 +83,6 @@
                     >
                         <main-title
                             class="title title-blue"
-                            :href="route(`workers`)"
                             >{{ $t("statistic.info_blocks.workers.title") }}
                         </main-title>
                         <ul class="statistic__list">
@@ -163,7 +162,7 @@
                     <!--                        </p>-->
                     <!--                        <blue-button v-if="!clearProfit">-->
                     <!--                            <Link-->
-                    <!--                                :href="route('settings')"-->
+                    <!--                                href="/settings"-->
                     <!--                                class="text text-md text-white"-->
                     <!--                                ><b>-->
                     <!--                                    {{-->

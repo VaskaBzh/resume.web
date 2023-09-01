@@ -5,33 +5,38 @@ export class ViewsService {
     constructor(translate, page) {
         this.tabs = [];
         this.translate = translate;
-        this.view = page.url;
+        this.view = null;
+
+        this.setView(page);
     }
 
     setTabs() {
         this.tabs = [
             ...this.tabs,
-            new TabData(
-                this.translate("tabs[0]"),
-                "/profile/referrals/dashboard"
-            ),
-            new TabData(
-                this.translate("tabs[1]"),
-                "/profile/referrals/attached-referrals"
-            ),
-            new TabData(
-                this.translate("tabs[2]"),
-                "/profile/referrals/incomes"
-            ),
+            new TabData(this.translate("tabs[0]"), ["referral", "overview"]),
+            new TabData(this.translate("tabs[1]"), ["referral", "my-referral"]),
+            new TabData(this.translate("tabs[2]"), [
+                "referral",
+                "earn-rewards",
+            ]),
         ];
     }
 
     setView(page) {
-        this.view = page.url;
+        const splitedUrl = page.url.split("?");
+        const lastIndexUrl = splitedUrl.length - 1;
+        const pageParams = splitedUrl[lastIndexUrl].split("=");
+        const lastIndexParams = splitedUrl.length - 1;
+        this.view = pageParams[lastIndexParams];
     }
 
     tabRoute(routeName) {
-        router.visit(routeName);
+        const firstIndex = 0;
+        const lastIndex = routeName.length - 1;
+        const name = routeName[firstIndex];
+        const param = routeName[lastIndex];
+
+        router.visit(name, { data: { page: param } });
 
         return this;
     }

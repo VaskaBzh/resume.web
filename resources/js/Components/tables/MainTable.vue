@@ -3,7 +3,7 @@
         <thead class="table__head">
             <tr class="table__row">
                 <th class="table_column" v-for="(title, i) in titles" :key="i">
-                    {{ title }}
+                    <span>{{ title }}</span>
                 </th>
             </tr>
         </thead>
@@ -182,6 +182,7 @@ export default {
     }
     &_column {
         position: relative;
+        pointer-events: none;
         @media (min-width: 767.98px) {
             height: 48px;
             padding-left: 16px;
@@ -191,6 +192,9 @@ export default {
         }
         &:last-child {
             border-radius: 0 8px 8px 0;
+        }
+        span {
+            pointer-events: fill;
         }
     }
     &__head {

@@ -78,6 +78,7 @@
         }
     }
     &:disabled {
-        color: #c5c5c5;
+        opacity: 0.5;
+        pointer-events: none;
     }
 }

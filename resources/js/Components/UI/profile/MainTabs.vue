@@ -4,8 +4,12 @@
             class="cabinet_button"
             :key="tab.title + i"
             v-for="(tab, i) in tabs"
-            :class="{ active: tab.value === active }"
-            @click="$emit('getValue', tab.value)"
+            :class="{
+                active: activeCondition(tab)
+            }"
+            @click="activeCondition(tab)
+                ? null
+                : $emit('getValue', tab.value)"
         >
             {{ tab.title }}
         </button>
@@ -19,6 +23,13 @@ export default {
         tabs: Array,
         active: Number,
     },
+    methods: {
+        activeCondition(tab) {
+            return (tab.value?.length
+                ? tab.value[tab.value.length - 1]
+                : tab.value) === this.active;
+        }
+    }
 };
 </script>
 
