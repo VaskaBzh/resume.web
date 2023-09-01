@@ -132,7 +132,11 @@ export default {
         color: #343434;
         white-space: nowrap;
         // text-align: center;
-        pointer-events: none;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
@@ -159,7 +163,12 @@ export default {
             }
         }
         span {
-            pointer-events: fill;
+            -moz-user-select: -moz-text;
+            -o-user-select: text;
+            -khtml-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+            display: inline-flex;
             &.workers {
                 color: #13d60e;
             }
