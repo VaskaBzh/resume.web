@@ -19,7 +19,7 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash :class="column[0]">{{ column[1] }}</span>
+            <span v-hash ref="row_content" :class="column[0]">{{ column[1] }}</span>
         </td>
         <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
         <!--            $t("more")-->
@@ -51,6 +51,9 @@ export default {
         titles: Array,
     },
     computed: {
+        getWorkersStats() {
+            return this.$refs?.row_content.find(el => el.className === "workers_stats");
+        },
         updatedColumns() {
             if (this.columns) {
                 let obj = this.columns;
@@ -114,12 +117,27 @@ export default {
         },
     },
     methods: {
+        setWorkersStats() {
+            if (!!this.getWorkersStats) {
+                const splitedText = this.getWorkersStats.textContent.split("/");
+
+                const firstSpan = `<span class="workers-active">${splitedText[0]}</span>`;
+                const secondSpan = `<span class="workers-inactive">${splitedText[1]}</span>`;
+
+                const joinedRow = [firstSpan, secondSpan].join("/");
+
+                this.getWorkersStats.innerHTML = joinedRow;
+            }
+        },
         openPopup() {
             this.$emit("openGraph", {
                 id: this.columns.graphId,
             });
         },
     },
+    mounted() {
+        this.setWorkersStats();
+    }
 };
 </script>
 
@@ -171,6 +189,18 @@ export default {
             display: inline-flex;
             &.workers {
                 color: #13d60e;
+                &_stats {
+                    display: inline-flex;
+                    gap: 6px;
+                }
+            }
+            .workers {
+                &-active {
+                    color: #13d60e;
+                }
+                &-inactive {
+                    color: #EB5757;
+                }
             }
         }
     }

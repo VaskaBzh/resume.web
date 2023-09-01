@@ -819,6 +819,23 @@ h6 {
     cursor: pointer;
 }
 
+
+
+.table {
+    &_column {
+        span {
+            .workers {
+                &-active {
+                    color: #13d60e;
+                }
+                &-inactive {
+                    color: #EB5757;
+                }
+            }
+        }
+    }
+}
+
 // Временный блок ререндера
 .hidden {
     position: absolute;

@@ -20,14 +20,36 @@
             height: 50%;
         }
     }
-    svg.preloader {
-        transform-origin: bottom right;
+    &_logo {
+        margin-bottom: 34px;
+        transition: all 0.5s ease 0s;
+    }
+    &-end {
+        .propeller_logo {
+            margin-bottom: 0;
+        }
+    }
+    &_value {
+        transition: all 0.5s ease 0s;
+        position: absolute;
+        bottom: 5px;
+        left: 50%;
+        transform: translateX(-50%);
+        &-end {
+            bottom: -10px;
+        }
+    }
+    &_preloader {
         width: 50%;
         height: 50%;
         position: absolute;
         left: 0;
         top: 0;
         animation: roll 1.2s infinite forwards linear;
+        transform-origin: center;
+        &-scale {
+            animation: scale 0.8s forwards ease;
+        }
     }
 }
 @keyframes roll {
@@ -36,5 +58,13 @@
     }
     to {
         transform: rotate(360deg);
+    }
+}
+@keyframes scale {
+    from {
+        //transform: scale(1);
+    }
+    to {
+        //transform: scale(4);
     }
 }
