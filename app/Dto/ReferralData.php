@@ -12,8 +12,7 @@ readonly final class ReferralData
         public User $user,
         public int $group_id,
         public string $code,
-        public float $subProfitPercent,
-        public float $userDiscountPercent,
+        public float $referralPercent,
     )
     {
     }
@@ -24,8 +23,7 @@ readonly final class ReferralData
             user: $requestData['user'],
             group_id: (int) $requestData['group_id'],
             code: $requestData['code'],
-            subProfitPercent: $requestData['sub_profit_percent'],
-            userDiscountPercent: $requestData['user_discount_percent']
+            referralPercent: $requestData['referral_percent'],
         );
     }
 }

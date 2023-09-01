@@ -11,12 +11,9 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Utils\Helper;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
 
 class ReferralService
 {
@@ -27,8 +24,7 @@ class ReferralService
                 'user' => $user,
                 'group_id' => $groupId,
                 'code' => Helper::generateUniqReferralCode(),
-                'sub_profit_percent' => 1,
-                'user_discount_percent' => 1,
+                'referral_percent' => 0.8,
             ])
         );
     }
@@ -56,7 +52,7 @@ class ReferralService
             return [
                 'email' => $user->email,
                 'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
-                'workers_count_in_active' => $referralSubCollection->sum('workers_count_in_active'),
+                'referral_inactive_workers_count' => $referralSubCollection->sum('workers_count_in_active'),
                 'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
                 'total_amount' => DB::table('incomes')
                     ->where('referral_id', $user->pivot->id)
