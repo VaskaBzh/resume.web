@@ -162,7 +162,7 @@
                     <!--                        </p>-->
                     <!--                        <blue-button v-if="!clearProfit">-->
                     <!--                            <Link-->
-                    <!--                                :href="route('settings')"-->
+                    <!--                                href="/settings"-->
                     <!--                                class="text text-md text-white"-->
                     <!--                                ><b>-->
                     <!--                                    {{-->

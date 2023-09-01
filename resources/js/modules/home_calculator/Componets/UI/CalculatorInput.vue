@@ -13,21 +13,10 @@
             class="row_unit"
             :class="{ 'row_unit-currency': hasCurrency }"
             v-show="inputUnit"
-            @click="toggleList"
+            @click="setValue(newCurrencyValue)"
         >
             <span v-if="hasCurrency">{{ baseValue }}</span>
             {{ inputUnit }}
-            <transition name="list">
-                <div v-if="hasCurrency" class="row__list" v-show="opened">
-                    <span
-                        @click="setValue(cur)"
-                        class="row_item"
-                        :key="i"
-                        v-for="(cur, i) in currency"
-                        >{{ cur }}</span
-                    >
-                </div>
-            </transition>
         </div>
     </div>
 </template>
@@ -48,10 +37,18 @@ export default {
         return {
             value: this.inputValue,
             currency: ["Р", "$"],
-            opened: false,
             baseValue: "",
             usd: 0,
         };
+    },
+    computed: {
+        newCurrencyValue() {
+            const firstIndex = 0;
+            const currency = this.currency.filter(cur => cur !== this.baseValue)[firstIndex];
+
+            this.getCurrency(currency);
+            return currency;
+        }
     },
     watch: {
         value(newValue, oldValue) {
@@ -60,7 +57,7 @@ export default {
             if (regex.test(newValue)) {
                 const numValue = parseFloat(newValue);
 
-                if (!isNaN(numValue) || numValue > this.watchValue) {
+                if (numValue > this.watchValue) {
                     this.value = oldValue;
                 }
             } else {
@@ -77,12 +74,6 @@ export default {
         },
     },
     methods: {
-        toggleList() {
-            this.opened = !this.opened;
-        },
-        closeList() {
-            this.opened = false;
-        },
         setBase() {
             const firstIndex = 0;
             const secondIndex = 1;
@@ -188,6 +179,17 @@ export default {
         border: none;
         outline: none;
         width: 100%;
+        &:-webkit-autofill {
+            border: none;
+            background: transparent;
+            transition: background 5000s ease 0s;
+            &:hover,
+            &:focus {
+                border: none;
+                background: transparent;
+                transition: background 5000s ease 0s;
+            }
+        }
         &::placeholder {
             color: var(--light-theme-gray-3, #818c99);
         }

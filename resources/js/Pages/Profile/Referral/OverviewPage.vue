@@ -201,6 +201,7 @@ export default {
         }
         &-bet {
             justify-content: space-around;
+            flex-wrap: wrap;
             @media (max-width: $pc) {
                 flex-direction: column;
                 gap: 16px;

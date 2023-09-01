@@ -1,12 +1,14 @@
 import api from "@/api/api";
 
 import { walletData } from "@/DTO/walletData";
-import { useForm } from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import store from "@/store";
 
 export class WalletService {
-    constructor() {
+    constructor(translate) {
         this.group_id = store.getters.getActive;
+
+        this.translate = translate;
 
         this.form = useForm({
             name: "",
@@ -34,25 +36,28 @@ export class WalletService {
     }
 
     clearForm(form) {
-        this.form = {
+        this.form = useForm({
             ...form,
             name: "",
             wallet: "",
             percent: "100",
             minWithdrawal: "0.005",
             group_id: store.getters.getActive,
-        };
+        });
     }
 
     setForm(wallet) {
-        this.form = {
+        const { props } = usePage();
+
+        this.form = useForm({
             ...this.form,
             name: wallet.fullName,
             wallet: wallet.wallet_address,
             percent: wallet.percent,
             minWithdrawal: wallet.minWithdrawal,
             group_id: store.getters.getActive,
-        };
+            _token: props.token,
+        });
     }
 
     closePopup() {
@@ -90,10 +95,12 @@ export class WalletService {
                     this.clearForm();
                     this.closePopup();
                 },
+                onFinish() {
+                    this.wait = false;
+                }
             });
-            this.wait = false;
         } else {
-            store.dispatch("getMessage", "Подождите 5 секунд.");
+            store.dispatch("getMessage", this.translate("wallets.messages[0]"));
         }
     }
 
@@ -107,16 +114,19 @@ export class WalletService {
                     this.clearForm();
                     this.closePopup();
                 },
+                onFinish() {
+                    this.wait = false;
+                }
             });
-            this.wait = false;
         } else {
-            store.dispatch("getMessage", "Подождите 5 секунд.");
+            store.dispatch("getMessage", this.translate("wallets.messages[0]"));
         }
     }
 
     async removeWallet(wallet) {
         this.setForm(wallet);
-        await this.form.post("walletswallet_delete", {});
+        // await this.form.post("/wallet_delete", {});
+        store.dispatch("getMessage", this.translate("wallets.messages[1]"));
         this.index();
     }
 

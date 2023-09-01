@@ -24,12 +24,13 @@ class PageController extends Controller
 
         return match (true) {
             $page === 'profile' => redirect('/profile/statistic'),
-            $page === 'referral' && !$queryable => redirect('profile/referral?page=overview'),
+            $page === 'referral' && !$queryable => redirect('/profile/referral?page=overview'),
             default => Inertia::render(
                 component: Arr::get(config('inertia.components'), $queryable ?? $page, 'HomePage'),
                 props: [
                     'auth_user' => Auth::check(),
-                    'user' => auth()->user()
+                    'user' => auth()->user(),
+                    "token" => csrf_token()
                 ]
             )
         };

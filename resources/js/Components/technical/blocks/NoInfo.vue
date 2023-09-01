@@ -132,8 +132,8 @@ export default {
     watch: {
         end: {
             deep: true,
-            handler(val) {
-                if (val) {
+            handler(newVal) {
+                if (newVal) {
                     clearInterval(this.intervalId);
                     this.intervalId = setInterval(() => {
                         if (this.progressPercentage < 100) {
@@ -147,7 +147,7 @@ export default {
         },
         progressPercentage: {
             deep: true,
-            handler(val) {
+            handler(newVal, oldVal) {
                 if (this.progressPercentage >= 79) {
                     this.intervalId = setInterval(() => {
                         if (this.progressPercentage < 98) {
@@ -158,7 +158,7 @@ export default {
             },
         },
     },
-    created() {
+    mounted() {
         this.intervalId = setInterval(() => {
             if (this.progressPercentage < 80) {
                 this.progressPercentage += 1;

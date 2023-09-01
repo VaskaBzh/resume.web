@@ -45,7 +45,7 @@
                         v-else
                         v-scroll="'left'"
                     >
-                        <Link :href="route('registration')" class="all-link">
+                        <Link :href="route('page', { page: 'registration' })" class="all-link">
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
                         ></Link>
@@ -306,7 +306,7 @@
                                 "
                             >
                                 <Link
-                                    :href="route('registration')"
+                                    :href="route('page', { page: 'registration' })"
                                     class="all-link"
                                 >
                                     {{ $t("home.bitcoin_block.button") }}</Link
@@ -339,7 +339,7 @@
                                     >{{ $t("home.promo_blocks.payment.link") }}
                                 </Link>
                                 <Link
-                                    :href="route('registration')"
+                                    :href="route('page', { page: 'registration' })"
                                     v-else
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link") }}
@@ -364,7 +364,7 @@
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
                                 <Link
-                                    :href="route('help')"
+                                    href="/help"
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.fpps.link") }}
                                 </Link>

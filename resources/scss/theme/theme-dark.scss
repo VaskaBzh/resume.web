@@ -283,6 +283,20 @@ body {
                         background: #101d2b !important;
                     }
                 }
+                .calculator {
+                    &__form {
+                        .row {
+                            background: var(--dark-theme-input, #333639);
+                            color: var(--dark-theme-text, #CACACA);
+                            &__list {
+                                background: var(--dark-theme-input, #333639);
+                            }
+                            &_item {
+                                color: var(--dark-theme-text, #CACACA);
+                            }
+                        }
+                    }
+                }
                 .referral {
                     &_code {
                         background: #283955;
@@ -736,7 +750,7 @@ body {
                     }
                     &__block {
                         &-light {
-                            background: #101d2b;
+                            background: var(--dark-theme-table-bg, #0B1621);
                         }
                         .title {
                             &-blue {

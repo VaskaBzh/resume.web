@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import { LoginFormData } from "@/modules/auth/DTO/LoginFormData";
 
 export class LoginService {
@@ -9,7 +9,12 @@ export class LoginService {
     }
 
     setForm() {
-        this.form = useForm(new LoginFormData("", "", false));
+        const { props } = usePage();
+
+        this.form = useForm({
+            ...new LoginFormData("", "", false),
+            _token: props.token,
+        });
     }
 
     async login() {

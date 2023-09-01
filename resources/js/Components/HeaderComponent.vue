@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="nav__container">
-            <Link :href="route('home')">
+            <Link href="/home">
                 <img
                     v-if="!getTheme"
                     class="nav__logo"
@@ -43,15 +43,15 @@
                 class="nav__button"
             ></account-menu>
             <Link
-                :href="route('login')"
-                v-show="viewportWidth >= 991.98 && !is_auth"
+                :href="route('page', { page: 'login' })"
+                v-show="viewportWidth >= 991.98 && !user?.name"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}
             </Link>
             <Link
                 href="/profile/statistic"
-                v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
+                v-show="viewportWidth >= 991.98 && !accountLink && !!user?.name"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}

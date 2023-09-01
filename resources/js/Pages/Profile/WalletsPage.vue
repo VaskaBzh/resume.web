@@ -3,7 +3,7 @@
         <main-title class="profile cabinet_title" tag="h3"
             >{{ $t("wallets.title") }}
             <!--                <blue-button class="wallets__button wallets__button-history">-->
-            <!--                    <Link :href="route('income')"> Доходы </Link>-->
+            <!--                    <Link href="/income"> Доходы </Link>-->
             <!--                </blue-button>-->
             <!--            <main-checkbox class="wallets__filter" @is_checked="wallets.filter">-->
             <!--                {{ $t("wallets.block.filter") }}-->
@@ -340,7 +340,7 @@ export default {
     },
     methods: {
         walletInit() {
-            this.wallets = new WalletService();
+            this.wallets = new WalletService(this.$t);
 
             this.wallets.index();
         },

@@ -46,9 +46,4 @@ class Helper
 
         return self::generateUniqReferralCode();
     }
-
-    public static function findVueComponent(string $uri, ?string $query)
-    {
-        dd($uri, $query);
-    }
 }

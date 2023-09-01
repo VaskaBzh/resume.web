@@ -130,12 +130,9 @@ export default {
     &__form {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        width: auto;
         gap: 8px;
         margin-bottom: 0;
-        @media (max-width: $pc) {
-            width: 100%;
-        }
+        width: 100%;
         @media (max-width: $mobile) {
             display: flex;
             flex-direction: column;

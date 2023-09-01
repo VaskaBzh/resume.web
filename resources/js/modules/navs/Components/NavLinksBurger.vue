@@ -22,14 +22,14 @@
                 ></account-menu>
                 <div class="nav__column" v-show="!is_auth">
                     <blue-button class="button button-md button-light">
-                        <Link :href="route('login')" class="all-link">
+                        <Link :href="route('page', { page: 'login' })" class="all-link">
                             {{ $t("header.login.buttons.login") }}
                         </Link>
                     </blue-button>
                     <blue-button
                         class="button button-md button-reverce button-reverce-border"
                     >
-                        <Link :href="route('registration')" class="all-link">
+                        <Link :href="route('page', { page: 'registration' })" class="all-link">
                             {{ $t("header.login.buttons.registration") }}
                         </Link>
                     </blue-button>
@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/vue3";
+import {Link, router, useForm, usePage} from "@inertiajs/vue3";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
 import { mapGetters } from "vuex";
@@ -116,7 +116,11 @@ export default {
             this.$store.dispatch("set_active", data);
         },
         async logout() {
-            await Inertia.post("/logout");
+            const { props } = usePage();
+
+            await router.post("/logout", {
+              _token: props.token,
+            });
         },
         closeBurger() {
             this.is_opened = false;

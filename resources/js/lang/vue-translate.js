@@ -591,6 +591,7 @@ const messages = {
         wallets: {
             title: "Your wallets",
             no_info: "Add Wallet",
+            messages: ["Wait 5 seconds.", "You can delete your wallet through tech support."],
             block: {
                 title: "Wallets list",
                 filter: "Hide with zero balance",
@@ -1267,6 +1268,7 @@ const messages = {
         wallets: {
             title: "Мои кошельки",
             no_info: "Добавить кошелек",
+            messages: ["Подождите 5 секунд.", "Удалить кошелек можно через тех поддержку."],
             block: {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",
