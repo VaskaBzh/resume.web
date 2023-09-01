@@ -21,6 +21,7 @@ readonly final class SubData
         public string $groupName,
         public ?float $pendingAmount,
         public ?float $totalAmount,
+        public ?float $percent,
     )
     {
     }
@@ -32,7 +33,8 @@ readonly final class SubData
             groupId: $requestData['group_id'],
             groupName: $requestData['group_name'],
             pendingAmount: Arr::get($requestData, 'pending_amount'),
-            totalAmount: Arr::get($requestData, 'total_amount')
+            totalAmount: Arr::get($requestData, 'total_amount'),
+            percent: Arr::get($requestData, 'percent'),
         );
     }
 }
