@@ -60,7 +60,7 @@ class IncomeService
         }
 
         $this->setNetworkDifficulty();
-        $this->calculateFee();
+/*        $this->calculateFee();*/
         $this->setDailyEarn();
         $this->setDailyAmount();
         $this->setPendingAmount();
@@ -102,7 +102,7 @@ class IncomeService
         $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: BtcComService::FEE - $this->params['allBtcFee']
+            fee: BtcComService::FEE - $this->sub->percent
         );
     }
 
@@ -137,15 +137,15 @@ class IncomeService
      *
      * @return float
      */
-    public function calculateFee(): void
+/*    public function calculateFee(): void
     {
         $referralUserDiscount = $this
             ->owner
             ?->pivot
-            ->user_discount_percent ?? 0;
+            ->referral_percent ?? 0;
 
-        $this->params['allBtcFee'] = $this->params['allBtcFee'] - ($referralUserDiscount);
-    }
+        $this->params['allBtcFee'] = $this->owner->pe - ($referralUserDiscount);
+    }*/
 
     /**
      * Устанавливаем доход овнера от реферала
@@ -257,8 +257,6 @@ class IncomeService
      */
     public function createFinance(): void
     {
-        //$earn = ($this->params['dailyAmount'] / (100 - $this->params['allBtcFee'])) * 100;
-
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
             'earn' => $this->dailyEarn,
