@@ -1,82 +1,84 @@
 version: "3.7"
 
 networks:
-    allbtc:
+  allbtc:
 
 volumes:
-    mysql-data:
+  mysql-data:
 
 services:
 
-    nginx:
-        image: nginx:stable-alpine
-        container_name: allbtc_nginx
-        restart: unless-stopped
-        ports:
-            - "8000:80"
-        volumes:
-            - ./:/var/www/html
-            - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:rw
-        depends_on:
-            - php
-        networks:
-            - allbtc
+  nginx:
+    image: nginx:stable-alpine
+    container_name: allbtc_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+      - "443:443"
+    volumes:
+      - ./:/var/www/html
+      - ./.docker/nginx/nginx.conf:/etc/nginx/conf.d/default.conf:rw
+      - /home/mainuser/certs/config/live/dev.all-btc.com/fullchain.pem:/etc/nginx/certs/fullchain.pem:ro
+      - /home/mainuser/certs/config/live/dev.all-btc.com/privkey.pem:/etc/nginx/certs/privkey.pem:ro
+      - /home/mainuser/my_passwords/.htpasswd:/etc/nginx/.htpasswd
+    depends_on:
+      - php
+    networks:
+      - allbtc
 
-    php:
-        build:
-            args:
-                - UID=${UID:-1000}
-                - GID=${GID:-1000}
-            context: .
-            dockerfile: ./.docker/php/Dockerfile
-        container_name: allbtc_app
-        ports:
-            - "5173:5173"
-        volumes:
-            - ./:/var/www/html
-        depends_on:
-            - db
-        networks:
-            - allbtc
+  php:
+    build:
+      args:
+        - UID=${UID:-1000}
+        - GID=${GID:-1000}
+      context: .
+      dockerfile: ./.docker/php/Dockerfile
+    container_name: allbtc_app
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - db
+    networks:
+      - allbtc
 
-    db:
-        platform: linux/x86_64
-        image: mysql:5.7
-        container_name: allbtc_db
-        restart: unless-stopped
-        ports:
-            - "33061:3306"
-        environment:
-            MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
-            MYSQL_DATABASE: ${DB_DATABASE}
-            MYSQL_PASSWORD: ${DB_PASSWORD}
-        volumes:
-            - mysql-data:/var/lib/mysql
-        networks:
-            - allbtc
+  db:
+    image: mysql:5.7
+    container_name: allbtc_db
+    restart: unless-stopped
+    ports:
+      - "33061:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - allbtc
 
-    db-test:
-        platform: linux/x86_64
-        image: mysql:5.7
-        container_name: allbtc_db_test
-        restart: unless-stopped
-        ports:
-            - "33071:3307"
-        expose:
-            - 3307
-        environment:
-            MYSQL_ROOT_PASSWORD: 1234
-            MYSQL_DATABASE: allbtc_test
-            MYSQL_PASSWORD: 1234
-            MYSQL_TCP_PORT: 3307
-        networks:
-            - allbtc
+  db-test:
+    image: mysql:5.7
+    container_name: allbtc_db_test
+    restart: unless-stopped
+    ports:
+      - "33071:3307"
+    expose:
+      - 3307
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: allbtc_test
+      MYSQL_PASSWORD: 1234
+      MYSQL_TCP_PORT: 3307
+    networks:
+      - allbtc
 
-    mailhog:
-        image: 'mailhog/mailhog:latest'
-        container_name: allbtc_smtp
-        ports:
-            - '${MAIL_PORT}:1025'
-            - '${MAIL_DASHBOARD_PORT}:8025'
-        networks:
-            - allbtc
+#  mailhog:
+#    image: 'mailhog/mailhog:latest'
+#    container_name: allbtc_smtp
+#    ports:
+#      - '${MAIL_PORT}:1025'
+#      - '${MAIL_DASHBOARD_PORT}:8025'
+#    networks:
+#      - allbtc
