@@ -1,4 +1,4 @@
-<template>
+--<template>
     <h1 v-if="tag === 'h1'" class="title">
         <slot></slot>
     </h1>

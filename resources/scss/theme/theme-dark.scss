@@ -904,6 +904,14 @@ body {
                             &.workers {
                                 color: var(--dark-theme-green, #86FF83);
                             }
+                            .workers {
+                                &-active {
+                                    color: var(--dark-theme-green, #86FF83);
+                                }
+                                &-inactive {
+                                    color: var(--dark-theme-red, #EF4E4D);
+                                }
+                            }
                         }
                     }
                     &__row {
