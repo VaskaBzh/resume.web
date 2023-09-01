@@ -127,6 +127,8 @@ export class SettingsService {
             router.reload();
         } catch (err) {
             this.sendMessage(err.response.data.message);
+
+            router.reload();
         }
     }
 
