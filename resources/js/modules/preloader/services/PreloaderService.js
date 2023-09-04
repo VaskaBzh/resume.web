@@ -69,12 +69,12 @@ export class PreloaderService {
                 duration: 1
             }
         );
-        gsap.to(
-            "#id",
-            {
-                cssRule
-            }
-        );
+        // gsap.to(
+        //     "#id",
+        //     {
+        //         cssRule:
+        //     }
+        // );
     }
 
     animateCloseLine() {
