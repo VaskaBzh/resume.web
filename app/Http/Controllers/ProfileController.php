@@ -12,19 +12,16 @@ use Inertia\Inertia;
 
 class ProfileController extends Controller
 {
-    public function __invoke(Request $request, string $page)
+    public function __invoke(Request $request, ?string $page = null)
     {
-        $queryable = $request->query('page');
         $user = auth()->user();
 
-        Inertia::render(
-            component: Arr::get(config('inertia.components.profile'), $queryable ?? $page, 'StatisticPage'),
+        return Inertia::render(
+            component: Arr::get(config('inertia.components.profile'), $page, 'ErrorPage'),
             props: [
                 'auth_user' => Auth::check(),
                 'user' => $user,
-                'referral_code' => User::whereNotNull('referral_code')
-                    ->find($user?->owners->first()?->user_id)
-                    ?->referral_code['code'],
+                'has_referral_role' => $user->hasRole('referral'),
                 "token" => csrf_token(),
             ]
         );

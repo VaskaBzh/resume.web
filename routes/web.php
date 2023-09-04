@@ -7,6 +7,7 @@ use App\Http\Controllers\Income\ListController as IncomeListController;
 use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\PageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Referral\CodeController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Sub\ListController as SubListController;
@@ -23,8 +24,8 @@ use App\Http\Controllers\Payout\ListController as PayoutListController;
 use App\Http\Controllers\Referral\ListController as ListReferralController;
 use App\Http\Controllers\Referral\AttachController as AttachReferralController;
 use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListController;
+use App\Http\Controllers\Referral\ShowController as ShowReferralController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,10 +38,19 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
+
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
 
-    Route::get('/profile/{page}', ProfileController::class)->name('profile.index');
+    Route::group([
+        'prefix' => 'profile'
+    ], function () {
+        Route::redirect('', 'statistic');
+        Route::get('/referral', ShowReferralController::class)
+            ->middleware('role:referral')
+            ->name('referral.page');
+        Route::get('{page}', ProfileController::class)->name('profile.index');
+    });
 
     Route::group([
         'prefix' => 'subs',
@@ -110,7 +120,6 @@ Route::middleware('auth')->group(function () {
 });
 
 /* Public routes */
-
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
 
@@ -121,4 +130,3 @@ Route::group([
     Route::get('/', 'index')->name('home');
     Route::get('/{page}', 'show')->name('page');
 });
-

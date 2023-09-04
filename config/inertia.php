@@ -28,9 +28,11 @@ return [
             'settings' => 'Profile/SettingsPage',
             'wallets' => 'Profile/WalletsPage',
             'workers' => 'Profile/WorkersPage',
-            'overview' => 'Profile/Referral/OverviewPage',
-            'my-referral' => 'Profile/Referral/MyReferralPage',
-            'earn-rewards' => 'Profile/Referral/EarnRewardsPage',
-        ],
+            'referral' => [
+                'overview' => 'Profile/Referral/OverviewPage',
+                'my-referral' => 'Profile/Referral/MyReferralPage',
+                'earn-rewards' => 'Profile/Referral/EarnRewardsPage',
+            ]
+        ]
     ]
 ];
