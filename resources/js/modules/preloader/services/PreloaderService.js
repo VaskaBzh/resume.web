@@ -1,9 +1,18 @@
-import { gsap } from "gsap";
+import anime from "animejs/lib/anime.es.js";
 
 export class PreloaderService {
     constructor() {
         this.progressPercentage = 0;
         this.interval = null;
+
+        this.animate = null;
+
+        this.lineColor = '#4282EC';
+        this.iconContainer = null;
+
+        this.preloaderLine = null;
+        this.preloaderCircle = null;
+        this.polygon = null;
     }
 
     killInterval() {
@@ -21,6 +30,8 @@ export class PreloaderService {
                 this.killInterval();
             }
         }, intervalMillisecondsTime);
+
+        this.animateLine();
     }
 
     slowProcess() {
@@ -40,6 +51,7 @@ export class PreloaderService {
 
     endProcess(endValue) {
         if (endValue) {
+            this.animateCloseLine();
             this.killInterval();
             this.killProcess();
         }
@@ -58,27 +70,93 @@ export class PreloaderService {
             } else {
                 this.killInterval();
             }
-        },  intervalMillisecondsTime);
+        }, intervalMillisecondsTime);
+    }
+
+    setContainerElement(containerElem) {
+        this.iconContainer = containerElem;
+    }
+
+    setLineElement(containerElem) {
+        this.preloaderLine = containerElem;
+    }
+
+    setCircleElement(containerElem) {
+        this.preloaderCircle = containerElem;
+    }
+
+    dropElement(element) {
+        element.remove();
+    }
+
+    setPolygon(element) {
+        this.polygon = element;
+    }
+
+    getPath(element) {
+        return element.getAttribute("d");
+    }
+
+    convertPath(element) {
+        const length = element.getTotalLength();
+        const svgPoint = element.getPointAtLength(0);
+        let str = svgPoint.x + " " + svgPoint.y;
+
+        for (let i = 1; i < length; i++) {
+            const svgPoint = element.getPointAtLength(i);
+            str += " " + svgPoint.x + " " + svgPoint.y;
+        }
+
+        return str;
     }
 
     animateLine() {
-        const lineTimeline = gsap.timeline(
+        const lastPath = this.convertPath(this.preloaderLine);
+
+        this.polygon.setAttribute('points', lastPath);
+
+        // this.animate = anime({
+        //     targets: '#polygon',
+        //     points: [
+        //         { value: [
+        //                 '0 0 0 0 0 0 0 0 0 0 0 0',
+        //                 lastPath
+        //             ]
+        //         },
+        //     ],
+        //     easing: 'easeOutQuad',
+        //     duration: 2000,
+        // });
+        //
+        // this.animate.remove("#polygon");
+
+        this.animate = anime(
             {
-                repeat: -1,
-                repeatDelay: .1,
-                duration: 1
+                targets: '#polygon',
+                rotate: 720,
+                duration: 3500,
+                loop: true,
+                easing: 'easeOutExpo'
             }
         );
-        // gsap.to(
-        //     "#id",
-        //     {
-        //         cssRule:
-        //     }
-        // );
     }
 
-    animateCloseLine() {
+    animateCloseLine = () => {
+        const firstPath = this.convertPath(this.preloaderLine);
+        const lastPath = this.convertPath(this.preloaderCircle);
 
+        anime({
+            targets: '#polygon',
+            points: [
+                { value: [
+                        firstPath,
+                        lastPath
+                    ]
+                },
+            ],
+            easing: 'easeOutQuad',
+            duration: 2000,
+        });
     }
 
     animateCross() {

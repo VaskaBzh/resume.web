@@ -6,10 +6,12 @@
     >
         <div class="preloader__wrap">
             <div class="preloader_icon">
-                <preloader-circle-icon class="preloader_circle" id="preloader_circle" v-show="endConditionWithoutSlots" />
+                <preloader-circle-icon class="preloader_circle" id="preloader_circle" v-show="false" @getElement="service.setCircleElement($event)" @dropContainer="service.dropElement($event)" />
                 <preloader-end-icon class="preloader_cross" id="preloader_cross" v-show="endConditionWithoutSlots" />
-                <preloader-line-icon class="preloader_line" id="preloader_line" v-show="!endConditionWithoutSlots" />
+                <preloader-line-icon v-show="false" @getElement="service.setLineElement($event)" @dropContainer="service.dropElement($event)" />
                 <preloader-logo-icon class="preloader_logo" id="preloader_logo" v-show="!endConditionWithoutSlots" />
+
+                <preloader-container-icon class="preloader_icon-custom" @getPolygon="service.setPolygon($event)" @getContainer="service.setContainerElement($event)" />
             </div>
 
             <span class="preloader_progress">{{ progressValue }}</span>
@@ -35,6 +37,7 @@ import PreloaderLineIcon from "../icons/PreloaderLineIcon.vue";
 import PreloaderLogoIcon from "../icons/PreloaderLogoIcon.vue";
 
 import { PreloaderService } from "../services/PreloaderService";
+import PreloaderContainerIcon from "../icons/PreloaderContainerIcon.vue";
 
 export default {
     name: "main-preloader",
@@ -66,6 +69,7 @@ export default {
         PreloaderEndIcon,
         PreloaderLineIcon,
         PreloaderLogoIcon,
+        PreloaderContainerIcon,
     },
     data() {
         return {
@@ -100,8 +104,11 @@ export default {
         position: relative;
     }
     &_icon {
-        position: relative;
-
+        &-custom {
+            position: relative;
+            overflow: visible;
+            margin-top: 75px;
+        }
     }
     &_progress {
         color: #4066B5;
@@ -112,7 +119,8 @@ export default {
     &_line {
         position: absolute;
         left: 0;
-        bottom: 0;
+        top: 100%;
+        transform-origin: center top;
     }
 }
 </style>
