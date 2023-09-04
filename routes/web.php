@@ -6,6 +6,7 @@ use App\Http\Controllers\Hashes\HashRateListController;
 use App\Http\Controllers\Income\ListController as IncomeListController;
 use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\PageController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Referral\CodeController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use App\Http\Controllers\Sub\ListController as SubListController;
@@ -53,7 +54,7 @@ Route::group([
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
 
-    Route::get('/profile/{page}', [PageController::class, 'show'])->name('profile.index');
+    Route::get('/profile/{page}', ProfileController::class)->name('profile.index');
 
     Route::group([
         'prefix' => 'subs',
