@@ -18,10 +18,11 @@ class PageController extends Controller
     }
 
     public function show(Request $request, string $page)
-    {/*dd(Arr::get(config('inertia.components.public'), $queryable ?? $page));*/
+    {
         Inertia::render(
-            component: Arr::get(config('inertia.components.public'), $queryable ?? $page),
+            component: Arr::get(config('inertia.components.public'), $page),
             props: [
+                'user' => auth()->user(),
                 "token" => csrf_token(),
             ]
         );

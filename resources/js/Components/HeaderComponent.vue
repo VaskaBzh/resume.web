@@ -50,7 +50,7 @@
                 {{ $t("header.login_button") }}
             </Link>
             <Link
-                href="/profile/statistic"
+                href="/profile"
                 v-show="viewportWidth >= 991.98 && !accountLink && !!user?.name"
                 class="nav__button"
             >
