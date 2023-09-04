@@ -37,20 +37,6 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-/* Public routes */
-
-
-Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
-Route::get('/chart', ChartController::class)->name('chart');
-
-Route::group([
-    'prefix' => '',
-    'controller' => PageController::class
-], function () {
-    Route::get('/', 'index')->name('home');
-    Route::get('/{page}', 'show')->name('page');
-});
-
 /* Must auth web routes */
 Route::middleware('auth')->group(function () {
 
@@ -104,5 +90,18 @@ Route::middleware('auth')->group(function () {
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
         Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });
+});
+
+/* Public routes */
+
+Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
+Route::get('/chart', ChartController::class)->name('chart');
+
+Route::group([
+    'prefix' => '',
+    'controller' => PageController::class
+], function () {
+    Route::get('/', 'index')->name('home');
+    Route::get('/{page}', 'show')->name('page');
 });
 
