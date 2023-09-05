@@ -1,6 +1,6 @@
 <template>
     <div class="copy" :class="{ 'copy-active': hasCopy }" @click="copy">
-        <p class="copy_input">{{ catedCode }}</p>
+        <p class="copy_input">{{ cuttedCode }}</p>
         <transition name="copy">
             <copy-icon class="copy_icon" v-show="!hasCopy" />
         </transition>
@@ -29,7 +29,7 @@ export default {
         };
     },
     computed: {
-        catedCode() {
+        cuttedCode() {
             return this.code.length >= 16
                 ? `${this.code.substr(0, 16)}...`
                 : this.code;
