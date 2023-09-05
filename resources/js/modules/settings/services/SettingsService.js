@@ -8,7 +8,7 @@ import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
 
 export class SettingsService {
-    constructor(translate, user, referral_code) {
+    constructor(translate, user) {
         this.translate = translate;
         this.profit = "";
         this.clearProfit = null;
@@ -17,7 +17,6 @@ export class SettingsService {
         this.form = {};
         this.validate = {};
         this.user = user;
-        this.referral_code = referral_code;
 
         this.userData = "";
 
@@ -39,17 +38,12 @@ export class SettingsService {
         this.user = user;
     }
 
-    setCode(referral_code) {
-        this.referral_code = referral_code;
-    }
-
     setUserData() {
         this.userData = new SettingsUserData(
             this.user.name,
             this.user.email,
             "*********",
-            this.user.phone ?? this.translate("inputs.phone"),
-            this.referral_code
+            this.user.phone ?? this.translate("inputs.phone")
         );
     }
 
@@ -112,24 +106,6 @@ export class SettingsService {
 
     sendMessage(message) {
         store.dispatch("getMessage", message);
-    }
-
-    async setReferral(code) {
-        let result = {};
-
-        try {
-            result = await api.post(`/referrals/attach/${this.user.id}`, {
-                code: code,
-            });
-
-            this.sendMessage(result.data.message);
-
-            router.reload();
-        } catch (err) {
-            this.sendMessage(err.response.data.message);
-
-            router.reload();
-        }
     }
 
     setValue(value) {

@@ -30,9 +30,11 @@ export default {
     },
     computed: {
         cuttedCode() {
-            return this.code.length >= 16
-                ? `${this.code.substr(0, 16)}...`
-                : this.code;
+            if (this.code)
+                return this.code.length >= 16
+                    ? `${this.code.substr(0, 16)}...`
+                    : this.code;
+            return "...";
         }
     },
     methods: {
