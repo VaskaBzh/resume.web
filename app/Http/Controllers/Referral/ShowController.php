@@ -18,10 +18,13 @@ class ShowController extends Controller
             return redirect('/profile/referral?page=overview');
         }
 
+        $user = auth()->user();
+        
         return Inertia::render(
             component: Arr::get(config('inertia.components.profile.referral'), $query, 'ErrorPage'),
             props: [
-                'user' => auth()->user(),
+                'has_referral_role' => $user->hasRole('referral'),
+                'user' => $user,
                 "token" => csrf_token(),
             ]
         );
