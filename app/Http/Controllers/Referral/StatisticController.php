@@ -19,7 +19,9 @@ class StatisticController extends Controller
             return new JsonResponse(['message' => 'referral code not exists'], 422);
         }
 
-        $owner = Sub::find($user->referral_code['group_id']);
+        $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
+
+        $owner = Sub::find($referralCodeData['group_id']);
 
         if (!$owner) {
             return new JsonResponse(['message' => 'owner not found'], 422);
@@ -29,6 +31,6 @@ class StatisticController extends Controller
             referrals: $owner->referrals()->get()
         );
 
-        return new ReferralStatisticResource($user, $statistic);
+        return new ReferralStatisticResource($user, $statistic, $referralCodeData);
     }
 }
