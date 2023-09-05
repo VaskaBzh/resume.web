@@ -9,14 +9,14 @@ use App\Models\User;
 
 class AttachReferral
 {
-    public static function execute(User $referral, Sub $owner): void
+    public static function execute(Sub $referralSub, Sub $ownerSub, $referralPercent): void
     {
         try {
-            $owner
+            $ownerSub
                 ->referrals()
-                ->attach($referral, ['referral_percent' => 0.8]);
+                ->attach($referralSub, ['referral_percent' => $referralPercent]);
 
-            $owner->update(['percent' => $owner->percent - 0.08]);
+            $referralSub->update(['percent' => $referralSub->percent - $referralPercent]);
         } catch (\Exception $e) {
             report($e);
 

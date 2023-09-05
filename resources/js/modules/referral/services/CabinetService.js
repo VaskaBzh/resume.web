@@ -67,12 +67,8 @@ export class CabinetService {
         await this.index();
     }
 
-    setUser(user) {
-        this.user = user;
-    }
-
-    setCode() {
-        this.code = this.user.referral_code?.code || "...";
+    setCode(code) {
+        this.code = code;
     }
 
     setActiveSub(group_id) {

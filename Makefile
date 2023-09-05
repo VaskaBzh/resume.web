@@ -53,3 +53,5 @@ stats:
 	$(ARTISAN) update:stats
 income:
 	$(ARTISAN) income
+role:
+	$(ARTISAN) give:role

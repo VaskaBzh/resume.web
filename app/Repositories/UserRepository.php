@@ -5,11 +5,12 @@ declare(strict_types=1);
 namespace App\Repositories;
 
 use Illuminate\Database\Query\Builder;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\DB;
 
 class UserRepository
 {
-    public function getReferralIncomeCollection(int $groupId, string $perPage = "15"): Builder
+    public function getReferralIncomeCollection(int $groupId, ?int $perPage = 15): LengthAwarePaginator
     {
         return DB::table('referrals')
             ->where('referrals.group_id', $groupId)
@@ -25,6 +26,14 @@ class UserRepository
                 count(workers.id) as worker_count'
             )
             ->groupBy('incomes.id')
-            ->latest();
+            ->latest()
+            ->paginate($perPage);
+    }
+
+    public function getTotalIncomesTotalAmount(int $referralId): int|float|null
+    {
+        return DB::table('incomes')
+            ->where('referral_id', $referralId)
+            ->sum('daily_amount');
     }
 }

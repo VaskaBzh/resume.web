@@ -188,6 +188,7 @@ export default {
         left: 0;
         top: 100%;
         transform-origin: center center;
+        -webkit-transform-origin: center;
     }
 }
 </style>

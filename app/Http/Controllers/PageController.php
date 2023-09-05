@@ -16,29 +16,19 @@ class PageController extends Controller
     public function index()
     {
         return Inertia::render(
-            component: Arr::get(config('inertia.components.public'), 'home', 'HomePage')
+            component:'HomePage',
+            props: ['user' => auth()->user()]
         );
     }
 
-    public function show(Request $request, string $page)
+    public function show(string $page)
     {
-        $queryable = $request->query('page');
-        $user = auth()->user();
-
-        return match (true) {
-            Str::is($page, 'profile') => redirect('/profile/statistic'),
-            Str::is($page, 'referral') && !$queryable => redirect('/profile/referral?page=overview'),
-            default => Inertia::render(
-                component: Arr::get(config('inertia.components'), $queryable ?? $page, 'HomePage'),
-                props: [
-                    'auth_user' => Auth::check(),
-                    'user' => $user,
-                    'referral_code' => User::whereNotNull('referral_code')
-                        ->find($user?->owners->first()?->user_id)
-                        ?->referral_code['code'],
-                    "token" => csrf_token(),
-                ]
-            )
-        };
+        return Inertia::render(
+            component: Arr::get(config('inertia.components.public'), $page, 'ErrorPage'),
+            props: [
+                'user' => auth()->user(),
+                "token" => csrf_token(),
+            ]
+        );
     }
 }

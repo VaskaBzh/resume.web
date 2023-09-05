@@ -1,3 +1,4 @@
+'use strict';
 import anime from "animejs/lib/anime.es.js";
 import { ref } from "vue";
 
@@ -57,7 +58,6 @@ export class PreloaderService {
         if (endValue) {
             this.endAnimation();
             this.killInterval();
-            this.killProcess();
         }
     }
 
@@ -73,6 +73,7 @@ export class PreloaderService {
                 this.progressPercentage += percentStep;
             } else {
                 this.killInterval();
+                this.animateCross();
             }
         }, intervalMillisecondsTime);
     }
@@ -135,7 +136,7 @@ export class PreloaderService {
             easing: 'easeInOutSine',
             duration: 1000,
             begin: (anim) => {
-                this.animateCross();
+                this.killProcess();
             }
         });
     }
@@ -146,7 +147,6 @@ export class PreloaderService {
 
     animateCross = () => {
         this.makeCrossVisible();
-
 
         // anime({
         //     targets: this.cross.left,
