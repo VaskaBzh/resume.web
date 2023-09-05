@@ -104,6 +104,6 @@ class ReferralService
 
     public static function getReferralDataFromCode(string $code): array
     {
-        return json_decode(base64_encode($code), true);
+        return json_decode(base64_decode($code), true);
     }
 }
