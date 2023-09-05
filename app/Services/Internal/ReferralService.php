@@ -10,23 +10,34 @@ use App\Dto\ReferralData;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
-use App\Utils\Helper;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class ReferralService
 {
-    public static function generateCode(User $user, int $groupId): bool
+    /**
+     * @param User $user
+     * @param int $groupId
+     * @return void
+     * @throws \Exception
+     */
+    public static function generateCode(User $user, int $groupId): string
     {
-        return GenerateReferralCode::execute(
-            referralData: ReferralData::fromRequest([
-                'user' => $user,
-                'group_id' => $groupId,
-                'code' => Helper::generateUniqReferralCode(),
-                'referral_percent' => 0.8,
-            ])
-        );
+        try {
+            $code = static::generateReferralCode(subGroupId: $groupId);
+
+            GenerateReferralCode::execute(
+                referralData: ReferralData::fromRequest([
+                    'user' => $user,
+                    'code' => $code,
+                ])
+            );
+
+            return $code;
+        } catch (\Exception) {
+            throw new \Exception('Something went wrong..');
+        }
     }
 
     public static function getOwnerStatistic(Collection $referrals): array
@@ -83,8 +94,7 @@ class ReferralService
 
     public static function attach(User $user, string $code): void
     {
-        $owner = User::where('referral_code->code', $code)
-            ->first();
+        $owner = User::where('referral_code', $code)->first();
 
         if (!$owner) {
             throw new \Exception('Неверный код');
@@ -94,9 +104,22 @@ class ReferralService
             throw new \Exception('Нельзя добавить собственный аккаунт');
         }
 
-        $ownerSub = Sub::with('user')
-            ->find($owner->referral_code['group_id']);
+        $decryptedData = static::getReferralDataFromCode(code: $code);
 
-        AttachReferral::execute($user, $ownerSub);
+        AttachReferral::execute(
+            referralSub: $user->subs()->first(),
+            ownerSub: Sub::with('user')->find($decryptedData['group_id']),
+            referralPercent: $decryptedData['referral_percent'],
+        );
+    }
+
+    public static function generateReferralCode(int $subGroupId): string
+    {
+        return base64_encode(json_encode(['group_id' => $subGroupId, 'referral_percent' => 0.8]));
+    }
+
+    public static function getReferralDataFromCode(string $code): array
+    {
+        return json_decode(base64_encode($code), true);
     }
 }

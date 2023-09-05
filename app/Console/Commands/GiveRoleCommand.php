@@ -14,7 +14,9 @@ class GiveRoleCommand extends Command
 
     public function handle(): void
     {
-        $roles = Role::all();
+
+
+/*        $roles = Role::all();
 
         $roleName = $this
             ->choice(
@@ -27,7 +29,6 @@ class GiveRoleCommand extends Command
             $user = User::where('name', $userCredential)
                 ->orWhere('email', $userCredential)
                 ->first();
-
 
             if ($user) {
                 if ($user->hasRole($roleName)) {
@@ -45,6 +46,6 @@ class GiveRoleCommand extends Command
             } else {
                 $this->error('ERROR: USER NOT FOUND');
             }
-        }
+        }*/
     }
 }

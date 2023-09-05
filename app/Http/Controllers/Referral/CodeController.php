@@ -14,18 +14,19 @@ class CodeController extends Controller
 {
     public function __invoke(User $user, Request $request): JsonResponse
     {
-        $result = ReferralService::generateCode(user: $user, groupId: $request->group_id);
+        try {
+            $code = ReferralService::generateCode(user: $user, groupId: (int) $request->group_id);
 
-        if (!$result) {
+            return new JsonResponse([
+                'success' => true,
+                'message' => 'Реферальный код успешно создан',
+                'referral_url' => route('page', 'registration?referral_code=' . $code),
+            ]);
+        } catch (\Exception $e) {
             return new JsonResponse([
                 'success' => false,
-                'message' => 'Ошибка создания кода'
+                'message' => $e->getMessage()
             ], 403);
         }
-
-        return new JsonResponse([
-            'success' => true,
-            'message' => 'Реферальный код успешно создан'
-        ]);
     }
 }

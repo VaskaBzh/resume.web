@@ -8,11 +8,8 @@ use App\Dto\ReferralData;
 
 class GenerateReferralCode
 {
-    public static function execute(ReferralData $referralData): bool
+    public static function execute(ReferralData $referralData)
     {
-        return $referralData->user->update([
-            'referral_code->group_id' => $referralData->group_id,
-            'referral_code->code' => $referralData->code,
-        ]);
+        $referralData->user->update(['referral_code' => $referralData->code]);
     }
 }
