@@ -4,17 +4,31 @@
         v-scroll="'opacity transition--fast'"
         v-show="!killPreloaderCondition"
     >
-        <div class="preloader__wrap">
-            <div class="preloader_icon">
-                <preloader-circle-icon class="preloader_circle" id="preloader_circle" v-show="false" @getElement="service.setCircleElement($event)" @dropContainer="service.dropElement($event)" />
-                <preloader-end-icon class="preloader_cross" id="preloader_cross" v-show="endConditionWithoutSlots" />
-                <preloader-line-icon v-show="false" @getElement="service.setLineElement($event)" @dropContainer="service.dropElement($event)" />
-                <preloader-logo-icon class="preloader_logo" id="preloader_logo" v-show="!endConditionWithoutSlots" />
+        <div class="preloader__wrap" :class="{ 'preloader__wrap-no-info': crossVisible }">
+            <div class="preloader__icon">
+                <preloader-end-icon
+                    class="preloader_cross"
+                    id="preloader_cross"
+                    @getCross="service.setCross($event)"
+                    v-show="crossVisible"
+                />
+                <preloader-logo-icon
+                    class="preloader_logo"
+                    id="preloader_logo"
+                    :class="{ 'preloader_logo-center': endConditionWithoutSlots }"
+                />
 
-                <preloader-container-icon class="preloader_icon-custom" @getPolygon="service.setPolygon($event)" @getContainer="service.setContainerElement($event)" />
+                <preloader-container-icon
+                    class="preloader__icon-custom"
+                    @getPolygon="service.setPolygon($event)"
+                />
             </div>
 
-            <span class="preloader_progress">{{ progressValue }}</span>
+            <transition name="progress">
+                <span class="preloader_progress" v-show="!endConditionWithoutSlots || progressVisible">
+                    {{ progressValue }}
+                </span>
+            </transition>
         </div>
     </div>
     <!--        class="no-info no-bg"-->
@@ -31,9 +45,7 @@
 </template>
 
 <script>
-import PreloaderCircleIcon from "../icons/PreloaderCircleIcon.vue";
 import PreloaderEndIcon from "../icons/PreloaderEndIcon.vue";
-import PreloaderLineIcon from "../icons/PreloaderLineIcon.vue";
 import PreloaderLogoIcon from "../icons/PreloaderLogoIcon.vue";
 
 import { PreloaderService } from "../services/PreloaderService";
@@ -55,25 +67,25 @@ export default {
     },
     computed: {
         endConditionWithoutSlots() {
-            return !this.wait && this.empty && Object.entries(this.$slots).length === 0;
+            return !this.wait && this.empty;
         },
         killPreloaderCondition() {
             return !this.wait && !this.empty && this.end;
         },
         progressValue() {
-            return this.endConditionWithoutSlots ? this.$t('no_info') : `${this.service.progressPercentage}%`;
+            return this.progressVisible ? this.$t('no_info') : `${this.service.progressPercentage}%`;
         },
     },
     components: {
-        PreloaderCircleIcon,
         PreloaderEndIcon,
-        PreloaderLineIcon,
         PreloaderLogoIcon,
         PreloaderContainerIcon,
     },
     data() {
         return {
             service: new PreloaderService(),
+            crossVisible: false,
+            progressVisible: false,
         };
     },
     watch: {
@@ -83,6 +95,13 @@ export default {
         progressPercentage() {
             this.service.slowProcess();
         },
+        'service.crossVisible.value'() {
+            this.crossVisible = true;
+
+            setTimeout(() => {
+                this.progressVisible = true;
+            }, 1000)
+        }
     },
     mounted() {
         this.service.startProcess(this.interval);
@@ -101,26 +120,74 @@ export default {
     &__wrap {
         width: 150px;
         height: 190px;
+        transition: all 0.8s ease 0s;
         position: relative;
-    }
-    &_icon {
-        &-custom {
-            position: relative;
-            overflow: visible;
-            margin-top: 75px;
+        display: flex;
+        &-no-info {
+            .preloader {
+                &__icon {
+                    margin: 0;
+                }
+                &_progress {
+                    bottom: 0;
+                }
+            }
         }
+    }
+    &_logo {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transition: all 0.8s ease 0s;
+        transform: translate(-50%, -50%);
+        &-center {
+            top: 50%;
+        }
+    }
+    &__icon {
+        position: relative;
+        height: 150px;
+        width: 100%;
+        margin: 20px 0 0;
+        transition: all 0.5s ease 0s;
+        &-custom {
+            overflow: visible;
+        }
+    }
+    &_cross {
+        position: absolute;
+        bottom: -6px;
+        right: 34px;
     }
     &_progress {
         color: #4066B5;
         font-size: 18px;
         font-weight: 700;
         line-height: 24px;
+        position: absolute;
+        bottom: 40px;
+        left: 50%;
+        transform: translateX(-50%);
+        transition: top 0.8s ease 0s;
+        white-space: nowrap;
+        &.progress {
+            &-enter-active {
+                transition: opacity 0.8s ease 0s, top 0.8s ease 0s;
+            }
+            &-leave-active {
+                transition: opacity 0.2s ease 0s, top 0.8s ease 0s;
+            }
+            &-enter-from,
+            &-leave-to {
+                opacity: 0;
+            }
+        }
     }
-    &_line {
+    &_polygon {
         position: absolute;
         left: 0;
         top: 100%;
-        transform-origin: center top;
+        transform-origin: center center;
     }
 }
 </style>

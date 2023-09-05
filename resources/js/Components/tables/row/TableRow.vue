@@ -132,7 +132,6 @@ export default {
         color: #343434;
         white-space: nowrap;
         // text-align: center;
-        pointer-events: none;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
