@@ -1,18 +1,21 @@
 import anime from "animejs/lib/anime.es.js";
+import { ref } from "vue";
 
 export class PreloaderService {
     constructor() {
         this.progressPercentage = 0;
         this.interval = null;
 
+        this.endTable = false;
+        this.resizeEnd = false;
+        this.crossVisible = ref(false);
+
         this.animate = null;
 
         this.lineColor = '#4282EC';
-        this.iconContainer = null;
 
-        this.preloaderLine = null;
-        this.preloaderCircle = null;
         this.polygon = null;
+        this.cross = null;
     }
 
     killInterval() {
@@ -32,6 +35,7 @@ export class PreloaderService {
         }, intervalMillisecondsTime);
 
         this.animateLine();
+        this.animateLineResize()
     }
 
     slowProcess() {
@@ -51,7 +55,7 @@ export class PreloaderService {
 
     endProcess(endValue) {
         if (endValue) {
-            this.animateCloseLine();
+            this.endAnimation();
             this.killInterval();
             this.killProcess();
         }
@@ -73,93 +77,89 @@ export class PreloaderService {
         }, intervalMillisecondsTime);
     }
 
-    setContainerElement(containerElem) {
-        this.iconContainer = containerElem;
-    }
-
-    setLineElement(containerElem) {
-        this.preloaderLine = containerElem;
-    }
-
-    setCircleElement(containerElem) {
-        this.preloaderCircle = containerElem;
-    }
-
-    dropElement(element) {
-        element.remove();
-    }
-
     setPolygon(element) {
         this.polygon = element;
     }
 
-    getPath(element) {
-        return element.getAttribute("d");
+    setCross(element) {
+        this.cross = element;
     }
 
-    convertPath(element) {
-        const length = element.getTotalLength();
-        const svgPoint = element.getPointAtLength(0);
-        let str = svgPoint.x + " " + svgPoint.y;
+    makeCrossVisible() {
+        this.crossVisible.value = true;
+    }
 
-        for (let i = 1; i < length; i++) {
-            const svgPoint = element.getPointAtLength(i);
-            str += " " + svgPoint.x + " " + svgPoint.y;
-        }
+    animateLineResize() {
+        this.animateResize = anime(
+            {
+                targets: this.polygon,
+                strokeDashoffset: [-890, -1247],
+                duration: 1600,
+                loop: true,
+                easing: 'easeInOutSine',
+                direction: 'alternate',
+                update: (anim) => {
+                    if (this.endTable && Math.round(anim.progress) === 0) {
+                        this.animateResize.remove(this.polygon);
 
-        return str;
+                        this.resizeEnd = true;
+                    }
+                }
+            }
+        );
     }
 
     animateLine() {
-        const lastPath = this.convertPath(this.preloaderLine);
-
-        this.polygon.setAttribute('points', lastPath);
-
-        // this.animate = anime({
-        //     targets: '#polygon',
-        //     points: [
-        //         { value: [
-        //                 '0 0 0 0 0 0 0 0 0 0 0 0',
-        //                 lastPath
-        //             ]
-        //         },
-        //     ],
-        //     easing: 'easeOutQuad',
-        //     duration: 2000,
-        // });
-        //
-        // this.animate.remove("#polygon");
-
         this.animate = anime(
             {
-                targets: '#polygon',
+                targets: this.polygon,
                 rotate: 720,
-                duration: 3500,
+                duration: 2500,
                 loop: true,
-                easing: 'easeOutExpo'
+                easing: 'linear',
+                changeComplete: (anim) => {
+                    if (this.endTable && this.resizeEnd) {
+                        this.animateCloseLine();
+
+                        this.animate.remove(this.polygon);
+                    }
+                }
             }
         );
     }
 
     animateCloseLine = () => {
-        const firstPath = this.convertPath(this.preloaderLine);
-        const lastPath = this.convertPath(this.preloaderCircle);
-
         anime({
-            targets: '#polygon',
-            points: [
-                { value: [
-                        firstPath,
-                        lastPath
-                    ]
-                },
-            ],
-            easing: 'easeOutQuad',
-            duration: 2000,
+            targets: this.polygon,
+            strokeDashoffset: [-890, -1247],
+            easing: 'easeInOutSine',
+            duration: 1000,
+            begin: (anim) => {
+                this.animateCross();
+            }
         });
     }
 
-    animateCross() {
+    endAnimation() {
+        this.endTable = true;
+    }
 
+    animateCross = () => {
+        this.makeCrossVisible();
+
+
+        // anime({
+        //     targets: this.cross.left,
+        //     strokeDashoffset: [-128, 0],
+        //     easing: 'easeInOutSine',
+        //     duration: 800,
+        // });
+        anime({
+            targets: this.cross.querySelectorAll('rect'),
+            easing: 'linear',
+            duration: 300,
+            height: 33.361,
+            delay: anime.stagger(400)
+        });
     }
 }

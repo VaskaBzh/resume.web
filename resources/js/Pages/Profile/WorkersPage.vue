@@ -31,7 +31,7 @@
             <wrap-table
                 :table="worker_service.table"
                 :key="getActive"
-                :wait="!worker_service.rows?.length > 0"
+                :wait="worker_service.waitWorkers"
                 :empty="worker_service.table?.get('rows')"
                 :worker_service="worker_service"
                 :rowsVal="1000"
@@ -65,7 +65,7 @@ export default {
             workersInActive: 0,
             workersDead: 0,
             viewportWidth: 0,
-            worker_service: {},
+            worker_service: new WorkerService(this.$t, [0, 1, 3, 4]),
         };
     },
     watch: {
@@ -75,8 +75,6 @@ export default {
     },
     methods: {
         async initWorkers() {
-            this.worker_service = new WorkerService(this.$t, [0, 1, 3, 4]);
-
             await this.worker_service.fillTable();
         },
         handleResize() {
