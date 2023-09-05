@@ -9,6 +9,7 @@ use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
 use App\Models\Sub;
 use App\Models\User;
+use App\Repositories\UserRepository;
 use App\Services\External\BtcComService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
@@ -65,31 +66,14 @@ class ReferralService
                 'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
                 'referral_inactive_workers_count' => $referralSubCollection->sum('workers_count_in_active'),
                 'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
-                'total_amount' => DB::table('incomes')
-                    ->where('referral_id', $user->pivot->id)
-                    ->sum('daily_amount')
+                'total_amount' => resolve(UserRepository::class)->getTotalIncomesTotalAmount($user->pivot->id)
             ];
         });
     }
 
-    public static function getReferralIncomeCollection(int $groupId, int $perPage = 15): LengthAwarePaginator
+    public static function getReferralIncomes(int $groupId, int $perPage): LengthAwarePaginator
     {
-        return DB::table('referrals')
-            ->where('referrals.group_id', $groupId)
-            ->join('incomes', 'referrals.id', 'incomes.referral_id')
-            ->join('users', 'referrals.user_id', 'users.id')
-            ->join('subs', 'referrals.user_id', 'subs.user_id')
-            ->join('workers', 'subs.group_id', 'workers.group_id')
-            ->selectRaw(
-                'users.email,
-                incomes.daily_amount,
-                incomes.hash,
-                incomes.created_at,
-                count(workers.id) as worker_count'
-            )
-            ->groupBy('incomes.id')
-            ->latest()
-            ->paginate($perPage);
+        return resolve(UserRepository::class)->getReferralIncomeCollection($groupId, $perPage);
     }
 
     public static function attach(User $user, string $code): void

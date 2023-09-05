@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::group([
         'prefix' => 'profile'
     ], function () {
-        Route::redirect('', 'statistic');
+        Route::redirect('', 'profile/statistic');
         Route::get('/referral', ShowReferralController::class)
             ->middleware('role:referral')
             ->name('referral.page');

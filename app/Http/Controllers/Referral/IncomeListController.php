@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Referral;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Repositories\UserRepository;
+use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,8 +16,7 @@ class IncomeListController extends Controller
 {
     public function __invoke(
         User $user,
-        Request $request,
-        UserRepository $userRepository
+        Request $request
     )
     {
         if (!$user->referral_code) {
@@ -25,8 +25,6 @@ class IncomeListController extends Controller
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
-        return $userRepository
-            ->getReferralIncomeCollection($user->referral_code['group_id'])
-            ->paginate($request->per_page ?? 15);
+        return ReferralService::getReferralIncomes($user->subs()->first()->group_id, 15);
     }
 }
