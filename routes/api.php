@@ -36,7 +36,6 @@ Route::group([
     Route::post('/generate/{user}', CodeController::class)->name('code');
     Route::get('/statistic/{user}', StatisticReferralController::class)->name('referral.show');
     Route::get('{user}', ReferralListController::class)->name('referral.list');
-    Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
 });
 
