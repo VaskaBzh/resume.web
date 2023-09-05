@@ -30,9 +30,9 @@
 
             <wrap-table
                 :table="worker_service.table"
-                :key="getActive"
+                :key="changedActive"
                 :wait="worker_service.waitWorkers"
-                :empty="worker_service.table?.get('rows')"
+                :empty="worker_service.rows"
                 :worker_service="worker_service"
                 :rowsVal="1000"
             />
@@ -65,11 +65,13 @@ export default {
             workersInActive: 0,
             workersDead: 0,
             viewportWidth: 0,
+            changedActive: -1,
             worker_service: new WorkerService(this.$t, [0, 1, 3, 4]),
         };
     },
     watch: {
-        getActive() {
+        getActive(newActive, oldActive) {
+            this.changedActive = oldActive === -1 ? -1 : newActive
             this.initWorkers();
         },
     },
@@ -112,10 +114,12 @@ export default {
     },
     mounted() {
         this.initWorkers();
+
         document.title = this.$t("header.links.workers");
     },
     created() {
         window.addEventListener("resize", this.handleResize);
+
         this.handleResize();
     },
 };
