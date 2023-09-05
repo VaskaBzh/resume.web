@@ -20,14 +20,6 @@
                     <!--                        @clicked="settingsService.setClearProfit($event)"-->
                     <!--                        :currency="true"-->
                     <!--                    />-->
-                    <settings-block
-                        :title="$t('cards.referral.title')"
-                        :placeholder="$t('cards.referral.placeholder')"
-                        :button="$t('cards.referral.button')"
-                        :value="settingsService.userData.code"
-                        :disabled="!!settingsService.userData.code"
-                        @clicked="settingsService.setReferral($event)"
-                    />
                 </div>
             </div>
         </div>
@@ -74,14 +66,12 @@ export default {
         message: String,
         user: Object,
         auth_user: Boolean,
-        referral_code: String,
     },
     data() {
         return {
             settingsService: new SettingsService(
                 this.$t,
-                this.user,
-                this.referral_code
+                this.user
             ),
             is_checked: true,
             notification: true,
@@ -97,9 +87,6 @@ export default {
         user(newUserProp) {
             this.settingsService.setUser(newUserProp);
             this.settingsService.setUserData();
-        },
-        referral_code(newCode) {
-            this.settingsService.setCode(newCode);
         },
     },
     methods: {

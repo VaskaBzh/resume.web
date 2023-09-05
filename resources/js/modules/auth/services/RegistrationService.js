@@ -16,11 +16,19 @@ export class RegistrationService {
     setForm() {
         const { props } = usePage();
 
-        this.form = useForm({
-            ...new FormData("", "", "", "", "", false),
-            _token: props.token,
+        const referral_code = this.getReferralCode(window.location.search);
 
+        this.form = useForm({
+            ...new FormData("", "", "", "", referral_code, false),
+            _token: props.token,
         });
+    }
+
+
+    getReferralCode(page) {
+        const ulrParams = new URLSearchParams(page);
+
+        return ulrParams.get('referral_code');
     }
 
     async account_create() {

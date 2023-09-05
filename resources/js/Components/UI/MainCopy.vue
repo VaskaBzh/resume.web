@@ -29,10 +29,12 @@ export default {
         };
     },
     computed: {
-        catedCode() {
-            return this.code.length >= 16
-                ? `${this.code.substr(0, 16)}...`
-                : this.code;
+        cuttedCode() {
+            if (this.code)
+                return this.code.length >= 16
+                    ? `${this.code.substr(0, 16)}...`
+                    : this.code;
+            return "...";
         }
     },
     methods: {
