@@ -2,7 +2,7 @@
     <div
         class="preloader cabinet__block cabinet__block-light"
         v-scroll="'opacity transition--fast'"
-        v-show="!killPreloaderCondition"
+        v-if="!killPreloaderCondition"
     >
         <div class="preloader__wrap" :class="{ 'preloader__wrap-no-info': crossVisible }">
             <div class="preloader__icon">
