@@ -7,7 +7,7 @@ up: down
 down:
 	docker-compose down
 restart: down up
-build: install composer npm key
+build: install composer npm key migrate front
 install:
 	cp .env.example .env || true
 	docker-compose build
@@ -40,6 +40,7 @@ clear:
 tinker:
 	$(ARTISAN) tinker
 test:
+	$(ARTISAN) config:clear
 	$(ARTISAN) test --env=testing
 remote_test:
 	ssh mainuser@92.205.188.112
