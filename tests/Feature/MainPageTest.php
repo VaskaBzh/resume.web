@@ -18,4 +18,6 @@ class MainPageTest extends TestCase
         $minerstats = MinerStat::factory()->create();
         $this->assertDatabaseHas('miner_stats', ['id' => $minerstats->only('id')]);
     }
+
+
 }
