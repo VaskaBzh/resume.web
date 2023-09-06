@@ -19,7 +19,7 @@ class ShowController extends Controller
         }
 
         $user = auth()->user();
-        
+
         return Inertia::render(
             component: Arr::get(config('inertia.components.profile.referral'), $query, 'ErrorPage'),
             props: [
