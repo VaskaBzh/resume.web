@@ -61,18 +61,18 @@
                     "
                 />
             </div>
-            <auth-input
-                :error="service.errors.referral_code"
-                :model="service.form.referral_code"
-                :placeholder="this.$t('auth.reg.placeholders[4]')"
-                name="email"
-                type="text"
-                @change="
-                    service.form.referral_code = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
-            />
+<!--            <auth-input-->
+<!--                :error="service.errors.referral_code"-->
+<!--                :model="service.form.referral_code"-->
+<!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
+<!--                name="email"-->
+<!--                type="text"-->
+<!--                @change="-->
+<!--                    service.form.referral_code = !!$event.target-->
+<!--                        ? $event.target.value-->
+<!--                        : $event-->
+<!--                "-->
+<!--            />-->
         </div>
         <input
             class="form-auth_checkbox"

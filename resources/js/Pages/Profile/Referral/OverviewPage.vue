@@ -106,10 +106,6 @@ export default {
                 await this.service.getSelectAccounts();
             }
         },
-        user(newUserProp) {
-            this.service.setUser(newUserProp);
-            this.service.setCode();
-        },
     },
     async mounted() {
         this.service.getGradeList();

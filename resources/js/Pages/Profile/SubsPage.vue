@@ -34,11 +34,11 @@
                     :accountInfo="account"
                 />
             </div>
-            <no-info
+            <main-preloader
                 :wait="waitAccounts"
                 :interval="50"
                 :end="endAccounts"
-            ></no-info>
+            />
         </div>
         <!--        <teleport to="body">-->
         <!--            <main-popup-->
@@ -99,7 +99,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 import { ref } from "vue";
 
@@ -110,7 +110,7 @@ export default {
         Head,
         MainPopup,
         BlueButton,
-        NoInfo,
+        MainPreloader,
     },
     layout: profileLayoutView,
     props: ["errors", "message", "user", "auth_user"],
@@ -162,7 +162,7 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
-        &.no-info {
+        &.preloader {
             display: flex;
         }
         @media (max-width: 1320.98px) {

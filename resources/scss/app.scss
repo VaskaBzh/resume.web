@@ -41,9 +41,6 @@
 @import "./templates/input";
 @import "./templates/search";
 @import "./templates/form";
-@import "./templates/no-info";
-@import "./templates/propeller";
-@import "./templates/preloader";
 @import "./templates/shadow";
 @import "./templates/password";
 
@@ -440,14 +437,14 @@ h6 {
     }
 }
 .statistic {
-    .no-info {
+    .preloader {
         margin-bottom: 40px;
         @media (max-width: $mobile) {
             margin-bottom: 32px;
         }
     }
     .cabinet {
-        .no-info {
+        .preloader {
             margin-bottom: 0;
         }
     }

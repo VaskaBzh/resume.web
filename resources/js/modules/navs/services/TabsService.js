@@ -1,13 +1,14 @@
-import {TabsData} from "../DTO/TabsData";
-import {router} from "@inertiajs/vue3";
+import { TabsData } from "../DTO/TabsData";
+import { router } from "@inertiajs/vue3";
 
 export class TabsService {
     constructor() {
         this.links = [];
     }
 
-    setLinks() {
+    setLinks(hasReferralRole) {
         this.links = [
+            ...this.links,
             new TabsData("/profile/statistic", "statistic", "statistic"),
             new TabsData("/profile/income", "income", "income"),
             new TabsData("/profile/wallets", "wallets", "wallets"),
@@ -18,8 +19,21 @@ export class TabsService {
                 "connecting",
                 "connecting"
             ),
-            new TabsData("/profile/referral", "referral", "referral"),
         ];
+
+        if (hasReferralRole)
+            this.setReferralTab();
+    }
+
+    setReferralTab() {
+        this.links = [
+            ...this.links,
+            new TabsData("/profile/referral", "referral", "referral"),
+        ]
+    }
+
+    dropLinks() {
+        this.links = [];
     }
 
     back() {

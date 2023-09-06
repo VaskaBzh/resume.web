@@ -57,9 +57,6 @@ export default {
         };
     },
     watch: {
-        graph() {
-            console.log(this.graph);
-        },
         viewportWidth() {
             this.height = this.getHeight;
         },

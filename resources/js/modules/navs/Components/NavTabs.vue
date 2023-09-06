@@ -49,7 +49,7 @@
     </div>
 </template>
 <script>
-import { Link } from "@inertiajs/vue3";
+import {Link, usePage} from "@inertiajs/vue3";
 import { TabsService } from "../services/TabsService";
 
 export default {
@@ -70,9 +70,17 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
+        setLinks() {
+            const { props } = usePage();
+
+            this.service.setLinks(props.has_referral_role);
+        }
     },
     mounted() {
-        this.service.setLinks();
+        this.setLinks();
+    },
+    unmounted() {
+        this.service.dropLinks();
     },
     computed: {
         fullPage() {
