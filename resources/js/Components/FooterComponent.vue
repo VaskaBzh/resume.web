@@ -2,14 +2,14 @@
     <blue-button
         class="feedback"
         :data-popup="{
-            '#feedback': !this.$page.url.startsWith('/profile'),
+            '#feedback': !useRoute().fullPath.startsWith('/profile'),
         }"
     >
         <a
             class="all-link"
             target="_blank"
             :href="
-                this.$page.url.startsWith('/profile')
+                useRoute().fullPath.startsWith('/profile')
                     ? 'https://t.me/allbtc_support'
                     : '#'
             "
@@ -19,7 +19,7 @@
     <teleport to="body">
         <main-popup
             id="feedback"
-            v-show="!this.$page.url.startsWith('/profile')"
+            v-show="!useRoute().fullPath.startsWith('/profile')"
             :wait="this.wait"
             :errors="errors"
         >
@@ -75,7 +75,7 @@
         <div class="footer__main">
             <div class="footer__row">
                 <div class="footer__social_con">
-                    <a href="/">
+                    <router-link :to="{ name: 'default' }">
                         <img
                             class="nav__logo"
                             v-if="!getTheme"
@@ -88,7 +88,7 @@
                             src="../../assets/img/logo_high_quality-dark.svg"
                             alt="logo"
                         />
-                    </a>
+                    </router-link>
                     <div class="footer__social socials">
                         <a
                             target="_blank"
@@ -271,9 +271,11 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
+import {useRoute} from "vue-router";
 
 export default {
     name: "footer-component",
+    methods: {useRoute},
     components: { MainTitle, MainPopup, BlueButton },
     props: {
         errors: Object,
@@ -294,7 +296,6 @@ export default {
         let form = useForm({
             message: "",
             contacts: "",
-            _token: props.token,
         });
 
         const sendFeedback = async () => {

@@ -23,10 +23,10 @@
                 />
             </svg>
         </a>
-        <Link
+        <router-link
             v-for="(link, i) in links"
             :key="i"
-            :href="link.url"
+            :to="link.url"
             :class="{
                 burger_link: this.viewportWidth < 991.98,
                 'router-link-active': $page.url.startsWith(
@@ -45,12 +45,13 @@
             ></svg>
 
             {{ $t(`tabs.${link.name}`) }}
-        </Link>
+        </router-link>
     </div>
 </template>
 <script>
 import { Link } from "@inertiajs/vue3";
 import { TabsService } from "../services/TabsService";
+import {useRoute} from "vue-router";
 
 export default {
     components: {
@@ -76,7 +77,7 @@ export default {
     },
     computed: {
         fullPage() {
-            const pageArr = this.$page.url.split("/");
+            const pageArr = useRoute().fullPath.split("/");
             const fullPages = ["income", "settings", "wallets"];
             return fullPages.find(
                 (page) => page === pageArr[pageArr.length - 1]

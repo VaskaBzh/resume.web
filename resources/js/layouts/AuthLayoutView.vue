@@ -17,7 +17,7 @@
                 <div class="page__container">
                     <div class="auth__main">
                         <div class="page__content">
-                            <Link :href="route('home')">
+                            <router-link :to="{ name: 'home' }">
                                 <img
                                     v-show="!isDark"
                                     src="../../assets/img/logo_high_quality-lg.svg"
@@ -28,7 +28,7 @@
                                     src="../../assets/img/logo_high_quality-lg-dark.svg"
                                     alt="logo"
                                 />
-                            </Link>
+                            </router-link>
                             <keep-alive>
                                 <slot :errors="errors"></slot>
                             </keep-alive>

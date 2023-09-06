@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import calculatorLayoutView from "../Shared/CalculatorLayoutView.vue";
+import calculatorLayoutView from "../layouts/CalculatorLayoutView.vue";
 import FirstCalculatorView from "../modules/calculator/Components/views/FirstCalculatorView.vue";
 import StatsCalculatorView from "../modules/calculator/Components/views/StatsCalculatorView.vue";
 import LightCalculatorView from "../modules/calculator/Components/views/LightCalculatorView.vue";

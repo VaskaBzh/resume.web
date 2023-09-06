@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="nav__container">
-            <Link :href="route('home')">
+            <router-link :to="{ name: 'home' }">
                 <img
                     v-if="!getTheme"
                     class="nav__logo"
@@ -14,7 +14,7 @@
                     src="../../assets/img/logo_high_quality-dark.svg"
                     alt="logo"
                 />
-            </Link>
+            </router-link>
 
             <nav-links
                 @closed="burgerClose"
@@ -42,20 +42,20 @@
                 v-if="!!user && accountLink && viewportWidth >= 991.78"
                 class="nav__button"
             ></account-menu>
-            <Link
-                :href="route('page', { page: 'login' })"
+            <router-link
+                :to="{ name: 'login' }"
                 v-show="viewportWidth >= 991.98 && !user?.name"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}
-            </Link>
-            <Link
-                href="/profile"
+            </router-link>
+            <router-link
+                :to="{ name: 'statistic' }"
                 v-show="viewportWidth >= 991.98 && !accountLink && !!user?.name"
                 class="nav__button"
             >
                 {{ $t("header.login_button") }}
-            </Link>
+            </router-link>
 
             <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
                 <select-language
@@ -93,6 +93,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import {mapGetters} from "vuex";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
+import {useRoute} from "vue-router";
 
 export default defineComponent({
     components: {
@@ -150,9 +151,9 @@ export default defineComponent({
     computed: {
         ...mapGetters(["getIncome", "allAccounts", "getActive", "getTheme"]),
         accountLink() {
-            let url = this.$page.url.startsWith("http")
-                ? new URL(this.$page.url).pathname
-                : this.$page.url;
+            let url = useRoute().fullPath.startsWith("http")
+                ? new URL(useRoute().fullPath).pathname
+                : useRoute().fullPath;
             return url.startsWith("/profile");
         },
     },

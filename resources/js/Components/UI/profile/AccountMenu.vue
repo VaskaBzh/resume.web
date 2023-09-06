@@ -52,7 +52,7 @@
                 </a>
             </div>
             <div class="button__row" v-if="viewportWidth >= 991.98">
-                <Link class="settings" href='/profile/settings'
+                <router-link class="settings" :to="{ name: 'settings' }"
                     ><svg
                         width="16"
                         height="17"
@@ -65,7 +65,7 @@
                         />
                     </svg>
 
-                    {{ $t("header.menu.acc_admin.settings") }}</Link
+                    {{ $t("header.menu.acc_admin.settings") }}</router-link
                 >
             </div>
             <div class="button__row">
@@ -138,13 +138,13 @@
 <script>
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { mapGetters } from "vuex";
-import { Link, router, useForm, usePage } from "@inertiajs/vue3";
-import { Inertia } from "@inertiajs/inertia";
+import { router, useForm, usePage } from "@inertiajs/vue3";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import store from "../../../store";
 import { ref } from "vue";
+import { useRoute } from 'vue-router';
 
 export default {
     name: "account-menu",
@@ -153,7 +153,6 @@ export default {
         MainPopup,
         BlueButton,
         MainRadio,
-        Link,
     },
     props: {
         user: {
@@ -263,7 +262,7 @@ export default {
         accounts() {
             this.change_height();
         },
-        "$page.url"(newUrl) {
+        "useRoute().fullPath"(newUrl) {
             if (newUrl.startsWith("/profile/accounts") && this.linkAddClicked) {
                 this.linkAddClicked = false;
                 setTimeout(() => {
@@ -277,8 +276,8 @@ export default {
     },
     methods: {
         async openAddPopup() {
-            if (!this.$page.url.startsWith("/profile/accounts")) {
-                await router.visit("/profile/accounts");
+            if (useRoute().currentRoute.value.path !== "/profile/accounts") {
+                await useRoute().push({ name: 'accounts' });
 
                 setTimeout(() => {
                     this.$refs.input.focus();

@@ -14,13 +14,10 @@ export class RegistrationService {
     }
 
     setForm() {
-        const { props } = usePage();
-
         const referral_code = this.getReferralCode(window.location.search);
 
         this.form = useForm({
             ...new FormData("", "", "", "", referral_code, false),
-            _token: props.token,
         });
     }
 

@@ -22,16 +22,16 @@
                 ></account-menu>
                 <div class="nav__column" v-show="!is_auth">
                     <blue-button class="button button-md button-light">
-                        <Link :href="route('page', { page: 'login' })" class="all-link">
+                        <router-link :to="{ name: 'login' }" class="all-link">
                             {{ $t("header.login.buttons.login") }}
-                        </Link>
+                        </router-link>
                     </blue-button>
                     <blue-button
                         class="button button-md button-reverce button-reverce-border"
                     >
-                        <Link :href="route('page', { page: 'registration' })" class="all-link">
+                        <router-link :to="{ name: 'registration' }" class="all-link">
                             {{ $t("header.login.buttons.registration") }}
-                        </Link>
+                        </router-link>
                     </blue-button>
                 </div>
             </div>

@@ -1,5 +1,4 @@
 <template>
-    <Head title="Хостингам" />
     <div class="hosting section">
         <div class="hosting__container">
             <div class="hosting__main page__main">
@@ -18,19 +17,19 @@
                         class="button button-lg button-with-propeller"
                         v-if="this.auth_user"
                     >
-                        <Link href="/profile/accounts" class="all-link">
+                        <router-link :to="{ name: 'accounts' }" class="all-link">
                             {{ $t("hosting.button") }}
                             <div class="button_propeller"></div
-                        ></Link>
+                        ></router-link>
                     </blue-button>
                     <blue-button
                         class="button button-lg button-with-propeller"
                         v-else
                     >
-                        <Link :href="route('page', { page: 'registration' })" class="all-link">
+                        <router-link :to="{ name: 'registration' }" class="all-link">
                             {{ $t("hosting.button") }}
                             <div class="button_propeller"></div
-                        ></Link>
+                        ></router-link>
                     </blue-button>
                 </div>
                 <div class="hosting__image page__image">
@@ -74,7 +73,6 @@
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import { Link, Head } from "@inertiajs/vue3";
 import InfoView from "@/Components/technical/views/InfoView.vue";
 import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import ProfitView from "@/Components/technical/views/ProfitView.vue";
@@ -103,8 +101,6 @@ export default {
         InterfaceView,
         SikkerView,
         ControlView,
-        Link,
-        Head,
         SwiperSlide,
         InfoCard,
     },
