@@ -2,7 +2,6 @@ import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
-import { router } from "@inertiajs/vue3";
 
 export class CabinetService {
     constructor(user, translate) {
@@ -58,8 +57,6 @@ export class CabinetService {
             });
 
             this.sendMessage(result.data.message);
-
-            router.reload();
         } catch (err) {
             this.sendMessage(err.response.data.message);
         }
@@ -67,12 +64,8 @@ export class CabinetService {
         await this.index();
     }
 
-    setUser(user) {
-        this.user = user;
-    }
-
-    setCode() {
-        this.code = this.user.referral_code?.code || "...";
+    setCode(code) {
+        this.code = code;
     }
 
     setActiveSub(group_id) {
@@ -90,6 +83,8 @@ export class CabinetService {
         }
 
         const result = response?.data || response;
+
+        this.setCode(result.code || "...");
 
         this.setActiveSub(result.group_id);
 

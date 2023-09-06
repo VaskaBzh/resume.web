@@ -7,6 +7,7 @@ import { workerHashrateData } from "@/DTO/workerHashrateData";
 export class WorkerService {
     constructor(translate, titles) {
         this.group_id = store.getters.getActive;
+        this.worker_id = -1;
         this.translate = translate;
         this.titles = this.useTranslater(titles);
         this.rows = [];
@@ -14,6 +15,7 @@ export class WorkerService {
         this.table = new Map();
 
         this.waitWorkers = true;
+        this.waitTargetWorkers = true;
         this.target_worker = {};
     }
 
@@ -41,10 +43,15 @@ export class WorkerService {
         };
     }
 
-    async fillTable() {
-        if (store.getters.getActive !== -1) {
-            await this.getList();
+    updateGroup_id() {
+        this.group_id = store.getters.getActive;
+    }
 
+    async fillTable() {
+        this.updateGroup_id();
+        await this.getList();
+
+        if (this.group_id !== -1) {
             this.table.set("titles", this.titles);
             this.table.set("rows", this.rows);
         }
@@ -71,24 +78,28 @@ export class WorkerService {
     }
 
     async getList() {
-        if (store.getters.getActive !== -1) {
+        if (this.group_id !== -1) {
             this.waitWorkers = true;
 
-            this.rows = (await this.fetchList()).data.data.map((el) => {
-                return new workerData({
-                    ...el,
+            try {
+                this.rows = (await this.fetchList()).data.data.map((el) => {
+                    return new workerData({
+                        ...el,
+                    });
                 });
-            });
 
-            this.rows.unshift(this.setFirstRow());
+                this.rows.unshift(this.setFirstRow());
 
-            this.waitWorkers = false;
+                this.waitWorkers = false;
+            } catch(e) {
+                console.error(`Error with: ${e}`)
+            }
         }
     }
 
     async getWorker() {
-        if (store.getters.getActive !== -1) {
-            this.waitWorkers = true;
+        if (this.group_id !== -1) {
+            this.waitTargetWorkers = true;
 
             Object.assign(
                 this.target_worker,
@@ -96,8 +107,6 @@ export class WorkerService {
                     ...(await this.fetchWorker()).data.data,
                 })
             );
-
-            this.waitWorkers = false;
         }
     }
 
@@ -153,6 +162,8 @@ export class WorkerService {
     }
 
     async getPopup(worker_id) {
+        this.updateGroup_id();
+
         this.worker_id = worker_id;
         await this.getWorkerGraph();
 
@@ -160,11 +171,13 @@ export class WorkerService {
 
         await this.makeFullValues();
         await this.getWorker();
+
+        this.waitTargetWorkers = false;
     }
 
     async getWorkerGraph() {
-        if (store.getters.getActive !== -1) {
-            this.waitWorkers = true;
+        if (this.group_id !== -1) {
+            this.waitTargetWorkers = true;
 
             this.workers_graph = (await this.fetchWorkerGraph()).data.data.map(
                 (el) => {
@@ -173,8 +186,6 @@ export class WorkerService {
                     });
                 }
             );
-
-            this.waitWorkers = false;
         }
     }
 }

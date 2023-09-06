@@ -12,7 +12,7 @@
                 <current-exchange-rate />
             </div>
 
-            <no-info
+            <main-preloader
                 class="cabinet"
                 :wait="waitHistory"
                 :interval="20"
@@ -40,7 +40,7 @@
                 <div
                     class="cabinet__block cabinet__block-graph cabinet__block-light"
                 >
-                    <no-info-wait
+                    <wait-preloader
                         class="no-bg"
                         :wait="hashrates.waitHashrate"
                     />
@@ -114,7 +114,7 @@
                             </li>
                         </ul>
                     </div>
-                    <no-info
+                    <main-preloader
                         :wait="waitAccounts"
                         :interval="20"
                         :end="endAccounts"
@@ -222,8 +222,8 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
-import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
-import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
@@ -237,8 +237,8 @@ export default {
         Head,
         CopyBlock,
         BtcCalculator,
-        NoInfoWait,
-        NoInfo,
+        WaitPreloader,
+        MainPreloader,
         CurrentExchangeRate,
         MainTabs,
     },
@@ -427,7 +427,7 @@ export default {
             display: flex;
             flex-direction: column;
             gap: 8px;
-            .no-info {
+            .preloader {
                 margin-bottom: 0;
             }
         }
@@ -523,7 +523,7 @@ export default {
                 width: auto;
             }
         }
-        .no-info {
+        .preloader {
             display: flex;
             align-items: center;
             justify-content: center;
