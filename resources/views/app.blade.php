@@ -9,12 +9,11 @@
     <link rel="icon" href="/favicon.ico">
     <title>All-btc mining pool</title>
 
-    @routes
     @vite([ "resources/scss/app.scss", "resources/js/app.js" ])
-    @inertiaHead
 </head>
 <body>
-@inertia
+    <div id="app">
+    </div>
 </body>
 <!-- Yandex.Metrika counter -->
     @if(config('APP_ENV') === 'production')

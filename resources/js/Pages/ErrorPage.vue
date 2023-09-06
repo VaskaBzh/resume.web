@@ -1,5 +1,5 @@
 <script>
-import layoutView from "../Shared/LayoutView.vue";
+import layoutView from "../layouts/LayoutView.vue";
 
 export default {
     name: "ErrorPage",

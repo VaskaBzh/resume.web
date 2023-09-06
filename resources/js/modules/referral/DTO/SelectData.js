@@ -1,4 +1,4 @@
-import { SelectSvgEnum } from "@/modules/referral/enums/SelectSvgEnum";
+import { SelectSvgEnum } from "@/modules/referral/map/SelectSvgEnum";
 
 export class SelectData {
     constructor(svg, text, value) {

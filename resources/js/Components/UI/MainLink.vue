@@ -1,23 +1,25 @@
 <template>
-    <Link
-        :href="link.page"
+    <router-link
+        :to="link.page"
         class="nav__link"
         :class="{
             burger_link: viewportWidth < 991.98,
-            active: $page.url === link.page,
+            active: useRoute().fullPath === link.page,
         }"
     >
         <div class="burger_link_icon" v-if="link.svg" v-html="link.svg"></div>
 
         {{ link.name }}
-    </Link>
+    </router-link>
 </template>
 
 <script>
 import { Link } from "@inertiajs/vue3";
+import { useRoute } from "vue-router";
 
 export default {
     name: "main-link",
+    methods: {useRoute},
     components: {
         Link,
     },

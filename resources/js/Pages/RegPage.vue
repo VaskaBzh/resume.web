@@ -3,11 +3,9 @@
 </template>
 
 <script>
-import authLayoutView from "@/Shared/AuthLayoutView.vue";
 import RegistrationForm from "@/modules/auth/Components/blocks/RegistrationForm.vue";
 
 export default {
-    layout: authLayoutView,
     name: "reg-page",
     props: ["errors"],
     components: {
