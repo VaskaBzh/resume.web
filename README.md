@@ -21,7 +21,7 @@ Before starting the installation, make sure you have docker and docker-compose i
 ###### make command
 
 ~~~
- sudo apt update
+sudo apt update
 ~~~
 ~~~
 sudo apt install make
