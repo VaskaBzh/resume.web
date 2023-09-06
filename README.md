@@ -1,6 +1,6 @@
 
 <div style="display: flex; justify-content: center; align-items: center; margin: 30px">
- <img src="public/build/assets/лого 2 темная тема.svg" alt="Логотип" />
+ <img src="public/logo.svg" alt="Логотип" />
 </div>
 
 Before starting the installation, make sure you have docker and docker-compose installed on your system
