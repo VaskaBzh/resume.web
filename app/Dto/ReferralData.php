@@ -10,9 +10,7 @@ readonly final class ReferralData
 {
     public function __construct(
         public User $user,
-        public int $group_id,
         public string $code,
-        public float $referralPercent,
     )
     {
     }
@@ -21,9 +19,7 @@ readonly final class ReferralData
     {
         return new self(
             user: $requestData['user'],
-            group_id: (int) $requestData['group_id'],
             code: $requestData['code'],
-            referralPercent: $requestData['referral_percent'],
         );
     }
 }

@@ -1,10 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Utils;
 
 use App\Models\MinerStat;
 use App\Models\User;
 use App\Services\External\BtcComService;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Str;
 
 class Helper
@@ -32,18 +35,5 @@ class Helper
         $total = $stats->reward_block / $earnTime;
 
         return $total + $total * (($stats->fpps_rate - $fee) / 100);
-    }
-
-    public static function generateUniqReferralCode(): string
-    {
-        $codeLength = 10;
-
-        $code = Str::random($codeLength);
-
-        if (!User::where('referral_code', $code)->first()) {
-            return $code;
-        }
-
-        return self::generateUniqReferralCode();
     }
 }

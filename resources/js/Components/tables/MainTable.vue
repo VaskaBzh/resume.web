@@ -182,7 +182,6 @@ export default {
     }
     &_column {
         position: relative;
-        pointer-events: none;
         @media (min-width: 767.98px) {
             height: 48px;
             padding-left: 16px;

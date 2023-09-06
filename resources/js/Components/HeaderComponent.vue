@@ -39,7 +39,7 @@
                 :errors="errors"
                 :viewportWidth="viewportWidth"
                 :user="user"
-                v-if="is_auth && accountLink && viewportWidth >= 991.78"
+                v-if="!!user && accountLink && viewportWidth >= 991.78"
                 class="nav__button"
             ></account-menu>
             <Link
@@ -50,7 +50,7 @@
                 {{ $t("header.login_button") }}
             </Link>
             <Link
-                href="/profile/statistic"
+                href="/profile"
                 v-show="viewportWidth >= 991.98 && !accountLink && !!user?.name"
                 class="nav__button"
             >

@@ -10,23 +10,29 @@ return [
     */
 
     'components' => [
-        'accounts' => 'Profile/SubsPage',
-        'statistic' => 'Profile/StatisticPage',
-        'connecting' => 'Profile/ConnectingPage',
-        'income' => 'Profile/IncomePage',
-        'settings' => 'Profile/SettingsPage',
-        'wallets' => 'Profile/WalletsPage',
-        'workers' => 'Profile/WorkersPage',
-        'about' => 'AboutPage',
-        'home' => 'HomePage',
-        'calculator' => 'CalculatorPage',
-        'complexity' => 'ComplexityPage',
-        'help' => 'FaqPage',
-        'hosting' => 'HostingPage',
-        'overview' => 'Profile/Referral/OverviewPage',
-        'my-referral' => 'Profile/Referral/MyReferralPage',
-        'earn-rewards' => 'Profile/Referral/EarnRewardsPage',
-        'login' => 'Auth/LoginPage',
-        'registration' => 'Auth/RegPage',
+        'public' => [
+            'about' => 'AboutPage',
+            'home' => 'HomePage',
+            'calculator' => 'CalculatorPage',
+            'complexity' => 'ComplexityPage',
+            'help' => 'FaqPage',
+            'hosting' => 'HostingPage',
+            'login' => 'Auth/LoginPage',
+            'registration' => 'Auth/RegPage',
+        ],
+        'profile' => [
+            'accounts' => 'Profile/SubsPage',
+            'statistic' => 'Profile/StatisticPage',
+            'connecting' => 'Profile/ConnectingPage',
+            'income' => 'Profile/IncomePage',
+            'settings' => 'Profile/SettingsPage',
+            'wallets' => 'Profile/WalletsPage',
+            'workers' => 'Profile/WorkersPage',
+            'referral' => [
+                'overview' => 'Profile/Referral/OverviewPage',
+                'my-referral' => 'Profile/Referral/MyReferralPage',
+                'earn-rewards' => 'Profile/Referral/EarnRewardsPage',
+            ]
+        ]
     ]
 ];

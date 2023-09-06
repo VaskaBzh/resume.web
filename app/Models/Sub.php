@@ -61,8 +61,7 @@ class Sub extends Model
                 'id',
                 'user_id',
                 'group_id',
-                'sub_profit_percent',
-                'referral_percent'
+                'referral_percent',
             )->withTimestamps();
     }
 

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Console\Commands\GiveRoleCommand;
 use App\Console\Commands\IncomeCommand;
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
@@ -20,6 +21,7 @@ class Kernel extends ConsoleKernel
         MakeHashesCommand::class,
         MakeWorkerHashesCommand::class,
         PayoutCommand::class,
+        GiveRoleCommand::class,
     ];
     /**
      * Define the application's command schedule.

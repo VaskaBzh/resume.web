@@ -73,7 +73,7 @@ class RegisterController extends Controller
         $userData = UserData::fromRequest($request->all());
 
         try {
-            $isExist = $btcComService->btcHasUser(
+            /*$isExist = $btcComService->btcHasUser(
                 userData: UserData::fromRequest($request->all())
             );
 
@@ -81,21 +81,21 @@ class RegisterController extends Controller
                 return back()->withErrors([
                     'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
                 ]);
-            }
+            }*/
 
             $user = $this->create(userData: $userData);
 
-            if ($request->referral_code) {
-                ReferralService::attach(user: $user, code: $request->referral_code);
-            }
+            $this->guard()->login($user);
+
+            $btcComService->createSub(userData: $userData);
 
             event(new Registered(
                 user: $user
             ));
 
-            $this->guard()->login($user);
-
-            $btcComService->createSub(userData: $userData);
+            if ($request->referral_code) {
+                ReferralService::attach(user: $user, code: $request->referral_code);
+            }
         } catch (\Exception $e) {
             report($e);
 

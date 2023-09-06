@@ -30,7 +30,7 @@
             </blue-button>
         </main-title>
         <div ref="wallets" class="wrap">
-            <no-info
+            <main-preloader
                 :wait="wallets.waitWallets"
                 :interval="35"
                 :end="endWallet"
@@ -86,7 +86,7 @@
                         {{ $t("wallets.no_info") }}
                     </div>
                 </div>
-            </no-info>
+            </main-preloader>
             <div ref="list" class="wallets__list" v-if="!wallets.waitWallets">
                 <wallet-block
                     v-for="(wallet, i) in wallets.wallets"
@@ -277,7 +277,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
-import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
@@ -292,7 +292,7 @@ export default {
         MainCheckbox,
         BlueButton,
         MainTitle,
-        NoInfo,
+        MainPreloader,
         WalletBlock,
         MainInput,
     },
