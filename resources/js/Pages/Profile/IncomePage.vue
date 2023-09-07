@@ -122,7 +122,6 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import MainDate from "@/Components/UI/MainDate.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import { mapGetters } from "vuex";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
 import { IncomeService } from "@/services/IncomeService";
 
@@ -151,7 +150,6 @@ export default {
             incomes: {},
         };
     },
-    layout: profileLayoutView,
     computed: {
         ...mapGetters([
             "allIncomeHistory",

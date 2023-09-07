@@ -6,7 +6,7 @@ export default {
         let error = null;
         await axios
             .get(
-                '/chart',
+                '/v1/chart',
             )
             .then(async (res) => {
                 response = res.data;

@@ -2,10 +2,10 @@
     <div
         class="nav-tabs"
         :class="{
-            'nav-tabs-full-page': this.fullPage,
+            'nav-tabs-full-page': fullPage,
         }"
         ref="tabs"
-        v-if="this.viewportWidth > 991.98"
+        v-if="viewportWidth > 991.98"
     >
         <a class="nav-tabs_link-back" href="#" @click="service.back">
             <svg
@@ -28,10 +28,8 @@
             :key="i"
             :to="link.url"
             :class="{
-                burger_link: this.viewportWidth < 991.98,
-                'router-link-active': $page.url.startsWith(
-                    `${link.url}`
-                ),
+                burger_link: viewportWidth < 991.98,
+                'router-link-active': route.fullPath.startsWith(`${link.url}`),
             }"
             class="nav-tabs__tab"
         >
@@ -49,14 +47,10 @@
     </div>
 </template>
 <script>
-import {Link, usePage} from "@inertiajs/vue3";
 import { TabsService } from "../services/TabsService";
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
 
 export default {
-    components: {
-        Link,
-    },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
@@ -72,10 +66,9 @@ export default {
             this.viewportWidth = window.innerWidth;
         },
         setLinks() {
-            const { props } = usePage();
-
-            this.service.setLinks(props.has_referral_role);
-        }
+            console.log(this.route.state);
+            this.service.setLinks(!!this.route.state.user.referral_code);
+        },
     },
     mounted() {
         this.setLinks();
@@ -84,8 +77,11 @@ export default {
         this.service.dropLinks();
     },
     computed: {
+        route() {
+            return useRoute();
+        },
         fullPage() {
-            const pageArr = useRoute().fullPath.split("/");
+            const pageArr = this.route.fullPath.split("/");
             const fullPages = ["income", "settings", "wallets"];
             return fullPages.find(
                 (page) => page === pageArr[pageArr.length - 1]

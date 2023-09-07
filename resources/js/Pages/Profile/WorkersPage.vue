@@ -42,7 +42,6 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
 import BlueButton from "@/Components/UI/BlueButton.vue";
@@ -55,7 +54,6 @@ export default {
         Head,
         BlueButton,
     },
-    layout: profileLayoutView,
     data() {
         return {
             workersActive: 0,

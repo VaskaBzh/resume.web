@@ -6,12 +6,10 @@
 </template>
 <script>
 import { Head } from "@inertiajs/vue3";
-import profile from "@/Shared/ProfileLayoutView.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 
 export default {
     components: { MainTitle, Head },
-    layout: profile,
     data() {
         return {};
     },

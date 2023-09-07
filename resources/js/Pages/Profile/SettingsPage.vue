@@ -42,7 +42,6 @@
 </template>
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import SettingsBlock from "@/modules/settings/Components/blocks/SettingsBlock.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
@@ -51,7 +50,6 @@ import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 
 export default {
-    layout: profileLayoutView,
     i18n: {
         sharedMessages: SettingsMessage,
     },

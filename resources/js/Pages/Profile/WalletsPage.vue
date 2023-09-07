@@ -278,7 +278,6 @@ import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 
 import { WalletService } from "@/services/WalletService";
@@ -292,7 +291,6 @@ export default {
         MainPreloader,
         WalletBlock,
     },
-    layout: profileLayoutView,
     computed: {
         ...mapGetters(["getActive"]),
         endWallet() {

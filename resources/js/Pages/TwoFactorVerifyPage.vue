@@ -24,11 +24,9 @@
 </template>
 
 <script>
-import LayoutView from "@/Shared/LayoutView.vue";
 import axios from "axios";
 
 export default {
-    layout: LayoutView,
     name: "TwoFactorVerify",
     props: ["qrCode", "secret"],
     data() {
