@@ -10,6 +10,8 @@ use App\Http\Controllers\Api\WalletListController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Referral\AttachController as AttachReferralController;
 use App\Http\Controllers\MinerStatController;
 use App\Http\Controllers\Referral\CodeController;
@@ -29,6 +31,39 @@ use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListCont
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+
+/**
+ * Public routs
+ */
+Auth::routes(['verify' => true]);
+
+Route::group([
+    'prefix' => '',
+    'controller' => LoginController::class
+], function () {
+    Route::post("/reverify", "reVerify")->name('reverify');
+});
+
+Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
+Route::get('/chart', ChartController::class)->name('chart');
+
+/**
+ * Token protected routes
+ */
+Route::group([
+    'middleware' => 'auth:sanctum'
+], function () {
+    Route::post('logout', [LoginController::class, 'logout']);
+    Route::put('reset', [ResetPasswordController::class, 'changePassword']);
+
+    Route::group([
+        'prefix' => 'subs',
+    ], function () {
+        Route::get('{user}', SubListController::class)->name('sub.list');
+        Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
+//        Route::post('/create', SubCreateController::class)->name('sub.create');
+    });
+});
 
 Route::group([
     'prefix' => 'referrals'
@@ -88,5 +123,3 @@ Route::group([
 //    Route::get('{sub}', WalletListController::class)->name('wallet.list');
 //});
 //
-Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
-Route::get('/chart', ChartController::class)->name('chart');

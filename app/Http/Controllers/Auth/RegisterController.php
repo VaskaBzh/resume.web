@@ -27,23 +27,6 @@ class RegisterController extends Controller
     use RegistersUsers;
 
     /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
-
-    /**
      * Get a validator for an incoming registration request.
      *
      * @param array $data
@@ -66,28 +49,16 @@ class RegisterController extends Controller
     public function register(
         Request       $request,
         BtcComService $btcComService
-    ): RedirectResponse
+    ): JsonResponse
     {
         $this->validator($request->all())->validate();
 
         $userData = UserData::fromRequest($request->all());
 
         try {
-            /*$isExist = $btcComService->btcHasUser(
-                userData: UserData::fromRequest($request->all())
-            );
-
-            if ($isExist) {
-                return back()->withErrors([
-                    'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
-                ]);
-            }*/
+            $btcComService->createSub(userData: $userData);
 
             $user = $this->create(userData: $userData);
-
-            $this->guard()->login($user);
-
-            $btcComService->createSub(userData: $userData);
 
             event(new Registered(
                 user: $user
@@ -96,15 +67,19 @@ class RegisterController extends Controller
             if ($request->referral_code) {
                 ReferralService::attach(user: $user, code: $request->referral_code);
             }
+
+            return new JsonResponse([
+                'message' => 'success',
+                'user' => $user,
+                'token' => $user->createToken($user->name)->plainTextToken
+            ]);
         } catch (\Exception $e) {
             report($e);
 
-            return back()->withErrors([
+            return new JsonResponse([
                 'message' => 'Something went wrong! Please contact with tech support'
-            ]);
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return redirect("/profile/accounts");
     }
 
     public function isUserAuthorizedForVerification(Request $request, User $user)

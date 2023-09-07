@@ -43,16 +43,6 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function () {
 
     Route::group([
-        'prefix' => 'profile'
-    ], function () {
-        Route::redirect('', 'profile/statistic');
-        Route::get('/referral', ShowReferralController::class)
-            ->middleware('role:referral')
-            ->name('referral.page');
-        Route::get('{page}', ProfileController::class)->name('profile.index');
-    });
-
-    Route::group([
         'prefix' => 'subs',
     ], function () {
         Route::get('{user}', SubListController::class)->name('sub.list');
@@ -117,16 +107,4 @@ Route::middleware('auth')->group(function () {
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
         Route::post('/attach/{user}', AttachReferralController::class)->name('referral.attach');
     });
-});
-
-/* Public routes */
-Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
-Route::get('/chart', ChartController::class)->name('chart');
-
-Route::group([
-    'prefix' => '',
-    'controller' => PageController::class
-], function () {
-    Route::get('/', 'index')->name('home');
-    Route::get('/{page}', 'show')->name('page');
 });
