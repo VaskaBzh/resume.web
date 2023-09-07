@@ -69,11 +69,9 @@ import { CabinetService } from "@/modules/referral/services/CabinetService";
 import { mapGetters } from "vuex";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
 export default {
     name: "cabinet-view",
-    layout: ProfileLayoutView,
     components: {
         MainTitle,
         MainCopy,

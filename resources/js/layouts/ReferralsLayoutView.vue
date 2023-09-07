@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
@@ -32,7 +31,6 @@ import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 
 export default {
-    layout: ProfileLayoutView,
     components: {
         MainTitle,
         MainTabs,

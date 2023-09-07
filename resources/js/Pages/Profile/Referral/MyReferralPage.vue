@@ -29,10 +29,8 @@ import WrapTable from "@/Components/tables/WrapTable.vue";
 import { ReferralsService } from "@/modules/referral/services/ReferralsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
 export default {
-    layout: ProfileLayoutView,
     name: "referrals-view",
     i18n: {
         sharedMessages: ReferralsMessage,

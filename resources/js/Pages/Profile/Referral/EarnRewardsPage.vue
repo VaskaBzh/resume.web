@@ -34,12 +34,10 @@ import MainSlider from "@/Components/technical/MainSlider.vue";
 import { PaymentService } from "@/modules/referral/services/PaymentService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 
 export default {
     name: "payment-view",
-    layout: ProfileLayoutView,
     i18n: {
         sharedMessages: ReferralsMessage,
     },

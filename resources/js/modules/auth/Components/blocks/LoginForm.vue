@@ -110,7 +110,7 @@ export default {
     data() {
         return {
             pdf,
-            service: new LoginService(),
+            service: new LoginService(this.$router),
         };
     },
     mounted() {
