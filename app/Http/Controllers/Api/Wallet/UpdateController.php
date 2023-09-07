@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Wallet;
+namespace App\Http\Controllers\Api\Wallet;
 
 use App\Actions\Wallet\Upsert;
 use App\Dto\WalletData;

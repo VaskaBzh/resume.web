@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Referral;
+namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ReferralStatisticResource;

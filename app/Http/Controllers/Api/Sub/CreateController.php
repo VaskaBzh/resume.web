@@ -2,20 +2,20 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Sub;
+namespace App\Http\Controllers\Api\Sub;
 
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCreateRequest;
 use App\Services\External\BtcComService;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\JsonResponse;
 
 class CreateController extends Controller
 {
     public function __invoke(
         SubCreateRequest $request,
         BtcComService    $btcComService,
-    ): RedirectResponse
+    ): JsonResponse
     {
         try {
             $result = $btcComService->createSub(
@@ -23,18 +23,18 @@ class CreateController extends Controller
             );
 
             if (isset($result['errors'])) {
-                return back()->withErrors($result['errors']);
+                return new JsonResponse(['message' => $result['errors']]);
             }
 
         } catch (\Exception $e) {
             report($e);
 
-            return back()->with([
+            return new JsonResponse([
                 'message' => trans('actions.fail_sub_create')
             ]);
         }
 
-        return back()->with([
+        return new JsonResponse([
             'message' => trans('actions.success_sub_create')
         ]);
     }
