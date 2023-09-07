@@ -2,11 +2,10 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Controllers\Referral;
+namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Repositories\UserRepository;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
