@@ -1,4 +1,3 @@
-import {router, useForm, usePage} from "@inertiajs/vue3";
 import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
@@ -87,21 +86,19 @@ export class SettingsService {
     async ajax() {
         this.wait = true;
 
-        const { props } = usePage();
-
-        let sendForm = useForm({
+        let sendForm = {
             [this.form.key]: this.form.item,
-            _token: props.token,
-        });
+        };
 
-        await sendForm.post(route("change", this.user), {
-            onFinish: () => {
-                this.wait = false;
+        try {
+            await api.post(route("change", this.user), sendForm);
 
-                this.setRows();
-                // this.closed = false;
-            },
-        });
+            this.wait = false;
+
+            this.setRows();
+        } catch (e) {
+            console.error("Error with: " + e);
+        }
     }
 
     sendMessage(message) {

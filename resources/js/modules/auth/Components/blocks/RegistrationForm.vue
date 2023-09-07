@@ -3,10 +3,10 @@
         <main-title tag="h3" class="form-auth_title">{{
             this.$t("auth.reg.title")
         }}</main-title>
-        <auth-errors :errors="errors" />
+        <auth-errors :errors="service.errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="service.errors.email"
+                :error="service.errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.reg.placeholders[0]')"
                 name="email"
@@ -18,7 +18,7 @@
                 "
             />
             <auth-input
-                :error="service.errors.name"
+                :error="service.errorsExpired.name"
                 :model="service.form.name"
                 :placeholder="this.$t('auth.reg.placeholders[1]')"
                 name="name"
@@ -31,7 +31,7 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
+                :class="{ error: service.errorsExpired.password }"
             >
                 <main-password
                     name="password"
@@ -48,7 +48,7 @@
             <main-validate :validate="service.validate" />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
+                :class="{ error: service.errorsExpired.password }"
             >
                 <main-password
                     name="password_confirmation"
@@ -61,18 +61,18 @@
                     "
                 />
             </div>
-<!--            <auth-input-->
-<!--                :error="service.errors.referral_code"-->
-<!--                :model="service.form.referral_code"-->
-<!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
-<!--                name="email"-->
-<!--                type="text"-->
-<!--                @change="-->
-<!--                    service.form.referral_code = !!$event.target-->
-<!--                        ? $event.target.value-->
-<!--                        : $event-->
-<!--                "-->
-<!--            />-->
+            <!--            <auth-input-->
+            <!--                :error="service.errors.referral_code"-->
+            <!--                :model="service.form.referral_code"-->
+            <!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
+            <!--                name="email"-->
+            <!--                type="text"-->
+            <!--                @change="-->
+            <!--                    service.form.referral_code = !!$event.target-->
+            <!--                        ? $event.target.value-->
+            <!--                        : $event-->
+            <!--                "-->
+            <!--            />-->
         </div>
         <input
             class="form-auth_checkbox"
