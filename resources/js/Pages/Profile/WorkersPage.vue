@@ -40,7 +40,6 @@
     </div>
 </template>
 <script>
-import { Link } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
@@ -55,10 +54,8 @@ export default {
         MainTitle,
         Head,
         BlueButton,
-        Link,
     },
     layout: profileLayoutView,
-    props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
             workersActive: 0,
@@ -71,7 +68,7 @@ export default {
     },
     watch: {
         getActive(newActive, oldActive) {
-            this.changedActive = oldActive === -1 ? -1 : newActive
+            this.changedActive = oldActive === -1 ? -1 : newActive;
             this.initWorkers();
         },
     },

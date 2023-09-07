@@ -88,7 +88,6 @@ export default {
     components: {
         BlueButton,
         AccountMenu,
-        Link,
         MainLink,
         SelectLanguage,
         SelectTheme,

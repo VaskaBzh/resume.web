@@ -3,7 +3,7 @@
         <main-title tag="h3" class="form-auth_title">{{
             this.$t("auth.login.title")
         }}</main-title>
-        <auth-errors :errors="service.errors" />
+        <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
                 :error="service.errorsExpired.email"
@@ -88,6 +88,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 
 import { LoginService } from "@/modules/auth/services/LoginService";
+import { useRoute } from "vue-router";
 
 export default {
     name: "login-form",
@@ -97,6 +98,14 @@ export default {
         AuthErrors,
         MainTitle,
         BlueButton,
+    },
+    computed: {
+        router() {
+            return useRoute();
+        },
+        errors() {
+            return this.router.params.errors;
+        },
     },
     data() {
         return {

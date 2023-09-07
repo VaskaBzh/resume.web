@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import AppLayoutView from "./AppLayoutView.vue";
+import AppLayoutView from "./layouts/AppLayoutView.vue";
 
 export default {
     name: "app",
