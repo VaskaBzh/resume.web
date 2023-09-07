@@ -35,14 +35,6 @@ use App\Http\Controllers\Referral\IncomeListController as ReferralIncomeListCont
 /**
  * Public routs
  */
-Auth::routes(['verify' => true]);
-
-Route::group([
-    'prefix' => '',
-    'controller' => LoginController::class
-], function () {
-    Route::post("/reverify", "reVerify")->name('reverify');
-});
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
