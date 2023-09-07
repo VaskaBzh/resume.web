@@ -3,14 +3,18 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Validation\ValidationException;
 use App\Models\User;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -29,59 +33,59 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    public function loggedOut(Request $request)
+    public function login(Request $request): JsonResponse
     {
-        return redirect('/');
-    }
-
-    protected function attemptLogin(Request $request)
-    {
-        $credentials = $this->credentials($request);
-
-        $user = auth()->getProvider()->retrieveByCredentials($credentials);
-
-        if ($user && auth()->validate($credentials)) {
-            auth()->login($user, $request->get('remember'));
-
-            return true;
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return new JsonResponse([
+                'message' => 'Credentials do not match'
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
-        return false;
+        $user = User::whereEmail($request->email)->first();
+        $token = $user->createToken($user->name);
+
+        return new JsonResponse([
+            'user' => $user,
+            'token' => $token->plainTextToken,
+            'expired_at' => $token->accessToken->expires_at
+        ]);
     }
 
-    protected function verify(Request $request)
+    public function logout(): JsonResponse
     {
-        $credentials = $this->credentials($request);
-
-        if ($this->guard()->attempt($credentials, $request->filled('remember'))) {
-            $user = $this->guard()->getLastAttempted();
-
-            $user->sendEmailVerificationNotification();
-            $this->guard()->logout();
-
-            if (app()->getLocale() === 'ru') {
-                throw ValidationException::withMessages([
-                    $this->username() => [trans('Сообщение с подтверждением отправлено на почту.')],
-                ]);
-            } else if (app()->getLocale() === 'en') {
-                throw ValidationException::withMessages([
-                    $this->username() => [trans('A confirmation email has been sent to your email address.')],
-                ]);
-            }
+        if (auth()->check()) {
+            auth()
+                ->user()
+                ->tokens()
+                ->delete();
         }
+
+        return response()->json('Logged out');
     }
 
-    protected function sendFailedLoginResponse(Request $request)
+    protected function reVerify(Request $request): JsonResponse
     {
-        // Здесь можно добавить свою кастомную логику проверки ошибок, если это необходимо
+        if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+            return new JsonResponse([
+                'message' => 'Credentials do not match'
+            ], Response::HTTP_UNAUTHORIZED);
+        }
+
+        User::whereEmail($request->email)
+            ->first()
+            ->sendEmailVerificationNotification();
+
         if (app()->getLocale() === 'ru') {
-            throw ValidationException::withMessages([
-                $this->username() => [trans('Неверная почта или пароль.')],
+            return response()->json([
+                $request->email => [trans('Сообщение с подтверждением отправлено на почту.')],
             ]);
         } else if (app()->getLocale() === 'en') {
-            throw ValidationException::withMessages([
-                $this->username() => [trans('Invalid email or password.')],
+            return response()->json([
+                $request->email => [trans('A confirmation email has been sent to your email address.')],
             ]);
         }
+
+        return $this->logout();
     }
+
 }

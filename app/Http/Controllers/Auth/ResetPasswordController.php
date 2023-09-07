@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -12,61 +14,38 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordController extends Controller
 {
     /**
-     * Where to redirect users after changing their password.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::PROFILE;
-
-    /**
-     * Show the form to change the user's password.
-     *
-     * @return string
-     */
-    public function showChangePasswordForm()
-    {
-        return "/profile/settings";
-    }
-
-    /**
      * Handle the password change request.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\RedirectResponse
      */
     public function changePassword(Request $request)
     {
         $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
 
         if ($validator->fails()) {
-            return back()
-                ->withErrors($validator)
-                ->withInput();
+            return response()->json($validator->errors()->all(), Response::HTTP_BAD_REQUEST);
         }
 
         $user = auth()->user();
 
         if (!Hash::check($request->input('old_password'), $user->password)) {
             if (app()->getLocale() === 'ru') {
-                return back()
-                    ->withErrors(new MessageBag(['error' => 'Необходимо подтвердить старый пароль.']))
-                    ->withInput();
+                return response()->json(['error' => 'Необходимо подтвердить старый пароль'], Response::HTTP_UNAUTHORIZED);
             } else if (app()->getLocale() === 'en') {
-                return back()
-                    ->withErrors(new MessageBag(['error' => 'You need to confirm your old password.']))
-                    ->withInput();
+                return response()->json(['error' => 'You need to confirm your old password.'], Response::HTTP_UNAUTHORIZED);
             }
         }
+
         $this->resetPassword($user, $request->input('password'));
 
         if (app()->getLocale() === 'ru') {
-            return back()->with('message', 'Пароль успешно изменен.');
+            return response()->json(['message' => 'Пароль успешно изменен.']);
         } else if (app()->getLocale() === 'en') {
-            return back()->with('message', 'The password has been successfully changed.');
+            return response()->json(['message' => 'The password has been successfully changed.']);
         }
     }
 

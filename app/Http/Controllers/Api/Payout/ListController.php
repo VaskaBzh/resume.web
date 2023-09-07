@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Payout;
+namespace App\Http\Controllers\Api\Payout;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\PayoutResource;
