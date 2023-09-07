@@ -75,14 +75,14 @@
 </template>
 
 <script>
-import {Link, router, useForm, usePage} from "@inertiajs/vue3";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
 import { mapGetters } from "vuex";
-import { Inertia } from "@inertiajs/inertia";
 import MainLink from "@/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
+import api from "@/api/api";
+import {useRoute} from "vue-router";
 
 export default {
     components: {
@@ -117,12 +117,13 @@ export default {
             this.$store.dispatch("set_active", data);
         },
         async logout() {
-            const { props } = usePage();
+            try {
+                await api.post("/logout", form);
 
-            await router.post("/logout", {
-              _token: props.token,
-
-            });
+                useRoute().push({ name: "default" });
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
         },
         closeBurger() {
             this.is_opened = false;

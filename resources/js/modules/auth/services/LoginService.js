@@ -7,6 +7,7 @@ export class LoginService {
         this.form = {};
         this.checkbox = false;
         this.errors = {};
+        this.errorsExpired = {};
 
         this.router = useRoute();
     }
@@ -19,22 +20,20 @@ export class LoginService {
 
     async login() {
         try {
-            await api.post("/login", this.form)
+            await api.post("/login", this.form);
 
-            this.router.push({ name: 'statistic' })
-        } catch(err) {
-            this.router.forward({
-                params: {
-                    errors: err.response.data.errors
-                }
-            })
+            this.router.push({ name: "statistic" });
+        } catch (err) {
+            this.setErrors(err.response.data.errors);
         }
     }
 
     setErrors(errors) {
         this.errors = { ...errors };
+
+        this.errorsExpired = { ...errors };
         setTimeout(() => {
-            this.errors = {};
+            this.errorsExpired = {};
         }, 1500);
     }
 }

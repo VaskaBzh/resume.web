@@ -268,14 +268,14 @@ import pdf from "@/../assets/files/policy.pdf";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
+import api from "@/api/api";
 
 export default {
     name: "footer-component",
-    methods: {useRoute},
+    methods: { useRoute },
     components: { MainTitle, MainPopup, BlueButton },
     props: {
         errors: Object,
@@ -289,26 +289,25 @@ export default {
         };
     },
     setup() {
-        const { props } = usePage();
-
         let wait = ref(false);
 
-        let form = useForm({
+        let form = {
             message: "",
             contacts: "",
-        });
+        };
 
         const sendFeedback = async () => {
             wait.value = true;
-            await form.post("/send_message", {
-                onFinish: () => {
-                    wait.value = false;
-                },
-                onSuccess: () => {
-                    form.message = "";
-                    form.contacts = "";
-                },
-            });
+            try {
+                await api.post("/send_message", form);
+
+                form.message = "";
+                form.contacts = "";
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
+
+            wait.value = false;
         };
 
         return {

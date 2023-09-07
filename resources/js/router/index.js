@@ -1,15 +1,20 @@
-import routes from "./routes/rotes";
-import { createRouter, createWebHashHistory } from 'vue-router';
-import { LoadLayoutMiddleware } from "./middlewares/LoadLayoutMiddleware";
+import { createRouter, createWebHashHistory } from "vue-router";
+
+import routes from "@/router/routes/rotes";
+import { LoadLayoutMiddleware } from "@/router/middlewares/LoadLayoutMiddleware";
+import { AuthCheckProfileMiddleware } from "@/router/middlewares/AuthCheckProfileMiddleware";
+import { AuthMiddleware } from "@/router/middlewares/AuthMiddleware";
 
 export const router = createRouter({
     // 4. Provide the history implementation to use. We are using the hash history for simplicity here.
     history: createWebHashHistory(),
     routes, // short for `routes: routes`
-})
+});
 
 const middlewares = {
-    LoadLayoutMiddleware
+    LoadLayoutMiddleware,
+    AuthCheckProfileMiddleware,
+    AuthMiddleware,
 };
 
 router.beforeEach(async (to, from, next) => {
@@ -19,9 +24,13 @@ router.beforeEach(async (to, from, next) => {
         return next();
     }
 
-    const middlewareFunctions = routeMiddleware.map(name => middlewares[name]);
+    const middlewareFunctions = routeMiddleware.map(
+        (name) => middlewares[name]
+    );
 
-    await middlewareFunctions[0](to);
+    middlewareFunctions.forEach(async func => {
+        await func(to);
+    });
 
     return next();
 });

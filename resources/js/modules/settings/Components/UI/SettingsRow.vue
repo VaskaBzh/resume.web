@@ -30,8 +30,9 @@
 </template>
 
 <script>
-import { useForm, usePage } from "@inertiajs/vue3";
 import { SettingsMessage } from "../../lang/SettingsMessage";
+import api from "@/api/api";
+import { useRoute } from "vue-router";
 
 export default {
     name: "settings-row",
@@ -54,17 +55,17 @@ export default {
     },
     methods: {
         async checkbox_changes(data) {
-            const { props } = usePage();
-
             if (this.val !== null) {
-                const { props } = usePage();
-
-                let form = useForm({
+                let form = {
                     item: data,
                     type: this.name,
-                  _token: props.token,
-                });
-                await form.post(route("change"), {});
+                };
+
+                try {
+                    await api.post(route("change"), form);
+                } catch (e) {
+                    console.error("Error with: " + e);
+                }
             }
         },
         get_val(pas) {

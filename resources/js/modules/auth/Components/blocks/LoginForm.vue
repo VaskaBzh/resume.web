@@ -3,10 +3,10 @@
         <main-title tag="h3" class="form-auth_title">{{
             this.$t("auth.login.title")
         }}</main-title>
-        <auth-errors :errors="errors" />
+        <auth-errors :errors="service.errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="service.errors.email"
+                :error="service.errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
@@ -19,13 +19,13 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
+                :class="{ error: service.errorsExpired.email }"
             >
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.reg.placeholders[1]')"
                     :model="service.form.password"
-                    :errors="errors"
+                    :errors="service.errors"
                     @change="
                         service.form.password = !!$event.target
                             ? $event.target.value
@@ -81,7 +81,6 @@
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
-import { Link } from "@inertiajs/vue3";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
@@ -92,14 +91,10 @@ import { LoginService } from "@/modules/auth/services/LoginService";
 
 export default {
     name: "login-form",
-    props: {
-        errors: Object,
-    },
     components: {
         AuthInput,
         MainPassword,
         AuthErrors,
-        Link,
         MainTitle,
         BlueButton,
     },
@@ -108,11 +103,6 @@ export default {
             pdf,
             service: new LoginService(),
         };
-    },
-    watch: {
-        errors(newVal) {
-            this.service.setErrors(newVal);
-        },
     },
     mounted() {
         this.service.setForm();

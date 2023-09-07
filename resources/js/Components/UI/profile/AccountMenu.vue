@@ -1,6 +1,10 @@
 <template>
     <div @click="toggleMenu" class="button">
-        <div class="button_name" :class="{ 'button_name-target': target }" ref="name">
+        <div
+            class="button_name"
+            :class="{ 'button_name-target': target }"
+            ref="name"
+        >
             <svg
                 width="22"
                 height="22"
@@ -138,13 +142,13 @@
 <script>
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { mapGetters } from "vuex";
-import { router, useForm, usePage } from "@inertiajs/vue3";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import store from "../../../store";
 import { ref } from "vue";
-import { useRoute } from 'vue-router';
+import { useRoute } from "vue-router";
+import api from "@/api/api";
 
 export default {
     name: "account-menu",
@@ -191,35 +195,34 @@ export default {
         let wait = ref(false);
         let closed = ref(false);
 
-        const { props } = usePage();
-
-        const form = useForm({
+        const form = {
             name: "",
-            _token: props.token,
-        });
+        };
 
         const addAcc = async () => {
             wait.value = true;
 
-            await form.post(route("sub.create"), {
-                onFinish: () => {
-                    wait.value = false;
-                    store.dispatch("accounts_all", props.user.id);
-                },
-                onSuccess: () => {
-                    closed.value = true;
-                    store.dispatch("accounts_all", props.user.id);
-                },
-            });
+            try {
+                await api.post(route("sub.create"), form);
+
+                closed.value = true;
+                store.dispatch("accounts_all", props.user.id);
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
+
+            wait.value = false;
+            store.dispatch("accounts_all", props.user.id);
         };
 
         const logout = async () => {
-            await router.post(
-                "/logout",
-                {
-                        _token: props.token,
-                    },
-            );
+            try {
+                await api.post("/logout", form);
+
+                useRoute().push({ name: "default" });
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
         };
 
         return {
@@ -277,7 +280,7 @@ export default {
     methods: {
         async openAddPopup() {
             if (useRoute().currentRoute.value.path !== "/profile/accounts") {
-                await useRoute().push({ name: 'accounts' });
+                await useRoute().push({ name: "accounts" });
 
                 setTimeout(() => {
                     this.$refs.input.focus();
@@ -326,7 +329,10 @@ export default {
             this.change_height();
         },
         hideMenuClick(e) {
-            if (!e.target.closest(".nav__container .button .button_name") && !e.target.closest(".nav__container .button .button__row"))
+            if (
+                !e.target.closest(".nav__container .button .button_name") &&
+                !e.target.closest(".nav__container .button .button__row")
+            )
                 this.hideMenu();
         },
         toggleMenu() {

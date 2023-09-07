@@ -1,9 +1,11 @@
 import { TabsData } from "../DTO/TabsData";
-import { router } from "@inertiajs/vue3";
+import {useRouter} from "vue-router";
 
 export class TabsService {
     constructor() {
         this.links = [];
+
+        this.router = useRouter();
     }
 
     setLinks(hasReferralRole) {
@@ -37,7 +39,7 @@ export class TabsService {
     }
 
     back() {
-        router.visit("/profile/statistic");
+        this.router.go(-1);
         // if (window.history.length > 1) {
         //     window.history.back();
         // } else {

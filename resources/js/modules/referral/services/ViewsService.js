@@ -1,11 +1,12 @@
 import { TabData } from "@/modules/referral/DTO/TabData";
-import { router } from "@inertiajs/vue3";
+import { useRoute } from "vue-router";
 
 export class ViewsService {
     constructor(translate, page) {
         this.tabs = [];
         this.translate = translate;
         this.view = null;
+        this.router = useRoute();
 
         this.setView(page);
     }
@@ -36,7 +37,7 @@ export class ViewsService {
         const name = routeName[firstIndex];
         const param = routeName[lastIndex];
 
-        router.visit(name, { data: { page: param } });
+        this.router.push({ name: name, params: { page: param } });
 
         return this;
     }
