@@ -28,9 +28,9 @@ router.beforeEach(async (to, from, next) => {
         (name) => middlewares[name]
     );
 
-    middlewareFunctions.forEach(async func => {
-        await func(to);
-    });
+    for (let i = 0; i < middlewareFunctions.length - 1; i++) {
+        await middlewareFunctions[i](to);
+    }
 
     return next();
 });

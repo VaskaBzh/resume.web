@@ -276,12 +276,10 @@
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
-import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
-import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import MainInput from "@/Components/UI/inputs/MainInput.vue";
 
 import { WalletService } from "@/services/WalletService";
 import { usePage } from "@inertiajs/vue3";
@@ -289,12 +287,10 @@ import { usePage } from "@inertiajs/vue3";
 export default {
     components: {
         MainPopup,
-        MainCheckbox,
         BlueButton,
         MainTitle,
         NoInfo,
         WalletBlock,
-        MainInput,
     },
     layout: profileLayoutView,
     computed: {
@@ -311,8 +307,7 @@ export default {
         this.handleResize();
     },
     data() {
-        return {
-            // isChecked: false,
+        return {yy
             viewportWidth: 0,
             waitWallet: true,
             wallets: [],

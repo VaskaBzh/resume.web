@@ -24,4 +24,4 @@ app.use(router)
     .directive("tooltip", tippyAnimation)
     .directive("hide", hideAnimation)
     .directive("hash", hashRender)
-    .mount('#app');
+    .mount("#app");

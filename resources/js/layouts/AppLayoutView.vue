@@ -1,7 +1,9 @@
 <template>
-    <component :is="route.meta.layoutComponent">
-        <slot />
-    </component>
+    <keep-alive>
+        <component :is="route.meta.layoutComponent">
+            <slot />
+        </component>
+    </keep-alive>
 </template>
 
 <script>
@@ -12,11 +14,9 @@ export default {
     computed: {
         route() {
             return useRoute();
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

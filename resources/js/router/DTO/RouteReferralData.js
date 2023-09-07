@@ -6,10 +6,14 @@ export class RouteReferralData {
         this.path = `/profile/referral`;
         this.name = name;
         this.params = { page: name };
-        this.component = () => import(`../../Pages/${RouteNamesMap.profile.referral[component]}`);
+        this.component = () =>
+            import(`../../Pages/${RouteNamesMap.profile.referral[component]}`);
+        this.params = {
+            errors: {},
+        };
         this.meta = {
-            middleware: [ 'LoadLayoutMiddleware' ],
-            link: 'ProfileLayoutView',
-        }
+            middleware: ["LoadLayoutMiddleware"],
+            link: "ProfileLayoutView",
+        };
     }
 }

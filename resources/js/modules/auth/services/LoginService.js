@@ -24,16 +24,16 @@ export class LoginService {
 
             this.router.push({ name: "statistic" });
         } catch (err) {
-            this.setErrors(err.response.data.errors);
+            this.router.params.errors = err.response.data.errors;
+            this.router.reload();
+            // this.setErrors(err.response.data.errors);
         }
     }
 
     setErrors(errors) {
         this.errors = { ...errors };
-
-        this.errorsExpired = { ...errors };
         setTimeout(() => {
-            this.errorsExpired = {};
+            this.errors = {};
         }, 1500);
     }
 }
