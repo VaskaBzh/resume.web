@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Builders\UserBuilder;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
@@ -82,5 +83,10 @@ class User extends Authenticatable implements MustVerifyEmail
     public function newEloquentBuilder($query): UserBuilder
     {
         return new UserBuilder($query);
+    }
+
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmailNotification);
     }
 }

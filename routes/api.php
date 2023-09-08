@@ -22,6 +22,7 @@ use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -41,7 +42,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
-
+Route::get('/verify/{id}/{hash}', VerificationController::class)->name('verification.verify');
 /**
  * Token protected routes
  */
@@ -51,6 +52,7 @@ Route::group([
     Route::post('logout', [LoginController::class, 'logout']);
     Route::put('reset', [ResetPasswordController::class, 'changePassword']);
     Route::put('/change/{user}', AccountController::class)->name('change');
+
 
     Route::group([
         'prefix' => 'workers',
