@@ -1,6 +1,7 @@
 import api from "@/api/api";
 
 import { accountData } from "@/DTO/accountData";
+import store from "@/store";
 
 const firstSubIndex = 0;
 export default {
@@ -10,7 +11,13 @@ export default {
         },
         async set_active({ commit, state }, index) {
             let sub = new accountData(
-                (await api.get(`/subs/sub/${index}`)).data.data
+                (
+                    await api.get(`/subs/sub/${index}`, {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    })
+                ).data.data
             );
 
             commit("updateActive", index);
@@ -22,11 +29,15 @@ export default {
             commit("updateActiveAccount", sub);
         },
         async accounts_all({ commit, state }, user_id) {
-            let subsList = (await api.get(`/subs/${user_id}`)).data.data.map(
-                (el) => {
-                    return new accountData(el);
-                }
-            );
+            let subsList = (
+                await api.get(`/subs/${user_id}`, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                })
+            ).data.data.map((el) => {
+                return new accountData(el);
+            });
 
             commit("updateAccounts", subsList);
             if (state.active === -1) {

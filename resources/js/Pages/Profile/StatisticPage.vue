@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('statistic.title')" />
     <div class="statistic profile">
         <div class="statistic__wrapper">
             <div class="main-header-container">

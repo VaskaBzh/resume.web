@@ -38,10 +38,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        user: {
-            type: Object,
-        },
-        errors: Object,
         message: {
             type: String,
         },
@@ -64,6 +60,7 @@ export default {
             "allHash",
             "getActive",
             "getMessage",
+            "user",
         ]),
     },
     async mounted() {
@@ -86,6 +83,10 @@ export default {
             this.$store.dispatch("destroyer");
         }
         clearInterval(this.interval);
+    },
+    created() {
+        this.$store.dispatch("setUser");
+        this.$store.dispatch("setToken");
     },
 };
 </script>

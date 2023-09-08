@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('workers.title')" />
     <div class="workers profile">
         <div class="workers__wrapper">
             <main-title tag="h3" class="cabinet_title">

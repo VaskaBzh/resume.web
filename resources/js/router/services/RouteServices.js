@@ -11,7 +11,7 @@ export class RouteServices {
     setRoutes() {
         this.routes = [
             ...this.routes,
-            this.setDefaultRoute(),
+            ...this.setDefaultRoutes(),
             new RoutePublicData("home", "home"),
             // new RoutePublicData('about', 'about'),
             new RoutePublicData("calculator", "calculator"),
@@ -28,18 +28,34 @@ export class RouteServices {
             new RouteProfileData("wallets", "wallets"),
             new RouteProfileData("workers", "workers"),
             new RouteReferralData("overview", "overview"),
-            new RouteReferralData("myReferral", "myReferral"),
+            new RouteReferralData("my-referral", "my-referral"),
             new RouteReferralData("earnRewards", "earnRewards"),
         ];
     }
 
-    setDefaultRoute() {
-        return {
-            path: "/",
-            name: "default",
-            redirect: "/home",
-            // component: () => import(`../../Pages/${RouteNamesMap.public['home']}`),
-        };
+    setDefaultRoutes() {
+        return [
+            {
+                path: "/",
+                name: "default",
+                redirect: "/home",
+            },
+            {
+                path: "/profile",
+                name: "profile",
+                redirect: "/profile/statistic",
+            },
+            {
+                path: "/profile/referral",
+                name: "referral",
+                redirect: () => {
+                    return {
+                        name: "overview",
+                        params: { page: "overview" },
+                    };
+                },
+            },
+        ];
     }
 
     dropRoutes() {

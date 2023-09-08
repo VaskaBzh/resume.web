@@ -29,6 +29,7 @@ import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
+import { useRoute } from "vue-router";
 
 export default {
     components: {
@@ -43,20 +44,25 @@ export default {
         errors: Object,
         message: String,
     },
+    computed: {
+        route() {
+            return useRoute();
+        },
+    },
     data() {
         return {
-            viewService: new ViewsService(this.$t, this.$page),
+            viewService: new ViewsService(this.$t),
         };
     },
     methods: {
         referralRouting(routeName) {
-            this.viewService.tabRoute(routeName).setView(this.$page);
+            this.viewService.tabRoute(routeName).setView(this.route);
         },
     },
     mounted() {
         document.title = this.$t("header.links.referral");
 
-        this.viewService.setTabs();
+        this.viewService.setTabs().setView(this.route);
     },
 };
 </script>

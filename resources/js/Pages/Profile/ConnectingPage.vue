@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('connection.title')" />
     <div class="connecting profile">
         <div class="connecting__wrapper">
             <main-title class="cabinet_title" tag="h3">{{

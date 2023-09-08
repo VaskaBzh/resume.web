@@ -1,5 +1,4 @@
 <template>
-    <Head title="Главная Allbtc" />
     <div class="home">
         <div class="home__container">
             <div class="home__main page__main section">

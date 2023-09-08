@@ -49,6 +49,7 @@
 <script>
 import { TabsService } from "../services/TabsService";
 import { useRoute } from "vue-router";
+import { mapGetters } from "vuex";
 
 export default {
     created() {
@@ -66,14 +67,14 @@ export default {
             this.viewportWidth = window.innerWidth;
         },
         setLinks() {
-            console.log(this.route.state);
-            this.service.setLinks(!!this.route.state.user.referral_code);
+            this.service.setLinks(!!this.user.has_referral_role);
         },
     },
     mounted() {
         this.service.setLinks();
     },
     computed: {
+        ...mapGetters(["user"]),
         route() {
             return useRoute();
         },

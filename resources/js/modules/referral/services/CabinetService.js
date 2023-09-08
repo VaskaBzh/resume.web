@@ -4,7 +4,7 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
 
 export class CabinetService {
-    constructor(user, translate) {
+    constructor(translate) {
         this.statsCards = [];
         this.accounts = [];
         this.gradeList = [];
@@ -14,6 +14,10 @@ export class CabinetService {
         this.code = "";
         this.activeSubId = null;
 
+        this.user = null;
+    }
+
+    setUser(user) {
         this.user = user;
     }
 
@@ -52,9 +56,17 @@ export class CabinetService {
         let result = {};
 
         try {
-            result = await api.post(`/referrals/generate/${this.user.id}`, {
-                group_id: id,
-            });
+            result = await api.post(
+                `/referrals/generate/${this.user.id}`,
+                {
+                    group_id: id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            );
 
             this.sendMessage(result.data.message);
         } catch (err) {
@@ -80,8 +92,13 @@ export class CabinetService {
         let response = {};
 
         try {
-            response = (await api.get(`/referrals/statistic/${this.user.id}`))
-                .data;
+            response = (
+                await api.get(`/referrals/statistic/${this.user.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                })
+            ).data;
         } catch (err) {
             console.error(`FetchError: ${err}`);
         }

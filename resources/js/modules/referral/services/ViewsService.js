@@ -1,14 +1,12 @@
 import { TabData } from "@/modules/referral/DTO/TabData";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 export class ViewsService {
-    constructor(translate, page) {
+    constructor(translate) {
         this.tabs = [];
         this.translate = translate;
         this.view = null;
-        this.router = useRoute();
-
-        this.setView(page);
+        this.router = useRouter();
     }
 
     setTabs() {
@@ -21,10 +19,12 @@ export class ViewsService {
                 "earn-rewards",
             ]),
         ];
+
+        return this;
     }
 
     setView(page) {
-        const splitedUrl = page.url.split("?");
+        const splitedUrl = page.fullPath.split("?");
         const lastIndexUrl = splitedUrl.length - 1;
         const pageParams = splitedUrl[lastIndexUrl].split("=");
         const lastIndexParams = splitedUrl.length - 1;
@@ -37,7 +37,8 @@ export class ViewsService {
         const name = routeName[firstIndex];
         const param = routeName[lastIndex];
 
-        this.router.push({ name: name, params: { page: param } });
+        console.log(name, param);
+        this.router.push({ name: param, params: { page: param } });
 
         return this;
     }

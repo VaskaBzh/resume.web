@@ -29,22 +29,11 @@ export class LoginService {
             store.dispatch("setUser", user);
             store.dispatch("setToken", token);
 
-            // this.router.push({
-            //     name: "login",
-            // });
-        } catch (err) {
             this.router.push({
-                name: "login",
-                state: { errors: err.response?.data?.errors },
+                name: "statistic",
             });
-            // this.setErrors(err.response.data.errors);
+        } catch (err) {
+            store.dispatch("setFullErrors", err.response.data.errors);
         }
-    }
-
-    setErrors(errors) {
-        this.errors = { ...errors };
-        setTimeout(() => {
-            this.errors = {};
-        }, 1500);
     }
 }

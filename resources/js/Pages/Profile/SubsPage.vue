@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('accounts.title')" />
     <div class="accounts profile">
         <div class="accounts__wrapper">
             <main-title tag="h3" class="cabinet_title">

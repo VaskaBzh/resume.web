@@ -33,6 +33,7 @@
 import { SettingsMessage } from "../../lang/SettingsMessage";
 import api from "@/api/api";
 import { useRoute } from "vue-router";
+import store from "@/store";
 
 export default {
     name: "settings-row",
@@ -62,7 +63,11 @@ export default {
                 };
 
                 try {
-                    await api.post(route("change"), form);
+                    await api.post(route("change"), form, {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    });
                 } catch (e) {
                     console.error("Error with: " + e);
                 }
