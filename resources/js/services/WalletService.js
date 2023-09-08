@@ -132,7 +132,7 @@ export class WalletService {
         this.setForm(wallet);
         // await this.form.post("/wallet_delete", {});
         store.dispatch("getMessage", this.translate("wallets.messages[1]"));
-        this.index();
+        // this.index();
     }
 
     // async filter(needDrop) {

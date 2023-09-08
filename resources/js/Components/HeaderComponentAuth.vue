@@ -71,7 +71,7 @@ export default {
             if (window.history.state !== "") {
                 this.$router.go(-1);
             } else {
-                this.$router.push({ name: "default" });
+                this.$router.push({ name: "home" });
             }
         },
     },

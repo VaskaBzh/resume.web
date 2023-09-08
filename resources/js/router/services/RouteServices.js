@@ -2,6 +2,7 @@ import { RoutePublicData } from "../DTO/RoutePublicData";
 import { RouteProfileData } from "../DTO/RouteProfileData";
 import { RouteReferralData } from "../DTO/RouteReferralData";
 import { RouteAuthData } from "../DTO/RouteAuthData";
+import { RouteNamesMap } from "@/router/map/RouteNamesMap";
 
 export class RouteServices {
     constructor() {
@@ -12,7 +13,6 @@ export class RouteServices {
         this.routes = [
             ...this.routes,
             ...this.setDefaultRoutes(),
-            new RoutePublicData("home", "home"),
             // new RoutePublicData('about', 'about'),
             new RoutePublicData("calculator", "calculator"),
             // new RoutePublicData('complexity', 'complexity'),
@@ -33,9 +33,17 @@ export class RouteServices {
     setDefaultRoutes() {
         return [
             {
-                path: "/",
-                name: "default",
-                redirect: "/home",
+                path: `/`,
+                name: "home",
+                component: () =>
+                    import(`../../Pages/${RouteNamesMap.public["home"]}`),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                    ],
+                    link: "LayoutView",
+                },
             },
             {
                 path: "/profile",
