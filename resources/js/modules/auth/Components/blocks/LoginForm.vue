@@ -6,7 +6,7 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="service.errorsExpired.email"
+                :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
@@ -19,13 +19,13 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errorsExpired.email }"
+                :class="{ error: errorsExpired.email }"
             >
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.reg.placeholders[1]')"
                     :model="service.form.password"
-                    :errors="service.errors"
+                    :errors="errors"
                     @change="
                         service.form.password = !!$event.target
                             ? $event.target.value
@@ -88,7 +88,7 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 
 import { LoginService } from "@/modules/auth/services/LoginService";
-import { useRoute } from "vue-router";
+import { mapGetters } from "vuex";
 
 export default {
     name: "login-form",
@@ -100,12 +100,7 @@ export default {
         BlueButton,
     },
     computed: {
-        router() {
-            return useRoute();
-        },
-        errors() {
-            return this.router.params.errors;
-        },
+        ...mapGetters(["errors", "errorsExpired"]),
     },
     data() {
         return {

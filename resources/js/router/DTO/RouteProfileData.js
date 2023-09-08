@@ -11,7 +11,11 @@ export class RouteProfileData {
             errors: {},
         };
         this.meta = {
-            middleware: ["LoadLayoutMiddleware", "AuthCheckProfileMiddleware"],
+            middleware: [
+                "LoadLayoutMiddleware",
+                "AuthCheckProfileMiddleware",
+                "DropErrorsMiddleware",
+            ],
             link: "ProfileLayoutView",
         };
     }

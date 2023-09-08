@@ -85,7 +85,11 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.wait = true;
             try {
-                await api.post("/wallets/create", this.form);
+                await api.post("/wallets/create", this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
                 this.index();
                 this.clearForm();
@@ -104,7 +108,11 @@ export class WalletService {
             this.wait = true;
 
             try {
-                await api.post("/wallets/update", this.form);
+                await api.put("/wallets/update", this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
                 this.index();
                 this.clearForm();
@@ -136,6 +144,10 @@ export class WalletService {
     // }
 
     async fetch() {
-        return await api.get(`/wallets/${this.group_id}`);
+        return await api.get(`/wallets/${this.group_id}`, {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
     }
 }

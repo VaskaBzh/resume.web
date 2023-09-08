@@ -15,8 +15,8 @@ import hashRender from "@/Components/directives/HashRender.vue";
 
 const app = createApp(App);
 
-app.use(router)
-    .use(store)
+app.use(store)
+    .use(router)
     .use(i18n)
     .mixin({ methods: { route: window.route } })
     .directive("scroll", scrollAnimation)

@@ -91,7 +91,14 @@ export class SettingsService {
         };
 
         try {
-            await api.post(route("change", this.user), sendForm);
+            await api.post(
+                route("change", this.user, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }),
+                sendForm
+            );
 
             this.wait = false;
 

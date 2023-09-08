@@ -18,12 +18,16 @@ export default {
         saveToken({ state }) {
             localStorage.setItem("token", state.token);
         },
-        dropUser({ state }, user) {},
-        dropToken({ state }, token) {},
+        dropUser() {
+            localStorage.removeItem("user");
+        },
+        dropToken() {
+            localStorage.removeItem("token");
+        },
     },
     mutations: {
         changeUser(state, user) {
-            state.user = user;
+            state.user = { ...user };
         },
         changeToken(state, token) {
             state.token = token;
@@ -34,10 +38,10 @@ export default {
         token: "",
     },
     getters: {
-        user({ state }) {
+        user(state) {
             return state.user;
         },
-        token({ state }) {
+        token(state) {
             return state.token;
         },
     },

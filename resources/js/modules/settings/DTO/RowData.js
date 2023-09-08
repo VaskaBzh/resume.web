@@ -1,4 +1,4 @@
-import { SvgEnums } from "@/modules/settings/map/SvgEnums";
+import { SvgEnums } from "@/modules/settings/enums/SvgEnums";
 
 export class RowData {
     constructor(title, name, value, svgKey) {

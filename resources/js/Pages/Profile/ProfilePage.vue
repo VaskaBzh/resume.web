@@ -1,5 +1,4 @@
 <template>
-    <Head title="Личный Кабинет" />
     <main-title tag="h1" class="statistic__title" style="width: 100%">
         Добро пожаловать!
     </main-title>

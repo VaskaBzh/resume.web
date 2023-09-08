@@ -203,21 +203,29 @@ export default {
             wait.value = true;
 
             try {
-                await api.post(route("sub.create"), form);
+                await api.post(route("sub.create"), form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
                 closed.value = true;
-                store.dispatch("accounts_all", props.user.id);
+                store.dispatch("accounts_all", store.getters.user.id);
             } catch (e) {
                 console.error("Error with: " + e);
             }
 
             wait.value = false;
-            store.dispatch("accounts_all", props.user.id);
+            store.dispatch("accounts_all", store.getters.user.id);
         };
 
         const logout = async () => {
             try {
-                await api.post("/logout", form);
+                await api.post("/logout", form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
                 useRoute().push({ name: "default" });
             } catch (e) {

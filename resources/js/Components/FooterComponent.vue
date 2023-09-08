@@ -272,6 +272,7 @@ import { ref } from "vue";
 import { mapGetters } from "vuex";
 import { useRoute } from "vue-router";
 import api from "@/api/api";
+import store from "@/store";
 
 export default {
     name: "footer-component",
@@ -299,7 +300,11 @@ export default {
         const sendFeedback = async () => {
             wait.value = true;
             try {
-                await api.post("/send_message", form);
+                await api.post("/send_message", form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
                 form.message = "";
                 form.contacts = "";

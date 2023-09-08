@@ -85,20 +85,21 @@ export default {
         sharedMessages: ReferralsMessage,
     },
     props: {
-        user: Object,
-        errors: Object,
         message: String,
     },
     computed: {
-        ...mapGetters(["allAccounts"]),
+        ...mapGetters(["allAccounts", "user"]),
     },
     data() {
         return {
             percent: 0.8,
-            service: new CabinetService(this.user, this.$t),
+            service: new CabinetService(this.$t),
         };
     },
     watch: {
+        user(newUser) {
+            this.service.setUser(newUser);
+        },
         async allAccounts(newValue) {
             if (newValue) {
                 await this.service.getSelectAccounts();
@@ -106,6 +107,7 @@ export default {
         },
     },
     async mounted() {
+        this.service.setUser(this.user);
         this.service.getGradeList();
 
         this.service.getStatsCards({});

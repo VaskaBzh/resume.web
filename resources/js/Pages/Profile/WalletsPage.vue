@@ -305,7 +305,7 @@ export default {
         this.handleResize();
     },
     data() {
-        return {yy
+        return {
             viewportWidth: 0,
             waitWallet: true,
             wallets: [],
@@ -371,8 +371,7 @@ export default {
         },
     },
     mounted() {
-        const { props } = usePage();
-        this.wallets = new WalletService(props.csrf);
+        this.wallets = new WalletService(this.$t);
         this.walletInit();
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;

@@ -30,7 +30,10 @@
                     <blue-button
                         class="button button-md button-reverce button-reverce-border"
                     >
-                        <router-link :to="{ name: 'registration' }" class="all-link">
+                        <router-link
+                            :to="{ name: 'registration' }"
+                            class="all-link"
+                        >
                             {{ $t("header.login.buttons.registration") }}
                         </router-link>
                     </blue-button>
@@ -82,7 +85,8 @@ import MainLink from "@/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 import api from "@/api/api";
-import {useRoute} from "vue-router";
+import { useRoute } from "vue-router";
+import store from "@/store";
 
 export default {
     components: {
@@ -117,7 +121,11 @@ export default {
         },
         async logout() {
             try {
-                await api.post("/logout", form);
+                await api.post("/logout", form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
                 useRoute().push({ name: "default" });
             } catch (e) {

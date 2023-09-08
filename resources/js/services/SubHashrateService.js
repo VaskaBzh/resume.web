@@ -74,7 +74,12 @@ export class SubHashrateService {
 
     async fetch() {
         return await api.get(
-            `/hashrate/${this.group_id}?offset=${this.offset}`
+            `/hashrate/${this.group_id}?offset=${this.offset}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            }
         );
     }
 

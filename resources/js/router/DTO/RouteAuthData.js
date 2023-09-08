@@ -10,7 +10,11 @@ export class RouteAuthData {
             errors: {},
         };
         this.meta = {
-            middleware: ["LoadLayoutMiddleware", "AuthMiddleware"],
+            middleware: [
+                "LoadLayoutMiddleware",
+                "AuthMiddleware",
+                "DropErrorsMiddleware",
+            ],
             link: "AuthLayoutView",
         };
     }
