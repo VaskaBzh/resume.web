@@ -56,7 +56,7 @@ class RegisterController extends Controller
         $userData = UserData::fromRequest($request->all());
 
         try {
-           // $btcComService->createSub(userData: $userData);
+            $btcComService->createSub(userData: $userData);
 
             $user = $this->create(userData: $userData);
 

@@ -81,8 +81,12 @@ export default {
             this.per_page = $event;
             this.page = 1;
         },
+        user(newUser) {
+            this.service.setUser(newUser);
+        },
     },
     mounted() {
+        this.service.setUser(this.user);
         this.initIncomes();
     },
 };

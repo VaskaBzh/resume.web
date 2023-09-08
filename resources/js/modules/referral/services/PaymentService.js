@@ -30,7 +30,7 @@ export class PaymentService extends TableService {
 
     async fetchIncomes(page, per_page) {
         return await api.get(
-            `/referrals/incomes/${this.user_id}?page=${page}&per_page=${per_page}`,
+            `/referrals/incomes/${this.user.id}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,

@@ -39,7 +39,7 @@ export class ReferralsService extends TableService {
     }
 
     async fetchReferrals(page, per_page) {
-        return await api.get(`/referrals/${this.userюid}`, {
+        return await api.get(`/referrals/${this.user.id}`, {
             headers: {
                 Authorization: `Bearer ${store.getters.token}`,
             },
