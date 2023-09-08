@@ -87,9 +87,16 @@ export class CabinetService {
     }
 
     transformCode(code) {
-        return `${window.location.host}/#/registration?referral_code=${
-            code.split("?")[1].split("=")[1]
-        }`;
+        const firstIndex = 1;
+
+        const params = code.split("?")[firstIndex];
+        const referralCodeParam = params.split("referral_code")[1];
+        const referralCode = referralCodeParam.substr(
+            firstIndex,
+            referralCodeParam.length - firstIndex
+        );
+
+        return `${window.location.host}/#/registration?referral_code=${referralCode}`;
     }
 
     async index() {
