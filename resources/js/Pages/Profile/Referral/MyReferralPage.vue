@@ -54,6 +54,7 @@ export default {
         },
     },
     async mounted() {
+        this.service.setUser(this.user);
         this.service.getGradeList();
         this.service.getPercent();
 

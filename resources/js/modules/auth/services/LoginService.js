@@ -7,8 +7,6 @@ export class LoginService {
     constructor(router) {
         this.form = {};
         this.checkbox = false;
-        this.errors = {};
-        this.errorsExpired = {};
 
         this.route = useRoute();
         this.router = router;
@@ -33,7 +31,10 @@ export class LoginService {
                 name: "statistic",
             });
         } catch (err) {
-            store.dispatch("setFullErrors", err.response.data.errors);
+            // store.dispatch("setFullErrors", err.response.data.errors);
+            store.dispatch("setFullErrors", {
+                email: err.response.data.message,
+            });
         }
     }
 }
