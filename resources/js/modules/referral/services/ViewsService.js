@@ -37,8 +37,7 @@ export class ViewsService {
         const name = routeName[firstIndex];
         const param = routeName[lastIndex];
 
-        console.log(name, param);
-        this.router.push({ name: param, params: { page: param } });
+        this.router.push({ name: param, query: { page: param } });
 
         return this;
     }

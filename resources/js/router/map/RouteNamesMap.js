@@ -20,7 +20,7 @@ export const RouteNamesMap = {
         referral: {
             overview: "Profile/Referral/OverviewPage.vue",
             "my-referral": "Profile/Referral/MyReferralPage.vue",
-            earnRewards: "Profile/Referral/EarnRewardsPage.vue",
+            "earn-rewards": "Profile/Referral/EarnRewardsPage.vue",
         },
     },
 };

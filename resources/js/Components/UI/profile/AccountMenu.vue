@@ -147,7 +147,7 @@ import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import store from "../../../store";
 import { ref } from "vue";
-import { useRoute } from "vue-router";
+import { useRoute, useRouter } from "vue-router";
 import api from "@/api/api";
 
 export default {
@@ -194,6 +194,7 @@ export default {
     setup() {
         let wait = ref(false);
         let closed = ref(false);
+        const router = useRouter();
 
         const form = {
             name: "",
@@ -203,7 +204,7 @@ export default {
             wait.value = true;
 
             try {
-                await api.post(route("sub.create"), form, {
+                await api.post("/subs/create", form, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -221,13 +222,16 @@ export default {
 
         const logout = async () => {
             try {
-                await api.post("/logout", form, {
+                await api.post("/logout", {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
 
-                useRoute().push({ name: "default" });
+                store.dispatch("dropUser");
+                store.dispatch("dropToken");
+
+                router.push({ name: "default" });
             } catch (e) {
                 console.error("Error with: " + e);
             }
@@ -273,8 +277,8 @@ export default {
         accounts() {
             this.change_height();
         },
-        "useRoute().fullPath"(newUrl) {
-            if (newUrl.startsWith("/profile/accounts") && this.linkAddClicked) {
+        linkAddClicked(newBool) {
+            if (this.$route.fullPath !== "/profile/accounts" && newBool) {
                 this.linkAddClicked = false;
                 setTimeout(() => {
                     this.openedAddPopup = true;
@@ -287,20 +291,19 @@ export default {
     },
     methods: {
         async openAddPopup() {
-            if (useRoute().currentRoute.value.path !== "/profile/accounts") {
-                await useRoute().push({ name: "accounts" });
+            if (this.$route.fullPath !== "/profile/accounts") {
+                await this.$router.push({ name: "accounts" });
+
+                this.linkAddClicked = true;
 
                 setTimeout(() => {
                     this.$refs.input.focus();
                 }, 300);
-
-                this.linkAddClicked = true;
             } else {
                 this.openedAddPopup = true;
 
                 setTimeout(() => {
                     this.$refs.input.focus();
-                    console.log("focussss");
                 }, 300);
 
                 setTimeout(() => {

@@ -31,10 +31,8 @@
 </template>
 
 <script>
-import { router } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
-import {useRoute} from "vue-router";
 
 export default {
     name: "header-component-auth",
@@ -48,11 +46,6 @@ export default {
             viewportWidth: 0,
             is_reg: false,
         };
-    },
-    computed: {
-        router() {
-            return useRoute();
-        },
     },
     props: {
         is_auth: {
@@ -76,9 +69,9 @@ export default {
         },
         back() {
             if (window.history.state !== "") {
-                this.router.go(-1);
+                this.$router.go(-1);
             } else {
-                this.router.push({ name: "default" });
+                this.$router.push({ name: "default" });
             }
         },
     },
@@ -167,5 +160,4 @@ export default {
         }
     }
 }
-
 </style>

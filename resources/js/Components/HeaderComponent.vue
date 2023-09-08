@@ -84,20 +84,18 @@
 </template>
 
 <script>
-import {Link, useForm} from "@inertiajs/vue3";
+import { useForm } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
-import {defineComponent, ref} from "vue";
+import { defineComponent, ref } from "vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
-import {useRoute} from "vue-router";
 
 export default defineComponent({
     components: {
-        Link,
         NavLinks,
         AccountMenu,
         SelectLanguage,
@@ -151,9 +149,9 @@ export default defineComponent({
     computed: {
         ...mapGetters(["getIncome", "allAccounts", "getActive", "getTheme"]),
         accountLink() {
-            let url = useRoute().fullPath.startsWith("http")
-                ? new URL(useRoute().fullPath).pathname
-                : useRoute().fullPath;
+            let url = this.$route.fullPath.startsWith("http")
+                ? new URL(this.$route.fullPath).pathname
+                : this.$route.fullPath;
             return url.startsWith("/profile");
         },
     },
@@ -166,7 +164,7 @@ export default defineComponent({
                 this.is_open = !this.is_open;
                 this.is_open
                     ? (document.querySelector("body").style.overflowY =
-                        "hidden")
+                          "hidden")
                     : (document.querySelector("body").style.overflowY = "auto");
             }
         },

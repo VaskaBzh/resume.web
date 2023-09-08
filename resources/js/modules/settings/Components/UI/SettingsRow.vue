@@ -34,6 +34,7 @@ import { SettingsMessage } from "../../lang/SettingsMessage";
 import api from "@/api/api";
 import { useRoute } from "vue-router";
 import store from "@/store";
+import { mapGetters } from "vuex";
 
 export default {
     name: "settings-row",
@@ -54,6 +55,9 @@ export default {
             this.value = this.val;
         }
     },
+    computed: {
+        ...mapGetters(["user"]),
+    },
     methods: {
         async checkbox_changes(data) {
             if (this.val !== null) {
@@ -63,7 +67,7 @@ export default {
                 };
 
                 try {
-                    await api.post(route("change"), form, {
+                    await api.post(`/change/${this.user.id}`, form, {
                         headers: {
                             Authorization: `Bearer ${store.getters.token}`,
                         },

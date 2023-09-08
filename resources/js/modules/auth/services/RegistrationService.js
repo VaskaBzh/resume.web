@@ -2,7 +2,7 @@ import { FormData } from "@/modules/auth/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import api from "@/api/api";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 
 export class RegistrationService {
     constructor() {
@@ -12,6 +12,8 @@ export class RegistrationService {
         this.errors = {};
         this.errorsExpired = {};
 
+        this.router = useRouter();
+
         this.validateService = new ValidateService();
     }
 
@@ -19,7 +21,7 @@ export class RegistrationService {
         const referral_code = this.getReferralCode(window.location.search);
 
         this.form = {
-            ...new FormData("", "", "", "", referral_code, false),
+            ...new FormData("", "", "", "", referral_code),
         };
     }
 
@@ -30,14 +32,12 @@ export class RegistrationService {
     }
 
     async account_create() {
-        this.checkbox = false;
-
-        if (this.form.checkbox) {
+        if (this.checkbox) {
             if (Object.entries(this.validate).length === 0) {
                 try {
                     await api.post("/register", this.form);
 
-                    useRoute().push({ name: "statistic" });
+                    this.router.push({ name: "statistic" });
                 } catch (err) {
                     console.error("Error with: " + err);
 

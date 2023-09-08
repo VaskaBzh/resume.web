@@ -48,6 +48,7 @@ import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vu
 
 import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import { mapGetters } from "vuex";
 
 export default {
     i18n: {
@@ -60,17 +61,15 @@ export default {
         SettingsPopup,
     },
     props: {
-        errors: Object,
         message: String,
-        user: Object,
         auth_user: Boolean,
+    },
+    computed: {
+        ...mapGetters(["user"]),
     },
     data() {
         return {
-            settingsService: new SettingsService(
-                this.$t,
-                this.user
-            ),
+            settingsService: new SettingsService(this.$t),
             is_checked: true,
             notification: true,
             password_confirmation: "",
@@ -82,8 +81,8 @@ export default {
         "settingsService.profit"(newValue) {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },
-        user(newUserProp) {
-            this.settingsService.setUser(newUserProp);
+        user(newUser) {
+            this.settingsService.setUser(newUser);
             this.settingsService.setUserData();
         },
     },
@@ -98,6 +97,9 @@ export default {
     mounted() {
         document.title = this.$t("header.links.settings");
         this.$refs.page.style.opacity = 1;
+
+        this.settingsService.setUser(this.user);
+        this.settingsService.setUserData();
 
         this.settingsProcess();
     },

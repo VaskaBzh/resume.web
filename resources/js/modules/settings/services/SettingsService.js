@@ -15,7 +15,7 @@ export class SettingsService {
         this.rows = [];
         this.form = {};
         this.validate = {};
-        this.user = user;
+        this.user = null;
 
         this.userData = "";
 
@@ -91,14 +91,11 @@ export class SettingsService {
         };
 
         try {
-            await api.post(
-                route("change", this.user, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                }),
-                sendForm
-            );
+            await api.put(`/change/${this.user.id}`, sendForm, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            });
 
             this.wait = false;
 

@@ -11,10 +11,12 @@ export default {
     name: "app",
     components: {
         AppLayoutView,
-    }
-}
+    },
+    created() {
+        this.$store.dispatch("setUser");
+        this.$store.dispatch("setToken");
+    },
+};
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

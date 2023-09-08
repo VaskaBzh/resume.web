@@ -67,7 +67,7 @@ export default {
             this.viewportWidth = window.innerWidth;
         },
         setLinks() {
-            this.service.setLinks(!!this.user.has_referral_role);
+            this.service.setLinks(this.user);
         },
     },
     mounted() {

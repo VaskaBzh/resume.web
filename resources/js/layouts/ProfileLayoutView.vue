@@ -84,10 +84,6 @@ export default {
         }
         clearInterval(this.interval);
     },
-    created() {
-        this.$store.dispatch("setUser");
-        this.$store.dispatch("setToken");
-    },
 };
 </script>
 <style lang="scss">

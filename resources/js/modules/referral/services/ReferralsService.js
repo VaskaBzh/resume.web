@@ -8,10 +8,10 @@ import api from "@/api/api";
 import store from "@/store";
 
 export class ReferralsService extends TableService {
-    constructor(id, translate, titleIndexes) {
+    constructor(translate, titleIndexes) {
         super(translate, titleIndexes);
 
-        this.user_id = id;
+        this.user = null;
     }
 
     setter(referral) {
@@ -28,6 +28,10 @@ export class ReferralsService extends TableService {
         );
     }
 
+    setUser(user) {
+        this.user = user;
+    }
+
     useTranslater(indexes) {
         return indexes.map((index) =>
             this.translate(`referrals_titles[${index}]`)
@@ -35,7 +39,7 @@ export class ReferralsService extends TableService {
     }
 
     async fetchReferrals(page, per_page) {
-        return await api.get(`/referrals/${this.user_id}`, {
+        return await api.get(`/referrals/${this.userюid}`, {
             headers: {
                 Authorization: `Bearer ${store.getters.token}`,
             },
