@@ -2,13 +2,19 @@ import { TableService } from "@/services/extends/TableService";
 
 import { PaymentData } from "@/modules/referral/DTO/PaymentData";
 import api from "@/api/api";
+import store from "@/store";
 
 export class PaymentService extends TableService {
-    constructor(id, translate, titleIndexes) {
+    constructor(translate, titleIndexes) {
         super(translate, titleIndexes);
 
-        this.user_id = id;
+        this.user = null;
     }
+
+    setUser(user) {
+        this.user = user;
+    }
+
     setter(referral) {
         return new PaymentData(
             this.dateFormatter(referral["created_at"]),
@@ -22,7 +28,12 @@ export class PaymentService extends TableService {
 
     async fetchIncomes(page, per_page) {
         return await api.get(
-            `/referrals/incomes/${this.user_id}?page=${page}&per_page=${per_page}`
+            `/referrals/incomes/${this.user_id}?page=${page}&per_page=${per_page}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            }
         );
     }
 

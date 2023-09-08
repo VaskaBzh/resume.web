@@ -26,7 +26,6 @@
 </template>
 
 <script>
-import calculatorLayoutView from "../Shared/CalculatorLayoutView.vue";
 import FirstCalculatorView from "../modules/calculator/Components/views/FirstCalculatorView.vue";
 import StatsCalculatorView from "../modules/calculator/Components/views/StatsCalculatorView.vue";
 import LightCalculatorView from "../modules/calculator/Components/views/LightCalculatorView.vue";
@@ -35,7 +34,6 @@ import HeaderComponentCalculator from "../modules/calculator/Components/HeaderCo
 
 export default {
     name: "calculator-page",
-    layout: calculatorLayoutView,
     props: {
         user: Object,
         errors: Object,

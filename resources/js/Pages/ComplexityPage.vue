@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('complexity.title')" />
     <div class="complexity">
         <div class="complexity__container">
             <div class="page__main">

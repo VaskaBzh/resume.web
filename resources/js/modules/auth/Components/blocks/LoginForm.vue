@@ -6,7 +6,7 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="service.errors.email"
+                :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
@@ -19,7 +19,7 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
+                :class="{ error: errorsExpired.email }"
             >
                 <main-password
                     name="password"
@@ -72,8 +72,8 @@
         >
         <p class="text text-light form-auth_text">
             {{ this.$t("auth.login.link[0]") }}
-            <Link :href="route('page', { page: 'registration' })" class="form-auth_link">
-                {{ this.$t("auth.login.link[1]") }}</Link
+            <router-link :to="{ name: 'registration' }" class="form-auth_link">
+                {{ this.$t("auth.login.link[1]") }}</router-link
             >
         </p>
     </form>
@@ -81,7 +81,6 @@
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
-import { Link } from "@inertiajs/vue3";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
@@ -89,30 +88,25 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 
 import { LoginService } from "@/modules/auth/services/LoginService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "login-form",
-    props: {
-        errors: Object,
-    },
     components: {
         AuthInput,
         MainPassword,
         AuthErrors,
-        Link,
         MainTitle,
         BlueButton,
+    },
+    computed: {
+        ...mapGetters(["errors", "errorsExpired"]),
     },
     data() {
         return {
             pdf,
-            service: new LoginService(),
+            service: new LoginService(this.$router),
         };
-    },
-    watch: {
-        errors(newVal) {
-            this.service.setErrors(newVal);
-        },
     },
     mounted() {
         this.service.setForm();

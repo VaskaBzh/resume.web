@@ -16,7 +16,7 @@
                     />
                 </div>
                 <transition name="page">
-                    <slot />
+                    <router-view />
                 </transition>
             </div>
         </div>
@@ -24,7 +24,6 @@
 </template>
 
 <script>
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
@@ -32,7 +31,6 @@ import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 
 export default {
-    layout: ProfileLayoutView,
     components: {
         MainTitle,
         MainTabs,
@@ -47,18 +45,23 @@ export default {
     },
     data() {
         return {
-            viewService: new ViewsService(this.$t, this.$page),
+            viewService: new ViewsService(this.$t),
         };
+    },
+    watch: {
+        $route(newRoute) {
+            this.viewService.setView(newRoute);
+        },
     },
     methods: {
         referralRouting(routeName) {
-            this.viewService.tabRoute(routeName).setView(this.$page);
+            this.viewService.tabRoute(routeName);
         },
     },
     mounted() {
         document.title = this.$t("header.links.referral");
 
-        this.viewService.setTabs();
+        this.viewService.setTabs().setView(this.$route);
     },
 };
 </script>
