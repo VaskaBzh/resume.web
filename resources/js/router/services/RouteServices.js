@@ -27,6 +27,7 @@ export class RouteServices {
             new RouteProfileData("settings", "settings"),
             new RouteProfileData("wallets", "wallets"),
             new RouteProfileData("workers", "workers"),
+            new RouteProfileData("watchers", "watchers"),
         ];
     }
 

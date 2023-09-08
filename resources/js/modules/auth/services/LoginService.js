@@ -31,10 +31,12 @@ export class LoginService {
                 name: "statistic",
             });
         } catch (err) {
-            // store.dispatch("setFullErrors", err.response.data.errors);
             store.dispatch("setFullErrors", {
-                email: err.response.data.message,
+                ...err.response.data,
             });
+            // store.dispatch("setFullErrors", {
+            //     email: err.response.data.message,
+            // });
         }
     }
 }

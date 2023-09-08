@@ -17,6 +17,7 @@ export class TabsService {
             new TabsData("/profile/accounts", "accounts", "accounts"),
             new TabsData("/profile/workers", "workers", "workers"),
             new TabsData("/profile/connecting", "connecting", "connecting"),
+            new TabsData("/profile/watchers", "watchers", "connecting"),
         ];
 
         if (user.roles.find((role) => role.name === "referral"))
