@@ -3,17 +3,11 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\ValidationException;
 use App\Models\User;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
@@ -37,8 +31,8 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
-                'message' => 'Credentials do not match'
-            ], Response::HTTP_UNAUTHORIZED);
+                'error' => 'Credentials do not match'
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         $user = User::whereEmail($request->email)->first();
@@ -68,8 +62,8 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
             return new JsonResponse([
-                'message' => 'Credentials do not match'
-            ], Response::HTTP_UNAUTHORIZED);
+                'error' => 'Credentials do not match'
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         User::whereEmail($request->email)
