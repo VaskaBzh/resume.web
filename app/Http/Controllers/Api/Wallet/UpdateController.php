@@ -9,15 +9,16 @@ use App\Dto\WalletData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallet\UpdateRequest;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class UpdateController extends Controller
 {
-    public function __invoke(UpdateRequest $request): RedirectResponse
+    public function __invoke(UpdateRequest $request): JsonResource
     {
         Upsert::execute(
             walletData: WalletData::fromRequest($request->all())
         );
 
-        return back()->with('message', trans('actions.wallet_update'));
+        return new JsonResource(['message' => trans('actions.wallet_update')]);
     }
 }
