@@ -121,7 +121,7 @@ export default {
         },
         async logout() {
             try {
-                await api.post("/logout", {
+                await api.post("/logout", {}, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },

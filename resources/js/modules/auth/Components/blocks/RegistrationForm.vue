@@ -3,10 +3,10 @@
         <main-title tag="h3" class="form-auth_title">{{
             this.$t("auth.reg.title")
         }}</main-title>
-        <auth-errors :errors="service.errors" />
+        <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="service.errorsExpired.email"
+                :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.reg.placeholders[0]')"
                 name="email"
@@ -18,7 +18,7 @@
                 "
             />
             <auth-input
-                :error="service.errorsExpired.name"
+                :error="errorsExpired.name"
                 :model="service.form.name"
                 :placeholder="this.$t('auth.reg.placeholders[1]')"
                 name="name"
@@ -31,13 +31,13 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errorsExpired.password }"
+                :class="{ error: errorsExpired.password }"
             >
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.reg.placeholders[2]')"
                     :model="service.form.password"
-                    :errors="errors"
+                    :errors="errorsExpired"
                     @change="
                         service.validateProcess(
                             !!$event.target ? $event.target.value : $event
@@ -48,7 +48,7 @@
             <main-validate :validate="service.validate" />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errorsExpired.password }"
+                :class="{ error: errorsExpired.password }"
             >
                 <main-password
                     name="password_confirmation"
@@ -126,7 +126,6 @@
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
-import { Link } from "@inertiajs/vue3";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
@@ -135,20 +134,20 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 
 import { RegistrationService } from "@/modules/auth/services/RegistrationService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "registration-form",
-    props: {
-        errors: Object,
-    },
     components: {
         AuthInput,
         MainPassword,
         MainValidate,
         AuthErrors,
-        Link,
         MainTitle,
         BlueButton,
+    },
+    computed: {
+        ...mapGetters(["errors", "errorsExpired"]),
     },
     data() {
         return {

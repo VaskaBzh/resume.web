@@ -1,24 +1,22 @@
 <template>
-    <referrals-layout-view>
-        <div class="referral__content">
-            <div class="referral__head">
-                <!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
-                <percent-card
-                    :percent="service.percent"
-                    :percentSvg="service.percentSvg"
-                    :percentList="service.gradeList"
-                    class="referral__card referral__card-percent"
-                />
-            </div>
-            <wrap-table
-                :table="service.table"
-                :wait="service.waitTable"
-                :empty="service.rows"
-                :errors="errors"
-                :rowsVal="1000"
+    <div class="referral__content">
+        <div class="referral__head">
+            <!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
+            <percent-card
+                :percent="service.percent"
+                :percentSvg="service.percentSvg"
+                :percentList="service.gradeList"
+                class="referral__card referral__card-percent"
             />
         </div>
-    </referrals-layout-view>
+        <wrap-table
+            :table="service.table"
+            :wait="service.waitTable"
+            :empty="service.rows"
+            :errors="errors"
+            :rowsVal="1000"
+        />
+    </div>
 </template>
 
 <script>

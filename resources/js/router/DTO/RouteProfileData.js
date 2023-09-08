@@ -6,10 +6,6 @@ export class RouteProfileData {
         this.name = name;
         this.component = () =>
             import(`../../Pages/${RouteNamesMap.profile[component]}`);
-        this.params = {
-            user: null,
-            errors: {},
-        };
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",

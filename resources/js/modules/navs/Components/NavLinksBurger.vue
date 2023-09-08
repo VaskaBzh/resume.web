@@ -117,11 +117,15 @@ export default {
         },
         async logout() {
             try {
-                await api.post("/logout", {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                await api.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
 
                 store.dispatch("dropUser");
                 store.dispatch(" dropToken");

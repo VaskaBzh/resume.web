@@ -28,13 +28,14 @@ export class ViewsService {
         const lastIndexUrl = splitedUrl.length - 1;
         const pageParams = splitedUrl[lastIndexUrl].split("=");
         const lastIndexParams = splitedUrl.length - 1;
+
         this.view = pageParams[lastIndexParams];
     }
 
     tabRoute(routeName) {
-        const firstIndex = 0;
+        // const firstIndex = 0;
         const lastIndex = routeName.length - 1;
-        const name = routeName[firstIndex];
+        // const name = routeName[firstIndex];
         const param = routeName[lastIndex];
 
         this.router.push({ name: param, query: { page: param } });

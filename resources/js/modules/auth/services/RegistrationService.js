@@ -3,14 +3,13 @@ import { FormData } from "@/modules/auth/DTO/FormData";
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import api from "@/api/api";
 import { useRouter } from "vue-router";
+import store from "@/store";
 
 export class RegistrationService {
     constructor() {
         this.form = {};
         this.validate = {};
         this.checkbox = false;
-        this.errors = {};
-        this.errorsExpired = {};
 
         this.router = useRouter();
 
@@ -41,7 +40,7 @@ export class RegistrationService {
                 } catch (err) {
                     console.error("Error with: " + err);
 
-                    this.setErrors(err.response.data.errors);
+                    store.dispatch("setFullErrors", err.response.data.errors);
                 }
             }
         } else {
@@ -55,14 +54,5 @@ export class RegistrationService {
             this.form,
             this.validate
         );
-    }
-
-    setErrors(errors) {
-        this.errors = { ...errors };
-
-        this.errorsExpired = { ...errors };
-        setTimeout(() => {
-            this.errorsExpired = {};
-        }, 1500);
     }
 }

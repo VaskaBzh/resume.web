@@ -2,6 +2,7 @@ import { RoutePublicData } from "../DTO/RoutePublicData";
 import { RouteProfileData } from "../DTO/RouteProfileData";
 import { RouteReferralData } from "../DTO/RouteReferralData";
 import { RouteAuthData } from "../DTO/RouteAuthData";
+import { RouteNamesMap } from "@/router/map/RouteNamesMap";
 
 export class RouteServices {
     constructor() {
@@ -27,9 +28,6 @@ export class RouteServices {
             new RouteProfileData("settings", "settings"),
             new RouteProfileData("wallets", "wallets"),
             new RouteProfileData("workers", "workers"),
-            new RouteReferralData("overview", "overview"),
-            new RouteReferralData("my-referral", "my-referral"),
-            new RouteReferralData("earn-rewards", "earn-rewards"),
         ];
     }
 
@@ -48,14 +46,20 @@ export class RouteServices {
             {
                 path: "/profile/referral",
                 name: "referral",
+                params: { page: "" },
+                component: () =>
+                    import(`../../layouts/ReferralsLayoutView.vue`),
                 redirect: (to) => {
-                    if (!to.query.page) {
-                        return {
-                            name: "overview",
-                            query: { page: "overview" },
-                        };
-                    }
+                    return {
+                        name: "overview",
+                        query: { page: "overview" },
+                    };
                 },
+                children: [
+                    new RouteReferralData("overview", "overview"),
+                    new RouteReferralData("my-referral", "my-referral"),
+                    new RouteReferralData("earn-rewards", "earn-rewards"),
+                ],
             },
         ];
     }

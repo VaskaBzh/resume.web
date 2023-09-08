@@ -16,7 +16,7 @@
                     />
                 </div>
                 <transition name="page">
-                    <slot />
+                    <router-view />
                 </transition>
             </div>
         </div>
@@ -48,9 +48,14 @@ export default {
             viewService: new ViewsService(this.$t),
         };
     },
+    watch: {
+        $route(newRoute) {
+            this.viewService.setView(newRoute);
+        },
+    },
     methods: {
         referralRouting(routeName) {
-            this.viewService.tabRoute(routeName).setView(this.$route.fullPath);
+            this.viewService.tabRoute(routeName);
         },
     },
     mounted() {

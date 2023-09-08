@@ -96,6 +96,7 @@ export class WalletService {
                 this.closePopup();
             } catch (e) {
                 console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
             }
             this.wait = false;
         } else {
@@ -119,6 +120,7 @@ export class WalletService {
                 this.closePopup();
             } catch (e) {
                 console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
             }
             this.wait = false;
         } else {
@@ -144,10 +146,18 @@ export class WalletService {
     // }
 
     async fetch() {
-        return await api.get(`/wallets/${this.group_id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        let response = null;
+
+        try {
+            response = await api.get(`/wallets/${this.group_id}`, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            });
+        } catch (e) {
+            store.dispatch("setFullErrors", e.response.data.errors);
+        }
+
+        return response;
     }
 }

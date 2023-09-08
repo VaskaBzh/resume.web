@@ -162,7 +162,6 @@ export default {
         user: {
             type: Object,
         },
-        errors: Object,
         is_auth: {
             type: Boolean,
             default: false,
@@ -214,6 +213,7 @@ export default {
                 store.dispatch("accounts_all", store.getters.user.id);
             } catch (e) {
                 console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
             }
 
             wait.value = false;
@@ -222,11 +222,15 @@ export default {
 
         const logout = async () => {
             try {
-                await api.post("/logout", {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                await api.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
 
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
@@ -246,7 +250,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getIncome", "getAccount", "allAccounts", "getActive"]),
+        ...mapGetters([
+            "getIncome",
+            "getAccount",
+            "allAccounts",
+            "getActive",
+            "errors",
+        ]),
         accounts() {
             let arr = [];
             if (this.allAccounts && Object.values(this.allAccounts)[0]) {
