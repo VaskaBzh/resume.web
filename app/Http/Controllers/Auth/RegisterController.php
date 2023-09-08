@@ -60,13 +60,13 @@ class RegisterController extends Controller
 
             $user = $this->create(userData: $userData);
 
+            if ($request->referral_code) {
+                ReferralService::attach(referral: $user, code: $request->referral_code);
+            }
+
             event(new Registered(
                 user: $user
             ));
-
-            if ($request->referral_code) {
-                ReferralService::attach(user: $user, code: $request->referral_code);
-            }
 
             return new JsonResponse([
                 'message' => 'success',
