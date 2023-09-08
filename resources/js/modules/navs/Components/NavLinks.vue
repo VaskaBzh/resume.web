@@ -131,10 +131,10 @@ export default {
                     }
                 );
 
+                await this.router.push({ name: "home" });
+
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
-
-                this.router.push({ name: "home" });
             } catch (e) {
                 console.error("Error with: " + e);
             }
