@@ -20,9 +20,11 @@ class ListController extends Controller
             return new JsonResponse(['message' => 'referral code not exists'], 422);
         }
 
-        $sub = Sub::find($user->referral_code['group_id']);
+        $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
 
-        $referralSubs = ReferralService::getReferralCollection(owner: $sub, btcComService: $btcComService);
+        $owner = Sub::find($referralCodeData['group_id']);
+
+        $referralSubs = ReferralService::getReferralCollection(owner: $owner, btcComService: $btcComService);
 
         return new ReferralResourceCollection($referralSubs);
     }

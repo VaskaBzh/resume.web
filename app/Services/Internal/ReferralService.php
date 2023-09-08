@@ -66,7 +66,7 @@ class ReferralService
                 'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
                 'referral_inactive_workers_count' => $referralSubCollection->sum('workers_count_in_active'),
                 'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
-                'total_amount' => resolve(UserRepository::class)->getTotalIncomesTotalAmount($user->pivot->id)
+                'total_amount' => resolve(UserRepository::class)->getIncomesTotalAmount($user->pivot->id)
             ];
         });
     }

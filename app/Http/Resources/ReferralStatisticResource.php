@@ -24,7 +24,7 @@ class ReferralStatisticResource extends JsonResource
             'attached_referrals_count' => $this->statistic['attached_referrals_count'],
             'active_referrals_count' => $this->statistic['active_referrals_count'],
             'referrals_total_amount' => $this->statistic['referrals_total_amount'],
-            'code' => route('page', 'registration?referral_code=' . $this->referral_code),
+            'code' => route('v1.register', 'referral_code=' . $this->referral_code),
         ];
     }
 }

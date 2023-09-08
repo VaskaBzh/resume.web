@@ -30,7 +30,7 @@ class UserRepository
             ->paginate($perPage);
     }
 
-    public function getTotalIncomesTotalAmount(int $referralId): int|float|null
+    public function getIncomesTotalAmount(int $referralId): string|float|null
     {
         return DB::table('incomes')
             ->where('referral_id', $referralId)
