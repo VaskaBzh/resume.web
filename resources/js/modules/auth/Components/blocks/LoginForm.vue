@@ -6,7 +6,7 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="errorsExpired.email"
+                :error="errorsExpired.error"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
@@ -19,7 +19,7 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: errorsExpired.email }"
+                :class="{ error: errorsExpired.error }"
             >
                 <main-password
                     name="password"

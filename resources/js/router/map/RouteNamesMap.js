@@ -17,6 +17,7 @@ export const RouteNamesMap = {
         settings: "Profile/SettingsPage.vue",
         wallets: "Profile/WalletsPage.vue",
         workers: "Profile/WorkersPage.vue",
+        watchers: "Profile/WatchersPage.vue",
         referral: {
             overview: "Profile/Referral/OverviewPage.vue",
             "my-referral": "Profile/Referral/MyReferralPage.vue",
