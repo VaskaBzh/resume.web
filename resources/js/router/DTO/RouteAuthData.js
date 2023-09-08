@@ -6,6 +6,9 @@ export class RouteAuthData {
         this.name = name;
         this.component = () =>
             import(`../../Pages/${RouteNamesMap.public[component]}`);
+        this.query = {
+            referral_code: "",
+        };
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",

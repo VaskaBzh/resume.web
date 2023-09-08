@@ -152,13 +152,8 @@ export default {
     data() {
         return {
             pdf,
-            service: new RegistrationService(),
+            service: new RegistrationService(this.$router, this.$route),
         };
-    },
-    watch: {
-        errors(newVal) {
-            this.service.setErrors(newVal);
-        },
     },
     mounted() {
         this.service.setForm();

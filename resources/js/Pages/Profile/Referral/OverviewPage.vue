@@ -91,7 +91,7 @@ export default {
     data() {
         return {
             percent: 0.8,
-            service: new CabinetService(this.$t),
+            service: new CabinetService(this.$t, this.$route),
         };
     },
     watch: {
