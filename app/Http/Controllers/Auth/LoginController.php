@@ -47,7 +47,8 @@ class LoginController extends Controller
         return new JsonResponse([
             'user' => $user,
             'token' => $token->plainTextToken,
-            'expired_at' => $token->accessToken->expires_at
+            'expired_at' => $token->accessToken->expires_at,
+            'hash_referral_role' => $user->hasRole('referral')
         ]);
     }
 
