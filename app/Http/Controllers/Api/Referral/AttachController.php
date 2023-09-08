@@ -16,7 +16,7 @@ class AttachController extends Controller
     public function __invoke(User $user, AttachReferralRequest $request): JsonResponse
     {
         try {
-            ReferralService::attach(user: $user, code: $request->code);
+            ReferralService::attach(referral: $user, code: $request->code);
         } catch (\Exception $e) {
             return new JsonResponse([
                 'message' => $e->getMessage()
