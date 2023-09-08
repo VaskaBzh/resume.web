@@ -27,6 +27,12 @@ export class LoginService {
             store.dispatch("setUser", user);
             store.dispatch("setToken", token);
 
+            if (this.route?.query?.verify_hash) {
+                await api.post("/verify", {
+                    user: user,
+                });
+            }
+
             this.router.push({
                 name: "statistic",
             });
