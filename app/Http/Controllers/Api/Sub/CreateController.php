@@ -30,7 +30,7 @@ class CreateController extends Controller
             report($e);
 
             return new JsonResponse([
-                'message' => trans('actions.fail_sub_create')
+                'error' => trans('actions.fail_sub_create')
             ]);
         }
 
