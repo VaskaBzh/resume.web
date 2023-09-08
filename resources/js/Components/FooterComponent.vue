@@ -76,7 +76,7 @@
         <div class="footer__main">
             <div class="footer__row">
                 <div class="footer__social_con">
-                    <router-link :to="{ name: 'default' }">
+                    <router-link :to="{ name: 'home' }">
                         <img
                             class="nav__logo"
                             v-if="!getTheme"

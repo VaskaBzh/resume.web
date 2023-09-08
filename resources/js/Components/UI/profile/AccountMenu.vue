@@ -235,7 +235,7 @@ export default {
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
 
-                router.push({ name: "default" });
+                router.push({ name: "home" });
             } catch (e) {
                 console.error("Error with: " + e);
             }

@@ -134,7 +134,7 @@ export default {
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
 
-                this.router.push({ name: "default" });
+                this.router.push({ name: "home" });
             } catch (e) {
                 console.error("Error with: " + e);
             }
@@ -182,7 +182,7 @@ export default {
             return [
                 {
                     link: "home",
-                    page: "/home",
+                    page: "/",
                     name: this.$t("header.links.home"),
                 },
                 {
