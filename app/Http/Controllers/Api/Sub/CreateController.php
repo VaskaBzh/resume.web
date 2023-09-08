@@ -23,14 +23,14 @@ class CreateController extends Controller
             );
 
             if (isset($result['errors'])) {
-                return new JsonResponse(['message' => $result['errors']]);
+                return new JsonResponse(['error' => $result['errors']]);
             }
 
         } catch (\Exception $e) {
             report($e);
 
             return new JsonResponse([
-                'message' => trans('actions.fail_sub_create')
+                'error' => trans('actions.fail_sub_create')
             ]);
         }
 
