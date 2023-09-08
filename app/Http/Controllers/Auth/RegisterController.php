@@ -60,9 +60,9 @@ class RegisterController extends Controller
 
             $user = $this->create(userData: $userData);
 
-//            event(new Registered(
-//                user: $user
-//            ));
+            event(new Registered(
+                user: $user
+            ));
 
             if ($request->referral_code) {
                 ReferralService::attach(user: $user, code: $request->referral_code);
@@ -77,35 +77,9 @@ class RegisterController extends Controller
             report($e);
 
             return new JsonResponse([
-                'message' => 'Something went wrong! Please contact with tech support'
+                'error' => 'Something went wrong! Please contact with tech support'
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-    }
-
-    public function isUserAuthorizedForVerification(Request $request, User $user)
-    {
-        if (!hash_equals((string)$user->getKey(), (string)$request->route('id'))) {
-            return false;
-        }
-
-        if (!hash_equals(sha1($user->getEmailForVerification()), (string)$request->route('hash'))) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function verify(Request $request, $id, $hash)
-    {
-        $user = User::findOrFail($id);
-
-        if (!$this->isUserAuthorizedForVerification($request, $user)) {
-            return abort(403, 'Unauthorized action.');
-        }
-
-        $user->markEmailAsVerified();
-
-        return redirect($this->redirectPath())->with('message', 'Ваша почта успешно подтверждена!');
     }
 
     protected function messages()
