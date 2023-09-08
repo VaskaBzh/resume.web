@@ -4,7 +4,7 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
 
 export class CabinetService {
-    constructor(translate) {
+    constructor(translate, route) {
         this.statsCards = [];
         this.accounts = [];
         this.gradeList = [];
@@ -13,6 +13,8 @@ export class CabinetService {
 
         this.code = "";
         this.activeSubId = null;
+
+        this.route = route;
 
         this.user = null;
     }
@@ -88,6 +90,12 @@ export class CabinetService {
         this.activeSubId = group_id;
     }
 
+    transformCode(code) {
+        return `${window.location.host}/#/registration?referral_code=${
+            code.split("?")[1].split("=")[1]
+        }`;
+    }
+
     async index() {
         let response = {};
 
@@ -105,7 +113,8 @@ export class CabinetService {
 
         const result = response?.data || response;
 
-        this.setCode(result.code || "...");
+        let code = this.transformCode(result.code);
+        this.setCode(code || "...");
 
         this.setActiveSub(result.group_id);
 

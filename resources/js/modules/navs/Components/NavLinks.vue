@@ -51,7 +51,7 @@
                     :key="i"
                     class="burger_link-account"
                     :class="{
-                        'burger_link-active': $page.url === link.page,
+                        'burger_link-active': $route.fullPath === link.page,
                     }"
                     :viewportWidth="viewportWidth"
                 ></main-link>
@@ -121,11 +121,15 @@ export default {
         },
         async logout() {
             try {
-                await api.post("/logout", {}, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                await api.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
 
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
@@ -178,7 +182,7 @@ export default {
             return [
                 {
                     link: "home",
-                    page: "/",
+                    page: "/home",
                     name: this.$t("header.links.home"),
                 },
                 {

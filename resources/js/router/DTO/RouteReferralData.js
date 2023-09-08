@@ -8,7 +8,11 @@ export class RouteReferralData {
         this.component = () =>
             import(`../../Pages/${RouteNamesMap.profile.referral[component]}`);
         this.meta = {
-            middleware: ["LoadLayoutMiddleware", "DropErrorsMiddleware"],
+            middleware: [
+                "LoadLayoutMiddleware",
+                "DropErrorsMiddleware",
+                "AuthCheckProfileMiddleware",
+            ],
             link: "ProfileLayoutView",
         };
     }

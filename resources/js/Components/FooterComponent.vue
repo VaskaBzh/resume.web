@@ -1,18 +1,19 @@
 <template>
     <blue-button
         class="feedback"
-        :data-popup="{
-            '#feedback': !route.fullPath.startsWith('/profile'),
-        }"
+        v-show="!route.fullPath.startsWith('/profile')"
+        data-popup="#feedback"
+    >
+        <span class="all-link">{{ $t("footer.feedback.button") }}</span>
+    </blue-button>
+    <blue-button
+        class="feedback"
+        v-show="route.fullPath.startsWith('/profile')"
     >
         <a
             class="all-link"
             target="_blank"
-            :href="
-                route.fullPath.startsWith('/profile')
-                    ? 'https://t.me/allbtc_support'
-                    : '#'
-            "
+            href="https://t.me/allbtc_support"
             >{{ $t("footer.feedback.button") }}</a
         >
     </blue-button>
@@ -276,13 +277,9 @@ import store from "@/store";
 
 export default {
     name: "footer-component",
-    methods: { useRoute },
     components: { MainTitle, MainPopup, BlueButton },
-    props: {
-        errors: Object,
-    },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["getTheme", "errors"]),
         route() {
             return useRoute();
         },
@@ -313,6 +310,7 @@ export default {
                 form.contacts = "";
             } catch (e) {
                 console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
             }
 
             wait.value = false;
