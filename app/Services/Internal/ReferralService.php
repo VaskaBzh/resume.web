@@ -76,7 +76,7 @@ class ReferralService
         return resolve(UserRepository::class)->getReferralIncomeCollection($groupId, $perPage);
     }
 
-    public static function attach(User $user, string $code): void
+    public static function attach(User $referral, string $code): void
     {
         $owner = User::where('referral_code', $code)->first();
 
@@ -84,14 +84,14 @@ class ReferralService
             throw new \Exception('Неверный код');
         }
 
-        if ($owner->id === $user->id) {
+        if ($owner->id === $referral->id) {
             throw new \Exception('Нельзя добавить собственный аккаунт');
         }
 
         $decryptedData = static::getReferralDataFromCode(code: $code);
 
         AttachReferral::execute(
-            referralSub: $user->subs()->first(),
+            referralSub: $referral->subs()->first(),
             ownerSub: Sub::with('user')->find($decryptedData['group_id']),
             referralPercent: $decryptedData['referral_percent'],
         );
