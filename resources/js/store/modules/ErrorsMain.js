@@ -1,8 +1,8 @@
 export default {
     actions: {
         setFullErrors({ commit }, errors) {
-            commit("changeErrors", errors);
-            commit("changeErrorsExpired", errors);
+            this.dispatch("setErrors", errors);
+            this.dispatch("setErrorsExpired", errors);
         },
         setErrors({ commit }, errors) {
             commit("changeErrors", errors);

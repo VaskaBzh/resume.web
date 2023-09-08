@@ -292,7 +292,7 @@ export default {
         WalletBlock,
     },
     computed: {
-        ...mapGetters(["getActive"]),
+        ...mapGetters(["getActive", "errors"]),
         endWallet() {
             return this.wallets.wallets?.length > 0;
         },
@@ -376,7 +376,7 @@ export default {
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
     },
-    props: ["errors", "message", "user", "auth_user"],
+    props: ["message", "auth_user"],
 };
 </script>
 <style lang="scss">
