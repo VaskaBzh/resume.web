@@ -23,7 +23,9 @@
                     @is_checked="watchers_form.incomes = $event"
                     >Доходы</main-checkbox
                 >
-                <button @submit.prevent="sendWorkers" class="watchers_button">Отправить</button>
+                <button @submit.prevent="sendWorkers" class="watchers_button">
+                    Отправить
+                </button>
             </form>
         </div>
     </div>
