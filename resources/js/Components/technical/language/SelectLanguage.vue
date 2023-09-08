@@ -86,7 +86,7 @@ export default {
                 this.$i18n.locale = lang.value;
                 localStorage.setItem("location", lang.value);
                 await axios.post(
-                    "/set_location",
+                    "/v1/set_location",
                     {
                         location: this.$i18n.locale,
                     },
@@ -108,7 +108,7 @@ export default {
             if (localStorage.getItem("location")) {
                 this.$i18n.locale = localStorage.getItem("location");
                 await axios.post(
-                    "/set_location",
+                    "/v1/set_location",
                     {
                         location: this.$i18n.locale,
                     },

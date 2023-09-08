@@ -38,10 +38,6 @@ export default {
             type: Boolean,
             default: false,
         },
-        user: {
-            type: Object,
-        },
-        errors: Object,
         message: {
             type: String,
         },
@@ -64,6 +60,7 @@ export default {
             "allHash",
             "getActive",
             "getMessage",
+            "user",
         ]),
     },
     async mounted() {

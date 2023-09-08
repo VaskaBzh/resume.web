@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('connection.title')" />
     <div class="connecting profile">
         <div class="connecting__wrapper">
             <main-title class="cabinet_title" tag="h3">{{
@@ -18,14 +17,12 @@
 
 <script>
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";
 
 export default {
     components: { MainTitle, Head, CopyBlock },
-    layout: ProfileLayoutView,
     data() {
         return {
             viewportWidth: 0,

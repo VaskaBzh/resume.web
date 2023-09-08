@@ -9,13 +9,23 @@ import store from "@/store";
 export class IncomeService extends TableService {
     async fetchIncomes(page = 1, per_page = 15) {
         return await api.get(
-            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`
+            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            }
         );
     }
 
     async fetchPayout(page = 1, per_page = 15) {
         return await api.get(
-            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`
+            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            }
         );
     }
 
@@ -77,8 +87,8 @@ export class IncomeService extends TableService {
               )
             : new incomeData(
                   income["referral_id"]
-                      ? this.translate('income.types[0]')
-                      : this.translate('income.types[1]'),
+                      ? this.translate("income.types[0]")
+                      : this.translate("income.types[1]"),
                   this.dateFormatter(income["created_at"]),
                   datePay,
                   income["hash"],

@@ -3,11 +3,9 @@
 </template>
 
 <script>
-import authLayoutView from "@/Shared/AuthLayoutView.vue";
 import LoginForm from "@/modules/auth/Components/blocks/LoginForm.vue";
 
 export default {
-    layout: authLayoutView,
     name: "login-page",
     props: { errors: Object },
     components: {

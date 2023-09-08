@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use Illuminate\Support\Facades\Route;
 
@@ -28,3 +29,5 @@ Route::middleware('auth')->group(function () {
 //    });
     Route::post('/send_message', SendMessageConroller::class)->name('send_message');
 });
+
+Route::get('/verify/{id}/{hash}', VerificationController::class)->name('verification.verify');

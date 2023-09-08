@@ -62,15 +62,27 @@ export class WorkerService {
     }
 
     async fetchList() {
-        return await api.get(`/workers/${this.group_id}`);
+        return await api.get(`/workers/${this.group_id}`, {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
     }
 
     async fetchWorker() {
-        return await api.get(`/workers/worker/${this.worker_id}`);
+        return await api.get(`/workers/worker/${this.worker_id}`, {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
     }
 
     async fetchWorkerGraph() {
-        return await api.get(`/workerhashrate/${this.worker_id}`);
+        return await api.get(`/workerhashrate/${this.worker_id}`, {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
     }
 
     clearTable() {
@@ -91,8 +103,8 @@ export class WorkerService {
                 this.rows.unshift(this.setFirstRow());
 
                 this.waitWorkers = false;
-            } catch(e) {
-                console.error(`Error with: ${e}`)
+            } catch (e) {
+                console.error(`Error with: ${e}`);
             }
         }
     }

@@ -1,10 +1,9 @@
 <template>
-    <Head :title="$t('workers.title')" />
     <div class="workers profile">
         <div class="workers__wrapper">
             <main-title tag="h3" class="cabinet_title">
                 {{ $t("workers.title") }}
-                <Link href="/profile/connecting">
+                <router-link :to="{ name: 'connecting' }">
                     <blue-button class="add">
                         <svg
                             width="24"
@@ -25,7 +24,7 @@
                             />
                         </svg>
                     </blue-button>
-                </Link>
+                </router-link>
             </main-title>
 
             <wrap-table
@@ -40,10 +39,8 @@
     </div>
 </template>
 <script>
-import { Link } from "@inertiajs/vue3";
 import { Head } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
 import BlueButton from "@/Components/UI/BlueButton.vue";
@@ -55,10 +52,7 @@ export default {
         MainTitle,
         Head,
         BlueButton,
-        Link,
     },
-    layout: profileLayoutView,
-    props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
             workersActive: 0,
@@ -71,7 +65,7 @@ export default {
     },
     watch: {
         getActive(newActive, oldActive) {
-            this.changedActive = oldActive === -1 ? -1 : newActive
+            this.changedActive = oldActive === -1 ? -1 : newActive;
             this.initWorkers();
         },
     },

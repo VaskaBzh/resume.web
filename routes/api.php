@@ -24,7 +24,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
-//
 /*
 |--------------------------------------------------------------------------
 | API Routes

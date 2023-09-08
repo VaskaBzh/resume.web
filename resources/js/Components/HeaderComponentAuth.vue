@@ -31,7 +31,6 @@
 </template>
 
 <script>
-import { router } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 
@@ -70,9 +69,9 @@ export default {
         },
         back() {
             if (window.history.state !== "") {
-                window.history.back();
+                this.$router.go(-1);
             } else {
-                router.visit("/home");
+                this.$router.push({ name: "default" });
             }
         },
     },
@@ -161,5 +160,4 @@ export default {
         }
     }
 }
-
 </style>

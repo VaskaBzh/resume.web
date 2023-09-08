@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('accounts.title')" />
     <div class="accounts profile">
         <div class="accounts__wrapper">
             <main-title tag="h3" class="cabinet_title">
@@ -93,15 +92,13 @@
 </template>
 
 <script>
-import { Head, useForm } from "@inertiajs/vue3";
+import { Head } from "@inertiajs/vue3";
 import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
-import { ref } from "vue";
 
 export default {
     components: {
@@ -112,7 +109,6 @@ export default {
         BlueButton,
         MainPreloader,
     },
-    layout: profileLayoutView,
     props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
