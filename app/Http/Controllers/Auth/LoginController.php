@@ -31,7 +31,7 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
-                'error' => 'Credentials do not match'
+                'error' => ['Credentials do not match']
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -62,7 +62,7 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
             return new JsonResponse([
-                'error' => 'Credentials do not match'
+                'error' => ['Credentials do not match']
             ], Response::HTTP_BAD_REQUEST);
         }
 
