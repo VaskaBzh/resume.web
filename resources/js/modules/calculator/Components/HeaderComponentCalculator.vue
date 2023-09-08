@@ -44,7 +44,9 @@
                     </router-link>
                     <router-link
                         :to="{ name: 'statistic' }"
-                        v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
+                        v-show="
+                            viewportWidth >= 991.98 && !accountLink && is_auth
+                        "
                         class="header-calculator_button"
                     >
                         {{ $t("header.login_button") }}
@@ -56,25 +58,22 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import { mapGetters } from "vuex";
 import NavLinksBurger from "../../navs/Components/NavLinksBurger.vue";
-import {useRoute} from "vue-router";
 
 export default {
     name: "header-component-auth",
     components: {
-        Link,
         SelectLanguage,
         NavLinksBurger,
     },
     computed: {
         ...mapGetters(["getTheme"]),
         accountLink() {
-            let url = useRoute().fullPath.startsWith("http")
-                ? new URL(useRoute().fullPath).pathname
-                : useRoute().fullPath;
+            let url = this.$route.fullPath.startsWith("http")
+                ? new URL(this.$route.fullPath).pathname
+                : this.$route.fullPath;
             return url.startsWith("/profile");
         },
     },

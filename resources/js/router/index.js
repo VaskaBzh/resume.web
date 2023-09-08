@@ -32,7 +32,7 @@ router.beforeEach(async (to, from, next) => {
     );
 
     for (let i = 0; i < middlewareFunctions.length; i++) {
-        await middlewareFunctions[i](to);
+        await middlewareFunctions[i](to, router);
     }
 
     return next();

@@ -2,14 +2,14 @@
     <blue-button
         class="feedback"
         :data-popup="{
-            '#feedback': !useRoute().fullPath.startsWith('/profile'),
+            '#feedback': !route.fullPath.startsWith('/profile'),
         }"
     >
         <a
             class="all-link"
             target="_blank"
             :href="
-                useRoute().fullPath.startsWith('/profile')
+                route.fullPath.startsWith('/profile')
                     ? 'https://t.me/allbtc_support'
                     : '#'
             "
@@ -19,12 +19,12 @@
     <teleport to="body">
         <main-popup
             id="feedback"
-            v-show="!useRoute().fullPath.startsWith('/profile')"
-            :wait="this.wait"
+            v-show="!route.fullPath.startsWith('/profile')"
+            :wait="wait"
             :errors="errors"
         >
             <form
-                @submit.prevent="this.sendFeedback"
+                @submit.prevent="sendFeedback"
                 class="form form-popup popup__form"
             >
                 <main-title tag="h3">{{
@@ -283,6 +283,9 @@ export default {
     },
     computed: {
         ...mapGetters(["getTheme"]),
+        route() {
+            return useRoute();
+        },
     },
     data() {
         return {

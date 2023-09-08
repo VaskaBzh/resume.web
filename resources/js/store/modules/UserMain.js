@@ -18,11 +18,15 @@ export default {
         saveToken({ state }) {
             localStorage.setItem("token", state.token);
         },
-        dropUser() {
+        dropUser({ commit }) {
             localStorage.removeItem("user");
+
+            commit("changeUser", {});
         },
-        dropToken() {
+        dropToken({ commit }) {
             localStorage.removeItem("token");
+
+            commit("changeToken", "");
         },
     },
     mutations: {

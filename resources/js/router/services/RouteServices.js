@@ -29,7 +29,7 @@ export class RouteServices {
             new RouteProfileData("workers", "workers"),
             new RouteReferralData("overview", "overview"),
             new RouteReferralData("my-referral", "my-referral"),
-            new RouteReferralData("earnRewards", "earnRewards"),
+            new RouteReferralData("earn-rewards", "earn-rewards"),
         ];
     }
 
@@ -48,11 +48,13 @@ export class RouteServices {
             {
                 path: "/profile/referral",
                 name: "referral",
-                redirect: () => {
-                    return {
-                        name: "overview",
-                        params: { page: "overview" },
-                    };
+                redirect: (to) => {
+                    if (!to.query.page) {
+                        return {
+                            name: "overview",
+                            query: { page: "overview" },
+                        };
+                    }
                 },
             },
         ];

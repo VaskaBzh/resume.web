@@ -35,15 +35,17 @@ import { PaymentService } from "@/modules/referral/services/PaymentService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
+import { mapGetters } from "vuex";
+import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
+import { ReferralsService } from "@/modules/referral/services/ReferralsService";
 
 export default {
     name: "payment-view",
     i18n: {
         sharedMessages: ReferralsMessage,
     },
-    props: {
-        user: Object,
-        errors: Object,
+    computed: {
+        ...mapGetters(["user"]),
     },
     components: {
         ReferralSelect,
@@ -54,12 +56,15 @@ export default {
     },
     data() {
         return {
-            service: new PaymentService(this.user.id, this.$t, [0, 1, 2, 3, 4]),
+            service: new PaymentService(this.$t, [0, 1, 2, 3, 4]),
             per_page: 10,
             page: 1,
         };
     },
     watch: {
+        user(newUser) {
+            this.service.setUser(newUser);
+        },
         page() {
             this.initIncomes();
         },

@@ -29,15 +29,15 @@ import WrapTable from "@/Components/tables/WrapTable.vue";
 import { ReferralsService } from "@/modules/referral/services/ReferralsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "referrals-view",
     i18n: {
         sharedMessages: ReferralsMessage,
     },
-    props: {
-        errors: Object,
-        user: Object,
+    computed: {
+        ...mapGetters(["user"]),
     },
     components: {
         MainSearch,
@@ -47,12 +47,13 @@ export default {
     },
     data() {
         return {
-            service: new ReferralsService(
-                this.user.id,
-                this.$t,
-                [0, 1, 2, 3, 4]
-            ),
+            service: new ReferralsService(this.$t, [0, 1, 2, 3, 4]),
         };
+    },
+    watch: {
+        user(newUser) {
+            this.service.setUser(newUser);
+        },
     },
     async mounted() {
         this.service.getGradeList();

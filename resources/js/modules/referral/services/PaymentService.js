@@ -5,6 +5,16 @@ import api from "@/api/api";
 import store from "@/store";
 
 export class PaymentService extends TableService {
+    constructor(translate, titleIndexes) {
+        super(translate, titleIndexes);
+
+        this.user = null;
+    }
+
+    setUser(user) {
+        this.user = user;
+    }
+
     setter(referral) {
         new PaymentData(
             this.dateFormatter(referral["created_at"]),

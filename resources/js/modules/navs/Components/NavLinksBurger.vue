@@ -81,14 +81,13 @@ import MainLink from "@/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 import api from "@/api/api";
-import { useRoute } from "vue-router";
+import { useRouter } from "vue-router";
 import store from "@/store";
 
 export default {
     components: {
         BlueButton,
         AccountMenu,
-        Link,
         MainLink,
         SelectLanguage,
         SelectTheme,
@@ -118,13 +117,16 @@ export default {
         },
         async logout() {
             try {
-                await api.post("/logout", form, {
+                await api.post("/logout", {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
 
-                useRoute().push({ name: "default" });
+                store.dispatch("dropUser");
+                store.dispatch(" dropToken");
+
+                this.router.push({ name: "default" });
             } catch (e) {
                 console.error("Error with: " + e);
             }
@@ -149,6 +151,9 @@ export default {
     },
     computed: {
         ...mapGetters(["allAccounts", "getActive"]),
+        router() {
+            return useRouter();
+        },
         name() {
             let name = "...";
             if (this.getAccount) {

@@ -78,7 +78,7 @@
             class="form-auth_checkbox"
             type="checkbox"
             id="checkbox"
-            v-model="service.form.checkbox"
+            v-model="service.checkbox"
         />
         <label for="checkbox" :class="{ error: service.checkbox }">
             <div class="fake">
