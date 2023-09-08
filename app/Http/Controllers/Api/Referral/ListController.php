@@ -17,7 +17,7 @@ class ListController extends Controller
     public function __invoke(User $user, BtcComService $btcComService)
     {
         if (!$user->referral_code) {
-            return new JsonResponse(['message' => 'referral code not exists'], 422);
+            return new JsonResponse(['error' => 'referral code not exists'], 422);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);

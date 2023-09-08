@@ -23,7 +23,7 @@ class CreateController extends Controller
             );
 
             if (isset($result['errors'])) {
-                return new JsonResponse(['message' => $result['errors']]);
+                return new JsonResponse(['error' => $result['errors']]);
             }
 
         } catch (\Exception $e) {

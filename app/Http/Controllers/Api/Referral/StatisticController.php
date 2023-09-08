@@ -16,7 +16,7 @@ class StatisticController extends Controller
     public function __invoke(User $user)
     {
         if (!$user->referral_code) {
-            return new JsonResponse(['message' => 'referral code not exists'], 422);
+            return new JsonResponse(['error' => 'referral code not exists'], 422);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
@@ -24,7 +24,7 @@ class StatisticController extends Controller
         $owner = Sub::find($referralCodeData['group_id']);
 
         if (!$owner) {
-            return new JsonResponse(['message' => 'owner not found'], 422);
+            return new JsonResponse(['error' => 'owner not found'], 422);
         }
 
         $statistic = ReferralService::getOwnerStatistic(
