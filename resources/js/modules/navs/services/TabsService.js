@@ -19,8 +19,9 @@ export class TabsService {
             new TabsData("/profile/watchers", "watchers", "connecting"),
         ];
 
-        if (user.roles.find((role) => role.name === "referral"))
-            this.setReferralTab();
+        if (user.roles)
+            if (user.roles.find((role) => role.name === "referral"))
+                this.setReferralTab();
     }
 
     setReferralTab() {
