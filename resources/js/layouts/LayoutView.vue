@@ -1,7 +1,7 @@
 <template>
     <div class="app_back">
         <!--        <main-preloader></main-preloader>-->
-        <header-component :errors="errors" :user="user" :is_auth="auth_user" />
+        <header-component :user="user" />
         <div class="page">
             <div class="hint">
                 <div class="hint_item" v-hide="this.getMessage !== ''">
@@ -13,10 +13,10 @@
             </div>
             <div class="observer_block"></div>
             <keep-alive>
-                <slot :errors="errors"></slot>
+                <slot></slot>
             </keep-alive>
         </div>
-        <footer-component :errors="errors" />
+        <footer-component />
     </div>
 </template>
 
@@ -27,53 +27,17 @@ import { mapGetters } from "vuex";
 
 export default {
     props: {
-        auth_user: {
-            type: Boolean,
-            default: false,
-        },
         message: {
             type: String,
         },
-        errors: {
-            type: Object,
-        },
-        user: {
-            type: Object,
-        },
-    },
-    data() {
-        return {
-            interval: null,
-        };
     },
     components: { HeaderComponent, FooterComponent },
     computed: {
-        ...mapGetters(["getMessage", "allAccounts"]),
+        ...mapGetters(["getMessage", "allAccounts", "user"]),
     },
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");
-        if (this.auth_user) {
-            await this.$store.dispatch("accounts_all", this.user.id);
-        }
-        if (this.auth_user) {
-            this.interval = setInterval(async () => {
-                await this.$store.dispatch("accounts_all", this.user.id);
-            }, 60000);
-        }
-        // if (!localStorage.getItem("location")) {
-        //     axios.get("/get_location").then((res) => {
-        //         localStorage.setItem('location', res.data);
-        //     });
-        // }
-    },
-    unmounted() {
-        if (!this.auth_user) {
-            this.$store.dispatch("destroyer");
-        }
-        if (this.interval) {
-            clearInterval(this.interval);
-        }
     },
 };
 </script>

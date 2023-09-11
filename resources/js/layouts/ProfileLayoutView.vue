@@ -1,7 +1,7 @@
 <template>
     <div class="app_back app_back-profile">
         <div class="app_back_elem-blur"></div>
-        <header-component :user="user" :errors="errors" :is_auth="auth_user" />
+        <header-component :user="user" />
         <div class="page">
             <teleport to="body">
                 <div class="hint">
@@ -23,7 +23,7 @@
                 </div>
             </div>
         </div>
-        <footer-component :errors="errors" />
+        <footer-component />
     </div>
 </template>
 <script>
@@ -34,18 +34,9 @@ import { mapGetters } from "vuex";
 
 export default {
     props: {
-        auth_user: {
-            type: Boolean,
-            default: false,
-        },
         message: {
             type: String,
         },
-    },
-    data() {
-        return {
-            interval: null,
-        };
     },
     components: {
         FooterComponent,
@@ -62,27 +53,6 @@ export default {
             "getMessage",
             "user",
         ]),
-    },
-    async mounted() {
-        if (this.$store.getters.getValid) {
-            this.$store.dispatch("getMiningStat");
-            this.$store.dispatch("getGraph");
-        }
-        await this.$store.dispatch("accounts_all", this.user.id);
-        this.interval = setInterval(async () => {
-            await this.$store.dispatch("accounts_all", this.user.id);
-        }, 60000);
-        // if (!localStorage.getItem("location")) {
-        //     axios.get("/get_location").then((res) => {
-        //         localStorage.setItem("location", res.data);
-        //     });
-        // }
-    },
-    unmounted() {
-        if (!this.auth_user) {
-            this.$store.dispatch("destroyer");
-        }
-        clearInterval(this.interval);
     },
 };
 </script>

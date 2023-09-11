@@ -7,7 +7,11 @@ export class RoutePublicData {
         this.component = () =>
             import(`../../Pages/${RouteNamesMap.public[component]}`);
         this.meta = {
-            middleware: ["LoadLayoutMiddleware", "DropErrorsMiddleware"],
+            middleware: [
+                "LoadLayoutMiddleware",
+                "DropErrorsMiddleware",
+                "DropSubsMiddleware",
+            ],
             link: "LayoutView",
         };
     }

@@ -56,7 +56,7 @@ class RegisterController extends Controller
         $userData = UserData::fromRequest($request->all());
 
         try {
-            $btcComService->createSub(userData: $userData);
+//            $btcComService->createSub(userData: $userData);
 
             $user = $this->create(userData: $userData);
 
@@ -64,9 +64,9 @@ class RegisterController extends Controller
                 ReferralService::attach(referral: $user, code: $request->referral_code);
             }
 
-            event(new Registered(
-                user: $user
-            ));
+//            event(new Registered(
+//                user: $user
+//            ));
 
             return new JsonResponse([
                 'message' => 'success',
