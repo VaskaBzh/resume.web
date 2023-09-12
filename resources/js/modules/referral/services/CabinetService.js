@@ -96,7 +96,7 @@ export class CabinetService {
             referralCodeParam.length - firstIndex
         );
 
-        return `${window.location.host}/#/registration?referral_code=${referralCode}`;
+        return `${window.location.host}/registration?referral_code=${referralCode}`;
     }
 
     async index() {
