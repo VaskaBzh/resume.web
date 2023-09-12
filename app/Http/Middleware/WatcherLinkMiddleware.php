@@ -21,9 +21,9 @@ class WatcherLinkMiddleware
             return $next($request);
         }
 
-        $isAllowed = WatcherLinkService::isAllowedRoute($accessKey, $request->segments());
+        /*$isAllowed = WatcherLinkService::isAllowedRoute($accessKey, $request->segments());
 
-        dd('sss');
+        dd('sss');*/
     }
 
     private function isValidAccessKey(string $accessKey): bool
