@@ -7,7 +7,7 @@ export class RouteReferralData {
         this.query = { page: name };
         this.component = () =>
             import(
-                `../../Pages/${RouteNamesMap.profile.referral[component]}.vue`
+                `../../Pages/Profile/Referral/${RouteNamesMap.profile.referral[component]}.vue`
             );
         this.meta = {
             middleware: [

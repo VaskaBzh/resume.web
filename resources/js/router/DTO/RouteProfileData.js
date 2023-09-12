@@ -5,7 +5,7 @@ export class RouteProfileData {
         this.path = `/profile/${name}`;
         this.name = name;
         this.component = () =>
-            import(`../../Pages/${RouteNamesMap.profile[component]}.vue`);
+            import(`../../Pages/Profile/${RouteNamesMap.profile[component]}.vue`);
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",
