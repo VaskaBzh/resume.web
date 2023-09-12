@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', \App\Http\Controllers\HomeController::class)->name('home');
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', '.*');
 
 /* protected routes */
 Route::middleware('auth')->group(function () {
