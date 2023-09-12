@@ -37,7 +37,7 @@ export class RouteServices {
                 path: `/`,
                 name: "home",
                 component: () =>
-                    import(`../../Pages/${RouteNamesMap.public["home"]}`),
+                    import(`../../Pages/${RouteNamesMap.public["home"]}.vue`),
                 meta: {
                     middleware: [
                         "LoadLayoutMiddleware",

@@ -5,14 +5,14 @@ export class RoutePublicData {
         this.path = `/${name}`;
         this.name = name;
         this.component = () =>
-            import(`../../Pages/${RouteNamesMap.public[component]}`);
+            import(`../../Pages/${RouteNamesMap.public[component]}.vue`);
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",
                 "DropErrorsMiddleware",
                 "DropSubsMiddleware",
             ],
-            link: "LayoutView",
+            layout: "LayoutView",
         };
     }
 }

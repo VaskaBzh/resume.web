@@ -1,16 +1,20 @@
 <template>
-    <app-layout-view>
-        <router-view />
-    </app-layout-view>
+    <keep-alive>
+        <component :is="route.meta.layoutComponent">
+            <router-view />
+        </component>
+    </keep-alive>
 </template>
 
 <script>
-import AppLayoutView from "./layouts/AppLayoutView.vue";
+import { useRoute } from "vue-router";
 
 export default {
-    name: "app",
-    components: {
-        AppLayoutView,
+    name: "app-layout-view",
+    computed: {
+        route() {
+            return useRoute();
+        },
     },
     created() {
         this.$store.dispatch("setUser");
