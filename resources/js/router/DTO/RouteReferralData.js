@@ -6,14 +6,16 @@ export class RouteReferralData {
         this.name = name;
         this.query = { page: name };
         this.component = () =>
-            import(`../../Pages/${RouteNamesMap.profile.referral[component]}`);
+            import(
+                `../../Pages/${RouteNamesMap.profile.referral[component]}.vue`
+            );
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",
                 "DropErrorsMiddleware",
                 "AuthCheckProfileMiddleware",
             ],
-            link: "ProfileLayoutView",
+            layout: "ProfileLayoutView",
         };
     }
 }
