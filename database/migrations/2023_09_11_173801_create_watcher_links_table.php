@@ -12,9 +12,10 @@ return new class extends Migration {
             $table->string('name');
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('group_id');
-            $table->string('token');
+            $table->string('token')->unique();
             $table->unsignedBigInteger('access_count')->default(0);
-            $table->json('allowed_views');
+            $table->json('allowed_routes');
+            $table->unique(['name', 'user_id']);
             $table->timestamps();
         });
     }

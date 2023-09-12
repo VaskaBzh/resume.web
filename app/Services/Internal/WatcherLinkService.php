@@ -4,24 +4,45 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Actions\WatcherLink\Create;
 use App\Dto\WatcherLinkData;
+use App\Models\WatcherLink;
 
 class WatcherLinkService
 {
-    public static function generateLink(WatcherLinkData $watcherLinkData)
+    private function __construct(
+        private WatcherLinkData $watcherLinkData,
+    )
     {
-        $token = self::createToken($watcherLinkData->allowedViews);
-
-        dd($token, self::getAllowedViewsFromToken($token));
     }
 
-    public static function createToken(array $allowedViews): string
+    public static function withParams(WatcherLinkData $watcherLinkData): WatcherLinkService
     {
-        return base64_encode(json_encode($allowedViews));
+       return new self(watcherLinkData: $watcherLinkData);
     }
 
-    public static function getAllowedViewsFromToken(string $token)
+    private function createToken(): string
     {
-        return json_decode(base64_decode($token), true);
+        return base64_encode(json_encode([
+            'name' => $this->watcherLinkData->name,
+            'group_id' => $this->watcherLinkData->sub->group_id,
+        ]));
+    }
+
+    public static function isAllowedRoute(string $token, $route)
+    {
+        $watcherLink = WatcherLink::where('token', $token)->first();
+
+        dd($watcherLink);
+    }
+
+    public function createLink(): void
+    {
+        $token = $this->createToken();
+
+        Create::execute(
+            watcherLinkData: $this->watcherLinkData,
+            token: $token,
+        );
     }
 }

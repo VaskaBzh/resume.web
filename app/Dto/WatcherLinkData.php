@@ -5,13 +5,15 @@ declare(strict_types=1);
 namespace App\Dto;
 
 use App\Models\Sub;
+use App\Models\User;
 
 readonly final class WatcherLinkData
 {
     public function __construct(
         public string $name,
         public Sub $sub,
-        public array $allowedViews,
+        public User $user,
+        public array $allowedRoutes,
     )
     {
     }
@@ -21,7 +23,8 @@ readonly final class WatcherLinkData
         return new self(
             name: $requestData['name'],
             sub: $requestData['sub'],
-            allowedViews: $requestData['allowedViews']
+            user: $requestData['user'],
+            allowedRoutes: $requestData['allowedRoutes']
         );
     }
 }

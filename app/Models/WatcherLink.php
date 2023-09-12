@@ -8,18 +8,25 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class WatcherLink extends Model
 {
     protected $fillable = [
+        'name',
         'user_id',
+        'group_id',
         'token',
         'access_count',
-        'allowed_views',
+        'allowed_routes',
     ];
 
     protected $casts = [
-        'allowed_views' => 'array',
+        'allowed_routes' => 'array',
     ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function sub(): BelongsTo
+    {
+        return $this->belongsTo(Sub::class);
     }
 }
