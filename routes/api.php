@@ -19,6 +19,7 @@ use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Api\Wallet\UpdateController as WalletUpdateController;
 use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
+use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -47,19 +48,11 @@ Route::get('/verify/{id}/{hash}', VerificationController::class)->name('verifica
  * Token protected routes
  */
 Route::group([
-    'middleware' => 'auth:sanctum'
+    'middleware' => ['watcher-link', 'auth:sanctum']
 ], function () {
     Route::post('logout', [LoginController::class, 'logout']);
     Route::put('reset', [ResetPasswordController::class, 'changePassword']);
     Route::put('/change/{user}', AccountController::class)->name('change');
-
-
-    Route::group([
-        'prefix' => 'workers',
-    ], function () {
-        Route::get('{sub}', WorkerListController::class)->name('worker.list');
-        Route::get('worker/{worker}', WorkerShowController::class)->name('worker.show');
-    });
 
     Route::group([
         'prefix' => 'subs',
@@ -67,6 +60,13 @@ Route::group([
         Route::get('{user}', SubListController::class)->name('sub.list');
         Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
         Route::post('/create', SubCreateController::class)->name('sub.create');
+    });
+
+    Route::group([
+        'prefix' => 'workers',
+    ], function () {
+        Route::get('{sub}', WorkerListController::class)->name('worker.list');
+        Route::get('worker/{worker}', WorkerShowController::class)->name('worker.show');
     });
 
     Route::group([
@@ -85,6 +85,10 @@ Route::group([
         Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
         Route::post('/attach/{user}', ReferralAttachController::class)->name('referral.attach');
+    });
+
+    Route::group(['prefix' => 'watchers'], function () {
+        Route::post('/create/{sub}', WatcherLinkCreateController::class);
     });
 
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');

@@ -42,7 +42,7 @@ class LoginController extends Controller
             'user' => $user,
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
-            'hash_referral_role' => $user->hasRole('referral')
+            'has_referral_role' => $user->hasRole('referral')
         ]);
     }
 
