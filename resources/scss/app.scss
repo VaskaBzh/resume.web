@@ -205,11 +205,11 @@ h6 {
 // Профиль
 .profile {
     @media (min-width: $pc) {
-        padding-left: 320px;
+        // padding-left: 320px;
     }
-    @media (min-width: $tablet) {
-        padding-left: 270px;
-    }
+    // @media (min-width: $tablet) {
+    //     padding-left: 270px;
+    // }
     width: 100%;
 }
 

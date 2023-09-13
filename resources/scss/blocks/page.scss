@@ -1,80 +1,80 @@
-.page {
-    flex: 1 1 auto;
-    position: relative;
-    margin-top: 84px;
-    padding-bottom: 120px;
-    @media (max-width: $tablet) {
-        margin-top: 80px;
-        padding-bottom: 80px;
-    }
-    @media (max-width: $mobileSmall) {
-        padding-bottom: 113px;
-        margin-top: 59px;
-    }
-    .observer_block {
-        @media (min-width: $pc) {
-            position: absolute;
-            top: -80px;
-            left: 0;
-            opacity: 0;
-        }
-        @media (max-width: $pc) {
-            display: none;
-        }
-    }
-    &__main {
-        margin-top: 140px;
-        display: flex;
-        @media (min-width: $tablet) {
-            align-items: center;
-        }
-        @media (max-width: $tablet) {
-            flex-direction: column;
-            margin-top: 56px;
-        }
-    }
-    &__content {
-        flex: 1 0 40%;
-        position: relative;
-        .description {
-            margin-bottom: 40px;
-            @media (max-width: $tablet) {
-                margin-bottom: 52px;
-            }
-            @media (max-width: $mobileSmall) {
-                margin-bottom: 40px;
-            }
-            @media (max-width: $mobileSmall) {
-                font-size: 16px;
-            }
-        }
-        @media (max-width: $tablet) {
-            flex: 1 0 100%;
-        }
-    }
-    &__title {
-        margin-bottom: 16px;
-        @media (max-width: $tablet) {
-            margin-bottom: 10px;
-        }
-    }
-    &__image {
-        position: relative;
-        @media (max-width: $tablet) {
-            order: -1;
-        }
-        & img {
-            max-width: 897px;
-            @media (max-width: $pc) {
-                max-width: 770px;
-            }
-            @media (max-width: $mobileSmall) {
-                position: relative;
-                left: 20vw;
-                max-width: unset;
-                width: 140vw;
-                object-fit: cover;
-            }
-        }
-    }
-}
+// .page {
+//     flex: 1 1 auto;
+//     position: relative;
+//     margin-top: 84px;
+//     padding-bottom: 120px;
+//     @media (max-width: $tablet) {
+//         margin-top: 80px;
+//         padding-bottom: 80px;
+//     }
+//     @media (max-width: $mobileSmall) {
+//         padding-bottom: 113px;
+//         margin-top: 59px;
+//     }
+//     .observer_block {
+//         @media (min-width: $pc) {
+//             position: absolute;
+//             top: -80px;
+//             left: 0;
+//             opacity: 0;
+//         }
+//         @media (max-width: $pc) {
+//             display: none;
+//         }
+//     }
+//     &__main {
+//         margin-top: 140px;
+//         display: flex;
+//         @media (min-width: $tablet) {
+//             align-items: center;
+//         }
+//         @media (max-width: $tablet) {
+//             flex-direction: column;
+//             margin-top: 56px;
+//         }
+//     }
+//     &__content {
+//         flex: 1 0 40%;
+//         position: relative;
+//         .description {
+//             margin-bottom: 40px;
+//             @media (max-width: $tablet) {
+//                 margin-bottom: 52px;
+//             }
+//             @media (max-width: $mobileSmall) {
+//                 margin-bottom: 40px;
+//             }
+//             @media (max-width: $mobileSmall) {
+//                 font-size: 16px;
+//             }
+//         }
+//         @media (max-width: $tablet) {
+//             flex: 1 0 100%;
+//         }
+//     }
+//     &__title {
+//         margin-bottom: 16px;
+//         @media (max-width: $tablet) {
+//             margin-bottom: 10px;
+//         }
+//     }
+//     &__image {
+//         position: relative;
+//         @media (max-width: $tablet) {
+//             order: -1;
+//         }
+//         & img {
+//             max-width: 897px;
+//             @media (max-width: $pc) {
+//                 max-width: 770px;
+//             }
+//             @media (max-width: $mobileSmall) {
+//                 position: relative;
+//                 left: 20vw;
+//                 max-width: unset;
+//                 width: 140vw;
+//                 object-fit: cover;
+//             }
+//         }
+//     }
+// }

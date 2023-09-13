@@ -1,15 +1,71 @@
 <template>
     <div class="income" ref="page">
-        <article class="income-cards-article">
-            <div class="income-cards-container">
-                <AccrualsCard/>
-                <YesterdayIncomeCard/>
+        <div class="income__column">
+            <div class="income__row">
+                <div class="cabinet__block cabinet__block-light">
+                    <span class="text"
+                        >{{ $t("income.income_info.titles[0]") }}:</span
+                    >
+                    <span class="main__number"
+                        >{{ this.payed }}
+                        BTC
+                    </span>
+                </div>
+                <div class="cabinet__block cabinet__block-light">
+                    <span class="text"
+                        >{{ $t("income.income_info.titles[1]") }}:
+                    </span>
+                    <span class="main__number">
+                        {{ this.unPayment }}
+                        BTC
+                    </span>
+                </div>
+                <div class="cabinet__block cabinet__block-light">
+                    <span class="text"
+                        >{{ $t("income.income_info.titles[2]") }}:
+                    </span>
+                    <span class="main__number">
+                        {{ this.yesterdayProfit }}
+                        BTC
+                    </span>
+                </div>
             </div>
-            <div class="month-card-container">
-                <MonthIncome/>
-            </div>
-        </article>
+        </div>
+        <div class="cabinet__head">
+            <main-title tag="h4" class="headline history-transaction">
+                {{ $t("income.table.title") }}
+            </main-title>
+        </div>
+        <!-- <blue-button></blue-button> -->
 
+        <!-- <div class="income__filter">-->
+        <!--                <div-->
+        <!--                    class="income__filter_block"-->
+        <!--                    v-show="this.walletOptions[1]"-->
+        <!--                >-->
+        <!--                    <div class="income__filter_label">Кошелек</div>-->
+        <!--                    <main-select-->
+        <!--                        @getCoin="this.filter"-->
+        <!--                        class="income__filter_select"-->
+        <!--                        :options="this.walletOptions"-->
+        <!--                    ></main-select>-->
+        <!--                </div>-->
+        <!--                <div class="income__filter_block income__filter_block-adapt">-->
+        <!--                    <div class="income__filter_label">Статус операции</div>-->
+        <!--                    <main-select-->
+        <!--                        @getCoin="this.filter"-->
+        <!--                        class="income__filter_select"-->
+        <!--                        :options="this.operationOptions"-->
+        <!--                    ></main-select>-->
+        <!--                </div>-->
+        <!--            <div class="income__filter_block">-->
+        <!--                <div class="income__filter_label">{{ $t("date.label") }}</div>-->
+        <!--                <main-date-->
+        <!--                    v-model="date"-->
+        <!--                    :placeholder="$t('date.placeholder')"-->
+        <!--                ></main-date>-->
+        <!--            </div>-->
+        <!--        </div> -->
         <article class="income-table-block">
             <div class="tabs-block-container">
                 <button
@@ -27,6 +83,17 @@
                     {{ $t("income.table.tabs[1]") }}
                 </button>
             </div>
+            <!--            <div class="filter-block-container">-->
+            <!--                &lt;!&ndash; <div class="income__filter"> &ndash;&gt;-->
+            <!--                <div class="filter_block">-->
+            <!--                    <main-date-->
+            <!--                        v-model="date"-->
+            <!--                        :placeholder="$t('date.placeholder')"-->
+            <!--                        @calendarChange="filterTable"-->
+            <!--                    ></main-date>-->
+            <!--                </div>-->
+            <!--                &lt;!&ndash; </div> &ndash;&gt;-->
+            <!--            </div>-->
         </article>
 
         <main-slider
@@ -44,26 +111,20 @@
 </template>
 <script>
 import MainSlider from "@/Components/technical/MainSlider.vue";
-import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue"
-import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue"
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import MainDate from "@/Components/UI/MainDate.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import { mapGetters } from "vuex";
 
 import { IncomeService } from "@/services/IncomeService";
-import MonthIncome from "../../modules/income/Components/MonthIncome.vue";
 
 export default {
     components: {
-    MainSlider,
-    MainTitle,
-    MainDate,
-    CurrentExchangeRate,
-    AccrualsCard,
-    YesterdayIncomeCard,
-    MonthIncome
-},
+        MainSlider,
+        MainTitle,
+        MainDate,
+        CurrentExchangeRate,
+    },
     props: ["errors", "message", "user"],
     data() {
         return {
@@ -209,23 +270,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.income-cards-container{
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    width: 100%;
-}
-.income-cards-article{
-    width: 100%;
-    display: flex;
-    gap: 12px;
-}
-.month-card-container{
-    width: 100%;
-}
 .income {
     width: 100%;
     transition: all 0.3s linear 0.2s;
+    
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;

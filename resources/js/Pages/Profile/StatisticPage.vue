@@ -1,5 +1,5 @@
 <template>
-    <div class="statistic profile">
+    <div class="statistic">
         <div class="statistic__wrapper">
             <div class="main-header-container">
                 <main-title tag="h3" class="cabinet_title">
@@ -8,7 +8,7 @@
                     <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
                     <!--                >-->
                 </main-title>
-                <current-exchange-rate />
+                <!-- <current-exchange-rate /> -->
             </div>
 
             <main-preloader
@@ -222,7 +222,7 @@ import { mapGetters } from "vuex";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
-import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
+// import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
 
 import { SubHashrateService } from "@/services/SubHashrateService";
@@ -237,7 +237,7 @@ export default {
         BtcCalculator,
         WaitPreloader,
         MainPreloader,
-        CurrentExchangeRate,
+        // CurrentExchangeRate,
         MainTabs,
     },
     data() {

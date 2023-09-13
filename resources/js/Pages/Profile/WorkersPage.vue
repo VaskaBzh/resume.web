@@ -1,5 +1,5 @@
 <template>
-    <div class="workers profile">
+    <div class="workers">
         <div class="workers__wrapper">
             <main-title tag="h3" class="cabinet_title">
                 {{ $t("workers.title") }}

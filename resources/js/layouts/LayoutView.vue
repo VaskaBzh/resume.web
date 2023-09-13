@@ -22,7 +22,7 @@
 
 <script>
 import FooterComponent from "@/Components/FooterComponent.vue";
-import HeaderComponent from "@/Components/HeaderComponent.vue";
+import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
 import { mapGetters } from "vuex";
 
 export default {

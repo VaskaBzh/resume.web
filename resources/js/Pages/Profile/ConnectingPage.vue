@@ -1,5 +1,5 @@
 <template>
-    <div class="connecting profile">
+    <div class="connecting">
         <div class="connecting__wrapper">
             <main-title class="cabinet_title" tag="h3">{{
                 $t("connection.title")
