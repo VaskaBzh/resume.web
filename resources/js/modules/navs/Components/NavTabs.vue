@@ -63,12 +63,18 @@ export default {
         };
     },
     methods: {
+        ...mapGetters(["user"]),
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
         setLinks() {
             this.service.setLinks(this.user);
         },
+    },
+    watch: {
+        user() {
+            this.setLinks();
+        }
     },
     mounted() {
         this.setLinks();

@@ -9,6 +9,8 @@ export class TabsService {
     }
 
     setLinks(user) {
+        this.dropLinks();
+
         this.links = [
             ...this.links,
             new TabsData("/profile/statistic", "statistic", "statistic"),
