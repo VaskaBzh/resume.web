@@ -1,18 +1,19 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\WatcherLinks;
 
+use App\Rules\WatcherLink\ContainsRouteRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
-class WatcherLinkRequest extends FormRequest
+class CreateLinkRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
             'name' => 'required|string|max:200|'
                 . Rule::unique('watcher_links', 'name')->where('user_id', auth()->user()->id),
-            'allowed_routes' => 'required|array|min:1|max:2',
+            'allowed_routes' => ['required', 'array',  new ContainsRouteRule],
         ];
     }
 

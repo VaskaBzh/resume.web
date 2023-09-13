@@ -17,7 +17,7 @@ class WatcherLink extends Model
     ];
 
     protected $casts = [
-        'allowed_routes' => 'array',
+        'allowed_routes' => 'json',
     ];
 
     public function user(): BelongsTo

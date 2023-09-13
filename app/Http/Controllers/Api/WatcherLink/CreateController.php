@@ -6,18 +6,19 @@ namespace App\Http\Controllers\Api\WatcherLink;
 
 use App\Dto\WatcherLinkData;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\WatcherLinkRequest;
+use App\Http\Requests\WatcherLinks\CreateLinkRequest;
+use App\Http\Resources\WatcherLinkResource;
 use App\Models\Sub;
 use App\Services\Internal\WatcherLinkService;
 
 class CreateController extends Controller
 {
     public function __invoke(
-        WatcherLinkRequest $request,
-        Sub     $sub,
-    )
+        CreateLinkRequest $request,
+        Sub               $sub,
+    ): WatcherLinkResource
     {
-        WatcherLinkService::withParams(
+        $watcherLink = WatcherLinkService::withParams(
             watcherLinkData: WatcherLinkData::fromRequest([
                 'name' => $request->name,
                 'sub' => $sub,
@@ -25,5 +26,7 @@ class CreateController extends Controller
                 'allowedRoutes' => $request->allowed_routes,
             ])
         )->createLink();
+
+        return new WatcherLinkResource($watcherLink);
     }
 }

@@ -13,8 +13,7 @@ class WatcherLinkService
     private function __construct(
         private WatcherLinkData $watcherLinkData,
     )
-    {
-    }
+    {}
 
     public static function withParams(WatcherLinkData $watcherLinkData): WatcherLinkService
     {
@@ -29,18 +28,25 @@ class WatcherLinkService
         ]));
     }
 
-    public static function isAllowedRoute(string $token, $route)
+    public static function isRouteAllowed(string $routeName, string $token): bool
     {
-        $watcherLink = WatcherLink::where('token', $token)->first();
+        $allowedRoutes = WatcherLinkService::getAllowedRoutes(token: $token) ?? [];
 
-        dd($watcherLink);
+        return in_array($routeName, $allowedRoutes);
     }
 
-    public function createLink(): void
+    public static function getAllowedRoutes(string $token): ?array
+    {
+        return WatcherLink::where('token', $token)
+            ->first()
+            ?->allowed_routes;
+    }
+
+    public function createLink(): WatcherLink
     {
         $token = $this->createToken();
 
-        Create::execute(
+        return Create::execute(
             watcherLinkData: $this->watcherLinkData,
             token: $token,
         );

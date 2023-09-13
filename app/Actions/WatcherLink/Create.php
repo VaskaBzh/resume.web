@@ -7,9 +7,9 @@ use App\Models\WatcherLink;
 
 class Create
 {
-    public static function execute(WatcherLinkData $watcherLinkData, string $token)
+    public static function execute(WatcherLinkData $watcherLinkData, string $token): WatcherLink
     {
-        WatcherLink::create([
+        return WatcherLink::create([
             'name' => $watcherLinkData->name,
             'user_id' => $watcherLinkData->user->id,
             'group_id' => $watcherLinkData->sub->group_id,

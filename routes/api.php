@@ -21,6 +21,7 @@ use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
 use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
 use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkController;
+use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherUpdateController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -115,6 +116,7 @@ Route::group([
     Route::group(['prefix' => 'watchers'], function () {
         Route::get('/{user}/{sub}', WatcherLinkController::class);
         Route::post('/create/{sub}', WatcherLinkCreateController::class);
+        Route::put('/update/{sub}/{watcher}', WatcherUpdateController::class);
     });
 });
 /* ________________ End protected routes ____________________ */

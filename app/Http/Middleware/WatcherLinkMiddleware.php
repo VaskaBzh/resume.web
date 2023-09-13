@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
-use App\Models\WatcherLink;
 use App\Services\Internal\WatcherLinkService;
 use Closure;
 use Illuminate\Http\Request;
@@ -13,21 +14,19 @@ class WatcherLinkMiddleware
     {
         $accessKey = $request->header('X-Access-Key');
 
-        if (!$accessKey) {
-            return $next($request);
+        if ($accessKey) {
+            $isRouteAllowed = WatcherLinkService::isRouteAllowed(
+                routeName: $request->route()->getName(),
+                token: $accessKey
+            );
+
+            if ($isRouteAllowed) {
+                $request->attributes->set('access_key_valid', true);
+
+                return $next($request);
+            }
         }
 
-        if (!$this->isValidAccessKey($accessKey)) {
-            return $next($request);
-        }
-
-        /*$isAllowed = WatcherLinkService::isAllowedRoute($accessKey, $request->segments());
-
-        dd('sss');*/
-    }
-
-    private function isValidAccessKey(string $accessKey): bool
-    {
-        return WatcherLink::where('token', $accessKey)->exists();
+        return $next($request);
     }
 }
