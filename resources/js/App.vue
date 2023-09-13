@@ -15,6 +15,13 @@ export default {
     created() {
         this.$store.dispatch("setUser");
         this.$store.dispatch("setToken");
+        this.handleResize();
+        window.addEventListener("resize", this.handleResize);
+    },
+    methods: {
+        handleResize() {
+            this.$store.dispatch("getViewportWidth", window.innerWidth);
+        },
     },
 };
 </script>
