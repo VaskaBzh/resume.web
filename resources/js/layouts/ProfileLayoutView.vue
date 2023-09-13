@@ -1,35 +1,21 @@
 <template>
-    <div class="app_back app_back-profile">
-        <div class="app_back_elem-blur"></div>
-        <header-component :user="user" />
-        <div class="page">
-            <teleport to="body">
-                <div class="hint">
-                    <div class="hint_item" v-hide="this.getMessage !== ''">
-                        {{ this.getMessage }}
-                    </div>
-                    <div class="hint_item" v-hide="this.message !== null">
-                        {{ this.message }}
-                    </div>
-                </div>
-            </teleport>
-            <div class="observer_block"></div>
-            <div class="account">
-                <div class="account__container">
-                    <nav-tabs ref="tabs" />
-                    <keep-alive>
-                        <slot />
-                    </keep-alive>
-                </div>
+    <div class="layout">
+        <div class="header-container">
+            <header-component :user="user" />
+        </div>
+        <div class="nav-container">
+            <nav-tabs ref="tabs" :user="user"/>
+        </div>
+            <div class="page-container">
+                <keep-alive>
+                   <slot />
+                </keep-alive>
             </div>
         </div>
-        <footer-component />
-    </div>
 </template>
 <script>
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
-import HeaderComponent from "@/Components/HeaderComponent.vue";
-import FooterComponent from "@/Components/FooterComponent.vue";
+import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -39,7 +25,7 @@ export default {
         },
     },
     components: {
-        FooterComponent,
+        // FooterComponent,
         HeaderComponent,
         NavTabs,
     },
@@ -56,20 +42,39 @@ export default {
     },
 };
 </script>
-<style lang="scss">
-.account {
-    margin-top: 40px;
-    @media (max-width: 767.98px) {
-        margin-top: 32px;
-    }
-    @media (max-width: 479.98px) {
-        margin-top: 24px;
-    }
-
-    &__container {
-        display: flex;
-        justify-content: space-between;
-        position: relative;
-    }
+<style scoped>
+.layout{
+    width: 100vw;
+    height: 100vh;
+    background: var(--secondary-white, #FFF);
+}
+.header-container{
+    width: calc(100vw - 320px);
+    height: 84px;
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 0;
+    right: 0;
+    transition: all 0.3s ease 0s;
+}
+.nav-container{
+    width: 320px;
+    height: 100vh;
+    padding: 0 24px;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+}
+.page-container{
+    position: fixed;
+    padding: 24px;
+    border-radius: 40px 0px 0px 0px;
+    background: var(--background-first, #F8FAFD);
+    box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
+    top: 84px;
+    left: 320px;
+    width: calc(100vw - 320px);
+    height: calc(100vh - 84px);
 }
 </style>

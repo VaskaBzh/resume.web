@@ -48,6 +48,7 @@ const messages = {
         },
         header: {
             login_button: "Account",
+            user_title: "Subaccount",
             popups: {
                 errors: {
                     link_email_confirm: "Confirm the address.",
@@ -725,6 +726,7 @@ const messages = {
         },
         header: {
             login_button: "Личный кабинет",
+            user_title: "Субаккаунт",
             popups: {
                 errors: {
                     link_email_confirm: "Подтвердите адрес.",

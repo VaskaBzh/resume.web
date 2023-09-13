@@ -5,29 +5,12 @@
             :class="{ 'button_name-target': target }"
             ref="name"
         >
-            <svg
-                width="22"
-                height="22"
-                viewBox="0 0 22 22"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M11.0003 3.66553C11.9606 3.68412 12.8752 4.07865 13.5478 4.76435C14.2203 5.45004 14.5971 6.37219 14.5971 7.33265C14.5971 8.29312 14.2203 9.21526 13.5478 9.90096C12.8752 10.5867 11.9606 10.9812 11.0003 10.9998C10.04 10.9812 9.1253 10.5867 8.45276 9.90096C7.78021 9.21526 7.40347 8.29312 7.40347 7.33265C7.40347 6.37219 7.78021 5.45004 8.45276 4.76435C9.1253 4.07865 10.04 3.68412 11.0003 3.66553ZM11.0003 12.834C15.0531 12.834 18.3345 14.4751 18.3345 16.4998V18.334H3.66602V16.4998C3.66602 14.4751 6.94745 12.834 11.0003 12.834Z"
-                />
-            </svg>
-
-            {{ name }}
-            <svg
-                width="20"
-                height="20"
-                viewBox="0 0 20 20"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M1.70833 6.33317L2.89583 5.1665L10.0417 12.3123L17.1875 5.1665L18.375 6.33317L10.0417 14.6665L1.70833 6.33317Z"
-                />
+        <div>
+            <p class="user-name-text">{{ name }}</p>
+            <p class="user-title-text">{{$t("header.user_title")}}</p>
+        </div>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
         </div>
         <div class="button__menu" ref="menu" :class="{ target: target }">
@@ -369,35 +352,42 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.user-name-text{
+    color: var(--secondary-white, var(--main-gohan, #FFF));
+    font-family: Unbounded;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+}
+.user-title-text{
+    color: var(--secondary-white, var(--main-gohan, #FFF));
+    font-family: NunitoSans;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 135%; /* 16.2px */
+}
 .button {
     position: relative;
-    min-width: 160px;
-    width: fit-content;
-    @media (min-width: 991.98px) {
-        margin-left: 40px;
-    }
-    @media (max-width: 991.98px) {
-        min-width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: flex-start;
-    }
+    width:270px;
+    margin-bottom: 16px;
     &_name {
         width: 100%;
         cursor: pointer;
         transition: all 0.5s ease 0s;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        gap: 4px;
-        color: #3f7bdd;
-        min-width: 160px;
+        border-radius: 16px;
+        background: var(--gradient-v-1, linear-gradient(117deg, #024BC0 16.84%, #3597F9 103.73%));
+        box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 24px -6px rgba(0, 0, 0, 0.16);
+        display: flex;
+        padding: 16px;
+        color: var(--secondary-white, #FFF);
         font-size: 16px;
-        line-height: 150%;
-        border: 1px solid #3f7bdd;
-        padding: 0 24px;
-        min-height: 40px;
-        border-radius: 8px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 150%; /* 24px */
+        align-items: center;
+        gap: 16px;
+        align-self: stretch;
         &-target {
             svg {
                 &:last-child {
@@ -412,35 +402,7 @@ export default {
                 margin-left: auto;
             }
         }
-        @media (max-width: 991.98px) {
-            background: #d2def2;
-            border: none;
-            padding: 0 16px;
-            min-height: 56px;
-            gap: 8px;
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 120%;
-            svg {
-                width: 24px;
-                height: 24px;
-                &:last-child {
-                    width: 22px;
-                    height: 22px;
-                }
-            }
-        }
-        @media (max-width: 479.98px) {
-            background: #d2def2;
-            border: none;
-            min-height: 48px;
-        }
-        @media (min-width: 991.98px) {
-            &:hover {
-                background: #c6d8f5;
-                border: 1px solid #c6d8f5;
-            }
-        }
+
     }
     .list_button {
         a {
@@ -497,39 +459,8 @@ export default {
         position: absolute;
         color: #818c99;
         right: 0;
-        top: 48px;
+        top: 80px;
         transition: all 0.5s ease 0s;
-        @media (max-width: 991.98px) {
-            top: 64px;
-        }
-        @media (max-width: 479.98px) {
-            top: 56px;
-        }
-        @media (min-width: 991.98px) {
-            min-width: 326px;
-        }
-        button,
-        a {
-            font-weight: 400;
-            display: inline-flex;
-            gap: 8px;
-            align-items: center;
-            transition: all 0.3s ease 0s;
-            width: 100%;
-            font-size: 16px;
-            line-height: 120%;
-        }
-        button {
-            color: #e5403f;
-            svg {
-                fill: #e5403f;
-            }
-        }
-        svg {
-            width: 22px;
-            height: 22px;
-            fill: #3f7bdd;
-        }
-    }
+}
 }
 </style>
