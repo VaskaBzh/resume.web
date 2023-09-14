@@ -48,6 +48,7 @@ const messages = {
         },
         header: {
             login_button: "Account",
+            user_title: "Subaccount",
             popups: {
                 errors: {
                     link_email_confirm: "Confirm the address.",
@@ -584,7 +585,8 @@ const messages = {
             },
         },
         connection: {
-            title: "Worker connection",
+            title: "Pool URLs",
+            note: "If connected correctly, the device will appear in 1-10 minutes",
             block: {
                 title: "Configure your device according to the data provided below:",
             },
@@ -608,6 +610,7 @@ const messages = {
                 },
             },
             popups: {
+                note: "After adding a wallet, the address cannot be changed",
                 add: {
                     title: "Add wallet",
                     placeholders: {
@@ -728,6 +731,7 @@ const messages = {
         },
         header: {
             login_button: "Личный кабинет",
+            user_title: "Субаккаунт",
             popups: {
                 errors: {
                     link_email_confirm: "Подтвердите адрес.",
@@ -1265,7 +1269,8 @@ const messages = {
             },
         },
         connection: {
-            title: "Подключение воркера",
+            title: "URL-адреса пула",
+            note: "При корректном подключении устройство отобразится через 1-10 минут",
             block: {
                 title: "Настройте ваше устройство согласно представленным ниже данным:",
             },
@@ -1286,6 +1291,7 @@ const messages = {
                 },
             },
             popups: {
+                note: "После добавления кошелька адрес невозможно будет изменить",
                 add: {
                     title: "Добавить кошелек",
                     placeholders: {

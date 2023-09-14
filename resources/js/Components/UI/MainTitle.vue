@@ -25,6 +25,8 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+*{
+}
 h1 {
     font-weight: 500;
     font-size: 64px;
@@ -52,9 +54,11 @@ h2 {
 }
 
 h3 {
-    font-weight: 500;
-    font-size: 40px;
-    line-height: 120%;
+    color: var(--light-gray-800, #1D2939);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 160%; /* 32px */
     @media (max-width: 767.98px) {
         font-size: 32px;
     }
@@ -73,14 +77,11 @@ h4 {
     }
 }
 .title {
-    font-family: AmpleSoftPro, serif;
+    font-family: Unbounded;
     font-style: normal;
-    color: #343434;
+    color: var(--light-gray-800, #1D2939);
     &.profile {
         margin: 0 0 40px;
-        @media (min-width: 991.98px) {
-            padding-left: 70px;
-        }
         display: flex;
         width: 100%;
         align-items: center;

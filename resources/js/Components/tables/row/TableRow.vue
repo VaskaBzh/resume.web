@@ -145,7 +145,7 @@ export default {
             }
         }
         @media (min-width: 767.98px) {
-            background: #fafafa;
+            background: var(--light-secondary-wb, #FFF);
         }
         &:first-child {
             @media (min-width: 767.98px) {

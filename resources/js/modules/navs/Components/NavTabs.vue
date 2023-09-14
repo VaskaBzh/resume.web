@@ -1,57 +1,137 @@
 <template>
-    <div
-        class="nav-tabs"
-        :class="{
-            'nav-tabs-full-page': fullPage,
-        }"
-        ref="tabs"
-        v-if="viewportWidth > 991.98"
-    >
-        <a class="nav-tabs_link-back" href="#" @click="service.back">
-            <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M14 18L8 12L14 6"
-                    stroke-width="2"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                />
-            </svg>
-        </a>
-        <router-link
-            v-for="(link, i) in links"
-            :key="i"
-            :to="link.url"
-            :class="{
-                burger_link: viewportWidth < 991.98,
-                'router-link-active': route.fullPath.startsWith(`${link.url}`),
-            }"
-            class="nav-tabs__tab"
-        >
-            <svg
-                v-html="link.icon"
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="25"
-                viewBox="0 0 24 25"
-                fill="none"
-            ></svg>
-
-            {{ $t(`tabs.${link.name}`) }}
+    <div>
+        <router-link :to="{ name: 'home' }">
+            <div class="logo-container">
+                <img
+                    class="logo-img"
+                    src="../assets/img/logo-img.svg"
+                    alt="logo"
+                 >
+                 <div class="allbtc-logo-container">
+                    <img
+                    class="logo-img"
+                    src="../assets/img/logo-allbtc.svg"
+                    alt="logo"
+                    >
+                    <img
+                    class="logo-pool"
+                    src="../assets/img/logo-pool.svg"
+                    alt="logo"
+                    >       
+                </div>
+            </div>
         </router-link>
+        <article class="article-tabs">
+            <account-menu
+                :errors="errors"
+                :viewportWidth="viewportWidth"
+                :user="user"
+            ></account-menu>
+        <div class="nav-link-container">
+            <router-link
+                v-for="(link, i) in mainLinks"
+                :key="i"
+                :to="link.url"
+                class="nav-link"
+            >
+            <div class="nav-link-item">
+                <svg
+                    v-html="link.icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="#98A2B3"
+                ></svg>
+                <span>
+                    {{ $t(`tabs.${link.name}`) }}
+                </span>
+            </div>
+        </router-link>
+        <button class="header-nav-tabs" @click="actionList('sub')">
+            <h3 class="title-tabs">Субаккаунт</h3>
+            <div :class="{'open-arrow': isOpenSub, 'close-arrow': closeSubList }">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                 </svg>
+            </div>
+        </button>
+        <router-link
+                v-for="(link, i) in subLinks"
+                :key="i"
+                :to="link.url"
+                class="nav-link"
+                :class="{'close-list': closeSubList}"
+                v-if="isOpenSub"
+            >
+            <div class="nav-link-item">
+                    <svg
+                    v-html="link.icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                ></svg>
+                <span>
+                    {{ $t(`tabs.${link.name}`) }}
+                </span>
+            </div>
+        </router-link>
+
+        <button class="header-nav-tabs" @click="actionList('settings')">
+            <h3 class="title-tabs">Настройки</h3>
+            <div :class="{'open-arrow': isOpenSettings, 'close-arrow': closeSettingsList }">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                 </svg>
+            </div>
+        </button>
+        <router-link
+                v-for="(link, i) in settingLinks"
+                :key="i"
+                :to="link.url"
+                class="nav-link"
+                :class="{'close-list': closeSettingsList}"
+                v-if="isOpenSettings"
+            >
+            <div class="nav-link-item">
+                <svg
+                    v-html="link.icon"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="25"
+                    viewBox="0 0 24 25"
+                    fill="none"
+                ></svg>
+                <span>
+                    {{ $t(`tabs.${link.name}`) }}
+                </span>
+            </div>
+        </router-link>
+        </div>
+    </article>
+    <div class="logout">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <path d="M15.1 16.4603C14.79 20.0603 12.94 21.5303 8.89 21.5303H8.76C4.29 21.5303 2.5 19.7403 2.5 15.2703V8.75027C2.5 4.28027 4.29 2.49027 8.76 2.49027H8.89C12.91 2.49027 14.76 3.94027 15.09 7.48027M9 12.0203L20.38 12.0203M18.15 15.3703L21.5 12.0203L18.15 8.67027" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="nav-link">
+            {{ $t('header.login.menu.logout') }} 
+        </span>
+    </div>
     </div>
 </template>
 <script>
 import { TabsService } from "../services/TabsService";
 import { useRoute } from "vue-router";
 import { mapGetters } from "vuex";
+import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
+import { defineComponent } from "vue";
 
-export default {
+export default  defineComponent({
+    components: {
+        AccountMenu,
+    }, 
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
@@ -60,16 +140,65 @@ export default {
         return {
             viewportWidth: 0,
             service: new TabsService(),
+            subaccounts: new TabsService(),
+            settings: new TabsService(),
+            isOpenSub: true,
+            isOpenSettings: true,
+            closeSubList: false,
+            closeSettingsList: false,
         };
+    },
+    props: {
+        is_auth: {
+            type: Boolean,
+            default: false,
+        },
+        user: {
+            type: Object,
+        },
+        errors: {
+            type: Object,
+        },
     },
     methods: {
         ...mapGetters(["user"]),
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        setLinks() {
-            this.service.setLinks(this.user);
+        setMainLinks() {
+            this.service.setMainLinks(this.user);
         },
+        setSubaccountLinks(){
+            this.subaccounts.setSubaccountLinks();
+        },
+        setSettingsLinks(){
+            this.settings.setSettingsLinks();
+        },
+        actionList(name){
+            if(name == 'sub'){
+                if(this.isOpenSub){
+                this.closeSubList = true
+                setTimeout(() => {
+                    this.closeSubList = false
+                    this.isOpenSub = false 
+                }, 400);
+                }
+                else{
+                    this.isOpenSub = true 
+                }
+            }else{
+                if(this.isOpenSettings){
+                    this.closeSettingsList = true
+                    setTimeout(() => {
+                        this.closeSettingsList = false
+                        this.isOpenSettings = false 
+                    }, 400);
+                }
+                else{
+                    this.isOpenSettings = true 
+                }
+            }
+        }
     },
     watch: {
         user() {
@@ -77,7 +206,9 @@ export default {
         }
     },
     mounted() {
-        this.setLinks();
+        this.setMainLinks();
+        this.setSubaccountLinks();
+        this.setSettingsLinks();
     },
     unmounted() {
         this.service.dropLinks();
@@ -94,261 +225,138 @@ export default {
                 (page) => page === pageArr[pageArr.length - 1]
             );
         },
-        links() {
-            return this.service.links;
+        mainLinks() {
+            return this.service.mainLinks;
         },
+        subLinks(){
+            return this.subaccounts.subLinks;
+        },
+        settingLinks(){
+            return this.settings.settingLinks;
+        }
     },
-};
+});
 </script>
-<style lang="scss">
-.nav-tabs {
-    max-width: 240px;
+<style scoped>
+.title-tabs{
+    color: var(--gray-800, #1D2939);
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 175%; /* 31.5px */
+}
+.header-nav-tabs{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
+}
+.logo-container{
+    display: inline-flex;
+    padding: 40px 0 40px 16px;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.allbtc-logo-container{
+    display: flex;
+    max-height: 54px;
+    flex-direction: column;
+}
+.logo-pool{
+    width: 47px;
+    height: 23px;
+}
+.nav-link-container{
     display: flex;
     flex-direction: column;
+    align-items: flex-start; 
+    gap: 8px;
+}
+.nav-link{
+    color: var(--gray-600, #475467);
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    padding: 8px;
+    line-height: 175%; /* 31.5px */
+    transition: all 0.3s ease 0s;
+    animation: openList 0.5s ease-out;
+}
+.nav-link:hover{
     border-radius: 12px;
-    background: transparent;
-    height: fit-content;
-    -webkit-box-shadow: 0 11px 34px 0 transparent;
-    z-index: 9;
-    @media (min-width: 991px) {
-        //&:hover {
-        //    -webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 10%);
-        //}
-        overflow: hidden;
-        position: fixed;
-        top: 132px;
+    background: var(--primary-25, #F5FAFF);
+    width: 100%;
+}
+.nav-link:hover .nav-link-item{
+    color: var(--primary-500, #2E90FA);
+}
+.nav-link:hover svg{
+    color: var(--primary-500, #2E90FA);
+    fill: #2E90FA;
+}
+@keyframes openList{
+    0%{
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+    100%{
         transform: translateY(0);
+        
     }
-    &_link-back {
-        display: none;
-        @media (min-width: 991px) {
-            background: #fafafa;
-            border-radius: 8px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            visibility: hidden;
-            opacity: 0;
-            width: 0;
-            height: 0;
-            svg {
-                width: 24px;
-                height: 24px;
-                stroke: #343434;
-            }
-            &:hover {
-                background: #5389e1;
-                svg {
-                    stroke: #fafafa;
-                }
-            }
-        }
+}
+.close-list{
+    animation: closeList 0.4s ease-in;
+}
+@keyframes closeList{
+    0%{
+        transform: translateY(0px);
     }
-    //&.fixed {
-    //    @media (min-width: 1271px) {
-    //        transform: translateY(-92px);
-    //    }
-    //}
-    &-full-page {
-        @media (min-width: 991.98px) {
-            position: absolute;
-            border-radius: 13px;
-            padding: 0;
-            top: 3px;
-            background-color: transparent;
-            border: 0.5px solid transparent;
-            width: fit-content;
-            height: fit-content;
-            -webkit-box-shadow: 0 11px 34px 0 transparent !important;
-            &.fixed {
-                @media (min-width: 991px) {
-                    transform: translate(0);
-                }
-            }
-            .nav-tabs {
-                &__tab {
-                    overflow: hidden;
-                    visibility: hidden;
-                    opacity: 0;
-                    width: 0;
-                    height: 0;
-                    min-height: 0;
-                }
+    100%{
+        transform: translateY(-10px);
+        opacity: 0;
+    }
+}
+.open-arrow{
+    animation: openArrow 0.4s linear;
+    transform: rotate(180deg);
 
-                &_link-back {
-                    width: 40px;
-                    height: 40px;
-                    overflow: visible;
-                    visibility: visible;
-                    opacity: 1;
-                }
-            }
-        }
+}
+@keyframes openArrow{
+    0%{
+        transform: rotate(0deg);
     }
-    //@media (max-width: 1270px) {
-    //    max-height: 68px;
-    //    height: 100%;
-    //    max-width: 131%;
-    //    width: 131%;
-    //    overflow-x: scroll;
-    //    overflow-y: visible;
-    //    background-color: transparent;
-    //    padding: 4px calc((1270px - 970px) / 2) 0;
-    //    border-radius: 0;
-    //    flex-direction: row;
-    //    box-sizing: border-box;
-    //    gap: 6px;
-    //    position: absolute;
-    //    top: 0;
-    //    left: 0;
-    //    margin: 0 calc((1270px - 970px) / -2);
-    //    &::-webkit-scrollbar {
-    //        width: 0;
-    //    }
-    //}
-    @media (max-width: 991.98px) {
-        padding: 4px calc((992px - 750px) / 2) 0;
-        margin: 0 calc((992px - 750px) / -2);
-        max-width: calc(100% + (992px - 750px) / 2);
-        width: calc(100% + (992px - 750px) / 2);
+    100%{
+
+        transform: rotate(180deg);
     }
-    @media (max-width: 991.98px) {
-        padding: 4px 15px 0 30px;
-        margin: 0 -15px;
-        max-width: calc(100% + 15px);
-        width: calc(100% + 15px);
-        display: none;
+}
+.close-arrow{
+    animation: closeArrow 0.4s linear;
+    transform: rotate(0deg);
+}
+@keyframes closeArrow{
+    0%{
+        transform: rotate(180deg);
     }
-    @media (max-width: 479.98px) {
-        padding: 4px 15px 0 15px;
-        margin: 0;
-        max-width: calc(100% + 30px);
-        width: calc(100% + 30px);
+    100%{
+
+        transform: rotate(0deg);
     }
-    &__tab {
-        width: 100%;
-        color: #80809a;
-        padding: 5px 20px 5px 16px;
-        display: inline-flex;
-        align-items: center;
-        position: relative;
-        height: 60px;
-        min-height: 60px;
-        user-select: none;
-        font-weight: 500;
-        -webkit-tap-highlight-color: transparent;
-        //-webkit-box-shadow: 0 11px 34px 0 transparent;
-        @media (min-width: 991px) {
-            position: relative;
-            color: #000;
-            border-radius: 12px;
-            font-weight: 400;
-            font-size: 20px;
-            font-family: AmpleSoftPro, serif;
-            line-height: 132.6%;
-            gap: 16px;
-            background: transparent;
-            svg {
-                width: 22px;
-                height: 22px;
-            }
-        }
-        //@media (max-width: 1270px) {
-        //    background: rgba(255, 255, 255, 0.5);
-        //    border-radius: 8px;
-        //    color: #818c99;
-        //    height: 40px;
-        //    min-height: 40px;
-        //    padding: 0 20px;
-        //    justify-content: center;
-        //    font-size: 18px;
-        //    line-height: 23px;
-        //    border: none;
-        //    width: auto;
-        //    white-space: nowrap;
-        //    svg {
-        //        display: none;
-        //    }
-        //}
-        @media (max-width: 991.98px) {
-            font-size: 16px;
-            line-height: 16px;
-            height: 34px;
-            min-height: 34px;
-        }
-        @media (max-width: 991.98px) {
-            svg {
-                display: block;
-            }
-        }
-        @media (max-width: 380.98px) {
-            height: 28px;
-            min-height: 28px;
-            font-size: 16px;
-            line-height: 14px;
-        }
-        svg {
-            @media (min-width: 991px) {
-                fill: #417fe5;
-            }
-        }
-        &-stroke {
-            svg {
-                @media (min-width: 991px) {
-                    fill: transparent;
-                    stroke: #417fe5;
-                }
-            }
-            //&:hover {
-            //    svg {
-            //        fill: transparent !important;
-            //        fill-opacity: 0 !important;
-            //        stroke-opacity: 1;
-            //        stroke: #4182ec !important ;
-            //    }
-            //}
-        }
-        &:hover {
-            //-webkit-box-shadow: 0 11px 34px 0 rgb(0 0 0 / 5%);
-        }
-        //    @media (max-width: 1270px) {
-        //        background: #fff;
-        //        border: 0.5px solid rgba(0, 0, 0, 0.08);
-        //        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.04);
-        //    }
-        //    @media (min-width: 1271px) {
-        //        &:before {
-        //            opacity: 1;
-        //            visibility: visible;
-        //        }
-        //        svg {
-        //            stroke: transparent;
-        //            stroke-width: 0;
-        //            fill-opacity: 1;
-        //            fill: #4182ec;
-        //        }
-        //    }
-        //}
-        &:last-child {
-            @media (min-width: 1270px) {
-                border-bottom: none;
-            }
-        }
-        svg {
-            @media (min-width: 1270px) {
-                height: 24px;
-                width: 24px;
-            }
-        }
-    }
-    .router-link-active {
-        @media (min-width: 991.98px) {
-            color: #5389e1;
-            background: #dce4f1;
-            font-weight: 500;
-        }
-    }
+}
+.nav-link-item{
+    display: flex;
+    gap: 16px;
+}
+.logout{
+    position: fixed;
+    bottom: 32px;
+    left: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
 }
 </style>

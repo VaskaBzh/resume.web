@@ -1,16 +1,6 @@
 <template>
-    <div class="statistic profile">
+    <div class="statistic">
         <div class="statistic__wrapper">
-            <div class="main-header-container">
-                <main-title tag="h3" class="cabinet_title">
-                    {{ $t("statistic.title") }}
-                    <!--                <main-checkbox @is_checked="allStat">-->
-                    <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
-                    <!--                >-->
-                </main-title>
-                <current-exchange-rate />
-            </div>
-
             <main-preloader
                 class="cabinet"
                 :wait="waitHistory"
@@ -52,163 +42,41 @@
                     />
                 </div>
             </div>
-            <div
-                class="cabinet"
-                v-if="
-                    endHistory &&
-                    !waitHistory &&
-                    !!getAccount &&
-                    hashrates.records?.filter((a) => a.hashrate > 0).length ===
-                        0
-                "
-            >
-                <main-title tag="h4" class="headline">{{
-                    $t("statistic.chart.no_workers_title")
-                }}</main-title>
-                <copy-block
-                    v-for="(object, i) in copyObject"
-                    :key="i"
-                    :copyObject="object"
-                />
-            </div>
             <div class="cabinet">
-                <main-title tag="h4" class="headline">
-                    {{ $t("statistic.info_blocks.title") }}
-                </main-title>
-                <div class="statistic__row">
-                    <div
-                        class="cabinet__block cabinet__block-light hash__block"
-                        v-if="!waitAccounts"
-                    >
-                        <main-title class="title title-blue"
-                            >{{ $t("statistic.info_blocks.workers.title") }}
-                        </main-title>
-                        <ul class="statistic__list">
-                            <li class="active text text-md">
-                                <span>
-                                    {{
-                                        $t(
-                                            "statistic.info_blocks.workers.types[0]"
-                                        )
-                                    }}</span
-                                >
-                                {{ this.workers.active }}
-                            </li>
-                            <li class="unStable text text-md">
-                                <span>
-                                    {{
-                                        $t(
-                                            "statistic.info_blocks.workers.types[1]"
-                                        )
-                                    }}</span
-                                >
-                                {{ this.workers.unStable }}
-                            </li>
-                            <li class="inActive text text-md">
-                                <span>{{
-                                    $t("statistic.info_blocks.workers.types[2]")
-                                }}</span>
-                                {{ this.workers.inActive }}
-                            </li>
-                        </ul>
+                <div class="statistic-container">
+                    <HashrateCards></HashrateCards>
+                    <div class="statistic-card">
+                        <p class="statistic-card-title"> {{$t("statistic.info_blocks.workers.types[0]")}}</p>
+                        <p class="statistic-card-num color-green"> {{ this.workers.active }}</p>
+                    </div>
+                    <div class="statistic-card">
+                        <p class="statistic-card-title"> {{$t("statistic.info_blocks.workers.types[2]")}}</p>
+                        <p class="statistic-card-num color-red"> {{ this.workers.inActive }}</p>
+                    </div>
                     </div>
                     <main-preloader
                         :wait="waitAccounts"
                         :interval="20"
                         :end="endAccounts"
                     />
-                    <div
-                        class="cabinet__block cabinet__block-light hash__block"
-                    >
-                        <main-title class="title title-blue"
-                            >{{ $t("statistic.info_blocks.hashrate.title") }}
-                        </main-title>
-                        <ul class="statistic__list statistic__list-last">
-                            <li class="text text-md">
-                                {{ $t("statistic.info_blocks.hash.titles[0]") }}
-                                <span class="statistic_info text-blue"
-                                    ><b v-hash
-                                        >{{
-                                            Number(this.workers.hash).toFixed(2)
-                                        }}
-                                        TH/s</b
-                                    ></span
-                                >
-                            </li>
-                            <li class="text text-md">
-                                {{ $t("statistic.info_blocks.hash.titles[1]") }}
-                                <span class="statistic_info text-blue"
-                                    ><b v-hash
-                                        >{{
-                                            Number(this.workers.hash24).toFixed(
-                                                2
-                                            )
-                                        }}
-                                        TH/s</b
-                                    ></span
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <!--                    <div-->
-                    <!--                        class="statistic__info cabinet__block cabinet__block-light"-->
-                    <!--                    >-->
-                    <!--                        <main-title tag="h4" class="title title-blue">{{-->
-                    <!--                            this.$t("statistic.info_blocks.title_clear")-->
-                    <!--                        }}</main-title>-->
-                    <!--                        <p class="text text-md" v-if="!clearProfit">-->
-                    <!--                            {{ this.$t("statistic.info_blocks.text_clear") }}-->
-                    <!--                        </p>-->
-                    <!--                        <blue-button v-if="!clearProfit">-->
-                    <!--                            <Link-->
-                    <!--                                href="/settings"-->
-                    <!--                                class="text text-md text-white"-->
-                    <!--                                ><b>-->
-                    <!--                                    {{-->
-                    <!--                                        this.$t(-->
-                    <!--                                            "statistic.info_blocks.button_clear"-->
-                    <!--                                        )-->
-                    <!--                                    }}</b-->
-                    <!--                                ></Link-->
-                    <!--                            >-->
-                    <!--                        </blue-button>-->
-                    <!--                        <btc-calculator-->
-                    <!--                            v-if="clearProfit"-->
-                    <!--                            :title="-->
-                    <!--                                this.$t('statistic.info_blocks.clear.titles[0]')-->
-                    <!--                            "-->
-                    <!--                            :BTC="todayEarn"-->
-                    <!--                            :clearProfit="clearProfitDay"-->
-                    <!--                        />-->
-                    <!--                        <btc-calculator-->
-                    <!--                            v-if="clearProfit"-->
-                    <!--                            :title="-->
-                    <!--                                this.$t('statistic.info_blocks.clear.titles[1]')-->
-                    <!--                            "-->
-                    <!--                            :BTC="clearBTCMounth"-->
-                    <!--                            :clearProfit="clearProfit"-->
-                    <!--                        />-->
-                    <!--                    </div>-->
+
                     <div
                         class="statistic__info cabinet__block cabinet__block-light"
                     >
-                        <main-title tag="h4" class="title title-blue">{{
-                            $t("statistic.info_blocks.title")
-                        }}</main-title>
-                        <btc-calculator
-                            :title="
-                                $t('statistic.info_blocks.payment.titles[0]')
-                            "
-                            :BTC="yesterdayEarn"
-                        />
                         <btc-calculator
                             :title="
                                 $t('statistic.info_blocks.payment.titles[1]')
                             "
                             :BTC="todayEarn"
                         />
+                        <btc-calculator
+                            :title="
+                                $t('statistic.info_blocks.payment.titles[0]')
+                            "
+                            :BTC="yesterdayEarn"
+                        />
+
                     </div>
-                </div>
             </div>
         </div>
     </div>
@@ -222,9 +90,9 @@ import { mapGetters } from "vuex";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
-import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
+// import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
-
+import HashrateCards from '@/modules/hashrate/Components/HashrateCards.vue'
 import { SubHashrateService } from "@/services/SubHashrateService";
 
 export default {
@@ -237,8 +105,9 @@ export default {
         BtcCalculator,
         WaitPreloader,
         MainPreloader,
-        CurrentExchangeRate,
+        // CurrentExchangeRate,
         MainTabs,
+        HashrateCards,
     },
     data() {
         return {
@@ -407,6 +276,64 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.statistic-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+.statistic-card{
+    border-radius: 24px;
+    background: var(--light-secondary-wb, #FFF);
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
+    padding: 16px 24px;
+    min-width: 349px;
+}
+@media (max-width: 1860px) {
+    .statistic-card{
+         min-width: 120px;
+    }
+    .hashrate-card{
+        min-width: 349px;
+    }
+}
+.statistic-card-title{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 145%; /* 20.3px */
+}
+.color-green{
+    color: var(--light-green-100, #1FB96C);
+}
+.color-red{
+    color: var(--light-red-100, #F1404A);
+}
+.color-main{
+    color: var(--light-gray-800, #1D2939);
+}
+.flex-row{
+    display: flex;
+    gap: 24px;
+    align-items: center;
+}
+.color-gray{
+    color: var(--light-gray-300, var(--gray-3100, #D0D5DD));
+    font-family: Unbounded;
+    font-size: 27px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 147%; /* 39.69px */
+}
+.statistic-card-num{
+    font-family: Unbounded;
+    font-size: 41px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 137%; /* 56.17px */
+}
 .statistic {
     &__row {
         display: grid;
@@ -432,6 +359,7 @@ export default {
     &__info {
         display: flex;
         flex-direction: column;
+        width: 50%;
         gap: 16px;
         .blue-button {
             margin-top: auto;
