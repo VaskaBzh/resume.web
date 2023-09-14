@@ -1,6 +1,7 @@
 import api from "@/api/api";
 
 import { accountData } from "@/DTO/accountData";
+import store from "@/store";
 
 const firstSubIndex = 0;
 export default {
@@ -10,7 +11,13 @@ export default {
         },
         async set_active({ commit, state }, index) {
             let sub = new accountData(
-                (await api.get(`/subs/sub/${index}`)).data.data
+                (
+                    await api.get(`/subs/sub/${index}`, {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    })
+                ).data.data
             );
 
             commit("updateActive", index);
@@ -22,11 +29,15 @@ export default {
             commit("updateActiveAccount", sub);
         },
         async accounts_all({ commit, state }, user_id) {
-            let subsList = (await api.get(`/subs/${user_id}`)).data.data.map(
-                (el) => {
-                    return new accountData(el);
-                }
-            );
+            let subsList = (
+                await api.get(`/subs/${user_id}`, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                })
+            ).data.data.map((el) => {
+                return new accountData(el);
+            });
 
             commit("updateAccounts", subsList);
             if (state.active === -1) {
@@ -36,11 +47,30 @@ export default {
                 );
             }
         },
+        async set_accounts({ commit, state }, user_id) {
+            if (state.valid) {
+                this.dispatch("getMiningStat");
+                this.dispatch("getGraph");
+            }
+            await this.dispatch("accounts_all", user_id);
+            this.dispatch("set_interval", user_id);
+        },
+        set_interval({ state }, user_id) {
+            state.interval = setInterval(async () => {
+                await this.dispatch("accounts_all", user_id);
+            }, 60000);
+        },
+        drop_all({ commit, state }) {
+            clearInterval(state.interval);
+
+            commit("destroy_acc");
+        },
     },
     mutations: {
         destroy_acc(state) {
             state.accounts = {};
             state.activeAccount = {};
+            state.active = -1;
         },
         updateActive(state, index) {
             state.active = index;
@@ -60,6 +90,7 @@ export default {
         active: -1,
         accounts: {},
         activeAccount: {},
+        interval: null,
     },
     getters: {
         allAccounts(state) {

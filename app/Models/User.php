@@ -3,17 +3,23 @@
 namespace App\Models;
 
 use App\Builders\UserBuilder;
+use App\Notifications\VerifyEmailNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasFactory, Notifiable, HasRoles;
+    use HasFactory,
+        Notifiable,
+        HasRoles,
+        HasApiTokens;
 
     protected $table = 'users';
 
@@ -47,7 +53,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'email_verified_at' => 'datetime',
     ];
 
-    public function subs()
+    /* Relations */
+    public function subs(): HasMany
     {
         return $this->hasMany(Sub::class);
     }
@@ -68,6 +75,14 @@ class User extends Authenticatable implements MustVerifyEmail
             )->withTimestamps();
     }
 
+    public function watcherLinks(): HasMany
+    {
+        return $this->hasMany(WatcherLink::class);
+    }
+
+    /* End relations */
+
+    /* Attributes */
     public function owner(): Attribute
     {
         return Attribute::make(
@@ -75,6 +90,14 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function sendEmailVerificationNotification(): void
+    {
+        $this->notify(new VerifyEmailNotification);
+    }
+
+    /* End attributes */
+
+    /* Custom builder */
     public function newEloquentBuilder($query): UserBuilder
     {
         return new UserBuilder($query);

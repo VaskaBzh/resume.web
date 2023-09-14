@@ -1,24 +1,22 @@
 <template>
-    <referrals-layout-view>
-        <div class="referral__content">
-            <div class="referral__head">
-                <!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
-                <percent-card
-                    :percent="service.percent"
-                    :percentSvg="service.percentSvg"
-                    :percentList="service.gradeList"
-                    class="referral__card referral__card-percent"
-                />
-            </div>
-            <wrap-table
-                :table="service.table"
-                :wait="service.waitTable"
-                :empty="service.rows"
-                :errors="errors"
-                :rowsVal="1000"
+    <div class="referral__content">
+        <div class="referral__head">
+            <!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
+            <percent-card
+                :percent="service.percent"
+                :percentSvg="service.percentSvg"
+                :percentList="service.gradeList"
+                class="referral__card referral__card-percent"
             />
         </div>
-    </referrals-layout-view>
+        <wrap-table
+            :table="service.table"
+            :wait="service.waitTable"
+            :empty="service.rows"
+            :errors="errors"
+            :rowsVal="1000"
+        />
+    </div>
 </template>
 
 <script>
@@ -29,17 +27,15 @@ import WrapTable from "@/Components/tables/WrapTable.vue";
 import { ReferralsService } from "@/modules/referral/services/ReferralsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
+import { mapGetters } from "vuex";
 
 export default {
-    layout: ProfileLayoutView,
     name: "referrals-view",
     i18n: {
         sharedMessages: ReferralsMessage,
     },
-    props: {
-        errors: Object,
-        user: Object,
+    computed: {
+        ...mapGetters(["user"]),
     },
     components: {
         MainSearch,
@@ -49,14 +45,16 @@ export default {
     },
     data() {
         return {
-            service: new ReferralsService(
-                this.user.id,
-                this.$t,
-                [0, 1, 2, 3, 4]
-            ),
+            service: new ReferralsService(this.$t, [0, 1, 2, 3, 4]),
         };
     },
+    watch: {
+        user(newUser) {
+            this.service.setUser(newUser);
+        },
+    },
     async mounted() {
+        this.service.setUser(this.user);
         this.service.getGradeList();
         this.service.getPercent();
 

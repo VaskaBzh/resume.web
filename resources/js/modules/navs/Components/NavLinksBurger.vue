@@ -9,10 +9,7 @@
     </transition>
     <div class="nav__links_con" :class="{ open: is_opened }">
         <div class="nav__links_wrapper">
-            <div
-                class="nav__header"
-                id="burger_head"
-            >
+            <div class="nav__header" id="burger_head">
                 <account-menu
                     :viewportWidth="viewportWidth"
                     :is_auth="is_auth"
@@ -22,16 +19,19 @@
                 ></account-menu>
                 <div class="nav__column" v-show="!is_auth">
                     <blue-button class="button button-md button-light">
-                        <Link :href="route('page', { page: 'login' })" class="all-link">
+                        <router-link :to="{ name: 'login' }" class="all-link">
                             {{ $t("header.login.buttons.login") }}
-                        </Link>
+                        </router-link>
                     </blue-button>
                     <blue-button
                         class="button button-md button-reverce button-reverce-border"
                     >
-                        <Link :href="route('page', { page: 'registration' })" class="all-link">
+                        <router-link
+                            :to="{ name: 'registration' }"
+                            class="all-link"
+                        >
                             {{ $t("header.login.buttons.registration") }}
-                        </Link>
+                        </router-link>
                     </blue-button>
                 </div>
             </div>
@@ -74,20 +74,20 @@
 </template>
 
 <script>
-import {Link, router, useForm, usePage} from "@inertiajs/vue3";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
 import { mapGetters } from "vuex";
-import { Inertia } from "@inertiajs/inertia";
 import MainLink from "@/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
+import api from "@/api/api";
+import { useRouter } from "vue-router";
+import store from "@/store";
 
 export default {
     components: {
         BlueButton,
         AccountMenu,
-        Link,
         MainLink,
         SelectLanguage,
         SelectTheme,
@@ -116,11 +116,24 @@ export default {
             this.$store.dispatch("set_active", data);
         },
         async logout() {
-            const { props } = usePage();
+            try {
+                await api.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
 
-            await router.post("/logout", {
-              _token: props.token,
-            });
+                await this.router.push({ name: "home" });
+
+                store.dispatch("dropUser");
+                store.dispatch("dropToken");
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
         },
         closeBurger() {
             this.is_opened = false;
@@ -142,6 +155,9 @@ export default {
     },
     computed: {
         ...mapGetters(["allAccounts", "getActive"]),
+        router() {
+            return useRouter();
+        },
         name() {
             let name = "...";
             if (this.getAccount) {

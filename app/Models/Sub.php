@@ -97,6 +97,10 @@ class Sub extends Model
         return new SubBuilder($query);
     }
 
+    public function watcherLinks(): HasMany
+    {
+        return $this->hasMany(WatcherLink::class, 'group_id');
+    }
     /* Attributes */
 
     public function totalPayout(): Attribute

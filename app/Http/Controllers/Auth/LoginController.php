@@ -3,14 +3,12 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Redirect;
-use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
-use Inertia\Inertia;
-use Illuminate\Support\Facades\Config;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -29,76 +27,77 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * Where to redirect users after login.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::PROFILE;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
+    public function login(Request $request): JsonResponse
     {
-        $this->middleware('guest')->except('logout');
-    }
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
 
-    public function loggedOut(Request $request)
-    {
-        return redirect('/');
-    }
-
-    protected function attemptLogin(Request $request)
-    {
-        $credentials = $this->credentials($request);
-
-        $user = auth()->getProvider()->retrieveByCredentials($credentials);
-
-        if ($user && auth()->validate($credentials)) {
-            auth()->login($user, $request->get('remember'));
-
-            return true;
+        if (auth()->check()) {
+            return new JsonResponse([
+                'error' => ['Already login in']
+            ], Response::HTTP_BAD_REQUEST);
         }
 
-        return false;
-    }
-
-    protected function verify(Request $request)
-    {
-        $credentials = $this->credentials($request);
-
-        if ($this->guard()->attempt($credentials, $request->filled('remember'))) {
-            $user = $this->guard()->getLastAttempted();
-
-            $user->sendEmailVerificationNotification();
-            $this->guard()->logout();
-
-            if (app()->getLocale() === 'ru') {
-                throw ValidationException::withMessages([
-                    $this->username() => [trans('Сообщение с подтверждением отправлено на почту.')],
-                ]);
-            } else if (app()->getLocale() === 'en') {
-                throw ValidationException::withMessages([
-                    $this->username() => [trans('A confirmation email has been sent to your email address.')],
-                ]);
-            }
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return new JsonResponse([
+                'error' => ['Credentials do not match']
+            ], Response::HTTP_BAD_REQUEST);
         }
+
+        $user = User::whereEmail($request->email)->first();
+        $user->tokens()->delete();
+
+        $token = $user->createToken($user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
+
+        return new JsonResponse([
+            'user' => $user,
+            'token' => $token->plainTextToken,
+            'expired_at' => $token->accessToken->expires_at,
+            'has_referral_role' => $user->hasRole('referral')
+        ]);
     }
 
-    protected function sendFailedLoginResponse(Request $request)
+    public function logout(): JsonResponse
     {
-        // Здесь можно добавить свою кастомную логику проверки ошибок, если это необходимо
+        auth()->user()
+            ?->tokens()
+            ->delete();
+
+        return response()->json('Logged out');
+    }
+
+    public function decreaseTokenTime(): void
+    {
+        auth()->user()
+            ->currentAccessToken()
+            ->update(['expires_at' => now()->addHours(2)]);
+    }
+
+    public function reVerify(Request $request): JsonResponse
+    {
+        if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
+            return new JsonResponse([
+                'error' => ['Credentials do not match']
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
+        User::whereEmail($request->email)
+            ->first()
+            ->sendEmailVerificationNotification();
+
         if (app()->getLocale() === 'ru') {
-            throw ValidationException::withMessages([
-                $this->username() => [trans('Неверная почта или пароль.')],
+            return response()->json([
+                $request->email => [trans('Сообщение с подтверждением отправлено на почту.')],
             ]);
         } else if (app()->getLocale() === 'en') {
-            throw ValidationException::withMessages([
-                $this->username() => [trans('Invalid email or password.')],
+            return response()->json([
+                $request->email => [trans('A confirmation email has been sent to your email address.')],
             ]);
         }
+
+        return $this->logout();
     }
+
 }

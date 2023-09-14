@@ -44,11 +44,13 @@ export default {
     computed: {
         newCurrencyValue() {
             const firstIndex = 0;
-            const currency = this.currency.filter(cur => cur !== this.baseValue)[firstIndex];
+            const currency = this.currency.filter(
+                (cur) => cur !== this.baseValue
+            )[firstIndex];
 
             this.getCurrency(currency);
             return currency;
-        }
+        },
     },
     watch: {
         value(newValue, oldValue) {
@@ -79,7 +81,7 @@ export default {
             const secondIndex = 1;
 
             this.baseValue =
-                this.$i18n.locale === "ru"
+                this.$i18n?.locale === "ru"
                     ? this.currency[firstIndex]
                     : this.currency[secondIndex];
         },

@@ -1,12 +1,16 @@
 import { TabsData } from "../DTO/TabsData";
-import { router } from "@inertiajs/vue3";
+import { useRouter } from "vue-router";
 
 export class TabsService {
     constructor() {
         this.links = [];
+
+        this.router = useRouter();
     }
 
-    setLinks(hasReferralRole) {
+    setLinks(user) {
+        this.dropLinks();
+
         this.links = [
             ...this.links,
             new TabsData("/profile/statistic", "statistic", "statistic"),
@@ -14,22 +18,20 @@ export class TabsService {
             new TabsData("/profile/wallets", "wallets", "wallets"),
             new TabsData("/profile/accounts", "accounts", "accounts"),
             new TabsData("/profile/workers", "workers", "workers"),
-            new TabsData(
-                "/profile/connecting",
-                "connecting",
-                "connecting"
-            ),
+            new TabsData("/profile/connecting", "connecting", "connecting"),
+            new TabsData("/profile/watchers", "watchers", "connecting"),
         ];
 
-        if (hasReferralRole)
-            this.setReferralTab();
+        if (user.roles)
+            if (user.roles.find((role) => role.name === "referral"))
+                this.setReferralTab();
     }
 
     setReferralTab() {
         this.links = [
             ...this.links,
             new TabsData("/profile/referral", "referral", "referral"),
-        ]
+        ];
     }
 
     dropLinks() {
@@ -37,7 +39,7 @@ export class TabsService {
     }
 
     back() {
-        router.visit("/profile/statistic");
+        this.router.go(-1);
         // if (window.history.length > 1) {
         //     window.history.back();
         // } else {

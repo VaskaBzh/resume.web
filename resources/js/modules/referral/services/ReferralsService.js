@@ -5,12 +5,13 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
 
 import api from "@/api/api";
+import store from "@/store";
 
 export class ReferralsService extends TableService {
-    constructor(id, translate, titleIndexes) {
+    constructor(translate, titleIndexes) {
         super(translate, titleIndexes);
 
-        this.user_id = id;
+        this.user = null;
     }
 
     setter(referral) {
@@ -27,6 +28,10 @@ export class ReferralsService extends TableService {
         );
     }
 
+    setUser(user) {
+        this.user = user;
+    }
+
     useTranslater(indexes) {
         return indexes.map((index) =>
             this.translate(`referrals_titles[${index}]`)
@@ -34,7 +39,11 @@ export class ReferralsService extends TableService {
     }
 
     async fetchReferrals(page, per_page) {
-        return await api.get(`/referrals/${this.user_id}`);
+        return await api.get(`/referrals/${this.user.id}`, {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
     }
 
     async index(page = 1, per_page = 15) {
@@ -52,7 +61,7 @@ export class ReferralsService extends TableService {
             });
 
             this.titles = this.useTranslater([0, 1, 2, 4]);
-        } catch(err) {
+        } catch (err) {
             console.error(`FetchError: ${err}`);
         }
 

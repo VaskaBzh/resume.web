@@ -1,25 +1,27 @@
 <template>
-    <Link
-        :href="link.page"
+    <router-link
+        :to="link.page"
         class="nav__link"
         :class="{
             burger_link: viewportWidth < 991.98,
-            active: $page.url === link.page,
+            active: route.fullPath === link.page,
         }"
     >
         <div class="burger_link_icon" v-if="link.svg" v-html="link.svg"></div>
 
         {{ link.name }}
-    </Link>
+    </router-link>
 </template>
 
 <script>
-import { Link } from "@inertiajs/vue3";
+import { useRoute } from "vue-router";
 
 export default {
     name: "main-link",
-    components: {
-        Link,
+    computed: {
+        route() {
+            return useRoute();
+        },
     },
     props: {
         link: Object,
@@ -53,8 +55,8 @@ export default {
         }
     }
 }
-.nav__link:hover{
-    color: #7C7C7C;
+.nav__link:hover {
+    color: #7c7c7c;
 }
 .burger_link {
     &-account {
@@ -66,7 +68,7 @@ export default {
         gap: 16px;
         font-size: 18px;
         line-height: 150%;
-        color: #80809A;
+        color: #80809a;
         height: 48px;
         transition: all 0.3s ease 0s;
         border-radius: 8px;

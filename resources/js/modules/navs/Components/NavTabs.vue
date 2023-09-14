@@ -2,10 +2,10 @@
     <div
         class="nav-tabs"
         :class="{
-            'nav-tabs-full-page': this.fullPage,
+            'nav-tabs-full-page': fullPage,
         }"
         ref="tabs"
-        v-if="this.viewportWidth > 991.98"
+        v-if="viewportWidth > 991.98"
     >
         <a class="nav-tabs_link-back" href="#" @click="service.back">
             <svg
@@ -23,15 +23,13 @@
                 />
             </svg>
         </a>
-        <Link
+        <router-link
             v-for="(link, i) in links"
             :key="i"
-            :href="link.url"
+            :to="link.url"
             :class="{
-                burger_link: this.viewportWidth < 991.98,
-                'router-link-active': $page.url.startsWith(
-                    `${link.url}`
-                ),
+                burger_link: viewportWidth < 991.98,
+                'router-link-active': route.fullPath.startsWith(`${link.url}`),
             }"
             class="nav-tabs__tab"
         >
@@ -45,17 +43,15 @@
             ></svg>
 
             {{ $t(`tabs.${link.name}`) }}
-        </Link>
+        </router-link>
     </div>
 </template>
 <script>
-import {Link, usePage} from "@inertiajs/vue3";
 import { TabsService } from "../services/TabsService";
+import { useRoute } from "vue-router";
+import { mapGetters } from "vuex";
 
 export default {
-    components: {
-        Link,
-    },
     created() {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
@@ -67,13 +63,17 @@ export default {
         };
     },
     methods: {
+        ...mapGetters(["user"]),
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
         setLinks() {
-            const { props } = usePage();
-
-            this.service.setLinks(props.has_referral_role);
+            this.service.setLinks(this.user);
+        },
+    },
+    watch: {
+        user() {
+            this.setLinks();
         }
     },
     mounted() {
@@ -83,8 +83,12 @@ export default {
         this.service.dropLinks();
     },
     computed: {
+        ...mapGetters(["user"]),
+        route() {
+            return useRoute();
+        },
         fullPage() {
-            const pageArr = this.$page.url.split("/");
+            const pageArr = this.route.fullPath.split("/");
             const fullPages = ["income", "settings", "wallets"];
             return fullPages.find(
                 (page) => page === pageArr[pageArr.length - 1]

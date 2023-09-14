@@ -1,9 +1,7 @@
 <script>
-import layoutView from "../Shared/LayoutView.vue";
 
 export default {
     name: "ErrorPage",
-    layout: layoutView
 }
 </script>
 

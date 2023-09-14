@@ -6,7 +6,7 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="service.errors.email"
+                :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.reg.placeholders[0]')"
                 name="email"
@@ -18,7 +18,7 @@
                 "
             />
             <auth-input
-                :error="service.errors.name"
+                :error="errorsExpired.name"
                 :model="service.form.name"
                 :placeholder="this.$t('auth.reg.placeholders[1]')"
                 name="name"
@@ -31,13 +31,13 @@
             />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
+                :class="{ error: errorsExpired.password }"
             >
                 <main-password
                     name="password"
                     :placeholder="this.$t('auth.reg.placeholders[2]')"
                     :model="service.form.password"
-                    :errors="errors"
+                    :errors="errorsExpired"
                     @change="
                         service.validateProcess(
                             !!$event.target ? $event.target.value : $event
@@ -48,7 +48,7 @@
             <main-validate :validate="service.validate" />
             <div
                 class="form-auth_row password_row"
-                :class="{ error: service.errors.password }"
+                :class="{ error: errorsExpired.password }"
             >
                 <main-password
                     name="password_confirmation"
@@ -61,24 +61,24 @@
                     "
                 />
             </div>
-<!--            <auth-input-->
-<!--                :error="service.errors.referral_code"-->
-<!--                :model="service.form.referral_code"-->
-<!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
-<!--                name="email"-->
-<!--                type="text"-->
-<!--                @change="-->
-<!--                    service.form.referral_code = !!$event.target-->
-<!--                        ? $event.target.value-->
-<!--                        : $event-->
-<!--                "-->
-<!--            />-->
+            <!--            <auth-input-->
+            <!--                :error="service.errors.referral_code"-->
+            <!--                :model="service.form.referral_code"-->
+            <!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
+            <!--                name="email"-->
+            <!--                type="text"-->
+            <!--                @change="-->
+            <!--                    service.form.referral_code = !!$event.target-->
+            <!--                        ? $event.target.value-->
+            <!--                        : $event-->
+            <!--                "-->
+            <!--            />-->
         </div>
         <input
             class="form-auth_checkbox"
             type="checkbox"
             id="checkbox"
-            v-model="service.form.checkbox"
+            v-model="service.checkbox"
         />
         <label for="checkbox" :class="{ error: service.checkbox }">
             <div class="fake">
@@ -117,16 +117,15 @@
         >
         <p class="text text-light form-auth_text">
             {{ this.$t("auth.reg.link[0]") }}
-            <Link :href="route('page', { page: 'login' })" class="form-auth_link">{{
+            <router-link :to="{ name: 'login' }" class="form-auth_link">{{
                 this.$t("auth.reg.link[1]")
-            }}</Link>
+            }}</router-link>
         </p>
     </form>
 </template>
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
-import { Link } from "@inertiajs/vue3";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
 import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
@@ -135,31 +134,26 @@ import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 
 import { RegistrationService } from "@/modules/auth/services/RegistrationService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "registration-form",
-    props: {
-        errors: Object,
-    },
     components: {
         AuthInput,
         MainPassword,
         MainValidate,
         AuthErrors,
-        Link,
         MainTitle,
         BlueButton,
+    },
+    computed: {
+        ...mapGetters(["errors", "errorsExpired"]),
     },
     data() {
         return {
             pdf,
-            service: new RegistrationService(),
+            service: new RegistrationService(this.$router, this.$route),
         };
-    },
-    watch: {
-        errors(newVal) {
-            this.service.setErrors(newVal);
-        },
     },
     mounted() {
         this.service.setForm();

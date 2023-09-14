@@ -4,7 +4,7 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
 
 export class CabinetService {
-    constructor(user, translate) {
+    constructor(translate, route) {
         this.statsCards = [];
         this.accounts = [];
         this.gradeList = [];
@@ -14,6 +14,12 @@ export class CabinetService {
         this.code = "";
         this.activeSubId = null;
 
+        this.route = route;
+
+        this.user = null;
+    }
+
+    setUser(user) {
         this.user = user;
     }
 
@@ -52,9 +58,17 @@ export class CabinetService {
         let result = {};
 
         try {
-            result = await api.post(`/referrals/generate/${this.user.id}`, {
-                group_id: id,
-            });
+            result = await api.post(
+                `/referrals/generate/${this.user.id}`,
+                {
+                    group_id: id,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            );
 
             this.sendMessage(result.data.message);
         } catch (err) {
@@ -72,19 +86,38 @@ export class CabinetService {
         this.activeSubId = group_id;
     }
 
+    transformCode(code) {
+        const firstIndex = 1;
+
+        const params = code.split("?")[firstIndex];
+        const referralCodeParam = params.split("referral_code")[1];
+        const referralCode = referralCodeParam.substr(
+            firstIndex,
+            referralCodeParam.length - firstIndex
+        );
+
+        return `${window.location.host}/registration?referral_code=${referralCode}`;
+    }
+
     async index() {
         let response = {};
 
         try {
-            response = (await api.get(`/referrals/statistic/${this.user.id}`))
-                .data;
+            response = (
+                await api.get(`/referrals/statistic/${this.user.id}`, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                })
+            ).data;
         } catch (err) {
             console.error(`FetchError: ${err}`);
         }
 
         const result = response?.data || response;
 
-        this.setCode(result.code || "...");
+        let code = this.transformCode(result.code);
+        this.setCode(code || "...");
 
         this.setActiveSub(result.group_id);
 

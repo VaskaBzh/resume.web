@@ -1,5 +1,4 @@
 <template>
-    <Head :title="$t('statistic.title')" />
     <div class="statistic profile">
         <div class="statistic__wrapper">
             <div class="main-header-container">
@@ -81,8 +80,7 @@
                         class="cabinet__block cabinet__block-light hash__block"
                         v-if="!waitAccounts"
                     >
-                        <main-title
-                            class="title title-blue"
+                        <main-title class="title title-blue"
                             >{{ $t("statistic.info_blocks.workers.title") }}
                         </main-title>
                         <ul class="statistic__list">
@@ -119,34 +117,35 @@
                         :interval="20"
                         :end="endAccounts"
                     />
-                    <div class="cabinet__block cabinet__block-light hash__block">
-                        <main-title
-                            class="title title-blue"
-                        >{{ $t("statistic.info_blocks.hashrate.title") }}
+                    <div
+                        class="cabinet__block cabinet__block-light hash__block"
+                    >
+                        <main-title class="title title-blue"
+                            >{{ $t("statistic.info_blocks.hashrate.title") }}
                         </main-title>
                         <ul class="statistic__list statistic__list-last">
                             <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[0]") }}
                                 <span class="statistic_info text-blue"
-                                ><b v-hash
-                                >{{
-                                        Number(this.workers.hash).toFixed(2)
-                                    }}
+                                    ><b v-hash
+                                        >{{
+                                            Number(this.workers.hash).toFixed(2)
+                                        }}
                                         TH/s</b
-                                ></span
+                                    ></span
                                 >
                             </li>
                             <li class="text text-md">
                                 {{ $t("statistic.info_blocks.hash.titles[1]") }}
                                 <span class="statistic_info text-blue"
-                                ><b v-hash
-                                >{{
-                                        Number(this.workers.hash24).toFixed(
-                                            2
-                                        )
-                                    }}
+                                    ><b v-hash
+                                        >{{
+                                            Number(this.workers.hash24).toFixed(
+                                                2
+                                            )
+                                        }}
                                         TH/s</b
-                                ></span
+                                    ></span
                                 >
                             </li>
                         </ul>
@@ -219,7 +218,6 @@ import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { Head, router } from "@inertiajs/vue3";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import profileLayoutView from "@/Shared/ProfileLayoutView.vue";
 import { mapGetters } from "vuex";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
@@ -242,7 +240,6 @@ export default {
         CurrentExchangeRate,
         MainTabs,
     },
-    layout: profileLayoutView,
     data() {
         return {
             waitHistory: true,

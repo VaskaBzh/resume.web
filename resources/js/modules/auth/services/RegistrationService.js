@@ -1,42 +1,48 @@
-import {useForm, usePage} from "@inertiajs/vue3";
 import { FormData } from "@/modules/auth/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
+import api from "@/api/api";
+import store from "@/store";
 
 export class RegistrationService {
-    constructor() {
+    constructor(router, route) {
         this.form = {};
         this.validate = {};
         this.checkbox = false;
-        this.errors = {};
+
+        this.router = router;
+        this.route = route;
 
         this.validateService = new ValidateService();
     }
 
     setForm() {
-        const { props } = usePage();
+        const referral_code = this.route?.query?.referral_code;
 
-        const referral_code = this.getReferralCode(window.location.search);
-
-        this.form = useForm({
-            ...new FormData("", "", "", "", referral_code, false),
-            _token: props.token,
-        });
-    }
-
-
-    getReferralCode(page) {
-        const ulrParams = new URLSearchParams(page);
-
-        return ulrParams.get('referral_code');
+        this.form = {
+            ...new FormData("", "", "", "", referral_code),
+        };
     }
 
     async account_create() {
-        this.checkbox = false;
-
-        if (this.form.checkbox) {
+        if (this.checkbox) {
             if (Object.entries(this.validate).length === 0) {
-                this.form.post("/register", {});
+                try {
+                    const response = await api.post("/register", this.form);
+
+                    const user = response.data.user;
+                    const token = response.data.token;
+                    store.dispatch("setUser", user);
+                    store.dispatch("setToken", token);
+
+                    this.router.push({
+                        name: "statistic",
+                    });
+                } catch (err) {
+                    console.error("Error with: " + err);
+
+                    store.dispatch("setFullErrors", err.response.data.errors);
+                }
             }
         } else {
             this.checkbox = true;
@@ -49,12 +55,5 @@ export class RegistrationService {
             this.form,
             this.validate
         );
-    }
-
-    setErrors(errors) {
-        this.errors = { ...errors };
-        setTimeout(() => {
-            this.errors = {};
-        }, 1500);
     }
 }
