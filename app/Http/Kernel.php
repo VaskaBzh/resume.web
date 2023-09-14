@@ -32,7 +32,6 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             \Illuminate\Session\Middleware\StartSession::class,
-            \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
