@@ -73,7 +73,7 @@
             padding: 16px;
         }
         &-light {
-            background: #fafafa;
+            background: var(--light-secondary-wb, #FFF);
         }
         &-graph {
             position: relative;
