@@ -88,6 +88,7 @@ Route::group([
     Route::post('logout', [LoginController::class, 'logout']);
     Route::put('reset', [ResetPasswordController::class, 'changePassword']);
     Route::put('/change/{user}', AccountController::class)->name('change');
+    Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
     Route::group([
         'prefix' => 'subs',
