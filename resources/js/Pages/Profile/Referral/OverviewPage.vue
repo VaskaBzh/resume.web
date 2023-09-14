@@ -1,60 +1,58 @@
 <template>
-    <referrals-layout-view>
-        <div class="referral_content">
-            <div class="cabinet__block cabinet__block-light referral__block">
-                <main-title tag="h4" class="title referral_title">
-                    {{ $t("referral.title") }}
-                </main-title>
-                <p class="text text-gray referral_text referral_text-mb">
-                    {{ $t("referral.text") }}
-                </p>
-                <div class="referral__row">
-                    <main-copy class="referral_code" :code="service.code" />
-                    <percent-card
-                        :percent="percent"
-                        class="referral__card-percent"
-                    />
-                </div>
-            </div>
-            <div class="cabinet__block cabinet__block-light referral__block">
-                <main-title tag="h4" class="title referral_title">
-                    {{ $t("stats.title") }}
-                </main-title>
-                <div class="referral__row referral__row-bet">
-                    <stats-card
-                        v-for="(card, i) in service.statsCards"
-                        :content="card"
-                        :key="i"
-                    />
-                </div>
-            </div>
-            <div class="cabinet__block cabinet__block-light referral__block">
-                <main-title tag="h4" class="title referral_title">
-                    {{ $t("incomes.title") }}
-                </main-title>
-                <p class="text text-gray referral_text">
-                    {{ $t("incomes.text") }}
-                </p>
-                <referral-select
-                    class="referral_select-cabinet"
-                    :rows="service.accounts"
-                    :activeSubId="service.activeSubId"
-                    @changeSub="service.generateCode($event)"
+    <div class="referral_content">
+        <div class="cabinet__block cabinet__block-light referral__block">
+            <main-title tag="h4" class="title referral_title">
+                {{ $t("referral.title") }}
+            </main-title>
+            <p class="text text-gray referral_text referral_text-mb">
+                {{ $t("referral.text") }}
+            </p>
+            <div class="referral__row">
+                <main-copy class="referral_code" :code="service.code" />
+                <percent-card
+                    :percent="percent"
+                    class="referral__card-percent"
                 />
             </div>
-            <div
-                class="cabinet__block cabinet__block-light referral__block referral__block-full"
-            >
-                <main-title tag="h4" class="title referral_title">
-                    {{ $t("grade.title") }}
-                </main-title>
-                <p class="text text-gray referral_text">
-                    {{ $t("grade.text") }}
-                </p>
-                <info-list :gradeList="service.gradeList" />
+        </div>
+        <div class="cabinet__block cabinet__block-light referral__block">
+            <main-title tag="h4" class="title referral_title">
+                {{ $t("stats.title") }}
+            </main-title>
+            <div class="referral__row referral__row-bet">
+                <stats-card
+                    v-for="(card, i) in service.statsCards"
+                    :content="card"
+                    :key="i"
+                />
             </div>
         </div>
-    </referrals-layout-view>
+        <div class="cabinet__block cabinet__block-light referral__block">
+            <main-title tag="h4" class="title referral_title">
+                {{ $t("incomes.title") }}
+            </main-title>
+            <p class="text text-gray referral_text">
+                {{ $t("incomes.text") }}
+            </p>
+            <referral-select
+                class="referral_select-cabinet"
+                :rows="service.accounts"
+                :activeSubId="service.activeSubId"
+                @changeSub="service.generateCode($event)"
+            />
+        </div>
+        <div
+            class="cabinet__block cabinet__block-light referral__block referral__block-full"
+        >
+            <main-title tag="h4" class="title referral_title">
+                {{ $t("grade.title") }}
+            </main-title>
+            <p class="text text-gray referral_text">
+                {{ $t("grade.text") }}
+            </p>
+            <info-list :gradeList="service.gradeList" />
+        </div>
+    </div>
 </template>
 
 <script>
@@ -69,11 +67,9 @@ import { CabinetService } from "@/modules/referral/services/CabinetService";
 import { mapGetters } from "vuex";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import ProfileLayoutView from "@/Shared/ProfileLayoutView.vue";
 
 export default {
     name: "cabinet-view",
-    layout: ProfileLayoutView,
     components: {
         MainTitle,
         MainCopy,
@@ -87,20 +83,21 @@ export default {
         sharedMessages: ReferralsMessage,
     },
     props: {
-        user: Object,
-        errors: Object,
         message: String,
     },
     computed: {
-        ...mapGetters(["allAccounts"]),
+        ...mapGetters(["allAccounts", "user"]),
     },
     data() {
         return {
             percent: 0.8,
-            service: new CabinetService(this.user, this.$t),
+            service: new CabinetService(this.$t, this.$route),
         };
     },
     watch: {
+        user(newUser) {
+            this.service.setUser(newUser);
+        },
         async allAccounts(newValue) {
             if (newValue) {
                 await this.service.getSelectAccounts();
@@ -108,6 +105,7 @@ export default {
         },
     },
     async mounted() {
+        this.service.setUser(this.user);
         this.service.getGradeList();
 
         this.service.getStatsCards({});

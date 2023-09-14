@@ -3,13 +3,13 @@
         <nav class="header-calculator__container">
             <div class="header-calculator__main">
                 <div class="header-calculator__content">
-                    <Link href="/home">
+                    <router-link :to="{ name: 'home' }">
                         <img
                             class="calculator__logo"
                             src="@/../assets/img/logo_high_quality-dark.svg"
                             alt="logo"
                         />
-                    </Link>
+                    </router-link>
                     <nav-links-burger
                         @closed="burgerClose"
                         :is_auth="is_auth"
@@ -35,20 +35,22 @@
                     </div>
                 </div>
                 <div class="header-calculator__content">
-                    <Link
-                        :href="route('page', { page: 'login' })"
+                    <router-link
+                        :to="{ name: 'login' }"
                         v-show="viewportWidth >= 991.98 && !is_auth"
                         class="header-calculator_button"
                     >
                         {{ $t("header.login_button") }}
-                    </Link>
-                    <Link
-                        href="/statistic"
-                        v-show="viewportWidth >= 991.98 && !accountLink && is_auth"
+                    </router-link>
+                    <router-link
+                        :to="{ name: 'statistic' }"
+                        v-show="
+                            viewportWidth >= 991.98 && !accountLink && is_auth
+                        "
                         class="header-calculator_button"
                     >
                         {{ $t("header.login_button") }}
-                    </Link>
+                    </router-link>
                 </div>
             </div>
         </nav>
@@ -56,7 +58,6 @@
 </template>
 
 <script>
-import { Link } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import { mapGetters } from "vuex";
 import NavLinksBurger from "../../navs/Components/NavLinksBurger.vue";
@@ -64,16 +65,15 @@ import NavLinksBurger from "../../navs/Components/NavLinksBurger.vue";
 export default {
     name: "header-component-auth",
     components: {
-        Link,
         SelectLanguage,
         NavLinksBurger,
     },
     computed: {
         ...mapGetters(["getTheme"]),
         accountLink() {
-            let url = this.$page.url.startsWith("http")
-                ? new URL(this.$page.url).pathname
-                : this.$page.url;
+            let url = this.$route.fullPath.startsWith("http")
+                ? new URL(this.$route.fullPath).pathname
+                : this.$route.fullPath;
             return url.startsWith("/profile");
         },
     },

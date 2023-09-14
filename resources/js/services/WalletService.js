@@ -1,7 +1,6 @@
 import api from "@/api/api";
 
 import { walletData } from "@/DTO/walletData";
-import {useForm, usePage} from "@inertiajs/vue3";
 import store from "@/store";
 
 export class WalletService {
@@ -10,13 +9,13 @@ export class WalletService {
 
         this.translate = translate;
 
-        this.form = useForm({
+        this.form = {
             name: "",
             wallet: "",
             percent: "100",
             minWithdrawal: "0.005",
             group_id: this.group_id,
-        });
+        };
 
         this.waitWallets = true;
         this.wait = false;
@@ -36,28 +35,25 @@ export class WalletService {
     }
 
     clearForm(form) {
-        this.form = useForm({
+        this.form = {
             ...form,
             name: "",
             wallet: "",
             percent: "100",
             minWithdrawal: "0.005",
             group_id: store.getters.getActive,
-        });
+        };
     }
 
     setForm(wallet) {
-        const { props } = usePage();
-
-        this.form = useForm({
+        this.form = {
             ...this.form,
             name: wallet.fullName,
             wallet: wallet.wallet_address,
             percent: wallet.percent,
             minWithdrawal: wallet.minWithdrawal,
             group_id: store.getters.getActive,
-            _token: props.token,
-        });
+        };
     }
 
     closePopup() {
@@ -88,17 +84,21 @@ export class WalletService {
     async addWallet() {
         if (store.getters.getActive !== -1) {
             this.wait = true;
+            try {
+                await api.post("/wallets/create", this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
 
-            await this.form.post("/wallets/create", {
-                onSuccess: (res) => {
-                    this.index();
-                    this.clearForm();
-                    this.closePopup();
-                },
-                onFinish() {
-                    this.wait = false;
-                }
-            });
+                this.index();
+                this.clearForm();
+                this.closePopup();
+            } catch (e) {
+                console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
+            }
+            this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
         }
@@ -108,16 +108,21 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.wait = true;
 
-            await this.form.post("/wallets/update", {
-                onSuccess: (res) => {
-                    this.index();
-                    this.clearForm();
-                    this.closePopup();
-                },
-                onFinish() {
-                    this.wait = false;
-                }
-            });
+            try {
+                await api.put("/wallets/update", this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+
+                this.index();
+                this.clearForm();
+                this.closePopup();
+            } catch (e) {
+                console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
+            }
+            this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
         }
@@ -127,7 +132,7 @@ export class WalletService {
         this.setForm(wallet);
         // await this.form.post("/wallet_delete", {});
         store.dispatch("getMessage", this.translate("wallets.messages[1]"));
-        this.index();
+        // this.index();
     }
 
     // async filter(needDrop) {
@@ -141,6 +146,18 @@ export class WalletService {
     // }
 
     async fetch() {
-        return await api.get(`/wallets/${this.group_id}`);
+        let response = null;
+
+        try {
+            response = await api.get(`/wallets/${this.group_id}`, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            });
+        } catch (e) {
+            store.dispatch("setFullErrors", e.response.data.errors);
+        }
+
+        return response;
     }
 }

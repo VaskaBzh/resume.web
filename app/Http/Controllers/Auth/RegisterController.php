@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Sub\Create;
-use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use App\Rules\User\OnlyEngNameRule;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -25,23 +19,6 @@ use Symfony\Component\HttpFoundation\Response;
 class RegisterController extends Controller
 {
     use RegistersUsers;
-
-    /**
-     * Where to redirect users after registration.
-     *
-     * @var string
-     */
-    protected $redirectTo = RouteServiceProvider::HOME;
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('guest');
-    }
 
     /**
      * Get a validator for an incoming registration request.
@@ -66,71 +43,41 @@ class RegisterController extends Controller
     public function register(
         Request       $request,
         BtcComService $btcComService
-    ): RedirectResponse
+    ): JsonResponse
     {
         $this->validator($request->all())->validate();
 
         $userData = UserData::fromRequest($request->all());
 
         try {
-            /*$isExist = $btcComService->btcHasUser(
-                userData: UserData::fromRequest($request->all())
-            );
-
-            if ($isExist) {
-                return back()->withErrors([
-                    'name' => trans('validation.unique', ['attribute' => 'Аккаунт'])
-                ]);
-            }*/
+//            $btcComService->createSub(userData: $userData);
 
             $user = $this->create(userData: $userData);
 
-            $this->guard()->login($user);
-
-            $btcComService->createSub(userData: $userData);
-
-            event(new Registered(
-                user: $user
-            ));
-
             if ($request->referral_code) {
-                ReferralService::attach(user: $user, code: $request->referral_code);
+                ReferralService::attach(referral: $user, code: $request->referral_code);
             }
+
+//            event(new Registered(
+//                user: $user
+//            ));
+
+            return new JsonResponse([
+                'message' => 'success',
+                'user' => $user,
+                'token' => $user->createToken(
+                    $user->name,
+                    ['*'],
+                    now()->addMinutes(config('sanctum.expiration'))
+                )->plainTextToken
+            ]);
         } catch (\Exception $e) {
             report($e);
 
-            return back()->withErrors([
-                'message' => 'Something went wrong! Please contact with tech support'
-            ]);
+            return new JsonResponse([
+                'error' => 'Something went wrong! Please contact with tech support'
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-
-        return redirect("/profile/accounts");
-    }
-
-    public function isUserAuthorizedForVerification(Request $request, User $user)
-    {
-        if (!hash_equals((string)$user->getKey(), (string)$request->route('id'))) {
-            return false;
-        }
-
-        if (!hash_equals(sha1($user->getEmailForVerification()), (string)$request->route('hash'))) {
-            return false;
-        }
-
-        return true;
-    }
-
-    public function verify(Request $request, $id, $hash)
-    {
-        $user = User::findOrFail($id);
-
-        if (!$this->isUserAuthorizedForVerification($request, $user)) {
-            return abort(403, 'Unauthorized action.');
-        }
-
-        $user->markEmailAsVerified();
-
-        return redirect($this->redirectPath())->with('message', 'Ваша почта успешно подтверждена!');
     }
 
     protected function messages()

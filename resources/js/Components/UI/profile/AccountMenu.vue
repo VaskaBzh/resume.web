@@ -1,6 +1,10 @@
 <template>
     <div @click="toggleMenu" class="button">
-        <div class="button_name" :class="{ 'button_name-target': target }" ref="name">
+        <div
+            class="button_name"
+            :class="{ 'button_name-target': target }"
+            ref="name"
+        >
             <svg
                 width="22"
                 height="22"
@@ -52,7 +56,7 @@
                 </a>
             </div>
             <div class="button__row" v-if="viewportWidth >= 991.98">
-                <Link class="settings" href='/profile/settings'
+                <router-link class="settings" :to="{ name: 'settings' }"
                     ><svg
                         width="16"
                         height="17"
@@ -65,7 +69,7 @@
                         />
                     </svg>
 
-                    {{ $t("header.menu.acc_admin.settings") }}</Link
+                    {{ $t("header.menu.acc_admin.settings") }}</router-link
                 >
             </div>
             <div class="button__row">
@@ -138,13 +142,13 @@
 <script>
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { mapGetters } from "vuex";
-import { Link, router, useForm, usePage } from "@inertiajs/vue3";
-import { Inertia } from "@inertiajs/inertia";
 import MainRadio from "@/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import store from "../../../store";
 import { ref } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import api from "@/api/api";
 
 export default {
     name: "account-menu",
@@ -153,13 +157,11 @@ export default {
         MainPopup,
         BlueButton,
         MainRadio,
-        Link,
     },
     props: {
         user: {
             type: Object,
         },
-        errors: Object,
         is_auth: {
             type: Boolean,
             default: false,
@@ -191,36 +193,52 @@ export default {
     setup() {
         let wait = ref(false);
         let closed = ref(false);
+        const router = useRouter();
 
-        const { props } = usePage();
-
-        const form = useForm({
+        const form = {
             name: "",
-            _token: props.token,
-        });
+        };
 
         const addAcc = async () => {
             wait.value = true;
 
-            await form.post(route("sub.create"), {
-                onFinish: () => {
-                    wait.value = false;
-                    store.dispatch("accounts_all", props.user.id);
-                },
-                onSuccess: () => {
-                    closed.value = true;
-                    store.dispatch("accounts_all", props.user.id);
-                },
-            });
+            try {
+                await api.post("/subs/create", form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+
+                closed.value = true;
+                store.dispatch("accounts_all", store.getters.user.id);
+            } catch (e) {
+                console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
+            }
+
+            wait.value = false;
+            store.dispatch("accounts_all", store.getters.user.id);
         };
 
         const logout = async () => {
-            await router.post(
-                "/logout",
-                {
-                        _token: props.token,
-                    },
-            );
+            try {
+                await api.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
+
+                await router.push({ name: "home" });
+
+                store.dispatch("dropUser");
+                store.dispatch("dropToken");
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
         };
 
         return {
@@ -232,7 +250,13 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getIncome", "getAccount", "allAccounts", "getActive"]),
+        ...mapGetters([
+            "getIncome",
+            "getAccount",
+            "allAccounts",
+            "getActive",
+            "errors",
+        ]),
         accounts() {
             let arr = [];
             if (this.allAccounts && Object.values(this.allAccounts)[0]) {
@@ -263,8 +287,8 @@ export default {
         accounts() {
             this.change_height();
         },
-        "$page.url"(newUrl) {
-            if (newUrl.startsWith("/profile/accounts") && this.linkAddClicked) {
+        linkAddClicked(newBool) {
+            if (this.$route.fullPath !== "/profile/accounts" && newBool) {
                 this.linkAddClicked = false;
                 setTimeout(() => {
                     this.openedAddPopup = true;
@@ -277,20 +301,19 @@ export default {
     },
     methods: {
         async openAddPopup() {
-            if (!this.$page.url.startsWith("/profile/accounts")) {
-                await router.visit("/profile/accounts");
+            if (this.$route.fullPath !== "/profile/accounts") {
+                await this.$router.push({ name: "accounts" });
+
+                this.linkAddClicked = true;
 
                 setTimeout(() => {
                     this.$refs.input.focus();
                 }, 300);
-
-                this.linkAddClicked = true;
             } else {
                 this.openedAddPopup = true;
 
                 setTimeout(() => {
                     this.$refs.input.focus();
-                    console.log("focussss");
                 }, 300);
 
                 setTimeout(() => {
@@ -327,7 +350,10 @@ export default {
             this.change_height();
         },
         hideMenuClick(e) {
-            if (!e.target.closest(".nav__container .button .button_name") && !e.target.closest(".nav__container .button .button__row"))
+            if (
+                !e.target.closest(".nav__container .button .button_name") &&
+                !e.target.closest(".nav__container .button .button__row")
+            )
                 this.hideMenu();
         },
         toggleMenu() {

@@ -1,5 +1,4 @@
 <template>
-    <Head title="Главная Allbtc" />
     <div class="home">
         <div class="home__container">
             <div class="home__main page__main section">
@@ -35,20 +34,20 @@
                         v-if="this.auth_user"
                         v-scroll="'left'"
                     >
-                        <Link href="/profile/accounts" class="all-link">
+                        <router-link href="/profile/accounts" class="all-link">
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
-                        ></Link>
+                        ></router-link>
                     </blue-button>
                     <blue-button
                         class="button-lg button-with-propeller"
                         v-else
                         v-scroll="'left'"
                     >
-                        <Link :href="route('page', { page: 'registration' })" class="all-link">
+                        <router-link :to="{ name: 'registration' }" class="all-link">
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
-                        ></Link>
+                        ></router-link>
                     </blue-button>
                 </div>
 
@@ -139,8 +138,8 @@
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
                         >
-                            <Link href="/profile/accounts" class="all-link">
-                                {{ $t("home.button") }}</Link
+                            <router-link :to="{ name: 'acconts' }" class="all-link">
+                                {{ $t("home.button") }}</router-link
                             >
                         </blue-button>
                         <blue-button
@@ -292,11 +291,11 @@
                                 class="big"
                                 v-if="viewportWidth >= 991.98 && this.auth_user"
                             >
-                                <Link
-                                    href="/profile/accounts"
+                                <router-link
+                                    :to="{ name: 'accounts' }"
                                     class="all-link"
                                 >
-                                    {{ $t("home.bitcoin_block.button") }}</Link
+                                    {{ $t("home.bitcoin_block.button") }}</router-link
                                 >
                             </blue-button>
                             <blue-button
@@ -305,11 +304,11 @@
                                     viewportWidth >= 991.98 && !this.auth_user
                                 "
                             >
-                                <Link
-                                    :href="route('page', { page: 'registration' })"
+                                <router-link
+                                    :to="{ name: 'registration' }"
                                     class="all-link"
                                 >
-                                    {{ $t("home.bitcoin_block.button") }}</Link
+                                    {{ $t("home.bitcoin_block.button") }}</router-link
                                 >
                             </blue-button>
                         </div>
@@ -332,18 +331,18 @@
                                 <div class="text">
                                     {{ $t("home.promo_blocks.payment.text") }}
                                 </div>
-                                <Link
-                                    href="/profile/accounts"
+                                <router-link
+                                    :to="{ name: 'accounts' }"
                                     v-if="this.auth_user"
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link") }}
-                                </Link>
-                                <Link
-                                    :href="route('page', { page: 'registration' })"
+                                </router-link>
+                                <router-link
+                                    :to="{ name: 'registration' }"
                                     v-else
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.payment.link") }}
-                                </Link>
+                                </router-link>
                             </div>
                         </div>
                         <div
@@ -363,11 +362,11 @@
                                 <div class="text">
                                     {{ $t("home.promo_blocks.fpps.text") }}
                                 </div>
-                                <Link
-                                    href="/help"
+                                <router-link
+                                    :to="{ name: 'help' }"
                                     class="link link-blue"
                                     >{{ $t("home.promo_blocks.fpps.link") }}
-                                </Link>
+                                </router-link>
                             </div>
                         </div>
                     </div>
@@ -395,7 +394,6 @@
     <mining-info-view :auth_user="this.auth_user" />
 </template>
 <script>
-import { Head, Link } from "@inertiajs/vue3";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import InfoView from "@/Components/technical/views/InfoView.vue";
@@ -422,8 +420,6 @@ export default {
         BlueButton,
         MainTitle,
         lineGraphStatistic,
-        Head,
-        Link,
         SwiperSlide,
         CalculatorView,
     },

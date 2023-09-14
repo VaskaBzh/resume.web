@@ -11,8 +11,8 @@
                             <div class="subtitle subtitle-white">
                                 {{ $t("info.title") }}
                             </div>
-                            <Link
-                                href="/profile/accounts"
+                            <router-link
+                                :to="{ name: 'accounts' }"
                                 v-if="this.auth_user"
                                 class="link link-white"
                             >
@@ -31,9 +31,9 @@
                                         fill="white"
                                     />
                                 </svg>
-                            </Link>
-                            <Link
-                                :href="route('page', { page: 'registration' })"
+                            </router-link>
+                            <router-link
+                                :to="{ name: 'registration' }"
                                 v-else
                                 class="link link-white"
                             >
@@ -52,7 +52,7 @@
                                         fill="white"
                                     />
                                 </svg>
-                            </Link>
+                            </router-link>
                         </div>
                         <div class="mining-im__general_image_con">
                             <img

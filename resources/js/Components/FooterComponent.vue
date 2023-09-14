@@ -1,30 +1,31 @@
 <template>
     <blue-button
         class="feedback"
-        :data-popup="{
-            '#feedback': !this.$page.url.startsWith('/profile'),
-        }"
+        v-show="!route.fullPath.startsWith('/profile')"
+        data-popup="#feedback"
+    >
+        <span class="all-link">{{ $t("footer.feedback.button") }}</span>
+    </blue-button>
+    <blue-button
+        class="feedback"
+        v-show="route.fullPath.startsWith('/profile')"
     >
         <a
             class="all-link"
             target="_blank"
-            :href="
-                this.$page.url.startsWith('/profile')
-                    ? 'https://t.me/allbtc_support'
-                    : '#'
-            "
+            href="https://t.me/allbtc_support"
             >{{ $t("footer.feedback.button") }}</a
         >
     </blue-button>
     <teleport to="body">
         <main-popup
             id="feedback"
-            v-show="!this.$page.url.startsWith('/profile')"
-            :wait="this.wait"
+            v-show="!route.fullPath.startsWith('/profile')"
+            :wait="wait"
             :errors="errors"
         >
             <form
-                @submit.prevent="this.sendFeedback"
+                @submit.prevent="sendFeedback"
                 class="form form-popup popup__form"
             >
                 <main-title tag="h3">{{
@@ -75,7 +76,7 @@
         <div class="footer__main">
             <div class="footer__row">
                 <div class="footer__social_con">
-                    <a href="/">
+                    <router-link :to="{ name: 'home' }">
                         <img
                             class="nav__logo"
                             v-if="!getTheme"
@@ -88,7 +89,7 @@
                             src="../../assets/img/logo_high_quality-dark.svg"
                             alt="logo"
                         />
-                    </a>
+                    </router-link>
                     <div class="footer__social socials">
                         <a
                             target="_blank"
@@ -268,18 +269,20 @@ import pdf from "@/../assets/files/policy.pdf";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
-import { useForm, usePage } from "@inertiajs/vue3";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
+import { useRoute } from "vue-router";
+import api from "@/api/api";
+import store from "@/store";
 
 export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
-    props: {
-        errors: Object,
-    },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["getTheme", "errors"]),
+        route() {
+            return useRoute();
+        },
     },
     data() {
         return {
@@ -287,27 +290,30 @@ export default {
         };
     },
     setup() {
-        const { props } = usePage();
-
         let wait = ref(false);
 
-        let form = useForm({
+        let form = {
             message: "",
             contacts: "",
-            _token: props.token,
-        });
+        };
 
         const sendFeedback = async () => {
             wait.value = true;
-            await form.post("/send_message", {
-                onFinish: () => {
-                    wait.value = false;
-                },
-                onSuccess: () => {
-                    form.message = "";
-                    form.contacts = "";
-                },
-            });
+            try {
+                await api.post("/send_message", form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+
+                form.message = "";
+                form.contacts = "";
+            } catch (e) {
+                console.error("Error with: " + e);
+                store.dispatch("setFullErrors", e.response.data.errors);
+            }
+
+            wait.value = false;
         };
 
         return {

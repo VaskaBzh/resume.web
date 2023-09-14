@@ -17,7 +17,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 RUN set -ex \
         && apk update \
         && apk --no-cache add yarn nodejs npm libpng freetype-dev  \
-                           libjpeg-turbo-dev libpng-dev libzip-dev php-xdebug \
+                           libjpeg-turbo-dev libpng-dev libzip-dev \
         && docker-php-ext-configure gd --with-freetype --with-jpeg \
         && docker-php-ext-install pdo mysqli pdo_mysql gd zip exif \
         && docker-php-ext-enable pdo_mysql \
