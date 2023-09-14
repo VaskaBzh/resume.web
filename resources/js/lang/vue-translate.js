@@ -607,6 +607,7 @@ const messages = {
                 },
             },
             popups: {
+                note: "After adding a wallet, the address cannot be changed",
                 add: {
                     title: "Add wallet",
                     placeholders: {
@@ -1284,6 +1285,7 @@ const messages = {
                 },
             },
             popups: {
+                note: "После добавления кошелька адрес невозможно будет изменить",
                 add: {
                     title: "Добавить кошелек",
                     placeholders: {

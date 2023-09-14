@@ -1,15 +1,11 @@
 <template>
     <div class="wallets__block wallets__block-wallet">
         <div class="wallets__block_name">
-            <span>{{ wallet.wallet_address }}</span>
-            <!--            <span v-else-if="wallet.fullName === '' && wallet.name !== ''">{{-->
-            <!--                wallet.name-->
-            <!--            }}</span>-->
-            <!--            <span-->
-            <!--                v-else-if="wallet.fullName !== '' && wallet.name !== ''"-->
-            <!--                v-tooltip="{ message: wallet.fullName }"-->
-            <!--                >{{ wallet.fullName }}</span-->
-            <!--            >-->
+            <div class="wallet-inf">
+                <span class="wallet-fullname">{{ wallet.fullName}}</span>
+                <span class="wallet-wallet_address">{{ wallet.wallet_address }}</span>
+
+            </div>
             <div class="wallets__block_doths" @click="toggleOpen">
                 <div></div>
                 <div></div>
@@ -23,43 +19,7 @@
                 ></main-menu>
             </div>
         </div>
-        <div class="main__number">
-            {{ converter.btc }}
-            <div class="unit">{{ wallet.currency }}</div>
-            <div class="row">
-                <span> ≈ {{ converter.usd }} $</span>
-                <span v-if="$i18n.locale === 'ru'">
-                    ≈ {{ converter.rub }} ₽</span
-                >
-            </div>
-        </div>
-        <div
-            class="wallets__block_i"
-            v-tooltip="{
-                message: `${$t(
-                    'wallets.block.wallet_block.i_info_titles[0]'
-                )}: ${wallet.percent}%. ${$t(
-                    'wallets.block.wallet_block.i_info_titles[1]'
-                )}: ${wallet.minWithdrawal} BTC`,
-            }"
-        >
-            <svg
-                width="3"
-                height="10"
-                viewBox="0 0 3 10"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-            >
-                <path
-                    d="M0.861318 3.95998C0.867851 3.44565 1.26175 3.18848 1.75002 3.18848C2.25129 3.18848 2.63539 3.44565 2.64844 3.95998L2.64844 9.12598C2.65494 9.37338 2.5752 9.57845 2.40922 9.74121C2.24315 9.90397 2.02665 9.98535 1.75972 9.98535C1.49932 9.98535 1.28285 9.90234 1.11032 9.73633C0.937785 9.57031 0.854784 9.3636 0.861318 9.11621L0.861318 3.95998Z"
-                    fill="#969797"
-                />
-                <path
-                    d="M1.01272 0.307582C1.22432 0.112315 1.47009 0.0146817 1.75002 0.0146817C2.03649 0.0146817 2.28389 0.113949 2.49222 0.312482C2.70053 0.511082 2.80469 0.750349 2.80469 1.03028C2.80469 1.31021 2.70053 1.54948 2.49222 1.74808C2.28389 1.94661 2.03649 2.04588 1.75002 2.04588C1.46355 2.04588 1.21615 1.94825 1.00782 1.75298C0.799486 1.55765 0.695319 1.31675 0.695319 1.03028C0.695319 0.743815 0.801119 0.502915 1.01272 0.307582Z"
-                    fill="#969797"
-                />
-            </svg>
-        </div>
+        
     </div>
 </template>
 
@@ -197,14 +157,33 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.wallet-inf{
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.wallet-wallet_address{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%; /* 20.3px */
+}
+.wallet-fullname{
+    color: var(--light-gray-500, #667085);
+    font-family: Unbounded;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+}
 .wallets {
     // .wallets__block
     &__block {
-        padding: 16px;
-        background-color: #fff;
-        border-radius: 13px;
-        width: fit-content;
-
+        border-radius: 24px;
+        background: var(--light-background-first, #F8FAFD);
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
         .main__number {
             padding: 16px 16px 0;
             margin-bottom: 8px;
@@ -234,11 +213,7 @@ export default {
         }
 
         &-wallet {
-            padding: 12px 0;
             transition: all 0.5s ease;
-            @media (max-width: 767.98px) {
-                padding: 14px 0;
-            }
 
             &.top {
                 &-before-enter {
@@ -253,11 +228,10 @@ export default {
 
         &_name {
             width: 100%;
+            padding: 16px 24px;
             display: inline-flex;
             align-items: center;
-            padding: 0 16px 16px;
             gap: 16px;
-            border-bottom: 1px solid #e8ecf2;
             @media (max-width: 767.98px) {
                 padding: 0 10px 10px;
             }
@@ -276,7 +250,6 @@ export default {
                 font-weight: 500;
                 font-size: 18px;
                 line-height: 26px;
-                color: #343434;
                 @media (max-width: 991.98px) {
                     font-size: 16px;
                     line-height: 23px;
@@ -304,10 +277,11 @@ export default {
 
         &_doths {
             margin-left: auto;
+            margin-bottom: 24px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 23.5px;
+            width: 24px;
             gap: 3px;
             cursor: pointer;
             position: relative;

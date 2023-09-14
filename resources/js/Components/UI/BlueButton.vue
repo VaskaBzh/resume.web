@@ -22,7 +22,7 @@ export default {
     line-height: 107.6%;
     color: #ffffff;
     min-height: 40px;
-    background: linear-gradient(84.14deg, #3f7bdd 8.75%, #4282ec 92.01%);
+    background: var(--primary-500, #2E90FA);
     border-radius: 12px;
     position: relative;
     transition: all 0.3s ease 0s;
@@ -41,10 +41,11 @@ export default {
         }
     }
     &.add {
-        width: 56px;
-        border-radius: 8px;
-        background: transparent;
-        border: 1px solid #3f7bdd;
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: var(--light-background-first, #F8FAFD);
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
         svg {
             width: 24px;
             height: 24px;
