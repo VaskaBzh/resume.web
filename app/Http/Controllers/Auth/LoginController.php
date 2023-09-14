@@ -29,6 +29,11 @@ class LoginController extends Controller
 
     public function login(Request $request): JsonResponse
     {
+        $request->validate([
+            'email' => 'required|string',
+            'password' => 'required|string'
+        ]);
+
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
                 'error' => ['Credentials do not match']
@@ -48,12 +53,9 @@ class LoginController extends Controller
 
     public function logout(): JsonResponse
     {
-        if (auth()->check()) {
-            auth()
-                ->user()
-                ->tokens()
-                ->delete();
-        }
+        auth()->user()
+            ?->tokens()
+            ->delete();
 
         return response()->json('Logged out');
     }
