@@ -13,7 +13,8 @@ use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\Response;
+use Illuminate\Http\Client\RequestException;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
@@ -30,17 +31,25 @@ class BtcComService
         $this->client = Http::baseUrl(config('api.btc.uri'))
             ->withHeaders([
                 'Authorization' => config('api.btc.token'),
-            ]);
+            ])->retry(3, 100, static fn($response) => $response->failed());
     }
 
+    /**
+     * @param array $segments
+     * @param string $method
+     * @param array $params
+     * @return mixed
+     * @throws \Exception
+     */
     public function call(array $segments, string $method = 'get', array $params = [])
     {
-        $response = $this->client->$method(implode('/', $segments), $params)
-            ->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
-                new \Exception('Ошибка при выполнении запроса')
-            );
+        try {
+            return $this->client->$method(implode('/', $segments), $params)['data'];
+        } catch (RequestException $e) {
+            report($e);
 
-        return $response['data'];
+            return new JsonResponse(['message' => $e->getMessage()]);
+        }
     }
 
     private static function transform(
@@ -155,7 +164,7 @@ class BtcComService
      */
     public function getSub(int $groupId): array
     {
-        return $this->call(['groups', $groupId], params: [
+        return $this->call(segments: ['groups', $groupId], params: [
             'puid' => self::PU_ID,
         ]);
     }
@@ -175,15 +184,13 @@ class BtcComService
             ];
         }
 
-        $response = $this->client->post(implode('/', [
-            'groups',
-            'create'
-        ]), [
-            'puid' => self::PU_ID,
-            'group_name' => $userData->name
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
+        $response = $this->call(
+            segments: ['groups', 'create'],
+            method: 'post',
+            params: [
+                'puid' => self::PU_ID,
+                'group_name' => $userData->name
+            ]);
 
         $this->createLocalSub(userData: $userData, groupId: $response['data']['gid']);
 
@@ -223,16 +230,17 @@ class BtcComService
      */
     public function updateWorker(WorkerData $workerData): void
     {
-        $this->client->post(implode('/', [
-            'worker',
-            'update'
-        ]), [
-            'puid' => self::PU_ID,
-            'group_id' => $workerData->group_id,
-            'worker_id' => (string)$workerData->worker_id
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
+        $this->call(
+            segments: [
+                'worker',
+                'update'
+            ],
+            method: 'post',
+            params: [
+                'puid' => self::PU_ID,
+                'group_id' => $workerData->group_id,
+                'worker_id' => (string)$workerData->worker_id
+            ]);
     }
 
     public function getStats(): array
