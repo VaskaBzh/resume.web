@@ -1,32 +1,9 @@
 <template>
     <div class="workers">
         <div class="workers__wrapper">
-            <main-title tag="h3" class="cabinet_title">
-                {{ $t("workers.title") }}
-                <router-link :to="{ name: 'connecting' }">
-                    <blue-button class="add">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
-                            />
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
-                            />
-                        </svg>
-                    </blue-button>
-                </router-link>
-            </main-title>
-
+            <div class="cards-container">
+                <hashrate-cards :currentPage="'worker'"></hashrate-cards>
+            </div>
             <wrap-table
                 :table="worker_service.table"
                 :key="changedActive"
@@ -45,14 +22,16 @@ import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
 import BlueButton from "@/Components/UI/BlueButton.vue";
 import { WorkerService } from "@/services/WorkerService";
+import HashrateCards from "../../modules/hashrate/Components/HashrateCards.vue";
 
 export default {
     components: {
-        WrapTable,
-        MainTitle,
-        Head,
-        BlueButton,
-    },
+    WrapTable,
+    MainTitle,
+    Head,
+    BlueButton,
+    HashrateCards
+},
     data() {
         return {
             workersActive: 0,
@@ -119,6 +98,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cards-container{
+    display: flex;
+    justify-content: space-between;
+}
 .workers {
     .form .title {
         margin-bottom: 0;
