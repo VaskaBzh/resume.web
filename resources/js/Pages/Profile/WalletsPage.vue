@@ -1,33 +1,13 @@
 <template>
     <div class="wallets" ref="page">
+        <div class="wallet-wrapper">
+            <div>
+                <main-title class="profile cabinet_title" tag="h3"
+                    >{{ $t("wallets.title") }}
+                </main-title>
+            </div>
         <main-title class="profile cabinet_title" tag="h3"
             >{{ $t("wallets.title") }}
-            <!--                <blue-button class="wallets__button wallets__button-history">-->
-            <!--                    <Link :href="route('income')"> Доходы </Link>-->
-            <!--                </blue-button>-->
-            <!--            <main-checkbox class="wallets__filter" @is_checked="wallets.filter">-->
-            <!--                {{ $t("wallets.block.filter") }}-->
-            <!--            </main-checkbox>-->
-            <blue-button class="add" data-popup="#addWallet">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
-                    />
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
-                    />
-                </svg>
-            </blue-button>
         </main-title>
         <div ref="wallets" class="wrap">
             <no-info
@@ -98,6 +78,28 @@
                 ></wallet-block>
             </div>
         </div>
+        <blue-button class="add" data-popup="#addWallet">
+                <svg
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                >
+                    <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
+                    />
+                    <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
+                    />
+                </svg>
+            </blue-button>
+        </div>
+
     </div>
     <teleport to="body">
         <main-popup
@@ -200,7 +202,10 @@
             >
                 <main-title tag="h3">{{
                     $t("wallets.popups.add.title")
-                }}</main-title>
+                }}
+                <p class="wallet-description">{{$t("wallets.popups.note")  }}</p>
+                
+            </main-title>
                 <input
                     v-model="wallets.form.wallet"
                     required
@@ -216,37 +221,8 @@
                     class="input popup__input"
                     :placeholder="$t('wallets.popups.add.placeholders.name')"
                 />
-                <div class="form_row form_row-non-height">
-                    <div class="form_column">
-                        <label for="percent" class="main__label">{{
-                            $t("wallets.popups.add.labels.percent")
-                        }}</label>
-                        <input
-                            name="percent"
-                            v-model="wallets.form.percent"
-                            id="percentChg"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="100"
-                        />
-                    </div>
-                    <div class="form_column">
-                        <label for="min" class="main__label">{{
-                            $t("wallets.popups.add.labels.minWithdrawal")
-                        }}</label>
-                        <input
-                            name="minWithdrawal"
-                            v-model="wallets.form.minWithdrawal"
-                            id="minChg"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="0.005"
-                        />
-                    </div>
-                </div>
-                <blue-button>
+
+                <blue-button class="button-container">
                     <button type="submit" class="all-link">
                         <svg
                             width="24"
@@ -380,7 +356,30 @@ export default {
 };
 </script>
 <style lang="scss">
+.button-container{
+    margin-top: 80px;
+}
+.wallet-description{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    margin: 8px 0 24px;
+}
+.wallet-wrapper{
+    border-radius: 24px;
+    background: var(--light-secondary-wb, #FFF);
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+    width: 560px;
+    padding: 32px 40px;
+}
 .wallets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 132px);
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
@@ -466,7 +465,6 @@ export default {
     }
 
     &__block {
-        padding: 16px;
         background: #fafafa;
         border-radius: 12px;
         width: 100%;
