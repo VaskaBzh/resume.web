@@ -585,7 +585,8 @@ const messages = {
             },
         },
         connection: {
-            title: "Worker connection",
+            title: "Pool URLs",
+            note: "If connected correctly, the device will appear in 1-10 minutes",
             block: {
                 title: "Configure your device according to the data provided below:",
             },
@@ -1264,7 +1265,8 @@ const messages = {
             },
         },
         connection: {
-            title: "Подключение воркера",
+            title: "URL-адреса пула",
+            note: "При корректном подключении устройство отобразится через 1-10 минут",
             block: {
                 title: "Настройте ваше устройство согласно представленным ниже данным:",
             },
