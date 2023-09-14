@@ -1,12 +1,12 @@
 <template>
     <div class="text">
-        <b>{{ this.copyObject.title }}:</b>
         <div
-            class="copy_row text text-light"
+            class="copy_row"
             :class="{ active: active }"
             @click="this.copyLink"
         >
-            {{ this.copyObject.link }}
+        <span class="">{{ this.copyObject.link }}</span>
+        <b class="title-url">{{ this.copyObject.title }}:</b>
             <copy-icon
                 class="copy_button"
                 :class="{ hide: active }"
@@ -75,18 +75,18 @@ export default {
     &_row {
         width: 100%;
         min-height: 48px;
-        border-radius: 8px;
-        box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
-        background: #fafafa;
+        border-radius: var(--surface-border-radius-radius-s-md, 12px);
+        background: var(--light-background-first, #F8FAFD);
         padding: 5px 24px;
         outline: none;
-        margin-left: auto;
         cursor: pointer;
-        display: inline-flex;
-        justify-content: space-between;
+        align-items: center;
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
+        display: flex;
+        flex-direction: column-reverse;
+        align-items: flex-start;
         transition: all 0.3s ease 0s;
         overflow: hidden;
-        max-width: calc(100% - 70px) !important;
         border: 1px solid transparent;
         @media (max-width: 479.98px) {
             padding: 2px 8px;
