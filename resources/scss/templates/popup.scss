@@ -279,9 +279,6 @@ body::after {
             overflow: hidden;
             transition: opacity 0.3s ease 0s;
             opacity: 0;
-            @media (max-width: $pc) {
-                padding: 24px 0;
-            }
             @media (max-width: $mobile) {
                 padding: 16px 0;
             }

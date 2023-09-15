@@ -592,7 +592,7 @@ const messages = {
             },
         },
         wallets: {
-            title: "Your wallets",
+            title:[ "Setting up auto payout", "Wallets"],
             no_info: "Add Wallet",
             messages: ["Wait 5 seconds.", "You can delete your wallet through tech support."],
             block: {
@@ -621,7 +621,7 @@ const messages = {
                     button: "Add",
                 },
                 change: {
-                    title: "Change wallet",
+                    title: "Change label",
                     placeholders: {
                         wallet: "Please enter the wallet *",
                         name: "Please enter the name",
@@ -630,8 +630,13 @@ const messages = {
                         percent: "Percent",
                         minWithdrawal: "Minimum withdrawal",
                     },
-                    button: "Change",
+                    button: "Save",
                 },
+                remove:{
+                    title: "Delete wallet",
+                    note: "Are you sure you want to delete your wallet?",
+                    button: ["Cancel", "Delete"]
+                }
             },
         },
         settings: {
@@ -1273,14 +1278,14 @@ const messages = {
             },
         },
         wallets: {
-            title: "Мои кошельки",
+            title:[ "Настройка автовыплаты", "Кошельки"],
             no_info: "Добавить кошелек",
             messages: ["Подождите 5 секунд.", "Удалить кошелек можно через тех поддержку."],
             block: {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",
                 wallet_block: {
-                    menu: ["Изменить", "Удалить"],
+                    menu: ["Изменить метку", "Удалить"],
                     i_info_titles: ["Процент вывода", "Мин сумма вывода"],
                 },
             },
@@ -1299,7 +1304,7 @@ const messages = {
                     button: "Добавить",
                 },
                 change: {
-                    title: "Измените кошелек",
+                    title: "Измените метку",
                     placeholders: {
                         wallet: "Введите кошелек *",
                         name: "Введите имя",
@@ -1308,8 +1313,13 @@ const messages = {
                         percent: "Процент *",
                         minWithdrawal: "Минимальный вывод",
                     },
-                    button: "Изменить",
+                    button: "Сохранить",
                 },
+                remove:{
+                    title: "Удалить кошелек",
+                    note: "Вы действительно хотите удалить кошелек?",
+                    button: ["Отменить", "Удалить"]
+                }
             },
         },
         settings: {

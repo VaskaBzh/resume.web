@@ -165,15 +165,15 @@ export default {
 .menu {
     cursor: default;
     position: absolute;
-    min-width: 255px;
-    background: #ffffff;
+    padding: 4px;
     height: fit-content;
+    width: 180px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-    border-radius: 21px;
-    width: fit-content;
+    border-radius: 16px;
+    background: var(--light-secondary-wb, #FFF);
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
     z-index: 5;
     transition: all 0.5s ease 0s;
     overflow: hidden;
@@ -212,21 +212,20 @@ export default {
         &-remove {
             color: #ff3b30;
         }
+        color: var(--light-gray-600, #475467);
+        font-family: NunitoSans;
+        font-size: 14px;
+        font-style: normal;
         font-weight: 400;
-        font-size: 17px;
-        line-height: 143.1%;
-        color: #000034;
+        line-height: 145%; /* 20.3px */
         display: flex;
-        height: 48px;
         gap: 12px;
-        padding: 12px;
+        padding: 10px 12px;
         align-items: center;
         width: 100%;
         background: transparent;
         transition: all 0.3s ease 0s;
-        &:not(:first-child) {
-            border-top: 1px solid rgba(214, 214, 214, 0.3);
-        }
+
         &:hover {
             background: #f6f8fa;
         }
@@ -266,7 +265,7 @@ export default {
     }
 }
 .wallets__block_doths_menu {
-    right: -16px;
-    top: calc(100% + 13px);
+    right: 24px;
+    top: -75px;
 }
 </style>
