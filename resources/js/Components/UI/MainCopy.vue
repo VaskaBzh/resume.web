@@ -76,8 +76,9 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
-    border-radius: 8px;
-    background: #ededed;
+    padding: var(--py-4, 16px) var(--px-4, 16px);
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--light-background-first, #F8FAFD);
     cursor: pointer;
     position: relative;
     transition: all 0.5s ease 0s;

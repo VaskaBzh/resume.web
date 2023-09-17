@@ -1,11 +1,6 @@
 <template>
     <div class="referral profile">
         <div class="referral__wrapper">
-            <div class="cabinet__head">
-                <main-title tag="h3" class="cabinet_title">{{
-                    $t("title")
-                }}</main-title>
-            </div>
             <div class="cabinet referral__cabinet">
                 <div class="referral__tabs">
                     <main-tabs

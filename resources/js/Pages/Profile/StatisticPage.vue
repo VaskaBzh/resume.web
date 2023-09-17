@@ -88,7 +88,6 @@ import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import MainTitle from "@/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
-import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 // import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
@@ -103,7 +102,6 @@ export default {
         Head,
         CopyBlock,
         BtcCalculator,
-        WaitPreloader,
         MainPreloader,
         // CurrentExchangeRate,
         MainTabs,

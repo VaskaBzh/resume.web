@@ -1,7 +1,7 @@
 <template>
     <div class="card">
         <p class="card_text">{{ $t("percent.text") }} - {{ percent }} %</p>
-        <svg
+        <div
             class="card_question"
             @mouseenter="openGradeList"
             @mouseleave="closeGradeList(true)"

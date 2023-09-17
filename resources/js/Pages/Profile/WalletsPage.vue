@@ -38,56 +38,7 @@
                 :end="endWallet"
                 :empty="emptyWallet"
             >
-                <div class="wallets__list">
-                    <div class="wallets__block" data-popup="#addWallet">
-                        <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 40 40"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M11.0703 20.0703C11.0703 19.518 11.518 19.0703 12.0703 19.0703H28.0703C28.6226 19.0703 29.0703 19.518 29.0703 20.0703C29.0703 20.6226 28.6226 21.0703 28.0703 21.0703H12.0703C11.518 21.0703 11.0703 20.6226 11.0703 20.0703Z"
-                                fill="url(#paint0_linear_1243_39061)"
-                            />
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M20.0703 11.0703C20.6226 11.0703 21.0703 11.518 21.0703 12.0703V28.0703C21.0703 28.6226 20.6226 29.0703 20.0703 29.0703C19.518 29.0703 19.0703 28.6226 19.0703 28.0703V12.0703C19.0703 11.518 19.518 11.0703 20.0703 11.0703Z"
-                                fill="url(#paint1_linear_1243_39061)"
-                            />
-                            <defs>
-                                <linearGradient
-                                    id="paint0_linear_1243_39061"
-                                    x1="13.8715"
-                                    y1="22.2233"
-                                    x2="22.7908"
-                                    y2="13.9877"
-                                    gradientUnits="userSpaceOnUse"
-                                >
-                                    <stop stop-color="#3F7BDD" />
-                                    <stop offset="1" stop-color="#4282EC" />
-                                </linearGradient>
-                                <linearGradient
-                                    id="paint1_linear_1243_39061"
-                                    x1="17.9174"
-                                    y1="13.8715"
-                                    x2="26.1529"
-                                    y2="22.7908"
-                                    gradientUnits="userSpaceOnUse"
-                                >
-                                    <stop stop-color="#3F7BDD" />
-                                    <stop offset="1" stop-color="#4282EC" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
 
-                        {{ $t("wallets.no_info") }}
-                    </div>
-                </div>
             </no-info>
             <div ref="list" class="wallets__list" v-if="!wallets.waitWallets">
                 <wallet-block
@@ -283,7 +234,6 @@ export default {
         MainPopup,
         BlueButton,
         MainTitle,
-        NoInfo,
         WalletBlock,
     },
     computed: {
