@@ -70,7 +70,7 @@ export class GraphService {
             this.svg.selectAll("*").remove();
             this.axis.selectAll("*").remove();
             this.tooltip.selectAll("*").remove();
-            // this.svg._groups[0][0].remove();
+            this.svg._groups[0][0].remove();
         }
     }
 
@@ -85,6 +85,8 @@ export class GraphService {
 
     setAxis() {
         this.axis = d3.select(".y-axis-container");
+
+        return this;
     }
 
     setXAxis(ticks) {
@@ -105,11 +107,20 @@ export class GraphService {
         return this;
     }
 
-    setX() {
+    setDefaultX() {
+        this.x = d3
+            .scaleLinear()
+            .domain(d3.extent(this.graphData.dates, (d) => new Date(d)))
+            .range([0, this.chartHtml.offsetWidth]);
+
+        return this;
+    }
+
+    setNumberX() {
         this.x = d3
             .scaleLinear()
             .domain(d3.extent(this.graphData.dates, (d, i) => i))
-            .range([0, this.containerWidth]);
+            .range([0, this.chartHtml.offsetWidth]);
 
         return this;
     }
@@ -164,14 +175,8 @@ export class GraphService {
         this.containerHeight = height;
 
         if (this.isMobile && this.tooltip) {
-            this.containerHeight = 380;
+            this.containerHeight = 246;
         }
-
-        return this;
-    }
-
-    setContainerWidth(width) {
-        this.containerWidth = width;
 
         return this;
     }
@@ -329,6 +334,7 @@ export class GraphService {
 
     formatNumberWithUnit(num, i) {
         let val = this.adjustValue(num, this.graphData.unit[i]);
+
         return (
             (String(val.val).split(".")[1] === "00"
                 ? Number(val.val).toFixed(0)

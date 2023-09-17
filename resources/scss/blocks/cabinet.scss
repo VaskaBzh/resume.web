@@ -77,7 +77,10 @@
         }
         &-graph {
             position: relative;
-            padding: 48px 40px 44px 28px;
+            padding: 24px 24px 48px 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
             @media (max-width: 767.98px) {
                 padding: 0 0 0 24px;
                 display: flex;

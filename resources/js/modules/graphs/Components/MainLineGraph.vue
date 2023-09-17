@@ -53,19 +53,16 @@ export default {
                     .setContainerHeight(this.height)
                     .createSvg()
                     .gradientInit()
-                    .setX()
+                    .setDefaultX()
+                    .setNumberX()
                     .setY()
-                    .setAxis();
-
-                if (this.service.isMobile) {
-                    this.service.setXAxis(12).setYAxis(6);
-                } else {
-                    this.service
-                        .setXAxis(this.service.validateXAxis())
-                        .setYAxis(6);
-                }
-
-                this.service
+                    .setAxis()
+                    .setXAxis(
+                        this.service.isMobile
+                            ? 12
+                            : this.service.validateXAxis()
+                    )
+                    .setYAxis(6)
                     .setLineGenerator()
                     .setAreaGenerator()
                     .setYBand()

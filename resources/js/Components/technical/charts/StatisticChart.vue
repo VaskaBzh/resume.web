@@ -52,7 +52,7 @@ export default {
     },
     data() {
         return {
-            height: 360,
+            height: 246,
             bandColor: "#E6EAF0",
         };
     },
@@ -85,11 +85,11 @@ export default {
         ...mapGetters(["isDark"]),
         getHeight() {
             if (!this.heightVal) {
-                if (this.viewportWidth < 479.98) return 338;
-                else if (this.viewportWidth < 767.98) return 338;
-                else if (this.viewportWidth < 991.98) return 338;
-                else if (this.viewportWidth < 1320.98) return 338;
-                else return 338;
+                if (this.viewportWidth < 479.98) return 246;
+                else if (this.viewportWidth < 767.98) return 246;
+                else if (this.viewportWidth < 991.98) return 246;
+                else if (this.viewportWidth < 1320.98) return 246;
+                else return 246;
             } else {
                 return this.heightVal;
             }

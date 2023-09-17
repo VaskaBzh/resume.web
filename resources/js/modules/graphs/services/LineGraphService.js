@@ -18,12 +18,12 @@ export class LineGraphService extends GraphService {
         gradient
             .append("stop")
             .attr("offset", "0%")
-            .attr("stop-color", "rgba(66, 130, 236, 0.8)");
+            .attr("stop-color", "rgba(46, 144, 250, 0.8)");
 
         gradient
             .append("stop")
             .attr("offset", "100%")
-            .attr("stop-color", "rgba(66, 129, 231, 0.04)");
+            .attr("stop-color", "rgba(46, 144, 250, 0)");
 
         return this;
     }
@@ -67,8 +67,8 @@ export class LineGraphService extends GraphService {
             .attr("class", "dot")
             .attr("r", 6)
             .style("opacity", 0)
-            .attr("fill", "#000000")
-            .attr("stroke", "#ffffff")
+            .attr("fill", "#ffffff")
+            .attr("stroke", "#2E90FA")
             .attr("stroke-width", 2);
         // this.circleColor
         // this.circleBorder
@@ -84,8 +84,8 @@ export class LineGraphService extends GraphService {
             .attr("fill", "none")
             .attr("class", "main_line")
             .attr("width", "100%")
-            .attr("stroke", "#000000")
-            .attr("stroke-width", "#ffffff");
+            .attr("stroke", "#2E90FA")
+            .attr("stroke-width", 1);
         // this.lineColor
         // this.lineWidth
 
@@ -100,9 +100,9 @@ export class LineGraphService extends GraphService {
             .attr("y1", 0)
             .attr("x2", 0)
             .attr("y2", this.containerHeight)
-            .attr("stroke-width", 3)
+            .attr("stroke-width", 1)
             .style("opacity", 0)
-            .attr("stroke", "#ffffff");
+            .attr("stroke", "rgba(152, 162, 179, 0.5)");
         // this.mouseLineColor
 
         return this;
@@ -129,7 +129,8 @@ export class LineGraphService extends GraphService {
             .attr("y", (d) => this.y(d) - 1)
             .attr("height", 1)
             .attr("width", "100%")
-            .attr("fill", "#ffffff");
+            .attr("opacity", 0.5)
+            .attr("fill", "#D0D5DD");
         //this.bandColor
 
         return this;
@@ -143,11 +144,7 @@ export class LineGraphService extends GraphService {
             .createCircle()
             .appendXAxis();
 
-        if (!this.isMobile) {
-            this.appendYAxis();
-        } else {
-            this.createAxis();
-        }
+        !this.isMobile ? this.appendYAxis() : this.createAxis();
 
         return this;
     }
