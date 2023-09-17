@@ -1,9 +1,9 @@
 <template>
-    <div class="errors" v-if="!!errors && Object.values(errors).length > 0">
+    <div class="errors" v-if="Object.values(errors).length > 0">
         <div
             class="errors_message"
             :key="i"
-            v-for="(error, i) in !!errors ? Object.values(errors) : []"
+            v-for="(error, i) in Object.values(errors)"
         >
             <svg
                 xmlns="http://www.w3.org/2000/svg"
