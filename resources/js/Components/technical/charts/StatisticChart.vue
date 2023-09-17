@@ -2,29 +2,29 @@
     <div class="graph">
         <div class="graph__main">
             <div class="graph__list" ref="graph">
-                <line-graph-statistic
-                    :key="graph ? Object.values(graph)?.length : 1"
-                    :graphData="graph"
-                    :height="height"
-                    :redraw="redraw"
-                    :viewportWidth="viewportWidth"
-                    :tooltip="tooltip"
-                    lineColor="#3F7BDD"
-                    :lineWidth="2.5"
-                    mouseLineColor="#3F7BDD"
-                    circleColor="#79A3E8"
-                    circleBorder="#3F7BDD"
-                    :bandColor="bandColor"
-                    graphType="statistic"
-                ></line-graph-statistic>
+                <main-line-graph :graphData="graph" :height="height" />
+
+                <!--                :key="graph ? Object.values(graph)?.length : 1"-->
+                <!--                :graphData="graph"-->
+                <!--                :height="height"-->
+                <!--                :redraw="redraw"-->
+                <!--                :viewportWidth="viewportWidth"-->
+                <!--                :tooltip="tooltip"-->
+                <!--                lineColor="#3F7BDD"-->
+                <!--                :lineWidth="2.5"-->
+                <!--                mouseLineColor="#3F7BDD"-->
+                <!--                circleColor="#79A3E8"-->
+                <!--                circleBorder="#3F7BDD"-->
+                <!--                :bandColor="bandColor"-->
+                <!--                graphType="statistic"-->
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import LineGraphStatistic from "@/Components/technical/graphs/LineGraphStatistic.vue";
 import { mapGetters } from "vuex";
+import MainLineGraph from "@/modules/graphs/Components/MainLineGraph.vue";
 
 export default {
     props: {
@@ -79,7 +79,7 @@ export default {
         }
     },
     components: {
-        LineGraphStatistic,
+        MainLineGraph,
     },
     computed: {
         ...mapGetters(["isDark"]),

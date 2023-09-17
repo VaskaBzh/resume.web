@@ -60,7 +60,7 @@ export class SubHashrateService {
         );
 
         while (values.length < this.offset) {
-            values.push(0);
+            values.push(this.randomizeTest(50, 250));
             amount.push("0");
             unit.push("T");
         }

@@ -6,23 +6,91 @@
 </template>
 
 <script>
-import { GraphService } from "@/modules/graphs/services/GraphService";
+import { LineGraphService } from "@/modules/graphs/services/LineGraphService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-line-graph",
     props: {
         graphData: Object,
+        height: Number,
     },
     data() {
         return {
             graph: this.graphData,
-            services: new GraphService(
-                this.$refs.chart,
-                this.$refs.tooltip,
-                this.graphData,
-                this.$t
-            ),
+            service: new LineGraphService(this.graphData, this.$t),
         };
+    },
+    computed: {
+        ...mapGetters(["isDark", "viewportWidth"]),
+    },
+    watch: {
+        "$refs.chart"(newChartHtml) {
+            this.service.setChartHtml(newChartHtml).dropGraph();
+            this.graphInit();
+        },
+        "$refs.tooltip"(newTooltipHtml) {
+            this.service.setTooltipHtml(newTooltipHtml).dropGraph();
+            this.graphInit();
+        },
+        graphData(newGraphData) {
+            this.service.setGraphData(newGraphData).dropGraph();
+            this.graphInit();
+        },
+        isDark(newIsDarkState) {
+            this.service.setDarkState(newIsDarkState).dropGraph();
+            this.graphInit();
+        },
+        viewportWidth(newViewportWidth) {
+            this.service.setIsMobileState(newViewportWidth).dropGraph();
+            this.graphInit();
+        },
+    },
+    methods: {
+        graphInit() {
+            if (this.graphData) {
+                this.service
+                    .setContainerHeight(this.height)
+                    .createSvg()
+                    .gradientInit()
+                    .setX()
+                    .setY()
+                    .setAxis();
+
+                if (this.service.isMobile) {
+                    this.service.setXAxis(12).setYAxis(6);
+                } else {
+                    this.service
+                        .setXAxis(this.service.validateXAxis())
+                        .setYAxis(6);
+                }
+
+                this.service
+                    .setLineGenerator()
+                    .setAreaGenerator()
+                    .setYBand()
+                    .graphAppends()
+                    .setTooltip();
+
+                if (this.service.isMobile) {
+                    this.service.setSvgEventsMobile();
+                } else {
+                    this.service.setSvgEvents().setTooltipEvents();
+                }
+            }
+        },
+    },
+    mounted() {
+        this.service
+            .setChartHtml(this.$refs.chart)
+            .setTooltipHtml(this.$refs.tooltip)
+            .setDarkState(this.isDark)
+            .setIsMobileState(this.viewportWidth);
+
+        this.graphInit();
+    },
+    unmounted() {
+        this.service.dropGraph();
     },
 };
 </script>

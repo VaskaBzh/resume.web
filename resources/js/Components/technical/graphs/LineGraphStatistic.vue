@@ -15,7 +15,6 @@
 <script>
 import * as d3 from "d3";
 import { mapGetters } from "vuex";
-import gradeRow from "@/modules/referral/Components/UI/GradeRow.vue";
 
 export default {
     name: "line-graph",
