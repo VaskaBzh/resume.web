@@ -12,7 +12,7 @@
                 v-if="
                     endHistory &&
                     !waitHistory &&
-                    hashrates.records?.filter((a) => a.hashrate > 0).length !==
+                    hashrates.values?.filter((a) => a.hashrate > 0).length !==
                         0
                 "
             >
@@ -46,37 +46,40 @@
                 <div class="statistic-container">
                     <HashrateCards></HashrateCards>
                     <div class="statistic-card">
-                        <p class="statistic-card-title"> {{$t("statistic.info_blocks.workers.types[0]")}}</p>
-                        <p class="statistic-card-num color-green"> {{ this.workers.active }}</p>
+                        <p class="statistic-card-title">
+                            {{ $t("statistic.info_blocks.workers.types[0]") }}
+                        </p>
+                        <p class="statistic-card-num color-green">
+                            {{ this.workers.active }}
+                        </p>
                     </div>
                     <div class="statistic-card">
-                        <p class="statistic-card-title"> {{$t("statistic.info_blocks.workers.types[2]")}}</p>
-                        <p class="statistic-card-num color-red"> {{ this.workers.inActive }}</p>
+                        <p class="statistic-card-title">
+                            {{ $t("statistic.info_blocks.workers.types[2]") }}
+                        </p>
+                        <p class="statistic-card-num color-red">
+                            {{ this.workers.inActive }}
+                        </p>
                     </div>
-                    </div>
-                    <no-info
-                        :wait="waitAccounts"
-                        :interval="20"
-                        :end="endAccounts"
+                </div>
+                <main-preloader
+                    :wait="waitAccounts"
+                    :interval="20"
+                    :end="endAccounts"
+                />
+
+                <div
+                    class="statistic__info cabinet__block cabinet__block-light"
+                >
+                    <btc-calculator
+                        :title="$t('statistic.info_blocks.payment.titles[1]')"
+                        :BTC="todayEarn"
                     />
-
-                    <div
-                        class="statistic__info cabinet__block cabinet__block-light"
-                    >
-                        <btc-calculator
-                            :title="
-                                $t('statistic.info_blocks.payment.titles[1]')
-                            "
-                            :BTC="todayEarn"
-                        />
-                        <btc-calculator
-                            :title="
-                                $t('statistic.info_blocks.payment.titles[0]')
-                            "
-                            :BTC="yesterdayEarn"
-                        />
-
-                    </div>
+                    <btc-calculator
+                        :title="$t('statistic.info_blocks.payment.titles[0]')"
+                        :BTC="yesterdayEarn"
+                    />
+                </div>
             </div>
         </div>
     </div>
@@ -91,8 +94,9 @@ import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 // import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import MainTabs from "@/Components/UI/profile/MainTabs.vue";
-import HashrateCards from '@/modules/hashrate/Components/HashrateCards.vue'
+import HashrateCards from "@/modules/hashrate/Components/HashrateCards.vue";
 import { SubHashrateService } from "@/services/SubHashrateService";
+import NoInfoWait from "@/Components/technical/blocks/NoInfoWait.vue";
 
 export default {
     props: ["errors", "message", "user", "auth_user"],
@@ -106,6 +110,7 @@ export default {
         // CurrentExchangeRate,
         MainTabs,
         HashrateCards,
+        NoInfoWait,
     },
     data() {
         return {
@@ -274,58 +279,58 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.statistic-container{
+.statistic-container {
     width: 100%;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
 }
-.statistic-card{
+.statistic-card {
     border-radius: 24px;
-    background: var(--light-secondary-wb, #FFF);
+    background: var(--light-secondary-wb, #fff);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
     padding: 16px 24px;
     min-width: 349px;
 }
 @media (max-width: 1860px) {
-    .statistic-card{
-         min-width: 120px;
+    .statistic-card {
+        min-width: 120px;
     }
-    .hashrate-card{
+    .hashrate-card {
         min-width: 349px;
     }
 }
-.statistic-card-title{
-    color: var(--light-gray-400, #98A2B3);
+.statistic-card-title {
+    color: var(--light-gray-400, #98a2b3);
     font-family: NunitoSans;
     font-size: 14px;
     font-style: normal;
     font-weight: 600;
     line-height: 145%; /* 20.3px */
 }
-.color-green{
-    color: var(--light-green-100, #1FB96C);
+.color-green {
+    color: var(--light-green-100, #1fb96c);
 }
-.color-red{
-    color: var(--light-red-100, #F1404A);
+.color-red {
+    color: var(--light-red-100, #f1404a);
 }
-.color-main{
-    color: var(--light-gray-800, #1D2939);
+.color-main {
+    color: var(--light-gray-800, #1d2939);
 }
-.flex-row{
+.flex-row {
     display: flex;
     gap: 24px;
     align-items: center;
 }
-.color-gray{
-    color: var(--light-gray-300, var(--gray-3100, #D0D5DD));
+.color-gray {
+    color: var(--light-gray-300, var(--gray-3100, #d0d5dd));
     font-family: Unbounded;
     font-size: 27px;
     font-style: normal;
     font-weight: 400;
     line-height: 147%; /* 39.69px */
 }
-.statistic-card-num{
+.statistic-card-num {
     font-family: Unbounded;
     font-size: 41px;
     font-style: normal;
