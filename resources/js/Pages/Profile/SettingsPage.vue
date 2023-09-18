@@ -58,7 +58,6 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SettingsBlock from "@/modules/settings/Components/blocks/SettingsBlock.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
 import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
@@ -73,7 +72,6 @@ export default {
         SettingsBlock,
         SettingsList,
         SettingsPopup,
-        BlueButton,
         SafetyCard
     },
     props: {
