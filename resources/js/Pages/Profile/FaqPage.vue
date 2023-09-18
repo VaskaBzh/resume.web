@@ -2,11 +2,13 @@
     <div class="faq">
         <div class="faq__container">
             <div class="faq__main">
-                <main-title tag="h1" class="title-blue faq_title">
+                <main-title tag="h2" class="faq_title">
                     FAQ
                 </main-title>
-
-                <div class="search">
+                <p class="description-text">
+                    {{ $t("faq[0].description") }}
+                </p>
+                <!-- <div class="search">
                     <input
                         v-model="searchQuery"
                         type="text"
@@ -35,14 +37,14 @@
                             </defs>
                         </svg>
                     </blue-button>
-                </div>
+                </div> -->
                 <transition-group name="fade">
                     <div
                         class="faq__list"
                         v-for="(accordion, i) in filteredFaq"
                         :key="i"
                     >
-                        <main-title tag="h3" class="title-blue">{{
+                        <main-title tag="h3" class="title-gray">{{
                             accordion.title
                         }}</main-title>
                         <div class="section__block section__block-light">
@@ -138,23 +140,23 @@ export default {
                         },
                     },
                 },
-                {
-                    title: this.$t("faq[2].title"),
-                    list: {
-                        0: {
-                            title: this.$t("faq[2].list[0].title"),
-                            text: this.$t("faq[2].list[0].text"),
-                        },
-                        1: {
-                            title: this.$t("faq[2].list[1].title"),
-                            text: this.$t("faq[2].list[1].text"),
-                        },
-                        2: {
-                            title: this.$t("faq[2].list[2].title"),
-                            text: this.$t("faq[2].list[2].text"),
-                        },
-                    },
-                },
+                // {
+                //     title: this.$t("faq[2].title"),
+                //     list: {
+                //         0: {
+                //             title: this.$t("faq[2].list[0].title"),
+                //             text: this.$t("faq[2].list[0].text"),
+                //         },
+                //         1: {
+                //             title: this.$t("faq[2].list[1].title"),
+                //             text: this.$t("faq[2].list[1].text"),
+                //         },
+                //         2: {
+                //             title: this.$t("faq[2].list[2].title"),
+                //             text: this.$t("faq[2].list[2].text"),
+                //         },
+                //     },
+                // },
             ];
         },
     },
@@ -173,9 +175,29 @@ export default {
 .fade-leave-to {
     opacity: 0;
 }
+.description-text{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    margin: 8px 0 40px;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+}
+.title-gray{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+}
 .faq {
+    overflow-y: scroll;
+    height: calc(100vh - 135px);
     &_title {
-        margin-top: 100px;
+        margin-top: 20px;
+        font-size: 27px;
         @media (max-width: 991.98px) {
             margin-top: 48px;
         }
@@ -205,13 +227,14 @@ export default {
             gap: 16px;
         }
         .section__block {
-            border-radius: 16px;
-            padding: 16px 40px;
+            border-radius: 24px;
+            background: var(--light-secondary-wb, #FFF);
+            box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
             @media (max-width: 991.98px) {
-                padding: 8px 24px;
+                // padding: 8px 24px;
             }
             @media (max-width: 479.98px) {
-                padding: 6px 8px;
+                // padding: 6px 8px;
             }
         }
     }

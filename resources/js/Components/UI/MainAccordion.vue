@@ -1,8 +1,14 @@
 <template>
     <div class="accordion" ref="accordion">
-        <main-title tag="h4" class="accordion_title" @click="accordionFunc"
+        <p class="accordion_title" @click="accordionFunc"
             >{{ accordion.title }}
-            <svg
+            <!-- <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="!isOpen">
+               <path d="M13 1.00005C13 1.00005 8.58107 6.99999 6.99995 7C5.41884 7.00001 1 1 1 1" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg> -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="!isOpen">
+                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            <!-- <svg
                 width="28"
                 height="28"
                 viewBox="0 0 28 28"
@@ -14,8 +20,11 @@
                     d="M13.125 4.375V13.125H4.375V14.875H13.125V23.625H14.875V14.875H23.625V13.125H14.875V4.375H13.125Z"
                     fill="#343434"
                 />
+            </svg> -->
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="isOpen">
+             <path d="M18 15C18 15 13.5811 9.00001 12 9C10.4188 8.99999 6 15 6 15" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
-            <svg
+            <!-- <svg
                 width="28"
                 height="28"
                 viewBox="0 0 28 28"
@@ -24,8 +33,8 @@
                 v-show="isOpen"
             >
                 <path d="M4 13V14.75H23.25V13H4Z" fill="#343434" />
-            </svg>
-        </main-title>
+            </svg> -->
+        </p>
         <transition name="slide-fade">
             <div
                 ref="value"
@@ -103,6 +112,12 @@ export default {
         border-bottom: 1px solid #e6eaf0;
     }
     &_title {
+        color: var(--light-gray-600, #475467);
+        font-family: NunitoSans;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 175%; /* 31.5px */
         cursor: pointer;
         display: inline-flex;
         justify-content: space-between;

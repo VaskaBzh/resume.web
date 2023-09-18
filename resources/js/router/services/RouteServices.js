@@ -28,6 +28,7 @@ export class RouteServices {
             new RouteProfileData("wallets", "wallets"),
             new RouteProfileData("workers", "workers"),
             new RouteProfileData("watchers", "watchers"),
+            new RouteProfileData("faq", "faq"),
         ];
     }
 

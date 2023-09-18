@@ -4,7 +4,7 @@ export const RouteNamesMap = {
         home: "HomePage.vue",
         calculator: "CalculatorPage.vue",
         complexity: "ComplexityPage.vue",
-        help: "FaqPage.vue",
+        // help: "FaqPage.vue",
         hosting: "HostingPage.vue",
         login: "LoginPage.vue",
         registration: "RegPage.vue",
@@ -18,6 +18,7 @@ export const RouteNamesMap = {
         wallets: "Profile/WalletsPage.vue",
         workers: "Profile/WorkersPage.vue",
         watchers: "Profile/WatchersPage.vue",
+        faq: "Profile/FaqPage.vue",
         referral: {
             overview: "Profile/Referral/OverviewPage.vue",
             "my-referral": "Profile/Referral/MyReferralPage.vue",

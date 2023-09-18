@@ -253,6 +253,7 @@ const messages = {
         faq: [
             {
                 title: "How to Start Mining on Allbtc Pool",
+                description: "Find answers to your most pressing questions.",
                 list: {
                     0: {
                         title: "What is Allbtc Pool?",
@@ -946,6 +947,7 @@ const messages = {
         faq: [
             {
                 title: "Как начать майнить на Allbtc Pool",
+                description: "Найдите ответы на самые волнующие вас вопросы.",
                 list: {
                     0: {
                         title: "Что такое Allbtc Pool?",

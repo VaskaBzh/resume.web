@@ -41,7 +41,7 @@ export class TabsService {
         this.settingLinks = [
             new TabsData("/profile/settings", "account", "account"),
             new TabsData("/profile/referral", "referral", "referral"),
-            new TabsData("/profile/connecting", "faq", "faq"),
+            new TabsData("/profile/faq", "faq", "faq"),
             new TabsData("/profile/watchers", "support", "support"),
         ]
     }
