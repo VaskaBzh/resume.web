@@ -5,7 +5,7 @@ export class RouteAuthData {
         this.path = `/${name}`;
         this.name = name;
         this.component = () =>
-            import(`../../Pages/${RouteNamesMap.public[component]}`);
+            import(`../../Pages/${RouteNamesMap.public[component]}.vue`);
         this.query = {
             referral_code: "",
         };
@@ -15,7 +15,7 @@ export class RouteAuthData {
                 "AuthMiddleware",
                 "DropErrorsMiddleware",
             ],
-            link: "AuthLayoutView",
+            layout: "AuthLayoutView",
         };
     }
 }

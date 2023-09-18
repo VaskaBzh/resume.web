@@ -8,7 +8,7 @@
                 :end="endHistory"
             />
             <div
-                class="cabinet"
+                class="cabinet cabinet-statistic"
                 v-if="
                     endHistory &&
                     !waitHistory &&
@@ -41,8 +41,6 @@
                         :viewportWidth="viewportWidth"
                     />
                 </div>
-            </div>
-            <div class="cabinet">
                 <div class="statistic-container">
                     <HashrateCards></HashrateCards>
                     <div class="statistic-card">

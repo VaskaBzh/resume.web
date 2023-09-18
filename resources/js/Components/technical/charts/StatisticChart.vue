@@ -52,7 +52,7 @@ export default {
     },
     data() {
         return {
-            height: 246,
+            height: 448,
             bandColor: "#E6EAF0",
         };
     },
@@ -89,7 +89,7 @@ export default {
                 else if (this.viewportWidth < 767.98) return 246;
                 else if (this.viewportWidth < 991.98) return 246;
                 else if (this.viewportWidth < 1320.98) return 246;
-                else return 246;
+                else return 448;
             } else {
                 return this.heightVal;
             }

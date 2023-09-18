@@ -129,7 +129,7 @@ export class LineGraphService extends GraphService {
             .attr("y", (d) => this.y(d) - 1)
             .attr("height", 1)
             .attr("width", "100%")
-            .attr("opacity", 0.5)
+            .attr("opacity", 0.2)
             .attr("fill", "#D0D5DD");
         //this.bandColor
 

@@ -1,8 +1,8 @@
 .cabinet {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 12px;
     @media (max-width: 767.98px) {
         margin-bottom: 32px;
         gap: 24px;
@@ -10,6 +10,11 @@
     @media (max-width: 479.98px) {
         margin-bottom: 32px;
         gap: 16px;
+    }
+    &-statistic {
+        margin-bottom: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
     }
     &:last-child {
         margin-bottom: 0;
@@ -20,6 +25,7 @@
         justify-content: space-between;
         gap: 16px;
         flex-wrap: wrap;
+        width: 100%;
     }
     &_title {
         margin-bottom: 40px;
@@ -81,6 +87,7 @@
             display: flex;
             flex-direction: column;
             gap: 24px;
+            width: 100%;
             @media (max-width: 767.98px) {
                 padding: 0 0 0 24px;
                 display: flex;
