@@ -3,47 +3,67 @@ import { useRouter } from "vue-router";
 
 export class TabsService {
     constructor() {
-        this.mainLinks = [];
+        this.links = [];
         this.subLinks = []
         this.settingLinks = []
         this.router = useRouter();
     }
 
-    setMainLinks(user) {
-        this.mainLinks = [
-            ...this.mainLinks,
-            new TabsData("/profile/statistic", "statistic", "statistic"),
-            new TabsData("/profile/income", "income", "income"),
-            new TabsData("/profile/workers", "workers", "workers"),
-            new TabsData("/profile/accounts", "accounts", "accounts"),
+    setLinks(user) {
+        this.links = [
+            ...this.links,
+            {
+                links: [
+                    new TabsData("/profile/statistic", "statistic", "statistic"),
+                    new TabsData("/profile/income", "income", "income"),
+                    new TabsData("/profile/workers", "workers", "workers"),
+                    new TabsData("/profile/accounts", "accounts", "accounts"),
+                ]
+            },
+            {
+                group_name: "Субаккаунт",
+                links: [
+                    new TabsData("/profile/connecting", "connecting", "connecting"),
+                    new TabsData("/profile/wallets", "wallets", "wallets"),
+                    new TabsData("/profile/watchers", "watchers", "watchers"),
+                ]
+            }
         ];
+
         if (user.roles)
             if (user.roles.find((role) => role.name === "referral"))
                 this.setReferralTab();
+            else
+                this.setWithoutReferralTab();
     }
 
     setReferralTab() {
-        this.mainLinks = [
-            ...this.mainLinks,
-            new TabsData("/profile/referral", "referral", "referral"),
+        this.links = [
+            ...this.links,
+            {
+                group_name: "Настройки",
+                links: [
+                    new TabsData("/profile/settings", "account", "account"),
+                    new TabsData("/profile/referral", "referral", "referral"),
+                    new TabsData("/profile/faq", "faq", "faq"),
+                    new TabsData("/profile/watchers", "support", "support"),
+                ]
+            },
         ];
     }
-    
-    setSubaccountLinks(){
-        this.subLinks =
-            [
-                new TabsData("/profile/wallets", "wallets", "wallets"),
-                new TabsData("/profile/connecting", "connecting", "connecting"),
-                new TabsData("/profile/watchers", "watchers", "watchers"),
-            ]
-    }
-    setSettingsLinks(){
-        this.settingLinks = [
-            new TabsData("/profile/settings", "account", "account"),
-            new TabsData("/profile/referral", "referral", "referral"),
-            new TabsData("/profile/faq", "faq", "faq"),
-            new TabsData("/profile/watchers", "support", "support"),
-        ]
+
+    setWithoutReferralTab() {
+        this.links = [
+            ...this.links,
+            {
+                group_name: "Настройки",
+                links: [
+                    new TabsData("/profile/settings", "account", "account"),
+                    new TabsData("/profile/faq", "faq", "faq"),
+                    new TabsData("/profile/watchers", "support", "support"),
+                ]
+            },
+        ];
     }
 
     dropLinks() {
@@ -52,10 +72,5 @@ export class TabsService {
 
     back() {
         this.router.go(-1);
-        // if (window.history.length > 1) {
-        //     window.history.back();
-        // } else {
-        //     router.visit("/profile/statistic");
-        // }
     }
 }

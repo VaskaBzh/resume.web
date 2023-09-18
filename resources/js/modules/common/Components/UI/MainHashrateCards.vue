@@ -1,7 +1,7 @@
 <template>
     <cabinet-card
         :title="$t('statistic.info_blocks.hash.titles[0]')"
-        :value="Number(getAccount.hash_per_min).toFixed(2)"
+        :value="hashPerMin"
         unit="TH/s"
     >
         <template v-slot:svg>
@@ -10,7 +10,7 @@
     </cabinet-card>
     <cabinet-card
         :title="$t('statistic.info_blocks.hash.titles[1]')"
-        :value="Number(getAccount.hash_per_day).toFixed(2)"
+        :value="hashPerDay"
         unit="TH/s"
     >
         <template v-slot:svg>
@@ -25,11 +25,16 @@ import HashrateIcon from "@/modules/common/icons/HashrateIcon.vue";
 import HashrateIcon24 from "@/modules/common/icons/HashrateIcon24.vue";
 
 export default {
-    props: ["currentPage"],
     computed: {
         ...mapGetters([
             "getAccount",
         ]),
+        hashPerDay() {
+            return this.getAccount.hash_per_day ? Number(this.getAccount.hash_per_day).toFixed(2) : "0.00";
+        },
+        hashPerMin() {
+            return this.getAccount.hash_per_min ? Number(this.getAccount.hash_per_min).toFixed(2) : "0.00";
+        },
     },
     components: {
         CabinetCard,

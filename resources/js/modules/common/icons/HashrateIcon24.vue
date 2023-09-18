@@ -21,5 +21,6 @@ svg {
     stroke: #53B1FD;
     width: 64px;
     height: 64px;
+    opacity: 0.3;
 }
 </style>

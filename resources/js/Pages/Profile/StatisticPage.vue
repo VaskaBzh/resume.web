@@ -11,6 +11,7 @@
             :end="!!service"
         />
         <div
+            v-scroll="'opacity transition--fast'"
             class="cabinet statistic__cabinet"
             v-if="
                 !service.waitGraph &&
@@ -60,6 +61,7 @@
             <statistic-column-graph class="statistic_graph-column" />
         </div>
         <no-information
+            v-scroll="'opacity transition--fast'"
             class="cabinet__preloader"
             v-if="
                 !service.waitGraph &&
@@ -106,17 +108,17 @@ export default {
     },
     watch: {
         async 'service.offset'() {
-            await this.service.index();
+            await this.service.lineGraphIndex();
         },
         async getActive(newActiveId) {
             this.service.setGroupId(newActiveId);
-            await this.service.index();
+            await this.service.lineGraphIndex();
         },
         async offset() {
-            await this.service.index();
+            await this.service.lineGraphIndex();
         },
         async getAccount() {
-            await this.service.index();
+            await this.service.lineGraphIndex();
         }
     },
     computed: {
@@ -125,7 +127,7 @@ export default {
     async mounted() {
         this.service.setGroupId(this.getActive);
         this.service.setButtons();
-        await this.service.index();
+        await this.service.lineGraphIndex();
     },
 };
 </script>

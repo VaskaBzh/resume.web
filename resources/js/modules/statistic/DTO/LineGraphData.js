@@ -1,4 +1,4 @@
-export class SubHashrateData {
+export class LineGraphData {
     constructor(hashrateRecord) {
         this.hashrate = hashrateRecord.hash;
         this.unit = hashrateRecord.unit;

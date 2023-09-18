@@ -11,15 +11,16 @@
         />
         <main-column-graph
             :height="height"
-            :graphData="graph"
+            :graphData="service.graph"
         />
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import MainProgressBar from "../../common/Components/UI/MainProgressBar.vue";
-import MainColumnGraph from "../../graphs/Components/MainColumnGraph.vue";
+import MainProgressBar from "@/modules/common/Components/UI/MainProgressBar.vue";
+import MainColumnGraph from "@/modules/graphs/Components/MainBarGraph.vue";
+import {StatisticService} from "@/modules/statistic/service/StatisticService";
 
 export default {
     name: "statistic-column-graph",
@@ -29,12 +30,16 @@ export default {
     },
     data() {
         return {
-            graph: {},
             height: 77,
+            service: new StatisticService(
+                [0, 1],
+                this.$t,
+                30
+            ),
         };
     },
     computed: {
-        ...mapGetters(["viewportWidth", "getAccount"]),
+        ...mapGetters(["viewportWidth", "getAccount", "getActive"]),
         pendingAmount() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
@@ -42,6 +47,22 @@ export default {
             }
             return Number(sum).toFixed(8);
         },
+    },
+    watch: {
+        async 'service.offset'() {
+            await this.service.barGraphIndex();
+        },
+        async getActive(newActiveId) {
+            this.service.setGroupId(newActiveId);
+            await this.service.barGraphIndex();
+        },
+        async getAccount() {
+            await this.service.barGraphIndex();
+        }
+    },
+    async mounted() {
+        this.service.setGroupId(this.getActive);
+        await this.service.barGraphIndex();
     }
 }
 </script>

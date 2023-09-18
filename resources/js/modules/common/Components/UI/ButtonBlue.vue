@@ -10,9 +10,10 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .button-blue {
-    width: 100%;
+    width: fit-content;
+    min-width: 300px;
     border-radius: 12px;
     background: var(--primary-500, #2E90FA);
     box-shadow: 0 10px 10px -6px rgba(0, 0, 0, 0.10);
@@ -29,5 +30,8 @@ export default {
     line-height: 32px;
     padding: 0 12px;
     transition: all 0.5s ease 0s;
+}
+.button-blue-full {
+    width: 100%;
 }
 </style>

@@ -58,6 +58,7 @@ export default {
     display: inline-flex;
     gap: 8px;
     align-items: flex-end;
+    opacity: 0.8;
 }
 .card_unit {
     color: var(--light-gray-300, #D0D5DD);

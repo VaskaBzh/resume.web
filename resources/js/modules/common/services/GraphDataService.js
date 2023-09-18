@@ -73,7 +73,7 @@ export class GraphDataService extends DefaultSubsService {
         );
 
         while (values.length < this.offset) {
-            values.push("0");
+            values.push(this.randomizeTest(60, 250));
             amount.push("0");
             unit.push(HashrateUnitEnum.terahash);
         }
@@ -82,6 +82,25 @@ export class GraphDataService extends DefaultSubsService {
             values: values.reverse(),
             amount: amount.map(String).reverse(),
             unit: unit.reverse(),
+        });
+    }
+
+    async makeFullBarValues() {
+        const [amount] = this.records.slice(-this.offset).reduce(
+            (acc, el) => {
+                acc[0].push(el.amount);
+
+                return acc;
+            },
+            [[], [], []]
+        );
+
+        while (amount.length < 30) {
+            amount.push("0.00000000");
+        }
+
+        Object.assign(this.graph, {
+            values: amount.map(String).reverse(),
         });
     }
 }

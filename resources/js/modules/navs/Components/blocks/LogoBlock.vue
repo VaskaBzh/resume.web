@@ -1,20 +1,18 @@
 <template>
-    <router-link :to="{ name: 'home' }">
-        <div class="logo">
-            <img class="logo_img" src="../../assets/img/logo-img.svg" alt="logo" />
-            <div class="logo_block">
-                <img
-                    class="logo_img"
-                    src="../../assets/img/logo-allbtc.svg"
-                    alt="logo"
-                />
-                <img
-                    class="logo_img-pool"
-                    src="../../assets/img/logo-pool.svg"
-                    alt="logo"
-                />
-            </div>
-        </div>
+    <router-link :to="{ name: 'home' }" class="logo">
+        <img class="logo_img" src="../../assets/img/logo-img.svg" alt="logo" />
+        <span class="logo_block">
+            <img
+                class="logo_img"
+                src="../../assets/img/logo-allbtc.svg"
+                alt="logo"
+            />
+            <img
+                class="logo_img-pool"
+                src="../../assets/img/logo-pool.svg"
+                alt="logo"
+            />
+        </span>
     </router-link>
 </template>
 
@@ -27,7 +25,6 @@ export default {
 <style scoped>
 .logo {
     display: inline-flex;
-    padding: 40px 0 40px 16px;
     justify-content: center;
     align-items: flex-start;
     gap: 10px;

@@ -4,7 +4,12 @@
             {{ title }}
         </main-title>
         <div class="btc__value btc-calc-num">
-            <b>{{ converter.btc }} BTC</b>
+            <div class="btc_num">
+                {{ converter.btc }}
+                <div class="btc_unit">
+                    BTC
+                </div>
+            </div>
             <div class="convertor-container">
                 <span class="convertor-calc">{{ converter.usd }} $</span>
                 <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter.rub }} ₽</span>
@@ -101,6 +106,26 @@ export default {
         gap: 4px;
     }
 
+    &_unit {
+        color: var(--light-gray-300, #D0D5DD);
+        font-family: Unbounded, serif;
+        font-size: 20px;
+        font-weight: 400;
+        line-height: 32px;
+    }
+
+    &_num {
+        opacity: 0.8;
+        display: flex;
+        gap: 8px;
+        color: var(--light-gray-800, #1D2939);
+        font-family: Unbounded, serif;
+        font-size: 27px;
+        font-weight: 400;
+        line-height: 40px;
+        align-items: flex-end;
+    }
+
     &__value {
         display: flex;
         align-items: center;
@@ -110,7 +135,6 @@ export default {
         @media (max-width: 479.98px) {
             gap: 0 5px;
         }
-
         span {
             white-space: nowrap;
             display: inline-flex;
