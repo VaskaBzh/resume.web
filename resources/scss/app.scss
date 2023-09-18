@@ -156,7 +156,6 @@ h6 {
         @if ($maxWidthContainer>0) {
             max-width: $maxWidthContainer;
             box-sizing: content-box;
-            margin: 0 auto;
         }
         @if ($containerPadding>0) {
             padding: 0 $containerPadding / 2 + px;
@@ -165,7 +164,6 @@ h6 {
 } @else {
     // По брейк-поинтам
     [class*="__container"] {
-        margin: 0 auto;
         @if ($maxWidthContainer>0) {
             max-width: $maxWidthContainer;
             box-sizing: content-box;

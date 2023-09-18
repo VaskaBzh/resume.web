@@ -14,6 +14,7 @@
             "
             class="form form-popup popup__form"
         >
+        <div class="header_card">
             <main-title tag="h3">{{
                 `${
                     form.type !== "почту"
@@ -21,6 +22,8 @@
                         : $t("popup.title_email")
                 } ${form.type}`
             }}</main-title>
+            <p class="popup-text">{{ $t("popup.text[0]") }}</p>
+        </div>
             <input
                 v-model="item"
                 autofocus
@@ -54,13 +57,17 @@
                 :errors="errors"
                 @change="password_confirmation = $event"
             />
-            <blue-button>
-                <button type="submit" class="all-link">
-                    <popup-loading-icon />
-                    {{ $t("popup.button") }}
-                    {{ form.type }}
-                </button>
-            </blue-button>
+            <div class="btn__block">
+                <blue-button class="btn-back">
+                        {{ $t("popup.button[0]") }}
+                 </blue-button>
+                <blue-button>
+                        <popup-loading-icon />
+                        {{ $t("popup.button[1]") }}
+                        {{ form.type }}
+                 </blue-button>
+            </div>
+
         </form>
     </main-popup>
 </template>
@@ -116,6 +123,36 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.header_card{
+    margin-bottom: 40px;
+}
+.btn__block{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 80px;
+    gap: 12px;
+}
+.btn-back{
+    border-radius: 12px;
+    border: 1px solid var(--light-gray-400, #98A2B3);
+    padding: 12px 16px;
+    background: inherit;
+    color: var(--light-gray-600, #475467);
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 175%; /* 31.5px */
+}
+.popup-text{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+}
 .form_wrapper-message {
     position: relative;
     left: 0;

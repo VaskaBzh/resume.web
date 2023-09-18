@@ -49,23 +49,17 @@ export class SettingsService {
     setRows() {
         this.rows = [
             new RowData(
-                this.translate("settings.block.settings_block.labels.login"),
-                "name",
-                this.userData.login,
-                "name"
-            ),
-            new RowData(
                 this.translate("settings.block.settings_block.labels.email"),
                 "email",
                 this.userData.email,
                 "email"
             ),
-            new RowData(
-                this.translate("settings.block.settings_block.labels.password"),
-                "password",
-                this.userData.password,
-                "password"
-            ),
+            // new RowData(
+            //     this.translate("settings.block.settings_block.labels.password"),
+            //     "password",
+            //     this.userData.password,
+            //     "password"
+            // ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.phone"),
                 "phone",
