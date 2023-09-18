@@ -110,7 +110,7 @@ export class GraphService {
     setDefaultX() {
         this.x = d3
             .scaleLinear()
-            .domain(d3.extent(this.graphData.dates, (d) => new Date(d)))
+            .domain(d3.extent(this.graphData.dates, (d) => d))
             .range([0, this.chartHtml.offsetWidth]);
 
         return this;

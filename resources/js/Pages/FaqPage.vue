@@ -60,9 +60,9 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
-import MainAccordion from "@/Components/UI/MainAccordion.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import MainAccordion from "@/modules/common/Components/UI/MainAccordion.vue";
 
 export default {
     components: { MainTitle, BlueButton, MainAccordion },

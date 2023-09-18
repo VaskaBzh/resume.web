@@ -32,9 +32,9 @@
 </template>
 
 <script>
-import MainInput from "@/Components/UI/inputs/MainInput.vue";
+import MainInput from "@/modules/common/Components/UI/inputs/MainInput.vue";
 import api from "@/api/api";
-import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
+import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 
 export default {
     name: "watchers-page",

@@ -18,13 +18,13 @@
                 ></main-menu>
             </div>
         </div>
-        
+
     </div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import MainMenu from "@/Components/UI/MainMenu.vue";
+import MainMenu from "@/modules/common/Components/UI/MainMenu.vue";
 import { Converter } from "@/Scripts/converter";
 
 export default {

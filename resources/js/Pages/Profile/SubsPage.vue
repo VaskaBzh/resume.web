@@ -94,9 +94,9 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 

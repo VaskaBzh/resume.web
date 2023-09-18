@@ -110,8 +110,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainCopy from "@/Components/UI/MainCopy.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
 import StatsCard from "@/modules/referral/Components/UI/StatsCard.vue";
 import ReferralSelect from "@/modules/referral/Components/UI/ReferralSelect.vue";
@@ -121,7 +121,7 @@ import { CabinetService } from "@/modules/referral/services/CabinetService";
 import { mapGetters } from "vuex";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import InfoCard from "../../../modules/common/Components/InfoCard.vue";
+import InfoCard from "../../../modules/common/Components/UI/CabinetCard.vue";
 export default {
     name: "cabinet-view",
     components: {
@@ -189,7 +189,7 @@ export default {
 }
 .referral {
     &_content {
-        
+
         display: grid;
         grid-template-columns: repeat(2, 49%);
         // grid-template-rows: repeat(2, auto);

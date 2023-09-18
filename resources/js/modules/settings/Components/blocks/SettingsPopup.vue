@@ -67,12 +67,12 @@
 
 <script>
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     name: "settings-popup",

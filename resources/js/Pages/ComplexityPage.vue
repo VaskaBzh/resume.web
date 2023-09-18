@@ -33,7 +33,7 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import MainChart from "@/Components/technical/charts/MainChart.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 
 export default {

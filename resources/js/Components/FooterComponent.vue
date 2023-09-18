@@ -266,9 +266,9 @@
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
 import { useRoute } from "vue-router";

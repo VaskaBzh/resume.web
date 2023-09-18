@@ -101,7 +101,7 @@ import TableRow from "@/Components/tables/row/TableRow.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     name: "main-table",

@@ -87,7 +87,7 @@
 import { useForm } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
-import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
+import AccountMenu from "@/modules/common/Components/Ui/AccountMenu.vue";
 import { defineComponent, ref } from "vue";
 import "swiper/css";
 import "swiper/css/pagination";

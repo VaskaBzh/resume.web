@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
 import InfoView from "@/Components/technical/views/InfoView.vue";
 import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import ProfitView from "@/Components/technical/views/ProfitView.vue";
@@ -82,7 +82,7 @@ import SikkerView from "@/Components/technical/views/SikkerView.vue";
 import EfficiencyView from "@/Components/technical/views/EfficiencyView.vue";
 import ControlView from "@/Components/technical/views/ControlView.vue";
 import { mapGetters } from "vuex";
-import InfoCard from "@/Components/technical/blocks/InfoCard.vue";
+import InfoCard from "@/Components/technical/blocks/CabinetCard.vue";
 import { SwiperSlide } from "swiper/vue";
 
 export default {

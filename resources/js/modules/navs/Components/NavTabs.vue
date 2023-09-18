@@ -151,7 +151,7 @@
 import { TabsService } from "../services/TabsService";
 import { useRoute } from "vue-router";
 import { mapGetters } from "vuex";
-import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
+import AccountMenu from "@/modules/common/Components/UI/AccountMenu.vue";
 import { defineComponent } from "vue";
 import LogoBlock from "@/modules/navs/Components/blocks/LogoBlock.vue";
 

@@ -437,12 +437,6 @@ h6 {
     }
 }
 .statistic {
-    .preloader {
-        margin-bottom: 40px;
-        @media (max-width: $mobile) {
-            margin-bottom: 32px;
-        }
-    }
     .cabinet {
         .preloader {
             margin-bottom: 0;
@@ -788,37 +782,8 @@ h6 {
 
 // Кастомные стили графиков
 .graph {
-    &.no-title {
-        min-height: 100%;
-        min-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .graph {
-            &__main {
-                padding: 0px;
-                min-height: 100%;
-                min-width: 100%;
-            }
-            &__head {
-                display: none;
-                //justify-content: flex-end;
-            }
-            &__item {
-                padding: 0;
-            }
-        }
-        //.title {
-        //    display: none;
-        //}
-    }
     &.paddings {
         min-height: auto;
-        .graph {
-            &__item {
-                padding: 28px 36px 33px;
-            }
-        }
     }
 }
 #myChart {

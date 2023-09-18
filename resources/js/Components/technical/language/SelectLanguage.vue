@@ -18,7 +18,7 @@
 <script>
 import axios from "axios";
 import { Inertia } from "@inertiajs/inertia";
-import MainMenu from "@/Components/UI/MainMenu.vue";
+import MainMenu from "@/modules/common/Components/UI/MainMenu.vue";
 import { usePage } from "@inertiajs/vue3";
 
 export default {

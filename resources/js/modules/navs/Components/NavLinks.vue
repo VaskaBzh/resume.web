@@ -78,10 +78,10 @@
 </template>
 
 <script>
-import BlueButton from "@/Components/UI/BlueButton.vue";
-import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
+import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import AccountMenu from "@/modules/common/Components/Ui/AccountMenu.vue";
 import { mapGetters } from "vuex";
-import MainLink from "@/Components/UI/MainLink.vue";
+import MainLink from "@/modules/common/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 import api from "@/api/api";
@@ -135,6 +135,7 @@ export default {
 
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
+                store.dispatch("drop_all");
             } catch (e) {
                 console.error("Error with: " + e);
             }
