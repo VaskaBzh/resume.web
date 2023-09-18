@@ -123,7 +123,7 @@
 </template>
 
 <script>
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";

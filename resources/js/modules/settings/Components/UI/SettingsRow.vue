@@ -1,7 +1,7 @@
 <template>
     <div
         class="cabinet__block cabinet__block-light"
-        :data-popup="`#changes`"
+        data-popup="#changes"
         @mousedown="change_val"
     >
         <div class="svg" v-html="svg"></div>
@@ -13,7 +13,7 @@
         <!--            >-->
         <!--                Изменить-->
         <!--            </span>-->
-        <span class="text text-black text-b">{{ this.value }}</span>
+        <span class="text text-black text-b">{{ value }}</span>
         <svg
             width="24"
             height="24"

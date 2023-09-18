@@ -395,9 +395,9 @@
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import InfoView from "@/Components/technical/views/InfoView.vue";
-import InfoCard from "@/Components/technical/blocks/CabinetCard.vue";
+import InfoCard from "@/Components/technical/blocks/InfoCard.vue";
 import AboutPanelView from "@/Components/technical/views/AboutPanelView.vue";
 import MiningInfoView from "@/Components/technical/views/MiningInfoView.vue";
 import { mapGetters } from "vuex";

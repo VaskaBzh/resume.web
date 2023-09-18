@@ -35,7 +35,7 @@
 
 <script>
 import MainSelect from "@/modules/common/Components/UI/MainSelect.vue";
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 
 export default {
     components: { BlueButton, MainSelect },

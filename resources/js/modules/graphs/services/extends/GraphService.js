@@ -174,10 +174,6 @@ export class GraphService {
     setContainerHeight(height) {
         this.containerHeight = height;
 
-        if (this.isMobile && this.tooltip) {
-            this.containerHeight = 246;
-        }
-
         return this;
     }
 

@@ -54,7 +54,6 @@ export default {
                     .createSvg()
                     .gradientInit()
                     .setDefaultX()
-                    .setNumberX()
                     .setY()
                     .setAxis()
                     .setXAxis(
@@ -62,6 +61,7 @@ export default {
                             ? 12
                             : this.service.validateXAxis()
                     )
+                    .setNumberX()
                     .setYAxis(6)
                     .setLineGenerator()
                     .setAreaGenerator()
@@ -92,4 +92,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.container-chart {
+    margin-left: 48px;
+}
+</style>

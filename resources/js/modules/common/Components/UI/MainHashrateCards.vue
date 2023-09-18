@@ -1,38 +1,28 @@
 <template>
-    <info-card :currentPage="currentPage">
+    <cabinet-card
+        :title="$t('statistic.info_blocks.hash.titles[0]')"
+        :value="Number(getAccount.hash_per_min).toFixed(2)"
+        unit="TH/s"
+    >
         <template v-slot:svg>
             <hashrate-icon />
         </template>
-        <template v-slot:title>
-            {{ $t("statistic.info_blocks.hash.titles[0]") }}
-        </template>
-        <template v-slot:num>
-            {{ Number(getAccount.hash_per_min).toFixed(2) }}
-        </template>
-        <template v-slot:unit>
-            TH/s
-        </template>
-    </info-card>
-    <info-card :currentPage="currentPage">
+    </cabinet-card>
+    <cabinet-card
+        :title="$t('statistic.info_blocks.hash.titles[1]')"
+        :value="Number(getAccount.hash_per_day).toFixed(2)"
+        unit="TH/s"
+    >
         <template v-slot:svg>
             <hashrate-icon24 />
         </template>
-        <template v-slot:title>
-            {{ $t("statistic.info_blocks.hash.titles[1]") }}
-        </template>
-        <template v-slot:num>
-            {{ Number(getAccount.hash_per_day).toFixed(2) }}
-        </template>
-        <template v-slot:unit>
-            TH/s
-        </template>
-    </info-card>
+    </cabinet-card>
 </template>
 <script>
 import { mapGetters } from "vuex";
-import InfoCard from "./CabinetCard.vue";
-import HashrateIcon from "../../icons/HashrateIcon.vue";
-import HashrateIcon24 from "../../icons/HashrateIcon24.vue";
+import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
+import HashrateIcon from "@/modules/common/icons/HashrateIcon.vue";
+import HashrateIcon24 from "@/modules/common/icons/HashrateIcon24.vue";
 
 export default {
     props: ["currentPage"],
@@ -42,7 +32,7 @@ export default {
         ]),
     },
     components: {
-        InfoCard,
+        CabinetCard,
         HashrateIcon,
         HashrateIcon24
     }

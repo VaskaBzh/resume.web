@@ -1,22 +1,29 @@
-import api from "@/api/api";
+import { DefaultSubsService } from "./DefaultSubsService";
+import {HashrateUnitEnum} from "../enums/HashrateUnitEnum";
 
-import { SubHashrateData } from "@/DTO/SubHashrateData";
-import store from "@/store";
-
-export class SubHashrateService {
-    constructor(translate, titles, offset = 24) {
-        this.group_id = -1;
-        this.offset = offset;
+export class GraphDataService extends DefaultSubsService {
+    constructor(titles, translate, offset = 24) {
+        super();
         this.titles = titles;
-
-        this.translate = translate;
+        this.offset = offset;
 
         this.graph = {};
+        this.records = [];
+
+        this.translate = translate;
+    }
+
+    setOffset(offset) {
+        this.offset = offset;
+    }
+
+    getTranslateRoute() {
+        return "chart.labels";
     }
 
     setTitles() {
         return this.titles.map((title) =>
-            this.translate(`chart.labels[${title}]`)
+            this.translate(`${this.getTranslateRoute()}[${title}]`)
         );
     }
 
@@ -44,15 +51,21 @@ export class SubHashrateService {
         return Math.random() * (max - min) + min;
     }
 
+    validateHashrate(hash, unit) {
+        let hashrate = hash ?? 0;
+        if (unit === HashrateUnitEnum.petahash) hashrate *= 1000;
+        else if (unit === HashrateUnitEnum.exsahash) hashrate *= 1000000;
+
+        return hashrate
+    }
+
     async makeFullValues() {
         const [values, amount, unit] = this.records.slice(-this.offset).reduce(
             (acc, el) => {
-                let hashrate = el.hashrate ?? 0;
-                if (el.unit === "P") hashrate *= 1000;
-                else if (el.unit === "E") hashrate *= 1000000;
+                let hashrate = this.validateHashrate(el.hashrate, el.unit);
                 acc[0].push(Number(hashrate));
                 el.amount ? acc[1].push(el.amount) : acc[1].push(0);
-                acc[2].push("T");
+                acc[2].push(HashrateUnitEnum.terahash);
 
                 return acc;
             },
@@ -60,9 +73,9 @@ export class SubHashrateService {
         );
 
         while (values.length < this.offset) {
-            values.push(this.randomizeTest(50, 250));
+            values.push("0");
             amount.push("0");
-            unit.push("T");
+            unit.push(HashrateUnitEnum.terahash);
         }
 
         Object.assign(this.graph, {
@@ -70,32 +83,5 @@ export class SubHashrateService {
             amount: amount.map(String).reverse(),
             unit: unit.reverse(),
         });
-    }
-
-    async fetch() {
-        return await api.get(
-            `/hashrate/${this.group_id}?offset=${this.offset}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            }
-        );
-    }
-
-    async index() {
-        if (store.getters.getActive !== -1) {
-            this.waitHashrate = true;
-
-            this.setDefaultKeys();
-
-            this.records = (await this.fetch()).data.data.map((el) => {
-                return new SubHashrateData(el);
-            });
-
-            await this.makeFullValues();
-
-            this.waitHashrate = false;
-        }
     }
 }

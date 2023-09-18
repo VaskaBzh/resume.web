@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import AccountMenu from "@/modules/common/Components/Ui/AccountMenu.vue";
 import { mapGetters } from "vuex";
 import MainLink from "@/modules/common/Components/UI/MainLink.vue";

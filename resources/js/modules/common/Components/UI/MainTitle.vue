@@ -77,7 +77,7 @@ h4 {
     }
 }
 .title {
-    font-family: Unbounded;
+    font-family: Unbounded, serif;
     font-style: normal;
     color: var(--light-gray-800, #1D2939);
     &.profile {
@@ -94,16 +94,11 @@ h4 {
         color: #ffffff;
     }
     &.headline {
-        font-weight: 500;
-        font-size: 24px;
-        line-height: 115%;
-        color: #545454;
-        @media (max-width: 767.98px) {
-            font-size: 20px;
-        }
-        @media (max-width: 479.98px) {
-            font-size: 18px;
-        }
+        color: var(--light-gray-400, #98A2B3);
+        font-family: NunitoSans, serif;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 145%;
     }
 }
 </style>

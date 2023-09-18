@@ -67,7 +67,7 @@
 
 <script>
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";

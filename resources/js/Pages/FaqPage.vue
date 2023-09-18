@@ -61,7 +61,7 @@
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainAccordion from "@/modules/common/Components/UI/MainAccordion.vue";
 
 export default {

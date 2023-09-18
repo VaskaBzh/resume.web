@@ -131,7 +131,7 @@ import MainPassword from "@/modules/common/Components/UI/inputs/MainPassword.vue
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import BlueButton from "@/modules/common/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 
 import { RegistrationService } from "@/modules/auth/services/RegistrationService";
 import { mapGetters } from "vuex";
