@@ -46,8 +46,8 @@
 import MainSlider from "@/Components/technical/MainSlider.vue";
 import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue"
 import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue"
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainDate from "@/Components/UI/MainDate.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainDate from "@/modules/common/Components/UI/MainDate.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import { mapGetters } from "vuex";
 

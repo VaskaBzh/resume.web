@@ -49,16 +49,21 @@ export default {
         },
         async set_accounts({ commit, state }, user_id) {
             if (state.valid) {
+                await this.dispatch("accounts_all", user_id);
                 this.dispatch("getMiningStat");
                 this.dispatch("getGraph");
+                commit("setValid")
             }
-            await this.dispatch("accounts_all", user_id);
+            this.dispatch("drop_interval");
             this.dispatch("set_interval", user_id);
         },
         set_interval({ state }, user_id) {
             state.interval = setInterval(async () => {
                 await this.dispatch("accounts_all", user_id);
             }, 60000);
+        },
+        drop_interval({ state }) {
+            clearInterval(state.interval);
         },
         drop_all({ commit, state }) {
             clearInterval(state.interval);

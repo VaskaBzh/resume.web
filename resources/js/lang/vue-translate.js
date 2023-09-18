@@ -1159,7 +1159,7 @@ const messages = {
             title: "Статистика",
             checkbox: "Общая статистика со всех аккаунтов",
             chart: {
-                title: "Общий хешрейт",
+                title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
             info_blocks: {

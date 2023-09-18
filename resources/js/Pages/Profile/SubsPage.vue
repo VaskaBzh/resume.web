@@ -33,11 +33,11 @@
                     :accountInfo="account"
                 />
             </div>
-            <no-info
+            <main-preloader
                 :wait="waitAccounts"
                 :interval="50"
                 :end="endAccounts"
-            ></no-info>
+            />
         </div>
         <!--        <teleport to="body">-->
         <!--            <main-popup-->
@@ -94,10 +94,10 @@
 <script>
 import { Head } from "@inertiajs/vue3";
 import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
-import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -107,7 +107,7 @@ export default {
         Head,
         MainPopup,
         BlueButton,
-        NoInfo,
+        MainPreloader,
     },
     props: ["errors", "message", "user", "auth_user"],
     data() {
@@ -158,7 +158,7 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         gap: 16px;
-        &.no-info {
+        &.preloader {
             display: flex;
         }
         @media (max-width: 1320.98px) {

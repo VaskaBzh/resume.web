@@ -1,21 +1,21 @@
 <template>
     <div class="layout">
         <div class="header-container">
-            <header-component :user="user" />
+            <header-component-profile :user="user" />
         </div>
         <div class="nav-container">
-            <nav-tabs ref="tabs" :user="user"/>
+            <nav-tabs ref="tabs" :user="user" />
         </div>
-            <div class="page-container">
-                <keep-alive>
-                   <slot />
-                </keep-alive>
-            </div>
+        <div class="page-container">
+            <keep-alive>
+                <slot />
+            </keep-alive>
         </div>
+    </div>
 </template>
 <script>
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
-import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
+import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -26,7 +26,7 @@ export default {
     },
     components: {
         // FooterComponent,
-        HeaderComponent,
+        HeaderComponentProfile,
         NavTabs,
     },
     computed: {
@@ -43,12 +43,12 @@ export default {
 };
 </script>
 <style scoped>
-.layout{
+.layout {
     width: 100vw;
     height: 100vh;
-    background: var(--secondary-white, #FFF);
+    background: var(--secondary-white, #fff);
 }
-.header-container{
+.header-container {
     width: calc(100vw - 320px);
     height: 84px;
     position: fixed;
@@ -58,7 +58,7 @@ export default {
     right: 0;
     transition: all 0.3s ease 0s;
 }
-.nav-container{
+.nav-container {
     width: 320px;
     height: 100vh;
     padding: 0 24px;
@@ -66,11 +66,11 @@ export default {
     top: 0px;
     left: 0px;
 }
-.page-container{
+.page-container {
     position: fixed;
     padding: 24px;
     border-radius: 40px 0px 0px 0px;
-    background: var(--background-first, #F8FAFD);
+    background: var(--background-first, #f8fafd);
     box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
     top: 84px;
     left: 320px;

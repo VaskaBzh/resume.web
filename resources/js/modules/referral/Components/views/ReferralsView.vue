@@ -20,7 +20,7 @@
 </template>
 
 <script>
-import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
+import MainSearch from "@/modules/common/Components/UI/inputs/MainSearch.vue";
 import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 

@@ -41,9 +41,6 @@
 @import "./templates/input";
 @import "./templates/search";
 @import "./templates/form";
-@import "./templates/no-info";
-@import "./templates/propeller";
-@import "./templates/preloader";
 @import "./templates/shadow";
 @import "./templates/password";
 
@@ -438,14 +435,8 @@ h6 {
     }
 }
 .statistic {
-    .no-info {
-        margin-bottom: 40px;
-        @media (max-width: $mobile) {
-            margin-bottom: 32px;
-        }
-    }
     .cabinet {
-        .no-info {
+        .preloader {
             margin-bottom: 0;
         }
     }
@@ -456,6 +447,15 @@ h6 {
     }
 }
 .y-axis-container {
+    position: absolute;
+    left: 30px;
+    top: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+    height: 100%;
+    width: fit-content;
+    justify-content: space-between;
     .tick {
         font-weight: 400;
         font-size: 12px;
@@ -465,7 +465,6 @@ h6 {
 }
 .container-chart {
     position: relative;
-    width: 100%;
     svg {
         overflow: visible;
         g {
@@ -780,37 +779,8 @@ h6 {
 
 // Кастомные стили графиков
 .graph {
-    &.no-title {
-        min-height: 100%;
-        min-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .graph {
-            &__main {
-                padding: 0px;
-                min-height: 100%;
-                min-width: 100%;
-            }
-            &__head {
-                display: none;
-                //justify-content: flex-end;
-            }
-            &__item {
-                padding: 0;
-            }
-        }
-        //.title {
-        //    display: none;
-        //}
-    }
     &.paddings {
         min-height: auto;
-        .graph {
-            &__item {
-                padding: 28px 36px 33px;
-            }
-        }
     }
 }
 #myChart {

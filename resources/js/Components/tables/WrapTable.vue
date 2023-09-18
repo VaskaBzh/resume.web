@@ -3,12 +3,12 @@
         <div class="cabinet__head" v-if="title">
             <main-title tag="h3" v-if="title">{{ title }}</main-title>
         </div>
-        <no-info
+        <main-preloader
             :wait="waitTable"
             :interval="35"
             :end="!waitTable"
             :empty="emptyTable"
-        ></no-info>
+        />
         <div class="cabinet__block-scroll" v-if="!waitTable && !emptyTable">
             <main-table
                 :viewportWidth="viewportWidth"
@@ -20,13 +20,13 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
-import NoInfo from "@/Components/technical/blocks/NoInfo.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
 
 export default {
-    components: { MainTitle, NoInfo, MainTable },
+    components: { MainTitle, MainPreloader, MainTable },
     emits: ["graph_render"],
     props: {
         table: Object,

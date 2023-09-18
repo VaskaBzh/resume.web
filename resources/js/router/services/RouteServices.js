@@ -38,7 +38,7 @@ export class RouteServices {
                 path: `/`,
                 name: "home",
                 component: () =>
-                    import(`../../Pages/${RouteNamesMap.public["home"]}`),
+                    import(`../../Pages/${RouteNamesMap.public["home"]}.vue`),
                 meta: {
                     middleware: [
                         "LoadLayoutMiddleware",
@@ -57,7 +57,7 @@ export class RouteServices {
                 name: "referral",
                 params: { page: "" },
                 component: () =>
-                    import(`../../layouts/ReferralsLayoutView.vue`),
+                    import("../../layouts/ReferralsLayoutView.vue"),
                 redirect: (to) => {
                     return {
                         name: "overview",

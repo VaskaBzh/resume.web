@@ -150,7 +150,7 @@
                     $t("wallets.popups.add.title")
                 }}
                 <p class="wallet-description">{{$t("wallets.popups.note")  }}</p>
-                
+
             </main-title>
                 <input
                     v-model="wallets.form.wallet"
@@ -208,7 +208,7 @@
                 <img src="../../../assets/img/wallet-icon.png">
                 <div class="wallet-inf">
                     <span class="wallet-fullname">{{ wallets.form.name}}</span>
-                    <span class="wallet-wallet_address">{{ wallets.form.wallet }}</span>  
+                    <span class="wallet-wallet_address">{{ wallets.form.wallet }}</span>
                 </div>
             </div>
             <div class="wallet__remove-button-container">
@@ -219,9 +219,9 @@
     </teleport>
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 import MainPopup from "@/Components/technical/MainPopup.vue";
@@ -400,7 +400,7 @@ export default {
 }
 .autopayout-input{
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--light-background-first, #F8FAFD); 
+    background: var(--light-background-first, #F8FAFD);
     padding-top: 24px;
 }
 .button-container{

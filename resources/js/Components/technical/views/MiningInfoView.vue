@@ -96,7 +96,7 @@
 
 <script>
 import { Link } from "@inertiajs/vue3";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 export default {
     props: {
         auth_user: {

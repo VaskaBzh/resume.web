@@ -1,18 +1,84 @@
 <template>
-    <nav class="header-content">
-        <div>
-            <CurrentExchangeRate/>
-        </div>
-        <div class="header-select-container">
-            <select-theme
-                    v-if="viewportWidth >= 991.78"
-                    :viewportWidth="viewportWidth"
-                ></select-theme>
-            <select-language
+    <nav class="nav">
+        <div class="nav__container">
+            <router-link :to="{ name: 'home' }">
+                <img
+                    v-if="!getTheme"
+                    class="nav__logo"
+                    src="@/assets/img/logo_high_quality.svg"
+                    alt="logo"
+                />
+                <img
+                    v-else
+                    class="nav__logo"
+                    src="@/assets/img/logo_high_quality-dark.svg"
+                    alt="logo"
+                />
+            </router-link>
+
+            <nav-links
+                @closed="burgerClose"
+                :is_auth="is_auth"
+                :viewportWidth="viewportWidth"
+                :is_open="is_open"
+                :errors="errors"
+            />
+
+            <div class="nav__buttons" v-show="viewportWidth >= 991.78">
+                <select-language
                     v-if="viewportWidth >= 991.78"
                     :viewportWidth="viewportWidth"
                 ></select-language>
+                <select-theme
+                    v-if="viewportWidth >= 991.78"
+                    :viewportWidth="viewportWidth"
+                ></select-theme>
+            </div>
 
+            <account-menu
+                :errors="errors"
+                :viewportWidth="viewportWidth"
+                :user="user"
+                v-if="!!user && accountLink && viewportWidth >= 991.78"
+                class="nav__button"
+            ></account-menu>
+            <router-link
+                :to="{ name: 'login' }"
+                v-show="viewportWidth >= 991.98 && !user?.name"
+                class="nav__button"
+            >
+                {{ $t("header.login_button") }}
+            </router-link>
+            <router-link
+                :to="{ name: 'statistic' }"
+                v-show="viewportWidth >= 991.98 && !accountLink && !!user?.name"
+                class="nav__button"
+            >
+                {{ $t("header.login_button") }}
+            </router-link>
+
+            <div v-show="viewportWidth < 991.98" class="nav__buttons_mobile">
+                <select-language
+                    v-show="viewportWidth > 479.98"
+                    :viewportWidth="viewportWidth"
+                ></select-language>
+                <select-theme
+                    v-show="viewportWidth > 479.98"
+                    :viewportWidth="viewportWidth"
+                ></select-theme>
+            </div>
+            <div
+                @click="burgerAction"
+                class="nav__burger"
+                :class="{ 'nav__burger-active': is_open }"
+                v-show="viewportWidth < 991.98"
+            >
+                <div class="nav__burger_con">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
         </div>
     </nav>
 </template>
@@ -21,13 +87,12 @@
 import { useForm } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
-import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
+import AccountMenu from "@/modules/common/Components/Ui/AccountMenu.vue";
 import { defineComponent, ref } from "vue";
 import "swiper/css";
 import "swiper/css/pagination";
 import { mapGetters } from "vuex";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
-import CurrentExchangeRate from "../../../Components/technical/blocks/CurrentExchangeRate.vue";
 
 export default defineComponent({
     components: {
@@ -35,7 +100,6 @@ export default defineComponent({
         AccountMenu,
         SelectLanguage,
         SelectTheme,
-        CurrentExchangeRate,
     },
     data() {
         return {
@@ -114,8 +178,60 @@ export default defineComponent({
 });
 </script>
 
-<!-- <style lang="scss" scoped>
+<style lang="scss" scoped>
 .nav {
+    z-index: 100;
+    width: 100%;
+    height: 84px;
+    position: fixed;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease 0s;
+
+    &:before {
+        transition: all 0.3s ease 0s;
+        left: 50%;
+        content: "";
+        transform: translateX(-50%);
+        top: 0;
+        width: 100vw;
+        height: 100%;
+        position: absolute;
+        background: #eef1f5;
+        box-shadow: 0 8px 24px 0 rgba(129, 135, 189, 0.15);
+        z-index: 100;
+        @media (min-width: 991.98px) {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+            z-index: -1;
+        }
+    }
+
+    @media (max-width: 991.98px) {
+        height: 80px;
+    }
+    @media (max-width: 479.98px) {
+        height: 60px;
+    }
+
+    &__logo {
+        max-width: 170px;
+        @media (min-width: 991.98px) {
+            margin-right: 100px;
+        }
+        @media (max-width: 479.98px) {
+            max-width: 138px;
+        }
+    }
+
+    a,
+    div,
+    span {
+        @media (max-width: 991.98px) {
+            z-index: 100;
+        }
+    }
+
     &__container {
         display: flex;
         align-items: center;
@@ -266,20 +382,5 @@ export default defineComponent({
             }
         }
     }
-}
-</style> -->
-<style scoped>
-.header-content{
-    padding: 0 24px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-}
-.header-select-container{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 16px;
 }
 </style>

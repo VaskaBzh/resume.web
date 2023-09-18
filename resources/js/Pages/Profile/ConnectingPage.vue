@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import { router, Head } from "@inertiajs/vue3";
 import { mapGetters } from "vuex";

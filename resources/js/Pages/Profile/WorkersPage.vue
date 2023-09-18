@@ -17,12 +17,12 @@
 </template>
 <script>
 import { Head } from "@inertiajs/vue3";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { WorkerService } from "@/services/WorkerService";
-import HashrateCards from "../../modules/hashrate/Components/HashrateCards.vue";
+import HashrateCards from "../../modules/common/Components/UI/MainHashrateCards.vue";
 
 export default {
     components: {

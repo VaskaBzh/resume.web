@@ -19,8 +19,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainTabs from "@/Components/UI/profile/MainTabs.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainTabs from "@/modules/common/Components/Ui/MainTabs.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";

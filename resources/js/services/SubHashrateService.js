@@ -5,7 +5,7 @@ import store from "@/store";
 
 export class SubHashrateService {
     constructor(translate, titles, offset = 24) {
-        this.group_id = store.getters.getActive;
+        this.group_id = -1;
         this.offset = offset;
         this.titles = titles;
 
@@ -60,7 +60,7 @@ export class SubHashrateService {
         );
 
         while (values.length < this.offset) {
-            values.push(0);
+            values.push(this.randomizeTest(50, 250));
             amount.push("0");
             unit.push("T");
         }

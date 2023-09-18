@@ -2,7 +2,7 @@ import { TableService } from "@/services/extends/TableService";
 import { ReferralsData } from "@/modules/referral/DTO/ReferralsData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 
-import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
+import { PercentSvgEnum } from "@/modules/referral/map/PercentSvgEnum";
 
 import api from "@/api/api";
 import store from "@/store";

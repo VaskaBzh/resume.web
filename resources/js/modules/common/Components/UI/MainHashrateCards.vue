@@ -1,22 +1,41 @@
 <template>
-  <div class="statistic-card flex-row hashrate-card" :class="[(currentPage == 'worker') ? 'max-width' : '']">
-      <slot name="svg"></slot>
-    <div>
-      <p class="statistic-card-title"> 
-        <slot name="title"></slot>
-      </p>
-      <span class="statistic-card-num color-main">
-        <slot name="num"></slot>
-      </span>
-      <span class="color-gray"> 
-        <slot name="unit"></slot>
-      </span>
-    </div>
-  </div>
+    <cabinet-card
+        :title="$t('statistic.info_blocks.hash.titles[0]')"
+        :value="Number(getAccount.hash_per_min).toFixed(2)"
+        unit="TH/s"
+    >
+        <template v-slot:svg>
+            <hashrate-icon />
+        </template>
+    </cabinet-card>
+    <cabinet-card
+        :title="$t('statistic.info_blocks.hash.titles[1]')"
+        :value="Number(getAccount.hash_per_day).toFixed(2)"
+        unit="TH/s"
+    >
+        <template v-slot:svg>
+            <hashrate-icon24 />
+        </template>
+    </cabinet-card>
 </template>
 <script>
+import { mapGetters } from "vuex";
+import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
+import HashrateIcon from "@/modules/common/icons/HashrateIcon.vue";
+import HashrateIcon24 from "@/modules/common/icons/HashrateIcon24.vue";
+
 export default {
     props: ["currentPage"],
+    computed: {
+        ...mapGetters([
+            "getAccount",
+        ]),
+    },
+    components: {
+        CabinetCard,
+        HashrateIcon,
+        HashrateIcon24
+    }
 };
 </script>
 <style scoped>
@@ -32,7 +51,7 @@ export default {
          min-width: 120px;
     }
     .hashrate-card{
-        min-width: 49%;
+        min-width: 349px;
     }
 }
 .max-width{

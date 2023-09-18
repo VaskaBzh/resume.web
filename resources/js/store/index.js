@@ -5,6 +5,7 @@ import btcInfo from "@/store/modules/btcInfo";
 import theme from "@/store/modules/theme";
 import UserMain from "@/store/modules/UserMain";
 import ErrorsMain from "@/store/modules/ErrorsMain";
+import ViewportWidth from "@/store/modules/ViewportWidth";
 
 export default createStore({
     modules: {
@@ -14,5 +15,6 @@ export default createStore({
         theme,
         UserMain,
         ErrorsMain,
+        ViewportWidth,
     },
 });

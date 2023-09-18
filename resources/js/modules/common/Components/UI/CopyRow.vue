@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import CopyIcon from "../../../modules/common/icons/CopyIcon.vue";
+import CopyIcon from "../../icons/CopyIcon.vue";
 
 export default {
     name: "copy-row",

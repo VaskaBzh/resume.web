@@ -478,7 +478,7 @@ $adaptHeight: 34px;
         }
         &::after {
             content: "";
-            background-image: url("../../../assets/img/arrow-down-icon-blue.svg");
+            background-image: url("../../../../../assets/img/arrow-down-icon-blue.svg");
             background-position: center;
             background-size: contain;
             background-repeat: no-repeat;
@@ -586,7 +586,7 @@ $adaptHeight: 34px;
             &::after {
                 width: 24px;
                 height: 24px;
-                background-image: url("../../../assets/img/arrow-down-icon-black.svg");
+                background-image: url("../../../../../assets/img/arrow-down-icon-black.svg");
             }
         }
     }

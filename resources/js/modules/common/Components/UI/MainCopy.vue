@@ -11,8 +11,8 @@
 </template>
 
 <script>
-import CopyIcon from "../../modules/common/icons/CopyIcon.vue";
-import TickIcon from "../../modules/common/icons/TickIcon.vue";
+import CopyIcon from "../../icons/CopyIcon.vue";
+import TickIcon from "../../icons/TickIcon.vue";
 
 export default {
     name: "main-copy",

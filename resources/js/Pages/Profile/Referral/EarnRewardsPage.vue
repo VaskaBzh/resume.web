@@ -26,7 +26,7 @@
 
 <script>
 import ReferralSelect from "@/modules/referral/Components/UI/ReferralSelect.vue";
-import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
+import MainSearch from "@/modules/common/Components/UI/inputs/MainSearch.vue";
 import MainSlider from "@/Components/technical/MainSlider.vue";
 
 import { PaymentService } from "@/modules/referral/services/PaymentService";

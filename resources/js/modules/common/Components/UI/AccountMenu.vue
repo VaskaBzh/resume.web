@@ -123,12 +123,12 @@
 </template>
 
 <script>
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { mapGetters } from "vuex";
-import MainRadio from "@/Components/UI/MainRadio.vue";
+import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import store from "../../../store";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import store from "../../../../store";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import api from "@/api/api";
@@ -219,6 +219,7 @@ export default {
 
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
+                store.dispatch("drop_all");
             } catch (e) {
                 console.error("Error with: " + e);
             }

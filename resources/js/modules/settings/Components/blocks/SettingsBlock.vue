@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 
 export default {
     name: "settings-block",

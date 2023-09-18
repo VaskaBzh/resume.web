@@ -5,7 +5,7 @@
 </template>
 <script>
 import { Head } from "@inertiajs/vue3";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     components: { MainTitle, Head },
