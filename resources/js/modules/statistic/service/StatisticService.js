@@ -61,6 +61,8 @@ export class StatisticService extends GraphDataService {
 
     async barGraphIndex() {
         if (this.group_id !== -1) {
+            this.waitGraphChange = true;
+
             this.setDefaultKeys();
 
             this.records = (await this.fetchIncomes()).data.data.map((el) => {
@@ -68,6 +70,8 @@ export class StatisticService extends GraphDataService {
             });
 
             await this.makeFullBarValues();
+
+            this.waitGraphChange = false;
         }
     }
 }

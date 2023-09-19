@@ -125,15 +125,19 @@ export class GraphService {
         return this;
     }
 
+    emptyValidationRules() {
+        return d3.max(this.graphData.values) !== 0
+            ? d3.max(this.graphData.values) +
+            d3.max(this.graphData.values) * 0.2
+            : 120
+    }
+
     setY() {
         this.y = d3
             .scaleLinear()
             .domain([
                 0,
-                d3.max(this.graphData.values) !== 0
-                    ? d3.max(this.graphData.values) +
-                      d3.max(this.graphData.values) * 0.2
-                    : 120,
+                this.emptyValidationRules(),
             ])
             .range([this.containerHeight, 0]);
 
@@ -386,13 +390,6 @@ export class GraphService {
         return this;
     }
 
-    validateYDomain() {
-        return d3.max(this.graphData.values) !== 0
-            ? d3.max(this.graphData.values) +
-                  d3.max(this.graphData.values) * 0.2
-            : 120;
-    }
-
     validateXAxis() {
         return store.getters.viewportWidth <= 991.98 ? 8 : 12;
     }
@@ -474,6 +471,25 @@ export class GraphService {
             const position = this.getClosestPoint(mouseX);
             this.updateLineAndDot(event, position);
             this.updateTooltip(event, position);
+        });
+
+        this.svg.on("mouseleave", () => {
+            this.tooltip.style("opacity", 0);
+
+            this.svg.selectAll(".vertical-line").style("opacity", 0);
+
+            this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+        });
+
+        return this;
+    }
+
+    setBarSvgEvents() {
+        this.svg.on("mousemove", (event) => {
+            const mouseX = d3.pointer(event)[0];
+            const position = mouseX;
+            // this.updateLineAndDot(event, position);
+            // this.updateTooltip(event, position);
         });
 
         this.svg.on("mouseleave", () => {

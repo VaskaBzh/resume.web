@@ -1,5 +1,5 @@
 export class BarGraphData {
     constructor(miningRecond) {
-        this.amount = miningRecond.amount;
+        this.amount = Number(miningRecond.amount);
     }
 }

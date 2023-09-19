@@ -4,7 +4,7 @@
 		  <img src=../../../../assets/img/img_no-statistic.png class="no-information_img" alt="no-statistic-info">
 		  <p class="no-information_text">Чтобы появилась статистика необходимо подключить воркеры</p>
 	  </div>
-	  <router-link to="connection" class="button-blue button-blue-full">Подключить</router-link>
+	  <router-link to="connecting" class="button-blue button-blue-full">Подключить</router-link>
   </div>
 </template>
 

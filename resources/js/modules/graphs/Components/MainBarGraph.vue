@@ -1,14 +1,23 @@
 <template>
-	<div ref="chart" class="container-chart">
-		<div ref="tooltip" class="tooltip" style="opacity: 0">Tooltip</div>
-	</div>
+    <div class="chart">
+        <main-title class="headline">
+            График дохода за месяц
+        </main-title>
+        <div ref="chart" class="container-chart">
+            <div ref="tooltip" class="tooltip" style="opacity: 0">Tooltip</div>
+        </div>
+    </div>
 </template>
 
 <script>
 import { ColumnGraphService } from "../services/ColumnGraphService";
+import MainTitle from "../../common/Components/UI/MainTitle.vue";
 
 export default {
 	name: "main-column-graph",
+    components: {
+        MainTitle,
+    },
 	props: {
 		graphData: Object,
 		height: Number,
@@ -47,27 +56,39 @@ export default {
 				this.service
 					.setContainerHeight(this.height)
 					.createSvg()
-					.setDefaultX()
 					.setY()
+                    .setNumberX()
 					.graphAppends()
 					.setTooltip();
 
 				// if (this.service.isMobile) {
 				// 	this.service.setSvgEventsMobile();
 				// } else {
-					this.service.setSvgEvents().setTooltipEvents();
+					this.service.setBarSvgEvents().setTooltipEvents();
 				// }
 			}
 		}
 	},
 	mounted() {
+        this.service
+            .setChartHtml(this.$refs.chart)
+            .setTooltipHtml(this.$refs.tooltip)
+            .setDarkState(this.isDark)
+            .setIsMobileState(this.viewportWidth);
+
 		this.graphInit();
 	}
 }
 </script>
 
 <style scoped>
+.chart {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
 .container-chart {
-	width: 100%;
+	width: calc(100% - 18px);
+    margin-right: 18px;
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="cabinet__block cabinet__block-graph cabinet__block-light"
+        class="cabinet__block cabinet__block-graph cabinet__block-light statistic__block"
     >
         <main-progress-bar
             title="Начислено"
@@ -9,9 +9,14 @@
             :final="0.005"
             unit="BTC"
         />
+        <no-info-wait
+            class="no-bg"
+            :wait="waitGraphChange"
+        />
         <main-column-graph
+            v-if="!waitGraphChange"
             :height="height"
-            :graphData="service.graph"
+            :graphData="graph"
         />
     </div>
 </template>
@@ -21,21 +26,22 @@ import { mapGetters } from "vuex";
 import MainProgressBar from "@/modules/common/Components/UI/MainProgressBar.vue";
 import MainColumnGraph from "@/modules/graphs/Components/MainBarGraph.vue";
 import {StatisticService} from "@/modules/statistic/service/StatisticService";
+import NoInfoWait from "../../../Components/technical/blocks/NoInfoWait.vue";
 
 export default {
     name: "statistic-column-graph",
     components: {
         MainColumnGraph,
-        MainProgressBar
+        MainProgressBar,
+        NoInfoWait,
+    },
+    props: {
+        waitGraphChange: Boolean,
+        graph: Object,
     },
     data() {
         return {
-            height: 77,
-            service: new StatisticService(
-                [0, 1],
-                this.$t,
-                30
-            ),
+            height: 85,
         };
     },
     computed: {
@@ -48,25 +54,13 @@ export default {
             return Number(sum).toFixed(8);
         },
     },
-    watch: {
-        async 'service.offset'() {
-            await this.service.barGraphIndex();
-        },
-        async getActive(newActiveId) {
-            this.service.setGroupId(newActiveId);
-            await this.service.barGraphIndex();
-        },
-        async getAccount() {
-            await this.service.barGraphIndex();
-        }
-    },
-    async mounted() {
-        this.service.setGroupId(this.getActive);
-        await this.service.barGraphIndex();
-    }
 }
 </script>
 
 <style scoped>
-
+.statistic__block {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 </style>

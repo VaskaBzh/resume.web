@@ -73,7 +73,7 @@ export class GraphDataService extends DefaultSubsService {
         );
 
         while (values.length < this.offset) {
-            values.push(this.randomizeTest(60, 250));
+            values.push(0);
             amount.push("0");
             unit.push(HashrateUnitEnum.terahash);
         }
@@ -96,11 +96,11 @@ export class GraphDataService extends DefaultSubsService {
         );
 
         while (amount.length < 30) {
-            amount.push("0.00000000");
+            amount.push(0);
         }
 
         Object.assign(this.graph, {
-            values: amount.map(String).reverse(),
+            values: amount.reverse(),
         });
     }
 }

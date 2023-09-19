@@ -127,7 +127,7 @@
 <script>
 import pdf from "@/../assets/files/policy.pdf";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
-import MainPassword from "@/modules/common/Components/UI/inputs/MainPassword.vue";
+import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";

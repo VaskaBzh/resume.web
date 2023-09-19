@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import MainInput from "@/modules/common/Components/UI/inputs/MainInput.vue";
+import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import api from "@/api/api";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 

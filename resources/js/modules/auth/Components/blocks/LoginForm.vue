@@ -82,7 +82,7 @@
 <script>
 import pdf from "@/../assets/files/policy.pdf";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
-import MainPassword from "@/modules/common/Components/UI/inputs/MainPassword.vue";
+import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";

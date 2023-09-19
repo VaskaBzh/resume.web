@@ -1,31 +1,31 @@
 <template>
     <div class="statistic" :class="{ 'statistic-center':
-            service.waitGraph ||
-            service.records?.filter((a) => a.hashrate > 0).length === 0
+            lineChartService.waitGraph ||
+            lineChartService.values?.filter((a) => a.hashrate > 0).length === 0
         }"
     >
         <main-preloader
             class="cabinet__preloader"
-            :wait="service.waitGraph"
+            :wait="lineChartService.waitGraph"
             :interval="20"
-            :end="!!service"
+            :end="!!lineChartService"
         />
         <div
             v-scroll="'opacity transition--fast'"
             class="cabinet statistic__cabinet"
             v-if="
-                !service.waitGraph &&
-                service.records?.filter((a) => a.hashrate > 0).length !==
+                !lineChartService.waitGraph &&
+                lineChartService.values?.filter((a) => a.hashrate > 0).length !==
                     0
             "
         >
             <statistic-line-graph
                 class="statistic_graph"
-                @getValue="service.setOffset($event)"
-                :waitGraphChange="service.waitGraphChange"
-                :offset="service.offset"
-                :graph="service.graph"
-                :buttons="service.buttons"
+                @getValue="lineChartService.setOffset($event)"
+                :waitGraphChange="lineChartService.waitGraphChange"
+                :offset="lineChartService.offset"
+                :graph="lineChartService.graph"
+                :buttons="lineChartService.buttons"
             />
             <cabinet-card
                 class="statistic__card-first"
@@ -58,14 +58,18 @@
                 :value="String(getAccount.workers_count_in_active)"
             />
             <info-block class="statistic__info" />
-            <statistic-column-graph class="statistic_graph-column" />
+            <statistic-column-graph
+                :waitGraphChange="barChartService.waitGraphChange"
+                :graph="barChartService.graph"
+                class="statistic_graph-column"
+            />
         </div>
         <no-information
             v-scroll="'opacity transition--fast'"
             class="cabinet__preloader"
             v-if="
-                !service.waitGraph &&
-                service.records?.filter((a) => a.hashrate > 0).length ===
+                !lineChartService.waitGraph &&
+                lineChartService.values?.filter((a) => a.hashrate > 0).length ===
                     0"
         />
     </div>
@@ -99,35 +103,50 @@ export default {
     },
     data() {
         return {
-            service: new StatisticService(
+            lineChartService: new StatisticService(
                 [0, 1],
                 this.$t,
                 this.offset
             ),
+            barChartService: new StatisticService(
+                [0, 1],
+                this.$t,
+                30
+            ),
         };
     },
     watch: {
-        async 'service.offset'() {
-            await this.service.lineGraphIndex();
+        async 'lineChartService.offset'() {
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
         },
         async getActive(newActiveId) {
-            this.service.setGroupId(newActiveId);
-            await this.service.lineGraphIndex();
+            this.lineChartService.setGroupId(newActiveId);
+            this.barChartService.setGroupId(newActiveId);
+
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
         },
         async offset() {
-            await this.service.lineGraphIndex();
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
         },
         async getAccount() {
-            await this.service.lineGraphIndex();
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
         }
     },
     computed: {
         ...mapGetters(["getActive", "getAccount",]),
     },
     async mounted() {
-        this.service.setGroupId(this.getActive);
-        this.service.setButtons();
-        await this.service.lineGraphIndex();
+        this.lineChartService.setGroupId(this.getActive);
+        this.barChartService.setGroupId(this.getActive);
+
+        this.lineChartService.setButtons();
+
+        await this.lineChartService.lineGraphIndex();
+        await this.barChartService.barGraphIndex();
     },
 };
 </script>
