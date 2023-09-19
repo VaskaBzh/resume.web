@@ -1,100 +1,64 @@
 <template>
-    <div class="watchers profile">
-        <div class="watchers__wrapper">
-            <form class="watchers__form">
-                <main-input
-                    inputName="watchers_name"
-                    inputLabel="Имя наблюдателя"
-                    :inputValue="watchers_form.name"
-                    @getValue="watchers_form.name = $event"
-                />
-                <main-checkbox
-                    class="watchers_checkbox"
-                    @is_checked="watchers_form.statistic = $event"
-                    >Статистика</main-checkbox
-                >
-                <main-checkbox
-                    class="watchers_checkbox"
-                    @is_checked="watchers_form.workers = $event"
-                    >Воркеры</main-checkbox
-                >
-                <main-checkbox
-                    class="watchers_checkbox"
-                    @is_checked="watchers_form.incomes = $event"
-                    >Доходы</main-checkbox
-                >
-                <button @submit.prevent="sendWorkers" class="watchers_button">
-                    Отправить
-                </button>
-            </form>
+    <div class="watchers">
+        <div class="watchers__head">
+            <div class="watchers__head__block">
+                <main-title>Наблюдатели</main-title>
+                <main-description>Создавайте и управляйте ссылками наблюдателя</main-description>
+            </div>
+            <main-button>
+                <template v-slot:svg>
+                    <plus-icon />
+                </template>
+            </main-button>
+        </div>
+        <div class="cabinet watchers__wrapper">
+            <main-slider
+
+            >
+                <watchers-list :blocks="service.blocks" />
+            </main-slider>
         </div>
     </div>
 </template>
 
 <script>
-import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
-import api from "@/api/api";
-import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
+import WatchersList from "../../modules/watchers/Components/blocks/WatchersList.vue";
+import { WatchersService } from "../../modules/watchers/services/WatchersService";
 
 export default {
     name: "watchers-page",
     components: {
-        MainInput,
-        MainCheckbox,
+        WatchersList,
+        MainSlider,
+        PlusIcon,
+        MainTitle,
+        MainDescription,
+        MainButton,
     },
     data() {
         return {
-            watchers_form: {
-                name: "",
-                statistic: true,
-                workers: true,
-                incomes: true,
-            },
+            service: new WatchersService(),
         };
-    },
-    methods: {
-        async sendWorkers() {
-            let response = null;
-            try {
-                response = await api.post(
-                    "/watchers/create",
-                    this.watchers_form
-                );
-
-                console.log(response);
-            } catch (err) {
-                console.errors("Error with: " + err);
-            }
-        },
     },
 };
 </script>
 
-<style scoped lang="scss">
-.watchers {
-    &__form {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        max-width: 300px;
-    }
-    &_checkbox {
-        max-width: 200%;
-        display: flex;
-        justify-content: space-between;
-        background: transparent !important;
-    }
-    &_button {
-        background: #d2dff3;
-        outline: none;
-        border: 0.5px solid #040d15;
-        min-width: 100%;
-        border-radius: 16px;
-        width: fit-content;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 40px;
-    }
+<style scoped>
+.watchers__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+.watchers__head__block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
 }
 </style>

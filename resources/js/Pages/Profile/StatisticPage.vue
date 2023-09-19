@@ -1,7 +1,7 @@
 <template>
     <div class="statistic" :class="{ 'statistic-center':
             lineChartService.waitGraph ||
-            lineChartService.values?.filter((a) => a.hashrate > 0).length === 0
+            lineChartService.records?.filter((a) => a.hashrate > 0).length === 0
         }"
     >
         <main-preloader
@@ -15,7 +15,7 @@
             class="cabinet statistic__cabinet"
             v-if="
                 !lineChartService.waitGraph &&
-                lineChartService.values?.filter((a) => a.hashrate > 0).length !==
+                lineChartService.records?.filter((a) => a.hashrate > 0).length !==
                     0
             "
         >
@@ -69,7 +69,7 @@
             class="cabinet__preloader"
             v-if="
                 !lineChartService.waitGraph &&
-                lineChartService.values?.filter((a) => a.hashrate > 0).length ===
+                lineChartService.records?.filter((a) => a.hashrate > 0).length ===
                     0"
         />
     </div>

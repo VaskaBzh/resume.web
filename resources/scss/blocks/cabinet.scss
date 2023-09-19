@@ -96,24 +96,15 @@
         &-light {
             background: var(--main-gohan, #FFF);
         }
-        .title {
-            font-family: Ubuntu, serif;
-            font-weight: 500;
-            font-size: 18px;
-            line-height: 140%;
-            &-blue {
-                color: #5389e1;
-            }
-        }
-        &-scroll {
-            @media (max-width: 767.98px) {
-                padding: 0 15px 16px;
-                overflow-y: visible;
-                overflow-x: scroll;
-                width: 100vw;
-                margin: 0 -15px;
-            }
-        }
+        //&-scroll {
+        //    @media (max-width: 767.98px) {
+        //        padding: 0 15px 16px;
+        //        overflow-y: visible;
+        //        overflow-x: scroll;
+        //        width: 100vw;
+        //        margin: 0 -15px;
+        //    }
+        //}
     }
 }
 .referral {
@@ -140,24 +131,6 @@
             &_name {
                 background: var(--light-theme-second-bg, #FAFAFA) !important;
             }
-        }
-    }
-}
-.slider {
-    .cabinet__block-scroll {
-        @media (max-width: 991.98px) {
-            padding: 0 15px 16px;
-            overflow-y: visible;
-            overflow-x: scroll;
-            width: 100vw;
-            margin: 0 calc((100vw - 750px) / -2);
-        }
-        @media (max-width: 767.98px) {
-            padding: 0 15px 16px;
-            overflow-y: visible;
-            overflow-x: scroll;
-            width: 100vw;
-            margin: 0 -15px;
         }
     }
 }
