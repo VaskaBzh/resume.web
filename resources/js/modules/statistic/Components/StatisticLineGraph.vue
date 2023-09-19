@@ -3,7 +3,7 @@
         class="cabinet__block cabinet__block-graph cabinet__block-light"
     >
         <div class="cabinet__head">
-            <main-title tag="h4" class="headline">
+            <main-title tag="h3">
                 {{ $t("statistic.chart.title") }}
             </main-title>
             <main-tabs

@@ -57,12 +57,6 @@ export class IncomeService extends TableService {
         }
     }
 
-    dateFormatter(date) {
-        let d = date.split("");
-        d.length = 10;
-        return d.join("").split("-").reverse().join(".");
-    }
-
     setter(income, filter) {
         let datePay = "...";
 

@@ -25,20 +25,10 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-*{
-}
 h1 {
-    font-weight: 500;
-    font-size: 64px;
-    line-height: 107.6%;
-    @media (max-width: 991.98px) {
-        font-size: 56px;
-        line-height: 100%;
-    }
-    @media (max-width: 767.98px) {
-        font-size: 40px;
-        line-height: 100%;
-    }
+    font-size: 27px;
+    font-weight: 400;
+    line-height: 40px;
 }
 
 h2 {
@@ -54,7 +44,6 @@ h2 {
 }
 
 h3 {
-    color: var(--light-gray-800, #1D2939);
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -78,7 +67,6 @@ h4 {
 }
 .title {
     font-family: Unbounded, serif;
-    font-style: normal;
     color: var(--light-gray-800, #1D2939);
     &.profile {
         margin: 0 0 40px;
@@ -86,12 +74,6 @@ h4 {
         width: 100%;
         align-items: center;
         justify-content: space-between;
-    }
-    &-blue {
-        color: #3f7bdd;
-    }
-    &-white {
-        color: #ffffff;
     }
     &.headline {
         color: var(--light-gray-400, #98A2B3);

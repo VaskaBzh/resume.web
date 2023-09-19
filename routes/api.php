@@ -19,9 +19,13 @@ use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Api\Wallet\UpdateController as WalletUpdateController;
 use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
+use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
+use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkController;
+use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherUpdateController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -35,22 +39,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-/**
- * Public routs
- */
+
+/* _________________ Public routes ____________________ */
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
+Route::get('/verify/{id}/{hash}', VerificationController::class)->name('verification.verify');
+/* _________________ End public routes ____________________ */
 
-/**
- * Token protected routes
- */
+
+
+/* ________________ Protected routes ____________________ */
+
+/*                        GET                             */
 Route::group([
-    'middleware' => 'auth:sanctum'
+    'middleware' => ['watcher-link', 'auth:sanctum']
 ], function () {
-    Route::post('logout', [LoginController::class, 'logout']);
-    Route::put('reset', [ResetPasswordController::class, 'changePassword']);
-    Route::put('/change/{user}', AccountController::class)->name('change');
+    Route::group([
+        'prefix' => 'subs',
+    ], function () {
+        Route::get('{user}', SubListController::class)->name('sub.list');
+        Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
+    });
 
     Route::group([
         'prefix' => 'workers',
@@ -60,17 +70,35 @@ Route::group([
     });
 
     Route::group([
+        'prefix' => 'wallets',
+    ], function () {
+        Route::get('{sub}', WalletListController::class)->name('wallet.list');
+    });
+
+    Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');
+    Route::get('/incomes/{sub}', ListController::class)->name('income.list');
+    Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
+    Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
+});
+
+/*                        POST & PUT                            */
+Route::group([
+    'middleware' => 'auth:sanctum'
+], function () {
+    Route::post('logout', [LoginController::class, 'logout']);
+    Route::put('reset', [ResetPasswordController::class, 'changePassword']);
+    Route::put('/change/{user}', AccountController::class)->name('change');
+    Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
+
+    Route::group([
         'prefix' => 'subs',
     ], function () {
-        Route::get('{user}', SubListController::class)->name('sub.list');
-        Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
         Route::post('/create', SubCreateController::class)->name('sub.create');
     });
 
     Route::group([
         'prefix' => 'wallets',
     ], function () {
-        Route::get('{sub}', WalletListController::class)->name('wallet.list');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
         Route::put('/update', WalletUpdateController::class)->name('wallet.update');
     });
@@ -86,8 +114,10 @@ Route::group([
         Route::post('/attach/{user}', ReferralAttachController::class)->name('referral.attach');
     });
 
-    Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');
-    Route::get('/incomes/{sub}', ListController::class)->name('income.list');
-    Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
-    Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
+    Route::group(['prefix' => 'watchers'], function () {
+        Route::get('/{user}/{sub}', WatcherLinkController::class);
+        Route::post('/create/{sub}', WatcherLinkCreateController::class);
+        Route::put('/update/{sub}/{watcher}', WatcherUpdateController::class);
+    });
 });
+/* ________________ End protected routes ____________________ */
