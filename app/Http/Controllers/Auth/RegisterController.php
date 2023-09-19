@@ -2,19 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Sub\Create;
-use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use App\Providers\RouteServiceProvider;
-use App\Rules\User\OnlyEngNameRule;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -71,7 +65,11 @@ class RegisterController extends Controller
             return new JsonResponse([
                 'message' => 'success',
                 'user' => $user,
-                'token' => $user->createToken($user->name)->plainTextToken
+                'token' => $user->createToken(
+                    $user->name,
+                    ['*'],
+                    now()->addMinutes(config('sanctum.expiration'))
+                )->plainTextToken
             ]);
         } catch (\Exception $e) {
             report($e);
