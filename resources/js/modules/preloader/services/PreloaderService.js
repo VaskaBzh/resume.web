@@ -9,6 +9,7 @@ export class PreloaderService {
         this.endTable = false;
         this.resizeEnd = false;
         this.crossVisible = ref(false);
+        this.animationIsEnd = ref(false);
 
         this.animate = null;
 
@@ -156,5 +157,8 @@ export class PreloaderService {
             height: 33.361,
             delay: anime.stagger(400),
         });
+        setTimeout(() => {
+            this.animationIsEnd.value = true;
+        }, 2500);
     };
 }

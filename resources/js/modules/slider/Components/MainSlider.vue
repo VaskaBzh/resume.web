@@ -1,20 +1,21 @@
 <template>
     <div class="slider">
         <main-preloader
+            class="cabinet__preloader"
             :wait="wait"
             :interval="35"
             :end="!wait"
             :empty="empty"
         />
-        <slot name="table" />
-        <div class="slider__nav">
+        <slot name="table" v-if="!wait && !empty" />
+        <div class="slider__nav" v-if="!wait && !empty">
 <!--            <page-info-->
 <!--                :startPage=""-->
 <!--            />-->
             <div class="slider__nav-slides">
                 <slider-swipe :direction="false" @swipe="ajax(meta?.links.prev)" />
-                <div class="slider__slides">
-                    <span v-if="!service.haveMeta">...</span>
+                <div class="slider__slides" v-if="!service.haveMeta">
+                    <span>...</span>
                 </div>
                 <div class="slider__slides" v-else>
                     <slider-button
@@ -54,7 +55,6 @@ export default {
             type: Number,
             default: 10,
         },
-        errors: Object,
         meta: Object,
     },
     watch: {
@@ -105,6 +105,8 @@ export default {
     }
 }
 .slider {
+    height: 100%;
+    width: 100%;
     // .slider__wrap
     &__wrap {
         width: 100%;

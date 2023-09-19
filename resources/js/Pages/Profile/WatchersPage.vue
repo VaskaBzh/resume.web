@@ -2,7 +2,7 @@
     <div class="watchers">
         <div class="watchers__head">
             <div class="watchers__head__block">
-                <main-title>Наблюдатели</main-title>
+                <main-title tag="h1">Наблюдатели</main-title>
                 <main-description>Создавайте и управляйте ссылками наблюдателя</main-description>
             </div>
             <main-button>
@@ -13,7 +13,11 @@
         </div>
         <div class="cabinet watchers__wrapper">
             <main-slider
-
+                :table="service.table"
+                :wait="service.waitTable"
+                :empty="service.emptyTable"
+                rowsNum="10"
+                :meta="service.meta"
             >
                 <watchers-list :blocks="service.blocks" />
             </main-slider>
@@ -29,6 +33,7 @@ import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import WatchersList from "../../modules/watchers/Components/blocks/WatchersList.vue";
 import { WatchersService } from "../../modules/watchers/services/WatchersService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "watchers-page",
@@ -42,13 +47,38 @@ export default {
     },
     data() {
         return {
-            service: new WatchersService(),
+            service: new WatchersService(this.$t),
         };
     },
+    computed: {
+        ...mapGetters([
+            "getActive",
+            "getAccount"
+        ]),
+    },
+    watch: {
+        getActive(newActiveId) {
+            this.service.setGroupId(newActiveId);
+        },
+        async getAccount() {
+            await this.service.index();
+        },
+    },
+    async mounted() {
+        this.service.setGroupId(this.getActive);
+
+        await this.service.index();
+    }
 };
 </script>
 
 <style scoped>
+.watchers {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
 .watchers__head {
     display: flex;
     justify-content: space-between;
@@ -60,5 +90,10 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 4px;
+}
+.watchers__wrapper {
+    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
 }
 </style>

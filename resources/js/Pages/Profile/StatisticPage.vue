@@ -5,7 +5,7 @@
         }"
     >
         <main-preloader
-            class="cabinet__preloader"
+            class="cabinet__preloader cabinet__preloader-bg"
             :wait="lineChartService.waitGraph"
             :interval="20"
             :end="!!lineChartService"

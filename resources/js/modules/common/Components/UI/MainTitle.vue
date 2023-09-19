@@ -27,20 +27,12 @@ export default {
 <style lang="scss" scoped>
 h1 {
     font-size: 27px;
-    font-weight: 400;
     line-height: 40px;
 }
 
 h2 {
-    font-weight: 500;
-    font-size: 56px;
-    line-height: 105%;
-    @media (max-width: 767.89px) {
-        font-size: 40px;
-    }
-    @media (max-width: 479.89px) {
-        font-size: 28px;
-    }
+    font-size: 20px;
+    line-height: 32px;
 }
 
 h3 {
@@ -68,6 +60,7 @@ h4 {
 .title {
     font-family: Unbounded, serif;
     color: var(--light-gray-800, #1D2939);
+    font-weight: 400;
     &.profile {
         margin: 0 0 40px;
         display: flex;

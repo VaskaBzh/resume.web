@@ -57,7 +57,9 @@ export default defineComponent({
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    padding: 40px 0 24px;
+    min-height: 100vh;
+    width: 320px;
+    padding: 40px 24px 24px;
 }
 .nav_logo {
     margin: 0 0 40px 16px;

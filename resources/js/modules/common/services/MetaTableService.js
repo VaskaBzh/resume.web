@@ -2,6 +2,8 @@ import { DefaultSubsService } from "@/modules/common/services/DefaultSubsService
 
 export class MetaTableService extends DefaultSubsService{
     constructor(translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {
+        super();
+
         this.translate = translate;
 
         this.table = new Map();
@@ -12,6 +14,7 @@ export class MetaTableService extends DefaultSubsService{
         this.titleIndexes = titleIndexes;
 
         this.waitTable = true;
+        this.emptyTable = false;
     }
 
     dateFormatter(date) {
@@ -28,6 +31,12 @@ export class MetaTableService extends DefaultSubsService{
         return indexes.map((index) =>
             this.translate(`${this.getTitleMap()}[${index}]`)
         );
+    }
+
+    checkEmpty() {
+        if (this.rows.length === 0) {
+            this.emptyTable = true;
+        }
     }
 
     setTable() {

@@ -15,14 +15,18 @@
         margin-bottom: 0;
     }
     &__preloader {
-        max-width: 450px;
-        min-height: 432px;
         width: 100%;
-        border-radius: 40px;
-        margin: auto;
-        background: var(--main-gohan, #FFF);
-        box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
-        padding: 32px;
+        height: 100%;
+        &-bg {
+            background: var(--main-gohan, #FFF);
+            box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
+            padding: 32px;
+            margin: auto;
+            border-radius: 40px;
+            max-width: 450px;
+            min-height: 432px;
+            height: auto;
+        }
     }
     &__head {
         display: flex;

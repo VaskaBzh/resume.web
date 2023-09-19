@@ -99,19 +99,19 @@ export default {
                 {
                     title: this.$t("safety.title[0]"),
                     text: this.$t("safety.text[0]"),
-                    src: "two-factor-icon.png",
+                    src: "two-factor-img_workers-block.png",
                     button: this.$t("safety.button[0]")
                 },
                 {
                     title: this.$t("safety.title[1]"),
                     text: this.$t("safety.text[1]"),
-                    src: "sms-icon.png",
+                    src: "sms-img_workers-block.png",
                     button: this.$t("safety.button[0]")
                 },
                 {
                     title: this.$t("safety.title[2]"),
                     text: this.$t("safety.text[2]"),
-                    src: "change-password-icon.png",
+                    src: "change-password-img_workers-block.png",
                     button: this.$t("safety.button[1]")
                 }
             ]
@@ -127,7 +127,7 @@ export default {
             this.settingsService.setUserData();
         },
     },
-    
+
     methods: {
         settingsProcess() {
             this.settingsService.setUserData();
