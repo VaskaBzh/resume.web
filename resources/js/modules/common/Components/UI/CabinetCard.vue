@@ -34,6 +34,7 @@ export default {
 .card {
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
 }
 .card_svg {
     margin-right: 24px;
@@ -67,4 +68,5 @@ export default {
     font-weight: 400;
     line-height: 147%;
 }
+
 </style>

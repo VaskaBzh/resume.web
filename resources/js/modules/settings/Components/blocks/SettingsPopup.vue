@@ -24,6 +24,7 @@
             }}</main-title>
             <p class="popup-text">{{ $t("popup.text[0]") }}</p>
         </div>
+            <SelectCountry/>
             <input
                 v-model="item"
                 autofocus
@@ -32,6 +33,8 @@
                 "
                 class="input popup__input"
                 :placeholder="placeholder"
+                @input="phoneInput" maxlength="18" @keydown="phoneKeyDown" @paste="phonePaste"
+                id="inputTel"
             />
             <!--            :placeholder="`${$t(-->
             <!--            'settings.block.settings_block.popup.placeholders.placeholder'-->
@@ -80,7 +83,7 @@ import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-
+import SelectCountry from "@/modules/settings/Components/SelectCountry.vue"
 export default {
     name: "settings-popup",
     i18n: {
@@ -100,20 +103,76 @@ export default {
         BlueButton,
         MainValidate,
         PopupLoadingIcon,
+        SelectCountry
     },
     data() {
         return {
-            item: "",
+            item: "+7",
             placeholder: this.form.item,
             password_confirmation: this.form.password_confirmation,
             password: this.form.password,
+            opened: false,
+
         };
     },
     methods: {
         getValue(bool) {
             this.$emit("ajaxChange", { password: bool, value: this.item });
         },
-    },
+       phoneInput(e) {
+        let inputNumbersValue = e.target.value.replace(/\D/g, "") //Хранятся только числа из инпута
+        let formattedInputValue = ''; //Хранится результат из инпута
+        let selectionStart = inputTel.selectionStart
+        if(!inputNumbersValue){
+          return inputTel.value = '';
+        }
+        else if(inputTel.value.length != selectionStart){
+          if(e.data && /\D/g.test(e.data)){
+            inputTel.value = inputNumbersValue;
+          }
+          return;
+        }
+        else if(['7','8'].indexOf(inputNumbersValue[0]) > -1){
+          let firstSymbols = (inputNumbersValue[0] == '8') ? '8' : '+7';
+          formattedInputValue = firstSymbols + ' ';
+          if(inputNumbersValue.length > 1){
+            formattedInputValue += '(' + inputNumbersValue.substring(1,4)
+          }
+          if(inputNumbersValue.length >= 5){
+            formattedInputValue += ') ' + inputNumbersValue.substring(4,7)
+          }
+          if(inputNumbersValue.length >= 8){
+            formattedInputValue += '-' + inputNumbersValue.substring(7,9)
+          }
+          if(inputNumbersValue.length >= 10){
+            formattedInputValue += '-' + inputNumbersValue.substring(9,11)
+          }
+        }
+        else if(inputNumbersValue[0] == '9'){
+          console.log('kz')
+        }
+        else{
+          console.log('no ru')
+          formattedInputValue = '+' + inputNumbersValue.substring(0,16)
+        }
+        inputTel.value = formattedInputValue
+  },
+  phoneKeyDown(e){
+    if(e.keyCode == 8 && e.target.value.replace(/\D/g, "").length == 1){
+      inputTel.value = ''
+    }
+  },
+   phonePaste(e){
+    let pasted = e.clipboardData || window.clipboardData;
+    let inputNumbersValue = e.target.value.replace(/\D/g, "") 
+    if (pasted){
+      let pastedText = pasted.getData('Text');
+      if(/\D/g.test(pastedText)){
+        inputTel.value = inputNumbersValue
+      }
+    }
+  }
+     },
     watch: {
         "form.item"(newValue) {
             this.placeholder = newValue;
