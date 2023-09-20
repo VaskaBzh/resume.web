@@ -431,9 +431,9 @@ const messages = {
             watchers: "Watchers",
             wallets: "Wallets",
             referral: "Ref. cabinet",
-            account: "Account",
             faq: "FAQ",
             support: "Support",
+            settings: "Account"
 
         },
         days: "Days",
@@ -1127,7 +1127,7 @@ const messages = {
             watchers: "Наблюдатели",
             wallets: "Кошельки",
             referral: "Реф. кабинет",
-            account: "Аккаунт",
+            settings: "Аккаунт",
             faq: "FAQ",
             support: "Поддержка",
         },

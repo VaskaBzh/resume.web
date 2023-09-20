@@ -6,14 +6,15 @@
                 <template v-slot:num>{{ this.payed }}</template>
             </MainIncomeCardRow>
         </div>
-    </div>
-    <main-progress-bar
+        <main-progress-bar
         title="Начислено"
         hint="На вашем субаккаунте 0.00051380 BTC Автовыплата происходит при  балансе > 0.005 BTC"
         :progress="pendingAmount"
         :final="0.005"
         unit="BTC"
     />
+    </div>
+
 </template>
 <script>
 import { mapGetters } from "vuex";

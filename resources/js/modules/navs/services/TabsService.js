@@ -43,7 +43,7 @@ export class TabsService {
             {
                 group_name: "Настройки",
                 links: [
-                    new TabsData("/profile/settings", "account", "account"),
+                    new TabsData("/profile/settings", "settings", "account"),
                     new TabsData("/profile/referral", "referral", "referral"),
                     new TabsData("/profile/faq", "faq", "faq"),
                     new TabsData("/profile/watchers", "support", "support"),
@@ -58,7 +58,7 @@ export class TabsService {
             {
                 group_name: "Настройки",
                 links: [
-                    new TabsData("/profile/settings", "account", "account"),
+                    new TabsData("/profile/settings", "settings", "account"),
                     new TabsData("/profile/faq", "faq", "faq"),
                     new TabsData("/profile/watchers", "support", "support"),
                 ]

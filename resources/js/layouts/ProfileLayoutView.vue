@@ -47,7 +47,7 @@ export default {
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: var(--secondary-white, #fff);
+    background: var(--background-bg, #fff);
     display: flex;
 }
 .layout__content {
