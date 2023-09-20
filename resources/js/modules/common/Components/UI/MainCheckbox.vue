@@ -2,8 +2,8 @@
     <span
         ref="checkbox"
         class="checkbox"
-        @click="this.checkboxer"
-        :class="{ checked: this.isChecked }"
+        @click="checkboxer"
+        :class="{ checked: isChecked }"
     >
         <slot></slot>
     </span>
@@ -50,29 +50,24 @@ export default {
 .checkbox {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    color: var(--text-teritary-day, #98A2B3);
+    font-family: NunitoSans, serif;
+    font-size: 16px;
     font-weight: 400;
-    font-size: 14px;
-    line-height: 130%;
-    color: #99acd3;
+    line-height: 24px;
     position: relative;
     user-select: none;
     cursor: pointer;
     gap: 16px;
-    @media (max-width: 479.98px) {
-        justify-content: space-between;
-    }
     &::after {
         content: "";
         display: inline-block;
-        width: 48px;
-        height: 24px;
-        background: #d2dff3;
+        width: 60px;
+        height: 32px;
+        background: #F2F4F7;
         transition: all 0.3s ease;
         border-radius: 32px;
-        @media (max-width: 479.98px) {
-            width: 37px;
-            height: 20px;
-        }
     }
     &::before {
         content: "";
@@ -81,24 +76,30 @@ export default {
         top: 50%;
         transform: translateY(-50%);
         right: 28px;
-        width: 16px;
-        height: 16px;
+        width: 24px;
+        height: 24px;
+        filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.10));
         border-radius: 50%;
-        background: rgba(255, 255, 255, 0.75);
+        background: #fff;
         transition: all 0.3s ease;
-        @media (max-width: 479.98px) {
-            width: 15px;
-            height: 15px;
-            right: 19px;
-        }
     }
     &.checked {
         &::before {
             right: 4px;
-            background: #5389e1;
         }
         &:after {
-            background: #bcd0f1;
+            background: #53B1FD;
+        }
+    }
+    &-sm {
+        &::after {
+            width: 44px;
+            height: 24px;
+        }
+        &::before {
+            width: 16px;
+            height: 16px;
+            right: 24px;
         }
     }
 }

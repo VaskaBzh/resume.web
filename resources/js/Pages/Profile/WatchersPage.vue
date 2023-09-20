@@ -27,7 +27,7 @@
         :wait="service.wait"
         :closed="service.closed"
         :form="service.form"
-        @createWatcher="createWatcher"
+        @createWatcher="createWatcher($event)"
     />
 </template>
 
@@ -66,7 +66,8 @@ export default {
     },
     methods: {
         async createWatcher(formData) {
-            this.service.setForm(formData.name, formData.allowedRows);
+            console.log(formData);
+            this.service.setForm(formData.name, formData.allowedRoutes);
             await this.service.createWatcher();
             await this.service.index();
         }

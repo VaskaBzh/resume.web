@@ -2,9 +2,10 @@
     <div
         class="input_row"
         :class="{ 'input_row-error': error, 'input_row-focus': value }"
+        @click="$refs.input.focus()"
     >
-        <input type="text" :id="inputName" v-model="value" class="input" />
         <label class="input_label" :for="inputName">{{ inputLabel }}</label>
+        <input type="text" :id="inputName" v-model="value" ref="input" class="input" />
     </div>
 </template>
 
@@ -33,37 +34,40 @@ export default {
 <style scoped lang="scss">
 .input {
     background: transparent;
-    color: #343434;
+    color: var(--text-secondary-day, #475467);
+    font-family: NunitoSans, serif;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    border: none;
+    outline: none;
     transition: all 0.5s ease 0s;
-    &:focus {
-        + .input {
-            &_label {
-                color: #5389e1;
-                font-size: 12px;
-                top: 0;
-            }
-        }
-    }
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     &_row {
+        min-height: 56px;
         background: inherit;
-        border: 1px solid #c5c5c5;
-        border-radius: 4px;
+        border: 1px solid transparent;
         position: relative;
         transition: all 0.5s ease 0s;
+        border-radius: 8px;
+        box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
+        padding: 12px 16px 8px;
+        cursor: text;
         &-error {
             border-color: #ed1818;
         }
-        &-focus {
-            border-color: #5389e1;
-        }
+        //&-focus {
+        //    border-color: #5389e1;
+        //}
     }
     &_label {
-        color: #c5c5c5;
-        font-size: 16px;
-        position: absolute;
-        top: 50%;
-        transform: translateY(-50%);
-        left: 16px;
+        color: var(--text-teritary-day, #98A2B3);
+        font-family: NunitoSans, serif;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
         cursor: text;
         background: inherit;
         transition: all 0.5s ease 0s;

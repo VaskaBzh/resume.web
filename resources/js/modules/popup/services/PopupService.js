@@ -26,9 +26,9 @@ export class PopupService {
     }
 
     dropAnimate() {
-        this.animate?.remove(this.popupContentHtml);
-        this.animate?.remove(this.popupBlockHtml);
-        this.animate?.remove(this.popupLogoHtml);
+        this.animate.remove(this.popupContentHtml);
+        this.animate.remove(this.popupBlockHtml);
+        this.animate.remove(this.popupLogoHtml);
     }
 
     closeAnimate() {
@@ -62,8 +62,8 @@ export class PopupService {
         this.animate = anime({
             targets: this.popupContentHtml,
             opacity: 1,
-            easing: 'easeInCubic',
-            duration: 500,
+            easing: 'easeOutCubic',
+            duration: 300,
             complete: () => {
                 this.dropAnimate();
             },
@@ -102,8 +102,8 @@ export class PopupService {
         this.animate = anime({
             targets: this.popupBlockHtml,
             width: '560px',
-            easing: 'easeInCubic',
-            duration: 500,
+            easing: 'easeInOutCubic',
+            duration: 400,
             complete: () => {
                 this.dropAnimate();
 
@@ -117,7 +117,7 @@ export class PopupService {
             targets: this.popupBlockHtml,
             translateY: 0,
             easing: 'easeInCubic',
-            duration: 500,
+            duration: 300,
             complete: () => {
                 this.dropAnimate();
 

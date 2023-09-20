@@ -136,7 +136,7 @@ export default {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 280px;
     height: 122px;
-    transform: translateY(120px);
+    transform: translateY(220px);
     padding: 40px;
     transition: all 0.5s ease 0s;
     position: relative;

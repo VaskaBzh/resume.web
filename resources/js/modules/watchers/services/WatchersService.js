@@ -73,10 +73,11 @@ export class WatchersService extends MetaTableService {
     }
 
     async createWatcher() {
-        await api.post(`/watchers/create/${this.group_id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        if (this.group_id !== -1)
+            await api.post(`/watchers/create/${this.group_id}`, {}, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            });
     }
 }
