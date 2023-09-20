@@ -13,7 +13,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-
+import ThemeService from '@/modules/interface/Services/ThemeService';
 export default {
     name: "select-theme",
     props: {
@@ -23,6 +23,8 @@ export default {
         return {
             opened: false,
             timer: true,
+            service: new ThemeService()
+
         };
     },
     computed: {
@@ -54,11 +56,18 @@ export default {
     },
     methods: {
         async changeActive() {
+            
             if (this.timer) {
                 this.timer = false;
-                this.theme === "light"
-                    ? this.$store.dispatch("SetThemeVal", true)
-                    : this.$store.dispatch("SetThemeVal", false);
+               if(this.theme === "light") {
+                this.$store.dispatch("SetThemeVal", true)
+                this.service.toggleTheme('light')
+
+               }else{
+                this.$store.dispatch("SetThemeVal", false);
+                this.service.toggleTheme('dark')
+               }
+                
                 this.$store.dispatch("theme", this.isDark);
                 setTimeout(() => this.timer = true, 500)
             }
@@ -66,6 +75,8 @@ export default {
     },
     mounted() {
         this.$store.dispatch("theme", this.isDark);
+        this.service.setTheme();
+
     },
 };
 </script>
