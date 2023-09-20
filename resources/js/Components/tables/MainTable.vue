@@ -213,11 +213,12 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: #818c99;
+                color: var(--text-teritary-day, #98A2B3);
+                font-family: NunitoSans;
                 font-size: 14px;
+                font-style: normal;
                 font-weight: 400;
-                line-height: 130%;
-                // text-align: left;
+                line-height: 20px; /* 142.857% */
                 background: transparent;
             }
         }
