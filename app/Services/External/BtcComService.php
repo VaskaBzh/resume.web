@@ -13,14 +13,14 @@ use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\RequestException;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class BtcComService
 {
     private PendingRequest $client;
+    private static $retryCount = 3;
+    private static $pendingTimeSec = 1;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
@@ -31,8 +31,10 @@ class BtcComService
         $this->client = Http::baseUrl(config('api.btc.uri'))
             ->withHeaders([
                 'Authorization' => config('api.btc.token'),
-            ])->retry(3, 100, static fn($response) => $response->failed());
+            ]);
     }
+
+    /* ------------------ Btc.com requests ------------------------ */
 
     /**
      * @param array $segments
@@ -41,106 +43,23 @@ class BtcComService
      * @return mixed
      * @throws \Exception
      */
-    public function call(array $segments, string $method = 'get', array $params = [])
+    public function call(array $segments, string $method = 'get', array $params = []): array
     {
-        try {
-            return $this->client->$method(implode('/', $segments), $params)['data'];
-        } catch (RequestException $e) {
-            report($e);
+        while (self::$retryCount > 0) {
+            $response = $this
+                ->client
+                ->$method(implode('/', $segments), $params);
 
-            return new JsonResponse(['message' => $e->getMessage()]);
+            if (filled($response['data'])) {
+                return $response['data'];
+            }
+
+            self::$retryCount--;
+
+            sleep(self::$pendingTimeSec);
         }
-    }
 
-    private static function transform(
-        MinerStat $stats,
-        Sub       $sub,
-        float     $hashPerDay,
-        array     $btcComSub
-    ): array
-    {
-        return [
-            'sub' => $sub->sub,
-            'pending_amount' => $sub->pending_amount,
-            'group_id' => $sub->group_id,
-            'workers_count_active' => $btcComSub['workers_active'],
-            'workers_count_in_active' => $btcComSub['workers_inactive'],
-            'workers_count_unstable' => $btcComSub['workers_dead'],
-            'hash_per_min' => $btcComSub['shares_1m'],
-            'hash_per_day' => $hashPerDay,
-            'today_forecast' => number_format(Helper::calculateEarn(
-                stats: $stats,
-                hashRate: $hashPerDay,
-                fee: BtcComService::FEE
-            ), 8, '.', ' '),
-            'reject_percent' => $btcComSub['reject_percent'],
-            'unit' => $btcComSub['shares_unit'],
-            'total_payout' => $sub->total_payout,
-            'yesterday_amount' => $sub->yesterday_amount,
-        ];
-    }
-
-    public function transformSub(Sub $sub): array
-    {
-        return self::transform(
-            stats: MinerStat::first(),
-            sub: $sub,
-            hashPerDay: $this->getSubHashRate(sub: $sub),
-            btcComSub: $this->getSub($sub->group_id)
-        );
-    }
-
-    public function transformSubCollection(Collection $subs): Collection
-    {
-        $stats = MinerStat::first();
-
-        return $this
-            ->filterUngrouped()
-            ->whereIn('gid', $subs->pluck('group_id')->toArray())
-            ->map(function (array $btcComSub) use ($subs, $stats) {
-                foreach ($subs as $sub) {
-                    $hashPerDay = $this->getSubHashRate(sub: $sub);
-
-                    if (in_array($sub->group_id, $btcComSub)) {
-
-                        return self::transform(
-                            stats: $stats,
-                            sub: $sub,
-                            hashPerDay: $hashPerDay,
-                            btcComSub: $btcComSub
-                        );
-                    }
-                }
-            });
-    }
-
-    public function getSubHashRate(Sub $sub): float
-    {
-        return Worker::getByGroupId($sub->group_id)
-            ->sum('approximate_hash_rate');
-    }
-
-    /**
-     * Фильтровать -1 и 0 группы
-     *
-     * @return Collection
-     */
-    public function filterUngrouped(): Collection
-    {
-        return collect($this->getGroupList())
-            ->filter(static fn(array $groups, int $index) => $index > 1);
-    }
-
-    /**
-     * Проверка наличия пользователя на стороне btc.com
-     *
-     * @return bool
-     */
-    public function btcHasUser(UserData $userData): bool
-    {
-        return $this->filterUngrouped()
-            ->pluck('name')
-            ->contains($userData->name);
+        return [];
     }
 
     /**
@@ -156,7 +75,7 @@ class BtcComService
             ]
         );
 
-        return collect($response['list']);
+        return collect($response['list'] ?? []);
     }
 
     /**
@@ -254,6 +173,99 @@ class BtcComService
         return array_merge($stats, [
             'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
         ]);
+    }
+
+    /* End requests */
+
+    private static function transform(
+        MinerStat $stats,
+        Sub       $sub,
+        float     $hashPerDay,
+        array     $btcComSub
+    ): array
+    {
+        return [
+            'sub' => $sub->sub,
+            'pending_amount' => $sub->pending_amount,
+            'group_id' => $sub->group_id,
+            'workers_count_active' => $btcComSub['workers_active'],
+            'workers_count_in_active' => $btcComSub['workers_inactive'],
+            'workers_count_unstable' => $btcComSub['workers_dead'],
+            'hash_per_min' => $btcComSub['shares_1m'],
+            'hash_per_day' => $hashPerDay,
+            'today_forecast' => number_format(Helper::calculateEarn(
+                stats: $stats,
+                hashRate: $hashPerDay,
+                fee: BtcComService::FEE
+            ), 8, '.', ' '),
+            'reject_percent' => $btcComSub['reject_percent'],
+            'unit' => $btcComSub['shares_unit'],
+            'total_payout' => $sub->total_payout,
+            'yesterday_amount' => $sub->yesterday_amount,
+        ];
+    }
+
+    public function transformSub(Sub $sub): array
+    {
+        return self::transform(
+            stats: MinerStat::first(),
+            sub: $sub,
+            hashPerDay: $this->getSubHashRate(sub: $sub),
+            btcComSub: $this->getSub($sub->group_id)
+        );
+    }
+
+    public function transformSubCollection(Collection $subs): Collection
+    {
+        $stats = MinerStat::first();
+
+        return $this
+            ->filterUngrouped()
+            ->whereIn('gid', $subs->pluck('group_id')->toArray())
+            ->map(function (array $btcComSub) use ($subs, $stats) {
+                foreach ($subs as $sub) {
+                    $hashPerDay = $this->getSubHashRate(sub: $sub);
+
+                    if (in_array($sub->group_id, $btcComSub)) {
+
+                        return self::transform(
+                            stats: $stats,
+                            sub: $sub,
+                            hashPerDay: $hashPerDay,
+                            btcComSub: $btcComSub
+                        );
+                    }
+                }
+            });
+    }
+
+    public function getSubHashRate(Sub $sub): float
+    {
+        return Worker::getByGroupId($sub->group_id)
+            ->sum('approximate_hash_rate');
+    }
+
+    /**
+     * Фильтровать -1 и 0 группы
+     *
+     * @return Collection
+     */
+    public function filterUngrouped(): Collection
+    {
+        return collect($this->getGroupList())
+            ->filter(static fn(array $groups, int $index) => $index > 1);
+    }
+
+    /**
+     * Проверка наличия пользователя на стороне btc.com
+     *
+     * @return bool
+     */
+    public function btcHasUser(UserData $userData): bool
+    {
+        return $this->filterUngrouped()
+            ->pluck('name')
+            ->contains($userData->name);
     }
 
     private function createLocalSub(UserData $userData, $groupId): void

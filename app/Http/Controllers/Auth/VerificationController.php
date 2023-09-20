@@ -54,7 +54,6 @@ class VerificationController extends Controller
             event(new Verified($user));
         }
 
-
         return redirect($request->redirect_to);
     }
 }
