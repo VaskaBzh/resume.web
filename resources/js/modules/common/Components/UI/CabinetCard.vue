@@ -1,5 +1,5 @@
 <template>
-    <div class="cabinet__block cabinet__block-light cabinet__block-card card">
+    <div class="cabinet__block cabinet__block-light cabinet__block-card card" :class="[page == 'worker' ? 'max-width' : '']">
         <div class="card_svg" v-if="this.$slots.svg">
             <slot name="svg"></slot>
         </div>
@@ -24,6 +24,7 @@ export default {
         title: String,
         value: String,
         unit: String,
+        page: String,
     },
     components: {
         MainTitle,
@@ -35,6 +36,9 @@ export default {
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+}
+.max-width{
+    width: 48%;
 }
 .card_svg {
     margin-right: 24px;

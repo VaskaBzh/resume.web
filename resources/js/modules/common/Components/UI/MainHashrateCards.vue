@@ -3,6 +3,7 @@
         :title="$t('statistic.info_blocks.hash.titles[0]')"
         :value="hashPerMin"
         unit="TH/s"
+        :page="'worker'"
     >
         <template v-slot:svg>
             <hashrate-icon />
@@ -12,6 +13,7 @@
         :title="$t('statistic.info_blocks.hash.titles[1]')"
         :value="hashPerDay"
         unit="TH/s"
+        :page="'worker'"
     >
         <template v-slot:svg>
             <hashrate-icon24 />

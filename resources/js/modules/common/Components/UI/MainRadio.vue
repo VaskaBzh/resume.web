@@ -5,7 +5,6 @@
         @click="checked"
     >
         {{ options.title }}
-        <div class="radio_button"></div>
     </div>
 </template>
 
@@ -41,16 +40,9 @@ export default {
     line-height: 150%;
     min-height: 40px;
     &.active {
-        background: #ecf2fc;
+        border-radius: var(--surface-border-radius-radius-s-md, 12px);
+        background: var(--background-island-inner-1, rgba(83, 177, 253, 0.07));
         color: #333639;
-        .radio_button {
-            background: #5389e1;
-            &:after {
-                width: 8px;
-                height: 8px;
-                background: #ecf2fc;
-            }
-        }
     }
     &_button {
         width: 16px;

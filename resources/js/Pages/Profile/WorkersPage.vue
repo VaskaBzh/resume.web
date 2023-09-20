@@ -95,6 +95,7 @@ export default {
 .cards-container{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 32px;
 }
 .workers {
     .form .title {
