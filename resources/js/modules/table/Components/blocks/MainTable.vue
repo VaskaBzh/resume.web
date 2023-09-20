@@ -97,7 +97,7 @@
 </template>
 
 <script>
-import TableRow from "@/Components/tables/row/TableRow.vue";
+import TableRow from "../row/TableRow.vue";
 import MainPopup from "@/Components/technical/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
@@ -213,11 +213,12 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: #818c99;
+                color: var(--text-table-title-day, #98A2B3);
+                font-family: NunitoSans;
                 font-size: 14px;
-                font-weight: 400;
-                line-height: 130%;
-                // text-align: left;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 20px; /* 142.857% */
                 background: transparent;
             }
         }
@@ -256,7 +257,7 @@ export default {
             // display: none;
             stroke: #818c99;
             position: absolute;
-            right: 12px;
+            right: 34px;
             margin-top: 25px;
             transform: translateY(-50%);
         }
