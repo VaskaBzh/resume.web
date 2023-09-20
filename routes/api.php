@@ -20,24 +20,15 @@ use App\Http\Controllers\Api\Wallet\UpdateController as WalletUpdateController;
 use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
 use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
-use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkController;
-use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherUpdateController;
+use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkListController;
+use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherLinkUpdateController;
+use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteController;
+use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
-
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
 
 
 /* _________________ Public routes ____________________ */
@@ -51,7 +42,7 @@ Route::get('/verify/{id}/{hash}', VerificationController::class)->name('verifica
 
 /* ________________ Protected routes ____________________ */
 
-/*                        GET                             */
+/* Can be allowed */
 Route::group([
     'middleware' => ['watcher-link', 'auth:sanctum']
 ], function () {
@@ -80,8 +71,8 @@ Route::group([
     Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
 });
+/* End allowable routes  */
 
-/*                        POST & PUT                            */
 Route::group([
     'middleware' => 'auth:sanctum'
 ], function () {
@@ -115,9 +106,11 @@ Route::group([
     });
 
     Route::group(['prefix' => 'watchers'], function () {
-        Route::get('/{user}/{sub}', WatcherLinkController::class);
+        Route::get('/{watcher}', WatcherLinkShowController::class);
+        Route::get('/{user}/{sub}', WatcherLinkListController::class);
         Route::post('/create/{sub}', WatcherLinkCreateController::class);
-        Route::put('/update/{sub}/{watcher}', WatcherUpdateController::class);
+        Route::put('/update/{watcher}', WatcherLinkUpdateController::class);
+        Route::delete('/delete/{watcher}', WatcherLinkDeleteController::class);
     });
 });
 /* ________________ End protected routes ____________________ */

@@ -192,9 +192,9 @@ class BtcComService
                 'group_name' => $userData->name
             ]);
 
-        $this->createLocalSub(userData: $userData, groupId: $response['data']['gid']);
+        $this->createLocalSub(userData: $userData, groupId: $response['gid']);
 
-        return $response['data'];
+        return $response;
     }
 
     /**
