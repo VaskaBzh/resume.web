@@ -31,6 +31,7 @@ export class PreloaderService {
             if (this.progressPercentage < limit) {
                 this.progressPercentage += percentStep;
             } else {
+                this.slowProcess();
                 this.killInterval();
             }
         }, intervalMillisecondsTime);
