@@ -7,7 +7,16 @@ export class WatchersService extends MetaTableService {
     constructor(translate, titleIndexes) {
         super(translate, titleIndexes);
 
+        this.popupOpened = false;
         this.blocks = [];
+    }
+
+    openPopup() {
+        this.popupOpened = true;
+
+        setTimeout(() => {
+            this.popupOpened = false;
+        })
     }
 
     setBlocks(newBlocks) {

@@ -5,7 +5,7 @@
                 <main-title tag="h1">Наблюдатели</main-title>
                 <main-description>Создавайте и управляйте ссылками наблюдателя</main-description>
             </div>
-            <main-button>
+            <main-button @click="service.createWatcher()">
                 <template v-slot:svg>
                     <plus-icon />
                 </template>
@@ -23,6 +23,9 @@
             </main-slider>
         </div>
     </div>
+    <watchers-popup>
+
+    </watchers-popup>
 </template>
 
 <script>
@@ -31,9 +34,10 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
-import WatchersList from "../../modules/watchers/Components/blocks/WatchersList.vue";
-import { WatchersService } from "../../modules/watchers/services/WatchersService";
+import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
+import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
+import WatchersPopup from "@/modules/watchers/Components/blocks/WatchersPopup.vue";
 
 export default {
     name: "watchers-page",
@@ -44,6 +48,7 @@ export default {
         MainTitle,
         MainDescription,
         MainButton,
+        WatchersPopup,
     },
     data() {
         return {
