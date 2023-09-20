@@ -1,6 +1,6 @@
 <template>
     <img
-        src="../../../assets/img/logo_high_quality.svg"
+        src="../../../../assets/img/logo_high_quality.svg"
         alt="logo"
     />
 </template>

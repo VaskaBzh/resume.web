@@ -14,5 +14,12 @@ export default {
 </script>
 
 <style scoped>
-
+.un-click {
+	position: fixed;
+	z-index: 9999;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+}
 </style>

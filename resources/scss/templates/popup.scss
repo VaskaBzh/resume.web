@@ -79,7 +79,7 @@ body::after {
             opacity: 1 !important;
         }
     }
-    .loading {
+    .popup__content_block-loading {
         form,
         .swiper {
             .blue-button {
@@ -109,7 +109,7 @@ body::after {
             }
         }
     }
-    &_show {
+    &-show {
         z-index: 150;
         visibility: visible;
         overflow: auto;
@@ -255,7 +255,7 @@ body::after {
                 bottom: 32px;
             }
         }
-        &.opened {
+        &-opened {
             .form {
                 &_message {
                     animation: fadeIn forwards 0.3s ease 0s;

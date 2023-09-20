@@ -1,12 +1,14 @@
 import { MetaTableService } from "@/modules/common/services/MetaTableService";
+import { WatchersData } from "@/modules/watchers/DTO/WatchersData";
+import { WatchersFormData } from "@/modules/watchers/DTO/WatchersFormData";
 import api from "@/api/api";
-import {WatchersData} from "../DTO/WatchersData";
 import store from "@/store";
 
 export class WatchersService extends MetaTableService {
     constructor(translate, titleIndexes) {
         super(translate, titleIndexes);
 
+        this.form = {};
         this.popupOpened = false;
         this.blocks = [];
     }
@@ -17,6 +19,17 @@ export class WatchersService extends MetaTableService {
         setTimeout(() => {
             this.popupOpened = false;
         })
+    }
+
+    setForm(name = "", allowedRows = []) {
+        this.form = {
+            ...this.form,
+            ...new WatchersFormData(name, allowedRows)
+        }
+    }
+
+    dropForm() {
+        this.form = {};
     }
 
     setBlocks(newBlocks) {

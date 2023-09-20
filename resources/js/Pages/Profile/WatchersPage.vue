@@ -5,7 +5,7 @@
                 <main-title tag="h1">Наблюдатели</main-title>
                 <main-description>Создавайте и управляйте ссылками наблюдателя</main-description>
             </div>
-            <main-button @click="service.createWatcher()">
+            <main-button data-popup="#addWatcher">
                 <template v-slot:svg>
                     <plus-icon />
                 </template>
@@ -23,9 +23,12 @@
             </main-slider>
         </div>
     </div>
-    <watchers-popup>
-
-    </watchers-popup>
+    <watchers-popup-add
+        :wait="service.wait"
+        :closed="service.closed"
+        :form="service.form"
+        @createWatcher="createWatcher"
+    />
 </template>
 
 <script>
@@ -37,7 +40,7 @@ import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
-import WatchersPopup from "@/modules/watchers/Components/blocks/WatchersPopup.vue";
+import WatchersPopupAdd from "@/modules/watchers/Components/blocks/WatchersPopupAdd.vue";
 
 export default {
     name: "watchers-page",
@@ -48,7 +51,7 @@ export default {
         MainTitle,
         MainDescription,
         MainButton,
-        WatchersPopup,
+        WatchersPopupAdd,
     },
     data() {
         return {
@@ -61,9 +64,18 @@ export default {
             "getAccount"
         ]),
     },
+    methods: {
+        async createWatcher(formData) {
+            this.service.setForm(formData.name, formData.allowedRows);
+            await this.service.createWatcher();
+            await this.service.index();
+        }
+    },
     watch: {
-        getActive(newActiveId) {
+        async getActive(newActiveId) {
             this.service.setGroupId(newActiveId);
+
+            await this.service.index();
         },
         async getAccount() {
             await this.service.index();
@@ -71,6 +83,7 @@ export default {
     },
     async mounted() {
         this.service.setGroupId(this.getActive);
+        this.service.setForm();
 
         await this.service.index();
     }

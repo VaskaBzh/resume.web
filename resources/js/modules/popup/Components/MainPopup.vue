@@ -1,47 +1,51 @@
 <template>
-	<div class="popup" :class="{ popup_show: opened }">
+	<div class="popup" :class="{ 'popup-show': service.isOpened }">
 		<un-click-view
 			:wait="wait"
 		/>
 		<div class="popup__wrapper">
 			<div
 				class="popup__content"
-				:class="{
-                    opened: contentOpened,
-                }"
+                :class="{ 'popup__content_block-loading': wait }"
+                ref="popup_block"
 			>
-				<logo-light
-					v-if="!getTheme"
-				/>
-				<logo-dark
-					v-else
-				/>
-				<div class="popup__content_block" :class="{ loading: wait }">
-					<button type="button" class="popup__close" @click="close">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							viewBox="0 0 48 48"
-						>
-							<path
-								d="M38 12.83L35.17 10L24 21.17L12.83 10L10 12.83L21.17 24L10 35.17L12.83 38L24 26.83L35.17 38L38 35.17L26.83 24L38 12.83Z"
-							/>
-						</svg>
-					</button>
-					<slot />
-				</div>
+                <div
+                    class="popup__block-logo"
+                    ref="popup_logo"
+                >
+                    <logo-light
+                        class="popup_logo"
+                    />
+                </div>
+                <!--					v-if="!getTheme"-->
+                <!--				<logo-dark-->
+                <!--					v-else-->
+                <!--				/>-->
+                <div
+                    class="popup__block"
+                    ref="popup_content"
+                >
+                    <button type="button" class="popup_close" @click="service.popupClose">
+                        <popup-cross-icon />
+                    </button>
+                    <slot />
+                </div>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 import { mapGetters } from "vuex";
+import { PopupService } from "@/modules/popup/services/PopupService";
 import LogoLight from "@/modules/popup/icons/LogoLight.vue";
 import LogoDark from "@/modules/popup/icons/LogoDark.vue";
 import UnClickView from "@/modules/popup/Components/UnClickView.vue";
+import PopupCrossIcon from "@/modules/popup/icons/PopupCrossIcon.vue";
 
 export default {
 	name: "main-popup",
 	components: {
+		PopupCrossIcon,
 		UnClickView,
 		LogoLight,
 		LogoDark,
@@ -60,94 +64,99 @@ export default {
 	},
 	data() {
 		return {
-			opened: false,
-			contentOpened: false,
+			service: new PopupService(this.id, this.$emit),
 		};
 	},
 	watch: {
 		closed(newBool) {
 			if (newBool) {
-				this.close();
+				this.service.popupClose();
 			}
 		},
 		opened(newBool) {
 			if (newBool) {
-				this.open();
+				this.service.popupOpen();
 			}
 		},
+        '$refs.popup_content'(newPopupContentHtml) {
+            this.service.setPopupContentHtml(newPopupContentHtml);
+        },
+        '$refs.popup_block'(newPopupBlockHtml) {
+            this.service.setPopupBlockHtml(newPopupBlockHtml);
+        },
+        '$refs.popup_logo'(newPopupLogoHtml) {
+            this.service.setPopupLogoHtml(newPopupLogoHtml);
+        }
 	},
 	computed: {
 		...mapGetters(["getTheme"]),
 	},
-	methods: {
-		async close() {
-			this.$emit("closed");
-			this.opened = false;
-			openedPopups -= 1;
-			this.contentOpened = false;
-			document.body.classList.remove("popup-show");
-			setTimeout(() => {
-				document.body.classList.remove("lock");
-				this.$emit("closed");
-			}, 500);
-		},
-		async open() {
-			this.opened = true;
-			openedPopups += 1;
-			setTimeout(() => {
-				this.contentOpened = true;
-			}, 300);
-			document.body.classList.add("popup-show");
-			document.body.classList.add("lock");
-			this.animationEnd
-				? setTimeout(() => this.$emit("opened"), this.animationEnd)
-				: this.$emit("opened");
-		},
-		clickClosed(e) {
-			if (!this.opened) {
-				if (e.target.closest(`[data-popup="#${this.id}"]`)) {
-					e.preventDefault();
-					this.open();
-				}
-			} else if (
-				!e.target.closest(".popup__content") &&
-				!e.target.closest(".un-click")
-			) {
-				this.close();
-			}
-		},
-		keyClosed(e) {
-			if (e.keyCode === 27) this.close(e);
-		},
-		initFunc() {
-			document.addEventListener("mousedown", this.clickClosed, true);
-			document.addEventListener("keydown", this.keyClosed);
-		},
-		destroyFunc() {
-			document.removeEventListener("mousedown", this.clickClosed, true);
-			document.removeEventListener("keydown", this.keyClosed);
-
-			this.close();
-		},
-	},
 	mounted() {
-		this.initFunc();
-		// Inertia.on("before", async (event) => {
-		//     await this.close();
-		// });
+        this.service.setPopupContentHtml(this.$refs.popup_content);
+        this.service.setPopupBlockHtml(this.$refs.popup_block);
+        this.service.setPopupLogoHtml(this.$refs.popup_logo);
+		this.service.initFunc();
 	},
 	beforeUnmount() {
-		this.destroyFunc();
+		this.service.destroyFunc();
 	},
 };
 </script>
-<style lang="scss">
-.un-click {
-	position: fixed;
-	z-index: 9999;
-	left: 0;
-	top: 0;
-	width: 100vw;
-	height: 100vh;
+<style scoped>
+.popup {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.15);
+    position: fixed;
+    z-index: -1;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    overflow: hidden;
+    opacity: 0;
+    transition: all 0.5s ease 0s, z-index 0s ease 0.5s;
+}
+.popup-show {
+    transition: all 0.5s ease 0s, z-index 0s ease 0s;
+    overflow: visible;
+    opacity: 1;
+    z-index: 1;
+}
+.popup__wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    overflow: scroll;
+    justify-content: center;
+}
+.popup__content {
+    border-radius: 24px;
+    background: var(--background-modal-day, #F8FAFD);
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+    width: 280px;
+    height: 122px;
+    transform: translateY(120px);
+    padding: 40px;
+    transition: all 0.5s ease 0s;
+    position: relative;
+}
+.popup__block-logo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.popup__block {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    opacity: 0;
+}
+.popup_close {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    padding: 8px;
 }
 </style>

@@ -57,7 +57,7 @@ export class RouteServices {
                 name: "referral",
                 params: { page: "" },
                 component: () =>
-                    import(`../../layouts/ReferralsLayoutView.vue`),
+                    import('../../layouts/ReferralsLayoutView.vue'),
                 redirect: (to) => {
                     return {
                         name: "overview",
