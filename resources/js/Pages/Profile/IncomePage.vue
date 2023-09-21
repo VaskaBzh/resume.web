@@ -224,6 +224,7 @@ export default {
     width: 100%;
 }
 .income {
+    padding: 24px;
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;

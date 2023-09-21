@@ -77,7 +77,7 @@
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import store from "../../../../store";
 import { ref } from "vue";

@@ -98,7 +98,7 @@
 
 <script>
 import TableRow from "../row/TableRow.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";

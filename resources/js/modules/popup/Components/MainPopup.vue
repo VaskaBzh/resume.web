@@ -75,6 +75,7 @@ export default {
 		},
 		opened(newBool) {
 			if (newBool) {
+                console.log(this.id)
 				this.service.popupOpen();
 			}
 		},
@@ -137,10 +138,11 @@ export default {
     width: 280px;
     height: 122px;
     transform: translateY(220px);
-    padding: 40px;
+    padding: 32px;
     transition: all 0.5s ease 0s;
     position: relative;
 }
+.popup__content
 .popup__block-logo {
     position: absolute;
     top: 50%;

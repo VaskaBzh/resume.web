@@ -35,12 +35,13 @@ export const SettingsMessage = {
             text:[
                 "Indicate your existing email, we will send a confirmation code to it",
                 "Sent the code by email",
-                "An SMS with a confirmation code will be sent to the new number",
+                "An SMS with a confirmation code will be sent to the specified number.",
                 "Sent a code to the number",
                 "Link your account to Google Authenticator using a QR code or setup key",
                 "To confirm, enter the temporary code from the Google Authenticator app",
+                "Resend code"
             ],
-            button: ["Back", "Change"],
+            button: ["Back", "Change", "Send code"],
          },
         button: "Change",
         safety: {
@@ -85,12 +86,13 @@ export const SettingsMessage = {
             text:[
                 "Укажите существующую почту, на нее мы отправим код подтверждения",
                 "Отправили код на почту",
-                "На новый номер поступит SMS с кодом подтверждения",
+                "На указанный номер поступит SMS с кодом подтверждения",
                 "Отправили код на номер",
                 "Привяжите аккаунт к Google Authenticator с помощью QR-кода или ключа настройки",
-                "Для подтверждения введите временный код из приложения Google Authenticator"
+                "Для подтверждения введите временный код из приложения Google Authenticator",
+                "Отправить код повторно"
             ],
-            button: ["Назад", "Сменить"],
+            button: ["Назад", "Сменить", "Отправить код"],
         },
         button: "Сменить",
         safety: {

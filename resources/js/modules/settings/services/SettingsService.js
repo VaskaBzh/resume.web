@@ -149,5 +149,6 @@ export class SettingsService {
             type: data.name,
             key: data.key,
         };
+        console.log(data.key)
     }
 }

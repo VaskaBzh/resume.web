@@ -81,7 +81,6 @@ export default {
             if (pas) {
                 data.password = pas;
             }
-
             this.$emit("openPopup", data);
         },
         change_val() {
