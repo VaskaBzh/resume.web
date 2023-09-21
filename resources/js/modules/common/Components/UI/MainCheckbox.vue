@@ -16,7 +16,10 @@ export default {
             type: Boolean,
             default: false,
         },
-        editable: Boolean,
+        editable: {
+            default: true,
+            type: Boolean,
+        },
     },
     data() {
         return {

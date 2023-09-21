@@ -1,5 +1,5 @@
 <template>
-    <span class="tag">
+    <span class="tag" v-show="tagName">
         {{ tagName }}
     </span>
 </template>

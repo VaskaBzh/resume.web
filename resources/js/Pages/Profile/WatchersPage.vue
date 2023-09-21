@@ -14,11 +14,18 @@
                 </template>
             </main-button>
         </div>
-        <div class="cabinet watchers__wrapper">
+        <div
+            class="cabinet watchers__wrapper"
+            :class="{
+                'watchers__wrapper-full':
+                    service.waitTable || service.emptyTable,
+            }"
+        >
             <main-slider
                 :wait="service.waitTable"
                 :empty="service.emptyTable"
-                rowsNum="10"
+                rowsNum="1000"
+                :haveNav="false"
                 :meta="service.meta"
             >
                 <watchers-list
@@ -26,14 +33,24 @@
                     :blocks="service.table.get('rows')"
                 />
             </main-slider>
-            <watchers-card :watcher="service.card" />
+            <watchers-card
+                v-show="!service.waitTable && !service.emptyTable"
+                :watcher="service.card"
+                @changeWatcher="changeWatcher"
+                @removeWatcher="removeWatcher"
+            />
         </div>
     </div>
     <watchers-popup-add
         :wait="service.wait"
         :closed="service.popupClosed"
-        :form="service.form"
         @createWatcher="createWatcher($event)"
+    />
+    <watchers-popup-remove
+        :wait="service.wait"
+        :name="name"
+        :id="service.card?.id"
+        @removeWatcher="removeWatcher($event)"
     />
 </template>
 
@@ -46,6 +63,7 @@ import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
 import WatchersPopupAdd from "@/modules/watchers/Components/blocks/WatchersPopupAdd.vue";
 import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue";
+import WatchersPopupRemove from "@/modules/watchers/Components/blocks/WatchersPopupRemove.vue";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
 
@@ -59,6 +77,7 @@ export default {
         MainDescription,
         MainButton,
         WatchersPopupAdd,
+        WatchersPopupRemove,
         WatchersCard,
     },
     data() {
@@ -68,11 +87,23 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive", "getAccount"]),
+        name() {
+            return this.service.card?.name;
+        },
     },
     methods: {
         async createWatcher(formData) {
             this.service.setForm(formData.name, formData.allowedRoutes);
             await this.service.createWatcher();
+            await this.service.index();
+        },
+        async changeWatcher(formData) {
+            this.service.setForm(formData.name, formData.allowedRoutes);
+            await this.service.changeWatcher(formData.id);
+            await this.service.index();
+        },
+        async removeWatcher(id) {
+            await this.service.removeWatcher(id);
             await this.service.index();
         },
     },
@@ -123,5 +154,8 @@ export default {
     gap: 12px;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
+}
+.watchers__wrapper-full {
+    grid-template-columns: 1fr;
 }
 </style>

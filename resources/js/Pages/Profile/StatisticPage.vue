@@ -70,7 +70,7 @@
         </div>
         <no-information
             v-scroll="'opacity transition--fast'"
-            class="cabinet__preloader"
+            class="cabinet__preloader-bg"
             v-if="
                 !lineChartService.waitGraph &&
                 lineChartService.records?.filter((a) => a.hashrate > 0)

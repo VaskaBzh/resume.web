@@ -1,38 +1,32 @@
 <template>
-	<div class="popup" :class="{ 'popup-show': service.isOpened }">
-		<un-click-view
-			:wait="wait"
-		/>
-		<div class="popup__wrapper">
-			<div
-				class="popup__content"
+    <div class="popup" :class="{ 'popup-show': service.isOpened }">
+        <un-click-view :wait="wait" />
+        <div class="popup__wrapper">
+            <div
+                class="popup__content"
                 :class="{ 'popup__content_block-loading': wait }"
                 ref="popup_block"
-			>
-                <div
-                    class="popup__block-logo"
-                    ref="popup_logo"
-                >
-                    <logo-light
-                        class="popup_logo"
-                    />
+            >
+                <div class="popup__block-logo" ref="popup_logo">
+                    <logo-light class="popup_logo" />
                 </div>
                 <!--					v-if="!getTheme"-->
                 <!--				<logo-dark-->
                 <!--					v-else-->
                 <!--				/>-->
-                <div
-                    class="popup__block"
-                    ref="popup_content"
-                >
-                    <button type="button" class="popup_close" @click="service.popupClose">
+                <div class="popup__block" ref="popup_content">
+                    <button
+                        type="button"
+                        class="popup_close"
+                        @click="service.popupClose"
+                    >
                         <popup-cross-icon />
                     </button>
                     <slot />
                 </div>
-			</div>
-		</div>
-	</div>
+            </div>
+        </div>
+    </div>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -43,64 +37,64 @@ import UnClickView from "@/modules/popup/Components/UnClickView.vue";
 import PopupCrossIcon from "@/modules/popup/icons/PopupCrossIcon.vue";
 
 export default {
-	name: "main-popup",
-	components: {
-		PopupCrossIcon,
-		UnClickView,
-		LogoLight,
-		LogoDark,
-	},
-	props: {
-		wait: Boolean,
-		id: String,
-		opened: {
-			type: Boolean,
-			default: false,
-		},
-		closed: {
-			type: Boolean,
-			default: false,
-		},
-	},
-	data() {
-		return {
-			service: new PopupService(this.id, this.$emit),
-		};
-	},
-	watch: {
-		closed(newBool) {
-			if (newBool) {
-				this.service.popupClose();
-			}
-		},
-		opened(newBool) {
-			if (newBool) {
-                console.log(this.id)
-				this.service.popupOpen();
-			}
-		},
-        '$refs.popup_content'(newPopupContentHtml) {
+    name: "main-popup",
+    components: {
+        PopupCrossIcon,
+        UnClickView,
+        LogoLight,
+        LogoDark,
+    },
+    props: {
+        wait: Boolean,
+        id: String,
+        opened: {
+            type: Boolean,
+            default: false,
+        },
+        closed: {
+            type: Boolean,
+            default: false,
+        },
+    },
+    data() {
+        return {
+            service: new PopupService(this.id, this.$emit),
+        };
+    },
+    watch: {
+        closed(newBool) {
+            if (newBool) {
+                this.service.popupClose();
+            }
+        },
+        opened(newBool) {
+            if (newBool) {
+                console.log(this.id);
+                this.service.popupOpen();
+            }
+        },
+        "$refs.popup_content"(newPopupContentHtml) {
             this.service.setPopupContentHtml(newPopupContentHtml);
         },
-        '$refs.popup_block'(newPopupBlockHtml) {
+        "$refs.popup_block"(newPopupBlockHtml) {
             this.service.setPopupBlockHtml(newPopupBlockHtml);
         },
-        '$refs.popup_logo'(newPopupLogoHtml) {
+        "$refs.popup_logo"(newPopupLogoHtml) {
             this.service.setPopupLogoHtml(newPopupLogoHtml);
-        }
-	},
-	computed: {
-		...mapGetters(["getTheme"]),
-	},
-	mounted() {
+        },
+    },
+    computed: {
+        ...mapGetters(["getTheme"]),
+    },
+    mounted() {
         this.service.setPopupContentHtml(this.$refs.popup_content);
         this.service.setPopupBlockHtml(this.$refs.popup_block);
         this.service.setPopupLogoHtml(this.$refs.popup_logo);
-		this.service.initFunc();
-	},
-	beforeUnmount() {
-		this.service.destroyFunc();
-	},
+        this.service.initFunc();
+    },
+    beforeUnmount() {
+        this.service.destroyFunc();
+    },
 };
 </script>
 <style scoped>
@@ -133,7 +127,7 @@ export default {
 }
 .popup__content {
     border-radius: 24px;
-    background: var(--background-modal-day, #F8FAFD);
+    background: var(--background-modal-day, #f8fafd);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 280px;
     height: 122px;
@@ -142,8 +136,7 @@ export default {
     transition: all 0.5s ease 0s;
     position: relative;
 }
-.popup__content
-.popup__block-logo {
+.popup__content .popup__block-logo {
     position: absolute;
     top: 50%;
     left: 50%;

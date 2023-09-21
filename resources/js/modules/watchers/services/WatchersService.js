@@ -121,4 +121,38 @@ export class WatchersService extends MetaTableService {
             }
         }
     }
+
+    async changeWatcher(id) {
+        if (this.group_id !== -1) {
+            try {
+                await api.put(`/watchers/update/${id}`, this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+
+                this.dropForm();
+                this.closePopup();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
+
+    async removeWatcher(id) {
+        if (this.group_id !== -1) {
+            try {
+                await api.delete(`/watchers/delete/${id}`, this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+
+                this.dropForm();
+                this.closePopup();
+            } catch (err) {
+                console.error(err);
+            }
+        }
+    }
 }

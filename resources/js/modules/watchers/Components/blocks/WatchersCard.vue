@@ -42,18 +42,27 @@
                 </div>
             </div>
             <main-copy
-                :cutValue="47"
+                :cutValue="45"
                 :code="watcher.link"
                 label="Ссылка наблюдателя"
             />
             <div class="card__buttons">
-                <main-button :class="firstButtonClass">{{
-                    firstButtonText
-                }}</main-button>
                 <main-button
-                    class="button-blue"
-                    @click="isEditable = !isEditable"
-                    >{{ secondButtonText }}</main-button
+                    class="card_button"
+                    :data-popup="isEditable ? null : '#removeWatcher'"
+                    :class="firstButtonClass"
+                    @click="buttonProcess"
+                >
+                    <template v-slot:text>{{
+                        firstButtonText
+                    }}</template></main-button
+                >
+                <main-button
+                    class="button-blue card_button"
+                    @click="changeWatcher"
+                    ><template v-slot:text>{{
+                        secondButtonText
+                    }}</template></main-button
                 >
             </div>
         </div>
@@ -85,7 +94,7 @@ export default {
     computed: {
         ...mapGetters(["errorsExpired"]),
         firstButtonClass() {
-            return this.isEditable ? "button-red" : "button-reverse";
+            return this.isEditable ? "button-reverse" : "button-red";
         },
         firstButtonText() {
             return this.isEditable ? "Отменить" : "Удалить";
@@ -96,15 +105,20 @@ export default {
     },
     watch: {
         watcher(newWatcher) {
-            this.setAllowedRoutes();
+            if (newWatcher?.tags) {
+                this.getAllowedRoutes(newWatcher.tags);
+                this.setId(newWatcher.id);
+                this.setFormName(newWatcher.name);
+            }
         },
     },
     data() {
         return {
             isEditable: false,
             form: {
-                name: "",
+                name: this.watcher?.name,
                 allowedRoutes: [],
+                id: this.watcher?.id,
             },
             allowedRoutes: [
                 {
@@ -125,14 +139,50 @@ export default {
             ],
         };
     },
+    mounted() {
+        if (this.watcher?.tags) this.getAllowedRoutes(this.watcher.tags);
+    },
     methods: {
+        setId(id) {
+            this.form = {
+                ...this.form,
+                id: id,
+            };
+        },
+        buttonProcess() {
+            if (!this.isEditable) this.$emit("removeWatcher", this.watcher);
+            else this.isEditable = false;
+        },
+        changeWatcher() {
+            if (this.isEditable) {
+                const routes = [];
+                this.allowedRoutes.forEach((route) => {
+                    route.routes.forEach((r) => {
+                        if (this.watcher.tags.includes(r))
+                            routes.push(route.routes);
+                    });
+                });
+
+                this.setAllowedRoutes(true, routes);
+                this.$emit("changeWatcher", this.form);
+            }
+
+            this.isEditable = !this.isEditable;
+        },
         setFormName(name) {
             this.form = {
                 ...this.form,
                 name: name,
             };
         },
-        getAllowedRoutes(allowedRoutes) {},
+        getAllowedRoutes(allowedRoutes) {
+            this.allowedRoutes.forEach((route) => {
+                route.routes.forEach((r) => {
+                    if (allowedRoutes.includes(r)) route.checked = true;
+                    else route.checked = false;
+                });
+            });
+        },
         setAllowedRoutes(boolean, routes) {
             if (boolean)
                 this.form.allowedRoutes = [
@@ -155,6 +205,8 @@ export default {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     min-height: 680px;
     padding: 32px;
+    display: flex;
+    flex-direction: column;
 }
 .card_title {
     margin-bottom: 40px;
@@ -170,15 +222,15 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 40px;
+    flex: 1 1 auto;
 }
 .card__content-empty {
     align-items: center;
     justify-content: center;
     gap: 8px;
-    height: 100%;
 }
 .card_input {
-    background: var(--background-island-inner-3-day, #F8FAFD);
+    background: var(--background-island-inner-3-day, #f8fafd);
 }
 .card_label {
     padding: 0 16px;
@@ -205,5 +257,7 @@ export default {
 }
 .card_button {
     min-height: 56px;
+    width: 100%;
+    transition: all 0.5s ease 0s;
 }
 </style>

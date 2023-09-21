@@ -1,52 +1,48 @@
 <template>
-    <teleport to="body">
-        <main-popup id="addWatcher" :wait="wait" :closed="closed">
-            <div class="watchers__form">
-                <div class="watchers__column">
-                    <div class="watchers-add">
-                        <main-title tag="h3">Добавить наблюдателя</main-title>
-                        <main-description
-                            >Наблюдатель получает возможность смотреть контент
-                            без возможности редактировать</main-description
-                        >
+    <main-popup id="addWatcher" :wait="wait" :closed="closed">
+        <div class="watchers__form">
+            <div class="watchers__column">
+                <div class="watchers-add">
+                    <main-title tag="h3">Добавить наблюдателя</main-title>
+                    <main-description
+                        >Наблюдатель получает возможность смотреть контент без
+                        возможности редактировать</main-description
+                    >
+                </div>
+                <main-input
+                    class="watchers_input"
+                    inputName="name"
+                    inputLabel="Имя наблюдателя"
+                    :inputValue="name"
+                    :error="errorsExpired.name"
+                    @getValue="setFormName($event)"
+                />
+                <div class="watchers__block">
+                    <div class="watchers_label">
+                        Доступные страницы для наблюдения
                     </div>
-                    <main-input
-                        class="watchers_input"
-                        inputName="name"
-                        inputLabel="Имя наблюдателя"
-                        :inputValue="name"
-                        :error="errorsExpired.name"
-                        @getValue="setFormName($event)"
-                    />
-                    <div class="watchers__block">
-                        <div class="watchers_label">
-                            Доступные страницы для наблюдения
-                        </div>
-                        <div class="watchers__block watchers__block-selects">
-                            <main-checkbox
-                                v-for="(route, i) in allowedRoutes"
-                                :key="i"
-                                :is_checked="route.checked"
-                                class="checkbox-sm"
-                                @is_checked="
-                                    setAllowedRoutes($event, route.routes)
-                                "
-                            >
-                                {{ route.name }}
-                            </main-checkbox>
-                        </div>
+                    <div class="watchers__block watchers__block-selects">
+                        <main-checkbox
+                            v-for="(route, i) in allowedRoutes"
+                            :key="i"
+                            :is_checked="route.checked"
+                            class="checkbox-sm"
+                            @is_checked="setAllowedRoutes($event, route.routes)"
+                        >
+                            {{ route.name }}
+                        </main-checkbox>
                     </div>
                 </div>
-                <main-button
-                    type="submit"
-                    @click.prevent="$emit('createWatcher', form)"
-                    class="button-blue button-full watchers_button"
-                >
-                    <template v-slot:text> Добавить </template>
-                </main-button>
             </div>
-        </main-popup>
-    </teleport>
+            <main-button
+                type="submit"
+                @click.prevent="$emit('createWatcher', form)"
+                class="button-blue button-full watchers_button"
+            >
+                <template v-slot:text> Добавить </template>
+            </main-button>
+        </div>
+    </main-popup>
 </template>
 
 <script>

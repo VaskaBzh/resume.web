@@ -8,7 +8,7 @@
             :empty="empty"
         />
         <slot v-if="!wait && !empty" />
-        <div class="slider__nav" v-if="!wait && !empty">
+        <div class="slider__nav" v-if="haveNav && !wait && !empty">
             <!--            <page-info-->
             <!--                :startPage=""-->
             <!--            />-->
@@ -55,6 +55,10 @@ export default {
     props: {
         table: Object,
         wait: Boolean,
+        haveNav: {
+            type: Boolean,
+            default: true,
+        },
         empty: Object,
         rowsNum: {
             type: Number,
