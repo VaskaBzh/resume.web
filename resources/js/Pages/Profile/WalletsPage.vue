@@ -224,7 +224,7 @@ import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 
 import { WalletService } from "@/services/WalletService";
 import { usePage } from "@inertiajs/vue3";
@@ -455,6 +455,7 @@ export default {
 }
 .wallets {
     display: flex;
+    padding: 24px;
     align-items: center;
     justify-content: center;
     height: calc(100vh - 132px);

@@ -92,6 +92,13 @@ export default {
           isOpenSelect: false,
         };
      },
+     watch: {
+      isOpenSelect(newVal){
+        if(newVal){
+          // Когда открыт селектор добавлять анимацию увеличения блока
+        }
+      }
+     }
 }
 </script>
 <style scoped>

@@ -93,7 +93,7 @@
 import { Head } from "@inertiajs/vue3";
 import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
@@ -208,6 +208,7 @@ export default {
 }
 
 .accounts {
+    padding: 24px;
     &__wrapper {
         width: 100%;
     }

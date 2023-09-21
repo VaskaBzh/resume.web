@@ -194,6 +194,7 @@ export default {
 }
 .faq {
     overflow-y: scroll;
+    padding: 24px;
     height: calc(100vh - 135px);
     &_title {
         margin-top: 20px;

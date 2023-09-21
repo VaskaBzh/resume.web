@@ -7,12 +7,14 @@
     </div>
   </div>
     <div class="btn_container">
-        
-      <button class="btn_content" data-popup="#changes">{{ card.button }}</button>
+      <button class="btn_content" data-popup="#changes" @mousedown="change_val">{{ card.button }}</button>
     </div>
 </template>
 <script>
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import api from "@/api/api";
+import store from "@/store";
+import { mapGetters } from "vuex";
 export default {
     name: "safety-card",
     i18n: {
@@ -27,6 +29,60 @@ export default {
                 `/resources/assets/img/${this.card.src}`,
                 import.meta.url
             );
+        },
+    },
+    data() {
+        return {
+            value: this.val,
+        };
+    },
+    beforeUpdate() {
+        this.value = this.val;
+    },
+    mounted() {
+        if (this.val === "..." || this.val === null) {
+            this.value = this.val;
+        }
+    },
+    computed: {
+        ...mapGetters(["user"]),
+    },
+    methods: {
+        async checkbox_changes(data) {
+            if (this.val !== null) {
+                let form = {
+                    item: data,
+                    type: this.name,
+                };
+
+                try {
+                    await api.post(`/change/${this.user.id}`, form, {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    });
+                } catch (e) {
+                    console.error("Error with: " + e);
+                }
+            }
+        },
+        get_val(pas) {
+            // this.end_change();
+            let data = {
+                name: this.name.toLowerCase(),
+                val: this.value,
+                key: this.keyForm,
+            };
+
+            if (pas) {
+                data.password = pas;
+            }
+            this.$emit("openPopup", data);
+        },
+        change_val() {
+            if (this.val !== "..." && this.val !== "********") {
+                this.name === "Пароль" ? this.get_val(true) : this.get_val();
+            }
         },
     },
 };

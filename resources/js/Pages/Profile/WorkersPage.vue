@@ -98,6 +98,7 @@ export default {
     margin-bottom: 32px;
 }
 .workers {
+    padding: 24px;
     .form .title {
         margin-bottom: 0;
     }

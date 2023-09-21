@@ -94,6 +94,7 @@ export default {
 <style scoped>
 .watchers {
     height: 100%;
+    padding: 24px;
     width: 100%;
     display: flex;
     flex-direction: column;

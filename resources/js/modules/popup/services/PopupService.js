@@ -87,7 +87,7 @@ export class PopupService {
     animateHeight() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.popupContentHtml.scrollHeight + 15}px`,
+            height: `${this.popupContentHtml.scrollHeight + 32}px`,
             easing: 'easeInCubic',
             duration: 500,
             complete: () => {
