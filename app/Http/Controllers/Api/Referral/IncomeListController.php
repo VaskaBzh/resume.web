@@ -20,7 +20,7 @@ class IncomeListController extends Controller
     {
         if (!$user->referral_code) {
             return new JsonResponse([
-                'error' => 'Referral not exists'
+                'error' => __('actions.referral.exists')
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 

@@ -24,7 +24,7 @@ class AttachController extends Controller
         }
 
         return new JsonResponse([
-            'error' => 'Реферальная программа успешно принята'
+            'error' => trans('actions.referral.confirmed')
         ], Response::HTTP_OK);
     }
 }

@@ -19,7 +19,7 @@ class CodeController extends Controller
 
             return new JsonResponse([
                 'success' => true,
-                'message' => 'Реферальный код успешно создан',
+                'message' => __('actions.referral.code.created'),
                 'referral_url' => route('v1.register', 'referral_code=' . $code),
             ]);
         } catch (\Exception $e) {
