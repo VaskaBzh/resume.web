@@ -9,23 +9,23 @@ export class WatchersService extends MetaTableService {
         super(translate, titleIndexes);
 
         this.form = {};
-        this.popupOpened = false;
+        this.popupClosed = false;
         this.blocks = [];
     }
 
-    openPopup() {
-        this.popupOpened = true;
+    closePopup() {
+        this.popupClosed = true;
 
         setTimeout(() => {
-            this.popupOpened = false;
-        })
+            this.popupClosed = false;
+        }, 300);
     }
 
     setForm(name = "", allowedRows = []) {
         this.form = {
             ...this.form,
-            ...new WatchersFormData(name, allowedRows)
-        }
+            ...new WatchersFormData(name, allowedRows),
+        };
     }
 
     dropForm() {
@@ -33,31 +33,30 @@ export class WatchersService extends MetaTableService {
     }
 
     setBlocks(newBlocks) {
-        this.blocks = [
-            ...newBlocks
-        ]
+        this.blocks = [...newBlocks];
     }
 
     dropBlocks() {
-        this.blocks = []
+        this.blocks = [];
     }
 
     async fetch(page = 1, per_page = 10) {
-        return await api.get(`/watchers/${store.getters.user.id}/${this.group_id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        return await api.get(
+            `/watchers/${store.getters.user.id}/${this.group_id}`,
+            {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            }
+        );
     }
 
     async index(page = 1, per_page = 10) {
         if (this.group_id !== -1) {
             try {
-                this.rows = (await this.fetch()).data.data.map((el) => {
-                    return new WatchersData({
-                        ...el,
-                    });
-                });
+                this.rows = (await this.fetch()).data.data.map(
+                    (el) => new WatchersData(el.name, el.allowed_routes, el.id)
+                );
 
                 this.setTable();
 
@@ -73,11 +72,19 @@ export class WatchersService extends MetaTableService {
     }
 
     async createWatcher() {
-        if (this.group_id !== -1)
-            await api.post(`/watchers/create/${this.group_id}`, {}, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            });
+        if (this.group_id !== -1) {
+            try {
+                await api.post(`/watchers/create/${this.group_id}`, this.form, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+
+                this.dropForm();
+                this.closePopup();
+            } catch (err) {
+                console.error(err);
+            }
+        }
     }
 }

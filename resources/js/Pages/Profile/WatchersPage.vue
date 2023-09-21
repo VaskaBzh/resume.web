@@ -3,7 +3,10 @@
         <div class="watchers__head">
             <div class="watchers__head__block">
                 <main-title tag="h1">Наблюдатели</main-title>
-                <main-description>Создавайте и управляйте ссылками наблюдателя</main-description>
+                <main-description
+                    >Создавайте и управляйте ссылками
+                    наблюдателя</main-description
+                >
             </div>
             <main-button data-popup="#addWatcher">
                 <template v-slot:svg>
@@ -13,19 +16,21 @@
         </div>
         <div class="cabinet watchers__wrapper">
             <main-slider
-                :table="service.table"
                 :wait="service.waitTable"
                 :empty="service.emptyTable"
                 rowsNum="10"
                 :meta="service.meta"
             >
-                <watchers-list :blocks="service.blocks" />
+                <watchers-list
+                    @getWatcher=""
+                    :blocks="service.table.get('rows')"
+                />
             </main-slider>
         </div>
     </div>
     <watchers-popup-add
         :wait="service.wait"
-        :closed="service.closed"
+        :closed="service.popupClosed"
         :form="service.form"
         @createWatcher="createWatcher($event)"
     />
@@ -59,18 +64,14 @@ export default {
         };
     },
     computed: {
-        ...mapGetters([
-            "getActive",
-            "getAccount"
-        ]),
+        ...mapGetters(["getActive", "getAccount"]),
     },
     methods: {
         async createWatcher(formData) {
-            console.log(formData);
             this.service.setForm(formData.name, formData.allowedRoutes);
             await this.service.createWatcher();
             await this.service.index();
-        }
+        },
     },
     watch: {
         async getActive(newActiveId) {
@@ -87,7 +88,7 @@ export default {
         this.service.setForm();
 
         await this.service.index();
-    }
+    },
 };
 </script>
 

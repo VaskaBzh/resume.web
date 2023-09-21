@@ -25,10 +25,20 @@ export class PopupService {
         this.popupLogoHtml = newPopupLogoHtml;
     }
 
+    setBodyHidden() {
+        document.querySelector("body").style.overflow = "hidden";
+    }
+
+    setBodyScroll() {
+        document.querySelector("body").style.overflow = "scroll";
+    }
+
     dropAnimate() {
-        this.animate.remove(this.popupContentHtml);
-        this.animate.remove(this.popupBlockHtml);
-        this.animate.remove(this.popupLogoHtml);
+        if (this.animate) {
+            this.animate.remove(this.popupContentHtml);
+            this.animate.remove(this.popupBlockHtml);
+            this.animate.remove(this.popupLogoHtml);
+        }
     }
 
     closeAnimate() {
@@ -36,24 +46,24 @@ export class PopupService {
 
         this.animate = anime({
             targets: this.popupContentHtml,
-            opacity: '0',
-            easing: 'easeInCubic',
+            opacity: "0",
+            easing: "easeInCubic",
             duration: 300,
         });
 
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: '122px',
-            width: '280px',
+            height: "122px",
+            width: "280px",
             translateY: 120,
-            easing: 'easeInCubic',
+            easing: "easeInCubic",
             duration: 300,
         });
 
         this.animate = anime({
             targets: this.popupLogoHtml,
-            opacity: '1',
-            easing: 'easeInCubic',
+            opacity: "1",
+            easing: "easeInCubic",
             duration: 300,
         });
     }
@@ -62,7 +72,7 @@ export class PopupService {
         this.animate = anime({
             targets: this.popupContentHtml,
             opacity: 1,
-            easing: 'easeOutCubic',
+            easing: "easeOutCubic",
             duration: 300,
             complete: () => {
                 this.dropAnimate();
@@ -74,12 +84,12 @@ export class PopupService {
         this.animate = anime({
             targets: this.popupLogoHtml,
             opacity: 0,
-            easing: 'easeInCubic',
+            easing: "easeInCubic",
             duration: 300,
             complete: () => {
                 this.dropAnimate();
 
-                this.animateOpacity()
+                this.animateOpacity();
             },
         });
     }
@@ -88,7 +98,7 @@ export class PopupService {
         this.animate = anime({
             targets: this.popupBlockHtml,
             height: `${this.popupContentHtml.scrollHeight + 15}px`,
-            easing: 'easeInCubic',
+            easing: "easeInCubic",
             duration: 500,
             complete: () => {
                 this.dropAnimate();
@@ -101,8 +111,8 @@ export class PopupService {
     animateWidth() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            width: '560px',
-            easing: 'easeInOutCubic',
+            width: "560px",
+            easing: "easeInOutCubic",
             duration: 400,
             complete: () => {
                 this.dropAnimate();
@@ -116,7 +126,7 @@ export class PopupService {
         this.animate = anime({
             targets: this.popupBlockHtml,
             translateY: 0,
-            easing: 'easeInCubic',
+            easing: "easeInCubic",
             duration: 300,
             complete: () => {
                 this.dropAnimate();
@@ -130,18 +140,21 @@ export class PopupService {
         this.animateTransform();
     }
 
-
     popupOpen = () => {
         this.emit("opened");
         this.animateContent();
         this.isOpened.value = true;
-    }
+
+        this.setBodyHidden();
+    };
 
     popupClose = () => {
         this.emit("closed");
         this.closeAnimate();
         this.isOpened.value = false;
-    }
+
+        this.setBodyScroll();
+    };
 
     clickClosed = (e) => {
         if (!this.isOpened.value) {
@@ -155,11 +168,11 @@ export class PopupService {
         ) {
             this.popupClose();
         }
-    }
+    };
 
     keyClosed = (e) => {
         if (e.keyCode === 27) this.popupClose(e);
-    }
+    };
 
     initFunc() {
         document.addEventListener("mousedown", this.clickClosed, true);

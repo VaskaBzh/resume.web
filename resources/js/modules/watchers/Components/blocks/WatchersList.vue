@@ -13,14 +13,14 @@
 import WatcherBlock from "@/modules/watchers/Components/WatcherBlock.vue";
 
 export default {
-	name: "watchers-list",
+    name: "watchers-list",
     components: {
-        WatcherBlock
+        WatcherBlock,
     },
     props: {
         blocks: Array,
-    }
-}
+    },
+};
 </script>
 
 <style scoped>

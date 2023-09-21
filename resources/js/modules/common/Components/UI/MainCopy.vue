@@ -1,5 +1,6 @@
 <template>
     <div class="copy" :class="{ 'copy-active': hasCopy }" @click="copy">
+        <p class="copy_label" v-show="label">{{ label }}</p>
         <p class="copy_input">{{ catedCode }}</p>
         <transition name="copy">
             <copy-icon class="copy_icon" v-show="!hasCopy" />
@@ -18,24 +19,29 @@ export default {
     name: "main-copy",
     props: {
         code: String,
+        label: String,
+        cutValue: {
+            type: Number,
+            default: 16,
+        },
     },
     components: {
         CopyIcon,
         TickIcon,
     },
     data() {
-        return  {
+        return {
             hasCopy: false,
         };
     },
     computed: {
         cuttedCode() {
             if (this.code)
-                return this.code.length >= 16
-                    ? `${this.code.substr(0, 16)}...`
+                return this.code.length >= this.cutValue
+                    ? `${this.code.substr(0, this.cutValue)}...`
                     : this.code;
             return "...";
-        }
+        },
     },
     methods: {
         copy() {
@@ -47,8 +53,10 @@ export default {
         },
         copyAnimation() {
             this.hasCopy = true;
-            setTimeout(() => {this.hasCopy = false}, 800)
-        }
+            setTimeout(() => {
+                this.hasCopy = false;
+            }, 800);
+        },
     },
 };
 </script>
@@ -75,14 +83,15 @@ export default {
     min-height: 48px;
     width: 100%;
     display: flex;
-    align-items: center;
+    justify-content: center;
     padding: var(--py-4, 16px) var(--px-4, 16px);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--light-background-first, #F8FAFD);
+    background: var(--light-background-first, #f8fafd);
     cursor: pointer;
     position: relative;
     transition: all 0.5s ease 0s;
     overflow: hidden;
+    flex-direction: column;
     &:hover {
         .copy {
             &_tick,
@@ -95,6 +104,13 @@ export default {
         }
         //&-active {
         //}
+    }
+    &_label {
+        color: var(--text-teritary-day, #98A2B3);
+        font-family: NunitoSans, serif;
+        font-size: 12px;
+        font-weight: 400;
+        line-height: 16px;
     }
     &_input {
         width: 100%;

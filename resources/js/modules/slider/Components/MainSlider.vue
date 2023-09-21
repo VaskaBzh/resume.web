@@ -7,13 +7,16 @@
             :end="!wait"
             :empty="empty"
         />
-        <slot name="table" v-if="!wait && !empty" />
+        <slot v-if="!wait && !empty" />
         <div class="slider__nav" v-if="!wait && !empty">
-<!--            <page-info-->
-<!--                :startPage=""-->
-<!--            />-->
+            <!--            <page-info-->
+            <!--                :startPage=""-->
+            <!--            />-->
             <div class="slider__nav-slides">
-                <slider-swipe :direction="false" @swipe="ajax(meta?.links.prev)" />
+                <slider-swipe
+                    :direction="false"
+                    @swipe="ajax(meta?.links.prev)"
+                />
                 <div class="slider__slides" v-if="!service.haveMeta">
                     <span>...</span>
                 </div>
@@ -26,13 +29,15 @@
                         @swipePage="ajax(link.url)"
                     />
                 </div>
-                <slider-swipe :direction="true" @swipe="ajax(meta?.links.next)" />
+                <slider-swipe
+                    :direction="true"
+                    @swipe="ajax(meta?.links.next)"
+                />
             </div>
         </div>
     </div>
 </template>
 <script>
-
 import SliderSwipe from "./UI/SliderSwipe.vue";
 import SliderButton from "./UI/SliderButton.vue";
 import PageInfo from "./UI/PageInfo.vue";
@@ -45,7 +50,7 @@ export default {
         MainPreloader,
         PageInfo,
         SliderButton,
-        SliderSwipe
+        SliderSwipe,
     },
     props: {
         table: Object,
@@ -58,7 +63,7 @@ export default {
         meta: Object,
     },
     watch: {
-        'service.link'(newLinksArray) {
+        "service.link"(newLinksArray) {
             this.service.setActiveLink(newLinksArray);
         },
         meta(newMeta) {

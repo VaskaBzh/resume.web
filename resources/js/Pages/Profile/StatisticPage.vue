@@ -1,7 +1,11 @@
 <template>
-    <div class="statistic" :class="{ 'statistic-center':
-            lineChartService.waitGraph ||
-            lineChartService.records?.filter((a) => a.hashrate > 0).length === 0
+    <div
+        class="statistic"
+        :class="{
+            'statistic-center':
+                lineChartService.waitGraph ||
+                lineChartService.records?.filter((a) => a.hashrate > 0)
+                    .length === 0,
         }"
     >
         <main-preloader
@@ -15,8 +19,8 @@
             class="cabinet statistic__cabinet"
             v-if="
                 !lineChartService.waitGraph &&
-                lineChartService.records?.filter((a) => a.hashrate > 0).length !==
-                    0
+                lineChartService.records?.filter((a) => a.hashrate > 0)
+                    .length !== 0
             "
         >
             <statistic-line-graph
@@ -69,8 +73,9 @@
             class="cabinet__preloader"
             v-if="
                 !lineChartService.waitGraph &&
-                lineChartService.records?.filter((a) => a.hashrate > 0).length ===
-                    0"
+                lineChartService.records?.filter((a) => a.hashrate > 0)
+                    .length === 0
+            "
         />
     </div>
 </template>
@@ -108,15 +113,11 @@ export default {
                 this.$t,
                 this.offset
             ),
-            barChartService: new StatisticService(
-                [0, 1],
-                this.$t,
-                30
-            ),
+            barChartService: new StatisticService([0, 1], this.$t, 30),
         };
     },
     watch: {
-        async 'lineChartService.offset'() {
+        async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
         },
@@ -134,10 +135,10 @@ export default {
         async getAccount() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
-        }
+        },
     },
     computed: {
-        ...mapGetters(["getActive", "getAccount",]),
+        ...mapGetters(["getActive", "getAccount"]),
     },
     async mounted() {
         this.lineChartService.setGroupId(this.getActive);
