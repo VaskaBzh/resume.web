@@ -11,6 +11,7 @@ export class WatchersService extends MetaTableService {
         this.form = {};
         this.popupClosed = false;
         this.blocks = [];
+        this.card = null;
     }
 
     closePopup() {
@@ -49,6 +50,39 @@ export class WatchersService extends MetaTableService {
                 },
             }
         );
+    }
+
+    async fetchCard(id) {
+        return await api.get(`/watchers/${id}`, {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
+    }
+
+    setCard(card) {
+        this.card = new WatchersData(
+            card.name,
+            card.allowed_routes,
+            card.id,
+            card.url
+        );
+    }
+
+    dropCard() {
+        this.card = null;
+    }
+
+    async getCard(id) {
+        this.dropCard();
+
+        try {
+            const card = (await this.fetchCard(id)).data.data;
+
+            this.setCard(card);
+        } catch (e) {
+            console.error(`Error with: ${e}`);
+        }
     }
 
     async index(page = 1, per_page = 10) {

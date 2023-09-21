@@ -22,10 +22,11 @@
                 :meta="service.meta"
             >
                 <watchers-list
-                    @getWatcher=""
+                    @getWatcher="service.getCard($event)"
                     :blocks="service.table.get('rows')"
                 />
             </main-slider>
+            <watchers-card :watcher="service.card" />
         </div>
     </div>
     <watchers-popup-add
@@ -43,9 +44,10 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
+import WatchersPopupAdd from "@/modules/watchers/Components/blocks/WatchersPopupAdd.vue";
+import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
-import WatchersPopupAdd from "@/modules/watchers/Components/blocks/WatchersPopupAdd.vue";
 
 export default {
     name: "watchers-page",
@@ -57,6 +59,7 @@ export default {
         MainDescription,
         MainButton,
         WatchersPopupAdd,
+        WatchersCard,
     },
     data() {
         return {
@@ -116,5 +119,9 @@ export default {
     height: 100%;
     width: 100%;
     flex: 1 1 auto;
+    display: grid;
+    gap: 12px;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
 }
 </style>

@@ -5,6 +5,7 @@
             :key="i"
             :name="block.name"
             :tags="block.tags"
+            @click="$emit('getWatcher', block.id)"
         />
     </div>
 </template>

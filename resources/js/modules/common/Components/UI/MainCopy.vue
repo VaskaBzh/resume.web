@@ -1,7 +1,7 @@
 <template>
     <div class="copy" :class="{ 'copy-active': hasCopy }" @click="copy">
         <p class="copy_label" v-show="label">{{ label }}</p>
-        <p class="copy_input">{{ catedCode }}</p>
+        <p class="copy_input">{{ cuttedCode }}</p>
         <transition name="copy">
             <copy-icon class="copy_icon" v-show="!hasCopy" />
         </transition>
@@ -106,7 +106,7 @@ export default {
         //}
     }
     &_label {
-        color: var(--text-teritary-day, #98A2B3);
+        color: var(--text-teritary-day, #98a2b3);
         font-family: NunitoSans, serif;
         font-size: 12px;
         font-weight: 400;
@@ -115,14 +115,14 @@ export default {
     &_input {
         width: 100%;
         height: 100%;
-        color: #818c99;
-        font-size: 16px;
-        font-weight: 400;
-        line-height: 150%;
         outline: none;
         border: none;
         background: transparent;
-        padding: 0 0 0 16px;
+        text-overflow: ellipsis;
+        font-family: NunitoSans, serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
     }
     &_tick {
         stroke: #4182ec;

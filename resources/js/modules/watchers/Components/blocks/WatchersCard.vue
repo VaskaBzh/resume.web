@@ -21,7 +21,8 @@
                 class="card_input"
                 inputName="name"
                 inputLabel="Имя наблюдателя"
-                :inputValue="name"
+                :inputValue="watcher.name"
+                :editable="isEditable"
                 :error="errorsExpired.name"
                 @getValue="setFormName($event)"
             />
@@ -29,10 +30,11 @@
                 <div class="card_label">Доступные страницы для наблюдения</div>
                 <div class="card__block card__block-selects">
                     <main-checkbox
-                        v-for="(route, i) in watcher.tags"
+                        v-for="(route, i) in allowedRoutes"
                         :key="i"
                         :is_checked="route.checked"
                         class="checkbox-sm"
+                        :editable="isEditable"
                         @is_checked="setAllowedRoutes($event, route.routes)"
                     >
                         {{ route.name }}
@@ -44,14 +46,16 @@
                 :code="watcher.link"
                 label="Ссылка наблюдателя"
             />
-        </div>
-        <div class="card__buttons">
-            <main-button :class="firstButtonClass">{{
-                firstButtonText
-            }}</main-button>
-            <main-button class="button-blue">{{
-                secondButtonText
-            }}</main-button>
+            <div class="card__buttons">
+                <main-button :class="firstButtonClass">{{
+                    firstButtonText
+                }}</main-button>
+                <main-button
+                    class="button-blue"
+                    @click="isEditable = !isEditable"
+                    >{{ secondButtonText }}</main-button
+                >
+            </div>
         </div>
     </div>
 </template>
@@ -66,7 +70,7 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import { mapGetters } from "vuex";
 
 export default {
-    name: "watcher-card",
+    name: "watchers-card",
     components: {
         MainTitle,
         MainDescription,
@@ -81,18 +85,23 @@ export default {
     computed: {
         ...mapGetters(["errorsExpired"]),
         firstButtonClass() {
-            return this.isChange ? "button-red" : "button-reverse";
+            return this.isEditable ? "button-red" : "button-reverse";
         },
         firstButtonText() {
-            return this.isChange ? "Отменить" : "Удалить";
+            return this.isEditable ? "Отменить" : "Удалить";
         },
         secondButtonText() {
-            return this.isChange ? "Сохранить" : "Изменить";
+            return this.isEditable ? "Сохранить" : "Изменить";
+        },
+    },
+    watch: {
+        watcher(newWatcher) {
+            this.setAllowedRoutes();
         },
     },
     data() {
         return {
-            isChange: false,
+            isEditable: false,
             form: {
                 name: "",
                 allowedRoutes: [],
@@ -123,6 +132,7 @@ export default {
                 name: name,
             };
         },
+        getAllowedRoutes(allowedRoutes) {},
         setAllowedRoutes(boolean, routes) {
             if (boolean)
                 this.form.allowedRoutes = [
@@ -165,9 +175,10 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    height: 100%;
 }
 .card_input {
-    background: var(--main-gohan, #fff);
+    background: var(--background-island-inner-3-day, #F8FAFD);
 }
 .card_label {
     padding: 0 16px;
@@ -185,6 +196,12 @@ export default {
     border-radius: 24px;
     background: var(--background-island-inner-3-day, #f8fafd);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
+}
+.card__buttons {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin-top: auto;
 }
 .card_button {
     min-height: 56px;

@@ -16,6 +16,7 @@ export default {
             type: Boolean,
             default: false,
         },
+        editable: Boolean,
     },
     data() {
         return {
@@ -24,8 +25,10 @@ export default {
     },
     methods: {
         checkboxer() {
-            this.isChecked = !this.isChecked;
-            this.$emit("is_checked", this.isChecked);
+            if (this.editable) {
+                this.isChecked = !this.isChecked;
+                this.$emit("is_checked", this.isChecked);
+            }
         },
     },
     updated() {
@@ -51,7 +54,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: var(--text-teritary-day, #98A2B3);
+    color: var(--text-teritary-day, #98a2b3);
     font-family: NunitoSans, serif;
     font-size: 16px;
     font-weight: 400;
@@ -65,7 +68,7 @@ export default {
         display: inline-block;
         width: 60px;
         height: 32px;
-        background: #F2F4F7;
+        background: #f2f4f7;
         transition: all 0.3s ease;
         border-radius: 32px;
     }
@@ -78,7 +81,7 @@ export default {
         right: 28px;
         width: 24px;
         height: 24px;
-        filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.10));
+        filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.1));
         border-radius: 50%;
         background: #fff;
         transition: all 0.3s ease;
@@ -88,7 +91,7 @@ export default {
             right: 4px;
         }
         &:after {
-            background: #53B1FD;
+            background: #53b1fd;
         }
     }
     &-sm {

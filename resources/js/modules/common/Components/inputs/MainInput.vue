@@ -5,7 +5,14 @@
         @click="$refs.input.focus()"
     >
         <label class="input_label" :for="inputName">{{ inputLabel }}</label>
-        <input type="text" :id="inputName" v-model="value" ref="input" class="input" />
+        <input
+            type="text"
+            :id="inputName"
+            v-model="value"
+            ref="input"
+            class="input"
+            :readonly="!editable"
+        />
     </div>
 </template>
 
@@ -17,6 +24,7 @@ export default {
         inputLabel: String,
         inputValue: String,
         error: String,
+        editable: Boolean,
     },
     data() {
         return {
@@ -25,7 +33,7 @@ export default {
     },
     watch: {
         value(newVal) {
-            this.$emit("getValue", newVal);
+            if (this.editable) this.$emit("getValue", newVal);
         },
     },
 };
@@ -63,7 +71,7 @@ export default {
         //}
     }
     &_label {
-        color: var(--text-teritary-day, #98A2B3);
+        color: var(--text-teritary-day, #98a2b3);
         font-family: NunitoSans, serif;
         font-size: 12px;
         font-weight: 400;

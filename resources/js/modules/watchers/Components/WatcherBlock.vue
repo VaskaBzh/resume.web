@@ -1,6 +1,5 @@
 <template>
     <div
-        @click="$emit('getWatcher', id)"
         class="block cabinet__block cabinet__block-card cabinet__block-light"
     >
         <span class="block_name">
@@ -20,7 +19,6 @@ export default {
     props: {
         name: String,
         tags: Array,
-        id: Number,
     },
     components: {
         WatcherTag,
@@ -33,6 +31,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 16px;
+    cursor: pointer;
 }
 .block_name {
     color: var(--old-light-gray-500, #667085);
