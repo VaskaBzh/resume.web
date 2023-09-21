@@ -506,7 +506,8 @@ const messages = {
             },
             popups: {
                 add: {
-                    title: "Enter the sub-account name",
+                    title: "Add subaccount",
+                    text: "The subaccount name cannot be changed in the future.",
                     placeholders: {
                         name: "Please enter the name",
                     },
@@ -1201,7 +1202,8 @@ const messages = {
             },
             popups: {
                 add: {
-                    title: "Задайте имя субаккаунта",
+                    title: "Добавить субаккаунт",
+                    text: "В дальнейшем имя субаккаунта невозможно изменить",
                     placeholders: {
                         name: "Введите имя",
                     },

@@ -37,6 +37,11 @@
                 <main-title tag="h3">{{
                     $t("accounts.popups.add.title")
                 }}</main-title>
+                <p class="popup-text">
+                    {{
+                        $t("accounts.popups.add.text")
+                    }}
+                </p>
                 <input
                     ref="input"
                     v-model="form.name"
@@ -46,8 +51,7 @@
                     class="input popup__input"
                     :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
-                <blue-button>
-                    <button type="submit" class="all-link">
+                    <button type="submit" class="all-link blue-button">
                         <svg
                             width="24"
                             height="24"
@@ -67,7 +71,6 @@
                         </svg>
                         {{ $t("accounts.popups.add.button") }}
                     </button>
-                </blue-button>
             </form>
         </main-popup>
     </teleport>
@@ -281,6 +284,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.popup-text{
+    color: var(--text-teritary-day, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+    margin-bottom: 40px;
+}
 .user-name-text{
     color: var(--secondary-white, var(--main-gohan, #FFF));
     font-family: Unbounded;
@@ -295,6 +307,32 @@ export default {
     font-size: 12px;
     font-weight: 600;
     line-height: 135%; /* 16.2px */
+}
+.popup__input{
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-modal-input-day, #FFF);
+    padding: var(--py-4, 16px) var(--px-4, 16px);
+    color: var(--select-text-no-value-day, #D0D5DD);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
+}
+.blue-button{
+    border-radius: 12px;
+    background: var(--buttons-primary-fill-border-default, #2E90FA);
+    /* shadow-btn-xl */
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
+    padding: 12px 16px;
+    color: var(--buttons-primary-text, #FFF);
+    /* Body 1/Nunito Sans 10pt/18/Bold */
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 177.778% */
+    margin: 80px 0 0px;
 }
 .button {
     position: relative;

@@ -52,26 +52,11 @@
             </div>
         </div>
         <div class="blue-button-container">
-            <blue-button class="add" data-popup="#addWallet">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
-                    />
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
-                    />
+            <button class="add" data-popup="#addWallet">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 4V20M4 12H20" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-            </blue-button>
+            </button>
         </div>
 
         </div>
@@ -93,25 +78,30 @@
                 <main-title tag="h3" class="change-label_title">
                     {{ $t("wallets.popups.change.title") }}
                 </main-title>
-                <input
+                <div class="autopayout-input_container">
+                    <label class="label-popup"> {{$t('wallets.popups.add.placeholders.wallet')}} </label>
+                    <input
                     v-model="wallets.form.wallet"
                     autofocus
                     disabled
                     type="text"
-                    class="input popup__input"
+                    class="input popup__input autopayput_input"
                     :placeholder="
                         $t('wallets.popups.change.placeholders.wallet')
                     "
                 />
+                </div>
+                <div class="autopayout-input_container">
+                    <label class="label-popup"> {{$t('wallets.popups.add.placeholders.name')}} </label>
                 <input
                     v-model="wallets.form.name"
                     autofocus
                     type="text"
-                    class="input popup__input"
+                    class="input popup__input  autopayput_input"
                     :placeholder="$t('wallets.popups.change.placeholders.name')"
                 />
-                <blue-button class="change-label_button">
-                    <button type="submit" class="all-link">
+                </div>
+                    <button type="submit" class="all-link change-autopyout_button">
                         <svg
                             width="24"
                             height="24"
@@ -131,7 +121,6 @@
                         </svg>
                         {{ $t("wallets.popups.change.button") }}
                     </button>
-                </blue-button>
             </form>
         </main-popup>
         <main-popup
@@ -152,24 +141,28 @@
                 <p class="wallet-description">{{$t("wallets.popups.note")  }}</p>
 
             </main-title>
-                <input
+                <div class="autopayout-input_container">
+                    <label class="label-popup"> {{$t('wallets.popups.add.placeholders.wallet')}} </label>
+                    <input
                     v-model="wallets.form.wallet"
                     required
                     autofocus
                     type="text"
-                    class="input popup__input"
                     :placeholder="$t('wallets.popups.add.placeholders.wallet')"
+                    class="input popup__input autopayput_input"
+    
                 />
+                </div>
+                <div class="autopayout-input_container">
+                    <label class="label-popup"> {{$t('wallets.popups.add.placeholders.name')}} </label>
                 <input
                     v-model="wallets.form.name"
-                    autofocus
                     type="text"
-                    class="input popup__input"
                     :placeholder="$t('wallets.popups.add.placeholders.name')"
+                    class="input popup__input  autopayput_input"
                 />
-
-                <blue-button class="button-container">
-                    <button type="submit" class="all-link">
+                </div>
+                <button type="submit" class="all-link change-autopyout_button">
                         <svg
                             width="24"
                             height="24"
@@ -189,7 +182,6 @@
                         </svg>
                         {{ $t("wallets.popups.add.button") }}
                     </button>
-                </blue-button>
             </form>
         </main-popup>
         <main-popup
@@ -221,7 +213,7 @@
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
-import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
@@ -232,7 +224,7 @@ import { usePage } from "@inertiajs/vue3";
 export default {
     components: {
         MainPopup,
-        BlueButton,
+        MainButton,
         MainTitle,
         WalletBlock,
     },
@@ -399,12 +391,29 @@ export default {
     line-height: 135%; /* 16.2px */
 }
 .autopayout-input{
+    border: none;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--light-background-first, #F8FAFD);
-    padding-top: 24px;
+    padding: 24px 0 0 16px;
+    width: 100%;
+    height: 56px;
+    outline: none;
+}
+input:focus{
+    border: none !important;
+    outline: none !important;
+    background: none !important;
 }
 .button-container{
     margin-top: 80px;
+}
+.add{
+    border-radius: 12px;
+    background: var(--buttons-island-inner-fill-border-default-day, #F8FAFD);
+    padding: 12px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
+    display: flex;
+    align-items: center;
 }
 .wallet-description{
     color: var(--light-gray-400, #98A2B3);
@@ -443,6 +452,30 @@ export default {
     font-weight: 700;
     line-height: 175%; /* 31.5px */
     width: 48%;
+}
+.autopayout-input_container{
+    display: flex;
+    margin-bottom: 12px;
+    flex-direction: column;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-modal-input-day, #FFF);
+    padding: var(--pt-3, 12px) var(--pr-4, 16px) var(--pb-2, 8px) var(--pl-4, 16px);
+}
+.change-autopyout_button{
+    border-radius: 12px;
+    background: var(--buttons-primary-fill-border-default, #2E90FA);
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
+    padding: 12px 16px;
+    color: var(--buttons-primary-text, #FFF);
+    font-family: NunitoSans;
+    margin: 36px 0;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 177.778% */
+}
+.autopayput_input{
+   background: inherit;
 }
 .cancel-button{
     border: 1px solid var(--light-gray-400, #98A2B3);
@@ -590,6 +623,14 @@ export default {
 }
 .input-container {
     position: relative;
+}
+.label-popup{
+    color: var(--text-teritary-day, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 133.333% */
 }
 .input-label {
     position: absolute;
