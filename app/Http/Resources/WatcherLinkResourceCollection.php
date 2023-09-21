@@ -12,6 +12,8 @@ class WatcherLinkResourceCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection->map(fn (WatcherLink $watcherLink) => [
+                'id' => $this->id,
+                'user_id' => $this->user_id,
                 'name' => $watcherLink->name,
                 'allowed_routes' => $watcherLink->allowed_routes,
                 'access_count' => $watcherLink->access_count,
