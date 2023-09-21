@@ -32,7 +32,7 @@ return [
         'string' => ':attribute должен быть не меньше :min и не больше :max. символов',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'Подтвердите :attribute.',
+    'confirmed' => ':attribute не совпадает',
     'current_password' => 'Пароль неверный.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
@@ -50,7 +50,7 @@ return [
     'email' => 'Неверный :attribute.',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
-    'exists' => ':attribute уже создан.',
+    'exists' => ':attribute не существует.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
@@ -119,8 +119,8 @@ return [
     'prohibited_if' => 'The :attribute field is prohibited when :other is :value.',
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
-    'regex' => 'The :attribute format is invalid.',
-    'required' => 'Заполните :attribute.',
+    'regex' => 'Не верный формат',
+    'required' => 'Введите :attribute.',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
@@ -174,6 +174,10 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'пароль',
+        'name' => 'имя',
+        'referral_code' => 'реферальный код'
+    ],
 
 ];

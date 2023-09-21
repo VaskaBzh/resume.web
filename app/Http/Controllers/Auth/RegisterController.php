@@ -33,7 +33,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255', 'regex:/^[A-aZ-z0-9]+$/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
-            'referral_code' => ['string', 'nullable']
+            'referral_code' => ['string', 'nullable', 'exists:users,referral_code']
         ], $this->messages());
     }
 
@@ -83,25 +83,18 @@ class RegisterController extends Controller
         }
     }
 
-    protected function messages()
+    protected function messages(): array
     {
-        if (app()->getLocale() === 'ru') {
-            return [
-                'name.regex' => 'Имя должно быть на английском',
-                'password.required' => 'Поле "Пароль" обязательно для заполнения.',
-                'password.min' => 'Поле "Пароль" должно быть не менее 8 символов.',
-                'password.confirmed' => 'Подтверждение пароля не совпадает.',
-                'referral_code.exists' => 'Неверный реферральный код'
-            ];
-        } else if (app()->getLocale() === 'en') {
-            return [
-                'name.regex' => 'Name must be on english',
-                'password.required' => 'The "Password" field is required.',
-                'password.min' => 'The "Password" field must be at least 8 characters.',
-                'password.confirmed' => 'The password confirmation does not match.',
-                'referral_code.exists' => 'referral code is incorrect'
-            ];
-        }
+        return [
+            'name.required' => __('validation.required', ['attribute' => __('validation.attributes.name')]),
+            'name.regex' => __('validation.regex', ['attribute' => __('validation.attributes.name')]),
+            'password.required' => __('validation.required', ['attribute' => __('validation.attributes.password')]),
+            'password.min' => __('validation.min.string', [
+                    'attribute' => __('validation.attributes.password'), 'min' => 8]
+            ),
+            'password.confirmed' => __('validation.confirmed', ['attribute' => __('validation.attributes.password')]),
+            'referral_code.exists' => __('validation.exists', ['attribute' => __('validation.attributes.referral_code')])
+        ];
     }
 
     /**
@@ -117,70 +110,5 @@ class RegisterController extends Controller
             'email' => $userData->email,
             'password' => Hash::make($userData->password),
         ]);
-    }
-
-    protected function getName(Request $request)
-    {
-        if (app()->getLocale() === 'ru') {
-            $messages = [
-                'name.required' => 'Необходимо дать имя аккаунту.',
-                "name.max" => "Максимальное количество символов аккаунта 16.",
-                "name.min" => "Минимальное количество символов аккаунта 3.",
-            ];
-        } else if (app()->getLocale() === 'en') {
-            $messages = [
-                'name.required' => 'Please provide an account name.',
-                'name.max' => 'The maximum number of characters for the account name is 16.',
-                'name.min' => 'The minimum number of characters for the account name is 3.',
-            ];
-        }
-        $request->validate([
-            'name' => 'required|min:3|max:16',
-        ], $messages);
-
-        if ($request->input("name") === "done") {
-            if (app()->getLocale() === 'ru') {
-                return back()->withErrors(new MessageBag(['error' => 'Аккаунт с таким именем уже существует!']));
-            } else if (app()->getLocale() === 'en') {
-                return back()->withErrors(new MessageBag(['error' => 'An account with this name already exists!']));
-            }
-        }
-    }
-
-    protected function getter(Request $request)
-    {
-        if (app()->getLocale() === 'ru') {
-            $messages = [
-                'email.required' => 'Необходимо заполнить «Email».',
-                'email.email' => 'Некорректное поле «Email».',
-            ];
-        } else if (app()->getLocale() === 'en') {
-            $messages = [
-                'email.required' => 'Please fill in the "Email" field.',
-                'email.email' => 'Invalid email field.',
-            ];
-        }
-        $request->validate([
-            'email' => 'required|email',
-        ], $messages);
-        $user = User::where('email', $request->input('email'))->first();
-
-        if ($user) {
-            if (app()->getLocale() === 'ru') {
-                throw ValidationException::withMessages([
-                    'error' => 'Пользователь с такой почтой уже существует.',
-                ]);
-            } else if (app()->getLocale() === 'en') {
-                throw ValidationException::withMessages([
-                    'error' => 'A user with this email already exists.',
-                ]);
-            }
-        } else {
-            if (app()->getLocale() === 'ru') {
-                return back()->with('message', 'Почта доступна.');
-            } else if (app()->getLocale() === 'en') {
-                return back()->with('message', 'The email is available.');
-            }
-        }
     }
 }
