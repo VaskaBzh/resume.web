@@ -37,7 +37,7 @@ class VerifyEmailNotification extends VerifyEmail
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-                'redirect_to' => url('/#/profile/statistic')
+                'redirect_to' => url('/profile/statistic')
             ]
         );
     }
