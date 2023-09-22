@@ -5,6 +5,7 @@ import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
+import {BlockData} from "../DTO/BlockData";
 
 export class SettingsService {
     constructor(translate, user) {
@@ -13,6 +14,7 @@ export class SettingsService {
         this.clearProfit = null;
 
         this.rows = [];
+        this.blocks = [];
         this.form = {};
         this.validate = {};
         this.user = null;
@@ -41,7 +43,6 @@ export class SettingsService {
         this.userData = new SettingsUserData(
             this.user.name,
             this.user.email,
-            "*********",
             this.user.phone ?? this.translate("inputs.phone")
         );
     }
@@ -65,6 +66,27 @@ export class SettingsService {
                 "phone",
                 this.userData.phone,
                 "phone"
+            ),
+        ];
+    }
+
+    setBlocks() {
+        this.blocks = [
+            new BlockData(
+                this.translate("safety.title[0]"),
+                this.translate("safety.text[0]"),
+                "2fac",
+                "",
+                "two-factor-icon.png",
+                this.translate("safety.button[0]")
+            ),
+            new BlockData(
+                this.translate("safety.title[2]"),
+                this.translate("safety.text[2]"),
+                "password",
+                "",
+                "change-password-icon.png",
+                this.translate("safety.button[1]")
             ),
         ];
     }
@@ -149,6 +171,5 @@ export class SettingsService {
             type: data.name,
             key: data.key,
         };
-        console.log(data.key)
     }
 }

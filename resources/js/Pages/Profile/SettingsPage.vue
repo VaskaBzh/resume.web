@@ -29,7 +29,7 @@
                 $t("title[1]")
             }}</main-title>
             <article class="card__article">
-                <div class="card__container" v-for="card in safetyCards">
+                <div class="card__container" v-for="card in settingsService.blocks">
                     <SafetyCard :card="card" @openPopup="settingsService.getHtml($event)"/>
                 </div>
             </article>
@@ -39,7 +39,6 @@
     </div>
     <teleport to="body">
         <settings-popup
-            :errors="errors"
             :form="settingsService.form"
             :validate="settingsService.validate"
             :wait="settingsService.waitAjax"
@@ -95,27 +94,6 @@ export default {
             password_confirmation: "",
             clearProfit: "",
             profit: "",
-            safetyCards: [
-                {
-                    title: this.$t("safety.title[0]"),
-                    text: this.$t("safety.text[0]"),
-                    src: "two-factor-img_workers-block.png",
-                    button: this.$t("safety.button[0]")
-                },
-                {
-                    title: this.$t("safety.title[1]"),
-                    text: this.$t("safety.text[1]"),
-                    src: "sms-img_workers-block.png",
-                    button: this.$t("safety.button[0]")
-                },
-                {
-                    title: this.$t("safety.title[2]"),
-                    text: this.$t("safety.text[2]"),
-                    src: "change-password-img_workers-block.png",
-                    button: this.$t("safety.button[1]")
-                }
-            ]
-
         };
     },
     watch: {
@@ -127,12 +105,12 @@ export default {
             this.settingsService.setUserData();
         },
     },
-
     methods: {
         settingsProcess() {
             this.settingsService.setUserData();
             this.settingsService.setForm();
             this.settingsService.setRows();
+            this.settingsService.setBlocks();
             this.settingsService.setProfits();
         },
     },

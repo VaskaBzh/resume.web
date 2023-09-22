@@ -17,6 +17,12 @@ export class GraphService {
         this.x = null;
         this.y = null;
 
+        this.fullDate = null;
+        this.time = null;
+        this.hashrate = null;
+        this.workersCountActive = null;
+        this.unit = null;
+
         this.contentTooltip = null;
 
         this.translate = translate;
@@ -69,7 +75,6 @@ export class GraphService {
         if (this.svg) {
             this.svg.selectAll("*").remove();
             this.axis.selectAll("*").remove();
-            this.tooltip.selectAll("*").remove();
             this.svg._groups[0][0].remove();
         }
     }
@@ -166,7 +171,8 @@ export class GraphService {
     }
 
     setTooltip() {
-        this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip)
+            this.tooltip = d3.select(this.tooltipHtml);
 
         return this;
     }
@@ -190,54 +196,33 @@ export class GraphService {
         );
     }
 
-    getAmount(nearestIndex) {
-        let a = this.graphData.amount
-            ? this.graphData.amount[nearestIndex]
-            : "0";
+    setDate(nearestIndex) {
+        const date = new Date(this.graphData.dates[nearestIndex]);
 
-        return this.graphData.amount
-            ? `<span>${this.translate(
-                  "tooltip.workers"
-              )} <span class="value">${a}</span></span>`
-            : ``;
+        this.fullDate = date.getUTCFullYear();
+        this.time = date.getDate()
+                        .toString()
+                        .padStart(2, "0")
+                    + "."
+                    + (date.getMonth() + 1)
+                        .toString()
+                        .padStart(2, "0");
+                    // + date.getUTCHours()
+                    //     .toString()
+                    //     .padStart(2, "0")
+                    // + ":00";
     }
 
-    getHashrate(values, unit) {
-        return `<span>
-                ${this.translate("tooltip.hash")}
-                <span class="value">
-                    ${this.tooltipFormatNumberWithUnit(values, unit)}
-                </span>
-            </span>`;
+    setUnit(nearestIndex) {
+        this.unit = this.graphData.unit ? this.graphData.unit[nearestIndex] : "T";
     }
 
-    getRejectRate() {
-        return `<span>${this.translate("tooltip.rejected")}
-                        <span class="value">0.000%</span>
-                    </span>`;
+    setHashrate(nearestIndex) {
+        this.hashrate = this.graphData.values[nearestIndex];
     }
 
-    getDate(time) {
-        return `<span class="time">
-                        ${new Date(time).getUTCFullYear() + "."}
-                        ${
-                            new Date(time)
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0") + "."
-                        }
-                        ${(new Date(time).getMonth() + 1)
-                            .toString()
-                            .padStart(2, "0")}
-                        ${new Date(time)
-                            .getUTCHours()
-                            .toString()
-                            .padStart(2, "0")}:00
-                    </span>`;
-    }
-
-    getUnit(nearestIndex) {
-        return this.graphData.unit ? this.graphData.unit[nearestIndex] : "T";
+    setWorkers(nearestIndex) {
+        this.workersCountActive = this.graphData.amount[nearestIndex];
     }
 
     getNearestIndex() {
@@ -254,21 +239,11 @@ export class GraphService {
             .style("opacity", 1);
     }
 
-    setContentTooltip(contentArray) {
-        const content = [];
-        let finillyContent = "";
-
-        contentArray.forEach((contentElem) => {
-            content.push(contentElem);
-        });
-
-        finillyContent = content.join("");
-
-        this.contentTooltip = `
-                <div class="tooltip-wrapper">
-                    ${finillyContent}
-                </div>
-            `;
+    setActualValues(nearestIndex) {
+        this.setUnit(nearestIndex);
+        this.setHashrate(nearestIndex);
+        this.setWorkers(nearestIndex);
+        this.setDate(nearestIndex);
     }
 
     tooltipInit(event) {
@@ -283,27 +258,17 @@ export class GraphService {
 
             const nearestIndex = this.getNearestIndex();
 
-            const values = this.graphData.values[nearestIndex];
-            const unit = this.getUnit(nearestIndex);
-            const time = this.graphData.dates[nearestIndex];
+            this.setActualValues(nearestIndex);
 
             this.setVerticalLine();
 
-            let workers = this.getAmount(nearestIndex);
-            let hashrate = this.getHashrate(values, unit);
-            let reject = this.getRejectRate();
-            let date = this.getDate(time);
-
-            this.setContentTooltip([workers, hashrate, reject, date]);
-
-            if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
+            if (new Date(this.graphData.dates[nearestIndex]).toLocaleTimeString() !== "Invalid Date") {
                 this.tooltip
                     .style("opacity", 1)
                     .style(
                         this.getPosition()?.side,
                         this.getPosition()?.position + "px"
-                    )
-                    .html(this.contentTooltip);
+                    );
             }
         } catch (error) {
             console.error(error);
@@ -359,7 +324,7 @@ export class GraphService {
 
     getPosition() {
         if (this.mouseX) {
-            const padding = 8;
+            const padding = 16;
 
             const isLeft = this.mouseX < this.tooltipHtml.clientWidth - padding;
             const isRight =
@@ -447,7 +412,7 @@ export class GraphService {
         this.tooltipInit(event);
 
         this.tooltip
-            .style("top", position.y - this.tooltipHtml.clientHeight - 7 + "px")
+            .style("top", position.y - this.tooltipHtml.clientHeight / 2 - 1  + "px")
             .style("opacity", 1);
     }
 

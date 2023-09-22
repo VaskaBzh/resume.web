@@ -46,7 +46,7 @@ export class TabsService {
                     new TabsData("/profile/settings", "settings", "account"),
                     new TabsData("/profile/referral", "referral", "referral"),
                     new TabsData("/profile/faq", "faq", "faq"),
-                    new TabsData("/profile/watchers", "support", "support"),
+                    // new TabsData("/profile/watchers", "support", "support"),
                 ]
             },
         ];
@@ -60,7 +60,7 @@ export class TabsService {
                 links: [
                     new TabsData("/profile/settings", "settings", "account"),
                     new TabsData("/profile/faq", "faq", "faq"),
-                    new TabsData("/profile/watchers", "support", "support"),
+                    // new TabsData("/profile/watchers", "support", "support"),
                 ]
             },
         ];

@@ -4,7 +4,22 @@
             График дохода за месяц
         </main-title>
         <div ref="chart" class="container-chart">
-            <div ref="tooltip" class="tooltip" style="opacity: 0">Tooltip</div>
+            <div ref="tooltip" class="tooltip" style="opacity: 1">
+                <div class="tooltip__content">
+                    <p class="tooltip_text">
+                        <span class="tooltip_value">{{ service.fullDate }}</span>
+                    </p>
+                    <p class="tooltip_text tooltip_text-minnig">
+                        <span class="tooltip_label">
+                            Майнинг
+                        </span>
+                        <span class="tooltip_value">
+                            {{ service.mining }} BTC
+                        </span>
+                    </p>
+                    <tooltip-bar-icon class="tooltip_icon" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -12,10 +27,12 @@
 <script>
 import { ColumnGraphService } from "../services/ColumnGraphService";
 import MainTitle from "../../common/Components/UI/MainTitle.vue";
+import TooltipBarIcon from "../icons/TooltipBarIcon.vue";
 
 export default {
 	name: "main-column-graph",
     components: {
+        TooltipBarIcon,
         MainTitle,
     },
 	props: {
@@ -90,5 +107,48 @@ export default {
 .container-chart {
 	width: calc(100% - 18px);
     margin-right: 18px;
+}
+.tooltip {
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--main-gohan, #FFF);
+    box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
+    padding: 12px;
+    min-width: 208px;
+}
+.tooltip__content {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    position: relative;
+}
+.tooltip_icon {
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
+}
+.tooltip_text {
+    font-family: NunitoSans, serif;
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 16px;
+}
+.tooltip_label {
+    color: var(--text-teritary-day, #98A2B3);
+}
+.tooltip_value {
+    color: var(--text-secondary-day, #475467);
+}
+.tooltip_value-green {
+    color: var(--status-succesfull, #1FB96C);
+}
+.tooltip_value-red {
+    color: var(--status-failed, #F1404A);
+}
+.tooltip_text-date {
+    margin-top: 8px;
+    display: inline-flex;
+    justify-content: space-between;
 }
 </style>

@@ -4,6 +4,8 @@ import * as d3 from "d3";
 export class ColumnGraphService extends GraphService {
     constructor(graphData, translate) {
         super(graphData, translate);
+
+        this.mining = null;
     }
 
     emptyValidationRules() {

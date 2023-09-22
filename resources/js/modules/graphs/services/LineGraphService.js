@@ -5,6 +5,25 @@ export class LineGraphService extends GraphService {
         super(graphData, translate);
     }
 
+    setDate(nearestIndex) {
+        const date = new Date(this.graphData.dates[nearestIndex]);
+
+        this.fullDate = date.getUTCFullYear();
+        if (this.graphData.values.length > 24)
+            this.time = date.getDate()
+                            .toString()
+                            .padStart(2, "0")
+                        + "."
+                        + (date.getMonth() + 1)
+                            .toString()
+                            .padStart(2, "0");
+        else
+            this.time = date.getUTCHours()
+                            .toString()
+                            .padStart(2, "0")
+                        + ":00";
+    }
+
     gradientInit() {
         const gradient = this.svg
             .append("defs")

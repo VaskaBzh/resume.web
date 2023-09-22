@@ -33,7 +33,7 @@ export default {
 </script>
 <style scoped>
 .card {
-    background: var(--background-island);
+    background: var(--background-island, #ffffff);
 
     display: flex;
     flex-wrap: nowrap;

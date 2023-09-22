@@ -1,6 +1,6 @@
 <template>
   <div class="card__subcontainer" >
-    <img :src="img">
+    <img :src="img" alt="image" />
     <div>
       <p class="card__title">{{ card.title }}</p >
       <p class="card__text"> {{ card.text }} </p>
@@ -23,14 +23,6 @@ export default {
     props: {
         card: Object,
     },
-    computed: {
-        img() {
-            return new URL(
-                `/resources/assets/img/${this.card.src}`,
-                import.meta.url
-            );
-        },
-    },
     data() {
         return {
             value: this.val,
@@ -46,6 +38,12 @@ export default {
     },
     computed: {
         ...mapGetters(["user"]),
+        img() {
+            return new URL(
+                `/resources/assets/img/${this.card.src}`,
+                import.meta.url
+            );
+        },
     },
     methods: {
         async checkbox_changes(data) {

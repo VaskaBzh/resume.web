@@ -44,7 +44,7 @@ const messages = {
             hash: "Hashrate",
             difficulty: "Difficulty",
             rejected: "Rejected",
-            workers: "Active workers",
+            workers: "Workers",
         },
         header: {
             login_button: "Account",
@@ -735,7 +735,7 @@ const messages = {
             hash: "Хешрейт",
             difficulty: "Сложность",
             rejected: "Отклоненный",
-            workers: "Активные воркеры",
+            workers: "Воркеры",
         },
         header: {
             login_button: "Личный кабинет",
