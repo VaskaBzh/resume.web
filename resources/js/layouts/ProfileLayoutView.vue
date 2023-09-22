@@ -1,21 +1,21 @@
 <template>
     <div class="layout">
-        <div class="header-container">
-            <header-component :user="user" />
-        </div>
-        <div class="nav-container">
-            <nav-tabs ref="tabs" :user="user"/>
-        </div>
+        <nav-tabs ref="tabs" />
+        <div class="layout__content">
+            <header-component-profile class="header-container" />
+
             <div class="page-container">
                 <keep-alive>
-                   <slot />
+                    <slot />
                 </keep-alive>
             </div>
         </div>
+
+    </div>
 </template>
 <script>
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
-import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
+import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -26,7 +26,7 @@ export default {
     },
     components: {
         // FooterComponent,
-        HeaderComponent,
+        HeaderComponentProfile,
         NavTabs,
     },
     computed: {
@@ -43,38 +43,33 @@ export default {
 };
 </script>
 <style scoped>
-.layout{
-    width: 100vw;
-    height: 100vh;
-    background: var(--secondary-white, #FFF);
+.layout {
+    width: 100%;
+    min-height: 100vh;
+    height: 100%;
+    background: var(--background-bg, #fff);
+    display: flex;
 }
-.header-container{
-    width: calc(100vw - 320px);
-    height: 84px;
-    position: fixed;
+.layout__content {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.header-container {
+    width: 100%;
+    min-height: 84px;
     display: flex;
     align-items: center;
-    top: 0;
-    right: 0;
     transition: all 0.3s ease 0s;
 }
-.nav-container{
-    width: 320px;
-    height: 100vh;
-    padding: 0 24px;
-    position: fixed;
-    top: 0px;
-    left: 0px;
-}
-.page-container{
-    position: fixed;
-    padding: 24px;
+.page-container {
+    /* padding: 24px; */
+    overflow: hidden;
     border-radius: 40px 0px 0px 0px;
-    background: var(--background-first, #F8FAFD);
+    background: var(--background-first, #f8fafd);
     box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
-    top: 84px;
-    left: 320px;
-    width: calc(100vw - 320px);
-    height: calc(100vh - 84px);
+    width: 100%;
+    height: 100%;
+    flex: 1 1 auto;
 }
 </style>

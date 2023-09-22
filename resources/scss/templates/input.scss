@@ -1,6 +1,6 @@
 .input {
     width: 100%;
-    padding: 0 12px;
+    padding: 8px 16px;
     color: var(--light-gray-600, #475467);
     font-family: NunitoSans;
     font-size: 16px;
@@ -87,7 +87,6 @@
         }
     }
     &:disabled {
-        opacity: 0.5;
-        pointer-events: none;
+        color: #c5c5c5;
     }
 }

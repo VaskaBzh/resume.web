@@ -98,10 +98,10 @@
 
 <script>
 import TableRow from "@/Components/tables/row/TableRow.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     name: "main-table",
@@ -182,6 +182,11 @@ export default {
     }
     &_column {
         position: relative;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
         @media (min-width: 767.98px) {
             height: 48px;
             padding-left: 16px;
@@ -193,7 +198,12 @@ export default {
             border-radius: 0 8px 8px 0;
         }
         span {
-            pointer-events: fill;
+            -moz-user-select: -moz-text;
+            -o-user-select: text;
+            -khtml-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+            display: inline-flex;
         }
     }
     &__head {
@@ -203,11 +213,12 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: #818c99;
+                color: var(--text-teritary-day, #98A2B3);
+                font-family: NunitoSans;
                 font-size: 14px;
+                font-style: normal;
                 font-weight: 400;
-                line-height: 130%;
-                // text-align: left;
+                line-height: 20px; /* 142.857% */
                 background: transparent;
             }
         }

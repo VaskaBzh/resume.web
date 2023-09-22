@@ -1,9 +1,10 @@
 <template>
     <div
         class="cabinet__block cabinet__block-light"
-        :data-popup="`#changes`"
+        data-popup="#changes"
         @mousedown="change_val"
     >
+    <div class="data_value">
         <div class="svg" v-html="svg"></div>
         <!--            <span-->
         <!--                class="change title title-blue"-->
@@ -14,18 +15,10 @@
         <!--                Изменить-->
         <!--            </span>-->
         <span class="text text-black text-b">{{ this.value }}</span>
-        <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            class="edit"
-        >
-            <path
-                d="M4.5 19.5H5.6L16.675 8.425L15.575 7.325L4.5 18.4V19.5ZM19.85 7.35L16.65 4.15L17.7 3.1C17.9833 2.81667 18.3333 2.675 18.75 2.675C19.1667 2.675 19.5167 2.81667 19.8 3.1L20.9 4.2C21.1833 4.48334 21.325 4.83334 21.325 5.25C21.325 5.66667 21.1833 6.01667 20.9 6.3L19.85 7.35ZM18.8 8.4L6.2 21H3V17.8L15.6 5.2L18.8 8.4ZM16.125 7.875L15.575 7.325L16.675 8.425L16.125 7.875Z"
-            />
-        </svg>
+    </div>
+        <span class="change-text">
+            {{ $t("button") }}
+        </span>
     </div>
 </template>
 
@@ -88,7 +81,6 @@ export default {
             if (pas) {
                 data.password = pas;
             }
-
             this.$emit("openPopup", data);
         },
         change_val() {
@@ -103,10 +95,14 @@ export default {
 <style lang="scss" scoped>
 .cabinet__block {
     display: flex;
-    gap: 16px;
+    gap: 8px;
     align-items: center;
+    justify-content: space-between;
     padding: 12px 16px;
-    border-radius: 12px;
+    width: 100%;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--light-background-first, #F8FAFD);
 }
 .edit {
     width: 24px;
@@ -114,5 +110,18 @@ export default {
     fill: #c5c5c5;
     margin-left: auto;
     cursor: pointer;
+}
+.change-text{
+    color: var(--primary-400, #53B1FD);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 24px */
+}
+.data_value{
+ display: flex;
+ gap: 16px;
+ align-items: center;
 }
 </style>

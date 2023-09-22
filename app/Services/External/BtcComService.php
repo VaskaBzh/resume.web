@@ -13,13 +13,14 @@ use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Http\Client\Response;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 
 class BtcComService
 {
     private PendingRequest $client;
+    private static $retryCount = 3;
+    private static $pendingTimeSec = 1;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
@@ -33,15 +34,148 @@ class BtcComService
             ]);
     }
 
-    public function call(array $segments, string $method = 'get', array $params = [])
-    {
-        $response = $this->client->$method(implode('/', $segments), $params)
-            ->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
-                new \Exception('Ошибка при выполнении запроса')
-            );
+    /* ------------------ Btc.com requests ------------------------ */
 
-        return $response['data'];
+    /**
+     * @param array $segments
+     * @param string $method
+     * @param array $params
+     * @return mixed
+     * @throws \Exception
+     */
+    public function call(array $segments, string $method = 'get', array $params = []): array
+    {
+        while (self::$retryCount > 0) {
+            $response = $this
+                ->client
+                ->$method(implode('/', $segments), $params);
+
+            if (filled($response['data'])) {
+                return $response['data'];
+            }
+
+            self::$retryCount--;
+
+            sleep(self::$pendingTimeSec);
+        }
+
+        return [];
     }
+
+    /**
+     * Получить коллекцию групп
+     */
+    public function getGroupList(): Collection
+    {
+        $response = $this->call(
+            segments: ['worker', 'groups'],
+            params: [
+                'puid' => self::PU_ID,
+                "page_size" => self::DEFAULT_PAGE_SIZE,
+            ]
+        );
+
+        return collect($response['list'] ?? []);
+    }
+
+    /**
+     * Инвормация о сабаккаунте
+     */
+    public function getSub(int $groupId): array
+    {
+        return $this->call(segments: ['groups', $groupId], params: [
+            'puid' => self::PU_ID,
+        ]);
+    }
+
+    /**
+     * Создать sub аккаунт по имени пользователя
+     */
+    public function createSub(UserData $userData): array
+    {
+        if ($this->btcHasUser(userData: $userData)) {
+            return [
+                'errors' => [
+                    'name' => trans('validation.unique', [
+                        'attribute' => 'Аккаунт'
+                    ])
+                ]
+            ];
+        }
+
+        $response = $this->call(
+            segments: ['groups', 'create'],
+            method: 'post',
+            params: [
+                'puid' => self::PU_ID,
+                'group_name' => $userData->name
+            ]);
+
+        $this->createLocalSub(userData: $userData, groupId: $response['gid']);
+
+        return $response;
+    }
+
+    /**
+     * Получить список воркеров
+     * Следует обратить внимание, метод принимает в строке запроса
+     * параметр group (не group_id)
+     */
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): Collection
+    {
+        $response = $this->call(
+            segments: ['worker'],
+            params: [
+                'puid' => self::PU_ID,
+                'group' => $groupId,
+                'page_size' => self::DEFAULT_PAGE_SIZE
+            ]
+        );
+
+        return collect($response['data']);
+    }
+
+    public function getWorker($workerId): Collection
+    {
+        $response = $this->call(['worker', $workerId], params: [
+            'puid' => self::PU_ID,
+        ]);
+
+        return collect($response['data']);
+    }
+
+    /**
+     * Обновить воркер
+     */
+    public function updateWorker(WorkerData $workerData): void
+    {
+        $this->call(
+            segments: [
+                'worker',
+                'update'
+            ],
+            method: 'post',
+            params: [
+                'puid' => self::PU_ID,
+                'group_id' => $workerData->group_id,
+                'worker_id' => (string)$workerData->worker_id
+            ]);
+    }
+
+    public function getStats(): array
+    {
+        $stats = $this->call(['pool', 'status']);
+        $fppsRate = $this->call(['account', 'earn-history'], params: [
+            'puid' => self::PU_ID,
+            "page_size" => "1",
+        ])['list'];
+
+        return array_merge($stats, [
+            'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
+        ]);
+    }
+
+    /* End requests */
 
     private static function transform(
         MinerStat $stats,
@@ -132,120 +266,6 @@ class BtcComService
         return $this->filterUngrouped()
             ->pluck('name')
             ->contains($userData->name);
-    }
-
-    /**
-     * Получить коллекцию групп
-     */
-    public function getGroupList(): Collection
-    {
-        $response = $this->call(
-            segments: ['worker', 'groups'],
-            params: [
-                'puid' => self::PU_ID,
-                "page_size" => self::DEFAULT_PAGE_SIZE,
-            ]
-        );
-
-        return collect($response['list']);
-    }
-
-    /**
-     * Инвормация о сабаккаунте
-     */
-    public function getSub(int $groupId): array
-    {
-        return $this->call(['groups', $groupId], params: [
-            'puid' => self::PU_ID,
-        ]);
-    }
-
-    /**
-     * Создать sub аккаунт по имени пользователя
-     */
-    public function createSub(UserData $userData): array
-    {
-        if ($this->btcHasUser(userData: $userData)) {
-            return [
-                'errors' => [
-                    'name' => trans('validation.unique', [
-                        'attribute' => 'Аккаунт'
-                    ])
-                ]
-            ];
-        }
-
-        $response = $this->client->post(implode('/', [
-            'groups',
-            'create'
-        ]), [
-            'puid' => self::PU_ID,
-            'group_name' => $userData->name
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
-
-        $this->createLocalSub(userData: $userData, groupId: $response['data']['gid']);
-
-        return $response['data'];
-    }
-
-    /**
-     * Получить список воркеров
-     * Следует обратить внимание, метод принимает в строке запроса
-     * параметр group (не group_id)
-     */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): Collection
-    {
-        $response = $this->call(
-            segments: ['worker'],
-            params: [
-                'puid' => self::PU_ID,
-                'group' => $groupId,
-                'page_size' => self::DEFAULT_PAGE_SIZE
-            ]
-        );
-
-        return collect($response['data']);
-    }
-
-    public function getWorker($workerId): Collection
-    {
-        $response = $this->call(['worker', $workerId], params: [
-            'puid' => self::PU_ID,
-        ]);
-
-        return collect($response['data']);
-    }
-
-    /**
-     * Обновить воркер
-     */
-    public function updateWorker(WorkerData $workerData): void
-    {
-        $this->client->post(implode('/', [
-            'worker',
-            'update'
-        ]), [
-            'puid' => self::PU_ID,
-            'group_id' => $workerData->group_id,
-            'worker_id' => (string)$workerData->worker_id
-        ])->throwIf(fn(Response $response) => $response->clientError() || $response->serverError(),
-            new \Exception('Ошибка при выполнении запроса')
-        );
-    }
-
-    public function getStats(): array
-    {
-        $stats = $this->call(['pool', 'status']);
-        $fppsRate = $this->call(['account', 'earn-history'], params: [
-            'puid' => self::PU_ID,
-            "page_size" => "1",
-        ])['list'];
-
-        return array_merge($stats, [
-            'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
-        ]);
     }
 
     private function createLocalSub(UserData $userData, $groupId): void

@@ -30,15 +30,14 @@
 @import "./templates/label";
 @import "./templates/status";
 @import "./templates/link";
-@import "./templates/button";
 @import "./templates/icon";
 @import "./templates/socials";
 @import "./templates/contacts";
 @import "./templates/quote";
-@import "./templates/popup";
+//@import "./templates/popup";
 @import "./templates/line";
 @import "./templates/datePicker";
-@import "./templates/input";
+//@import "./templates/input";
 @import "./templates/search";
 @import "./templates/form";
 @import "./templates/shadow";
@@ -46,7 +45,7 @@
 
 //========================================================================================================================================================
 // импорты тем
-@import "./theme/theme-dark";
+// @import "./theme/theme-dark";
 
 //========================================================================================================================================================
 // Обнуляющие стили
@@ -146,7 +145,6 @@ h6 {
         @if ($maxWidthContainer>0) {
             max-width: $maxWidthContainer;
             box-sizing: content-box;
-            margin: 0 auto;
         }
         @if ($containerPadding>0) {
             padding: 0 $containerPadding / 2 + px;
@@ -155,7 +153,6 @@ h6 {
 } @else {
     // По брейк-поинтам
     [class*="__container"] {
-        margin: 0 auto;
         @if ($maxWidthContainer>0) {
             max-width: $maxWidthContainer;
             box-sizing: content-box;
@@ -430,12 +427,6 @@ h6 {
     }
 }
 .statistic {
-    .preloader {
-        margin-bottom: 40px;
-        @media (max-width: $mobile) {
-            margin-bottom: 32px;
-        }
-    }
     .cabinet {
         .preloader {
             margin-bottom: 0;
@@ -448,6 +439,15 @@ h6 {
     }
 }
 .y-axis-container {
+    position: absolute;
+    left: 30px;
+    top: 0;
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 8px;
+    height: 100%;
+    width: fit-content;
+    justify-content: space-between;
     .tick {
         font-weight: 400;
         font-size: 12px;
@@ -457,7 +457,6 @@ h6 {
 }
 .container-chart {
     position: relative;
-    width: 100%;
     svg {
         overflow: visible;
         g {
@@ -772,41 +771,29 @@ h6 {
 
 // Кастомные стили графиков
 .graph {
-    &.no-title {
-        min-height: 100%;
-        min-width: 100%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        .graph {
-            &__main {
-                padding: 0px;
-                min-height: 100%;
-                min-width: 100%;
-            }
-            &__head {
-                display: none;
-                //justify-content: flex-end;
-            }
-            &__item {
-                padding: 0;
-            }
-        }
-        //.title {
-        //    display: none;
-        //}
-    }
     &.paddings {
         min-height: auto;
-        .graph {
-            &__item {
-                padding: 28px 36px 33px;
-            }
-        }
     }
 }
 #myChart {
     cursor: pointer;
+}
+
+
+
+.table {
+    &_column {
+        span {
+            .workers {
+                &-active {
+                    color: #13d60e;
+                }
+                &-inactive {
+                    color: #EB5757;
+                }
+            }
+        }
+    }
 }
 
 // Временный блок ререндера

@@ -1,11 +1,6 @@
 <template>
     <div class="referral profile">
         <div class="referral__wrapper">
-            <div class="cabinet__head">
-                <main-title tag="h3" class="cabinet_title">{{
-                    $t("title")
-                }}</main-title>
-            </div>
             <div class="cabinet referral__cabinet">
                 <div class="referral__tabs">
                     <main-tabs
@@ -24,8 +19,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainTabs from "@/Components/UI/profile/MainTabs.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainTabs from "@/modules/common/Components/Ui/MainTabs.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";

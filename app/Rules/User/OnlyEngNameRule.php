@@ -3,7 +3,6 @@
 namespace App\Rules\User;
 
 use Illuminate\Contracts\Validation\InvokableRule;
-use Illuminate\Contracts\Validation\Rule;
 
 class OnlyEngNameRule implements InvokableRule
 {

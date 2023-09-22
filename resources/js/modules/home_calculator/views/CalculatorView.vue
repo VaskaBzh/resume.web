@@ -48,7 +48,7 @@
     </div>
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import CalculatorInput from "../Componets/UI/CalculatorInput.vue";
 import CalculatorResult from "@/modules/home_calculator/views/CalculatorResult.vue";
 

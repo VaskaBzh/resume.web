@@ -2,7 +2,7 @@
     <div class="workers">
         <div class="workers__wrapper">
             <div class="cards-container">
-                <hashrate-cards :currentPage="'worker'"></hashrate-cards>
+                <main-hashrate-cards />
             </div>
             <wrap-table
                 :table="worker_service.table"
@@ -16,21 +16,15 @@
     </div>
 </template>
 <script>
-import { Head } from "@inertiajs/vue3";
-import MainTitle from "@/Components/UI/MainTitle.vue";
 import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
-import BlueButton from "@/Components/UI/BlueButton.vue";
 import { WorkerService } from "@/services/WorkerService";
-import HashrateCards from "../../modules/hashrate/Components/HashrateCards.vue";
+import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.vue";
 
 export default {
     components: {
     WrapTable,
-    MainTitle,
-    Head,
-    BlueButton,
-    HashrateCards
+    MainHashrateCards
 },
     data() {
         return {
@@ -101,8 +95,10 @@ export default {
 .cards-container{
     display: flex;
     justify-content: space-between;
+    margin-bottom: 32px;
 }
 .workers {
+    padding: 24px;
     .form .title {
         margin-bottom: 0;
     }

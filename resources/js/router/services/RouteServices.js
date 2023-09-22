@@ -29,6 +29,7 @@ export class RouteServices {
             new RouteProfileData("wallets", "wallets"),
             new RouteProfileData("workers", "workers"),
             new RouteProfileData("watchers", "watchers"),
+            new RouteProfileData("faq", "faq"),
         ];
     }
 
@@ -57,7 +58,7 @@ export class RouteServices {
                 name: "referral",
                 params: { page: "" },
                 component: () =>
-                    import(`../../layouts/ReferralsLayoutView.vue`),
+                    import('../../layouts/ReferralsLayoutView.vue'),
                 redirect: (to) => {
                     return {
                         name: "overview",

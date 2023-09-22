@@ -17,8 +17,8 @@
 
 <script>
 import axios from "axios";
-import { Inertia } from "@inertiajs/inertia";
-import MainMenu from "@/Components/UI/MainMenu.vue";
+import { Inertia } from "@inertiajs/i¡ertia";
+import MainMenu from "@/modules/common/Components/UI/MainMenu.vue";
 import { usePage } from "@inertiajs/vue3";
 
 export default {
@@ -75,20 +75,19 @@ export default {
             if (this.$i18n.locale !== lang.value) {
                 this.$i18n.locale = lang.value;
                 localStorage.setItem("location", lang.value);
-                await axios.post(
-                    "/v1/set_location",
-                    {
-                        location: this.$i18n.locale,
-                    },
-                    {
-                        headers: {
-                            ["X-XSRF-TOKEN"]: document
-                                .querySelector(`meta[name="csrf-token"]`)
-                                .getAttribute("content"),
-                        },
-                    }
-                );
-                Inertia.reload({ preserveScroll: true });
+                // await axios.post(
+                //     "/v1/set_location",
+                //     {
+                //         location: this.$i18n.locale,
+                //     },
+                //     {
+                //         headers: {
+                //             ["X-XSRF-TOKEN"]: document
+                //                 .querySelector(`meta[name="csrf-token"]`)
+                //                 .getAttribute("content"),
+                //         },
+                //     }
+                // );
             }
         },
         toggle() {
@@ -97,13 +96,13 @@ export default {
         async setLanguage() {
             if (localStorage.getItem("location")) {
                 this.$i18n.locale = localStorage.getItem("location");
-                await axios.post(
-                    "/v1/set_location",
-                    {
-                        location: this.$i18n.locale,
-                    },
-                    {}
-                );
+                // await axios.post(
+                //     "/v1/set_location",
+                //     {
+                //         location: this.$i18n.locale,
+                //     },
+                //     {}
+                // );
             }
         },
     },

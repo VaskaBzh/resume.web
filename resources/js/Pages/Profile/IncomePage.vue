@@ -2,11 +2,11 @@
     <div class="income" ref="page">
         <article class="income-cards-article">
             <div class="income-cards-container">
-                <AccrualsCard/>
-                <YesterdayIncomeCard/>
+                <AccrualsCard />
+                <YesterdayIncomeCard />
             </div>
             <div class="month-card-container">
-                <MonthIncome/>
+                <MonthIncome />
             </div>
         </article>
 
@@ -43,11 +43,11 @@
     </div>
 </template>
 <script>
-import MainSlider from "@/Components/technical/MainSlider.vue";
-import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue"
-import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue"
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainDate from "@/Components/UI/MainDate.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
+import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue";
+import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainDate from "@/modules/common/Components/UI/MainDate.vue";
 import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import { mapGetters } from "vuex";
 
@@ -56,14 +56,14 @@ import MonthIncome from "../../modules/income/Components/MonthIncome.vue";
 
 export default {
     components: {
-    MainSlider,
-    MainTitle,
-    MainDate,
-    CurrentExchangeRate,
-    AccrualsCard,
-    YesterdayIncomeCard,
-    MonthIncome
-},
+        MainSlider,
+        MainTitle,
+        MainDate,
+        CurrentExchangeRate,
+        AccrualsCard,
+        YesterdayIncomeCard,
+        MonthIncome,
+    },
     props: ["errors", "message", "user"],
     data() {
         return {
@@ -209,21 +209,22 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.income-cards-container{
+.income-cards-container {
     display: flex;
     flex-direction: column;
     gap: 12px;
     width: 100%;
 }
-.income-cards-article{
+.income-cards-article {
     width: 100%;
     display: flex;
     gap: 12px;
 }
-.month-card-container{
+.month-card-container {
     width: 100%;
 }
 .income {
+    padding: 24px;
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;

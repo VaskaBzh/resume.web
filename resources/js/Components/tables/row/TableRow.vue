@@ -19,7 +19,7 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash :class="column[0]">{{ column[1] }}</span>
+            <span v-hash ref="row_content" :class="column[0]">{{ column[1] }}</span>
         </td>
         <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
         <!--            $t("more")-->
@@ -51,6 +51,9 @@ export default {
         titles: Array,
     },
     computed: {
+        getWorkersStats() {
+            return this.$refs?.row_content.find(el => el.className === "workers_stats");
+        },
         updatedColumns() {
             if (this.columns) {
                 let obj = this.columns;
@@ -114,12 +117,27 @@ export default {
         },
     },
     methods: {
+        setWorkersStats() {
+            if (!!this.getWorkersStats) {
+                const splitedText = this.getWorkersStats.textContent.split("/");
+
+                const firstSpan = `<span class="workers-active">${splitedText[0]}</span>`;
+                const secondSpan = `<span class="workers-inactive">${splitedText[1]}</span>`;
+
+                const joinedRow = [firstSpan, secondSpan].join("/");
+
+                this.getWorkersStats.innerHTML = joinedRow;
+            }
+        },
         openPopup() {
             this.$emit("openGraph", {
                 id: this.columns.graphId,
             });
         },
     },
+    mounted() {
+        this.setWorkersStats();
+    }
 };
 </script>
 
@@ -132,6 +150,11 @@ export default {
         color: #343434;
         white-space: nowrap;
         // text-align: center;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
@@ -145,7 +168,7 @@ export default {
             }
         }
         @media (min-width: 767.98px) {
-            background: var(--light-secondary-wb, #FFF);
+            background: #fafafa;
         }
         &:first-child {
             @media (min-width: 767.98px) {
@@ -158,9 +181,26 @@ export default {
             }
         }
         span {
-            pointer-events: fill;
+            -moz-user-select: -moz-text;
+            -o-user-select: text;
+            -khtml-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+            display: inline-flex;
             &.workers {
                 color: #13d60e;
+                &_stats {
+                    display: inline-flex;
+                    gap: 6px;
+                }
+            }
+            .workers {
+                &-active {
+                    color: #13d60e;
+                }
+                &-inactive {
+                    color: #EB5757;
+                }
             }
         }
     }

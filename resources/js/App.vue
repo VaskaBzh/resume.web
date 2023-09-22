@@ -8,17 +8,40 @@
 
 <script>
 import { useRoute } from "vue-router";
-
+import ThemeService from '@/modules/interface/Services/ThemeService';
+import { mapGetters } from "vuex";
 export default {
     name: "app-layout-view",
     computed: {
+        ...mapGetters(["isDark"]),
         route() {
             return useRoute();
+        },
+    },
+    data() {
+        return {
+            service: new ThemeService()
+        }
+    },
+    methods: {
+        handleResize() {
+            this.$store.dispatch("getViewportWidth", window.innerWidth);
         },
     },
     created() {
         this.$store.dispatch("setUser");
         this.$store.dispatch("setToken");
+
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    mounted() {
+        const themeNames = {
+            false: "light",
+            true: "dark",
+        }
+        if (this.isDark)
+            this.service.toggleTheme(themeNames[this.isDark]);
     },
 };
 </script>

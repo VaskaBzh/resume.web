@@ -30,7 +30,6 @@ class VerificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:sanctum');
         $this->middleware('signed')->only('verify');
         $this->middleware('throttle:6,1')->only('verify', 'resend');
     }
@@ -55,6 +54,6 @@ class VerificationController extends Controller
             event(new Verified($user));
         }
 
-        return new JsonResponse(['message' => 'Email verified successfully']);
+        return redirect($request->redirect_to);
     }
 }

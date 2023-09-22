@@ -78,8 +78,12 @@ export class CabinetService {
         await this.index();
     }
 
-    setCode(code) {
-        this.code = code;
+    setUser(user) {
+        this.user = user;
+    }
+
+    setCode() {
+        this.code = this.user.referral_code?.code || "...";
     }
 
     setActiveSub(group_id) {
@@ -96,7 +100,7 @@ export class CabinetService {
             referralCodeParam.length - firstIndex
         );
 
-        return `${window.location.host}/registration?referral_code=${referralCode}`;
+        return `${window.location.host}/#/registration?referral_code=${referralCode}`;
     }
 
     async index() {

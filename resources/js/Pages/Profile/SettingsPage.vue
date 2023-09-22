@@ -1,8 +1,9 @@
 <template>
     <div class="settings" ref="page">
         <div class="settings__main">
-            <main-title class="profile cabinet_title" tag="h3">{{
-                $t("title")
+            <div class="settings__card">
+                <main-title class="cabinet_title" tag="h3">{{
+                $t("title[0]")
             }}</main-title>
             <div class="settings__content">
                 <settings-list
@@ -10,7 +11,7 @@
                     @openPopup="settingsService.getHtml($event)"
                 />
                 <!--                    @send2fac="settingsService.send2Fac"-->
-                <div class="settings__column">
+                <!-- <div class="settings__column"> -->
                     <!--                    <settings-block-->
                     <!--                        :title="$t('cards.profit.title')"-->
                     <!--                        :text="$t('cards.profit.text')"-->
@@ -20,7 +21,19 @@
                     <!--                        @clicked="settingsService.setClearProfit($event)"-->
                     <!--                        :currency="true"-->
                     <!--                    />-->
+                <!-- </div> -->
+            </div>
+            </div>
+            <div class="settings__card">
+                <main-title class="cabinet_title" tag="h3">{{
+                $t("title[1]")
+            }}</main-title>
+            <article class="card__article">
+                <div class="card__container" v-for="card in safetyCards">
+                    <SafetyCard :card="card" @openPopup="settingsService.getHtml($event)"/>
                 </div>
+            </article>
+
             </div>
         </div>
     </div>
@@ -41,14 +54,14 @@
     </teleport>
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SettingsBlock from "@/modules/settings/Components/blocks/SettingsBlock.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
-
 import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
+import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue"
 
 export default {
     i18n: {
@@ -59,6 +72,7 @@ export default {
         SettingsBlock,
         SettingsList,
         SettingsPopup,
+        SafetyCard
     },
     props: {
         message: String,
@@ -66,6 +80,12 @@ export default {
     },
     computed: {
         ...mapGetters(["user"]),
+        img() {
+            return new URL(
+                `/resources/assets/img/${this.card.img}`,
+                import.meta.url
+            );
+         },
     },
     data() {
         return {
@@ -75,6 +95,27 @@ export default {
             password_confirmation: "",
             clearProfit: "",
             profit: "",
+            safetyCards: [
+                {
+                    title: this.$t("safety.title[0]"),
+                    text: this.$t("safety.text[0]"),
+                    src: "two-factor-img_workers-block.png",
+                    button: this.$t("safety.button[0]")
+                },
+                {
+                    title: this.$t("safety.title[1]"),
+                    text: this.$t("safety.text[1]"),
+                    src: "sms-img_workers-block.png",
+                    button: this.$t("safety.button[0]")
+                },
+                {
+                    title: this.$t("safety.title[2]"),
+                    text: this.$t("safety.text[2]"),
+                    src: "change-password-img_workers-block.png",
+                    button: this.$t("safety.button[1]")
+                }
+            ]
+
         };
     },
     watch: {
@@ -86,6 +127,7 @@ export default {
             this.settingsService.setUserData();
         },
     },
+
     methods: {
         settingsProcess() {
             this.settingsService.setUserData();
@@ -106,7 +148,17 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.card__article{
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.card__container{
+    display: flex;
+    justify-content: space-between;
+}
 .settings {
+    padding: 24px;
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
@@ -115,6 +167,12 @@ export default {
     }
     &__main {
         width: 100%;
+        height: calc(100vh - 135px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
     }
     &__content {
         width: 100%;
@@ -149,6 +207,13 @@ export default {
             height: 28px;
             width: 100%;
         }
+    }
+    &__card{
+        border-radius: 24px;
+        background: var(--main-gohan, #FFF);
+        padding: 24px;
+        box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+        width: 711px;
     }
 }
 </style>

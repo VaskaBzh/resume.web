@@ -1,100 +1,161 @@
 <template>
-    <div class="watchers profile">
-        <div class="watchers__wrapper">
-            <form class="watchers__form">
-                <main-input
-                    inputName="watchers_name"
-                    inputLabel="Имя наблюдателя"
-                    :inputValue="watchers_form.name"
-                    @getValue="watchers_form.name = $event"
+    <div class="watchers">
+        <div class="watchers__head">
+            <div class="watchers__head__block">
+                <main-title tag="h1">Наблюдатели</main-title>
+                <main-description
+                    >Создавайте и управляйте ссылками
+                    наблюдателя</main-description
+                >
+            </div>
+            <main-button data-popup="#addWatcher">
+                <template v-slot:svg>
+                    <plus-icon />
+                </template>
+            </main-button>
+        </div>
+        <div
+            class="cabinet watchers__wrapper"
+            :class="{
+                'watchers__wrapper-full':
+                    service.waitTable || service.emptyTable,
+            }"
+        >
+            <main-slider
+                :wait="service.waitTable"
+                :empty="service.emptyTable"
+                rowsNum="1000"
+                :haveNav="false"
+                :meta="service.meta"
+            >
+                <watchers-list
+                    @getWatcher="service.getCard($event)"
+                    :blocks="service.table.get('rows')"
                 />
-                <main-checkbox
-                    class="watchers_checkbox"
-                    @is_checked="watchers_form.statistic = $event"
-                    >Статистика</main-checkbox
-                >
-                <main-checkbox
-                    class="watchers_checkbox"
-                    @is_checked="watchers_form.workers = $event"
-                    >Воркеры</main-checkbox
-                >
-                <main-checkbox
-                    class="watchers_checkbox"
-                    @is_checked="watchers_form.incomes = $event"
-                    >Доходы</main-checkbox
-                >
-                <button @submit.prevent="sendWorkers" class="watchers_button">
-                    Отправить
-                </button>
-            </form>
+            </main-slider>
+            <watchers-card
+                v-show="!service.waitTable && !service.emptyTable"
+                :watcher="service.card"
+                @changeWatcher="changeWatcher"
+                @removeWatcher="removeWatcher"
+            />
         </div>
     </div>
+    <watchers-popup-add
+        :wait="service.wait"
+        :closed="service.popupClosed"
+        @createWatcher="createWatcher($event)"
+    />
+    <watchers-popup-remove
+        :wait="service.wait"
+        :name="name"
+        :id="service.card?.id"
+        @removeWatcher="removeWatcher($event)"
+    />
 </template>
 
 <script>
-import MainInput from "@/Components/UI/inputs/MainInput.vue";
-import api from "@/api/api";
-import MainCheckbox from "@/Components/UI/MainCheckbox.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
+import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
+import WatchersPopupAdd from "@/modules/watchers/Components/blocks/WatchersPopupAdd.vue";
+import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue";
+import WatchersPopupRemove from "@/modules/watchers/Components/blocks/WatchersPopupRemove.vue";
+import { WatchersService } from "@/modules/watchers/services/WatchersService";
+import { mapGetters } from "vuex";
 
 export default {
     name: "watchers-page",
     components: {
-        MainInput,
-        MainCheckbox,
+        WatchersList,
+        MainSlider,
+        PlusIcon,
+        MainTitle,
+        MainDescription,
+        MainButton,
+        WatchersPopupAdd,
+        WatchersPopupRemove,
+        WatchersCard,
     },
     data() {
         return {
-            watchers_form: {
-                name: "",
-                statistic: true,
-                workers: true,
-                incomes: true,
-            },
+            service: new WatchersService(this.$t),
         };
     },
-    methods: {
-        async sendWorkers() {
-            let response = null;
-            try {
-                response = await api.post(
-                    "/watchers/create",
-                    this.watchers_form
-                );
-
-                console.log(response);
-            } catch (err) {
-                console.errors("Error with: " + err);
-            }
+    computed: {
+        ...mapGetters(["getActive", "getAccount"]),
+        name() {
+            return this.service.card?.name;
         },
+    },
+    methods: {
+        async createWatcher(formData) {
+            this.service.setForm(formData.name, formData.allowedRoutes);
+            await this.service.createWatcher();
+            await this.service.index();
+        },
+        async changeWatcher(formData) {
+            this.service.setForm(formData.name, formData.allowedRoutes);
+            await this.service.changeWatcher(formData.id);
+            await this.service.index();
+        },
+        async removeWatcher(id) {
+            await this.service.removeWatcher(id);
+            await this.service.index();
+        },
+    },
+    watch: {
+        async getActive(newActiveId) {
+            this.service.setGroupId(newActiveId);
+
+            await this.service.index();
+        },
+        async getAccount() {
+            await this.service.index();
+        },
+    },
+    async mounted() {
+        this.service.setGroupId(this.getActive);
+        this.service.setForm();
+
+        await this.service.index();
     },
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .watchers {
-    &__form {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        max-width: 300px;
-    }
-    &_checkbox {
-        max-width: 200%;
-        display: flex;
-        justify-content: space-between;
-        background: transparent !important;
-    }
-    &_button {
-        background: #d2dff3;
-        outline: none;
-        border: 0.5px solid #040d15;
-        min-width: 100%;
-        border-radius: 16px;
-        width: fit-content;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        min-height: 40px;
-    }
+    height: 100%;
+    padding: 24px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.watchers__head {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 32px;
+    align-items: center;
+}
+.watchers__head__block {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.watchers__wrapper {
+    height: 100%;
+    width: 100%;
+    flex: 1 1 auto;
+    display: grid;
+    gap: 12px;
+    grid-template-rows: 1fr;
+    grid-template-columns: repeat(2, 1fr);
+}
+.watchers__wrapper-full {
+    grid-template-columns: 1fr;
 }
 </style>

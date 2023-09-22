@@ -71,8 +71,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import InfoView from "@/Components/technical/views/InfoView.vue";
 import AdvantagesView from "@/Components/technical/views/AdvantagesView.vue";
 import ProfitView from "@/Components/technical/views/ProfitView.vue";

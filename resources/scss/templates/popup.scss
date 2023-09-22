@@ -79,7 +79,7 @@ body::after {
             opacity: 1 !important;
         }
     }
-    .loading {
+    .popup__content_block-loading {
         form,
         .swiper {
             .blue-button {
@@ -109,7 +109,7 @@ body::after {
             }
         }
     }
-    &_show {
+    &-show {
         z-index: 150;
         visibility: visible;
         overflow: auto;
@@ -240,24 +240,22 @@ body::after {
         }
         .graph {
             width: 100%;
-            &__main {
-                .container-chart {
-                    margin-bottom: 25px;
-                    @media (max-width: $mobile) {
-                        margin-bottom: 33px;
-                        overflow: visible;
-                        margin-top: 33px;
-                    }
-                    @media (max-width: 479.98px) {
-                        margin-bottom: 35px;
-                    }
+            .container-chart {
+                margin-bottom: 25px;
+                @media (max-width: $mobile) {
+                    margin-bottom: 33px;
+                    overflow: visible;
+                    margin-top: 33px;
                 }
-                .y-axis-container {
-                    bottom: 32px;
+                @media (max-width: 479.98px) {
+                    margin-bottom: 35px;
                 }
             }
+            .y-axis-container {
+                bottom: 32px;
+            }
         }
-        &.opened {
+        &-opened {
             .form {
                 &_message {
                     animation: fadeIn forwards 0.3s ease 0s;
@@ -279,9 +277,6 @@ body::after {
             overflow: hidden;
             transition: opacity 0.3s ease 0s;
             opacity: 0;
-            @media (max-width: $pc) {
-                padding: 24px 0;
-            }
             @media (max-width: $mobile) {
                 padding: 16px 0;
             }
@@ -424,25 +419,6 @@ body::after {
                 padding: 4px 18px 0 38px;
             }
             padding: 0 0 0 42px;
-        }
-        .graph {
-            .graph {
-                &__main {
-                    @media (max-width: $mobile) {
-                        margin: 0 -20px 0 0;
-                    }
-                    @media (max-width: 479.98px) {
-                        margin: 0 -20px 0 32px;
-                    }
-                }
-                &__list {
-                    padding: 0;
-                    margin: 0;
-                    @media (max-width: $mobile) {
-                        padding-right: 20px;
-                    }
-                }
-            }
         }
         @media (max-width: $mobileSmall) {
             .graph {

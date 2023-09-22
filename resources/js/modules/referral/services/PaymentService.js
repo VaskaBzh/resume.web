@@ -16,13 +16,15 @@ export class PaymentService extends TableService {
     }
 
     setter(referral) {
-        return new PaymentData(
+        new PaymentData(
             this.dateFormatter(referral["created_at"]),
             referral["email"],
-            referral["worker_count"],
+            referral["workers_active"],
+            referral["workers_inactive"],
             referral["hash"],
             "T",
-            referral["daily_amount"]
+            this.dateFormatter(referral["created_at"]),
+            referral["amount"]
         );
     }
 
@@ -42,9 +44,9 @@ export class PaymentService extends TableService {
             this.translate(`income_titles[${index}]`)
         );
     }
-
     async index(page = 1, per_page = 15) {
-        this.waitTable = true;
+        if (store.getters.getActive !== -1) {
+            this.waitTable = true;
 
         let response = {};
 
@@ -53,6 +55,9 @@ export class PaymentService extends TableService {
 
             this.meta = { meta: response.data };
 
+            this.rows = response.data.data.map((el) => {
+                return this.setter(el);
+            });
             this.rows = response.data.data.map((el) => {
                 return this.setter(el);
             });
@@ -68,6 +73,7 @@ export class PaymentService extends TableService {
     async setTable(page = 1, per_page = 15) {
         await this.index(page, per_page);
 
+        console.log(this.titles);
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 
