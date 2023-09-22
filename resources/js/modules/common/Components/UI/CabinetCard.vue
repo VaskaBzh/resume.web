@@ -33,6 +33,8 @@ export default {
 </script>
 <style scoped>
 .card {
+    background: var(--background-island);
+
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -49,13 +51,13 @@ export default {
     gap: 4px;
 }
 .card-active .card_num {
-    color: var(--light-green-100, #1FB96C);
+    color: #1FB96C;
 }
 .card-in-active .card_num {
-    color: var(--light-red-100, #F1404A);
+    color: #F1404A;
 }
 .card_num {
-    color: var(--light-gray-800, #1D2939);
+    color: var(--text-primary);
     font-family: Unbounded, serif;
     font-size: 41px;
     font-weight: 400;
