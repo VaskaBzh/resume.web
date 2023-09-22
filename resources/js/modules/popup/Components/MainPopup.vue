@@ -69,18 +69,8 @@ export default {
         },
         opened(newBool) {
             if (newBool) {
-                console.log(this.id);
-                this.service.popupOpen();
+                this.service.popupOpen(this.$refs.popup_block.scrollHeight);
             }
-        },
-        "$refs.popup_content"(newPopupContentHtml) {
-            this.service.setPopupContentHtml(newPopupContentHtml);
-        },
-        "$refs.popup_block"(newPopupBlockHtml) {
-            this.service.setPopupBlockHtml(newPopupBlockHtml);
-        },
-        "$refs.popup_logo"(newPopupLogoHtml) {
-            this.service.setPopupLogoHtml(newPopupLogoHtml);
         },
     },
     computed: {
@@ -132,8 +122,8 @@ export default {
     width: 280px;
     height: 122px;
     transform: translateY(220px);
-    padding: 32px;
     transition: all 0.5s ease 0s;
+    padding: 32px;
     position: relative;
 }
 .popup__content .popup__block-logo {
@@ -147,6 +137,7 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
+    min-width: 496px;
 }
 .popup_close {
     position: absolute;

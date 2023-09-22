@@ -9,6 +9,7 @@ export class PopupService {
         this.popupContentHtml = null;
         this.popupBlockHtml = null;
         this.popupLogoHtml = null;
+        this.clicked = ref(false);
 
         this.animate = null;
     }
@@ -97,7 +98,7 @@ export class PopupService {
     animateHeight() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.popupContentHtml.scrollHeight + 15}px`,
+            height: `${this.popupContentHtml.scrollHeight + 64}px`,
             easing: "easeInCubic",
             duration: 500,
             complete: () => {

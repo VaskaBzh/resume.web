@@ -8,6 +8,7 @@ export const RouteNamesMap = {
         hosting: "HostingPage",
         login: "LoginPage",
         registration: "RegPage",
+        confirm: "ConfirmPage",
     },
     profile: {
         accounts: "SubsPage",

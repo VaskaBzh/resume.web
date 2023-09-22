@@ -84,12 +84,17 @@ export default {
 .auth {
     display: flex;
     justify-content: center;
+    flex: 1 1 auto;
     // .auth__con
     &__con {
+        flex: 1 1 auto;
+        display: flex;
         & .page {
             // .page__container
             &__container {
                 height: 100%;
+                flex: 1 1 auto;
+                margin: 0 auto;
             }
             // .page__content
             &__content {

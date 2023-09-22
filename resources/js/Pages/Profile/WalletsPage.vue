@@ -32,14 +32,6 @@
             >{{ $t("wallets.title[1]") }}
         </main-title>
         <div ref="wallets" class="wrap">
-            <no-info
-                :wait="wallets.waitWallets"
-                :interval="35"
-                :end="endWallet"
-                :empty="emptyWallet"
-            >
-
-            </no-info>
             <div ref="list" class="wallets__list" v-if="!wallets.waitWallets">
                 <wallet-block
                     v-for="(wallet, i) in wallets.wallets"
@@ -150,7 +142,7 @@
                     type="text"
                     :placeholder="$t('wallets.popups.add.placeholders.wallet')"
                     class="input popup__input autopayput_input"
-    
+
                 />
                 </div>
                 <div class="autopayout-input_container">
@@ -468,7 +460,7 @@ input:focus{
     padding: 12px 16px;
     color: var(--buttons-primary-text, #FFF);
     font-family: NunitoSans;
-    margin: 36px 0;
+    margin: 36px 0 0;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;

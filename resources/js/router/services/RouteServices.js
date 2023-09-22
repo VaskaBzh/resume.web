@@ -21,6 +21,7 @@ export class RouteServices {
             new RoutePublicData("hosting", "hosting"),
             new RouteAuthData("login", "login"),
             new RouteAuthData("registration", "registration"),
+            new RouteAuthData("confirm", "confirm"),
             new RouteProfileData("accounts", "accounts"),
             new RouteProfileData("statistic", "statistic"),
             new RouteProfileData("connecting", "connecting"),
