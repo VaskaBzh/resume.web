@@ -28,7 +28,7 @@
                         v-html="option.svg"
                     ></span>
                     <img v-if="option.img" :src="imgs[i]" alt="" />
-                    {{ option.name }}
+                    {{ option.value }}
                 </button>
             </div>
         </transition>
@@ -39,7 +39,7 @@
 export default {
     name: "main-menu",
     props: {
-        options: Object,
+        options:Object,
         opened: Boolean,
         className: String,
     },

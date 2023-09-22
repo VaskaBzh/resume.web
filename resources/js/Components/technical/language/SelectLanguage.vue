@@ -1,7 +1,7 @@
 <template>
     <div class="select" @click="toggle">
         <div class="select_title menu_toggle" :class="{ rotate: opened }">
-            <span>Русский</span>
+            <span>RU</span>
             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
@@ -38,12 +38,10 @@ export default {
         options() {
             return [
                 {
-                    name: this.$t("language.ru"),
                     img: "ru.svg",
                     value: "ru",
                 },
                 {
-                    name: this.$t("language.en"),
                     img: "en.svg",
                     value: "en",
                 },

@@ -40,12 +40,7 @@
                     <!--                    <img :src="this.optionsImgs[i]" />-->
                     {{ option.title }}
                 </p>
-                <p
-                    v-else
-                    class="main_select"
-                    @click="selectOptions(option.title, '', option.value)"
-                >
-                    {{ option.title }}
+
                 </p>
             </div>
         </div>
