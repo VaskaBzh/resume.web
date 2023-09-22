@@ -1,5 +1,5 @@
 <template>
-    <div class="logout">
+    <div class="logout" @click="logout">
         <logout-icon class="logout_icon" />
         <span class="logout_text">
             {{ $t("header.login.menu.logout") }}
@@ -9,10 +9,40 @@
 
 <script>
 import LogoutIcon from "../../icons/LogoutIcon.vue";
+import api from "@/api/api";
+import { mapGetters } from "vuex";
 
 export default {
     name: "logout-link",
-    components: {LogoutIcon},
+    components: {
+        LogoutIcon
+    },
+    computed: {
+        ...mapGetters(["token"]),
+    },
+    methods: {
+        async logout() {
+            try {
+                await api.post(
+                    "/logout",
+                    {},
+                    {
+                        headers: {
+                            Authorization: `Bearer ${this.token}`,
+                        },
+                    }
+                );
+
+                await this.$router.push({ name: "home" });
+
+                this.$store.dispatch("dropUser");
+                this.$store.dispatch("dropToken");
+                this.$store.dispatch("drop_all");
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
+        }
+    },
 }
 </script>
 
@@ -27,6 +57,7 @@ export default {
     border-radius: 12px;
     background: transparent;
     gap: 16px;
+    cursor: pointer;
 }
 .logout:hover {
     background: var(--primary-4007, rgba(83, 177, 253, 0.07));
