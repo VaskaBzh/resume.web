@@ -5,7 +5,7 @@
                 {{ title }}
             </main-title>
             <div class="progress_icon">
-                <progress-hint-icon />
+                <TooltipCard></TooltipCard>
             </div>
         </div>
         <div class="progress__block">
@@ -22,9 +22,8 @@
 
 <script>
 import MainTitle from "./MainTitle.vue";
-import ProgressHintIcon from "../../icons/ProgressHintIcon.vue";
 import anime from "animejs/lib/anime.es.js";
-
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
 export default {
     name: "main-progress-bar",
     props: {
@@ -36,7 +35,7 @@ export default {
     },
     components: {
         MainTitle,
-        ProgressHintIcon,
+        TooltipCard
     },
     computed: {
         percent() {
