@@ -82,6 +82,7 @@ import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import { openNotification } from '@/modules/notifications/services/NotificationServices';
 import store from "../../../../store";
 import { ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
@@ -138,16 +139,16 @@ export default {
 
         const addAcc = async () => {
             wait.value = true;
-
             try {
-                await api.post("/subs/create", form, {
+               const response =  await api.post("/subs/create", form, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
-
+                openNotification(response.data.message, 'Добавлено')
                 closed.value = true;
                 store.dispatch("accounts_all", store.getters.user.id);
+
             } catch (e) {
                 console.error("Error with: " + e);
                 store.dispatch("setFullErrors", e.response.data.errors);
