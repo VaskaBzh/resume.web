@@ -44,8 +44,9 @@ export class PaymentService extends TableService {
             this.translate(`income_titles[${index}]`)
         );
     }
+
     async index(page = 1, per_page = 15) {
-        if (store.getters.getActive !== -1) {
+        if (store.getters.getActive !== -1)
             this.waitTable = true;
 
         let response = {};

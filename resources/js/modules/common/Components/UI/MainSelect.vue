@@ -40,8 +40,6 @@
                     <!--                    <img :src="this.optionsImgs[i]" />-->
                     {{ option.title }}
                 </p>
-
-                </p>
             </div>
         </div>
     </div>

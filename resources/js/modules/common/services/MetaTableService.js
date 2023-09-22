@@ -44,6 +44,7 @@ export class MetaTableService extends DefaultSubsService{
         this.table.set("rows", this.rows);
 
         this.waitTable = false;
+        this.emptyTable = false;
 
         return this;
     }

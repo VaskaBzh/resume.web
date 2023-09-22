@@ -155,16 +155,15 @@ export default {
         },
         changeWatcher() {
             if (this.isEditable) {
-                const routes = [];
-                this.allowedRoutes.forEach((route) => {
-                    route.routes.forEach((r) => {
-                        if (this.watcher.tags.includes(r))
-                            routes.push(route.routes);
-                    });
-                });
-
+                let routes = [];
+                this.allowedRoutes.forEach(elem => {
+                    routes = [
+                        ...routes,
+                        ...elem.routes,
+                    ]
+                })
                 this.setAllowedRoutes(true, routes);
-                this.$emit("changeWatcher", this.form);
+                this.$emit("changeWatcher", this.form.allowedRoutes);
             }
 
             this.isEditable = !this.isEditable;
@@ -178,12 +177,12 @@ export default {
         getAllowedRoutes(allowedRoutes) {
             this.allowedRoutes.forEach((route) => {
                 route.routes.forEach((r) => {
-                    if (allowedRoutes.includes(r)) route.checked = true;
-                    else route.checked = false;
+                    route.checked = !!allowedRoutes.includes(r);
                 });
             });
         },
         setAllowedRoutes(boolean, routes) {
+            console.log(routes)
             if (boolean)
                 this.form.allowedRoutes = [
                     ...this.form.allowedRoutes,

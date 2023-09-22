@@ -16,10 +16,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { Inertia } from "@inertiajs/i¡ertia";
 import MainMenu from "@/modules/common/Components/UI/MainMenu.vue";
-import { usePage } from "@inertiajs/vue3";
 
 export default {
     name: "select-language",

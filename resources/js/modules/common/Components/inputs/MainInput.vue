@@ -24,7 +24,10 @@ export default {
         inputLabel: String,
         inputValue: String,
         error: String,
-        editable: Boolean,
+        editable: {
+            type: Boolean,
+            default: true,
+        },
     },
     data() {
         return {
