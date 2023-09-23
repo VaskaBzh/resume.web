@@ -3,6 +3,10 @@
 namespace App\Exceptions;
 
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\JsonResponse;
+use Spatie\Permission\Exceptions\UnauthorizedException;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -45,6 +49,20 @@ class Handler extends ExceptionHandler
     {
         $this->reportable(function (Throwable $e) {
             //
+        });
+
+        $this->renderable(function (Throwable $e) {
+            if ($e instanceof NotFoundHttpException) {
+                return new JsonResponse([
+                    'message' => 'Resource not found'
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            }
+
+            if ($e instanceof UnauthorizedException) {
+                return new JsonResponse([
+                    'message' => 'Unauthorized'
+                ], Response::HTTP_UNAUTHORIZED);
+            }
         });
     }
 }

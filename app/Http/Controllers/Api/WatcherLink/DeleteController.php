@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DeleteController extends Controller
 {
-    public function __invoke(WatcherLink $watcher): JsonResponse
+    public function __invoke(?WatcherLink $watcher): JsonResponse
     {
         try {
             $this->authorize('viewOrChange', $watcher);

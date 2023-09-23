@@ -23,9 +23,9 @@ class SubCreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'name.required' => trans('validation.required', ['attribute' => 'имя']),
-            'name.max' => trans('validation.max.string', ['attribute' => 'Поле имени', 'max' => '16']),
-            'name.min' => trans('validation.min.string', ['attribute' => 'Поле имени', 'min' => '3']),
+            'name.required' => trans('validation.required', ['attribute' => __('validation.attributes.name')]),
+            'name.max' => trans('validation.max.string', [__('validation.attributes.name'), 'max' => '16']),
+            'name.min' => trans('validation.min.string', ['attribute' => __('validation.attributes.name'), 'min' => '3']),
         ];
     }
 }

@@ -34,15 +34,9 @@ class LoginController extends Controller
             'password' => 'required|string'
         ]);
 
-        if (auth()->check()) {
-            return new JsonResponse([
-                'error' => ['Already login in']
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
-                'error' => ['Credentials do not match']
+                'error' => [__('auth.failed')]
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -79,7 +73,7 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
             return new JsonResponse([
-                'error' => ['Credentials do not match']
+                'error' => [__('auth.failed')]
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -87,17 +81,9 @@ class LoginController extends Controller
             ->first()
             ->sendEmailVerificationNotification();
 
-        if (app()->getLocale() === 'ru') {
-            return response()->json([
-                $request->email => [trans('Сообщение с подтверждением отправлено на почту.')],
-            ]);
-        } else if (app()->getLocale() === 'en') {
-            return response()->json([
-                $request->email => [trans('A confirmation email has been sent to your email address.')],
-            ]);
-        }
-
-        return $this->logout();
+        return new JsonResponse([
+            $request->email => [__('auth.email.verify')],
+        ]);
     }
 
 }
