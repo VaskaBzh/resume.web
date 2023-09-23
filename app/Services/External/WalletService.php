@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Services\External;
 
-use App\Actions\Wallet\Upsert;
-use App\Dto\WalletData;
 use App\Models\Wallet;
 use Illuminate\Http\Client\RequestException;
 use Illuminate\Http\Client\Response;
@@ -69,18 +69,5 @@ class WalletService
         ]);
 
         return $response['result'];
-    }
-
-    public function upsertLocalWallet(Wallet $wallet, float $payment): void
-    {
-        Upsert::execute(
-            walletData: WalletData::fromRequest([
-                'wallet' => $wallet->wallet,
-                'group_id' => $wallet->group_id,
-                'payment' => $payment + $wallet->payment,
-                'percent' => $wallet->percent,
-                'minWithdrawal' => $wallet->minWithdrawal
-            ])
-        );
     }
 }
