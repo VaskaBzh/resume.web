@@ -19,7 +19,9 @@ class PayoutCommand extends Command
 
     public function handle(): void
     {
-        $readyToPayoutSubs = Sub::readyToPayout()->with('wallets')->get();
+        $readyToPayoutSubs = Sub::readyToPayout()
+            ->with('wallets')
+            ->get();
 
         if (!filled($readyToPayoutSubs)) {
             return;

@@ -6,7 +6,6 @@ use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\Incomes\ListController;
 use App\Http\Controllers\Api\MinerStatController;
 use App\Http\Controllers\Api\PayoutListController;
-use App\Http\Controllers\Api\Referral\AttachController as ReferralAttachController;
 use App\Http\Controllers\Api\Referral\CodeController as ReferralCodeController;
 use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
@@ -98,11 +97,10 @@ Route::group([
         'prefix' => 'referrals',
         'middleware' => 'role:referral'
     ], function () {
-        Route::get('/{user}', ReferralListController::class)->name('referral.list');
-        Route::post('/generate/{user}', ReferralCodeController::class)->name('code');
-        Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');
-        Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
-        Route::post('/attach/{user}', ReferralAttachController::class)->name('referral.attach');
+        Route::get('', ReferralListController::class)->name('referral.list');
+        Route::post('/generate', ReferralCodeController::class)->name('code');
+        Route::get('/statistic', ReferralStatisticController::class)->name('referral.show');
+        Route::get('/incomes', ReferralIncomeListController::class)->name('referral.income.list');
     });
 
     Route::group(['prefix' => 'watchers'], function () {

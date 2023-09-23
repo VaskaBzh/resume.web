@@ -12,10 +12,10 @@ use Illuminate\Http\Request;
 
 class CodeController extends Controller
 {
-    public function __invoke(User $user, Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
         try {
-            $code = ReferralService::generateCode(user: $user, groupId: (int) $request->group_id);
+            $code = ReferralService::generateCode(user: auth()->user(), groupId: (int) $request->group_id);
 
             return new JsonResponse([
                 'success' => true,
