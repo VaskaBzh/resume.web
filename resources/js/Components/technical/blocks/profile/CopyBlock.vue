@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CopyRow from "@/modules/common/Components/Ui/CopyRow.vue";
+import CopyRow from "@/modules/common/Components/UI/CopyRow.vue";
 
 export default {
     components: { CopyRow },

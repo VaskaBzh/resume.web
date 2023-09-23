@@ -79,7 +79,7 @@
 
 <script>
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
-import AccountMenu from "@/modules/common/Components/Ui/AccountMenu.vue";
+import AccountMenu from "@/modules/common/Components/UI/AccountMenu.vue";
 import { mapGetters } from "vuex";
 import MainLink from "@/modules/common/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";

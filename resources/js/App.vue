@@ -11,6 +11,7 @@ import { useRoute } from "vue-router";
 import ThemeService from "@/modules/interface/Services/ThemeService";
 import { mapGetters } from "vuex";
 import api from "@/api/api";
+import store from "@/store";
 export default {
     name: "app-layout-view",
     computed: {
@@ -28,20 +29,32 @@ export default {
         handleResize() {
             this.$store.dispatch("getViewportWidth", window.innerWidth);
         },
+        async onClose() {
+            try {
+                await api.put("/decrease/token", {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                });
+            } catch (error) {
+                console.error("Error decreasing token:", error);
+            }
+        },
     },
     created() {
         this.$store.dispatch("setUser");
         this.$store.dispatch("setToken");
 
         window.addEventListener("resize", this.handleResize);
+        // window.addEventListener("beforeunload", this.onClose);
         this.handleResize();
     },
-    mounted() {
+    async mounted() {
         this.themeService.toggleTheme("light");
     },
-    async unmounted() {
-        await api.put("/decrease/token");
-    },
+    // async unmounted() {
+    //     window.removeEventListener("beforeunload", this.onClose);
+    // },
 };
 </script>
 

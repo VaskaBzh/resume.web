@@ -42,6 +42,7 @@ import {
     titleNote,
     openNotification,
 } from "@/modules/notifications/services/NotificationServices";
+import api from "@/api/api";
 
 export default {
     components: {
