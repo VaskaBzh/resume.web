@@ -268,14 +268,23 @@ class BtcComService
             ->contains($userData->name);
     }
 
-    private function createLocalSub(UserData $userData, $groupId): void
+    private function createLocalSub(UserData $userData, $groupId): string
     {
-        Create::execute(
-            subData: SubData::fromRequest([
-                'user_id' => auth()->user()->id,
-                'group_id' => $groupId,
-                'group_name' => $userData->name,
-            ])
-        );
+        try {
+            $sub = Create::execute(
+                subData: SubData::fromRequest([
+                    'user_id' => auth()->user()->id,
+                    'group_id' => $groupId,
+                    'group_name' => $userData->name,
+                ])
+            );
+
+            return $sub->sub;
+        } catch (\Exception $e) {
+            report($e);
+
+            throw new \Exception($e->getMessage());
+        }
+
     }
 }
