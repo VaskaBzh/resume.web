@@ -160,6 +160,7 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'group_id_unique' => ':attribute already taken by this sub-account'
         ],
     ],
 
@@ -177,7 +178,9 @@ return [
     'attributes' => [
         'password' => 'password',
         'name' => 'name',
-        'referral_code' => 'referral code'
+        'referral_code' => 'referral code',
+        'wallet_address' => 'wallet address',
+        'wallet_name' => 'wallet name',
     ],
 
 ];

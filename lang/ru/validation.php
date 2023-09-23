@@ -160,6 +160,7 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте'
         ],
     ],
 
@@ -177,7 +178,9 @@ return [
     'attributes' => [
         'password' => 'пароль',
         'name' => 'имя',
-        'referral_code' => 'реферальный код'
+        'referral_code' => 'реферальный код',
+        'wallet.address' => 'адрес кошелька',
+        'wallet.name' => 'имя кошелька',
     ],
 
 ];
