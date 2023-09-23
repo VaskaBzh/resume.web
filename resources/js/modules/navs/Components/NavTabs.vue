@@ -1,7 +1,12 @@
 <template>
     <div class="nav">
-        <div class="nav__block">
+            <div class="nav__block">
             <logo-block class="nav_logo" />
+            <div class="header-select-container">
+                <select-theme
+                ></select-theme>
+                <select-language></select-language>
+            </div>
             <div class="nav__tabs">
                 <account-menu
                     :viewportWidth="viewportWidth"
@@ -18,6 +23,8 @@
         </div>
         <logout-link class="nav_logout" />
     </div>
+    <div class="nav-bg-mobile">
+    </div>
 </template>
 <script>
 import { TabsService } from "@/modules/navs/services/TabsService";
@@ -27,13 +34,16 @@ import { defineComponent } from "vue";
 import LogoBlock from "@/modules/navs/Components/blocks/LogoBlock.vue";
 import LogoutLink from "@/modules/navs/Components/UI/LogoutLink.vue";
 import NavGroup from "@/modules/navs/Components/UI/NavGroup.vue";
-
+import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
+import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 export default defineComponent({
     components: {
         LogoutLink,
         AccountMenu,
         LogoBlock,
         NavGroup,
+        SelectLanguage,
+        SelectTheme
     },
     data() {
         return {
@@ -59,7 +69,43 @@ export default defineComponent({
     height: 100%;
     min-height: 100vh;
     width: 320px;
-    padding: 40px 24px 24px;
+    padding: 40px 16px 16px;
+}
+.header-select-container{
+    display: none;
+}
+
+@media(max-width:900px){
+    .nav {
+        position: fixed;
+        right: 0;
+        top: 71px;
+        padding: 20px 24px 24px;
+        z-index: 10;
+        background: var(--background-island);
+        box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+        /* display: none; */
+    }
+    .header-select-container{
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 24px;
+    }
+    .nav_logo{
+        display: none;
+    }
+    .nav-bg-mobile{
+        position: fixed;
+        background: rgba(0, 0, 0, 0.15);
+        left: 0;
+        right: 0;
+        bottom: 0;
+        top:71px;
+
+        /* display: none; */
+        /* Раскоменнтировать при появлении логики */
+        /* display: inline-block; */
+    }
 }
 .nav_logo {
     margin: 0 0 40px 16px;

@@ -10,7 +10,7 @@
         </span>
         <span class="btc-gray-text">BTC</span>
       </div>
-      <div>
+      <div class="flex-column">
         <span class="rub-counter-text"> ≈ {{ converter?.usd }} $ </span>
         <span class="rub-counter-text" v-if="$i18n.locale === 'ru'"> 
           ≈ {{ converter?.rub }} ₽
@@ -88,6 +88,11 @@ export default {
   font-weight: 400;
   line-height: 147%; /* 39.69px */
 }
+@media(max-width:900px){
+  .data-num{
+    font-size: 20px;
+  }
+}
 .btc-gray-text{
   color: var(--gray-300, #D0D5DD);
   font-family: Unbounded;
@@ -97,6 +102,11 @@ export default {
   line-height: 160%; /* 32px */
   margin-left: 8px;
 }
+@media(max-width:900px){
+  .btc-gray-text{
+    font-size: 14px;
+  }
+}
 .rub-counter-text{
   color: var(--gray-300, #D0D5DD);
   font-family: Unbounded;
@@ -104,5 +114,17 @@ export default {
   font-style: normal;
   font-weight: 400;
   line-height: 145%; /* 20.3px */
+}
+@media(max-width:900px){
+  .rub-counter-text{
+    font-size: 10px;
+  }
+}
+@media(max-width:900px){
+  .flex-column{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
 }
 </style>

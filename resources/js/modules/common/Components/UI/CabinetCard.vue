@@ -75,4 +75,13 @@ export default {
     line-height: 147%;
 }
 
+@media(max-width: 900px){
+    .card_num{
+        font-size: 20px;
+    }
+    .card_unit{
+        font-size: 14px;
+    }
+}
+
 </style>

@@ -97,6 +97,12 @@ export default {
     justify-content: space-between;
     margin-bottom: 32px;
 }
+@media(max-width:900px){
+    .cards-container{
+        flex-direction: column;
+        gap: 16px;
+    }
+}
 .workers {
     padding: 24px;
     .form .title {

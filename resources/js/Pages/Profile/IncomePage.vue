@@ -220,6 +220,12 @@ export default {
     display: flex;
     gap: 12px;
 }
+@media (max-width: 900px) {
+    .income-cards-article{
+        flex-direction: column;
+        gap: 12px;
+    }
+    }
 .month-card-container {
     width: 100%;
 }
