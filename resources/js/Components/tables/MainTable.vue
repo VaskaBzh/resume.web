@@ -20,80 +20,80 @@
             />
         </tbody>
     </table>
-    <teleport to="body">
-        <main-popup
-            v-if="!!worker_service"
-            :errors="errors"
-            class="popup-graph"
-            id="seeChart"
-            ref="chart"
-            typePopup="graph"
-            @closed="dropUser"
-        >
-            <div class="popup__head">
-                <main-title tag="h4" class="title-blue">
-                    {{ worker_service.target_worker?.name }}
-                </main-title>
-                <span
-                    class="status popup_status"
-                    :class="worker_service.target_worker?.class"
-                >
-                    {{
-                        worker_service.target_worker?.class === "ACTIVE"
-                            ? $t("workers.statuses[0]")
-                            : worker_service.target_worker?.class === "INACTIVE"
-                            ? $t("workers.statuses[1]")
-                            : $t("workers.statuses[2]")
-                    }}
-                </span>
-            </div>
-            <div class="popup__main">
-                <div class="popup__info">
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">
-                            {{ $t("workers.table.thead[1]") }}</span
-                        >
-                        <span class="text text-black">
-                            <b> {{ worker_service.target_worker?.hashrate }}</b>
-                        </span>
-                    </div>
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">{{
-                            $t("workers.table.thead[3]")
-                        }}</span>
-                        <span class="text text-black">
-                            <b>
-                                {{
-                                    worker_service.target_worker
-                                        ?.hashrate_per_day
-                                }}</b
-                            ></span
-                        >
-                    </div>
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">{{
-                            $t("workers.table.thead[4]")
-                        }}</span>
-                        <span class="text text-black">
-                            <b>
-                                {{
-                                    worker_service.target_worker?.reject_percent
-                                }}</b
-                            ></span
-                        >
-                    </div>
-                </div>
-                <statistic-chart
-                    class="popup-graph__graph"
-                    :graph="worker_service.graph"
-                    :redraw="redraw"
-                    :viewportWidth="viewportWidth"
-                    :heightVal="height"
-                    :tooltip="true"
-                />
-            </div>
-        </main-popup>
-    </teleport>
+    <!--    <teleport to="body">-->
+    <!--        <main-popup-->
+    <!--            v-if="!!worker_service"-->
+    <!--            :errors="errors"-->
+    <!--            class="popup-graph"-->
+    <!--            id="seeChart"-->
+    <!--            ref="chart"-->
+    <!--            typePopup="graph"-->
+    <!--            @closed="dropUser"-->
+    <!--        >-->
+    <!--            <div class="popup__head">-->
+    <!--                <main-title tag="h4" class="title-blue">-->
+    <!--                    {{ worker_service.target_worker?.name }}-->
+    <!--                </main-title>-->
+    <!--                <span-->
+    <!--                    class="status popup_status"-->
+    <!--                    :class="worker_service.target_worker?.class"-->
+    <!--                >-->
+    <!--                    {{-->
+    <!--                        worker_service.target_worker?.class === "ACTIVE"-->
+    <!--                            ? $t("workers.statuses[0]")-->
+    <!--                            : worker_service.target_worker?.class === "INACTIVE"-->
+    <!--                            ? $t("workers.statuses[1]")-->
+    <!--                            : $t("workers.statuses[2]")-->
+    <!--                    }}-->
+    <!--                </span>-->
+    <!--            </div>-->
+    <!--            <div class="popup__main">-->
+    <!--                <div class="popup__info">-->
+    <!--                    <div class="popup__info_block">-->
+    <!--                        <span class="label popup__info_block_label">-->
+    <!--                            {{ $t("workers.table.thead[1]") }}</span-->
+    <!--                        >-->
+    <!--                        <span class="text text-black">-->
+    <!--                            <b> {{ worker_service.target_worker?.hashrate }}</b>-->
+    <!--                        </span>-->
+    <!--                    </div>-->
+    <!--                    <div class="popup__info_block">-->
+    <!--                        <span class="label popup__info_block_label">{{-->
+    <!--                            $t("workers.table.thead[3]")-->
+    <!--                        }}</span>-->
+    <!--                        <span class="text text-black">-->
+    <!--                            <b>-->
+    <!--                                {{-->
+    <!--                                    worker_service.target_worker-->
+    <!--                                        ?.hashrate_per_day-->
+    <!--                                }}</b-->
+    <!--                            ></span-->
+    <!--                        >-->
+    <!--                    </div>-->
+    <!--                    <div class="popup__info_block">-->
+    <!--                        <span class="label popup__info_block_label">{{-->
+    <!--                            $t("workers.table.thead[4]")-->
+    <!--                        }}</span>-->
+    <!--                        <span class="text text-black">-->
+    <!--                            <b>-->
+    <!--                                {{-->
+    <!--                                    worker_service.target_worker?.reject_percent-->
+    <!--                                }}</b-->
+    <!--                            ></span-->
+    <!--                        >-->
+    <!--                    </div>-->
+    <!--                </div>-->
+    <!--                <statistic-chart-->
+    <!--                    class="popup-graph__graph"-->
+    <!--                    :graph="worker_service.graph"-->
+    <!--                    :redraw="redraw"-->
+    <!--                    :viewportWidth="viewportWidth"-->
+    <!--                    :heightVal="height"-->
+    <!--                    :tooltip="true"-->
+    <!--                />-->
+    <!--            </div>-->
+    <!--        </main-popup>-->
+    <!--    </teleport>-->
 </template>
 
 <script>
@@ -151,7 +151,8 @@ export default {
     },
     methods: {
         async getUser(data) {
-            data.id ? await this.worker_service?.getPopup(data.id) : null;
+            this.$emit("getData", data);
+            // data.id ? await this.worker_service?.getPopup(data.id) : null;
         },
         dropUser() {
             Object.values(this.worker_service).length > 0
@@ -213,7 +214,7 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: var(--text-teritary-day, #98A2B3);
+                color: var(--text-teritary-day, #98a2b3);
                 font-family: NunitoSans;
                 font-size: 14px;
                 font-style: normal;

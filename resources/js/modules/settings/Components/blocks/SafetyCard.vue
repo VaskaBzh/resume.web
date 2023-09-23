@@ -1,19 +1,19 @@
 <template>
-  <div class="card__subcontainer" >
-    <img :src="img" alt="image" />
-    <div>
-      <p class="card__title">{{ card.title }}</p >
-      <p class="card__text"> {{ card.text }} </p>
+    <div class="card__subcontainer">
+        <img :src="img" alt="image" />
+        <div>
+            <p class="card__title">{{ card.title }}</p>
+            <p class="card__text">{{ card.text }}</p>
+        </div>
     </div>
-  </div>
     <div class="btn_container">
-      <button class="btn_content" data-popup="#changes" @mousedown="change_val">{{ card.button }}</button>
+        <button class="btn_content" data-popup="#fac" @mousedown="change_val">
+            {{ card.button }}
+        </button>
     </div>
 </template>
 <script>
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
-import api from "@/api/api";
-import store from "@/store";
 import { mapGetters } from "vuex";
 export default {
     name: "safety-card",
@@ -22,19 +22,6 @@ export default {
     },
     props: {
         card: Object,
-    },
-    data() {
-        return {
-            value: this.val,
-        };
-    },
-    beforeUpdate() {
-        this.value = this.val;
-    },
-    mounted() {
-        if (this.val === "..." || this.val === null) {
-            this.value = this.val;
-        }
     },
     computed: {
         ...mapGetters(["user"]),
@@ -45,56 +32,18 @@ export default {
             );
         },
     },
-    methods: {
-        async checkbox_changes(data) {
-            if (this.val !== null) {
-                let form = {
-                    item: data,
-                    type: this.name,
-                };
-
-                try {
-                    await api.post(`/change/${this.user.id}`, form, {
-                        headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
-                        },
-                    });
-                } catch (e) {
-                    console.error("Error with: " + e);
-                }
-            }
-        },
-        get_val(pas) {
-            // this.end_change();
-            let data = {
-                name: this.name.toLowerCase(),
-                val: this.value,
-                key: this.keyForm,
-            };
-
-            if (pas) {
-                data.password = pas;
-            }
-            this.$emit("openPopup", data);
-        },
-        change_val() {
-            if (this.val !== "..." && this.val !== "********") {
-                this.name === "Пароль" ? this.get_val(true) : this.get_val();
-            }
-        },
-    },
 };
 </script>
 <style scoped>
-.card__text{
-    color: var(--light-gray-400, #98A2B3);
+.card__text {
+    color: var(--light-gray-400, #98a2b3);
     font-family: NunitoSans;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
     line-height: 145%; /* 20.3px */
 }
-.card__title{
+.card__title {
     color: var(--text-secondary, #475467);
     font-family: Unbounded;
     font-size: 16px;
@@ -102,28 +51,29 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
-.card__subcontainer{
+.card__subcontainer {
     display: flex;
     align-items: center;
     gap: 12px;
     width: 62%;
 }
-.btn_container{
+.btn_container {
     display: flex;
     align-items: center;
 }
-.btn_content{
-  width: 163px;
-  padding: 8px 16px;
-  border-radius: 12px;
-  border: 1px solid var(--primary-500, #2E90FA);
-  background: var(--primary-500, #2E90FA);
-  box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 12px -6px rgba(0, 0, 0, 0.05);
-  color: var(--background-island);
-  font-family: NunitoSans;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 175%; /* 31.5px */
+.btn_content {
+    width: 163px;
+    padding: 8px 16px;
+    border-radius: 12px;
+    border: 1px solid var(--primary-500, #2e90fa);
+    background: var(--primary-500, #2e90fa);
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
+        0px 8px 12px -6px rgba(0, 0, 0, 0.05);
+    color: var(--background-island);
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 175%; /* 31.5px */
 }
 </style>

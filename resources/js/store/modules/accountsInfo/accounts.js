@@ -52,7 +52,7 @@ export default {
                 await this.dispatch("accounts_all", user_id);
                 this.dispatch("getMiningStat");
                 this.dispatch("getGraph");
-                commit("setValid")
+                commit("setValid", false);
             }
             this.dispatch("drop_interval");
             this.dispatch("set_interval", user_id);
@@ -65,9 +65,10 @@ export default {
         drop_interval({ state }) {
             clearInterval(state.interval);
         },
-        drop_all({ commit, state }) {
-            clearInterval(state.interval);
+        drop_all({ commit }) {
+            this.dispatch("drop_interval");
 
+            commit("setValid", true);
             commit("destroy_acc");
         },
     },
@@ -80,8 +81,8 @@ export default {
         updateActive(state, index) {
             state.active = index;
         },
-        setValid(state) {
-            state.valid = false;
+        setValid(state, validState) {
+            state.valid = validState;
         },
         updateAccounts(state, accounts) {
             state.accounts = { ...accounts };

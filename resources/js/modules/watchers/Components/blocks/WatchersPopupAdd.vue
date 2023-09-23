@@ -27,7 +27,7 @@
                             :key="i"
                             :is_checked="route.checked"
                             class="checkbox-sm"
-                            @is_checked="setAllowedRoutes($event, route.routes)"
+                            @is_checked="setAllowedRoutes($event, i)"
                         >
                             {{ route.name }}
                         </main-checkbox>
@@ -36,7 +36,7 @@
             </div>
             <main-button
                 type="submit"
-                @click.prevent="$emit('createWatcher', form)"
+                @click.prevent="setFormAllowedRoutes"
                 class="button-blue button-full watchers_button"
             >
                 <template v-slot:text> Добавить </template>
@@ -75,16 +75,23 @@ export default {
                 name: name,
             };
         },
-        setAllowedRoutes(boolean, routes) {
-            if (boolean)
-                this.form.allowedRoutes = [
-                    ...this.form.allowedRoutes,
-                    ...routes,
-                ];
-            else
-                this.form.allowedRoutes = this.form.allowedRoutes.filter(
-                    (route) => routes.filter((r) => r === route).length === 0
-                );
+        dropFormAllowedRoutes() {
+            this.form.allowedRoutes = [];
+        },
+        setFormAllowedRoutes() {
+            this.dropFormAllowedRoutes();
+            this.allowedRoutes.forEach((route) => {
+                if (route.checked)
+                    this.form.allowedRoutes = [
+                        ...this.form.allowedRoutes,
+                        ...route.routes,
+                    ];
+            });
+
+            this.$emit("createWatcher", this.form);
+        },
+        setAllowedRoutes(checkState, index) {
+            this.allowedRoutes[index].checked = checkState;
         },
     },
     data() {

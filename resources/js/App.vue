@@ -8,8 +8,9 @@
 
 <script>
 import { useRoute } from "vue-router";
-import ThemeService from '@/modules/interface/Services/ThemeService';
+import ThemeService from "@/modules/interface/Services/ThemeService";
 import { mapGetters } from "vuex";
+import api from "@/api/api";
 export default {
     name: "app-layout-view",
     computed: {
@@ -20,8 +21,8 @@ export default {
     },
     data() {
         return {
-            service: new ThemeService()
-        }
+            themeService: new ThemeService(),
+        };
     },
     methods: {
         handleResize() {
@@ -36,7 +37,10 @@ export default {
         this.handleResize();
     },
     mounted() {
-        this.service.toggleTheme('light')
+        this.themeService.toggleTheme("light");
+    },
+    async unmounted() {
+        await api.put("/decrease/token");
     },
 };
 </script>

@@ -1,21 +1,13 @@
 <template>
     <div
-        class="cabinet__block cabinet__block-light"
+        class="cabinet__block cabinet__block-light row"
         data-popup="#changes"
         @mousedown="change_val"
     >
-    <div class="data_value">
-        <div class="svg" v-html="svg"></div>
-        <!--            <span-->
-        <!--                class="change title title-blue"-->
-        <!--                v-if="!this.text"-->
-        <!--                @click="change_val"-->
-        <!--                :data-popup="`#changes`"-->
-        <!--            >-->
-        <!--                Изменить-->
-        <!--            </span>-->
-        <span class="text text-black text-b">{{ this.value }}</span>
-    </div>
+        <div class="data_value">
+            <div v-html="svg"></div>
+            <span class="text text-black text-b">{{ this.value }}</span>
+        </div>
         <span class="change-text">
             {{ $t("button") }}
         </span>
@@ -104,6 +96,9 @@ export default {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-island-inner-3);
 }
+.row {
+    cursor: pointer;
+}
 .edit {
     width: 24px;
     height: 24px;
@@ -111,17 +106,17 @@ export default {
     margin-left: auto;
     cursor: pointer;
 }
-.change-text{
-    color: var(--primary-400, #53B1FD);
-    font-family: NunitoSans;
+.change-text {
+    color: var(--primary-400, #53b1fd);
+    font-family: NunitoSans, serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 600;
     line-height: 150%; /* 24px */
 }
-.data_value{
- display: flex;
- gap: 16px;
- align-items: center;
+.data_value {
+    display: flex;
+    gap: 16px;
+    align-items: center;
 }
 </style>

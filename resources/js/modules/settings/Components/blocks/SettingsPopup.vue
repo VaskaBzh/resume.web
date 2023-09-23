@@ -14,76 +14,97 @@
             "
             class="form form-popup popup__form"
         >
-        <div class="header_card">
-            <main-title tag="h3">{{
-                `${
-                    form.type !== "почту"
-                        ? $t("popup.title")
-                        : $t("popup.title_email")
-                } ${form.type}`
-            }}</main-title>
-                <p class="popup-text" v-if="!stepTwo"> {{form.key == 'email'? $t("popup.text[0]") : $t("popup.text[2]") }}</p>
-                <p class="popup-text" v-else> {{form.key == 'email'? $t("popup.text[1]"): $t("popup.text[3]")}}</p>
-
-        </div>
-        <input :placeholder="placeholder" class="input popup__input" v-if="form.key !== 'phone' && !stepTwo">
-        <div v-if="form.key == 'phone' && !stepTwo">
-            <SelectCountry/>
+            <div class="header_card">
+                <main-title tag="h3">{{
+                    `${
+                        form.type !== "почту"
+                            ? $t("popup.title")
+                            : $t("popup.title_email")
+                    } ${form.type}`
+                }}</main-title>
+                <p class="popup-text">
+                    {{
+                        form.key == "email"
+                            ? $t("popup.text[0]")
+                            : $t("popup.text[2]")
+                    }}
+                </p>
+                <!--                <p class="popup-text" v-else>-->
+                <!--                {{-->
+                <!--                    form.key == "email"-->
+                <!--                        ? $t("popup.text[1]")-->
+                <!--                        : $t("popup.text[3]")-->
+                <!--                }}-->
+                <!--                </p>-->
+            </div>
             <input
-                v-model="item"
-                autofocus
-                :type="
-                    form.type === $t('inputs.password') ? 'password' : 'text'
-                "
-                class="input popup__input"
                 :placeholder="placeholder"
-                @input="phoneInput" maxlength="18" @keydown="phoneKeyDown" @paste="phonePaste"
-                id="inputTel"
+                class="input popup__input"
+                v-model="inputValue"
+                v-if="form.key !== 'phone'"
             />
+            <div v-if="form.key == 'phone'">
+                <!--                <SelectCountry />-->
+                <input
+                    v-model="inputValue"
+                    autofocus
+                    :type="
+                        form.type === $t('inputs.password')
+                            ? 'password'
+                            : 'text'
+                    "
+                    class="input popup__input"
+                    :placeholder="placeholder"
+                    @input="phoneInput"
+                    maxlength="18"
+                    @keydown="phoneKeyDown"
+                    @paste="phonePaste"
+                    id="inputTel"
+                />
             </div>
             <!--            :placeholder="`${$t(-->
             <!--            'settings.block.settings_block.popup.placeholders.placeholder'-->
             <!--            )} ${form.type}`"-->
-            <settings-password
-                v-if="form.type === $t('inputs.password')"
-                name="password"
-                :placeholder="`${$t('popup.placeholders.password_new')} ${
-                    form.type
-                }`"
-                :model="password"
-                :errors="errors"
-                @change="$emit('validate', $event)"
-            />
-            <main-validate :validate="validate" />
-            <settings-password
-                v-if="form.type === $t('inputs.password')"
-                name="password"
-                :placeholder="`${$t(
-                    'popup.placeholders.password_confirmation'
-                )} ${form.type}`"
-                :model="password_confirmation"
-                :errors="errors"
-                @change="password_confirmation = $event"
-            />
-            <div v-if="stepTwo">
-                <input :placeholder="placeholder" class="input popup__input">
-                <p class="blue-text">{{ $t("popup.text[6]") }}</p>
-            <div class="btn__block" >
-                <button class="btn-back" @click="stepTwo = !stepTwo">
-                        {{ $t("popup.button[0]") }}
-                 </button>
-                <button class="btn-active" @click="stepTwo = !stepTwo">
+            <!--            <settings-password-->
+            <!--                v-if="form.type === $t('inputs.password')"-->
+            <!--                name="password"-->
+            <!--                :placeholder="`${$t('popup.placeholders.password_new')} ${-->
+            <!--                    form.type-->
+            <!--                }`"-->
+            <!--                :model="password"-->
+            <!--                :errors="errors"-->
+            <!--                @change="$emit('validate', $event)"-->
+            <!--            />-->
+            <!--            <main-validate :validate="validate" />-->
+            <!--            <settings-password-->
+            <!--                v-if="form.type === $t('inputs.password')"-->
+            <!--                name="password"-->
+            <!--                :placeholder="`${$t(-->
+            <!--                    'popup.placeholders.password_confirmation'-->
+            <!--                )} ${form.type}`"-->
+            <!--                :model="password_confirmation"-->
+            <!--                :errors="errors"-->
+            <!--                @change="password_confirmation = $event"-->
+            <!--            />-->
+            <div>
+                <!--                <input :placeholder="placeholder" class="input popup__input" />-->
+                <!--                <p class="blue-text">{{ $t("popup.text[6]") }}</p>-->
+                <div class="btn__block">
+                    <!--                    <button class="btn-back" @click="stepTwo = !stepTwo">-->
+                    <!--                        {{ $t("popup.button[0]") }}-->
+                    <!--                    </button>-->
+                    <button type="submit" class="btn-send-code">
                         <!-- <popup-loading-icon /> -->
                         {{ $t("popup.button[1]") }}
                         {{ form.type }}
-                 </button>
+                    </button>
+                </div>
             </div>
-            </div>
-            <div class="btn__block" v-else>
-                <button class="btn-send-code" @click="stepTwo = !stepTwo">
-                        {{ $t("popup.button[2]") }}
-                 </button>
-            </div>
+            <!--            <div class="btn__block">-->
+            <!--                <button class="btn-send-code" @click="stepTwo = !stepTwo">-->
+            <!--                    {{ $t("popup.button[2]") }}-->
+            <!--                </button>-->
+            <!--            </div>-->
         </form>
     </main-popup>
 </template>
@@ -96,8 +117,8 @@ import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import SelectCountry from "@/modules/settings/Components/SelectCountry.vue"
-import {mapGetters} from "vuex";
+import SelectCountry from "@/modules/settings/Components/SelectCountry.vue";
+import { mapGetters } from "vuex";
 export default {
     name: "settings-popup",
     i18n: {
@@ -119,7 +140,7 @@ export default {
         MainButton,
         MainValidate,
         PopupLoadingIcon,
-        SelectCountry
+        SelectCountry,
     },
     data() {
         return {
@@ -129,66 +150,70 @@ export default {
             password: this.form.password,
             opened: false,
             stepTwo: false,
+            inputValue: "",
         };
     },
     methods: {
         getValue(bool) {
-            this.$emit("ajaxChange", { password: bool, value: this.item });
+            this.$emit("ajaxChange", { password: bool, value: this.inputValue });
         },
-           phoneInput(e) {
-            let inputNumbersValue = e.target.value.replace(/\D/g, "") //Хранятся только числа из инпута
-            let formattedInputValue = ''; //Хранится результат из инпута
-            let selectionStart = inputTel.selectionStart
-            if(!inputNumbersValue){
-              return inputTel.value = '';
+        phoneInput(e) {
+            let inputNumbersValue = e.target.value.replace(/\D/g, ""); //Хранятся только числа из инпута
+            let formattedInputValue = ""; //Хранится результат из инпута
+            let selectionStart = inputTel.selectionStart;
+            if (!inputNumbersValue) {
+                return (inputTel.value = "");
+            } else if (inputTel.value.length != selectionStart) {
+                if (e.data && /\D/g.test(e.data)) {
+                    inputTel.value = inputNumbersValue;
+                }
+                return;
+            } else if (["7", "8"].indexOf(inputNumbersValue[0]) > -1) {
+                let firstSymbols = inputNumbersValue[0] == "8" ? "8" : "+7";
+                formattedInputValue = firstSymbols + " ";
+                if (inputNumbersValue.length > 1) {
+                    formattedInputValue +=
+                        "(" + inputNumbersValue.substring(1, 4);
+                }
+                if (inputNumbersValue.length >= 5) {
+                    formattedInputValue +=
+                        ") " + inputNumbersValue.substring(4, 7);
+                }
+                if (inputNumbersValue.length >= 8) {
+                    formattedInputValue +=
+                        "-" + inputNumbersValue.substring(7, 9);
+                }
+                if (inputNumbersValue.length >= 10) {
+                    formattedInputValue +=
+                        "-" + inputNumbersValue.substring(9, 11);
+                }
+            } else if (inputNumbersValue[0] == "9") {
+                console.log("kz");
+            } else {
+                console.log("no ru");
+                formattedInputValue = "+" + inputNumbersValue.substring(0, 16);
             }
-            else if(inputTel.value.length != selectionStart){
-              if(e.data && /\D/g.test(e.data)){
-                inputTel.value = inputNumbersValue;
-              }
-              return;
+            inputTel.value = formattedInputValue;
+        },
+        phoneKeyDown(e) {
+            if (
+                e.keyCode == 8 &&
+                e.target.value.replace(/\D/g, "").length == 1
+            ) {
+                inputTel.value = "";
             }
-            else if(['7','8'].indexOf(inputNumbersValue[0]) > -1){
-              let firstSymbols = (inputNumbersValue[0] == '8') ? '8' : '+7';
-              formattedInputValue = firstSymbols + ' ';
-              if(inputNumbersValue.length > 1){
-                formattedInputValue += '(' + inputNumbersValue.substring(1,4)
-              }
-              if(inputNumbersValue.length >= 5){
-                formattedInputValue += ') ' + inputNumbersValue.substring(4,7)
-              }
-              if(inputNumbersValue.length >= 8){
-                formattedInputValue += '-' + inputNumbersValue.substring(7,9)
-              }
-              if(inputNumbersValue.length >= 10){
-                formattedInputValue += '-' + inputNumbersValue.substring(9,11)
-              }
-            }
-            else if(inputNumbersValue[0] == '9'){
-              console.log('kz')
-            }
-            else{
-              console.log('no ru')
-              formattedInputValue = '+' + inputNumbersValue.substring(0,16)
-            }
-            inputTel.value = formattedInputValue
-      },
-      phoneKeyDown(e){
-        if(e.keyCode == 8 && e.target.value.replace(/\D/g, "").length == 1){
-          inputTel.value = ''
-        }
-      },
-        phonePaste(e){
+        },
+        phonePaste(e) {
             let pasted = e.clipboardData || window.clipboardData;
-            let inputNumbersValue = e.target.value.replace(/\D/g, "")
-            if (pasted){
-            let pastedText = pasted.getData('Text');
-            if(/\D/g.test(pastedText)){
-                inputTel.value = inputNumbersValue
+            let inputNumbersValue = e.target.value.replace(/\D/g, "");
+            if (pasted) {
+                let pastedText = pasted.getData("Text");
+                if (/\D/g.test(pastedText)) {
+                    inputTel.value = inputNumbersValue;
+                }
             }
-         }
-        }
-     },
+        },
+    },
     watch: {
         "form.item"(newValue) {
             this.placeholder = newValue;
@@ -198,46 +223,45 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.header_card{
+.header_card {
     margin-bottom: 40px;
 }
-.btn__block{
+.btn__block {
     display: flex;
     width: 100%;
     justify-content: space-between;
     margin-top: 80px;
     gap: 12px;
-
 }
-.btn-send-code{
+.btn-send-code {
     width: 100%;
     border-radius: 12px;
-    background: var(--buttons-primary-fill-border-default, #2E90FA);
-    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
+    background: var(--buttons-primary-fill-border-default, #2e90fa);
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
     padding: 12px 16px;
-    color: var(--buttons-primary-text, var(--background-island, #FFF));
+    color: var(--buttons-primary-text, var(--background-island, #fff));
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
     line-height: 32px; /* 177.778% */
 }
-.btn-active{
+.btn-active {
     width: 49%;
     border-radius: 12px;
-    background: var(--buttons-primary-fill-border-default, #2E90FA);
-    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
-    color: var(--buttons-primary-text, var(--background-island, #FFF));
+    background: var(--buttons-primary-fill-border-default, #2e90fa);
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
+    color: var(--buttons-primary-text, var(--background-island, #fff));
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
     font-weight: 700;
     line-height: 32px; /* 177.778% */
 }
-.btn-back{
+.btn-back {
     border-radius: 12px;
     width: 49%;
-    border: 1px solid var(--light-gray-400, #98A2B3);
+    border: 1px solid var(--light-gray-400, #98a2b3);
     padding: 12px 16px;
     background: inherit;
     color: var(--text-secondary, #475467);
@@ -247,8 +271,8 @@ export default {
     font-weight: 700;
     line-height: 175%; /* 31.5px */
 }
-.popup-text{
-    color: var(--light-gray-400, #98A2B3);
+.popup-text {
+    color: var(--light-gray-400, #98a2b3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
@@ -266,8 +290,8 @@ export default {
         width: 100%;
     }
 }
-.blue-text{
-    color: var(--buttons-ghost-text-default, #53B1FD);
+.blue-text {
+    color: var(--buttons-ghost-text-default, #53b1fd);
     font-family: NunitoSans;
     font-size: 14px;
     cursor: pointer;
@@ -276,16 +300,16 @@ export default {
     margin-top: 18px;
     line-height: 20px; /* 142.857% */
 }
-.popup__input{
+.popup__input {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island, #FFF);
+    background: var(--background-island, #fff);
     padding: var(--py-4, 16px) var(--px-4, 16px);
     width: 100%;
     height: 56px;
 }
-.popup__input::placeholder{
-    color: var(--select-text-no-value-day, #D0D5DD);
+.popup__input::placeholder {
+    color: var(--select-text-no-value-day, #d0d5dd);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;

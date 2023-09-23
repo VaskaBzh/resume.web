@@ -5,7 +5,7 @@ import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
-import {BlockData} from "../DTO/BlockData";
+import { BlockData } from "../DTO/BlockData";
 
 export class SettingsService {
     constructor(translate, user) {
@@ -80,14 +80,14 @@ export class SettingsService {
                 "two-factor-icon.png",
                 this.translate("safety.button[0]")
             ),
-            new BlockData(
-                this.translate("safety.title[2]"),
-                this.translate("safety.text[2]"),
-                "password",
-                "",
-                "change-password-icon.png",
-                this.translate("safety.button[1]")
-            ),
+            // new BlockData(
+            //     this.translate("safety.title[2]"),
+            //     this.translate("safety.text[2]"),
+            //     "password",
+            //     "",
+            //     "change-password-icon.png",
+            //     this.translate("safety.button[1]")
+            // ),
         ];
     }
 

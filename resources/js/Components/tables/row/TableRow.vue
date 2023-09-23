@@ -19,7 +19,9 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash ref="row_content" :class="column[0]">{{ column[1] }}</span>
+            <span v-hash ref="row_content" :class="column[0]">{{
+                column[1]
+            }}</span>
         </td>
         <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
         <!--            $t("more")-->
@@ -52,7 +54,9 @@ export default {
     },
     computed: {
         getWorkersStats() {
-            return this.$refs?.row_content.find(el => el.className === "workers_stats");
+            return this.$refs?.row_content.find(
+                (el) => el.className === "workers_stats"
+            );
         },
         updatedColumns() {
             if (this.columns) {
@@ -118,7 +122,7 @@ export default {
     },
     methods: {
         setWorkersStats() {
-            if (!!this.getWorkersStats) {
+            if (this.getWorkersStats) {
                 const splitedText = this.getWorkersStats.textContent.split("/");
 
                 const firstSpan = `<span class="workers-active">${splitedText[0]}</span>`;
@@ -137,7 +141,7 @@ export default {
     },
     mounted() {
         this.setWorkersStats();
-    }
+    },
 };
 </script>
 
@@ -199,7 +203,7 @@ export default {
                     color: #13d60e;
                 }
                 &-inactive {
-                    color: #EB5757;
+                    color: #eb5757;
                 }
             }
         }

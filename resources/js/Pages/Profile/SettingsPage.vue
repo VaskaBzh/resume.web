@@ -3,64 +3,55 @@
         <div class="settings__main">
             <div class="settings__card">
                 <main-title class="cabinet_title" tag="h3">{{
-                $t("title[0]")
-            }}</main-title>
-            <div class="settings__content">
-                <settings-list
-                    :rows="settingsService.rows"
-                    @openPopup="settingsService.getHtml($event)"
-                />
-                <!--                    @send2fac="settingsService.send2Fac"-->
-                <!-- <div class="settings__column"> -->
-                    <!--                    <settings-block-->
-                    <!--                        :title="$t('cards.profit.title')"-->
-                    <!--                        :text="$t('cards.profit.text')"-->
-                    <!--                        :button="$t('cards.profit.button')"-->
-                    <!--                        :value="settingsService.profit"-->
-                    <!--                        :success="settingsService.clearProfit"-->
-                    <!--                        @clicked="settingsService.setClearProfit($event)"-->
-                    <!--                        :currency="true"-->
-                    <!--                    />-->
-                <!-- </div> -->
-            </div>
+                    $t("title[0]")
+                }}</main-title>
+                <div class="settings__content">
+                    <settings-list
+                        :rows="settingsService.rows"
+                        @openPopup="settingsService.getHtml($event)"
+                    />
+                </div>
             </div>
             <div class="settings__card">
                 <main-title class="cabinet_title" tag="h3">{{
-                $t("title[1]")
-            }}</main-title>
-            <article class="card__article">
-                <div class="card__container" v-for="card in settingsService.blocks">
-                    <SafetyCard :card="card" @openPopup="settingsService.getHtml($event)"/>
-                </div>
-            </article>
-
+                    $t("title[1]")
+                }}</main-title>
+                <article class="card__article">
+                    <div
+                        class="card__container"
+                        v-for="card in settingsService.blocks"
+                    >
+                        <SafetyCard
+                            :card="card"
+                            @openPopup="settingsService.getHtml($event)"
+                        />
+                    </div>
+                </article>
             </div>
         </div>
     </div>
-    <teleport to="body">
-        <settings-popup
-            :form="settingsService.form"
-            :validate="settingsService.validate"
-            :wait="settingsService.waitAjax"
-            :closed="settingsService.closed"
-            @ajaxChange="settingsService.ajaxChange($event)"
-            @validate="
-                settingsService.validateProcess(
-                    !!$event.target ? $event.target.value : $event
-                )
-            "
-        />
-    </teleport>
+    <settings-popup
+        v-if="settingsService.form !== {}"
+        :form="settingsService.form"
+        :validate="settingsService.validate"
+        :wait="settingsService.waitAjax"
+        :closed="settingsService.closed"
+        @ajaxChange="settingsService.ajaxChange($event)"
+        @validate="
+            settingsService.validateProcess(
+                !!$event.target ? $event.target.value : $event
+            )
+        "
+    />
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import SettingsBlock from "@/modules/settings/Components/blocks/SettingsBlock.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
 import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
-import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue"
+import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 
 export default {
     i18n: {
@@ -68,10 +59,9 @@ export default {
     },
     components: {
         MainTitle,
-        SettingsBlock,
         SettingsList,
         SettingsPopup,
-        SafetyCard
+        SafetyCard,
     },
     props: {
         message: String,
@@ -84,7 +74,7 @@ export default {
                 `/resources/assets/img/${this.card.img}`,
                 import.meta.url
             );
-         },
+        },
     },
     data() {
         return {
@@ -126,12 +116,12 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.card__article{
+.card__article {
     display: flex;
     flex-direction: column;
     gap: 32px;
 }
-.card__container{
+.card__container {
     display: flex;
     justify-content: space-between;
 }
@@ -186,9 +176,9 @@ export default {
             width: 100%;
         }
     }
-    &__card{
+    &__card {
         border-radius: 24px;
-        background: var(--background-island, #FFF);
+        background: var(--background-island, #fff);
         padding: 24px;
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 711px;

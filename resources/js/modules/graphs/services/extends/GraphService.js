@@ -133,17 +133,14 @@ export class GraphService {
     emptyValidationRules() {
         return d3.max(this.graphData.values) !== 0
             ? d3.max(this.graphData.values) +
-            d3.max(this.graphData.values) * 0.2
-            : 120
+                  d3.max(this.graphData.values) * 0.2
+            : 120;
     }
 
     setY() {
         this.y = d3
             .scaleLinear()
-            .domain([
-                0,
-                this.emptyValidationRules(),
-            ])
+            .domain([0, this.emptyValidationRules()])
             .range([this.containerHeight, 0]);
 
         return this;
@@ -171,14 +168,14 @@ export class GraphService {
     }
 
     setTooltip() {
-        if (!this.tooltip)
-            this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip) this.tooltip = d3.select(this.tooltipHtml);
 
         return this;
     }
 
-    setMouseX(mouseX) {
-        this.mouseX = mouseX;
+    setMouseX() {
+        this.mouseX =
+            this.clientX - this.svg.node().getBoundingClientRect().left;
     }
 
     setContainerHeight(height) {
@@ -200,21 +197,16 @@ export class GraphService {
         const date = new Date(this.graphData.dates[nearestIndex]);
 
         this.fullDate = date.getUTCFullYear();
-        this.time = date.getDate()
-                        .toString()
-                        .padStart(2, "0")
-                    + "."
-                    + (date.getMonth() + 1)
-                        .toString()
-                        .padStart(2, "0");
-                    // + date.getUTCHours()
-                    //     .toString()
-                    //     .padStart(2, "0")
-                    // + ":00";
+        this.time =
+            date.getDate().toString().padStart(2, "0") +
+            "." +
+            (date.getMonth() + 1).toString().padStart(2, "0");
     }
 
     setUnit(nearestIndex) {
-        this.unit = this.graphData.unit ? this.graphData.unit[nearestIndex] : "T";
+        this.unit = this.graphData.unit
+            ? this.graphData.unit[nearestIndex]
+            : "T";
     }
 
     setHashrate(nearestIndex) {
@@ -246,23 +238,29 @@ export class GraphService {
         this.setDate(nearestIndex);
     }
 
+    setOtherElements() {
+        this.setVerticalLine();
+    }
+
     tooltipInit(event) {
         try {
             event?.touches
                 ? (this.clientX = event.touches[0].clientX)
                 : (this.clientX = event.clientX);
 
-            this.setMouseX(
-                this.clientX - this.svg.node().getBoundingClientRect().left
-            );
+            this.setMouseX();
 
             const nearestIndex = this.getNearestIndex();
 
             this.setActualValues(nearestIndex);
 
-            this.setVerticalLine();
+            this.setOtherElements();
 
-            if (new Date(this.graphData.dates[nearestIndex]).toLocaleTimeString() !== "Invalid Date") {
+            if (
+                new Date(
+                    this.graphData.dates[nearestIndex]
+                ).toLocaleTimeString() !== "Invalid Date"
+            ) {
                 this.tooltip
                     .style("opacity", 1)
                     .style(
@@ -402,7 +400,7 @@ export class GraphService {
             }
             if (position.x > touchX) end = target;
             else if (position.x < touchX) beginning = target;
-            else break; //position.x === touchX
+            else break;
         }
 
         return position;
@@ -412,7 +410,10 @@ export class GraphService {
         this.tooltipInit(event);
 
         this.tooltip
-            .style("top", position.y - this.tooltipHtml.clientHeight / 2 - 1  + "px")
+            .style(
+                "top",
+                position.y - this.tooltipHtml.clientHeight / 2 - 1 + "px"
+            )
             .style("opacity", 1);
     }
 
@@ -436,25 +437,6 @@ export class GraphService {
             const position = this.getClosestPoint(mouseX);
             this.updateLineAndDot(event, position);
             this.updateTooltip(event, position);
-        });
-
-        this.svg.on("mouseleave", () => {
-            this.tooltip.style("opacity", 0);
-
-            this.svg.selectAll(".vertical-line").style("opacity", 0);
-
-            this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
-        });
-
-        return this;
-    }
-
-    setBarSvgEvents() {
-        this.svg.on("mousemove", (event) => {
-            const mouseX = d3.pointer(event)[0];
-            const position = mouseX;
-            // this.updateLineAndDot(event, position);
-            // this.updateTooltip(event, position);
         });
 
         this.svg.on("mouseleave", () => {

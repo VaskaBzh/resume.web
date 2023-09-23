@@ -35,6 +35,9 @@ export default {
         };
     },
     watch: {
+        inputValue(newInputValue) {
+            this.value = newInputValue;
+        },
         value(newVal) {
             if (this.editable) this.$emit("getValue", newVal);
         },

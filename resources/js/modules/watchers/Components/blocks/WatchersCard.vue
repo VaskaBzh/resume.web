@@ -3,10 +3,10 @@
         <main-title
             tag="h3"
             class="card_title"
-            :class="{ 'card_title-empty': !!watcher }"
+            :class="{ 'card_title-empty': !!saveWatcher }"
             >Настройка наблюдателя</main-title
         >
-        <div class="card__content card__content-empty" v-if="!watcher">
+        <div class="card__content card__content-empty" v-if="!saveWatcher">
             <img
                 class="card_img"
                 src="../../imgs/img_watcher-card.png"
@@ -21,7 +21,7 @@
                 class="card_input"
                 inputName="name"
                 inputLabel="Имя наблюдателя"
-                :inputValue="watcher.name"
+                :inputValue="saveWatcher.name"
                 :editable="isEditable"
                 :error="errorsExpired.name"
                 @getValue="setFormName($event)"
@@ -35,7 +35,7 @@
                         :is_checked="route.checked"
                         class="checkbox-sm"
                         :editable="isEditable"
-                        @is_checked="setAllowedRoutes($event, route.routes)"
+                        @is_checked="setAllowedRoutes($event, i)"
                     >
                         {{ route.name }}
                     </main-checkbox>
@@ -43,7 +43,7 @@
             </div>
             <main-copy
                 :cutValue="45"
-                :code="watcher.link"
+                :code="saveWatcher.link"
                 label="Ссылка наблюдателя"
             />
             <div class="card__buttons">
@@ -105,6 +105,7 @@ export default {
     },
     watch: {
         watcher(newWatcher) {
+            this.setWatcher(newWatcher);
             if (newWatcher?.tags) {
                 this.getAllowedRoutes(newWatcher.tags);
                 this.setId(newWatcher.id);
@@ -114,6 +115,7 @@ export default {
     },
     data() {
         return {
+            saveWatcher: this.watcher,
             isEditable: false,
             form: {
                 name: this.watcher?.name,
@@ -143,6 +145,27 @@ export default {
         if (this.watcher?.tags) this.getAllowedRoutes(this.watcher.tags);
     },
     methods: {
+        dropFormAllowedRoutes() {
+            this.form.allowedRoutes = [];
+        },
+        setFormAllowedRoutes() {
+            this.dropFormAllowedRoutes();
+            this.allowedRoutes.forEach((route) => {
+                if (route.checked)
+                    this.form.allowedRoutes = [
+                        ...this.form.allowedRoutes,
+                        ...route.routes,
+                    ];
+            });
+
+            this.$emit("changeWatcher", this.form);
+        },
+        setAllowedRoutes(checkState, index) {
+            this.allowedRoutes[index].checked = checkState;
+        },
+        setWatcher(newWatcher) {
+            this.saveWatcher = newWatcher;
+        },
         setId(id) {
             this.form = {
                 ...this.form,
@@ -155,15 +178,7 @@ export default {
         },
         changeWatcher() {
             if (this.isEditable) {
-                let routes = [];
-                this.allowedRoutes.forEach(elem => {
-                    routes = [
-                        ...routes,
-                        ...elem.routes,
-                    ]
-                })
-                this.setAllowedRoutes(true, routes);
-                this.$emit("changeWatcher", this.form.allowedRoutes);
+                this.setFormAllowedRoutes();
             }
 
             this.isEditable = !this.isEditable;
@@ -180,18 +195,6 @@ export default {
                     route.checked = !!allowedRoutes.includes(r);
                 });
             });
-        },
-        setAllowedRoutes(boolean, routes) {
-            console.log(routes)
-            if (boolean)
-                this.form.allowedRoutes = [
-                    ...this.form.allowedRoutes,
-                    ...routes,
-                ];
-            else
-                this.form.allowedRoutes = this.form.allowedRoutes.filter(
-                    (route) => routes.filter((r) => r === route).length === 0
-                );
         },
     },
 };
