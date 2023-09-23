@@ -165,6 +165,7 @@ export default {
     justify-content: space-between;
     margin-bottom: 24px;
 }
+
 .accounts_input{
     width: 349px;
     padding: 12px 12px 12px 44px;
@@ -198,6 +199,17 @@ export default {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 78px;
 }
+@media(max-width:900px){
+    .button_choose-state{
+        display: none;
+    }
+    .accounts_input{
+        max-width: 244px;
+    }
+    .button__container{
+        width: 40px;
+    }
+}
 .input__container{
     position: relative;
 }
@@ -209,6 +221,9 @@ export default {
 
 .accounts {
     padding: 24px;
+    @media(max-width:900px){
+        padding: 24px 12px;
+    }
     &__wrapper {
         width: 100%;
     }

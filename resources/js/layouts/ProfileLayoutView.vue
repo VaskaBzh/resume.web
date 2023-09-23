@@ -4,7 +4,7 @@
         <div class="layout__content">
             <header-component-profile class="header-container" />
             <!-- Кнопка для тестирования -->
-            <button @click="openNotification('all good', 'title')">add</button>
+            <!-- <button @click="openNotification('all good', 'title')">add</button> -->
 
             <div class="page-container">
                 <div :class="{ 'note-animation': messageNote }">
@@ -90,6 +90,11 @@ export default {
     width: 100%;
     height: 100%;
     flex: 1 1 auto;
+}
+@media(max-width:900px){
+    .page-container{
+        border-radius:0;
+    }
 }
 .header-card {
     display: flex;

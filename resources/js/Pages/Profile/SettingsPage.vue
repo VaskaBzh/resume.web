@@ -125,6 +125,12 @@ export default {
     display: flex;
     justify-content: space-between;
 }
+@media(max-width:900px){
+    .card__container{
+        flex-direction: column;
+        gap: 16px;
+    }
+}
 .settings {
     padding: 24px;
     width: 100%;
@@ -132,6 +138,9 @@ export default {
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
+    }
+    @media (max-width: 900px) {
+        padding: 24px 12px;
     }
     &__main {
         width: 100%;
@@ -182,6 +191,9 @@ export default {
         padding: 24px;
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 711px;
+        @media(max-width:900px){
+            width: 80vw;
+        }
     }
 }
 </style>

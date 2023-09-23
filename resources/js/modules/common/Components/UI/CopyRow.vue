@@ -91,7 +91,7 @@ export default {
         @media (max-width: 479.98px) {
             padding: 2px 8px;
             min-height: 40px;
-            max-width: calc(100% - 55px) !important;
+            // max-width: calc(100% - 55px) !important;
         }
         &:hover {
             .copy {

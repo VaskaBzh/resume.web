@@ -57,10 +57,12 @@ export default {
     gap: 12px;
     width: 62%;
 }
+
 .btn_container {
     display: flex;
     align-items: center;
 }
+
 .btn_content {
     width: 163px;
     padding: 8px 16px;
@@ -75,5 +77,16 @@ export default {
     font-style: normal;
     font-weight: 600;
     line-height: 175%; /* 31.5px */
+}
+@media(max-width:900px){
+    .card__subcontainer {
+        width: 100%;
+    }
+    .btn_container {
+        justify-content: center;
+    }
+    .btn_content{
+        width: 100%;
+    }
 }
 </style>

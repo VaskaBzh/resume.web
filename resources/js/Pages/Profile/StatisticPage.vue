@@ -164,6 +164,10 @@ export default {
         @media (max-width: 1700px) {
             grid-template-columns: repeat(6, 1fr);
         }
+        @media (max-width: 900px) {
+            display: flex;
+            flex-direction: column;
+        }
     }
     &_graph {
         grid-column: 1 / 5;
