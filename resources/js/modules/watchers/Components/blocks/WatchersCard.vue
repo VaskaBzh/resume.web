@@ -200,7 +200,7 @@ export default {
 <style scoped>
 .card {
     border-radius: 24px;
-    background: var(--background-island-day, #fff);
+    background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     min-height: 680px;
     padding: 32px;
@@ -229,7 +229,7 @@ export default {
     gap: 8px;
 }
 .card_input {
-    background: var(--background-island-inner-3-day, #f8fafd);
+    background: var(--background-island-inner-3);
 }
 .card_label {
     padding: 0 16px;
@@ -245,7 +245,7 @@ export default {
     flex-direction: column;
     gap: 24px;
     border-radius: 24px;
-    background: var(--background-island-inner-3-day, #f8fafd);
+    background: var(--background-island-inner-3);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
 }
 .card__buttons {

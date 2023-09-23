@@ -36,7 +36,7 @@ export default {
   gap: 16px;
   align-self: stretch;
   border-radius: 24px;
-  background: var(--secondary-white, #FFF);
+  background: var(--background-island, #FFF);
   box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
 .flex-jc{
@@ -57,7 +57,7 @@ export default {
   margin-bottom: 4px;
 }
 .data-num{
-  color: var(--gray-800, #1D2939);
+  color: var(--text-primary, #1D2939);
   font-family: Unbounded;
   font-size: 27px;
   font-style: normal;

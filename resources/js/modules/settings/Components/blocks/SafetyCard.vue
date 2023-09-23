@@ -95,7 +95,7 @@ export default {
     line-height: 145%; /* 20.3px */
 }
 .card__title{
-    color: var(--light-gray-600, #475467);
+    color: var(--text-secondary, #475467);
     font-family: Unbounded;
     font-size: 16px;
     font-style: normal;
@@ -119,7 +119,7 @@ export default {
   border: 1px solid var(--primary-500, #2E90FA);
   background: var(--primary-500, #2E90FA);
   box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 12px -6px rgba(0, 0, 0, 0.05);
-  color: var(--light-secondary-wb, #FFF);
+  color: var(--background-island);
   font-family: NunitoSans;
   font-size: 18px;
   font-style: normal;

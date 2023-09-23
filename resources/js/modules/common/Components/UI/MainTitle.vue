@@ -59,7 +59,7 @@ h4 {
 }
 .title {
     font-family: Unbounded, serif;
-    color: var(--light-gray-800, #1D2939);
+    color: var(--text-primary);
     font-weight: 400;
     &.profile {
         margin: 0 0 40px;

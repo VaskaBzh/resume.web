@@ -19,6 +19,7 @@
 
   /* text */
   --text-primary: #1D2939;
+  --text-primary-80: rgba(241, 241, 242, 0.80);
   --text-secondary: #475467;
   --text-teritary: #98A2B3;
   --text-fourth: #D0D5DD;
@@ -32,4 +33,8 @@
 
   /* select */
   --text-no-value : #D0D5DD;
+
+  /* button */
+  --buttons-fourth-fill-border-default: #F2F4F7;
+  --buttons-tabs-fill-border-focus: #FFF;
 } 

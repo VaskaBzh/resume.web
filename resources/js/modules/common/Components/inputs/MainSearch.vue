@@ -70,7 +70,7 @@ export default {
         height: 24px;
     }
     &_input {
-        color: #343434;
+        color: var(--text-secondary);
         font-size: 18px;
         font-weight: 400;
         line-height: 135%;

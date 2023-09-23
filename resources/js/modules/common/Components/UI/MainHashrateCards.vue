@@ -48,7 +48,7 @@ export default {
 <style scoped>
 .statistic-card{
     border-radius: 24px;
-    background: var(--light-secondary-wb, #FFF);
+    background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
     padding: 16px 24px;
     min-width: 349px;
@@ -73,7 +73,7 @@ export default {
     line-height: 145%; /* 20.3px */
 }
 .color-main{
-    color: var(--light-gray-800, #1D2939);
+    color: var(--text-primary);
 }
 .flex-row{
     display: flex;

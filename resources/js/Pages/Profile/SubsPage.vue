@@ -169,7 +169,7 @@ export default {
     width: 349px;
     padding: 12px 12px 12px 44px;
     border-radius: 12px;
-    background: var(--background-island-day, #FFF);
+    background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     color: var(--text-secondary-day, #475467);
     font-family: NunitoSans;
@@ -184,12 +184,12 @@ export default {
     position: relative;
 }
 .current-state{
-    background: var(--background-island-day, #FFF);
+    background: var(--background-island);
     transition: all 0.2s linear;
 }
 .button_choose-state{
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--buttons-fourth-fill-border-default-day, #F2F4F7);
+    background: var(--buttons-fourth-fill-border-default, #2C2F34);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
 .button__container{

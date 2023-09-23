@@ -141,11 +141,11 @@ export default {
     flex-direction: column;
     gap: 24px;
     border-radius: 24px;
-    background: var(--main-gohan, #fff);
+    background: var(--background-island, #fff);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
 .watchers_input {
-    background: var(--main-gohan, #fff);
+    background: var(--background-island, #fff);
 }
 .watchers_label {
     padding: 0 16px;

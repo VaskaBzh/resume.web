@@ -36,12 +36,7 @@ export default {
         this.handleResize();
     },
     mounted() {
-        const themeNames = {
-            false: "light",
-            true: "dark",
-        }
-        if (this.isDark)
-            this.service.toggleTheme(themeNames[this.isDark]);
+        this.service.toggleTheme('light')
     },
 };
 </script>

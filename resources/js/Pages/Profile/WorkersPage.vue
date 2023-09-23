@@ -171,7 +171,7 @@ export default {
             @media (max-width: 767.98px) {
                 font-size: 16px;
                 line-height: 20px;
-                color: #818c99;
+                color: var(--text-secondary);
                 margin-bottom: 6px;
             }
         }

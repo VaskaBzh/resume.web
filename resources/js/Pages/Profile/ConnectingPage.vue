@@ -69,7 +69,7 @@ export default {
 <style lang="scss" scoped>
 .title-connecting{
     margin-bottom: 8px;
-    color: var(--light-gray-800, #1D2939);
+    color: var(--text-primary);
     font-family: Unbounded;
     font-size: 18px;
     font-style: normal;
@@ -78,7 +78,7 @@ export default {
 }
 .note-card{
     border-radius: 12px;
-    background: var(--primary-25, #F5FAFF);
+    background: var(--background-island-inner-1, #F5FAFF);
     padding: 16px;
     display: flex;
     align-items: center;
@@ -149,7 +149,7 @@ export default {
     // .connecting__wrapper
     &__wrapper {
         border-radius: 24px;
-        background: var(--light-secondary-wb, #FFF);
+        background: var(--background-island);
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 560px;
         padding: 32px 40px;

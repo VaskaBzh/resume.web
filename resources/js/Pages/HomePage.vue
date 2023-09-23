@@ -859,7 +859,7 @@ export default {
             width: 100%;
             &:last-child {
                 .subtitle-value span:last-child {
-                    color: #343434;
+                    color: var(--text-secondary);
                 }
             }
         }

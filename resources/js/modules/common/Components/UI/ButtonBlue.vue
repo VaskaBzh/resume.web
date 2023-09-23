@@ -23,7 +23,7 @@ export default {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: var(--light-secondary-wb, #FFF);
+    color: var(--background-island);
     font-family: NunitoSans, serif;
     font-size: 18px;
     font-weight: 700;

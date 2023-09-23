@@ -169,7 +169,7 @@ export default {
 					}
 			}
 			@media (min-width: 767.98px) {
-					background: var(--light-secondary-wb, #FFF);
+					background: var(--background-island);
 			}
 			&:first-child {
 					@media (min-width: 767.98px) {

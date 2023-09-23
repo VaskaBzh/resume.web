@@ -20,7 +20,7 @@ export default {
     width: fit-content;
     min-height: 40px;
     border-radius: 12px;
-    background: var(--old-light-secondary-wb, #FFF);
+    background: var(--background-island, #FFF);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border: none;
     outline: none;
@@ -32,17 +32,17 @@ export default {
 }
 .button-blue {
     background: var(--old-primary-500, #2E90FA);
-    color: var(--old-light-secondary-wb, var(--main-gohan, #FFF));
+    color: var(--background-island, var(--background-island, #FFF));
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
 }
 .button-red {
     background: var(--old-light-red-100, #F1404A);
-    color: var(--old-light-secondary-wb, var(--main-gohan, #FFF));
+    color: var(--background-island, var(--background-island, #FFF));
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 24px -6px rgba(0, 0, 0, 0.16);
 }
 .button-blue .button_icon,
 .button-red .button_icon {
-    stroke: var(--old-light-secondary-wb, var(--main-gohan, #FFF));
+    stroke: var(--background-island, var(--background-island, #FFF));
 }
 .button-reverse {
     background: transparent;

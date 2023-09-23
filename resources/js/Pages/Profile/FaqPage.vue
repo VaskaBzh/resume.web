@@ -229,7 +229,7 @@ export default {
         }
         .section__block {
             border-radius: 24px;
-            background: var(--light-secondary-wb, #FFF);
+            background: var(--background-island);
             box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
             @media (max-width: 991.98px) {
                 // padding: 8px 24px;

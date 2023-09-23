@@ -53,7 +53,7 @@ export default {
 	background: var(--primary-4007, rgba(83, 177, 253, 0.07));
 }
 .tab_text {
-	color: var(--light-gray-600, #475467);
+	color: var(--text-secondary, #475467);
 	font-family: NunitoSans, serif;
 	font-size: 18px;
 	font-weight: 400;

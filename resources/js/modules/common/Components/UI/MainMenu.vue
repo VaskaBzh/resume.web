@@ -172,7 +172,7 @@ export default {
     flex-direction: column;
     align-items: center;
     border-radius: 16px;
-    background: var(--light-secondary-wb, #FFF);
+    background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
     z-index: 5;
     transition: all 0.5s ease 0s;
@@ -212,7 +212,7 @@ export default {
         &-remove {
             color: #ff3b30;
         }
-        color: var(--light-gray-600, #475467);
+        color: var(--text-secondary, #475467);
         font-family: NunitoSans;
         font-size: 14px;
         font-style: normal;

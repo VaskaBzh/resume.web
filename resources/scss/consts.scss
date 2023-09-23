@@ -1,7 +1,7 @@
 $fontFamily: Ubuntu;
 $fontSize: 14px;
 // Основные цвета
-$mainColor: #343434; // Цвет шрифта по умолчанию
+$maincolor: var(--text-secondary); // Цвет шрифта по умолчанию
 
 // Основной transition
 $transition: 1.5s;

@@ -188,7 +188,7 @@ export default {
     }
     &__card{
         border-radius: 24px;
-        background: var(--main-gohan, #FFF);
+        background: var(--background-island, #FFF);
         padding: 24px;
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 711px;

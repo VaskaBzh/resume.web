@@ -54,12 +54,12 @@ button {
 
 [aria-label][tooltip-position]::before,
 [aria-label][tooltip-position]::after {
-  --tooltip-color: var(--main-gohan, #FFF);
+  --tooltip-color: var(--background-island, #FFF);
   --arrow-size: 0.5rem;
   --scale: 0;
   border-radius: var(--surface-border-radius-radius-s-md, 12px);
   border: 1px solid var(--background-tooltip-day, #FFF);
-  background: var(--main-gohan, #FFF);
+  background: var(--background-island, #FFF);
   box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
   color: var(--text-secondary-day, #475467);
   font-family: NunitoSans;

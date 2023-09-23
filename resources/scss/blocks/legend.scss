@@ -84,7 +84,7 @@
     }
     &-all {
       @media (max-width: $mobile) {
-        color: #818c99;
+        color: var(--text-secondary);
         white-space: nowrap;
       }
       &::before {

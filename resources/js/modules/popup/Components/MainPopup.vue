@@ -117,7 +117,7 @@ export default {
 }
 .popup__content {
     border-radius: 24px;
-    background: var(--background-modal-day, #f8fafd);
+    background: var(--background-island-inner-3);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 280px;
     height: 122px;

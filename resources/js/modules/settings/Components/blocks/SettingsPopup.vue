@@ -215,7 +215,7 @@ export default {
     background: var(--buttons-primary-fill-border-default, #2E90FA);
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
     padding: 12px 16px;
-    color: var(--buttons-primary-text, var(--main-gohan, #FFF));
+    color: var(--buttons-primary-text, var(--background-island, #FFF));
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
@@ -227,7 +227,7 @@ export default {
     border-radius: 12px;
     background: var(--buttons-primary-fill-border-default, #2E90FA);
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
-    color: var(--buttons-primary-text, var(--main-gohan, #FFF));
+    color: var(--buttons-primary-text, var(--background-island, #FFF));
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
@@ -240,7 +240,7 @@ export default {
     border: 1px solid var(--light-gray-400, #98A2B3);
     padding: 12px 16px;
     background: inherit;
-    color: var(--light-gray-600, #475467);
+    color: var(--text-secondary, #475467);
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
@@ -279,7 +279,7 @@ export default {
 .popup__input{
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-modal-input-day, #FFF);
+    background: var(--background-island, #FFF);
     padding: var(--py-4, 16px) var(--px-4, 16px);
     width: 100%;
     height: 56px;

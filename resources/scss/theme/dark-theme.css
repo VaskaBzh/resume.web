@@ -19,6 +19,7 @@
 
   /* text */
   --text-primary: #F1F1F2;
+  --text-primary-80: rgba(241, 241, 242, 0.80);
   --text-secondary: #C5C8CD;
   --text-teritary: #6F7682;
   --text-fourth: #595E68;
@@ -29,4 +30,9 @@
 
   /* status */
   --text-no-value: #43474E;
+
+  /* button */
+  --buttons-fourth-fill-border-default: #2C2F34;
+  --buttons-tabs-fill-border-focus: #212327;
+
 }

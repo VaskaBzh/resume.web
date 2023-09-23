@@ -102,7 +102,7 @@ export default {
     width: 100%;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--light-background-first, #F8FAFD);
+    background: var(--background-island-inner-3);
 }
 .edit {
     width: 24px;

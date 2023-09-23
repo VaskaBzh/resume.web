@@ -18,7 +18,7 @@
         width: 100%;
         height: 100%;
         &-bg {
-            background: var(--main-gohan, #FFF);
+            background: var(--background-island);
             box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
             padding: 32px;
             margin: auto;
@@ -52,7 +52,7 @@
         height: 40px;
         gap: 9px;
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--light-background-first, #F8FAFD);
+        background: var(--background-island-inner-3);
         @media (max-width: 479.98px) {
             width: 100%;
             gap: 24px;
@@ -81,7 +81,7 @@
         }
         &.active {
             border-radius: 12px;
-            background: var(--light-secondary-wb, #ffffff);
+            background: var(--background-island);
             box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
             color: var(--primary-500, #2E90FA);
         }
@@ -98,7 +98,7 @@
             border-radius: 24px;
         }
         &-light {
-            background: var(--main-gohan, #FFF);
+            background: var(--background-island);
         }
         //&-scroll {
         //    @media (max-width: 767.98px) {

@@ -382,7 +382,7 @@ export default {
     }
     .tabs-active {
         color: rgba(121, 163, 232, 1);
-        background: rgba(250, 250, 250, 1);
+        background: var(--buttons-tabs-fill-border-focus);
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     }
     .filter_block {

@@ -147,7 +147,7 @@ export default {
         font-size: 18px;
         font-weight: 400;
         line-height: 135%;
-        color: #343434;
+        color: var(--text-secondary);
         white-space: nowrap;
         // text-align: center;
         -moz-user-select: -moz-none;

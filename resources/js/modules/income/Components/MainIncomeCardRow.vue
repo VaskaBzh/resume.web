@@ -81,7 +81,7 @@ export default {
   margin-bottom: 4px;
 }
 .data-num{
-  color: var(--gray-800, #1D2939);
+  color: var(--text-primary, #1D2939);
   font-family: Unbounded;
   font-size: 27px;
   font-style: normal;

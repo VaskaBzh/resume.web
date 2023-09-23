@@ -76,7 +76,7 @@ export default {
         width: 100%;
         min-height: 48px;
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--light-background-first, #F8FAFD);
+        background: var(--background-island-inner-3);
         padding: 5px 24px;
         outline: none;
         cursor: pointer;

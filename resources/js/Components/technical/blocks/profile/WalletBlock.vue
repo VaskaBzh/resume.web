@@ -148,7 +148,7 @@ export default {
     // .wallets__block
     &__block {
         border-radius: 24px;
-        background: var(--light-background-first, #F8FAFD);
+        background: var(--background-island-inner-3);
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
         .main__number {
             padding: 16px 16px 0;
@@ -160,7 +160,7 @@ export default {
             gap: 4px;
             flex-wrap: wrap;
             font-weight: 500;
-            color: #343434;
+            color: var(--text-secondary);
             .unit {
                 font-weight: 500;
             }

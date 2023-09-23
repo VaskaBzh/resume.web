@@ -72,7 +72,7 @@ export default {
   line-height: 145%; /* 20.3px */
 }
 .rate-current-price{
-  color: var(--secondary-black, #101828);
+  color: var(--text-primary);
   font-family: Unbounded;
   font-size: 14px;
   font-style: normal;

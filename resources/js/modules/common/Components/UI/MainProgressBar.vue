@@ -90,7 +90,7 @@ export default {
     align-items: center;
 }
 .progress_value {
-    color: var(--light-secondary-bw, #101828);
+    color: var(--text-primary);
     font-family: Unbounded, serif;
     font-size: 14px;
     font-weight: 400;

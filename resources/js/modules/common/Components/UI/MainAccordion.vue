@@ -112,7 +112,7 @@ export default {
         border-bottom: 1px solid #e6eaf0;
     }
     &_title {
-        color: var(--light-gray-600, #475467);
+        color: var(--text-secondary, #475467);
         font-family: NunitoSans;
         font-size: 18px;
         font-style: normal;

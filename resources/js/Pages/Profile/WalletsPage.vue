@@ -356,7 +356,7 @@ export default {
     align-items: center;
     gap: 16px;
     border-radius: 24px;
-    background: var(--light-secondary-wb, #FFF);
+    background: var(--background-island);
     padding: 16px 24px;
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
@@ -385,7 +385,7 @@ export default {
 .autopayout-input{
     border: none;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--light-background-first, #F8FAFD);
+    background: var(--background-island-inner-3);
     padding: 24px 0 0 16px;
     width: 100%;
     height: 56px;
@@ -401,7 +401,7 @@ input:focus{
 }
 .add{
     border-radius: 12px;
-    background: var(--buttons-island-inner-fill-border-default-day, #F8FAFD);
+    background: var(--background-island-inner-3);
     padding: 12px;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
     display: flex;
@@ -418,7 +418,7 @@ input:focus{
 }
 .wallet-wrapper{
     border-radius: 24px;
-    background: var(--light-secondary-wb, #FFF);
+    background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 560px;
     padding: 32px 40px;
@@ -450,7 +450,7 @@ input:focus{
     margin-bottom: 12px;
     flex-direction: column;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-modal-input-day, #FFF);
+    background: var(--background-island, #FFF);
     padding: var(--pt-3, 12px) var(--pr-4, 16px) var(--pb-2, 8px) var(--pl-4, 16px);
 }
 .change-autopyout_button{
@@ -471,10 +471,10 @@ input:focus{
 }
 .cancel-button{
     border: 1px solid var(--light-gray-400, #98A2B3);
-    color: var(--light-gray-600, #475467);
+    color: var(--text-secondary, #475467);
 }
 .remove-button{
-    color: var(--light-secondary-wb, #FFF);
+    color: var(--background-island);
     background: var(--light-red-100, #F1404A);
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
 }

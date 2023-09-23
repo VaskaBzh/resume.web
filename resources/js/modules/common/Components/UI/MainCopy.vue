@@ -86,7 +86,7 @@ export default {
     justify-content: center;
     padding: var(--py-4, 16px) var(--px-4, 16px);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--light-background-first, #f8fafd);
+    background: var(--background-island-inner-3);
     cursor: pointer;
     position: relative;
     transition: all 0.5s ease 0s;

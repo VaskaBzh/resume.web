@@ -36,7 +36,7 @@ import { messageNote, titleNote, openNotification} from '@/modules/notifications
     width: 100%;
     min-height: 100vh;
     height: 100%;
-    background: var(--background-island, #fff); 
+    background: var(--background-island); 
     display: flex;
 }
 .layout__content {
@@ -55,7 +55,7 @@ import { messageNote, titleNote, openNotification} from '@/modules/notifications
     /* padding: 24px; */
     overflow: hidden;
     border-radius: 40px 0px 0px 0px;
-    background: var(--background-globe, #F8FAFD);
+    background: var(--background-globe);
     box-shadow: 0px 1px 4px 0px rgba(16, 24, 40, 0.05) inset;
     width: 100%;
     height: 100%;

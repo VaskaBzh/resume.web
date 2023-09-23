@@ -61,11 +61,11 @@ export default {
                 this.timer = false;
                if(this.theme === "light") {
                 this.$store.dispatch("SetThemeVal", true)
-                this.service.toggleTheme('light')
+                this.service.toggleTheme('dark')
 
                }else{
                 this.$store.dispatch("SetThemeVal", false);
-                this.service.toggleTheme('dark')
+                this.service.toggleTheme('light')
                }
                 
                 this.$store.dispatch("theme", this.isDark);
@@ -76,7 +76,8 @@ export default {
     mounted() {
         this.$store.dispatch("theme", this.isDark);
         this.service.setTheme();
-
+        this.$store.dispatch("SetThemeVal", false);
+        this.service.toggleTheme('light')
     },
 };
 </script>
@@ -85,7 +86,7 @@ export default {
 .checkbox {
     width: 60px;
     height: 32px;
-    background: var(--light-gray-100, #F2F4F7);
+    background: var(--buttons-fourth-fill-border-default, #F2F4F7);
     border-radius: 24px;
     position: relative;
     cursor: pointer;
@@ -103,8 +104,7 @@ export default {
         position: absolute;
         top: 50%;
         transform: translateY(-50%);
-        background: var(--light-secondary-wb, #FFF);
-
+        background: var(--background-island);
         left: 4px;
         transition: all 0.3s ease 0s;
     }

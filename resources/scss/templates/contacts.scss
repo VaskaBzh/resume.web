@@ -39,7 +39,7 @@
             align-items: center;
             gap: 16px;
             text-align: left;
-            color: #343434;
+            color: var(--text-secondary);
             font-size: 14px;
             font-weight: 500;
             line-height: 140%;
@@ -71,7 +71,7 @@
         .contacts {
             &_item {
                 gap: 10px;
-                color: #818c99;
+                color: var(--text-secondary);
                 font-weight: 400;
                 font-size: 16px;
                 line-height: 18px;

@@ -294,7 +294,7 @@ export default {
     margin-bottom: 40px;
 }
 .user-name-text{
-    color: var(--secondary-white, var(--main-gohan, #FFF));
+    color: var(--text-primary-inverse);
     font-family: Unbounded;
     font-size: 16px;
     font-style: normal;
@@ -302,7 +302,7 @@ export default {
     line-height: 150%; /* 24px */
 }
 .user-title-text{
-    color: var(--secondary-white, var(--main-gohan, #FFF));
+    color: var(--text-primary-inverse);
     font-family: NunitoSans;
     font-size: 12px;
     font-weight: 600;
@@ -310,7 +310,7 @@ export default {
 }
 .popup__input{
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-modal-input-day, #FFF);
+    background: var(--background-island, #FFF);
     padding: var(--py-4, 16px) var(--px-4, 16px);
     color: var(--select-text-no-value-day, #D0D5DD);
     font-family: NunitoSans;
@@ -347,7 +347,7 @@ export default {
         box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 24px -6px rgba(0, 0, 0, 0.16);
         display: flex;
         padding: 16px;
-        color: var(--secondary-white, #FFF);
+        color: var(--background-island, #FFF);
         font-size: 16px;
         font-style: normal;
         font-weight: 400;
@@ -419,12 +419,12 @@ export default {
         flex-direction: column;
         overflow: hidden;
         border-radius: 16px;
-        background: var(--background-sub-dropdown-day, #FFF);
+        background: var(--background-sub-dropdown, #FFF);
         box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
         min-width: 100%;
         padding: 4px;
         position: absolute;
-        color: #818c99;
+        color: var(--text-secondary);
         right: 0;
         top: 80px;
         transition: all 0.5s ease 0s;
