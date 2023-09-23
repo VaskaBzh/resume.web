@@ -26,7 +26,7 @@ class CreateRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'wallet.required' => __('validation.required', ['attribute' => __('validation.attributes.wallet')]),
+            'wallet.required' => __('validation.required', ['attribute' => __('validation.attributes.wallet_address')]),
             'wallet.min' => __('validation.min.string', ['attribute' => __('validation.attributes.wallet_address')]),
             'wallet.max' => __('validation.max.string', ['attribute' => __('validation.attributes.wallet_address')]),
             'wallet.unique' => __('validation.unique', ['attribute' => __('validation.attributes.wallet_address')]),
