@@ -196,6 +196,9 @@ export default {
     overflow-y: scroll;
     padding: 24px;
     height: calc(100vh - 135px);
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     &_title {
         margin-top: 20px;
         font-size: 27px;

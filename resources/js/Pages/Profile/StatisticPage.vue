@@ -157,6 +157,9 @@ export default {
     height: 100%;
     padding: 24px;
     position: relative;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     &__cabinet {
         display: grid;
         grid-template-rows: repeat(3, auto);

@@ -6,11 +6,9 @@
                     <main-title class="" tag="h3"
                     >{{ $t("wallets.title[0]") }}
                     </main-title>
-                    <button>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M7.66025 11.3326C7.66025 11.6087 7.88411 11.8326 8.16025 11.8326C8.4364 11.8326 8.66025 11.6087 8.66025 11.3326H7.66025ZM7.49359 6.83255C7.21744 6.83255 6.99359 7.05641 6.99359 7.33255C6.99359 7.60869 7.21744 7.83255 7.49359 7.83255V6.83255ZM8.06262 7.43018L8.41618 7.07663L8.06262 7.43018ZM7.99346 4.83255C7.71732 4.83255 7.49346 5.05641 7.49346 5.33255C7.49346 5.60869 7.71732 5.83255 7.99346 5.83255V4.83255ZM7.99945 5.83255C8.27559 5.83255 8.49945 5.60869 8.49945 5.33255C8.49945 5.05641 8.27559 4.83255 7.99945 4.83255V5.83255ZM7.99886 13.8327C6.49194 13.8327 5.41206 13.8316 4.59079 13.7212C3.78391 13.6127 3.30194 13.407 2.94658 13.0516L2.23947 13.7587C2.8116 14.3309 3.53977 14.5889 4.45754 14.7123C5.36093 14.8337 6.52021 14.8327 7.99886 14.8327V13.8327ZM1.16553 7.99935C1.16553 9.47799 1.16447 10.6373 1.28592 11.5407C1.40931 12.4584 1.66734 13.1866 2.23947 13.7587L2.94658 13.0516C2.59121 12.6963 2.38549 12.2143 2.27701 11.4074C2.16659 10.5862 2.16553 9.50626 2.16553 7.99935H1.16553ZM13.8322 7.99935C13.8322 9.50626 13.8311 10.5862 13.7207 11.4074C13.6122 12.2143 13.4065 12.6963 13.0511 13.0516L13.7583 13.7587C14.3304 13.1866 14.5884 12.4584 14.7118 11.5407C14.8333 10.6373 14.8322 9.47799 14.8322 7.99935H13.8322ZM7.99886 14.8327C9.47751 14.8327 10.6368 14.8337 11.5402 14.7123C12.458 14.5889 13.1861 14.3309 13.7583 13.7587L13.0511 13.0516C12.6958 13.407 12.2138 13.6127 11.4069 13.7212C10.5857 13.8316 9.50578 13.8327 7.99886 13.8327V14.8327ZM7.99886 2.16602C9.50578 2.16602 10.5857 2.16708 11.4069 2.27749C12.2138 2.38598 12.6958 2.5917 13.0511 2.94706L13.7583 2.23996C13.1861 1.66783 12.458 1.4098 11.5402 1.28641C10.6368 1.16495 9.47751 1.16602 7.99886 1.16602V2.16602ZM14.8322 7.99935C14.8322 6.5207 14.8333 5.36142 14.7118 4.45803C14.5884 3.54026 14.3304 2.81209 13.7583 2.23996L13.0511 2.94706C13.4065 3.30243 13.6122 3.7844 13.7207 4.59128C13.8311 5.41254 13.8322 6.49243 13.8322 7.99935H14.8322ZM7.99886 1.16602C6.52021 1.16602 5.36093 1.16495 4.45754 1.28641C3.53977 1.4098 2.8116 1.66783 2.23947 2.23996L2.94658 2.94706C3.30194 2.5917 3.78391 2.38598 4.59079 2.27749C5.41206 2.16708 6.49194 2.16602 7.99886 2.16602V1.16602ZM2.16553 7.99935C2.16553 6.49243 2.16659 5.41254 2.27701 4.59128C2.38549 3.7844 2.59121 3.30243 2.94658 2.94706L2.23947 2.23996C1.66734 2.81209 1.40931 3.54026 1.28592 4.45803C1.16447 5.36142 1.16553 6.5207 1.16553 7.99935H2.16553ZM7.66025 7.99922V11.3326H8.66025V7.99922H7.66025ZM7.49359 7.83255C7.57401 7.83255 7.63589 7.83258 7.68874 7.83392C7.74184 7.83526 7.77341 7.8377 7.79272 7.8403C7.81171 7.84285 7.80533 7.84389 7.78648 7.83614C7.76364 7.82674 7.73497 7.80964 7.70907 7.78374L8.41618 7.07663C8.25898 6.91943 8.07218 6.86887 7.92597 6.84921C7.79414 6.83149 7.63659 6.83255 7.49359 6.83255V7.83255ZM8.66025 7.99922C8.66025 7.85622 8.66132 7.69867 8.64359 7.56684C8.62393 7.42062 8.57338 7.23383 8.41618 7.07663L7.70907 7.78374C7.68317 7.75784 7.66607 7.72917 7.65667 7.70632C7.64891 7.68747 7.64996 7.6811 7.65251 7.70009C7.6551 7.71939 7.65755 7.75097 7.65889 7.80407C7.66022 7.85691 7.66025 7.91879 7.66025 7.99922H8.66025ZM7.99346 5.83255H7.99945V4.83255H7.99346V5.83255Z" fill="#D0D5DD"/>
-                        </svg>
-                    </button>
+                    <div class="tooltipe-container">
+                        <tooltip-card :text="$t('wallets.tooltip')"></tooltip-card>
+                    </div>
                 </div>
                 <div class="form_column">
                         <div class="autopayout-container">
@@ -176,30 +174,6 @@
                     </button>
             </form>
         </main-popup>
-        <main-popup
-            id="removeWallet"
-            :wait="wallets.wait"
-            :closed="wallets.closed"
-            :errors="errors"
-            @closed="wallets.clearForm(wallets.form)"
-            v-if="wallets.form"
-        >
-            <main-title tag="h3">
-                        {{ $t("wallets.popups.remove.title") }}
-            </main-title>
-            <p class="wallet-description">{{$t("wallets.popups.remove.note")}}</p>
-            <div class="wallet__remove-inf-container">
-                <img src="../../../assets/img/wallet-icon.png">
-                <div class="wallet-inf">
-                    <span class="wallet-fullname">{{ wallets.form.name}}</span>
-                    <span class="wallet-wallet_address">{{ wallets.form.wallet }}</span>
-                </div>
-            </div>
-            <div class="wallet__remove-button-container">
-                <button class="button_wallet cancel-button">{{$t("wallets.popups.remove.button[0]")  }}</button>
-                <button class="button_wallet remove-button">{{$t("wallets.popups.remove.button[1]")  }}</button>
-            </div>
-        </main-popup>
     </teleport>
 </template>
 <script>
@@ -212,13 +186,14 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 
 import { WalletService } from "@/services/WalletService";
 import { usePage } from "@inertiajs/vue3";
-
+import TooltipCard  from '@/modules/common/Components/UI/TooltipCard.vue'
 export default {
     components: {
         MainPopup,
         MainButton,
         MainTitle,
         WalletBlock,
+        TooltipCard
     },
     computed: {
         ...mapGetters(["getActive", "errors"]),
@@ -350,6 +325,10 @@ export default {
 .autopayout-container{
     position: relative;
     width: 100%;
+}
+.tooltipe-container{
+    transform: translateX(130px);
+    margin-bottom: 10px;
 }
 .wallet__remove-inf-container{
     display: flex;
@@ -487,6 +466,9 @@ input:focus{
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     .no-info.no-bg {
         padding: 0;
         .wallets {
@@ -569,7 +551,7 @@ input:focus{
     }
 
     &__block {
-        background: #fafafa;
+        background: var(--background-island);;
         border-radius: 12px;
         width: 100%;
         @media (max-width: 767.98px) {

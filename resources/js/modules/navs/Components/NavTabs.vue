@@ -1,5 +1,5 @@
 <template>
-    <div class="nav">
+    <div class="nav" :class="[isOpenBurger? 'open-burger' : 'close-burger']">
             <div class="nav__block">
             <logo-block class="nav_logo" />
             <div class="header-select-container">
@@ -7,7 +7,7 @@
                 ></select-theme>
                 <select-language></select-language>
             </div>
-            <div class="nav__tabs">
+            <div class="nav__tabs" >
                 <account-menu
                     :viewportWidth="viewportWidth"
                     :user="user"
@@ -23,7 +23,7 @@
         </div>
         <logout-link class="nav_logout" />
     </div>
-    <div class="nav-bg-mobile">
+    <div class="nav-bg-mobile" :class="[isOpenBurger? 'open-bg' : 'close-bg']" @click="$emit('changeBurger', !isOpenBurger)">
     </div>
 </template>
 <script>
@@ -36,6 +36,7 @@ import LogoutLink from "@/modules/navs/Components/UI/LogoutLink.vue";
 import NavGroup from "@/modules/navs/Components/UI/NavGroup.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
+
 export default defineComponent({
     components: {
         LogoutLink,
@@ -44,6 +45,11 @@ export default defineComponent({
         NavGroup,
         SelectLanguage,
         SelectTheme
+    },
+    props:{
+        isOpenBurger: {
+            type: Boolean,
+        }
     },
     data() {
         return {
@@ -81,10 +87,10 @@ export default defineComponent({
         right: 0;
         top: 71px;
         padding: 20px 24px 24px;
-        z-index: 10;
+        z-index: 100;
         background: var(--background-island);
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-        /* display: none; */
+        display: none;
     }
     .header-select-container{
         display: flex;
@@ -101,10 +107,37 @@ export default defineComponent({
         right: 0;
         bottom: 0;
         top:71px;
+        display: none;
+    }
+    .open-burger{
+        display: inline-block;
+        animation: openBurger 0.4s linear;
+    }
+    @keyframes openBurger{
+        0%{
+            transform: translateX(350px);
+        }
+        100%{
+            transform: translateX(0px);
+        }
+    }
+    .close-burger{
+        animation: closeBurger 0.4s linear;
+    }
+    @keyframes closeBurger{
+        0%{
+        display: inline-block;
 
-        /* display: none; */
-        /* Раскоменнтировать при появлении логики */
-        /* display: inline-block; */
+            transform: translateX(0px);
+        }
+        100%{
+            transform: translateX(350px);
+            display: none;
+        }
+    }
+    .open-bg{
+        display: inline-block;
+        transition: all 0.3s linear;
     }
 }
 .nav_logo {

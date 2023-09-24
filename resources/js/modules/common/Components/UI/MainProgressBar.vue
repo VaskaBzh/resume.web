@@ -5,7 +5,7 @@
                 {{ title }}
             </main-title>
             <div class="progress_icon">
-                <TooltipCard></TooltipCard>
+                <!-- <TooltipCard></TooltipCard> -->
             </div>
         </div>
         <div class="progress__block">
@@ -23,7 +23,7 @@
 <script>
 import MainTitle from "./MainTitle.vue";
 import anime from "animejs/lib/anime.es.js";
-import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
+// import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
 export default {
     name: "main-progress-bar",
     props: {
@@ -35,7 +35,7 @@ export default {
     },
     components: {
         MainTitle,
-        TooltipCard
+        // TooltipCard
     },
     computed: {
         percent() {

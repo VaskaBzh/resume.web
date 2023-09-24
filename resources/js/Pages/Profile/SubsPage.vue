@@ -221,8 +221,8 @@ export default {
 
 .accounts {
     padding: 24px;
-    @media(max-width:900px){
-        padding: 24px 12px;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
     }
     &__wrapper {
         width: 100%;
