@@ -160,7 +160,7 @@ export default {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
-                openNotification(response.data.message, "Добавлено");
+                openNotification(true, "Добавлено",  response.data.message);
                 closed.value = true;
                 store.dispatch("accounts_all", store.getters.user.id);
             } catch (e) {
