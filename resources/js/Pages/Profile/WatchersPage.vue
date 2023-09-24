@@ -160,6 +160,11 @@ export default {
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
 }
+@media(max-width: 700px){
+    .watchers__wrapper{
+        display: flex;
+    }
+}
 .watchers__wrapper-full {
     grid-template-columns: 1fr;
 }

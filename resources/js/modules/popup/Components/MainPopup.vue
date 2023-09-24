@@ -149,6 +149,7 @@ export default {
     .popup__content {
         width: 80vw !important;
         height: auto !important;
+        padding: 16px;
     }
     .popup__block{
        min-width: auto;
