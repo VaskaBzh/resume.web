@@ -16,84 +16,11 @@
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
                 :data-popup="row.data"
+                :removePercent="removePercent"
                 @tableProcess="getUser"
             />
         </tbody>
     </table>
-    <!--    <teleport to="body">-->
-    <!--        <main-popup-->
-    <!--            v-if="!!worker_service"-->
-    <!--            :errors="errors"-->
-    <!--            class="popup-graph"-->
-    <!--            id="seeChart"-->
-    <!--            ref="chart"-->
-    <!--            typePopup="graph"-->
-    <!--            @closed="dropUser"-->
-    <!--        >-->
-    <!--            <div class="popup__head">-->
-    <!--                <main-title tag="h4" class="title-blue">-->
-    <!--                    {{ worker_service.target_worker?.name }}-->
-    <!--                </main-title>-->
-    <!--                <span-->
-    <!--                    class="status popup_status"-->
-    <!--                    :class="worker_service.target_worker?.class"-->
-    <!--                >-->
-    <!--                    {{-->
-    <!--                        worker_service.target_worker?.class === "ACTIVE"-->
-    <!--                            ? $t("workers.statuses[0]")-->
-    <!--                            : worker_service.target_worker?.class === "INACTIVE"-->
-    <!--                            ? $t("workers.statuses[1]")-->
-    <!--                            : $t("workers.statuses[2]")-->
-    <!--                    }}-->
-    <!--                </span>-->
-    <!--            </div>-->
-    <!--            <div class="popup__main">-->
-    <!--                <div class="popup__info">-->
-    <!--                    <div class="popup__info_block">-->
-    <!--                        <span class="label popup__info_block_label">-->
-    <!--                            {{ $t("workers.table.thead[1]") }}</span-->
-    <!--                        >-->
-    <!--                        <span class="text text-black">-->
-    <!--                            <b> {{ worker_service.target_worker?.hashrate }}</b>-->
-    <!--                        </span>-->
-    <!--                    </div>-->
-    <!--                    <div class="popup__info_block">-->
-    <!--                        <span class="label popup__info_block_label">{{-->
-    <!--                            $t("workers.table.thead[3]")-->
-    <!--                        }}</span>-->
-    <!--                        <span class="text text-black">-->
-    <!--                            <b>-->
-    <!--                                {{-->
-    <!--                                    worker_service.target_worker-->
-    <!--                                        ?.hashrate_per_day-->
-    <!--                                }}</b-->
-    <!--                            ></span-->
-    <!--                        >-->
-    <!--                    </div>-->
-    <!--                    <div class="popup__info_block">-->
-    <!--                        <span class="label popup__info_block_label">{{-->
-    <!--                            $t("workers.table.thead[4]")-->
-    <!--                        }}</span>-->
-    <!--                        <span class="text text-black">-->
-    <!--                            <b>-->
-    <!--                                {{-->
-    <!--                                    worker_service.target_worker?.reject_percent-->
-    <!--                                }}</b-->
-    <!--                            ></span-->
-    <!--                        >-->
-    <!--                    </div>-->
-    <!--                </div>-->
-    <!--                <statistic-chart-->
-    <!--                    class="popup-graph__graph"-->
-    <!--                    :graph="worker_service.graph"-->
-    <!--                    :redraw="redraw"-->
-    <!--                    :viewportWidth="viewportWidth"-->
-    <!--                    :heightVal="height"-->
-    <!--                    :tooltip="true"-->
-    <!--                />-->
-    <!--            </div>-->
-    <!--        </main-popup>-->
-    <!--    </teleport>-->
 </template>
 
 <script>
@@ -112,6 +39,7 @@ export default {
         worker_service: {
             type: Object,
         },
+        removePercent: Boolean,
     },
     components: { MainPopup, StatisticChart, TableRow, MainTitle },
     computed: {
@@ -226,6 +154,7 @@ export default {
     }
     &__row {
         text-align: left;
+        position: relative;
         &[data-popup="#seeChart"] {
             td {
                 transition: all 0.3s ease 0s;

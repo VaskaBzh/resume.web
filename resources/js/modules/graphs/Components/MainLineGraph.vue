@@ -10,7 +10,7 @@
                         {{ service.hashrate }} {{ service.unit }}h/s
                     </span>
                 </p>
-                <p class="tooltip_text">
+                <p class="tooltip_text" v-if="service.workersCountActive">
                     <span class="tooltip_label"
                         >{{ $t("tooltip.workers") }}:
                     </span>
@@ -97,7 +97,7 @@ export default {
                     .setY()
                     .setAxis()
                     .setXAxis(
-                        this.service.isMobile
+                        this.service.chartHtml.offsetWidth > 500
                             ? 12
                             : this.service.validateXAxis()
                     )

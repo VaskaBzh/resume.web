@@ -214,7 +214,8 @@ export class GraphService {
     }
 
     setWorkers(nearestIndex) {
-        this.workersCountActive = this.graphData.amount[nearestIndex];
+        if (this.graphData.amount)
+            this.workersCountActive = this.graphData.amount[nearestIndex];
     }
 
     getNearestIndex() {
@@ -354,7 +355,8 @@ export class GraphService {
     }
 
     validateXAxis() {
-        return store.getters.viewportWidth <= 991.98 ? 8 : 12;
+        // return store.getters.viewportWidth <= 991.98 ? 8 : 12;
+        return 6;
     }
 
     setSvgEventsMobile() {

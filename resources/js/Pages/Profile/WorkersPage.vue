@@ -14,22 +14,29 @@
             <div class="cards-container">
                 <main-hashrate-cards />
             </div>
-            <main-slider
-                :wait="worker_service.waitWorkers"
-                :empty="worker_service.emptyWorkers"
-                rowsNum="1000"
-                :haveNav="false"
-                :meta="{}"
-            >
-                <main-table
-                    :table="worker_service.table"
-                    @getData="getTargetWorker($event)"
-                ></main-table>
-            </main-slider>
-            <worker-card
-                v-if="worker_service.target_worker"
-                :target_worker="worker_service.target_worker"
-            />
+            <div class="workers__content">
+                <main-slider
+                    :wait="worker_service.waitWorkers"
+                    :empty="worker_service.emptyWorkers"
+                    rowsNum="1000"
+                    :haveNav="false"
+                >
+                    <main-table
+                        :table="worker_service.table"
+                        :removePercent="removePercent"
+                        @getData="getTargetWorker($event)"
+                    ></main-table>
+                </main-slider>
+                <worker-card
+                    class="workers__card"
+                    v-if="
+                        Object.entries(worker_service.target_worker).length > 0
+                    "
+                    :target_worker="worker_service.target_worker"
+                    :graph="worker_service.workers_graph"
+                    @closeCard="dropWorker"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -57,6 +64,7 @@ export default {
             workersDead: 0,
             viewportWidth: 0,
             changedActive: -1,
+            removePercent: false,
             worker_service: new WorkerService(
                 this.$t,
                 [0, 1, 3, 4],
@@ -77,8 +85,15 @@ export default {
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
-        getTargetWorker(id) {
-            this.worker_service.getPopup(id);
+        async getTargetWorker(data) {
+            await this.worker_service.getPopup(data.id);
+
+            this.removePercent = true;
+        },
+        dropWorker() {
+            this.worker_service.dropWorker();
+
+            this.removePercent = false;
         },
     },
     computed: {
@@ -144,6 +159,13 @@ export default {
     }
     .form .title {
         margin-bottom: 0;
+    }
+    &__content {
+        display: flex;
+        gap: 12px;
+    }
+    &__card {
+        min-width: calc(50% - 6px);
     }
     &__button {
         min-width: 60px;

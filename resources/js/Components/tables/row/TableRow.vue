@@ -32,7 +32,7 @@
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            v-if="!!this.columns.graphId"
+            v-if="!!this.columns.graphId && !removePercent"
         >
             <path
                 d="M10 6L16 12L10 18"
@@ -51,6 +51,7 @@ export default {
         viewportWidth: Number,
         columns: Array,
         titles: Array,
+        removePercent: Boolean,
     },
     computed: {
         getWorkersStats() {
@@ -96,16 +97,18 @@ export default {
         renderColumns() {
             let obj = {};
             if (this.columns) {
-                obj = Object.entries(this.updatedColumns).filter(
-                    (col) =>
+                obj = Object.entries(this.updatedColumns).filter((col) => {
+                    return (
                         col[0] !== "class" &&
                         col[0] !== "graphId" &&
                         col[0] !== "data" &&
                         col[0] !== "unit" &&
                         col[0] !== "unit24" &&
                         col[0] !== "message" &&
-                        col[0] !== "validate"
-                );
+                        col[0] !== "validate" &&
+                        col[0] !== (this.removePercent ? "reject_percent" : "")
+                    );
+                });
                 if (
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
@@ -172,7 +175,7 @@ export default {
             }
         }
         @media (min-width: 767.98px) {
-            background: var(--background-island);;
+            background: var(--background-island);
         }
         &:first-child {
             @media (min-width: 767.98px) {
@@ -218,7 +221,7 @@ export default {
             padding: 8px 0;
             &:not(.main) {
                 padding: 16px;
-                background: var(--background-island);;
+                background: var(--background-island);
                 border-radius: 16px;
                 box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
                 .more {

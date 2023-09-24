@@ -3,7 +3,15 @@
         <div class="card__content">
             <div class="card__head">
                 <h3 class="card_title">{{ target_worker.name }}</h3>
-                <span class="card_status">{{ target_worker.class }}</span>
+                <span
+                    class="card_status"
+                    :class="{
+                        'card_status-active': target_worker.class === 'ACTIVE',
+                        'card_status-in-active':
+                            target_worker.class === 'INACTIVE',
+                    }"
+                    >{{ target_worker.class }}</span
+                >
             </div>
             <svg
                 class="card_close"
@@ -12,6 +20,7 @@
                 viewBox="0 0 24 24"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                @click="$emit('closeCard')"
             >
                 <path
                     d="M19 5L5 19M5 5L19 19"
@@ -33,12 +42,14 @@
             />
             <div class="card__block">
                 <cabinet-card
+                    class="card__elem"
                     :title="$t('statistic.info_blocks.hash.titles[0]')"
                     :value="hashPerDay"
                     unit="TH/s"
                     :page="'worker'"
                 />
                 <cabinet-card
+                    class="card__elem"
                     :title="$t('statistic.info_blocks.hash.titles[1]')"
                     :value="hashPerMin"
                     unit="TH/s"
@@ -72,10 +83,10 @@ export default {
     },
     computed: {
         hashPerDay() {
-            return this.target_worker.hashrate.split(" ")[[1]];
+            return this.target_worker.hashrate.split(" ")[0];
         },
         hashPerMin() {
-            return this.target_worker.hashrate_per_day.split(" ")[[1]];
+            return this.target_worker.hashrate_per_day.split(" ")[0];
         },
     },
 };
@@ -93,6 +104,15 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 24px;
+}
+.card_close {
+    position: absolute;
+    right: -8px;
+    top: 0;
+    height: 32px;
+    width: 32px;
+    cursor: pointer;
+    padding: 8px;
 }
 .card__head {
     display: flex;
@@ -114,10 +134,23 @@ export default {
     font-size: 14px;
     font-weight: 600;
     line-height: 20px;
+    display: inline-flex;
+    align-items: center;
 }
 .card_status-active {
     color: var(--status-succesfull, #1fb96c);
     background: var(--background-success-day, #e9f8f1);
+}
+.card__block {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px;
+    margin-top: 24px;
+}
+.card__elem {
+    border-radius: 24px;
+    background: var(--background-island-inner-3-day, #f8fafd);
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
 }
 .card_status-in-active {
     color: var(--status-failed, #f1404a);
