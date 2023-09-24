@@ -21,10 +21,41 @@ export class SettingsService {
 
         this.userData = "";
 
+        this.qrcode = null;
+        this.code = null;
+
         this.closed = false;
+        this.opened2facPopup = false;
         this.waitAjax = false;
 
         this.validateService = new ValidateService();
+    }
+
+    openFacPopup() {
+        this.opened2facPopup = true;
+
+        setTimeout(() => (this.opened2facPopup = false), 300);
+    }
+
+    async sendFac() {
+        try {
+            const response = (await this.fetchFac()).data;
+
+            this.qrcode = response.qrcode;
+            this.code = response.secret;
+
+            this.openFacPopup();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    async fetchFac() {
+        return await api.get("/2fac/enable", {
+            headers: {
+                Authorization: `Bearer ${store.getters.token}`,
+            },
+        });
     }
 
     validateProcess(event) {
@@ -76,18 +107,16 @@ export class SettingsService {
                 this.translate("safety.title[0]"),
                 this.translate("safety.text[0]"),
                 "2fac",
-                "",
                 "two-factor-icon.png",
                 this.translate("safety.button[0]")
             ),
-            // new BlockData(
-            //     this.translate("safety.title[2]"),
-            //     this.translate("safety.text[2]"),
-            //     "password",
-            //     "",
-            //     "change-password-icon.png",
-            //     this.translate("safety.button[1]")
-            // ),
+            new BlockData(
+                this.translate("safety.title[2]"),
+                this.translate("safety.text[2]"),
+                "password",
+                "change-password-icon.png",
+                this.translate("safety.button[1]")
+            ),
         ];
     }
 

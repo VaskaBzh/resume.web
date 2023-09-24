@@ -36,7 +36,7 @@ export default {
     },
     computed: {
         cuttedCode() {
-            if (this.code)
+            if (this.code && this.cutValue !== -1)
                 return this.code.length >= this.cutValue
                     ? `${this.code.substr(0, this.cutValue)}...`
                     : this.code;

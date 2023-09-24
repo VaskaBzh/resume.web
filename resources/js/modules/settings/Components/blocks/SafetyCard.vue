@@ -7,7 +7,11 @@
         </div>
     </div>
     <div class="btn_container">
-        <button class="btn_content" data-popup="#fac" @mousedown="change_val">
+        <button
+            class="btn_content"
+            :data-popup="'#' + card.id"
+            @mousedown="$emit('send2fac')"
+        >
             {{ card.button }}
         </button>
     </div>
@@ -78,14 +82,14 @@ export default {
     font-weight: 600;
     line-height: 175%; /* 31.5px */
 }
-@media(max-width:900px){
+@media (max-width: 900px) {
     .card__subcontainer {
         width: 100%;
     }
     .btn_container {
         justify-content: center;
     }
-    .btn_content{
+    .btn_content {
         width: 100%;
     }
 }

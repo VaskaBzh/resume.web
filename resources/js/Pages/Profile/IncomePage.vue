@@ -34,20 +34,19 @@
             :empty="incomes.emptyTable"
             rowsNum="1000"
             :haveNav="false"
-            :meta="incomes.meta"
         >
         </main-slider>
-<!--        <main-slider-->
-<!--            :wait="incomes.waitTable"-->
-<!--            :empty="incomes.rows"-->
-<!--            :table="incomes.table"-->
-<!--            :rowsNum="per_page"-->
-<!--            :errors="errors"-->
-<!--            :meta="incomes.meta"-->
-<!--            :key="getActive"-->
-<!--            @changePerPage="changePerPage"-->
-<!--            @changePage="page = $event"-->
-<!--        ></main-slider>-->
+        <!--        <main-slider-->
+        <!--            :wait="incomes.waitTable"-->
+        <!--            :empty="incomes.rows"-->
+        <!--            :table="incomes.table"-->
+        <!--            :rowsNum="per_page"-->
+        <!--            :errors="errors"-->
+        <!--            :meta="incomes.meta"-->
+        <!--            :key="getActive"-->
+        <!--            @changePerPage="changePerPage"-->
+        <!--            @changePage="page = $event"-->
+        <!--        ></main-slider>-->
     </div>
 </template>
 <script>

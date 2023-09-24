@@ -9,9 +9,11 @@
             :final="0.005"
             unit="BTC"
         />
-        <no-info-wait
-            class="no-bg"
+        <main-preloader
             :wait="waitGraphChange"
+            :interval="35"
+            :end="!waitGraphChange"
+            :empty="false"
         />
         <main-column-graph
             v-if="!waitGraphChange"
@@ -25,12 +27,14 @@
 import { mapGetters } from "vuex";
 import MainProgressBar from "@/modules/common/Components/UI/MainProgressBar.vue";
 import MainColumnGraph from "@/modules/graphs/Components/MainBarGraph.vue";
-import {StatisticService} from "@/modules/statistic/service/StatisticService";
+import { StatisticService } from "@/modules/statistic/service/StatisticService";
 import NoInfoWait from "../../../Components/technical/blocks/NoInfoWait.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 
 export default {
     name: "statistic-column-graph",
     components: {
+        MainPreloader,
         MainColumnGraph,
         MainProgressBar,
         NoInfoWait,
@@ -54,7 +58,7 @@ export default {
             return Number(sum).toFixed(8);
         },
     },
-}
+};
 </script>
 
 <style scoped>

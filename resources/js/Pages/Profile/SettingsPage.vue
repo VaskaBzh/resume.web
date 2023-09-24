@@ -23,7 +23,7 @@
                     >
                         <SafetyCard
                             :card="card"
-                            @openPopup="settingsService.getHtml($event)"
+                            @send2fac="settingsService.sendFac()"
                         />
                     </div>
                 </article>
@@ -43,6 +43,12 @@
             )
         "
     />
+    <fac-popup
+        :wait="settingsService.waitAjax"
+        :closed="settingsService.closed"
+        :qrcode="settingsService.qrcode"
+        :code="settingsService.code"
+    />
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
@@ -52,6 +58,7 @@ import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
+import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
 
 export default {
     i18n: {
@@ -62,6 +69,7 @@ export default {
         SettingsList,
         SettingsPopup,
         SafetyCard,
+        FacPopup,
     },
     props: {
         message: String,
@@ -125,8 +133,8 @@ export default {
     display: flex;
     justify-content: space-between;
 }
-@media(max-width:900px){
-    .card__container{
+@media (max-width: 900px) {
+    .card__container {
         flex-direction: column;
         gap: 16px;
     }
@@ -191,7 +199,7 @@ export default {
         padding: 24px;
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 711px;
-        @media(max-width:900px){
+        @media (max-width: 900px) {
             width: 80vw;
         }
     }
