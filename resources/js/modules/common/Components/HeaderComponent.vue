@@ -5,13 +5,13 @@
                 <img
                     v-if="!getTheme"
                     class="nav__logo"
-                    src="@/assets/img/logo_high_quality.svg"
+                    src="../../../../assets/img/logo_high_quality.svg"
                     alt="logo"
                 />
                 <img
                     v-else
                     class="nav__logo"
-                    src="@/assets/img/logo_high_quality-dark.svg"
+                    src="../../../../assets/img/logo_high_quality-dark.svg"
                     alt="logo"
                 />
             </router-link>
@@ -235,6 +235,7 @@ export default defineComponent({
     &__container {
         display: flex;
         align-items: center;
+        margin: 0 auto;
         gap: 5px;
         height: 100%;
     }

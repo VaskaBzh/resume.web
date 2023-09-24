@@ -10,7 +10,7 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
 .button-blue {
     width: fit-content;
     min-width: 300px;

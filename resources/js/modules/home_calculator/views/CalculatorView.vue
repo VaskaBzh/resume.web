@@ -78,11 +78,13 @@ export default {
             if (newValue) {
                 this.calculatorService.setInputs(newValue);
             }
+            console.log(newValue)
         },
     },
     mounted() {
         if (this.btcInfo?.btc) {
             this.calculatorService.setInputs(this.btcInfo.btc);
+
         }
     },
     methods: {
@@ -108,8 +110,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .calculator {
+
+    &__container {
+        margin: 0 auto;
+    }
+
     &_title {
-        margin-bottom: 24px;
+   margin-bottom: 24px;
+   font-family: AmpleSoft Pro;
+
     }
     &_description {
         margin-bottom: 48px;

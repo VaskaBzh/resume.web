@@ -37,7 +37,7 @@
                         selectOptions(option.title, option.img, option.value)
                     "
                 >
-                    <!--                    <img :src="this.optionsImgs[i]" />-->
+                                        <img :src="this.optionsImgs[i]" />
                     {{ option.title }}
                 </p>
             </div>

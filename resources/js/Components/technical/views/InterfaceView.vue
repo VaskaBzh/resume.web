@@ -107,6 +107,11 @@ export default {
 
 <style scoped lang="scss">
 .interface {
+
+    &__container {
+        margin: 0 auto;
+    }
+
     &__content {
         display: flex;
         justify-content: space-between;
