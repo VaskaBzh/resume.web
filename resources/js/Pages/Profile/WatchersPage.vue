@@ -2,7 +2,7 @@
     <div class="watchers">
         <div class="watchers__head">
             <div class="watchers__head__block">
-                <main-title tag="h1">Наблюдатели</main-title>
+                <main-title tag="h4">Наблюдатели</main-title>
                 <main-description
                     >Создавайте и управляйте ссылками
                     наблюдателя</main-description

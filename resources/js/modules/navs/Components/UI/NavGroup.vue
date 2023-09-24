@@ -94,7 +94,7 @@ export default {
 	gap: 8px;
 	justify-content: space-between;
 	align-items: center;
-	color: var(--text-primary);
+	color: var(--text-primary-80);
 	font-family: NunitoSans, serif;
 	font-size: 18px;
 	font-weight: 700;

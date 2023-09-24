@@ -57,7 +57,7 @@ export default {
     color: #F1404A;
 }
 .card_num {
-    color: var(--text-primary);
+    color: var(--text-primary-80);
     font-family: Unbounded, serif;
     font-size: 41px;
     font-weight: 400;

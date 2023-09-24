@@ -138,7 +138,7 @@ export default {
 }
 .tooltip {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--main-gohan, #fff);
+    background: var(--background-island, #fff);
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;

@@ -95,7 +95,7 @@ export default {
 <style scoped>
 .card {
     border-radius: 24px;
-    background: var(--main-gohan, #fff);
+    background: var(--background-island, #fff);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     padding: 24px;
 }
@@ -119,7 +119,7 @@ export default {
     gap: 16px;
 }
 .card_title {
-    color: var(--text-primary-80-day, rgba(29, 41, 57, 0.8));
+    color: var(--text-primary, rgba(29, 41, 57, 0.8));
     font-family: Unbounded, serif;
     font-size: 18px;
     font-weight: 400;
@@ -147,13 +147,37 @@ export default {
     gap: 8px;
     margin-top: 24px;
 }
+@media(max-width: 800px){
+    .card__block{
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .card{
+        padding: 24px 12px;
+    }
+}
 .card__elem {
     border-radius: 24px;
-    background: var(--background-island-inner-3-day, #f8fafd);
+    background: var(--background-island-inner-3, #f8fafd);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
 }
 .card_status-in-active {
     color: var(--status-failed, #f1404a);
     background: var(--background-failed-day, #feeced);
+}
+@media(max-width: 400px){
+    .card__block{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: space-between;
+    }
+    .card__elem {
+        width: 100%;
+    }
+    .card__head{
+        gap: 8px;
+    }
 }
 </style>

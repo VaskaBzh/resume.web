@@ -12,6 +12,6 @@ export default {
 
 <style scoped>
 svg {
-	fill: var(--main-gohan, #FFF);
+	fill: var(--background-island, #FFF);
 }
 </style>

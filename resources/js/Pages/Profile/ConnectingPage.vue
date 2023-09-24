@@ -69,7 +69,7 @@ export default {
 <style lang="scss" scoped>
 .title-connecting{
     margin-bottom: 8px;
-    color: var(--text-primary);
+    color: var(--text-primary-80);
     font-family: Unbounded;
     font-size: 18px;
     font-style: normal;
