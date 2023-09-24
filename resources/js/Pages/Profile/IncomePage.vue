@@ -126,6 +126,9 @@ export default {
         getActive() {
             this.initIncomes();
         },
+        "$i18n.locale"() {
+            this.initIncomes();
+        },
     },
     methods: {
         async initIncomes() {
