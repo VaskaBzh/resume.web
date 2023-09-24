@@ -28,5 +28,4 @@ Route::middleware('auth')->group(function () {
 //        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
 //        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 //    });
-    Route::post('/send_message', SendMessageConroller::class)->name('send_message');
 });

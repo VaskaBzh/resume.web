@@ -12,6 +12,7 @@ class Authenticate extends Middleware
     public function handle($request, Closure $next, ...$guards)
     {
         if ($request->attributes->get('access_key_valid')) {
+
             return $next($request);
         }
 

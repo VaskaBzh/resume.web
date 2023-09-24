@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\AllowedRoutesController;
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\Incomes\ListController;
@@ -68,6 +69,7 @@ Route::group([
     Route::get('/incomes/{sub}', ListController::class)->name('income.list');
     Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
+    Route::get('/allowed/{token}', AllowedRoutesController::class)->name('allowed-routes');
 });
 /* End allowable routes  */
 
