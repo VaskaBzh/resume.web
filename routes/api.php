@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowContro
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -59,12 +60,6 @@ Route::group([
         Route::get('worker/{worker}', WorkerShowController::class)->name('worker.show');
     });
 
-    Route::group([
-        'prefix' => 'wallets',
-    ], function () {
-        Route::get('{sub}', WalletListController::class)->name('wallet.list');
-    });
-
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');
     Route::get('/incomes/{sub}', ListController::class)->name('income.list');
     Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
@@ -81,13 +76,12 @@ Route::group([
     Route::put('/change/{user}', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
-    /*Route::group([
+    Route::group([
         'prefix' => '2fac'
     ], function () {
-        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
-        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
-    });*/
+        Route::put('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+        Route::get('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+    });
 
     Route::group([
         'prefix' => 'subs',
@@ -97,7 +91,9 @@ Route::group([
 
     Route::group([
         'prefix' => 'wallets',
+        'middleware' => ['verified', 'verify-expiration']
     ], function () {
+        Route::get('{sub}', WalletListController::class)->name('wallet.list');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
         Route::put('/update', WalletUpdateController::class)->name('wallet.update');
     });

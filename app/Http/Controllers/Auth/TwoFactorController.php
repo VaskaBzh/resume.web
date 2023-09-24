@@ -11,40 +11,39 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 use PragmaRX\Google2FALaravel\Google2FA;
+use Symfony\Component\HttpFoundation\Response;
 
 class TwoFactorController extends Controller
 {
     public function __construct(readonly private Google2FA $googleTwoFactor)
-    {}
+    {
+    }
 
-    public function enable(Request $request): RedirectResponse
+    public function enable(Request $request): JsonResponse
     {
         $user = auth()->user();
+        try {
+            $secretKey = $this->googleTwoFactor->generateSecretKey();
+            $user->google2fa_secret = $secretKey;
+            $user->save();
 
-        if ($request->has('2fac')) {
-            try {
-                $secretKey = $this->googleTwoFactor->generateSecretKey();
-                $user->google2fa_secret = $secretKey;
-                $user->save();
+            $QRImage = $this->googleTwoFactor->getQRCodeInline(
+                'test',
+                $user->email,
+                $user->google2fa_secret
+            );
 
-                $QRImage = $this->googleTwoFactor->getQRCodeInline(
-                    'test',
-                    $user->email,
-                    $user->google2fa_secret
-                );
-
-//                return
-            } catch (\Exception $e) {
-                report($e);
-            }
-
-            return redirect()->route('2fa.show')->with([
+            return new JsonResponse([
                 'qrCode' => $QRImage,
                 'secret' => $user->google2fa_secret
             ]);
-        }
+        } catch (\Exception $e) {
+            report($e);
 
-        return back();
+            return new JsonResponse([
+                'message' => 'Something went wrong'
+            ], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function verify(TwoFactorVerifyRequest $request): JsonResponse

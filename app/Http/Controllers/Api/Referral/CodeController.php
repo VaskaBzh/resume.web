@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
+use App\Models\Sub;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
@@ -15,7 +16,10 @@ class CodeController extends Controller
     public function __invoke(Request $request): JsonResponse
     {
         try {
-            $code = ReferralService::generateCode(user: auth()->user(), groupId: (int) $request->group_id);
+            $code = ReferralService::generateCode(
+                user: auth()->user(),
+                sub: Sub::findOrFail($request->group_id)
+            );
 
             return new JsonResponse([
                 'success' => true,

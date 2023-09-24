@@ -73,5 +73,6 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'watcher-link' => \App\Http\Middleware\WatcherLinkMiddleware::class,
+        'verify-expiration' => \App\Http\Middleware\EmailVerificationExpirationMiddleware::class,
     ];
 }
