@@ -10,6 +10,7 @@ export default {
     props: {
         tag: String,
     },
+    i18n: {},
     computed: {
         tagName() {
             const tagsNames = {

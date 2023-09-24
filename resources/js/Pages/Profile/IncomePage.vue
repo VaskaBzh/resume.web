@@ -35,18 +35,8 @@
             rowsNum="1000"
             :haveNav="false"
         >
+            <main-table :table="incomes.table"></main-table>
         </main-slider>
-        <!--        <main-slider-->
-        <!--            :wait="incomes.waitTable"-->
-        <!--            :empty="incomes.rows"-->
-        <!--            :table="incomes.table"-->
-        <!--            :rowsNum="per_page"-->
-        <!--            :errors="errors"-->
-        <!--            :meta="incomes.meta"-->
-        <!--            :key="getActive"-->
-        <!--            @changePerPage="changePerPage"-->
-        <!--            @changePage="page = $event"-->
-        <!--        ></main-slider>-->
     </div>
 </template>
 <script>
@@ -57,6 +47,7 @@ import { mapGetters } from "vuex";
 
 import { IncomeService } from "@/services/IncomeService";
 import MonthIncome from "../../modules/income/Components/MonthIncome.vue";
+import MainTable from "@/Components/tables/MainTable.vue";
 
 export default {
     components: {
@@ -64,6 +55,7 @@ export default {
         AccrualsCard,
         YesterdayIncomeCard,
         MonthIncome,
+        MainTable,
     },
     props: ["errors", "message", "user"],
     data() {
@@ -124,6 +116,9 @@ export default {
             this.initIncomes();
         },
         getActive() {
+            this.initIncomes();
+        },
+        "$i18n.locale"() {
             this.initIncomes();
         },
     },
