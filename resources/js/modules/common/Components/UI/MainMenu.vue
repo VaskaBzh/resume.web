@@ -28,7 +28,7 @@
                         v-html="option.svg"
                     ></span>
                     <img v-if="option.img" :src="imgs[i]" alt="" />
-                    {{ option.name }}
+                    {{ option.value }}
                 </button>
             </div>
         </transition>
@@ -259,8 +259,9 @@ export default {
 .select {
     &__options {
         left: 0;
-        min-width: 168px;
-        top: calc(100% + 11px);
+        // min-width: 168px;
+        width: auto;
+        top: calc(100% + 12px);
         z-index: 2;
     }
 }

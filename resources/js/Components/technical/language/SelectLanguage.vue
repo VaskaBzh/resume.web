@@ -1,7 +1,7 @@
 <template>
     <div class="select" @click="toggle">
         <div class="select_title menu_toggle" :class="{ rotate: opened }">
-            <span>RU</span>
+            <span>{{ active.value }}</span>
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="24"
