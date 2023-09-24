@@ -42,6 +42,18 @@ export class PopupService {
         }
     }
 
+    animateOnUpdate() {
+        this.animate = anime({
+            targets: this.popupBlockHtml,
+            height: `${this.popupContentHtml.scrollHeight + 64}px`,
+            easing: "easeInCubic",
+            duration: 500,
+            complete: () => {
+                this.dropAnimate();
+            },
+        });
+    }
+
     closeAnimate() {
         this.dropAnimate();
 

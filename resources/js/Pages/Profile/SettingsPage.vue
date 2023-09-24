@@ -21,10 +21,7 @@
                         class="card__container"
                         v-for="card in settingsService.blocks"
                     >
-                        <SafetyCard
-                            :card="card"
-                            @send2fac="settingsService.sendFac()"
-                        />
+                        <SafetyCard :card="card" @send2fac="sendFac" />
                     </div>
                 </article>
             </div>
@@ -44,10 +41,12 @@
         "
     />
     <fac-popup
+        :opened="settingsService.openedFacPopup"
         :wait="settingsService.waitAjax"
-        :closed="settingsService.closed"
-        :qrcode="settingsService.qrcode"
+        :closed="settingsService.closedFacPopup"
+        :qrCode="settingsService.qrCode"
         :code="settingsService.code"
+        @sendVerify="sendVerify($event)"
     />
 </template>
 <script>
@@ -104,6 +103,12 @@ export default {
         },
     },
     methods: {
+        async sendFac() {
+            await this.settingsService.sendFac();
+        },
+        async sendVerify(form) {
+            await this.settingsService.sendVerify(form);
+        },
         settingsProcess() {
             this.settingsService.setUserData();
             this.settingsService.setForm();

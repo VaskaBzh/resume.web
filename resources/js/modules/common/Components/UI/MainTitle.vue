@@ -66,7 +66,7 @@ h4 {
 
 
 .title {
-    font-family: AmpleSoft Pro;;
+    font-family: Unbounded, serif;
     color: var(--text-primary);
     font-weight: 400;
     &.profile {
@@ -86,9 +86,6 @@ h4 {
 
     &-blue {
         color: #3F7BDD;
-
     }
-
-
 }
 </style>

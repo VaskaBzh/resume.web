@@ -433,8 +433,7 @@ const messages = {
             referral: "Ref. cabinet",
             faq: "FAQ",
             support: "Support",
-            settings: "Account"
-
+            settings: "Account",
         },
         days: "Days",
         hours: "Hours",
@@ -598,10 +597,14 @@ const messages = {
             },
         },
         wallets: {
-            title:[ "Setting up auto payout", "Wallets"],
-            tooltip: "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
+            title: ["Setting up auto payout", "Wallets"],
+            tooltip:
+                "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
             no_info: "Add Wallet",
-            messages: ["Wait 5 seconds.", "You can delete your wallet through tech support."],
+            messages: [
+                "Wait 5 seconds.",
+                "You can delete your wallet through tech support.",
+            ],
             block: {
                 title: "Wallets list",
                 filter: "Hide with zero balance",
@@ -639,11 +642,11 @@ const messages = {
                     },
                     button: "Save",
                 },
-                remove:{
+                remove: {
                     title: "Delete wallet",
                     note: "Are you sure you want to delete your wallet?",
-                    button: ["Cancel", "Delete"]
-                }
+                    button: ["Cancel", "Delete"],
+                },
             },
         },
         settings: {
@@ -1290,10 +1293,14 @@ const messages = {
             },
         },
         wallets: {
-            title:[ "Настройка автовыплаты", "Кошельки"],
-            tooltip: "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
+            title: ["Настройка автовыплаты", "Кошельки"],
+            tooltip:
+                "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
             no_info: "Добавить кошелек",
-            messages: ["Подождите 5 секунд.", "Удалить кошелек можно через тех поддержку."],
+            messages: [
+                "Подождите 5 секунд.",
+                "Удалить кошелек можно через тех поддержку.",
+            ],
             block: {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",
@@ -1328,11 +1335,11 @@ const messages = {
                     },
                     button: "Сохранить",
                 },
-                remove:{
+                remove: {
                     title: "Удалить кошелек",
                     note: "Вы действительно хотите удалить кошелек?",
-                    button: ["Отменить", "Удалить"]
-                }
+                    button: ["Отменить", "Удалить"],
+                },
             },
         },
         settings: {
@@ -1383,8 +1390,10 @@ const messages = {
     },
 };
 
-// Create VueI18n instance with options
-export const i18n = createI18n({
+const i18n = createI18n({
     locale: "en",
     messages,
 });
+
+// Create VueI18n instance with options
+export default i18n;

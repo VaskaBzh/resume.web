@@ -36,10 +36,12 @@ export default {
     },
     computed: {
         cuttedCode() {
-            if (this.code && this.cutValue !== -1)
-                return this.code.length >= this.cutValue
-                    ? `${this.code.substr(0, this.cutValue)}...`
-                    : this.code;
+            if (this.code)
+                if (this.cutValue !== -1)
+                    return this.code.length >= this.cutValue
+                        ? `${this.code.substr(0, this.cutValue)}...`
+                        : this.code;
+                else return this.code;
             return "...";
         },
     },

@@ -35,6 +35,7 @@ import LogoLight from "@/modules/popup/icons/LogoLight.vue";
 import LogoDark from "@/modules/popup/icons/LogoDark.vue";
 import UnClickView from "@/modules/popup/Components/UnClickView.vue";
 import PopupCrossIcon from "@/modules/popup/icons/PopupCrossIcon.vue";
+import anime from "animejs";
 
 export default {
     name: "main-popup",
@@ -55,6 +56,10 @@ export default {
             type: Boolean,
             default: false,
         },
+        makeResize: {
+            type: Boolean,
+            default: false,
+        },
     },
     data() {
         return {
@@ -71,6 +76,12 @@ export default {
             if (newBool) {
                 this.service.popupOpen(this.$refs.popup_block.scrollHeight);
             }
+        },
+        makeResize(newResizeState) {
+            if (newResizeState)
+                setTimeout(() => {
+                    this.service.animateOnUpdate();
+                }, 150);
         },
     },
     computed: {
@@ -125,6 +136,7 @@ export default {
     transition: all 0.5s ease 0s;
     padding: 32px;
     position: relative;
+    overflow: hidden;
 }
 .popup__content .popup__block-logo {
     position: absolute;

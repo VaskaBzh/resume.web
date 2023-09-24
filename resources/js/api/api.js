@@ -13,6 +13,16 @@ const instance = axios.create({
     },
 });
 
+instance.interceptors.request.use((config) => {
+    const locale = localStorage.getItem("location");
+    const csrf = document
+        .querySelector("meta[name='csrf-token']")
+        .getAttribute("content");
+    if (locale) config.headers["Accept-Language"] = locale;
+    if (csrf) config.headers["X-CSRF-TOKEN"] = csrf;
+    return config;
+});
+
 instance.interceptors.response.use(
     (response) => {
         return response;

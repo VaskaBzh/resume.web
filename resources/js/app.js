@@ -4,7 +4,7 @@ import { createApp } from "vue";
 
 import App from "@/App.vue";
 
-import { i18n } from "@/lang/vue-translate.js";
+import i18n from "@/lang/vue-translate.js";
 
 import store from "./store/index.js";
 import scrollAnimation from "@/Components/directives/animations/scrollAnimation.vue";

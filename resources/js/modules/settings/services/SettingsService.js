@@ -21,41 +21,79 @@ export class SettingsService {
 
         this.userData = "";
 
-        this.qrcode = null;
+        this.qrCode = null;
         this.code = null;
 
         this.closed = false;
-        this.opened2facPopup = false;
+        this.openedFacPopup = false;
+        this.closedFacPopup = false;
         this.waitAjax = false;
 
         this.validateService = new ValidateService();
     }
 
-    openFacPopup() {
-        this.opened2facPopup = true;
+    setCode(code) {
+        this.code = code;
+    }
 
-        setTimeout(() => (this.opened2facPopup = false), 300);
+    setQrCode(qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    async sendVerify(form) {
+        try {
+            const response = await this.fetchVerifyFac(form);
+
+            this.closeFacPopup();
+        } catch (err) {
+            console.error(err);
+
+            store.dispatch("setFullErrors", err.response.data);
+        }
     }
 
     async sendFac() {
         try {
-            const response = (await this.fetchFac()).data;
+            const response = await this.fetchFac();
 
-            this.qrcode = response.qrcode;
-            this.code = response.secret;
-
+            this.setCode(response.secret);
+            this.setQrCode(response.qrCode);
             this.openFacPopup();
         } catch (err) {
             console.error(err);
         }
     }
 
+    openFacPopup() {
+        this.openedFacPopup = true;
+
+        setTimeout(() => (this.openedFacPopup = false), 300);
+    }
+
+    closeFacPopup() {
+        this.closedFacPopup = true;
+
+        setTimeout(() => (this.closedFacPopup = false), 300);
+    }
+
     async fetchFac() {
-        return await api.get("/2fac/enable", {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        return (
+            await api.get("/2fac/enable", {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
+    async fetchVerifyFac(form) {
+        return (
+            await api.post("/2fac/verify", form, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
     }
 
     validateProcess(event) {

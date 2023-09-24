@@ -2,8 +2,20 @@
     <div class="select" @click="toggle">
         <div class="select_title menu_toggle" :class="{ rotate: opened }">
             <span>RU</span>
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
+            >
+                <path
+                    d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9"
+                    stroke="#D0D5DD"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                />
             </svg>
         </div>
         <main-menu
@@ -72,19 +84,6 @@ export default {
             if (this.$i18n.locale !== lang.value) {
                 this.$i18n.locale = lang.value;
                 localStorage.setItem("location", lang.value);
-                // await axios.post(
-                //     "/v1/set_location",
-                //     {
-                //         location: this.$i18n.locale,
-                //     },
-                //     {
-                //         headers: {
-                //             ["X-XSRF-TOKEN"]: document
-                //                 .querySelector(`meta[name="csrf-token"]`)
-                //                 .getAttribute("content"),
-                //         },
-                //     }
-                // );
             }
         },
         toggle() {
@@ -119,7 +118,7 @@ export default {
     width: fit-content;
     padding: 8px 12px;
     border-radius: 12px;
-    background: var(--buttons-fourth-fill-border-default, #F2F4F7);
+    background: var(--buttons-fourth-fill-border-default, #f2f4f7);
     position: relative;
     cursor: pointer;
     @media (max-width: 767.98px) {
@@ -134,7 +133,7 @@ export default {
         gap: 8px;
         border-radius: 14px;
         transition: all 0.5s ease 0s;
-        color: var(--gray-400, #98A2B3);
+        color: var(--gray-400, #98a2b3);
         text-align: center;
 
         /* Label 1/Nunito Sans 10pt/14/SemiBold */
