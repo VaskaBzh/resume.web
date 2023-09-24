@@ -11,6 +11,9 @@ export class WorkerService {
         this.translate = translate;
         this.titles = this.useTranslater(titles);
         this.rows = [];
+        //
+        // this.buttons = [];
+        // this.offset = [];
 
         this.table = new Map();
 
@@ -28,23 +31,23 @@ export class WorkerService {
         );
     }
 
-    setFirstRow() {
-        return {
-            class: "main",
-            name: this.translate("workers.table.sub_thead"),
-            hashrate:
-                store.getters.getAccount.hash_per_min +
-                store.getters.getAccount.unit +
-                "h/s",
-            // unit: store.getters.getAccount.unit,
-            hashRate24:
-                store.getters.getAccount.hash_per_day +
-                store.getters.getAccount.unit +
-                "h/s",
-            // unit24: store.getters.getAccount.unit,
-            rejectRate: store.getters.getAccount.reject_percent + " %",
-        };
-    }
+    // setFirstRow() {
+    //     return {
+    //         class: "main",
+    //         name: this.translate("workers.table.sub_thead"),
+    //         hashrate:
+    //             store.getters.getAccount.hash_per_min +
+    //             store.getters.getAccount.unit +
+    //             "h/s",
+    //         // unit: store.getters.getAccount.unit,
+    //         hashRate24:
+    //             store.getters.getAccount.hash_per_day +
+    //             store.getters.getAccount.unit +
+    //             "h/s",
+    //         // unit24: store.getters.getAccount.unit,
+    //         rejectRate: store.getters.getAccount.reject_percent + " %",
+    //     };
+    // }
 
     updateGroup_id() {
         this.group_id = store.getters.getActive;
@@ -127,6 +130,13 @@ export class WorkerService {
                 this.emptyWorkers = true;
             }
         }
+    }
+
+    setButtons() {
+        this.buttons = [
+            { title: `24 ${this.translate("hours")}`, value: 24 },
+            { title: `7 ${this.translate("days")}`, value: 168 },
+        ];
     }
 
     async getWorker() {

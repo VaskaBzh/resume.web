@@ -16,7 +16,7 @@
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
                 :data-popup="row.data"
-                @openGraph="getUser"
+                @tableProcess="getUser"
             />
         </tbody>
     </table>

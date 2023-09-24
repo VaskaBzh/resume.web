@@ -134,7 +134,7 @@ export default {
             }
         },
         openPopup() {
-            this.$emit("openGraph", {
+            this.$emit("tableProcess", {
                 id: this.columns.graphId,
             });
         },

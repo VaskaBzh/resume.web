@@ -21,8 +21,15 @@
                 :haveNav="false"
                 :meta="{}"
             >
-                <main-table :table="worker_service.table"></main-table>
+                <main-table
+                    :table="worker_service.table"
+                    @getData="getTargetWorker($event)"
+                ></main-table>
             </main-slider>
+            <worker-card
+                v-if="worker_service.target_worker"
+                :target_worker="worker_service.target_worker"
+            />
         </div>
     </div>
 </template>
@@ -33,6 +40,7 @@ import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
+import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
 
 export default {
     components: {
@@ -40,6 +48,7 @@ export default {
         MainSlider,
         MainTable,
         MainPreloader,
+        WorkerCard,
     },
     data() {
         return {
@@ -67,6 +76,9 @@ export default {
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
+        },
+        getTargetWorker(id) {
+            this.worker_service.getPopup(id);
         },
     },
     computed: {

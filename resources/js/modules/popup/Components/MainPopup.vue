@@ -144,14 +144,15 @@ export default {
     top: -8px;
     right: -8px;
     padding: 8px;
+    z-index: 2;
 }
-@media(max-width: 900px){
+@media (max-width: 900px) {
     .popup__content {
         width: 80vw !important;
         height: auto !important;
     }
-    .popup__block{
-       min-width: auto;
+    .popup__block {
+        min-width: auto;
     }
 }
 </style>

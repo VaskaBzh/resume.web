@@ -21,9 +21,24 @@ export class TabsService {
                         "statistic",
                         "statistic"
                     ),
-                    new TabsData("/profile/income", "income", "income", "income"),
-                    new TabsData("/profile/workers", "workers", "workers", "workers"),
-                    new TabsData("/profile/accounts", "accounts", "accounts", "accounts"),
+                    new TabsData(
+                        "/profile/income",
+                        "income",
+                        "income",
+                        "income"
+                    ),
+                    new TabsData(
+                        "/profile/workers",
+                        "workers",
+                        "workers",
+                        "workers"
+                    ),
+                    new TabsData(
+                        "/profile/accounts",
+                        "accounts",
+                        "accounts",
+                        "accounts"
+                    ),
                 ],
             },
             {
@@ -35,8 +50,18 @@ export class TabsService {
                         "connecting",
                         "connecting"
                     ),
-                    new TabsData("/profile/wallets", "wallets","wallets", "wallets"),
-                    new TabsData("/profile/watchers", "watchers","watchers", "watchers"),
+                    new TabsData(
+                        "/profile/wallets",
+                        "wallets",
+                        "wallets",
+                        "wallets"
+                    ),
+                    new TabsData(
+                        "/profile/watchers",
+                        "watchers",
+                        "watchers",
+                        "watchers"
+                    ),
                 ],
             },
         ];
@@ -117,8 +142,18 @@ export class TabsService {
             {
                 group_name: "Настройки",
                 links: [
-                    new TabsData("/profile/settings", "settings", "settings", "account"),
-                    new TabsData("/profile/referral", "referral", "referral", "referral"),
+                    new TabsData(
+                        "/profile/settings",
+                        "settings",
+                        "settings",
+                        "account"
+                    ),
+                    new TabsData(
+                        "/profile/referral",
+                        "referral",
+                        "referral",
+                        "referral"
+                    ),
                     new TabsData("/profile/faq", "faq", "faq", "faq"),
                     // new TabsData("/profile/watchers", "support", "support", "support"),
                 ],
@@ -132,7 +167,12 @@ export class TabsService {
             {
                 group_name: "Настройки",
                 links: [
-                    new TabsData("/profile/settings", "settings", "settings", "account"),
+                    new TabsData(
+                        "/profile/settings",
+                        "settings",
+                        "settings",
+                        "account"
+                    ),
                     new TabsData("/profile/faq", "faq", "faq", "faq"),
                     // new TabsData("/profile/watchers", "support", "support"),
                 ],
