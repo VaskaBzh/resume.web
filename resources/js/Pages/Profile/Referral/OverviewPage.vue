@@ -194,15 +194,11 @@ export default {
         grid-template-columns: repeat(2, 49%);
         // grid-template-rows: repeat(2, auto);
         gap: 16px;
-        // @media (max-width: $pc) {
-        //     grid-template-columns: repeat(3, 1fr);
-        //     grid-template-rows: repeat(4, auto);
-        // }
-        // @media (max-width: $mobile) {
-        //     display: flex;
-        //     flex-direction: column;
-        //     gap: 8px;
-        // }
+        @media (max-width: $mobile) {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
     }
     &__block {
         &:first-child {
