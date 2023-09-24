@@ -126,7 +126,11 @@ export default {
                 {
                     name: "Статистика",
                     checked: false,
-                    routes: ["v1.sub.show", "v1.hashrate.list"],
+                    routes: [
+                        "v1.sub.show",
+                        "v1.hashrate.list",
+                        "v1.allowed-routes",
+                    ],
                 },
                 {
                     name: "Воркеры",

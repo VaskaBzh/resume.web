@@ -55,7 +55,7 @@ export default defineComponent({
     },
     data() {
         return {
-            service: new TabsService(this.$router),
+            service: new TabsService(this.$router, this.$route),
         };
     },
     mounted() {

@@ -191,6 +191,7 @@ export default {
             -webkit-user-select: text;
             user-select: text;
             display: inline-flex;
+            align-items: center;
             &.workers {
                 color: #13d60e;
                 &_stats {
