@@ -18,7 +18,7 @@ class ContainsRouteRule implements InvokableRule
 
    public function __invoke($attribute, $value, $fail)
    {
-       if (!in_array('v1.sub.show', $value)) {
+       if (!in_array('v1.sub.show', $value) || !in_array('v1.allowed-routes', $value)) {
            $fail('Must contains v.sub.show route');
        }
 

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\AllowedRoutesController;
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\Incomes\ListController;
@@ -38,7 +39,6 @@ Route::get('/verify/{id}/{hash}', VerificationController::class)->name('verifica
 /* _________________ End public routes ____________________ */
 
 
-
 /* ________________ Protected routes ____________________ */
 
 /* Can be allowed */
@@ -69,6 +69,7 @@ Route::group([
     Route::get('/incomes/{sub}', ListController::class)->name('income.list');
     Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
+    Route::get('/allowed/{token}', AllowedRoutesController::class)->name('allowed-routes');
 });
 /* End allowable routes  */
 
@@ -79,6 +80,14 @@ Route::group([
     Route::put('reset', [ResetPasswordController::class, 'changePassword']);
     Route::put('/change/{user}', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
+
+    /*Route::group([
+        'prefix' => '2fac'
+    ], function () {
+        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
+        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+    });*/
 
     Route::group([
         'prefix' => 'subs',

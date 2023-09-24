@@ -32,6 +32,8 @@ class TwoFactorController extends Controller
                     $user->email,
                     $user->google2fa_secret
                 );
+
+//                return
             } catch (\Exception $e) {
                 report($e);
             }
