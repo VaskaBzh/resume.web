@@ -351,6 +351,7 @@ export default {
 }
 .footer {
     &__container {
+        margin: 110px auto 0;
         z-index: 1;
     }
     // .footer__main

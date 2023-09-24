@@ -26,13 +26,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 h1 {
-    font-size: 27px;
-    line-height: 40px;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 107.6%;
 }
 
 h2 {
-    font-size: 20px;
-    line-height: 32px;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 105%;
+
 }
 
 h3 {
@@ -57,8 +62,11 @@ h4 {
         line-height: 135%;
     }
 }
+
+
+
 .title {
-    font-family: Unbounded, serif;
+    font-family: AmpleSoft Pro;;
     color: var(--text-primary);
     font-weight: 400;
     &.profile {
@@ -75,5 +83,12 @@ h4 {
         font-weight: 600;
         line-height: 145%;
     }
+
+    &-blue {
+        color: #3F7BDD;
+
+    }
+
+
 }
 </style>

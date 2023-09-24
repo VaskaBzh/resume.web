@@ -110,6 +110,8 @@ export default {
     },
 };
 </script>
+
+
 <style scoped lang="scss">
 .list-leave-active,
 .list-enter-active {
