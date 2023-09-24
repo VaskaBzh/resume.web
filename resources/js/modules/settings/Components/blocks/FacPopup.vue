@@ -85,7 +85,6 @@ export default {
     },
     watch: {
         errorsExpired() {
-            console.log(this.errorsExpired);
         },
 
         hasCode() {

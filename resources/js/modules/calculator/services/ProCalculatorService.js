@@ -185,7 +185,6 @@ export class ProCalculatorService {
         const seconds = formulDifficulty / (formulHashrate * earnTime);
 
         /* Время на окупаемость в месяцах */
-        console.log(seconds / convertmultiplier);
 
         /* result: 4.898917437665151 */
     }
