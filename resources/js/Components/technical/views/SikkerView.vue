@@ -35,8 +35,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import { Link } from "@inertiajs/vue3";
 
 export default {
@@ -54,6 +54,9 @@ export default {
 
 <style scoped lang="scss">
 .sikker {
+    &__container {
+        margin: 0 auto;
+    }
     &__main {
         display: flex;
         flex-direction: column;
@@ -90,6 +93,24 @@ export default {
         gap: 8px;
         @media (max-width: 479.98px) {
             gap: 12px;
+        }
+    }
+    .button_propeller {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #366DC8 url("../../../../assets/img/propeller.svg") no-repeat center;
+        transition: all 0.5s ease;
+        animation: rotate 1.9s linear infinite;
+        stroke-width: 1px;
+        stroke: #FFF;
+        box-shadow: 0px 11px 6px 0px rgba(0, 0, 0, 0.08) inset;
+        filter: drop-shadow(0px 0px 35px rgba(255, 255, 255, 0.04));
+
+        @keyframes rotate {
+            from {
+                transform: rotate(360deg);
+            }
         }
     }
 }

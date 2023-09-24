@@ -2,14 +2,16 @@ export class ReferralsData {
     constructor(
         mail,
         workersActive,
-        workers_inactive,
+        workersInActive,
         hashrate,
         unit,
+        init_date,
         amount
     ) {
         this.mail = mail;
-        this.workers = workersActive;
+        this.workers_stats = `${workersActive} / ${workersInActive}`;
         this.hashrate = `${hashrate} ${unit}h/s`;
+        this.init_date = init_date;
         this.amount = `${amount} BTC`;
     }
 }

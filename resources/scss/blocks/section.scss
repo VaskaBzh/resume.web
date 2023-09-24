@@ -14,7 +14,7 @@
         //    0px 0px 0px rgba(0, 0, 0, 0.05);
         box-shadow: 0 4px 10px rgba(85, 85, 85, 0.1);
         border-radius: 32px;
-        padding: 40px 32px;
+        padding: 0px 24px;
         width: 100%;
         @media (max-width: 767.98px) {
             padding: 40px;
@@ -23,7 +23,7 @@
             padding: 24px;
         }
         &-light {
-            background: #fafafa;
+            background: var(--background-island);;
         }
         &-blue {
             background: #5389E1;

@@ -5,6 +5,7 @@ import { RowData } from "@/modules/settings/DTO/RowData";
 import api from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
+import { BlockData } from "../DTO/BlockData";
 
 export class SettingsService {
     constructor(translate, user) {
@@ -13,16 +14,86 @@ export class SettingsService {
         this.clearProfit = null;
 
         this.rows = [];
+        this.blocks = [];
         this.form = {};
         this.validate = {};
         this.user = null;
 
         this.userData = "";
 
+        this.qrCode = null;
+        this.code = null;
+
         this.closed = false;
+        this.openedFacPopup = false;
+        this.closedFacPopup = false;
         this.waitAjax = false;
 
         this.validateService = new ValidateService();
+    }
+
+    setCode(code) {
+        this.code = code;
+    }
+
+    setQrCode(qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    async sendVerify(form) {
+        try {
+            const response = await this.fetchVerifyFac(form);
+
+            this.closeFacPopup();
+        } catch (err) {
+            console.error(err);
+
+            store.dispatch("setFullErrors", err.response.data);
+        }
+    }
+
+    async sendFac() {
+        try {
+            const response = await this.fetchFac();
+
+            this.setCode(response.secret);
+            this.setQrCode(response.qrCode);
+            this.openFacPopup();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    openFacPopup() {
+        this.openedFacPopup = true;
+
+        setTimeout(() => (this.openedFacPopup = false), 300);
+    }
+
+    closeFacPopup() {
+        this.closedFacPopup = true;
+
+        setTimeout(() => (this.closedFacPopup = false), 300);
+    }
+
+    async fetchFac() {
+        return (
+            await api.get("/2fac/enable", {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
+    async fetchVerifyFac(form) {
+        return (
+            await api.post("/2fac/verify", form, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
     }
 
     validateProcess(event) {
@@ -41,7 +112,6 @@ export class SettingsService {
         this.userData = new SettingsUserData(
             this.user.name,
             this.user.email,
-            "*********",
             this.user.phone ?? this.translate("inputs.phone")
         );
     }
@@ -49,28 +119,41 @@ export class SettingsService {
     setRows() {
         this.rows = [
             new RowData(
-                this.translate("settings.block.settings_block.labels.login"),
-                "name",
-                this.userData.login,
-                "name"
-            ),
-            new RowData(
                 this.translate("settings.block.settings_block.labels.email"),
                 "email",
                 this.userData.email,
                 "email"
             ),
-            new RowData(
-                this.translate("settings.block.settings_block.labels.password"),
-                "password",
-                this.userData.password,
-                "password"
-            ),
+            // new RowData(
+            //     this.translate("settings.block.settings_block.labels.password"),
+            //     "password",
+            //     this.userData.password,
+            //     "password"
+            // ),
             new RowData(
                 this.translate("settings.block.settings_block.labels.phone"),
                 "phone",
                 this.userData.phone,
                 "phone"
+            ),
+        ];
+    }
+
+    setBlocks() {
+        this.blocks = [
+            new BlockData(
+                this.translate("safety.title[0]"),
+                this.translate("safety.text[0]"),
+                "2fac",
+                "two-factor-icon.png",
+                this.translate("safety.button[0]")
+            ),
+            new BlockData(
+                this.translate("safety.title[2]"),
+                this.translate("safety.text[2]"),
+                "password",
+                "change-password-icon.png",
+                this.translate("safety.button[1]")
             ),
         ];
     }

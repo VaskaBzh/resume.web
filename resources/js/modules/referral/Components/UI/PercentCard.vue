@@ -103,7 +103,7 @@ export default {
 <style scoped lang="scss">
 .grade-enter-active,
 .grade-leave-active {
-    transition: all 0.5s ease 0s;
+    transition: all 0.7s ease 0s;
 }
 .grade-enter-from,
 .grade-leave-to {
@@ -156,7 +156,7 @@ export default {
         min-width: 350px;
         z-index: 101;
         &_text {
-            color: #818c99;
+            color: var(--text-secondary);
             font-size: 12px;
             font-weight: 400;
             line-height: 130%;

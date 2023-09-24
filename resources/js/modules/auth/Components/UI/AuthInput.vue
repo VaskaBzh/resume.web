@@ -66,7 +66,7 @@ export default {
         }
         outline: none;
         width: 100%;
-        color: #343434;
+        color: var(--text-secondary);
         font-size: 24px;
         font-family: AmpleSoftPro, serif;
         line-height: 135%;

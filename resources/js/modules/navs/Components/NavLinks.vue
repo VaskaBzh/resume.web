@@ -78,10 +78,10 @@
 </template>
 
 <script>
-import BlueButton from "@/Components/UI/BlueButton.vue";
-import AccountMenu from "@/Components/UI/profile/AccountMenu.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import AccountMenu from "@/modules/common/Components/UI/AccountMenu.vue";
 import { mapGetters } from "vuex";
-import MainLink from "@/Components/UI/MainLink.vue";
+import MainLink from "@/modules/common/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
 import api from "@/api/api";
@@ -135,6 +135,7 @@ export default {
 
                 store.dispatch("dropUser");
                 store.dispatch("dropToken");
+                store.dispatch("drop_all");
             } catch (e) {
                 console.error("Error with: " + e);
             }
@@ -195,11 +196,11 @@ export default {
                 //     page: "/complexity",
                 //     name: this.$t("header.links.complexity"),
                 // },
-                {
-                    link: "help",
-                    page: "/help",
-                    name: "FAQ",
-                },
+                // {
+                //     link: "help",
+                //     page: "/help",
+                //     name: "FAQ",
+                // },
                 // {
                 //     link: "calculator",
                 //     page: "/calculator",
@@ -373,7 +374,7 @@ export default {
     &_con {
         @media (max-width: 991.98px) {
             position: fixed;
-            background: #fafafa;
+            background: var(--background-island);;
             box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
             max-width: 384px;
             overflow: scroll;

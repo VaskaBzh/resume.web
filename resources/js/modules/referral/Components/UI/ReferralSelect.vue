@@ -154,7 +154,10 @@ export default {
         display: inline-flex;
         align-items: center;
         border-radius: 8px;
-        background: #ededed;
+        padding: var(--py-4, 16px) var(--px-4, 16px);
+        border-radius: var(--surface-border-radius-radius-s-md, 12px);
+         background: var(--background-island-inner-3);
+        box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
         width: 100%;
         transition: all 0.3s ease 0s;
         &-selected {
@@ -173,7 +176,7 @@ export default {
             transition: all 0.3s ease 0s;
         }
         &-active {
-            background: #fafafa;
+            background: var(--background-island);;
             box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05),
                 0px 4px 12px -4px rgba(29, 41, 57, 0.05);
             svg {

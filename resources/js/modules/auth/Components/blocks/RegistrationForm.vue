@@ -80,7 +80,7 @@
             id="checkbox"
             v-model="service.checkbox"
         />
-        <label for="checkbox" :class="{ error: service.checkbox }">
+        <label for="checkbox" :class="{ error: service.checkboxState }">
             <div class="fake">
                 <svg
                     width="24"
@@ -127,11 +127,11 @@
 <script>
 import pdf from "@/../assets/files/policy.pdf";
 import AuthInput from "@/modules/auth/Components/UI/AuthInput.vue";
-import MainPassword from "@/Components/UI/inputs/MainPassword.vue";
+import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 
 import { RegistrationService } from "@/modules/auth/services/RegistrationService";
 import { mapGetters } from "vuex";

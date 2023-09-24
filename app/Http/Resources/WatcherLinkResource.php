@@ -10,6 +10,8 @@ class WatcherLinkResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
+            'user_id' => $this->user_id,
             'name' => $this->name,
             'allowed_routes' => $this->allowed_routes,
             'access_count' => $this->access_count,

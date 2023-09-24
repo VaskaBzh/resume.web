@@ -8,14 +8,18 @@ class ContainsRouteRule implements InvokableRule
 {
     private const ALLOWED_ROUTES = [
         'v1.sub.show',
+        'v1.hashrate.list',
         'v1.worker.show',
         'v1.worker.list',
-        'v1.income.list'
+        'v1.worker_hashrate.list',
+        'v1.income.list',
+        'v1.payout.list',
+        'v1.allowed-routes'
     ];
 
    public function __invoke($attribute, $value, $fail)
    {
-       if (!in_array('v1.sub.show', $value)) {
+       if (!in_array('v1.sub.show', $value) || !in_array('v1.allowed-routes', $value)) {
            $fail('Must contains v.sub.show route');
        }
 

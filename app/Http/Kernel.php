@@ -3,6 +3,7 @@
 namespace App\Http;
 
 use App\Http\Middleware\HandleInertiaRequests;
+use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -19,6 +20,7 @@ class Kernel extends HttpKernel
         \App\Http\Middleware\TrustProxies::class,
         \Illuminate\Http\Middleware\HandleCors::class,
         \App\Http\Middleware\PreventRequestsDuringMaintenance::class,
+        \App\Http\Middleware\SetLocale::class,
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
@@ -32,7 +34,6 @@ class Kernel extends HttpKernel
     protected $middlewareGroups = [
         'web' => [
             \Illuminate\Session\Middleware\StartSession::class,
-            \App\Http\Middleware\SetLocale::class,
             \App\Http\Middleware\EncryptCookies::class,
             \Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse::class,
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
@@ -72,5 +73,6 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'watcher-link' => \App\Http\Middleware\WatcherLinkMiddleware::class,
+        'verify-expiration' => \App\Http\Middleware\EmailVerificationExpirationMiddleware::class,
     ];
 }

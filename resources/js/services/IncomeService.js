@@ -7,12 +7,22 @@ import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
 
 export class IncomeService extends TableService {
+    constructor(translate, titleIndexes, route) {
+        super(translate, titleIndexes);
+
+        this.route = route;
+    }
+
     async fetchIncomes(page = 1, per_page = 15) {
         return await api.get(
             `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
+                    ...(this.route?.query?.access_key
+                        ? { "X-Access-Key": this.route.query.access_key }
+                        : {
+                              Authorization: `Bearer ${store.getters.token}`,
+                          }),
                 },
             }
         );
@@ -23,7 +33,11 @@ export class IncomeService extends TableService {
             `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
+                    ...(this.route?.query?.access_key
+                        ? { "X-Access-Key": this.route.query.access_key }
+                        : {
+                              Authorization: `Bearer ${store.getters.token}`,
+                          }),
                 },
             }
         );
@@ -55,12 +69,6 @@ export class IncomeService extends TableService {
             case "pending":
                 return this.translate("income.table.status.pending");
         }
-    }
-
-    dateFormatter(date) {
-        let d = date.split("");
-        d.length = 10;
-        return d.join("").split("-").reverse().join(".");
     }
 
     setter(income, filter) {
@@ -114,8 +122,10 @@ export class IncomeService extends TableService {
     }
 
     async index(filter, page = 1, per_page = 15) {
-        this.waitTable = true;
         if (store.getters.getActive !== -1) {
+            this.emptyTable = false;
+            this.waitTable = true;
+
             let response;
 
             if (filter) {
@@ -126,9 +136,17 @@ export class IncomeService extends TableService {
 
             this.meta = response.data;
 
-            this.rows = response.data.data.map((el) => {
-                return this.setter(el, filter);
-            });
+            try {
+                this.rows = response.data.data.map((el) => {
+                    return this.setter(el, filter);
+                });
+
+                if (this.rows.length === 0) this.emptyTable = true;
+
+                this.waitTable = false;
+            } catch (err) {
+                this.emptyTable = true;
+            }
 
             if (filter) {
                 this.titles = this.useTranslater([1, 4, 5, 6]);
@@ -145,10 +163,6 @@ export class IncomeService extends TableService {
 
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
-
-        if (store.getters.getActive !== -1) {
-            this.waitTable = false;
-        }
 
         return this;
     }

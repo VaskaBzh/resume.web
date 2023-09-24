@@ -9,6 +9,7 @@ export class RegistrationService {
         this.form = {};
         this.validate = {};
         this.checkbox = false;
+        this.checkboxState = false;
 
         this.router = router;
         this.route = route;
@@ -36,7 +37,7 @@ export class RegistrationService {
                     store.dispatch("setToken", token);
 
                     this.router.push({
-                        name: "statistic",
+                        name: "confirm",
                     });
                 } catch (err) {
                     console.error("Error with: " + err);
@@ -45,7 +46,9 @@ export class RegistrationService {
                 }
             }
         } else {
-            this.checkbox = true;
+            this.checkboxState = true;
+
+            setTimeout(() => this.checkboxState = false, 1500)
         }
     }
 

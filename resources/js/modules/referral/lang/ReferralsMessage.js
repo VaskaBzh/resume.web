@@ -3,16 +3,16 @@ export const ReferralsMessage = {
         title: "Referral Dashboard",
         tabs: ["Cabinet", "My Referrals", "Rewards"],
         referral: {
-            title: "Referral Code",
-            text: "This promo code needs to be provided to the referral during registration or in account settings. Your active referrals will appear in the 'My Referrals' tab.",
+            title: "Referral link",
+            text: "Your personal link to attract referrals to the pool",
         },
         stats: {
             title: "Overall Statistics",
-            cards: ["Invited", "Active", "Total Profit"],
+            cards: ["Your percentage", "Total hashrate", "Invited", "Active", "Total profit for all time"],
         },
         incomes: {
             title: "Referral Earnings",
-            text: "Specify the subaccount where rewards for referrals will be credited.",
+            text: "You will receive an accrual for the referral to the selected subaccount",
             base_value: "Subaccount",
         },
         grade: {
@@ -46,16 +46,16 @@ export const ReferralsMessage = {
         title: "Рефаральный кабинет",
         tabs: ["Кабинет", "Мои рефералы", "Вознаграждения"],
         referral: {
-            title: "Реферальный код",
-            text: "Данный промокод необходимо указать рефералу при регистрации или в настройках аккаунта. Ваши активные рефералы будут появляться во вкладке “Мои рефералы”.",
+            title: "Реферальная ссылка",
+            text: "Ваша персональная ссылка для привлечения рефералов в пул",
         },
         stats: {
             title: "Общая статистика",
-            cards: ["Приглашенные", "Активные", "Общая прибыль"],
+            cards: ["Ваш процент", "Общий хешрейт", "Приглашенные", "Активные", "Общая прибыль за все время"],
         },
         incomes: {
             title: "Начисления за рефералов",
-            text: "Укажите субаккаут на который будут начисляться вознаграждения за рефералов.",
+            text: "На выбранный cубаккаунт вы получите начисление за реферала",
             base_value: "Субаккаунт",
         },
         grade: {

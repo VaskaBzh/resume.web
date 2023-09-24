@@ -14,6 +14,8 @@ class GiveRoleCommand extends Command
 
     public function handle(): void
     {
+
+
         $roles = Role::all();
 
         $roleName = $this
