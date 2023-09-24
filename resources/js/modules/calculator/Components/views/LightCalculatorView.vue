@@ -104,7 +104,6 @@ export default {
     },
     watch: {
         "btcInfo.btc"(newValue) {
-            console.log(newValue);
             if (newValue) {
                 this.lightService.setInputs(newValue);
 

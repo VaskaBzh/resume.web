@@ -78,7 +78,6 @@ export default {
             if (newValue) {
                 this.calculatorService.setInputs(newValue);
             }
-            console.log(newValue)
         },
     },
     mounted() {

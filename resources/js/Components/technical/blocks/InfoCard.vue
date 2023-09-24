@@ -34,7 +34,7 @@ export default {
     flex-direction: column;
     align-items: center;
     gap: 20px;
-    background: var(--background-island);;
+    background: var(--background-island);
     box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     border-radius: 32px;
     padding: 32px 39px;

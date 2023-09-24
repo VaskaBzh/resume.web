@@ -265,8 +265,6 @@ export default {
                 clearInterval(this.intervalId);
             }
         }, this.interval);
-
-        console.log(this.$refs.preloader_line.getTotalLength());
     },
     beforeUnmount() {
         clearInterval(this.intervalId);

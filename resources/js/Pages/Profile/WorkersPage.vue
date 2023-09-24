@@ -77,6 +77,9 @@ export default {
             this.changedActive = oldActive === -1 ? -1 : newActive;
             this.initWorkers();
         },
+        "$i18n.locale"() {
+            this.initWorkers();
+        },
     },
     methods: {
         async initWorkers() {
@@ -163,7 +166,7 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
-        @media(max-width:800px){
+        @media (max-width: 800px) {
             flex-direction: column;
         }
     }

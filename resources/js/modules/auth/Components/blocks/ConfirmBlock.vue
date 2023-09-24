@@ -22,7 +22,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 .confirm {
     display: flex;
     flex-direction: column;

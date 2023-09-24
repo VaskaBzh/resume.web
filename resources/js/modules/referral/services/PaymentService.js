@@ -74,7 +74,6 @@ export class PaymentService extends TableService {
     async setTable(page = 1, per_page = 15) {
         await this.index(page, per_page);
 
-        console.log(this.titles);
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 

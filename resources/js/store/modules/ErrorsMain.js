@@ -1,7 +1,6 @@
 export default {
     actions: {
         setFullErrors({ commit }, errors) {
-            console.log(errors);
             this.dispatch("setErrors", errors);
             this.dispatch("setErrorsExpired", errors);
         },

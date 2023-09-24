@@ -1,24 +1,28 @@
 <template>
     <router-link :to="{ name: 'home' }" class="logo">
-        <img class="logo_img" src="../../assets/img/logo-img.svg" alt="logo" />
-        <span class="logo_block">
-            <img
-                class="logo_img"
-                src="../../assets/img/logo-allbtc.svg"
-                alt="logo"
-            />
-            <img
-                class="logo_img-pool"
-                src="../../assets/img/logo-pool.svg"
-                alt="logo"
-            />
-        </span>
+        <img
+            class="logo_img"
+            src="../../assets/img/logo-tabs.svg"
+            alt="logo"
+            v-show="!isDark"
+        />
+        <img
+            class="logo_img"
+            src="../../assets/img/logo-tabs-dark.svg"
+            alt="logo"
+            v-show="isDark"
+        />
     </router-link>
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "logo-block",
+    computed: {
+        ...mapGetters(["isDark"]),
+    },
 };
 </script>
 
