@@ -105,7 +105,7 @@ export default {
     gap: 16px;
 }
 .watchers_text {
-    color: var(--text-secondary-day, #475467);
+    color: var(--text-secondary, #475467);
     font-family: Unbounded, serif;
     font-size: 16px;
     font-weight: 400;

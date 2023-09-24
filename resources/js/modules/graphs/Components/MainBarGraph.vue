@@ -140,7 +140,7 @@ export default {
     color: var(--text-teritary-day, #98a2b3);
 }
 .tooltip_value {
-    color: var(--text-secondary-day, #475467);
+    color: var(--text-secondary, #475467);
 }
 .tooltip_value-green {
     color: var(--status-succesfull, #1fb96c);

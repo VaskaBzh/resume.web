@@ -145,4 +145,13 @@ export default {
     right: -8px;
     padding: 8px;
 }
+@media(max-width: 900px){
+    .popup__content {
+        width: 80vw !important;
+        height: auto !important;
+    }
+    .popup__block{
+       min-width: auto;
+    }
+}
 </style>

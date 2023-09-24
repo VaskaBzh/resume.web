@@ -172,7 +172,7 @@ export default {
     border-radius: 12px;
     background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-    color: var(--text-secondary-day, #475467);
+    color: var(--text-secondary, #475467);
     font-family: NunitoSans;
     font-size: 14px;
     font-style: normal;

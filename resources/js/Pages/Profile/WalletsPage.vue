@@ -373,7 +373,7 @@ export default {
 input:focus{
     border: none !important;
     outline: none !important;
-    background: none !important;
+    // background: none !important;
 }
 .button-container{
     margin-top: 80px;

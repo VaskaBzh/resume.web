@@ -68,7 +68,7 @@ button {
   border: 1px solid var(--background-tooltip-day, #FFF);
   background: var(--background-island, #FFF);
   box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
-  color: var(--text-secondary-day, #475467);
+  color: var(--text-secondary, #475467);
   font-family: NunitoSans;
   font-size: 12px;
   font-style: normal;

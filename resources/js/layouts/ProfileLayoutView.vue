@@ -147,7 +147,7 @@ export default {
 }
 .red-card{
     background: var(--background-failed);
-    color: var(--status-failed);
+    color: var(--status-failed, #F1404A);
 }
 .note-animation {
     z-index: 10;
