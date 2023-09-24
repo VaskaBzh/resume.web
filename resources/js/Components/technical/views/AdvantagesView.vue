@@ -59,6 +59,9 @@ export default {
 
 <style scoped lang="scss">
 .advantages {
+    &__container {
+        margin: 0 auto;
+    }
     &__content {
         display: flex;
         flex-direction: column;

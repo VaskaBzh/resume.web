@@ -43,6 +43,9 @@ export default {
 </script>
 
 <style lang="scss">
+.page {
+    z-index: 1;
+}
 .nav__logo {
     max-width: 170px;
     @media (max-width: 767.98px) {

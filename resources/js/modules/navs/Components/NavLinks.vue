@@ -196,11 +196,11 @@ export default {
                 //     page: "/complexity",
                 //     name: this.$t("header.links.complexity"),
                 // },
-                {
-                    link: "help",
-                    page: "/help",
-                    name: "FAQ",
-                },
+                // {
+                //     link: "help",
+                //     page: "/help",
+                //     name: "FAQ",
+                // },
                 // {
                 //     link: "calculator",
                 //     page: "/calculator",
