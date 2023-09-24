@@ -1,6 +1,4 @@
 export const WatchersMessage = {
-    en: {
-    },
-    ru: {
-    },
+    en: {},
+    ru: {},
 };
