@@ -27,6 +27,7 @@ use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowContro
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Route;
 
@@ -75,13 +76,12 @@ Route::group([
     Route::put('/change/{user}', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
-    /*Route::group([
+    Route::group([
         'prefix' => '2fac'
     ], function () {
-        Route::post('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
-        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
-    });*/
+        Route::put('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+        Route::get('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+    });
 
     Route::group([
         'prefix' => 'subs',
