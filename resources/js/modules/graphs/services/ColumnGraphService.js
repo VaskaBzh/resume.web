@@ -41,6 +41,14 @@ export class ColumnGraphService extends GraphService {
             .style("opacity", 1);
     }
 
+    dropBarsStyles() {
+        const bars = this.svg.selectAll("path").nodes();
+
+        bars.forEach((bar) => {
+            bar.setAttribute("style", "transition: all 0.3s ease 0s;");
+        });
+    }
+
     getClosestPoint(touchX) {
         const bars = this.svg.selectAll("path").nodes();
         let closestBar = null;
@@ -82,6 +90,7 @@ export class ColumnGraphService extends GraphService {
 
         this.svg.on("mouseleave", () => {
             this.tooltip.style("opacity", 0);
+            this.dropBarsStyles();
         });
 
         return this;
