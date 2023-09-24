@@ -31,24 +31,29 @@
 
         <main-slider
             :wait="incomes.waitTable"
-            :empty="incomes.rows"
-            :table="incomes.table"
-            :rowsNum="per_page"
-            :errors="errors"
+            :empty="incomes.emptyTable"
+            rowsNum="1000"
+            :haveNav="false"
             :meta="incomes.meta"
-            :key="getActive"
-            @changePerPage="changePerPage"
-            @changePage="page = $event"
-        ></main-slider>
+        >
+        </main-slider>
+<!--        <main-slider-->
+<!--            :wait="incomes.waitTable"-->
+<!--            :empty="incomes.rows"-->
+<!--            :table="incomes.table"-->
+<!--            :rowsNum="per_page"-->
+<!--            :errors="errors"-->
+<!--            :meta="incomes.meta"-->
+<!--            :key="getActive"-->
+<!--            @changePerPage="changePerPage"-->
+<!--            @changePage="page = $event"-->
+<!--        ></main-slider>-->
     </div>
 </template>
 <script>
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue";
 import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue";
-import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDate from "@/modules/common/Components/UI/MainDate.vue";
-import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
 import { mapGetters } from "vuex";
 
 import { IncomeService } from "@/services/IncomeService";
@@ -57,9 +62,6 @@ import MonthIncome from "../../modules/income/Components/MonthIncome.vue";
 export default {
     components: {
         MainSlider,
-        MainTitle,
-        MainDate,
-        CurrentExchangeRate,
         AccrualsCard,
         YesterdayIncomeCard,
         MonthIncome,
@@ -128,7 +130,11 @@ export default {
     },
     methods: {
         async initIncomes() {
-            this.incomes = new IncomeService(this.$t, [0, 1, 2, 3, 4, 5, 8]);
+            this.incomes = new IncomeService(
+                this.$t,
+                [0, 1, 2, 3, 4, 5, 8],
+                this.$route
+            );
 
             await this.incomes.setTable(this.filter, this.page, this.per_page);
         },
@@ -197,7 +203,6 @@ export default {
         },
     },
     async created() {
-        // await this.$store.dispatch("getAccounts");
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
@@ -221,11 +226,11 @@ export default {
     gap: 12px;
 }
 @media (max-width: 900px) {
-    .income-cards-article{
+    .income-cards-article {
         flex-direction: column;
         gap: 12px;
     }
-    }
+}
 .month-card-container {
     width: 100%;
 }

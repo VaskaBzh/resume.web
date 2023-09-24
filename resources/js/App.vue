@@ -1,13 +1,12 @@
 <template>
     <keep-alive>
-        <component :is="route.meta.layoutComponent">
+        <component :is="$route.meta.layoutComponent">
             <router-view />
         </component>
     </keep-alive>
 </template>
 
 <script>
-import { useRoute } from "vue-router";
 import ThemeService from "@/modules/interface/Services/ThemeService";
 import { mapGetters } from "vuex";
 import api from "@/api/api";
@@ -16,9 +15,6 @@ export default {
     name: "app-layout-view",
     computed: {
         ...mapGetters(["isDark", "token"]),
-        route() {
-            return useRoute();
-        },
     },
     data() {
         return {
@@ -32,7 +28,7 @@ export default {
         },
         async onClose() {
             try {
-                if (this.token)
+                if (this.token && !this.$route?.query?.access_key)
                     await api.put(
                         "/decrease/token",
                         {},

@@ -1,8 +1,16 @@
 <template>
     <div class="layout">
-        <nav-tabs ref="tabs" :isOpenBurger="isOpenBurger"  @changeBurger="change($event)"/>
+        <nav-tabs
+            ref="tabs"
+            :isOpenBurger="isOpenBurger"
+            @changeBurger="change($event)"
+        />
         <div class="layout__content">
-            <header-component-profile class="header-container" :isOpenBurger="isOpenBurger" @changeBurger="change($event)"/>
+            <header-component-profile
+                class="header-container"
+                :isOpenBurger="isOpenBurger"
+                @changeBurger="change($event)"
+            />
             <!-- Кнопка для тестирования -->
             <button @click="openNotification('all good', 'title')">add</button>
 
@@ -42,35 +50,28 @@ import {
     titleNote,
     openNotification,
 } from "@/modules/notifications/services/NotificationServices";
-import api from "@/api/api";
 
 export default {
     components: {
         NavTabs,
         HeaderComponentProfile,
     },
-    computed: {
-        messageNote() {
-            return messageNote;
-        },
-        titleNote() {
-            return titleNote;
-        },
-        openNotification() {
-            return openNotification;
-        },
-
+    setup() {
+        return {
+            messageNote,
+            titleNote,
+            openNotification,
+        };
     },
     methods: {
-        change(event){
-            console.log(event)
-            this.isOpenBurger = event
-        }
+        change(event) {
+            this.isOpenBurger = event;
+        },
     },
     data() {
         return {
             isOpenBurger: false,
-        }
+        };
     },
 };
 </script>
@@ -104,9 +105,9 @@ export default {
     height: 100%;
     flex: 1 1 auto;
 }
-@media(max-width:900px){
-    .page-container{
-        border-radius:0;
+@media (max-width: 900px) {
+    .page-container {
+        border-radius: 0;
     }
 }
 .header-card {

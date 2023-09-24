@@ -258,7 +258,7 @@ export default {
             // display: none;
             stroke: #818c99;
             position: absolute;
-            right: 12px;
+            right: 40px;
             margin-top: 25px;
             transform: translateY(-50%);
         }

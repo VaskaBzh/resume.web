@@ -1,4 +1,4 @@
---<template>
+<template>
     <h1 v-if="tag === 'h1'" class="title">
         <slot></slot>
     </h1>
@@ -69,7 +69,7 @@ h4 {
         justify-content: space-between;
     }
     &.headline {
-        color: var(--light-gray-400, #98A2B3);
+        color: var(--light-gray-400, #98a2b3);
         font-family: NunitoSans, serif;
         font-size: 14px;
         font-weight: 600;

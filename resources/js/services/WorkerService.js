@@ -5,7 +5,7 @@ import store from "@/store";
 import { workerHashrateData } from "@/DTO/workerHashrateData";
 
 export class WorkerService {
-    constructor(translate, titles) {
+    constructor(translate, titles, route) {
         this.group_id = store.getters.getActive;
         this.worker_id = -1;
         this.translate = translate;
@@ -15,8 +15,11 @@ export class WorkerService {
         this.table = new Map();
 
         this.waitWorkers = true;
+        this.emptyWorkers = false;
         this.waitTargetWorkers = true;
         this.target_worker = {};
+
+        this.route = route;
     }
 
     useTranslater(indexes) {
@@ -64,7 +67,11 @@ export class WorkerService {
     async fetchList() {
         return await api.get(`/workers/${this.group_id}`, {
             headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+                ...(this.route?.query?.access_key
+                    ? { "X-Access-Key": this.route.query.access_key }
+                    : {
+                          Authorization: `Bearer ${store.getters.token}`,
+                      }),
             },
         });
     }
@@ -72,7 +79,11 @@ export class WorkerService {
     async fetchWorker() {
         return await api.get(`/workers/worker/${this.worker_id}`, {
             headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+                ...(this.route?.query?.access_key
+                    ? { "X-Access-Key": this.route.query.access_key }
+                    : {
+                          Authorization: `Bearer ${store.getters.token}`,
+                      }),
             },
         });
     }
@@ -80,7 +91,11 @@ export class WorkerService {
     async fetchWorkerGraph() {
         return await api.get(`/workerhashrate/${this.worker_id}`, {
             headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+                ...(this.route?.query?.access_key
+                    ? { "X-Access-Key": this.route.query.access_key }
+                    : {
+                          Authorization: `Bearer ${store.getters.token}`,
+                      }),
             },
         });
     }
@@ -91,6 +106,7 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
+            this.emptyWorkers = false;
             this.waitWorkers = true;
 
             try {
@@ -100,11 +116,15 @@ export class WorkerService {
                     });
                 });
 
-                this.rows.unshift(this.setFirstRow());
+                // this.rows.unshift(this.setFirstRow());
+
+                if (this.rows.length === 0) this.emptyWorkers = true;
 
                 this.waitWorkers = false;
             } catch (e) {
                 console.error(`Error with: ${e}`);
+
+                this.emptyWorkers = true;
             }
         }
     }

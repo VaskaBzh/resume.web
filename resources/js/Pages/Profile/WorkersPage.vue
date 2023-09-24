@@ -1,31 +1,46 @@
 <template>
     <div class="workers">
-        <div class="workers__wrapper">
+        <main-preloader
+            class="cabinet__preloader"
+            :wait="worker_service.waitWorkers"
+            :interval="35"
+            :end="!worker_service.waitWorkers"
+            :empty="worker_service.emptyWorkers"
+        />
+        <div
+            class="workers__wrapper"
+            v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
+        >
             <div class="cards-container">
                 <main-hashrate-cards />
             </div>
-            <wrap-table
-                :table="worker_service.table"
-                :key="changedActive"
+            <main-slider
                 :wait="worker_service.waitWorkers"
-                :empty="worker_service.rows"
-                :worker_service="worker_service"
-                :rowsVal="1000"
-            />
+                :empty="worker_service.emptyWorkers"
+                rowsNum="1000"
+                :haveNav="false"
+                :meta="{}"
+            >
+                <main-table :table="worker_service.table"></main-table>
+            </main-slider>
         </div>
     </div>
 </template>
 <script>
-import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
 import { WorkerService } from "@/services/WorkerService";
 import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
+import MainTable from "@/Components/tables/MainTable.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 
 export default {
     components: {
-    WrapTable,
-    MainHashrateCards
-},
+        MainHashrateCards,
+        MainSlider,
+        MainTable,
+        MainPreloader,
+    },
     data() {
         return {
             workersActive: 0,
@@ -33,7 +48,11 @@ export default {
             workersDead: 0,
             viewportWidth: 0,
             changedActive: -1,
-            worker_service: new WorkerService(this.$t, [0, 1, 3, 4]),
+            worker_service: new WorkerService(
+                this.$t,
+                [0, 1, 3, 4],
+                this.$route
+            ),
         };
     },
     watch: {
@@ -92,19 +111,22 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
-.cards-container{
+.cards-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 32px;
 }
-@media(max-width:900px){
-    .cards-container{
+@media (max-width: 900px) {
+    .cards-container {
         flex-direction: column;
         gap: 16px;
     }
 }
 .workers {
     padding: 24px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }

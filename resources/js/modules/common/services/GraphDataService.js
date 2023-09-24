@@ -1,5 +1,5 @@
 import { DefaultSubsService } from "./DefaultSubsService";
-import {HashrateUnitEnum} from "../enums/HashrateUnitEnum";
+import { HashrateUnitEnum } from "../enums/HashrateUnitEnum";
 
 export class GraphDataService extends DefaultSubsService {
     constructor(titles, translate, offset = 24) {
@@ -56,7 +56,7 @@ export class GraphDataService extends DefaultSubsService {
         if (unit === HashrateUnitEnum.petahash) hashrate *= 1000;
         else if (unit === HashrateUnitEnum.exsahash) hashrate *= 1000000;
 
-        return hashrate
+        return hashrate;
     }
 
     async makeFullValues() {

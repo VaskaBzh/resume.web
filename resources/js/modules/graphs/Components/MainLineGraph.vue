@@ -1,30 +1,36 @@
 <template>
     <div ref="chart" class="container-chart">
-        <div ref="tooltip" class="tooltip" style="opacity: 1">
+        <div ref="tooltip" class="tooltip" style="opacity: 0">
             <div class="tooltip__content">
                 <p class="tooltip_text">
-                    <span class="tooltip_label">{{ $t("tooltip.hash") }}: </span>
+                    <span class="tooltip_label"
+                        >{{ $t("tooltip.hash") }}:
+                    </span>
                     <span class="tooltip_value">
                         {{ service.hashrate }} {{ service.unit }}h/s
                     </span>
                 </p>
                 <p class="tooltip_text">
-                    <span class="tooltip_label">{{ $t("tooltip.workers") }}: </span>
-                    <span class="tooltip_value">
-                    <span class="tooltip_value tooltip_value-green">
-                        {{ service.workersCountActive }}
+                    <span class="tooltip_label"
+                        >{{ $t("tooltip.workers") }}:
                     </span>
-                </span>
+                    <span class="tooltip_value">
+                        <span class="tooltip_value tooltip_value-green">
+                            {{ service.workersCountActive }}
+                        </span>
+                    </span>
                 </p>
                 <p class="tooltip_text">
-                    <span class="tooltip_label">{{ $t("tooltip.rejected") }}: </span>
+                    <span class="tooltip_label"
+                        >{{ $t("tooltip.rejected") }}:
+                    </span>
                     <span class="tooltip_value">0.000%</span>
                 </p>
                 <p class="tooltip_text tooltip_text-date">
                     <span class="tooltip_value">
                         {{ service.fullDate }}
                     </span>
-                        <span class="tooltip_label">
+                    <span class="tooltip_label">
                         {{ service.time }}
                     </span>
                 </p>
@@ -132,7 +138,7 @@ export default {
 }
 .tooltip {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--main-gohan, #FFF);
+    background: var(--main-gohan, #fff);
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;
@@ -157,16 +163,16 @@ export default {
     line-height: 16px;
 }
 .tooltip_label {
-    color: var(--text-teritary-day, #98A2B3);
+    color: var(--text-teritary-day, #98a2b3);
 }
 .tooltip_value {
     color: var(--text-secondary-day, #475467);
 }
 .tooltip_value-green {
-    color: var(--status-succesfull, #1FB96C);
+    color: var(--status-succesfull, #1fb96c);
 }
 .tooltip_value-red {
-    color: var(--status-failed, #F1404A);
+    color: var(--status-failed, #f1404a);
 }
 .tooltip_text-date {
     margin-top: 8px;

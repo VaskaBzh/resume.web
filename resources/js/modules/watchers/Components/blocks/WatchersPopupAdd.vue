@@ -104,17 +104,21 @@ export default {
                 {
                     name: "Статистика",
                     checked: false,
-                    routes: ["v1.sub.show"],
+                    routes: ["v1.sub.show", "v1.hashrate.list"],
                 },
                 {
                     name: "Воркеры",
                     checked: false,
-                    routes: ["v1.worker.show", "v1.worker.list"],
+                    routes: [
+                        "v1.worker.show",
+                        "v1.worker.list",
+                        "v1.worker_hashrate.list",
+                    ],
                 },
                 {
                     name: "Доходы",
                     checked: false,
-                    routes: ["v1.income.list"],
+                    routes: ["v1.income.list", "v1.payout.list"],
                 },
             ],
         };

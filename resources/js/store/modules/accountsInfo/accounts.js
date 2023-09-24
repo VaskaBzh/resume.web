@@ -9,22 +9,24 @@ export default {
         async destroy_accounts({ commit, state }) {
             commit("destroy_acc");
         },
-        async set_active({ commit, state }, index) {
+        async set_active({ commit, state }, data) {
             let sub = new accountData(
                 (
-                    await api.get(`/subs/sub/${index}`, {
+                    await api.get(`/subs/sub/${data.index}`, {
                         headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
+                            ...(data?.access_key
+                                ? {
+                                      "X-Access-Key": data.access_key,
+                                  }
+                                : {
+                                      Authorization: `Bearer ${store.getters.token}`,
+                                  }),
                         },
                     })
                 ).data.data
             );
 
-            commit("updateActive", index);
-
-            // let sub = Object.values(state.accounts).filter(
-            //     (el) => el.group_id === index
-            // )
+            commit("updateActive", data.index);
 
             commit("updateActiveAccount", sub);
         },
@@ -41,21 +43,27 @@ export default {
 
             commit("updateAccounts", subsList);
             if (state.active === -1) {
-                this.dispatch(
-                    "set_active",
-                    Object.values(subsList)[firstSubIndex].group_id
-                );
+                this.dispatch("set_active", {
+                    index: Object.values(subsList)[firstSubIndex].group_id,
+                });
             }
         },
-        async set_accounts({ commit, state }, user_id) {
-            if (state.valid) {
-                await this.dispatch("accounts_all", user_id);
-                this.dispatch("getMiningStat");
-                this.dispatch("getGraph");
-                commit("setValid", false);
+        async set_accounts({ commit, state }, data) {
+            if (data.route?.query?.access_key) {
+                this.dispatch("set_active", {
+                    access_key: data.route.query.access_key,
+                    index: data.route.query.puid,
+                });
+            } else {
+                if (state.valid) {
+                    await this.dispatch("accounts_all", data.user_id);
+                    this.dispatch("getMiningStat");
+                    this.dispatch("getGraph");
+                    commit("setValid", false);
+                }
+                this.dispatch("drop_interval");
+                this.dispatch("set_interval", data.user_id);
             }
-            this.dispatch("drop_interval");
-            this.dispatch("set_interval", user_id);
         },
         set_interval({ state }, user_id) {
             state.interval = setInterval(async () => {

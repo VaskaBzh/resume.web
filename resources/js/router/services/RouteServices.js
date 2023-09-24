@@ -4,7 +4,6 @@ import { RouteReferralData } from "../DTO/RouteReferralData";
 import { RouteAuthData } from "../DTO/RouteAuthData";
 import { RouteNamesMap } from "@/router/map/RouteNamesMap";
 
-
 export class RouteServices {
     constructor() {
         this.routes = [];
@@ -57,13 +56,11 @@ export class RouteServices {
             {
                 path: "/profile/referral",
                 name: "referral",
-                params: { page: "" },
                 component: () =>
-                    import('../../layouts/ReferralsLayoutView.vue'),
+                    import("../../layouts/ReferralsLayoutView.vue"),
                 redirect: (to) => {
                     return {
                         name: "overview",
-                        query: { page: "overview" },
                     };
                 },
                 children: [
@@ -72,14 +69,67 @@ export class RouteServices {
                     new RouteReferralData("earn-rewards", "earn-rewards"),
                 ],
             },
+            // {
+            //     path: "/verify",
+            //     name: "verify",
+            //     meta: {
+            //         middleware: ["EmailVerifyController"],
+            //     },
+            //     query: {
+            //         verify_hash: null,
+            //     },
+            // },
             {
-                path: "/verify",
-                name: "verify",
-                meta: {
-                    middleware: ["EmailVerifyController"],
+                path: "/watcher",
+                name: "watcher",
+                redirect: (to) => {
+                    return {
+                        name: "watcher_statistic",
+                        query: {
+                            access_key: to.query.access_key,
+                            puid: to.query.puid,
+                        },
+                    };
                 },
-                query: {
-                    verify_hash: null,
+            },
+            {
+                path: "/watcher/statistic",
+                name: "watcher_statistic",
+                component: () =>
+                    import("../../Pages/Profile/StatisticPage.vue"),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                        "AuthCheckProfileMiddleware",
+                    ],
+                    layout: "ProfileLayoutView",
+                },
+            },
+            {
+                path: "/watcher/workers",
+                name: "watcher_workers",
+                component: () => import("../../Pages/Profile/WorkersPage.vue"),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                        "AuthCheckProfileMiddleware",
+                    ],
+                    layout: "ProfileLayoutView",
+                },
+            },
+            {
+                path: "/watcher/income",
+                name: "watcher_income",
+                component: () => import("../../Pages/Profile/IncomePage.vue"),
+                meta: {
+                    middleware: [
+                        "LoadLayoutMiddleware",
+                        "DropErrorsMiddleware",
+                        "AuthCheckProfileMiddleware",
+                    ],
+                    layout: "ProfileLayoutView",
                 },
             },
         ];

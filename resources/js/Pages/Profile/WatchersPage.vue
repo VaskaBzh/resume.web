@@ -135,7 +135,7 @@ export default {
     flex-direction: column;
 }
 @media (max-width: 900px) {
-   .watchers{
+    .watchers {
         padding: 24px 12px 24px;
     }
 }

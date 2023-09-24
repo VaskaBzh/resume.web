@@ -4,42 +4,50 @@
         v-scroll="'opacity transition--fast'"
         v-if="!killPreloaderCondition"
     >
-<!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
-        <div class="preloader__wrap" :class="{
-            'preloader__wrap-no-info': crossVisible,
-            'preloader__wrap-no-info-after': service.animationIsEnd
-        }">
-<!--            <transition name="preloader">-->
-<!--            v-show="!service.animationIsEnd"-->
-                <div class="preloader__icon">
-                    <preloader-end-icon
-                        class="preloader_cross"
-                        id="preloader_cross"
-                        @getCross="service.setCross($event)"
-                        v-show="crossVisible"
-                    />
-                    <preloader-logo-icon
-                        class="preloader_logo"
-                        id="preloader_logo"
-                        :class="{ 'preloader_logo-center': endConditionWithoutSlots }"
-                    />
-                    <preloader-container-icon
-                        class="preloader__icon-custom"
-                        @getPolygon="service.setPolygon($event)"
-                    />
-                </div>
-<!--            </transition>-->
-<!--            <transition name="preloader">-->
-<!--                <img-->
-<!--                    class="preloader_img"-->
-<!--                    v-show="service.animationIsEnd"-->
-<!--                    src="../imgs/img_no-information.png"-->
-<!--                    alt="no-information"-->
-<!--                >-->
-<!--            </transition>-->
+        <!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
+        <div
+            class="preloader__wrap"
+            :class="{
+                'preloader__wrap-no-info': crossVisible,
+                'preloader__wrap-no-info-after': service.animationIsEnd,
+            }"
+        >
+            <!--            <transition name="preloader">-->
+            <!--            v-show="!service.animationIsEnd"-->
+            <div class="preloader__icon">
+                <preloader-end-icon
+                    class="preloader_cross"
+                    id="preloader_cross"
+                    @getCross="service.setCross($event)"
+                    v-show="crossVisible"
+                />
+                <preloader-logo-icon
+                    class="preloader_logo"
+                    id="preloader_logo"
+                    :class="{
+                        'preloader_logo-center': endConditionWithoutSlots,
+                    }"
+                />
+                <preloader-container-icon
+                    class="preloader__icon-custom"
+                    @getPolygon="service.setPolygon($event)"
+                />
+            </div>
+            <!--            </transition>-->
+            <!--            <transition name="preloader">-->
+            <!--                <img-->
+            <!--                    class="preloader_img"-->
+            <!--                    v-show="service.animationIsEnd"-->
+            <!--                    src="../imgs/img_no-information.png"-->
+            <!--                    alt="no-information"-->
+            <!--                >-->
+            <!--            </transition>-->
 
             <transition name="progress">
-                <span class="preloader_progress" v-show="!endConditionWithoutSlots || progressVisible">
+                <span
+                    class="preloader_progress"
+                    v-show="!endConditionWithoutSlots || progressVisible"
+                >
                     {{ progressValue }}
                 </span>
             </transition>
@@ -77,7 +85,9 @@ export default {
         },
         progressValue() {
             // this.$t('no_info')
-            return this.progressVisible ? "По вашему запросу ничего не найдено" : `${this.service.progressPercentage}%`;
+            return this.progressVisible
+                ? "По вашему запросу ничего не найдено"
+                : `${this.service.progressPercentage}%`;
         },
     },
     components: {
@@ -99,12 +109,12 @@ export default {
         progressPercentage() {
             this.service.slowProcess();
         },
-        'service.crossVisible'() {
+        "service.crossVisible"() {
             this.crossVisible = true;
 
             setTimeout(() => {
                 this.progressVisible = true;
-            }, 1000)
+            }, 1000);
         },
     },
     mounted() {
@@ -201,7 +211,7 @@ export default {
         right: 34px;
     }
     &_progress {
-        color: #4066B5;
+        color: #4066b5;
         font-size: 16px;
         font-weight: 700;
         line-height: 24px;

@@ -111,7 +111,8 @@ export default {
             lineChartService: new StatisticService(
                 [0, 1],
                 this.$t,
-                this.offset
+                this.offset,
+                this.$route
             ),
             barChartService: new StatisticService([0, 1], this.$t, 30),
         };
