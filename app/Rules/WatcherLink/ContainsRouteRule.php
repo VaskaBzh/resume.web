@@ -13,7 +13,8 @@ class ContainsRouteRule implements InvokableRule
         'v1.worker.list',
         'v1.worker_hashrate.list',
         'v1.income.list',
-        'v1.payout.list'
+        'v1.payout.list',
+        'v1.allowed-routes'
     ];
 
    public function __invoke($attribute, $value, $fail)

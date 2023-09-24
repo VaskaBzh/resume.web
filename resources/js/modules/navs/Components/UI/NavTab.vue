@@ -10,7 +10,7 @@
         class="tab"
         :class="{
             burger_link: viewportWidth < 991.98,
-            'tab-active': $route.fullPath === tab.url,
+            'tab-active': $route.path === tab.url,
         }"
     >
         <svg
@@ -23,7 +23,7 @@
             fill="none"
         ></svg>
         <span class="tab_text">
-            {{ $t(`tabs.${tab.name}`) }}
+            {{ $t(`tabs.${tab.translateKey}`) }}
         </span>
     </router-link>
 </template>
