@@ -59,12 +59,6 @@ Route::group([
         Route::get('worker/{worker}', WorkerShowController::class)->name('worker.show');
     });
 
-    Route::group([
-        'prefix' => 'wallets',
-    ], function () {
-        Route::get('{sub}', WalletListController::class)->name('wallet.list');
-    });
-
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');
     Route::get('/incomes/{sub}', ListController::class)->name('income.list');
     Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
@@ -97,7 +91,9 @@ Route::group([
 
     Route::group([
         'prefix' => 'wallets',
+        'middleware' => 'verified'
     ], function () {
+        Route::get('{sub}', WalletListController::class)->name('wallet.list');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
         Route::put('/update', WalletUpdateController::class)->name('wallet.update');
     });

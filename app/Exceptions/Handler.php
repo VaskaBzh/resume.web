@@ -51,16 +51,22 @@ class Handler extends ExceptionHandler
             //
         });
 
-        $this->renderable(function (Throwable $e) {
+        $this->renderable(static function (Throwable $e) {
             if ($e instanceof NotFoundHttpException) {
                 return new JsonResponse([
-                    'message' => 'Resource not found'
+                    'message' => $e->getMessage()
                 ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
 
             if ($e instanceof UnauthorizedException) {
                 return new JsonResponse([
-                    'message' => 'Unauthorized'
+                    'message' => $e->getMessage()
+                ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            if ($e->getMessage() == 'Your email address is not verified.') {
+                return new JsonResponse([
+                    'message' => $e->getMessage()
                 ], Response::HTTP_UNAUTHORIZED);
             }
         });
