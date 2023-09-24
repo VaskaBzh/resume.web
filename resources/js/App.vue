@@ -11,11 +11,11 @@ import { useRoute } from "vue-router";
 import ThemeService from "@/modules/interface/Services/ThemeService";
 import { mapGetters } from "vuex";
 import api from "@/api/api";
-import store from "@/store";
+
 export default {
     name: "app-layout-view",
     computed: {
-        ...mapGetters(["isDark"]),
+        ...mapGetters(["isDark", "token"]),
         route() {
             return useRoute();
         },
@@ -23,6 +23,7 @@ export default {
     data() {
         return {
             themeService: new ThemeService(),
+            isPageHidden: false,
         };
     },
     methods: {
@@ -31,14 +32,22 @@ export default {
         },
         async onClose() {
             try {
-                await api.put("/decrease/token", {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                if (this.token)
+                    await api.put(
+                        "/decrease/token",
+                        {},
+                        {
+                            headers: {
+                                Authorization: `Bearer ${this.token}`,
+                            },
+                        }
+                    );
             } catch (error) {
                 console.error("Error decreasing token:", error);
             }
+        },
+        handleVisibilityChange() {
+            this.isPageHidden = document.hidden;
         },
     },
     created() {
@@ -46,15 +55,23 @@ export default {
         this.$store.dispatch("setToken");
 
         window.addEventListener("resize", this.handleResize);
-        // window.addEventListener("beforeunload", this.onClose);
+        window.addEventListener("beforeunload", this.onClose);
+        document.addEventListener(
+            "visibilitychange",
+            this.handleVisibilityChange
+        );
         this.handleResize();
     },
     async mounted() {
         this.themeService.toggleTheme("light");
     },
-    // async unmounted() {
-    //     window.removeEventListener("beforeunload", this.onClose);
-    // },
+    async unmounted() {
+        window.removeEventListener("beforeunload", this.onClose);
+        document.removeEventListener(
+            "visibilitychange",
+            this.handleVisibilityChange
+        );
+    },
 };
 </script>
 
