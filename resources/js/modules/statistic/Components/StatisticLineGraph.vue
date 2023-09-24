@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="cabinet__block cabinet__block-graph cabinet__block-light"
-    >
+    <div class="cabinet__block cabinet__block-graph cabinet__block-light">
         <div class="cabinet__head">
             <main-title tag="h3">
                 {{ $t("statistic.chart.title") }}
@@ -12,9 +10,10 @@
                 :active="offset"
             />
         </div>
-        <no-info-wait
-            class="no-bg"
+        <main-preloader
             :wait="waitGraphChange"
+            :end="!waitGraphChange"
+            :empty="false"
         />
         <main-line-graph
             v-if="!waitGraphChange"
@@ -30,6 +29,7 @@ import MainTabs from "../../common/Components/UI/MainTabs.vue";
 import NoInfoWait from "../../../Components/technical/blocks/NoInfoWait.vue";
 import { mapGetters } from "vuex";
 import MainLineGraph from "../../graphs/Components/MainLineGraph.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 
 export default {
     name: "statistic-line-graph",
@@ -40,6 +40,7 @@ export default {
         buttons: Object,
     },
     components: {
+        MainPreloader,
         MainTitle,
         MainTabs,
         NoInfoWait,
@@ -58,10 +59,8 @@ export default {
                 return this.heightVal;
             }
         },
-    }
-}
+    },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
