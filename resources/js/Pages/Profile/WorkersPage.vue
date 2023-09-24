@@ -105,6 +105,9 @@ export default {
 }
 .workers {
     padding: 24px;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     .form .title {
         margin-bottom: 0;
     }

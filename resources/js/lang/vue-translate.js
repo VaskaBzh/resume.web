@@ -599,6 +599,7 @@ const messages = {
         },
         wallets: {
             title:[ "Setting up auto payout", "Wallets"],
+            tooltip: "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
             no_info: "Add Wallet",
             messages: ["Wait 5 seconds.", "You can delete your wallet through tech support."],
             block: {
@@ -1290,6 +1291,7 @@ const messages = {
         },
         wallets: {
             title:[ "Настройка автовыплаты", "Кошельки"],
+            tooltip: "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
             no_info: "Добавить кошелек",
             messages: ["Подождите 5 секунд.", "Удалить кошелек можно через тех поддержку."],
             block: {

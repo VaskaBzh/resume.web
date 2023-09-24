@@ -172,7 +172,7 @@ export default {
             }
         }
         @media (min-width: 767.98px) {
-            background: #fafafa;
+            background: var(--background-island);;
         }
         &:first-child {
             @media (min-width: 767.98px) {
@@ -217,7 +217,7 @@ export default {
             padding: 8px 0;
             &:not(.main) {
                 padding: 16px;
-                background: #fafafa;
+                background: var(--background-island);;
                 border-radius: 16px;
                 box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
                 .more {

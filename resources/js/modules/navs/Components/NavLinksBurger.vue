@@ -345,7 +345,7 @@ export default {
 
     &_con {
         position: fixed;
-        background: #fafafa;
+        background: var(--background-island);;
         box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
         max-width: 384px;
         overflow: scroll;

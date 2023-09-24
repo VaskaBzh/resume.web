@@ -1,10 +1,10 @@
 <template>
     <div class="layout">
-        <nav-tabs ref="tabs" />
+        <nav-tabs ref="tabs" :isOpenBurger="isOpenBurger"  @changeBurger="change($event)"/>
         <div class="layout__content">
-            <header-component-profile class="header-container" />
+            <header-component-profile class="header-container" :isOpenBurger="isOpenBurger" @changeBurger="change($event)"/>
             <!-- Кнопка для тестирования -->
-            <!-- <button @click="openNotification('all good', 'title')">add</button> -->
+            <button @click="openNotification('all good', 'title')">add</button>
 
             <div class="page-container">
                 <div :class="{ 'note-animation': messageNote }">
@@ -59,6 +59,18 @@ export default {
         openNotification() {
             return openNotification;
         },
+
+    },
+    methods: {
+        change(event){
+            console.log(event)
+            this.isOpenBurger = event
+        }
+    },
+    data() {
+        return {
+            isOpenBurger: false,
+        }
     },
 };
 </script>

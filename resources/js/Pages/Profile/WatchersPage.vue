@@ -134,6 +134,11 @@ export default {
     display: flex;
     flex-direction: column;
 }
+@media (max-width: 900px) {
+   .watchers{
+        padding: 24px 12px 24px;
+    }
+}
 .watchers__head {
     display: flex;
     justify-content: space-between;
