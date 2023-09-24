@@ -1,4 +1,3 @@
-'use strict';
 import anime from "animejs/lib/anime.es.js";
 import { ref } from "vue";
 
@@ -10,10 +9,11 @@ export class PreloaderService {
         this.endTable = false;
         this.resizeEnd = false;
         this.crossVisible = ref(false);
+        this.animationIsEnd = ref(false);
 
         this.animate = null;
 
-        this.lineColor = '#4282EC';
+        this.lineColor = "#4282EC";
 
         this.polygon = null;
         this.cross = null;
@@ -31,12 +31,13 @@ export class PreloaderService {
             if (this.progressPercentage < limit) {
                 this.progressPercentage += percentStep;
             } else {
+                this.slowProcess();
                 this.killInterval();
             }
         }, intervalMillisecondsTime);
 
         this.animateLine();
-        this.animateLineResize()
+        this.animateLineResize();
     }
 
     slowProcess() {
@@ -58,6 +59,7 @@ export class PreloaderService {
         if (endValue) {
             this.endAnimation();
             this.killInterval();
+            this.killProcess();
         }
     }
 
@@ -66,14 +68,13 @@ export class PreloaderService {
         const percentStep = 1;
         const tailNumber = percentEnd - this.progressPercentage;
         const timeOutMilliseconds = 200;
-        const intervalMillisecondsTime = timeOutMilliseconds / (tailNumber);
+        const intervalMillisecondsTime = timeOutMilliseconds / tailNumber;
 
         this.interval = setInterval(() => {
             if (this.progressPercentage < percentEnd) {
                 this.progressPercentage += percentStep;
             } else {
                 this.killInterval();
-                this.animateCross();
             }
         }, intervalMillisecondsTime);
     }
@@ -91,55 +92,51 @@ export class PreloaderService {
     }
 
     animateLineResize() {
-        this.animateResize = anime(
-            {
-                targets: this.polygon,
-                strokeDashoffset: [-890, -1247],
-                duration: 1600,
-                loop: true,
-                easing: 'easeInOutSine',
-                direction: 'alternate',
-                update: (anim) => {
-                    if (this.endTable && Math.round(anim.progress) === 0) {
-                        this.animateResize.remove(this.polygon);
+        this.animateResize = anime({
+            targets: this.polygon,
+            strokeDashoffset: [-890, -1247],
+            duration: 1600,
+            loop: true,
+            easing: "easeInOutSine",
+            direction: "alternate",
+            update: (anim) => {
+                if (this.endTable && Math.round(anim.progress) === 0) {
+                    this.animateResize.remove(this.polygon);
 
-                        this.resizeEnd = true;
-                    }
+                    this.resizeEnd = true;
                 }
-            }
-        );
+            },
+        });
     }
 
     animateLine() {
-        this.animate = anime(
-            {
-                targets: this.polygon,
-                rotate: 720,
-                duration: 2500,
-                loop: true,
-                easing: 'linear',
-                changeComplete: (anim) => {
-                    if (this.endTable && this.resizeEnd) {
-                        this.animateCloseLine();
+        this.animate = anime({
+            targets: this.polygon,
+            rotate: 720,
+            duration: 2500,
+            loop: true,
+            easing: "linear",
+            changeComplete: (anim) => {
+                if (this.endTable && this.resizeEnd) {
+                    this.animateCloseLine();
 
-                        this.animate.remove(this.polygon);
-                    }
+                    this.animate.remove(this.polygon);
                 }
-            }
-        );
+            },
+        });
     }
 
     animateCloseLine = () => {
         anime({
             targets: this.polygon,
             strokeDashoffset: [-890, -1247],
-            easing: 'easeInOutSine',
+            easing: "easeInOutSine",
             duration: 1000,
             begin: (anim) => {
-                this.killProcess();
-            }
+                this.animateCross();
+            },
         });
-    }
+    };
 
     endAnimation() {
         this.endTable = true;
@@ -155,11 +152,14 @@ export class PreloaderService {
         //     duration: 800,
         // });
         anime({
-            targets: this.cross.querySelectorAll('rect'),
-            easing: 'linear',
+            targets: this.cross.querySelectorAll("rect"),
+            easing: "linear",
             duration: 300,
             height: 33.361,
-            delay: anime.stagger(400)
+            delay: anime.stagger(400),
         });
-    }
+        setTimeout(() => {
+            this.animationIsEnd.value = true;
+        }, 2500);
+    };
 }

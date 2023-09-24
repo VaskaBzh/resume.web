@@ -5,43 +5,49 @@ import store from "@/store";
 import { workerHashrateData } from "@/DTO/workerHashrateData";
 
 export class WorkerService {
-    constructor(translate, titles) {
+    constructor(translate, titles, route) {
         this.group_id = store.getters.getActive;
         this.worker_id = -1;
         this.translate = translate;
-        this.titles = this.useTranslater(titles);
+        this.titles = [];
+        this.titleIndexes = titles;
         this.rows = [];
+        this.workers_graph = {};
+        this.records = [];
 
         this.table = new Map();
 
         this.waitWorkers = true;
+        this.emptyWorkers = false;
         this.waitTargetWorkers = true;
         this.target_worker = {};
+
+        this.route = route;
     }
 
     useTranslater(indexes) {
-        return indexes.map((index) =>
+        this.titles = indexes.map((index) =>
             this.translate(`workers.table.thead[${index}]`)
         );
     }
 
-    setFirstRow() {
-        return {
-            class: "main",
-            name: this.translate("workers.table.sub_thead"),
-            hashrate:
-                store.getters.getAccount.hash_per_min +
-                store.getters.getAccount.unit +
-                "h/s",
-            // unit: store.getters.getAccount.unit,
-            hashRate24:
-                store.getters.getAccount.hash_per_day +
-                store.getters.getAccount.unit +
-                "h/s",
-            // unit24: store.getters.getAccount.unit,
-            rejectRate: store.getters.getAccount.reject_percent + " %",
-        };
-    }
+    // setFirstRow() {
+    //     return {
+    //         class: "main",
+    //         name: this.translate("workers.table.sub_thead"),
+    //         hashrate:
+    //             store.getters.getAccount.hash_per_min +
+    //             store.getters.getAccount.unit +
+    //             "h/s",
+    //         // unit: store.getters.getAccount.unit,
+    //         hashRate24:
+    //             store.getters.getAccount.hash_per_day +
+    //             store.getters.getAccount.unit +
+    //             "h/s",
+    //         // unit24: store.getters.getAccount.unit,
+    //         rejectRate: store.getters.getAccount.reject_percent + " %",
+    //     };
+    // }
 
     updateGroup_id() {
         this.group_id = store.getters.getActive;
@@ -64,7 +70,11 @@ export class WorkerService {
     async fetchList() {
         return await api.get(`/workers/${this.group_id}`, {
             headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+                ...(this.route?.query?.access_key
+                    ? { "X-Access-Key": this.route.query.access_key }
+                    : {
+                          Authorization: `Bearer ${store.getters.token}`,
+                      }),
             },
         });
     }
@@ -72,7 +82,11 @@ export class WorkerService {
     async fetchWorker() {
         return await api.get(`/workers/worker/${this.worker_id}`, {
             headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+                ...(this.route?.query?.access_key
+                    ? { "X-Access-Key": this.route.query.access_key }
+                    : {
+                          Authorization: `Bearer ${store.getters.token}`,
+                      }),
             },
         });
     }
@@ -80,7 +94,11 @@ export class WorkerService {
     async fetchWorkerGraph() {
         return await api.get(`/workerhashrate/${this.worker_id}`, {
             headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+                ...(this.route?.query?.access_key
+                    ? { "X-Access-Key": this.route.query.access_key }
+                    : {
+                          Authorization: `Bearer ${store.getters.token}`,
+                      }),
             },
         });
     }
@@ -91,6 +109,8 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
+            this.useTranslater(this.titleIndexes);
+            this.emptyWorkers = false;
             this.waitWorkers = true;
 
             try {
@@ -100,13 +120,24 @@ export class WorkerService {
                     });
                 });
 
-                this.rows.unshift(this.setFirstRow());
+                // this.rows.unshift(this.setFirstRow());
+
+                if (this.rows.length === 0) this.emptyWorkers = true;
 
                 this.waitWorkers = false;
             } catch (e) {
                 console.error(`Error with: ${e}`);
+
+                this.emptyWorkers = true;
             }
         }
+    }
+
+    setButtons() {
+        this.buttons = [
+            { title: `24 ${this.translate("hours")}`, value: 24 },
+            { title: `7 ${this.translate("days")}`, value: 168 },
+        ];
     }
 
     async getWorker() {
@@ -120,6 +151,10 @@ export class WorkerService {
                 })
             );
         }
+    }
+
+    dropWorker() {
+        this.target_worker = {};
     }
 
     setGraphTitles() {
@@ -137,8 +172,8 @@ export class WorkerService {
     }
 
     setDefaultKeys() {
-        this.graph = {
-            ...this.graph,
+        this.workers_graph = {
+            ...this.workers_graph,
             title: this.setGraphTitles(),
             dates: this.setDates(),
         };
@@ -149,26 +184,23 @@ export class WorkerService {
     }
 
     async makeFullValues() {
-        const [values, unit] = this.workers_graph.slice(-24).reduce(
+        const [hashrate, unit] = this.records.slice(-24).reduce(
             (acc, el) => {
-                let hashrate = el.hashrate ?? 0;
-                if (el.unit === "P") hashrate *= 1000;
-                else if (el.unit === "E") hashrate *= 1000000;
-                acc[0].push(Number(hashrate));
-                acc[1].push("T");
+                acc[0].push(el.hashrate);
+                acc[1].push(el.unit);
 
                 return acc;
             },
             [[], [], []]
         );
 
-        while (values.length < 24) {
-            values.push(0);
+        while (hashrate.length < 24) {
+            hashrate.push(0);
             unit.push("T");
         }
 
-        Object.assign(this.graph, {
-            values: values.reverse(),
+        Object.assign(this.workers_graph, {
+            values: hashrate.reverse(),
             unit: unit.reverse(),
         });
     }
@@ -177,12 +209,17 @@ export class WorkerService {
         this.updateGroup_id();
 
         this.worker_id = worker_id;
-        await this.getWorkerGraph();
-
         await this.setDefaultKeys();
+
+        await this.getWorkerGraph();
 
         await this.makeFullValues();
         await this.getWorker();
+
+        const titles = this.titles;
+
+        if (titles.length === this.titles.length) titles.pop();
+        this.useTranslater(titles);
 
         this.waitTargetWorkers = false;
     }
@@ -191,7 +228,7 @@ export class WorkerService {
         if (this.group_id !== -1) {
             this.waitTargetWorkers = true;
 
-            this.workers_graph = (await this.fetchWorkerGraph()).data.data.map(
+            this.records = (await this.fetchWorkerGraph()).data.data.map(
                 (el) => {
                     return new workerHashrateData({
                         ...el,

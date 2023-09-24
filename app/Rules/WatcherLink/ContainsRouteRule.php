@@ -8,9 +8,12 @@ class ContainsRouteRule implements InvokableRule
 {
     private const ALLOWED_ROUTES = [
         'v1.sub.show',
+        'v1.hashrate.list',
         'v1.worker.show',
         'v1.worker.list',
+        'v1.worker_hashrate.list',
         'v1.income.list',
+        'v1.payout.list',
         'v1.allowed-routes'
     ];
 

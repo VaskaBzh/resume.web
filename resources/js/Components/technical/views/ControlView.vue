@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -377,6 +377,9 @@ export default {
     }
 }
 .control {
+    &__container {
+        margin: 0 auto;
+    }
     &__content {
         display: flex;
         flex-direction: column;

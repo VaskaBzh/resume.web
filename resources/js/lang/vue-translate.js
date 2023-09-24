@@ -44,10 +44,11 @@ const messages = {
             hash: "Hashrate",
             difficulty: "Difficulty",
             rejected: "Rejected",
-            workers: "Active workers",
+            workers: "Workers",
         },
         header: {
             login_button: "Account",
+            user_title: "Subaccount",
             popups: {
                 errors: {
                     link_email_confirm: "Confirm the address.",
@@ -252,6 +253,7 @@ const messages = {
         faq: [
             {
                 title: "How to Start Mining on Allbtc Pool",
+                description: "Find answers to your most pressing questions.",
                 list: {
                     0: {
                         title: "What is Allbtc Pool?",
@@ -429,6 +431,9 @@ const messages = {
             watchers: "Watchers",
             wallets: "Wallets",
             referral: "Ref. cabinet",
+            faq: "FAQ",
+            support: "Support",
+            settings: "Account",
         },
         days: "Days",
         hours: "Hours",
@@ -500,7 +505,8 @@ const messages = {
             },
             popups: {
                 add: {
-                    title: "Enter the sub-account name",
+                    title: "Add subaccount",
+                    text: "The subaccount name cannot be changed in the future.",
                     placeholders: {
                         name: "Please enter the name",
                     },
@@ -584,13 +590,16 @@ const messages = {
             },
         },
         connection: {
-            title: "Worker connection",
+            title: "Pool URLs",
+            note: "If connected correctly, the device will appear in 1-10 minutes",
             block: {
                 title: "Configure your device according to the data provided below:",
             },
         },
         wallets: {
-            title: "Your wallets",
+            title: ["Setting up auto payout", "Wallets"],
+            tooltip:
+                "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
             no_info: "Add Wallet",
             messages: [
                 "Wait 5 seconds.",
@@ -608,6 +617,7 @@ const messages = {
                 },
             },
             popups: {
+                note: "After adding a wallet, the address cannot be changed",
                 add: {
                     title: "Add wallet",
                     placeholders: {
@@ -621,7 +631,7 @@ const messages = {
                     button: "Add",
                 },
                 change: {
-                    title: "Change wallet",
+                    title: "Change label",
                     placeholders: {
                         wallet: "Please enter the wallet *",
                         name: "Please enter the name",
@@ -630,7 +640,12 @@ const messages = {
                         percent: "Percent",
                         minWithdrawal: "Minimum withdrawal",
                     },
-                    button: "Change",
+                    button: "Save",
+                },
+                remove: {
+                    title: "Delete wallet",
+                    note: "Are you sure you want to delete your wallet?",
+                    button: ["Cancel", "Delete"],
                 },
             },
         },
@@ -724,10 +739,11 @@ const messages = {
             hash: "Хешрейт",
             difficulty: "Сложность",
             rejected: "Отклоненный",
-            workers: "Активные воркеры",
+            workers: "Воркеры",
         },
         header: {
             login_button: "Личный кабинет",
+            user_title: "Субаккаунт",
             popups: {
                 errors: {
                     link_email_confirm: "Подтвердите адрес.",
@@ -936,6 +952,7 @@ const messages = {
         faq: [
             {
                 title: "Как начать майнить на Allbtc Pool",
+                description: "Найдите ответы на самые волнующие вас вопросы.",
                 list: {
                     0: {
                         title: "Что такое Allbtc Pool?",
@@ -1115,6 +1132,9 @@ const messages = {
             watchers: "Наблюдатели",
             wallets: "Кошельки",
             referral: "Реф. кабинет",
+            settings: "Аккаунт",
+            faq: "FAQ",
+            support: "Поддержка",
         },
         days: "Дней",
         hours: "Часа",
@@ -1144,7 +1164,7 @@ const messages = {
             title: "Статистика",
             checkbox: "Общая статистика со всех аккаунтов",
             chart: {
-                title: "Общий хешрейт",
+                title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
             info_blocks: {
@@ -1186,7 +1206,8 @@ const messages = {
             },
             popups: {
                 add: {
-                    title: "Задайте имя субаккаунта",
+                    title: "Добавить субаккаунт",
+                    text: "В дальнейшем имя субаккаунта невозможно изменить",
                     placeholders: {
                         name: "Введите имя",
                     },
@@ -1265,13 +1286,16 @@ const messages = {
             },
         },
         connection: {
-            title: "Подключение воркера",
+            title: "URL-адреса пула",
+            note: "При корректном подключении устройство отобразится через 1-10 минут",
             block: {
                 title: "Настройте ваше устройство согласно представленным ниже данным:",
             },
         },
         wallets: {
-            title: "Мои кошельки",
+            title: ["Настройка автовыплаты", "Кошельки"],
+            tooltip:
+                "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
             no_info: "Добавить кошелек",
             messages: [
                 "Подождите 5 секунд.",
@@ -1281,11 +1305,12 @@ const messages = {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",
                 wallet_block: {
-                    menu: ["Изменить", "Удалить"],
+                    menu: ["Изменить метку", "Удалить"],
                     i_info_titles: ["Процент вывода", "Мин сумма вывода"],
                 },
             },
             popups: {
+                note: "После добавления кошелька адрес невозможно будет изменить",
                 add: {
                     title: "Добавить кошелек",
                     placeholders: {
@@ -1299,7 +1324,7 @@ const messages = {
                     button: "Добавить",
                 },
                 change: {
-                    title: "Измените кошелек",
+                    title: "Измените метку",
                     placeholders: {
                         wallet: "Введите кошелек *",
                         name: "Введите имя",
@@ -1308,7 +1333,12 @@ const messages = {
                         percent: "Процент *",
                         minWithdrawal: "Минимальный вывод",
                     },
-                    button: "Изменить",
+                    button: "Сохранить",
+                },
+                remove: {
+                    title: "Удалить кошелек",
+                    note: "Вы действительно хотите удалить кошелек?",
+                    button: ["Отменить", "Удалить"],
                 },
             },
         },
@@ -1360,8 +1390,10 @@ const messages = {
     },
 };
 
-// Create VueI18n instance with options
-export const i18n = createI18n({
+const i18n = createI18n({
     locale: "en",
     messages,
 });
+
+// Create VueI18n instance with options
+export default i18n;

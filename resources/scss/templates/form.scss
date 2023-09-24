@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    gap: 16px;
+    // gap: 16px;
     position: relative;
     textarea {
         resize: none;
@@ -30,7 +30,7 @@
         }
     }
     &-popup {
-        gap: 16px;
+        // gap: 16px;
         .form {
             overflow: visible;
             &_link {
@@ -48,15 +48,6 @@
                 font-size: 18px;
                 line-height: 107.6%;
             }
-        }
-    }
-    &:not(.form-auth) {
-        h3 {
-            margin-bottom: 24px !important;
-            font-size: 18px !important;
-            font-family: Ubuntu, serif !important;
-            font-weight: 500 !important;
-            line-height: 120% !important;
         }
     }
     &_link {
@@ -218,7 +209,7 @@
                 transition: all 0.5s ease 0s;
             }
             width: 100%;
-            color: #343434;
+            color: var(--text-secondary);
             font-size: 24px;
             font-family: AmpleSoftPro, serif;
             line-height: 135%;

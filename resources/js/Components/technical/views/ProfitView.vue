@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 export default {
     name: "profit-view",
@@ -52,6 +52,7 @@ export default {
         }
     }
     &__container {
+        margin: 0 auto;
         position: relative;
         @media (min-width: 991.98px) {
             width: 100%;

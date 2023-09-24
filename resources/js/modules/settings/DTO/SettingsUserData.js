@@ -1,8 +1,7 @@
 export class SettingsUserData {
-    constructor(login, email, password, phone) {
+    constructor(login, email, phone) {
         this.login = login;
         this.email = email;
-        this.password = password;
         this.phone = phone;
     }
 }

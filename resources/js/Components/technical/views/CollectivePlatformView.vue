@@ -127,7 +127,7 @@ import { Swiper, SwiperSlide } from "swiper/vue";
 
 import "swiper/css";
 import "swiper/css/pagination";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     data() {

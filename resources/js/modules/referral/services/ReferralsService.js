@@ -2,7 +2,7 @@ import { TableService } from "@/services/extends/TableService";
 import { ReferralsData } from "@/modules/referral/DTO/ReferralsData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 
-import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
+import { PercentSvgEnum } from "@/modules/referral/map/PercentSvgEnum";
 
 import api from "@/api/api";
 import store from "@/store";
@@ -15,11 +15,11 @@ export class ReferralsService extends TableService {
     }
 
     setter(referral) {
-        return new ReferralsData(
+        new ReferralsData(
             referral["email"],
-            referral["referral_active_workers_count"],
-            referral["workers_count_in_active"],
-            referral["referral_hash_per_day"],
+            referral["workers_active"],
+            referral["workers_inactive"],
+            referral["hash"],
             "T",
             // this.dateFormatter(referral["created_at"]),
             referral["total_amount"] === 0

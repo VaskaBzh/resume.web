@@ -1,6 +1,6 @@
 <template>
     <div class="copy__block">
-        <span class="text">
+        <span class="connecting-description">
             {{ this.copyObject.title }}
         </span>
         <copy-row
@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import CopyRow from "@/Components/UI/profile/CopyRow.vue";
+import CopyRow from "@/modules/common/Components/UI/CopyRow.vue";
 
 export default {
     components: { CopyRow },
@@ -24,6 +24,15 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.connecting-description{
+    color: var(--light-gray-400, #98A2B3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */;
+    margin-bottom: 18px;
+}
 .copy {
     &__block {
         display: flex;

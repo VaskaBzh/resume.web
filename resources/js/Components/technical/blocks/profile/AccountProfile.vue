@@ -237,8 +237,9 @@ export default {
             flex-direction: column;
             gap: 8px;
             .text-md {
+                color: var(--text-teritary);
                 &:last-child {
-                    color: #818c99;
+                    color: var(--text-secondary);
                     font-weight: 700;
                     line-height: 115%;
                     @media (max-width: 991.98px) {
