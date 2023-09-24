@@ -2,7 +2,7 @@
   <div class="month-income-card">
     <div class="income-card">
       <MainIncomeCardRow>
-        <template v-slot:title>Доход за месяц</template>
+        <template v-slot:title>{{ $t("income.income_info.card[2]") }}</template>
         <template v-slot:num>{{ this.yesterdayProfit }}</template>
       </MainIncomeCardRow>
   </div>

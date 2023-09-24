@@ -4,7 +4,7 @@
             tag="h3"
             class="card_title"
             :class="{ 'card_title-empty': !!saveWatcher }"
-            >Настройка наблюдателя</main-title
+            >{{ $t("settings_card.title") }}</main-title
         >
         <div class="card__content card__content-empty" v-if="!saveWatcher">
             <img
@@ -13,21 +13,21 @@
                 alt="chose-watcher"
             />
             <main-description
-                >Для начала выберете наблюдателя из списка
+                >{{ $t("default_text") }}
             </main-description>
         </div>
         <div class="card__content" v-else>
             <main-input
                 class="card_input"
                 inputName="name"
-                inputLabel="Имя наблюдателя"
+                :inputLabel="$t('settings_card.labels[0]')"
                 :inputValue="saveWatcher.name"
                 :editable="isEditable"
                 :error="errorsExpired.name"
                 @getValue="setFormName($event)"
             />
             <div class="card__block">
-                <div class="card_label">Доступные страницы для наблюдения</div>
+                <div class="card_label">{{$t('settings_card.text')}}</div>
                 <div class="card__block card__block-selects">
                     <main-checkbox
                         v-for="(route, i) in allowedRoutes"
@@ -44,7 +44,7 @@
             <main-copy
                 :cutValue="45"
                 :code="saveWatcher.link"
-                label="Ссылка наблюдателя"
+                :label="$t('settings_card.labels[1]')"
             />
             <div class="card__buttons">
                 <main-button
@@ -77,6 +77,7 @@ import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-card",
@@ -88,6 +89,9 @@ export default {
         MainCopy,
         MainButton,
     },
+    i18n: {
+        sharedMessages: WatchersMessage,
+    },
     props: {
         watcher: Object,
     },
@@ -97,10 +101,10 @@ export default {
             return this.isEditable ? "button-reverse" : "button-red";
         },
         firstButtonText() {
-            return this.isEditable ? "Отменить" : "Удалить";
+            return this.isEditable ? this.$t('settings_card.buttons[3]') : this.$t('settings_card.buttons[0]');
         },
         secondButtonText() {
-            return this.isEditable ? "Сохранить" : "Изменить";
+            return this.isEditable ? this.$t('settings_card.buttons[2]') : this.$t('settings_card.buttons[1]');
         },
     },
     watch: {
@@ -124,7 +128,7 @@ export default {
             },
             allowedRoutes: [
                 {
-                    name: "Статистика",
+                    name: this.$t('tabs[0]'),
                     checked: false,
                     routes: [
                         "v1.sub.show",
@@ -133,7 +137,7 @@ export default {
                     ],
                 },
                 {
-                    name: "Воркеры",
+                    name: this.$t('tabs[2]'),
                     checked: false,
                     routes: [
                         "v1.worker.show",
@@ -142,7 +146,7 @@ export default {
                     ],
                 },
                 {
-                    name: "Доходы",
+                    name: this.$t('tabs[1]'),
                     checked: false,
                     routes: ["v1.income.list", "v1.payout.list"],
                 },

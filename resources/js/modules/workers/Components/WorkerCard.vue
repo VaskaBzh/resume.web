@@ -158,6 +158,7 @@ export default {
     }
 }
 .card__elem {
+    width: 100%;
     border-radius: 24px;
     background: var(--background-island-inner-3, #f8fafd);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);

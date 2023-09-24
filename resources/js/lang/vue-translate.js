@@ -466,6 +466,7 @@ const messages = {
                 title: "Hashrate",
                 no_workers_title: "Connect to allbtc pool",
             },
+            graph: ["Monthly income graph", "Mining", "Accrued"], 
             info_blocks: {
                 title: "Earnings",
                 title_clear: "Net income",
@@ -557,6 +558,7 @@ const messages = {
             income_info: {
                 title: "Earnings",
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
+                card: ["Accrued for all time", "Accrued", "Income for the month"]
             },
             table: {
                 title: "Transaction history",
@@ -695,6 +697,9 @@ const messages = {
             },
             confidence: "Privacy policy",
         },
+        preloader: {
+            text: "Nothing was found for your request"
+        }
     },
     ru: {
         more: "Подробнее",
@@ -1167,6 +1172,7 @@ const messages = {
                 title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
+            graph: ["График дохода за месяц", "Майнинг", "Начислено"], 
             info_blocks: {
                 title: "Начисления",
                 title_clear: "Чистая прибыль",
@@ -1253,6 +1259,7 @@ const messages = {
             income_info: {
                 title: "Платежи",
                 titles: ["Оплачено", "Неоплачено", "Вчерашний доход"],
+                card: ["Начислено за все время", "Начислено", "Доход за месяц",]
             },
             table: {
                 title: "История транзакций",
@@ -1387,6 +1394,9 @@ const messages = {
             },
             confidence: "Конфиденциальность",
         },
+        preloader: {
+            text: "По вашему запросу ничего не найдено"
+        }
     },
 };
 

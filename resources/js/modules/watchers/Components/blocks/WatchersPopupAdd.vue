@@ -3,23 +3,22 @@
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers-add">
-                    <main-title tag="h3">Добавить наблюдателя</main-title>
+                    <main-title tag="h3">{{ $t("add_watcher_card.title") }}</main-title>
                     <main-description
-                        >Наблюдатель получает возможность смотреть контент без
-                        возможности редактировать</main-description
+                        >{{ $t("add_watcher_card.text[0]") }}</main-description
                     >
                 </div>
                 <main-input
                     class="watchers_input"
                     inputName="name"
-                    inputLabel="Имя наблюдателя"
+                    :inputLabel="$t('add_watcher_card.labels')"
                     :inputValue="name"
                     :error="errorsExpired.name"
                     @getValue="setFormName($event)"
                 />
                 <div class="watchers__block">
                     <div class="watchers_label">
-                        Доступные страницы для наблюдения
+                        {{ $t("add_watcher_card.text[1]") }}
                     </div>
                     <div class="watchers__block watchers__block-selects">
                         <main-checkbox
@@ -39,7 +38,7 @@
                 @click.prevent="setFormAllowedRoutes"
                 class="button-blue button-full watchers_button"
             >
-                <template v-slot:text> Добавить </template>
+                <template v-slot:text> {{ $t("add_watcher_card.buttons") }} </template>
             </main-button>
         </div>
     </main-popup>
@@ -53,6 +52,7 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-popup-add",
@@ -67,6 +67,9 @@ export default {
     props: {
         wait: Boolean,
         closed: Boolean,
+    },
+    i18n: {
+        sharedMessages: WatchersMessage,
     },
     methods: {
         setFormName(name) {
@@ -102,7 +105,7 @@ export default {
             },
             allowedRoutes: [
                 {
-                    name: "Статистика",
+                    name: this.$t('tabs[0]'),
                     checked: false,
                     routes: [
                         "v1.sub.show",
@@ -111,7 +114,7 @@ export default {
                     ],
                 },
                 {
-                    name: "Воркеры",
+                    name: this.$t('tabs[2]'),
                     checked: false,
                     routes: [
                         "v1.worker.show",
@@ -120,7 +123,7 @@ export default {
                     ],
                 },
                 {
-                    name: "Доходы",
+                    name: this.$t('tabs[1]'),
                     checked: false,
                     routes: ["v1.income.list", "v1.payout.list"],
                 },

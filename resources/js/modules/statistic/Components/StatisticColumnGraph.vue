@@ -3,7 +3,7 @@
         class="cabinet__block cabinet__block-graph cabinet__block-light statistic__block"
     >
         <main-progress-bar
-            title="Начислено"
+            :title=" $t('statistic.graph[2]')"
             hint="На вашем субаккаунте 0.00051380 BTC Автовыплата происходит при  балансе > 0.005 BTC"
             :progress="pendingAmount"
             :final="0.005"
