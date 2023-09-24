@@ -91,7 +91,7 @@ Route::group([
 
     Route::group([
         'prefix' => 'wallets',
-        'middleware' => 'verified'
+        'middleware' => ['verified', 'verify-expiration']
     ], function () {
         Route::get('{sub}', WalletListController::class)->name('wallet.list');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');

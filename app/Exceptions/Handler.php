@@ -6,6 +6,7 @@ use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
 
@@ -64,10 +65,10 @@ class Handler extends ExceptionHandler
                 ], Response::HTTP_UNAUTHORIZED);
             }
 
-            if ($e->getMessage() == 'Your email address is not verified.') {
+            if ($e instanceof HttpException) {
                 return new JsonResponse([
                     'message' => $e->getMessage()
-                ], Response::HTTP_UNAUTHORIZED);
+                ], Response::HTTP_FORBIDDEN);
             }
         });
     }
