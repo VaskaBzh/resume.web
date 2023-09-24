@@ -172,7 +172,6 @@ export default {
         //     }
         // },
         filterTable(e) {
-            console.log(e);
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;

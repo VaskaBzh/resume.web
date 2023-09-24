@@ -188,9 +188,7 @@ export default {
                         "-" + inputNumbersValue.substring(9, 11);
                 }
             } else if (inputNumbersValue[0] == "9") {
-                console.log("kz");
             } else {
-                console.log("no ru");
                 formattedInputValue = "+" + inputNumbersValue.substring(0, 16);
             }
             inputTel.value = formattedInputValue;

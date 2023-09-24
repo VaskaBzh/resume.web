@@ -3,6 +3,7 @@ import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
 import path from "path";
 
+
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
 
@@ -11,7 +12,6 @@ export default defineConfig(({ command, mode }) => {
             origin: "*",
         },
     };
-
     if (loadEnv(mode, process.cwd(), "").APP_ENV === "local") {
         serverConf = {
             ...serverConf,
@@ -47,7 +47,7 @@ export default defineConfig(({ command, mode }) => {
             preprocessorOptions: {
                 scss: {
                     additionalData:
-                        '@import "resources/scss/mixins.scss"; @import "resources/scss/consts.scss";',
+                        '@import "resources/scss/mixins.scss"; @import "resources/scss/consts.scss";;',
                 },
             },
         },
