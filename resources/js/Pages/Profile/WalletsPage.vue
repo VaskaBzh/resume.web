@@ -276,7 +276,6 @@ export default {
     },
     mounted() {
         this.wallets = new WalletService(this.$t);
-        console.log(this.wallets.form.minWithdrawal)
         this.walletInit();
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;

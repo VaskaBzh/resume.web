@@ -16,7 +16,6 @@ export class WatchersService extends MetaTableService {
 
     closePopup() {
         this.popupClosed = true;
-        console.log(this.popupClosed);
 
         setTimeout(() => {
             this.popupClosed = false;
@@ -149,7 +148,6 @@ export class WatchersService extends MetaTableService {
 
                 this.dropForm();
                 this.closePopup();
-                console.log("closed");
 
                 this.dropCard();
             } catch (err) {

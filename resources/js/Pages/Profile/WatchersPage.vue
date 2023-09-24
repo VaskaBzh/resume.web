@@ -2,10 +2,9 @@
     <div class="watchers">
         <div class="watchers__head">
             <div class="watchers__head__block">
-                <main-title tag="h4">Наблюдатели</main-title>
+                <main-title tag="h4">{{ $t("title") }}</main-title>
                 <main-description
-                    >Создавайте и управляйте ссылками
-                    наблюдателя</main-description
+                    >{{ $t("text") }}</main-description
                 >
             </div>
             <main-button data-popup="#addWatcher">
@@ -66,6 +65,7 @@ import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue"
 import WatchersPopupRemove from "@/modules/watchers/Components/blocks/WatchersPopupRemove.vue";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-page",
@@ -79,6 +79,9 @@ export default {
         WatchersPopupAdd,
         WatchersPopupRemove,
         WatchersCard,
+    },
+    i18n: {
+        sharedMessages: WatchersMessage,
     },
     data() {
         return {
