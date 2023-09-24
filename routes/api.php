@@ -80,7 +80,7 @@ Route::group([
         'prefix' => '2fac'
     ], function () {
         Route::put('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::get('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
+        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
     });
 
     Route::group([
