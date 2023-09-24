@@ -218,7 +218,7 @@ export default {
     display: flex;
     gap: 12px;
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .income-cards-article {
         flex-direction: column;
         gap: 12px;

@@ -74,8 +74,23 @@ export default {
     font-weight: 400;
     line-height: 147%;
 }
-
-@media(max-width: 900px){
+@media(max-width: 1450px){
+    .card_num{
+        font-size: 31px;
+    }
+    .card_unit{
+        font-size: 25px;
+    }
+}
+@media(max-width: 1350px){
+    .card_num{
+        font-size: 25px;
+    }
+    .card_unit{
+        font-size: 20px;
+    }
+}
+@media(max-width: 1200px){
     .card_num{
         font-size: 20px;
     }
