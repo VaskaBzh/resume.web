@@ -80,6 +80,7 @@ export default {
         padding: 5px 24px;
         outline: none;
         cursor: pointer;
+        color: var(--text-secondary);
         align-items: center;
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
         display: flex;

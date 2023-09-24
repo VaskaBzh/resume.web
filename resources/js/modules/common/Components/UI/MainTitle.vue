@@ -66,8 +66,8 @@ h4 {
 
 
 .title {
-    font-family: AmpleSoft Pro;;
-    color: var(--text-primary);
+    font-family: NunitoSans;
+    color: var(--text-primary-80);
     font-weight: 400;
     &.profile {
         margin: 0 0 40px;

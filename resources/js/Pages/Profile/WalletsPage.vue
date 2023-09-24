@@ -663,7 +663,8 @@ input:focus{
 }
 input:focus {
     border: 1px solid rgba(83, 137, 225, 1);
-    background: rgba(250, 250, 250, 1);
+    background: transparent;
+    color: var(--text-secondary);
 }
 .input-error {
     color: red;

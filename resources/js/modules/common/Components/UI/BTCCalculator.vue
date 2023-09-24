@@ -76,7 +76,7 @@ export default {
     height: fit-content;
 }
 .btc-calc-num{
-    color: var(--text-primary);
+    color: var(--text-primary-80);
     font-family: Unbounded, serif;
     font-size: 27px;
     font-style: normal;
@@ -114,7 +114,7 @@ export default {
     &_num {
         display: flex;
         gap: 8px;
-        color: var(--text-primary);
+        color: var(--text-primary-80);
         font-family: Unbounded, serif;
         font-size: 27px;
         font-weight: 400;

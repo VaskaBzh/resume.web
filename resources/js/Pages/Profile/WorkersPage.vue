@@ -163,6 +163,9 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
+        @media(max-width:800px){
+            flex-direction: column;
+        }
     }
     &__card {
         min-width: calc(50% - 6px);
