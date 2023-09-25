@@ -1,5 +1,8 @@
 <template>
     <div class="income" ref="page">
+        <main-title class="title-income" tag="h4">{{
+                    $t("income.title")
+         }}</main-title>
         <article class="income-cards-article">
             <div class="income-cards-container">
                 <AccrualsCard />
@@ -49,7 +52,7 @@ import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue";
 import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue";
 import { mapGetters } from "vuex";
-
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { IncomeService } from "@/services/IncomeService";
 import MonthIncome from "../../modules/income/Components/MonthIncome.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
@@ -61,6 +64,7 @@ export default {
         YesterdayIncomeCard,
         MonthIncome,
         MainTable,
+        MainTitle
     },
     props: ["errors", "message", "user"],
     data() {
@@ -178,6 +182,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.title-income {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-income {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+    }
+}
 .income-cards-container {
     display: flex;
     flex-direction: column;

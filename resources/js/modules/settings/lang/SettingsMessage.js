@@ -1,6 +1,6 @@
 export const SettingsMessage = {
     en: {
-        title: ["Personal Information", "Safety"],
+        title: ["Personal Information", "Safety", "Account"],
         labels: {
             login: "Login",
             email: "Email",
@@ -56,7 +56,7 @@ export const SettingsMessage = {
         }
     },
     ru: {
-        title:[ "Персональные данные", "Безопасность"],
+        title:[ "Персональные данные", "Безопасность",  "Аккаунт"],
         labels: {
             login: "Логин",
             email: "Почту",

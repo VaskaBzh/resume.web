@@ -11,6 +11,9 @@
             class="workers__wrapper"
             v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
         >
+        <main-title class="title-worker" tag="h4">{{
+                    $t("workers.title")
+         }}</main-title>
             <div class="cards-container">
                 <main-hashrate-cards />
             </div>
@@ -51,6 +54,7 @@ import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     components: {
@@ -59,6 +63,7 @@ export default {
         MainTable,
         MainPreloader,
         WorkerCard,
+        MainTitle
     },
     data() {
         return {
@@ -145,6 +150,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.title-worker {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-worker {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+    }
+}
 .cards-container {
     display: flex;
     justify-content: space-between;
