@@ -216,10 +216,10 @@ export class WorkerService {
         await this.makeFullValues();
         await this.getWorker();
 
-        const titles = this.titles;
-
-        if (titles.length === this.titles.length) titles.pop();
-        this.useTranslater(titles);
+        // const titles = this.titles;
+        //
+        // if (titles.length === this.titles.length) titles.pop();
+        // this.useTranslater(titles);
 
         this.waitTargetWorkers = false;
     }

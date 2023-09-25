@@ -8,9 +8,10 @@
                 ref="popup_block"
             >
                 <div class="popup__block-logo" ref="popup_logo">
-                    <logo-light class="popup_logo" />
+                    <logo-light class="popup_logo" v-show="!isDark" />
+                    <logo-dark class="popup_logo" v-show="isDark" />
                 </div>
-                <!--					v-if="!getTheme"-->
+                <!--					v-if="!isDark"-->
                 <!--				<logo-dark-->
                 <!--					v-else-->
                 <!--				/>-->
@@ -85,7 +86,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["getTheme", "isDark"]),
     },
     mounted() {
         this.service.setPopupContentHtml(this.$refs.popup_content);
@@ -123,12 +124,17 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     justify-content: center;
+}
+.popup__wrapper::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 .popup__content {
     border-radius: 24px;
-    background: var(--background-island-inner-3);
+    background: var(--background-modal, #212327);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 280px;
     height: 122px;

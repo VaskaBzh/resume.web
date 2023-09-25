@@ -46,8 +46,8 @@ export class PaymentService extends TableService {
     }
 
     async index(page = 1, per_page = 15) {
-        if (store.getters.getActive !== -1)
-            this.waitTable = true;
+        this.emptyTable = false;
+        this.waitTable = true;
 
         let response = {};
 
@@ -63,9 +63,15 @@ export class PaymentService extends TableService {
                 return this.setter(el);
             });
 
+            if (this.rows.length === 0) {
+                this.emptyTable = true;
+            }
+
             this.titles = this.useTranslater([0, 1, 2, 3, 4]);
         } catch (err) {
             console.error(`FetchError: ${err}`);
+
+            this.emptyTable = true;
         }
 
         return this;

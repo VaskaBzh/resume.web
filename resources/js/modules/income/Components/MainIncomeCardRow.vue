@@ -120,7 +120,7 @@ export default {
     font-size: 10px;
   }
 }
-@media(max-width:900px){
+@media(max-width:1100px){
   .flex-column{
     display: flex;
     flex-direction: column;

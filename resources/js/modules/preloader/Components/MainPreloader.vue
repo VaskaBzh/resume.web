@@ -2,7 +2,7 @@
     <div
         class="preloader cabinet__block"
         v-scroll="'opacity transition--fast'"
-        v-if="!killPreloaderCondition"
+        v-show="!killPreloaderCondition"
     >
         <!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
         <div
@@ -86,7 +86,7 @@ export default {
         progressValue() {
             // this.$t('no_info')
             return this.progressVisible
-                ? "По вашему запросу ничего не найдено"
+                ? this.$t("preloader.text")
                 : `${this.service.progressPercentage}%`;
         },
     },
@@ -103,6 +103,9 @@ export default {
         };
     },
     watch: {
+        killPreloaderCondition() {
+            this.service.killPreloader();
+        },
         end(newEndVal) {
             this.service.endProcess(newEndVal);
         },
@@ -120,13 +123,13 @@ export default {
     mounted() {
         this.service.startProcess(this.interval);
     },
-    beforeUnmount() {
-        this.service.killInterval();
+    unmounted() {
+        this.service.killPreloader();
     },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .preloader {
     display: flex;
     justify-content: center;

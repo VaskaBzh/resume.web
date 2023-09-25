@@ -26,7 +26,6 @@
   --text-logo: #FFFFFF;
   --text-table-title: #43474E;
   --text-primary-inverse: #FFFFFF;
-  --text-focus: #2E90FA;
 
   /* status */
   --text-no-value: #43474E;
@@ -34,5 +33,5 @@
   /* button */
   --buttons-fourth-fill-border-default: #2C2F34;
   --buttons-tabs-fill-border-focus: #212327;
-
+  --buttons-stroke-text: #C5C8CD;
 }

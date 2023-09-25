@@ -155,9 +155,9 @@ export default {
 <style lang="scss">
 .statistic {
     width: 100%;
-    height: 100%;
     padding: 24px;
     position: relative;
+    flex: 1 1 auto;
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }

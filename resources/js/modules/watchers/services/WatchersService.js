@@ -3,6 +3,7 @@ import { WatchersData } from "@/modules/watchers/DTO/WatchersData";
 import { WatchersFormData } from "@/modules/watchers/DTO/WatchersFormData";
 import api from "@/api/api";
 import store from "@/store";
+import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class WatchersService extends MetaTableService {
     constructor(translate, titleIndexes) {
@@ -68,8 +69,6 @@ export class WatchersService extends MetaTableService {
     }
 
     async getCard(id) {
-        this.dropCard();
-
         try {
             const card = (await this.fetchCard(id)).data.data;
 
@@ -104,16 +103,32 @@ export class WatchersService extends MetaTableService {
     async createWatcher() {
         if (this.group_id !== -1) {
             try {
-                await api.post(`/watchers/create/${this.group_id}`, this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await api.post(
+                    `/watchers/create/${this.group_id}`,
+                    this.form,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
+
+                openNotification(
+                    true,
+                    this.translate("validate_messages.success"),
+                    this.translate("validate_messages.watcher_message")
+                );
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
+
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
             }
         }
     }
@@ -121,17 +136,32 @@ export class WatchersService extends MetaTableService {
     async changeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                await api.put(`/watchers/update/${id}`, this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await api.put(
+                    `/watchers/update/${id}`,
+                    this.form,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
+
+                openNotification(
+                    true,
+                    this.translate("validate_messages.success"),
+                    response.data.message
+                );
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
 
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
                 await this.getCard(id);
             }
         }
@@ -140,11 +170,16 @@ export class WatchersService extends MetaTableService {
     async removeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                await api.delete(`/watchers/delete/${id}`, this.form, {
+                const response = await api.delete(`/watchers/delete/${id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
+                openNotification(
+                    true,
+                    this.translate("validate_messages.success"),
+                    response.data.message
+                );
 
                 this.dropForm();
                 this.closePopup();
@@ -152,6 +187,12 @@ export class WatchersService extends MetaTableService {
                 this.dropCard();
             } catch (err) {
                 console.error(err);
+
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
             }
         }
     }

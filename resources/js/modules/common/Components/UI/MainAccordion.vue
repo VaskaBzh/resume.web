@@ -102,12 +102,12 @@ export default {
     overflow: hidden;
     height: fit-content;
     transition: all 0.8s ease 0s;
-    @media (max-width: 991.98px) {
-        padding: 16px 0;
-    }
-    @media (max-width: 479.98px) {
-        padding: 10px 0;
-    }
+    // @media (max-width: 991.98px) {
+    //     padding: 16px 0;
+    // }
+    // @media (max-width: 479.98px) {
+    //     padding: 10px 0;
+    // }
     &:not(:last-child) {
         border-bottom: 1px solid #e6eaf0;
     }

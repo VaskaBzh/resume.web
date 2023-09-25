@@ -1,6 +1,6 @@
 <template>
     <div class="chart">
-        <main-title class="headline"> График дохода за месяц </main-title>
+        <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
         <div ref="chart" class="container-chart">
             <div ref="tooltip" class="tooltip" style="opacity: 0">
                 <div class="tooltip__content">
@@ -14,7 +14,9 @@
                         >
                     </p>
                     <p class="tooltip_text tooltip_text-minnig">
-                        <span class="tooltip_label"> Майнинг </span>
+                        <span class="tooltip_label">
+                            {{ $t("statistic.graph[1]") }}:
+                        </span>
                         <span class="tooltip_value">
                             {{ service.mining || 0 }} BTC
                         </span>
@@ -30,6 +32,7 @@
 import { ColumnGraphService } from "../services/ColumnGraphService";
 import MainTitle from "../../common/Components/UI/MainTitle.vue";
 import TooltipBarIcon from "../icons/TooltipBarIcon.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-column-graph",
@@ -46,6 +49,9 @@ export default {
             graph: this.graphData,
             service: new ColumnGraphService(this.graphData, this.$t),
         };
+    },
+    computed: {
+        ...mapGetters(["viewportWidth"]),
     },
     watch: {
         "$refs.chart"(newChartHtml) {

@@ -1,26 +1,28 @@
 <template>
     <div class="nav" :class="[isOpenBurger ? 'open-burger' : 'close-burger']">
-        <div class="nav__block">
-            <logo-block class="nav_logo" />
-            <div class="header-select-container">
-                <select-theme></select-theme>
-                <select-language></select-language>
+        <div class="nav__content">
+            <div class="nav__block">
+                <logo-block class="nav_logo" />
+                <div class="header-select-container">
+                    <select-theme></select-theme>
+                    <select-language></select-language>
+                </div>
+                <div class="nav__tabs">
+                    <account-menu
+                        :viewportWidth="viewportWidth"
+                        :user="user"
+                    ></account-menu>
+                    <nav class="nav__column">
+                        <nav-group
+                            v-for="(group, i) in service.links"
+                            :group="group"
+                            :key="i"
+                        />
+                    </nav>
+                </div>
             </div>
-            <div class="nav__tabs">
-                <account-menu
-                    :viewportWidth="viewportWidth"
-                    :user="user"
-                ></account-menu>
-                <nav class="nav__column">
-                    <nav-group
-                        v-for="(group, i) in service.links"
-                        :group="group"
-                        :key="i"
-                    />
-                </nav>
-            </div>
+            <logout-link class="nav_logout" />
         </div>
-        <logout-link class="nav_logout" />
     </div>
     <div
         class="nav-bg-mobile"
@@ -73,13 +75,23 @@ export default defineComponent({
 </script>
 <style scoped>
 .nav {
+    height: 100vh;
+    //min-height: 100vh;
+    overflow-y: scroll;
+    min-width: 320px;
+    overflow-x: hidden;
+}
+.nav::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+.nav__content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: 100%;
-    min-height: 100vh;
-    width: 320px;
+    width: 100%;
     padding: 40px 16px 16px;
+    gap: 8px;
 }
 .header-select-container {
     display: none;

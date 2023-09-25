@@ -2,6 +2,7 @@ import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 import api from "@/api/api";
+import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class CabinetService {
     constructor(translate, route) {
@@ -36,7 +37,7 @@ export class CabinetService {
             new SelectData(
                 "profit",
                 this.translate("stats.cards[2]"),
-                Number(data?.referrals_total_amount) || "0.00000000"
+                Number(data?.referrals_total_amount) || 0
             ),
             new SelectData(
                 "active",
@@ -46,8 +47,8 @@ export class CabinetService {
         ];
     }
 
-    getSelectAccounts() {
-        this.accounts = store.getters.allAccounts;
+    getSelectAccounts(newAccountsList) {
+        this.accounts = newAccountsList;
     }
 
     sendMessage(message) {
@@ -59,7 +60,7 @@ export class CabinetService {
 
         try {
             result = await api.post(
-                `/referrals/generate/${this.user.id}`,
+                `/referrals/generate/`,
                 {
                     group_id: id,
                 },
@@ -69,21 +70,28 @@ export class CabinetService {
                     },
                 }
             );
+            openNotification(
+                true,
+                this.translate("validate_messages.success"),
+                result.data.message
+            );
 
             this.sendMessage(result.data.message);
         } catch (err) {
             this.sendMessage(err.response.data.message);
+
+            openNotification(
+                false,
+                this.translate("validate_messages.error"),
+                err.response.data.message
+            );
         }
 
         await this.index();
     }
 
-    setUser(user) {
-        this.user = user;
-    }
-
-    setCode() {
-        this.code = this.user.referral_code?.code || "...";
+    setCode(code = null) {
+        this.code = code ?? (this.user.referral_code?.code || "...");
     }
 
     setActiveSub(group_id) {
@@ -100,7 +108,7 @@ export class CabinetService {
             referralCodeParam.length - firstIndex
         );
 
-        return `${window.location.host}/#/registration?referral_code=${referralCode}`;
+        return `${window.location.host}/registration?referral_code=${referralCode}`;
     }
 
     async index() {
@@ -108,7 +116,7 @@ export class CabinetService {
 
         try {
             response = (
-                await api.get(`/referrals/statistic/${this.user.id}`, {
+                await api.get(`/referrals/statistic/`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -130,7 +138,6 @@ export class CabinetService {
 
     getGradeList() {
         this.gradeList = [
-            ...this.gradeList,
             new GradeData("0.8", "> 30"),
             new GradeData("0.9", "30 - 49"),
             new GradeData("1.0", "75 - 99"),

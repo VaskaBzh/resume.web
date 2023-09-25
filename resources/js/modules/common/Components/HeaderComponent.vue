@@ -3,7 +3,7 @@
         <div class="nav__container">
             <router-link :to="{ name: 'home' }">
                 <img
-                    v-if="!getTheme"
+                    v-if="!isDark"
                     class="nav__logo"
                     src="../../../../assets/img/logo_high_quality.svg"
                     alt="logo"
@@ -147,7 +147,7 @@ export default defineComponent({
         };
     },
     computed: {
-        ...mapGetters(["getIncome", "allAccounts", "getActive", "getTheme"]),
+        ...mapGetters(["getIncome", "allAccounts", "getActive", "isDark"]),
         accountLink() {
             let url = this.$route.fullPath.startsWith("http")
                 ? new URL(this.$route.fullPath).pathname

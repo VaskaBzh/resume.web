@@ -201,6 +201,7 @@ export default {
             line-height: 135%;
             margin: 16px 0 40px;
             position: relative;
+            width: 100%;
             .form-auth_link {
                 @media (max-width: $tablet) {
                     display: block;

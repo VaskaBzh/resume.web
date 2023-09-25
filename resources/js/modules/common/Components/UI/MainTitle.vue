@@ -45,9 +45,6 @@ h3 {
     font-style: normal;
     font-weight: 400;
     line-height: 160%; /* 32px */
-    @media (max-width: 767.98px) {
-        font-size: 32px;
-    }
     @media (max-width: 479.98px) {
         font-size: 16px;
     }

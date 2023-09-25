@@ -27,15 +27,18 @@
                         @getData="getTargetWorker($event)"
                     ></main-table>
                 </main-slider>
-                <worker-card
-                    class="workers__card"
-                    v-if="
-                        Object.entries(worker_service.target_worker).length > 0
-                    "
-                    :target_worker="worker_service.target_worker"
-                    :graph="worker_service.workers_graph"
-                    @closeCard="dropWorker"
-                />
+                <transition name="slide">
+                    <worker-card
+                        class="workers__card"
+                        v-if="
+                            Object.entries(worker_service.target_worker)
+                                .length > 0
+                        "
+                        :target_worker="worker_service.target_worker"
+                        :graph="worker_service.workers_graph"
+                        @closeCard="dropWorker"
+                    />
+                </transition>
             </div>
         </div>
     </div>
@@ -154,7 +157,7 @@ export default {
 }
 .workers {
     padding: 24px;
-    height: 100%;
+    flex: 1 1 auto;
     display: flex;
     flex-direction: column;
     @media (max-width: 900px) {
@@ -263,5 +266,15 @@ export default {
             z-index: 2;
         }
     }
+}
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.5s ease-out;
+}
+.slide-enter-from,
+.slide-leave-to {
+    max-width: 0;
+    min-width: 0;
+    opacity: 0;
 }
 </style>

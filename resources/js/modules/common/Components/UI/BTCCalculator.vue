@@ -120,9 +120,15 @@ export default {
         font-weight: 400;
         line-height: 40px;
         align-items: flex-end;
-        @media(max-width:900px){
+        @media(max-width: 1450px){
+         font-size: 25x;
+        }
+        @media(max-width: 1350px){
+                font-size: 23px;
+            }
+        @media(max-width:1200px){
             font-size: 20px;
-    }
+        }
     }
 
     &__value {

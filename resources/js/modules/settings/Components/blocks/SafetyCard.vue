@@ -75,11 +75,11 @@ export default {
     background: var(--primary-500, #2e90fa);
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
         0px 8px 12px -6px rgba(0, 0, 0, 0.05);
-    color: var(--background-island);
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
+    color: var(--buttons-primary-text, var(--main-gohan, #FFF));
     line-height: 175%; /* 31.5px */
 }
 @media (max-width: 900px) {

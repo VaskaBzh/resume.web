@@ -1,4 +1,4 @@
-import currency from "@/api/currency";
+import store from "@/store";
 
 export class Converter {
     constructor(value, price) {
@@ -13,7 +13,7 @@ export class Converter {
     }
 
     async getRuble() {
-        let ruble = (await currency()).data.rates.USD || 0;
+        let ruble = store.getters.currency.rates.USD || 0;
 
         this.rub = this.usd / (ruble || 1);
     }

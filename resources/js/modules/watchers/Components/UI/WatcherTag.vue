@@ -5,18 +5,22 @@
 </template>
 
 <script>
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+
 export default {
     name: "watcher-tag",
     props: {
         tag: String,
     },
-    i18n: {},
+    i18n: {
+        sharedMessages: WatchersMessage,
+    },
     computed: {
         tagName() {
             const tagsNames = {
-                "v1.sub.show": "Статистика",
-                "v1.worker.list": "Воркеры",
-                "v1.income.list": "Доходы",
+                "v1.sub.show":  this.$t('tabs[0]'),
+                "v1.worker.list": this.$t('tabs[2]'),
+                "v1.income.list": this.$t('tabs[1]'),
             };
 
             return tagsNames[this.tag];

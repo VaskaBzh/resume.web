@@ -6,6 +6,7 @@ import api from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
 import { BlockData } from "../DTO/BlockData";
+import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class SettingsService {
     constructor(translate, user) {
@@ -45,9 +46,16 @@ export class SettingsService {
             const response = await this.fetchVerifyFac(form);
 
             this.closeFacPopup();
+
+            openNotification(true, this.translate("validate_messages.connected"), response.data.message);
         } catch (err) {
             console.error(err);
 
+            openNotification(
+                false,
+                this.translate("validate_messages.error"),
+                err.response.data.error ?? err.response.data.message
+            );
             store.dispatch("setFullErrors", err.response.data);
         }
     }
@@ -148,13 +156,13 @@ export class SettingsService {
                 "two-factor-icon.png",
                 this.translate("safety.button[0]")
             ),
-            new BlockData(
-                this.translate("safety.title[2]"),
-                this.translate("safety.text[2]"),
-                "password",
-                "change-password-icon.png",
-                this.translate("safety.button[1]")
-            ),
+            // new BlockData(
+            //     this.translate("safety.title[2]"),
+            //     this.translate("safety.text[2]"),
+            //     "password",
+            //     "change-password-icon.png",
+            //     this.translate("safety.button[1]")
+            // ),
         ];
     }
 
@@ -174,17 +182,24 @@ export class SettingsService {
         };
 
         try {
-            await api.put(`/change/${this.user.id}`, sendForm, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            });
+            const response = await api.put(
+                `/change/${this.user.id}`,
+                sendForm,
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            );
 
             this.wait = false;
+            openNotification(true, this.translate("validate_messages.changed"), response.data.message);
 
             this.setRows();
-        } catch (e) {
-            console.error("Error with: " + e);
+        } catch (err) {
+            console.error("Error with: " + err);
+
+            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
         }
     }
 

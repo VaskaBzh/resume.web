@@ -5,12 +5,32 @@ import { TableService } from "./extends/TableService";
 import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
+import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
+import { GraphDataService } from "@/modules/common/services/GraphDataService";
 
 export class IncomeService extends TableService {
     constructor(translate, titleIndexes, route) {
         super(translate, titleIndexes);
 
+        this.graphService = new GraphDataService(titleIndexes, translate, 30);
         this.route = route;
+        this.waitGraphChange = true;
+        this.incomeBarGraph = {};
+    }
+
+    async fetchChartIncomes(page = 1, per_page = 30) {
+        return await api.get(
+            `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
+            {
+                headers: {
+                    ...(this.route?.query?.access_key
+                        ? { "X-Access-Key": this.route.query.access_key }
+                        : {
+                              Authorization: `Bearer ${store.getters.token}`,
+                          }),
+                },
+            }
+        );
     }
 
     async fetchIncomes(page = 1, per_page = 15) {
@@ -165,5 +185,31 @@ export class IncomeService extends TableService {
         this.table.set("rows", this.rows);
 
         return this;
+    }
+
+    async barGraphIndex() {
+        if (this.group_id !== -1) {
+            this.waitGraphChange = true;
+
+            this.graphService.setDefaultKeys();
+
+            try {
+                this.graphService.records = (
+                    await this.fetchIncomes()
+                ).data.data.map((el) => {
+                    return new BarGraphData(el);
+                });
+            } catch (e) {
+                console.error(e);
+
+                this.graphService.records = new BarGraphData({ amount: 0 });
+            }
+
+            await this.graphService.makeFullBarValues();
+
+            this.incomeBarGraph = this.graphService.graph;
+
+            this.waitGraphChange = false;
+        }
     }
 }

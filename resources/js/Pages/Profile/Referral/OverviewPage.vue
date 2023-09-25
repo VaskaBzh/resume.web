@@ -1,45 +1,36 @@
 <template>
-    <div class="referral_content">
+    <div class="referral__content">
         <div class="grid-column">
             <div class="card__block">
-                <InfoCard>
-                <template v-slot:svg>
-                    <img src="../../../../assets/img/percent-icon.png">
-                </template>
-                <template v-slot:title>
-                    {{ $t("stats.cards[0]") }}
-                </template>
-                <template v-slot:num>
-                    {{ percent }}
-                </template>
-            </InfoCard>
-            <InfoCard>
-                <template v-slot:svg>
-                    <img src="../../../../assets/img/hashrate-icon.png">
-                </template>
-                <template v-slot:title>
-                    {{ $t("stats.cards[1]") }}
-                </template>
-                <template v-slot:num>
-                    {{ percent }}
-                </template>
-                <template v-slot:unit>
-                    PH/s
-                </template>
-            </InfoCard>
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[0]')"
+                    :value="percent"
+                    unit="PH/s"
+                >
+                    <template v-slot:svg>
+                        <img src="../../../../assets/img/percent-icon.png" />
+                    </template>
+                </InfoCard>
+                <!--                <InfoCard-->
+                <!--                    class="referral__card-info"-->
+                <!--                    :title="$t('stats.cards[1]')"-->
+                <!--                    :value="percent"-->
+                <!--                >-->
+                <!--                    <template v-slot:svg>-->
+                <!--                        <img src="../../../../assets/img/hashrate-icon.png" />-->
+                <!--                    </template>-->
+                <!--                </InfoCard>-->
             </div>
-                <InfoCard :currentPage="'worker'">
+            <InfoCard
+                class="referral__card-info"
+                :currentPage="'worker'"
+                :title="$t('stats.cards[4]')"
+                :value="service.statsCards[1]?.value ?? 0"
+                unit="BTC"
+            >
                 <template v-slot:svg>
-                    <img src="../../../../assets/img/income-icon.png">
-                </template>
-                <template v-slot:title>
-                    {{ $t("stats.cards[4]") }}
-                </template>
-                <template v-slot:num>
-                    {{ percent }}
-                </template>
-                <template v-slot:unit>
-                    BTC
+                    <img src="../../../../assets/img/income-icon.png" />
                 </template>
             </InfoCard>
             <div class="cabinet__block cabinet__block-light referral__block">
@@ -50,7 +41,11 @@
                     {{ $t("referral.text") }}
                 </p>
                 <div class="referral__row">
-                    <main-copy class="referral_code" :code="service.code" />
+                    <main-copy
+                        class="referral_code"
+                        :cutValue="50"
+                        :code="service.code"
+                    />
                 </div>
             </div>
             <div class="cabinet__block cabinet__block-light referral__block">
@@ -67,44 +62,39 @@
                     @changeSub="service.generateCode($event)"
                 />
             </div>
-
         </div>
         <div class="grid-column">
             <div class="card__block">
-                <InfoCard>
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[2]')"
+                    :value="service.statsCards[0]?.value ?? 0"
+                >
                     <template v-slot:svg>
-                        <img src="../../../../assets/img/invite-icon.png">
-                    </template>
-                    <template v-slot:title>
-                        {{ $t("stats.cards[2]") }}
-                    </template>
-                    <template v-slot:num>
-                        {{ percent }}
+                        <img src="../../../../assets/img/invite-icon.png" />
                     </template>
                 </InfoCard>
-                <InfoCard>
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[3]')"
+                    :value="service.statsCards[2]?.value ?? 0"
+                >
                     <template v-slot:svg>
-                        <img src="../../../../assets/img/active-icon.png">
-                    </template>
-                    <template v-slot:title>
-                        {{ $t("stats.cards[3]") }}
-                    </template>
-                    <template v-slot:num>
-                        {{ percent }}
+                        <img src="../../../../assets/img/active-icon.png" />
                     </template>
                 </InfoCard>
             </div>
-        <div
-            class="cabinet__block cabinet__block-light referral__block referral__block-full"
-        >
-            <main-title tag="h4" class="title referral_title">
-                {{ $t("grade.title") }}
-            </main-title>
-            <p class="text text-gray referral_text">
-                {{ $t("grade.text") }}
-            </p>
-            <info-list :gradeList="service.gradeList" />
-        </div>
+            <div
+                class="cabinet__block cabinet__block-light referral__block referral__block-full"
+            >
+                <main-title tag="h4" class="title referral_title">
+                    {{ $t("grade.title") }}
+                </main-title>
+                <p class="text text-gray referral_text">
+                    {{ $t("grade.text") }}
+                </p>
+                <info-list :gradeList="service.gradeList" />
+            </div>
         </div>
     </div>
 </template>
@@ -132,7 +122,7 @@ export default {
         ReferralSelect,
         InfoList,
         ReferralsLayoutView,
-        InfoCard
+        InfoCard,
     },
     i18n: {
         sharedMessages: ReferralsMessage,
@@ -152,15 +142,15 @@ export default {
     watch: {
         user(newUser) {
             this.service.setUser(newUser);
+            this.service.setCode();
         },
         async allAccounts(newValue) {
             if (newValue) {
-                await this.service.getSelectAccounts();
+                await this.service.getSelectAccounts(newValue);
             }
         },
-        user(newUserProp) {
-            this.service.setUser(newUserProp);
-            this.service.setCode();
+        "$i18n.locale"() {
+            this.service.getGradeList();
         },
     },
     async mounted() {
@@ -170,26 +160,26 @@ export default {
         this.service.getStatsCards({});
         this.service.setCode();
         await this.service.index();
-        if (this.allAccounts) this.service.getSelectAccounts();
+        if (this.allAccounts) this.service.getSelectAccounts(this.allAccounts);
     },
 };
 </script>
 
 <style scoped lang="scss">
-.card__block{
+.card__block {
     display: flex;
     width: 100%;
     justify-content: space-between;
     gap: 16px;
 }
-.grid-column{
+.grid-column {
     display: flex;
     flex-direction: column;
     gap: 16px;
 }
 .referral {
-    &_content {
-
+    &__content {
+        flex: 1 1 auto;
         display: grid;
         grid-template-columns: repeat(2, 49%);
         // grid-template-rows: repeat(2, auto);
@@ -198,6 +188,11 @@ export default {
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+    }
+    &__card {
+        &-info {
+            width: 100%;
         }
     }
     &__block {

@@ -16,6 +16,10 @@ export class TableService {
         this.emptyTable = false;
     }
 
+    setActive(id) {
+        this.activeId = id;
+    }
+
     dateFormatter(date) {
         let d = date.split("");
         d.length = 10;

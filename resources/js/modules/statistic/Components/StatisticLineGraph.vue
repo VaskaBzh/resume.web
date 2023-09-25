@@ -10,11 +10,7 @@
                 :active="offset"
             />
         </div>
-        <main-preloader
-            :wait="waitGraphChange"
-            :end="!waitGraphChange"
-            :empty="false"
-        />
+        <wait-preloader :wait="waitGraphChange" />
         <main-line-graph
             v-if="!waitGraphChange"
             :graphData="graph"
@@ -29,7 +25,7 @@ import MainTabs from "../../common/Components/UI/MainTabs.vue";
 import NoInfoWait from "../../../Components/technical/blocks/NoInfoWait.vue";
 import { mapGetters } from "vuex";
 import MainLineGraph from "../../graphs/Components/MainLineGraph.vue";
-import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
+import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 
 export default {
     name: "statistic-line-graph",
@@ -40,10 +36,9 @@ export default {
         buttons: Object,
     },
     components: {
-        MainPreloader,
+        WaitPreloader,
         MainTitle,
         MainTabs,
-        NoInfoWait,
         MainLineGraph,
     },
     computed: {

@@ -44,7 +44,10 @@
                         v-else
                         v-scroll="'left'"
                     >
-                        <router-link :to="{ name: 'registration' }" class="all-link">
+                        <router-link
+                            :to="{ name: 'registration' }"
+                            class="all-link"
+                        >
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
                         ></router-link>
@@ -53,7 +56,7 @@
 
                 <div v-if="viewportWidth >= 991.98" class="home__background">
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_1"
                         src="../../assets/img/main_an_img_1.svg"
                         alt=""
@@ -65,7 +68,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_2"
                         src="../../assets/img/main_an_img_2.svg"
                         alt=""
@@ -77,7 +80,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_3"
                         src="../../assets/img/main_an_img_3.svg"
                         alt=""
@@ -89,7 +92,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_4"
                         src="../../assets/img/main_an_img_4.svg"
                         alt=""
@@ -101,7 +104,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_5"
                         src="../../assets/img/main_an_img_5.svg"
                         alt=""
@@ -115,7 +118,7 @@
                 </div>
                 <div v-else class="home__background">
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image"
                         src="../../assets/img/main_an_img_full.webp"
                         alt=""
@@ -138,7 +141,10 @@
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
                         >
-                            <router-link :to="{ name: 'acconts' }" class="all-link">
+                            <router-link
+                                :to="{ name: 'acconts' }"
+                                class="all-link"
+                            >
                                 {{ $t("home.button") }}</router-link
                             >
                         </blue-button>
@@ -295,7 +301,9 @@
                                     :to="{ name: 'accounts' }"
                                     class="all-link"
                                 >
-                                    {{ $t("home.bitcoin_block.button") }}</router-link
+                                    {{
+                                        $t("home.bitcoin_block.button")
+                                    }}</router-link
                                 >
                             </blue-button>
                             <blue-button
@@ -308,7 +316,9 @@
                                     :to="{ name: 'registration' }"
                                     class="all-link"
                                 >
-                                    {{ $t("home.bitcoin_block.button") }}</router-link
+                                    {{
+                                        $t("home.bitcoin_block.button")
+                                    }}</router-link
                                 >
                             </blue-button>
                         </div>
@@ -439,7 +449,7 @@ export default {
         this.handleResize();
     },
     computed: {
-        ...mapGetters(["btcInfo", "btcHistory", "getTheme"]),
+        ...mapGetters(["btcInfo", "btcHistory", "isDark"]),
         days() {
             if (this.btcInfo.btc)
                 return Math.floor(
@@ -520,7 +530,6 @@ export default {
 
 <style lang="scss" scoped>
 .home {
-
     // .home__main
 
     &__container {
@@ -675,7 +684,6 @@ export default {
             @media (max-width: 1320.98px) {
                 display: block;
                 top: 25.3em;
-
             }
         }
         @keyframes imag5 {
@@ -1069,11 +1077,11 @@ export default {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    background: #366DC8 url("../../assets/img/propeller.svg") no-repeat center;
+    background: #366dc8 url("../../assets/img/propeller.svg") no-repeat center;
     transition: all 0.5s ease;
     animation: rotate 1.9s linear infinite;
     stroke-width: 1px;
-    stroke: #FFF;
+    stroke: #fff;
     box-shadow: 0px 11px 6px 0px rgba(0, 0, 0, 0.08) inset;
     filter: drop-shadow(0px 0px 35px rgba(255, 255, 255, 0.04));
 

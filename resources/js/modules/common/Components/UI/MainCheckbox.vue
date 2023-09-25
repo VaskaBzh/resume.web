@@ -37,7 +37,7 @@ export default {
     watch: {
         is_checked(newCheckState) {
             this.isChecked = newCheckState;
-        }
+        },
     },
 };
 </script>
@@ -47,6 +47,7 @@ export default {
     align-items: center;
     justify-content: space-between;
     color: var(--text-teritary-day, #98a2b3);
+    background: transparent !important;
     font-family: NunitoSans, serif;
     font-size: 16px;
     font-weight: 400;

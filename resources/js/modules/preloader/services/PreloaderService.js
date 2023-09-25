@@ -19,11 +19,21 @@ export class PreloaderService {
         this.cross = null;
     }
 
+    killPreloader() {
+        this.endProcess();
+    }
+
     killInterval() {
         clearInterval(this.interval);
     }
 
+    dropResizeState() {
+        this.resizeEnd = false;
+    }
+
     startProcess(intervalMillisecondsTime) {
+        this.dropEndAnimation();
+        this.dropResizeState();
         const limit = 80;
         const percentStep = 1;
 
@@ -57,9 +67,9 @@ export class PreloaderService {
 
     endProcess(endValue) {
         if (endValue) {
-            this.endAnimation();
             this.killInterval();
             this.killProcess();
+            this.endAnimation();
         }
     }
 
@@ -142,15 +152,13 @@ export class PreloaderService {
         this.endTable = true;
     }
 
+    dropEndAnimation() {
+        this.endTable = false;
+    }
+
     animateCross = () => {
         this.makeCrossVisible();
 
-        // anime({
-        //     targets: this.cross.left,
-        //     strokeDashoffset: [-128, 0],
-        //     easing: 'easeInOutSine',
-        //     duration: 800,
-        // });
         anime({
             targets: this.cross.querySelectorAll("rect"),
             easing: "linear",

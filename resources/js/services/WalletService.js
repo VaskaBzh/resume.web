@@ -2,6 +2,7 @@ import api from "@/api/api";
 
 import { walletData } from "@/DTO/walletData";
 import store from "@/store";
+import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class WalletService {
     constructor(translate) {
@@ -85,18 +86,21 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.wait = true;
             try {
-                await api.post("/wallets/create", this.form, {
+                const response = await api.post("/wallets/create", this.form, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
 
+                openNotification(true, this.translate("validate_messages.success"), response.data.message);
                 this.index();
                 this.clearForm();
                 this.closePopup();
-            } catch (e) {
-                console.error("Error with: " + e);
-                store.dispatch("setFullErrors", e.response.data.errors);
+            } catch (err) {
+                console.error("Error with: " + err);
+                store.dispatch("setFullErrors", err.response.data.errors);
+
+                openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
             }
             this.wait = false;
         } else {
@@ -109,11 +113,13 @@ export class WalletService {
             this.wait = true;
 
             try {
-                await api.put("/wallets/update", this.form, {
+                const response = await api.put("/wallets/update", this.form, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
+
+                openNotification(true, this.translate("validate_messages.connected"), response.data.message);
 
                 this.index();
                 this.clearForm();
@@ -125,6 +131,7 @@ export class WalletService {
             this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
+            store.dispatch("setFullErrors", err.response.data.errors);
         }
     }
 

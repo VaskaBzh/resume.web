@@ -1,5 +1,8 @@
 <template>
-    <div class="cabinet__block cabinet__block-light cabinet__block-card card" :class="[page == 'worker' ? 'max-width' : '']">
+    <div
+        class="cabinet__block cabinet__block-light cabinet__block-card card"
+        :class="[page == 'worker' ? 'max-width' : '']"
+    >
         <div class="card_svg" v-if="this.$slots.svg">
             <slot name="svg"></slot>
         </div>
@@ -10,8 +13,8 @@
             <p class="card_num">
                 {{ value }}
                 <span class="card_unit" v-show="unit">
-                {{ unit }}
-            </span>
+                    {{ unit }}
+                </span>
             </p>
         </div>
     </div>
@@ -28,7 +31,7 @@ export default {
     },
     components: {
         MainTitle,
-    }
+    },
 };
 </script>
 <style scoped>
@@ -39,7 +42,7 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
 }
-.max-width{
+.max-width {
     width: 48%;
 }
 .card_svg {
@@ -51,10 +54,10 @@ export default {
     gap: 4px;
 }
 .card-active .card_num {
-    color: #1FB96C;
+    color: #1fb96c;
 }
 .card-in-active .card_num {
-    color: #F1404A;
+    color: #f1404a;
 }
 .card_num {
     color: var(--text-primary-80);
@@ -66,22 +69,37 @@ export default {
     gap: 8px;
     align-items: flex-end;
     opacity: 0.8;
+    flex-wrap: wrap;
 }
 .card_unit {
-    color: var(--light-gray-300, #D0D5DD);
+    color: var(--light-gray-300, #d0d5dd);
     font-family: Unbounded, serif;
     font-size: 27px;
     font-weight: 400;
     line-height: 147%;
 }
-
-@media(max-width: 900px){
-    .card_num{
+@media (max-width: 1450px) {
+    .card_num {
+        font-size: 31px;
+    }
+    .card_unit {
+        font-size: 25px;
+    }
+}
+@media (max-width: 1350px) {
+    .card_num {
+        font-size: 25px;
+    }
+    .card_unit {
         font-size: 20px;
     }
-    .card_unit{
+}
+@media (max-width: 1200px) {
+    .card_num {
+        font-size: 20px;
+    }
+    .card_unit {
         font-size: 14px;
     }
 }
-
 </style>

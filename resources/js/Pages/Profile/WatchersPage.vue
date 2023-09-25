@@ -2,10 +2,9 @@
     <div class="watchers">
         <div class="watchers__head">
             <div class="watchers__head__block">
-                <main-title tag="h4">Наблюдатели</main-title>
+                <main-title tag="h4">{{ $t("title") }}</main-title>
                 <main-description
-                    >Создавайте и управляйте ссылками
-                    наблюдателя</main-description
+                    >{{ $t("text") }}</main-description
                 >
             </div>
             <main-button data-popup="#addWatcher">
@@ -16,29 +15,39 @@
         </div>
         <div
             class="cabinet watchers__wrapper"
-            :class="{
-                'watchers__wrapper-full':
-                    service.waitTable || service.emptyTable,
-            }"
         >
-            <main-slider
+            <main-preloader
+                class="cabinet__preloader watchers__preloader"
                 :wait="service.waitTable"
+                :interval="35"
+                :end="!service.waitTable"
                 :empty="service.emptyTable"
-                rowsNum="1000"
-                :haveNav="false"
-                :meta="service.meta"
-            >
-                <watchers-list
-                    @getWatcher="service.getCard($event)"
-                    :blocks="service.table.get('rows')"
-                />
-            </main-slider>
-            <watchers-card
-                v-show="!service.waitTable && !service.emptyTable"
-                :watcher="service.card"
-                @changeWatcher="changeWatcher"
-                @removeWatcher="removeWatcher"
             />
+            <transition name="fade">
+                <main-slider
+                    :wait="service.waitTable"
+                    :empty="service.emptyTable"
+                    v-show="!service.waitTable && !service.emptyTable"
+                    rowsNum="1000"
+                    :haveNav="false"
+                    :havePreloader="false"
+                    :meta="service.meta"
+                >
+                    <watchers-list
+                        @getWatcher="service.getCard($event)"
+                        :blocks="service.table.get('rows')"
+                        :activeWatcher="service.card"
+                    />
+                </main-slider>
+            </transition>
+            <transition name="fade">
+                <watchers-card
+                    v-show="!service.waitTable && !service.emptyTable"
+                    :watcher="service.card"
+                    @changeWatcher="changeWatcher"
+                    @removeWatcher="removeWatcher"
+                />
+            </transition>
         </div>
     </div>
     <watchers-popup-add
@@ -48,6 +57,7 @@
     />
     <watchers-popup-remove
         :wait="service.wait"
+        :closed="service.popupClosed"
         :name="name"
         :id="service.card?.id"
         @removeWatcher="removeWatcher($event)"
@@ -66,6 +76,8 @@ import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue"
 import WatchersPopupRemove from "@/modules/watchers/Components/blocks/WatchersPopupRemove.vue";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 
 export default {
     name: "watchers-page",
@@ -79,6 +91,10 @@ export default {
         WatchersPopupAdd,
         WatchersPopupRemove,
         WatchersCard,
+        MainPreloader,
+    },
+    i18n: {
+        sharedMessages: WatchersMessage,
     },
     data() {
         return {
@@ -127,12 +143,26 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 .watchers {
-    height: 100%;
+    flex: 1 1 auto;
     padding: 24px;
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+.watchers__preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 @media (max-width: 900px) {
     .watchers {
@@ -159,13 +189,11 @@ export default {
     gap: 12px;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
+    position: relative;
 }
-@media(max-width: 700px){
-    .watchers__wrapper{
+@media (max-width: 700px) {
+    .watchers__wrapper {
         display: flex;
     }
-}
-.watchers__wrapper-full {
-    grid-template-columns: 1fr;
 }
 </style>
