@@ -42,23 +42,29 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
 }
+
 .max-width {
     width: 48%;
 }
+
 .card_svg {
     margin-right: 24px;
 }
+
 .card__content {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
+
 .card-active .card_num {
     color: #1fb96c;
 }
+
 .card-in-active .card_num {
     color: #f1404a;
 }
+
 .card_num {
     color: var(--text-primary-80);
     font-family: Unbounded, serif;
@@ -100,6 +106,12 @@ export default {
     }
     .card_unit {
         font-size: 14px;
+    }
+}
+
+@media (max-width: 497.98px) {
+    .card_svg {
+        display: none;
     }
 }
 </style>
