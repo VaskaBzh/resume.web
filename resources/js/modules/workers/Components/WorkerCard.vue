@@ -199,7 +199,7 @@ export default {
     color: var(--status-failed, #f1404a);
     background: var(--background-failed-day, #feeced);
 }
-@media (max-width: 400px) {
+@media (max-width: 410px) {
     .card__block {
         display: flex;
         flex-direction: column;

@@ -197,6 +197,10 @@ export default {
         @media (max-width: 900px) {
             min-height: 450px;
         }
+        @media (max-width: 410px) {
+            min-height: 550px;
+
+        }
     }
     &__button {
         min-width: 60px;
