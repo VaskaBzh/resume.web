@@ -12,7 +12,7 @@ class HashBuilder extends BaseBuilder
     {
         return $this
             ->getByGroupId($groupId)
-            ->whereDate('created_at', '<=', $date);
+            ->where('created_at', '<', $date);
     }
 
     public function getByOffset(int $groupId, ?int $count = 24): Builder

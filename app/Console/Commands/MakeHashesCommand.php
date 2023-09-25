@@ -33,10 +33,8 @@ class MakeHashesCommand extends Command
             $progress->advance();
 
             DeleteOldHashrates::execute(
-                query: Hash::oldestThan(
-                    groupId: $sub->group_id,
-                    date: now()->subMonths(2)->toDateTimeString()
-                )
+                groupId: $sub->group_id,
+                date: now()->subMonths(2)->toDateTimeString()
             );
 
             try {
@@ -44,7 +42,7 @@ class MakeHashesCommand extends Command
 
                 Hash::create([
                     'group_id' => $sub->group_id,
-                    'hash' => Arr::get($subInfo , 'shares_1m', 0),
+                    'hash' => Arr::get($subInfo, 'shares_1m', 0),
                     'unit' => Arr::get($subInfo, 'shares_unit', 'T'),
                     'worker_count' => Arr::get($subInfo, 'workers_active', 0)
                 ]);

@@ -15,6 +15,7 @@ use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class BtcComService
 {
@@ -50,7 +51,10 @@ class BtcComService
                 ->client
                 ->$method(implode('/', $segments), $params);
 
+            Log::channel('btc_com')->info('BTC.COM RESPONSE', ['Response' => $response->json()]);
+
             if (filled($response['data'])) {
+
                 return $response['data'];
             }
 
