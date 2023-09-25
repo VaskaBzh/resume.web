@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Console\Commands\EmailVerifyNotificationCommand;
 use App\Console\Commands\GiveRoleCommand;
 use App\Console\Commands\IncomeCommand;
 use App\Console\Commands\MakeWorkerHashesCommand;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         MakeWorkerHashesCommand::class,
         PayoutCommand::class,
         GiveRoleCommand::class,
+        EmailVerifyNotificationCommand::class,
     ];
     /**
      * Define the application's command schedule.
