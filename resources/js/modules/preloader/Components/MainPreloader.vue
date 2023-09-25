@@ -22,7 +22,7 @@
                     class="preloader_logo"
                     id="preloader_logo"
                     :class="{
-                        'preloader_logo-center': endConditionWithoutSlots,
+                        'preloader_logo-center': isLogoCenter,
                     }"
                 />
                 <preloader-container-icon
@@ -32,10 +32,7 @@
             </div>
 
             <transition name="progress">
-                <span
-                    class="preloader_progress"
-                    v-show="!endConditionWithoutSlots || progressVisible"
-                >
+                <span class="preloader_progress" v-show="progressVisible">
                     {{ progressValue }}
                 </span>
             </transition>
@@ -49,12 +46,12 @@ import PreloaderLogoIcon from "../icons/PreloaderLogoIcon.vue";
 
 import { PreloaderService } from "../services/PreloaderService";
 import PreloaderContainerIcon from "../icons/PreloaderContainerIcon.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-preloader",
     props: {
         wait: Boolean,
-        end: Boolean,
         empty: {
             type: Boolean,
             default: false,
@@ -65,15 +62,17 @@ export default {
         },
     },
     computed: {
-        endConditionWithoutSlots() {
-            return !this.wait && this.empty;
+        ...mapGetters(["getActive"]),
+        end() {
+            return !this.wait;
         },
         killPreloaderCondition() {
             return !this.wait && !this.empty && this.end;
         },
         progressValue() {
-            return this.progressVisible
-                ? this.$t("preloader.text")
+            console.log(this.service.progressPercentage);
+            return this.service.progressPercentage.length > 3
+                ? this.service.progressPercentage
                 : `${this.service.progressPercentage}%`;
         },
     },
@@ -84,39 +83,54 @@ export default {
     },
     data() {
         return {
-            service: new PreloaderService(),
+            service: new PreloaderService(this.$t),
             crossVisible: false,
-            progressVisible: false,
+            progressVisible: true,
+            isLogoCenter: false,
         };
     },
     watch: {
-        killPreloaderCondition() {
-            this.service.killPreloader();
+        empty(newStateEmpty) {
+            // this.service.killPreloader();
+            if (newStateEmpty) {
+                this.progressVisible = false;
+            }
+            this.crossVisible = false;
+            this.isLogoCenter = !!newStateEmpty;
         },
+        // wait(newStateWait) {
+        //     if (newStateWait) {
+        //         this.service.startProcess(this.interval);
+        //     }
+        // },
         end(newEndVal) {
             this.service.endProcess(newEndVal);
         },
-        "service.crossVisible"() {
-            this.crossVisible = true;
+        "service.crossVisible"(newCrossState) {
+            if (newCrossState) {
+                this.crossVisible = true;
 
-            setTimeout(() => {
-                this.progressVisible = true;
-            }, 1000);
+                setTimeout(() => {
+                    this.progressVisible = true;
+                }, 1000);
+            }
         },
-        getActive() {
-            this.service.killPreloader();
+        getActive(newId, oldId) {
+            if (oldId !== -1) {
+                this.progressVisible = true;
+                this.crossVisible = false;
 
-            this.service.startProcess(this.interval);
-            this.progressVisible = false;
+                this.service.startProcess(this.interval);
+            }
         },
     },
     mounted() {
-        if (!this.killPreloaderCondition) {
-            this.service.startProcess(this.interval);
-        } else {
-            this.service.dropEndAnimation();
-            this.service.animateCloseLine();
-        }
+        // if (!this.killPreloaderCondition) {
+        this.service.startProcess(this.interval);
+        // } else {
+        //     this.service.dropEndAnimation();
+        //     this.service.animateCloseLine();
+        // }
     },
     unmounted() {
         this.service.killPreloader();

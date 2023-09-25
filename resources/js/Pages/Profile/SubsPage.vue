@@ -25,8 +25,8 @@
                 </blue-button>
             </main-title> -->
             <main-title class="title-sub" tag="h4">{{
-                    $t("accounts.title")
-                }}</main-title>
+                $t("accounts.title")
+            }}</main-title>
             <div class="accounts__header">
                 <!--                <div class="input__container">-->
                 <!--                    <input-->
@@ -140,12 +140,10 @@
                 <!--                    </div>-->
                 <!--                </div>-->
             </div>
-            
-            <div v-if="isCard">
 
+            <div v-if="isCard">
                 <div class="accounts__content" v-if="!waitAccounts">
                     <account-profile
-                        @getId="setId"
                         v-for="(account, i) in allAccounts"
                         :key="i + account.name + getActive"
                         :accKey="i"
@@ -240,9 +238,6 @@ export default {
         },
     },
     methods: {
-        setId(id) {
-            this.id = id;
-        },
         activeButton(step) {
             if (step === "card") {
                 this.isCard = true;
