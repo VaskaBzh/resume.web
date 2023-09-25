@@ -11,9 +11,9 @@
             class="workers__wrapper"
             v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
         >
-        <main-title class="title-worker" tag="h4">{{
-                    $t("workers.title")
-         }}</main-title>
+            <main-title class="title-worker" tag="h4">{{
+                $t("workers.title")
+            }}</main-title>
             <div class="cards-container">
                 <main-hashrate-cards />
             </div>
@@ -34,6 +34,7 @@
                     <worker-card
                         class="workers__card"
                         v-if="
+                            viewportWidth > 500 &&
                             Object.entries(worker_service.target_worker)
                                 .length > 0
                         "
@@ -45,6 +46,20 @@
             </div>
         </div>
     </div>
+    <workers-popup-card
+        v-if="viewportWidth <= 500"
+        :wait="worker_service.wait"
+        :closed="worker_service.popupCardClosed"
+        :opened="worker_service.popupCardOpened"
+        @dropWatcher="dropWorker"
+    >
+        <worker-card
+            class="workers__card"
+            v-if="Object.entries(worker_service.target_worker).length > 0"
+            :target_worker="worker_service.target_worker"
+            :graph="worker_service.workers_graph"
+            @closeCard="dropWorker"
+    /></workers-popup-card>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -55,6 +70,7 @@ import MainTable from "@/Components/tables/MainTable.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import WorkersPopupCard from "@/modules/workers/Components/WorkersPopupCard.vue";
 
 export default {
     components: {
@@ -63,14 +79,14 @@ export default {
         MainTable,
         MainPreloader,
         WorkerCard,
-        MainTitle
+        MainTitle,
+        WorkersPopupCard,
     },
     data() {
         return {
             workersActive: 0,
             workersInActive: 0,
             workersDead: 0,
-            viewportWidth: 0,
             changedActive: -1,
             removePercent: false,
             worker_service: new WorkerService(
@@ -94,18 +110,19 @@ export default {
         async initWorkers() {
             await this.worker_service.fillTable();
         },
-        handleResize() {
-            this.viewportWidth = window.innerWidth;
-        },
         async getTargetWorker(data) {
             await this.worker_service.getPopup(data.id);
 
-            this.removePercent = true;
+            this.viewportWidth > 500
+                ? (this.removePercent = true)
+                : this.worker_service.openPopupCard();
         },
         dropWorker() {
             this.worker_service.dropWorker();
 
-            this.removePercent = false;
+            this.viewportWidth > 500
+                ? (this.removePercent = false)
+                : this.worker_service.closePopupCard();
         },
     },
     computed: {
@@ -115,6 +132,7 @@ export default {
             "allHash",
             "allHistoryMiner",
             "getAccount",
+            "viewportWidth",
         ]),
         copyObject() {
             return [
@@ -141,11 +159,6 @@ export default {
         this.initWorkers();
 
         document.title = this.$t("header.links.workers");
-    },
-    created() {
-        window.addEventListener("resize", this.handleResize);
-
-        this.handleResize();
     },
 };
 </script>
@@ -207,9 +220,17 @@ export default {
             position: absolute;
             width: calc(100% - 20px);
         }
+        @media (max-width: 500px) {
+            min-height: 380px;
+        }
+        @media (max-width: 490px) {
+            width: 100%;
+        }
         @media (max-width: 410px) {
             min-height: 550px;
-
+        }
+        @media (max-width: 390px) {
+            min-height: 470px;
         }
     }
     &__button {
