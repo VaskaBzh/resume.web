@@ -1,5 +1,5 @@
 import { Profit } from "../../../Scripts/profit";
-import currency from "../../../api/currency";
+import store from "@/store";
 import { CalculatorInputData } from "../DTO/CalculatorInputData";
 
 export class CalculatorService {
@@ -38,7 +38,6 @@ export class CalculatorService {
                 false,
                 false,
                 100000
-
             ),
             new CalculatorInputData(
                 "power",
@@ -97,7 +96,7 @@ export class CalculatorService {
 
     async converted(btc) {
         const rubleCost = btc.toFixed(8);
-        const usdCourse = (await currency()).data.rates.USD || 0;
+        const usdCourse = store.getters.currency.rates.USD || 0;
         const btcCourse = this.btcInfo.price;
         const btcCost = rubleCost * usdCourse;
         const result = btcCost / btcCourse;

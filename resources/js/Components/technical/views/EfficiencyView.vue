@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     name: "efficiency-view",
@@ -64,6 +64,7 @@ export default {
         }
     }
     &__container {
+        margin: 0 auto;
         @media (min-width: 479.98px) {
             position: relative;
         }

@@ -13,14 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class IncomeListController extends Controller
 {
-    public function __invoke(
-        User $user,
-        Request $request
-    )
+    public function __invoke(Request $request)
     {
-        if (!$user->referral_code) {
+        $user = auth()->user();
+
+        if (!$user?->referral_code) {
             return new JsonResponse([
-                'error' => 'Referral not exists'
+                'error' => __('actions.referral.exists')
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 

@@ -1,63 +1,107 @@
 <template>
-    <div class="referral_content">
-        <div class="cabinet__block cabinet__block-light referral__block">
-            <main-title tag="h4" class="title referral_title">
-                {{ $t("referral.title") }}
-            </main-title>
-            <p class="text text-gray referral_text referral_text-mb">
-                {{ $t("referral.text") }}
-            </p>
-            <div class="referral__row">
-                <main-copy class="referral_code" :code="service.code" />
-                <percent-card
-                    :percent="percent"
-                    class="referral__card-percent"
+    <div class="referral__content">
+        <div class="grid-column">
+            <div class="card__block">
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[0]')"
+                    :value="percent"
+                    unit="PH/s"
+                >
+                    <template v-slot:svg>
+                        <img src="../../../../assets/img/percent-icon.png" />
+                    </template>
+                </InfoCard>
+                <!--                <InfoCard-->
+                <!--                    class="referral__card-info"-->
+                <!--                    :title="$t('stats.cards[1]')"-->
+                <!--                    :value="percent"-->
+                <!--                >-->
+                <!--                    <template v-slot:svg>-->
+                <!--                        <img src="../../../../assets/img/hashrate-icon.png" />-->
+                <!--                    </template>-->
+                <!--                </InfoCard>-->
+            </div>
+            <InfoCard
+                class="referral__card-info"
+                :currentPage="'worker'"
+                :title="$t('stats.cards[4]')"
+                :value="service.statsCards[1]?.value ?? 0"
+                unit="BTC"
+            >
+                <template v-slot:svg>
+                    <img src="../../../../assets/img/income-icon.png" />
+                </template>
+            </InfoCard>
+            <div class="cabinet__block cabinet__block-light referral__block">
+                <main-title tag="h4" class="title referral_title">
+                    {{ $t("referral.title") }}
+                </main-title>
+                <p class="text text-gray referral_text referral_text-mb">
+                    {{ $t("referral.text") }}
+                </p>
+                <div class="referral__row">
+                    <main-copy
+                        class="referral_code"
+                        :cutValue="50"
+                        :code="service.code"
+                    />
+                </div>
+            </div>
+            <div class="cabinet__block cabinet__block-light referral__block">
+                <main-title tag="h4" class="title referral_title">
+                    {{ $t("incomes.title") }}
+                </main-title>
+                <p class="text text-gray referral_text">
+                    {{ $t("incomes.text") }}
+                </p>
+                <referral-select
+                    class="referral_select-cabinet"
+                    :rows="service.accounts"
+                    :activeSubId="service.activeSubId"
+                    @changeSub="service.generateCode($event)"
                 />
             </div>
         </div>
-        <div class="cabinet__block cabinet__block-light referral__block">
-            <main-title tag="h4" class="title referral_title">
-                {{ $t("stats.title") }}
-            </main-title>
-            <div class="referral__row referral__row-bet">
-                <stats-card
-                    v-for="(card, i) in service.statsCards"
-                    :content="card"
-                    :key="i"
-                />
+        <div class="grid-column">
+            <div class="card__block">
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[2]')"
+                    :value="service.statsCards[0]?.value ?? 0"
+                >
+                    <template v-slot:svg>
+                        <img src="../../../../assets/img/invite-icon.png" />
+                    </template>
+                </InfoCard>
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[3]')"
+                    :value="service.statsCards[2]?.value ?? 0"
+                >
+                    <template v-slot:svg>
+                        <img src="../../../../assets/img/active-icon.png" />
+                    </template>
+                </InfoCard>
             </div>
-        </div>
-        <div class="cabinet__block cabinet__block-light referral__block">
-            <main-title tag="h4" class="title referral_title">
-                {{ $t("incomes.title") }}
-            </main-title>
-            <p class="text text-gray referral_text">
-                {{ $t("incomes.text") }}
-            </p>
-            <referral-select
-                class="referral_select-cabinet"
-                :rows="service.accounts"
-                :activeSubId="service.activeSubId"
-                @changeSub="service.generateCode($event)"
-            />
-        </div>
-        <div
-            class="cabinet__block cabinet__block-light referral__block referral__block-full"
-        >
-            <main-title tag="h4" class="title referral_title">
-                {{ $t("grade.title") }}
-            </main-title>
-            <p class="text text-gray referral_text">
-                {{ $t("grade.text") }}
-            </p>
-            <info-list :gradeList="service.gradeList" />
+            <div
+                class="cabinet__block cabinet__block-light referral__block referral__block-full"
+            >
+                <main-title tag="h4" class="title referral_title">
+                    {{ $t("grade.title") }}
+                </main-title>
+                <p class="text text-gray referral_text">
+                    {{ $t("grade.text") }}
+                </p>
+                <info-list :gradeList="service.gradeList" />
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainCopy from "@/Components/UI/MainCopy.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
 import StatsCard from "@/modules/referral/Components/UI/StatsCard.vue";
 import ReferralSelect from "@/modules/referral/Components/UI/ReferralSelect.vue";
@@ -67,7 +111,7 @@ import { CabinetService } from "@/modules/referral/services/CabinetService";
 import { mapGetters } from "vuex";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-
+import InfoCard from "../../../modules/common/Components/UI/CabinetCard.vue";
 export default {
     name: "cabinet-view",
     components: {
@@ -78,6 +122,7 @@ export default {
         ReferralSelect,
         InfoList,
         ReferralsLayoutView,
+        InfoCard,
     },
     i18n: {
         sharedMessages: ReferralsMessage,
@@ -97,11 +142,15 @@ export default {
     watch: {
         user(newUser) {
             this.service.setUser(newUser);
+            this.service.setCode();
         },
         async allAccounts(newValue) {
             if (newValue) {
-                await this.service.getSelectAccounts();
+                await this.service.getSelectAccounts(newValue);
             }
+        },
+        "$i18n.locale"() {
+            this.service.getGradeList();
         },
     },
     async mounted() {
@@ -111,26 +160,39 @@ export default {
         this.service.getStatsCards({});
         this.service.setCode();
         await this.service.index();
-        if (this.allAccounts) this.service.getSelectAccounts();
+        if (this.allAccounts) this.service.getSelectAccounts(this.allAccounts);
     },
 };
 </script>
 
 <style scoped lang="scss">
+.card__block {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    gap: 16px;
+}
+.grid-column {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
 .referral {
-    &_content {
+    &__content {
+        flex: 1 1 auto;
         display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, auto);
+        grid-template-columns: repeat(2, 49%);
+        // grid-template-rows: repeat(2, auto);
         gap: 16px;
-        @media (max-width: $pc) {
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(4, auto);
-        }
         @media (max-width: $mobile) {
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+    }
+    &__card {
+        &-info {
+            width: 100%;
         }
     }
     &__block {
@@ -173,7 +235,6 @@ export default {
         }
     }
     &_code {
-        max-width: 190px;
         @media (max-width: $pc) {
             max-width: 394px;
         }

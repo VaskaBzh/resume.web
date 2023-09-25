@@ -1,5 +1,5 @@
 export class PaymentData {
-    constructor(date, mail, workers, hashRate, unit, amount) {
+    constructor(date, mail, amount, workers, hashRate, unit) {
         this.date = date;
         this.mail = mail;
         this.amount = `${amount} BTC`;

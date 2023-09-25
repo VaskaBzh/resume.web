@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SendMessage\SendMessageConroller;
 use Illuminate\Support\Facades\Route;
 
@@ -15,9 +16,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/{any}', function () {
-    return view('app');
-})->where('any', '.*');
+Route::get('/{any}', HomeController::class)->where('any', '.*');
 
 /* protected routes */
 Route::middleware('auth')->group(function () {
@@ -29,5 +28,4 @@ Route::middleware('auth')->group(function () {
 //        Route::get('show', [IndexController::class, 'twoFactorAuth'])->name('2fa.show');
 //        Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
 //    });
-    Route::post('/send_message', SendMessageConroller::class)->name('send_message');
 });

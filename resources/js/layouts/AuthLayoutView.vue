@@ -55,7 +55,6 @@
 <script>
 import HeaderComponentAuth from "@/Components/HeaderComponentAuth.vue";
 import { mapGetters } from "vuex";
-import { Link } from "@inertiajs/vue3";
 
 export default {
     props: {
@@ -70,7 +69,7 @@ export default {
             type: Object,
         },
     },
-    components: { HeaderComponentAuth, Link },
+    components: { HeaderComponentAuth },
     computed: {
         ...mapGetters(["getMessage", "isDark"]),
     },
@@ -84,12 +83,17 @@ export default {
 .auth {
     display: flex;
     justify-content: center;
+    flex: 1 1 auto;
     // .auth__con
     &__con {
+        flex: 1 1 auto;
+        display: flex;
         & .page {
             // .page__container
             &__container {
                 height: 100%;
+                flex: 1 1 auto;
+                margin: 0 auto;
             }
             // .page__content
             &__content {

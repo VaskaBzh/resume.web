@@ -1,101 +1,70 @@
 <template>
     <div class="wallets" ref="page">
-        <main-title class="profile cabinet_title" tag="h3"
-            >{{ $t("wallets.title") }}
-            <!--                <blue-button class="wallets__button wallets__button-history">-->
-            <!--                    <Link href="/income"> Доходы </Link>-->
-            <!--                </blue-button>-->
-            <!--            <main-checkbox class="wallets__filter" @is_checked="wallets.filter">-->
-            <!--                {{ $t("wallets.block.filter") }}-->
-            <!--            </main-checkbox>-->
-            <blue-button class="add" data-popup="#addWallet">
-                <svg
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                >
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
-                    />
-                    <path
-                        fill-rule="evenodd"
-                        clip-rule="evenodd"
-                        d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
-                    />
-                </svg>
-            </blue-button>
-        </main-title>
-        <div ref="wallets" class="wrap">
-            <main-preloader
-                :wait="wallets.waitWallets"
-                :interval="35"
-                :end="endWallet"
-                :empty="emptyWallet"
-            >
-                <div class="wallets__list">
-                    <div class="wallets__block" data-popup="#addWallet">
-                        <svg
-                            width="40"
-                            height="40"
-                            viewBox="0 0 40 40"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M11.0703 20.0703C11.0703 19.518 11.518 19.0703 12.0703 19.0703H28.0703C28.6226 19.0703 29.0703 19.518 29.0703 20.0703C29.0703 20.6226 28.6226 21.0703 28.0703 21.0703H12.0703C11.518 21.0703 11.0703 20.6226 11.0703 20.0703Z"
-                                fill="url(#paint0_linear_1243_39061)"
-                            />
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M20.0703 11.0703C20.6226 11.0703 21.0703 11.518 21.0703 12.0703V28.0703C21.0703 28.6226 20.6226 29.0703 20.0703 29.0703C19.518 29.0703 19.0703 28.6226 19.0703 28.0703V12.0703C19.0703 11.518 19.518 11.0703 20.0703 11.0703Z"
-                                fill="url(#paint1_linear_1243_39061)"
-                            />
-                            <defs>
-                                <linearGradient
-                                    id="paint0_linear_1243_39061"
-                                    x1="13.8715"
-                                    y1="22.2233"
-                                    x2="22.7908"
-                                    y2="13.9877"
-                                    gradientUnits="userSpaceOnUse"
-                                >
-                                    <stop stop-color="#3F7BDD" />
-                                    <stop offset="1" stop-color="#4282EC" />
-                                </linearGradient>
-                                <linearGradient
-                                    id="paint1_linear_1243_39061"
-                                    x1="17.9174"
-                                    y1="13.8715"
-                                    x2="26.1529"
-                                    y2="22.7908"
-                                    gradientUnits="userSpaceOnUse"
-                                >
-                                    <stop stop-color="#3F7BDD" />
-                                    <stop offset="1" stop-color="#4282EC" />
-                                </linearGradient>
-                            </defs>
-                        </svg>
-
-                        {{ $t("wallets.no_info") }}
+        <div class="wallet-wrapper">
+            <div class="autopayout-component">
+                <div class="header-component-wallet">
+                    <main-title class="" tag="h3"
+                        >{{ $t("wallets.title[0]") }}
+                    </main-title>
+                    <div class="tooltipe-container">
+                        <tooltip-card
+                            :text="$t('wallets.tooltip')"
+                        ></tooltip-card>
                     </div>
                 </div>
-            </main-preloader>
-            <div ref="list" class="wallets__list" v-if="!wallets.waitWallets">
-                <wallet-block
-                    v-for="(wallet, i) in wallets.wallets"
-                    :key="i"
-                    v-scroll="'top'"
-                    :wallet="wallet"
-                    @getWallet="wallets.setForm(wallet)"
-                    @remove="wallets.removeWallet(wallet)"
-                ></wallet-block>
+                <div class="form_column">
+                    <div class="autopayout-container">
+                        <input
+                            name="minWithdrawal"
+                            id="min"
+                            type="text"
+                            class="input popup__input autopayout-input"
+                            placeholder="0.005"
+                        />
+                        <label for="min" class="main__label autopayout-label">{{
+                            $t("wallets.popups.change.labels.minWithdrawal")
+                        }}</label>
+                        <span class="autopayout-btc">BTC</span>
+                    </div>
+                </div>
+            </div>
+            <main-title class="header-component-wallet" tag="h3"
+                >{{ $t("wallets.title[1]") }}
+            </main-title>
+            <div ref="wallets" class="wrap">
+                <div
+                    ref="list"
+                    class="wallets__list"
+                    v-if="!wallets.waitWallets"
+                >
+                    <wallet-block
+                        v-for="(wallet, i) in wallets.wallets"
+                        :key="i"
+                        v-scroll="'top'"
+                        :wallet="wallet"
+                        @getWallet="wallets.setForm(wallet)"
+                        @remove="wallets.removeWallet(wallet)"
+                    ></wallet-block>
+                </div>
+            </div>
+            <div class="blue-button-container">
+                <button class="add" data-popup="#addWallet">
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                    >
+                        <path
+                            d="M12 4V20M4 12H20"
+                            stroke="#98A2B3"
+                            stroke-width="1.5"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                        />
+                    </svg>
+                </button>
             </div>
         </div>
     </div>
@@ -112,78 +81,58 @@
                 @submit.prevent="wallets.changeWallet"
                 class="form form-popup popup__form"
             >
-                <main-title tag="h3">
+                <main-title tag="h3" class="change-label_title">
                     {{ $t("wallets.popups.change.title") }}
                 </main-title>
-                <input
-                    v-model="wallets.form.wallet"
-                    autofocus
-                    disabled
-                    type="text"
-                    class="input popup__input"
-                    :placeholder="
-                        $t('wallets.popups.change.placeholders.wallet')
-                    "
-                />
-                <input
-                    v-model="wallets.form.name"
-                    autofocus
-                    type="text"
-                    class="input popup__input"
-                    :placeholder="$t('wallets.popups.change.placeholders.name')"
-                />
-                <div class="form_row form_row-non-height">
-                    <div class="form_column">
-                        <label for="percent" class="main__label">{{
-                            $t("wallets.popups.change.labels.percent")
-                        }}</label>
-                        <input
-                            name="percent"
-                            v-model="wallets.form.percent"
-                            id="percent"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="100"
-                        />
-                    </div>
-                    <div class="form_column">
-                        <label for="min" class="main__label">{{
-                            $t("wallets.popups.change.labels.minWithdrawal")
-                        }}</label>
-                        <input
-                            name="minWithdrawal"
-                            v-model="wallets.form.minWithdrawal"
-                            id="min"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="0.005"
-                        />
-                    </div>
+                <div class="autopayout-input_container">
+                    <label class="label-popup">
+                        {{ $t("wallets.popups.add.placeholders.wallet") }}
+                    </label>
+                    <input
+                        v-model="wallets.form.wallet"
+                        autofocus
+                        disabled
+                        type="text"
+                        class="input popup__input autopayput_input"
+                        :placeholder="
+                            $t('wallets.popups.change.placeholders.wallet')
+                        "
+                    />
                 </div>
-                <blue-button>
-                    <button type="submit" class="all-link">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
-                            />
-                            <path
-                                d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
-                            />
-                            <path
-                                d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                            />
-                        </svg>
-                        {{ $t("wallets.popups.change.button") }}
-                    </button>
-                </blue-button>
+                <div class="autopayout-input_container">
+                    <label class="label-popup">
+                        {{ $t("wallets.popups.add.placeholders.name") }}
+                    </label>
+                    <input
+                        v-model="wallets.form.name"
+                        autofocus
+                        type="text"
+                        class="input popup__input autopayput_input"
+                        :placeholder="
+                            $t('wallets.popups.change.placeholders.name')
+                        "
+                    />
+                </div>
+                <button type="submit" class="all-link change-autopyout_button">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
+                        />
+                        <path
+                            d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
+                        />
+                        <path
+                            d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
+                        />
+                    </svg>
+                    {{ $t("wallets.popups.change.button") }}
+                </button>
             </form>
         </main-popup>
         <main-popup
@@ -198,98 +147,82 @@
                 @submit.prevent="wallets.addWallet"
                 class="form form-popup popup__form"
             >
-                <main-title tag="h3">{{
-                    $t("wallets.popups.add.title")
-                }}</main-title>
-                <input
-                    v-model="wallets.form.wallet"
-                    required
-                    autofocus
-                    type="text"
-                    class="input popup__input"
-                    :placeholder="$t('wallets.popups.add.placeholders.wallet')"
-                />
-                <input
-                    v-model="wallets.form.name"
-                    autofocus
-                    type="text"
-                    class="input popup__input"
-                    :placeholder="$t('wallets.popups.add.placeholders.name')"
-                />
-                <div class="form_row form_row-non-height">
-                    <div class="form_column">
-                        <label for="percent" class="main__label">{{
-                            $t("wallets.popups.add.labels.percent")
-                        }}</label>
-                        <input
-                            name="percent"
-                            v-model="wallets.form.percent"
-                            id="percentChg"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="100"
-                        />
-                    </div>
-                    <div class="form_column">
-                        <label for="min" class="main__label">{{
-                            $t("wallets.popups.add.labels.minWithdrawal")
-                        }}</label>
-                        <input
-                            name="minWithdrawal"
-                            v-model="wallets.form.minWithdrawal"
-                            id="minChg"
-                            autofocus
-                            type="text"
-                            class="input popup__input"
-                            placeholder="0.005"
-                        />
-                    </div>
+                <main-title tag="h3"
+                    >{{ $t("wallets.popups.add.title") }}
+                    <p class="wallet-description">
+                        {{ $t("wallets.popups.note") }}
+                    </p>
+                </main-title>
+                <div class="autopayout-input_container">
+                    <label class="label-popup">
+                        {{ $t("wallets.popups.add.placeholders.wallet") }}
+                    </label>
+                    <input
+                        v-model="wallets.form.wallet"
+                        required
+                        autofocus
+                        type="text"
+                        :placeholder="
+                            $t('wallets.popups.add.placeholders.wallet')
+                        "
+                        class="input popup__input autopayput_input"
+                    />
                 </div>
-                <blue-button>
-                    <button type="submit" class="all-link">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
-                            />
-                            <path
-                                d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
-                            />
-                            <path
-                                d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                            />
-                        </svg>
-                        {{ $t("wallets.popups.add.button") }}
-                    </button>
-                </blue-button>
+                <div class="autopayout-input_container">
+                    <label class="label-popup">
+                        {{ $t("wallets.popups.add.placeholders.name") }}
+                    </label>
+                    <input
+                        v-model="wallets.form.name"
+                        type="text"
+                        :placeholder="
+                            $t('wallets.popups.add.placeholders.name')
+                        "
+                        class="input popup__input autopayput_input"
+                    />
+                </div>
+                <button type="submit" class="all-link change-autopyout_button">
+                    <svg
+                        width="24"
+                        height="24"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                    >
+                        <path
+                            d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 9.64 2 7.4 3.42 5.52C3.67 5.19 4.14 5.13 4.47 5.38C4.8 5.63 4.87 6.1 4.62 6.43C3.4 8.04 2.75 9.97 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75C11.59 2.75 11.25 2.41 11.25 2C11.25 1.59 11.59 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75Z"
+                        />
+                        <path
+                            d="M12 19.75C7.73 19.75 4.25 16.27 4.25 12C4.25 11.59 4.59 11.25 5 11.25C5.41 11.25 5.75 11.59 5.75 12C5.75 15.45 8.55 18.25 12 18.25C15.45 18.25 18.25 15.45 18.25 12C18.25 8.55 15.45 5.75 12 5.75C11.59 5.75 11.25 5.41 11.25 5C11.25 4.59 11.59 4.25 12 4.25C16.27 4.25 19.75 7.73 19.75 12C19.75 16.27 16.27 19.75 12 19.75Z"
+                        />
+                        <path
+                            d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
+                        />
+                    </svg>
+                    {{ $t("wallets.popups.add.button") }}
+                </button>
             </form>
         </main-popup>
     </teleport>
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
-import MainPopup from "@/Components/technical/MainPopup.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 
 import { WalletService } from "@/services/WalletService";
 import { usePage } from "@inertiajs/vue3";
-
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 export default {
     components: {
         MainPopup,
-        BlueButton,
+        MainButton,
         MainTitle,
-        MainPreloader,
         WalletBlock,
+        TooltipCard,
     },
     computed: {
         ...mapGetters(["getActive", "errors"]),
@@ -380,10 +313,187 @@ export default {
 };
 </script>
 <style lang="scss">
+.change-label_title {
+    margin-bottom: 24px;
+}
+.change-label_button {
+    margin-top: 80px;
+}
+.wallet-inf {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.wallet-wallet_address {
+    color: var(--light-gray-400, #98a2b3);
+    font-family: NunitoSans;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 145%; /* 20.3px */
+}
+.wallet-fullname {
+    color: var(--light-gray-500, #667085);
+    font-family: Unbounded;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+}
+.header-component-wallet {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 24px;
+}
+.autopayout-component {
+    margin-bottom: 40px;
+}
+.autopayout-container {
+    position: relative;
+    width: 100%;
+}
+.wallet__remove-inf-container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border-radius: 24px;
+    background: var(--background-island);
+    padding: 16px 24px;
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+}
+.autopayout-btc {
+    color: var(--light-gray-400, #98a2b3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 24px */
+    position: absolute;
+    top: 16px;
+    right: 16px;
+}
+.autopayout-label {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+    color: var(--light-gray-400, #98a2b3);
+    font-family: NunitoSans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 135%; /* 16.2px */
+}
+.autopayout-input {
+    border: none;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-island-inner-3) !important;
+    padding: 24px 0 0 16px;
+    width: 100%;
+    height: 56px;
+    outline: none;
+}
+input:focus {
+    border: none !important;
+    outline: none !important;
+    background: var(--background-island-inner-3) !important;
+}
+.button-container {
+    margin-top: 80px;
+}
+.add {
+    border-radius: 12px;
+    background: var(--background-island-inner-3);
+    padding: 12px;
+    box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
+    display: flex;
+    align-items: center;
+}
+.wallet-description {
+    color: var(--light-gray-400, #98a2b3);
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    margin: 8px 0 24px;
+}
+.wallet-wrapper {
+    border-radius: 24px;
+    background: var(--background-island);
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+    width: 560px;
+    padding: 32px 40px;
+}
+.blue-button-container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.wallet__remove-button-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 92px;
+}
+.button_wallet {
+    border-radius: 12px;
+    padding: 12px 16px;
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 175%; /* 31.5px */
+    width: 48%;
+}
+.autopayout-input_container {
+    display: flex;
+    margin-bottom: 12px;
+    flex-direction: column;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-modal-input, #2C2F34);
+    padding: var(--pt-3, 12px) var(--pr-4, 16px) var(--pb-2, 8px)
+        var(--pl-4, 16px);
+}
+.change-autopyout_button {
+    border-radius: 12px;
+    background: var(--buttons-primary-fill-border-default, #2e90fa);
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
+    padding: 12px 16px;
+    color: var(--buttons-primary-text, #fff);
+    font-family: NunitoSans;
+    margin: 36px 0 0;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 177.778% */
+}
+.autopayput_input {
+    background: inherit !important;
+}
+.cancel-button {
+    border: 1px solid var(--light-gray-400, #98a2b3);
+    color: var(--text-secondary, #475467);
+}
+.remove-button {
+    color: var(--background-island);
+    background: var(--light-red-100, #f1404a);
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
+}
 .wallets {
+    display: flex;
+    padding: 24px;
+    align-items: center;
+    justify-content: center;
+    flex: 1 1 auto;
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     .no-info.no-bg {
         padding: 0;
         .wallets {
@@ -466,8 +576,7 @@ export default {
     }
 
     &__block {
-        padding: 16px;
-        background: #fafafa;
+        background: var(--background-island);
         border-radius: 12px;
         width: 100%;
         @media (max-width: 767.98px) {
@@ -513,6 +622,14 @@ export default {
 }
 .input-container {
     position: relative;
+}
+.label-popup {
+    color: var(--text-teritary-day, #98a2b3);
+    font-family: NunitoSans;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px; /* 133.333% */
 }
 .input-label {
     position: absolute;
@@ -571,7 +688,8 @@ export default {
 }
 input:focus {
     border: 1px solid rgba(83, 137, 225, 1);
-    background: rgba(250, 250, 250, 1);
+    background: transparent;
+    color: var(--text-secondary);
 }
 .input-error {
     color: red;

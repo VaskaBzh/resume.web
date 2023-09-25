@@ -1,54 +1,63 @@
 <template>
     <div class="settings" ref="page">
         <div class="settings__main">
-            <main-title class="profile cabinet_title" tag="h3">{{
-                $t("title")
-            }}</main-title>
-            <div class="settings__content">
-                <settings-list
-                    :rows="settingsService.rows"
-                    @openPopup="settingsService.getHtml($event)"
-                />
-                <!--                    @send2fac="settingsService.send2Fac"-->
-                <div class="settings__column">
-                    <!--                    <settings-block-->
-                    <!--                        :title="$t('cards.profit.title')"-->
-                    <!--                        :text="$t('cards.profit.text')"-->
-                    <!--                        :button="$t('cards.profit.button')"-->
-                    <!--                        :value="settingsService.profit"-->
-                    <!--                        :success="settingsService.clearProfit"-->
-                    <!--                        @clicked="settingsService.setClearProfit($event)"-->
-                    <!--                        :currency="true"-->
-                    <!--                    />-->
+            <div class="settings__card">
+                <main-title class="cabinet_title" tag="h3">{{
+                    $t("title[0]")
+                }}</main-title>
+                <div class="settings__content">
+                    <settings-list
+                        :rows="settingsService.rows"
+                        @openPopup="settingsService.getHtml($event)"
+                    />
                 </div>
+            </div>
+            <div class="settings__card">
+                <main-title class="cabinet_title" tag="h3">{{
+                    $t("title[1]")
+                }}</main-title>
+                <article class="card__article">
+                    <div
+                        class="card__container"
+                        v-for="card in settingsService.blocks"
+                    >
+                        <SafetyCard :card="card" @send2fac="sendFac" />
+                    </div>
+                </article>
             </div>
         </div>
     </div>
-    <teleport to="body">
-        <settings-popup
-            :errors="errors"
-            :form="settingsService.form"
-            :validate="settingsService.validate"
-            :wait="settingsService.waitAjax"
-            :closed="settingsService.closed"
-            @ajaxChange="settingsService.ajaxChange($event)"
-            @validate="
-                settingsService.validateProcess(
-                    !!$event.target ? $event.target.value : $event
-                )
-            "
-        />
-    </teleport>
+    <settings-popup
+        v-if="settingsService.form !== {}"
+        :form="settingsService.form"
+        :validate="settingsService.validate"
+        :wait="settingsService.waitAjax"
+        :closed="settingsService.closed"
+        @ajaxChange="settingsService.ajaxChange($event)"
+        @validate="
+            settingsService.validateProcess(
+                !!$event.target ? $event.target.value : $event
+            )
+        "
+    />
+    <fac-popup
+        :opened="settingsService.openedFacPopup"
+        :wait="settingsService.waitAjax"
+        :closed="settingsService.closedFacPopup"
+        :qrCode="settingsService.qrCode"
+        :code="settingsService.code"
+        @sendVerify="sendVerify($event)"
+    />
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import SettingsBlock from "@/modules/settings/Components/blocks/SettingsBlock.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
-
 import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
+import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
+import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
 
 export default {
     i18n: {
@@ -56,9 +65,10 @@ export default {
     },
     components: {
         MainTitle,
-        SettingsBlock,
         SettingsList,
         SettingsPopup,
+        SafetyCard,
+        FacPopup,
     },
     props: {
         message: String,
@@ -66,6 +76,12 @@ export default {
     },
     computed: {
         ...mapGetters(["user"]),
+        img() {
+            return new URL(
+                `/resources/assets/img/${this.card.img}`,
+                import.meta.url
+            );
+        },
     },
     data() {
         return {
@@ -87,10 +103,17 @@ export default {
         },
     },
     methods: {
+        async sendFac() {
+            await this.settingsService.sendFac();
+        },
+        async sendVerify(form) {
+            await this.settingsService.sendVerify(form);
+        },
         settingsProcess() {
             this.settingsService.setUserData();
             this.settingsService.setForm();
             this.settingsService.setRows();
+            this.settingsService.setBlocks();
             this.settingsService.setProfits();
         },
     },
@@ -106,15 +129,41 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.card__article {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+.card__container {
+    display: flex;
+    justify-content: space-between;
+}
+@media (max-width: 900px) {
+    .card__container {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
 .settings {
+    padding: 24px;
     width: 100%;
+    flex: 1 1 auto;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     &__main {
         width: 100%;
+        height: calc(100vh - 135px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        gap: 12px;
     }
     &__content {
         width: 100%;
@@ -148,6 +197,16 @@ export default {
         @media (max-width: 767.98px) {
             height: 28px;
             width: 100%;
+        }
+    }
+    &__card {
+        border-radius: 24px;
+        background: var(--background-island, #fff);
+        padding: 24px;
+        box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+        width: 711px;
+        @media (max-width: 900px) {
+            width: 80vw;
         }
     }
 }

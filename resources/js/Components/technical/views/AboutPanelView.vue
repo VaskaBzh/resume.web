@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     components: {
@@ -72,6 +72,11 @@ export default {
     //@media (max-width: 767.98px) {
     //    background-position: center 45%;
     //}
+
+    &__container {
+        margin: 0 auto;
+    }
+
 }
 // @keyframes strokeAnimate {
 //   0% {../
@@ -81,6 +86,8 @@ export default {
 //     background-position-x: 0;
 //   }
 // }
+
+
 .panel-am {
     display: flex;
     gap: 84px;

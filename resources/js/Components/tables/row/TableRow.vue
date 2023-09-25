@@ -19,7 +19,9 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash :class="column[0]">{{ column[1] }}</span>
+            <span v-hash ref="row_content" :class="column[0]">{{
+                column[1]
+            }}</span>
         </td>
         <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
         <!--            $t("more")-->
@@ -30,7 +32,7 @@
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            v-if="!!this.columns.graphId"
+            v-if="!!this.columns.graphId && !removePercent"
         >
             <path
                 d="M10 6L16 12L10 18"
@@ -49,8 +51,14 @@ export default {
         viewportWidth: Number,
         columns: Array,
         titles: Array,
+        removePercent: Boolean,
     },
     computed: {
+        getWorkersStats() {
+            return this.$refs?.row_content.find(
+                (el) => el.className === "workers_stats"
+            );
+        },
         updatedColumns() {
             if (this.columns) {
                 let obj = this.columns;
@@ -89,16 +97,18 @@ export default {
         renderColumns() {
             let obj = {};
             if (this.columns) {
-                obj = Object.entries(this.updatedColumns).filter(
-                    (col) =>
+                obj = Object.entries(this.updatedColumns).filter((col) => {
+                    return (
                         col[0] !== "class" &&
                         col[0] !== "graphId" &&
                         col[0] !== "data" &&
                         col[0] !== "unit" &&
                         col[0] !== "unit24" &&
                         col[0] !== "message" &&
-                        col[0] !== "validate"
-                );
+                        col[0] !== "validate" &&
+                        col[0] !== (this.removePercent ? "reject_percent" : "")
+                    );
+                });
                 if (
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
@@ -114,11 +124,26 @@ export default {
         },
     },
     methods: {
+        setWorkersStats() {
+            if (this.getWorkersStats) {
+                const splitedText = this.getWorkersStats.textContent.split("/");
+
+                const firstSpan = `<span class="workers-active">${splitedText[0]}</span>`;
+                const secondSpan = `<span class="workers-inactive">${splitedText[1]}</span>`;
+
+                const joinedRow = [firstSpan, secondSpan].join("/");
+
+                this.getWorkersStats.innerHTML = joinedRow;
+            }
+        },
         openPopup() {
-            this.$emit("openGraph", {
+            this.$emit("tableProcess", {
                 id: this.columns.graphId,
             });
         },
+    },
+    mounted() {
+        this.setWorkersStats();
     },
 };
 </script>
@@ -129,9 +154,14 @@ export default {
         font-size: 18px;
         font-weight: 400;
         line-height: 135%;
-        color: #343434;
+        color: var(--text-secondary);
         white-space: nowrap;
         // text-align: center;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
         @media (max-width: 991.98px) {
             font-size: 14px;
         }
@@ -145,7 +175,7 @@ export default {
             }
         }
         @media (min-width: 767.98px) {
-            background: #fafafa;
+            background: var(--background-island);
         }
         &:first-child {
             @media (min-width: 767.98px) {
@@ -158,9 +188,27 @@ export default {
             }
         }
         span {
-            pointer-events: fill;
+            -moz-user-select: -moz-text;
+            -o-user-select: text;
+            -khtml-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+            display: inline-flex;
+            align-items: center;
             &.workers {
                 color: #13d60e;
+                &_stats {
+                    display: inline-flex;
+                    gap: 6px;
+                }
+            }
+            .workers {
+                &-active {
+                    color: #13d60e;
+                }
+                &-inactive {
+                    color: #eb5757;
+                }
             }
         }
     }
@@ -173,7 +221,7 @@ export default {
             padding: 8px 0;
             &:not(.main) {
                 padding: 16px;
-                background: #fafafa;
+                background: var(--background-island);
                 border-radius: 16px;
                 box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
                 .more {

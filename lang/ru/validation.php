@@ -32,7 +32,7 @@ return [
         'string' => ':attribute должен быть не меньше :min и не больше :max. символов',
     ],
     'boolean' => 'The :attribute field must be true or false.',
-    'confirmed' => 'Подтвердите :attribute.',
+    'confirmed' => ':attribute не совпадает',
     'current_password' => 'Пароль неверный.',
     'date' => 'The :attribute is not a valid date.',
     'date_equals' => 'The :attribute must be a date equal to :date.',
@@ -50,7 +50,7 @@ return [
     'email' => 'Неверный :attribute.',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
-    'exists' => ':attribute уже создан.',
+    'exists' => ':attribute не существует.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
@@ -90,8 +90,8 @@ return [
     'max' => [
         'array' => 'The :attribute must not have more than :max items.',
         'file' => 'The :attribute must not be greater than :max kilobytes.',
-        'numeric' => ':attribute должен быть не более :max.',
-        'string' => ':attribute должен быть не более :max символов.',
+        'numeric' => ':attribute не более :max.',
+        'string' => ':attribute не более :max символов.',
     ],
     'max_digits' => 'The :attribute must not have more than :max digits.',
     'mimes' => 'The :attribute must be a file of type: :values.',
@@ -99,8 +99,8 @@ return [
     'min' => [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'numeric' => ':attribute должен быть не менее :min.',
-        'string' => ':attribute должен быть не менее :min символов.',
+        'numeric' => ':attribute не менее :min.',
+        'string' => ':attribute не менее :min символов.',
     ],
     'min_digits' => 'The :attribute must have at least :min digits.',
     'multiple_of' => 'The :attribute must be a multiple of :value.',
@@ -119,8 +119,8 @@ return [
     'prohibited_if' => 'The :attribute field is prohibited when :other is :value.',
     'prohibited_unless' => 'The :attribute field is prohibited unless :other is in :values.',
     'prohibits' => 'The :attribute field prohibits :other from being present.',
-    'regex' => 'The :attribute format is invalid.',
-    'required' => 'Заполните :attribute.',
+    'regex' => 'Не верный формат',
+    'required' => 'Введите :attribute.',
     'required_array_keys' => 'The :attribute field must contain entries for: :values.',
     'required_if' => 'The :attribute field is required when :other is :value.',
     'required_if_accepted' => 'The :attribute field is required when :other is accepted.',
@@ -160,6 +160,7 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте'
         ],
     ],
 
@@ -174,6 +175,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'пароль',
+        'name' => 'имя',
+        'referral_code' => 'реферальный код',
+        'wallet.address' => 'адрес кошелька',
+        'wallet.name' => 'имя кошелька',
+    ],
 
 ];

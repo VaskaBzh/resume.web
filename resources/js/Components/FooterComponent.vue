@@ -79,7 +79,7 @@
                     <router-link :to="{ name: 'home' }">
                         <img
                             class="nav__logo"
-                            v-if="!getTheme"
+                            v-if="!isDark"
                             src="../../assets/img/logo_high_quality.svg"
                             alt="logo"
                         />
@@ -266,9 +266,9 @@
 
 <script>
 import pdf from "@/../assets/files/policy.pdf";
-import BlueButton from "@/Components/UI/BlueButton.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import MainPopup from "@/modules/popup/Components/MainPopup.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
 import { useRoute } from "vue-router";
@@ -279,7 +279,7 @@ export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
     computed: {
-        ...mapGetters(["getTheme", "errors"]),
+        ...mapGetters(["isDark", "errors"]),
         route() {
             return useRoute();
         },
@@ -351,6 +351,7 @@ export default {
 }
 .footer {
     &__container {
+        margin: 110px auto 0;
         z-index: 1;
     }
     // .footer__main

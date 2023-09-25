@@ -34,8 +34,8 @@
 </template>
 
 <script>
-import MainSelect from "@/Components/UI/MainSelect.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainSelect from "@/modules/common/Components/UI/MainSelect.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 
 export default {
     components: { BlueButton, MainSelect },

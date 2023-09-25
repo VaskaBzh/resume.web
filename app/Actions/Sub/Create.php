@@ -9,9 +9,9 @@ use App\Models\Sub;
 
 class Create
 {
-    public static function execute(SubData $subData): void
+    public static function execute(SubData $subData): Sub
     {
-        Sub::create([
+        return Sub::create([
             'user_id' => $subData->userId,
             'group_id' => $subData->groupId,
             'sub' => $subData->groupName,

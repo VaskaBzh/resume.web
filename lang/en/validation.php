@@ -50,7 +50,7 @@ return [
     'email' => 'The :attribute must be a valid email address.',
     'ends_with' => 'The :attribute must end with one of the following: :values.',
     'enum' => 'The selected :attribute is invalid.',
-    'exists' => ':attribute already exists.',
+    'exists' => ':attribute is not exists.',
     'file' => 'The :attribute must be a file.',
     'filled' => 'The :attribute field must have a value.',
     'gt' => [
@@ -160,6 +160,7 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'group_id_unique' => ':attribute already taken by this sub-account'
         ],
     ],
 
@@ -174,6 +175,12 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'password' => 'password',
+        'name' => 'name',
+        'referral_code' => 'referral code',
+        'wallet_address' => 'wallet address',
+        'wallet_name' => 'wallet name',
+    ],
 
 ];

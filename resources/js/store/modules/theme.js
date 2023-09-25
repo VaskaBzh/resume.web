@@ -19,6 +19,7 @@ export default {
     },
     state: {
         timer: true,
+        theme: "light",
         dark: useDark({
             selector: "body",
             attribute: "color-scheme",

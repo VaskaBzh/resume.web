@@ -16,111 +16,40 @@
                 :viewportWidth="viewportWidth"
                 :class="row.class ?? null"
                 :data-popup="row.data"
-                @openGraph="getUser"
+                :removePercent="removePercent"
+                @tableProcess="getUser"
             />
         </tbody>
     </table>
-    <teleport to="body">
-        <main-popup
-            v-if="!!worker_service"
-            :errors="errors"
-            class="popup-graph"
-            id="seeChart"
-            ref="chart"
-            typePopup="graph"
-            @closed="dropUser"
-        >
-            <div class="popup__head">
-                <main-title tag="h4" class="title-blue">
-                    {{ worker_service.target_worker?.name }}
-                </main-title>
-                <span
-                    class="status popup_status"
-                    :class="worker_service.target_worker?.class"
-                >
-                    {{
-                        worker_service.target_worker?.class === "ACTIVE"
-                            ? $t("workers.statuses[0]")
-                            : worker_service.target_worker?.class === "INACTIVE"
-                            ? $t("workers.statuses[1]")
-                            : $t("workers.statuses[2]")
-                    }}
-                </span>
-            </div>
-            <div class="popup__main">
-                <div class="popup__info">
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">
-                            {{ $t("workers.table.thead[1]") }}</span
-                        >
-                        <span class="text text-black">
-                            <b> {{ worker_service.target_worker?.hashrate }}</b>
-                        </span>
-                    </div>
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">{{
-                            $t("workers.table.thead[3]")
-                        }}</span>
-                        <span class="text text-black">
-                            <b>
-                                {{
-                                    worker_service.target_worker
-                                        ?.hashrate_per_day
-                                }}</b
-                            ></span
-                        >
-                    </div>
-                    <div class="popup__info_block">
-                        <span class="label popup__info_block_label">{{
-                            $t("workers.table.thead[4]")
-                        }}</span>
-                        <span class="text text-black">
-                            <b>
-                                {{
-                                    worker_service.target_worker?.reject_percent
-                                }}</b
-                            ></span
-                        >
-                    </div>
-                </div>
-                <statistic-chart
-                    class="popup-graph__graph"
-                    :graph="worker_service.graph"
-                    :redraw="redraw"
-                    :viewportWidth="viewportWidth"
-                    :heightVal="height"
-                    :tooltip="true"
-                />
-            </div>
-        </main-popup>
-    </teleport>
 </template>
 
 <script>
 import TableRow from "@/Components/tables/row/TableRow.vue";
-import MainPopup from "@/Components/technical/MainPopup.vue";
-import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
-import MainTitle from "@/Components/UI/MainTitle.vue";
-
 export default {
     name: "main-table",
     props: {
         viewportWidth: Number,
         table: Object,
         errors: Object,
-        worker_service: {
-            type: Object,
-        },
+        removePercent: Boolean,
     },
-    components: { MainPopup, StatisticChart, TableRow, MainTitle },
+    components: { TableRow },
     computed: {
         ...mapGetters(["allHistoryMiner"]),
         rows() {
             return this.table?.get("rows");
         },
         titles() {
-            return this.table?.get("titles");
+            if (this.table?.get("titles")) {
+                const titles = [...this.table?.get("titles")];
+                if (this.removePercent) {
+                    titles.pop();
+                }
+                return titles;
+            }
+
+            return null;
         },
     },
     data() {
@@ -131,10 +60,6 @@ export default {
         };
     },
     watch: {
-        "worker_service.graph"() {
-            this.redraw = false;
-            setTimeout(() => (this.redraw = true), 1700);
-        },
         viewportWidth() {
             if (this.viewportWidth >= 991.98) {
                 this.height = 360;
@@ -151,7 +76,8 @@ export default {
     },
     methods: {
         async getUser(data) {
-            data.id ? await this.worker_service?.getPopup(data.id) : null;
+            this.$emit("getData", data);
+            // data.id ? await this.worker_service?.getPopup(data.id) : null;
         },
         dropUser() {
             Object.values(this.worker_service).length > 0
@@ -182,6 +108,11 @@ export default {
     }
     &_column {
         position: relative;
+        -moz-user-select: -moz-none;
+        -o-user-select: none;
+        -khtml-user-select: none;
+        -webkit-user-select: none;
+        user-select: none;
         @media (min-width: 767.98px) {
             height: 48px;
             padding-left: 16px;
@@ -193,7 +124,12 @@ export default {
             border-radius: 0 8px 8px 0;
         }
         span {
-            pointer-events: fill;
+            -moz-user-select: -moz-text;
+            -o-user-select: text;
+            -khtml-user-select: text;
+            -webkit-user-select: text;
+            user-select: text;
+            display: inline-flex;
         }
     }
     &__head {
@@ -203,17 +139,19 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: #818c99;
+                color: var(--text-teritary-day, #98a2b3);
+                font-family: NunitoSans;
                 font-size: 14px;
+                font-style: normal;
                 font-weight: 400;
-                line-height: 130%;
-                // text-align: left;
+                line-height: 20px; /* 142.857% */
                 background: transparent;
             }
         }
     }
     &__row {
         text-align: left;
+        position: relative;
         &[data-popup="#seeChart"] {
             td {
                 transition: all 0.3s ease 0s;
@@ -229,11 +167,17 @@ export default {
             &:hover,
             &:active {
                 @media (max-width: 767.98px) {
-                    background: #c6d8f5;
+                    background: var(
+                        --background-island-inner-1,
+                        rgba(83, 177, 253, 0.07)
+                    );
                 }
                 @media (min-width: 767.98px) {
                     td {
-                        background: #c6d8f5;
+                        background: var(
+                            --background-island-inner-1,
+                            rgba(83, 177, 253, 0.07)
+                        );
                     }
                     svg {
                         stroke: #343434;
@@ -246,7 +190,7 @@ export default {
             // display: none;
             stroke: #818c99;
             position: absolute;
-            right: 12px;
+            right: 40px;
             margin-top: 25px;
             transform: translateY(-50%);
         }

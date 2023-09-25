@@ -14,28 +14,28 @@
         <!--                @changePerPage="changePerPage"-->
         <!--                @changePage="page = $event"-->
         <!--            />-->
-        <wrap-table
-            :table="service.table"
+        <main-slider
+            class="referral__slider"
             :wait="service.waitTable"
-            :empty="service.rows"
-            :errors="errors"
-            :rowsVal="1000"
-        />
+            :empty="service.emptyTable"
+            rowsNum="1000"
+            :haveNav="false"
+        >
+            <main-table :table="service.table"></main-table>
+        </main-slider>
     </div>
 </template>
 
 <script>
 import ReferralSelect from "@/modules/referral/Components/UI/ReferralSelect.vue";
-import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
-import MainSlider from "@/Components/technical/MainSlider.vue";
+import MainSearch from "@/modules/common/Components/inputs/MainSearch.vue";
 
 import { PaymentService } from "@/modules/referral/services/PaymentService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
-import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
-import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
-import { ReferralsService } from "@/modules/referral/services/ReferralsService";
+import MainTable from "@/Components/tables/MainTable.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 
 export default {
     name: "payment-view",
@@ -49,7 +49,7 @@ export default {
         ReferralSelect,
         MainSearch,
         MainSlider,
-        WrapTable,
+        MainTable,
         ReferralsLayoutView,
     },
     data() {
@@ -94,6 +94,14 @@ export default {
 
 <style scoped lang="scss">
 .referral {
+    &__slider {
+        flex: 1 1 auto;
+    }
+    &__content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
     &__head {
         margin-bottom: 24px;
         display: flex;

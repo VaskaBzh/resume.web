@@ -1,57 +1,64 @@
 <template>
-    <div class="workers profile">
-        <div class="workers__wrapper">
-            <main-title tag="h3" class="cabinet_title">
-                {{ $t("workers.title") }}
-                <router-link :to="{ name: 'connecting' }">
-                    <blue-button class="add">
-                        <svg
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg"
-                        >
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M3.07031 12.0706C3.07031 11.5183 3.51803 11.0706 4.07031 11.0706H20.0703C20.6226 11.0706 21.0703 11.5183 21.0703 12.0706C21.0703 12.6229 20.6226 13.0706 20.0703 13.0706H4.07031C3.51803 13.0706 3.07031 12.6229 3.07031 12.0706Z"
-                            />
-                            <path
-                                fill-rule="evenodd"
-                                clip-rule="evenodd"
-                                d="M12.0703 3.07098C12.6226 3.07098 13.0703 3.5187 13.0703 4.07098V20.071C13.0703 20.6233 12.6226 21.071 12.0703 21.071C11.518 21.071 11.0703 20.6233 11.0703 20.071V4.07098C11.0703 3.5187 11.518 3.07098 12.0703 3.07098Z"
-                            />
-                        </svg>
-                    </blue-button>
-                </router-link>
-            </main-title>
-
-            <wrap-table
-                :table="worker_service.table"
-                :key="changedActive"
-                :wait="worker_service.waitWorkers"
-                :empty="worker_service.rows"
-                :worker_service="worker_service"
-                :rowsVal="1000"
-            />
+    <div class="workers">
+        <main-preloader
+            class="cabinet__preloader"
+            :wait="worker_service.waitWorkers"
+            :interval="35"
+            :end="!worker_service.waitWorkers"
+            :empty="worker_service.emptyWorkers"
+        />
+        <div
+            class="workers__wrapper"
+            v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
+        >
+            <div class="cards-container">
+                <main-hashrate-cards />
+            </div>
+            <div class="workers__content">
+                <main-slider
+                    :wait="worker_service.waitWorkers"
+                    :empty="worker_service.emptyWorkers"
+                    rowsNum="1000"
+                    :haveNav="false"
+                >
+                    <main-table
+                        :table="worker_service.table"
+                        :removePercent="removePercent"
+                        @getData="getTargetWorker($event)"
+                    ></main-table>
+                </main-slider>
+                <transition name="slide">
+                    <worker-card
+                        class="workers__card"
+                        v-if="
+                            Object.entries(worker_service.target_worker)
+                                .length > 0
+                        "
+                        :target_worker="worker_service.target_worker"
+                        :graph="worker_service.workers_graph"
+                        @closeCard="dropWorker"
+                    />
+                </transition>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import { Head } from "@inertiajs/vue3";
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import WrapTable from "@/Components/tables/WrapTable.vue";
 import { mapGetters } from "vuex";
-import BlueButton from "@/Components/UI/BlueButton.vue";
 import { WorkerService } from "@/services/WorkerService";
+import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
+import MainTable from "@/Components/tables/MainTable.vue";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
+import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
 
 export default {
     components: {
-        WrapTable,
-        MainTitle,
-        Head,
-        BlueButton,
+        MainHashrateCards,
+        MainSlider,
+        MainTable,
+        MainPreloader,
+        WorkerCard,
     },
     data() {
         return {
@@ -60,12 +67,20 @@ export default {
             workersDead: 0,
             viewportWidth: 0,
             changedActive: -1,
-            worker_service: new WorkerService(this.$t, [0, 1, 3, 4]),
+            removePercent: false,
+            worker_service: new WorkerService(
+                this.$t,
+                [0, 1, 3, 4],
+                this.$route
+            ),
         };
     },
     watch: {
         getActive(newActive, oldActive) {
             this.changedActive = oldActive === -1 ? -1 : newActive;
+            this.initWorkers();
+        },
+        "$i18n.locale"() {
             this.initWorkers();
         },
     },
@@ -75,6 +90,16 @@ export default {
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
+        },
+        async getTargetWorker(data) {
+            await this.worker_service.getPopup(data.id);
+
+            this.removePercent = true;
+        },
+        dropWorker() {
+            this.worker_service.dropWorker();
+
+            this.removePercent = false;
         },
     },
     computed: {
@@ -119,9 +144,37 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.cards-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 32px;
+}
+@media (max-width: 900px) {
+    .cards-container {
+        flex-direction: column;
+        gap: 16px;
+    }
+}
 .workers {
+    padding: 24px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
     .form .title {
         margin-bottom: 0;
+    }
+    &__content {
+        display: flex;
+        gap: 12px;
+        @media (max-width: 800px) {
+            flex-direction: column;
+        }
+    }
+    &__card {
+        min-width: calc(50% - 6px);
     }
     &__button {
         min-width: 60px;
@@ -192,7 +245,7 @@ export default {
             @media (max-width: 767.98px) {
                 font-size: 16px;
                 line-height: 20px;
-                color: #818c99;
+                color: var(--text-secondary);
                 margin-bottom: 6px;
             }
         }
@@ -213,5 +266,15 @@ export default {
             z-index: 2;
         }
     }
+}
+.slide-enter-active,
+.slide-leave-active {
+    transition: all 0.5s ease-out;
+}
+.slide-enter-from,
+.slide-leave-to {
+    max-width: 0;
+    min-width: 0;
+    opacity: 0;
 }
 </style>

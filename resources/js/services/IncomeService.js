@@ -5,14 +5,44 @@ import { TableService } from "./extends/TableService";
 import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
+import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
+import { GraphDataService } from "@/modules/common/services/GraphDataService";
 
 export class IncomeService extends TableService {
+    constructor(translate, titleIndexes, route) {
+        super(translate, titleIndexes);
+
+        this.graphService = new GraphDataService(titleIndexes, translate, 30);
+        this.route = route;
+        this.waitGraphChange = true;
+        this.incomeBarGraph = {};
+    }
+
+    async fetchChartIncomes(page = 1, per_page = 30) {
+        return await api.get(
+            `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
+            {
+                headers: {
+                    ...(this.route?.query?.access_key
+                        ? { "X-Access-Key": this.route.query.access_key }
+                        : {
+                              Authorization: `Bearer ${store.getters.token}`,
+                          }),
+                },
+            }
+        );
+    }
+
     async fetchIncomes(page = 1, per_page = 15) {
         return await api.get(
             `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
+                    ...(this.route?.query?.access_key
+                        ? { "X-Access-Key": this.route.query.access_key }
+                        : {
+                              Authorization: `Bearer ${store.getters.token}`,
+                          }),
                 },
             }
         );
@@ -23,7 +53,11 @@ export class IncomeService extends TableService {
             `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
+                    ...(this.route?.query?.access_key
+                        ? { "X-Access-Key": this.route.query.access_key }
+                        : {
+                              Authorization: `Bearer ${store.getters.token}`,
+                          }),
                 },
             }
         );
@@ -55,12 +89,6 @@ export class IncomeService extends TableService {
             case "pending":
                 return this.translate("income.table.status.pending");
         }
-    }
-
-    dateFormatter(date) {
-        let d = date.split("");
-        d.length = 10;
-        return d.join("").split("-").reverse().join(".");
     }
 
     setter(income, filter) {
@@ -114,8 +142,10 @@ export class IncomeService extends TableService {
     }
 
     async index(filter, page = 1, per_page = 15) {
-        this.waitTable = true;
         if (store.getters.getActive !== -1) {
+            this.emptyTable = false;
+            this.waitTable = true;
+
             let response;
 
             if (filter) {
@@ -126,9 +156,17 @@ export class IncomeService extends TableService {
 
             this.meta = response.data;
 
-            this.rows = response.data.data.map((el) => {
-                return this.setter(el, filter);
-            });
+            try {
+                this.rows = response.data.data.map((el) => {
+                    return this.setter(el, filter);
+                });
+
+                if (this.rows.length === 0) this.emptyTable = true;
+
+                this.waitTable = false;
+            } catch (err) {
+                this.emptyTable = true;
+            }
 
             if (filter) {
                 this.titles = this.useTranslater([1, 4, 5, 6]);
@@ -146,10 +184,32 @@ export class IncomeService extends TableService {
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 
-        if (store.getters.getActive !== -1) {
-            this.waitTable = false;
-        }
-
         return this;
+    }
+
+    async barGraphIndex() {
+        if (this.group_id !== -1) {
+            this.waitGraphChange = true;
+
+            this.graphService.setDefaultKeys();
+
+            try {
+                this.graphService.records = (
+                    await this.fetchIncomes()
+                ).data.data.map((el) => {
+                    return new BarGraphData(el);
+                });
+            } catch (e) {
+                console.error(e);
+
+                this.graphService.records = new BarGraphData({ amount: 0 });
+            }
+
+            await this.graphService.makeFullBarValues();
+
+            this.incomeBarGraph = this.graphService.graph;
+
+            this.waitGraphChange = false;
+        }
     }
 }

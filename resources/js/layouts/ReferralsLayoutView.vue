@@ -1,11 +1,6 @@
 <template>
     <div class="referral profile">
         <div class="referral__wrapper">
-            <div class="cabinet__head">
-                <main-title tag="h3" class="cabinet_title">{{
-                    $t("title")
-                }}</main-title>
-            </div>
             <div class="cabinet referral__cabinet">
                 <div class="referral__tabs">
                     <main-tabs
@@ -24,8 +19,8 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import MainTabs from "@/Components/UI/profile/MainTabs.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainTabs from "@/modules/common/Components/UI/MainTabs.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
@@ -78,9 +73,15 @@ export default {
     opacity: 0;
 }
 .referral {
+    padding: 24px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
     &__wrapper {
         display: flex;
         flex-direction: column;
+        flex: 1 1 auto;
     }
     &__buttons {
         min-height: 48px;
@@ -88,6 +89,7 @@ export default {
     &__cabinet {
         gap: 24px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
     &__tabs {
         @media (max-width: $mobile) {
@@ -100,7 +102,7 @@ export default {
             }
         }
         &-list {
-            min-width: fit-content;
+            width: fit-content;
         }
     }
 }

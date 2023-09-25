@@ -1,16 +1,20 @@
 <template>
     <div class="select" @click="toggle">
         <div class="select_title menu_toggle" :class="{ rotate: opened }">
-            <img :src="activeImg" :alt="active" />
+            <span>{{ active.value }}</span>
             <svg
-                width="15"
-                height="16"
-                viewBox="0 0 15 16"
-                fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                viewBox="0 0 24 24"
+                fill="none"
             >
                 <path
-                    d="M6.79289 10.2929L3.70711 7.20711C3.07714 6.57714 3.52331 5.5 4.41421 5.5H10.5858C11.4767 5.5 11.9229 6.57714 11.2929 7.20711L8.20711 10.2929C7.81658 10.6834 7.18342 10.6834 6.79289 10.2929Z"
+                    d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9"
+                    stroke="#D0D5DD"
+                    stroke-width="1.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
                 />
             </svg>
         </div>
@@ -24,10 +28,7 @@
 </template>
 
 <script>
-import axios from "axios";
-import { Inertia } from "@inertiajs/inertia";
-import MainMenu from "@/Components/UI/MainMenu.vue";
-import { usePage } from "@inertiajs/vue3";
+import MainMenu from "@/modules/common/Components/UI/MainMenu.vue";
 
 export default {
     name: "select-language",
@@ -46,12 +47,10 @@ export default {
         options() {
             return [
                 {
-                    name: this.$t("language.ru"),
                     img: "ru.svg",
                     value: "ru",
                 },
                 {
-                    name: this.$t("language.en"),
                     img: "en.svg",
                     value: "en",
                 },
@@ -85,20 +84,6 @@ export default {
             if (this.$i18n.locale !== lang.value) {
                 this.$i18n.locale = lang.value;
                 localStorage.setItem("location", lang.value);
-                await axios.post(
-                    "/v1/set_location",
-                    {
-                        location: this.$i18n.locale,
-                    },
-                    {
-                        headers: {
-                            ["X-XSRF-TOKEN"]: document
-                                .querySelector(`meta[name="csrf-token"]`)
-                                .getAttribute("content"),
-                        },
-                    }
-                );
-                Inertia.reload({ preserveScroll: true });
             }
         },
         toggle() {
@@ -107,13 +92,13 @@ export default {
         async setLanguage() {
             if (localStorage.getItem("location")) {
                 this.$i18n.locale = localStorage.getItem("location");
-                await axios.post(
-                    "/v1/set_location",
-                    {
-                        location: this.$i18n.locale,
-                    },
-                    {}
-                );
+                // await axios.post(
+                //     "/v1/set_location",
+                //     {
+                //         location: this.$i18n.locale,
+                //     },
+                //     {}
+                // );
             }
         },
     },
@@ -130,17 +115,14 @@ export default {
 
 <style lang="scss" scoped>
 .select {
-    height: 24px;
     width: fit-content;
+    padding: 8px 12px;
+    border-radius: 12px;
+    background: var(--buttons-fourth-fill-border-default, #f2f4f7);
     position: relative;
     cursor: pointer;
     @media (max-width: 767.98px) {
         height: 36px;
-    }
-    img {
-        width: 20px;
-        height: 20px;
-        border-radius: 50%;
     }
     &_title {
         padding: 2px 0 2px 4px;
@@ -151,12 +133,15 @@ export default {
         gap: 8px;
         border-radius: 14px;
         transition: all 0.5s ease 0s;
-        svg {
-            fill: #3f7bdd;
-            transition: all 0.5s ease 0s;
-            width: 15px;
-            height: 15px;
-        }
+        color: var(--gray-400, #98a2b3);
+        text-align: center;
+
+        /* Label 1/Nunito Sans 10pt/14/SemiBold */
+        font-family: NunitoSans;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 145%; /* 20.3px */
     }
 }
 </style>

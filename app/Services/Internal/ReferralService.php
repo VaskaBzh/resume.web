@@ -18,14 +18,14 @@ class ReferralService
 {
     /**
      * @param User $user
-     * @param int $groupId
+     * @param Sub $sub
      * @return string
      * @throws \Exception
      */
-    public static function generateCode(User $user, int $groupId): string
+    public static function generateCode(User $user, Sub $sub): string
     {
         try {
-            $code = static::generateReferralCode(subGroupId: $groupId);
+            $code = static::generateReferralCode(subGroupId: $sub->group_id);
 
             GenerateReferralCode::execute(
                 referralData: ReferralData::fromRequest([

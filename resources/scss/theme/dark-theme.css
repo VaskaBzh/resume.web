@@ -1,0 +1,37 @@
+:root {
+  /* background */
+  --background-island: #212327;
+  --background-globe : #161616;
+  --background-modal: #212327;
+  --background-modal-input: #2C2F34;
+  --background-datepicker: #2C2F34;
+  --background-tooltip: #2C2F34cc;
+  --background-sub-dropdown: #2C2F34;
+  --background-island-inner-3 : #2C2F34;
+  --background-graphic-line: #6F7682;
+  --background-success: #21322E;
+  --background-waiting: #37322D;
+  --background-failed: #36262A;
+  --background-active-chart-line: #98A2B3;
+  --background-island-inner-1: #53B1FD12;
+  --background-island-inner-2: #53B1FD12;
+  --background-accient: #2E90FA;
+
+  /* text */
+  --text-primary: #F1F1F2;
+  --text-primary-80: rgba(241, 241, 242, 0.80);
+  --text-secondary: #C5C8CD;
+  --text-teritary: #6F7682;
+  --text-fourth: #595E68;
+  --text-logo: #FFFFFF;
+  --text-table-title: #43474E;
+  --text-primary-inverse: #FFFFFF;
+
+  /* status */
+  --text-no-value: #43474E;
+
+  /* button */
+  --buttons-fourth-fill-border-default: #2C2F34;
+  --buttons-tabs-fill-border-focus: #212327;
+  --buttons-stroke-text: #C5C8CD;
+}

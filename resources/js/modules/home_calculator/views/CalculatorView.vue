@@ -48,7 +48,7 @@
     </div>
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import CalculatorInput from "../Componets/UI/CalculatorInput.vue";
 import CalculatorResult from "@/modules/home_calculator/views/CalculatorResult.vue";
 
@@ -83,6 +83,7 @@ export default {
     mounted() {
         if (this.btcInfo?.btc) {
             this.calculatorService.setInputs(this.btcInfo.btc);
+
         }
     },
     methods: {
@@ -108,8 +109,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .calculator {
+
+    &__container {
+        margin: 0 auto;
+    }
+
     &_title {
-        margin-bottom: 24px;
+   margin-bottom: 24px;
+   font-family: AmpleSoft Pro;
+
     }
     &_description {
         margin-bottom: 48px;

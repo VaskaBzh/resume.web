@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     name: "interface-view",
@@ -107,6 +107,11 @@ export default {
 
 <style scoped lang="scss">
 .interface {
+
+    &__container {
+        margin: 0 auto;
+    }
+
     &__content {
         display: flex;
         justify-content: space-between;

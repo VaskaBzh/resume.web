@@ -1,554 +1,233 @@
 <template>
-    <div class="statistic profile">
-        <div class="statistic__wrapper">
-            <div class="main-header-container">
-                <main-title tag="h3" class="cabinet_title">
-                    {{ $t("statistic.title") }}
-                    <!--                <main-checkbox @is_checked="allStat">-->
-                    <!--                    {{ $t("statistic.checkbox") }}</main-checkbox-->
-                    <!--                >-->
-                </main-title>
-                <current-exchange-rate />
-            </div>
-
-            <main-preloader
-                class="cabinet"
-                :wait="waitHistory"
-                :interval="20"
-                :end="endHistory"
+    <div
+        class="statistic"
+        :class="{
+            'statistic-center':
+                lineChartService.waitGraph ||
+                lineChartService.records?.filter((a) => a.hashrate > 0)
+                    .length === 0,
+        }"
+    >
+        <main-preloader
+            class="cabinet__preloader cabinet__preloader-bg"
+            :wait="lineChartService.waitGraph"
+            :interval="20"
+            :end="!!lineChartService"
+        />
+        <div
+            v-scroll="'opacity transition--fast'"
+            class="cabinet statistic__cabinet"
+            v-if="
+                !lineChartService.waitGraph &&
+                lineChartService.records?.filter((a) => a.hashrate > 0)
+                    .length !== 0
+            "
+        >
+            <statistic-line-graph
+                class="statistic_graph"
+                @getValue="lineChartService.setOffset($event)"
+                :waitGraphChange="lineChartService.waitGraphChange"
+                :offset="lineChartService.offset"
+                :graph="lineChartService.graph"
+                :buttons="lineChartService.buttons"
             />
-            <div
-                class="cabinet"
-                v-if="
-                    endHistory &&
-                    !waitHistory &&
-                    hashrates.records?.filter((a) => a.hashrate > 0).length !==
-                        0
-                "
+            <cabinet-card
+                class="statistic__card-first"
+                :title="$t('statistic.info_blocks.hash.titles[0]')"
+                :value="Number(getAccount.hash_per_min).toFixed(2)"
+                unit="TH/s"
             >
-                <div class="cabinet__head">
-                    <main-title tag="h4" class="headline">
-                        {{ $t("statistic.chart.title") }}
-                    </main-title>
-                    <main-tabs
-                        @getValue="changeGraph"
-                        :tabs="buttons"
-                        :active="offset"
-                    />
-                </div>
-                <div
-                    class="cabinet__block cabinet__block-graph cabinet__block-light"
-                >
-                    <wait-preloader
-                        class="no-bg"
-                        :wait="hashrates.waitHashrate"
-                    />
-                    <statistic-chart
-                        v-if="!hashrates.waitHashrate"
-                        class="no-title"
-                        :offset="offset"
-                        :graph="hashrates.graph"
-                        :viewportWidth="viewportWidth"
-                    />
-                </div>
-            </div>
-            <div
-                class="cabinet"
-                v-if="
-                    endHistory &&
-                    !waitHistory &&
-                    !!getAccount &&
-                    hashrates.records?.filter((a) => a.hashrate > 0).length ===
-                        0
-                "
+                <template v-slot:svg>
+                    <hashrate-icon />
+                </template>
+            </cabinet-card>
+            <cabinet-card
+                class="statistic__card-second"
+                :title="$t('statistic.info_blocks.hash.titles[1]')"
+                :value="Number(getAccount.hash_per_day).toFixed(2)"
+                unit="TH/s"
             >
-                <main-title tag="h4" class="headline">{{
-                    $t("statistic.chart.no_workers_title")
-                }}</main-title>
-                <copy-block
-                    v-for="(object, i) in copyObject"
-                    :key="i"
-                    :copyObject="object"
-                />
-            </div>
-            <div class="cabinet">
-                <main-title tag="h4" class="headline">
-                    {{ $t("statistic.info_blocks.title") }}
-                </main-title>
-                <div class="statistic__row">
-                    <div
-                        class="cabinet__block cabinet__block-light hash__block"
-                        v-if="!waitAccounts"
-                    >
-                        <main-title class="title title-blue"
-                            >{{ $t("statistic.info_blocks.workers.title") }}
-                        </main-title>
-                        <ul class="statistic__list">
-                            <li class="active text text-md">
-                                <span>
-                                    {{
-                                        $t(
-                                            "statistic.info_blocks.workers.types[0]"
-                                        )
-                                    }}</span
-                                >
-                                {{ this.workers.active }}
-                            </li>
-                            <li class="unStable text text-md">
-                                <span>
-                                    {{
-                                        $t(
-                                            "statistic.info_blocks.workers.types[1]"
-                                        )
-                                    }}</span
-                                >
-                                {{ this.workers.unStable }}
-                            </li>
-                            <li class="inActive text text-md">
-                                <span>{{
-                                    $t("statistic.info_blocks.workers.types[2]")
-                                }}</span>
-                                {{ this.workers.inActive }}
-                            </li>
-                        </ul>
-                    </div>
-                    <main-preloader
-                        :wait="waitAccounts"
-                        :interval="20"
-                        :end="endAccounts"
-                    />
-                    <div
-                        class="cabinet__block cabinet__block-light hash__block"
-                    >
-                        <main-title class="title title-blue"
-                            >{{ $t("statistic.info_blocks.hashrate.title") }}
-                        </main-title>
-                        <ul class="statistic__list statistic__list-last">
-                            <li class="text text-md">
-                                {{ $t("statistic.info_blocks.hash.titles[0]") }}
-                                <span class="statistic_info text-blue"
-                                    ><b v-hash
-                                        >{{
-                                            Number(this.workers.hash).toFixed(2)
-                                        }}
-                                        TH/s</b
-                                    ></span
-                                >
-                            </li>
-                            <li class="text text-md">
-                                {{ $t("statistic.info_blocks.hash.titles[1]") }}
-                                <span class="statistic_info text-blue"
-                                    ><b v-hash
-                                        >{{
-                                            Number(this.workers.hash24).toFixed(
-                                                2
-                                            )
-                                        }}
-                                        TH/s</b
-                                    ></span
-                                >
-                            </li>
-                        </ul>
-                    </div>
-                    <!--                    <div-->
-                    <!--                        class="statistic__info cabinet__block cabinet__block-light"-->
-                    <!--                    >-->
-                    <!--                        <main-title tag="h4" class="title title-blue">{{-->
-                    <!--                            this.$t("statistic.info_blocks.title_clear")-->
-                    <!--                        }}</main-title>-->
-                    <!--                        <p class="text text-md" v-if="!clearProfit">-->
-                    <!--                            {{ this.$t("statistic.info_blocks.text_clear") }}-->
-                    <!--                        </p>-->
-                    <!--                        <blue-button v-if="!clearProfit">-->
-                    <!--                            <Link-->
-                    <!--                                href="/settings"-->
-                    <!--                                class="text text-md text-white"-->
-                    <!--                                ><b>-->
-                    <!--                                    {{-->
-                    <!--                                        this.$t(-->
-                    <!--                                            "statistic.info_blocks.button_clear"-->
-                    <!--                                        )-->
-                    <!--                                    }}</b-->
-                    <!--                                ></Link-->
-                    <!--                            >-->
-                    <!--                        </blue-button>-->
-                    <!--                        <btc-calculator-->
-                    <!--                            v-if="clearProfit"-->
-                    <!--                            :title="-->
-                    <!--                                this.$t('statistic.info_blocks.clear.titles[0]')-->
-                    <!--                            "-->
-                    <!--                            :BTC="todayEarn"-->
-                    <!--                            :clearProfit="clearProfitDay"-->
-                    <!--                        />-->
-                    <!--                        <btc-calculator-->
-                    <!--                            v-if="clearProfit"-->
-                    <!--                            :title="-->
-                    <!--                                this.$t('statistic.info_blocks.clear.titles[1]')-->
-                    <!--                            "-->
-                    <!--                            :BTC="clearBTCMounth"-->
-                    <!--                            :clearProfit="clearProfit"-->
-                    <!--                        />-->
-                    <!--                    </div>-->
-                    <div
-                        class="statistic__info cabinet__block cabinet__block-light"
-                    >
-                        <main-title tag="h4" class="title title-blue">{{
-                            $t("statistic.info_blocks.title")
-                        }}</main-title>
-                        <btc-calculator
-                            :title="
-                                $t('statistic.info_blocks.payment.titles[0]')
-                            "
-                            :BTC="yesterdayEarn"
-                        />
-                        <btc-calculator
-                            :title="
-                                $t('statistic.info_blocks.payment.titles[1]')
-                            "
-                            :BTC="todayEarn"
-                        />
-                    </div>
-                </div>
-            </div>
+                <template v-slot:svg>
+                    <hashrate-icon24 />
+                </template>
+            </cabinet-card>
+            <cabinet-card
+                class="card-active statistic__card-third"
+                :title="$t('statistic.info_blocks.workers.types[0]')"
+                :value="String(getAccount.workers_count_active)"
+            />
+            <cabinet-card
+                class="card-in-active statistic__card-fourth"
+                :title="$t('statistic.info_blocks.workers.types[2]')"
+                :value="String(getAccount.workers_count_in_active)"
+            />
+            <info-block class="statistic__info" />
+            <statistic-column-graph
+                :waitGraphChange="barChartService.waitGraphChange"
+                :graph="barChartService.graph"
+                class="statistic_graph-column"
+            />
         </div>
+        <no-information
+            v-scroll="'opacity transition--fast'"
+            class="cabinet__preloader-bg"
+            v-if="
+                !lineChartService.waitGraph &&
+                lineChartService.records?.filter((a) => a.hashrate > 0)
+                    .length === 0
+            "
+        />
     </div>
 </template>
 <script>
-import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
-import { Head, router } from "@inertiajs/vue3";
-import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
-import MainTitle from "@/Components/UI/MainTitle.vue";
+// import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
-import BtcCalculator from "@/Components/UI/profile/BTCCalculator.vue";
-import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
-import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
-import MainTabs from "@/Components/UI/profile/MainTabs.vue";
-
-import { SubHashrateService } from "@/services/SubHashrateService";
+import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
+import HashrateIcon from "@/modules/common/icons/HashrateIcon.vue";
+import HashrateIcon24 from "@/modules/common/icons/HashrateIcon24.vue";
+import InfoBlock from "@/modules/statistic/Components/InfoBlock.vue";
+import StatisticLineGraph from "@/modules/statistic/Components/StatisticLineGraph.vue";
+import StatisticColumnGraph from "@/modules/statistic/Components/StatisticColumnGraph.vue";
+import { StatisticService } from "@/modules/statistic/service/StatisticService";
+import NoInformation from "../../modules/statistic/Components/NoInformation.vue";
 
 export default {
-    props: ["errors", "message", "user", "auth_user"],
     components: {
-        StatisticChart,
         MainTitle,
-        Head,
-        CopyBlock,
-        BtcCalculator,
-        WaitPreloader,
+        // CopyBlock,
         MainPreloader,
-        CurrentExchangeRate,
-        MainTabs,
+        CabinetCard,
+        HashrateIcon,
+        HashrateIcon24,
+        InfoBlock,
+        StatisticLineGraph,
+        StatisticColumnGraph,
+        NoInformation,
     },
     data() {
         return {
-            waitHistory: true,
-            waitAccounts: true,
-            waitAjax: true,
-            viewportWidth: 0,
-            profit: {},
-            linkAddress: "btc.all-btc.com:4444",
-            linkAddress1: "btc.all-btc.com:3333",
-            linkAddress2: "btc.all-btc.com:2222",
-            visualType: "table",
-            interval: null,
-            intervalRender: null,
-            offset: 24,
-            clearProfit: null,
-            hashrates: {},
-            graphs: [
-                {
-                    id: 1,
-                    title: [
-                        this.$t("chart.labels[0]"),
-                        this.$t("chart.labels[1]"),
-                    ],
-                    values: [],
-                    dates: [],
-                    amount: [],
-                    unit: [],
-                },
-            ],
-            tables: {
-                payment: {
-                    rows: [],
-                },
-            },
-            activeHistory: null,
-            all: false,
+            lineChartService: new StatisticService(
+                [0, 1],
+                this.$t,
+                this.offset,
+                this.$route
+            ),
+            barChartService: new StatisticService([0, 1], this.$t, 30),
         };
     },
-    created: function () {
-        window.addEventListener("resize", this.handleResize);
-        this.handleResize();
-    },
     watch: {
-        async getActive() {
-            await this.initHashrate();
+        async "lineChartService.offset"() {
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
+        },
+        async getActive(newActiveId) {
+            this.lineChartService.setGroupId(newActiveId);
+            this.barChartService.setGroupId(newActiveId);
 
-            this.waitHistory = this.getActive === -1 ? true : false;
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
         },
         async offset() {
-            await this.initHashrate();
-
-            this.waitHistory = this.getActive === -1 ? true : false;
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
+        },
+        async getAccount() {
+            await this.lineChartService.lineGraphIndex();
+            await this.barChartService.barGraphIndex();
         },
     },
     computed: {
-        endHistory() {
-            return !!this.hashrates;
-        },
-        endAccounts() {
-            return !!this.getAccount;
-        },
-        clearProfitDay() {
-            if (this.btcInfo) {
-                if (this.getAccount) {
-                    return Number(this.clearProfit) / 30;
-                }
-            }
-            return 0;
-        },
-        clearBTCMounth() {
-            if (this.btcInfo) {
-                if (this.getAccount) {
-                    return this.todayEarn * 30;
-                }
-            }
-            return 0;
-        },
-        copyObject() {
-            return [
-                {
-                    title: this.$t("connection.block.title"),
-                    copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port" },
-                        { link: "btc.all-btc.com:3333", title: "Port 1" },
-                        { link: "btc.all-btc.com:2222", title: "Port 2" },
-                    ],
-                },
-            ];
-        },
-        buttons() {
-            return [
-                // { title: "6 часов", value: 6 },
-                { title: `24 ${this.$t("hours")}`, value: 24 },
-                { title: `7 ${this.$t("days")}`, value: 168 },
-            ];
-        },
-        workers() {
-            return {
-                hash: this.getAccount.hash_per_min ?? 0,
-                hash24: this.getAccount.hash_per_day ?? 0,
-                active: this.getAccount.workers_count_active ?? 0,
-                unStable: this.getAccount.workers_count_unstable ?? 0,
-                inActive: this.getAccount.workers_count_in_active ?? 0,
-                all: this.getAccount.workersAll ?? 0,
-            };
-        },
-        todayEarn() {
-            let val = this.getAccount?.today_forecast || 0;
-            return Number(val).toFixed(8);
-        },
-        yesterdayEarn() {
-            let val = this.getAccount?.yesterday_amount || 0;
-            return Number(val).toFixed(8);
-        },
-        ...mapGetters([
-            "getTable",
-            "getActive",
-            "allAccounts",
-            "getAccount",
-            "allHistory",
-            "allHash",
-            "allIncomeHistory",
-            "btcInfo",
-        ]),
-    },
-    methods: {
-        async initHashrate(needUpdate = false) {
-            needUpdate ? (this.waitHistory = true) : (this.waitHistory = false);
-            this.hashrates = new SubHashrateService(
-                this.$t,
-                [0, 1],
-                this.offset
-            );
-
-            await this.hashrates.index();
-
-            this.intervalRender = setInterval(() => {
-                this.hashrates.index();
-            }, 60000);
-        },
-        handleResize() {
-            this.viewportWidth = window.innerWidth;
-        },
-        changeGraph(val) {
-            this.offset = val;
-        },
-        router() {
-            return router;
-        },
+        ...mapGetters(["getActive", "getAccount"]),
     },
     async mounted() {
-        await this.initHashrate(true);
-        this.waitHistory = this.getActive === -1 ? true : false;
-        if (localStorage.getItem("clearProfit")) {
-            this.clearProfit = localStorage.getItem("clearProfit");
-        }
-        if (Object.keys(this.getAccount).length > 0) this.waitAccounts = false;
-    },
-    unmounted() {
-        clearInterval(this.intervalRender);
-    },
-    beforeUpdate() {
-        if (Object.keys(this.getAccount).length > 0) this.waitAccounts = false;
+        this.lineChartService.setGroupId(this.getActive);
+        this.barChartService.setGroupId(this.getActive);
+
+        this.lineChartService.setButtons();
+
+        await this.lineChartService.lineGraphIndex();
+        await this.barChartService.barGraphIndex();
     },
 };
 </script>
-<style lang="scss" scoped>
+<style lang="scss">
 .statistic {
-    &__row {
+    width: 100%;
+    padding: 24px;
+    position: relative;
+    flex: 1 1 auto;
+    @media (max-width: 900px) {
+        padding: 24px 12px 24px;
+    }
+    &__cabinet {
         display: grid;
-        gap: 16px;
-        grid-template-columns: repeat(3, 1fr);
-        @media (max-width: 1320.98px) {
-            grid-template-rows: repeat(2, 1fr);
-            grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(3, auto);
+        grid-template-columns: repeat(4, 1fr);
+        @media (max-width: 1700px) {
+            grid-template-columns: repeat(6, 1fr);
         }
-        @media (max-width: 479.98px) {
-            grid-template-columns: 1fr;
-            grid-template-rows: repeat(2, 1fr);
-        }
-        .cabinet__block {
+        @media (max-width: 900px) {
             display: flex;
             flex-direction: column;
-            gap: 8px;
-            .preloader {
-                margin-bottom: 0;
+        }
+    }
+    &_graph {
+        grid-column: 1 / 5;
+        position: relative;
+        padding: 24px 24px 48px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 24px;
+        width: 100%;
+        height: fit-content;
+        @media (max-width: 1700px) {
+            grid-column: 1 / 7;
+        }
+        &-column {
+            grid-column: 3 / 5;
+            @media (max-width: 1700px) {
+                grid-column: 4 / 7;
             }
         }
+    }
+    &-center {
+        display: flex;
+        align-items: center;
+        justify-content: center;
     }
     &__info {
-        display: flex;
-        flex-direction: column;
-        gap: 16px;
-        .blue-button {
-            margin-top: auto;
-            padding: 0 24px;
-            .text {
-                z-index: 1;
-            }
+        grid-column: 1 / 3;
+        @media (max-width: 1700px) {
+            grid-column: 1 / 4;
         }
     }
-    &__list {
-        display: flex;
-        flex-direction: column;
-        gap: 4px;
-        &-last {
-            margin-top: 8px;
-        }
-        li {
-            width: 100%;
-            display: inline-flex;
-            justify-content: space-between;
-            span {
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                &:before {
-                    content: "";
-                    width: 12px;
-                    height: 12px;
-                    display: flex;
-                    border-radius: 50%;
-                }
-            }
-            &.active {
-                span {
-                    &:before {
-                        background: #13d60e;
-                    }
-                }
-            }
-            &.inActive {
-                span {
-                    &:before {
-                        background: #ff0000;
-                    }
-                }
-            }
-            &.unStable {
-                span {
-                    &:before {
-                        background: #e9c058;
-                    }
-                }
-            }
-            .statistic_info {
-                &:before {
-                    content: none;
-                }
+    &__card {
+        &-first {
+            grid-column: 1 / 2;
+            @media (max-width: 1700px) {
+                grid-column: 1 / 3;
             }
         }
-    }
-    &__title {
-        margin-bottom: 16px;
-        @media (max-width: 479.98px) {
-            margin-bottom: 24px;
-        }
-    }
-    &__block {
-        display: grid;
-        width: 100%;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 24px;
-        @media (max-width: 998.98px) {
-            grid-template-columns: auto 300px;
-        }
-        .wrap {
-            &__block {
-                justify-content: space-between;
-                @media (max-width: 998.98px) {
-                    justify-content: center;
-                }
-                @media (max-width: 767.98px) {
-                    justify-content: space-between;
-                }
-            }
-            &__head {
-                width: auto;
+        &-second {
+            grid-column: 2 / 3;
+            @media (max-width: 1700px) {
+                grid-column: 3 / 5;
             }
         }
-        .preloader {
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        &-third {
+            grid-column: 3 / 4;
+            @media (max-width: 1700px) {
+                grid-column: 5 / 6;
+            }
         }
-        .swiper {
-            padding: 4px 4px 6px !important;
-            background: rgba(255, 255, 255, 0.3);
+        &-fourth {
+            grid-column: 4 / 5;
+            @media (max-width: 1700px) {
+                grid-column: 6 / 7;
+            }
         }
-        @media (max-width: 767.98px) {
-            grid-template-columns: 1fr;
-            gap: 8px;
-        }
-    }
-    &__link {
-        margin-top: 16px;
-        font-size: 18px;
-        @media (max-width: 479.98px) {
-            font-size: 16px;
-        }
-    }
-    .hash__block {
-        @media (max-width: 479.98px) {
-            grid-template-columns: 1fr;
-        }
-    }
-    .main-header-container {
-        display: flex;
-        align-items: baseline;
     }
 }
 </style>

@@ -19,7 +19,7 @@
                     >
                     <transition name="sun-moon">
                         <img
-                            v-show="!getTheme"
+                            v-show="!isDark"
                             src="../../../../assets/img/light.svg"
                             alt="light"
                             class="light"
@@ -27,7 +27,7 @@
                     </transition>
                     <transition name="sun-moon">
                         <img
-                            v-show="getTheme"
+                            v-show="isDark"
                             src="../../../../assets/img/dark.svg"
                             alt="dark"
                             class="dark"
@@ -38,7 +38,7 @@
                     <div
                         :key="i"
                         class="asic"
-                        :class="{ 'asic-dark': getTheme }"
+                        :class="{ 'asic-dark': isDark }"
                         v-for="(_, i) in [1, 1, 1, 1, 1, 1, 1]"
                     >
                         <img
@@ -57,7 +57,7 @@
                         </div>
                         <transition name="asic-shadow">
                             <img
-                                v-show="!getTheme"
+                                v-show="!isDark"
                                 src="../../../../assets/img/asic-sun.webp"
                                 alt="asic"
                                 class="asic-shadow"
@@ -65,7 +65,7 @@
                         </transition>
                         <transition name="asic-shadow">
                             <img
-                                v-show="getTheme"
+                                v-show="isDark"
                                 src="../../../../assets/img/asic-moon.webp"
                                 alt="asic"
                                 class="asic-shadow"
@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 
 export default {
@@ -99,7 +99,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["isDark"]),
     },
     watch: {
         animated(newBool) {
@@ -200,10 +200,13 @@ export default {
                         bool = false;
                         setTimeout(() => {
                             if (this.setTheme) {
-                                this.$store.dispatch("theme", !this.getTheme);
+                                this.$store.dispatch(
+                                    "theme",
+                                    !this.isDark ? "dark" : "light"
+                                );
                                 this.$store.dispatch(
                                     "SetThemeVal",
-                                    this.getTheme
+                                    !this.isDark
                                 );
                             }
                         }, 2000);
@@ -377,6 +380,9 @@ export default {
     }
 }
 .control {
+    &__container {
+        margin: 0 auto;
+    }
     &__content {
         display: flex;
         flex-direction: column;

@@ -1,33 +1,36 @@
 <template>
     <div class="referral__content">
-        <div class="referral__head">
-            <!--            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />-->
-            <percent-card
-                :percent="service.percent"
-                :percentSvg="service.percentSvg"
-                :percentList="service.gradeList"
-                class="referral__card referral__card-percent"
-            />
-        </div>
-        <wrap-table
-            :table="service.table"
+        <!--        <div class="referral__head">-->
+        <!--            &lt;!&ndash;            <main-search class="referral_search" :placeholder="$t('search.placeholder')" />&ndash;&gt;-->
+        <!--            <percent-card-->
+        <!--                :percent="service.percent"-->
+        <!--                :percentSvg="service.percentSvg"-->
+        <!--                :percentList="service.gradeList"-->
+        <!--                class="referral__card referral__card-percent"-->
+        <!--            />-->
+        <!--        </div>-->
+        <main-slider
+            class="referral__slider"
             :wait="service.waitTable"
-            :empty="service.rows"
-            :errors="errors"
-            :rowsVal="1000"
-        />
+            :empty="service.emptyTable"
+            rowsNum="1000"
+            :haveNav="false"
+        >
+            <main-table :table="service.table"></main-table>
+        </main-slider>
     </div>
 </template>
 
 <script>
-import MainSearch from "@/Components/UI/inputs/MainSearch.vue";
+import MainSearch from "@/modules/common/Components/inputs/MainSearch.vue";
 import PercentCard from "@/modules/referral/Components/UI/PercentCard.vue";
-import WrapTable from "@/Components/tables/WrapTable.vue";
 
 import { ReferralsService } from "@/modules/referral/services/ReferralsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
 import { mapGetters } from "vuex";
+import MainTable from "@/Components/tables/MainTable.vue";
+import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 
 export default {
     name: "referrals-view",
@@ -40,8 +43,9 @@ export default {
     components: {
         MainSearch,
         PercentCard,
-        WrapTable,
         ReferralsLayoutView,
+        MainSlider,
+        MainTable,
     },
     data() {
         return {
@@ -51,6 +55,9 @@ export default {
     watch: {
         user(newUser) {
             this.service.setUser(newUser);
+        },
+        "$i18n.locale"() {
+            this.service.getGradeList();
         },
     },
     async mounted() {
@@ -65,6 +72,14 @@ export default {
 
 <style scoped lang="scss">
 .referral {
+    &__slider {
+        flex: 1 1 auto;
+    }
+    &__content {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
     &__head {
         display: flex;
         align-items: center;

@@ -12,7 +12,7 @@ export class RouteAuthData {
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",
-                "AuthMiddleware",
+                name === "confirm" ? "" : "AuthMiddleware",
                 "DropErrorsMiddleware",
             ],
             layout: "AuthLayoutView",

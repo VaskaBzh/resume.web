@@ -24,6 +24,25 @@ const middlewares = {
 router.beforeEach(async (to, from, next) => {
     const routeMiddleware = to.meta.middleware;
 
+    if (to.path.startsWith("/profile") || to.path.startsWith("/watcher/")) {
+        document.querySelector("body").style.overflow = "hidden";
+    } else {
+        document.querySelector("body").removeAttribute("style");
+    }
+
+    if (
+        from.path.split("/")[1] === "watcher" &&
+        to.path.split("/")[1] === "watcher"
+    ) {
+        const accessKey = from?.query?.access_key;
+        const puid = from?.query?.puid;
+
+        to.query = {
+            access_key: accessKey,
+            puid: puid,
+        };
+    }
+
     if (!routeMiddleware) {
         return next();
     }

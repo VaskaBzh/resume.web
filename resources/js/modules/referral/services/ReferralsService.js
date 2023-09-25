@@ -15,11 +15,11 @@ export class ReferralsService extends TableService {
     }
 
     setter(referral) {
-        return new ReferralsData(
+        new ReferralsData(
             referral["email"],
-            referral["referral_active_workers_count"],
-            referral["workers_count_in_active"],
-            referral["referral_hash_per_day"],
+            referral["workers_active"],
+            referral["workers_inactive"],
+            referral["hash"],
             "T",
             // this.dateFormatter(referral["created_at"]),
             referral["total_amount"] === 0
@@ -47,6 +47,7 @@ export class ReferralsService extends TableService {
     }
 
     async index(page = 1, per_page = 15) {
+        this.emptyTable = false;
         this.waitTable = true;
 
         let response = {};
@@ -60,9 +61,15 @@ export class ReferralsService extends TableService {
                 return this.setter(el);
             });
 
+            if (this.rows.length === 0) {
+                this.emptyTable = true;
+            }
+
             this.titles = this.useTranslater([0, 1, 2, 4]);
         } catch (err) {
             console.error(`FetchError: ${err}`);
+
+            this.emptyTable = true;
         }
 
         return this;
@@ -83,7 +90,6 @@ export class ReferralsService extends TableService {
         this.gradeList = [];
 
         this.gradeList = [
-            ...this.gradeList,
             new GradeData("0.8", "> 30"),
             new GradeData("0.9", "30 - 49"),
             new GradeData("1.0", "75 - 99"),

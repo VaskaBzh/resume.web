@@ -10,13 +10,16 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends Controller
 {
-    public function __invoke(User $user)
+    public function __invoke()
     {
-        if (!$user->referral_code) {
-            return new JsonResponse(['error' => 'referral code not exists'], 422);
+        $user = auth()->user();
+
+        if (!$user?->referral_code) {
+            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
@@ -24,7 +27,7 @@ class StatisticController extends Controller
         $owner = Sub::find($referralCodeData['group_id']);
 
         if (!$owner) {
-            return new JsonResponse(['error' => 'owner not found'], 422);
+            return new JsonResponse(['error' => __('actions.referral.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $statistic = ReferralService::getOwnerStatistic(

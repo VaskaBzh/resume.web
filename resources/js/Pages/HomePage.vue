@@ -44,7 +44,10 @@
                         v-else
                         v-scroll="'left'"
                     >
-                        <router-link :to="{ name: 'registration' }" class="all-link">
+                        <router-link
+                            :to="{ name: 'registration' }"
+                            class="all-link"
+                        >
                             {{ $t("home.button") }}
                             <div class="button_propeller"></div
                         ></router-link>
@@ -53,7 +56,7 @@
 
                 <div v-if="viewportWidth >= 991.98" class="home__background">
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_1"
                         src="../../assets/img/main_an_img_1.svg"
                         alt=""
@@ -65,7 +68,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_2"
                         src="../../assets/img/main_an_img_2.svg"
                         alt=""
@@ -77,7 +80,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_3"
                         src="../../assets/img/main_an_img_3.svg"
                         alt=""
@@ -89,7 +92,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_4"
                         src="../../assets/img/main_an_img_4.svg"
                         alt=""
@@ -101,7 +104,7 @@
                         alt=""
                     />
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image home__background_5"
                         src="../../assets/img/main_an_img_5.svg"
                         alt=""
@@ -115,7 +118,7 @@
                 </div>
                 <div v-else class="home__background">
                     <img
-                        v-if="!getTheme"
+                        v-if="!isDark"
                         class="home__background_image"
                         src="../../assets/img/main_an_img_full.webp"
                         alt=""
@@ -138,7 +141,10 @@
                             class="big"
                             v-if="viewportWidth < 991.98 && this.auth_user"
                         >
-                            <router-link :to="{ name: 'acconts' }" class="all-link">
+                            <router-link
+                                :to="{ name: 'acconts' }"
+                                class="all-link"
+                            >
                                 {{ $t("home.button") }}</router-link
                             >
                         </blue-button>
@@ -295,7 +301,9 @@
                                     :to="{ name: 'accounts' }"
                                     class="all-link"
                                 >
-                                    {{ $t("home.bitcoin_block.button") }}</router-link
+                                    {{
+                                        $t("home.bitcoin_block.button")
+                                    }}</router-link
                                 >
                             </blue-button>
                             <blue-button
@@ -308,7 +316,9 @@
                                     :to="{ name: 'registration' }"
                                     class="all-link"
                                 >
-                                    {{ $t("home.bitcoin_block.button") }}</router-link
+                                    {{
+                                        $t("home.bitcoin_block.button")
+                                    }}</router-link
                                 >
                             </blue-button>
                         </div>
@@ -394,8 +404,8 @@
     <mining-info-view :auth_user="this.auth_user" />
 </template>
 <script>
-import MainTitle from "@/Components/UI/MainTitle.vue";
-import BlueButton from "@/Components/UI/BlueButton.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import InfoView from "@/Components/technical/views/InfoView.vue";
 import InfoCard from "@/Components/technical/blocks/InfoCard.vue";
 import AboutPanelView from "@/Components/technical/views/AboutPanelView.vue";
@@ -439,7 +449,7 @@ export default {
         this.handleResize();
     },
     computed: {
-        ...mapGetters(["btcInfo", "btcHistory", "getTheme"]),
+        ...mapGetters(["btcInfo", "btcHistory", "isDark"]),
         days() {
             if (this.btcInfo.btc)
                 return Math.floor(
@@ -521,11 +531,19 @@ export default {
 <style lang="scss" scoped>
 .home {
     // .home__main
+
+    &__container {
+        margin: 0 auto;
+    }
     &__main {
         display: flex;
         @media (min-width: 991.98px) {
             margin-bottom: 295px;
             margin-top: 240px;
+        }
+
+        @media (max-width: 991.98px) {
+            margin-top: 160px;
         }
     }
     // .home__content
@@ -546,7 +564,11 @@ export default {
     }
     // .home__title
     &__title {
+        max-width: 495px;
         margin-bottom: 20px;
+        font-size: 56px;
+        font-family: "AmpleSoft Pro";
+        line-height: 107.6%;
         @media (max-width: 479.98px) {
             font-size: 35px;
             line-height: 107.6%;
@@ -555,10 +577,11 @@ export default {
     // .home__background
     &__background {
         position: relative;
-        top: -25em;
+        top: -15em;
+        left: 10em;
         @media (max-width: 1320.98px) {
-            top: -6em;
-            left: -21em;
+            top: -10em;
+            left: -3em;
             transform: scale(0.7);
         }
         @media (max-width: 991.98px) {
@@ -612,7 +635,9 @@ export default {
                 animation-fill-mode: forwards;
             }
             @media (max-width: 1320.98px) {
-                display: none;
+                display: block;
+                top: 33em;
+                left: 2em;
             }
         }
         // .home__background_3
@@ -627,7 +652,9 @@ export default {
                 animation-fill-mode: forwards;
             }
             @media (max-width: 1320.98px) {
-                display: none;
+                display: block;
+                top: 45em;
+                left: 10em;
             }
         }
         // .home__background_4
@@ -642,7 +669,9 @@ export default {
                 animation-fill-mode: forwards;
             }
             @media (max-width: 1320.98px) {
-                display: none;
+                display: block;
+                top: 45em;
+                left: -6em;
             }
         }
         // .home__background_5
@@ -653,7 +682,8 @@ export default {
             animation: keyshow5 1.7s ease forwards,
                 imag5 12s 1.7s infinite linear;
             @media (max-width: 1320.98px) {
-                display: none;
+                display: block;
+                top: 25.3em;
             }
         }
         @keyframes imag5 {
@@ -859,7 +889,7 @@ export default {
             width: 100%;
             &:last-child {
                 .subtitle-value span:last-child {
-                    color: #343434;
+                    color: var(--text-secondary);
                 }
             }
         }
@@ -1041,5 +1071,24 @@ export default {
     z-index: 5;
 }
 .info-home {
+}
+
+.button_propeller {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #366dc8 url("../../assets/img/propeller.svg") no-repeat center;
+    transition: all 0.5s ease;
+    animation: rotate 1.9s linear infinite;
+    stroke-width: 1px;
+    stroke: #fff;
+    box-shadow: 0px 11px 6px 0px rgba(0, 0, 0, 0.08) inset;
+    filter: drop-shadow(0px 0px 35px rgba(255, 255, 255, 0.04));
+
+    @keyframes rotate {
+        from {
+            transform: rotate(360deg);
+        }
+    }
 }
 </style>

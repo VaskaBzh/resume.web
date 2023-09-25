@@ -2,7 +2,7 @@ import { Profit } from "../../../Scripts/profit";
 
 import { InputData } from "../../common/DTO/InputData";
 
-// import currency from "@/api/currency";
+import store from "@/store";
 
 export class LightCalculatorService {
     constructor() {
@@ -115,7 +115,7 @@ export class LightCalculatorService {
 
     async converted(btc) {
         const rubleCost = btc.toFixed(8);
-        const usdCourse = (await currency()).data.rates.USD || 0;
+        const usdCourse = store.getters.currency.rates.USD || 0;
         const btcCourse = this.btcInfo.price;
         const btcCost = rubleCost * usdCourse;
         const result = btcCost / btcCourse;

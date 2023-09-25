@@ -1,6 +1,6 @@
 export const SettingsMessage = {
     en: {
-        title: "Account Settings",
+        title: ["Personal Information", "Safety"],
         labels: {
             login: "Login",
             email: "Email",
@@ -26,17 +26,37 @@ export const SettingsMessage = {
         },
         popup: {
             title: "Set new",
-            title_email: "Set new",
+            title_email: "Change",
             placeholders: {
                 placeholder: "Enter",
                 password_new: "Enter New",
                 password_confirmation: "Confirm",
             },
-            button: "Change",
+            text:[
+                "Indicate your existing email, we will send a confirmation code to it",
+                "Sent the code by email",
+                "An SMS with a confirmation code will be sent to the specified number.",
+                "Sent a code to the number",
+                "Link your account to Google Authenticator using a QR code or setup key",
+                "To confirm, enter the temporary code from the Google Authenticator app",
+                "Resend code"
+            ],
+            button: ["Back", "Change", "Send code"],
+         },
+        button: "Change",
+        safety: {
+            title: ["Two-Factor Authentication", "Login via SMS", "Change password"],
+            text: ["This is a security mechanism used to protect your profile by linking your login to a physical device.", "Receive an SMS with a code to confirm your account login on your mobile phone.", "To change your password, you need to remember the current one."],
+            button:["Connect","Change"]
         },
+        fac_popup:{
+            title: '2FA connection',
+            button: ['Continue', 'Back', 'Connect'],
+            label: ["Settings key", "Code from application"],
+        }
     },
     ru: {
-        title: "Настройки аккаунта",
+        title:[ "Персональные данные", "Безопасность"],
         labels: {
             login: "Логин",
             email: "Почту",
@@ -61,14 +81,34 @@ export const SettingsMessage = {
             },
         },
         popup: {
-            title: "Задайте новый",
-            title_email: "Задайте новую",
+            title: "Сменить",
+            title_email: "Сменить",
             placeholders: {
                 placeholder: "Введите",
                 password_new: "Введите новый",
                 password_confirmation: "Подтвердите",
             },
-            button: "Изменить",
+            text:[
+                "Укажите существующую почту, на нее мы отправим код подтверждения",
+                "Отправили код на почту",
+                "На указанный номер поступит SMS с кодом подтверждения",
+                "Отправили код на номер",
+                "Привяжите аккаунт к Google Authenticator с помощью QR-кода или ключа настройки",
+                "Для подтверждения введите временный код из приложения Google Authenticator",
+                "Отправить код повторно"
+            ],
+            button: ["Назад", "Сменить", "Отправить код"],
         },
+        button: "Сменить",
+        safety: {
+            title: ["Two-Factor Authentication", "Вход по SMS", "Сменить пароль"],
+            text: ["Это механизм безопасности, используемый для защиты вашего профиля путем привязки вашего входа к физическому устройству.", "Получай SMS с кодом для подтверждения входа в аккаунт на свой мобильный телефон.", "Для смены пароля вам нужно помнить текущий."],
+            button:["Подключить","Сменить"]
+        },
+        fac_popup:{
+            title: 'Подключение 2FA',
+            button: ['Продолжить', 'Назад', 'Подключить'],
+            label: ["Ключ настройки", "Код из приложения"],
+        }
     },
 };
