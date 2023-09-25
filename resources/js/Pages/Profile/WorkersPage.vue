@@ -170,6 +170,14 @@ export default {
         gap: 16px;
     }
 }
+
+@media (max-width: 497.98px) {
+    .cards-container {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 16px;
+    }
+}
 .workers {
     padding: 24px;
     flex: 1 1 auto;
@@ -196,6 +204,8 @@ export default {
         }
         @media (max-width: 900px) {
             min-height: 450px;
+            position: absolute;
+            width: calc(100% - 20px);
         }
         @media (max-width: 410px) {
             min-height: 550px;
