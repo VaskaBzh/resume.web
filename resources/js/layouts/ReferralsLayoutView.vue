@@ -113,7 +113,7 @@ export default {
                 font-style: normal;
                 font-weight: 600;
                 line-height: 16px;
-                padding: 10px 12px;
+                padding: 12px 0;
                 min-width: unset;
                 background: transparent;
             }
