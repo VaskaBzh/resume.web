@@ -38,4 +38,7 @@
   --buttons-fourth-fill-border-default: #F2F4F7;
   --buttons-tabs-fill-border-focus: #FFF;
   --buttons-stroke-text: #475467;
+  --buttons-primary-text: #FFF;
+  
+  --main-checkbox-default: #F2F4F7;
 } 

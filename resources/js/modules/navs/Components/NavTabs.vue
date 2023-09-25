@@ -76,6 +76,7 @@ export default defineComponent({
 <style scoped>
 .nav {
     height: 100vh;
+    /* min-height: 100vh; */
     overflow-y: scroll;
     min-width: 320px;
     overflow-x: hidden;
@@ -91,6 +92,11 @@ export default defineComponent({
     width: 100%;
     padding: 40px 16px 16px;
     gap: 8px;
+}
+@media(max-width:900px){
+    .nav__content{
+        padding: 0px 16px 56px;
+    }
 }
 .header-select-container {
     display: none;

@@ -49,7 +49,7 @@ export default {
 		change_height(isOpen) {
 			const height = isOpen ? this.$refs.group.scrollHeight : 32;
 
-			this.$refs.group.style.maxHeight = `${height}px`;
+			// this.$refs.group.style.maxHeight = `${height}px`;
 		},
 	},
 	watch: {

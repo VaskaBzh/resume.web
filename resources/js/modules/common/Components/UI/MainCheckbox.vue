@@ -61,7 +61,7 @@ export default {
         display: inline-block;
         width: 60px;
         height: 32px;
-        background: #f2f4f7;
+        background: var(--main-checkbox-default);
         transition: all 0.3s ease;
         border-radius: 32px;
     }
