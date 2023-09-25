@@ -187,12 +187,14 @@ export default {
         }
         svg {
             transition: all 0.3s ease 0s;
-            // display: none;
             stroke: #818c99;
             position: absolute;
             right: 40px;
             margin-top: 25px;
             transform: translateY(-50%);
+            @media (max-width: 900px) {
+                display: none;
+            }
         }
     }
     &_column {

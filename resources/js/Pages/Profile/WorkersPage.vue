@@ -170,12 +170,19 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
-        @media (max-width: 800px) {
+        @media (max-width: 1300px) {
             flex-direction: column;
         }
     }
     &__card {
         min-width: calc(50% - 6px);
+        min-height: 474px;
+        @media (max-width: 1300px) {
+            min-height: 437px;
+        }
+        @media (max-width: 900px) {
+            min-height: 450px;
+        }
     }
     &__button {
         min-width: 60px;
@@ -274,8 +281,10 @@ export default {
 }
 .slide-enter-from,
 .slide-leave-to {
-    max-width: 0;
-    min-width: 0;
+    @media (min-width: 1300px) {
+        max-width: 0;
+        min-width: 0;
+    }
     opacity: 0;
 }
 </style>

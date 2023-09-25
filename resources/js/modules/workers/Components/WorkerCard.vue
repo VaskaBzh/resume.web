@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-watchers">
+    <div class="card">
         <div class="card__wrapper">
             <div class="card__content">
                 <div class="card__head">

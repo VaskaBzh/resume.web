@@ -247,6 +247,7 @@ export default {
     position: relative;
     flex: 1 1 auto;
     padding-top: 40px;
+    width: 100%;
 }
 .card_img {
     width: 240px;

@@ -23,9 +23,9 @@
                     .length !== 0
             "
         >
-        <main-title class="title-statistic" tag="h4">{{
-                    $t("statistic.title")
-         }}</main-title>
+            <main-title class="title-statistic" tag="h4">{{
+                $t("statistic.title")
+            }}</main-title>
             <statistic-line-graph
                 class="statistic_graph"
                 @getValue="lineChartService.setOffset($event)"
@@ -160,11 +160,11 @@ export default {
 };
 </script>
 <style lang="scss">
-.title-statistic{
+.title-statistic {
     display: none;
 }
-@media(max-width: 500px){
-    .title-statistic{
+@media (max-width: 500px) {
+    .title-statistic {
         display: inline-block;
         padding: 0 0 4px 16px;
     }
@@ -190,7 +190,7 @@ export default {
         }
     }
     &_graph {
-        grid-column: 1 / 5;
+        grid-column: 1 / 7;
         position: relative;
         padding: 24px 24px 48px 24px;
         display: flex;
@@ -198,9 +198,14 @@ export default {
         gap: 24px;
         width: 100%;
         height: fit-content;
+        .y-axis-container {
+            @media (max-width: 500px) {
+                top: 14px;
+            }
+        }
         @media (max-width: 500px) {
-         flex-direction: column-reverse;
-         padding: 16px;
+            flex-direction: column-reverse;
+            padding: 16px;
         }
         @media (max-width: 900px) {
             gap: 32px;
