@@ -12,7 +12,7 @@ class WorkerHashRateBuilder extends BaseBuilder
     {
         return $this
             ->where('worker_id', $workerId)
-            ->whereDate('created_at', '<=', $date);
+            ->where('created_at', '<', $date);
     }
 
     public function dailyHashRates(int $workerId): Builder
