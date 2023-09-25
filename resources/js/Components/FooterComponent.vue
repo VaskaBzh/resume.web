@@ -79,7 +79,7 @@
                     <router-link :to="{ name: 'home' }">
                         <img
                             class="nav__logo"
-                            v-if="!getTheme"
+                            v-if="!isDark"
                             src="../../assets/img/logo_high_quality.svg"
                             alt="logo"
                         />
@@ -279,7 +279,7 @@ export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
     computed: {
-        ...mapGetters(["getTheme", "errors"]),
+        ...mapGetters(["isDark", "errors"]),
         route() {
             return useRoute();
         },

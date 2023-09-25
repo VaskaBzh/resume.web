@@ -3,8 +3,12 @@
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers__head">
-                    <main-title tag="h3">{{ $t("delete_card.title") }}</main-title>
-                    <main-description>{{ $t("delete_card.text") }}</main-description>
+                    <main-title tag="h3">{{
+                        $t("delete_card.title")
+                    }}</main-title>
+                    <main-description>{{
+                        $t("delete_card.text")
+                    }}</main-description>
                 </div>
                 <div
                     class="watchers__card cabinet__block-card cabinet__block cabinet__block-light"
@@ -22,13 +26,17 @@
                     @click.prevent="closePopup"
                     class="button-reverse button-full watchers_button"
                 >
-                    <template v-slot:text> {{ $t("delete_card.buttons[0]") }} </template>
+                    <template v-slot:text>
+                        {{ $t("delete_card.buttons[0]") }}
+                    </template>
                 </main-button>
                 <main-button
                     @click.prevent="removeWatcher"
                     class="button-red button-full watchers_button"
                 >
-                    <template v-slot:text> {{ $t("delete_card.buttons[1]") }} </template>
+                    <template v-slot:text>
+                        {{ $t("delete_card.buttons[1]") }}
+                    </template>
                 </main-button>
             </div>
         </div>

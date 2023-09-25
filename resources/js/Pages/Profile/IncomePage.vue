@@ -169,6 +169,7 @@ export default {
         document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
         if (this.getActive !== -1) {
+            this.incomes.setActive(this.getActive);
             await this.initIncomes();
             await this.incomes.barGraphIndex();
         }

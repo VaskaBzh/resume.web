@@ -31,8 +31,7 @@ export default {
     position: relative;
 }
 
-[aria-label][tooltip-position]::before,
-[aria-label][tooltip-position]::after {
+[aria-label][tooltip-position]::before {
     --scale: 0;
     position: absolute;
     z-index: 10;
@@ -41,8 +40,7 @@ export default {
     transition-timing-function: linear;
 }
 
-[aria-label][tooltip-position]:hover::before,
-[aria-label][tooltip-position]:hover::after {
+[aria-label][tooltip-position]:hover::before {
     --scale: 1;
 }
 
@@ -57,13 +55,7 @@ export default {
     transform: scale(0);
 }
 
-[aria-label][tooltip-position]::after {
-    content: "";
-    border: var(--arrow-size) solid transparent;
-}
-
-[aria-label][tooltip-position]::before,
-[aria-label][tooltip-position]::after {
+[aria-label][tooltip-position]::before {
     --tooltip-color: var(--background-island, #fff);
     --arrow-size: 0.5rem;
     --scale: 0;
@@ -94,15 +86,6 @@ export default {
     transform-origin: right center;
 }
 
-[aria-label][tooltip-position="left"]::after {
-    --translate-x: calc(-1 * var(--arrow-size));
-    --translate-y: -50%;
-    left: 0px;
-    top: 0%;
-    border-left-color: var(--tooltip-color);
-    transform-origin: right center;
-}
-
 /** Left */
 
 [aria-label][tooltip-position="left"]::before {
@@ -110,15 +93,6 @@ export default {
     --translate-y: -50%;
     left: 0px;
     top: 50%;
-    transform-origin: right center;
-}
-
-[aria-label][tooltip-position="left"]::after {
-    --translate-x: calc(-1 * var(--arrow-size));
-    --translate-y: -50%;
-    left: 0px;
-    top: 50%;
-    border-left-color: var(--tooltip-color);
     transform-origin: right center;
 }
 </style>

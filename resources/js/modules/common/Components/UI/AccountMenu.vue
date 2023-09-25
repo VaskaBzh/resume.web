@@ -100,8 +100,8 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "../../../../store";
 import { ref } from "vue";
-import { useRoute, useRouter } from "vue-router";
 import api from "@/api/api";
+import i18n from "@/lang/vue-translate";
 
 export default {
     name: "account-menu",
@@ -146,7 +146,7 @@ export default {
     setup() {
         let wait = ref(false);
         let closed = ref(false);
-        const router = useRouter();
+        const t = i18n.global.t;
 
         const form = {
             name: "",
@@ -160,12 +160,21 @@ export default {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 });
-                openNotification(true, "Добавлено",  response.data.message);
+                openNotification(
+                    true,
+                    t("validate_messages.added"),
+                    response.data.message
+                );
                 closed.value = true;
                 store.dispatch("accounts_all", store.getters.user.id);
-            } catch (e) {
-                console.error("Error with: " + e);
-                store.dispatch("setFullErrors", e.response.data.errors);
+            } catch (err) {
+                console.error("Error with: " + err);
+                store.dispatch("setFullErrors", err.response.data.errors);
+                openNotification(
+                    false,
+                    t("validate_messages.error"),
+                    err.response.data.message
+                );
             }
 
             wait.value = false;

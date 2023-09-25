@@ -75,6 +75,11 @@ export default {
             }
         },
     },
+    watch: {
+        isDark() {
+            this.initTheme();
+        },
+    },
     methods: {
         async changeActive() {
             if (this.timer) {
@@ -93,7 +98,9 @@ export default {
         },
         initTheme() {
             const activeTheme =
-                JSON.parse(localStorage.getItem("theme")) ?? "light";
+                JSON.parse(localStorage.getItem("theme")) ?? this.isDark
+                    ? "dark"
+                    : "light";
 
             this.$store.dispatch("theme", activeTheme);
             this.service.setTheme();

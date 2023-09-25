@@ -2,7 +2,7 @@
     <div
         class="preloader cabinet__block"
         v-scroll="'opacity transition--fast'"
-        v-if="!killPreloaderCondition"
+        v-show="!killPreloaderCondition"
     >
         <!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
         <div

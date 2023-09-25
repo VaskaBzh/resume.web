@@ -76,7 +76,6 @@ export default {
         drop_all({ commit }) {
             this.dispatch("drop_interval");
 
-            commit("setValid", true);
             commit("destroy_acc");
         },
     },
@@ -85,6 +84,7 @@ export default {
             state.accounts = {};
             state.activeAccount = {};
             state.active = -1;
+            state.valie = false;
         },
         updateActive(state, index) {
             state.active = index;

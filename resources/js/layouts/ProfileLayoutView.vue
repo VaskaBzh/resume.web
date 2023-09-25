@@ -96,12 +96,6 @@ export default {
             isOpenBurger: false,
         };
     },
-    mounted() {
-        document.querySelector("body").style.overflow = "hidden";
-    },
-    unmounted() {
-        document.querySelector("body").removeAttribute("style");
-    },
 };
 </script>
 <style scoped>
@@ -157,7 +151,7 @@ export default {
     gap: 10px;
     background: var(--background-success, #e9f8f1);
     color: var(--status-succesfull, #1fb96c);
-    font-family: Unbounded;
+    font-family: Unbounded, serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -184,10 +178,10 @@ export default {
         transform: translateX(280px);
         opacity: 1;
     }
-    15% {
+    5% {
         transform: translateX(-24px);
     }
-    90% {
+    95% {
         transform: translateX(-24px);
         opacity: 1;
     }

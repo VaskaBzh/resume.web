@@ -51,19 +51,19 @@ export default {
         await this.$store.dispatch("setCurrency");
 
         window.addEventListener("resize", this.handleResize);
-        window.addEventListener("beforeunload", this.onClose);
         document.addEventListener(
             "visibilitychange",
             this.handleVisibilityChange
         );
+        window.addEventListener("beforeunload", this.onClose);
         this.handleResize();
     },
     async unmounted() {
-        window.removeEventListener("beforeunload", this.onClose);
         document.removeEventListener(
             "visibilitychange",
             this.handleVisibilityChange
         );
+        window.removeEventListener("beforeunload", this.onClose);
     },
 };
 </script>

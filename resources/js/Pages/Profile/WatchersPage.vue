@@ -15,13 +15,9 @@
         </div>
         <div
             class="cabinet watchers__wrapper"
-            :class="{
-                'watchers__wrapper-full':
-                    service.waitTable || service.emptyTable,
-            }"
         >
             <main-preloader
-                class="cabinet__preloader"
+                class="cabinet__preloader watchers__preloader"
                 :wait="service.waitTable"
                 :interval="35"
                 :end="!service.waitTable"
@@ -34,6 +30,7 @@
                     v-show="!service.waitTable && !service.emptyTable"
                     rowsNum="1000"
                     :haveNav="false"
+                    :havePreloader="false"
                     :meta="service.meta"
                 >
                     <watchers-list
@@ -60,6 +57,7 @@
     />
     <watchers-popup-remove
         :wait="service.wait"
+        :closed="service.popupClosed"
         :name="name"
         :id="service.card?.id"
         @removeWatcher="removeWatcher($event)"
@@ -160,6 +158,12 @@ export default {
     display: flex;
     flex-direction: column;
 }
+.watchers__preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
 @media (max-width: 900px) {
     .watchers {
         padding: 24px 12px 24px;
@@ -185,13 +189,11 @@ export default {
     gap: 12px;
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
+    position: relative;
 }
 @media (max-width: 700px) {
     .watchers__wrapper {
         display: flex;
     }
-}
-.watchers__wrapper-full {
-    grid-template-columns: 1fr;
 }
 </style>

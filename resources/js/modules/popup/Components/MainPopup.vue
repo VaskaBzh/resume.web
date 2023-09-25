@@ -11,7 +11,7 @@
                     <logo-light class="popup_logo" v-show="!isDark" />
                     <logo-dark class="popup_logo" v-show="isDark" />
                 </div>
-                <!--					v-if="!getTheme"-->
+                <!--					v-if="!isDark"-->
                 <!--				<logo-dark-->
                 <!--					v-else-->
                 <!--				/>-->

@@ -73,9 +73,15 @@ export default {
     opacity: 0;
 }
 .referral {
+    padding: 24px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
     &__wrapper {
         display: flex;
         flex-direction: column;
+        flex: 1 1 auto;
     }
     &__buttons {
         min-height: 48px;
@@ -83,6 +89,7 @@ export default {
     &__cabinet {
         gap: 24px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
     &__tabs {
         @media (max-width: $mobile) {
@@ -95,7 +102,7 @@ export default {
             }
         }
         &-list {
-            min-width: fit-content;
+            width: fit-content;
         }
     }
 }

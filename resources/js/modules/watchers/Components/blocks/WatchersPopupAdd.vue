@@ -14,7 +14,7 @@
                     class="watchers_input"
                     inputName="name"
                     :inputLabel="$t('add_watcher_card.labels')"
-                    :inputValue="name"
+                    :inputValue="form.name"
                     :error="errorsExpired.name"
                     @getValue="setFormName($event)"
                 />
@@ -80,6 +80,40 @@ export default {
             this.allowedRoutes.map(
                 (route, i) => (route.name = this.$t(`tabs[${i}]`))
             );
+        },
+        closed(newClosedState) {
+            if (newClosedState) {
+                this.allowedRoutes = [
+                    {
+                        name: this.$t("tabs[0]"),
+                        checked: false,
+                        routes: [
+                            "v1.sub.show",
+                            "v1.hashrate.list",
+                            "v1.allowed-routes",
+                        ],
+                    },
+                    {
+                        name: this.$t("tabs[2]"),
+                        checked: false,
+                        routes: [
+                            "v1.worker.show",
+                            "v1.worker.list",
+                            "v1.worker_hashrate.list",
+                        ],
+                    },
+                    {
+                        name: this.$t("tabs[1]"),
+                        checked: false,
+                        routes: ["v1.income.list", "v1.payout.list"],
+                    },
+                ];
+
+                this.form = {
+                    name: "",
+                    allowedRoutes: [],
+                };
+            }
         },
     },
     methods: {
@@ -170,11 +204,11 @@ export default {
     flex-direction: column;
     gap: 24px;
     border-radius: 24px;
-    background: var(--background-island, #fff);
+    background: var(--background-modal-input, #2c2f34);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
 .watchers_input {
-    background: var(--background-island, #fff);
+    background: var(--background-modal-input, #2c2f34);
 }
 .watchers_label {
     padding: 0 16px;

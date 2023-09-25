@@ -88,7 +88,7 @@ export default {
     justify-content: center;
     padding: var(--py-4, 16px) var(--px-4, 16px);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-modal-input, #2c2f34);
+    background: var(--background-modal-input, #ffffff);
     cursor: pointer;
     position: relative;
     transition: all 0.5s ease 0s;

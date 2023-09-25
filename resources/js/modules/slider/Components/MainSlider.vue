@@ -6,6 +6,7 @@
             :interval="35"
             :end="!wait"
             :empty="empty"
+            v-if="havePreloader"
         />
         <slot v-if="!wait && !empty" />
         <div class="slider__nav" v-if="haveNav && !wait && !empty">
@@ -56,6 +57,10 @@ export default {
         table: Object,
         wait: Boolean,
         haveNav: {
+            type: Boolean,
+            default: true,
+        },
+        havePreloader: {
             type: Boolean,
             default: true,
         },

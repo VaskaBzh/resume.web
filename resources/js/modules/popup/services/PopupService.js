@@ -12,6 +12,8 @@ export class PopupService {
         this.clicked = ref(false);
 
         this.animate = null;
+
+        this.pageContainer = document.querySelector(".page-container");
     }
 
     setPopupContentHtml(newPopupContentHtml) {
@@ -27,11 +29,15 @@ export class PopupService {
     }
 
     setBodyHidden() {
-        document.querySelector(".page-container").style.overflowY = "hidden";
+        if (this.pageContainer) {
+            this.pageContainer.style.overflowY = "hidden";
+        }
     }
 
     setBodyScroll() {
-        document.querySelector(".page-container").removeAttribute("style");
+        if (this.pageContainer) {
+            this.pageContainer.removeAttribute("style");
+        }
     }
 
     dropAnimate() {
@@ -158,6 +164,8 @@ export class PopupService {
         this.animateContent();
         this.isOpened.value = true;
 
+        this.pageContainer = document.querySelector(".page-container");
+
         this.setBodyHidden();
     };
 
@@ -165,6 +173,8 @@ export class PopupService {
         this.emit("closed");
         this.closeAnimate();
         this.isOpened.value = false;
+
+        this.pageContainer = document.querySelector(".page-container");
 
         this.setBodyScroll();
     };
