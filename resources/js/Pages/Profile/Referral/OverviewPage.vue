@@ -6,24 +6,23 @@
                     class="referral__card-info"
                     :title="$t('stats.cards[0]')"
                     :value="percent"
-                    unit="PH/s"
                 >
                     <template v-slot:svg>
                         <img src="../../../../assets/img/percent-icon.png" />
                     </template>
                 </InfoCard>
-                <!--                <InfoCard-->
-                <!--                    class="referral__card-info"-->
-                <!--                    :title="$t('stats.cards[1]')"-->
-                <!--                    :value="percent"-->
-                <!--                >-->
-                <!--                    <template v-slot:svg>-->
-                <!--                        <img src="../../../../assets/img/hashrate-icon.png" />-->
-                <!--                    </template>-->
-                <!--                </InfoCard>-->
+                                <InfoCard
+                                    class="referral__card-info"
+                                    :title="$t('stats.cards[1]')"
+                                    :value="percent"
+                                >
+                                    <template v-slot:svg>
+                                        <img src="../../../../assets/img/hashrate-icon.png" />
+                                    </template>
+                                </InfoCard>
             </div>
             <InfoCard
-                class="referral__card-info"
+                class="referral__card-info referal__general-profit"
                 :currentPage="'worker'"
                 :title="$t('stats.cards[4]')"
                 :value="service.statsCards[1]?.value ?? 0"
@@ -85,7 +84,7 @@
                 </InfoCard>
             </div>
             <div
-                class="cabinet__block cabinet__block-light referral__block referral__block-full"
+                class="cabinet__block cabinet__block-grid cabinet__block-light referral__block referral__block-full"
             >
                 <main-title tag="h4" class="title referral_title">
                     {{ $t("grade.title") }}
@@ -171,17 +170,27 @@ export default {
     width: 100%;
     justify-content: space-between;
     gap: 16px;
+    max-height: 108px;
 }
 .grid-column {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
     gap: 16px;
+
+    .cabinet__block-grid {
+        grid-column: 1/3;
+    }
+
+    .referal__general-profit {
+        grid-row: 2;
+        grid-column: 1/3;
+    }
+
 }
 .referral {
     &__content {
-        flex: 1 1 auto;
         display: grid;
-        grid-template-columns: repeat(2, 49%);
+        grid-template-columns: repeat(2, 1fr);
         // grid-template-rows: repeat(2, auto);
         gap: 16px;
         @media (max-width: $mobile) {
@@ -190,33 +199,37 @@ export default {
             gap: 8px;
         }
     }
+
     &__card {
         &-info {
             width: 100%;
         }
     }
+
+    .card__block {
+        grid-column: 1/3;
+    }
+
     &__block {
+        grid-column: 1/3;
         &:first-child {
             @media (max-width: $pc) {
-                grid-column: 1/4;
+                grid-column: 1/3;
             }
         }
         &:nth-child(2) {
             @media (max-width: $pc) {
-                grid-row: 2/4;
             }
         }
         &:nth-child(3) {
             @media (max-width: $pc) {
                 grid-row: 4/5;
-                grid-column: 1/4;
+                grid-column: 1/3;
             }
         }
         &-full {
-            grid-row: 1/3;
-            grid-column: 2/3;
+            grid-row: 2/20;
             @media (max-width: $pc) {
-                grid-row: 2/4;
                 grid-column: 2/4;
             }
         }

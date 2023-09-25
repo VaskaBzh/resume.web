@@ -28,7 +28,7 @@
                         v-html="option.svg"
                     ></span>
                     <img v-if="option.img" :src="imgs[i]" alt="" />
-                    {{ option.value }}
+                    {{ option.value || option.name }}
                 </button>
             </div>
         </transition>

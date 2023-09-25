@@ -3,7 +3,7 @@
         <div class="watchers__head">
             <div class="watchers__head__block">
                 <main-title tag="h4">{{ $t("title") }}</main-title>
-                <main-description>{{ $t("text") }}</main-description>
+                <main-description class="is-vis-text-mobile">{{ $t("text") }}</main-description>
             </div>
             <main-button data-popup="#addWatcher">
                 <template v-slot:svg>
@@ -36,6 +36,7 @@
                     />
                 </main-slider>
             </transition>
+
             <transition name="fade">
                 <watchers-card
                     v-show="!service.waitTable && !service.emptyTable"
@@ -158,16 +159,17 @@ export default {
     display: flex;
     flex-direction: column;
 }
+.is-vis-text-mobile{
+    display: inline-block;
+}
+.is-vis-add-button-mobile{
+    display: none;
+}
 .watchers__preloader {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-}
-@media (max-width: 900px) {
-    .watchers {
-        padding: 24px 12px 24px;
-    }
 }
 .watchers__head {
     display: flex;
@@ -176,6 +178,7 @@ export default {
     margin-bottom: 32px;
     align-items: center;
 }
+
 .watchers__head__block {
     display: flex;
     flex-direction: column;
@@ -191,9 +194,28 @@ export default {
     grid-template-columns: repeat(2, 1fr);
     position: relative;
 }
+@media (max-width: 900px) {
+    .watchers {
+        padding: 24px 12px 24px;
+    }
+}
 @media (max-width: 700px) {
     .watchers__wrapper {
         display: flex;
+    }
+}
+@media (max-width: 500px) {
+    .watchers__head {
+        margin: 16px 16px 32px;
+    }
+    .is-vis-text-mobile {
+        display: none;
+    }
+    .is-vis-add-button-mobile{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
     }
 }
 </style>
