@@ -313,7 +313,7 @@ export default {
 }
 .popup__input::placeholder {
     font-family: NunitoSans, serif;
-    color: var(--select-text-no-value, #43474E);;
+    color: var(--select-text-no-value, #43474e);
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
