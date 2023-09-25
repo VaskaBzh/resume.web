@@ -193,7 +193,7 @@ export default {
         bottom: 10px;
         left: 50% !important;
         transform: translateX(-50%);
-        background: #ffffff;
+        background:  var(--background-island);
         width: calc(100% - 20px) !important;
         max-height: 50vh;
         height: fit-content;
