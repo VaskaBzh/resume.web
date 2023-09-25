@@ -223,5 +223,11 @@ export default {
     .card__head {
         gap: 8px;
     }
+
+    .card_status {
+        border-radius: 8px;
+        background: var(--background-success-night, #21322E);
+        font-size: 12px;
+    }
 }
 </style>
