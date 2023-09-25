@@ -5,7 +5,7 @@
                 <main-title tag="h4">{{ $t("title") }}</main-title>
                 <main-description class="is-vis-text-mobile">{{ $t("text") }}</main-description>
             </div>
-            <main-button data-popup="#addWatcher" class="is-vis-text-mobile">
+            <main-button data-popup="#addWatcher">
                 <template v-slot:svg>
                     <plus-icon />
                 </template>
@@ -36,13 +36,7 @@
                     />
                 </main-slider>
             </transition>
-            <div class="is-vis-add-button-mobile">
-                <main-button data-popup="#addWatcher">
-                    <template v-slot:svg>
-                        <plus-icon />
-                    </template>
-                </main-button>
-            </div>
+
             <transition name="fade">
                 <watchers-card
                     v-show="!service.waitTable && !service.emptyTable"

@@ -248,7 +248,7 @@ export default {
 }
 @media(max-width:500px){
     .card {
-         min-height: 268px;
+        display: none;
     }
     .title-mobile{
     display: none;
