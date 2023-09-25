@@ -86,7 +86,7 @@ export default {
         progressValue() {
             // this.$t('no_info')
             return this.progressVisible
-                ? "По вашему запросу ничего не найдено"
+                ? this.$t("preloader.text")
                 : `${this.service.progressPercentage}%`;
         },
     },
@@ -129,7 +129,7 @@ export default {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .preloader {
     display: flex;
     justify-content: center;

@@ -14,6 +14,7 @@ export class IncomeService extends TableService {
 
         this.graphService = new GraphDataService(titleIndexes, translate, 30);
         this.route = route;
+        this.waitGraphChange = true;
         this.incomeBarGraph = {};
     }
 
@@ -192,11 +193,17 @@ export class IncomeService extends TableService {
 
             this.graphService.setDefaultKeys();
 
-            this.graphService.records = (
-                await this.fetchIncomes()
-            ).data.data.map((el) => {
-                return new BarGraphData(el);
-            });
+            try {
+                this.graphService.records = (
+                    await this.fetchIncomes()
+                ).data.data.map((el) => {
+                    return new BarGraphData(el);
+                });
+            } catch (e) {
+                console.error(e);
+
+                this.graphService.records = new BarGraphData({ amount: 0 });
+            }
 
             await this.graphService.makeFullBarValues();
 

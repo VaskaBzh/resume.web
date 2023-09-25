@@ -80,6 +80,7 @@ export default defineComponent({
     min-height: 100vh;
     width: 320px;
     padding: 40px 16px 16px;
+    gap: 8px;
 }
 .header-select-container {
     display: none;

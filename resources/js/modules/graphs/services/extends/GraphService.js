@@ -427,8 +427,13 @@ export class GraphService {
 
         this.tooltip
             .style(
-                "top",
-                position.y - this.tooltipHtml.clientHeight / 2 - 1 + "px"
+                "topposition.y",
+                position?.y ??
+                    this.chartHtml -
+                        2 -
+                        this.tooltipHtml.clientHeight / 2 -
+                        1 +
+                        "px"
             )
             .style("opacity", 1);
     }

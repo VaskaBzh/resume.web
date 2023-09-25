@@ -7,7 +7,7 @@
             </div>
             <div class="month-card-container">
                 <MonthIncome
-                    :wait="incomes.waitTable"
+                    :wait="incomes.waitGraphChange"
                     :graph="incomes.incomeBarGraph"
                 />
             </div>
@@ -34,6 +34,7 @@
 
         <!--        incomes.incomeBarGraph-->
         <main-slider
+            class="income__slider"
             :wait="incomes.waitTable"
             :empty="incomes.emptyTable"
             rowsNum="1000"
@@ -76,7 +77,11 @@ export default {
             per_page: 25,
             page: 1,
             filter: "",
-            incomes: {},
+            incomes: new IncomeService(
+                this.$t,
+                [0, 1, 2, 3, 4, 5, 8],
+                this.$route
+            ),
         };
     },
     computed: {
@@ -119,8 +124,12 @@ export default {
         per_page() {
             this.initIncomes();
         },
-        getActive() {
-            this.initIncomes();
+        async getActive(newActiveIndex) {
+            if (newActiveIndex !== -1) {
+                this.incomes.setActive(newActiveIndex);
+                await this.initIncomes();
+                await this.incomes.barGraphIndex();
+            }
         },
         "$i18n.locale"() {
             this.initIncomes();
@@ -128,55 +137,8 @@ export default {
     },
     methods: {
         async initIncomes() {
-            this.incomes = new IncomeService(
-                this.$t,
-                [0, 1, 2, 3, 4, 5, 8],
-                this.$route
-            );
-
-            await this.incomes.barGraphIndex();
             await this.incomes.setTable(this.filter, this.page, this.per_page);
         },
-        // filterDate() {
-        //     if (this.date && Object.values(this.date).length !== 0) {
-        //         if (
-        //             Object.values(this.date)[0] &&
-        //             Object.values(this.date)[1]
-        //         ) {
-        //             this.incomeInfo.rows.length = 0;
-        //             Object.values(
-        //                 this.allIncomeHistory[this.getActive]
-        //             ).forEach((row) => {
-        //                 if (
-        //                     new Date(row.created_at) >=
-        //                         new Date(Object.values(this.date)[0]) &&
-        //                     new Date(row.created_at) <=
-        //                         new Date(Object.values(this.date)[1])
-        //                 ) {
-        //                     this.setRows(row);
-        //                 }
-        //             });
-        //         }
-        //     }
-        // },
-        // filter(data) {
-        //     this.incomeInfo.rows.length = 0;
-        //     if (data !== "all") {
-        //         Object.values(this.allIncomeHistory[this.getActive]).forEach(
-        //             (row) => {
-        //                 if (row["status"] === data) {
-        //                     this.setRows(row);
-        //                 }
-        //                 if (row["wallet"] === data) {
-        //                     this.setRows(row);
-        //                 }
-        //             }
-        //         );
-        //     } else {
-        //         this.getIncomeInfo();
-        //     }
-        // },
-        filterTable(e) {},
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
@@ -203,10 +165,13 @@ export default {
         window.addEventListener("resize", this.handleResize);
         this.handleResize();
     },
-    mounted() {
+    async mounted() {
         document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
-        this.initIncomes();
+        if (this.getActive !== -1) {
+            await this.initIncomes();
+            await this.incomes.barGraphIndex();
+        }
     },
 };
 </script>
@@ -222,7 +187,7 @@ export default {
     display: flex;
     gap: 12px;
 }
-@media (max-width: 900px) {
+@media (max-width: 1100px) {
     .income-cards-article {
         flex-direction: column;
         gap: 12px;
@@ -234,6 +199,9 @@ export default {
 .income {
     padding: 24px;
     width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
     @media (max-width: 1271.98px) {
@@ -241,6 +209,10 @@ export default {
     }
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
+    }
+    &__slider {
+        height: fit-content;
+        flex: 1 1 auto;
     }
 
     &__column {

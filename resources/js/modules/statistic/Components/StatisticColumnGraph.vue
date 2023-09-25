@@ -3,18 +3,13 @@
         class="cabinet__block cabinet__block-graph cabinet__block-light statistic__block"
     >
         <main-progress-bar
-            title="Начислено"
+            :title="$t('statistic.graph[2]')"
             hint="На вашем субаккаунте 0.00051380 BTC Автовыплата происходит при  балансе > 0.005 BTC"
             :progress="pendingAmount"
             :final="0.005"
             unit="BTC"
         />
-        <main-preloader
-            :wait="waitGraphChange"
-            :interval="35"
-            :end="!waitGraphChange"
-            :empty="false"
-        />
+        <wait-preloader :wait="waitGraphChange" :interval="35" />
         <main-column-graph
             v-if="!waitGraphChange"
             :height="height"
@@ -27,17 +22,14 @@
 import { mapGetters } from "vuex";
 import MainProgressBar from "@/modules/common/Components/UI/MainProgressBar.vue";
 import MainColumnGraph from "@/modules/graphs/Components/MainBarGraph.vue";
-import { StatisticService } from "@/modules/statistic/service/StatisticService";
-import NoInfoWait from "../../../Components/technical/blocks/NoInfoWait.vue";
-import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
+import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 
 export default {
     name: "statistic-column-graph",
     components: {
-        MainPreloader,
+        WaitPreloader,
         MainColumnGraph,
         MainProgressBar,
-        NoInfoWait,
     },
     props: {
         waitGraphChange: Boolean,

@@ -27,7 +27,13 @@ export class PreloaderService {
         clearInterval(this.interval);
     }
 
+    dropResizeState() {
+        this.resizeEnd = false;
+    }
+
     startProcess(intervalMillisecondsTime) {
+        this.dropEndAnimation();
+        this.dropResizeState();
         const limit = 80;
         const percentStep = 1;
 
@@ -144,6 +150,10 @@ export class PreloaderService {
 
     endAnimation() {
         this.endTable = true;
+    }
+
+    dropEndAnimation() {
+        this.endTable = false;
     }
 
     animateCross = () => {

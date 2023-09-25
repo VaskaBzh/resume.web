@@ -308,12 +308,12 @@ export default {
     width: 100%;
     height: 56px;
     outline: none;
-    background: var(--background-modal-input, #2c2f34);
-    color: var(--text-secondary, #c5c8cd);
+    background: var(--background-modal-input, #2c2f34) !important;
+    color: var(--text-secondary, #c5c8cd) !important;
 }
 .popup__input::placeholder {
     font-family: NunitoSans, serif;
-    color: var(--select-text-no-value, #43474e);
+    color: var(--select-text-no-value, #43474e) !important;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

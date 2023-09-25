@@ -7,11 +7,10 @@
             </MainIncomeCardRow>
         </div>
         <div class="month__content">
-            <main-preloader
+            <wait-preloader
+                class="month__block-no-padding"
                 :wait="wait"
                 :interval="35"
-                :end="!wait"
-                :empty="false"
             />
             <main-bar-graph v-if="!wait" :height="height" :graphData="graph" />
         </div>
@@ -22,11 +21,12 @@ import { mapGetters } from "vuex";
 import MainIncomeCardRow from "@/modules/income/Components/MainIncomeCardRow.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import MainBarGraph from "@/modules/graphs/Components/MainBarGraph.vue";
+import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 
 export default {
     components: {
         MainIncomeCardRow,
-        MainPreloader,
+        WaitPreloader,
         MainBarGraph,
     },
     props: {
@@ -51,6 +51,9 @@ export default {
 };
 </script>
 <style scoped>
+.month__block-no-padding {
+    padding: 0;
+}
 .month-income-card {
     display: flex;
     height: 300px;

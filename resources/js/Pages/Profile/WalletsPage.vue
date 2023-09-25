@@ -354,10 +354,6 @@ export default {
     position: relative;
     width: 100%;
 }
-.tooltipe-container {
-    transform: translateX(130px);
-    margin-bottom: 10px;
-}
 .wallet__remove-inf-container {
     display: flex;
     align-items: center;
@@ -392,7 +388,7 @@ export default {
 .autopayout-input {
     border: none;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island-inner-3);
+    background: var(--background-island-inner-3) !important;
     padding: 24px 0 0 16px;
     width: 100%;
     height: 56px;
@@ -457,7 +453,7 @@ input:focus {
     margin-bottom: 12px;
     flex-direction: column;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island, #fff);
+    background: var(--background-modal-input, #2C2F34);
     padding: var(--pt-3, 12px) var(--pr-4, 16px) var(--pb-2, 8px)
         var(--pl-4, 16px);
 }
@@ -475,7 +471,7 @@ input:focus {
     line-height: 32px; /* 177.778% */
 }
 .autopayput_input {
-    background: inherit;
+    background: inherit !important;
 }
 .cancel-button {
     border: 1px solid var(--light-gray-400, #98a2b3);
@@ -491,7 +487,7 @@ input:focus {
     padding: 24px;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 132px);
+    flex: 1 1 auto;
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;

@@ -2,9 +2,7 @@
     <div class="faq">
         <div class="faq__container">
             <div class="faq__main">
-                <main-title tag="h2" class="faq_title">
-                    FAQ
-                </main-title>
+                <main-title tag="h2" class="faq_title"> FAQ </main-title>
                 <p class="description-text">
                     {{ $t("faq[0].description") }}
                 </p>
@@ -175,8 +173,8 @@ export default {
 .fade-leave-to {
     opacity: 0;
 }
-.description-text{
-    color: var(--light-gray-400, #98A2B3);
+.description-text {
+    color: var(--light-gray-400, #98a2b3);
     font-family: NunitoSans;
     margin: 8px 0 40px;
     font-size: 16px;
@@ -184,8 +182,8 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
-.title-gray{
-    color: var(--light-gray-400, #98A2B3);
+.title-gray {
+    color: var(--light-gray-400, #98a2b3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
@@ -193,9 +191,9 @@ export default {
     line-height: 150%; /* 24px */
 }
 .faq {
-    overflow-y: scroll;
     padding: 24px;
-    height: calc(100vh - 135px);
+
+    flex: 1 1 auto;
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
@@ -234,12 +232,6 @@ export default {
             border-radius: 24px;
             background: var(--background-island);
             box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
-            @media (max-width: 991.98px) {
-                // padding: 8px 24px;
-            }
-            @media (max-width: 479.98px) {
-                // padding: 6px 8px;
-            }
         }
     }
 }

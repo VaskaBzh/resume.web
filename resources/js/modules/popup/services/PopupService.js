@@ -27,11 +27,11 @@ export class PopupService {
     }
 
     setBodyHidden() {
-        document.querySelector("body").style.overflow = "hidden";
+        document.querySelector(".page-container").style.overflowY = "hidden";
     }
 
     setBodyScroll() {
-        document.querySelector("body").style.overflow = "scroll";
+        document.querySelector(".page-container").removeAttribute("style");
     }
 
     dropAnimate() {

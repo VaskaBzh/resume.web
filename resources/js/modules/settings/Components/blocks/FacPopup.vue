@@ -8,10 +8,9 @@
         :makeResize="makeResize"
     >
         <div class="fac__head">
-            <main-title tag="h3">Подключение 2FA</main-title>
+            <main-title tag="h3">{{ $t("fac_popup.title") }}</main-title>
             <main-description
-                >Привяжите аккаунт к Google Authenticator с помощью QR-кода или
-                ключа настройки</main-description
+                >{{ $t("popup.text[4]") }}</main-description
             >
         </div>
         <div class="fac__content" v-show="!hasCode">
@@ -20,20 +19,20 @@
                 class="fac_code"
                 :cutValue="-1"
                 :code="code"
-                label="Ключ настройки"
+                :label="$t('fac_popup.label[0]')"
             />
             <main-button
                 class="button-blue fac_button button-full"
                 @click.prevent="hasCode = true"
             >
-                <template v-slot:text>Продолжить</template>
+                <template v-slot:text>{{ $t("fac_popup.button[0]") }}</template>
             </main-button>
         </div>
         <div class="fac__content" v-show="hasCode">
             <main-input
                 class="fac_input"
                 inputName="twoFactorSecret"
-                inputLabel="Код из приложения"
+                :inputLabel="$t('fac_popup.label[1]')"
                 :inputValue="form.twoFactorSecret"
                 :error="errorsExpired.error"
                 @getValue="form.twoFactorSecret = $event"
@@ -43,13 +42,13 @@
                     class="button-reverse fac_button button-full"
                     @click.prevent="hasCode = false"
                 >
-                    <template v-slot:text>Назад</template>
+                    <template v-slot:text>{{ $t("fac_popup.button[1]") }}</template>
                 </main-button>
                 <main-button
                     class="button-blue fac_button button-full"
                     @click="closePopup"
                 >
-                    <template v-slot:text>Подключить</template>
+                    <template v-slot:text>{{ $t("fac_popup.button[2]") }}</template>
                 </main-button>
             </div>
         </div>
@@ -64,6 +63,8 @@ import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import { mapGetters } from "vuex";
+import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+
 
 export default {
     name: "fac-popup",
@@ -73,6 +74,9 @@ export default {
         wait: Boolean,
         qrCode: String,
         code: String,
+    },
+    i18n: {
+        sharedMessages: SettingsMessage,
     },
     data() {
         return {

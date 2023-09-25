@@ -44,9 +44,11 @@ export default {
             this.isPageHidden = document.hidden;
         },
     },
-    created() {
+    async created() {
         this.$store.dispatch("setUser");
         this.$store.dispatch("setToken");
+
+        await this.$store.dispatch("setCurrency");
 
         window.addEventListener("resize", this.handleResize);
         window.addEventListener("beforeunload", this.onClose);

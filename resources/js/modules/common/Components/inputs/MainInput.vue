@@ -47,8 +47,8 @@ export default {
 
 <style scoped lang="scss">
 .input {
-    background: transparent;
-    color: var(--text-secondary, #475467);
+    background: transparent !important;
+    color: var(--text-secondary, #475467) !important;
     font-family: NunitoSans, serif;
     font-size: 16px;
     font-weight: 400;

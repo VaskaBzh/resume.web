@@ -124,8 +124,13 @@ export default {
     height: 100%;
     display: flex;
     align-items: center;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     justify-content: center;
+}
+.popup__wrapper::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 .popup__content {
     border-radius: 24px;
