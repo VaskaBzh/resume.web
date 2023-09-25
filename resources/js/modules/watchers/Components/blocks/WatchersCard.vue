@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <main-title tag="h3" class="card_title">{{
+        <main-title tag="h3" class="card_title title-mobile">{{
             $t("settings_card.title")
         }}</main-title>
         <div class="card__wrapper">
@@ -242,6 +242,17 @@ export default {
     padding: 32px;
     display: flex;
     flex-direction: column;
+}
+.title-mobile{
+    display: inline-block;
+}
+@media(max-width:500px){
+    .card {
+         min-height: 268px;
+    }
+    .title-mobile{
+    display: none;
+}
 }
 .card__wrapper {
     position: relative;

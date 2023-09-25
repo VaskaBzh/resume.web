@@ -429,6 +429,11 @@ input:focus {
     width: 560px;
     padding: 32px 40px;
 }
+@media(max-width: 500px){
+    .wallet-wrapper {
+        padding: 16px;
+    }
+}
 .blue-button-container {
     width: 100%;
     display: flex;

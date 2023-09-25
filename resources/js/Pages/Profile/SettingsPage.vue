@@ -157,6 +157,7 @@ export default {
     .card__container {
         flex-direction: column;
         gap: 16px;
+        padding: 0;
     }
 }
 .settings {

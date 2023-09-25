@@ -166,7 +166,7 @@ export default {
 }
 @media (max-width: 900px) {
     .popup__content {
-        width: 80vw !important;
+        width: 92vw !important;
         height: auto !important;
         padding: 16px;
     }
