@@ -50,7 +50,7 @@ export class ColumnGraphService extends GraphService {
     }
 
     getClosestPoint(touchX) {
-        const bars = this.svg.selectAll("path").nodes();
+        const bars = this.svg.selectAll(".bar").nodes();
         let closestBar = null;
 
         bars.forEach((bar, i) => {
@@ -96,19 +96,29 @@ export class ColumnGraphService extends GraphService {
         return this;
     }
 
+    dropGraph() {
+        if (this.svg) {
+            this.svg.selectAll("*").remove();
+            this.svg._groups[0][0].remove();
+        }
+    }
+
     appendBars() {
         this.svg
             .append("g")
             .attr("fill", "rgba(83, 177, 253, 0.15)")
             .selectAll("path")
-            .attr("class", "bar")
             .style("transition", "all 0.3s ease 0s")
             .data(this.graphData.values)
             .join("path")
+            .attr("class", "bar")
             .attr("d", (d, i) => {
                 const x = this.x(i);
-                const y = this.y(d) >= 84 ? 84 : this.y(d);
-                const width = this.chartHtml.offsetWidth / 31;
+                const y =
+                    this.y(d) >= this.containerHeight - 1
+                        ? this.containerHeight - 1
+                        : this.y(d);
+                const width = this.chartHtml.offsetWidth / 30;
                 const height =
                     this.y(0) - this.y(d) <= 1 ? 1 : this.y(0) - this.y(d);
                 const rx = this.y(0) - this.y(d) <= 1 ? 0 : 6;

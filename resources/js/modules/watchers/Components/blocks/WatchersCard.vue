@@ -3,68 +3,76 @@
         <main-title
             tag="h3"
             class="card_title"
-            :class="{ 'card_title-empty': !!saveWatcher }"
             >Настройка наблюдателя</main-title
         >
-        <div class="card__content card__content-empty" v-if="!saveWatcher">
-            <img
-                class="card_img"
-                src="../../imgs/img_watcher-card.png"
-                alt="chose-watcher"
-            />
-            <main-description
-                >Для начала выберете наблюдателя из списка
-            </main-description>
-        </div>
-        <div class="card__content" v-else>
-            <main-input
-                class="card_input"
-                inputName="name"
-                inputLabel="Имя наблюдателя"
-                :inputValue="saveWatcher.name"
-                :editable="isEditable"
-                :error="errorsExpired.name"
-                @getValue="setFormName($event)"
-            />
-            <div class="card__block">
-                <div class="card_label">Доступные страницы для наблюдения</div>
-                <div class="card__block card__block-selects">
-                    <main-checkbox
-                        v-for="(route, i) in allowedRoutes"
-                        :key="i"
-                        :is_checked="route.checked"
-                        class="checkbox-sm"
-                        :editable="isEditable"
-                        @is_checked="setAllowedRoutes($event, i)"
-                    >
-                        {{ route.name }}
-                    </main-checkbox>
+        <div class="card__wrapper">
+            <transition name="fade">
+                <div
+                    class="card__content card__content-empty"
+                    v-if="!saveWatcher"
+                >
+                    <img
+                        class="card_img"
+                        src="../../imgs/img_watcher-card.png"
+                        alt="chose-watcher"
+                    />
+                    <main-description class="card_description"
+                        >Для начала выберете наблюдателя из списка
+                    </main-description>
                 </div>
-            </div>
-            <main-copy
-                :cutValue="45"
-                :code="saveWatcher.link"
-                label="Ссылка наблюдателя"
-            />
-            <div class="card__buttons">
-                <main-button
-                    class="card_button"
-                    :data-popup="isEditable ? null : '#removeWatcher'"
-                    :class="firstButtonClass"
-                    @click="buttonProcess"
-                >
-                    <template v-slot:text>{{
-                        firstButtonText
-                    }}</template></main-button
-                >
-                <main-button
-                    class="button-blue card_button"
-                    @click="changeWatcher"
-                    ><template v-slot:text>{{
-                        secondButtonText
-                    }}</template></main-button
-                >
-            </div>
+                <div class="card__content" v-else>
+                    <main-input
+                        class="card_input"
+                        inputName="name"
+                        inputLabel="Имя наблюдателя"
+                        :inputValue="saveWatcher.name"
+                        :editable="isEditable"
+                        :error="errorsExpired.name"
+                        @getValue="setFormName($event)"
+                    />
+                    <div class="card__block">
+                        <div class="card_label">
+                            Доступные страницы для наблюдения
+                        </div>
+                        <div class="card__block card__block-selects">
+                            <main-checkbox
+                                v-for="(route, i) in allowedRoutes"
+                                :key="i"
+                                :is_checked="route.checked"
+                                class="checkbox-sm"
+                                :editable="isEditable"
+                                @is_checked="setAllowedRoutes($event, i)"
+                            >
+                                {{ route.name }}
+                            </main-checkbox>
+                        </div>
+                    </div>
+                    <main-copy
+                        :cutValue="45"
+                        :code="saveWatcher.link"
+                        label="Ссылка наблюдателя"
+                    />
+                    <div class="card__buttons">
+                        <main-button
+                            class="card_button"
+                            :data-popup="isEditable ? null : '#removeWatcher'"
+                            :class="firstButtonClass"
+                            @click="buttonProcess"
+                        >
+                            <template v-slot:text>{{
+                                firstButtonText
+                            }}</template></main-button
+                        >
+                        <main-button
+                            class="button-blue card_button"
+                            @click="changeWatcher"
+                            ><template v-slot:text>{{
+                                secondButtonText
+                            }}</template></main-button
+                        >
+                    </div>
+                </div>
+            </transition>
         </div>
     </div>
 </template>
@@ -209,6 +217,14 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 .card {
     border-radius: 24px;
     background: var(--background-island);
@@ -218,15 +234,17 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.card_title {
-    margin-bottom: 40px;
-}
-.card_title-empty {
-    margin-bottom: 0;
+.card__wrapper {
+    position: relative;
+    flex: 1 1 auto;
+    padding-top: 40px;
 }
 .card_img {
     width: 240px;
     height: 240px;
+}
+.card_description {
+    white-space: nowrap;
 }
 .card__content {
     display: flex;
@@ -238,6 +256,10 @@ export default {
     align-items: center;
     justify-content: center;
     gap: 8px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 .card_input {
     background: var(--background-island-inner-3);

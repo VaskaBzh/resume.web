@@ -21,24 +21,37 @@
                     service.waitTable || service.emptyTable,
             }"
         >
-            <main-slider
+            <main-preloader
+                class="cabinet__preloader"
                 :wait="service.waitTable"
+                :interval="35"
+                :end="!service.waitTable"
                 :empty="service.emptyTable"
-                rowsNum="1000"
-                :haveNav="false"
-                :meta="service.meta"
-            >
-                <watchers-list
-                    @getWatcher="service.getCard($event)"
-                    :blocks="service.table.get('rows')"
-                />
-            </main-slider>
-            <watchers-card
-                v-show="!service.waitTable && !service.emptyTable"
-                :watcher="service.card"
-                @changeWatcher="changeWatcher"
-                @removeWatcher="removeWatcher"
             />
+            <transition name="fade">
+                <main-slider
+                    :wait="service.waitTable"
+                    :empty="service.emptyTable"
+                    v-show="!service.waitTable && !service.emptyTable"
+                    rowsNum="1000"
+                    :haveNav="false"
+                    :meta="service.meta"
+                >
+                    <watchers-list
+                        @getWatcher="service.getCard($event)"
+                        :blocks="service.table.get('rows')"
+                        :activeWatcher="service.card"
+                    />
+                </main-slider>
+            </transition>
+            <transition name="fade">
+                <watchers-card
+                    v-show="!service.waitTable && !service.emptyTable"
+                    :watcher="service.card"
+                    @changeWatcher="changeWatcher"
+                    @removeWatcher="removeWatcher"
+                />
+            </transition>
         </div>
     </div>
     <watchers-popup-add
@@ -66,6 +79,7 @@ import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue"
 import WatchersPopupRemove from "@/modules/watchers/Components/blocks/WatchersPopupRemove.vue";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
+import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 
 export default {
     name: "watchers-page",
@@ -79,6 +93,7 @@ export default {
         WatchersPopupAdd,
         WatchersPopupRemove,
         WatchersCard,
+        MainPreloader,
     },
     data() {
         return {
@@ -127,6 +142,14 @@ export default {
 </script>
 
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+    transition: all 0.5s ease;
+}
+.fade-enter-from,
+.fade-leave-to {
+    opacity: 0;
+}
 .watchers {
     height: 100%;
     padding: 24px;
@@ -160,8 +183,8 @@ export default {
     grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
 }
-@media(max-width: 700px){
-    .watchers__wrapper{
+@media (max-width: 700px) {
+    .watchers__wrapper {
         display: flex;
     }
 }

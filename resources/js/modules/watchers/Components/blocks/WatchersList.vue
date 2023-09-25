@@ -5,6 +5,9 @@
             :key="i"
             :name="block.name"
             :tags="block.tags"
+            :class="{
+                'list_block-active': activeWatcher?.name === block.name,
+            }"
             @click="$emit('getWatcher', block.id)"
         />
     </div>
@@ -20,6 +23,7 @@ export default {
     },
     props: {
         blocks: Array,
+        activeWatcher: Object,
     },
 };
 </script>

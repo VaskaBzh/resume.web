@@ -155,7 +155,10 @@ export default {
     },
     methods: {
         getValue(bool) {
-            this.$emit("ajaxChange", { password: bool, value: this.inputValue });
+            this.$emit("ajaxChange", {
+                password: bool,
+                value: this.inputValue,
+            });
         },
         phoneInput(e) {
             let inputNumbersValue = e.target.value.replace(/\D/g, ""); //Хранятся только числа из инпута
@@ -290,7 +293,7 @@ export default {
 }
 .blue-text {
     color: var(--buttons-ghost-text-default, #53b1fd);
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
     font-size: 14px;
     cursor: pointer;
     font-style: normal;
@@ -301,14 +304,16 @@ export default {
 .popup__input {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island, #fff);
     padding: var(--py-4, 16px) var(--px-4, 16px);
     width: 100%;
     height: 56px;
+    outline: none;
+    background: var(--background-modal-input, #2c2f34);
+    color: var(--text-secondary, #c5c8cd);
 }
 .popup__input::placeholder {
-    color: var(--select-text-no-value-day, #d0d5dd);
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
+    color: var(--select-text-no-value, #43474E);;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;

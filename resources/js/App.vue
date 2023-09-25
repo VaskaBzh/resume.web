@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import ThemeService from "@/modules/interface/Services/ThemeService";
 import { mapGetters } from "vuex";
 import api from "@/api/api";
 
@@ -18,7 +17,6 @@ export default {
     },
     data() {
         return {
-            themeService: new ThemeService(),
             isPageHidden: false,
         };
     },
@@ -57,9 +55,6 @@ export default {
             this.handleVisibilityChange
         );
         this.handleResize();
-    },
-    async mounted() {
-        this.themeService.toggleTheme("light");
     },
     async unmounted() {
         window.removeEventListener("beforeunload", this.onClose);

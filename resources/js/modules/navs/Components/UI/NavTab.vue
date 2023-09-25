@@ -13,15 +13,7 @@
             'tab-active': $route.path === tab.url,
         }"
     >
-        <svg
-            class="tab_icon"
-            v-html="tab.icon"
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="25"
-            viewBox="0 0 24 25"
-            fill="none"
-        ></svg>
+        <div class="tab_icon" v-html="tab.icon"></div>
         <span class="tab_text">
             {{ $t(`tabs.${tab.translateKey}`) }}
         </span>
@@ -42,7 +34,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 .tab {
     width: 100%;
     display: inline-flex;
@@ -66,17 +58,29 @@ export default {
     line-height: 32px;
     transition: all 0.5s ease 0s;
 }
-.tab_icon {
+.tab_icon,
+.tab_icon svg {
     width: 24px;
     height: 24px;
+}
+.tab_icon-stroke {
+    fill: none;
     stroke: var(--light-gray-400, #98a2b3);
+}
+.tab_icon-fill {
+    fill: var(--light-gray-400, #98a2b3);
+    stroke: none;
 }
 .tab:hover .tab_text,
 .tab-active .tab_text {
     color: var(--primary-500, #2e90fa);
 }
-.tab:hover .tab_icon,
-.tab-active .tab_icon {
+.tab:hover .tab_icon-fill,
+.tab-active .tab_icon-fill {
+    fill: var(--primary-500, #2e90fa);
+}
+.tab:hover .tab_icon-stroke,
+.tab-active .tab_icon-stroke {
     stroke: var(--primary-500, #2e90fa);
 }
 </style>

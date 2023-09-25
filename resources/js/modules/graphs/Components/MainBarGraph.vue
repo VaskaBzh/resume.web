@@ -30,6 +30,7 @@
 import { ColumnGraphService } from "../services/ColumnGraphService";
 import MainTitle from "../../common/Components/UI/MainTitle.vue";
 import TooltipBarIcon from "../icons/TooltipBarIcon.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-column-graph",
@@ -46,6 +47,9 @@ export default {
             graph: this.graphData,
             service: new ColumnGraphService(this.graphData, this.$t),
         };
+    },
+    computed: {
+        ...mapGetters(["viewportWidth"]),
     },
     watch: {
         "$refs.chart"(newChartHtml) {

@@ -65,7 +65,7 @@ export default {
         ...mapGetters(["isDark", "viewportWidth"]),
     },
     watch: {
-        "$refs.chart"(newChartHtml) {
+        "$refs.chart.offsetWidth"(newChartHtml) {
             this.service.setChartHtml(newChartHtml).dropGraph();
             this.graphInit();
         },
@@ -75,6 +75,10 @@ export default {
         },
         graphData(newGraphData) {
             this.service.setGraphData(newGraphData).dropGraph();
+            this.graphInit();
+        },
+        height() {
+            this.service.dropGraph();
             this.graphInit();
         },
         isDark(newIsDarkState) {

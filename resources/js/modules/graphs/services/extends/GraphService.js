@@ -333,6 +333,20 @@ export class GraphService {
                     padding;
             let width = this.tooltipHtml.clientWidth;
 
+            if (isLeft) {
+                this.tooltip
+                    .select(".tooltip_icon")
+                    .style("left", "-20px")
+                    .style("right", "auto")
+                    .style("transform", "translateY(-50%) rotate(180deg)");
+            } else {
+                this.tooltip
+                    .select(".tooltip_icon")
+                    .style("right", "-20px")
+                    .style("left", "auto")
+                    .style("transform", "translateY(-50%)");
+            }
+
             return {
                 side: "left",
                 position: isLeft

@@ -31,12 +31,12 @@ export default {
 }
 .button-blue {
     background: var(--old-primary-500, #2e90fa);
-    color: var(--background-island, var(--background-island, #fff));
+    color: var(--buttons-primary-text, var(--main-gohan, #fff));
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
 }
 .button-red {
     background: var(--old-light-red-100, #f1404a);
-    color: var(--background-island, var(--background-island, #fff));
+    color: var(--buttons-delete-text, var(--main-gohan, #fff));
     box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
         0px 8px 24px -6px rgba(0, 0, 0, 0.16);
 }
@@ -47,7 +47,7 @@ export default {
 .button-reverse {
     background: transparent;
     border: 1px solid var(--old-light-gray-400, #98a2b3);
-    color: var(--old-light-gray-600, #475467);
+    color: var(--buttons-stroke-text, #475467);
 }
 .button-reverse .button_icon {
     stroke: var(--old-light-gray-600, #475467);

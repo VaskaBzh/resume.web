@@ -68,8 +68,6 @@ export class WatchersService extends MetaTableService {
     }
 
     async getCard(id) {
-        this.dropCard();
-
         try {
             const card = (await this.fetchCard(id)).data.data;
 
@@ -140,7 +138,7 @@ export class WatchersService extends MetaTableService {
     async removeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                await api.delete(`/watchers/delete/${id}`, this.form, {
+                await api.delete(`/watchers/delete/${id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },

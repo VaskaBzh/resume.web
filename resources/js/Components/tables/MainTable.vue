@@ -25,30 +25,31 @@
 
 <script>
 import TableRow from "@/Components/tables/row/TableRow.vue";
-import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-import StatisticChart from "@/Components/technical/charts/StatisticChart.vue";
 import { mapGetters } from "vuex";
-import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-
 export default {
     name: "main-table",
     props: {
         viewportWidth: Number,
         table: Object,
         errors: Object,
-        worker_service: {
-            type: Object,
-        },
         removePercent: Boolean,
     },
-    components: { MainPopup, StatisticChart, TableRow, MainTitle },
+    components: { TableRow },
     computed: {
         ...mapGetters(["allHistoryMiner"]),
         rows() {
             return this.table?.get("rows");
         },
         titles() {
-            return this.table?.get("titles");
+            if (this.table?.get("titles")) {
+                const titles = [...this.table?.get("titles")];
+                if (this.removePercent) {
+                    titles.pop();
+                }
+                return titles;
+            }
+
+            return null;
         },
     },
     data() {
@@ -59,10 +60,6 @@ export default {
         };
     },
     watch: {
-        "worker_service.graph"() {
-            this.redraw = false;
-            setTimeout(() => (this.redraw = true), 1700);
-        },
         viewportWidth() {
             if (this.viewportWidth >= 991.98) {
                 this.height = 360;
@@ -170,11 +167,17 @@ export default {
             &:hover,
             &:active {
                 @media (max-width: 767.98px) {
-                    background: #c6d8f5;
+                    background: var(
+                        --background-island-inner-1,
+                        rgba(83, 177, 253, 0.07)
+                    );
                 }
                 @media (min-width: 767.98px) {
                     td {
-                        background: #c6d8f5;
+                        background: var(
+                            --background-island-inner-1,
+                            rgba(83, 177, 253, 0.07)
+                        );
                     }
                     svg {
                         stroke: #343434;

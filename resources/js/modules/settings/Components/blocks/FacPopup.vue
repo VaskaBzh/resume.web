@@ -40,7 +40,7 @@
             />
             <div class="fac__buttons">
                 <main-button
-                    class="button-reverce fac_button button-full"
+                    class="button-reverse fac_button button-full"
                     @click.prevent="hasCode = false"
                 >
                     <template v-slot:text>Назад</template>
@@ -84,8 +84,7 @@ export default {
         };
     },
     watch: {
-        errorsExpired() {
-        },
+        errorsExpired() {},
 
         hasCode() {
             this.makeResize = true;
@@ -121,18 +120,14 @@ export default {
 }
 .fac_qrcode {
     width: 200px;
-    height: 160px;
     margin: 0 auto 40px;
 }
-.fac_code {
-    margin-bottom: 80px;
-    border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--main-gohan, #fff);
-}
+.fac_code,
 .fac_input {
     margin-bottom: 80px;
-    border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--main-gohan, #fff);
+}
+.fac_input {
+    background: var(--background-modal-input, #2c2f34);
 }
 .fac_button {
     min-height: 56px;

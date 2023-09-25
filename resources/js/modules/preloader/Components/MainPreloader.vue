@@ -103,6 +103,9 @@ export default {
         };
     },
     watch: {
+        killPreloaderCondition() {
+            this.service.killPreloader();
+        },
         end(newEndVal) {
             this.service.endProcess(newEndVal);
         },
@@ -120,8 +123,8 @@ export default {
     mounted() {
         this.service.startProcess(this.interval);
     },
-    beforeUnmount() {
-        this.service.killInterval();
+    unmounted() {
+        this.service.killPreloader();
     },
 };
 </script>

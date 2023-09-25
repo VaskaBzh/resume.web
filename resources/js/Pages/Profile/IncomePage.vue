@@ -6,7 +6,10 @@
                 <YesterdayIncomeCard />
             </div>
             <div class="month-card-container">
-                <MonthIncome />
+                <MonthIncome
+                    :wait="incomes.waitTable"
+                    :graph="incomes.incomeBarGraph"
+                />
             </div>
         </article>
 
@@ -29,6 +32,7 @@
             </div>
         </article>
 
+        <!--        incomes.incomeBarGraph-->
         <main-slider
             :wait="incomes.waitTable"
             :empty="incomes.emptyTable"
@@ -130,6 +134,7 @@ export default {
                 this.$route
             );
 
+            await this.incomes.barGraphIndex();
             await this.incomes.setTable(this.filter, this.page, this.per_page);
         },
         // filterDate() {
@@ -171,8 +176,7 @@ export default {
         //         this.getIncomeInfo();
         //     }
         // },
-        filterTable(e) {
-        },
+        filterTable(e) {},
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },

@@ -88,7 +88,7 @@ export default {
     justify-content: center;
     padding: var(--py-4, 16px) var(--px-4, 16px);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island-inner-3);
+    background: var(--background-modal-input, #2c2f34);
     cursor: pointer;
     position: relative;
     transition: all 0.5s ease 0s;
@@ -125,6 +125,7 @@ export default {
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
+        color: var(--text-secondary, #475467);
     }
     &_tick {
         stroke: #4182ec;

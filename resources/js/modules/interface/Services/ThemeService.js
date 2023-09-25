@@ -16,10 +16,6 @@ export default class ThemeService {
         localStorage.setItem("theme", JSON.stringify(theme));
     }
 
-    createLink() {
-        return document.createElement("link");
-    }
-
     toggleTheme(theme) {
         const themeFile = new URL(
             `/resources/scss/theme/${theme}-theme.css`,
@@ -27,7 +23,7 @@ export default class ThemeService {
         );
 
         if (!this.linkElement) {
-            this.linkElement = this.createLink();
+            this.linkElement = this.ThemeModel.createLink();
         }
 
         this.setAttributes(themeFile);
