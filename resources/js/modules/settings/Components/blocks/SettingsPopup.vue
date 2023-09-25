@@ -240,7 +240,7 @@ export default {
     background: var(--buttons-primary-fill-border-default, #2e90fa);
     box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
     padding: 12px 16px;
-    color: var(--buttons-primary-text, var(--background-island, #fff));
+    color: var(--buttons-primary-text);
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
