@@ -10,6 +10,7 @@ export class PreloaderService {
         this.resizeEnd = false;
         this.crossVisible = ref(false);
         this.animationIsEnd = ref(false);
+        this.centerLogo = ref(false);
 
         this.animate = null;
 
@@ -32,10 +33,10 @@ export class PreloaderService {
     }
 
     dropStyles() {
-        // this.polygon.removeAttribute("style");
-        // this.cross.removeAttribute("style");
-        // console.log(this.polygon);
-        // console.log(this.cross);
+        if (this.polygon && this.cross) {
+            this.polygon.removeAttribute("style");
+            this.cross.removeAttribute("style");
+        }
     }
 
     startProcess(intervalMillisecondsTime) {
@@ -131,7 +132,7 @@ export class PreloaderService {
         });
     }
 
-    animateLine() {
+    animateLine = () => {
         this.animate = anime({
             targets: this.polygon,
             rotate: 720,
@@ -140,13 +141,14 @@ export class PreloaderService {
             easing: "linear",
             changeComplete: (anim) => {
                 if (this.endTable && this.resizeEnd) {
+                    this.centerLogo.value = true;
                     this.animateCloseLine();
 
                     this.animate.remove(this.polygon);
                 }
             },
         });
-    }
+    };
 
     animateCloseLine = () => {
         anime({
