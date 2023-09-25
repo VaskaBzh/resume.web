@@ -119,6 +119,9 @@ export default {
                 this.progressVisible = true;
             }, 1000);
         },
+        getActive() {
+            this.service.startProcess(this.interval);
+        },
     },
     mounted() {
         this.service.startProcess(this.interval);
