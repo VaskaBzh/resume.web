@@ -76,7 +76,6 @@ export default defineComponent({
 <style scoped>
 .nav {
     height: 100vh;
-    //min-height: 100vh;
     overflow-y: scroll;
     min-width: 320px;
     overflow-x: hidden;

@@ -82,9 +82,9 @@ export class IncomeService extends TableService {
 
     setStatus(status) {
         switch (status) {
-            case "completed":
+            case "complete":
                 return this.translate("income.table.status.fullfill");
-            case "rejected":
+            case "error":
                 return this.translate("income.table.status.rejected");
             case "pending":
                 return this.translate("income.table.status.pending");

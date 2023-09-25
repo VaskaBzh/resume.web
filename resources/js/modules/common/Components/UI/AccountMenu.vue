@@ -416,6 +416,7 @@ export default {
         }
     }
     &__row {
+        cursor: pointer;
         position: relative;
         &:not(:first-child) {
             height: 40px;
