@@ -6,6 +6,7 @@
   --background-modal-input: #2C2F34;
   --background-datepicker: #2C2F34;
   --background-tooltip: #2C2F34cc;
+  --background-tooltip-shadow: rgba(44, 47, 52, 0.90); 
   --background-sub-dropdown: #2C2F34;
   --background-island-inner-3 : #2C2F34;
   --background-graphic-line: #6F7682;
@@ -34,4 +35,8 @@
   --buttons-fourth-fill-border-default: #2C2F34;
   --buttons-tabs-fill-border-focus: #212327;
   --buttons-stroke-text: #C5C8CD;
+  --buttons-primary-text: #FFF;
+
+  --main-checkbox-default: #212327;
+  --box-shadow: rgba(16, 24, 40, 0.08)
 }

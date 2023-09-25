@@ -4,6 +4,7 @@
             ref="tabs"
             :isOpenBurger="isOpenBurger"
             @changeBurger="change($event)"
+            @closeBurger="change(false)"
         />
         <div class="layout__content">
             <header-component-profile

@@ -10,10 +10,13 @@
                     BTC
                 </div>
             </div>
-            <div class="convertor-container">
+            <div class="convertor-container is-web">
                 <span class="convertor-calc">{{ converter.usd }} $</span>
                 <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter.rub }} ₽</span>
             </div>
+            <tooltip-card class="is-mobile"
+                            :text="'$' + converter.usd + ' ≈ ' + converter.rub + ' ₽'"
+            ></tooltip-card>
         </div>
     </div>
 </template>
@@ -21,10 +24,12 @@
 import { Converter } from "@/Scripts/converter";
 import { mapGetters } from "vuex";
 import MainTitle from "./MainTitle.vue";
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
 export default {
     name: "btc-calculator",
     components: {
-        MainTitle
+        MainTitle,
+        TooltipCard
     },
     props: {
         BTC: {
@@ -71,6 +76,20 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.is-web{
+    display: inline-block
+}
+.is-mobile{
+    display: none
+}
+@media(max-width:500px){
+    .is-web{
+        display: none
+    } 
+    .is-mobile{
+        display: inline-block
+}
+}
 .btn-about{
     margin-left: 8px;
     height: fit-content;

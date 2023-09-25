@@ -10,25 +10,27 @@ export default {
             commit("destroy_acc");
         },
         async set_active({ commit, state }, data) {
-            let sub = new accountData(
-                (
-                    await api.get(`/subs/sub/${data.index}`, {
-                        headers: {
-                            ...(data?.access_key
-                                ? {
-                                      "X-Access-Key": data.access_key,
-                                  }
-                                : {
-                                      Authorization: `Bearer ${store.getters.token}`,
-                                  }),
-                        },
-                    })
-                ).data.data
-            );
+            if (data.index) {
+                let sub = new accountData(
+                    (
+                        await api.get(`/subs/sub/${data.index}`, {
+                            headers: {
+                                ...(data?.access_key
+                                    ? {
+                                          "X-Access-Key": data.access_key,
+                                      }
+                                    : {
+                                          Authorization: `Bearer ${store.getters.token}`,
+                                      }),
+                            },
+                        })
+                    ).data.data
+                );
 
-            commit("updateActive", data.index);
+                commit("updateActive", data.index);
 
-            commit("updateActiveAccount", sub);
+                commit("updateActiveAccount", sub);
+            }
         },
         async accounts_all({ commit, state }, user_id) {
             let subsList = (
@@ -84,7 +86,7 @@ export default {
             state.accounts = {};
             state.activeAccount = {};
             state.active = -1;
-            state.valie = false;
+            state.valid = true;
         },
         updateActive(state, index) {
             state.active = index;

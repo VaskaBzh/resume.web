@@ -60,7 +60,7 @@ export default {
     --arrow-size: 0.5rem;
     --scale: 0;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    border: 1px solid var(--background-tooltip-day, #fff);
+    border: 1px solid var(--background-tooltip-shadow);
     background: var(--background-island, #fff);
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     color: var(--text-secondary, #475467);

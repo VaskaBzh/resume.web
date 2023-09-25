@@ -121,7 +121,9 @@ export default {
 .slider {
     height: 100%;
     width: 100%;
-    // .slider__wrap
+    @media(max-width: 500px){
+        height: auto;
+    }
     &__wrap {
         width: 100%;
         padding: 24px 16px;

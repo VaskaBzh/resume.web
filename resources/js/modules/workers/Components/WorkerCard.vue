@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-watchers">
+    <div class="card">
         <div class="card__wrapper">
             <div class="card__content">
                 <div class="card__head">
@@ -37,11 +37,9 @@
                 <!--                :tabs="buttons"-->
                 <!--                :active="offset"-->
                 <!--            />-->
-                <main-line-graph
-                    class="card_graph"
-                    :graphData="graph"
-                    :height="height"
-                />
+                <div class="card_graph">
+                    <main-line-graph :graphData="graph" :height="height" />
+                </div>
                 <div class="card__block">
                     <cabinet-card
                         class="card__elem"
@@ -127,6 +125,7 @@ export default {
     top: 0;
     left: 0;
     padding: 24px;
+    width: 100%;
 }
 .card__content {
     position: relative;
@@ -153,6 +152,9 @@ export default {
     font-size: 18px;
     font-weight: 400;
     line-height: 28px;
+}
+.card_graph {
+    height: 190px;
 }
 .card_status {
     border-radius: 8px;

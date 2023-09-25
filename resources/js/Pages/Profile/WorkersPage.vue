@@ -11,6 +11,9 @@
             class="workers__wrapper"
             v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
         >
+        <main-title class="title-worker" tag="h4">{{
+                    $t("workers.title")
+         }}</main-title>
             <div class="cards-container">
                 <main-hashrate-cards />
             </div>
@@ -51,6 +54,7 @@ import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
     components: {
@@ -59,6 +63,7 @@ export default {
         MainTable,
         MainPreloader,
         WorkerCard,
+        MainTitle
     },
     data() {
         return {
@@ -82,6 +87,7 @@ export default {
         },
         "$i18n.locale"() {
             this.initWorkers();
+            document.title = this.$t("header.links.workers");
         },
     },
     methods: {
@@ -144,6 +150,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.title-worker {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-worker {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+    }
+}
 .cards-container {
     display: flex;
     justify-content: space-between;
@@ -169,12 +184,19 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
-        @media (max-width: 800px) {
+        @media (max-width: 1300px) {
             flex-direction: column;
         }
     }
     &__card {
         min-width: calc(50% - 6px);
+        min-height: 474px;
+        @media (max-width: 1300px) {
+            min-height: 437px;
+        }
+        @media (max-width: 900px) {
+            min-height: 450px;
+        }
     }
     &__button {
         min-width: 60px;
@@ -273,8 +295,10 @@ export default {
 }
 .slide-enter-from,
 .slide-leave-to {
-    max-width: 0;
-    min-width: 0;
+    @media (min-width: 1300px) {
+        max-width: 0;
+        min-width: 0;
+    }
     opacity: 0;
 }
 </style>

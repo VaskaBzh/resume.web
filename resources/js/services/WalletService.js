@@ -70,13 +70,20 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.waitWallets = true;
 
-            this.wallets = (await this.fetch()).data.data.map((el) => {
-                return new walletData({
-                    ...el,
-                    name: this.getName(el.name, el.wallet),
-                    fullName: el.name ?? el.wallet,
-                });
-            });
+            try {
+                const response = await this.fetch();
+
+                if (response)
+                    this.wallets = response.map((el) => {
+                        return new walletData({
+                            ...el,
+                            name: this.getName(el.name, el.wallet),
+                            fullName: el.name ?? el.wallet,
+                        });
+                    });
+            } catch (err) {
+                console.error(err);
+            }
 
             this.waitWallets = false;
         }
@@ -92,7 +99,11 @@ export class WalletService {
                     },
                 });
 
-                openNotification(true, this.translate("validate_messages.success"), response.data.message);
+                openNotification(
+                    true,
+                    this.translate("validate_messages.success"),
+                    response.data.message
+                );
                 this.index();
                 this.clearForm();
                 this.closePopup();
@@ -100,7 +111,11 @@ export class WalletService {
                 console.error("Error with: " + err);
                 store.dispatch("setFullErrors", err.response.data.errors);
 
-                openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
             }
             this.wait = false;
         } else {
@@ -119,7 +134,11 @@ export class WalletService {
                     },
                 });
 
-                openNotification(true, this.translate("validate_messages.connected"), response.data.message);
+                openNotification(
+                    true,
+                    this.translate("validate_messages.connected"),
+                    response.data.message
+                );
 
                 this.index();
                 this.clearForm();
@@ -156,11 +175,13 @@ export class WalletService {
         let response = null;
 
         try {
-            response = await api.get(`/wallets/${this.group_id}`, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            });
+            response = (
+                await api.get(`/wallets/${this.group_id}`, {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                })
+            ).data.data;
         } catch (e) {
             store.dispatch("setFullErrors", e.response.data.errors);
         }

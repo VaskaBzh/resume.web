@@ -204,7 +204,7 @@ export default {
             margin-top: 48px;
         }
         @media (max-width: 767.98px) {
-            margin-top: 32px;
+            margin-top: 0px;
         }
     }
     .search {

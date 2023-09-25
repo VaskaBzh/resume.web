@@ -82,9 +82,9 @@ export class IncomeService extends TableService {
 
     setStatus(status) {
         switch (status) {
-            case "completed":
+            case "complete":
                 return this.translate("income.table.status.fullfill");
-            case "rejected":
+            case "error":
                 return this.translate("income.table.status.rejected");
             case "pending":
                 return this.translate("income.table.status.pending");
@@ -146,17 +146,17 @@ export class IncomeService extends TableService {
             this.emptyTable = false;
             this.waitTable = true;
 
-            let response;
-
-            if (filter) {
-                response = await this.fetchPayout(page, per_page);
-            } else {
-                response = await this.fetchIncomes(page, per_page);
-            }
-
-            this.meta = response.data;
-
             try {
+                let response;
+
+                if (filter) {
+                    response = await this.fetchPayout(page, per_page);
+                } else {
+                    response = await this.fetchIncomes(page, per_page);
+                }
+
+                this.meta = response.data;
+
                 this.rows = response.data.data.map((el) => {
                     return this.setter(el, filter);
                 });
