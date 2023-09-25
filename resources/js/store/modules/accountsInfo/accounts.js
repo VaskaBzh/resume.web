@@ -86,7 +86,7 @@ export default {
             state.accounts = {};
             state.activeAccount = {};
             state.active = -1;
-            state.valie = false;
+            state.valid = true;
         },
         updateActive(state, index) {
             state.active = index;

@@ -10,7 +10,6 @@ export class PreloaderService {
         this.resizeEnd = false;
         this.crossVisible = ref(false);
         this.animationIsEnd = ref(false);
-        this.centerLogo = ref(false);
 
         this.animate = null;
 
@@ -18,6 +17,14 @@ export class PreloaderService {
 
         this.polygon = null;
         this.cross = null;
+    }
+
+    endAnimation() {
+        this.endTable = true;
+    }
+
+    dropEndAnimation() {
+        this.endTable = false;
     }
 
     killPreloader() {
@@ -48,6 +55,7 @@ export class PreloaderService {
         const limit = 80;
         const percentStep = 1;
 
+        this.killInterval();
         this.interval = setInterval(() => {
             if (this.progressPercentage < limit) {
                 this.progressPercentage += percentStep;
@@ -141,10 +149,12 @@ export class PreloaderService {
             easing: "linear",
             changeComplete: (anim) => {
                 if (this.endTable && this.resizeEnd) {
-                    this.centerLogo.value = true;
-                    this.animateCloseLine();
-
                     this.animate.remove(this.polygon);
+
+                    this.dropResizeState();
+                    this.dropEndAnimation();
+
+                    this.animateCloseLine();
                 }
             },
         });
@@ -162,26 +172,22 @@ export class PreloaderService {
         });
     };
 
-    endAnimation() {
-        this.endTable = true;
-    }
-
-    dropEndAnimation() {
-        this.endTable = false;
-    }
-
     animateCross = () => {
-        this.makeCrossVisible();
+        if (this.cross) {
+            this.makeCrossVisible();
 
-        anime({
-            targets: this.cross.querySelectorAll("rect"),
-            easing: "linear",
-            duration: 300,
-            height: 33.361,
-            delay: anime.stagger(400),
-        });
-        setTimeout(() => {
-            this.animationIsEnd.value = true;
-        }, 2500);
+            const rect = this.cross.querySelectorAll("rect");
+
+            anime({
+                targets: rect,
+                easing: "linear",
+                duration: 300,
+                height: 33.361,
+                delay: anime.stagger(400),
+            });
+            setTimeout(() => {
+                this.animationIsEnd.value = true;
+            }, 2500);
+        }
     };
 }

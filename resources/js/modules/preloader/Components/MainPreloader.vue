@@ -4,7 +4,6 @@
         v-scroll="'opacity transition--fast'"
         v-show="!killPreloaderCondition"
     >
-        <!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
         <div
             class="preloader__wrap"
             :class="{
@@ -12,8 +11,6 @@
                 'preloader__wrap-no-info-after': service.animationIsEnd,
             }"
         >
-            <!--            <transition name="preloader">-->
-            <!--            v-show="!service.animationIsEnd"-->
             <div class="preloader__icon">
                 <preloader-end-icon
                     class="preloader_cross"
@@ -33,15 +30,6 @@
                     @getPolygon="service.setPolygon($event)"
                 />
             </div>
-            <!--            </transition>-->
-            <!--            <transition name="preloader">-->
-            <!--                <img-->
-            <!--                    class="preloader_img"-->
-            <!--                    v-show="service.animationIsEnd"-->
-            <!--                    src="../imgs/img_no-information.png"-->
-            <!--                    alt="no-information"-->
-            <!--                >-->
-            <!--            </transition>-->
 
             <transition name="progress">
                 <span
@@ -84,7 +72,6 @@ export default {
             return !this.wait && !this.empty && this.end;
         },
         progressValue() {
-            // this.$t('no_info')
             return this.progressVisible
                 ? this.$t("preloader.text")
                 : `${this.service.progressPercentage}%`;
@@ -109,9 +96,6 @@ export default {
         end(newEndVal) {
             this.service.endProcess(newEndVal);
         },
-        progressPercentage() {
-            this.service.slowProcess();
-        },
         "service.crossVisible"() {
             this.crossVisible = true;
 
@@ -120,11 +104,19 @@ export default {
             }, 1000);
         },
         getActive() {
+            this.service.killPreloader();
+
             this.service.startProcess(this.interval);
+            this.progressVisible = false;
         },
     },
     mounted() {
-        this.service.startProcess(this.interval);
+        if (!this.killPreloaderCondition) {
+            this.service.startProcess(this.interval);
+        } else {
+            this.service.dropEndAnimation();
+            this.service.animateCloseLine();
+        }
     },
     unmounted() {
         this.service.killPreloader();
