@@ -82,6 +82,7 @@ export default {
         },
         "$i18n.locale"() {
             this.initWorkers();
+            document.title = this.$t("header.links.workers");
         },
     },
     methods: {

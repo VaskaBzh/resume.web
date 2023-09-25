@@ -31,9 +31,19 @@ export class PreloaderService {
         this.resizeEnd = false;
     }
 
+    dropStyles() {
+        // this.polygon.removeAttribute("style");
+        // this.cross.removeAttribute("style");
+        // console.log(this.polygon);
+        // console.log(this.cross);
+    }
+
     startProcess(intervalMillisecondsTime) {
+        this.progressPercentage = 0;
+
         this.dropEndAnimation();
         this.dropResizeState();
+
         const limit = 80;
         const percentStep = 1;
 
@@ -45,6 +55,8 @@ export class PreloaderService {
                 this.killInterval();
             }
         }, intervalMillisecondsTime);
+
+        this.dropStyles();
 
         this.animateLine();
         this.animateLineResize();

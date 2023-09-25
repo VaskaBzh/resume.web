@@ -118,6 +118,9 @@ export default {
         };
     },
     watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.statistic");
+        },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
@@ -142,6 +145,7 @@ export default {
         ...mapGetters(["getActive", "getAccount"]),
     },
     async mounted() {
+        document.title = this.$t("header.links.statistic");
         this.lineChartService.setGroupId(this.getActive);
         this.barChartService.setGroupId(this.getActive);
 
@@ -184,6 +188,9 @@ export default {
         height: fit-content;
         @media (max-width: 1700px) {
             grid-column: 1 / 7;
+        }
+        @media (max-width: 900px) {
+            gap: 32px;
         }
         &-column {
             grid-column: 3 / 5;

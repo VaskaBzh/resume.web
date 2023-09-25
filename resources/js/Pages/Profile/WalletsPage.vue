@@ -263,6 +263,9 @@ export default {
                 ""
             );
         },
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.wallets");
+        },
     },
     methods: {
         walletInit() {

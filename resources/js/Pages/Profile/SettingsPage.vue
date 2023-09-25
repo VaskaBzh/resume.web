@@ -94,6 +94,9 @@ export default {
         };
     },
     watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.settings");
+        },
         "settingsService.profit"(newValue) {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },

@@ -3,9 +3,7 @@
         <div class="watchers__head">
             <div class="watchers__head__block">
                 <main-title tag="h4">{{ $t("title") }}</main-title>
-                <main-description
-                    >{{ $t("text") }}</main-description
-                >
+                <main-description>{{ $t("text") }}</main-description>
             </div>
             <main-button data-popup="#addWatcher">
                 <template v-slot:svg>
@@ -13,9 +11,7 @@
                 </template>
             </main-button>
         </div>
-        <div
-            class="cabinet watchers__wrapper"
-        >
+        <div class="cabinet watchers__wrapper">
             <main-preloader
                 class="cabinet__preloader watchers__preloader"
                 :wait="service.waitTable"
@@ -132,8 +128,12 @@ export default {
         async getAccount() {
             await this.service.index();
         },
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.watchers");
+        },
     },
     async mounted() {
+        document.title = this.$t("header.links.watchers");
         this.service.setGroupId(this.getActive);
         this.service.setForm();
 

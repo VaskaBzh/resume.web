@@ -61,6 +61,11 @@ export default {
             ];
         },
     },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.connecting");
+        },
+    },
     mounted() {
         document.title = this.$t("header.links.connecting");
     },

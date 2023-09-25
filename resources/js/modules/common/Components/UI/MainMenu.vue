@@ -39,7 +39,7 @@
 export default {
     name: "main-menu",
     props: {
-        options:Object,
+        options: Object,
         opened: Boolean,
         className: String,
     },
@@ -193,7 +193,6 @@ export default {
         bottom: 10px;
         left: 50% !important;
         transform: translateX(-50%);
-        background: #ffffff;
         width: calc(100% - 20px) !important;
         max-height: 50vh;
         height: fit-content;
@@ -212,8 +211,9 @@ export default {
         &-remove {
             color: #ff3b30;
         }
+        border-radius: 12px;
         color: var(--text-secondary, #475467);
-        font-family: NunitoSans;
+        font-family: NunitoSans, serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -227,7 +227,10 @@ export default {
         transition: all 0.3s ease 0s;
 
         &:hover {
-            background: #f6f8fa;
+            background: var(
+                --background-island-inner-1,
+                rgba(83, 177, 253, 0.07)
+            );
         }
     }
     &_column {

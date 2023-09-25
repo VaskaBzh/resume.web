@@ -206,6 +206,11 @@ export default {
         MainPreloader,
         MainTable,
     },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("accounts.title");
+        },
+    },
     props: ["errors", "message", "user", "auth_user"],
     data() {
         return {

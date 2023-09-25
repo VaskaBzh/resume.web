@@ -7,11 +7,11 @@
             </MainIncomeCardRow>
         </div>
         <div class="month__content">
-            <wait-preloader
-                class="month__block-no-padding"
-                :wait="wait"
-                :interval="35"
-            />
+            <!--            <wait-preloader-->
+            <!--                class="month__block-no-padding"-->
+            <!--                :wait="wait"-->
+            <!--                :interval="35"-->
+            <!--            />-->
             <main-bar-graph v-if="!wait" :height="height" :graphData="graph" />
         </div>
     </div>

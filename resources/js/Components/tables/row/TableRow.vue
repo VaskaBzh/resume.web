@@ -45,15 +45,17 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "table-row",
     props: {
-        viewportWidth: Number,
         columns: Array,
         titles: Array,
         removePercent: Boolean,
     },
     computed: {
+        ...mapGetters(["viewportWidth"]),
         getWorkersStats() {
             return this.$refs?.row_content?.find(
                 (el) => el.className === "workers_stats"

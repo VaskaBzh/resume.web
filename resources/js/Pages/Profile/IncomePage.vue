@@ -133,6 +133,7 @@ export default {
         },
         "$i18n.locale"() {
             this.initIncomes();
+            document.title = this.$t("header.links.income");
         },
     },
     methods: {

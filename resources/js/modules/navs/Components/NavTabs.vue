@@ -8,12 +8,10 @@
                     <select-language></select-language>
                 </div>
                 <div class="nav__tabs">
-                    <account-menu
-                        :viewportWidth="viewportWidth"
-                        :user="user"
-                    ></account-menu>
+                    <account-menu></account-menu>
                     <nav class="nav__column">
                         <nav-group
+                            @click="$emit('closeBurger')"
                             v-for="(group, i) in service.links"
                             :group="group"
                             :key="i"
@@ -93,15 +91,17 @@ export default defineComponent({
     padding: 40px 16px 16px;
     gap: 8px;
 }
-@media(max-width:900px){
-    .nav__content{
+@media (max-width: 900px) {
+    .nav__content {
         padding: 0px 16px 56px;
     }
 }
 .header-select-container {
     display: none;
 }
-
+.open-bg {
+    z-index: 5;
+}
 @media (max-width: 900px) {
     .nav {
         position: fixed;
