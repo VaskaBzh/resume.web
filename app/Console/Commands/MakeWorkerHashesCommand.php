@@ -30,10 +30,8 @@ class MakeWorkerHashesCommand extends Command
         Worker::all()->each(static function (Worker $worker) use ($btcComService) {
 
             DeleteOldWorkerHashrates::execute(
-                query: WorkerHashrate::oldestThan(
-                    workerId: $worker->worker_id,
-                    date: now()->subMonths(2)->toDateTimeString()
-                )
+                workerId: $worker->worker_id,
+                date: now()->subMonths(2)->toDateTimeString()
             );
 
             try {

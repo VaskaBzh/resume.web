@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Actions\Hashes;
 
-use Illuminate\Database\Eloquent\Builder;
+use App\Models\Hash;
 
 class DeleteOldHashrates
 {
-    public static function execute(Builder $query): void
+    public static function execute(int $groupId, string $date): void
     {
-        $query->delete();
+        Hash::oldestThan(
+            groupId: $groupId,
+            date: $date
+        )->delete();
     }
 }

@@ -84,6 +84,13 @@ return [
             'days' => 30,
         ],
 
+        'btc_com' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/btc/btc.log'),
+            'level' => 'debug',
+            'days' => 30,
+        ],
+
         'commands' => [
             'driver' => 'daily',
             'path' => storage_path('logs/commands/commands.log'),

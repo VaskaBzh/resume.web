@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Console;
 
+use App\Console\Commands\EmailVerifyNotificationCommand;
 use App\Console\Commands\GiveRoleCommand;
 use App\Console\Commands\IncomeCommand;
 use App\Console\Commands\MakeWorkerHashesCommand;
@@ -22,6 +23,7 @@ class Kernel extends ConsoleKernel
         MakeWorkerHashesCommand::class,
         PayoutCommand::class,
         GiveRoleCommand::class,
+        EmailVerifyNotificationCommand::class,
     ];
     /**
      * Define the application's command schedule.
@@ -32,7 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('income')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('make:worker-hashes')->hourly();
+        $schedule->command('make:worker-hashes')->everyThirtyMinutes();
     }
 
     /**
