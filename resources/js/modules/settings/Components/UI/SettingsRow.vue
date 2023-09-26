@@ -1,7 +1,7 @@
 <template>
     <div
         class="cabinet__block cabinet__block-light row"
-        data-popup="#changes"
+        :data-popup="!!this.user.email_verified_at ? '#changes' : ''"
         @mousedown="change_val"
     >
         <div class="data_value">
@@ -9,7 +9,7 @@
             <span class="text text-black text-b">{{ this.value }}</span>
         </div>
         <span class="change-text">
-            {{ $t("button") }}
+            {{ buttonName }}
         </span>
     </div>
 </template>
@@ -27,15 +27,32 @@ export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
+    watch: {
+        user(newUserData) {
+            if (this.name === this.$t("settings.block.settings_block.labels.email")) {
+                this.buttonName = !!newUserData.email_verified_at ? this.$t("button") : this.$t("button_verify");
+            }
+        },
+        name(newRowName) {
+            if (newRowName === this.$t("settings.block.settings_block.labels.email")) {
+                this.buttonName = !!this.user.email_verified_at ? this.$t("button") : this.$t("button_verify");
+            }
+        }
+    },
     data() {
         return {
             value: this.val,
+            overTime: 0,
+            buttonName: this.$t("button"),
         };
     },
     beforeUpdate() {
         this.value = this.val;
     },
     mounted() {
+        if (this.name === this.$t("settings.block.settings_block.labels.email")) {
+            this.buttonName = !!this.user.email_verified_at ? this.$t("button") : this.$t("button_verify");
+        }
         if (this.val === "..." || this.val === null) {
             this.value = this.val;
         }
@@ -44,6 +61,25 @@ export default {
         ...mapGetters(["user"]),
     },
     methods: {
+        setTimer(intervalEndTime) {
+            if (this.overTime === 0) {
+                this.overTime = intervalEndTime;
+                const interval = setInterval(() => {
+                    if (this.overTime > 0) {
+                        this.overTime = this.overTime - 1000;
+
+                        let overTime = this.overTime;
+                        this.buttonName = overTime / 1000 + " сек";
+                    } else {
+                        clearInterval(interval);
+
+                        this.overTime = 0;
+
+                        this.buttonName = this.$t("button");
+                    }
+                }, 1000)
+            }
+        },
         async checkbox_changes(data) {
             if (this.val !== null) {
                 let form = {
@@ -66,6 +102,7 @@ export default {
             // this.end_change();
             let data = {
                 name: this.name.toLowerCase(),
+                verify: !!this.user.email_verified_at,
                 val: this.value,
                 key: this.keyForm,
             };
@@ -73,7 +110,13 @@ export default {
             if (pas) {
                 data.password = pas;
             }
-            this.$emit("openPopup", data);
+            if (this.overTime === 0) {
+                this.$emit("openPopup", data);
+            }
+
+            if (!this.user.email_verified_at) {
+                this.setTimer(60000);
+            }
         },
         change_val() {
             if (this.val !== "..." && this.val !== "********") {

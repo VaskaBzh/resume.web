@@ -46,6 +46,7 @@
                         </div>
                     </div>
                     <main-copy
+                        class="card_copy"
                         :cutValue="45"
                         :code="saveWatcher.link"
                         :label="$t('settings_card.labels[1]')"
@@ -200,7 +201,7 @@ export default {
             };
         },
         buttonProcess() {
-            if (!this.isEditable) this.$emit("removeWatcher", this.watcher);
+            if (!this.isEditable) this.$emit("removeWatcher", this.watcher.id);
             else this.isEditable = false;
         },
         changeWatcher() {
@@ -247,6 +248,11 @@ export default {
 }
 .title-mobile {
     display: inline-block;
+}
+@media(max-width: 500px){
+    .title-mobile{
+    font-size: 19px;
+}
 }
 .card__wrapper {
     position: relative;

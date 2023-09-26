@@ -4,7 +4,10 @@
                     $t("title[2]")
                 }}</main-title>
         <div class="settings__main">
-            <div class="settings__card">
+            <div
+                class="settings__card"
+                v-if="!this.user.email_verified_at"
+            >
                 <main-title class="cabinet_title" tag="h3">{{
                     $t("title[0]")
                 }}</main-title>
@@ -106,6 +109,8 @@ export default {
         user(newUser) {
             this.settingsService.setUser(newUser);
             this.settingsService.setUserData();
+
+            this.settingsProcess();
         },
     },
     methods: {

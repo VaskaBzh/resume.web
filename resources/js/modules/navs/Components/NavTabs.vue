@@ -90,6 +90,8 @@ export default defineComponent({
     width: 100%;
     padding: 40px 16px 16px;
     gap: 8px;
+
+    min-height: 100vh;
 }
 @media (max-width: 900px) {
     .nav__content {
@@ -133,6 +135,7 @@ export default defineComponent({
     .open-burger {
         display: inline-block;
         animation: openBurger 0.4s linear;
+        min-width: 100%;
     }
     @keyframes openBurger {
         0% {

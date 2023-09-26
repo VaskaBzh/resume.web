@@ -1,7 +1,27 @@
+import api from "@/api/api"
+
 export default {
     actions: {
-        setUser({ commit, dispatch }, user = null) {
-            const userData = user ?? JSON.parse(localStorage.getItem("user"));
+        async setUser({ commit, dispatch, state }, user = null) {
+            let response = null;
+
+            state.localUser = user ?? JSON.parse(localStorage.getItem("user"));
+
+            if (!user && state.token) {
+                try {
+                    response = (await api.get("/user", {
+                        headers: {
+                            Authorization: `Bearer ${state.token}`,
+                        },
+                    })).data.data;
+                } catch (err) {
+                    console.error(err);
+
+                    response = null;
+                }
+            }
+
+            const userData = user ?? response ?? JSON.parse(localStorage.getItem("user"));
             commit("changeUser", userData);
 
             dispatch("saveUser");
@@ -39,11 +59,15 @@ export default {
     },
     state: {
         user: {},
+        localUser: {},
         token: "",
     },
     getters: {
         user(state) {
             return state.user;
+        },
+        localUser(state) {
+            return state.localUser;
         },
         token(state) {
             return state.token;

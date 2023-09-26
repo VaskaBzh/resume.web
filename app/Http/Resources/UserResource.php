@@ -24,10 +24,10 @@ class UserResource extends JsonResource
             'permissions_count' => $this->permissions_count,
             'read_notifications_count' => $this->read_notifications_count,
             'roles_count' => $this->roles_count,
+            'roles' => $this->roles,
             'subs_count' => $this->subs_count,
             'tokens_count' => $this->tokens_count,
             'unread_notifications_count' => $this->unread_notifications_count,
-
             'owner' => new SubResource($this->whenLoaded('owner')),
             'owners' => ReferralResourceCollection::collection($this->whenLoaded('owners')),
             'subs' => ReferralResourceCollection::collection($this->whenLoaded('subs')),

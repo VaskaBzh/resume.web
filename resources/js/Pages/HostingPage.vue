@@ -187,6 +187,7 @@ export default {
     }
     &__image {
         width: 70%;
+        display: none;
         img {
             @media (min-width: 767.98px) {
                 max-width: 100%;
@@ -194,7 +195,7 @@ export default {
         }
         @media (max-width: 991.98px) {
             margin: 40px 0 0;
-            display: flex;
+            display: none;
             align-items: center;
             justify-content: center;
             img {

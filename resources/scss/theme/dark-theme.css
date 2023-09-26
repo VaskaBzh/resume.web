@@ -1,43 +1,46 @@
 :root {
-  /* background */
-  --background-island: #212327;
-  --background-globe : #161616;
-  --background-modal: #212327;
-  --background-modal-input: #2C2F34;
-  --background-datepicker: #2C2F34;
-  --background-tooltip: #2C2F34cc;
-  --background-tooltip-shadow: rgba(44, 47, 52, 0.90); 
-  --background-sub-dropdown: #2C2F34;
-  --background-island-inner-3 : #2C2F34;
-  --background-graphic-line: #6F7682;
-  --background-success: #21322E;
-  --background-waiting: #37322D;
-  --background-failed: #36262A;
-  --background-active-chart-line: #98A2B3;
-  --background-island-inner-1: #53B1FD12;
-  --background-island-inner-2: #53B1FD12;
-  --background-accient: #2E90FA;
+    /* background */
+    --background-island: #212327;
+    --background-globe : #161616;
+    --background-modal: #212327;
+    --background-modal-input: #2C2F34;
+    --background-datepicker: #2C2F34;
+    --background-tooltip: #2C2F34cc;
+    --background-tooltip-shadow: rgba(44, 47, 52, 0.90);
+    --background-sub-dropdown: #2C2F34;
+    --background-island-inner-3 : #2C2F34;
+    --background-graphic-line: #6F7682;
+    --background-success: #21322E;
+    --background-waiting: #37322D;
+    --background-failed: #36262A;
+    --background-active-chart-line: #98A2B3;
+    --background-island-inner-1: #53B1FD12;
+    --background-island-inner-2: #53B1FD12;
+    --background-accient: #2E90FA;
 
-  /* text */
-  --text-primary: #F1F1F2;
-  --text-primary-80: rgba(241, 241, 242, 0.80);
-  --text-secondary: #C5C8CD;
-  --text-teritary: #6F7682;
-  --text-fourth: #595E68;
-  --text-logo: #FFFFFF;
-  --text-table-title: #43474E;
-  --text-primary-inverse: #FFFFFF;
-  --select-text-no-value: #d0d5dd;
+    /* text */
+    --text-primary: #F1F1F2;
+    --text-primary-80: rgba(241, 241, 242, 0.80);
+    --text-secondary: #C5C8CD;
+    --text-teritary: #6F7682;
+    --text-fourth: #595E68;
+    --text-logo: #FFFFFF;
+    --text-table-title: #43474E;
+    --text-primary-inverse: #FFFFFF;
 
-  /* status */
-  --text-no-value: #43474E;
 
-  /* button */
-  --buttons-fourth-fill-border-default: #2C2F34;
-  --buttons-tabs-fill-border-focus: #212327;
-  --buttons-stroke-text: #C5C8CD;
-  --buttons-primary-text: #FFF;
+    --background-waiting-day: #37322D;
 
-  --main-checkbox-default: #212327;
-  --box-shadow: rgba(16, 24, 40, 0.08)
+    /* status */
+    --text-no-value: #43474E;
+    --status-waiting: #ffb868;
+
+    /* button */
+    --buttons-fourth-fill-border-default: #2C2F34;
+    --buttons-tabs-fill-border-focus: #212327;
+    --buttons-stroke-text: #C5C8CD;
+    --buttons-primary-text: #FFF;
+
+    --main-checkbox-default: #212327;
+    --box-shadow: rgba(16, 24, 40, 0.08)
 }

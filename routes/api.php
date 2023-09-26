@@ -75,7 +75,9 @@ Route::group([
 ], function () {
     Route::get('/user', UserController::class)->name('user.show');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::post('/email/reverify', ResendVerifyEmailController::class)->name('resend-verify-email');
+    Route::post('/email/reverify', ResendVerifyEmailController::class)
+        ->middleware('throttle:2,1')
+        ->name('resend-verify-email');
     Route::put('/reset', [ResetPasswordController::class, 'changePassword']);
     Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);

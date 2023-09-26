@@ -1,6 +1,14 @@
 <template>
     <div class="wallets" ref="page">
-        <div class="wallet-wrapper">
+        <main-preloader
+            class="cabinet__preloader cabinet__preloader-bg wallets__preloader"
+            :wait="wallets.waitWallets"
+            :interval="35"
+            :end="!wallets.waitWallets"
+            :empty="wallets.emptyTable"
+            v-if="!wallets.emptyTable"
+        />
+        <div class="wallet-wrapper" v-if="!wallets.waitWallets && !wallets.emptyTable">
             <div class="autopayout-component">
                 <div class="header-component-wallet">
                     <main-title class="" tag="h3"
@@ -67,8 +75,35 @@
                 </button>
             </div>
         </div>
+        <div class="wallets__no-information cabinet__preloader cabinet__preloader-bg" v-if="wallets.emptyTable && !wallets.waitWallet">
+            <div class="wallets__no-information__content">
+                <img src="../../../assets/img/img_wallets-no-info.png" alt="" class="wallets__no wallets__no-information_img">
+                <main-description>{{ $t("wallets.no_info.description") }}</main-description>
+                <div class="wallets__block-warning" v-show="!user.email_verified_at">
+                    <div class="wallets__head">
+                        <div class="wallets_icon">
+                            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M22.5303 3.03033C22.8232 2.73744 22.8232 2.26256 22.5303 1.96967C22.2374 1.67678 21.7626 1.67678 21.4697 1.96967L22.5303 3.03033ZM19.4697 3.96967C19.1768 4.26256 19.1768 4.73744 19.4697 5.03033C19.7626 5.32322 20.2374 5.32322 20.5303 5.03033L19.4697 3.96967ZM19.4967 12.2619L18.9664 11.7316L19.4967 12.2619ZM16.5933 12.9877L17.1236 12.4574L16.5933 12.9877ZM18.7708 12.9877L19.3012 13.5181L18.7708 12.9877ZM11.5123 5.72916L10.9819 5.19883L11.5123 5.72916ZM11.5123 7.90674L10.9819 8.43707L11.5123 7.90674ZM12.2381 5.0033L12.7684 5.53363L12.2381 5.0033ZM4.53033 21.0303C4.82322 20.7374 4.82322 20.2626 4.53033 19.9697C4.23744 19.6768 3.76256 19.6768 3.46967 19.9697L4.53033 21.0303ZM1.46967 21.9697C1.17678 22.2626 1.17678 22.7374 1.46967 23.0303C1.76256 23.3232 2.23744 23.3232 2.53033 23.0303L1.46967 21.9697ZM11.7619 19.9967L12.2922 20.527H12.2922L11.7619 19.9967ZM12.4877 17.0933L13.0181 16.5629L12.4877 17.0933ZM12.4877 19.2708L11.9574 18.7405H11.9574L12.4877 19.2708ZM5.22916 12.0123L5.75949 12.5426L5.75949 12.5426L5.22916 12.0123ZM7.40674 12.0123L6.87641 12.5426L7.40674 12.0123ZM4.5033 12.7381L3.97297 12.2078L3.97297 12.2078L4.5033 12.7381ZM9.96967 9.46967C9.67678 9.76256 9.67678 10.2374 9.96967 10.5303C10.2626 10.8232 10.7374 10.8232 11.0303 10.5303L9.96967 9.46967ZM12.5303 9.03033C12.8232 8.73744 12.8232 8.26256 12.5303 7.96967C12.2374 7.67678 11.7626 7.67678 11.4697 7.96967L12.5303 9.03033ZM13.9697 13.4697C13.6768 13.7626 13.6768 14.2374 13.9697 14.5303C14.2626 14.8232 14.7374 14.8232 15.0303 14.5303L13.9697 13.4697ZM16.5303 13.0303C16.8232 12.7374 16.8232 12.2626 16.5303 11.9697C16.2374 11.6768 15.7626 11.6768 15.4697 11.9697L16.5303 13.0303ZM21.4697 1.96967L19.4697 3.96967L20.5303 5.03033L22.5303 3.03033L21.4697 1.96967ZM11.7078 4.47297L10.9819 5.19883L12.0426 6.25949L12.7684 5.53363L11.7078 4.47297ZM10.9819 8.43707L16.0629 13.5181L17.1236 12.4574L12.0426 7.37641L10.9819 8.43707ZM19.3012 13.5181L20.027 12.7922L18.9664 11.7316L18.2405 12.4574L19.3012 13.5181ZM20.027 12.7922C22.3243 10.4949 22.3243 6.77027 20.027 4.47297L18.9664 5.53363C20.6779 7.24514 20.6779 10.02 18.9664 11.7316L20.027 12.7922ZM12.7684 5.53363C14.48 3.82212 17.2549 3.82212 18.9664 5.53363L20.027 4.47297C17.7297 2.17568 14.0051 2.17568 11.7078 4.47297L12.7684 5.53363ZM12.0426 7.37641C11.8131 7.1469 11.7519 6.95527 11.75 6.82326C11.7482 6.69624 11.7993 6.5028 12.0426 6.25949L10.9819 5.19883C10.521 5.65975 10.2413 6.22436 10.2502 6.84472C10.259 7.46007 10.55 8.00512 10.9819 8.43707L12.0426 7.37641ZM18.2405 12.4574C18.011 12.6869 17.8194 12.7481 17.6874 12.75C17.5603 12.7518 17.3669 12.7007 17.1236 12.4574L16.0629 13.5181C16.5239 13.979 17.0885 14.2587 17.7088 14.2498C18.3242 14.241 18.8692 13.95 19.3012 13.5181L18.2405 12.4574ZM3.46967 19.9697L1.46967 21.9697L2.53033 23.0303L4.53033 21.0303L3.46967 19.9697ZM5.03363 13.2684L5.75949 12.5426L4.69883 11.4819L3.97297 12.2078L5.03363 13.2684ZM6.87641 12.5426L11.9574 17.6236L13.0181 16.5629L7.93707 11.4819L6.87641 12.5426ZM11.9574 18.7405L11.2316 19.4664L12.2922 20.527L13.0181 19.8012L11.9574 18.7405ZM11.2316 19.4664C9.52005 21.1779 6.74514 21.1779 5.03363 19.4664L3.97297 20.527C6.27027 22.8243 9.99492 22.8243 12.2922 20.527L11.2316 19.4664ZM3.97297 12.2078C1.67568 14.5051 1.67568 18.2297 3.97297 20.527L5.03363 19.4664C3.32212 17.7549 3.32212 14.98 5.03363 13.2684L3.97297 12.2078ZM7.93707 11.4819C7.50512 11.05 6.96007 10.759 6.34472 10.7502C5.72436 10.7413 5.15975 11.021 4.69883 11.4819L5.75949 12.5426C6.0028 12.2993 6.19624 12.2482 6.32326 12.25C6.45527 12.2519 6.6469 12.3131 6.87641 12.5426L7.93707 11.4819ZM13.0181 19.8012C13.45 19.3692 13.741 18.8242 13.7498 18.2088C13.7587 17.5885 13.479 17.0239 13.0181 16.5629L11.9574 17.6236C12.2007 17.8669 12.2518 18.0603 12.25 18.1874C12.2481 18.3194 12.1869 18.511 11.9574 18.7405L13.0181 19.8012ZM11.0303 10.5303L12.5303 9.03033L11.4697 7.96967L9.96967 9.46967L11.0303 10.5303ZM15.0303 14.5303L16.5303 13.0303L15.4697 11.9697L13.9697 13.4697L15.0303 14.5303Z" fill="#FFB868"/>
+                            </svg>
+                        </div>
+                        <div class="wallets_description-warning">
+                            {{ $t("wallets.no_info.message") }}
+                        </div>
+                    </div>
+                    <div class="wallets_link-warning" @click="sendEmailVerification">
+                        {{ verifyButtonName }}
+                    </div>
+                </div>
+                <main-button class="button-blue button-full wallets_button-no-information" :class="{
+                    'button-disabled': !user.email_verified_at
+                }" :data-popup="!user.email_verified_at ? '' : '#addWallet'">
+                    <template v-slot:text>
+                        {{ $t("wallets.no_info.button_text") }}
+                    </template>
+                </main-button>
+            </div>
+        </div>
     </div>
-    <teleport to="body">
         <main-popup
             id="changeWallet"
             :wait="wallets.wait"
@@ -203,19 +238,19 @@
                 </button>
             </form>
         </main-popup>
-    </teleport>
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
-import { mapGetters } from "vuex";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-
-import { WalletService } from "@/services/WalletService";
-import { usePage } from "@inertiajs/vue3";
+import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
+
+import { mapGetters } from "vuex";
+import { WalletService } from "@/services/WalletService";
+
 export default {
     components: {
         MainPopup,
@@ -223,9 +258,11 @@ export default {
         MainTitle,
         WalletBlock,
         TooltipCard,
+        MainPreloader,
+        MainDescription,
     },
     computed: {
-        ...mapGetters(["getActive", "errors"]),
+        ...mapGetters(["getActive", "errors", "user"]),
         endWallet() {
             return this.wallets.wallets?.length > 0;
         },
@@ -240,11 +277,13 @@ export default {
     data() {
         return {
             viewportWidth: 0,
+            overTime: 0,
             waitWallet: true,
-            wallets: [],
+            wallets: new WalletService(this.$t),
             isActiveLabelEmail: false,
             isActiveLabelName: false,
             isActiveLabelMinWithdrawal: false,
+            verifyButtonName: this.$t("wallets.no_info.verify_text"),
         };
     },
     watch: {
@@ -269,9 +308,9 @@ export default {
     },
     methods: {
         walletInit() {
-            this.wallets = new WalletService(this.$t);
-
-            this.wallets.index();
+            if (this.getActive !== -1) {
+                this.wallets.index();
+            }
         },
         handleResize() {
             this.viewportWidth = window.innerWidth;
@@ -305,9 +344,29 @@ export default {
                     break;
             }
         },
+        async sendEmailVerification() {
+            if (this.overTime === 0) {
+                this.wallets.sendEmailVerification();
+
+                this.overTime = 60000;
+                const interval = setInterval(() => {
+                    if (this.overTime > 0) {
+                        this.overTime = this.overTime - 1000;
+
+                        let overTime = this.overTime;
+                        this.verifyButtonName = overTime / 1000 + " сек";
+                    } else {
+                        clearInterval(interval);
+
+                        this.overTime = 0;
+
+                        this.verifyButtonName = this.$t("wallets.no_info.verify_text");
+                    }
+                }, 1000)
+            }
+        }
     },
     mounted() {
-        this.wallets = new WalletService(this.$t);
         this.walletInit();
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
@@ -596,6 +655,46 @@ input:focus {
                 border-top: none;
             }
         }
+        &-warning {
+            padding: 16px;
+            border-radius: var(--surface-border-radius-radius-s-md, 12px);
+            background: var(--background-waiting-day, #FFF8F0);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-bottom: 24px;
+            @media (max-width: 500px) {
+                padding: 8px;
+            }
+        }
+    }
+
+    &__head {
+        display: flex;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 12px;
+    }
+
+    &_description {
+        &-warning {
+            color: var(--status-waiting, #FFB868);
+            font-family: NunitoSans, serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+        }
+    }
+
+    &_link {
+        &-warning {
+            color: var(--icons-accent, #53B1FD);
+            font-family: NunitoSans, serif;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 20px;
+            cursor: pointer;
+        }
     }
 
     // .wallets__column
@@ -622,6 +721,33 @@ input:focus {
             width: 100%;
             justify-content: space-between;
             gap: 11px;
+        }
+    }
+
+    &_button {
+        &-no-information {
+            min-height: 56px !important;
+        }
+    }
+
+    &__no-information {
+        padding: 32px 40px;
+        @media (max-width: 500px) {
+            padding: 24px 16px;
+        }
+        &__content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        &_img {
+            margin-bottom: 24px;
+            width: 160px;
+            height: 160px;
+        }
+        .text {
+            text-align: center;
+            margin-bottom: 80px;
         }
     }
 }

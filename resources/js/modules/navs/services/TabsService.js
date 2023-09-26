@@ -66,8 +66,8 @@ export class TabsService {
             },
         ];
 
-        if (user.roles)
-            if (user.roles.find((role) => role.name === "referral"))
+        // if (user.roles)
+            if (user.roles && user.roles.find((role) => role.name === "referral"))
                 this.setReferralTab();
             else this.setWithoutReferralTab();
     }

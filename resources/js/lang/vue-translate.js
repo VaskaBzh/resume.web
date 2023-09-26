@@ -613,9 +613,14 @@ const messages = {
         },
         wallets: {
             title: ["Setting up auto payout", "Wallets"],
+            no_info: {
+                description: "To enable automatic payouts, add your wallet address",
+                message: "To add a wallet, you need to verify your email",
+                verify_text: "Verify email",
+                button_text: "Add",
+            },
             tooltip:
                 "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
-            no_info: "Add Wallet",
             messages: [
                 "Wait 5 seconds.",
                 "You can delete your wallet through tech support.",
@@ -1323,9 +1328,14 @@ const messages = {
         },
         wallets: {
             title: ["Настройка автовыплаты", "Кошельки"],
+            no_info: {
+                description: "Для автовыплаты начислений добавьте адрес вашего кошелька",
+                message: "Чтобы добавить кошелек вам необходимо подтвердить почту",
+                verify_text: "Подтвердить почту",
+                button_text: "Добавить",
+            },
             tooltip:
                 "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
-            no_info: "Добавить кошелек",
             messages: [
                 "Подождите 5 секунд.",
                 "Удалить кошелек можно через тех поддержку.",

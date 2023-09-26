@@ -3,7 +3,7 @@
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers-add">
-                    <main-title tag="h3">{{
+                    <main-title tag="h3" class="watcher-card-title">{{
                         $t("add_watcher_card.title")
                     }}</main-title>
                     <main-description>{{
@@ -187,6 +187,11 @@ export default {
     flex-direction: column;
     gap: 80px;
     width: 100%;
+}
+@media(max-width: 500px){
+    .watcher-card-title{
+    font-size: 19px;
+}
 }
 .watchers__column {
     display: flex;

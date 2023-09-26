@@ -131,7 +131,7 @@ export default {
     padding: 24px;
     width: 100%;
 }
-@media (max-width: 500px) {
+@media (max-width: 1200px) {
     .card {
         border-radius: 0;
     }

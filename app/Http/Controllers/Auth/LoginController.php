@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -46,7 +47,7 @@ class LoginController extends Controller
         $token = $user->createToken($user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
 
         return new JsonResponse([
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
             'has_referral_role' => $user->hasRole('referral')

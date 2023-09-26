@@ -10,7 +10,7 @@ export default {
     name: "confirm-page",
     components: {
         ConfirmBlock,
-    }
+    },
 };
 </script>
 

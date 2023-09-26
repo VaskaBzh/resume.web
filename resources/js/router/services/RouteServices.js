@@ -2,6 +2,7 @@ import { RoutePublicData } from "../DTO/RoutePublicData";
 import { RouteProfileData } from "../DTO/RouteProfileData";
 import { RouteReferralData } from "../DTO/RouteReferralData";
 import { RouteAuthData } from "../DTO/RouteAuthData";
+import { RouteConfirmData } from "../DTO/RouteConfirmData";
 import { RouteNamesMap } from "@/router/map/RouteNamesMap";
 
 export class RouteServices {
@@ -20,7 +21,7 @@ export class RouteServices {
             new RoutePublicData("hosting", "hosting"),
             new RouteAuthData("login", "login"),
             new RouteAuthData("registration", "registration"),
-            new RouteAuthData("confirm", "confirm"),
+            new RouteConfirmData("confirm", "confirm"),
             new RouteProfileData("accounts", "accounts"),
             new RouteProfileData("statistic", "statistic"),
             new RouteProfileData("connecting", "connecting"),

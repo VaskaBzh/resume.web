@@ -19,6 +19,7 @@ export class WalletService {
         };
 
         this.waitWallets = true;
+        this.emptyTable = false;
         this.wait = false;
         this.closed = false;
     }
@@ -66,6 +67,26 @@ export class WalletService {
         }, 600);
     }
 
+    async sendEmailVerification() {
+        try {
+            const response = await api.post("/email/reverify",
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            )
+
+            openNotification(true, this.translate("validate_messages.success"), response.data.message);
+        } catch (err) {
+            console.error("Error with: " + err);
+
+            this.verifyTimer = 60000;
+            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+        }
+    }
+
     async index() {
         if (store.getters.getActive !== -1) {
             this.waitWallets = true;
@@ -73,7 +94,7 @@ export class WalletService {
             try {
                 const response = await this.fetch();
 
-                if (response)
+                if (response) {
                     this.wallets = response.map((el) => {
                         return new walletData({
                             ...el,
@@ -81,8 +102,19 @@ export class WalletService {
                             fullName: el.name ?? el.wallet,
                         });
                     });
+                }
+
+                if (this.wallets?.length === 0) {
+                    this.emptyTable = true;
+                }
             } catch (err) {
                 console.error(err);
+
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
             }
 
             this.waitWallets = false;
@@ -146,6 +178,12 @@ export class WalletService {
             } catch (e) {
                 console.error("Error with: " + e);
                 store.dispatch("setFullErrors", e.response.data.errors);
+
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
             }
             this.wait = false;
         } else {
@@ -172,20 +210,34 @@ export class WalletService {
     // }
 
     async fetch() {
-        let response = null;
+        if (store.getters.getActive !== -1) {
+            this.emptyTable = false;
+            this.waitWallets = true;
 
-        try {
-            response = (
-                await api.get(`/wallets/${this.group_id}`, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                })
-            ).data.data;
-        } catch (e) {
-            store.dispatch("setFullErrors", e.response.data.errors);
+            let response = null;
+
+            try {
+                response = (
+                    await api.get(`/wallets/${store.getters.getActive}`, {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    })
+                ).data.data;
+            } catch (err) {
+                store.dispatch("setFullErrors", err.response.data.errors);
+
+                openNotification(
+                    false,
+                    this.translate("validate_messages.error"),
+                    err.response.data.message
+                );
+
+                this.emptyTable = true;
+                this.waitWallets = false;
+            }
+
+            return response;
         }
-
-        return response;
     }
 }
