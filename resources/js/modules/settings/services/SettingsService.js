@@ -25,8 +25,6 @@ export class SettingsService {
         this.qrCode = null;
         this.code = null;
 
-        this.verifyTimer = 0;
-
         this.closed = false;
         this.openedFacPopup = false;
         this.closedFacPopup = false;
@@ -49,6 +47,7 @@ export class SettingsService {
 
             this.closeFacPopup();
 
+            console.log(response);
             openNotification(true, this.translate("validate_messages.connected"), response.data.message);
         } catch (err) {
             console.error(err);
@@ -116,7 +115,6 @@ export class SettingsService {
 
     async sendEmailVerification() {
         try {
-            console.log(store.getters.token);
             const response = await api.post("/email/reverify",
                 {},
                 {
@@ -124,13 +122,12 @@ export class SettingsService {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
                 }
-            )
+            );
 
             openNotification(true, this.translate("validate_messages.success"), response.data.message);
         } catch (err) {
             console.error("Error with: " + err);
 
-            this.verifyTimer = 60000;
             openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
         }
     }

@@ -11,7 +11,6 @@
             :keyForm="row.name"
             v-for="(row, i) in rows"
             :key="i"
-            :verifyTimer="verifyTimer"
         />
 <!--        <button @click="$emit('send2fac')">2fac</button>-->
     </div>
@@ -24,7 +23,6 @@ export default {
     name: "settings-form",
     props: {
         rows: Array,
-        verifyTimer: Number,
     },
     components: {
         SettingsRow,

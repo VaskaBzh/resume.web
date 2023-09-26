@@ -23,7 +23,7 @@ import { mapGetters } from "vuex";
 
 export default {
     name: "settings-row",
-    props: ["val", "svg", "name", "keyForm", "verifyTimer"],
+    props: ["val", "svg", "name", "keyForm"],
     i18n: {
         sharedMessages: SettingsMessage,
     },
@@ -36,11 +36,6 @@ export default {
         name(newRowName) {
             if (newRowName === this.$t("settings.block.settings_block.labels.email")) {
                 this.buttonName = !!this.user.email_verified_at ? this.$t("button") : this.$t("button_verify");
-            }
-        },
-        verifyTimer(newTimerValue) {
-            if (!this.user.email_verified_at) {
-                this.setTimer(newTimerValue)
             }
         }
     },
@@ -115,7 +110,13 @@ export default {
             if (pas) {
                 data.password = pas;
             }
-            this.$emit("openPopup", data);
+            if (this.overTime === 0) {
+                this.$emit("openPopup", data);
+            }
+
+            if (!this.user.email_verified_at) {
+                this.setTimer(60000);
+            }
         },
         change_val() {
             if (this.val !== "..." && this.val !== "********") {

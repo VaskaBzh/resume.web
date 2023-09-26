@@ -90,6 +90,8 @@ export default defineComponent({
     width: 100%;
     padding: 40px 16px 16px;
     gap: 8px;
+
+    min-height: 100vh;
 }
 @media (max-width: 900px) {
     .nav__content {
