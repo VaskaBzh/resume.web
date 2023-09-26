@@ -99,9 +99,21 @@ export default {
         }
     }
 
-    .card.sm {
-        min-height: 404px;
+
+    @media (max-width: 900px) {
+        .card.sm {
+            min-height: 525px;
+        }
     }
+
+    @media (max-width: 497.98px) {
+        .card.sm {
+            min-height: 404px;
+        }
+    }
+
+
+
 
     &_wrapper {
         display: grid;

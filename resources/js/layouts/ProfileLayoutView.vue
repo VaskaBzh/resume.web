@@ -167,7 +167,7 @@ export default {
     color: var(--status-failed, #f1404a);
 }
 .note-animation {
-    z-index: 10;
+    z-index: 9999999999;
     animation: noteAnimation 6s linear;
     position: fixed;
     top: 112px;

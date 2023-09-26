@@ -341,9 +341,11 @@ export default {
     }
     @media (min-width: 767.98px) {
         right: 60px;
+        min-width: 200px;
     }
-    @media (min-width: 479.98px) {
+    @media (max-width: 479.98px) {
         bottom: 50px;
+        min-width: 140px;
     }
     right: 15px;
     bottom: calc(30px);

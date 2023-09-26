@@ -652,6 +652,7 @@ export default {
         position: absolute;
         left: 12px;
         bottom: 73px;
+        top: 360px;
     }
     .tick {
         max-width: 24px;

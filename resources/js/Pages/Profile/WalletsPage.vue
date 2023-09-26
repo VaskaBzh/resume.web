@@ -68,7 +68,6 @@
             </div>
         </div>
     </div>
-    <teleport to="body">
         <main-popup
             id="changeWallet"
             :wait="wallets.wait"
@@ -203,7 +202,6 @@
                 </button>
             </form>
         </main-popup>
-    </teleport>
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
