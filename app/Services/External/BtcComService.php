@@ -84,7 +84,7 @@ class BtcComService
     /**
      * Инвормация о сабаккаунте
      */
-    public function getSub(int $groupId): array
+    public function getSub(int $groupId): ?array
     {
         return $this->call(segments: ['groups', $groupId], params: [
             'puid' => self::PU_ID,
