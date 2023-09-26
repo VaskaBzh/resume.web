@@ -26,9 +26,11 @@ use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteCo
 use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ResendVerifyEmailController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -56,13 +58,13 @@ Route::group([
     Route::group([
         'prefix' => 'workers',
     ], function () {
-        Route::get('{sub}', WorkerListController::class)->name('worker.list');
-        Route::get('worker/{worker}', WorkerShowController::class)->name('worker.show');
+        Route::get('/{sub}', WorkerListController::class)->name('worker.list');
+        Route::get('/worker/{worker}', WorkerShowController::class)->name('worker.show');
     });
 
     Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');
     Route::get('/incomes/{sub}', ListController::class)->name('income.list');
-    Route::get('payouts/{sub}', PayoutListController::class)->name('payout.list');
+    Route::get('/payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');
     Route::get('/allowed/{token}', AllowedRoutesController::class)->name('allowed-routes');
 });
@@ -71,9 +73,11 @@ Route::group([
 Route::group([
     'middleware' => 'auth:sanctum'
 ], function () {
-    Route::post('logout', [LoginController::class, 'logout']);
-    Route::put('reset', [ResetPasswordController::class, 'changePassword']);
-    Route::put('/change/{user}', AccountController::class)->name('change');
+    Route::get('/user', UserController::class)->name('user.show');
+    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/email/reverify', ResendVerifyEmailController::class)->name('resend-verify-email');
+    Route::put('/reset', [ResetPasswordController::class, 'changePassword']);
+    Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
     Route::group([
@@ -93,7 +97,7 @@ Route::group([
         'prefix' => 'wallets',
         'middleware' => ['verified', 'verify-expiration']
     ], function () {
-        Route::get('{sub}', WalletListController::class)->name('wallet.list');
+        Route::get('/{sub}', WalletListController::class)->name('wallet.list');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
         Route::put('/update', WalletUpdateController::class)->name('wallet.update');
     });
