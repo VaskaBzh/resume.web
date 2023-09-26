@@ -3,15 +3,24 @@ import api from "@/api/api"
 export default {
     actions: {
         async setUser({ commit, dispatch, state }, user = null) {
-            // if (!user) {
-            //  const response = (await api.get("/get_user", {
-            //          headers: {
-            //              Authorization: `Bearer ${state.token}`,
-            //          },
-            //      })).data.data;
-            // }
+            let response = null;
 
-            const userData = user ?? JSON.parse(localStorage.getItem("user")) /* response */;
+            if (!user && state.token) {
+                try {
+
+                    response = (await api.get("/user", {
+                        headers: {
+                            Authorization: `Bearer ${state.token}`,
+                        },
+                    })).data.data;
+                } catch (err) {
+                    console.error(err);
+
+                    response = null;
+                }
+            }
+
+            const userData = user ?? response ?? JSON.parse(localStorage.getItem("user"));
             commit("changeUser", userData);
 
             dispatch("saveUser");

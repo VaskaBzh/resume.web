@@ -97,6 +97,10 @@ export default {
             isOpenBurger: false,
         };
     },
+    async created() {
+        await this.$store.dispatch("setUser");
+        this.$store.dispatch("setToken");
+    }
 };
 </script>
 <style scoped>

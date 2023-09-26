@@ -112,6 +112,25 @@ export class SettingsService {
         );
     }
 
+    async sendEmailVerification() {
+        try {
+            const response = await api.post("/email/reverify",
+                {},
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            )
+
+            openNotification(true, this.translate("validate_messages.success"), response.data.message);
+        } catch (err) {
+            console.error("Error with: " + err);
+
+            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+        }
+    }
+
     setUser(user) {
         this.user = user;
     }
@@ -242,16 +261,20 @@ export class SettingsService {
         this.clearProfit = newProfit;
     }
 
-    getHtml(data) {
+    async getHtml(data) {
         // item: data.name === "пароль" ? "" : data.val,
-        this.form = {
-            ...this.form,
-            item:
-                data.name === this.translate("inputs.password")
-                    ? this.translate("inputs.old_password")
-                    : data.val,
-            type: data.name,
-            key: data.key,
-        };
+        if (data.verify) {
+            this.form = {
+                ...this.form,
+                item:
+                    data.name === this.translate("inputs.password")
+                        ? this.translate("inputs.old_password")
+                        : data.val,
+                type: data.name,
+                key: data.key,
+            };
+        } else {
+            await this.sendEmailVerification()
+        }
     }
 }
