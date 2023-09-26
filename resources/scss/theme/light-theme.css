@@ -28,7 +28,8 @@
   --text-table-title: #98A2B3;
   --text-primary-inverse: #FFFFFF;
   --text-focus: #2E90FA;
-
+  --select-text-no-value: #d0d5dd;
+  
     /* status */
   --death: #667085;
 
