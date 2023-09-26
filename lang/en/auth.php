@@ -18,4 +18,5 @@ return [
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'email.verify' => 'Verify mail send to email address :value',
     'email.already_verify' => 'Verify mail :value already verified :date',
+    'email.verify.delay' => 'Your email :value verified successfully, wait :time (hour) for full access',
 ];
