@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
@@ -22,8 +24,6 @@ class LoginController extends Controller
     | to conveniently provide its functionality to your applications.
     |
     */
-
-//
 
     use AuthenticatesUsers;
 
@@ -68,22 +68,4 @@ class LoginController extends Controller
             ->currentAccessToken()
             ->update(['expires_at' => now()->addHours(2)]);
     }
-
-    public function reVerify(Request $request): JsonResponse
-    {
-        if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-            return new JsonResponse([
-                'error' => [__('auth.failed')]
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
-        User::whereEmail($request->email)
-            ->first()
-            ->sendEmailVerificationNotification();
-
-        return new JsonResponse([
-            $request->email => [__('auth.email.verify')],
-        ]);
-    }
-
 }
