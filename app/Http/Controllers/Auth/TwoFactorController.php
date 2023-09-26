@@ -55,7 +55,7 @@ class TwoFactorController extends Controller
             if (!$isValid) {
                 return new JsonResponse([
                     'error' => 'Не верный код'
-                ], 401);
+                ], Response::HTTP_BAD_REQUEST);
             }
         } catch (\Exception $e) {
             report($e);
