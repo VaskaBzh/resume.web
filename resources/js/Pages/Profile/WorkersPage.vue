@@ -34,32 +34,33 @@
                     <worker-card
                         class="workers__card"
                         v-if="
-                            viewportWidth > 500 &&
+                            viewportWidth > 1200 &&
                             Object.entries(worker_service.target_worker)
                                 .length > 0
                         "
                         :target_worker="worker_service.target_worker"
                         :graph="worker_service.workers_graph"
-                        @closeCard="dropWorker"
+                        @closeCard="dropWorkers"
                     />
                 </transition>
             </div>
         </div>
     </div>
     <workers-popup-card
-        v-if="viewportWidth <= 500"
+        v-if="viewportWidth <= 1200"
         :wait="worker_service.wait"
         :closed="worker_service.popupCardClosed"
         :opened="worker_service.popupCardOpened"
-        @dropWatcher="dropWorker"
+        @dropWatcher="dropWorkers"
     >
         <worker-card
             class="workers__card"
             v-if="Object.entries(worker_service.target_worker).length > 0"
             :target_worker="worker_service.target_worker"
             :graph="worker_service.workers_graph"
-            @closeCard="dropWorker"
-    /></workers-popup-card>
+            @closeCard="dropWorkers"
+    />
+    </workers-popup-card>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -113,14 +114,14 @@ export default {
         async getTargetWorker(data) {
             await this.worker_service.getPopup(data.id);
 
-            this.viewportWidth > 500
+            this.viewportWidth > 1200
                 ? (this.removePercent = true)
                 : this.worker_service.openPopupCard();
         },
-        dropWorker() {
+        dropWorkers() {
             this.worker_service.dropWorker();
 
-            this.viewportWidth > 500
+            this.viewportWidth > 1200
                 ? (this.removePercent = false)
                 : this.worker_service.closePopupCard();
         },
