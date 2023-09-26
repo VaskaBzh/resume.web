@@ -23,15 +23,19 @@ import { mapGetters } from "vuex";
 
 export default {
     name: "settings-row",
-    props: ["val", "svg", "name", "keyForm"],
+    props: ["val", "svg", "name", "keyForm", "verifyTimer"],
     i18n: {
         sharedMessages: SettingsMessage,
     },
     watch: {
         name(newRowName) {
-            console.log(newRowName);
             if (newRowName === "Email") {
                 this.buttonName = !!this.user.email_verified_at ? this.$t("button") : this.$t("button_verify");
+            }
+        },
+        verifyTimer(newTimerValue) {
+            if (!this.user.email_verified_at) {
+                this.setTimer(newTimerValue)
             }
         }
     },
@@ -56,6 +60,17 @@ export default {
         ...mapGetters(["user"]),
     },
     methods: {
+        setTimer(intervalEndTime) {
+            let overTime = intervalEndTime;
+            const interval = setInterval(() => {
+                if (overTime !== 0) {
+                    overTime = overTime - 1000;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 1000)
+            this.buttonName
+        },
         async checkbox_changes(data) {
             if (this.val !== null) {
                 let form = {

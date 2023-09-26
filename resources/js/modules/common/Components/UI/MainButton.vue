@@ -63,4 +63,7 @@ export default {
     height: 24px;
     stroke: #2e90fa;
 }
+.button-disabled {
+    opacity: 0.5;
+}
 </style>

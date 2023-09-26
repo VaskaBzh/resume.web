@@ -5,9 +5,10 @@ export default {
         async setUser({ commit, dispatch, state }, user = null) {
             let response = null;
 
+            state.localUser = user ?? JSON.parse(localStorage.getItem("user"));
+
             if (!user && state.token) {
                 try {
-
                     response = (await api.get("/user", {
                         headers: {
                             Authorization: `Bearer ${state.token}`,
@@ -58,11 +59,15 @@ export default {
     },
     state: {
         user: {},
+        localUser: {},
         token: "",
     },
     getters: {
         user(state) {
             return state.user;
+        },
+        localUser(state) {
+            return state.localUser;
         },
         token(state) {
             return state.token;

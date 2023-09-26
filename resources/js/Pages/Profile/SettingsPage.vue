@@ -12,6 +12,7 @@
                     <settings-list
                         :rows="settingsService.rows"
                         @openPopup="settingsService.getHtml($event)"
+                        :verifyTimer="settingsService.verifyTimer"
                     />
                 </div>
             </div>

@@ -162,6 +162,7 @@ export class TabsService {
     }
 
     setWithoutReferralTab() {
+        console.log(this.links)
         this.links = [
             ...this.links,
             {

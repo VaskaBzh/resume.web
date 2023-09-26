@@ -25,6 +25,8 @@ export class SettingsService {
         this.qrCode = null;
         this.code = null;
 
+        this.verifyTimer = 0;
+
         this.closed = false;
         this.openedFacPopup = false;
         this.closedFacPopup = false;
@@ -127,6 +129,7 @@ export class SettingsService {
         } catch (err) {
             console.error("Error with: " + err);
 
+            this.verifyTimer = 60000;
             openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
         }
     }
