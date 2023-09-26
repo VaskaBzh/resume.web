@@ -24,8 +24,8 @@ export class LoginService {
 
             const user = response.data.user;
             const token = response.data.token;
-            store.dispatch("setUser", user);
             store.dispatch("setToken", token);
+            store.dispatch("setUser", user);
 
             // if (this.route?.query?.verify_hash) {
             //     await api.post("/verify", {

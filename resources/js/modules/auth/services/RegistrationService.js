@@ -33,8 +33,8 @@ export class RegistrationService {
 
                     const user = response.data.user;
                     const token = response.data.token;
-                    store.dispatch("setUser", user);
                     store.dispatch("setToken", token);
+                    store.dispatch("setUser", user);
 
                     this.router.push({
                         name: "confirm",

@@ -116,6 +116,7 @@ export class SettingsService {
 
     async sendEmailVerification() {
         try {
+            console.log(store.getters.token);
             const response = await api.post("/email/reverify",
                 {},
                 {

@@ -107,6 +107,8 @@ export default {
         user(newUser) {
             this.settingsService.setUser(newUser);
             this.settingsService.setUserData();
+
+            this.settingsProcess();
         },
     },
     methods: {
