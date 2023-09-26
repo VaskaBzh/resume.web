@@ -1,7 +1,17 @@
+import api from "@/api/api"
+
 export default {
     actions: {
-        setUser({ commit, dispatch }, user = null) {
-            const userData = user ?? JSON.parse(localStorage.getItem("user"));
+        async setUser({ commit, dispatch, state }, user = null) {
+            // if (!user) {
+            //  const response = (await api.get("/get_user", {
+            //          headers: {
+            //              Authorization: `Bearer ${state.token}`,
+            //          },
+            //      })).data.data;
+            // }
+
+            const userData = user ?? JSON.parse(localStorage.getItem("user")) /* response */;
             commit("changeUser", userData);
 
             dispatch("saveUser");

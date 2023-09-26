@@ -38,6 +38,9 @@ export class RegistrationService {
 
                     this.router.push({
                         name: "confirm",
+                        query: {
+                            email: user.email,
+                        },
                     });
                 } catch (err) {
                     console.error("Error with: " + err);

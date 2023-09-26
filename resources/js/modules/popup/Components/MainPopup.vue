@@ -117,7 +117,7 @@ export default {
     transition: all 0.5s ease 0s, z-index 0s ease 0s;
     overflow: visible;
     opacity: 1;
-    z-index: 1;
+    z-index: 112;
 }
 .popup__wrapper {
     width: 100%;

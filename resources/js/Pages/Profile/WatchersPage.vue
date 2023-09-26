@@ -125,7 +125,6 @@ export default {
             return this.service.card?.name;
         },
         activeCard() {
-            console.log(this.service.card);
             return this.service.card;
         },
     },

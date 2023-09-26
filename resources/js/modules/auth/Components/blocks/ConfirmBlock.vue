@@ -4,7 +4,7 @@
             Подтверждение регистрации
         </main-title>
         <main-description class="description-base">
-            На почту alysikova.sidorova@gmail.com было отправлено письмо со ссылкой для подтверждения регистрации. Проверьте папку “Спам“, если не обнаружили письмо в списке входящих.
+            На почту {{ this.$route.query?.email }} было отправлено письмо со ссылкой для подтверждения регистрации. Проверьте папку “Спам“, если не обнаружили письмо в списке входящих.
         </main-description>
     </div>
 </template>
@@ -18,6 +18,13 @@ export default {
     components: {
         MainTitle,
         MainDescription,
+    },
+    mounted() {
+        if (!this.$route.query?.email) {
+            this.$router.push({
+                name: "home",
+            })
+        }
     }
 }
 </script>
