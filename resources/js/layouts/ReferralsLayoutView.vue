@@ -114,7 +114,6 @@ export default {
                 font-weight: 600;
                 line-height: 16px;
                 padding: 12px 0;
-                min-width: unset;
                 background: transparent;
             }
         }

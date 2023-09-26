@@ -340,11 +340,12 @@ export default {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-island, #fff);
     padding: var(--py-4, 16px) var(--px-4, 16px);
-    color: var(--select-text-no-value-day, #d0d5dd);
+    color: var(-text-secondary);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
+    outline: var(--states-border-focus, #2E90FA);
     line-height: 24px; /* 150% */
 }
 .blue-button {
