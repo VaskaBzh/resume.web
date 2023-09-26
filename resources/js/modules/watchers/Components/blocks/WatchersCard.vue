@@ -249,8 +249,10 @@ export default {
 .title-mobile {
     display: inline-block;
 }
-.card_copy {
-    background: var(--background-island-inner-3);
+@media(max-width: 500px){
+    .title-mobile{
+    font-size: 19px;
+}
 }
 .card__wrapper {
     position: relative;
