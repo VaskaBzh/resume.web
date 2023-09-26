@@ -70,11 +70,11 @@ export default {
     }
     // .calculator__title
     &__title {
-        font-family: AmpleSoftPro, serif;
         font-style: normal;
         font-weight: 500;
         font-size: 53px;
         line-height: 107.6%;
+        font-family: AmpleSoftPro, serif;
         color: #000034;
         @media (max-width: 1270px) {
             margin-bottom: 16px;

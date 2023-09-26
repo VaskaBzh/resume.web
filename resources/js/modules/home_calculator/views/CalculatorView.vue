@@ -116,7 +116,7 @@ export default {
 
     &_title {
    margin-bottom: 24px;
-   font-family: AmpleSoft Pro;
+   font-family: AmpleSoftPro, serif;
 
     }
     &_description {

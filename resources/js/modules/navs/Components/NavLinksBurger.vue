@@ -362,6 +362,7 @@ export default {
             top: 59px;
             padding: 32px 16px 24px;
             max-width: 100%;
+            min-width: 100%;
         }
 
         &.open {

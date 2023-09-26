@@ -138,18 +138,18 @@
                         v-scroll="'left'"
                     >
                         <blue-button
-                            class="big"
+                            class="big btn-line-graph"
                             v-if="viewportWidth < 991.98 && this.auth_user"
                         >
                             <router-link
-                                :to="{ name: 'acconts' }"
+                                :to="{ name: 'accounts' }"
                                 class="all-link"
                             >
                                 {{ $t("home.button") }}</router-link
                             >
                         </blue-button>
                         <blue-button
-                            class="big"
+                            class="big btn-line-graph"
                             v-else-if="viewportWidth < 991.98"
                         >
                             <a href="#" data-popup="#auth" class="all-link">
@@ -294,7 +294,7 @@
                                 </li>
                             </ul>
                             <blue-button
-                                class="big"
+                                class="big btn-line-graph"
                                 v-if="viewportWidth >= 991.98 && this.auth_user"
                             >
                                 <router-link
@@ -307,7 +307,7 @@
                                 >
                             </blue-button>
                             <blue-button
-                                class="big"
+                                class="big btn-line-graph"
                                 v-else-if="
                                     viewportWidth >= 991.98 && !this.auth_user
                                 "
@@ -543,7 +543,7 @@ export default {
         }
 
         @media (max-width: 991.98px) {
-            margin-top: 160px;
+            margin-top: 131px;
             flex-flow: column nowrap;
         }
         @media (max-width: 497.98px) {
@@ -571,7 +571,7 @@ export default {
         max-width: 495px;
         margin-bottom: 20px;
         font-size: 56px;
-        font-family: "AmpleSoft Pro";
+        font-family: AmpleSoftPro, serif;
         line-height: 107.6%;
         @media (max-width: 479.98px) {
             font-size: 35px;
@@ -862,6 +862,7 @@ export default {
         display: flex;
         flex-direction: column;
         flex: 0 1 100%;
+        gap: 10px;
         .blue-button {
             min-width: 222px;
             margin-bottom: 0;
@@ -885,6 +886,10 @@ export default {
             @media (max-width: 767.98px) {
                 gap: 20px;
                 padding-left: 20px;
+            }
+            @media (max-width: 370.98px) {
+                gap: 20px;
+                padding-left: 0;
             }
         }
         // .home-im__content_item
@@ -1095,6 +1100,10 @@ export default {
         from {
             transform: rotate(360deg);
         }
+    }
+
+    .btn-line-graph {
+        margin-top: 20px;
     }
 }
 </style>
