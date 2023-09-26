@@ -128,6 +128,9 @@ export default {
         font-size: 20px;
         font-weight: 400;
         line-height: 32px;
+        @media(max-width: 900px){
+            line-height: 36px;
+        }
     }
 
     &_num {
