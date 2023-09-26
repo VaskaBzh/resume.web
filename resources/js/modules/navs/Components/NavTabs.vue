@@ -133,6 +133,7 @@ export default defineComponent({
     .open-burger {
         display: inline-block;
         animation: openBurger 0.4s linear;
+        min-width: 100%;
     }
     @keyframes openBurger {
         0% {
