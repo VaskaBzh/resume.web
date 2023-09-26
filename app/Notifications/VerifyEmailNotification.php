@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -33,11 +35,11 @@ class VerifyEmailNotification extends VerifyEmail
     {
         return URL::temporarySignedRoute(
             'v1.verification.verify',
-            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 1440)),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-                'redirect_to' =>  config('app.url') . '/v1/profile/statistic'
+                'redirect_to' =>  config('app.url') . '/profile/statistic'
             ],
             false
         );

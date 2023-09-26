@@ -3,9 +3,7 @@
         class="cabinet__block cabinet__block-light cabinet__block-card card"
         :class="[page == 'worker' ? 'max-width' : '']"
     >
-        <div class="card_svg" v-if="this.$slots.svg">
-            <slot name="svg"></slot>
-        </div>
+
         <div class="card__content">
             <main-title class="headline">
                 {{ title }}

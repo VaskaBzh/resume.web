@@ -191,12 +191,16 @@ export default {
     &__content {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        // grid-template-rows: repeat(2, auto);
         gap: 16px;
-        @media (max-width: $mobile) {
+        @media (max-width: 768px) {
             display: flex;
             flex-direction: column;
             gap: 8px;
+        }
+        @media screen and (max-width: 1320px) {
+            display: grid;
+            grid-template-rows: repeat(2, 1fr);
+            grid-template-columns: unset;
         }
     }
 
