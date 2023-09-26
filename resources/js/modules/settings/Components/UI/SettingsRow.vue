@@ -9,7 +9,7 @@
             <span class="text text-black text-b">{{ this.value }}</span>
         </div>
         <span class="change-text">
-            {{ $t("button") }}
+            {{ buttonName }}
         </span>
     </div>
 </template>
@@ -27,15 +27,27 @@ export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
+    watch: {
+        name(newRowName) {
+            console.log(newRowName);
+            if (newRowName === "Email") {
+                this.buttonName = !!this.user.email_verified_at ? this.$t("button") : this.$t("button_verify");
+            }
+        }
+    },
     data() {
         return {
             value: this.val,
+            buttonName: this.$t("button"),
         };
     },
     beforeUpdate() {
         this.value = this.val;
     },
     mounted() {
+        if (this.name === "Email") {
+            this.buttonName = !!this.user.email_verified_at ? this.$t("button") : this.$t("button_verify");
+        }
         if (this.val === "..." || this.val === null) {
             this.value = this.val;
         }

@@ -109,7 +109,7 @@ export default {
     //     padding: 10px 0;
     // }
     &:not(:last-child) {
-        border-bottom: 1px solid #e6eaf0;
+        border-bottom: 1px solid var(--text-fourth);
     }
     &_title {
         color: var(--text-secondary, #475467);

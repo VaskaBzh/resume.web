@@ -345,8 +345,12 @@ export default {
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
-    outline: var(--states-border-focus, #2E90FA);
+    outline: none;
+    border: 1px solid transparent;
     line-height: 24px; /* 150% */
+}
+.popup__input:focus {
+    border: 1px solid #2E90FA;
 }
 .blue-button {
     border-radius: 12px;

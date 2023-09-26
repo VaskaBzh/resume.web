@@ -138,12 +138,12 @@ export class SettingsService {
             //     this.userData.password,
             //     "password"
             // ),
-            new RowData(
-                this.translate("settings.block.settings_block.labels.phone"),
-                "phone",
-                this.userData.phone,
-                "phone"
-            ),
+            // new RowData(
+            //     this.translate("settings.block.settings_block.labels.phone"),
+            //     "phone",
+            //     this.userData.phone,
+            //     "phone"
+            // ),
         ];
     }
 

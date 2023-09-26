@@ -7,4 +7,3 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes(['logout' => false]);
-Route::post('/reverify', [LoginController::class, 'reVerify'])->name('reverify');

@@ -1,18 +1,17 @@
 import { RouteNamesMap } from "../map/RouteNamesMap";
 
-export class RouteAuthData {
+export class RouteConfirmData {
     constructor(name, component) {
         this.path = `/${name}`;
         this.name = name;
         this.component = () =>
-            import(`../../Pages/${RouteNamesMap.public[component]}.vue`);
-        this.query = {
-            referral_code: "",
+                    import(`../../Pages/${RouteNamesMap.public[component]}.vue`);
+        this.props = {
+            email: "",
         };
         this.meta = {
             middleware: [
                 "LoadLayoutMiddleware",
-                "AuthMiddleware",
                 "DropErrorsMiddleware",
             ],
             layout: "AuthLayoutView",
