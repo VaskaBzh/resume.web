@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Middleware;
 
 use Closure;
@@ -9,13 +11,14 @@ class EmailVerificationExpirationMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        if (now() < $request->user()->email_verified_at->addDay()) {
-            abort(403, __('auth.email.verify.delay', [
-                    'value' => $request->user()->email,
-                    'time' => now()->diffInHours($request->user()->email_verified_at)
-                ])
-            );
-        }
+        abort_if(
+            now() < $request->user()->email_verified_at->addDay(),
+            403,
+            __('auth.email.verify.delay', [
+                'value' => $request->user()->email,
+                'time' => now()->diffInHours($request->user()->email_verified_at)
+            ])
+        );
 
         return $next($request);
     }
