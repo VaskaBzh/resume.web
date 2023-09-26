@@ -25,7 +25,7 @@ class VerifyEmailNotification extends VerifyEmail
 
         return (new MailMessage)
             ->line('Нажмите кнопку "Подвердить почту"  перейдите по ссылке для активации аккаунта')
-            ->action('Подвердить почту', $url)
+            ->action('Подвердить почту', config('app.url') . $url)
             ->line('Thank you for using our application!');
     }
 
@@ -37,8 +37,9 @@ class VerifyEmailNotification extends VerifyEmail
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-                'redirect_to' => url('/profile/statistic')
-            ]
+                'redirect_to' =>  config('app.url') . '/v1/profile/statistic'
+            ],
+            false
         );
     }
 

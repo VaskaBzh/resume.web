@@ -127,7 +127,9 @@ export default {
             }
         },
         "$i18n.locale"() {
-            this.allowedRoutes.map((route, i) => route.name = this.$t(`tabs[${i}]`))
+            this.allowedRoutes.map(
+                (route, i) => (route.name = this.$t(`tabs[${i}]`))
+            );
         },
     },
     data() {
@@ -243,16 +245,8 @@ export default {
     display: flex;
     flex-direction: column;
 }
-.title-mobile{
+.title-mobile {
     display: inline-block;
-}
-@media(max-width:500px){
-    .card {
-        display: none;
-    }
-    .title-mobile{
-    display: none;
-}
 }
 .card__wrapper {
     position: relative;

@@ -69,6 +69,11 @@ export default {
         min-width: 100%;
     }
 }
+@media(max-width:497.98px){
+    .max-width{
+        min-width: 48%;
+    }
+}
 .statistic-card-title{
     color: var(--light-gray-400, #98A2B3);
     font-family: NunitoSans;

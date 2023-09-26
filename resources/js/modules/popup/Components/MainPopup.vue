@@ -1,5 +1,5 @@
 <template>
-    <div class="popup" :class="{ 'popup-show': service.isOpened }">
+    <div class="popup" :id="id" :class="{ 'popup-show': service.isOpened }">
         <un-click-view :wait="wait" />
         <div class="popup__wrapper">
             <div
@@ -165,9 +165,10 @@ export default {
     z-index: 2;
 }
 @media (max-width: 900px) {
+    .popup__wrapper {
+        padding: 16px;
+    }
     .popup__content {
-        width: 92vw !important;
-        height: auto !important;
         padding: 16px;
     }
     .popup__block {

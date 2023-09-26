@@ -85,6 +85,7 @@ export default {
     }
     &__buttons {
         min-height: 48px;
+
     }
     &__cabinet {
         gap: 24px;
@@ -100,9 +101,22 @@ export default {
                 width: 0;
                 display: none;
             }
+
+
+
         }
+
         &-list {
             width: fit-content;
+            @media (max-width: 497.98px) {
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 16px;
+                padding: 12px 0;
+                min-width: unset;
+                background: transparent;
+            }
         }
     }
 }

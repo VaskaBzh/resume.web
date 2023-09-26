@@ -34,7 +34,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('income')->dailyAt('07:00');
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
-        $schedule->command('make:worker-hashes')->everyThirtyMinutes();
+        $schedule->command('make:worker-hashes')->everyFifteenMinutes();
     }
 
     /**
