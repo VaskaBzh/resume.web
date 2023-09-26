@@ -16,7 +16,7 @@ class EmailVerificationExpirationMiddleware
             403,
             __('auth.email.verify.delay', [
                 'value' => $request->user()->email,
-                'time' => now()->diffInHours($request->user()->email_verified_at)
+                'time' => now()->diffInHours($request->user()->email_verified_at->addDay())
             ])
         );
 
