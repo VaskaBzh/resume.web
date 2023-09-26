@@ -12,8 +12,10 @@ use Illuminate\Http\RedirectResponse;
 
 class AccountController extends ResetPasswordController
 {
-    public function __invoke(UserUpdateRequest $request, User $user): JsonResponse
+    public function __invoke(UserUpdateRequest $request): JsonResponse
     {
+        $user = auth()->user();
+
         if ($request->has('password')) {
             $this->changePassword($request);
         }

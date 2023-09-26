@@ -15,6 +15,7 @@ use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class BtcComService
 {
@@ -50,6 +51,8 @@ class BtcComService
                 ->client
                 ->$method(implode('/', $segments), $params);
 
+            Log::channel('btc_com')->info('BTC.COM RESPONSE', ['Response' => $response->json()]);
+
             if (filled($response['data'])) {
                 return $response['data'];
             }
@@ -81,7 +84,7 @@ class BtcComService
     /**
      * Инвормация о сабаккаунте
      */
-    public function getSub(int $groupId): array
+    public function getSub(int $groupId): ?array
     {
         return $this->call(segments: ['groups', $groupId], params: [
             'puid' => self::PU_ID,

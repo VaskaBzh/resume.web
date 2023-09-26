@@ -11,6 +11,7 @@ use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Log;
 
 class MakeWorkerHashesCommand extends Command
@@ -30,35 +31,29 @@ class MakeWorkerHashesCommand extends Command
         Worker::all()->each(static function (Worker $worker) use ($btcComService) {
 
             DeleteOldWorkerHashrates::execute(
-                query: WorkerHashrate::oldestThan(
-                    workerId: $worker->worker_id,
-                    date: now()->subMonths(2)->toDateTimeString()
-                )
+                workerId: $worker->worker_id,
+                date: now()->subMonths(2)->toDateTimeString()
             );
 
-            try {
-                $btcWorker = $btcComService->getWorker($worker->worker_id);
+            $btcWorker = $btcComService->getWorker($worker->worker_id);
 
-                if ($btcWorker->isNotEmpty()) {
-                    WorkerHashrate::create([
-                        'worker_id' => $worker->worker_id,
-                        'hash' => $btcWorker['shares_1m'] ?? 0,
-                        'unit' => $btcWorker['shares_unit'] ?? 'T',
-                    ]);
+            if ($btcWorker->isNotEmpty()) {
+                WorkerHashrate::create([
+                    'worker_id' => $worker->worker_id,
+                    'hash' => $btcWorker['shares_1m'] ?? 0,
+                    'unit' => $btcWorker['shares_unit'] ?? 'T',
+                ]);
 
-                    Update::execute($worker, workerData: WorkerData::fromRequest([
-                        'worker_id' => $worker->worker_id,
-                        'group_id' => $worker->group_id,
-                        'approximate_hash_rate' => $btcWorker['shares_1d']
-                    ]));
-                }
-            } catch (\Exception $e) {
-                report($e);
+                Update::execute($worker, workerData: WorkerData::fromRequest([
+                    'worker_id' => $worker->worker_id,
+                    'group_id' => $worker->group_id,
+                    'approximate_hash_rate' => $btcWorker['shares_1d']
+                ]));
             }
+
+            Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE');
         });
 
-        Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE');
-
-        $this->call('make:sub-hashes');
+        Artisan::call('make:sub-hashes');
     }
 }
