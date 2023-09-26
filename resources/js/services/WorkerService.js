@@ -20,6 +20,8 @@ export class WorkerService {
         this.waitWorkers = true;
         this.emptyWorkers = false;
         this.waitTargetWorkers = true;
+        this.popupCardOpened = false;
+        this.popupCardClosed = false;
         this.target_worker = {};
 
         this.route = route;
@@ -205,6 +207,22 @@ export class WorkerService {
         });
     }
 
+    openPopupCard() {
+        this.popupCardOpened = true;
+
+        setTimeout(() => {
+            this.popupCardOpened = false;
+        }, 300);
+    }
+
+    closePopupCard() {
+        this.popupCardClosed = true;
+
+        setTimeout(() => {
+            this.popupCardClosed = false;
+        }, 300);
+    }
+
     async getPopup(worker_id) {
         this.updateGroup_id();
 
@@ -215,11 +233,6 @@ export class WorkerService {
 
         await this.makeFullValues();
         await this.getWorker();
-
-        // const titles = this.titles;
-        //
-        // if (titles.length === this.titles.length) titles.pop();
-        // this.useTranslater(titles);
 
         this.waitTargetWorkers = false;
     }

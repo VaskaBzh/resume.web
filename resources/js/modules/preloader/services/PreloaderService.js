@@ -90,7 +90,9 @@ export class PreloaderService {
     }
 
     setProgressEnd() {
-        this.progressPercentage = this.translate("preloader.text");
+        this.progressPercentage = this.translate
+            ? this.translate("preloader.text")
+            : "No info";
     }
 
     killProcess() {

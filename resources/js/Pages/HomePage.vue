@@ -539,11 +539,15 @@ export default {
         display: flex;
         @media (min-width: 991.98px) {
             margin-bottom: 295px;
-            margin-top: 240px;
+            margin-top: 160px;
         }
 
         @media (max-width: 991.98px) {
             margin-top: 160px;
+            flex-flow: column nowrap;
+        }
+        @media (max-width: 497.98px) {
+            flex-flow: column nowrap;
         }
     }
     // .home__content
@@ -876,9 +880,11 @@ export default {
             gap: 16px;
             @media (max-width: 1320.98px) {
                 gap: 8px;
+                padding-left: 20px;
             }
             @media (max-width: 767.98px) {
                 gap: 20px;
+                padding-left: 20px;
             }
         }
         // .home-im__content_item

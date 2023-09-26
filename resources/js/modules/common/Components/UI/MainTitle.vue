@@ -30,6 +30,9 @@ h1 {
     font-style: normal;
     font-weight: 500;
     line-height: 107.6%;
+    @media (max-width: 479.98px) {
+        font-size: 36px;
+    }
 }
 
 h2 {
@@ -37,6 +40,10 @@ h2 {
     font-style: normal;
     font-weight: 500;
     line-height: 105%;
+
+    @media (max-width: 479.98px) {
+        font-size: 36px;
+    }
 
 }
 
@@ -46,7 +53,7 @@ h3 {
     font-weight: 400;
     line-height: 160%; /* 32px */
     @media (max-width: 479.98px) {
-        font-size: 16px;
+        font-size: 20px;
     }
 }
 

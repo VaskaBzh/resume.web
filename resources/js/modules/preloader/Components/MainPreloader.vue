@@ -70,7 +70,6 @@ export default {
             return !this.wait && !this.empty && this.end;
         },
         progressValue() {
-            console.log(this.service.progressPercentage);
             return this.service.progressPercentage.length > 3
                 ? this.service.progressPercentage
                 : `${this.service.progressPercentage}%`;
