@@ -248,6 +248,11 @@ export default {
 .title-mobile {
     display: inline-block;
 }
+@media(max-width: 500px){
+    .title-mobile{
+    font-size: 19px;
+}
+}
 .card__wrapper {
     position: relative;
     flex: 1 1 auto;
