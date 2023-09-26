@@ -4,7 +4,6 @@
         v-scroll="'opacity transition--fast'"
         v-show="!killPreloaderCondition"
     >
-        <!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
         <div
             class="preloader__wrap"
             :class="{
@@ -12,8 +11,6 @@
                 'preloader__wrap-no-info-after': service.animationIsEnd,
             }"
         >
-            <!--            <transition name="preloader">-->
-            <!--            v-show="!service.animationIsEnd"-->
             <div class="preloader__icon">
                 <preloader-end-icon
                     class="preloader_cross"
@@ -25,7 +22,7 @@
                     class="preloader_logo"
                     id="preloader_logo"
                     :class="{
-                        'preloader_logo-center': endConditionWithoutSlots,
+                        'preloader_logo-center': isLogoCenter,
                     }"
                 />
                 <preloader-container-icon
@@ -33,21 +30,9 @@
                     @getPolygon="service.setPolygon($event)"
                 />
             </div>
-            <!--            </transition>-->
-            <!--            <transition name="preloader">-->
-            <!--                <img-->
-            <!--                    class="preloader_img"-->
-            <!--                    v-show="service.animationIsEnd"-->
-            <!--                    src="../imgs/img_no-information.png"-->
-            <!--                    alt="no-information"-->
-            <!--                >-->
-            <!--            </transition>-->
 
             <transition name="progress">
-                <span
-                    class="preloader_progress"
-                    v-show="!endConditionWithoutSlots || progressVisible"
-                >
+                <span class="preloader_progress" v-show="progressVisible">
                     {{ progressValue }}
                 </span>
             </transition>
@@ -61,12 +46,12 @@ import PreloaderLogoIcon from "../icons/PreloaderLogoIcon.vue";
 
 import { PreloaderService } from "../services/PreloaderService";
 import PreloaderContainerIcon from "../icons/PreloaderContainerIcon.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-preloader",
     props: {
         wait: Boolean,
-        end: Boolean,
         empty: {
             type: Boolean,
             default: false,
@@ -77,16 +62,16 @@ export default {
         },
     },
     computed: {
-        endConditionWithoutSlots() {
-            return !this.wait && this.empty;
+        ...mapGetters(["getActive"]),
+        end() {
+            return !this.wait;
         },
         killPreloaderCondition() {
             return !this.wait && !this.empty && this.end;
         },
         progressValue() {
-            // this.$t('no_info')
-            return this.progressVisible
-                ? this.$t("preloader.text")
+            return this.service.progressPercentage.length > 3
+                ? this.service.progressPercentage
                 : `${this.service.progressPercentage}%`;
         },
     },
@@ -97,31 +82,54 @@ export default {
     },
     data() {
         return {
-            service: new PreloaderService(),
+            service: new PreloaderService(this.$t),
             crossVisible: false,
-            progressVisible: false,
+            progressVisible: true,
+            isLogoCenter: false,
         };
     },
     watch: {
-        killPreloaderCondition() {
-            this.service.killPreloader();
+        empty(newStateEmpty) {
+            // this.service.killPreloader();
+            if (newStateEmpty) {
+                this.progressVisible = false;
+            }
+            this.crossVisible = false;
+            this.isLogoCenter = !!newStateEmpty;
         },
+        // wait(newStateWait) {
+        //     if (newStateWait) {
+        //         this.service.startProcess(this.interval);
+        //     }
+        // },
         end(newEndVal) {
             this.service.endProcess(newEndVal);
         },
-        progressPercentage() {
-            this.service.slowProcess();
-        },
-        "service.crossVisible"() {
-            this.crossVisible = true;
+        "service.crossVisible"(newCrossState) {
+            if (newCrossState) {
+                this.crossVisible = true;
 
-            setTimeout(() => {
+                setTimeout(() => {
+                    this.progressVisible = true;
+                }, 1000);
+            }
+        },
+        getActive(newId, oldId) {
+            if (oldId !== -1) {
                 this.progressVisible = true;
-            }, 1000);
+                this.crossVisible = false;
+
+                this.service.startProcess(this.interval);
+            }
         },
     },
     mounted() {
+        // if (!this.killPreloaderCondition) {
         this.service.startProcess(this.interval);
+        // } else {
+        //     this.service.dropEndAnimation();
+        //     this.service.animateCloseLine();
+        // }
     },
     unmounted() {
         this.service.killPreloader();

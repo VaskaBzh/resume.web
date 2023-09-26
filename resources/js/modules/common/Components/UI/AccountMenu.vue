@@ -38,6 +38,7 @@
                     :key="i"
                     :options="option"
                     :getActive="getActive"
+                    @click="changeActiveAccount(option.value)"
                 ></main-radio>
             </div>
         </div>
@@ -239,6 +240,9 @@ export default {
         },
     },
     methods: {
+        changeActiveAccount(id) {
+            this.$store.dispatch("set_active", { index: id });
+        },
         async openAddPopup() {
             if (this.$route.fullPath !== "/profile/accounts") {
                 await this.$router.push({ name: "accounts" });
@@ -416,6 +420,7 @@ export default {
         }
     }
     &__row {
+        cursor: pointer;
         position: relative;
         &:not(:first-child) {
             height: 40px;

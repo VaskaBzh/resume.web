@@ -85,6 +85,7 @@ export default {
 @media (max-width: 900px) {
     .card__subcontainer {
         width: 100%;
+        flex-direction: column;
     }
     .btn_container {
         justify-content: center;

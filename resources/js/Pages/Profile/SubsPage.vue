@@ -24,6 +24,9 @@
                     </svg>
                 </blue-button>
             </main-title> -->
+            <main-title class="title-sub" tag="h4">{{
+                $t("accounts.title")
+            }}</main-title>
             <div class="accounts__header">
                 <!--                <div class="input__container">-->
                 <!--                    <input-->
@@ -137,10 +140,10 @@
                 <!--                    </div>-->
                 <!--                </div>-->
             </div>
+
             <div v-if="isCard">
                 <div class="accounts__content" v-if="!waitAccounts">
                     <account-profile
-                        @getId="setId"
                         v-for="(account, i) in allAccounts"
                         :key="i + account.name + getActive"
                         :accKey="i"
@@ -206,6 +209,11 @@ export default {
         MainPreloader,
         MainTable,
     },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("accounts.title");
+        },
+    },
     props: ["errors", "message", "user", "auth_user"],
     data() {
         return {
@@ -230,9 +238,6 @@ export default {
         },
     },
     methods: {
-        setId(id) {
-            this.id = id;
-        },
         activeButton(step) {
             if (step === "card") {
                 this.isCard = true;
@@ -258,6 +263,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.title-sub {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-sub {
+        display: inline-block;
+        padding: 0 0 0px 16px;
+    }
+}
 .accounts__header {
     display: flex;
     justify-content: center;

@@ -33,6 +33,12 @@ export default {
     line-height: 150%; /* 24px */;
     margin-bottom: 18px;
 }
+@media(max-width: 500px){
+    .connecting-description{
+        font-size: 12px;
+        line-height: 16px
+    }
+}
 .copy {
     &__block {
         display: flex;

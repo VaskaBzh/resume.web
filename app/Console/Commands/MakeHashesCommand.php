@@ -37,17 +37,15 @@ class MakeHashesCommand extends Command
                 date: now()->subMonths(2)->toDateTimeString()
             );
 
-            try {
-                $subInfo = $btcComService->getSub($sub->group_id);
+            $subInfo = $btcComService->getSub($sub->group_id);
 
+            if (filled($subInfo)) {
                 Hash::create([
                     'group_id' => $sub->group_id,
                     'hash' => Arr::get($subInfo, 'shares_1m', 0),
                     'unit' => Arr::get($subInfo, 'shares_unit', 'T'),
                     'worker_count' => Arr::get($subInfo, 'workers_active', 0)
                 ]);
-            } catch (\Exception $e) {
-                report($e);
             }
         });
 

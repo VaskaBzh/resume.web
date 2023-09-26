@@ -263,6 +263,9 @@ export default {
                 ""
             );
         },
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.wallets");
+        },
     },
     methods: {
         walletInit() {
@@ -425,6 +428,11 @@ input:focus {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 560px;
     padding: 32px 40px;
+}
+@media(max-width: 500px){
+    .wallet-wrapper {
+        padding: 16px;
+    }
 }
 .blue-button-container {
     width: 100%;

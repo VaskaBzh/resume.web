@@ -1,5 +1,5 @@
 <template>
-    <div class="card card-watchers">
+    <div class="card">
         <div class="card__wrapper">
             <div class="card__content">
                 <div class="card__head">
@@ -37,11 +37,9 @@
                 <!--                :tabs="buttons"-->
                 <!--                :active="offset"-->
                 <!--            />-->
-                <main-line-graph
-                    class="card_graph"
-                    :graphData="graph"
-                    :height="height"
-                />
+                <div class="card_graph">
+                    <main-line-graph :graphData="graph" :height="height" />
+                </div>
                 <div class="card__block">
                     <cabinet-card
                         class="card__elem"
@@ -67,6 +65,7 @@
 import MainTabs from "@/modules/common/Components/UI/MainTabs.vue";
 import MainLineGraph from "@/modules/graphs/Components/MainLineGraph.vue";
 import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "worker-card",
@@ -89,9 +88,13 @@ export default {
             await this.height++;
             this.height--;
         }, 10);
-        setTimeout(() => clearInterval(interval), 501);
+        setTimeout(
+            () => clearInterval(interval),
+            this.viewportWidth < 500 ? 3501 : 501
+        );
     },
     computed: {
+        ...mapGetters(["viewportWidth"]),
         hashPerDay() {
             return this.target_worker.hashrate.split(" ")[0];
         },
@@ -122,11 +125,22 @@ export default {
     min-height: 505px;
 }
 .card__wrapper {
-    width: fit-content;
     position: absolute;
     top: 0;
     left: 0;
     padding: 24px;
+    width: 100%;
+}
+@media (max-width: 500px) {
+    .card {
+        border-radius: 0;
+    }
+    .card_close {
+        display: none;
+    }
+    .card__wrapper {
+        padding: 0;
+    }
 }
 .card__content {
     position: relative;
@@ -153,6 +167,9 @@ export default {
     font-size: 18px;
     font-weight: 400;
     line-height: 28px;
+}
+.card_graph {
+    height: 190px;
 }
 .card_status {
     border-radius: 8px;
@@ -182,22 +199,18 @@ export default {
         width: 100%;
         justify-content: space-between;
     }
-    .card {
-        padding: 24px 12px;
-    }
 }
 .card__elem {
     width: 100%;
     border-radius: 24px;
     background: var(--background-island-inner-3, #f8fafd);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
-    width: 100%;
 }
 .card_status-in-active {
     color: var(--status-failed, #f1404a);
     background: var(--background-failed-day, #feeced);
 }
-@media (max-width: 400px) {
+@media (max-width: 410px) {
     .card__block {
         display: flex;
         flex-direction: column;
@@ -209,6 +222,12 @@ export default {
     }
     .card__head {
         gap: 8px;
+    }
+
+    .card_status {
+        border-radius: 8px;
+        background: var(--background-success-night, #21322E);
+        font-size: 12px;
     }
 }
 </style>

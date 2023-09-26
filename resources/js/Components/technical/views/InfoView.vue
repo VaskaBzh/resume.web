@@ -98,6 +98,11 @@ export default {
             padding: 0;
         }
     }
+
+    .card.sm {
+        min-height: 404px;
+    }
+
     &_wrapper {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

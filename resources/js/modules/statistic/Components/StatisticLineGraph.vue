@@ -1,7 +1,7 @@
 <template>
     <div class="cabinet__block cabinet__block-graph cabinet__block-light">
         <div class="cabinet__head">
-            <main-title tag="h3">
+            <main-title tag="h3" class="chart-title-statistic">
                 {{ $t("statistic.chart.title") }}
             </main-title>
             <main-tabs
@@ -58,4 +58,10 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+@media(max-width:500px){
+    .chart-title-statistic{
+        display: none;
+    }
+}
+</style>

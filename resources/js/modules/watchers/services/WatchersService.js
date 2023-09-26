@@ -11,8 +11,14 @@ export class WatchersService extends MetaTableService {
 
         this.form = {};
         this.popupClosed = false;
+        this.popupCardOpened = false;
+        this.popupCardClosed = false;
         this.blocks = [];
         this.card = null;
+    }
+
+    useTranslater() {
+        return;
     }
 
     closePopup() {
@@ -20,6 +26,22 @@ export class WatchersService extends MetaTableService {
 
         setTimeout(() => {
             this.popupClosed = false;
+        }, 300);
+    }
+
+    closeCardPopup() {
+        this.popupCardClosed = true;
+
+        setTimeout(() => {
+            this.popupCardClosed = false;
+        }, 300);
+    }
+
+    openCardPopup() {
+        this.popupCardOpened = true;
+
+        setTimeout(() => {
+            this.popupCardOpened = false;
         }, 300);
     }
 
@@ -73,6 +95,8 @@ export class WatchersService extends MetaTableService {
             const card = (await this.fetchCard(id)).data.data;
 
             this.setCard(card);
+
+            this.openCardPopup();
         } catch (e) {
             console.error(`Error with: ${e}`);
 

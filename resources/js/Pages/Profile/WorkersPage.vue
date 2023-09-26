@@ -11,6 +11,9 @@
             class="workers__wrapper"
             v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
         >
+            <main-title class="title-worker" tag="h4">{{
+                $t("workers.title")
+            }}</main-title>
             <div class="cards-container">
                 <main-hashrate-cards />
             </div>
@@ -31,6 +34,7 @@
                     <worker-card
                         class="workers__card"
                         v-if="
+                            viewportWidth > 500 &&
                             Object.entries(worker_service.target_worker)
                                 .length > 0
                         "
@@ -42,6 +46,20 @@
             </div>
         </div>
     </div>
+    <workers-popup-card
+        v-if="viewportWidth <= 500"
+        :wait="worker_service.wait"
+        :closed="worker_service.popupCardClosed"
+        :opened="worker_service.popupCardOpened"
+        @dropWatcher="dropWorker"
+    >
+        <worker-card
+            class="workers__card"
+            v-if="Object.entries(worker_service.target_worker).length > 0"
+            :target_worker="worker_service.target_worker"
+            :graph="worker_service.workers_graph"
+            @closeCard="dropWorker"
+    /></workers-popup-card>
 </template>
 <script>
 import { mapGetters } from "vuex";
@@ -51,6 +69,8 @@ import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import WorkersPopupCard from "@/modules/workers/Components/WorkersPopupCard.vue";
 
 export default {
     components: {
@@ -59,13 +79,14 @@ export default {
         MainTable,
         MainPreloader,
         WorkerCard,
+        MainTitle,
+        WorkersPopupCard,
     },
     data() {
         return {
             workersActive: 0,
             workersInActive: 0,
             workersDead: 0,
-            viewportWidth: 0,
             changedActive: -1,
             removePercent: false,
             worker_service: new WorkerService(
@@ -82,24 +103,26 @@ export default {
         },
         "$i18n.locale"() {
             this.initWorkers();
+            document.title = this.$t("header.links.workers");
         },
     },
     methods: {
         async initWorkers() {
             await this.worker_service.fillTable();
         },
-        handleResize() {
-            this.viewportWidth = window.innerWidth;
-        },
         async getTargetWorker(data) {
             await this.worker_service.getPopup(data.id);
 
-            this.removePercent = true;
+            this.viewportWidth > 500
+                ? (this.removePercent = true)
+                : this.worker_service.openPopupCard();
         },
         dropWorker() {
             this.worker_service.dropWorker();
 
-            this.removePercent = false;
+            this.viewportWidth > 500
+                ? (this.removePercent = false)
+                : this.worker_service.closePopupCard();
         },
     },
     computed: {
@@ -109,6 +132,7 @@ export default {
             "allHash",
             "allHistoryMiner",
             "getAccount",
+            "viewportWidth",
         ]),
         copyObject() {
             return [
@@ -136,14 +160,18 @@ export default {
 
         document.title = this.$t("header.links.workers");
     },
-    created() {
-        window.addEventListener("resize", this.handleResize);
-
-        this.handleResize();
-    },
 };
 </script>
 <style lang="scss" scoped>
+.title-worker {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-worker {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+    }
+}
 .cards-container {
     display: flex;
     justify-content: space-between;
@@ -152,6 +180,14 @@ export default {
 @media (max-width: 900px) {
     .cards-container {
         flex-direction: column;
+        gap: 16px;
+    }
+}
+
+@media (max-width: 497.98px) {
+    .cards-container {
+        flex-direction: row;
+        flex-wrap: nowrap;
         gap: 16px;
     }
 }
@@ -169,12 +205,33 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
-        @media (max-width: 800px) {
+        @media (max-width: 1300px) {
             flex-direction: column;
         }
     }
     &__card {
         min-width: calc(50% - 6px);
+        min-height: 474px;
+        @media (max-width: 1300px) {
+            min-height: 437px;
+        }
+        @media (max-width: 900px) {
+            min-height: 450px;
+            position: absolute;
+            width: calc(100% - 20px);
+        }
+        @media (max-width: 500px) {
+            min-height: 380px;
+        }
+        @media (max-width: 490px) {
+            width: 100%;
+        }
+        @media (max-width: 410px) {
+            min-height: 550px;
+        }
+        @media (max-width: 390px) {
+            min-height: 470px;
+        }
     }
     &__button {
         min-width: 60px;
@@ -273,8 +330,10 @@ export default {
 }
 .slide-enter-from,
 .slide-leave-to {
-    max-width: 0;
-    min-width: 0;
+    @media (min-width: 1300px) {
+        max-width: 0;
+        min-width: 0;
+    }
     opacity: 0;
 }
 </style>

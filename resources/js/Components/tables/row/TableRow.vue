@@ -45,17 +45,19 @@
 </template>
 
 <script>
+import {mapGetters} from "vuex";
+
 export default {
     name: "table-row",
     props: {
-        viewportWidth: Number,
         columns: Array,
         titles: Array,
         removePercent: Boolean,
     },
     computed: {
+        ...mapGetters(["viewportWidth"]),
         getWorkersStats() {
-            return this.$refs?.row_content.find(
+            return this.$refs?.row_content?.find(
                 (el) => el.className === "workers_stats"
             );
         },
@@ -280,8 +282,8 @@ export default {
                 }
             }
         }
-        &.rejected,
-        &.completed,
+        &.error,
+        &.complete,
         &.pending {
             span {
                 &.status,
@@ -308,7 +310,7 @@ export default {
                 background: #13d60e;
             }
         }
-        &.completed {
+        &.complete {
             span.status:before {
                 background: #13d60e;
             }
@@ -323,7 +325,7 @@ export default {
                 background: #ff0000;
             }
         }
-        &.rejected {
+        &.error {
             span.status:before {
                 background: #ff0000;
             }

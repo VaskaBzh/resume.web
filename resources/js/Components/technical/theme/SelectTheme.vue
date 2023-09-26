@@ -75,11 +75,6 @@ export default {
             }
         },
     },
-    watch: {
-        isDark() {
-            this.initTheme();
-        },
-    },
     methods: {
         async changeActive() {
             if (this.timer) {

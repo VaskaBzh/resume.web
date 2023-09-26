@@ -61,6 +61,11 @@ export default {
             ];
         },
     },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.connecting");
+        },
+    },
     mounted() {
         document.title = this.$t("header.links.connecting");
     },
@@ -93,6 +98,12 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 145%; /* 20.3px */
+}
+@media(max-width: 500px){
+    .note-text{
+        font-size: 12px;
+        line-height: 16px;
+    }
 }
 .connecting {
     display: flex;
@@ -153,6 +164,10 @@ export default {
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 560px;
         padding: 32px 40px;
+        @media (max-width: 767.98px) {
+            margin: 0 16px;
+            padding: 16px;
+        }
     }
     &__select {
         max-width: 280px !important;

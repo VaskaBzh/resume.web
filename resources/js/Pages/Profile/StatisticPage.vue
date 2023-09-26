@@ -23,6 +23,9 @@
                     .length !== 0
             "
         >
+            <main-title class="title-statistic" tag="h4">{{
+                $t("statistic.title")
+            }}</main-title>
             <statistic-line-graph
                 class="statistic_graph"
                 @getValue="lineChartService.setOffset($event)"
@@ -118,6 +121,9 @@ export default {
         };
     },
     watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.statistic");
+        },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
@@ -142,6 +148,7 @@ export default {
         ...mapGetters(["getActive", "getAccount"]),
     },
     async mounted() {
+        document.title = this.$t("header.links.statistic");
         this.lineChartService.setGroupId(this.getActive);
         this.barChartService.setGroupId(this.getActive);
 
@@ -153,6 +160,15 @@ export default {
 };
 </script>
 <style lang="scss">
+.title-statistic {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-statistic {
+        display: inline-block;
+        padding: 0 0 4px 16px;
+    }
+}
 .statistic {
     width: 100%;
     padding: 24px;
@@ -174,7 +190,7 @@ export default {
         }
     }
     &_graph {
-        grid-column: 1 / 5;
+        grid-column: 1 / 7;
         position: relative;
         padding: 24px 24px 48px 24px;
         display: flex;
@@ -182,8 +198,17 @@ export default {
         gap: 24px;
         width: 100%;
         height: fit-content;
-        @media (max-width: 1700px) {
-            grid-column: 1 / 7;
+        .y-axis-container {
+            @media (max-width: 500px) {
+                top: 14px;
+            }
+        }
+        @media (max-width: 500px) {
+            flex-direction: column-reverse;
+            padding: 16px;
+        }
+        @media (max-width: 900px) {
+            gap: 32px;
         }
         &-column {
             grid-column: 3 / 5;

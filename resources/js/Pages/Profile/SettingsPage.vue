@@ -1,5 +1,8 @@
 <template>
     <div class="settings" ref="page">
+        <main-title class="title-settings" tag="h3">{{
+                    $t("title[2]")
+                }}</main-title>
         <div class="settings__main">
             <div class="settings__card">
                 <main-title class="cabinet_title" tag="h3">{{
@@ -94,6 +97,9 @@ export default {
         };
     },
     watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.settings");
+        },
         "settingsService.profit"(newValue) {
             this.settingsService.setProfit(newValue.replace(/[^0-9]/g, ""));
         },
@@ -129,6 +135,15 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+.title-settings {
+    display: none;
+}
+@media (max-width: 500px) {
+    .title-settings {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+    }
+}
 .card__article {
     display: flex;
     flex-direction: column;
@@ -142,6 +157,7 @@ export default {
     .card__container {
         flex-direction: column;
         gap: 16px;
+        padding: 0;
     }
 }
 .settings {
@@ -164,6 +180,9 @@ export default {
         justify-content: center;
         flex-direction: column;
         gap: 12px;
+        @media(max-width: 500px){
+            height: auto;
+        }
     }
     &__content {
         width: 100%;
@@ -206,7 +225,7 @@ export default {
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         width: 711px;
         @media (max-width: 900px) {
-            width: 80vw;
+            width: 90vw;
         }
     }
 }
