@@ -50,7 +50,6 @@ class Income extends Model
 
     /* end relations */
 
-    /* Создаем кастомный билдер */
     public function newEloquentBuilder($query): IncomeBuilder
     {
         return new IncomeBuilder($query);

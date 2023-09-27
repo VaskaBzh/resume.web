@@ -24,6 +24,7 @@ class ResetPasswordController extends Controller
      */
     public function changePassword(Request $request)
     {
+        dd($request);
         $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
 
         if ($validator->fails()) {
