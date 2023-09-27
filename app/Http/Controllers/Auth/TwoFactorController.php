@@ -19,7 +19,7 @@ class TwoFactorController extends Controller
     {
     }
 
-    public function enable(Request $request): JsonResponse
+    public function enable(): JsonResponse
     {
         $user = auth()->user();
         try {
@@ -28,7 +28,7 @@ class TwoFactorController extends Controller
             $user->save();
 
             $QRImage = $this->googleTwoFactor->getQRCodeInline(
-                'test',
+                config('app.name'),
                 $user->email,
                 $user->google2fa_secret
             );
@@ -62,7 +62,7 @@ class TwoFactorController extends Controller
         }
 
         return new JsonResponse([
-            'success' => 'Авторизация прошла успешно'
+            'success' => 'Верификация прошла успешно'
         ]);
     }
 }

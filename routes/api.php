@@ -6,7 +6,7 @@ use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\Incomes\ListController;
 use App\Http\Controllers\Api\MinerStatController;
-use App\Http\Controllers\Api\PayoutListController;
+use App\Http\Controllers\Api\Payout\ListController as PayoutListController;
 use App\Http\Controllers\Api\Referral\CodeController as ReferralCodeController;
 use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
@@ -85,7 +85,7 @@ Route::group([
     Route::group([
         'prefix' => '2fac'
     ], function () {
-        Route::get('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+        Route::put('enable', [TwoFactorController::class, 'enable'])->name('2fa.enable');
         Route::post('verify', [TwoFactorController::class, 'verify'])->name('2fa.verify');
     });
 
@@ -99,9 +99,9 @@ Route::group([
         'prefix' => 'wallets',
         'middleware' => ['verified', 'verify-expiration']
     ], function () {
-        Route::get('/{sub}', WalletListController::class)->name('wallet.list');
+        Route::put('/update/{wallet}', WalletUpdateController::class)->name('wallet.update');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
-        Route::put('/update', WalletUpdateController::class)->name('wallet.update');
+        Route::get('/{sub}', WalletListController::class)->name('wallet.list');
     });
 
     Route::group([

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Notifications;
 
 use Illuminate\Auth\Notifications\VerifyEmail;
@@ -10,7 +12,13 @@ use Illuminate\Support\Facades\URL;
 
 class VerifyEmailNotification extends VerifyEmail
 {
-    public function __construct()
+    private const MAIL_EXPIRATION = 1440; /* m */
+
+    public function __construct(
+        private readonly string $actionContext,
+        private readonly string $actionRoute,
+        private readonly string $actionText,
+    )
     {
     }
 
@@ -24,16 +32,18 @@ class VerifyEmailNotification extends VerifyEmail
         $url = $this->verificationUrl($notifiable);
 
         return (new MailMessage)
-            ->line('Нажмите кнопку "Подвердить почту"  перейдите по ссылке для активации аккаунта')
-            ->action('Подвердить почту', config('app.url') . $url)
-            ->line('Thank you for using our application!');
+            ->view('mail.user.email-verify')
+            ->greeting(__('notifications.greetings', ['email' => $notifiable->email]))
+            ->line($this->actionContext)
+            ->action($this->actionText, config('app.url') . $url)
+            ->line(__('notifications.email.expired_at.text', ['value' => self::MAIL_EXPIRATION / 60]));
     }
 
-    protected function verificationUrl($notifiable)
+    protected function verificationUrl($notifiable): string
     {
         return URL::temporarySignedRoute(
-            'v1.verification.verify',
-            Carbon::now()->addMinutes(Config::get('auth.verification.expire', 60)),
+            $this->actionRoute,
+            Carbon::now()->addMinutes(Config::get('auth.verification.expire', self::MAIL_EXPIRATION)),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),

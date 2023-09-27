@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\WatcherLink;
 
 use App\Actions\WatcherLink\ToggleRoute;
-use App\Actions\WatcherLink\Update;
-use App\Dto\WatcherLinkData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\WatcherLinks\UpdateLinkRequest;
 use App\Models\WatcherLink;
@@ -23,7 +21,6 @@ class UpdateController extends Controller
     {
         try {
             $this->authorize('viewOrChange', $watcher);
-
 
             ToggleRoute::execute(
                 watcherLink: $watcher,

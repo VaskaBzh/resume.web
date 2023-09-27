@@ -54,6 +54,7 @@ class BtcComService
             Log::channel('btc_com')->info('BTC.COM RESPONSE', ['Response' => $response->json()]);
 
             if (filled($response['data'])) {
+
                 return $response['data'];
             }
 

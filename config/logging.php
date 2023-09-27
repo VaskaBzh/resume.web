@@ -77,6 +77,13 @@ return [
             'days' => 30,
         ],
 
+        'btc_com' => [
+            'driver' => 'daily',
+            'path' => storage_path('logs/btc/btc.log'),
+            'level' => 'debug',
+            'days' => 30,
+        ],
+
         'payouts' => [
             'driver' => 'daily',
             'path' => storage_path('logs/payouts/payouts.log'),
