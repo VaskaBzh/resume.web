@@ -106,7 +106,19 @@ export default {
         font-size: 14px;
     }
 }
-
+@media(max-width: 900px){
+    .card_num {
+        font-size: 27px;
+    }
+    .card_unit {
+        color: var(--text-fourth-night, #595E68);
+        font-family: Unbounded;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 31px; /* 155.556% */
+    }
+}
 @media (max-width: 497.98px) {
     .card_svg {
         display: none;
