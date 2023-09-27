@@ -6,7 +6,7 @@
             :interval="35"
             :end="!wait"
             :empty="empty"
-            v-if="havePreloader"
+            v-if="havePreloader && (wait || empty)"
         />
         <slot v-if="!wait && !empty" />
         <div class="slider__nav" v-if="haveNav && !wait && !empty">

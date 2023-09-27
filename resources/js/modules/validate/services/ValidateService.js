@@ -1,8 +1,8 @@
 import { ValidateEnums } from "@/modules/validate/enums/ValidateEnums";
 
 export class ValidateService {
-    validateProcess(event, form, validate) {
-        form.password = event;
+    validateProcess(password, form, validate) {
+        form.password = password;
         validate = {};
 
         if (form.password?.length <= 10 || form.password?.length >= 50)

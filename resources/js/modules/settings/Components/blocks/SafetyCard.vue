@@ -10,7 +10,7 @@
         <button
             class="btn_content"
             :data-popup="'#' + card.id"
-            @mousedown="$emit('send2fac')"
+            @mousedown="$emit(card.emit)"
         >
             {{ card.button }}
         </button>
