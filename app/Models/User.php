@@ -92,7 +92,11 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function sendEmailVerificationNotification(): void
     {
-        $this->notify(new VerifyEmailNotification);
+        $this->notify(new VerifyEmailNotification(
+            actionContext: __('notifications.email.verify.context'),
+            actionRoute: 'v1.verification.verify',
+            actionText: __('notifications.email.verify.action-text'),
+        ));
     }
 
     /* End attributes */

@@ -10,7 +10,7 @@ readonly final class WalletData
 {
     /**
      * @param string|null $name - имя кошелшька
-     * @param string $walletAddress - адрес кошелька
+     * @param string|null $walletAddress - адрес кошелька
      * @param int $groupId - id сабаккаунта
      * @param int|null $percent - процент кошелька
      * @param float|null $minWithdrawal - минимальая сумма вывода средств
@@ -18,7 +18,7 @@ readonly final class WalletData
      */
     public function __construct(
         public ?string $name,
-        public string $walletAddress,
+        public ?string $walletAddress,
         public int $groupId,
         public ?int $percent,
         public ?float $minWithdrawal,
@@ -31,7 +31,7 @@ readonly final class WalletData
     {
         return new self(
             name: Arr::get($requestData, 'name'),
-            walletAddress: $requestData['wallet'],
+            walletAddress: Arr::get($requestData, 'wallet'),
             groupId: (int) $requestData['group_id'],
             percent: (int) Arr::get($requestData, 'percent'),
             minWithdrawal: (float) Arr::get($requestData, 'minWithdrawal'),
