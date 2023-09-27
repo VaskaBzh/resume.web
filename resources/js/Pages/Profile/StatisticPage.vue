@@ -166,7 +166,13 @@ export default {
 @media (max-width: 500px) {
     .title-statistic {
         display: inline-block;
-        padding: 0 0 4px 16px;
+        padding: 0 0 8px 16px;
+        color: var(--text-primary);
+        font-family: Unbounded !important;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
     }
 }
 .statistic {

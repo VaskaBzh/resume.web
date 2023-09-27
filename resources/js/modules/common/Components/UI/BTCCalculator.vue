@@ -120,6 +120,9 @@ export default {
         flex-direction: column;
         position: relative;
         gap: 4px;
+        @media(max-width:500px){
+            gap: 0px;
+        }
     }
 
     &_unit {
@@ -128,8 +131,16 @@ export default {
         font-size: 20px;
         font-weight: 400;
         line-height: 32px;
+        @media(max-width: 500px){
+            line-height: 34px;
+            color: var(--text-fourth-night, #595E68);
+            font-family: Unbounded;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+        }
         @media(max-width: 900px){
-            line-height: 36px;
+            line-height: 39px;
         }
     }
 
