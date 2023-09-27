@@ -166,8 +166,8 @@ export default {
 @media (max-width: 500px) {
     .title-statistic {
         display: inline-block;
-        padding: 0 0 0px 16px;
-        color: var(--text-primary-night, #09097a);
+        padding: 0 0 8px 16px;
+        color: var(--text-primary);
         font-family: Unbounded !important;
         font-size: 20px;
         font-style: normal;
