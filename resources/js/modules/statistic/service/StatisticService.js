@@ -1,7 +1,7 @@
 import { GraphDataService } from "@/modules/common/services/GraphDataService";
 import store from "@/store";
 import { LineGraphData } from "@/modules/statistic/DTO/LineGraphData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
 
 export class StatisticService extends GraphDataService {
@@ -23,7 +23,7 @@ export class StatisticService extends GraphDataService {
     }
 
     async fetchIncomes(page = 1, per_page = 30) {
-        return await api.get(
+        return await ProfileApi.get(
             `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
@@ -38,7 +38,7 @@ export class StatisticService extends GraphDataService {
     }
 
     async fetch() {
-        return await api.get(
+        return await ProfileApi.get(
             `/hashrate/${this.group_id}?offset=${this.offset}`,
             {
                 headers: {

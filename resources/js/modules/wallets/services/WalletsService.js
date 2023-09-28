@@ -1,12 +1,16 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
-import { walletData } from "@/DTO/walletData";
+import { WalletData } from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
+import { DefaultSubsService } from "../../common/services/DefaultSubsService";
+import { VerifyService } from "../../verify/services/VerifyService";
 
-export class WalletService {
+export class WalletService extends DefaultSubsService {
     constructor(translate) {
-        this.group_id = store.getters.getActive;
+        super();
+
+        this.verify = new VerifyService(translate);
 
         this.translate = translate;
 
@@ -43,7 +47,7 @@ export class WalletService {
             wallet: "",
             percent: "100",
             minWithdrawal: "0.005",
-            group_id: store.getters.getActive,
+            group_id: this.group_id,
         };
     }
 
@@ -54,7 +58,7 @@ export class WalletService {
             wallet: wallet.wallet_address,
             percent: wallet.percent,
             minWithdrawal: wallet.minWithdrawal,
-            group_id: store.getters.getActive,
+            group_id: this.group_id,
         };
     }
 
@@ -67,28 +71,8 @@ export class WalletService {
         }, 600);
     }
 
-    async sendEmailVerification() {
-        try {
-            const response = await api.post("/email/reverify",
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                }
-            )
-
-            openNotification(true, this.translate("validate_messages.success"), response.data.message);
-        } catch (err) {
-            console.error("Error with: " + err);
-
-            this.verifyTimer = 60000;
-            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
-        }
-    }
-
     async index() {
-        if (store.getters.getActive !== -1) {
+        if (this.group_id !== -1) {
             this.waitWallets = true;
 
             try {
@@ -96,7 +80,7 @@ export class WalletService {
 
                 if (response) {
                     this.wallets = response.map((el) => {
-                        return new walletData({
+                        return new WalletData({
                             ...el,
                             name: this.getName(el.name, el.wallet),
                             fullName: el.name ?? el.wallet,
@@ -122,21 +106,17 @@ export class WalletService {
     }
 
     async addWallet() {
-        if (store.getters.getActive !== -1) {
+        if (this.group_id !== -1) {
             this.wait = true;
             try {
-                const response = await api.post("/wallets/create", this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await ProfileApi.post("/wallets/create", this.form);
 
                 openNotification(
                     true,
                     this.translate("validate_messages.success"),
                     response.data.message
                 );
-                this.index();
+                await this.index();
                 this.clearForm();
                 this.closePopup();
             } catch (err) {
@@ -156,15 +136,11 @@ export class WalletService {
     }
 
     async changeWallet() {
-        if (store.getters.getActive !== -1) {
+        if (this.group_id !== -1) {
             this.wait = true;
 
             try {
-                const response = await api.put("/wallets/update", this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await ProfileApi.put("/wallets/update", this.form);
 
                 openNotification(
                     true,
@@ -172,12 +148,12 @@ export class WalletService {
                     response.data.message
                 );
 
-                this.index();
+                await this.index();
                 this.clearForm();
                 this.closePopup();
-            } catch (e) {
-                console.error("Error with: " + e);
-                store.dispatch("setFullErrors", e.response.data.errors);
+            } catch (err) {
+                console.error("Error with: " + err);
+                store.dispatch("setFullErrors", err.response.data.errors);
 
                 openNotification(
                     false,
@@ -188,7 +164,6 @@ export class WalletService {
             this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
-            store.dispatch("setFullErrors", err.response.data.errors);
         }
     }
 
@@ -210,7 +185,7 @@ export class WalletService {
     // }
 
     async fetch() {
-        if (store.getters.getActive !== -1) {
+        if (this.group_id !== -1) {
             this.emptyTable = false;
             this.waitWallets = true;
 
@@ -218,11 +193,7 @@ export class WalletService {
 
             try {
                 response = (
-                    await api.get(`/wallets/${store.getters.getActive}`, {
-                        headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
-                        },
-                    })
+                    await ProfileApi.get(`/wallets/${this.group_id}`)
                 ).data.data;
             } catch (err) {
                 store.dispatch("setFullErrors", err.response.data.errors);

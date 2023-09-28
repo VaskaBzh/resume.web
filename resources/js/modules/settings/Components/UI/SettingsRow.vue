@@ -16,8 +16,7 @@
 
 <script>
 import { SettingsMessage } from "../../lang/SettingsMessage";
-import api from "@/api/api";
-import { useRoute } from "vue-router";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { mapGetters } from "vuex";
 
@@ -88,11 +87,7 @@ export default {
                 };
 
                 try {
-                    await api.post(`/change/${this.user.id}`, form, {
-                        headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
-                        },
-                    });
+                    await ProfileApi.post(`/change/${this.user.id}`, form);
                 } catch (e) {
                     console.error("Error with: " + e);
                 }

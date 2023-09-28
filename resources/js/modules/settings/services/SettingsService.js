@@ -2,7 +2,7 @@ import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
 import { BlockData } from "../DTO/BlockData";
@@ -122,7 +122,7 @@ export class SettingsService {
 
     async fetchPassword(form) {
         return (
-            await api.post("/reset/password", form, {
+            await ProfileApi.post("/reset/password", form, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -132,7 +132,7 @@ export class SettingsService {
 
     async fetchFac() {
         return (
-            await api.get("/2fac/enable", {
+            await ProfileApi.get("/2fac/enable", {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -142,7 +142,7 @@ export class SettingsService {
 
     async fetchVerifyFac(form) {
         return (
-            await api.post("/2fac/verify", form, {
+            await ProfileApi.post("/2fac/verify", form, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -160,7 +160,7 @@ export class SettingsService {
 
     async sendEmailVerification() {
         try {
-            const response = await api.post("/email/reverify",
+            const response = await ProfileApi.post("/email/reverify",
                 {},
                 {
                     headers: {
@@ -253,7 +253,7 @@ export class SettingsService {
         };
 
         try {
-            const response = await api.put(
+            const response = await ProfileApi.put(
                 `/change/${this.user.id}`,
                 sendForm,
                 {

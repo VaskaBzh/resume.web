@@ -4,7 +4,7 @@ import { GradeData } from "@/modules/referral/DTO/GradeData";
 
 import { PercentSvgEnum } from "@/modules/referral/enums/PercentSvgEnum";
 
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 
 export class ReferralsService extends TableService {
@@ -39,7 +39,7 @@ export class ReferralsService extends TableService {
     }
 
     async fetchReferrals(page, per_page) {
-        return await api.get(`/referrals/${this.user.id}`, {
+        return await ProfileApi.get(`/referrals/${this.user.id}`, {
             headers: {
                 Authorization: `Bearer ${store.getters.token}`,
             },

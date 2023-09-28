@@ -70,16 +70,16 @@ export class RouteServices {
                     new RouteReferralData("earn-rewards", "earn-rewards"),
                 ],
             },
-            // {
-            //     path: "/verify",
-            //     name: "verify",
-            //     meta: {
-            //         middleware: ["EmailVerifyController"],
-            //     },
-            //     query: {
-            //         verify_hash: null,
-            //     },
-            // },
+            {
+                path: "/v1/verify",
+                name: "verify",
+                meta: {
+                    middleware: ["EmailVerifyController"],
+                },
+                query: {
+                    verify_hash: null,
+                },
+            },
             {
                 path: "/watcher",
                 name: "watcher",

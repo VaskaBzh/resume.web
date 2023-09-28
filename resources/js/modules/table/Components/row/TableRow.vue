@@ -144,7 +144,7 @@ export default {
 <style scoped lang="scss">
 .table {
 	&_column {
-		color: var(--text-teritary-day, #98A2B3);
+		color: var(--text-teritary);
 		font-family: NunitoSans;
 		font-size: 14px;
 		font-style: normal;

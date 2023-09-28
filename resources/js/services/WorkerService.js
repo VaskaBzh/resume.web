@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { workerData } from "@/DTO/workerData";
 import store from "@/store";
@@ -70,7 +70,7 @@ export class WorkerService {
     }
 
     async fetchList() {
-        return await api.get(`/workers/${this.group_id}`, {
+        return await ProfileApi.get(`/workers/${this.group_id}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }
@@ -82,7 +82,7 @@ export class WorkerService {
     }
 
     async fetchWorker() {
-        return await api.get(`/workers/worker/${this.worker_id}`, {
+        return await ProfileApi.get(`/workers/worker/${this.worker_id}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }
@@ -94,7 +94,7 @@ export class WorkerService {
     }
 
     async fetchWorkerGraph() {
-        return await api.get(`/workerhashrate/${this.worker_id}`, {
+        return await ProfileApi.get(`/workerhashrate/${this.worker_id}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }

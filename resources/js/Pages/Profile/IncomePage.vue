@@ -185,12 +185,7 @@ export default {
 .title-income {
     display: none;
 }
-@media (max-width: 500px) {
-    .title-income {
-        display: inline-block;
-        padding: 0 0 16px 16px;
-    }
-}
+
 .income-cards-container {
     display: flex;
     flex-direction: column;
@@ -206,6 +201,21 @@ export default {
     .income-cards-article {
         flex-direction: column;
         gap: 12px;
+    }
+}
+@media (max-width: 500px) {
+    .title-income {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+        color: var(--text-primary);
+        font-family: Unbounded !important;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
+    }
+    .income-cards-container {
+        gap: 8px;
     }
 }
 .month-card-container {
@@ -375,11 +385,11 @@ export default {
         padding: 12px;
         // width: 32%;
         border-radius: 8px;
-        color: rgba(129, 140, 153, 1);
+        color: var(--buttons-tabs-text-default);
         font-size: 18px;
     }
     .tabs-active {
-        color: rgba(121, 163, 232, 1);
+        color: var(--buttons-tabs-text-focus, #2E90FA);
         background: var(--buttons-tabs-fill-border-focus);
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     }

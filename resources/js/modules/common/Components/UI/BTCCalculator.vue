@@ -103,12 +103,12 @@ export default {
     line-height: 147%;
 }
 .convertor-calc{
-    color: var(--light-gray-300, var(--gray-3100, #D0D5DD));
-    font-family: Unbounded, serif;
+    color: var(--text-fourth);
+    font-family: Unbounded;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 145%;
+    line-height: 20px; /* 142.857% */
 }
 .converter-container {
     display: flex;
@@ -119,17 +119,23 @@ export default {
         display: flex;
         flex-direction: column;
         position: relative;
-        gap: 4px;
     }
 
     &_unit {
-        color: var(--light-gray-300, #D0D5DD);
+        color: var(--text-fourth, #D0D5DD);
         font-family: Unbounded, serif;
         font-size: 20px;
         font-weight: 400;
         line-height: 32px;
+        @media(max-width: 500px){
+            line-height: 34px;
+            font-family: Unbounded;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+        }
         @media(max-width: 900px){
-            line-height: 36px;
+            line-height: 39px;
         }
     }
 

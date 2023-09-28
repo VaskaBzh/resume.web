@@ -67,7 +67,11 @@ export default {
         transition: all 0.5s ease 0s;
         border-radius: 8px;
         box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
-        padding: 12px 16px 8px;
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+        justify-content: center;
+        padding: 4px 16px;
         cursor: text;
         &-error {
             border-color: #ed1818;
@@ -77,7 +81,7 @@ export default {
         //}
     }
     &_label {
-        color: var(--text-teritary-day, #98a2b3);
+        color: var(--text-teritary, #98a2b3);
         font-family: NunitoSans, serif;
         font-size: 12px;
         font-weight: 400;

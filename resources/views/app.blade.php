@@ -6,6 +6,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Зарабатывайте на майнинге вместе с allbtc pool. Allbtc poll - Высокий доход. Надежность. Эффективность.">
+    <meta name="title" content="All-btc mining pool">
     <link rel="icon" href="/favicon.ico">
     <title>All-btc mining pool</title>
 

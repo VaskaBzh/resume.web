@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { MainApi } from "@/api/api";
 
 import { accountData } from "@/DTO/accountData";
 import store from "@/store";
@@ -13,7 +13,7 @@ export default {
             if (data.index) {
                 let sub = new accountData(
                     (
-                        await api.get(`/subs/sub/${data.index}`, {
+                        await MainApi.get(`/subs/sub/${data.index}`, {
                             headers: {
                                 ...(data?.access_key
                                     ? {
@@ -34,7 +34,7 @@ export default {
         },
         async accounts_all({ commit, state }, user_id) {
             let subsList = (
-                await api.get(`/subs/${user_id}`, {
+                await MainApi.get(`/subs/${user_id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },

@@ -92,7 +92,7 @@ export class PopupService {
             targets: this.popupContentHtml,
             opacity: 1,
             easing: "easeOutCubic",
-            duration: 300,
+            duration: 150,
             complete: () => {
                 this.dropAnimate();
             },
@@ -104,7 +104,7 @@ export class PopupService {
             targets: this.popupLogoHtml,
             opacity: 0,
             easing: "easeInCubic",
-            duration: 300,
+            duration: 150,
             complete: () => {
                 this.dropAnimate();
 
@@ -118,7 +118,7 @@ export class PopupService {
             targets: this.popupBlockHtml,
             height: `${this.popupContentHtml.scrollHeight + 64}px`,
             easing: "easeInCubic",
-            duration: 500,
+            duration: 350,
             complete: () => {
                 this.dropAnimate();
 
@@ -132,7 +132,7 @@ export class PopupService {
             targets: this.popupBlockHtml,
             width: "560px",
             easing: "easeInOutCubic",
-            duration: 400,
+            duration: 250,
             complete: () => {
                 this.dropAnimate();
 
@@ -146,7 +146,7 @@ export class PopupService {
             targets: this.popupBlockHtml,
             translateY: 0,
             easing: "easeInCubic",
-            duration: 300,
+            duration: 150,
             complete: () => {
                 this.dropAnimate();
 

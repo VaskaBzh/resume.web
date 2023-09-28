@@ -143,7 +143,7 @@ export default {
     line-height: 16px;
 }
 .tooltip_label {
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
 }
 .tooltip_value {
     color: var(--text-secondary, #475467);

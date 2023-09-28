@@ -101,7 +101,7 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "../../../../store";
 import { ref } from "vue";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import i18n from "@/lang/vue-translate";
 
 export default {
@@ -156,11 +156,7 @@ export default {
         const addAcc = async () => {
             wait.value = true;
             try {
-                const response = await api.post("/subs/create", form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await ProfileApi.post("/subs/create", form);
                 openNotification(
                     true,
                     t("validate_messages.added"),
@@ -313,7 +309,7 @@ export default {
 
 <style scoped lang="scss">
 .popup-text {
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;

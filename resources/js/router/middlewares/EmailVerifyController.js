@@ -1,29 +1,15 @@
-import store from "@/store";
-import axios from "axios";
+import { ProfileApi } from "@/api/api";
 
 export async function EmailVerifyController(route, router) {
-    const verify_hash = route.query.verify_hash;
-    const user = store.getters.user;
-    const token = store.getters.token;
-
     try {
-        await axios.post(
-            "/v1/verify",
-            {
-                user: user,
-            },
-            {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            }
-        );
+        await ProfileApi.post(route.fullPath,);
+
+        router.push({
+            name: "statistic",
+        });
     } catch (err) {
         router.push({
             name: "login",
-            query: {
-                verify_hash: verify_hash,
-            },
         });
     }
 }

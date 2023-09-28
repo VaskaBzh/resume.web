@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { SubHashrateData } from "@/DTO/SubHashrateData";
 import store from "@/store";
@@ -73,7 +73,7 @@ export class SubHashrateService {
     }
 
     async fetch() {
-        return await api.get(
+        return await ProfileApi.get(
             `/hashrate/${this.group_id}?offset=${this.offset}`,
             {
                 headers: {

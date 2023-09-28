@@ -62,7 +62,7 @@ h4 {
     font-size: 24px;
     line-height: 107.6%;
     @media (max-width: 767.98px) {
-        font-size: 18px;
+        // font-size: 18px;
         line-height: 135%;
     }
 }
@@ -70,7 +70,7 @@ h4 {
 
 
 .title {
-    font-family: AmpleSoftPro, serif;
+    font-family: NunitoSans, serif;
     color: var(--text-primary);
     font-weight: 400;
     &.profile {
