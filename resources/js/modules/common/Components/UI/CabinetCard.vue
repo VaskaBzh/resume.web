@@ -9,7 +9,7 @@
                 {{ title }}
             </main-title>
             <p class="card_num">
-                {{ value }}
+                {{ Number(value).toFixed(2) }}
                 <span class="card_unit" v-show="unit">
                     {{ unit }}
                 </span>
@@ -29,7 +29,7 @@ export default {
     },
     components: {
         MainTitle,
-    },
+    }
 };
 </script>
 <style scoped>
@@ -71,16 +71,27 @@ export default {
     line-height: 137%;
     display: inline-flex;
     gap: 8px;
-    align-items: flex-end;
+    align-items: baseline;
     opacity: 0.8;
     flex-wrap: wrap;
 }
+.workers__card .card_num{
+    font-size: 27px;
+    line-height: 40px; /* 148.148% */
+}
+
 .card_unit {
     color: var(--text-fourth);
     font-family: Unbounded, serif;
     font-size: 27px;
     font-weight: 400;
     line-height: 147%;
+}
+.workers__card .card_unit{
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
 }
 @media (max-width: 1450px) {
     .card_unit {
@@ -119,6 +130,13 @@ export default {
 @media (max-width: 497.98px) {
     .card_svg {
         display: none;
+    }
+    /* Почему не работает?? */
+    .workers__card .card_unit{
+        font-size: 12px;
+    }
+    .workers__card .card_num{
+        font-size: 20px;
     }
 }
 </style>

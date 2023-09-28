@@ -84,8 +84,8 @@ export default {
         };
     },
     mounted() {
-        const interval = setInterval(async () => {
-            await this.height++;
+        const interval = setInterval(() => {
+            this.height++;
             this.height--;
         }, 10);
         setTimeout(
