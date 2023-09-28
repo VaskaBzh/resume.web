@@ -658,7 +658,7 @@ input:focus {
         &-warning {
             padding: 16px;
             border-radius: var(--surface-border-radius-radius-s-md, 12px);
-            background: var(--background-waiting-day, #FFF8F0);
+            background: var(--background-waiting, #FFF8F0);
             display: flex;
             flex-direction: column;
             gap: 12px;

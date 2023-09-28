@@ -213,8 +213,8 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: var(--text-table-title-day, #98A2B3);
-                font-family: NunitoSans;
+                color: var(--text-table-title, #98A2B3);
+                font-family: NunitoSans, serif;
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 600;

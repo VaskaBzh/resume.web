@@ -108,7 +108,7 @@ export default {
         font-size: 27px;
     }
     .card_unit {
-        color: var(--text-fourth-night, #595E68);
+        color: var(--text-fourth, #595E68);
         font-family: Unbounded;
         font-size: 18px;
         font-style: normal;

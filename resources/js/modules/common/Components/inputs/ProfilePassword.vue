@@ -100,7 +100,7 @@ export default {
         width: 100%;
 
         &::placeholder {
-            color: var(--select-text-no-value-day, #D0D5DD);
+            color: var(--select-text-no-value, #D0D5DD);
         }
 
         &:active,
@@ -112,7 +112,7 @@ export default {
     &_icon {
         width: 24px;
         height: 24px;
-        stroke: var(--select-text-no-value-day, #D0D5DD);
+        stroke: var(--select-text-no-value, #D0D5DD);
         transition: all 0.5s ease 0s;
         position: absolute;
         top: 50%;

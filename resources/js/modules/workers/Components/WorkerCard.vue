@@ -185,7 +185,7 @@ export default {
 }
 .card_status-active {
     color: var(--status-succesfull, #1fb96c);
-    background: var(--background-success-day, #e9f8f1);
+    background: var(--background-success, #e9f8f1);
 }
 .card__block {
     display: grid;
@@ -208,7 +208,7 @@ export default {
 }
 .card_status-in-active {
     color: var(--status-failed, #f1404a);
-    background: var(--background-failed-day, #feeced);
+    background: var(--background-failed, #feeced);
 }
 @media (max-width: 410px) {
     .card__block {
@@ -226,7 +226,7 @@ export default {
 
     .card_status {
         border-radius: 8px;
-        background: var(--background-success-night, #21322E);
+        background: var(--background-success, #21322E);
         font-size: 12px;
     }
 }
