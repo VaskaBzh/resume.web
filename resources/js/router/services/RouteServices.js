@@ -4,6 +4,7 @@ import { RouteReferralData } from "../DTO/RouteReferralData";
 import { RouteAuthData } from "../DTO/RouteAuthData";
 import { RouteConfirmData } from "../DTO/RouteConfirmData";
 import { RouteNamesMap } from "@/router/map/RouteNamesMap";
+import {VerifyMiddleware} from "../middlewares/VerifyMiddleware";
 
 export class RouteServices {
     constructor() {
@@ -70,16 +71,20 @@ export class RouteServices {
                     new RouteReferralData("earn-rewards", "earn-rewards"),
                 ],
             },
-            {
-                path: "/v1/verify",
-                name: "verify",
-                meta: {
-                    middleware: ["EmailVerifyController"],
-                },
-                query: {
-                    verify_hash: null,
-                },
-            },
+            // {
+            //     path: "/v1/verify",
+            //     name: "verify",
+            //     meta: {
+            //         middleware: ["VerifyMiddleware"],
+            //     },
+            // },
+            // {
+            //     path: "/v1/password/reset/verify/",
+            //     name: "password_reset",
+            //     meta: {
+            //         middleware: ["VerifyMiddleware"],
+            //     },
+            // },
             {
                 path: "/watcher",
                 name: "watcher",

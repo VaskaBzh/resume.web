@@ -45,6 +45,9 @@ export default {
         flex-direction: column;
         gap: 22px;
         flex: 1 1 auto;
+        @media(max-width:500px){
+             gap: 8px;
+        }
         //@media (max-width: 767.98px) {
         //.connecting__row {
         //    &:first-child {

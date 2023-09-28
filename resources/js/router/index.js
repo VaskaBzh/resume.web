@@ -5,6 +5,7 @@ import { AuthCheckProfileMiddleware } from "@/router/middlewares/AuthCheckProfil
 import { AuthMiddleware } from "@/router/middlewares/AuthMiddleware";
 import { DropErrorsMiddleware } from "@/router/middlewares/DropErrorsMiddleware";
 import { DropSubsMiddleware } from "@/router/middlewares/DropSubsMiddleware";
+import { VerifyMiddleware } from "@/router/middlewares/VerifyMiddleware";
 
 import routes from "@/router/routes/rotes";
 import { apiService } from "@/api/api";
@@ -19,6 +20,7 @@ const middlewares = {
     AuthCheckProfileMiddleware,
     AuthMiddleware,
     DropErrorsMiddleware,
+    VerifyMiddleware,
     DropSubsMiddleware,
 };
 

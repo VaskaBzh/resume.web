@@ -1,8 +1,8 @@
 import { ProfileApi } from "@/api/api";
 
-export async function EmailVerifyController(route, router) {
+export async function VerifyMiddleware(route, router) {
     try {
-        await ProfileApi.post(route.fullPath,);
+        await ProfileApi.get(route.fullPath);
 
         router.push({
             name: "statistic",
