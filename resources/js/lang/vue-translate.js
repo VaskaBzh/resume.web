@@ -498,6 +498,7 @@ const messages = {
                     title: "Worker",
                     types: ["Active", "Unstable", "Inactive"],
                 },
+                tooltip: ["On your subaccount", "Autopayment occurs when the balance is >"]
             },
         },
         accounts: {
@@ -1222,6 +1223,7 @@ const messages = {
                     title: "Воркеры",
                     types: ["Активные", "Нестабильные", "Неактивные"],
                 },
+                tooltip: ["На вашем субаккаунте ", "Автовыплата происходит при  балансе >"]
             },
         },
         accounts: {

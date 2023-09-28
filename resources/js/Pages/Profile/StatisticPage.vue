@@ -206,7 +206,8 @@ export default {
         height: fit-content;
         .y-axis-container {
             @media (max-width: 500px) {
-                top: 14px;
+                top: 18px;
+                left: 16px
             }
         }
         @media (max-width: 500px) {

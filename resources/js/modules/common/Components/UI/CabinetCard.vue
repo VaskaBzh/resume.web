@@ -76,16 +76,13 @@ export default {
     flex-wrap: wrap;
 }
 .card_unit {
-    color: var(--light-gray-300, #d0d5dd);
+    color: var(--text-fourth);
     font-family: Unbounded, serif;
     font-size: 27px;
     font-weight: 400;
     line-height: 147%;
 }
 @media (max-width: 1450px) {
-    .card_num {
-        font-size: 31px;
-    }
     .card_unit {
         font-size: 25px;
     }
