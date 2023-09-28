@@ -78,11 +78,15 @@ Route::group([
     Route::post('/email/reverify', ResendVerifyEmailController::class)
         ->middleware('throttle:2,1')
         ->name('resend-verify-email');
+    
+    /* password change */
     Route::post('/password/reset', [ResetPasswordController::class, 'sendEmail'])
         ->name('password-reset.send-email');
     Route::get('/password/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordChange'])
         ->name('password.reset.verify');
     Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
+    /* end password change */
+
     Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
