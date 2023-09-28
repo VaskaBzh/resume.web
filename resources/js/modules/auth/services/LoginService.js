@@ -1,5 +1,5 @@
 import { LoginFormData } from "@/modules/auth/DTO/LoginFormData";
-import api from "../../../api/api";
+import { ProfileApi } from "@/api/api";
 import { useRoute } from "vue-router";
 import store from "@/store";
 
@@ -20,7 +20,7 @@ export class LoginService {
 
     async login() {
         try {
-            const response = await api.post("/login", this.form);
+            const response = await ProfileApi.post("/login", this.form);
 
             const user = response.data.user;
             const token = response.data.token;
@@ -28,7 +28,7 @@ export class LoginService {
             store.dispatch("setUser", user);
 
             // if (this.route?.query?.verify_hash) {
-            //     await api.post("/verify", {
+            //     await ProfileApi.post("/verify", {
             //         user: user,
             //     });
             // }

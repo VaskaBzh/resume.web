@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { walletData } from "@/DTO/walletData";
 import store from "@/store";
@@ -69,7 +69,7 @@ export class WalletService {
 
     async sendEmailVerification() {
         try {
-            const response = await api.post("/email/reverify",
+            const response = await ProfileApi.post("/email/reverify",
                 {},
                 {
                     headers: {
@@ -125,7 +125,7 @@ export class WalletService {
         if (store.getters.getActive !== -1) {
             this.wait = true;
             try {
-                const response = await api.post("/wallets/create", this.form, {
+                const response = await ProfileApi.post("/wallets/create", this.form, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -160,7 +160,7 @@ export class WalletService {
             this.wait = true;
 
             try {
-                const response = await api.put("/wallets/update", this.form, {
+                const response = await ProfileApi.put("/wallets/update", this.form, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -218,7 +218,7 @@ export class WalletService {
 
             try {
                 response = (
-                    await api.get(`/wallets/${store.getters.getActive}`, {
+                    await ProfileApi.get(`/wallets/${store.getters.getActive}`, {
                         headers: {
                             Authorization: `Bearer ${store.getters.token}`,
                         },

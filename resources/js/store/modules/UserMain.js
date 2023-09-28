@@ -1,4 +1,5 @@
-import api from "@/api/api"
+import { MainApi, ProfileApi, mainApiService, apiService } from "@/api/api";
+import { router } from "@/router/index";
 
 export default {
     actions: {
@@ -9,11 +10,7 @@ export default {
 
             if (!user && state.token) {
                 try {
-                    response = (await api.get("/user", {
-                        headers: {
-                            Authorization: `Bearer ${state.token}`,
-                        },
-                    })).data.data;
+                    response = (await MainApi.get("/user")).data.data;
                 } catch (err) {
                     console.error(err);
 
@@ -25,6 +22,18 @@ export default {
             commit("changeUser", userData);
 
             dispatch("saveUser");
+        },
+        async logout({ dispatch }) {
+            apiService.stopAxios();
+            mainApiService.stopAxios();
+
+            await ProfileApi.post("/logout");
+
+            await router.push({ name: "home" });
+
+            dispatch("dropUser");
+            dispatch("dropToken");
+            dispatch("drop_all");
         },
         setToken({ commit, dispatch }, token = null) {
             const tokenRow = token ?? localStorage.getItem("token");

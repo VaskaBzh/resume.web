@@ -7,6 +7,7 @@ import { DropErrorsMiddleware } from "@/router/middlewares/DropErrorsMiddleware"
 import { DropSubsMiddleware } from "@/router/middlewares/DropSubsMiddleware";
 
 import routes from "@/router/routes/rotes";
+import { apiService } from "@/api/api";
 
 export const router = createRouter({
     history: createWebHistory(),
@@ -22,6 +23,8 @@ const middlewares = {
 };
 
 router.beforeEach(async (to, from, next) => {
+    apiService.stopAxios();
+
     const routeMiddleware = to.meta.middleware;
 
     if (to.path.startsWith("/profile") || to.path.startsWith("/watcher/")) {

@@ -1,7 +1,7 @@
 import { FormData } from "@/modules/auth/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 
 export class RegistrationService {
@@ -29,7 +29,7 @@ export class RegistrationService {
         if (this.checkbox) {
             if (Object.entries(this.validate).length === 0) {
                 try {
-                    const response = await api.post("/register", this.form);
+                    const response = await ProfileApi.post("/register", this.form);
 
                     const user = response.data.user;
                     const token = response.data.token;

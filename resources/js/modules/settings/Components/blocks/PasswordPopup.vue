@@ -5,6 +5,7 @@
         :opened="opened"
         :wait="wait"
         :closed="closed"
+        :makeResize="makeResize"
     >
         <div class="password__head">
             <main-title tag="h3">{{ $t("password_popup.title") }}</main-title>
@@ -68,6 +69,15 @@ export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
+    watch: {
+        "form.password"() {
+            setTimeout(() => {
+                this.makeResize = true
+                setTimeout(() => this.makeResize = false, 50);
+            }, 355);
+
+        }
+    },
     data() {
         return {
             form: {
@@ -75,6 +85,7 @@ export default {
                 password: "",
                 "password-confirmation": "",
             },
+            makeResize: false,
         };
     },
     computed: {

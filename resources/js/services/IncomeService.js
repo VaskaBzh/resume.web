@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { TableService } from "./extends/TableService";
 
@@ -19,7 +19,7 @@ export class IncomeService extends TableService {
     }
 
     async fetchChartIncomes(page = 1, per_page = 30) {
-        return await api.get(
+        return await ProfileApi.get(
             `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
@@ -34,7 +34,7 @@ export class IncomeService extends TableService {
     }
 
     async fetchIncomes(page = 1, per_page = 15) {
-        return await api.get(
+        return await ProfileApi.get(
             `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
@@ -49,7 +49,7 @@ export class IncomeService extends TableService {
     }
 
     async fetchPayout(page = 1, per_page = 15) {
-        return await api.get(
+        return await ProfileApi.get(
             `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
                 headers: {

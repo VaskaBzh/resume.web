@@ -8,7 +8,7 @@
 
 <script>
 import { mapGetters } from "vuex";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 export default {
     name: "app-layout-view",
@@ -27,15 +27,7 @@ export default {
         async onClose() {
             try {
                 if (this.token && !this.$route?.query?.access_key)
-                    await api.put(
-                        "/decrease/token",
-                        {},
-                        {
-                            headers: {
-                                Authorization: `Bearer ${this.token}`,
-                            },
-                        }
-                    );
+                    await ProfileApi.put("/decrease/token");
             } catch (error) {
                 console.error("Error decreasing token:", error);
             }

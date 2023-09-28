@@ -9,7 +9,6 @@
 
 <script>
 import LogoutIcon from "../../icons/LogoutIcon.vue";
-import api from "@/api/api";
 import { mapGetters } from "vuex";
 
 export default {
@@ -22,25 +21,7 @@ export default {
     },
     methods: {
         async logout() {
-            try {
-                await api.post(
-                    "/logout",
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${this.token}`,
-                        },
-                    }
-                );
-
-                await this.$router.push({ name: "home" });
-
-                this.$store.dispatch("dropUser");
-                this.$store.dispatch("dropToken");
-                this.$store.dispatch("drop_all");
-            } catch (e) {
-                console.error("Error with: " + e);
-            }
+            this.$store.dispatch("logout");
         }
     },
 }
