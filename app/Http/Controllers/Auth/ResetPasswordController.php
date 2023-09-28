@@ -5,49 +5,65 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Providers\RouteServiceProvider;
+use App\Traits\Tokenable;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
 use Illuminate\Validation\Rules;
-use Illuminate\Validation\ValidationException;
-use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordController extends Controller
 {
-    /**
-     * Handle the password change request.
-     *
-     */
-    public function changePassword(Request $request)
+    use Tokenable;
+
+    public function __construct()
     {
-        dd($request);
-        $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
+        $this->middleware('signed')->only('verify');
+        $this->middleware('throttle:6,1')->only('verify', 'resend');
+    }
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->all(), Response::HTTP_BAD_REQUEST);
-        }
-
+    public function sendEmail(): JsonResponse
+    {
         $user = auth()->user();
 
-        if (!Hash::check($request->input('old_password'), $user->password)) {
-            if (app()->getLocale() === 'ru') {
-                return response()->json(['error' => 'Необходимо подтвердить старый пароль'], Response::HTTP_UNAUTHORIZED);
-            } else if (app()->getLocale() === 'en') {
-                return response()->json(['error' => 'You need to confirm your old password.'], Response::HTTP_UNAUTHORIZED);
-            }
+        if ($user->hasVerifiedEmail()) {
+
+            $user->sendPasswordResetNotification(Password::createToken($user));
+
+            return new JsonResponse(['message' => 'success']);
         }
 
-        $this->resetPassword($user, $request->input('password'));
+        return new JsonResponse(['message' => 'user email not verified'], Response::HTTP_FORBIDDEN);
+    }
 
-        if (app()->getLocale() === 'ru') {
-            return response()->json(['message' => 'Пароль успешно изменен.']);
-        } else if (app()->getLocale() === 'en') {
-            return response()->json(['message' => 'The password has been successfully changed.']);
+    public function changePassword(Request $request)
+    {
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
+
+        $confirm = Hash::check($request->input('old_password'), $user->password);
+
+        if (!$validator->validate() || !$confirm) {
+            return new JsonResponse(['error' => __('auth.failed')], Response::HTTP_BAD_REQUEST);
         }
+
+        if (!$this->checkIfTokenExpired($user->email)) {
+            return new JsonResponse(['message' => 'token not exists or expired']);
+        }
+
+        if ($user->update(['password' => Hash::make($request->password)])) {
+
+            $this->deleteToken($user);
+
+            return new JsonResponse(['message' => 'success']);
+
+        }
+
+        return new JsonResponse(['message' => 'Something went wrong'], Response::HTTP_BAD_REQUEST);
     }
 
     /**

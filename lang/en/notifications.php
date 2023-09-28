@@ -6,4 +6,6 @@ return [
     'email.verify.action-text' => 'Verify email',
     'email.expired_at.text' => 'This link is valid for :value hours from the moment you received the message',
     'greetings' => 'Hello, :email',
+    'email.password-reset.context' => 'The password reset link is available at the following link',
+    'email.password-reset.action-text' => 'Change password',
 ];
