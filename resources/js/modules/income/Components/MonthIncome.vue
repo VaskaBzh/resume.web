@@ -80,7 +80,12 @@ export default {
     display: flex;
     width: 100%;
     justify-content: space-between;
+    align-items: baseline;
+}
+@media(max-width:500px){
+  .flex-jc{
     align-items: center;
+  }
 }
 .icome-container {
     width: 100%;

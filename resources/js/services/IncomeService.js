@@ -151,6 +151,7 @@ export class IncomeService extends TableService {
         if (store.getters.getActive !== -1) {
             this.emptyTable = false;
             this.waitTable = true;
+            let tableTitleIndexes = null;
 
             try {
                 let response;
@@ -167,25 +168,30 @@ export class IncomeService extends TableService {
                     return this.setter(el, filter);
                 });
 
-                // if (this.rows.filter(row => {
-                //     console.log(row);
-                //     console.log(this.translate("income.types[0]"));
-                //     return row.type === this.translate("income.types[0]")
-                // }).length === 0) {
-                //     this.rows
-                // }
+                if (this.rows.filter(row => row.type === this.translate("income.types[0]")).length === 0) {
+                    this.rows = this.rows.map((item) => {
+                        delete item.type
+                        return item
+                    });
+                    tableTitleIndexes = this.titleIndexes;
+                    tableTitleIndexes.shift();
+                    this.titles = this.useTranslater(tableTitleIndexes)
+                }
+
+
                 if (this.rows.length === 0) this.emptyTable = true;
 
                 this.waitTable = false;
             } catch (err) {
                 this.emptyTable = true;
-                console.log(12121212)
             }
 
-            if (filter) {
-                this.titles = this.useTranslater([1, 4, 5, 6]);
-            } else {
-                this.titles = this.useTranslater([0, 1, 2, 3, 4, 7, 8]);
+            if (!tableTitleIndexes) {
+                if (filter) {
+                    this.titles = this.useTranslater([1, 4, 5, 6]);
+                } else {
+                    this.titles = this.useTranslater([0, 1, 2, 3, 4, 7, 8]);
+                }
             }
 
             return this;

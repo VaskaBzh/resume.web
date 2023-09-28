@@ -55,6 +55,7 @@ export class GraphService {
 
     setGraphData(newGraphData) {
         this.graphData = newGraphData;
+        console.log(this.graphData, 'Это граф дата')
 
         return this;
     }

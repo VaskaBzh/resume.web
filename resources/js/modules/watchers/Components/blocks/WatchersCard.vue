@@ -287,7 +287,7 @@ export default {
 }
 .card_label {
     padding: 0 16px;
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans, serif;
     font-size: 14px;
     font-weight: 400;
