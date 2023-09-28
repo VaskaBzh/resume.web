@@ -189,17 +189,23 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 150%; /* 24px */
+    margin-left: 24px;
 }
 .faq {
     padding: 24px;
-
     flex: 1 1 auto;
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
     &_title {
-        margin-top: 20px;
+        margin-top: 8px;
         font-size: 27px;
+        color: var(--text-primary-80);
+        font-family: Unbounded;
+        font-size: 27px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 40px; /* 148.148% */
         @media (max-width: 991.98px) {
             margin-top: 48px;
         }
@@ -221,8 +227,10 @@ export default {
         display: flex;
         flex-direction: column;
         gap: 24px;
-        @media (max-width: 767.98px) {
+        width: 64%;
+        @media (max-width: 900px) {
             margin-bottom: 40px;
+            width: 100%;
         }
         @media (max-width: 479.98px) {
             margin-bottom: 32px;
