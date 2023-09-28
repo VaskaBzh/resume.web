@@ -169,7 +169,7 @@ export default {
         padding: 0 0 8px 16px;
         color: var(--text-primary);
         font-family: Unbounded !important;
-        font-size: 20px;
+        font-size: 20px !important;
         font-style: normal;
         font-weight: 400;
         line-height: 32px; /* 160% */

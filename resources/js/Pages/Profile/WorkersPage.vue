@@ -171,6 +171,12 @@ export default {
     .title-worker {
         display: inline-block;
         padding: 0 0 16px 16px;
+        color: var(--text-primary);
+        font-family: Unbounded !important;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
     }
 }
 .cards-container {
@@ -189,7 +195,8 @@ export default {
     .cards-container {
         flex-direction: row;
         flex-wrap: nowrap;
-        gap: 16px;
+        gap: 0px;
+        margin-bottom: 24px;
     }
 }
 .workers {
@@ -212,7 +219,7 @@ export default {
     }
     &__card {
         min-width: calc(50% - 6px);
-        min-height: 474px;
+        min-height: 440px;
         @media (max-width: 1300px) {
             min-height: 437px;
         }
@@ -231,7 +238,7 @@ export default {
             min-height: 550px;
         }
         @media (max-width: 390px) {
-            min-height: 470px;
+            min-height: 490px;
         }
     }
     &__button {

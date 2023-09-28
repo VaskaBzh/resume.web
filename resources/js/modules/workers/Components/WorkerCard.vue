@@ -185,7 +185,7 @@ export default {
 }
 .card_status-active {
     color: var(--status-succesfull, #1fb96c);
-    background: var(--background-success-day, #e9f8f1);
+    background: var(--background-success);
 }
 .card__block {
     display: grid;
