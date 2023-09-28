@@ -284,7 +284,9 @@ export default {
         }
         &.error,
         &.complete,
-        &.pending {
+        &.completed,
+        &.pending,
+        &.rejected {
             span {
                 &.status,
                 &.name {
@@ -310,7 +312,8 @@ export default {
                 background: #13d60e;
             }
         }
-        &.complete {
+        &.complete,
+        &.completed {
             span.status:before {
                 background: #13d60e;
             }
@@ -325,7 +328,8 @@ export default {
                 background: #ff0000;
             }
         }
-        &.error {
+        &.error,
+        &.rejected {
             span.status:before {
                 background: #ff0000;
             }

@@ -17,6 +17,7 @@ export class SettingsService {
         this.rows = [];
         this.blocks = [];
         this.form = {};
+        this.passwordForm = {};
         this.validate = {};
         this.user = null;
 
@@ -26,9 +27,13 @@ export class SettingsService {
         this.code = null;
 
         this.closed = false;
+        this.waitAjax = false;
+
         this.openedFacPopup = false;
         this.closedFacPopup = false;
-        this.waitAjax = false;
+
+        this.openedPasswordPopup = false;
+        this.closedPasswordPopup = false;
 
         this.validateService = new ValidateService();
     }
@@ -47,7 +52,6 @@ export class SettingsService {
 
             this.closeFacPopup();
 
-            console.log(response);
             openNotification(true, this.translate("validate_messages.connected"), response.data.message);
         } catch (err) {
             console.error(err);
@@ -59,6 +63,37 @@ export class SettingsService {
             );
             store.dispatch("setFullErrors", err.response.data);
         }
+    }
+
+    async sendPassword(form) {
+        try {
+            const response = await this.fetchPassword(form);
+
+            this.closePasswordPopup();
+
+            openNotification(true, this.translate("validate_messages.connected"), response.data.message);
+        } catch (err) {
+            console.error(err);
+
+            openNotification(
+                false,
+                this.translate("validate_messages.error"),
+                err.response.data.error ?? err.response.data.message
+            );
+            store.dispatch("setFullErrors", err.response.data);
+        }
+    }
+
+    openPasswordPopup() {
+        this.openedPasswordPopup = true;
+
+        setTimeout(() => (this.openedPasswordPopup = false), 300);
+    }
+
+    closePasswordPopup() {
+        this.closedPasswordPopup = true;
+
+        setTimeout(() => (this.closedPasswordPopup = false), 300);
     }
 
     async sendFac() {
@@ -83,6 +118,16 @@ export class SettingsService {
         this.closedFacPopup = true;
 
         setTimeout(() => (this.closedFacPopup = false), 300);
+    }
+
+    async fetchPassword(form) {
+        return (
+            await api.post("/reset/password", form, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
     }
 
     async fetchFac() {
@@ -174,15 +219,17 @@ export class SettingsService {
                 this.translate("safety.text[0]"),
                 "2fac",
                 "two-factor-icon.png",
-                this.translate("safety.button[0]")
+                this.translate("safety.button[0]"),
+                "openFacForm"
             ),
-            // new BlockData(
-            //     this.translate("safety.title[2]"),
-            //     this.translate("safety.text[2]"),
-            //     "password",
-            //     "change-password-icon.png",
-            //     this.translate("safety.button[1]")
-            // ),
+            new BlockData(
+                this.translate("safety.title[2]"),
+                this.translate("safety.text[2]"),
+                "password",
+                "change-password-icon.png",
+                this.translate("safety.button[1]"),
+                "openPasswordForm"
+            ),
         ];
     }
 
@@ -190,7 +237,11 @@ export class SettingsService {
         this.profit = newProfit;
     }
 
-    setForm() {
+    setDefaultForm() {
+        this.form = new FormData("", "", "", "", "");
+    }
+
+    setPasswordForm(form) {
         this.form = new FormData("", "", "", "", "");
     }
 
@@ -244,14 +295,6 @@ export class SettingsService {
         }
     };
 
-    // async send2Fac() {
-    //     let form = useForm({
-    //         "2fac": true,
-    //     });
-    //
-    //     await form.post("/2fac/enable", {});
-    // }
-
     setProfits() {
         this.profit = localStorage.getItem("clearProfit") || "";
         this.clearProfit = this.profit;
@@ -263,14 +306,10 @@ export class SettingsService {
     }
 
     async getHtml(data) {
-        // item: data.name === "пароль" ? "" : data.val,
         if (data.verify) {
             this.form = {
                 ...this.form,
-                item:
-                    data.name === this.translate("inputs.password")
-                        ? this.translate("inputs.old_password")
-                        : data.val,
+                item: data.val,
                 type: data.name,
                 key: data.key,
             };

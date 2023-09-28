@@ -27,7 +27,11 @@
                         class="card__container"
                         v-for="card in settingsService.blocks"
                     >
-                        <SafetyCard :card="card" @send2fac="sendFac" />
+                        <SafetyCard
+                            :card="card"
+                            @openFacForm="sendFac"
+                            @openPasswordForm="openPasswordPopup"
+                        />
                     </div>
                 </article>
             </div>
@@ -54,6 +58,14 @@
         :code="settingsService.code"
         @sendVerify="sendVerify($event)"
     />
+    <password-popup
+        :opened="settingsService.openedPasswordPopup"
+        :wait="settingsService.waitAjax"
+        :closed="settingsService.closedPasswordPopup"
+        :validateService="settingsService"
+        @sendPassword="sendPassword($event)"
+        @changePassword="setPasswordForm($event)"
+    />
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
@@ -64,12 +76,14 @@ import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
+import PasswordPopup from "../../modules/settings/Components/blocks/PasswordPopup.vue";
 
 export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
     components: {
+        PasswordPopup,
         MainTitle,
         SettingsList,
         SettingsPopup,
@@ -114,15 +128,24 @@ export default {
         },
     },
     methods: {
+        setPasswordForm() {
+
+        },
+        async openPasswordPopup() {
+            await this.settingsService.openPasswordPopup();
+        },
         async sendFac() {
             await this.settingsService.sendFac();
+        },
+        async sendPassword(form) {
+            await this.settingsService.sendPassword(form);
         },
         async sendVerify(form) {
             await this.settingsService.sendVerify(form);
         },
         settingsProcess() {
             this.settingsService.setUserData();
-            this.settingsService.setForm();
+            this.settingsService.setDefaultForm();
             this.settingsService.setRows();
             this.settingsService.setBlocks();
             this.settingsService.setProfits();

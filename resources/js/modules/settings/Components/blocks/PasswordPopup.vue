@@ -5,56 +5,43 @@
         :opened="opened"
         :wait="wait"
         :closed="closed"
-        :makeResize="makeResize"
     >
         <div class="password__head">
             <main-title tag="h3">{{ $t("password_popup.title") }}</main-title>
-            <main-description>{{ $t("popup.text[4]") }}</main-description>
+            <main-description>{{ $t("password_popup.description") }}</main-description>
         </div>
-        <div class="password__content" v-show="!hasCode">
-            <div class="password_qrcode" v-html="qrCode"></div>
-            <main-copy
-                class="password_code"
-                :cutValue="-1"
-                :code="code"
-                :label="$t('password_popup.label[0]')"
+        <div class="password__content">
+<!--            :errors="errorsExpired"-->
+            <profile-password
+                class="password_input"
+                name="password"
+                :placeholder="this.$t('password_popup.placeholders.current_password')"
+                :model="form.old_password"
+                @change="changePasswordForm('old_password', $event)"
+            />
+            <profile-password
+                class="password_input"
+                name="password"
+                :placeholder="this.$t('password_popup.placeholders.new_password')"
+                :model="form.password"
+                @change="changePasswordForm('password', $event)"
+            />
+            <main-validate :validate="validateService.validate" />
+            <profile-password
+                class="password_input password_input-last"
+                name="password"
+                :placeholder="this.$t('password_popup.placeholders.confirm_password')"
+                :model="form['password-confirmation']"
+                @change="changePasswordForm('password-confirmation', $event)"
             />
             <main-button
                 class="button-blue password_button button-full"
-                @click.prevent="hasCode = true"
+                @click="closePopup"
             >
                 <template v-slot:text>{{
-                    $t("password_popup.button[0]")
+                    $t("password_popup.button")
                 }}</template>
             </main-button>
-        </div>
-        <div class="password__content" v-show="hasCode">
-            <main-input
-                class="password_input"
-                inputName="twopasswordtorSecret"
-                :inputLabel="$t('password_popup.label[1]')"
-                :inputValue="form.twopasswordtorSecret"
-                :error="errorsExpired.error"
-                @getValue="form.twopasswordtorSecret = $event"
-            />
-            <div class="password__buttons">
-                <main-button
-                    class="button-reverse password_button button-full"
-                    @click.prevent="hasCode = false"
-                >
-                    <template v-slot:text>{{
-                        $t("password_popup.button[1]")
-                    }}</template>
-                </main-button>
-                <main-button
-                    class="button-blue password_button button-full"
-                    @click="closePopup"
-                >
-                    <template v-slot:text>{{
-                        $t("password_popup.button[2]")
-                    }}</template>
-                </main-button>
-            </div>
         </div>
     </main-popup>
 </template>
@@ -65,9 +52,10 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import { mapGetters } from "vuex";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import ProfilePassword from "@/modules/common/Components/inputs/ProfilePassword.vue";
+import MainValidate from "../../../validate/Components/MainValidate.vue";
 
 export default {
     name: "password-popup",
@@ -75,8 +63,7 @@ export default {
         opened: Boolean,
         closed: Boolean,
         wait: Boolean,
-        qrCode: String,
-        code: String,
+        validateService: Object,
     },
     i18n: {
         sharedMessages: SettingsMessage,
@@ -90,22 +77,29 @@ export default {
             },
         };
     },
-    watch: {
-    },
     computed: {
         ...mapGetters(["errorsExpired"]),
     },
     components: {
+        MainValidate,
+        ProfilePassword,
         MainDescription,
         MainPopup,
         MainTitle,
         MainCopy,
         MainButton,
-        MainInput,
     },
     methods: {
         closePopup() {
             this.$emit("sendPassword", this.form);
+        },
+        changePasswordForm(formKey, event) {
+            const formValue = !!event.target ? event.target.value : event;
+
+            this.form[formKey] = formValue;
+
+            this.$emit("changePassword", this.form);
+            this.validateService.validateProcess(this.form.password);
         },
     },
 };
@@ -118,23 +112,13 @@ export default {
     gap: 4px;
     margin-bottom: 40px;
 }
-.password_qrcode {
-    width: 200px;
-    margin: 0 auto 40px;
-}
-.password_code,
-.password_input {
-    margin-bottom: 80px;
-}
-.password_input {
-    background: var(--background-modal-input, #2c2f34);
-}
 .password_button {
     min-height: 56px;
 }
-.password__buttons {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 16px;
+.password_input {
+    margin-bottom: 16px;
+}
+.password_input-last {
+    margin-bottom: 80px;
 }
 </style>
