@@ -1,0 +1,125 @@
+<template>
+    <div class="miners-info-view">
+        <div class="miners-info-view__container">
+            <head-line class="miners-info-view_title">почему allbtc pool</head-line>
+            <h3 class="miners-info-view_subtitle">
+                <span>ПРодукт,</span>
+                <span class="miners-info-view_subtitle_one">созданный</span>
+                <span>майнерами</span>
+                <span>для майнеров</span>
+            </h3>
+            <div class="miners-info-view__items">
+                <div class="miners-info-view_item">
+                    <p class="miners-info-view_item_text">Наша команда,
+                        будучи экспертами и практикующими майнерами, специализируется на
+                        биткоине, знает все тонкости добычи криптовалюты и внедряет
+                        новые идеи и механизмы в развитие пула. Все внедренные
+                        инструменты помогают зарабатывать больше.
+                    </p>
+                    <h3 class="miners-info-view_item_title">Фокус на Bitcoin</h3>
+                </div>
+                <div class="miners-info-view_item">
+                    <h3 class="miners-info-view_item_title">Прозрачный мониторинг</h3>
+                </div>
+                <div class="miners-info-view_item">
+                    <h3 class="miners-info-view_item_title">технологии и безопасность</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+<script>
+import HeadLine from "../../../common/Components/UI/HeadLine.vue";
+
+export default {
+    name: "MinersInfoView",
+    components: {HeadLine}
+}
+</script>
+
+
+
+<style scoped lang="scss">
+.miners-info-view {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+    padding-top: 100px;
+    justify-content: center;
+    flex-flow: column nowrap;
+
+    &__container {
+        margin: 0 auto;
+    }
+
+    &_subtitle {
+        width: fit-content;
+        color: #F5FAFF;
+        display: flex;
+        flex-flow: column nowrap;
+        margin: 0 auto 40px;
+        justify-content: center;
+        text-shadow: 0px 4.897561073303223px 8.570732116699219px rgba(14, 14, 14, 0.05);
+        font-family: Unbounded, serif;
+        font-size: 46px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 100%;
+        text-transform: uppercase;
+
+        &_one {
+            display: block;
+            position: relative;
+            left: -100px;
+        }
+    }
+
+    &__items {
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: flex-start;
+        justify-content: center;
+        gap: 64px;
+        margin-top: 140px;
+    }
+
+    &_item {
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+
+        &:first-child {
+            width: 100%;
+            justify-content: space-between;
+        }
+
+
+        &_text {
+            width: 430px;
+            color: rgba(245, 250, 255, 0.70);
+            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
+            font-family: NunitoSans, serif;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 110%;
+        }
+
+       &_title {
+            color: #F5FAFF;
+            text-align: right;
+            font-family: Unbounded, serif;
+            font-size: 65px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 120%;
+            text-transform: uppercase;
+        }
+    }
+
+
+}
+</style>

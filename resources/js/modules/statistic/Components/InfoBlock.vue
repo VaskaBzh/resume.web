@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import BtcCalculator from "@/modules/common/Components/Ui/BTCCalculator.vue";
+import BtcCalculator from "@/modules/common/Components/UI/BTCCalculator.vue";
 import { mapGetters } from "vuex";
 
 export default {

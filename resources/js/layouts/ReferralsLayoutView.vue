@@ -20,7 +20,7 @@
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainTabs from "@/modules/common/Components/Ui/MainTabs.vue";
+import MainTabs from "@/modules/common/Components/UI/MainTabs.vue";
 
 import { ViewsService } from "@/modules/referral/services/ViewsService";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";

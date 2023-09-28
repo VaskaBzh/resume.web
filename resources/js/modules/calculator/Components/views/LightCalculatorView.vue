@@ -163,4 +163,13 @@ export default {
         transition-delay: 1s;
     }
 }
+
+.calculator-land_content {
+    width: 50vw;
+    margin: 50px auto;
+    border-radius: 40px;
+    background: linear-gradient(113deg, #0043AE 24.37%, #3A8FE3 111.64%);
+    box-shadow: 0px 4px 7px 0px rgba(14, 14, 14, 0.05);
+    padding: 30px 50px;
+}
 </style>

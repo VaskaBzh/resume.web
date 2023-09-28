@@ -11,7 +11,7 @@ export class RoutePublicData {
                 "LoadLayoutMiddleware",
                 "DropErrorsMiddleware",
                 "DropSubsMiddleware",
-            ],
+                ],
             layout: "LayoutView",
         };
     }

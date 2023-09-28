@@ -119,7 +119,7 @@ export default {
     width: fit-content;
     padding: 8px 12px;
     border-radius: 12px;
-    background: var(--light-gray-100, #F2F4F7);
+    background: var(--buttons-fourth-fill-border-default, #F2F4F7);
     position: relative;
     cursor: pointer;
     @media (max-width: 767.98px) {
