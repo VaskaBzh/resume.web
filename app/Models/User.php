@@ -27,10 +27,10 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
-        'phone',
         'referral_code',
+        'phone',
         'sms',
-        'google2fa_secret'
+        'google2fa_secret',
     ];
 
     /**
@@ -83,6 +83,7 @@ class User extends Authenticatable implements MustVerifyEmail
     /* End relations */
 
     /* Attributes */
+
     public function owner(): Attribute
     {
         return Attribute::make(
@@ -90,16 +91,22 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    /* End attributes */
+
     public function sendEmailVerificationNotification(): void
     {
         $this->notify(new VerifyEmailNotification(
-            actionContext: __('notifications.email.verify.context'),
             actionRoute: 'v1.verification.verify',
-            actionText: __('notifications.email.verify.action-text'),
         ));
     }
 
-    /* End attributes */
+    public function sendPasswordResetNotification($token): void
+    {
+        $this->notify(new VerifyEmailNotification(
+            actionRoute: 'v1.password.reset.verify',
+            token: $token
+        ));
+    }
 
     /* Custom builder */
     public function newEloquentBuilder($query): UserBuilder
