@@ -29,7 +29,7 @@ class VerifyEmailNotification extends VerifyEmail
 
 
 
-    protected function verificationEmailUrl($notifiable): string
+    protected function verificationEmailUrl($notifiable, string $redirectTo): string
     {
         return URL::temporarySignedRoute(
             $this->actionRoute,
@@ -37,6 +37,7 @@ class VerifyEmailNotification extends VerifyEmail
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
+                'redirect_to' => config('app.url') . $redirectTo
             ],
             false
         );
@@ -51,7 +52,7 @@ class VerifyEmailNotification extends VerifyEmail
                 ->line(__('notifications.email.verify.context'),)
                 ->action(
                     text: __('notifications.email.verify.action-text'),
-                    url: config('app.url') . $this->verificationEmailUrl($notifiable)
+                    url: config('app.url') . $this->verificationEmailUrl($notifiable, '/profile/statistic')
                 )
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
             'v1.password.reset.verify' => (new MailMessage)
@@ -60,7 +61,7 @@ class VerifyEmailNotification extends VerifyEmail
                 ->line(__('notifications.email.password-reset.context'),)
                 ->action(
                     text: __('notifications.email.password-reset.action-text'),
-                    url: config('app.url') . $this->verificationEmailUrl($notifiable)
+                    url: config('app.url') . $this->verificationEmailUrl($notifiable, 'profile/settings')
                 )
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
             default => throw new \Exception('Wrong route action ' . $this->actionRoute)
