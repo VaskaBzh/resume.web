@@ -2,10 +2,10 @@ import { ProfileApi } from "@/api/api";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class VerifyService {
-    constructor(verifyText) {
+    constructor() {
         this.translate = null;
         this.overTime = 0;
-        this.verifyText = verifyText;
+        this.verifyText = "";
         this.text = "";
         this.interval = null;
     }
@@ -32,6 +32,10 @@ export class VerifyService {
 
     setText(text = null) {
         this.text = text ?? this.verifyText;
+    }
+
+    setVerifyText(text) {
+        this.verifyText = text;
     }
 
     setOverTime(overTime) {

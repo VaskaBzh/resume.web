@@ -158,16 +158,9 @@ export class SettingsService {
         );
     }
 
-    async sendEmailVerification() {
+    async sendEmailVerification(verifyUrl) {
         try {
-            const response = await ProfileApi.post("/email/reverify",
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                }
-            );
+            const response = await ProfileApi.post(verifyUrl ?? "/email/reverify");
 
             openNotification(true, this.translate("validate_messages.success"), response.data.message);
         } catch (err) {
@@ -225,7 +218,7 @@ export class SettingsService {
             new BlockData(
                 this.translate("safety.title[2]"),
                 this.translate("safety.text[2]"),
-                "password",
+                "verify_password",
                 "change-password-icon.png",
                 this.translate("safety.button[1]"),
                 "openPasswordForm"
