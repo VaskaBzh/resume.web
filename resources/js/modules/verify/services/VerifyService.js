@@ -14,9 +14,9 @@ export class VerifyService {
         this.translate = translate;
     }
 
-    async sendEmailVerification() {
+    async sendEmailVerification(verifyUrl) {
         try {
-            const response = await this.fetchVerify();
+            const response = await this.fetchVerify(verifyUrl);
 
             openNotification(true, this.translate("validate_messages.success"), response.data.message);
         } catch (err) {
@@ -26,8 +26,8 @@ export class VerifyService {
         }
     }
 
-    async fetchVerify() {
-        return await ProfileApi.post("/email/reverify");
+    async fetchVerify(verifyUrl) {
+        return await ProfileApi.post(verifyUrl ?? "/email/reverify");
     }
 
     setText(text = null) {

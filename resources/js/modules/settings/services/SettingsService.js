@@ -158,9 +158,9 @@ export class SettingsService {
         );
     }
 
-    async sendEmailVerification(verifyUrl) {
+    async sendEmailVerification() {
         try {
-            const response = await ProfileApi.post(verifyUrl ?? "/email/reverify");
+            const response = await ProfileApi.post("/email/reverify");
 
             openNotification(true, this.translate("validate_messages.success"), response.data.message);
         } catch (err) {
