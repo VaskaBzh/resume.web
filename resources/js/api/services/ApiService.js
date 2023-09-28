@@ -1,6 +1,7 @@
 import axios from "axios";
 import store from "@/store";
 import { router } from "@/router/index";
+import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class ApiService {
     constructor() {
@@ -102,6 +103,28 @@ export class ApiService {
 
         return this;
     }
+
+    // initNotifications() {
+    //
+    //     this.instance.interceptors.response.use(
+    //         (response) => {
+    //             const fulfilledMessage = response.data.message;
+    //
+    //
+    //
+    //             return response;
+    //         },
+    //         async (error) => {
+    //             const errorMessage = error.response.data.message ?? error.response.data.error;
+    //
+    //             openNotification(false, this.translate("validate_messages.error"), errorMessage);
+    //
+    //             return Promise.reject(error);
+    //         }
+    //     );
+    //
+    //     return this;
+    // }
 
     setSignal() {
         this.instance.interceptors.request.use((config) => {

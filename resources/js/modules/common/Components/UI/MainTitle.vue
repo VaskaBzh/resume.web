@@ -70,7 +70,7 @@ h4 {
 
 
 .title {
-    font-family: AmpleSoftPro, serif;
+    font-family: NunitoSans, serif;
     color: var(--text-primary);
     font-weight: 400;
     &.profile {

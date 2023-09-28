@@ -7,12 +7,12 @@
             :placeholder="placeholder"
         />
         <transition name="fade">
-            <opened-eye-icon
+            <closed-eye-icon
                 class="row_icon"
                 @click="changeType"
                 v-if="type === 'password'"
             />
-            <closed-eye-icon
+            <opened-eye-icon
                 class="row_icon"
                 @click="changeType"
                 v-else
