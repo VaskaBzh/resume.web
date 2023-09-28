@@ -67,7 +67,12 @@ export default {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+}
+@media(max-width:500px){
+  .flex-jc{
+    align-items: center;
+  }
 }
 .icome-container{
   width: 100%;
@@ -94,7 +99,7 @@ export default {
   }
 }
 .btc-gray-text{
-  color: var(--gray-300, #D0D5DD);
+  color: var(--text-fourth);
   font-family: Unbounded;
   font-size: 20px;
   font-style: normal;
@@ -108,7 +113,7 @@ export default {
   }
 }
 .rub-counter-text{
-  color: var(--gray-300, #D0D5DD);
+  color: var(--text-fourth);
   font-family: Unbounded;
   font-size: 14px;
   font-style: normal;

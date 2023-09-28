@@ -139,7 +139,7 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: var(--text-teritary-day, #98a2b3);
+                color: var(--text-table-title);
                 font-family: NunitoSans;
                 font-size: 14px;
                 font-style: normal;

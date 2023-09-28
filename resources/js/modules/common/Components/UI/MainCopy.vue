@@ -108,7 +108,7 @@ export default {
         //}
     }
     &_label {
-        color: var(--text-teritary-day, #98a2b3);
+        color: var(--text-teritary);
         font-family: NunitoSans, serif;
         font-size: 12px;
         font-weight: 400;

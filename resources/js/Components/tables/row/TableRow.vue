@@ -153,10 +153,12 @@ export default {
 <style scoped lang="scss">
 .table {
     &_column {
-        font-size: 18px;
+        font-family: NunitoSans;
+        font-size: 14px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 135%;
-        color: var(--text-secondary);
+        line-height: 20px;
+        color: var(--text-teritary);
         white-space: nowrap;
         // text-align: center;
         -moz-user-select: -moz-none;

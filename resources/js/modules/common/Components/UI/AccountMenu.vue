@@ -313,7 +313,7 @@ export default {
 
 <style scoped lang="scss">
 .popup-text {
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
