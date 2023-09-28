@@ -1,5 +1,5 @@
 <template>
-	<a href="#" @click.prevent="sendVerifyMessage" class="verify">
+	<a href="#" @click.prevent="sendVerifyMessage(verifyUrl)" class="verify">
 		{{ service.text }}
 	</a>
 </template>
@@ -10,16 +10,14 @@ import { VerifyService } from "@/modules/verify/services/VerifyService";
 
 export default {
 	props: {
-		verifyText: {
-			type: String,
-			default: this.$t("verify_link"),
-		},
+		verifyText: String,
+		verifyUrl: String,
 	},
 	i18n: VerifyMessages,
 	name: "verify-link",
 	data() {
 		return {
-			service: new VerifyService(this.verifyText),
+			service: new VerifyService(),
 		};
 	},
 	watch: {
@@ -30,12 +28,13 @@ export default {
 		}
 	},
 	methods: {
-		async sendVerifyMessage() {
+		async sendVerifyMessage(verifyUrl) {
 			this.service.setTimer(60000);
-			await this.service.sendEmailVerification();
-		}
+			await this.service.sendEmailVerification(verifyUrl);
+		},
 	},
 	mounted() {
+		this.service.setVerifyText(!!this.verifyText ? this.verifyText : this.$t("verify_link"));
 		this.service.setText();
 		if (this.$t) {
 			this.service.setTranslate(this.$t);

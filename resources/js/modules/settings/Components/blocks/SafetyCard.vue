@@ -11,14 +11,23 @@
             class="btn_content"
             :data-popup="'#' + card.id"
             @mousedown="$emit(card.emit)"
+            v-if="card.name !== 'verify_password'"
         >
             {{ card.button }}
         </button>
+        <verify-link
+            v-else
+            class="btn_content"
+            :verifyText="card.button"
+            verifyUrl="/password/reset"
+        />
     </div>
 </template>
 <script>
+import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
+
 export default {
     name: "safety-card",
     i18n: {
@@ -26,6 +35,9 @@ export default {
     },
     props: {
         card: Object,
+    },
+    components: {
+        VerifyLink,
     },
     computed: {
         ...mapGetters(["user"]),
@@ -81,6 +93,9 @@ export default {
     font-weight: 600;
     color: var(--buttons-primary-text, var(--main-gohan, #FFF));
     line-height: 175%; /* 31.5px */
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
 }
 @media (max-width: 900px) {
     .card__subcontainer {
