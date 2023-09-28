@@ -240,121 +240,121 @@
 <!--    </main-popup>-->
 </template>
 <script>
-import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
-import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
-import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
-
-import { mapGetters } from "vuex";
-import { WalletService } from "@/services/WalletService";
-
-export default {
-    components: {
-        MainPopup,
-        MainButton,
-        MainTitle,
-        WalletBlock,
-        TooltipCard,
-        MainPreloader,
-        MainDescription,
-    },
-    computed: {
-        ...mapGetters(["getActive", "errors", "user"]),
-        endWallet() {
-            return this.wallets.wallets?.length > 0;
-        },
-        emptyWallet() {
-            return this.wallets.wallets?.length === 0;
-        },
-    },
-    created() {
-        window.addEventListener("resize", this.handleResize);
-        this.handleResize();
-    },
-    data() {
-        return {
-            viewportWidth: 0,
-            overTime: 0,
-            waitWallet: true,
-            wallets: new WalletService(this.$t),
-            isActiveLabelEmail: false,
-            isActiveLabelName: false,
-            isActiveLabelMinWithdrawal: false,
-            verifyButtonName: this.$t("wallets.no_info.verify_text"),
-        };
-    },
-    watch: {
-        getActive() {
-            this.walletInit();
-        },
-        "wallets.form.percent"(newVal) {
-            this.wallets.form.percent = String(newVal).replace(
-                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
-                ""
-            );
-        },
-        "wallets.form.minWithdrawal"(newVal) {
-            this.wallets.form.minWithdrawal = newVal.replace(
-                /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
-                ""
-            );
-        },
-        "$i18n.locale"() {
-            document.title = this.$t("header.links.wallets");
-        },
-    },
-    methods: {
-        walletInit() {
-            if (this.getActive !== -1) {
-                this.wallets.index();
-            }
-        },
-        handleResize() {
-            this.viewportWidth = window.innerWidth;
-        },
-        moveLabelFor(name) {
-            switch (name) {
-                case "email":
-                    this.isActiveLabelEmail = true;
-                    break;
-                case "name":
-                    this.isActiveLabelName = true;
-                    break;
-                case "minWithdrawal":
-                    this.isActiveLabelMinWithdrawal = true;
-                    break;
-            }
-        },
-        returnLabelfor(name) {
-            switch (name) {
-                case "email":
-                    if (this.wallets.form.wallet === "")
-                        return (this.isActiveLabelEmail = false);
-                    break;
-                case "name":
-                    if (this.wallets.form.name === "")
-                        return (this.isActiveLabelName = false);
-                    break;
-                case "minWithdrawal":
-                    if (this.wallets.form.minWithdrawal === "")
-                        return (this.isActiveLabelMinWithdrawal = false);
-                    break;
-            }
-        },
-        sendEmailVerification() {
-            this.wallets.verify.sendEmailVerification();
-        }
-    },
-    mounted() {
-        this.walletInit();
-        document.title = this.$t("header.links.wallets");
-        this.$refs.page.style.opacity = 1;
-    },
-    props: ["message", "auth_user"],
-};
+// import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+// import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
+// import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+// import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
+// import MainPopup from "@/modules/popup/Components/MainPopup.vue";
+// import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+// import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
+//
+// import { mapGetters } from "vuex";
+// import { WalletService } from "@/services/WalletService";
+//
+// export default {
+//     components: {
+//         MainPopup,
+//         MainButton,
+//         MainTitle,
+//         WalletBlock,
+//         TooltipCard,
+//         MainPreloader,
+//         MainDescription,
+//     },
+//     computed: {
+//         ...mapGetters(["getActive", "errors", "user"]),
+//         endWallet() {
+//             return this.wallets.wallets?.length > 0;
+//         },
+//         emptyWallet() {
+//             return this.wallets.wallets?.length === 0;
+//         },
+//     },
+//     created() {
+//         window.addEventListener("resize", this.handleResize);
+//         this.handleResize();
+//     },
+//     data() {
+//         return {
+//             viewportWidth: 0,
+//             overTime: 0,
+//             waitWallet: true,
+//             wallets: new WalletService(this.$t),
+//             isActiveLabelEmail: false,
+//             isActiveLabelName: false,
+//             isActiveLabelMinWithdrawal: false,
+//             verifyButtonName: this.$t("wallets.no_info.verify_text"),
+//         };
+//     },
+//     watch: {
+//         getActive() {
+//             this.walletInit();
+//         },
+//         "wallets.form.percent"(newVal) {
+//             this.wallets.form.percent = String(newVal).replace(
+//                 /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
+//                 ""
+//             );
+//         },
+//         "wallets.form.minWithdrawal"(newVal) {
+//             this.wallets.form.minWithdrawal = newVal.replace(
+//                 /[\u0401\u0451\u0410-\u044f/a-zA-Z]/g,
+//                 ""
+//             );
+//         },
+//         "$i18n.locale"() {
+//             document.title = this.$t("header.links.wallets");
+//         },
+//     },
+//     methods: {
+//         walletInit() {
+//             if (this.getActive !== -1) {
+//                 this.wallets.index();
+//             }
+//         },
+//         handleResize() {
+//             this.viewportWidth = window.innerWidth;
+//         },
+//         moveLabelFor(name) {
+//             switch (name) {
+//                 case "email":
+//                     this.isActiveLabelEmail = true;
+//                     break;
+//                 case "name":
+//                     this.isActiveLabelName = true;
+//                     break;
+//                 case "minWithdrawal":
+//                     this.isActiveLabelMinWithdrawal = true;
+//                     break;
+//             }
+//         },
+//         returnLabelfor(name) {
+//             switch (name) {
+//                 case "email":
+//                     if (this.wallets.form.wallet === "")
+//                         return (this.isActiveLabelEmail = false);
+//                     break;
+//                 case "name":
+//                     if (this.wallets.form.name === "")
+//                         return (this.isActiveLabelName = false);
+//                     break;
+//                 case "minWithdrawal":
+//                     if (this.wallets.form.minWithdrawal === "")
+//                         return (this.isActiveLabelMinWithdrawal = false);
+//                     break;
+//             }
+//         },
+//         sendEmailVerification() {
+//             this.wallets.verify.sendEmailVerification();
+//         }
+//     },
+//     mounted() {
+//         this.walletInit();
+//         document.title = this.$t("header.links.wallets");
+//         this.$refs.page.style.opacity = 1;
+//     },
+//     props: ["message", "auth_user"],
+// };
 </script>
 <style lang="scss">
 .change-label_title {
