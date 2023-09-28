@@ -506,9 +506,9 @@ const messages = {
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
-                    "Avg.hashrate / 1h",
+                    "Current hashrate",,
                     "Worker",
-                    "Projected earnings for today",
+                    "Hashrate / 24h",
                     "Total paid out",
                 ],
                 workers_status: ["Active", "All"],
@@ -1231,9 +1231,9 @@ const messages = {
             toggle: ["Активный", "Переключить"],
             block: {
                 titles: [
-                    "Ср.хешрейт / 1ч",
+                    "Текущий хешрейт",
                     "Воркеры",
-                    "Прогноз на сегодня",
+                    "Хешрейт / 24ч",
                     "Всего выплачено",
                 ],
                 workers_status: ["Активные", "Все"],

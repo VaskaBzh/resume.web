@@ -270,6 +270,12 @@ export default {
     .title-sub {
         display: inline-block;
         padding: 0 0 0px 16px;
+        color: var(--text-primary);
+        font-family: Unbounded !important;
+        font-size: 20px !important;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
     }
 }
 .accounts__header {
@@ -277,6 +283,11 @@ export default {
     justify-content: center;
     //space-between
     margin-bottom: 24px;
+}
+@media(max-width:500px){
+    .accounts__header {
+        margin-bottom: 16px;
+    }
 }
 .accounts_block {
     display: flex;
@@ -370,6 +381,7 @@ export default {
         }
         @media (max-width: 767.98px) {
             grid-template-columns: 1fr;
+            gap: 8px;
         }
     }
     &__title {

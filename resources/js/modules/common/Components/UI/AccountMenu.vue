@@ -52,7 +52,7 @@
             :errors="errors"
         >
             <form @submit.prevent="addAcc" class="form form-popup popup__form">
-                <main-title tag="h3">{{
+                <main-title tag="h3" class="account-title">{{
                     $t("accounts.popups.add.title")
                 }}</main-title>
                 <p class="popup-text">
@@ -319,7 +319,7 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 150% */
-    margin-bottom: 40px;
+    margin: 4px 0 40px;
 }
 .user-name-text {
     color: var(--text-primary-inverse);
@@ -336,6 +336,13 @@ export default {
     font-weight: 600;
     line-height: 135%; /* 16.2px */
 }
+.account-title{
+    font-family: Unbounded;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+}
 .popup__input {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-island, #fff);
@@ -351,6 +358,14 @@ export default {
 }
 .popup__input:focus {
     border: 1px solid #2E90FA;
+}
+.popup__input::placeholder{
+    color: var(--select-text-no-value, var(--gray-3100, #D0D5DD));
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
 }
 .blue-button {
     border-radius: 12px;
