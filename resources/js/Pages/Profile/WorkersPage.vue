@@ -140,9 +140,9 @@ export default {
                 {
                     title: this.$t("connection.block.title"),
                     copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port" },
-                        { link: "btc.all-btc.com:3333", title: "Port 1" },
-                        { link: "btc.all-btc.com:2222", title: "Port 2" },
+                        { link: "btc.all-btc.com:4444", title: "Port1" },
+                        { link: "btc.all-btc.com:3333", title: "Port 2" },
+                        { link: "btc.all-btc.com:2222", title: "Port 3" },
                     ],
                 },
             ];

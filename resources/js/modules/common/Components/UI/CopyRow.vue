@@ -90,7 +90,7 @@ export default {
         overflow: hidden;
         border: 1px solid transparent;
         @media (max-width: 479.98px) {
-            padding: 2px 8px;
+            padding: 9px 12px;
             min-height: 40px;
             // max-width: calc(100% - 55px) !important;
         }
@@ -131,7 +131,7 @@ export default {
             border-radius: 8px;
             opacity: 0;
             @media (max-width: 478.98px) {
-                right: 8px;
+                right: 12px;
                 width: 20px;
                 height: 20px;
             }
