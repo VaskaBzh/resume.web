@@ -29,11 +29,11 @@ class VerifyEmailNotification extends VerifyEmail
 
 
 
-    protected function verificationEmailUrl($notifiable, string $redirectTo): string
+    protected function verificationEmailUrl($notifiable, string $redirectTo, int $expiredAt): string
     {
         return URL::temporarySignedRoute(
             $this->actionRoute,
-            Carbon::now()->addMinutes(config('auth.verification.expire')),
+            Carbon::now()->addMinutes($expiredAt),
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
@@ -52,7 +52,11 @@ class VerifyEmailNotification extends VerifyEmail
                 ->line(__('notifications.email.verify.context'),)
                 ->action(
                     text: __('notifications.email.verify.action-text'),
-                    url: config('app.url') . $this->verificationEmailUrl($notifiable, '/profile/statistic')
+                    url: config('app.url') . $this->verificationEmailUrl(
+                        $notifiable,
+                        '/profile/statistic',
+                        config('auth.verification.expire')
+                    )
                 )
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
             'v1.password.reset.verify' => (new MailMessage)
@@ -61,7 +65,11 @@ class VerifyEmailNotification extends VerifyEmail
                 ->line(__('notifications.email.password-reset.context'),)
                 ->action(
                     text: __('notifications.email.password-reset.action-text'),
-                    url: config('app.url') . $this->verificationEmailUrl($notifiable, 'profile/settings')
+                    url: config('app.url') . $this->verificationEmailUrl(
+                        $notifiable,
+                        '/profile/settings',
+                        config('auth.passwords.users.expire')
+                    )
                 )
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
             default => throw new \Exception('Wrong route action ' . $this->actionRoute)

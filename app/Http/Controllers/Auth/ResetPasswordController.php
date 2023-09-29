@@ -19,12 +19,6 @@ class ResetPasswordController extends Controller
 {
     use Tokenable;
 
-    public function __construct()
-    {
-        $this->middleware('signed')->only('verify');
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
-    }
-
     public function sendEmail(): JsonResponse
     {
         $user = auth()->user();
