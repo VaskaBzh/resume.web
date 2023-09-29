@@ -13,13 +13,13 @@ use Symfony\Component\HttpFoundation\Response;
 trait Tokenable
 {
     public function verifyPasswordChange(Request $request, $id, $hash)
-    {
+    {dd('w');
         $user = User::find($id);
 
         if (!hash_equals((string)$request->route('id'), (string)$user->getKey())) {
             throw new AuthorizationException;
         }
-
+dd('s');
         if (!hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
             throw new AuthorizationException;
         }
@@ -27,7 +27,7 @@ trait Tokenable
         if (!$this->checkIfTokenExpired($user->email)) {
             return new JsonResponse(['status' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
         }
-
+dd('g');
         return redirect($request->redirect_to);
     }
 

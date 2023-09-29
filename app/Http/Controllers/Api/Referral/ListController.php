@@ -24,7 +24,7 @@ class ListController extends Controller
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
-        dd($referralCodeData);
+
         $owner = Sub::find($referralCodeData['group_id']);
 
         $referralSubs = ReferralService::getReferralCollection(owner: $owner, btcComService: $btcComService);

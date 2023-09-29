@@ -22,18 +22,6 @@ class VerificationController extends Controller
     |
     */
 
-
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('signed')->only('verify');
-        $this->middleware('throttle:6,1')->only('verify', 'resend');
-    }
-
     public function __invoke(Request $request, $id, $hash)
     {
         $user = User::find($id);
