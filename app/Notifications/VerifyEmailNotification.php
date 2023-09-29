@@ -29,7 +29,12 @@ class VerifyEmailNotification extends VerifyEmail
 
 
 
-    protected function verificationEmailUrl($notifiable, string $redirectTo, int $expiredAt): string
+    protected function verificationEmailUrl(
+        $notifiable,
+        string $redirectTo,
+        string $actionName,
+        int $expiredAt,
+    ): string
     {
         return URL::temporarySignedRoute(
             $this->actionRoute,
@@ -37,7 +42,8 @@ class VerifyEmailNotification extends VerifyEmail
             [
                 'id' => $notifiable->getKey(),
                 'hash' => sha1($notifiable->getEmailForVerification()),
-                'redirect_to' => config('app.url') . $redirectTo
+                'redirect_to' => config('app.url') . $redirectTo,
+                'action' => $actionName,
             ],
             false
         );
@@ -55,6 +61,7 @@ class VerifyEmailNotification extends VerifyEmail
                     url: config('app.url') . $this->verificationEmailUrl(
                         $notifiable,
                         '/profile/statistic',
+                        'email',
                         config('auth.verification.expire')
                     )
                 )
@@ -68,6 +75,7 @@ class VerifyEmailNotification extends VerifyEmail
                     url: config('app.url') . $this->verificationEmailUrl(
                         $notifiable,
                         '/profile/settings',
+                        'password',
                         config('auth.passwords.users.expire')
                     )
                 )
