@@ -9,6 +9,7 @@
     <calculator-land/>
     <miners-info-view></miners-info-view>
     <make-up-cab/>
+    <security-view/>
 </template>
 <script>
 
@@ -18,10 +19,11 @@ import WhoWeAre from "../modules/home/Components/Views/WhoWeAre.vue";
 import CalculatorLand from "../modules/home/Components/Views/CalculatorLand.vue";
 import MinersInfoView from "../modules/home/Components/Views/MinersInfoView.vue";
 import MakeUpCab from "../modules/home/Components/Views/MakeUpCab.vue";
+import SecurityView from "../modules/home/Components/Views/SecurityView.vue";
 
 export default {
     name: 'homa-page',
-    components: {MakeUpCab, MinersInfoView, CalculatorLand, WhoWeAre, LandingTitle, HeaderComponent}
+    components: {SecurityView, MakeUpCab, MinersInfoView, CalculatorLand, WhoWeAre, LandingTitle, HeaderComponent}
 }
 
 </script>
