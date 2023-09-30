@@ -212,6 +212,9 @@ export default {
         @media (max-width: 767.98px) {
             margin-top: 0px;
         }
+        @media (max-width: 500px) {
+            margin: 0 0 16px 20px;
+        }
     }
     .search {
         margin: 56px 0 48px;
@@ -223,7 +226,7 @@ export default {
         }
     }
     &__list {
-        margin-bottom: 48px;
+        margin-bottom: 40px;
         display: flex;
         flex-direction: column;
         gap: 24px;
@@ -233,14 +236,22 @@ export default {
             width: 100%;
         }
         @media (max-width: 479.98px) {
-            margin-bottom: 32px;
-            gap: 16px;
+            // margin-bottom: 32px;
+            gap:8px;
         }
         .section__block {
             border-radius: 24px;
             background: var(--background-island);
             box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
         }
+    }
+}
+@media (max-width: 500px) {
+    .faq__container{
+        padding: 0;
+    }
+    .description-text{
+        display: none;
     }
 }
 </style>
