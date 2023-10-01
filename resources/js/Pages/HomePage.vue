@@ -10,6 +10,10 @@
     <miners-info-view></miners-info-view>
     <make-up-cab/>
     <security-view/>
+    <app-mobile-view/>
+    <paymants-view/>
+    <mission-view/>
+    <connect-with-us-view/>
 </template>
 <script>
 
@@ -20,10 +24,19 @@ import CalculatorLand from "../modules/home/Components/Views/CalculatorLand.vue"
 import MinersInfoView from "../modules/home/Components/Views/MinersInfoView.vue";
 import MakeUpCab from "../modules/home/Components/Views/MakeUpCab.vue";
 import SecurityView from "../modules/home/Components/Views/SecurityView.vue";
+import AppMobileView from "../modules/home/Components/Views/AppMobileView.vue";
+import PaymantsView from "../modules/home/Components/Views/PaymantsView.vue";
+import MissionView from "../modules/home/Components/Views/MissionView.vue";
+import ConnectWithUsView from "../modules/home/Components/Views/ConnectWithUsView.vue";
 
 export default {
     name: 'homa-page',
-    components: {SecurityView, MakeUpCab, MinersInfoView, CalculatorLand, WhoWeAre, LandingTitle, HeaderComponent}
+    components: {
+        ConnectWithUsView,
+        MissionView,
+        PaymantsView,
+        AppMobileView,
+        SecurityView, MakeUpCab, MinersInfoView, CalculatorLand, WhoWeAre, LandingTitle, HeaderComponent}
 }
 
 </script>

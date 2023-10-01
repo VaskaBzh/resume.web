@@ -105,4 +105,37 @@ export default {
     border: 1px solid rgba(192, 228, 255, 0.60);
     background: rgba(13, 13, 13, 0.80);
 }
+
+.mobile-view__btn {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    fill: rgba(208, 213, 221, 0.20);
+    stroke-width: 0.5px;
+    background: rgba(208, 213, 221, 0.20);
+    backdrop-filter: unset;
+    position: absolute;
+    right: 20%;
+    top: 40%;
+    bottom: 50%;
+    color:#D0D5DD;
+    text-align: center;
+    font-family: Unbounded, serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%; /* 16.8px */
+    text-transform: uppercase;
+}
+.connect-withus_btn {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: rgba(208, 213, 221, 0.20) url("../../../../../assets/img/arrow-down-land.png") no-repeat center;
+    background-size: 40%;
+    stroke-width: 0.5px;
+    stroke: rgba(208, 213, 221, 0.20);
+    backdrop-filter: blur(10px);
+
+}
 </style>
