@@ -49,7 +49,8 @@ Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
 
 Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])
     ->middleware('throttle:3,1');
-Route::post('/password/restore', [ResetPasswordController::class, 'restore']);
+Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
+
 
 /* _________________ End public routes ____________________ */
 
@@ -95,7 +96,6 @@ Route::group([
             ->name('password-reset.send-email');
     });
 
-    Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
     Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
