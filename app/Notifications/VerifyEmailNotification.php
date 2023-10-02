@@ -31,7 +31,6 @@ class VerifyEmailNotification extends VerifyEmail
 
     protected function verificationEmailUrl(
         $notifiable,
-        string $redirectTo,
         int $expiredAt,
     ): string
     {
@@ -41,7 +40,6 @@ class VerifyEmailNotification extends VerifyEmail
             [
                 'id' => $notifiable->getKey(),
                 'hash' => hash('sha256', $notifiable->getEmailForVerification()),
-                'redirect_to' => config('app.url') . $redirectTo,
             ],
         );
     }
@@ -68,7 +66,6 @@ class VerifyEmailNotification extends VerifyEmail
                 text: __('notifications.email.verify.action-text'),
                 url: $this->verificationEmailUrl(
                     $notifiable,
-                    '/profile/statistic',
                     config('auth.verification.expire')
                 )
             );
@@ -81,7 +78,6 @@ class VerifyEmailNotification extends VerifyEmail
                 text: __('notifications.email.password-reset.action-text'),
                 url: $this->verificationEmailUrl(
                     $notifiable,
-                    '/profile/settings',
                     config('auth.passwords.users.expire')
                 )
             );

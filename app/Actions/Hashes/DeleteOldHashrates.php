@@ -13,6 +13,6 @@ class DeleteOldHashrates
         Hash::oldestThan(
             groupId: $groupId,
             date: $date
-        )->delete();
+        )?->delete();
     }
 }

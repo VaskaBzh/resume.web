@@ -25,6 +25,7 @@ use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherLinkUpdateCo
 use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteController;
 use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResendVerifyEmailController;
 use App\Http\Controllers\Auth\ResetPasswordController;
@@ -45,6 +46,9 @@ Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
     Route::get('/password/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordChange'])
         ->name('password.reset.verify');
 });
+
+Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->middleware('throttle:3,1');
 
 /* _________________ End public routes ____________________ */
 
@@ -91,7 +95,6 @@ Route::group([
     });
 
     Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
-
     Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
