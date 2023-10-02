@@ -1,8 +1,10 @@
 <template>
     <nav class="nav">
-        <button-blue class="button-black"> Личный кабинет</button-blue>
-        <nav-links/>
-        <select-language-land />
+        <div class="nav__container">
+            <button-blue class="button-black"> Личный кабинет</button-blue>
+            <nav-links/>
+            <select-language-land />
+        </div>
     </nav>
 </template>
 
@@ -27,6 +29,12 @@ export default {
     justify-content: space-between;
     background: transparent;
     z-index: 1;
+    &__container {
+        margin: 0 auto;
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+    }
     .button-black {
         width: 200px;
         height: 50px;

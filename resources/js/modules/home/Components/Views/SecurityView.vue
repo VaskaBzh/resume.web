@@ -69,8 +69,8 @@ export default {
         align-items: center;
         flex-flow: column nowrap;
         justify-content: flex-start;
-        padding: 360px 0;
-        gap: 560px;
+        /*padding: 360px 0;*/
+        /*gap: 560px;*/
     }
 
         &_item {

@@ -1,7 +1,7 @@
 <template>
     <ul class="nav__links">
         <li
-            class="nav__link"
+            class="nav_link"
             v-for="item in link"
         >{{ item }}
         </li>
@@ -41,7 +41,7 @@ export default {
 .fade-leave-to {
     opacity: 0;
 }
-.nav__link {
+.nav_link {
     color: rgba(228, 231, 236, 0.60);
     font-family: Unbounded, serif;
     font-size: 18px;
@@ -93,4 +93,6 @@ export default {
         opacity: 1;
     }
 }
+
+
 </style>

@@ -34,7 +34,6 @@ export default {
 <style scoped lang="scss">
 .make-up-cab {
     width: 100vw;
-    height: 100vh;
     display: flex;
     padding-top: 100px;
     justify-content: center;

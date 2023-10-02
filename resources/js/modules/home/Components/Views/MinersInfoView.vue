@@ -19,10 +19,24 @@
                     <h3 class="miners-info-view_item_title">Фокус на Bitcoin</h3>
                 </div>
                 <div class="miners-info-view_item">
+                    <p class="miners-info-view_item_text">Наша команда,
+                        будучи экспертами и практикующими майнерами, специализируется на
+                        биткоине, знает все тонкости добычи криптовалюты и внедряет
+                        новые идеи и механизмы в развитие пула. Все внедренные
+                        инструменты помогают зарабатывать больше.
+                    </p>
                     <h3 class="miners-info-view_item_title">Прозрачный мониторинг</h3>
+
                 </div>
                 <div class="miners-info-view_item">
+                    <p class="miners-info-view_item_text">Наша команда,
+                        будучи экспертами и практикующими майнерами, специализируется на
+                        биткоине, знает все тонкости добычи криптовалюты и внедряет
+                        новые идеи и механизмы в развитие пула. Все внедренные
+                        инструменты помогают зарабатывать больше.
+                    </p>
                     <h3 class="miners-info-view_item_title">технологии и безопасность</h3>
+
                 </div>
             </div>
         </div>
@@ -46,7 +60,6 @@ export default {
 .miners-info-view {
     display: flex;
     width: 100vw;
-    height: 100vh;
     padding-top: 100px;
     justify-content: center;
     flex-flow: column nowrap;
@@ -82,18 +95,26 @@ export default {
         flex-flow: column nowrap;
         align-items: flex-start;
         justify-content: center;
-        gap: 64px;
         margin-top: 140px;
     }
 
     &_item {
         width: 100%;
         display: flex;
-        justify-content: flex-end;
+        justify-content: space-between;
+        padding: 32px 0;
 
-        &:first-child {
-            width: 100%;
-            justify-content: space-between;
+        &:nth-child(1) {
+            border-top: .5px solid rgba(228, 231, 236, 0.40);
+            border-bottom: .5px solid rgba(228, 231, 236, 0.40);
+        }
+
+        &:nth-child(2) {
+            border-bottom: .5px solid rgba(228, 231, 236, 0.40);
+        }
+
+        &:nth-child(3) {
+            border-bottom: .5px solid rgba(228, 231, 236, 0.40);
         }
 
 
