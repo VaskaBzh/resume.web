@@ -2,11 +2,11 @@ import anime from "animejs/lib/anime.es.js";
 import { ref } from "vue";
 
 export class PreloaderService {
-    constructor(translate) {
+    constructor() {
         this.progressPercentage = 0;
         this.interval = null;
 
-        this.translate = translate;
+        this.translate = null;
 
         this.endTable = false;
         this.resizeEnd = false;
@@ -21,6 +21,10 @@ export class PreloaderService {
 
         this.polygon = null;
         this.cross = null;
+    }
+
+    setTranslate(translate) {
+        this.translate = translate;
     }
 
     endAnimation() {

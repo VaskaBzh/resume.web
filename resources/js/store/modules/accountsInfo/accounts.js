@@ -95,7 +95,7 @@ export default {
             state.valid = validState;
         },
         updateAccounts(state, accounts) {
-            state.accounts = { ...accounts };
+            state.accounts = [ ...accounts ];
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
@@ -104,7 +104,7 @@ export default {
     state: {
         valid: true,
         active: -1,
-        accounts: {},
+        accounts: [],
         activeAccount: {},
         interval: null,
     },

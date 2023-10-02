@@ -1,17 +1,27 @@
 import { DefaultSubsService } from "@/modules/common/services/DefaultSubsService";
-import { PageService } from "../../common/services/PageService";
+import { PageService } from "@/modules/common/services/PageService";
+import { SubsData } from "@/modules/subs/DTO/SubsData";
 
 export class SubService extends DefaultSubsService {
     constructor() {
         super();
 
-        this.isTable = false;
+        this.subsType = false;
 
         this.subList = null;
+
+        this.subsTable = null;
+        this.rows = null;
+        this.titles = null;
+        this.titleIndexes = null;
 
         this.waitSubs = true;
         this.emptySubs = false;
         this.page = new PageService();
+    }
+
+    setTranslate(translate) {
+        this.translate = translate;
     }
 
     setWait(newWaitState) {
@@ -26,7 +36,7 @@ export class SubService extends DefaultSubsService {
         if (this.subList) {
             this.setWait(false);
 
-            this.setEmpty(Object.entries(this.subList).length === 0);
+            this.setEmpty(this.subList.length === 0);
         }
     }
 
@@ -34,10 +44,25 @@ export class SubService extends DefaultSubsService {
         this.subList = newSubList;
 
         this.statesProcess();
+
+        return this;
     }
 
-    toggleIsTable() {
-        this.isTable = !this.isTable;
+    useTranslater(indexes) {
+        return indexes.map((index) =>
+            this.translate(`table.titles[${index}]`)
+        );
+    }
+
+    setTable() {
+        this.table.set("titles", this.titles);
+        this.table.set("rows", this.rows);
+
+        return this;
+    }
+
+    toggleSubsType() {
+        this.subsType = !this.subsType;
     }
 
     setDocumentTitle(title) {

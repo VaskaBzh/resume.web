@@ -82,13 +82,16 @@ export default {
     },
     data() {
         return {
-            service: new PreloaderService(this.$t),
+            service: new PreloaderService(),
             crossVisible: false,
             progressVisible: true,
             isLogoCenter: false,
         };
     },
     watch: {
+        '$i18n.locale'() {
+            this.service.setTranslate(this.$t);
+        },
         empty(newStateEmpty) {
             // this.service.killPreloader();
             if (newStateEmpty) {
@@ -126,6 +129,9 @@ export default {
     mounted() {
         // if (!this.killPreloaderCondition) {
         this.service.startProcess(this.interval);
+        if (this.$t) {
+            this.service.setTranslate(this.$t);
+        }
         // } else {
         //     this.service.dropEndAnimation();
         //     this.service.animateCloseLine();

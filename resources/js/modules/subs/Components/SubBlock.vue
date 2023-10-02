@@ -6,9 +6,32 @@
 			</span>
 		</div>
 		<div class="sub__content">
-			<info-block v-for="(sub, i) in subData.data" :key="i" :label="sub.label">
+			<info-block :label="$t('')">
 				<template v-slot:value>
-					{{ sub.value }}
+					{{ subData.hash_per_min }}
+				</template>
+			</info-block>
+			<info-block :label="$t('')">
+				<template v-slot:value>
+					{{ subData.hash_per_day }}
+				</template>
+			</info-block>
+			<info-block :label="$t('')">
+				<template v-slot:value>
+                    <span class="sub_worker sub_worker-active">
+                        {{ subData.workers_count_active }}
+                    </span>
+                    <span class="sub_worker sub_worker-in-active">
+                        {{ subData.workers_count_in_active }}
+                    </span>
+                    <span class="sub_worker sub_worker-unstable">
+                        {{ subData.workers_count_ustable }}
+                    </span>
+				</template>
+			</info-block>
+			<info-block :label="$t('')">
+				<template v-slot:value>
+					{{ subData.total_payout }} BTC
 				</template>
 			</info-block>
 		</div>

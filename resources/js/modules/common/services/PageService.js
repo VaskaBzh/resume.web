@@ -11,6 +11,8 @@ export class PageService {
 
     setDocumentTitle() {
         document.title = this.page_title;
+
+        return this;
     }
 
     titleProcess(title) {
