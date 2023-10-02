@@ -39,7 +39,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
 
-Route::group(['middleware' => 'verify-confirm'], function () {
+Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
     Route::get('/verify/{id}/{hash}', VerificationController::class)
         ->name('verification.verify');
     Route::get('/password/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordChange'])
@@ -82,15 +82,15 @@ Route::group([
 ], function () {
     Route::get('/user', UserController::class)->name('user.show');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::post('/email/reverify', ResendVerifyEmailController::class)
-        ->middleware('throttle:3,1')
-        ->name('resend-verify-email');
 
-    /* password change */
-    Route::post('/password/reset', [ResetPasswordController::class, 'sendEmail'])
-        ->name('password-reset.send-email');
+    Route::group(['middleware' => 'throttle:3,1'], function () {
+        Route::post('/email/reverify', ResendVerifyEmailController::class)
+            ->name('resend-verify-email');
+        Route::post('/password/reset', [ResetPasswordController::class, 'sendEmail'])
+            ->name('password-reset.send-email');
+    });
+
     Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
-    /* end password change */
 
     Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);

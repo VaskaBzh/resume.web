@@ -3,7 +3,6 @@
 namespace App\Traits;
 
 use App\Models\User;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -16,19 +15,11 @@ trait Tokenable
     {
         $user = User::find($id);
 
-        if (!hash_equals((string)$request->route('id'), (string)$user->getKey())) {
-            throw new AuthorizationException;
-        }
-
-        if (!hash_equals((string)$request->route('hash'), sha1($user->getEmailForVerification()))) {
-            throw new AuthorizationException;
-        }
-
         if (!$this->checkIfTokenExpired($user->email)) {
             return new JsonResponse(['status' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
         }
 
-        return redirect($request->redirect_to);
+        return redirect($request->redirect_to . '?action=password');
     }
 
     public function checkIfTokenExpired(string $email): bool
