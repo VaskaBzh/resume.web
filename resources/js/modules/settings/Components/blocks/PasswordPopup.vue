@@ -12,14 +12,6 @@
             <main-description>{{ $t("password_popup.description") }}</main-description>
         </div>
         <div class="password__content">
-<!--            :errors="errorsExpired"-->
-            <profile-password
-                class="password_input"
-                name="password"
-                :placeholder="this.$t('password_popup.placeholders.current_password')"
-                :model="form.old_password"
-                @change="changePasswordForm('old_password', $event)"
-            />
             <profile-password
                 class="password_input"
                 name="password"
@@ -81,7 +73,6 @@ export default {
     data() {
         return {
             form: {
-                old_password: "",
                 password: "",
                 "password-confirmation": "",
             },

@@ -122,7 +122,7 @@ export class SettingsService {
 
     async fetchPassword(form) {
         return (
-            await ProfileApi.post("/reset/password", form, {
+            await ProfileApi.put("/password/change", form, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },

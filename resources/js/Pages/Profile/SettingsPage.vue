@@ -64,7 +64,6 @@
         :closed="settingsService.closedPasswordPopup"
         :validateService="settingsService"
         @sendPassword="sendPassword($event)"
-        @changePassword="setPasswordForm($event)"
     />
 </template>
 <script>
@@ -128,9 +127,9 @@ export default {
         },
     },
     methods: {
-        setPasswordForm() {
-
-        },
+        // setPasswordForm(form) {
+        //     this.settingsService.setPasswordForm(form);
+        // },
         async openPasswordPopup() {
             await this.settingsService.openPasswordPopup();
         },
@@ -144,6 +143,9 @@ export default {
             await this.settingsService.sendVerify(form);
         },
         settingsProcess() {
+            if (this.$route.query.action === "password") {
+                this.openPasswordPopup();
+            }
             this.settingsService.setUserData();
             this.settingsService.setDefaultForm();
             this.settingsService.setRows();

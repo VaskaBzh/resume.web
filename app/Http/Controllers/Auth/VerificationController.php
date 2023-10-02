@@ -26,14 +26,6 @@ class VerificationController extends Controller
     {
         $user = User::find($id);
 
-        if (! hash_equals((string) $request->route('id'), (string) $user->getKey())) {
-            throw new AuthorizationException;
-        }
-
-        if (! hash_equals((string) $request->route('hash'), sha1($user->getEmailForVerification()))) {
-            throw new AuthorizationException;
-        }
-
         if ($user->hasVerifiedEmail()) {
             return  new JsonResponse(['message' => 'already verified'], 204);
         }
@@ -42,6 +34,6 @@ class VerificationController extends Controller
             event(new Verified($user));
         }
 
-        return redirect($request->redirect_to);
+        return redirect($request->redirect_to . '?action=email');
     }
 }
