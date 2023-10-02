@@ -49,7 +49,7 @@ Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
 
 Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])
     ->middleware('throttle:3,1');
-Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
+Route::put('/password/change/{user}', [ResetPasswordController::class, 'changePassword']);
 
 
 /* _________________ End public routes ____________________ */

@@ -19,4 +19,5 @@ return [
     'email.verify' => 'Verify mail send to email address :value',
     'email.already_verify' => 'Verify mail :value already verified :date',
     'email.verify.delay' => 'Your email :value verified successfully, wait :time (hour) for full access',
+    'email.verify.link.expired' => 'Your verification link expired, please try again',
 ];
