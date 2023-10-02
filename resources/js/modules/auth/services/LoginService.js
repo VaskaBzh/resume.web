@@ -57,7 +57,7 @@ export class LoginService {
             this.closePasswordPopup();
             this.removeRouteQuery();
 
-            openNotification(true, this.translate("validate_messages.connected"), response.data.message);
+            openNotification(true, this.translate("validate_messages.connected"), response.message);
         } catch (err) {
             console.error(err);
 
@@ -66,7 +66,6 @@ export class LoginService {
                 this.translate("validate_messages.error"),
                 err.response.data.error ?? err.response.data.message
             );
-            store.dispatch("setFullErrors", err.response.data);
         }
     }
 
