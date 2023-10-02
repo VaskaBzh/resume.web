@@ -8,6 +8,7 @@ export default {
 
             state.localUser = user ?? JSON.parse(localStorage.getItem("user"));
 
+            // console.log(router);
             if (!user && state.token) {
                 try {
                     response = (await MainApi.get("/user")).data.data;

@@ -11,6 +11,7 @@ import { VerifyService } from "@/modules/verify/services/VerifyService";
 export default {
 	props: {
 		verifyText: String,
+		data: Object,
 		verifyUrl: {
             type: String,
             default: "/email/reverify",
@@ -33,9 +34,10 @@ export default {
 		}
 	},
 	methods: {
-		async sendVerifyMessage(verifyUrl) {
-			this.service.setTimer(60000);
-			await this.service.sendEmailVerification(verifyUrl);
+		sendVerifyMessage(verifyUrl) {
+            const status = this.service.sendEmailVerification(verifyUrl, this.data);
+            this.$emit("sendVerification", status)
+            this.service.setTimer(60000);
 		},
 	},
 	mounted() {
@@ -49,5 +51,11 @@ export default {
 </script>
 
 <style scoped>
-
+.verify {
+    color: var(--icons-accent, #53B1FD);
+    font-family: NunitoSans, serif;
+    font-size: 14px;
+    font-weight: 600;
+    line-height: 20px;
+}
 </style>

@@ -4,8 +4,8 @@ export async function AuthCheckProfileMiddleware(route, router) {
     const user = store.getters.localUser;
 
     if (
-        !!user &&
-        Object.entries(user).length === 0 &&
+        (!user ||
+        Object.entries(user).length === 0) &&
         !route?.query?.access_key
     ) {
         router.push({ name: "home" });
@@ -13,7 +13,7 @@ export async function AuthCheckProfileMiddleware(route, router) {
         store.dispatch("drop_all");
         store.dispatch("dropUser");
         store.dispatch("dropToken");
-    } else {
-        store.dispatch("set_accounts", { route: route, user_id: user.id });
+    } else if (!!user) {
+        store.dispatch("set_accounts", { route: route, user_id: user?.id });
     }
 }

@@ -75,7 +75,7 @@ import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
-import PasswordPopup from "../../modules/settings/Components/blocks/PasswordPopup.vue";
+import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
 
 export default {
     i18n: {

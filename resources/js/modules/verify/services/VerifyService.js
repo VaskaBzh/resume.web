@@ -1,5 +1,6 @@
 import { ProfileApi } from "@/api/api";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
+import store from "@/store";
 
 export class VerifyService {
     constructor() {
@@ -14,20 +15,34 @@ export class VerifyService {
         this.translate = translate;
     }
 
-    async sendEmailVerification(verifyUrl) {
-        try {
-            const response = await this.fetchVerify(verifyUrl);
+    async sendEmailVerification(verifyUrl, data = null) {
+        const secondsEnd = 0;
 
-            openNotification(true, this.translate("validate_messages.success"), response.data.message);
-        } catch (err) {
-            console.error("Error with: " + err);
+        if (this.overTime === secondsEnd) {
+            try {
+                const response = await this.fetchVerify(verifyUrl, data);
 
-            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+                openNotification(true, this.translate("validate_messages.success"), response.data.message);
+
+                return false;
+            } catch (err) {
+                console.error("Error with: " + err);
+
+                this.dropInterval();
+                this.setOverTime(secondsEnd);
+                this.setText();
+
+                openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+
+                store.dispatch("setFullErrors", err.response.data.errors)
+
+                return true;
+            }
         }
     }
 
-    async fetchVerify(verifyUrl) {
-        return await ProfileApi.post(verifyUrl);
+    async fetchVerify(verifyUrl, data) {
+        return await ProfileApi.post(verifyUrl, data);
     }
 
     setText(text = null) {

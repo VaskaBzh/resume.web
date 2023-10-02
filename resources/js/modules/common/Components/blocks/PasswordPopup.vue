@@ -67,7 +67,6 @@ export default {
                 this.makeResize = true
                 setTimeout(() => this.makeResize = false, 50);
             }, 355);
-
         }
     },
     data() {
