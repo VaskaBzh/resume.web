@@ -13,7 +13,7 @@ export async function AuthCheckProfileMiddleware(route, router) {
         store.dispatch("drop_all");
         store.dispatch("dropUser");
         store.dispatch("dropToken");
-    } else if (!!user) {
+    } else {
         store.dispatch("set_accounts", { route: route, user_id: user?.id });
     }
 }

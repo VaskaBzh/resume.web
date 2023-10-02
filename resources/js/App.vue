@@ -39,8 +39,10 @@ export default {
     async created() {
         await this.$store.dispatch("setCurrency");
 
-        this.$store.dispatch("setToken");
-        await this.$store.dispatch("setUser");
+        if (!this.route?.query.access_key) {
+            this.$store.dispatch("setToken");
+            await this.$store.dispatch("setUser");
+        }
 
         window.addEventListener("resize", this.handleResize);
         // document.addEventListener(

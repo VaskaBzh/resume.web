@@ -8,7 +8,6 @@ export default {
 
             state.localUser = user ?? JSON.parse(localStorage.getItem("user"));
 
-            // console.log(router);
             if (!user && state.token) {
                 try {
                     response = (await MainApi.get("/user")).data.data;
@@ -20,6 +19,14 @@ export default {
             }
 
             const userData = user ?? response ?? JSON.parse(localStorage.getItem("user"));
+            commit("changeUser", userData);
+
+            dispatch("saveUser");
+        },
+        async setLocalUser({ commit, dispatch, state }, user = null) {
+            state.localUser = user ?? JSON.parse(localStorage.getItem("user"));
+
+            const userData = user ?? JSON.parse(localStorage.getItem("user"));
             commit("changeUser", userData);
 
             dispatch("saveUser");
