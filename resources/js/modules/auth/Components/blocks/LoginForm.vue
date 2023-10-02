@@ -122,7 +122,7 @@ export default {
     data() {
         return {
             pdf,
-            service: new LoginService(this.$router),
+            service: new LoginService(this.$router, this.$route),
         };
     },
     methods: {

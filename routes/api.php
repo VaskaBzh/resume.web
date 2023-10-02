@@ -51,6 +51,7 @@ Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLink
     ->middleware('throttle:3,1');
 Route::put('/password/change', [ResetPasswordController::class, 'changePassword']);
 
+
 /* _________________ End public routes ____________________ */
 
 

@@ -103,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
     public function sendPasswordResetNotification($token): void
     {
         $this->notify(new VerifyEmailNotification(
-            actionRoute: 'v1.password.reset.verify'
+            actionRoute: 'v1.password.reset.verify',
         ));
     }
 

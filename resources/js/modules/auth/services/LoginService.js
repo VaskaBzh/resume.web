@@ -5,13 +5,14 @@ import store from "@/store";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class LoginService {
-    constructor(router) {
+    constructor(router, route) {
         this.form = {};
         this.checkbox = false;
 
         this.translate = null;
 
         this.router = router;
+        this.route = route;
 
         this.openedPasswordPopup = false;
         this.closedPasswordPopup = false;
@@ -46,7 +47,12 @@ export class LoginService {
 
     async sendPassword(form) {
         try {
-            const response = await this.fetchPassword(form);
+            const formData = {
+                ...form,
+                email: this.route.query.email,
+            };
+
+            const response = await this.fetchPassword(formData);
 
             this.closePasswordPopup();
             this.removeRouteQuery();

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Traits\Tokenable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -35,7 +36,7 @@ class ResetPasswordController extends Controller
 
     public function changePassword(Request $request)
     {
-        $user = auth()->user();
+        $user = User::whereEmail($request->email)->first();
 
         $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
 
@@ -93,23 +94,5 @@ class ResetPasswordController extends Controller
                 'password.min' => 'The new password must be at least 8 characters.',
             ];
         }
-    }
-
-    /**
-     * Reset the given user's password.
-     *
-     * @param  \Illuminate\Contracts\Auth\CanResetPassword  $user
-     * @param  string  $password
-     * @return void
-     */
-    protected function resetPassword($user, $password)
-    {
-        $user->password = Hash::make($password);
-
-        $user->setRememberToken(Str::random(60));
-
-        $user->save();
-
-        // You may also dispatch an event for password change here, if needed.
     }
 }
