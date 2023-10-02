@@ -39,9 +39,7 @@ class ResetPasswordController extends Controller
 
         $validator = Validator::make($request->all(), $this->rules(), $this->customErrorMessages());
 
-        $confirm = Hash::check($request->input('old_password'), $user->password);
-
-        if (!$validator->validate() || !$confirm) {
+        if (!$validator->validate()) {
             return new JsonResponse(['error' => __('auth.failed')], Response::HTTP_BAD_REQUEST);
         }
 
@@ -69,7 +67,6 @@ class ResetPasswordController extends Controller
     protected function rules()
     {
         return [
-            'old_password' => ['required'],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ];
     }
