@@ -27,7 +27,7 @@ export class VerifyService {
     }
 
     async fetchVerify(verifyUrl) {
-        return await ProfileApi.post(verifyUrl ?? "/email/reverify");
+        return await ProfileApi.post(verifyUrl);
     }
 
     setText(text = null) {
@@ -35,6 +35,7 @@ export class VerifyService {
     }
 
     setVerifyText(text) {
+        console.log(text)
         this.verifyText = text;
     }
 

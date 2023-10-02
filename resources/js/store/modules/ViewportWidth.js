@@ -16,5 +16,14 @@ export default {
         viewportWidth(state) {
             return state.viewportWidth;
         },
+        isDesktop(state) {
+            return state.viewportWidth > 991;
+        },
+        isTablet(state) {
+            return state.viewportWidth <= 991;
+        },
+        isMobile(state) {
+            return state.viewportWidth <= 768;
+        },
     },
 };

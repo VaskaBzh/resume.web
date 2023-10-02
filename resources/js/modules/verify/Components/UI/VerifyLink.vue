@@ -11,9 +11,14 @@ import { VerifyService } from "@/modules/verify/services/VerifyService";
 export default {
 	props: {
 		verifyText: String,
-		verifyUrl: String,
+		verifyUrl: {
+            type: String,
+            default: "/email/reverify",
+        },
 	},
-	i18n: VerifyMessages,
+    i18n: {
+        sharedMessages: VerifyMessages,
+    },
 	name: "verify-link",
 	data() {
 		return {
@@ -34,7 +39,8 @@ export default {
 		},
 	},
 	mounted() {
-		this.service.setVerifyText(!!this.verifyText ? this.verifyText : this.$t("verify_link"));
+        console.log(this.$t("verify_link"))
+		this.service.setVerifyText(this.verifyText ?? this.$t("verify_link"));
 		this.service.setText();
 		if (this.$t) {
 			this.service.setTranslate(this.$t);

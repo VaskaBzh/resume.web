@@ -9,7 +9,7 @@
                 {{ title }}
             </main-title>
             <p class="card_num">
-                {{ Number(value).toFixed(2) }}
+                {{ value }}
                 <span class="card_unit" v-show="unit">
                     {{ unit }}
                 </span>

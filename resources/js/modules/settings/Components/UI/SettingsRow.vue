@@ -1,7 +1,7 @@
 <template>
     <div
         class="cabinet__block cabinet__block-light row"
-        :data-popup="!!this.user.email_verified_at ? '#changes' : ''"
+        :data-popup="!!user.email_verified_at ? '#changes' : ''"
         @mousedown="change_val"
     >
         <div class="data_value">

@@ -11,7 +11,7 @@
             class="btn_content"
             :data-popup="'#' + card.id"
             @mousedown="$emit(card.emit)"
-            v-if="card.name !== 'verify_password'"
+            v-if="card.name !== 'verify_password' && !!user.email_verified_at"
         >
             {{ card.button }}
         </button>
@@ -80,7 +80,7 @@ export default {
 }
 
 .btn_content {
-    width: 163px;
+    min-width: 163px;
     padding: 8px 16px;
     border-radius: 12px;
     border: 1px solid var(--primary-500, #2e90fa);
