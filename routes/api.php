@@ -38,13 +38,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
-
-Route::group(['middleware' => 'verify-confirm'], function () {
-    Route::get('/verify/{id}/{hash}', VerificationController::class)
-        ->name('verification.verify');
-    Route::get('/password/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordChange'])
-        ->name('password.reset.verify');
-});
+Route::get('/verify/{id}/{hash}', VerificationController::class)
+    ->name('verification.verify');
+Route::get('/password/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordChange'])
+    ->name('password.reset.verify');
 
 /* _________________ End public routes ____________________ */
 
