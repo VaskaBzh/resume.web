@@ -104,7 +104,7 @@ export default {
     },
     data() {
         return {
-            settingsService: new SettingsService(this.$t),
+            settingsService: new SettingsService(this.$t, this.$router),
             is_checked: true,
             notification: true,
             password_confirmation: "",

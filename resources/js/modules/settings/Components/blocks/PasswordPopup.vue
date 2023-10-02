@@ -24,8 +24,8 @@
                 class="password_input password_input-last"
                 name="password"
                 :placeholder="this.$t('password_popup.placeholders.confirm_password')"
-                :model="form['password-confirmation']"
-                @change="changePasswordForm('password-confirmation', $event)"
+                :model="form['password_confirmation']"
+                @change="changePasswordForm('password_confirmation', $event)"
             />
             <main-button
                 class="button-blue password_button button-full"
@@ -74,7 +74,7 @@ export default {
         return {
             form: {
                 password: "",
-                "password-confirmation": "",
+                "password_confirmation": "",
             },
             makeResize: false,
         };

@@ -35,7 +35,6 @@ export class VerifyService {
     }
 
     setVerifyText(text) {
-        console.log(text)
         this.verifyText = text;
     }
 

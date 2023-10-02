@@ -39,7 +39,6 @@ export default {
 		},
 	},
 	mounted() {
-        console.log(this.$t("verify_link"))
 		this.service.setVerifyText(this.verifyText ?? this.$t("verify_link"));
 		this.service.setText();
 		if (this.$t) {

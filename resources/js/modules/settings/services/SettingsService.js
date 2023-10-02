@@ -9,7 +9,7 @@ import { BlockData } from "../DTO/BlockData";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class SettingsService {
-    constructor(translate, user) {
+    constructor(translate, router) {
         this.translate = translate;
         this.profit = "";
         this.clearProfit = null;
@@ -20,6 +20,8 @@ export class SettingsService {
         this.passwordForm = {};
         this.validate = {};
         this.user = null;
+
+        this.router = router;
 
         this.userData = "";
 
@@ -65,11 +67,18 @@ export class SettingsService {
         }
     }
 
+    removeRouteQuery() {
+        this.router.push({
+            name: "settings",
+        })
+    }
+
     async sendPassword(form) {
         try {
             const response = await this.fetchPassword(form);
 
             this.closePasswordPopup();
+            this.removeRouteQuery();
 
             openNotification(true, this.translate("validate_messages.connected"), response.data.message);
         } catch (err) {
@@ -190,12 +199,6 @@ export class SettingsService {
                 this.userData.email,
                 "email"
             ),
-            // new RowData(
-            //     this.translate("settings.block.settings_block.labels.password"),
-            //     "password",
-            //     this.userData.password,
-            //     "password"
-            // ),
             // new RowData(
             //     this.translate("settings.block.settings_block.labels.phone"),
             //     "phone",
