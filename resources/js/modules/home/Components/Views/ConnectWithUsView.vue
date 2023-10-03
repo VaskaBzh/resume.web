@@ -22,7 +22,7 @@
 
 <script>
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import {run} from "../Services/RunString";
+import {run} from "../../Services/RunString";
 
 export default {
     name: "ConnectWithUsView",

@@ -175,9 +175,9 @@ export default {
     text-transform: uppercase;
 }
 
-.mobile-view_prev {
-    width: 28px;
-    height: 28px;
+.prev {
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background: transparent url("../../../../../assets/img/Arrow-next.png") no-repeat center;
     background-size: 100%;
@@ -186,9 +186,9 @@ export default {
 
 }
 
-.mobile-view_next {
-    width: 28px;
-    height: 28px;
+.next {
+    width: 35px;
+    height: 35px;
     border-radius: 50%;
     background: transparent url("../../../../../assets/img/Arrow-next.png") no-repeat center;
     background-size: 100%;

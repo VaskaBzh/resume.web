@@ -4,40 +4,40 @@
             <head-line class="mobile-view__title">Мобильное приложение</head-line>
             <div class="mobile-view__wrapper">
                 <div class="mobile-view_inner">
+                    <div class="mobile-view_item active">
+                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
+                            и эффективное управление</h3>
+                        <p class="mobile-view_text">Наша команда, будучи экспертами
+                            и практикующими майнерами, специализируется на биткоине, знает все тонкости
+                            добычи криптовалюты и внедряет новые идеи и механизмы в
+                            развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
+                    </div>
                     <div class="mobile-view_item">
-                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
+                        <h3 class="mobile-view_subtitle">Хороший мониторинг
                             и эффективное управление</h3>
                         <p class="mobile-view_text">Наша команда, будучи экспертами
                             и практикующими майнерами, специализируется на биткоине, знает все тонкости
                             добычи криптовалюты и внедряет новые идеи и механизмы в
                             развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
                     </div>
-                    <div class="mobile-view_item" v-show="isActive">
-                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
+                    <div class="mobile-view_item">
+                        <h3 class="mobile-view_subtitle">Четкий мониторинг
                             и эффективное управление</h3>
                         <p class="mobile-view_text">Наша команда, будучи экспертами
                             и практикующими майнерами, специализируется на биткоине, знает все тонкости
                             добычи криптовалюты и внедряет новые идеи и механизмы в
                             развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
                     </div>
-                    <div class="mobile-view_item" v-show="isActive">
-                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
+                    <div class="mobile-view_item">
+                        <h3 class="mobile-view_subtitle">Прекрасный мониторинг
                             и эффективное управление</h3>
                         <p class="mobile-view_text">Наша команда, будучи экспертами
                             и практикующими майнерами, специализируется на биткоине, знает все тонкости
                             добычи криптовалюты и внедряет новые идеи и механизмы в
                             развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
                     </div>
-                    <div class="mobile-view_item" v-show="isActive">
-                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
-                            и эффективное управление</h3>
-                        <p class="mobile-view_text">Наша команда, будучи экспертами
-                            и практикующими майнерами, специализируется на биткоине, знает все тонкости
-                            добычи криптовалюты и внедряет новые идеи и механизмы в
-                            развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
-                    </div>
-                    <div class="mobile-view_item" v-show="isActive">
-                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
+                    <div class="mobile-view_item">
+                        <h3 class="mobile-view_subtitle">Офигенный мониторинг
                             и эффективное управление</h3>
                         <p class="mobile-view_text">Наша команда, будучи экспертами
                             и практикующими майнерами, специализируется на биткоине, знает все тонкости
@@ -45,24 +45,24 @@
                             развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
                     </div>
                     <div class="mobile-view_prev_next">
-                        <button-blue class="mobile-view_prev"></button-blue>
-                        <button-blue class="mobile-view_next"></button-blue>
+                        <button-blue class="mobile-view_prev prev"></button-blue>
+                        <button-blue class="mobile-view_prev next"></button-blue>
                     </div>
                 </div>
                 <div class="mobile-view_swiper-picture">
-                    <div class="mobile-view_image">
-                        <img src="../../../../../assets/img/iphone-14-sreen1.png" alt="">
+                    <div class="mobile-view_image active">
+                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
                     </div>
-                    <div class="mobile-view_image" v-show="isActive">
-                        <img src="../../../../../assets/img/iphone-14-sreen1.png" alt="">
+                    <div class="mobile-view_image" >
+                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
                     </div>
-                    <div class="mobile-view_image" v-show="isActive">
-                        <img src="../../../../../assets/img/iphone-14-sreen1.png" alt="">
+                    <div class="mobile-view_image" >
+                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
                     </div>
-                    <div class="mobile-view_image" v-show="isActive">
-                        <img src="../../../../../assets/img/iphone-14-sreen1.png" alt="">
+                    <div class="mobile-view_image" >
+                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
                     </div>
-                    <div class="mobile-view_image" v-show="isActive">
+                    <div class="mobile-view_image" >
                         <img src="../../../../../assets/img/iphone-14-sreen1.png" alt="">
                     </div>
                 </div>
@@ -82,13 +82,19 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
+import {slideMobileView} from "../../Services/LandSlideAnime";
+import {onMounted} from "vue";
 
 export default {
     name: "AppMobileView",
     components: {ButtonBlue, HeadLine},
-    data() {
+    setup() {
+
+        onMounted(()=> {
+            slideMobileView()
+        })
         return {
-            isActive: false
+
         }
     }
 }
@@ -133,14 +139,18 @@ export default {
         align-items: flex-start;
         justify-content: flex-end;
         height: 100%;
+
+
     }
 
     &_item {
-        display: flex;
+        display: none;
         flex-flow: column nowrap;
         align-items: center;
+        opacity: 0;
         justify-content: center;
         gap: 30px;
+        overflow: hidden;
     }
 
     &_subtitle {
@@ -157,16 +167,22 @@ export default {
     &_image {
         width: 100%;
         height: 100%;
+        max-width: 100%;
         margin: 0 auto;
         border-radius: 70px;
         overflow: hidden;
-        display: flex;
         align-items: center;
         justify-content: flex-end;
+        visibility: hidden;
+        display: none;
+        opacity: 0;
+
     }
 
     img {
+        width: 100%;
         max-width: 479px;
+        height: 100%;
         object-fit: cover;
         border-radius: 70px;
     }
@@ -213,4 +229,12 @@ export default {
         }
     }
 }
+
+.active {
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+}
+
+
 </style>
