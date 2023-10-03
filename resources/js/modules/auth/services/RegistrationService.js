@@ -40,6 +40,7 @@ export class RegistrationService {
                         name: "confirm",
                         query: {
                             email: user.email,
+                            action: "registration",
                         },
                     });
                 } catch (err) {

@@ -14,6 +14,14 @@ export default {
                 } catch (err) {
                     console.error(err);
 
+                    if (err.response.status === 403) {
+                        router.push({ name: "home" });
+
+                        this.dispatch("drop_all");
+                        this.dispatch("dropUser");
+                        this.dispatch("dropToken");
+                    }
+
                     response = null;
                 }
             }

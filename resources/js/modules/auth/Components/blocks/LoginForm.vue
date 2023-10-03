@@ -102,6 +102,7 @@ import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 
+import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
 
@@ -115,6 +116,9 @@ export default {
         MainTitle,
         BlueButton,
         PasswordPopup,
+    },
+    i18n: {
+        sharedMessages: AuthMessages,
     },
     computed: {
         ...mapGetters(["errors", "errorsExpired"]),

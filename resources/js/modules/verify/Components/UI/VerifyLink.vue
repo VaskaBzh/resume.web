@@ -16,6 +16,10 @@ export default {
             type: String,
             default: "/email/reverify",
         },
+        sendVerification: {
+            type: Boolean,
+            default: false,
+        },
 	},
     i18n: {
         sharedMessages: VerifyMessages,
@@ -27,11 +31,16 @@ export default {
 		};
 	},
 	watch: {
-		"$t"(newT) {
+		$t(newT) {
 			if (newT) {
 				this.service.setTranslate(newT);
 			}
-		}
+		},
+        sendVerification(newSendVerificationState) {
+            if (newSendVerificationState) {
+                this.sendVerifyMessage();
+            }
+        }
 	},
 	methods: {
 		sendVerifyMessage(verifyUrl) {

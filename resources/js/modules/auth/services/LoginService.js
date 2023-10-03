@@ -109,6 +109,15 @@ export class LoginService {
             store.dispatch("setFullErrors", {
                 ...err.response.data,
             });
+
+            if (err.response.status === 403) {
+                this.router.push({
+                    name: "confirm",
+                    query: {
+                        email: this.form.email,
+                    },
+                });
+            }
             // store.dispatch("setFullErrors", {
             //     email: err.response.data.message,
             // });
