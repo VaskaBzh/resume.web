@@ -1,5 +1,5 @@
 <template>
-	<a href="#" @click.prevent="sendVerifyMessage(verifyUrl)" class="verify">
+	<a href="#" @click.prevent="sendVerifyMessage()" class="verify">
 		{{ service.text }}
 	</a>
 </template>
@@ -14,7 +14,7 @@ export default {
 		data: Object,
 		verifyUrl: {
             type: String,
-            default: "/email/reverify",
+            default: "/email/verify",
         },
         sendVerification: {
             type: Boolean,
@@ -43,8 +43,8 @@ export default {
         }
 	},
 	methods: {
-		sendVerifyMessage(verifyUrl) {
-            const status = this.service.sendEmailVerification(verifyUrl, this.data);
+		sendVerifyMessage() {
+            const status = this.service.sendEmailVerification(this.verifyUrl, this.data);
             this.$emit("sendVerification", status)
             this.service.setTimer(60000);
 		},

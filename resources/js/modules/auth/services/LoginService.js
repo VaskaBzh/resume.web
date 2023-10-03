@@ -110,6 +110,8 @@ export class LoginService {
                 ...err.response.data,
             });
 
+            console.log(err);
+
             if (err.response.status === 403) {
                 this.router.push({
                     name: "confirm",

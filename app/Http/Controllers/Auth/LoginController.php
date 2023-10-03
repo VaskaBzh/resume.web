@@ -65,8 +65,10 @@ class LoginController extends Controller
 
     public function decreaseTokenTime(): void
     {
-        auth()->user()
-            ->currentAccessToken()
+        auth()
+            ->user()
+            ->tokens()
+            ->first()
             ->update(['expires_at' => now()->addHours(2)]);
     }
 }

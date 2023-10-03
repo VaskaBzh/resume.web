@@ -52,7 +52,7 @@ export default {
             dispatch("drop_all");
         },
         setToken({ commit, dispatch }, token = null) {
-            const tokenRow = token ?? localStorage.getItem("token");
+            const tokenRow = token ?? JSON.parse(localStorage.getItem("token"));
             commit("changeToken", tokenRow);
 
             dispatch("saveToken");

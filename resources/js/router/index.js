@@ -6,6 +6,7 @@ import { AuthMiddleware } from "@/router/middlewares/AuthMiddleware";
 import { DropErrorsMiddleware } from "@/router/middlewares/DropErrorsMiddleware";
 import { DropSubsMiddleware } from "@/router/middlewares/DropSubsMiddleware";
 import { VerifyMiddleware } from "@/router/middlewares/VerifyMiddleware";
+import { ActionValidateMiddleware } from "@/router/middlewares/ActionValidateMiddleware";
 
 import routes from "@/router/routes/rotes";
 import { apiService } from "@/api/api";
@@ -22,6 +23,7 @@ const middlewares = {
     DropErrorsMiddleware,
     VerifyMiddleware,
     DropSubsMiddleware,
+    ActionValidateMiddleware,
 };
 
 router.beforeEach(async (to, from, next) => {

@@ -21,7 +21,7 @@ class ResendVerifyEmailController extends Controller
         ]);
 
         $validator->validate();
-        
+
         $user = User::whereEmail($request->email)->first();
 
         if ($user->hasVerifiedEmail()) {
@@ -29,7 +29,7 @@ class ResendVerifyEmailController extends Controller
                     'value' => $user->email,
                     'date' => $user->email_verified_at
                 ])
-            ]);
+            ], );
         }
 
         $user->sendEmailVerificationNotification();

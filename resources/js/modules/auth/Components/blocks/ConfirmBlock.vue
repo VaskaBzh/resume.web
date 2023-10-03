@@ -96,11 +96,15 @@ export default {
         justify-content: center;
         min-height: 56px;
         padding: 0 16px;
-        color: var(--icons-accent, #53B1FD);
+        color: var(--buttons-primary-text, var(--main-gohan, #fff));
         font-family: NunitoSans, serif;
         font-size: 14px;
         font-weight: 600;
         line-height: 20px;
+        border-radius: 12px;
+        background: var(--primary-500, #2E90FA);
+        box-shadow: 0 10px 10px -6px rgba(0, 0, 0, 0.1);
+        width: fit-content;
     }
 }
 </style>

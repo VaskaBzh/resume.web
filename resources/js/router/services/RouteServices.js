@@ -46,6 +46,7 @@ export class RouteServices {
                     middleware: [
                         "LoadLayoutMiddleware",
                         "DropErrorsMiddleware",
+                        "ActionValidateMiddleware",
                     ],
                     link: "LayoutView",
                 },
