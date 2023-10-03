@@ -36,6 +36,24 @@
                 </div>
             </div>
         </article>
+        <article class="article-hosting third-text">
+            <div class="how-are-we">что мы предлагаем</div>
+            <div class="offer-content">
+                <span class="text-offer">увеличим</span>
+                <div class="text-offer-column">
+                    <span class="text-offer">ваш доход<br></span>
+                    <span class="text-offer">за каждый квт<br></span>
+                </div>
+                <span class="text-offer text-end">на 50%<br></span>
+            </div>
+            <div class="offer-card-container">
+                <div class="offer-card" v-for="offer in offers">
+                    <p class="offer-title">{{ offer.title }}</p>
+                    <p class="offer-text">{{ offer.text }}</p>
+                </div>
+            </div>
+
+        </article>
     </main>
 </template>
 <script>
@@ -66,12 +84,39 @@ export default {
                     grayText: 'EH /s',
                     mainText: 'Общий хешрейт Allbtc Pool',
                 },
+            ],
+            offers:[
+                {
+                    title: 'до 4% персональная комиссия  для ваших клиентов',
+                    text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
+                },
+                {
+                    title: 'до 75% ваши вознаграждения  по партнерской программе',
+                    text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
+                }
             ]
         }
     },
 }
 </script>
 <style scoped>
+.offer-content{
+    color: var(--gray-1100, #F5FAFF);
+    text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
+    font-family: Unbounded;
+    font-size: 55px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 66px */
+    text-transform: uppercase;
+}
+.text-offer-column{
+    margin-left: 195px;
+}
+.text-end{
+    display: flex;
+    justify-content: end;
+}
 .facts-container{
     display: flex;
     position: relative;
@@ -95,6 +140,44 @@ export default {
     display: flex;
     gap: 10px;
     align-items: end;
+}
+.offer-card-container{
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    width: 100%;
+    margin-right: 137px;
+    gap: 20px;
+}
+.offer-card{
+    border-radius: 40px;
+    border-top: 2px solid #555353;
+    border-bottom: 0.5px solid #555353;
+    background: var(--gray-480, rgba(13, 13, 13, 0.80));
+    backdrop-filter: blur(10px);
+    display: inline-flex;
+    padding: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    width: 385px;
+}
+.offer-title{
+    color: var(--gray-3100, #D0D5DD);
+    font-family: Unbounded;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 19.2px */
+    text-transform: uppercase;
+}
+.offer-text{
+    color: var(--gray-170, rgba(245, 250, 255, 0.70));
+    font-family: NunitoSans;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 110%; /* 19.8px */
 }
 .fact-num{
     color: var(--gray-2100, #E4E7EC);
@@ -144,6 +227,10 @@ export default {
     background: var(--gray-4100, #0D0D0D);
     flex-direction: column;
     gap: 100px;
+}
+.third-text{
+    flex-direction: column;
+    gap: 110px;
 }
 .hosting-content{
     width: 607px;
