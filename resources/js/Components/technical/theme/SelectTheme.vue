@@ -118,6 +118,7 @@ export default {
     width: 60px;
     height: 32px;
     background: var(--buttons-fourth-fill-border-default, #f2f4f7);
+    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: 24px;
     position: relative;
     cursor: pointer;

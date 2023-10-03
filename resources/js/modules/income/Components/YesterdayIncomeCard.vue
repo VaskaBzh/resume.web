@@ -49,6 +49,9 @@ export default {
   .flex-jc{
     align-items: center;
   }
+  .income-card{
+    padding: 16px;
+  }
 }
 .icome-container{
   width: 100%;

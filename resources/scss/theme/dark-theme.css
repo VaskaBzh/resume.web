@@ -43,5 +43,8 @@
     --buttons-tabs-text-default: #2C2F34;
 
     --main-checkbox-default: #212327;
-    --box-shadow: rgba(16, 24, 40, 0.08)
+    --box-shadow: rgba(16, 24, 40, 0.08);
+
+    --svg-fill: #595E68;
+
 }

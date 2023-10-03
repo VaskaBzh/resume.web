@@ -25,7 +25,7 @@ export default {
 
 <style scoped lang="scss">
 .connecting-description{
-    color: var(--light-gray-400, #98A2B3);
+    color: var(--text-teritary, #98A2B3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;

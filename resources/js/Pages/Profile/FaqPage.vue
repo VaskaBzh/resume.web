@@ -174,7 +174,7 @@ export default {
     opacity: 0;
 }
 .description-text {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     margin: 8px 0 40px;
     font-size: 16px;
@@ -183,13 +183,25 @@ export default {
     line-height: 150%; /* 24px */
 }
 .title-gray {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 150%; /* 24px */
     margin-left: 24px;
+}
+@media(max-width: 500px){
+    .title-gray{
+        font-size: 12px;
+        margin: 16px 16px 0;
+    }
+    .faq__container{
+        padding: 0;
+    }
+    .description-text{
+        display: none;
+    }
 }
 .faq {
     padding: 24px;
@@ -200,7 +212,7 @@ export default {
     &_title {
         margin-top: 8px;
         font-size: 27px;
-        color: var(--text-primary-80);
+        color: var(--text-primary);
         font-family: Unbounded;
         font-size: 27px;
         font-style: normal;
@@ -211,6 +223,9 @@ export default {
         }
         @media (max-width: 767.98px) {
             margin-top: 0px;
+        }
+        @media (max-width:500px) {
+            margin: 0px 0 0 16px;
         }
     }
     .search {
@@ -223,10 +238,10 @@ export default {
         }
     }
     &__list {
-        margin-bottom: 48px;
+        margin-bottom: 40px;
         display: flex;
         flex-direction: column;
-        gap: 24px;
+        gap: 12px;
         width: 64%;
         @media (max-width: 900px) {
             margin-bottom: 40px;
@@ -234,7 +249,7 @@ export default {
         }
         @media (max-width: 479.98px) {
             margin-bottom: 32px;
-            gap: 16px;
+            gap: 8px;
         }
         .section__block {
             border-radius: 24px;

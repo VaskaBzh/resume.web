@@ -65,11 +65,6 @@ export default {
   justify-content: space-between;
   align-items: baseline;
 }
-@media(max-width:500px){
-  .flex-jc{
-    align-items: center;
-  }
-}
 .accrual-all-time, .accrual-today{
   width: 100%;
 }
@@ -136,5 +131,16 @@ export default {
   border-radius: 16px;
   opacity: 0.8;
   background: var(--primary-500, #2E90FA);
+}
+@media(max-width:500px){
+  .flex-jc{
+    align-items: center;
+  }
+  .accrual-card{
+    padding: 16px;
+  }
+  .title{
+    margin-bottom: 0px;
+  }
 }
 </style>

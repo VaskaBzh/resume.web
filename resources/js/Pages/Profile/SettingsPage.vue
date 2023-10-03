@@ -225,6 +225,7 @@ export default {
         gap: 12px;
         @media(max-width: 500px){
             height: auto;
+            gap: 8px;
         }
     }
     &__content {

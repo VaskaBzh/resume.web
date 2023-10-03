@@ -369,7 +369,7 @@
     gap: 8px;
 }
 .wallet-wallet_address {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 14px;
     font-style: normal;
@@ -408,7 +408,7 @@
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
 .autopayout-btc {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
@@ -422,7 +422,7 @@
     position: absolute;
     top: 8px;
     left: 16px;
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 12px;
     font-style: normal;
@@ -455,7 +455,7 @@ input:focus {
     align-items: center;
 }
 .wallet-description {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
@@ -523,7 +523,7 @@ input:focus {
     background: inherit !important;
 }
 .cancel-button {
-    border: 1px solid var(--light-gray-400, #98a2b3);
+    border: 1px solid var(--text-teritary, #98a2b3);
     color: var(--text-secondary, #475467);
 }
 .remove-button {

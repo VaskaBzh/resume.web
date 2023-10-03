@@ -54,6 +54,7 @@ export default {
     display: flex;
     justify-content: end;
     gap: 24px;
+    font-family: Unbounded;
 }
 .rate-block {
     display: flex;
@@ -62,19 +63,18 @@ export default {
     color: rgba(128, 128, 154, 1);
 }
 .rate-title {
-    color: var(--gray-400, #98a2b3);
+    color: var(--text-teritary);
     font-size: 14px;
-    font-family: Unbounded;
     font-style: normal;
     font-weight: 400;
-    line-height: 145%; /* 20.3px */
+    line-height: 20px; /* 142.857% */
 }
 .rate-current-price {
-    color: var(--text-primary-80);
-    font-family: Unbounded;
+    color: var(--text-primary);
+    opacity: 0.8;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 145%; /* 20.3px */
+    line-height: 20px; /* 142.857% */
 }
 </style>

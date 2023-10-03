@@ -8,10 +8,10 @@
                 height="24"
                 viewBox="0 0 24 24"
                 fill="none"
+                class="svg-lang"
             >
                 <path
                     d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9"
-                    stroke="#D0D5DD"
                     stroke-width="1.5"
                     stroke-linecap="round"
                     stroke-linejoin="round"
@@ -114,8 +114,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.svg-lang{
+    stroke: var(--svg-fill)
+}
 .select {
     width: fit-content;
+    height: 40px;
     padding: 8px 12px;
     border-radius: 12px;
     background: var(--buttons-fourth-fill-border-default, #f2f4f7);

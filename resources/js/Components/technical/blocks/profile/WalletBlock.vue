@@ -121,7 +121,7 @@ export default {
     gap: 8px;
 }
 .wallet-wallet_address{
-    color: var(--light-gray-400, #98A2B3);
+    color: var(--text-teritary, #98A2B3);
     font-family: NunitoSans;
     font-size: 14px;
     font-style: normal;

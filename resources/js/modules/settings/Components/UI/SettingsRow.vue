@@ -5,7 +5,7 @@
         @mousedown="change_val"
     >
         <div class="data_value">
-            <div v-html="svg"></div>
+            <div v-html="svg" class="svg-settings-input"></div>
             <span class="text text-black text-b">{{ this.value }}</span>
         </div>
         <span class="change-text">
@@ -126,9 +126,10 @@ export default {
 .cabinet__block {
     display: flex;
     gap: 8px;
+    min-height: 56px;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 16px;
     width: 100%;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
@@ -152,6 +153,10 @@ export default {
     font-weight: 600;
     line-height: 150%; /* 24px */
 }
+.svg-settings-input{
+    display: flex;
+    align-items: center;
+}
 .data_value {
     display: flex;
     gap: 16px;
@@ -168,6 +173,11 @@ export default {
     }
     .data_value {
         gap: 9px;
+    }
+}
+@media(max-width: 500px){
+    .cabinet__block {
+        min-height: 48px;
     }
 }
 </style>

@@ -46,4 +46,7 @@
     --buttons-primary-text: #FFF;
 
     --main-checkbox-default: #F2F4F7;
+
+    /* svg */
+    --svg-fill: #D0D5DD;
 }
