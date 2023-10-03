@@ -47,8 +47,11 @@ Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
         ->name('password.reset.verify');
 });
 
-Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail'])
-    ->middleware('throttle:3,1');
+Route::group(['middleware' => 'throttle:3,1'], function () {
+    Route::post('/email/reverify', ResendVerifyEmailController::class)
+        ->name('resend-verify-email');
+    Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+});
 Route::put('/password/change/{user}', [ResetPasswordController::class, 'changePassword']);
 
 
@@ -84,17 +87,14 @@ Route::group([
 /* End allowable routes  */
 
 Route::group([
-    'middleware' => 'auth:sanctum'
+    'middleware' => ['auth:sanctum', 'verified']
 ], function () {
     Route::get('/user', UserController::class)->name('user.show');
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    Route::post('/password/reset', [ResetPasswordController::class, 'sendEmail'])
+        ->middleware('throttle:3,1')
+        ->name('password-reset.send-email');
 
-    Route::group(['middleware' => 'throttle:3,1'], function () {
-        Route::post('/email/reverify', ResendVerifyEmailController::class)
-            ->name('resend-verify-email');
-        Route::post('/password/reset', [ResetPasswordController::class, 'sendEmail'])
-            ->name('password-reset.send-email');
-    });
 
     Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
@@ -114,7 +114,7 @@ Route::group([
 
     Route::group([
         'prefix' => 'wallets',
-        'middleware' => ['verified', 'verify-expiration']
+        'middleware' => ['verify-expiration']
     ], function () {
         Route::put('/update/{wallet}', WalletUpdateController::class)->name('wallet.update');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
