@@ -152,15 +152,22 @@ export default {
     font-weight: 600;
     line-height: 150%; /* 24px */
 }
-@media(max-width: 900px){
-    .change-text {
-        font-size: 12px;
-        line-height: 16px; /* 133.333% */
-    }
-}
 .data_value {
     display: flex;
     gap: 16px;
     align-items: center;
+}
+@media(max-width: 900px){
+    .change-text {
+        font-size: 12px;
+        line-height: 16px; /* 133.333% */
+        text-align: end;
+    }
+    .cabinet__block {
+      padding: 9px 12px;
+    }
+    .data_value {
+        gap: 9px;
+    }
 }
 </style>

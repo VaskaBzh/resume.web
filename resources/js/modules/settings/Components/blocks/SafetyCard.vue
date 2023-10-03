@@ -1,7 +1,7 @@
 <template>
     <div class="card__subcontainer">
         <img :src="img" alt="image" />
-        <div>
+        <div class="card_inf_block">
             <p class="card__title">{{ card.title }}</p>
             <p class="card__text">{{ card.text }}</p>
         </div>
@@ -59,6 +59,17 @@ export default {
     font-weight: 400;
     line-height: 145%; /* 20.3px */
 }
+.card_inf_block{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap:2px;
+}
+@media(max-width: 900px){
+    .card_inf_block{
+        width: 100%;
+    }
+}
 .card__title {
     color: var(--text-secondary, #475467);
     font-family: Unbounded;
@@ -107,6 +118,9 @@ export default {
     }
     .btn_content {
         width: 100%;
+        font-size: 14px;
+        line-height: 20px; /* 142.857% */
+        padding: 10px 12px;
     }
 }
 </style>

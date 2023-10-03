@@ -8,7 +8,7 @@
                 class="settings__card"
                 v-if="!this.user.email_verified_at"
             >
-                <main-title class="cabinet_title" tag="h3">{{
+                <main-title class="cabinet_title card_title" tag="h3">{{
                     $t("title[0]")
                 }}</main-title>
                 <div class="settings__content">
@@ -19,7 +19,7 @@
                 </div>
             </div>
             <div class="settings__card">
-                <main-title class="cabinet_title" tag="h3">{{
+                <main-title class="cabinet_title card_title" tag="h3">{{
                     $t("title[1]")
                 }}</main-title>
                 <article class="card__article">
@@ -178,6 +178,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-top: 8px;
 }
 .card__container {
     display: flex;
@@ -189,7 +190,19 @@ export default {
         gap: 16px;
         padding: 0;
     }
+    .card_title{
+        font-size: 16px;
+        line-height: 24px; /* 150% */
+        margin-bottom: 12px;
+    }
 }
+@media (max-width: 500px) {
+    .card__article {
+       margin-top: 28px;
+       gap: 40px;
+    }
+}
+
 .settings {
     padding: 24px;
     width: 100%;
@@ -256,6 +269,7 @@ export default {
         width: 711px;
         @media (max-width: 900px) {
             width: 90vw;
+            padding: 16px;
         }
     }
 }

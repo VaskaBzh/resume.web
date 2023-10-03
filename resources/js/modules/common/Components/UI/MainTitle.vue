@@ -70,8 +70,9 @@ h4 {
 
 
 .title {
-    font-family: NunitoSans, serif;
+    font-family: Unbounded;
     color: var(--text-primary);
+    opacity: 0.8;
     font-weight: 400;
     &.profile {
         margin: 0 0 40px;
