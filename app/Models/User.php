@@ -107,14 +107,6 @@ class User extends Authenticatable implements MustVerifyEmail
         ));
     }
 
-    public function sendPasswordChangeNotification(): void
-    {
-        $this->notify(new VerifyEmailNotification(
-                actionRoute: 'v1.password.change.verify',
-            )
-        );
-    }
-
     /* Custom builder */
     public function newEloquentBuilder($query): UserBuilder
     {

@@ -7,6 +7,7 @@ namespace App\Http\Controllers\Api\Account;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,6 +22,12 @@ class PasswordChangeController
         ]);
 
         $validator->validate();
+
+        if (!Auth::attempt(['email' => $user->email, 'password' => $request->old_password])) {
+            return new JsonResponse([
+                'error' => [__('auth.failed')]
+            ], Response::HTTP_BAD_REQUEST);
+        }
 
         if ($user->update(['password' => Hash::make($request->password)])) {
             return new JsonResponse(['message' => 'success']);

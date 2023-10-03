@@ -20,7 +20,9 @@ trait Tokenable
             return new JsonResponse(['status' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
         }
 
-        return redirect('/' . '?action=password&user_id=' . $user->id);
+        $this->deleteToken($user);
+
+        return redirect('/' . '?action=password&user_id=' . $user->id . '?hash=' . $hash);
     }
 
     public function checkIfTokenExpired(string $email): bool

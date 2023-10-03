@@ -53,8 +53,7 @@ class VerifyEmailNotification extends VerifyEmail
         return match ($this->actionRoute) {
             'v1.verification.verify' => $this->getEmailVerifyMailMessage($mail, $notifiable)
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
-            'v1.password.reset.verify',
-            'v1.password.change.verify' => $this->getPasswordChangeMailMessage($mail, $notifiable)
+            'v1.password.reset.verify' => $this->getPasswordChangeMailMessage($mail, $notifiable)
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
             default => throw new \Exception('Wrong route action ' . $this->actionRoute)
         };
