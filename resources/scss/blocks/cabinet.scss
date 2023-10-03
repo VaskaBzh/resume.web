@@ -49,10 +49,11 @@
     &__buttons {
         display: flex;
         align-items: center;
-        height: 40px;
+        height: 44px;
         gap: 9px;
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
         background: var(--background-globe);
+        padding: 2px;
         @media (max-width: 479.98px) {
             margin-top: 20px;
             gap: 0;
@@ -74,7 +75,7 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
+        border-radius: var(--surface-border-radius-radius-s-md, 12px);
         transition: all 0.5s ease 0s;
         white-space: nowrap;
         outline: none;
@@ -85,7 +86,6 @@
             color: var(--primary-500, #2E90FA);
         }
         &.active {
-            border-radius: 12px;
             background: var(--background-island);
             box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
             color: var(--primary-500, #2E90FA);

@@ -2,7 +2,7 @@ import { DefaultSubsService } from "./DefaultSubsService";
 import { HashrateUnitEnum } from "../enums/HashrateUnitEnum";
 
 export class GraphDataService extends DefaultSubsService {
-    constructor(titles, translate, offset = 24) {
+    constructor(titles, offset = 96) {
         super();
         this.titles = titles;
         this.offset = offset;
@@ -10,6 +10,10 @@ export class GraphDataService extends DefaultSubsService {
         this.graph = {};
         this.records = [];
 
+        this.translate = null;
+    }
+
+    setTranslate(translate) {
         this.translate = translate;
     }
 

@@ -1,6 +1,6 @@
 <template>
     <div
-        class="cabinet__block cabinet__block-light info"
+        class="cabinet__block cabinet__block-card cabinet__block-light info"
     >
         <btc-calculator
             :title="$t('statistic.info_blocks.payment.titles[0]')"

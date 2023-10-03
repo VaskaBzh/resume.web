@@ -41,7 +41,7 @@
                 unit="TH/s"
             >
                 <template v-slot:svg>
-                    <hashrate-icon />
+                    <minute-hashrate-icon />
                 </template>
             </cabinet-card>
             <cabinet-card
@@ -51,7 +51,7 @@
                 unit="TH/s"
             >
                 <template v-slot:svg>
-                    <hashrate-icon24 />
+                    <day-hashrate-icon />
                 </template>
             </cabinet-card>
             <cabinet-card
@@ -83,46 +83,46 @@
     </div>
 </template>
 <script>
-// import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
-import HashrateIcon from "@/modules/common/icons/HashrateIcon.vue";
-import HashrateIcon24 from "@/modules/common/icons/HashrateIcon24.vue";
 import InfoBlock from "@/modules/statistic/Components/InfoBlock.vue";
 import StatisticLineGraph from "@/modules/statistic/Components/StatisticLineGraph.vue";
 import StatisticColumnGraph from "@/modules/statistic/Components/StatisticColumnGraph.vue";
 import { StatisticService } from "@/modules/statistic/service/StatisticService";
-import NoInformation from "../../modules/statistic/Components/NoInformation.vue";
+import NoInformation from "@/modules/statistic/Components/NoInformation.vue";
+import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
+import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
 
 export default {
     components: {
         MainTitle,
-        // CopyBlock,
         MainPreloader,
         CabinetCard,
-        HashrateIcon,
-        HashrateIcon24,
         InfoBlock,
         StatisticLineGraph,
         StatisticColumnGraph,
         NoInformation,
+        MinuteHashrateIcon,
+        DayHashrateIcon,
     },
     data() {
         return {
             lineChartService: new StatisticService(
                 [0, 1],
-                this.$t,
                 this.offset,
                 this.$route
             ),
-            barChartService: new StatisticService([0, 1], this.$t, 30),
+            barChartService: new StatisticService([0, 1], 30),
         };
     },
     watch: {
         "$i18n.locale"() {
-            document.title = this.$t("header.links.statistic");
+            document.title = this.$t("header.links.statistic")
+
+            this.lineChartService.setTranslate(this.$t);
+            this.barChartService.setTranslate(this.$t);
         },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
@@ -137,7 +137,7 @@ export default {
         },
         async offset() {
             await this.lineChartService.lineGraphIndex();
-            await this.barChartService.barGraphIndex();
+            // await this.barChartService.barGraphIndex();
         },
         async getAccount() {
             await this.lineChartService.lineGraphIndex();
@@ -149,6 +149,11 @@ export default {
     },
     async mounted() {
         document.title = this.$t("header.links.statistic");
+        if (this.$t) {
+            this.lineChartService.setTranslate(this.$t);
+            this.barChartService.setTranslate(this.$t);
+        }
+
         this.lineChartService.setGroupId(this.getActive);
         this.barChartService.setGroupId(this.getActive);
 
@@ -187,7 +192,7 @@ export default {
         display: grid;
         grid-template-rows: repeat(3, auto);
         grid-template-columns: repeat(4, 1fr);
-        @media (max-width: 1700px) {
+        @media (max-width: 2100px) {
             grid-template-columns: repeat(6, 1fr);
         }
         @media (max-width: 900px) {
@@ -219,7 +224,7 @@ export default {
         }
         &-column {
             grid-column: 3 / 5;
-            @media (max-width: 1700px) {
+            @media (max-width: 2100px) {
                 grid-column: 4 / 7;
             }
         }
@@ -231,32 +236,32 @@ export default {
     }
     &__info {
         grid-column: 1 / 3;
-        @media (max-width: 1700px) {
+        @media (max-width: 2100px) {
             grid-column: 1 / 4;
         }
     }
     &__card {
         &-first {
             grid-column: 1 / 2;
-            @media (max-width: 1700px) {
+            @media (max-width: 2100px) {
                 grid-column: 1 / 3;
             }
         }
         &-second {
             grid-column: 2 / 3;
-            @media (max-width: 1700px) {
+            @media (max-width: 2100px) {
                 grid-column: 3 / 5;
             }
         }
         &-third {
             grid-column: 3 / 4;
-            @media (max-width: 1700px) {
+            @media (max-width: 2100px) {
                 grid-column: 5 / 6;
             }
         }
         &-fourth {
             grid-column: 4 / 5;
-            @media (max-width: 1700px) {
+            @media (max-width: 2100px) {
                 grid-column: 6 / 7;
             }
         }

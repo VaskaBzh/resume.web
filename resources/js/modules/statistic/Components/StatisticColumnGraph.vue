@@ -1,6 +1,6 @@
 <template>
     <div
-        class="cabinet__block cabinet__block-graph cabinet__block-light statistic__block"
+        class="cabinet__block cabinet__block-card cabinet__block-graph cabinet__block-light statistic__block"
     >
         <main-progress-bar
             :title="$t('statistic.graph[2]')"
@@ -37,7 +37,7 @@ export default {
     },
     data() {
         return {
-            height: 85,
+            height: 75,
         };
     },
     computed: {

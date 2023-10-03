@@ -3,7 +3,9 @@
         class="cabinet__block cabinet__block-light cabinet__block-card card"
         :class="[page == 'worker' ? 'max-width' : '']"
     >
-
+        <div class="card_icon">
+            <slot name="svg" />
+        </div>
         <div class="card__content">
             <main-title class="headline">
                 {{ title }}
@@ -35,18 +37,17 @@ export default {
 <style scoped>
 .card {
     background: var(--background-island, #ffffff);
-
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    gap: 24px;
 }
 
-.max-width {
-    width: 48%;
-}
-
-.card_svg {
-    margin-right: 24px;
+.card_icon {
+    stroke: var(--icons-accent);
+     @media (max-width: 1700px) {
+         display: none;
+     }
 }
 
 .card__content {

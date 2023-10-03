@@ -45,6 +45,7 @@
     --main-checkbox-default: #212327;
     --box-shadow: rgba(16, 24, 40, 0.08);
 
+    /* svg */
     --svg-fill: #595E68;
-
+    --icons-accent: #53B1FD4D;
 }

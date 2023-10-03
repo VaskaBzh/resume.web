@@ -11,12 +11,13 @@
                 </div>
             </div>
             <div class="convertor-container is-web">
-                <span class="convertor-calc">{{ converter.usd }} $</span>
+                <span class="convertor-calc">$ {{ converter.usd }} </span>
                 <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter.rub }} ₽</span>
             </div>
-            <tooltip-card class="is-mobile"
-                            :text="'$' + converter.usd + ' ≈ ' + converter.rub + ' ₽'"
-            ></tooltip-card>
+            <tooltip-card
+                class="is-mobile"
+                :text="'$' + converter.usd + ' ≈ ' + converter.rub + ' ₽'"
+            />
         </div>
     </div>
 </template>
@@ -80,15 +81,15 @@ export default {
     display: inline-block
 }
 .is-mobile{
-    display: none
+    display: none !important;
 }
-@media(max-width:500px){
+@media(max-width:500px) {
     .is-web{
         display: none
-    } 
-    .is-mobile{
+    }
+    .is-mobile {
         display: inline-block
-}
+    }
 }
 .btn-about{
     margin-left: 8px;
@@ -104,15 +105,15 @@ export default {
 }
 .convertor-calc{
     color: var(--text-fourth);
-    font-family: Unbounded;
+    font-family: Unbounded, serif;
     font-size: 14px;
-    font-style: normal;
     font-weight: 400;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
 }
 .converter-container {
     display: flex;
     align-items: center;
+    gap: 4px;
 }
 .btc {
     &__block {
@@ -129,7 +130,7 @@ export default {
         line-height: 32px;
         @media(max-width: 500px){
             line-height: 34px;
-            font-family: Unbounded;
+            font-family: Unbounded, serif;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;

@@ -5,8 +5,8 @@ import { ProfileApi } from "@/api/api";
 import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
 
 export class StatisticService extends GraphDataService {
-    constructor(titles, translate, offset, route) {
-        super(titles, translate, offset);
+    constructor(titles, offset, route) {
+        super(titles, offset);
 
         this.waitGraph = true;
         this.waitGraphChange = true;
@@ -19,12 +19,11 @@ export class StatisticService extends GraphDataService {
         this.buttons = [
             { title: `24 ${this.translate("hours")}`, value: 96 },
             { title: `7 ${this.translate("days")}`, value: 672 },
-            { title: `7 ${this.translate("month")}`, value: 2880 },
+            { title: `1 ${this.translate("month")}`, value: 2880 },
         ];
     }
 
     async fetchIncomes(page = 1, per_page = 30) {
-        // console.log(this.route?.query?.access_key);
         return await ProfileApi.get(
             `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
             {
