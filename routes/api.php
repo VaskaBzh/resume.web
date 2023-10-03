@@ -48,7 +48,7 @@ Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
 });
 
 Route::group(['middleware' => 'throttle:3,1'], function () {
-    Route::post('/email/reverify', ResendVerifyEmailController::class)
+    Route::post('/email/verify', ResendVerifyEmailController::class)
         ->name('resend-verify-email');
     Route::post('/password/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
 });
