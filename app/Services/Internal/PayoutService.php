@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
 class PayoutService
 {
     private Sub $sub;
-    public readonly Wallet $wallet;
+    public readonly ?Wallet $wallet;
     private array $params = [
         'status' => Status::REJECTED->value,
         'message' => Message::ERROR_PAYOUT->value
@@ -81,16 +81,16 @@ class PayoutService
      */
     public function payOut(): ?string
     {
-        if (!filled($this->wallet)) {
-            return null;
+        if ($this->wallet && now() < $this->sub?->user->email_verified_at->addDay()) {
+            return $this
+                ->remoteWallet
+                ->sendBalance(
+                    wallet: $this->sub->wallets()->first(),
+                    balance: $this->sub->pending_amount
+                );
         }
 
-        return $this
-            ->remoteWallet
-            ->sendBalance(
-                wallet: $this->sub->wallets()->first(),
-                balance: $this->sub->pending_amount
-            );
+        return null;
     }
 
     /**

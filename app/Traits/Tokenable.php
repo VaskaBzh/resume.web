@@ -22,7 +22,7 @@ trait Tokenable
 
         $this->deleteToken($user);
 
-        return redirect('/' . '?action=password&user_id=' . $user->id . '?hash=' . $hash);
+        return redirect('/' . '?action=password&user_id=' . $user->id . '&hash=' . $hash);
     }
 
     public function checkIfTokenExpired(string $email): bool
