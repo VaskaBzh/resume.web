@@ -1,7 +1,7 @@
 <template>
     <div class="progress">
         <div class="progress__head">
-            <main-title class="headline">
+            <main-title class="headline card-title">
                 {{ title }}
             </main-title>
             <div class="progress_icon">
@@ -75,9 +75,12 @@ export default {
     gap: 12px;
     margin-bottom: 16px;
 }
+
 .progress_icon {
     width: 20px;
     height: 20px;
+    display: flex;
+    align-items: center;
 }
 .progress__block {
     display: flex;
@@ -90,7 +93,7 @@ export default {
     align-items: center;
 }
 .progress_value {
-    color: var(--text-primary-80);
+    color: var(--text-primary);
     font-family: Unbounded, serif;
     font-size: 14px;
     font-weight: 400;
@@ -103,6 +106,19 @@ export default {
     position: relative;
     width: 100%;
 }
+@media(max-width:900px){
+    .progress__head{
+        margin-bottom: 12px;
+    }
+    .progress_value{
+        font-size: 12px;
+    }
+}
+@media(max-width:500px){
+    .progress__bar{
+        min-height: 12px;
+    }
+}
 .progress_line {
     border-radius: 16px;
     opacity: 0.8;
@@ -113,5 +129,10 @@ export default {
     height: 100%;
     width: 0;
     max-width: 100%;
+}
+@media(max-width:500px){
+   .card-title{
+        font-size: 12px !important;
+   }
 }
 </style>

@@ -104,6 +104,7 @@ export default {
 }
 .group_icon {
 	transition: all 0.5s ease 0s;
+	stroke: var(--svg-fill)
 }
 .group-closed .group_icon {
 	transform: rotate(180deg);

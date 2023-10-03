@@ -82,11 +82,6 @@ export default {
     justify-content: space-between;
     align-items: baseline;
 }
-@media(max-width:500px){
-  .flex-jc{
-    align-items: center;
-  }
-}
 .icome-container {
     width: 100%;
 }
@@ -125,5 +120,16 @@ export default {
 }
 .month__content {
     width: 100%;
+}
+@media(max-width:500px){
+  .flex-jc{
+    align-items: center;
+  }
+  .month-income-card{
+    padding: 16px;
+  }
+  .title{
+    margin-bottom: 0px;
+  }
 }
 </style>

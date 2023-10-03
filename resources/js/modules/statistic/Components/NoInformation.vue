@@ -55,7 +55,7 @@ export default {
     align-items: center;
 }
 .no-information_text {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     text-align: center;
     font-family: NunitoSans, serif;
     font-size: 16px;

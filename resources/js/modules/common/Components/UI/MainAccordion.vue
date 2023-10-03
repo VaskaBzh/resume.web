@@ -5,8 +5,8 @@
             <!-- <svg xmlns="http://www.w3.org/2000/svg"  width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="!isOpen">
                <path d="M13 1.00005C13 1.00005 8.58107 6.99999 6.99995 7C5.41884 7.00001 1 1 1 1" stroke="#D0D5DD" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg> -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  v-show="!isOpen">
-                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"  v-show="!isOpen" class="svg-faq">
+                <path d="M18 9.00005C18 9.00005 13.5811 15 12 15C10.4188 15 6 9 6 9" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <!-- <svg
                 width="28"
@@ -21,8 +21,8 @@
                     fill="#343434"
                 />
             </svg> -->
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="isOpen">
-                <path d="M18 15C18 15 13.5811 9.00001 12 9C10.4188 8.99999 6 15 6 15" stroke="#98A2B3" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" v-show="isOpen" class="svg-faq">
+                <path d="M18 15C18 15 13.5811 9.00001 12 9C10.4188 8.99999 6 15 6 15" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <!-- <svg
                 width="28"
@@ -73,6 +73,9 @@ export default {
         close() {
             // this.$refs.accordion.style.height = this.height + "px";
             this.$refs.accordion.style.height =  64 + "px";
+            if(window.innerWidth < 500){
+                this.$refs.accordion.style.height =  56 + "px";
+            }
 
         },
     },
@@ -88,6 +91,9 @@ export default {
 </script>
 
 <style lang="scss">
+.svg-faq{
+    stroke: var(--svg-fill)
+}
 .slide-fade-leave-active,
 .slide-fade-enter-active {
     transition: all 0.5s ease;
@@ -126,6 +132,7 @@ export default {
         width: 100%;
         @media (max-width: 479.98px) {
             font-size: 14px;
+            line-height: 20px; /* 142.857% */
         }
         svg {
             min-width: 28px;
@@ -164,6 +171,11 @@ export default {
                 content: counter(myCounter) ". ";
             }
         }
+    }
+}
+@media(max-width:500px){
+    .faq__list .section__block{
+        padding: 16px;
     }
 }
 </style>

@@ -1,6 +1,6 @@
 <template>
     <div class="card__subcontainer">
-        <img :src="img" alt="image" />
+        <img :src="img" alt="image" class="img-safety-card"/>
         <div class="card_inf_block">
             <p class="card__title">{{ card.title }}</p>
             <p class="card__text">{{ card.text }}</p>
@@ -51,8 +51,12 @@ export default {
 };
 </script>
 <style scoped>
+.img-safety-card{
+    width: 72px;
+    height: 72px;
+}
 .card__text {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 14px;
     font-style: normal;

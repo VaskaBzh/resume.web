@@ -82,11 +82,17 @@ h4 {
         justify-content: space-between;
     }
     &.headline {
-        color: var(--light-gray-400, #98a2b3);
+        color: var(--text-teritary);
         font-family: NunitoSans, serif;
         font-size: 14px;
         font-weight: 600;
-        line-height: 145%;
+        line-height: 142%;
+        opacity: 1;
+        @media(max-width: 900px){
+            .title{
+                font-size: 12px;
+            }
+        }
     }
 
     &-blue {

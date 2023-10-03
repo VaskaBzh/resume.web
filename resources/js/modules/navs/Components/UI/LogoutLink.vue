@@ -52,7 +52,7 @@ export default {
     transition: all 0.5s ease 0s;
 }
 .logout_icon {
-    stroke: var(--light-gray-400, #98A2B3);
+    stroke: var(--text-teritary, #98A2B3);
 }
 .logout:hover .logout_text {
     color: var(--primary-500, #2E90FA);
