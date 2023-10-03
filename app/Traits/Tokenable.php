@@ -22,7 +22,7 @@ trait Tokenable
 
         $redirectTo = auth()->check() ? '/profile/settings' : '/login';
 
-        return redirect($redirectTo . '?action=password&email=' . $request->email);
+        return redirect($redirectTo . '?action=password&user_id=' . $user->id);
     }
 
     public function checkIfTokenExpired(string $email): bool

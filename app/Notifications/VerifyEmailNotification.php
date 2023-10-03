@@ -40,7 +40,6 @@ class VerifyEmailNotification extends VerifyEmail
             [
                 'id' => $notifiable->getKey(),
                 'hash' => hash('sha256', $notifiable->getEmailForVerification()),
-                'email' => $notifiable->getEmailForVerification()
             ],
         );
     }
@@ -62,7 +61,8 @@ class VerifyEmailNotification extends VerifyEmail
 
     public function getEmailVerifyMailMessage(Renderable $mail, $notifiable): MailMessage
     {
-        return $mail->line(__('notifications.email.verify.context'))
+        return $mail
+            ->line(__('notifications.email.verify.context'))
             ->action(
                 text: __('notifications.email.verify.action-text'),
                 url: $this->verificationEmailUrl(
@@ -74,7 +74,8 @@ class VerifyEmailNotification extends VerifyEmail
 
     public function getPasswordChangeMailMessage(Renderable $mail, $notifiable): MailMessage
     {
-        return $mail->line(__('notifications.email.password-reset.context'))
+        return $mail
+            ->line(__('notifications.email.password-reset.context'))
             ->action(
                 text: __('notifications.email.password-reset.action-text'),
                 url: $this->verificationEmailUrl(
