@@ -11,8 +11,7 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['logout' => false, 'reset' => false, 'login' => false]);
 
-Route::post('/login', [LoginController::class, 'login'])
-    ->middleware('verified');
+Route::post('/login', [LoginController::class, 'login']);
 
 Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
     Route::get('/verify/{id}/{hash}', VerificationController::class)
