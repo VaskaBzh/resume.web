@@ -19,4 +19,5 @@ return [
     'email.verify' => 'Сообщение подверждения отправлено на почту :value',
     'email.already_verify' => 'Ваша почта :value была ранее подверждена :date',
     'email.verify.delay' => 'Выша почта :value подверждена, время ожидания для полного доступа в часах (:time)',
+    'email.not.verified' => 'Ваша почта :email не подтверждена'
 ];

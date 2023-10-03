@@ -61,7 +61,7 @@ export default {
             localStorage.setItem("user", JSON.stringify(state.user));
         },
         saveToken({ state }) {
-            localStorage.setItem("token", state.token);
+            localStorage.setItem("token", JSON.stringify(state.token));
         },
         dropUser({ commit }) {
             localStorage.removeItem("user");

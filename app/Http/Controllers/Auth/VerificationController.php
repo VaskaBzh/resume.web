@@ -34,6 +34,6 @@ class VerificationController extends Controller
             event(new Verified($user));
         }
 
-        return redirect($request->redirect_to . '?action=email');
+        return redirect('/' . '?action=email');
     }
 }

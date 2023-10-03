@@ -2,10 +2,10 @@ import store from "@/store";
 
 export async function AuthCheckProfileMiddleware(route, router) {
     const user = store.getters.localUser;
+    const token = store.getters.token;
 
     if (
-        (!user ||
-        Object.entries(user).length === 0) &&
+        !token &&
         !route?.query?.access_key
     ) {
         router.push({ name: "home" });

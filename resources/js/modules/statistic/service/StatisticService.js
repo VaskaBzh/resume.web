@@ -24,7 +24,7 @@ export class StatisticService extends GraphDataService {
     }
 
     async fetchIncomes(page = 1, per_page = 30) {
-        console.log(this.route?.query?.access_key);
+        // console.log(this.route?.query?.access_key);
         return await ProfileApi.get(
             `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
             {

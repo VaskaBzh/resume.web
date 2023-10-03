@@ -1,5 +1,4 @@
 export async function ActionValidateMiddleware(route, router) {
-    console.log(route.query?.action);
     if (route.query?.action) {
         const actionData = {
             password: "settings",

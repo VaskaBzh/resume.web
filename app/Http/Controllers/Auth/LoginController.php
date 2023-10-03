@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
@@ -28,13 +29,8 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string'
-        ]);
-
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
                 'error' => [__('auth.failed')]
@@ -42,8 +38,14 @@ class LoginController extends Controller
         }
 
         $user = User::whereEmail($request->email)->first();
-        $user->tokens()->delete();
 
+        if (!$user->hasVerifiedEmail()) {
+            return new JsonResponse([
+                'error' => [__('auth.email.not.verified', ['email' => $user->email])]
+            ], Response::HTTP_FORBIDDEN);
+        }
+
+        $user->tokens()->delete();
         $token = $user->createToken($user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
 
         return new JsonResponse([

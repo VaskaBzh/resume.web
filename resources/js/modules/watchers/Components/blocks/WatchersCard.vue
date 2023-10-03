@@ -259,6 +259,8 @@ export default {
     flex: 1 1 auto;
     padding-top: 40px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .card_img {
     width: 240px;
