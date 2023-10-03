@@ -19,10 +19,13 @@ export class WorkerService {
 
         this.waitWorkers = true;
         this.emptyWorkers = false;
-        this.waitTargetWorkers = true;
+
         this.popupCardOpened = false;
         this.popupCardClosed = false;
+
         this.target_worker = {};
+        this.waitTargetWorker = true;
+        this.visibleCard = false;
 
         this.route = route;
     }
@@ -144,7 +147,7 @@ export class WorkerService {
 
     async getWorker() {
         if (this.group_id !== -1) {
-            this.waitTargetWorkers = true;
+            this.waitTargetWorker = true;
 
             Object.assign(
                 this.target_worker,
@@ -157,6 +160,9 @@ export class WorkerService {
 
     dropWorker() {
         this.target_worker = {};
+
+        this.visibleCard = false;
+        this.waitTargetWorker = true;
     }
 
     setGraphTitles() {
@@ -224,6 +230,8 @@ export class WorkerService {
     }
 
     async getPopup(worker_id) {
+        this.visibleCard = true;
+
         this.updateGroup_id();
 
         this.worker_id = worker_id;
@@ -234,12 +242,12 @@ export class WorkerService {
         await this.makeFullValues();
         await this.getWorker();
 
-        this.waitTargetWorkers = false;
+        this.waitTargetWorker = false;
     }
 
     async getWorkerGraph() {
         if (this.group_id !== -1) {
-            this.waitTargetWorkers = true;
+            this.waitTargetWorker = true;
 
             this.records = (await this.fetchWorkerGraph()).data.data.map(
                 (el) => {

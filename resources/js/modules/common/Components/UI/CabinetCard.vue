@@ -3,7 +3,7 @@
         class="cabinet__block cabinet__block-light cabinet__block-card card"
         :class="[page == 'worker' ? 'max-width' : '']"
     >
-        <div class="card_icon">
+        <div class="card_icon" v-show="this.$slots.svg">
             <slot name="svg" />
         </div>
         <div class="card__content">
@@ -41,11 +41,12 @@ export default {
     flex-wrap: nowrap;
     align-items: center;
     gap: 24px;
+    width: 100%;
 }
 
 .card_icon {
-    stroke: var(--icons-accent);
-     @media (max-width: 1700px) {
+    fill: var(--icons-accent);
+     @media (max-width: 1880px) {
          display: none;
      }
 }

@@ -78,7 +78,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .is-web{
-    display: inline-block
+    display: inline-flex;
+    gap: 4px;
 }
 .is-mobile{
     display: none !important;

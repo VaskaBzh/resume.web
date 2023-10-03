@@ -50,7 +50,11 @@ export class LoginService {
             const formData = {
                 ...form,
                 email: this.route.query.email,
+                hash: this.route.query.hash,
             };
+
+            console.log(formData);
+            console.log(this.route.query);
 
             const response = await this.fetchPassword(formData);
 
@@ -71,7 +75,7 @@ export class LoginService {
 
     async fetchPassword(form) {
         return (
-            await MainApi.put("/password/change", form)
+            await MainApi.put(`/password/change/${this.route.query.user_id}`, form)
         ).data;
     }
 

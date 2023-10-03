@@ -153,7 +153,7 @@ export default {
 <style scoped lang="scss">
 .table {
     &_column {
-        font-family: NunitoSans;
+        font-family: NunitoSans, serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;

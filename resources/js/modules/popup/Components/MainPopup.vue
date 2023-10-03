@@ -161,8 +161,10 @@ export default {
     position: absolute;
     top: -8px;
     right: -8px;
-    padding: 8px;
+    padding: 10px;
     z-index: 2;
+    height: 44px;
+    width: 44px;
 }
 @media (max-width: 900px) {
     .popup__wrapper {

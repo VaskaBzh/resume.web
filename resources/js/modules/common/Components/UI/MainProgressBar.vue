@@ -102,7 +102,7 @@ export default {
 .progress__bar {
     min-height: 16px;
     border-radius: 16px;
-    background: var(--primary-4007, rgba(83, 177, 253, 0.07));
+    background: var(--background-island-inner-1, rgba(83, 177, 253, 0.07));
     position: relative;
     width: 100%;
 }
@@ -122,7 +122,7 @@ export default {
 .progress_line {
     border-radius: 16px;
     opacity: 0.8;
-    background: var(--primary-500, #2E90FA);
+    background: var(--background-accient, #2E90FA);
     position: absolute;
     left: 0;
     top: 0;

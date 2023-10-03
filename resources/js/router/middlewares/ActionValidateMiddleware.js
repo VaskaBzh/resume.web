@@ -9,6 +9,8 @@ export async function ActionValidateMiddleware(route, router) {
             name: actionData[route.query.action],
             query: {
                 action: route.query.action,
+                user_id: route.query.user_id,
+                hash: route.query.hash,
             },
         })
     }

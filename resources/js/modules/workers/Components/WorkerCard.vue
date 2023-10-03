@@ -1,61 +1,68 @@
 <template>
     <div class="card">
+        <wait-preloader
+            class="card_preloader"
+            :wait="wait"
+            :interval="20"
+            :end="!wait"
+        />
         <div class="card__wrapper">
             <div class="card__content">
-                <div class="card__head">
-                    <h3 class="card_title">{{ target_worker.name }}</h3>
-                    <span
-                        class="card_status"
-                        :class="{
-                            'card_status-active':
-                                target_worker.class === 'ACTIVE',
-                            'card_status-in-active':
-                                target_worker.class === 'INACTIVE',
-                        }"
-                        >{{ target_worker.class }}</span
-                    >
-                </div>
-                <svg
+                <transition name="fade">
+                    <div class="card__head" v-show="!wait">
+                        <h3 class="card_title">{{ target_worker.name }}</h3>
+                        <span
+                            class="card_status"
+                            :class="{
+                                'card_status-active':
+                                    target_worker.class === 'ACTIVE',
+                                'card_status-in-active':
+                                    target_worker.class === 'INACTIVE',
+                            }"
+                            >{{ target_worker.class }}</span
+                        >
+                    </div>
+                </transition>
+                <cross-icon
                     class="card_close"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
                     @click="$emit('closeCard')"
-                >
-                    <path
-                        d="M19 5L5 19M5 5L19 19"
-                        stroke="#D0D5DD"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                    />
-                </svg>
+                />
                 <!--            <main-tabs-->
                 <!--                @getValue="$emit('getValue', $event)"-->
                 <!--                :tabs="buttons"-->
                 <!--                :active="offset"-->
                 <!--            />-->
-                <div class="card_graph">
-                    <main-line-graph :graphData="graph" :height="height" />
-                </div>
-                <div class="card__block">
-                    <cabinet-card
-                        class="card__elem"
-                        :title="$t('statistic.info_blocks.hash.titles[0]')"
-                        :value="hashPerDay"
-                        unit="TH/s"
-                        :page="'worker'"
-                    />
-                    <cabinet-card
-                        class="card__elem"
-                        :title="$t('statistic.info_blocks.hash.titles[1]')"
-                        :value="hashPerMin"
-                        unit="TH/s"
-                        :page="'worker'"
-                    />
-                </div>
+                <transition name="fade">
+                    <div class="card_graph" v-if="!wait">
+                        <main-line-graph :graphData="graph" :height="height" />
+                    </div>
+                </transition>
+                <transition name="fade">
+                    <div class="card__block" v-show="!wait">
+                        <cabinet-card
+                            class="card__elem"
+                            :title="$t('statistic.info_blocks.hash.titles[0]')"
+                            :value="hashPerDay"
+                            unit="TH/s"
+                            :page="'worker'"
+                        >
+                            <template v-slot:svg>
+                                <minute-hashrate-icon />
+                            </template>
+                        </cabinet-card>
+                        <cabinet-card
+                            class="card__elem"
+                            :title="$t('statistic.info_blocks.hash.titles[1]')"
+                            :value="hashPerMin"
+                            unit="TH/s"
+                            :page="'worker'"
+                        >
+                            <template v-slot:svg>
+                                <day-hashrate-icon />
+                            </template>
+                        </cabinet-card>
+                    </div>
+                </transition>
             </div>
         </div>
     </div>
@@ -65,11 +72,19 @@
 import MainTabs from "@/modules/common/Components/UI/MainTabs.vue";
 import MainLineGraph from "@/modules/graphs/Components/MainLineGraph.vue";
 import CabinetCard from "@/modules/common/Components/UI/CabinetCard.vue";
+import CrossIcon from "@/modules/common/icons/CrossIcon.vue";
+import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
+import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
+import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
 import { mapGetters } from "vuex";
 
 export default {
     name: "worker-card",
     components: {
+        WaitPreloader,
+        DayHashrateIcon,
+        MinuteHashrateIcon,
+        CrossIcon,
         MainTabs,
         MainLineGraph,
         CabinetCard,
@@ -77,29 +92,20 @@ export default {
     props: {
         target_worker: Object,
         graph: Object,
+        wait: Boolean,
     },
     data() {
         return {
             height: 190,
         };
     },
-    mounted() {
-        const interval = setInterval(() => {
-            this.height++;
-            this.height--;
-        }, 10);
-        setTimeout(
-            () => clearInterval(interval),
-            this.viewportWidth < 500 ? 3501 : 501
-        );
-    },
     computed: {
         ...mapGetters(["viewportWidth"]),
         hashPerDay() {
-            return this.target_worker.hashrate.split(" ")[0];
+            return this.wait ? null : Number(this.target_worker.hashrate.split(" ")[0]).toFixed(2);
         },
         hashPerMin() {
-            return this.target_worker.hashrate_per_day.split(" ")[0];
+            return this.wait ? null : Number(this.target_worker.hashrate_per_day.split(" ")[0]).toFixed(2);
         },
     },
 };
@@ -121,8 +127,11 @@ export default {
     overflow: hidden;
     position: relative;
 }
-.card-watchers {
-    min-height: 505px;
+.card_preloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 .card__wrapper {
     position: absolute;

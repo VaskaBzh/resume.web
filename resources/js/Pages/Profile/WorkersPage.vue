@@ -34,10 +34,9 @@
                     <worker-card
                         class="workers__card"
                         v-if="
-                            viewportWidth > 1200 &&
-                            Object.entries(worker_service.target_worker)
-                                .length > 0
+                            viewportWidth > 1200 && worker_service.visibleCard
                         "
+                        :wait="worker_service.waitTargetWorker"
                         :target_worker="worker_service.target_worker"
                         :graph="worker_service.workers_graph"
                         @closeCard="dropWorkers"
@@ -58,6 +57,7 @@
             v-if="Object.entries(worker_service.target_worker).length > 0"
             :target_worker="worker_service.target_worker"
             :graph="worker_service.workers_graph"
+            :wait="worker_service.waitTargetWorker"
             @closeCard="dropWorkers"
     />
     </workers-popup-card>
@@ -112,11 +112,12 @@ export default {
             await this.worker_service.fillTable();
         },
         async getTargetWorker(data) {
-            await this.worker_service.getPopup(data.id);
+            if (this.viewportWidth > 1200) {
+                this.removePercent = true
+            }
 
-            this.viewportWidth > 1200
-                ? (this.removePercent = true)
-                : this.worker_service.openPopupCard();
+            await this.worker_service.getPopup(data.id);
+            this.worker_service.openPopupCard()
         },
         dropWorkers() {
             this.worker_service.dropWorker();
@@ -135,18 +136,6 @@ export default {
             "getAccount",
             "viewportWidth",
         ]),
-        copyObject() {
-            return [
-                {
-                    title: this.$t("connection.block.title"),
-                    copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port1" },
-                        { link: "btc.all-btc.com:3333", title: "Port 2" },
-                        { link: "btc.all-btc.com:2222", title: "Port 3" },
-                    ],
-                },
-            ];
-        },
         statuses() {
             return [
                 { title: this.$t("workers.select[0]"), value: "all" },
