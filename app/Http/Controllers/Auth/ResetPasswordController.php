@@ -45,7 +45,7 @@ class ResetPasswordController extends Controller
         }
 
         if (!$this->checkIfTokenExpired($user->email)) {
-            return new JsonResponse(['message' => 'token not exists or expired']);
+            return new JsonResponse(['message' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
         }
 
         if ($user->update(['password' => Hash::make($request->password)])) {

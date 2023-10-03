@@ -19,7 +19,7 @@ trait Tokenable
         if (!$this->checkIfTokenExpired($user->email)) {
             return new JsonResponse(['status' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
         }
-        
+
         $redirectTo = auth()->check() ? '/profile/settings' : '/login';
 
         return redirect($redirectTo . '?action=password&email=' . $request->email);
