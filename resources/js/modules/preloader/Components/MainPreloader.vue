@@ -61,6 +61,11 @@ export default {
             default: 15,
         },
     },
+    components: {
+        PreloaderEndIcon,
+        PreloaderLogoIcon,
+        PreloaderContainerIcon,
+    },
     computed: {
         ...mapGetters(["getActive"]),
         end() {
@@ -75,11 +80,6 @@ export default {
                 : `${this.service.progressPercentage}%`;
         },
     },
-    components: {
-        PreloaderEndIcon,
-        PreloaderLogoIcon,
-        PreloaderContainerIcon,
-    },
     data() {
         return {
             service: new PreloaderService(),
@@ -93,18 +93,12 @@ export default {
             this.service.setTranslate(this.$t);
         },
         empty(newStateEmpty) {
-            // this.service.killPreloader();
             if (newStateEmpty) {
                 this.progressVisible = false;
             }
             this.crossVisible = false;
             this.isLogoCenter = !!newStateEmpty;
         },
-        // wait(newStateWait) {
-        //     if (newStateWait) {
-        //         this.service.startProcess(this.interval);
-        //     }
-        // },
         end(newEndVal) {
             this.service.endProcess(newEndVal);
         },

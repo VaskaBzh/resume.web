@@ -446,6 +446,7 @@ const messages = {
         },
         days: "Days",
         hours: "Hours",
+        month: "Month",
         chart: {
             buttons: {
                 day: "24 days",
@@ -483,7 +484,7 @@ const messages = {
                     "Specify the cost of electricity to calculate net income.",
                 button_clear: "Specify",
                 payment: {
-                    titles: ["Yesterday", "Projected for today"],
+                    titles: ["Forecast for today", "Yesterday's income", "Forecast for the month"],
                 },
                 clear: {
                     titles: ["Today", "For month"],
@@ -1171,6 +1172,7 @@ const messages = {
         },
         days: "Дней",
         hours: "Часа",
+        month: "Месяц",
         chart: {
             buttons: {
                 day: "24 часа",
@@ -1208,7 +1210,7 @@ const messages = {
                     "Укажите расходы на электроэнергию для расчета чистой прибыли. ",
                 button_clear: "Указать",
                 payment: {
-                    titles: ["Вчера", "Прогноз на сегодня"],
+                    titles: ["Прогноз на сегодня", "Вчерашний доход", "Прогноз на месяц"],
                 },
                 clear: {
                     titles: ["Сегодня", "За месяц"],

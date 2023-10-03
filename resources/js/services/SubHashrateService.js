@@ -4,7 +4,7 @@ import { SubHashrateData } from "@/DTO/SubHashrateData";
 import store from "@/store";
 
 export class SubHashrateService {
-    constructor(translate, titles, offset = 24) {
+    constructor(translate, titles, offset = 96) {
         this.group_id = -1;
         this.offset = offset;
         this.titles = titles;

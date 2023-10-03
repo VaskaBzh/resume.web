@@ -17,8 +17,9 @@ export class StatisticService extends GraphDataService {
 
     setButtons() {
         this.buttons = [
-            { title: `24 ${this.translate("hours")}`, value: 24 },
-            { title: `7 ${this.translate("days")}`, value: 168 },
+            { title: `24 ${this.translate("hours")}`, value: 96 },
+            { title: `7 ${this.translate("days")}`, value: 672 },
+            { title: `7 ${this.translate("month")}`, value: 2880 },
         ];
     }
 

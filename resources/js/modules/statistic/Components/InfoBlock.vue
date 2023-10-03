@@ -3,15 +3,15 @@
         class="cabinet__block cabinet__block-light info"
     >
         <btc-calculator
-            :title="$t('statistic.info_blocks.payment.titles[1]')"
+            :title="$t('statistic.info_blocks.payment.titles[0]')"
             :BTC="todayAmount"
         />
         <btc-calculator
-            :title="$t('statistic.info_blocks.payment.titles[0]')"
+            :title="$t('statistic.info_blocks.payment.titles[1]')"
             :BTC="yesterdayAmount"
         />
         <btc-calculator
-            :title="$t('statistic.info_blocks.payment.titles[0]')"
+            :title="$t('statistic.info_blocks.payment.titles[2]')"
             :BTC="monthAmount"
         />
     </div>

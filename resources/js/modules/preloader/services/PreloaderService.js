@@ -27,8 +27,40 @@ export class PreloaderService {
         this.translate = translate;
     }
 
-    endAnimation() {
+    async dropResizeAnimation() {
+        if (this.animateLineResizeConst) {
+            this.animateLineResizeConst.pause;
+
+            await this.animateLineResizeConst = anime({
+                targets: this.polygon,
+                strokeDashoffset: [this.polygon.getAttribute("stroke-dash-offset"), -1247],
+                duration: 300,
+                easing: "easeInOutSine",
+                direction: "alternate",
+            });
+        }
+    }
+
+    async dropLineAnimation() {
+        if (this.animateLineConst) {
+            this.animateLineConst.pause;
+
+            await this.animateLineConst = anime({
+                targets: this.polygon,
+                rotate: 0,
+                duration: 500,
+                easing: "linear",
+            });
+        }
+    }
+
+    async endAnimation() {
         this.endTable = true;
+
+        await this.dropResizeAnimation();
+        await this.dropLineAnimation();
+
+        this.animateCloseLine();
     }
 
     dropEndAnimation() {

@@ -45,7 +45,7 @@ export class ColumnGraphService extends GraphService {
         const bars = this.svg.selectAll("path").nodes();
 
         bars.forEach((bar) => {
-            bar.setAttribute("style", "transition: all 0.3s ease 0s;");
+            bar.setAttribute("style", "transition: all 0.1s ease 0s;");
         });
     }
 
@@ -54,7 +54,7 @@ export class ColumnGraphService extends GraphService {
         let closestBar = null;
 
         bars.forEach((bar, i) => {
-            bar.setAttribute("style", "transition: all 0.3s ease 0s;");
+            bar.setAttribute("style", "transition: all 0.1s ease 0s;");
 
             const barWidth = (this.chartHtml.offsetWidth + 18) / bars.length;
             const barIndex = Math.floor(touchX / barWidth);
@@ -64,7 +64,7 @@ export class ColumnGraphService extends GraphService {
 
                 bar.setAttribute(
                     "style",
-                    "fill: #2E90FA; transition: all 0.3s ease 0s;"
+                    "fill: #2E90FA; transition: all 0.1s ease 0s;"
                 );
             }
         });
