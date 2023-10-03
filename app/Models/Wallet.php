@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 
 class Wallet extends Model
 {
@@ -26,6 +27,11 @@ class Wallet extends Model
         'percent',
     ];
 
+    public function getRouteKeyName(): string
+    {
+        return 'wallet';
+    }
+
     /*
      * Relations
     */
@@ -41,6 +47,11 @@ class Wallet extends Model
     public function payouts(): HasMany
     {
         return $this->hasMany(Payout::class);
+    }
+
+    public function confirmationCodes(): MorphMany
+    {
+        return $this->morphMany(ConfirmationCode::class, 'model');
     }
     /* end relations */
 

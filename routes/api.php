@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\Account\PasswordChangeController;
 use App\Http\Controllers\Api\AllowedRoutesController;
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
@@ -17,6 +16,8 @@ use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Api\Wallet\UpdateController as WalletUpdateController;
+use App\Http\Controllers\Api\Wallet\SendCodeController as WalletSendCodeController;
+use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
 use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteController;
 use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkListController;
@@ -90,7 +91,10 @@ Route::group([
         'prefix' => 'wallets',
         'middleware' => ['verify-expiration']
     ], function () {
+        Route::post('/send/code/{wallet}', WalletSendCodeController::class)->name('wallet.send-code');
         Route::put('/update/{wallet}', WalletUpdateController::class)->name('wallet.update');
+        Route::put('/change/address/{wallet}', WalletChangeAddressController::class)
+            ->name('wallet.change.address');
         Route::post('/create', WalletCreateController::class)->name('wallet.create');
         Route::get('/{sub}', WalletListController::class)->name('wallet.list');
     });

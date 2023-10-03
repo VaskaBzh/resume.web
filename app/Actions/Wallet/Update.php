@@ -13,7 +13,6 @@ class Update
     {
         $wallet->update([
             'name' => $walletData->name,
-            'wallet' => $walletData->walletAddress ?? $wallet->wallet,
             'minWithdrawal' => $walletData->minWithdrawal ?? $wallet->minWithdrawal
         ]);
     }
