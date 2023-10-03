@@ -65,6 +65,7 @@ export default {
 <style scoped lang="scss">
 .payments-view {
     display: flex;
+    height: 100vh;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: center;

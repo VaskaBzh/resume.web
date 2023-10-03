@@ -111,7 +111,6 @@ export default {
     height: 170px;
     border-radius: 50%;
     fill: rgba(208, 213, 221, 0.20);
-    stroke-width: 0.5px;
     background: rgba(208, 213, 221, 0.20);
     backdrop-filter: unset;
     bottom: 50%;
@@ -124,6 +123,7 @@ export default {
     line-height: 120%;
     align-self: center;
     text-transform: uppercase;
+    border: none;
 }
 .connect-withus_btn {
     width: 72px;

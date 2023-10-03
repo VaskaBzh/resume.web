@@ -49,21 +49,24 @@
                         <button-blue class="mobile-view_prev next"></button-blue>
                     </div>
                 </div>
-                <div class="mobile-view_swiper-picture">
-                    <div class="mobile-view_image active">
-                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
-                    </div>
-                    <div class="mobile-view_image" >
-                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
-                    </div>
-                    <div class="mobile-view_image" >
-                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
-                    </div>
-                    <div class="mobile-view_image" >
-                        <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
-                    </div>
-                    <div class="mobile-view_image" >
-                        <img src="../../../../../assets/img/iphone-14-sreen1.png" alt="">
+                <div class="mobile-view__content">
+                    <img class="iphone" src="../../../../../assets/img/iPhone-14.png" alt="">
+                    <div class="mobile-view_swiper-picture">
+                        <div class="mobile-view_image active">
+                            <img src="../../../../../assets/img/iphone-14-screen1.png" alt="">
+                        </div>
+                        <div class="mobile-view_image" >
+                            <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
+                        </div>
+                        <div class="mobile-view_image" >
+                            <img src="../../../../../assets/img/iphone-14-screen3.png" alt="">
+                        </div>
+                        <div class="mobile-view_image" >
+                            <img src="../../../../../assets/img/iphone-14-screen4.png" alt="">
+                        </div>
+                        <div class="mobile-view_image" >
+                            <img src="../../../../../assets/img/iphone-14-screen1.png" alt="">
+                        </div>
                     </div>
                 </div>
                 <button-blue class="mobile-view__btn">Скоро в AppStore</button-blue>
@@ -118,11 +121,10 @@ export default {
 
     &__wrapper {
         display: flex;
+        height: 100vh;
         flex-flow: row nowrap;
         justify-content: space-between;
-        margin: 0 calc(-50vw + 50%);
-        padding-left: 100px;
-        padding-right: 290px;
+        margin: 0 calc(-50vw + 75%);
     }
 
     &_inner {
@@ -132,15 +134,32 @@ export default {
         align-self: center;
         width: 25%;
     }
+    &__content {
+        height: 100%;
+        position: relative;
+        padding: 15px;
+        max-height: 875px;
+
+        img.iphone {
+            width: 100%;
+            position: absolute;
+            height: 100%;
+            object-fit: unset;
+            left: 50%;
+            z-index: 10;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
 
     &_swiper-picture {
         display: flex;
         flex-flow: row nowrap;
         align-items: flex-start;
-        justify-content: flex-end;
+        justify-content: center;
         height: 100%;
-
-
+        position: relative;
+        max-width: 479px;
     }
 
     &_item {
@@ -171,20 +190,16 @@ export default {
         margin: 0 auto;
         border-radius: 70px;
         overflow: hidden;
-        align-items: center;
-        justify-content: flex-end;
-        visibility: hidden;
+        z-index: 1;
+        justify-content: center;
         display: none;
-        opacity: 0;
 
-    }
-
-    img {
-        width: 100%;
-        max-width: 479px;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 70px;
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 70px;
+        }
     }
 
     &_text {

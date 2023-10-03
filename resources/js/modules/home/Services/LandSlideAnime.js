@@ -5,20 +5,16 @@ export function slideMobileView() {
     const titleBlocks = document.querySelectorAll(".mobile-view_item")
     const imageBlocks = document.querySelectorAll('.mobile-view_image')
 
-
     const slideNext = document.querySelector('.next')
 
     const slidePrev = document.querySelector('.prev')
 
     let indexBlock = 0;
 
-    let clickButton = null
 
     function isShowSlide() {
-        titleBlocks[indexBlock].classList.add('active-animation')
         titleBlocks[indexBlock].classList.add('active')
 
-        imageBlocks[indexBlock].classList.add('active-animation')
         imageBlocks[indexBlock].classList.add('active')
     }
 
@@ -26,45 +22,158 @@ export function slideMobileView() {
         titleBlocks[indexBlock].classList.remove('active')
 
         imageBlocks[indexBlock].classList.remove('active')
-
     }
 
 
     function nextSlide() {
 
-        isCloseSlide()
+        gsap.fromTo(imageBlocks[indexBlock].children, {opacity: 1}, {
+            opacity: 1,
+            xPercent: 100,
+            duration: 0,
+            stagger: { // wrap advanced options in an object
+                amount: 0,
+                each: 0,
+                from: "center",
+                grid: "auto",
+                ease: "power2.inOut",
+                repeat: -1 // Repeats immediately, not waiting for the other staggered animations to finish
+            }
+        })
 
-        indexBlock++
+        gsap.fromTo([titleBlocks[indexBlock].children[0]], {opacity: 1}, {
+            opacity: 0,
+            duration: .5,
+            xPercent: 10
+        })
 
-        if (indexBlock > titleBlocks.length - 1 && indexBlock > imageBlocks.length - 1) {
-            indexBlock = 0
-        }
+        gsap.fromTo(titleBlocks[indexBlock].children[1], {opacity: 1}, {
+            opacity: 0,
+            duration: .5,
+            xPercent: 10
+        }).then(()=> {
+            isCloseSlide()
 
-        isShowSlide()
+            indexBlock++
+
+            if (indexBlock > titleBlocks.length - 1 && indexBlock > imageBlocks.length - 1) {
+                indexBlock = 0
+            }
+
+            isShowSlide()
+
+            gsap.fromTo(imageBlocks[indexBlock].children, {opacity: 1, xPercent:-100}, {
+                opacity: 1,
+                xPercent: 0,
+                duration: 0,
+                stagger: { // wrap advanced options in an object
+                    amount: 0,
+                    each: 0,
+                    from: "center",
+                    grid: "auto",
+                    ease: "power2.inOut",
+                    repeat: -1 // Repeats immediately, not waiting for the other staggered animations to finish
+                }
+            })
+
+
+            gsap.fromTo(titleBlocks[indexBlock].children[0], {opacity: 0, xPercent:-10}, {
+                opacity: 1,
+                xPercent: 0,
+                duration: .5,
+            })
+
+
+            gsap.fromTo(titleBlocks[indexBlock].children[1], {opacity: 0, xPercent:-10}, {
+                opacity: 1,
+                xPercent: 0,
+                duration: .5,
+            })
+        })
+
     }
+
+
 
     function previousSlide() {
 
-        isCloseSlide()
+        gsap.fromTo(imageBlocks[indexBlock].children,{opacity:1}, {
+            opacity: 1,
+            xPercent: -100,
+            duration: 0,
+            stagger: { // wrap advanced options in an object
+                amount: 0,
+                each: 0,
+                from: "center",
+                grid: "auto",
+                ease: "power2.inOut",
+                repeat: -1 // Repeats immediately, not waiting for the other staggered animations to finish
+            }
+        })
 
-        indexBlock--
 
-        if (indexBlock < 0 && indexBlock < 0) {
-            indexBlock = titleBlocks.length - 1
-        }
+        gsap.fromTo([titleBlocks[indexBlock].children[0]], {opacity: 1}, {
+            opacity: 0,
+            duration: .5,
+            xPercent: -10
+        })
 
-        isShowSlide()
+
+        gsap.fromTo(titleBlocks[indexBlock].children[1],{opacity:1}, {
+            opacity: 0,
+            duration: .5,
+            xPercent: -10
+        }).then(()=> {
+            isCloseSlide()
+
+            indexBlock--
+
+            if (indexBlock < 0 && indexBlock < 0) {
+                indexBlock = titleBlocks.length - 1
+            }
+
+            isShowSlide()
+
+            gsap.fromTo(imageBlocks[indexBlock].children, {opacity: 1, xPercent:10}, {
+                opacity: 1,
+                xPercent: 0,
+                duration: 0,
+                stagger: { // wrap advanced options in an object
+                    amount: 0,
+                    each: 0,
+                    from: "center",
+                    grid: "auto",
+                    ease: "power2.inOut",
+                    repeat: -1 // Repeats immediately, not waiting for the other staggered animations to finish
+                }
+            })
+
+            gsap.fromTo(titleBlocks[indexBlock].children[0], {opacity: 0, xPercent: 10}, {
+                opacity: 1,
+                xPercent: 0,
+                duration: .5,
+            })
+
+            gsap.fromTo(titleBlocks[indexBlock].children[1], {opacity: 0, xPercent: 10}, {
+                opacity: 1,
+                xPercent: 0,
+                duration: .5,
+
+            })
+        })
+
+
+
+
+
+
+
+
     }
 
 
-    slideNext.addEventListener('click', (e) => {
-        clickButton = e.target
-        nextSlide()
-    })
-    slidePrev.addEventListener('click', (e) => {
-        clickButton = e.target
-        previousSlide()
-    })
+    slideNext.addEventListener('click', nextSlide)
+    slidePrev.addEventListener('click', previousSlide)
 }
 
 

@@ -59,7 +59,6 @@ export default {
 
     &_items {
         width: 50vw;
-        height: 40vh;
         border-radius: 40px;
         border-top: 2px solid #555353;
         border-bottom: 0.5px solid #555353;
@@ -76,7 +75,6 @@ export default {
         &_item {
             display: flex;
             flex-flow: row nowrap;
-            position: relative;
             align-items: center;
             justify-content: space-between;
             left: -200px;
