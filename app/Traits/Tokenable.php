@@ -12,15 +12,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait Tokenable
 {
-    public function verifyPasswordChange(Request $request, $id, $hash): JsonResponse|RedirectResponse
+    public function verifyPasswordReset(Request $request, $id, $hash): JsonResponse|RedirectResponse
     {
         $user = User::find($id);
 
         if (!$this->checkIfTokenExpired($user->email)) {
             return new JsonResponse(['status' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
         }
-
-        $redirectTo = auth()->check() ? '/profile/settings' : '/login';
 
         return redirect('/' . '?action=password&user_id=' . $user->id);
     }
