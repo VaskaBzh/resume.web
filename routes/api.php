@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\AccountController;
+use App\Http\Controllers\Api\Account\PasswordChangeController;
 use App\Http\Controllers\Api\AllowedRoutesController;
 use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\HashRateListController;
@@ -17,16 +17,15 @@ use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Api\Wallet\UpdateController as WalletUpdateController;
+use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
+use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteController;
+use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkListController;
+use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowController;
+use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherLinkUpdateController;
 use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
-use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
-use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkListController;
-use App\Http\Controllers\Api\WatcherLink\UpdateController as WatcherLinkUpdateController;
-use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteController;
-use App\Http\Controllers\Api\WatcherLink\ShowController as WatcherLinkShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -72,13 +71,6 @@ Route::group([
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
     Route::get('/user', UserController::class)->name('user.show');
-    Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-    Route::post('/password/reset', [ResetPasswordController::class, 'sendEmail'])
-        ->middleware('throttle:3,1')
-        ->name('password-reset.send-email');
-
-
-    Route::put('/change', AccountController::class)->name('change');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
     Route::group([

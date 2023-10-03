@@ -11,16 +11,16 @@
             class="btn_content"
             :data-popup="'#' + card.id"
             @mousedown="$emit(card.emit)"
-            v-if="card.name !== 'verify_password' && !!user.email_verified_at"
         >
             {{ card.button }}
         </button>
-        <verify-link
-            v-else
-            class="btn_content"
-            :verifyText="card.button"
-            verifyUrl="/password/reset"
-        />
+<!--        v-if="card.name !== 'verify_password' && !!user.email_verified_at"-->
+<!--        <verify-link-->
+<!--            v-else-->
+<!--            class="btn_content"-->
+<!--            :verifyText="card.button"-->
+<!--            verifyUrl="/password/reset"-->
+<!--        />-->
     </div>
 </template>
 <script>

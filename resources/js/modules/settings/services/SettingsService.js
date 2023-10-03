@@ -73,21 +73,36 @@ export class SettingsService {
         })
     }
 
-    async sendPassword(form) {
+    setPasswordForm(form = null) {
+        const formData =
+            form ?? {
+                old_password: "",
+                password: "",
+                "password_confirmation": "",
+            }
+
+        this.passwordForm = {
+            ...this.passwordForm,
+            ...formData,
+        }
+    }
+
+    async sendPassword() {
         try {
-            const response = await this.fetchPassword(form);
+            const response = await this.fetchPassword();
 
             this.closePasswordPopup();
             this.removeRouteQuery();
+            this.setPasswordForm();
 
-            openNotification(true, this.translate("validate_messages.connected"), response.data.message);
+            openNotification(true, this.translate("validate_messages.changed"), response.message);
         } catch (err) {
             console.error(err);
 
             openNotification(
                 false,
                 this.translate("validate_messages.error"),
-                err.response.data.error ?? err.response.data.message
+                err.response.data.message
             );
             store.dispatch("setFullErrors", err.response.data);
         }
@@ -129,9 +144,9 @@ export class SettingsService {
         setTimeout(() => (this.closedFacPopup = false), 300);
     }
 
-    async fetchPassword(form) {
+    async fetchPassword() {
         return (
-            await ProfileApi.put("/password/change", form, {
+            await ProfileApi.put(`/password/change/${this.user.id}`, this.passwordForm, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -234,10 +249,6 @@ export class SettingsService {
     }
 
     setDefaultForm() {
-        this.form = new FormData("", "", "", "", "");
-    }
-
-    setPasswordForm(form) {
         this.form = new FormData("", "", "", "", "");
     }
 

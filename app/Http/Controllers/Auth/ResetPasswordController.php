@@ -17,18 +17,12 @@ class ResetPasswordController extends Controller
 {
     use Tokenable;
 
-    public function sendEmail(): JsonResponse
+    public function sendPasswordChangeEmail(): JsonResponse
     {
         $user = auth()->user();
+        $user->sendPasswordChangeNotification();
 
-        if ($user->hasVerifiedEmail()) {
-
-            $user->sendPasswordResetNotification(Password::createToken($user));
-
-            return new JsonResponse(['message' => 'success']);
-        }
-
-        return new JsonResponse(['message' => 'user email not verified'], Response::HTTP_FORBIDDEN);
+        return new JsonResponse(['message' => 'success']);
     }
 
     public function changePassword(ChangePasswordRequest $request, User $user)

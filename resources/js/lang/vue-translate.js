@@ -11,6 +11,7 @@ const messages = {
             added: "Added",
             changed: "Changed",
             watcher_message: "Watcher created successfully",
+            verify_message: "Email verified successfully",
         },
         more: "More",
         auth: {
@@ -729,6 +730,7 @@ const messages = {
             added: "Добавлено",
             changed: "Изменено",
             watcher_message: "Вотчер успешно создан",
+            verify_message: "Почта успешно подтверждена",
         },
         more: "Подробнее",
         auth: {

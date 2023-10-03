@@ -27,7 +27,7 @@
                         class="card__container"
                         v-for="card in settingsService.blocks"
                     >
-                        <SafetyCard
+                        <safety-card
                             :card="card"
                             @openFacForm="sendFac"
                             @openPasswordForm="openPasswordPopup"
@@ -58,11 +58,12 @@
         :code="settingsService.code"
         @sendVerify="sendVerify($event)"
     />
-    <password-popup
+    <settings-password-popup
         :opened="settingsService.openedPasswordPopup"
         :wait="settingsService.waitAjax"
         :closed="settingsService.closedPasswordPopup"
         :validateService="settingsService"
+        :formData="settingsService.passwordForm"
         @sendPassword="sendPassword($event)"
     />
 </template>
@@ -75,14 +76,14 @@ import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
-import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
+import SettingsPasswordPopup from "@/modules/settings/Components/blocks/SettingsPasswordPopup.vue";
 
 export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
     components: {
-        PasswordPopup,
+        SettingsPasswordPopup,
         MainTitle,
         SettingsList,
         SettingsPopup,
@@ -127,26 +128,29 @@ export default {
         },
     },
     methods: {
-        // setPasswordForm(form) {
-        //     this.settingsService.setPasswordForm(form);
-        // },
+        setPasswordForm(form = null) {
+            this.settingsService.setPasswordForm(form);
+        },
         async openPasswordPopup() {
             await this.settingsService.openPasswordPopup();
         },
         async sendFac() {
             await this.settingsService.sendFac();
         },
-        async sendPassword(form) {
-            await this.settingsService.sendPassword(form);
+        async sendPassword(form = null) {
+			this.settingsService.setPasswordForm(form);
+
+            await this.settingsService.sendPassword();
         },
         async sendVerify(form) {
             await this.settingsService.sendVerify(form);
         },
         settingsProcess() {
-            if (this.$route.query.action === "password") {
-                this.openPasswordPopup();
-            }
+            // if (this.$route.query.action === "password") {
+            //     this.openPasswordPopup();
+            // }
             this.settingsService.setUserData();
+            this.settingsService.setPasswordForm();
             this.settingsService.setDefaultForm();
             this.settingsService.setRows();
             this.settingsService.setBlocks();
