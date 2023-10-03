@@ -31,7 +31,7 @@ export function slideMobileView() {
 
 
     function nextSlide() {
-
+        console.log('next')
         isCloseSlide()
 
         indexBlock++
@@ -44,6 +44,7 @@ export function slideMobileView() {
     }
 
     function previousSlide() {
+        console.log('prev')
 
         isCloseSlide()
 

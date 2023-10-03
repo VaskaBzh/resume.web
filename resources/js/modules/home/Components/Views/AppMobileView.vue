@@ -235,6 +235,4 @@ export default {
     opacity: 1;
     visibility: visible;
 }
-
-
 </style>
