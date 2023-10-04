@@ -2,7 +2,6 @@
 
 namespace App\Mail\User;
 
-use App\Models\ConfirmationCode;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
@@ -19,7 +18,7 @@ class CodeEmail extends Mailable
      * @return void
      */
     public function __construct(
-        private readonly ConfirmationCode $confirmationCode
+        private readonly string $code
     )
     {
     }
@@ -46,7 +45,7 @@ class CodeEmail extends Mailable
         return new Content(
             markdown: 'mail.user.code-email',
             with: [
-                'code' => $this->confirmationCode->code
+                'code' => $this->code
             ]
         );
     }
