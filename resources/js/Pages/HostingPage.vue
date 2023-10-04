@@ -52,19 +52,53 @@
                     <p class="offer-text">{{ offer.text }}</p>
                 </div>
             </div>
-
+        </article>
+        <article class="article-hosting article-work-with-us">
+            <WorkingWithUsCard></WorkingWithUsCard>
+        </article>
+        <article class="article-hosting black-block">
+            <MonitoringSystemCard></MonitoringSystemCard>
+        </article>
+        <article class="article-hosting black-block">
+            <SupportSystemCard></SupportSystemCard>
+        </article>
+        <article class="article-hosting article-work-with-us">
+            <ForClientsCard></ForClientsCard>
+        </article>
+        <article class="article-hosting black-block">
+            <PersonalAreaCard></PersonalAreaCard>
+        </article>
+        <article class="article-hosting black-block">
+            <MobileAppCard></MobileAppCard>
+        </article>
+        <article class="article-hosting article-work-with-us">
+            <GuaranteeCard></GuaranteeCard>
         </article>
     </main>
 </template>
 <script>
 import HeaderComponent from "../modules/common/Components/HeaderComponent.vue";
 import ButtonBlue from "../modules/common/Components/UI/ButtonBlue.vue";
+import WorkingWithUsCard from "../modules/hosting/Components/WorkingWithUsCard.vue";
+import MonitoringSystemCard from "../modules/hosting/Components/MonitoringSystemCard.vue";
+import SupportSystemCard from "../modules/hosting/Components/SupportSystemCard.vue";
+import ForClientsCard from "../modules/hosting/Components/ForClientsCard.vue";
+import PersonalAreaCard from "../modules/hosting/Components/PersonalAreaCard.vue";
+import MobileAppCard from "../modules/hosting/Components/MobileAppCard.vue";
+import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
 
 export default {
     name: 'hosting-page',
     components: {
          HeaderComponent,
-         ButtonBlue
+         ButtonBlue,
+         WorkingWithUsCard,
+         MonitoringSystemCard,
+         SupportSystemCard,
+         ForClientsCard,
+         PersonalAreaCard,
+         MobileAppCard,
+         GuaranteeCard
     },
     data() {
         return {
@@ -294,6 +328,21 @@ export default {
     display: flex;
     align-items: center;
     cursor: pointer;
+}
+.article-work-with-us{
+    border-radius: 70px;
+    background: linear-gradient(165deg, #002195 8.98%, #007AF3 122.43%);
+    box-shadow: -5px 4px 15px 10px rgba(9, 36, 68, 0.10);
+}
+.black-block{
+    flex-direction: column;
+    gap: 50px;
+    border-radius: 70px;
+    border-top: 1px solid #585757;
+    border-bottom: 1px solid #585757;
+    background: var(--gray-4100, #0D0D0D);
+    box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    /* margin-top: -120px; */
 }
 @media(max-width:1800px){
     .item-content{
