@@ -1,7 +1,10 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests\Wallet;
 
+use App\Rules\User\ConfirmationCodeRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class ChangeAddressRequest extends FormRequest
@@ -10,7 +13,7 @@ class ChangeAddressRequest extends FormRequest
     {
         return [
             'wallet_address' => ['required', 'string'],
-            'confirmation_code' => ['required', 'numeric', 'digits:5', 'exists:confirmation_codes,code']
+            'confirmation_code' => ['required', 'numeric', 'digits:5', new ConfirmationCodeRule],
         ];
     }
 

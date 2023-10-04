@@ -55,25 +55,25 @@
 <!--                    @remove="wallets.removeWallet(wallet)"-->
                 </div>
             </div>
-            <div class="blue-button-container">
-                <button class="add" data-popup="#addWallet">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="24"
-                        height="24"
-                        viewBox="0 0 24 24"
-                        fill="none"
-                    >
-                        <path
-                            d="M12 4V20M4 12H20"
-                            stroke="#98A2B3"
-                            stroke-width="1.5"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                        />
-                    </svg>
-                </button>
-            </div>
+<!--            <div class="blue-button-container">-->
+<!--                <button class="add" data-popup="#addWallet">-->
+<!--                    <svg-->
+<!--                        xmlns="http://www.w3.org/2000/svg"-->
+<!--                        width="24"-->
+<!--                        height="24"-->
+<!--                        viewBox="0 0 24 24"-->
+<!--                        fill="none"-->
+<!--                    >-->
+<!--                        <path-->
+<!--                            d="M12 4V20M4 12H20"-->
+<!--                            stroke="#98A2B3"-->
+<!--                            stroke-width="1.5"-->
+<!--                            stroke-linecap="round"-->
+<!--                            stroke-linejoin="round"-->
+<!--                        />-->
+<!--                    </svg>-->
+<!--                </button>-->
+<!--            </div>-->
         </div>
         <div class="wallets__no-information cabinet__preloader cabinet__preloader-bg" v-if="wallets.emptyTable && !wallets.waitWallet">
             <div class="wallets__no-information__content">

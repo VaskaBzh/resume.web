@@ -8,8 +8,8 @@ use App\Models\Wallet;
 
 class ChangeAddress
 {
-    public static function execute(Wallet $wallet, string $address)
+    public static function execute(Wallet $wallet, string $address): bool
     {
-        $wallet->update(['wallet' => $address]);
+        return $wallet->update(['wallet' => $address]);
     }
 }

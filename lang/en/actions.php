@@ -15,4 +15,5 @@ return [
     'referral.code.exists' => 'Referral code not exists',
     'account.password.update' => 'Password changed successfully',
     'account.update' => 'Account successfully updated',
+    'failed' => 'Something went wrong',
 ];
