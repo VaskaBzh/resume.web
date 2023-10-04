@@ -3,7 +3,8 @@
         <li
             class="nav_link"
             v-for="item in link"
-        >{{ item }}
+            @click="$router.push(item.url)"
+        >{{ item.name }}
         </li>
     </ul>
 </template>
@@ -13,7 +14,21 @@
 export default {
     data() {
         return {
-            link: ['Главная','Дата-центра','Майнерам'],
+            link: [
+                {
+                    name: 'Главная' ,
+                    url: '/'
+                },
+                {
+                    name: 'Дата-центра',
+                    url: '/hosting'
+                },
+                {
+                    name:  'Майнерам',
+                    url: ''
+                }
+               
+            ],
             active: false,
         }
     },
