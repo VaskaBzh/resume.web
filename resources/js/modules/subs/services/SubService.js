@@ -38,7 +38,7 @@ export class SubService extends DefaultSubsService {
     }
 
     statesProcess() {
-        if (this.subList) {
+        if (this.subList.length > 0) {
             this.setWait(false);
 
             this.setEmpty(this.subList.length === 0);
@@ -48,7 +48,7 @@ export class SubService extends DefaultSubsService {
     }
 
     tableStatesProcess() {
-        if (this.subList) {
+        if (this.subList.length > 0) {
             this.setTableEmpty(this.subList.length === 0);
         }
 

@@ -21,7 +21,8 @@
                 class="cabinet__preloader"
                 :wait="service.waitSubs"
                 :interval="50"
-                :end="service.emptySubs"
+                :end="!service.waitSubs"
+                :empty="service.emptySubs"
             />
         </div>
     </div>
