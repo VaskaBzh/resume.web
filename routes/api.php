@@ -10,14 +10,14 @@ use App\Http\Controllers\Api\Referral\CodeController as ReferralCodeController;
 use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
 use App\Http\Controllers\Api\Referral\StatisticController as ReferralStatisticController;
+use App\Http\Controllers\Api\SendCodeController;
 use App\Http\Controllers\Api\Sub\CreateController as SubCreateController;
 use App\Http\Controllers\Api\Sub\ListController as SubListController;
 use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
+use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
 use App\Http\Controllers\Api\Wallet\UpdateController as WalletUpdateController;
-use App\Http\Controllers\Api\Wallet\SendCodeController as WalletSendCodeController;
-use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\WatcherLink\CreateController as WatcherLinkCreateController;
 use App\Http\Controllers\Api\WatcherLink\DeleteController as WatcherLinkDeleteController;
 use App\Http\Controllers\Api\WatcherLink\ListController as WatcherLinkListController;
@@ -91,7 +91,6 @@ Route::group([
         'prefix' => 'wallets',
         'middleware' => ['verify-expiration']
     ], function () {
-        Route::post('/send/code/{wallet}', WalletSendCodeController::class)->name('wallet.send-code');
         Route::put('/update/{wallet}', WalletUpdateController::class)->name('wallet.update');
         Route::put('/change/address/{wallet}', WalletChangeAddressController::class)
             ->name('wallet.change.address');
@@ -116,5 +115,7 @@ Route::group([
         Route::put('/update/{watcher}', WatcherLinkUpdateController::class);
         Route::delete('/delete/{watcher}', WatcherLinkDeleteController::class);
     });
+
+    Route::post('/send/code/{user}', SendCodeController::class)->name('send-code');
 });
 /* ________________ End protected routes ____________________ */

@@ -8,12 +8,12 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
+use Illuminate\Support\Facades\Hash as HashFacade;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -32,6 +32,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'phone',
         'sms',
         'google2fa_secret',
+        'confirmation_code',
     ];
 
     /**
@@ -90,6 +91,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return Attribute::make(
             get: fn(): ?Sub => $this->owners()->first()
         );
+    }
+
+    public function confirmationCode(): string
+    {
+        $min = pow(10, 5 - 1);
+        $max = pow(10, 5) - 1;
+
+        return (string) mt_rand($min, $max);
     }
 
     /* End attributes */

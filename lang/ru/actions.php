@@ -14,4 +14,5 @@ return [
     'referral.exists' => 'Пользователя с таким кодом не существует',
     'referral.code.exists' => 'Реферальный код не найден',
     'account.password.update' => 'Пароль успешно изменен',
+    'failed' => 'Что-то пошло не так',
 ];
