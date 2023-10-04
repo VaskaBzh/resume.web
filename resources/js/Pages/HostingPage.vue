@@ -1,5 +1,5 @@
 <template>
-    <header-component/>
+    <!-- <header-component/> -->
     <main class="main-hosting">
         <article class="article-hosting first-text">
             <div class="hosting-content">
@@ -8,13 +8,14 @@
                 <span class="text-increase">Увеличьте <br></span>
                 <span class="text-income">ваш доход <br></span>
                 <span class="text-cvt">за каждый квт</span>
-                <button-blue class="get-consultation">получить консультацию</button-blue>
             </div>
+            <button-blue class="get-consultation">получить консультацию</button-blue>
+
         </article>
         <article class="article-hosting test-color second-text">
             <div class="how-are-we">кто мы</div>
-            <div class="hosting-content">
-                <p>
+            <div class="hosting-content how-we-are-content">
+                <p class="who-we-are-text">
                     Эффективный пул <br>  
                     для добычи Bitcoin, <br>
                     оптимизированный <br>
@@ -27,7 +28,7 @@
                 <div class="fact-item" v-for="fact in facts">
                     <div class="item-content">
                         <div class="fact-row">
-                            <span class="fact-num" :class="[fact.num == '5' ? 'orange-text' : '']">{{ fact.num }}</span>
+                            <span class="fact-num">{{ fact.num }}</span>
                             <span class="fact-gray-text">{{ fact.grayText }}</span>
                         </div>
                         <span class="fact-main-text">{{ fact.mainText }}</span>
@@ -48,7 +49,10 @@
             </div>
             <div class="offer-card-container">
                 <div class="offer-card" v-for="offer in offers">
-                    <p class="offer-title">{{ offer.title }}</p>
+                    <div>
+                        <p class="offer-title">{{ offer.percent }}</p>
+                        <p class="offer-title">{{ offer.title }}</p>
+                    </div>
                     <p class="offer-text">{{ offer.text }}</p>
                 </div>
             </div>
@@ -74,6 +78,12 @@
         <article class="article-hosting article-work-with-us">
             <GuaranteeCard></GuaranteeCard>
         </article>
+        <article class="article-hosting second-text">
+            <ConnectCard></ConnectCard>
+        </article>
+        <footer class="footer-hosting">
+            <FooterHosting></FooterHosting>
+        </footer>
     </main>
 </template>
 <script>
@@ -86,6 +96,9 @@ import ForClientsCard from "../modules/hosting/Components/ForClientsCard.vue";
 import PersonalAreaCard from "../modules/hosting/Components/PersonalAreaCard.vue";
 import MobileAppCard from "../modules/hosting/Components/MobileAppCard.vue";
 import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
+import ConnectCard from "../modules/hosting/Components/ConnectCard.vue";
+import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
+
 
 export default {
     name: 'hosting-page',
@@ -98,7 +111,9 @@ export default {
          ForClientsCard,
          PersonalAreaCard,
          MobileAppCard,
-         GuaranteeCard
+         GuaranteeCard,
+         ConnectCard,
+         FooterHosting
     },
     data() {
         return {
@@ -121,11 +136,13 @@ export default {
             ],
             offers:[
                 {
-                    title: 'до 4% персональная комиссия  для ваших клиентов',
+                    percent: 'до 4% ',
+                    title: 'персональная комиссия  для ваших клиентов',
                     text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
                 },
                 {
-                    title: 'до 75% ваши вознаграждения  по партнерской программе',
+                    percent: 'до 75% ',
+                    title: 'ваши вознаграждения  по партнерской программе',
                     text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
                 }
             ]
@@ -175,6 +192,9 @@ export default {
     gap: 10px;
     align-items: end;
 }
+.first-text{
+    flex-direction: column;
+}
 .offer-card-container{
     display: flex;
     align-items: center;
@@ -188,7 +208,6 @@ export default {
     border-top: 2px solid #555353;
     border-bottom: 0.5px solid #555353;
     background: var(--gray-480, rgba(13, 13, 13, 0.80));
-    backdrop-filter: blur(10px);
     display: inline-flex;
     padding: 30px;
     flex-direction: column;
@@ -222,9 +241,6 @@ export default {
     line-height: 100%; /* 110px */
     text-transform: uppercase;
 }
-.orange-text{
-    color: #E1941F;
-}
 .fact-gray-text{
     color: var(--gray-370, rgba(208, 213, 221, 0.70));
     font-family: Unbounded;
@@ -251,7 +267,7 @@ export default {
 }
 .article-hosting{
     width: 100vw;
-    height: 100vh;
+    height: 120vh;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -290,10 +306,17 @@ export default {
     margin-top: 50px;
     padding: 8px 20px;
     width: 100%;
+    color: var(--gray-1100, #F5FAFF);
     border-radius: 40px;
     border: 1px solid rgba(192, 228, 255, 0.60);
+    width: 607px;
     background: var(--gray-480, rgba(13, 13, 13, 0.80));
-    backdrop-filter: blur(10px);
+    font-family: Unbounded;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 16.8px */
+    text-transform: uppercase;
 }
 .how-are-we{
     border-radius: 30px;
@@ -311,7 +334,6 @@ export default {
     border-radius: 40px;
     border: 0.5px solid rgba(192, 228, 255, 0.60);
     background: var(--gray-470, rgba(13, 13, 13, 0.70));
-    backdrop-filter: blur(10px);
     position: absolute;
     color: var(--gray-2100, #E4E7EC);
     font-family: Unbounded;
@@ -344,6 +366,17 @@ export default {
     box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     /* margin-top: -120px; */
 }
+.footer-hosting{
+    width: 100vw;
+    /* height: 673px; */
+    flex-shrink: 0;
+    border-radius: 70px 70px 0px 0px;
+    border-top: 1px solid #585757;
+    border-bottom: 1px solid #585757;
+    background: var(--gray-4100, #0D0D0D);
+    box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    padding: 100px 100px 50px;
+}
 @media(max-width:1800px){
     .item-content{
         width: 400px;
@@ -373,6 +406,136 @@ export default {
     }
     .fact-main-text{
         font-size: 12px;
+    }
+    .who-we-are-text{
+        /* font-size: 30px; */
+    }
+}
+@media(max-width: 850px){
+    .help-button{
+        display: none;
+    }
+    .offer-content{
+        font-size: 36px;
+    }
+    .how-are-we{
+        font-size: 14px;
+    }
+    .offer-card-container{
+        margin-right: 0px;
+        justify-content: center;
+    }
+}
+@media(max-width: 768px){
+    .hosting-content{
+        font-size: 36px;
+        line-height: 120%; /* 43.2px */
+        width: 400px;
+    }
+    .text-fifty{
+        font-size: 106px;
+    }
+    .get-consultation{
+        width: 400px;
+    }
+    .who-we-are-text{
+        font-size: 20px;
+        line-height: 120%; /* 24px */
+    }
+    .how-we-are-content{
+        width: 304px;
+        height: 120px;
+    }
+    .fact-item{
+        padding: 33px 20px 0 20px;
+    }
+    .fact-item:last-child{
+        padding: 33px 21px 0 20px;
+    }
+    .item-content{
+        gap: 70px;
+    }
+}
+@media(max-width: 450px){
+    .hosting-content{
+        font-size: 22px;
+        width: 244px;
+        height: auto;
+    }
+    .text-fifty{
+        font-size: 60px;
+    }
+    .get-consultation{
+        width: 328px;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        margin-top: 70px;
+        line-height: 120%; /* 14.4px */
+    }
+    .black-block{
+        gap: 40px;
+    }
+    .who-we-are-text{
+        font-size: 18px;
+    }
+    .how-we-are-content{
+        width: 273px;
+        height: 118px;
+    }
+    .facts-container{
+        flex-direction: column;
+        width: 100%;
+
+    }
+    .fact-item{
+        border-top: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
+        border-left: none;
+        padding: 20px 0 44px 0;
+        display: flex;
+        width: 100%;
+        justify-content: center;
+    }
+    .fact-item:last-child{
+        border-right: none;
+        padding: 20px 0 44px 0;
+    }
+    .item-content{
+        gap: 20px;
+    }
+    .how-are-we{
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+    .second-text{
+        gap: 50px;
+    }
+    .offer-content{
+        font-size: 22px;
+        padding: 0 16px;
+        margin-top: 30px;
+    }
+    .text-offer-column{
+        margin-left: 75px;
+    }
+    .offer-card-container{
+        flex-direction: column;
+    }
+    .offer-card{
+        width: 328px;
+        padding: 20px;
+    }
+    .offer-title{
+        font-size: 14px;
+    }
+    .offer-text{
+        font-size: 14px;
+    }
+    .third-text{
+        gap: 50px;
+    }
+    .footer-hosting{
+        padding: 40px 16px;
     }
 }
 </style>

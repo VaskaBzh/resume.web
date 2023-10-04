@@ -47,4 +47,30 @@
 .img-iphone{
   z-index: 10;
 }
+@media(max-width: 768px){
+  .system-card-title{
+    font-size: 24px;
+  }
+}
+@media(max-width: 460px){
+  .system-card-title{
+    font-size: 18px;
+  }
+  .system-card-text{
+    font-size: 14px;
+  }
+  .system-card-inf{
+    width: 244px;
+  }
+  .system-card-img, .img-iphone{
+    width: 281px;
+    height: 497px;
+  }
+  .img-support {
+    width: 224px;
+    height: 482px;
+    left: 29px;
+    top: 9px;
+  }
+}
 </style>

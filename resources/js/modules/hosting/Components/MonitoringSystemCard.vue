@@ -1,11 +1,18 @@
 <template>
   <div class="system-card-inf">
-    <p class="system-card-title">Представляем систему мониторинга</p>
+    <p class="system-card-title">
+      Представляем <br>
+      систему <br>
+      мониторинга
+    </p>
     <p class="system-card-text">С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool</p>
   </div>
   <div class="system-card-img">
-    <img src="../assets/img/Mockup-mac.png" class="img-mac img-system">
-    <img src="../assets/img/Mockup-monitoring.png" class="img-statistic img-system">
+    <img src="../assets/img/Mockup-mac.png" class="img-mac img-system web">
+    <img src="../assets/img/Mockup-monitoring.png" class="img-monitoring img-system web">
+
+    <img src="../assets/img/Mockup-iphone.png" class="img-mac img-system mobile">
+    <img src="../assets/img/Mockup-monitoring-iphone.png" class="img-monitoring img-system mobile">
   </div>
   <p class="get-consultation">получить консультацию</p>
 </template>
@@ -41,7 +48,7 @@
 .img-system{
   position: absolute;
 }
-.img-statistic{
+.img-monitoring{
   left: 148px;
   top: 36px;
 }
@@ -57,11 +64,63 @@
   border-radius: 40px;
   border: 1px solid rgba(192, 228, 255, 0.60);
   background: var(--gray-480, rgba(13, 13, 13, 0.80));
-  backdrop-filter: blur(10px);
   padding: 8px 20px;
   width: 400px;
 }
 .img-mac{
   z-index: 10;
+}
+.mobile{
+  display: none;
+}
+@media(max-width: 1450px){
+  .system-card-img,  .img-mac{
+    width: 736px;
+    height: 423px;
+  }
+  .img-monitoring{
+    width: 584px;
+    height: 365px;
+    left: 80px;
+    top: 20px;
+  }
+  .get-consultation{
+    width: 704px;
+  }
+  .system-card-title{
+    font-size: 24px;
+  }
+}
+@media(max-width:450px){
+  .mobile{
+    display: inline-block;
+  }
+  .web{
+    display: none;
+  }
+  .system-card-img, .img-mac{
+    width: 281px;
+    height: 497px;
+  }
+  .img-monitoring {
+    width: 224px;
+    height: 482px;
+    left: 29px;
+    top: 9px;
+  }
+  .system-card-inf{
+    width: 244px;
+  }
+  .system-card-title{
+    font-size: 18px;
+  }
+  .system-card-text{
+    font-size: 14px;
+  }
+  .get-consultation{
+    width: 328px;
+    font-size: 12px;
+
+  }
 }
 </style>

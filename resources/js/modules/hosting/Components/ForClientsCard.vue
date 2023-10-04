@@ -35,4 +35,17 @@
   font-weight: 400;
   line-height: 110%; /* 19.8px */
 }
+@media(max-width:450px){
+  .working-title{
+    font-size: 12px;
+    padding: 8px 10px;
+    }
+  .working-text{
+    font-size: 14px;
+  }
+  .working-card{
+    width: 266px;
+    gap: 20px;
+  }
+}
 </style>
