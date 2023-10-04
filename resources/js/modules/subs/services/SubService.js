@@ -1,22 +1,23 @@
 import { DefaultSubsService } from "@/modules/common/services/DefaultSubsService";
 import { PageService } from "@/modules/common/services/PageService";
-import { SubsData } from "@/modules/subs/DTO/SubsData";
+import store from "@/store";
 
 export class SubService extends DefaultSubsService {
-    constructor() {
+    constructor(titleIndexes = [0, 1, 2, 3, 4]) {
         super();
 
-        this.subsType = false;
+        this.subsType = true;
 
         this.subList = null;
 
-        this.subsTable = null;
+        this.subsTable = new Map();
         this.rows = null;
         this.titles = null;
-        this.titleIndexes = null;
+        this.titleIndexes = titleIndexes;
 
         this.waitSubs = true;
         this.emptySubs = false;
+        this.emptyTableSubs = false;
         this.page = new PageService();
     }
 
@@ -32,18 +33,78 @@ export class SubService extends DefaultSubsService {
         this.emptySubs = newEmptyState;
     }
 
+    setTableEmpty(newEmptyTableState) {
+        this.emptyTableSubs = newEmptyTableState;
+    }
+
     statesProcess() {
         if (this.subList) {
             this.setWait(false);
 
             this.setEmpty(this.subList.length === 0);
         }
+
+        return this;
     }
 
-    setSubList(newSubList) {
-        this.subList = newSubList;
+    tableStatesProcess() {
+        if (this.subList) {
+            this.setTableEmpty(this.subList.length === 0);
+        }
 
-        this.statesProcess();
+        return this;
+    }
+
+    setTitleIndexes(newTitleIndexes = [0, 1, 2, 3, 4]) {
+        this.titleIndexes = newTitleIndexes;
+    }
+
+    setTitles() {
+        this.titles = this.useTranslater(this.titleIndexes);
+
+        return this;
+    }
+
+    setRows() {
+        this.rows = this.subList;
+
+        return this;
+    }
+
+    tableProcess() {
+        this.setRows()
+            .setTitles()
+            .setTable();
+
+        return this;
+    }
+
+    searchSub(searchQuery) {
+        const query = searchQuery.toLowerCase().trim();
+
+        if (!query) {
+            this.setSubList()
+                .tableStatesProcess()
+                .tableProcess();
+
+            return this;
+        }
+
+        const newSubsArray = store.getters.allAccounts
+            .map((sub) => {
+                const filteredSubsList = sub.name.toLowerCase().includes(query);
+
+                return filteredSubsList ? sub : null;
+            })
+            .filter(bool => bool);
+
+        this.setSubList(newSubsArray)
+            .tableStatesProcess()
+            .tableProcess();
+    }
+
+    setSubList(newSubList = store.getters.allAccounts) {
+        this.subList = newSubList;
 
         return this;
     }
@@ -55,8 +116,8 @@ export class SubService extends DefaultSubsService {
     }
 
     setTable() {
-        this.table.set("titles", this.titles);
-        this.table.set("rows", this.rows);
+        this.subsTable.set("titles", this.titles);
+        this.subsTable.set("rows", this.rows);
 
         return this;
     }

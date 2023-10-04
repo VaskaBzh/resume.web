@@ -3,7 +3,7 @@
 		<main-search
 			class="head_search"
 			:placeholder="$t('search_placeholder')"
-			@searched="console.log('searched')"
+			@searched="$emit('searched', $event)"
 		/>
 		<div class="head__buttons">
 			<main-button data-popup="#addAcc">

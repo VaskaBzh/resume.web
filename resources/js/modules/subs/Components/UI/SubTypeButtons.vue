@@ -39,7 +39,7 @@ export default {
 
 <style scoped>
 .buttons {
-	min-height: 40px;
+    height: 40px;
 	display: flex;
 	align-items: center;
 	border-radius: var(--surface-border-radius-radius-s-md, 12px);

@@ -29,11 +29,11 @@
     --text-primary-inverse: #FFFFFF;
     --text-accent: #53B1FD;
 
-    --background-waiting-day: #37322D;
-
     /* status */
     --text-no-value: #43474E;
     --status-waiting: #ffb868;
+    --status-succesfull: #1FB96C;
+    --status-failed: #F1404A;
 
     /* states */
     --states-broder-hover: #43474E;
@@ -51,5 +51,6 @@
     /* svg */
     --svg-fill: #595E68;
     --icons-accent: #53B1FD4D;
+    --icons-primary: #6F7682;
     --icons-secondary: #595E68;
 }

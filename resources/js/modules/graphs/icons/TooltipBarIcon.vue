@@ -12,6 +12,6 @@ export default {
 
 <style scoped>
 svg {
-	fill: var(--background-island, #FFF);
+	fill: var(--background-tooltip, rgba(44, 47, 52, 0.90));
 }
 </style>

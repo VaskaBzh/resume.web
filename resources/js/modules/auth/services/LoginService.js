@@ -53,15 +53,12 @@ export class LoginService {
                 hash: this.route.query.hash,
             };
 
-            console.log(formData);
-            console.log(this.route.query);
-
             const response = await this.fetchPassword(formData);
 
             this.closePasswordPopup();
             this.removeRouteQuery();
 
-            openNotification(true, this.translate("validate_messages.connected"), response.message);
+            openNotification(true, this.translate("validate_messages.changed"), response.message);
         } catch (err) {
             console.error(err);
 
@@ -75,7 +72,7 @@ export class LoginService {
 
     async fetchPassword(form) {
         return (
-            await MainApi.put(`/password/change/${this.route.query.user_id}`, form)
+            await MainApi.put(`/password/restore/${this.route.query.user_id}`, form)
         ).data;
     }
 

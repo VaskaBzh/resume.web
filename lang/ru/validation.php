@@ -160,7 +160,8 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
-            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте'
+            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте',
+            'confirmation_code_exists' => 'Неверный код подверждения',
         ],
     ],
 
