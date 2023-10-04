@@ -44,16 +44,16 @@
 </template>
 
 
-
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 
+
 export default {
     name: "MinersInfoView",
-    components: {HeadLine}
+    components: {HeadLine},
+
 }
 </script>
-
 
 
 <style scoped lang="scss">
@@ -61,11 +61,13 @@ export default {
     display: flex;
     width: 100vw;
     padding-top: 100px;
+    align-items: center;
     justify-content: center;
     flex-flow: column nowrap;
 
     &__container {
         margin: 0 auto;
+        max-width: 1636px;
     }
 
     &_subtitle {
@@ -100,9 +102,12 @@ export default {
 
     &_item {
         width: 100%;
-        display: flex;
-        justify-content: space-between;
+        display: grid;
+        grid-template-rows: repeat(1, 1fr);
+        grid-template-columns: repeat(1, 400px 1fr);
         padding: 32px 0;
+        overflow: hidden;
+
 
         &:nth-child(1) {
             border-top: .5px solid rgba(228, 231, 236, 0.40);
@@ -117,6 +122,13 @@ export default {
             border-bottom: .5px solid rgba(228, 231, 236, 0.40);
         }
 
+        &:hover &_text {
+            visibility: visible;
+            height:auto;
+            overflow: unset;
+            opacity:1;
+        }
+
 
         &_text {
             width: 430px;
@@ -127,9 +139,14 @@ export default {
             font-style: normal;
             font-weight: 400;
             line-height: 110%;
+            visibility: hidden;
+            height:0;
+            opacity:0;
+            transition:all 0.2s linear;
+
         }
 
-       &_title {
+        &_title {
             color: #F5FAFF;
             text-align: right;
             font-family: Unbounded, serif;
@@ -138,9 +155,11 @@ export default {
             font-weight: 600;
             line-height: 120%;
             text-transform: uppercase;
+            transition: all .5s linear;
         }
     }
 
 
 }
+
 </style>

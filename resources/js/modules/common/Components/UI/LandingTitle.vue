@@ -1,25 +1,41 @@
 <template>
-<div class="header-land">
-    <h1 class="header-land_title">
-        <span>Экспертный</span>
-        <span class="header-land_title_one">подход</span>
-        <span>к майнинг</span>
-        <span class="header-land_title_text">Bitcoin <span class="header-land_title_span">Используем передовые технологии
-                            для эффективного майнинга биткоина. Максимальная
-                            прозрачность майнинга в пару кликов.
-                      </span>
-        </span>
-    </h1>
-    <button-blue class="header-land_btn">попробовать демо кабинет</button-blue>
-</div>
+    <div class="header-land">
+        <div class="header-land_title">
+            <div class="header-land__block">
+                <span class="header-land_title_expert-one">Экспер</span>
+                <span class="header-land_title_expert-two">тный</span>
+            </div>
+            <div class="header-land__block-two">
+                <span class="header-land_title_approach">подход</span>
+            </div>
+            <div class="header-land__block-three">
+                <span class="header-land_title_mining-one">к майн<span class="header-land_title_mining-two">инг</span></span>
+            </div>
+            <div class="header-land__block-four">
+            <span class="header-land_title_text">
+                Bitcoin
+                <span class="header-land_title_span">
+                    Используем передовые технологии
+                    для эффективного майнинга биткоина. Максимальная
+                    прозрачность майнинга в пару кликов.
+                </span>
+            </span>
+            </div>
+        </div>
+        <button-blue class="header-land_btn">попробовать демо кабинет</button-blue>
+    </div>
 </template>
 
 <script>
 import ButtonBlue from "./ButtonBlue.vue";
 
+
 export default {
     name: "LandingTitle",
-    components: {ButtonBlue}
+    components: {ButtonBlue},
+    setup() {
+
+    }
 }
 </script>
 
@@ -32,6 +48,7 @@ export default {
     align-items: center;
     justify-content: center;
     background: transparent;
+
 
     &_title {
         color: #F5FAFF;
@@ -46,7 +63,20 @@ export default {
         line-height: 100%;
         text-transform: uppercase;
 
-        &_one {
+
+
+        &_expert-one,
+        &_expert-two,
+        &_approach,
+        &_mining-one,
+        &_mining-two,
+        &_text,
+        &_span {
+            display: flex;
+            opacity: 1;
+        }
+
+        &_approach {
             position: relative;
             left: -100px;
             top: 0;
@@ -69,6 +99,15 @@ export default {
             line-height: 110%;
             padding-left: 10px;
         }
+    }
+
+    &__block,
+    &__block-two,
+    &__block-three,
+    &__block-four {
+        display: flex;
+        flex-flow: row nowrap;
+        overflow: hidden;
     }
 }
 </style>

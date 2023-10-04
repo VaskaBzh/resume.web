@@ -36,8 +36,14 @@ export default {
     width: 100vw;
     display: flex;
     padding-top: 100px;
+    padding-bottom: 100px;
     justify-content: center;
     flex-flow: column nowrap;
+    border-radius: 70px;
+    border-top: 1px solid #585757;
+    border-bottom: 1px solid #585757;
+    background: #0D0D0D;
+    box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 
     &__container {
         margin: 0 auto;

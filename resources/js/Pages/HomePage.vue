@@ -2,8 +2,8 @@
     <header-component/>
     <div class="app_back_transparent">
         <div class="app_back_transparent__container">
-            <span class="app_back_transparent_one">Allbtc</span>
-            <span class="app_back_transparent_two">Pool</span>
+            <div class="app_back_transparent_block-one"><span class="app_back_transparent_one">Allbtc</span></div>
+            <div class="app_back_transparent_block-two"><span class="app_back_transparent_two">Pool</span></div>
         </div>
     </div>
     <landing-title/>
@@ -32,6 +32,8 @@ import PaymantsView from "../modules/home/Components/Views/PaymantsView.vue";
 import MissionView from "../modules/home/Components/Views/MissionView.vue";
 import ConnectWithUsView from "../modules/home/Components/Views/ConnectWithUsView.vue";
 import FooterComponentLand from "../modules/common/Components/FooterComponentLand.vue";
+import {animateHeader} from "../modules/home/Services/LandHeaderAnime";
+
 
 export default {
     name: 'homa-page',
@@ -41,7 +43,14 @@ export default {
         MissionView,
         PaymantsView,
         AppMobileView,
-        SecurityView, MakeUpCab, MinersInfoView, CalculatorLand, WhoWeAre, LandingTitle, HeaderComponent}
+        SecurityView, MakeUpCab, MinersInfoView, CalculatorLand, WhoWeAre, LandingTitle, HeaderComponent},
+
+    data() {
+
+    },
+    mounted() {
+        animateHeader()
+    }
 }
 
 </script>
@@ -74,18 +83,37 @@ export default {
             font-style: normal;
             font-weight: 600;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+
+
+            -webkit-text-fill-color: white;
+            opacity: .7;
+
             line-height: 120%;
             background: transparent;
             padding-bottom: 12rem;
+            z-index: 99;
+
         }
 
-        &_one {
+
+        &_block-one {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
             margin-right: auto;
+            overflow: hidden;
         }
 
-        &_two {
+        &_block-two {
             margin-left: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            overflow: hidden;
+        }
+
+        &_one, &_two {
+            display: block;
         }
 
     }
