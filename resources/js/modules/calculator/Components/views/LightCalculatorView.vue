@@ -5,7 +5,7 @@
                 v-show="lightService.inputs.length > 0"
                 class="title-white title-h2 calculator_title"
             >
-                Калькулятор Light
+            {{ $t("profitability_calculator.form_calculator.title") }}
             </calculator-title>
         </transition>
         <form class="calculator__form">
@@ -52,6 +52,8 @@ import { mapGetters } from "vuex";
 import { LightCalculatorService } from "../../services/LightCalculatorService.js";
 import CalculatorTabs from "../UI/CalculatorTabs.vue";
 import ConvertedResult from "../UI/ConvertedResult.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+
 // import ColumnGraph from "../graphs/ColumnGraph.vue";
 
 export default {
@@ -62,6 +64,9 @@ export default {
         CalculatorTabs,
         // ColumnGraph,
         ConvertedResult,
+    },
+    i18n: {
+            sharedMessages: HomeMessage,
     },
     computed: {
         ...mapGetters(["btcInfo"]),
@@ -76,15 +81,15 @@ export default {
                     value: 1,
                 },
                 {
-                    name: "1 день",
+                    name: this.$t("profitability_calculator.form_calculator.segment[0]"),
                     value: 24,
                 },
                 {
-                    name: "1 месяц",
+                    name: this.$t("profitability_calculator.form_calculator.segment[1]"),
                     value: 210,
                 },
                 {
-                    name: "3 месяца",
+                    name: this.$t("profitability_calculator.form_calculator.segment[2]"),
                     value: 720,
                 },
             ],

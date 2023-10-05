@@ -1,18 +1,18 @@
 export const HomeMessage = {
     en: {
-        title: ['Expert', 'approach', 'to mining', 'Bitcoin'],
+        title: ['Exp', 'ert', 'approach', 'to min', 'ing', 'Bitcoin'],
         text: 'We use advanced technologies for efficient Bitcoin mining. Maximum transparency of mining in a couple of clicks. ',
         button: 'try demo office',
-        how_we_are: {
+        who_we_are: {
             button: 'who we are',
             card_private: {
-                title: ['private', 'pool for', 'data-', 'centers'],
+                title: ['private pool for data-centers'],
                 num: ['7', '1.7', '30' ,'75%'],
                 text: ['years in the crypto industry', 'EH/ s pool hashrate', 'Total BTC mined', 'up to', 'more profit per kW'],
                 button: ['Learn more', 'get personal conditions']
             },
             card_community: {
-                title: ['community', 'for', 'private', 'miners'],
+                title: ['community for private miners'],
                 num: ['No.1', '24/7', '1' ,'4%'],
                 text: ['customer service', 'fast technical support', 'statistics screen', 'pool commission'],
                 button: ['Learn more'],
@@ -20,7 +20,7 @@ export const HomeMessage = {
             }
         },
         profitability_calculator: {
-            button: ['return calculator', 'calculator pro'],
+            button: ['profitability calculator', 'calculator pro'],
             title: ['calculate', 'your income', 'using', 'calculator', 'profitability'],
             text: 'Allows you to evaluate and predict possible approximate income and profit for a certain period. Actual earnings may vary slightly. ',
             form_calculator: {
@@ -36,15 +36,14 @@ export const HomeMessage = {
             button: 'why allbtc pool',
             title: ['Product,', 'created', 'by miners', 'for miners'],
             list: {
-                title: ['Focus on Bitcoin', 'Transparent monitoring', 'technology and ai'],
+                title: ['Focus on Bitcoin', 'Transparent monitoring', 'technology and safety'],
                 text: ['Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.']
             }
         },
         personal_account:{
-            button: 'personal account',
+            button: ['personal account','view personal account'],
             title: ['comfortable', 'personal', 'office'],
             text: 'Allows you to evaluate and predict possible approximate income and profit for a certain period. Actual earnings may vary slightly. ',
-            button: 'view personal account'
         },
         safety: {
             encryption: {
@@ -97,19 +96,19 @@ export const HomeMessage = {
         }
     },
     ru: {
-        title: ['Экспертный', 'подход', 'к майнингу', 'Bitcoin '],
+        title: ['Экспер', 'тный', 'подход', 'к майн', 'ингу', 'Bitcoin '],
         text: 'Используем передовые технологии для эффективного майнинга биткоина. Максимальная прозрачность майнинга в пару кликов. ',
         button: 'попробовать демо кабинет',
-        how_we_are: {
+        who_we_are: {
             button: 'кто мы',
             card_private: {
-                title: ['приватный', 'пул для', 'дата-', 'центров'],
+                title: ['приватный пул для дата-центров'],
                 num: ['7', '1.7', '30' ,'75%'],
                 text: ['лет в крипто индустрии', 'EH/ s хешрейт пула', 'BTC добыто всего', 'до', 'больше прибыли за кВт'],
                 button: ['Узнать больше', 'получить персональные условия']
             },
             card_community: {
-                title: ['комьюнити', 'для', 'частных', 'майнеров'],
+                title: ['комьюнити для частных майнеров'],
                 num: ['№1', '24/7', '1' ,'4%'],
                 text: ['клиентский сервис', 'быстрая техподдержка', 'экран для статистики', 'комиссия пула'],
                 button: ['Узнать больше'],
@@ -133,15 +132,14 @@ export const HomeMessage = {
             button: 'почему allbtc pool',
             title: ['ПРодукт,', 'созданный', 'майнерами', 'для майнеров'],
             list: {
-                title: ['Фокус на Bitcoin', 'Прозрачный мониторинг', 'технологии и ai'],
+                title: ['Фокус на Bitcoin', 'Прозрачный мониторинг', 'технологии и безопасность'],
                 text: ['Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.']
             }
         },
         personal_account:{
-            button: 'личный кабинет',
+            button: ['личный кабинет','посмотреть личный кабинет'],
             title: ['удобный', 'личный', 'кабинет'],
             text: 'Позволяет оценить и спрогнозировать возможный приблизательный доход и прибыль за определенный период. Фактические доходы могут незначительно отличаться. ',
-            button: 'посмотреть личный кабинет'
         },
         safety: {
             encryption: {
