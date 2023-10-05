@@ -1,11 +1,11 @@
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
-import LocomotiveScroll from "locomotive-scroll";
+
 gsap.registerPlugin(ScrollTrigger)
 
 export function animatedScroll () {
     ScrollTrigger.normalizeScroll(true)
-
+    let tl = new gsap.timeline()
     gsap.to(('.security-view_item'), {
         duration: 3,
         scrollTrigger: {
@@ -23,14 +23,29 @@ export function animatedScroll () {
 
 
 export function scroolingHeader() {
-   let loco = new LocomotiveScroll({
-       el: document.querySelector('[data-scroll-container]')
-       smooth: {
-           mobileToDesktop: true,
-           tablet: true
-       }
-   })
-    console.log(loco)
+
+    gsap.to(".header-land_title_expert-one", {
+        scrollTrigger: {
+            trigger: ".header-land_title",
+            scrub: true,
+            start: "top top",
+            end: "bottom bottom",
+            toggleClass: "active",
+            ease: "power2",
+            markers: true
+        }
+    });
+
+    gsap.to(".header-land_title_expert-one", {
+        scrollTrigger: {
+            trigger: ".header-land_title",
+            scrub: 1.5,
+            start: "top top",
+            end: "bottom bottom",
+            ease: "power2"
+        },
+        xPercent: -100
+    });
 
 }
 

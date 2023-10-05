@@ -1,5 +1,5 @@
 <template>
-    <div class="header-land data-scroll-container">
+    <div class="header-land">
         <div class="header-land_title">
             <div class="header-land__block">
                 <span class="header-land_title_expert-one">{{ $t("title[0]") }}</span>
@@ -34,12 +34,13 @@ export default {
     name: "LandingTitle",
     components: {ButtonBlue},
     i18n: {
-            sharedMessages: HomeMessage,
+        sharedMessages: HomeMessage,
     },
 
     mounted() {
         scroolingHeader()
 
+    }
 }
 </script>
 
@@ -118,6 +119,24 @@ export default {
         position: relative;
         left: -10%;
         top: 0
+    }
+
+    .active {
+        position: relative;
+        top: 0;
+        left: 0;
+        transition: all 1s linear;
+        animation: scrub 1s forwards ease-in;
+        @keyframes scrub {
+            0% {
+                opacity: 1;
+                left: 0;
+            }
+            100% {
+                opacity: 0;
+                left: -100%;
+            }
+        }
     }
 }
 </style>
