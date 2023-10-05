@@ -2,10 +2,8 @@
 
 namespace App\Console\Commands;
 
-use App\Actions\MinerStat\Upsert;
-use App\Services\External\BtcComService;
+use App\Services\External\MinerStatService;
 use Illuminate\Console\Command;
-use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class UpdateMinerStatCommand extends Command
@@ -15,27 +13,24 @@ class UpdateMinerStatCommand extends Command
     protected $description = 'Command description';
 
     public function handle(
-        BtcComService $btcComService
-    ): void
+        MinerStatService $minerStatService,
+    )
     {
-        $stats = $btcComService->getFppsRate();
+        try {
+            $stats = $minerStatService->store();
 
-        $difficulty = Http::get('https://blockchain.info/q/getdifficulty')
-            ->collect()
-            ->first();
+            if (!is_null($stats)) {
+                Log::channel('commands')->info('MINER STATS COMMAND', [
+                    'minerstats' => $stats
+                ]);
 
-//        if (empty($stats) && !$difficulty) {
-//            Log::error('Mining stats request is empty');
-//
-//            return;
-//        }
-//
-//        $minerstat = Upsert::execute(stats: $stats, difficulty: $difficulty);
-//
-//        Log::channel('commands')->info('MINER STATS COMMAND', [
-//            'minerstats' => $minerstat
-//        ]);
-//
-//        $this->line('Miner stats created');
+                $this->info('Stats updated');
+
+                return 0;
+            }
+        } catch (\Exception $e) {
+            report($e);
+            $this->error('Stats not imported, check logs');
+        }
     }
 }
