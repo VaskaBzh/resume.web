@@ -2,8 +2,8 @@
     <header-component/>
     <div class="app_back_transparent">
         <div class="app_back_transparent__container">
-            <div class="app_back_transparent_block-one"><span class="app_back_transparent_one">Allbtc</span></div>
-            <div class="app_back_transparent_block-two"><span class="app_back_transparent_two">Pool</span></div>
+            <div class="app_back_transparent_block-one"><span class="app_back_transparent_one">allbtc</span></div>
+            <div class="app_back_transparent_block-two"><span class="app_back_transparent_two">pool</span></div>
         </div>
     </div>
     <landing-title/>
@@ -66,9 +66,10 @@ export default {
         left: 0;
 
         &__container {
+            max-width: 1580px;
             position: relative;
             width: 100%;
-            height: 100%;
+            height: 75%;
             display: flex;
             margin: 0 auto;
             align-items: center;

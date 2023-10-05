@@ -45,6 +45,7 @@ export default {
     border-radius: 40px;
     border: 1px solid rgba(192, 228, 255, 0.60);
     background: rgba(13, 13, 13, 0.80);
+    opacity: 0;
 }
 
 .about_btn {

@@ -102,11 +102,11 @@ export default {
 
     &_item {
         width: 100%;
-        display: grid;
-        grid-template-rows: repeat(1, 1fr);
-        grid-template-columns: repeat(1, 400px 1fr);
+        display: flex;
+        justify-content: space-between;
         padding: 32px 0;
-        overflow: hidden;
+        max-height: 15vh;
+        transition: max-height 5s linear;
 
 
         &:nth-child(1) {
@@ -122,11 +122,22 @@ export default {
             border-bottom: .5px solid rgba(228, 231, 236, 0.40);
         }
 
+        &:hover {
+            max-height: 1000px;
+            grid-template-columns: repeat(1, 400px 1fr);
+            transition: max-height 5s linear;
+    }
+
         &:hover &_text {
-            visibility: visible;
-            height:auto;
+            max-height: 100%;
             overflow: unset;
             opacity:1;
+            transition: opacity .2s;
+        }
+
+        &:hover &_title {
+            white-space: unset;
+            transition: all 2s linear;
         }
 
 
@@ -139,10 +150,10 @@ export default {
             font-style: normal;
             font-weight: 400;
             line-height: 110%;
-            visibility: hidden;
-            height:0;
-            opacity:0;
-            transition:all 0.2s linear;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: opacity .2s linear;
 
         }
 
@@ -155,7 +166,13 @@ export default {
             font-weight: 600;
             line-height: 120%;
             text-transform: uppercase;
-            transition: all .5s linear;
+            display: flex;
+            align-items: flex-start;
+            justify-content: flex-end;
+            white-space: nowrap;
+            -ms-word-break: break-all;
+            word-break: break-word;
+            transition: white-space .3s linear;
         }
     }
 

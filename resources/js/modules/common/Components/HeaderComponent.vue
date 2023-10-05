@@ -29,6 +29,8 @@ export default {
     justify-content: space-between;
     background: transparent;
     z-index: 1;
+    padding: 50px 0;
+    opacity: 0;
     &__container {
         margin: 0 auto;
         display: flex;

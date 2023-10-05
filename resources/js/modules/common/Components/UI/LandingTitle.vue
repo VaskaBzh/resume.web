@@ -1,5 +1,5 @@
 <template>
-    <div class="header-land">
+    <div class="header-land data-scroll-container">
         <div class="header-land_title">
             <div class="header-land__block">
                 <span class="header-land_title_expert-one">Экспер</span>
@@ -28,13 +28,14 @@
 
 <script>
 import ButtonBlue from "./ButtonBlue.vue";
+import {scroolingHeader} from "../../../home/Services/ScrollAnime";
 
 
 export default {
     name: "LandingTitle",
     components: {ButtonBlue},
-    setup() {
-
+    mounted() {
+        scroolingHeader()
     }
 }
 </script>
@@ -60,8 +61,9 @@ export default {
         font-size: 110px;
         font-style: normal;
         font-weight: 600;
-        line-height: 100%;
+        line-height: 120%;
         text-transform: uppercase;
+        max-width: 965px;
 
 
 
@@ -73,23 +75,22 @@ export default {
         &_text,
         &_span {
             display: flex;
-            opacity: 1;
+            opacity: 0;
         }
 
-        &_approach {
-            position: relative;
-            left: -100px;
-            top: 0;
-        }
+        //&_approach {
+        //    position: relative;
+        //    left: -10%;
+        //    top: 0;
+        //}
 
         &_text {
-            display: block;
+            display: flex;
             position: relative;
         }
 
         &_span {
-            position: absolute;
-            top: 0;
+            display: flex;
             font-family: NunitoSans, serif;
             color: rgba(245, 250, 255, 0.70);
             text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
@@ -108,6 +109,12 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         overflow: hidden;
+    }
+
+    &__block-two {
+        position: relative;
+        left: -10%;
+        top: 0
     }
 }
 </style>

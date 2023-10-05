@@ -2,8 +2,8 @@
     <div class="security-view">
         <div class="security-view__container">
             <head-line class="security-view_btn">Безопасность</head-line>
-            <div class="security-view__wrapper">
-                <div class="security-view__left">
+            <div id="smooth-wrapper" class="security-view__wrapper">
+                <div id="smooth-content" class="security-view__left">
                     <div class="security-view__left__item__wrapper">
                         <div class="security-view_item">
                             <h3 class="security-view_item_title">Шифрование данных майнера</h3>
@@ -46,8 +46,7 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-import {gsap} from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import {animatedScroll} from "../../Services/ScrollAnime";
 
 
 export default {
@@ -55,23 +54,7 @@ export default {
     name: "SecurityView",
     components: {HeadLine},
     mounted() {
-        gsap.registerPlugin(ScrollTrigger)
-        gsap.to(('.security-view_item'), {
-            duration: 3,
-            scrollTrigger: {
-                trigger: '.security-view__wrapper',
-                start: 'top top',
-                end: 'bottom bottom',
-                scrub: true,
-                pin: '.security-view_right',
-                pinSpacing: false,
-                marker: true
-
-            }
-        })
-
-
-
+        animatedScroll()
     }
 
 }
@@ -135,11 +118,11 @@ export default {
     }
 
     &_right {
-        width:50%;
-        height:100vh;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
+        width: 50%;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
         position: absolute;
         left: 0;
         transform: translate(50%, 0%);
