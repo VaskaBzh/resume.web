@@ -9,51 +9,89 @@
             v-if="!wallets.emptyTable"
         />
         <div class="wallet-wrapper" v-if="!wallets.waitWallets && !wallets.emptyTable">
-            <div class="autopayout-component">
-                <div class="header-component-wallet">
-                    <main-title class="" tag="h3"
+            <div
+                class="wallet__block onboarding_block"
+                :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                }"
+            >
+                <div class="autopayout-component">
+                    <div class="header-component-wallet">
+                        <main-title class="" tag="h3"
                         >{{ $t("wallets.title[0]") }}
-                    </main-title>
-                    <div class="tooltipe-container">
-                        <tooltip-card
-                            :text="$t('wallets.tooltip')"
-                        ></tooltip-card>
+                        </main-title>
+                        <div class="tooltipe-container">
+                            <tooltip-card
+                                :text="$t('wallets.tooltip')"
+                            ></tooltip-card>
+                        </div>
+                    </div>
+                    <div class="form_column">
+                        <div class="autopayout-container">
+                            <input
+                                name="minWithdrawal"
+                                id="min"
+                                type="text"
+                                class="input popup__input autopayout-input"
+                                placeholder="0.005"
+                            />
+                            <label for="min" class="main__label autopayout-label">{{
+                                    $t("wallets.popups.change.labels.minWithdrawal")
+                                }}</label>
+                            <span class="autopayout-btc">BTC</span>
+                        </div>
                     </div>
                 </div>
-                <div class="form_column">
-                    <div class="autopayout-container">
-                        <input
-                            name="minWithdrawal"
-                            id="min"
-                            type="text"
-                            class="input popup__input autopayout-input"
-                            placeholder="0.005"
-                        />
-                        <label for="min" class="main__label autopayout-label">{{
-                            $t("wallets.popups.change.labels.minWithdrawal")
-                        }}</label>
-                        <span class="autopayout-btc">BTC</span>
-                    </div>
-                </div>
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.wallets[0]"
+                    title="titles.wallets[0]"
+                    className="onboarding__card-right"
+                />
             </div>
-            <main-title class="header-component-wallet" tag="h3"
-                >{{ $t("wallets.title[1]") }}
-            </main-title>
-            <div ref="wallets" class="wrap">
-                <div
-                    ref="list"
-                    class="wallets__list"
-                    v-if="!wallets.waitWallets"
-                >
-                    <wallet-block
-                        v-for="(wallet, i) in wallets.wallets"
-                        :key="i"
-                        v-scroll="'top'"
-                        :wallet="wallet"
-                        @getWallet="setForm"
-                    ></wallet-block>
-<!--                    @remove="wallets.removeWallet(wallet)"-->
+            <div
+                class="wallet__block onboarding_block"
+                :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
+                }"
+            >
+                <main-title class="header-component-wallet" tag="h3"
+                    >{{ $t("wallets.title[1]") }}
+                </main-title>
+                <div ref="wallets" class="wrap">
+                    <div
+                        ref="list"
+                        class="wallets__list"
+                        v-if="!wallets.waitWallets"
+                    >
+                        <wallet-block
+                            v-for="(wallet, i) in wallets.wallets"
+                            :key="i"
+                            v-scroll="'top'"
+                            :wallet="wallet"
+                            @getWallet="setForm"
+                        ></wallet-block>
+    <!--                    @remove="wallets.removeWallet(wallet)"-->
+                    </div>
                 </div>
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="2"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.wallets[1]"
+                    title="titles.wallets[1]"
+                    className="onboarding__card-right"
+                />
             </div>
 <!--            <div class="blue-button-container">-->
 <!--                <button class="add" data-popup="#addWallet">-->
@@ -237,6 +275,10 @@
             </button>
         </form>
     </main-popup>
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="Знакомсто с «Кошельками»"
+    />
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
@@ -247,12 +289,16 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 import WalletsWarning from "@/modules/wallets/Components/WalletsWarning.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { mapGetters } from "vuex";
 import { WalletsService } from "@/services/WalletsService";
+import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
     components: {
+        InstructionButton,
         WalletsWarning,
         MainPopup,
         MainButton,
@@ -261,6 +307,7 @@ export default {
         TooltipCard,
         MainPreloader,
         MainDescription,
+        InstructionStep,
     },
     computed: {
         ...mapGetters(["getActive", "errors", "user"]),
@@ -285,6 +332,7 @@ export default {
             isActiveLabelName: false,
             isActiveLabelMinWithdrawal: false,
             verifyButtonName: this.$t("wallets.no_info.verify_text"),
+            instructionService: new InstructionService(),
         };
     },
     watch: {
@@ -294,6 +342,9 @@ export default {
         "$i18n.locale"() {
             document.title = this.$t("header.links.wallets");
         },
+        user(newUserData) {
+            this.wallets.setUser(newUserData);
+        }
     },
     methods: {
         setForm(wallet) {
@@ -313,9 +364,15 @@ export default {
         }
     },
     mounted() {
+        this.instructionService.setStepsCount(2);
+
         this.walletInit();
         document.title = this.$t("header.links.wallets");
         this.$refs.page.style.opacity = 1;
+
+        if (this.user) {
+            this.wallets.setUser(this.user);
+        }
     },
     props: ["message", "auth_user"],
 };
@@ -358,9 +415,6 @@ export default {
     justify-content: space-between;
     width: 100%;
     margin-bottom: 24px;
-}
-.autopayout-component {
-    margin-bottom: 40px;
 }
 .autopayout-container {
     position: relative;
@@ -434,9 +488,16 @@ input:focus {
 .wallet-wrapper {
     border-radius: 24px;
     background: var(--background-island);
-    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+    box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 560px;
-    padding: 32px 40px;
+}
+.wallet__block {
+    width: 100%;
+    padding: 32px 40px 16px;
+    border-radius: 24px;
+    &:last-child {
+        padding: 16px 40px 32px;
+    }
 }
 @media(max-width: 500px){
     .wallet-wrapper {
@@ -570,12 +631,6 @@ input:focus {
 
     // .wallets__wrap
     .wrap {
-        margin-bottom: 40px;
-
-        &:last-child {
-            margin-bottom: 0;
-            transition: all 0.3s ease;
-        }
 
         &_title {
             margin-bottom: 8px;

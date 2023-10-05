@@ -5,12 +5,14 @@
             :isOpenBurger="isOpenBurger"
             @changeBurger="change($event)"
             @closeBurger="change(false)"
+            :instructionConfig="instructionService"
         />
         <div class="layout__content">
             <header-component-profile
                 class="header-container"
                 :isOpenBurger="isOpenBurger"
                 @changeBurger="change($event)"
+                :instructionConfig="instructionService"
             />
             <!-- Кнопка для тестирования -->
             <!--            <button @click="openNotification(true, 'title', 'text')">true</button>-->
@@ -67,12 +69,14 @@
 <script>
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import {
     messageNote,
     titleNote,
     openNotification,
     isGreen,
 } from "@/modules/notifications/services/NotificationServices";
+import {mapGetters} from "vuex";
 
 export default {
     components: {
@@ -95,8 +99,19 @@ export default {
     data() {
         return {
             isOpenBurger: false,
+            instructionService: new InstructionService(),
         };
     },
+    computed: {
+        ...mapGetters(["getActive"]),
+    },
+    mounted() {
+        if (
+            this.$route.query?.onboarding === "true"
+        ) {
+            this.instructionService.setStepsCount(2).setVisible();
+        }
+    }
 };
 </script>
 <style scoped>

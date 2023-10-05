@@ -1,6 +1,9 @@
 <template>
     <div
-        class="cabinet__block cabinet__block-card cabinet__block-light info"
+        class="cabinet__block onboarding_block cabinet__block-card cabinet__block-light info"
+        :class="{
+            'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 3
+        }"
     >
         <btc-calculator
             :title="$t('statistic.info_blocks.payment.titles[0]')"
@@ -14,17 +17,34 @@
             :title="$t('statistic.info_blocks.payment.titles[2]')"
             :BTC="monthAmount"
         />
+        <instruction-step
+            @next="instructionConfig.nextStep()"
+            @prev="instructionConfig.prevStep()"
+@close="instructionConfig.nextStep(6)"
+            :step_active="3"
+            :steps_count="instructionConfig.steps_count"
+            :step="instructionConfig.step"
+            :isVisible="instructionConfig.isVisible"
+            text="texts.statistic[2]"
+            title="titles.statistic[2]"
+            className="onboarding__card-bottom"
+        />
     </div>
 </template>
 
 <script>
 import BtcCalculator from "@/modules/common/Components/UI/BTCCalculator.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 import { mapGetters } from "vuex";
 
 export default {
     name: "info-block",
     components: {
         BtcCalculator,
+        InstructionStep,
+    },
+    props: {
+        instructionConfig: Object,
     },
     computed: {
         todayAmount() {

@@ -38,7 +38,7 @@
                                 :key="i"
                                 :is_checked="route.checked"
                                 class="checkbox-sm"
-                                :editable="isEditable"
+                                :editable="isEditable ? route.editable : isEditable"
                                 @is_checked="setAllowedRoutes($event, i)"
                             >
                                 {{ route.name }}
@@ -146,15 +146,17 @@ export default {
                 {
                     name: this.$t("tabs[0]"),
                     checked: false,
+                    editable: false,
                     routes: [
                         "v1.sub.show",
-                        "v1.hashrate.list",
+                        "v1.statistic.show",
                         "v1.allowed-routes",
                     ],
                 },
                 {
                     name: this.$t("tabs[2]"),
                     checked: false,
+                    editable: true,
                     routes: [
                         "v1.worker.show",
                         "v1.worker.list",
@@ -164,6 +166,7 @@ export default {
                 {
                     name: this.$t("tabs[1]"),
                     checked: false,
+                    editable: true,
                     routes: ["v1.income.list", "v1.payout.list"],
                 },
             ],

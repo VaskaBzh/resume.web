@@ -127,7 +127,7 @@ export default {
     display: none;
 }
 .column_value {
-    color: var(--text-table-title, #43474E);
+    color: var(--text-teritary);
     font-family: NunitoSans, serif;
     font-size: 14px;
     font-weight: 600;

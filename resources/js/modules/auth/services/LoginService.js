@@ -105,6 +105,13 @@ export class LoginService {
 
             this.router.push({
                 name: "statistic",
+                query: {
+                    ...this.route.query?.action === "email" ?
+                        {
+                            onboarding: true
+                        } :
+                        {},
+                }
             });
         } catch (err) {
             store.dispatch("setFullErrors", {

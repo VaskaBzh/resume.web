@@ -10,6 +10,9 @@
             class="copy_icon"
             :class="{ 'copy_icon-hide': active }"
         />
+        <slot
+            name="instruction"
+        />
     </div>
 </template>
 
@@ -42,13 +45,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.onboarding_block {
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+}
 .copy {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
+    justify-content: center;
     position: relative;
     min-height: 56px;
     padding: 4px 16px;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-island-inner-3, #F8FAFD);
     &:hover {
         .copy {
             &_button {

@@ -27,6 +27,8 @@ export class WalletsService extends DefaultSubsService {
         this.wait = false;
         this.closed = false;
         this.opened = false;
+
+        this.user = {};
     }
 
     substring(name) {
@@ -142,6 +144,10 @@ export class WalletsService extends DefaultSubsService {
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
         }
+    }
+
+    setUser(user) {
+        this.user = user;
     }
 
     async changeWallet() {

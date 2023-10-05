@@ -4,37 +4,74 @@
             <main-title class="title-connecting" tag="h4">{{
                 $t("connection.title")
             }}</main-title>
-            <div>
+            <div class="connecting__content">
                 <copy-block
                     v-for="(object, i) in this.copyObject"
                     :key="i"
                     :copyObject="object"
-                ></copy-block>
+                    :instructionConfig="instructionService"
+                />
+                <copy-row
+                    :copyObject="{
+                        link: `${getAccount.name}.worker_name`, title: 'Worker name'
+                    }"
+                    class="onboarding_block"
+                    :class="{
+                        'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
+                    }"
+                >
+                    <template v-slot:instruction>
+                        <instruction-step
+                            @next="instructionService.nextStep()"
+                            @prev="instructionService.prevStep()"
+                            @close="instructionService.nextStep(6)"
+                            :step_active="2"
+                            :steps_count="instructionService.steps_count"
+                            :step="instructionService.step"
+                            :isVisible="instructionService.isVisible"
+                            text="texts.connecting[1]"
+                            title="titles.connecting[1]"
+                            className="onboarding__card-right"
+                        />
+                    </template>
+                </copy-row>
             </div>
             <div class="note-card">
                 <span class="note-text">{{ $t("connection.note") }}</span>
             </div>
         </div>
     </div>
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="Знакомсто с «Подключением»"
+    />
 </template>
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
-import { router, Head } from "@inertiajs/vue3";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import CopyRow from "@/modules/common/Components/UI/CopyRow.vue";
+
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { mapGetters } from "vuex";
+import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
-    components: { MainTitle, Head, CopyBlock },
+    components: {
+        InstructionButton,
+        CopyRow,
+        MainTitle,
+        CopyBlock,
+        InstructionStep,
+    },
     data() {
         return {
             viewportWidth: 0,
+            instructionService: new InstructionService(),
         };
     },
     methods: {
-        router() {
-            return router;
-        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
@@ -44,7 +81,7 @@ export default {
         this.handleResize();
     },
     computed: {
-        ...mapGetters(["allAccounts"]),
+        ...mapGetters(["allAccounts", "getAccount"]),
         copyObject() {
             return [
                 {
@@ -52,7 +89,7 @@ export default {
                     copyObject: [
                         { link: "btc.all-btc.com:4444", title: "Port1" },
                         { link: "btc.all-btc.com:3333", title: "Port 2" },
-                        { link: "btc.all-btc.com:2222", title: "Port 3" },
+                        { link: "btc.all-btc.com:2222", title: "Port 3" }
                     ],
                 },
             ];
@@ -64,6 +101,7 @@ export default {
         },
     },
     mounted() {
+        this.instructionService.setStepsCount(2);
         document.title = this.$t("header.links.connecting");
     },
 };
@@ -72,7 +110,7 @@ export default {
 .title-connecting{
     margin-bottom: 8px;
     color: var(--text-primary-80);
-    font-family: Unbounded;
+    font-family: Unbounded, serif;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
@@ -90,7 +128,7 @@ export default {
 }
 .note-text{
     color: var(--primary-400, #53B1FD);
-    font-family: NunitoSans;
+    font-family: NunitoSans, serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -109,7 +147,12 @@ export default {
     display: flex;
     align-items: center;
     justify-content: center;
-    height: calc(100vh - 132px);
+    flex: 1 1 auto;
+    &__content {
+        display: flex;
+        flex-direction: column;
+        gap: 22px;
+    }
     // .connecting_question
     &__question {
         width: 100%;

@@ -1,5 +1,8 @@
 <template>
     <div class="slider">
+        <slot
+            name="instruction"
+        />
         <main-preloader
             class="cabinet__preloader"
             :wait="wait"
@@ -123,6 +126,9 @@ export default {
     width: 100%;
     @media(max-width: 500px){
         height: auto;
+    }
+    &.onboarding_block-target {
+        border-radius: 12   px;
     }
     &__wrap {
         width: 100%;

@@ -1,5 +1,10 @@
 <template>
-    <div class="cabinet__block cabinet__block-graph cabinet__block-light">
+    <div
+        class="cabinet__block onboarding_block cabinet__block-graph cabinet__block-light"
+        :class="{
+            'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1
+        }"
+    >
         <div class="cabinet__head">
             <main-title tag="h3" class="chart-title-statistic">
                 {{ $t("statistic.chart.title") }}
@@ -16,16 +21,29 @@
             :graphData="graph"
             :height="height"
         />
+        <instruction-step
+            @next="instructionConfig.nextStep()"
+            @prev="instructionConfig.prevStep()"
+@close="instructionConfig.nextStep(6)"
+            :step_active="1"
+            :steps_count="instructionConfig.steps_count"
+            :step="instructionConfig.step"
+            :isVisible="instructionConfig.isVisible"
+            text="texts.statistic[0]"
+            title="titles.statistic[0]"
+            className="onboarding__card-top"
+        />
     </div>
 </template>
 
 <script>
-import MainTitle from "../../common/Components/UI/MainTitle.vue";
-import MainTabs from "../../common/Components/UI/MainTabs.vue";
-import NoInfoWait from "../../../Components/technical/blocks/NoInfoWait.vue";
-import { mapGetters } from "vuex";
-import MainLineGraph from "../../graphs/Components/MainLineGraph.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import MainTabs from "@/modules/common/Components/UI/MainTabs.vue";
+import MainLineGraph from "@/modules/graphs/Components/MainLineGraph.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+
+import { mapGetters } from "vuex";
 
 export default {
     name: "statistic-line-graph",
@@ -34,12 +52,14 @@ export default {
         offset: Number,
         graph: Object,
         buttons: Object,
+        instructionConfig: Object,
     },
     components: {
         WaitPreloader,
         MainTitle,
         MainTabs,
         MainLineGraph,
+        InstructionStep,
     },
     computed: {
         ...mapGetters(["viewportWidth"]),

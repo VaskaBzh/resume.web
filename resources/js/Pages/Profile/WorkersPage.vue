@@ -14,16 +14,51 @@
             <main-title class="title-worker" tag="h4">{{
                 $t("workers.title")
             }}</main-title>
-            <div class="cards-container">
+            <div
+                class="cards-container onboarding_block"
+                :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                }"
+            >
                 <main-hashrate-cards />
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.workers[0]"
+                    title="titles.workers[0]"
+                    className="onboarding__card-top"
+                />
             </div>
             <div class="workers__content">
                 <main-slider
+                    class="onboarding_block"
+                    :class="{
+                        'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
+                    }"
                     :wait="worker_service.waitWorkers"
                     :empty="worker_service.emptyWorkers"
                     rowsNum="1000"
                     :haveNav="false"
                 >
+                    <template v-slot:instruction>
+                        <instruction-step
+                            @next="instructionService.nextStep()"
+                            @prev="instructionService.prevStep()"
+                            @close="instructionService.nextStep(6)"
+                            :step_active="2"
+                            :steps_count="instructionService.steps_count"
+                            :step="instructionService.step"
+                            :isVisible="instructionService.isVisible"
+                            text="texts.workers[1]"
+                            title="titles.workers[1]"
+                            className="onboarding__card-bottom"
+                        />
+                    </template>
                     <main-table
                         :table="worker_service.table"
                         :removePercent="removePercent"
@@ -61,10 +96,12 @@
             @closeCard="dropWorkers"
     />
     </workers-popup-card>
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="Знакомсто с «Воркерами»"
+    />
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { WorkerService } from "@/services/WorkerService";
 import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
@@ -72,9 +109,16 @@ import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WorkersPopupCard from "@/modules/workers/Components/WorkersPopupCard.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
+import { WorkerService } from "@/services/WorkerService";
+import { mapGetters } from "vuex";
+import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
     components: {
+        InstructionButton,
         MainHashrateCards,
         MainSlider,
         MainTable,
@@ -82,6 +126,7 @@ export default {
         WorkerCard,
         MainTitle,
         WorkersPopupCard,
+        InstructionStep,
     },
     data() {
         return {
@@ -95,6 +140,7 @@ export default {
                 [0, 1, 3, 4],
                 this.$route
             ),
+            instructionService: new InstructionService(),
         };
     },
     watch: {
@@ -146,6 +192,8 @@ export default {
         },
     },
     mounted() {
+        this.instructionService.setStepsCount(2);
+
         this.initWorkers();
 
         document.title = this.$t("header.links.workers");

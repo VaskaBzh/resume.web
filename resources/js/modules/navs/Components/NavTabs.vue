@@ -1,5 +1,10 @@
 <template>
-    <div class="nav" :class="[isOpenBurger ? 'open-burger' : 'close-burger']">
+    <div class="nav onboarding_block" :class="{
+        'open-burger': isOpenBurger,
+        'close-burger': !isOpenBurger,
+        'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1,
+        'nav-untouchable': $route.query?.onboarding === 'true'
+    }">
         <div class="nav__content">
             <div class="nav__block">
                 <logo-block class="nav_logo" />
@@ -21,6 +26,18 @@
             </div>
             <logout-link class="nav_logout" />
         </div>
+        <instruction-step
+            @next="instructionConfig.nextStep()"
+            @prev="instructionConfig.prevStep()"
+@close="instructionConfig.nextStep(6)"
+            :step_active="1"
+            :steps_count="instructionConfig.steps_count"
+            :step="instructionConfig.step"
+            :isVisible="instructionConfig.isVisible"
+            text="texts.common[0]"
+            title="titles.common[0]"
+            className="onboarding__card-left"
+        />
     </div>
     <div
         class="nav-bg-mobile"
@@ -38,9 +55,11 @@ import LogoutLink from "@/modules/navs/Components/UI/LogoutLink.vue";
 import NavGroup from "@/modules/navs/Components/UI/NavGroup.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
 export default defineComponent({
     components: {
+        InstructionStep,
         LogoutLink,
         AccountMenu,
         LogoBlock,
@@ -52,6 +71,7 @@ export default defineComponent({
         isOpenBurger: {
             type: Boolean,
         },
+        instructionConfig: Object,
     },
     data() {
         return {
@@ -74,10 +94,28 @@ export default defineComponent({
 <style scoped>
 .nav {
     height: 100vh;
-    /* min-height: 100vh; */
+    /*
+    min-height: 100vh;
     overflow-y: scroll;
-    min-width: 320px;
     overflow-x: hidden;
+    */
+    min-width: 320px;
+    position: relative;
+}
+.nav::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: transparent;
+    z-index: -10;
+    display: none;
+}
+.nav-untouchable::before {
+    z-index: 1000;
+    display: block;
 }
 .nav::-webkit-scrollbar {
     width: 0;

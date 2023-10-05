@@ -1,6 +1,7 @@
 import { ProfileApi } from "@/api/api";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "@/store";
+import { CodeFormData } from "@/modules/verify/DTO/CodeFormData";
 
 export class VerifyService {
     constructor() {
@@ -9,6 +10,14 @@ export class VerifyService {
         this.verifyText = "";
         this.text = "";
         this.interval = null;
+
+        this.form = {};
+    }
+
+    setForm(form = {}) {
+        this.form = {
+            ...new CodeFormData(form),
+        };
     }
 
     setTranslate(translate) {

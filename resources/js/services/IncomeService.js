@@ -12,7 +12,7 @@ export class IncomeService extends TableService {
     constructor(translate, titleIndexes, route) {
         super(translate, titleIndexes);
 
-        this.graphService = new GraphDataService(titleIndexes, translate, 30);
+        this.graphService = new GraphDataService(titleIndexes, 30);
         this.route = route;
         this.waitGraphChange = true;
         this.incomeBarGraph = {};
