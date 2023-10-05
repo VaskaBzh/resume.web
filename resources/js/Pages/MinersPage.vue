@@ -44,7 +44,7 @@ import MobileAppCard from "../modules/hosting/Components/MobileAppCard.vue";
 import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
 import ConnectCard from "../modules/hosting/Components/ConnectCard.vue";
 import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
-import CommunityCard from "../modules/hosting/Components/CommunityCard.vue";
+import CommunityCard from "../modules/miners/Components/CommunityCard.vue";
 
 export default {
     name: 'miners-page',
