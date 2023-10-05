@@ -6,8 +6,10 @@ export const RouteNamesMap = {
         complexity: "ComplexityPage",
         // help: "FaqPage",
         hosting: "HostingPage",
+        miners: "MinersPage",
         login: "LoginPage",
         registration: "RegPage",
+
     },
     profile: {
         accounts: "SubsPage",

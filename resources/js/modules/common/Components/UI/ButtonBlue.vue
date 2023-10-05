@@ -22,7 +22,7 @@ export default {
     border-radius: 40px;
     border: 0.5px solid rgba(192, 228, 255, 0.60);
     background: transparent;
-    backdrop-filter: blur(10px);
+    // backdrop-filter: blur(10px);
 }
 
 .header-land_btn {

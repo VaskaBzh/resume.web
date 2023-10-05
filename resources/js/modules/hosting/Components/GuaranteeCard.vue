@@ -1,14 +1,14 @@
 <template>
   <div class="guarantee-block">
     <div class="guarantee-card">
-      <p class="title-card">Гарантии надежности и безопасности</p>
-      <p class="text-card">С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool</p>
+      <p class="title-card">{{ $t("guarantees.title") }}</p>
+      <p class="text-card">{{ $t("guarantees.text") }}</p>
   </div>
   <div class="income-system-card gray-line gray-line-top">
     <div class="card-row">
-      <p class="text-card text-system text-web">Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.</p>
-      <p class="text-card text-system" v-if="isOpenAccordion">Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.</p>
-      <p class="title-hosting">система выплаты<br> FPPS+</p>
+      <p class="text-card text-system text-web">{{ $t("guarantees.list.text[0]") }}</p>
+      <p class="text-card text-system" v-if="isOpenAccordion">{{ $t("guarantees.list.text[0]") }}</p>
+      <p class="title-hosting">{{ $t("guarantees.list.title[0]") }}<br> {{ $t("guarantees.list.title[1]") }}</p>
     </div>
 
     <button class="accordion-button" @click="isOpenAccordion = !isOpenAccordion">
@@ -21,19 +21,25 @@
       </svg>
     </button>
   </div>
-  <p class="title-hosting gray-line">гарантия безопасности</p>
-  <p class="title-hosting gray-line">автовыплаты</p>
-  <p class="title-hosting gray-line">оперативная техподдержка</p>
+  <p class="title-hosting gray-line">{{ $t("guarantees.list.title[2]") }}</p>
+  <p class="title-hosting gray-line">{{ $t("guarantees.list.title[3]") }}</p>
+  <p class="title-hosting gray-line">{{ $t("guarantees.list.title[4]") }}а</p>
   </div>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
 export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
   data() {
     return {
       isOpenAccordion: false
     }
   },
 }
+
 </script>
 <style scoped>
 .guarantee-block{

@@ -19,6 +19,7 @@ export class RouteServices {
             // new RoutePublicData('complexity', 'complexity'),
             new RoutePublicData("help", "help"),
             new RoutePublicData("hosting", "hosting"),
+            new RoutePublicData("miners", "miners"),
             new RouteAuthData("login", "login"),
             new RouteAuthData("registration", "registration"),
             new RouteProfileData("accounts", "accounts"),

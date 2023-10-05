@@ -1,6 +1,6 @@
 <template>
   <div class="footer-content">
-    <p class="footer-title">Личный кабинет</p>
+    <p class="footer-title">{{ $t("footer.button") }}</p>
     <div class="footer-inf">
       <ul class="footer-links">
         <li v-for="link in links">{{ link.title }}</li>
@@ -25,40 +25,45 @@
   <div>
     <p class="allbtc-pool">allbtc pool</p>
     <div class="police-conf">
-      <span class="pointer">Политика конфиденциальности</span>
+      <span class="pointer">{{ $t("footer.text") }}</span>
       <span>© 2023 allbtc pool</span>
     </div>
   </div>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
 export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
   data() {
     return {
       links: [
         {
-          title: 'Главная',
+          title: this.$t("footer.list[0]"),
           url: '',
         },
         {
-          title: 'Дата-центрам',
+          title: this.$t("footer.list[1]"),
           url: '',
         },
         {
-          title: 'Майнерам',
+          title: this.$t("footer.list[2]"),
           url: '',
         },
-        {
-          title: 'FAQ',
-          url: '',
-        },
-        {
-          title: 'Новости',
-          url: '',
-        },
-        {
-          title: 'Контакты',
-          url: '',
-        },
+        // {
+        //   title: 'FAQ',
+        //   url: '',
+        // },
+        // {
+        //   title: 'Новости',
+        //   url: '',
+        // },
+        // {
+        //   title: 'Контакты',
+        //   url: '',
+        // },
       ]
     }
   },

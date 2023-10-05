@@ -1,41 +1,29 @@
 <template>
     <div class="miners-info-view">
         <div class="miners-info-view__container">
-            <head-line class="miners-info-view_title">почему allbtc pool</head-line>
+            <head-line class="miners-info-view_title"> {{ $t("why_allbtc.button") }}</head-line>
             <h3 class="miners-info-view_subtitle">
-                <span>ПРодукт,</span>
-                <span class="miners-info-view_subtitle_one">созданный</span>
-                <span>майнерами</span>
-                <span>для майнеров</span>
+                <span>{{ $t("why_allbtc.title[0]") }}</span>
+                <span class="miners-info-view_subtitle_one">{{ $t("why_allbtc.title[1]") }}</span>
+                <span>{{ $t("why_allbtc.title[2]") }}</span>
+                <span>{{ $t("why_allbtc.title[3]") }}</span>
             </h3>
             <div class="miners-info-view__items">
                 <div class="miners-info-view_item">
-                    <p class="miners-info-view_item_text">Наша команда,
-                        будучи экспертами и практикующими майнерами, специализируется на
-                        биткоине, знает все тонкости добычи криптовалюты и внедряет
-                        новые идеи и механизмы в развитие пула. Все внедренные
-                        инструменты помогают зарабатывать больше.
+                    <p class="miners-info-view_item_text">{{ $t("why_allbtc.list.text[0]") }}
                     </p>
-                    <h3 class="miners-info-view_item_title">Фокус на Bitcoin</h3>
+                    <h3 class="miners-info-view_item_title">{{ $t("why_allbtc.list.title[0]") }}</h3>
                 </div>
                 <div class="miners-info-view_item">
-                    <p class="miners-info-view_item_text">Наша команда,
-                        будучи экспертами и практикующими майнерами, специализируется на
-                        биткоине, знает все тонкости добычи криптовалюты и внедряет
-                        новые идеи и механизмы в развитие пула. Все внедренные
-                        инструменты помогают зарабатывать больше.
+                    <p class="miners-info-view_item_text">{{ $t("why_allbtc.list.text[1]") }}
                     </p>
-                    <h3 class="miners-info-view_item_title">Прозрачный мониторинг</h3>
+                    <h3 class="miners-info-view_item_title">{{ $t("why_allbtc.list.title[1]") }}</h3>
 
                 </div>
                 <div class="miners-info-view_item">
-                    <p class="miners-info-view_item_text">Наша команда,
-                        будучи экспертами и практикующими майнерами, специализируется на
-                        биткоине, знает все тонкости добычи криптовалюты и внедряет
-                        новые идеи и механизмы в развитие пула. Все внедренные
-                        инструменты помогают зарабатывать больше.
+                    <p class="miners-info-view_item_text">{{ $t("why_allbtc.list.text[2]") }}
                     </p>
-                    <h3 class="miners-info-view_item_title">технологии и безопасность</h3>
+                    <h3 class="miners-info-view_item_title">{{ $t("why_allbtc.list.title[2]") }}</h3>
 
                 </div>
             </div>
@@ -46,11 +34,14 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "MinersInfoView",
     components: {HeadLine},
+    i18n: {
+            sharedMessages: HomeMessage,
+    },
 
 }
 </script>

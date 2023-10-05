@@ -1,67 +1,71 @@
 <template>
 <div class="about">
-    <head-line>Кто мы</head-line>
+    <head-line>{{ $t("who_we_are.button") }}</head-line>
     <div class="about__wrapper">
         <div class="about__inner">
             <div class="about_item">
-                <h2 class="about_item_title">Приватный пул для дата-центров</h2>
+                <h2 class="about_item_title">{{ $t("who_we_are.card_private.title[0]") }}</h2>
                 <div class="about_item_cards">
                     <div class="about_item_card">
                         <div class="about_item_card_num">7</div>
-                        <div class="about_item_card_description">лет в крипто индустрии</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[0]") }}</div>
                     </div>
                     <div class="about_item_card">
                         <div class="about_item_card_num">1.7</div>
-                        <div class="about_item_card_description">EH/ s хешрейт пула</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[1]") }}</div>
                     </div>
                     <div class="about_item_card">
                         <div class="about_item_card_num">30</div>
-                        <div class="about_item_card_description">BTC добыто всего</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[2]") }}</div>
                     </div>
                     <div class="about_item_card">
-                        <div class="about_item_card_num"><span>до</span>75%</div>
-                        <div class="about_item_card_description">больше прибыли за кВт</div>
+                        <div class="about_item_card_num"><span>{{ $t("who_we_are.card_private.text[3]") }}</span>75%</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[4]") }}</div>
                     </div>
                 </div>
-                <button-blue class="about_link">узнать больше</button-blue>
+                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>
             </div>
             <div class="about_item">
-                <h2 class="about_item_title">Комьюнити для частных майнеров</h2>
+                <h2 class="about_item_title">{{ $t("who_we_are.card_community.title[0]") }}</h2>
                 <div class="about_item_cards">
                     <div class="about_item_card">
                         <div class="about_item_card_num">№1</div>
-                        <div class="about_item_card_description">клиентский сервис</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[0]") }}</div>
                     </div>
                     <div class="about_item_card">
                         <div class="about_item_card_num">24/7</div>
-                        <div class="about_item_card_description">быстрая техподдержка</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[1]") }}</div>
                     </div>
                     <div class="about_item_card">
                         <div class="about_item_card_num">1</div>
-                        <div class="about_item_card_description">экран для статистики</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[2]") }}</div>
                     </div>
                     <div class="about_item_card">
                         <div class="about_item_card_num">4%</div>
-                        <div class="about_item_card_description">комиссия пула</div>
+                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[3]") }}</div>
                     </div>
                 </div>
-                <button-blue class="about_link">узнать больше</button-blue>
+                <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
             </div>
         </div>
         <div class="about_stiky"></div>
     </div>
 
-    <button-blue class="about_btn">получить персональные условия</button-blue>
+    <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
 </div>
 </template>
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "WhoWeAre",
-    components: {ButtonBlue, HeadLine}
+    components: {ButtonBlue, HeadLine},
+    i18n: {
+            sharedMessages: HomeMessage,
+    },
 }
 </script>
 

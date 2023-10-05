@@ -1,10 +1,18 @@
 <template>
   <div class="working-card">
-    <p class="working-title">плюсы работы с нами</p>
-    <p class="working-text">С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool</p>
+    <p class="working-title">{{ inf.title }}</p>
+    <p class="working-text">{{ inf.text }}</p>
   </div>
 </template>
 <script>
+export default {
+  props: {
+        inf: {
+            type: Object,
+            default: () => {}
+        },
+  }
+}
 </script>
 <style scoped>
 .working-card{
@@ -37,13 +45,15 @@
 }
 @media(max-width:450px){
   .working-title{
-        font-size: 12px;
+    font-size: 12px;
+    padding: 8px 10px;
     }
   .working-text{
-      font-size: 14px;
+    font-size: 14px;
   }
   .working-card{
-    width: 244px;
+    width: 266px;
+    gap: 20px;
   }
 }
 </style>

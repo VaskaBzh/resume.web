@@ -2,41 +2,44 @@
     <div class="header-land data-scroll-container">
         <div class="header-land_title">
             <div class="header-land__block">
-                <span class="header-land_title_expert-one">Экспер</span>
-                <span class="header-land_title_expert-two">тный</span>
+                <span class="header-land_title_expert-one">{{ $t("title[0]") }}</span>
+                <span class="header-land_title_expert-two">{{ $t("title[1]") }}</span>
             </div>
             <div class="header-land__block-two">
-                <span class="header-land_title_approach">подход</span>
+                <span class="header-land_title_approach">{{ $t("title[2]") }}</span>
             </div>
             <div class="header-land__block-three">
-                <span class="header-land_title_mining-one">к майн<span class="header-land_title_mining-two">инг</span></span>
+                <span class="header-land_title_mining-one">{{ $t("title[3]") }}<span class="header-land_title_mining-two">{{ $t("title[4]") }}</span></span>
             </div>
             <div class="header-land__block-four">
             <span class="header-land_title_text">
                 Bitcoin
                 <span class="header-land_title_span">
-                    Используем передовые технологии
-                    для эффективного майнинга биткоина. Максимальная
-                    прозрачность майнинга в пару кликов.
+                    {{ $t("text") }}
                 </span>
             </span>
             </div>
         </div>
-        <button-blue class="header-land_btn">попробовать демо кабинет</button-blue>
+        <button-blue class="header-land_btn">{{ $t("button") }}</button-blue>
     </div>
 </template>
 
 <script>
 import ButtonBlue from "./ButtonBlue.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import {scroolingHeader} from "../../../home/Services/ScrollAnime";
 
 
 export default {
     name: "LandingTitle",
     components: {ButtonBlue},
+    i18n: {
+            sharedMessages: HomeMessage,
+    },
+
     mounted() {
         scroolingHeader()
-    }
+
 }
 </script>
 

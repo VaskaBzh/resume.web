@@ -1,19 +1,15 @@
 <template>
 <div class="calculator-land">
     <div class="calculator-land__container">
-        <head-line class="calculator-land_title_default">калькулятор доходности</head-line>
+        <head-line class="calculator-land_title_default">{{ $t("profitability_calculator.button[0]") }}</head-line>
         <h3 class="calculator-land_title">
-            <span>рассчитайте</span>
-            <span class="calculator-land_title_one">свой доход</span>
-            <span class="calculator-land_title_two">с помощью </span>
-            <span class="calculator-land_title_three">калькулятора</span>
-            <span class="calculator-land_title_four">доходности</span>
+            <span>{{ $t("profitability_calculator.title[0]") }}</span>
+            <span class="calculator-land_title_one">{{ $t("profitability_calculator.title[1]") }}</span>
+            <span class="calculator-land_title_two">{{ $t("profitability_calculator.title[2]") }}</span>
+            <span class="calculator-land_title_three">{{ $t("profitability_calculator.title[3]") }}</span>
+            <span class="calculator-land_title_four">{{ $t("profitability_calculator.title[4]") }}</span>
         </h3>
-        <h4 class="calculator-land_subtitle">Позволяет
-            оценить и спрогнозировать возможный
-            приблизательный доход и прибыль за о
-            пределенный период. Фактические доходы м
-            огут незначительно отличаться.
+        <h4 class="calculator-land_subtitle">{{ $t("profitability_calculator.text") }}
         </h4>
         <light-calculator-view class="calculator-land_content"/>
     </div>
@@ -24,11 +20,15 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import LightCalculatorView from "../../../calculator/Components/views/LightCalculatorView.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 
 export default {
     name: "CalculatorLand",
-    components: {LightCalculatorView, HeadLine}
+    components: {LightCalculatorView, HeadLine},
+    i18n: {
+            sharedMessages: HomeMessage,
+    },
 }
 </script>
 

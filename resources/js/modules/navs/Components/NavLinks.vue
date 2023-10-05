@@ -25,7 +25,7 @@ export default {
                 },
                 {
                     name:  'Майнерам',
-                    url: ''
+                    url: '/miners'
                 }
                
             ],

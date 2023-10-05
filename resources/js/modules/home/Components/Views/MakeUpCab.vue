@@ -1,20 +1,18 @@
 <template>
 <div class="make-up-cab">
     <div class="make-up-cab__container">
-        <head-line class="make-up-cab_title">личный кабинет</head-line>
+        <head-line class="make-up-cab_title">{{ $t("personal_account.button[0]") }}</head-line>
         <h3 class="make-up-cab_subtitle">
-            <span class="make-up-cab_subtitle_one">удобный</span>
-            <span  class="make-up-cab_subtitle_two">личный</span>
-            <span>кабинет</span>
+            <span class="make-up-cab_subtitle_one">{{ $t("personal_account.title[0]") }}</span>
+            <span  class="make-up-cab_subtitle_two">{{ $t("personal_account.title[1]") }}</span>
+            <span>{{ $t("personal_account.title[2]") }}</span>
         </h3>
-        <p class="make-up-cab_description">Удобный личный кабинет со всей
-            необходимой статистикой и интуитивно понятной
-            навигацией. Только нужные функции для конечного пользователя.
+        <p class="make-up-cab_description">{{ $t("personal_account.text") }}
         </p>
         <div class="make-up-cab_picture">
             <img src="../../../../../assets/img/land-makeup.png" alt="all-btc" >
         </div>
-        <button-blue class="make-up-cab_link">посмотреть личный кабинет</button-blue>
+        <button-blue class="make-up-cab_link">{{ $t("personal_account.button[1]") }}</button-blue>
     </div>
 </div>
 </template>
@@ -24,10 +22,15 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+
 
 export default {
     name: "MakeUpCab",
-    components: {ButtonBlue, HeadLine}
+    components: {ButtonBlue, HeadLine},
+    i18n: {
+            sharedMessages: HomeMessage,
+    },
 }
 </script>
 

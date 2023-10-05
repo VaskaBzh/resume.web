@@ -1,25 +1,32 @@
 <template>
-  <p class="connect-with-us">свяжитесь с нами</p>
+  <p class="connect-with-us">{{ $t("connect.button") }}</p>
   <div class="card-connect">
     <div>
-      <p class="card-title">интересно поработать с нами?</p>
-      <p class="card-text">Оставьте ваш номер телефона, клиентский менеджер свяжется с вами и ответит на все возникшие вопросы.</p>
+      <p class="card-title">{{ $t("connect.title") }}</p>
+      <p class="card-text">{{ $t("connect.text") }}</p>
     </div>
     <form class="connect-form">
-      <input class="connect-input" placeholder="Введите имя">
+      <input class="connect-input" :placeholder="$t('connect.form.placeholder')">
       <input class="connect-input" placeholder="+7">
       <div class="buttons-connect-container">
-        <button class="connect-order">Заказать звонок</button>
-        <p class="or-text">или</p>
+        <button class="connect-order">{{ $t("connect.form.button[0]") }}</button>
+        <p class="or-text">{{ $t("connect.form.text") }}</p>
         <div class="or-container">
-          <button class="or-button">TELEGRAM</button>
-          <button class="or-button">what’s app</button>
+          <button class="or-button">{{ $t("connect.form.button[1]") }}</button>
+          <button class="or-button">{{ $t("connect.form.button[2]") }}</button>
         </div>
       </div>
     </form>
   </div>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
+export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
+}
 </script>
 <style scoped>
 .connect-with-us{

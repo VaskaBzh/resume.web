@@ -1,11 +1,11 @@
 <template>
   <div class="system-card-inf">
     <p class="system-card-title">
-      Представляем <br>
-      систему <br>
-      мониторинга
+      {{ $t("system_monitoring.title[0]") }} <br>
+      {{ $t("system_monitoring.title[1]") }} <br>
+      {{ $t("system_monitoring.title[2]") }}
     </p>
-    <p class="system-card-text">С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool</p>
+    <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
   </div>
   <div class="system-card-img">
     <img src="../assets/img/Mockup-mac.png" class="img-mac img-system web">
@@ -14,9 +14,16 @@
     <img src="../assets/img/Mockup-iphone.png" class="img-mac img-system mobile">
     <img src="../assets/img/Mockup-monitoring-iphone.png" class="img-monitoring img-system mobile">
   </div>
-  <p class="get-consultation">получить консультацию</p>
+  <p class="get-consultation">{{ $t("system_monitoring.button") }}</p>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
+export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
+}
 </script>
 <style scoped>
 .system-card-inf{
