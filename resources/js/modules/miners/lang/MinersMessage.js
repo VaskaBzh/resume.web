@@ -1,8 +1,8 @@
 export const MinersMessage = {
     en: {
         title: ['transparent', 'and efficient', 'mining', 'bitcoin'],
-        buttun: 'get advice',
-        how_are_we: {
+        button: 'get advice',
+        who_are_we: {
             title: ['mining pool and', 'community for', 'miners'],
             column:{
                 num: ['>3', '4%', '>1.7'],
@@ -34,6 +34,7 @@ export const MinersMessage = {
         },
         community: {
             title: 'Large mining community and industry news',
+            title_mobile: ['Large', 'mining', 'community and', 'industry news'],
             text: 'Join the community of like-minded professionals and subscribe to our blogs for the Russian-speaking audience.',
             list: {
                 title: ['join the community', 'read our blogs'],
@@ -58,8 +59,8 @@ export const MinersMessage = {
     },
     ru: {
         title: ['прозрачный', 'и эффективный', 'майнинг', 'bitcoin'],
-        buttun: 'получить консультацию',
-        how_are_we: {
+        button: 'получить консультацию',
+        who_are_we: {
             title: ['майнинг пул и', 'комьюнити для', 'майнеров'],
             column:{
                 num: ['>3', '4%', '>1,7'],
@@ -91,6 +92,7 @@ export const MinersMessage = {
         },
         community: {
             title: 'Большое комьюнити майнеров и новости индустрии',
+            title_mobile: ['Большое', 'комьюнити', 'майнеров и', 'новости индустрии'],
             text: 'Присоединяйтесь к комьюнити профессионалов- единомышленников и подписывайтесь на наши блоги для русскоязычной аудитории.',
             list: {
                 title: ['вступайте в комьюнити', 'читайте наши блоги'],

@@ -1,24 +1,24 @@
 <template>
   <div class="card-community">
-    <p class="card-title card-web">Большое комьюнити майнеров и новости индустрии</p>
-    <p class="card-title card-mobile">Большое <br> комьюнити <br>  майнеров и <br> новости индустрии</p>
+    <p class="card-title card-web">{{ $t("community.title") }}</p>
+    <p class="card-title card-mobile">{{ $t("community.title_mobile[0]") }} <br> {{ $t("community.title_mobile[1]") }} <br>  {{ $t("community.title_mobile[2]") }} <br> {{ $t("community.title_mobile[3]") }}</p>
 
-    <p class="card-text">Присоединяйтесь к комьюнити профессионалов- единомышленников и подписывайтесь на наши блоги для русскоязычной аудитории.</p>
+    <p class="card-text">{{ $t("community.text") }}</p>
   </div>
   <div class="lists">
     <div>
-      <p class="list-title">вступайте в комьюнити</p>
+      <p class="list-title">{{ $t("community.list.title[0]") }}</p>
       <div class="list-items">
         <button class="list-item-tg">
-          Telegram комьюнити
+          {{ $t("community.list.buttons[0]") }}
         </button>
         <button class="list-item-tg">
-          telegram канал
+          {{ $t("community.list.buttons[1]") }}
         </button>
       </div>
     </div>
     <div>
-      <p class="list-title">читайте наши блоги</p>
+      <p class="list-title">{{ $t("community.list.title[1]") }}</p>
       <div class="list-items">
         <button class="list-item-blog">
         <img src="../assets/img/yandex.png" class="img-community-web">
@@ -42,6 +42,15 @@
     </div>
   </div>
 </template>
+<script>
+import { MinersMessage } from "@/modules/miners/lang/MinersMessage";
+
+export default {
+  i18n: {
+          sharedMessages: MinersMessage,
+        },
+}
+</script>
 <style scoped>
 .card-title{
   color: var(--gray-1100, #F5FAFF);

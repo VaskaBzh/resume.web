@@ -3,12 +3,12 @@
       <main class="main-miners">
         <article class="article-miners first-text">
             <div class="miners-content">
-                <span class="">прозрачный <br></span>
-                <span class="">и эффективный<br></span>
-                <span class="text-mining">майнинг <br></span>
-                <span class="text-bitcoin">bitcoin <br></span>
+                <span class="">{{ $t("title[0]") }} <br></span>
+                <span class="">{{ $t("title[1]") }}<br></span>
+                <span class="text-mining">{{ $t("title[2]") }} <br></span>
+                <span class="text-bitcoin">{{ $t("title[3]") }} <br></span>
             </div>
-            <button-blue class="get-consultation">получить консультацию</button-blue>
+            <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
         </article>
         <article class="article-hosting test-color second-text">
             <AboutView :facts="factsMiners" :title="titleMiners"></AboutView>
@@ -45,6 +45,8 @@ import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
 import ConnectCard from "../modules/hosting/Components/ConnectCard.vue";
 import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
 import CommunityCard from "../modules/miners/Components/CommunityCard.vue";
+import { MinersMessage } from "@/modules/miners/lang/MinersMessage";
+
 
 export default {
     name: 'miners-page',
@@ -58,29 +60,32 @@ export default {
       FooterHosting,
       CommunityCard
     },
+    i18n: {
+            sharedMessages: MinersMessage,
+    },
     data() {
         return {
             factsMiners: [
                 {
                     num: '>3',
-                    grayText: 'лет',
-                    mainText: ['Работаем на рынке', 'цифровых активов'],
+                    grayText: this.$t("who_are_we.column.gray_text[0]"),
+                    mainText: [ this.$t("who_are_we.column.main_text[0]"),  this.$t("who_are_we.title[1]")],
                 },
                 {
                     num: '4%',
                     grayText: '',
-                    mainText: ['постоянная', 'комиссия'],
+                    mainText: [ this.$t("who_are_we.title[2]"),  this.$t("who_are_we.title[3]")],
                 },
                 {
                     num: '>1,7',
                     grayText: 'EH /s',
-                    mainText: ['Общий хешрейт', 'Allbtc Pool'],
+                    mainText: [ this.$t("who_are_we.title[4]"),  this.$t("who_are_we.title[5]")],
                 },
             ],
-            titleMiners: ['майнинг пул и ', 'комьюнити для', 'майнеров'],
+            titleMiners: [ this.$t("who_are_we.title[0]"),  this.$t("who_are_we.title[1]"),  this.$t("who_are_we.title[2]")],
             ourOffer: {
-              title: 'что мы предлагаем',
-              text: 'Эффективный и стабильный майнинг-пул с персональной комиссией, оптимизированный под добычу Bitcoin. А также комплекс инструментов для прозрачного и удобного анализа ваших активов.'
+              title:  this.$t("offer.title"),
+              text:  this.$t("offer.text")
             }
         }
     },
