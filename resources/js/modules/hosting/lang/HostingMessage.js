@@ -1,8 +1,9 @@
 export const HostingMessage = {
     en: {
         title: ['by', '50%', 'Increase', 'your income', 'per kW'],
-        buttun: 'get advice',
-        how_are_we: {
+        button: 'get advice',
+        who_are_we: {
+            button: 'who we are',
             title: ['Efficient pool', 'for Bitcoin mining,', 'optimized', 'for work', 'data centers'],
             column:{
                 num: ['>3', '5', '>1.7'],
@@ -23,7 +24,7 @@ export const HostingMessage = {
             text: 'A personal manager will work with you to help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool'
         },
         system_monitoring: {
-            title: 'Introducing the monitoring system',
+            title: ['Introducing', 'the monitoring', 'system'],
             text: 'The hosting monitoring and management system allows you to optimize the operation of your data center. You can track your devices, monitor movements and repairs. It also includes statistics on all devices and timely actions when problems are identified.',
             button: 'get advice'
         },
@@ -49,7 +50,7 @@ export const HostingMessage = {
             title: 'Guarantees of reliability and safety',
             text: 'A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool',
             list: {
-                title: ['FPPS+ payment system', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
+                title: ['FPPS+', 'payment system', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
                 text: ['The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.']
             }
         },
@@ -71,8 +72,9 @@ export const HostingMessage = {
     },
     ru: {
         title: ['на', '50%', 'Увеличьте', 'ваш доход', 'за каждый квт'],
-        buttun: 'получить консультацию',
-        how_are_we: {
+        button: 'получить консультацию',
+        who_are_we: {
+            button: 'кто мы',
             title: ['Эффективный пул', 'для добычи Bitcoin,', 'оптимизированный', 'для работы', 'дата-центров'],
             column:{
                 num: ['>3', '5', '>1,7'],
@@ -93,7 +95,7 @@ export const HostingMessage = {
             text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
         },
         system_monitoring: {
-            title: 'Представляем систему мониторинга',
+            title: ['Представляем', 'систему', 'мониторинга'],
             text: 'Система мониторинга и управления хостингом позволяет оптимизировать работу вашего дата центра. Вы можете отслеживать ваши устройства, следить за перемещениями и ремонтами. Также это статистика по всем устройствам и своевременные действия при выявлении проблем.',
             button: 'получить консультацию'
         },
@@ -119,7 +121,7 @@ export const HostingMessage = {
             title: 'Гарантии надежности и безопасности',
             text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool',
             list: {
-                title: ['система выплаты FPPS+', 'гарантия безопасности', 'автовыплаты', 'оперативная техподдержка', 'своевременные уведомления'],
+                title: ['система выплаты', 'FPPS+', 'гарантия безопасности', 'автовыплаты', 'оперативная техподдержка', 'своевременные уведомления'],
                 text: ['Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.']
             }
         },

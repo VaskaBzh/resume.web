@@ -1,10 +1,17 @@
 <template>
   <div class="working-card">
-    <p class="working-title">Что получат ваши клиенты</p>
-    <p class="working-text">С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool</p>
+    <p class="working-title">{{ $t("for_clients.button") }}</p>
+    <p class="working-text">{{ $t("for_clients.text") }}</p>
   </div>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
+export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
+}
 </script>
 <style scoped>
 .working-card{

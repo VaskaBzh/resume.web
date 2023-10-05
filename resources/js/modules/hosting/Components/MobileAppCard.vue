@@ -1,7 +1,7 @@
 <template>
   <div class="system-card-inf">
-    <p class="system-card-title">мобильное приложение</p>
-    <p class="system-card-text">С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool</p>
+    <p class="system-card-title">{{ $t("mobile_app.title") }}</p>
+    <p class="system-card-text">{{ $t("mobile_app.text") }}</p>
   </div>
   <div class="system-card-img">
     <img src="../assets/img/Mockup-iphone.png" class="img-iphone img-system">
@@ -9,6 +9,13 @@
   </div>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
+export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
+}
 </script>
 <style scoped>
 .system-card-inf{

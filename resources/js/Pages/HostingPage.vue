@@ -3,27 +3,27 @@
     <main class="main-hosting">
         <article class="article-hosting first-text">
             <div class="hosting-content">
-                <span class="text-on">на</span>
-                <span class="text-fifty">50% <br></span>
-                <span class="text-increase">Увеличьте <br></span>
-                <span class="text-income">ваш доход <br></span>
-                <span class="text-cvt">за каждый квт</span>
+                <span class="text-on">{{ $t("title[0]") }}</span>
+                <span class="text-fifty">{{ $t("title[1]") }} <br></span>
+                <span class="text-increase">{{ $t("title[2]") }} <br></span>
+                <span class="text-income">{{ $t("title[3]") }} <br></span>
+                <span class="text-cvt">{{ $t("title[4]") }}</span>
             </div>
-            <button-blue class="get-consultation">получить консультацию</button-blue>
+            <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
 
         </article>
         <article class="article-hosting test-color second-text">
             <AboutView :facts="factsHosting" :title="titleHostings"></AboutView>
         </article>
         <article class="article-hosting third-text">
-            <div class="how-are-we">что мы предлагаем</div>
+            <div class="how-are-we">{{ $t("offer.button") }}</div>
             <div class="offer-content">
-                <span class="text-offer">увеличим</span>
+                <span class="text-offer">{{ $t("offer.title[0]") }}</span>
                 <div class="text-offer-column">
-                    <span class="text-offer">ваш доход<br></span>
-                    <span class="text-offer">за каждый квт<br></span>
+                    <span class="text-offer">{{ $t("offer.title[1]") }}<br></span>
+                    <span class="text-offer">{{ $t("offer.title[2]") }}<br></span>
                 </div>
-                <span class="text-offer text-end">на 50%<br></span>
+                <span class="text-offer text-end">{{ $t("offer.title[3]") }}<br></span>
             </div>
             <div class="offer-card-container">
                 <div class="offer-card" v-for="offer in offers">
@@ -67,7 +67,6 @@
 <script>
 import HeaderComponent from "../modules/common/Components/HeaderComponent.vue";
 import ButtonBlue from "../modules/common/Components/UI/ButtonBlue.vue";
-import WorkingWithUsCard from "../modules/hosting/Components/WorkingWithUsCard.vue";
 import MonitoringSystemCard from "../modules/hosting/Components/MonitoringSystemCard.vue";
 import SupportSystemCard from "../modules/hosting/Components/SupportSystemCard.vue";
 import ForClientsCard from "../modules/hosting/Components/ForClientsCard.vue";
@@ -78,14 +77,13 @@ import ConnectCard from "../modules/hosting/Components/ConnectCard.vue";
 import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
 import AboutView from "../modules/common/landing/Components/AboutView.vue";
 import BlueView from "../modules/common/landing/Components/BlueView.vue";
-
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     name: 'hosting-page',
     components: {
     HeaderComponent,
     ButtonBlue,
-    WorkingWithUsCard,
     MonitoringSystemCard,
     SupportSystemCard,
     ForClientsCard,
@@ -96,46 +94,49 @@ export default {
     FooterHosting,
     AboutView,
     BlueView
-},
+    },
+    i18n: {
+            sharedMessages: HostingMessage,
+        },
     data() {
         return {
             factsHosting: [
                 {
                     num: '>3',
-                    grayText: 'лет',
-                    mainText: ['Работаем на рынке', 'цифровых активо'],
+                    grayText: this.$t("who_are_we.column.gray_text[0]"),
+                    mainText: [this.$t("who_are_we.column.main_text[0]"), this.$t("who_are_we.column.main_text[1]")],
                 },
                 {
                     num: '5',
-                    grayText: 'крупнейших дата-центров РФ',
-                    mainText: ['Успешно работают', 'с нами'],
+                    grayText: this.$t("who_are_we.column.gray_text[1]"),
+                    mainText: [this.$t("who_are_we.column.main_text[2]"), this.$t("who_are_we.column.main_text[3]")],
                 },
                 {
                     num: '>1,7',
                     grayText: 'EH /s',
-                    mainText: ['Общий хешрейт', 'Allbtc Pool'],
+                    mainText: [this.$t("who_are_we.column.main_text[4]"), this.$t("who_are_we.column.main_text[5]")],
                 },
             ],
             offers:[
                 {
-                    percent: 'до 4% ',
-                    title: 'персональная комиссия  для ваших клиентов',
-                    text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
+                    percent: this.$t("offer.cards.title[0]"),
+                    title:  this.$t("offer.cards.title[1]"),
+                    text:  this.$t("offer.cards.text[0]")
                 },
                 {
-                    percent: 'до 75% ',
-                    title: 'ваши вознаграждения  по партнерской программе',
-                    text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
+                    percent:  this.$t("offer.cards.title[2]"),
+                    title:  this.$t("offer.cards.title[3]"),
+                    text:  this.$t("offer.cards.text[1]")
                 }
             ],
-            titleHostings: ['Эффективный пул ', 'для добычи Bitcoin,', 'оптимизированный', 'для работы ', 'дата-центров'],
+            titleHostings: [ this.$t("who_are_we.title[0]") , this.$t("who_are_we.title[1]"), this.$t("who_are_we.title[2]"), this.$t("who_are_we.title[3]"), this.$t("who_are_we.title[4]")],
             getYourClients: {
-                title: 'Что получат ваши клиенты',
-                text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
+                title: this.$t("for_clients.button"),
+                text: this.$t("for_clients.text")
             },
             workingWithUs: {
-                title: 'плюсы работы с нами',
-                text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool',
+                title: this.$t("pluse.button"),
+                text: this.$t("pluse.text")
             }
         }
     },
@@ -198,6 +199,7 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 110%; /* 19.8px */
+    width: 280px;
 }
 .main-hosting{
     width: 100vw;
@@ -371,6 +373,7 @@ export default {
     }
     .offer-text{
         font-size: 14px;
+        width: auto;
     }
     .third-text{
         gap: 50px;

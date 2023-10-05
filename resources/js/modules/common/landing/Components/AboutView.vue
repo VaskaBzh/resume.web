@@ -1,6 +1,6 @@
 <template>
-      <div class="how-are-we">кто мы</div>
-      <div class="hosting-content how-we-are-content">
+      <div class="who-are-we">{{ $t("who_are_we.button") }}</div>
+      <div class="hosting-content who-we-are-content">
           <p class="who-we-are-text">
               {{ title[0] }} <br>  
               {{ title[1] }} <br>
@@ -28,7 +28,12 @@
       </div>
 </template>
 <script>
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+
 export default {
+  i18n: {
+          sharedMessages: HostingMessage,
+        },
   props: {
         facts: {
             type: Object,
@@ -105,7 +110,7 @@ export default {
     line-height: 120%; /* 52.8px */
     text-transform: uppercase;
 }
-.how-are-we{
+.who-are-we{
     border-radius: 30px;
     border: 0.5px solid var(--secondary-gray, #98A2B3);
     padding: 14px 24px;
@@ -176,7 +181,7 @@ export default {
     .help-button{
         display: none;
     }
-    .how-are-we{
+    .who-are-we{
         font-size: 14px;
     }
 }
@@ -186,17 +191,11 @@ export default {
         line-height: 120%; /* 43.2px */
         width: 400px;
     }
-    .text-fifty{
-        font-size: 106px;
-    }
-    .get-consultation{
-        width: 400px;
-    }
     .who-we-are-text{
         font-size: 20px;
         line-height: 120%; /* 24px */
     }
-    .how-we-are-content{
+    .who-we-are-content{
         width: 304px;
         /* height: 120px; */
     }
@@ -219,7 +218,7 @@ export default {
     .who-we-are-text{
         font-size: 18px;
     }
-    .how-we-are-content{
+    .who-we-are-content{
         width: 273px;
         /* height: 118px; */
     }
@@ -243,7 +242,7 @@ export default {
     .item-content{
         gap: 20px;
     }
-    .how-are-we{
+    .who-are-we{
         font-size: 12px;
         padding: 8px 10px;
     }
