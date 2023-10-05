@@ -56,14 +56,22 @@ export default {
     components: {HeadLine},
     mounted() {
         gsap.registerPlugin(ScrollTrigger)
+        gsap.to(('.security-view_item'), {
+            duration: 3,
+            scrollTrigger: {
+                trigger: '.security-view__wrapper',
+                start: 'top top',
+                end: 'bottom bottom',
+                scrub: true,
+                pin: '.security-view_right',
+                pinSpacing: false,
+                marker: true
 
-        ScrollTrigger.create({
-            trigger:".security-view__wrapper",
-            start:"top top",
-            end:"bottom bottom",
-            pin:".security-view_right",
-            pinSpacing: false
+            }
         })
+
+
+
     }
 
 }
@@ -77,30 +85,30 @@ export default {
 
     &__container {
         margin: 0 auto;
+        max-width: 1600px;
     }
 
     &__wrapper {
         display: flex;
         position: relative;
+        justify-content: center;
     }
 
     &__left {
         position: relative;
-        left: 20%;
+        left: -10%;
         z-index: 99999;
 
         &__item__wrapper {
-            width: 100%;
+            width: 40vw;
         }
     }
 
     &_item {
         height: 100vh;
-        display: flex;
-        flex-flow: row nowrap;
-        align-items: center;
-        justify-content: center;
-        gap: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-column-gap: 30px;
 
 
         &_title {
@@ -111,6 +119,7 @@ export default {
             font-weight: 400;
             line-height: 120%;
             text-transform: uppercase;
+            align-self: center;
         }
 
         &_text {
@@ -121,6 +130,7 @@ export default {
             font-style: normal;
             font-weight: 400;
             line-height: 110%;
+            align-self: center;
         }
     }
 
@@ -131,8 +141,8 @@ export default {
         flex-direction:column;
         justify-content:center;
         position: absolute;
-        right: 0;
-        top: 0;
+        left: 0;
+        transform: translate(50%, 0%);
 
         &_item {
             width: 100%;
@@ -144,6 +154,7 @@ export default {
             backdrop-filter: blur(10px);
             display: flex;
             align-items: center;
+            position: absolute;
             flex-flow: column nowrap;
             justify-content: center;
         }
