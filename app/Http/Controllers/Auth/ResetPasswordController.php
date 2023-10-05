@@ -6,10 +6,12 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ChangePasswordRequest;
+use App\Mail\User\PasswordChangeConfirmationMail;
 use App\Models\User;
 use App\Traits\Tokenable;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordController extends Controller
@@ -27,6 +29,8 @@ class ResetPasswordController extends Controller
         }
 
         if ($user->update(['password' => Hash::make($request->password)])) {
+
+            Mail::to($user->email)->send(new PasswordChangeConfirmationMail);
 
             return new JsonResponse(['message' => 'success']);
         }
