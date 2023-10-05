@@ -1,5 +1,5 @@
 <template>
-    <!-- <header-component/> -->
+    <header-component/>
     <main class="main-hosting">
         <article class="article-hosting first-text">
             <div class="hosting-content">
@@ -13,29 +13,7 @@
 
         </article>
         <article class="article-hosting test-color second-text">
-            <div class="how-are-we">кто мы</div>
-            <div class="hosting-content how-we-are-content">
-                <p class="who-we-are-text">
-                    Эффективный пул <br>  
-                    для добычи Bitcoin, <br>
-                    оптимизированный <br>
-                    для работы <br>
-                    дата-центров <br>
-                </p>
-            </div>
-            <div class="facts-container">
-                <div class="help-button">?</div>
-                <div class="fact-item" v-for="fact in facts">
-                    <div class="item-content">
-                        <div class="fact-row">
-                            <span class="fact-num">{{ fact.num }}</span>
-                            <span class="fact-gray-text">{{ fact.grayText }}</span>
-                        </div>
-                        <span class="fact-main-text">{{ fact.mainText }}</span>
-                    </div>
-  
-                </div>
-            </div>
+            <AboutView :facts="factsHosting" :title="titleHostings"></AboutView>
         </article>
         <article class="article-hosting third-text">
             <div class="how-are-we">что мы предлагаем</div>
@@ -58,7 +36,7 @@
             </div>
         </article>
         <article class="article-hosting article-work-with-us">
-            <WorkingWithUsCard></WorkingWithUsCard>
+            <BlueView :inf="workingWithUs"></BlueView>
         </article>
         <article class="article-hosting black-block">
             <MonitoringSystemCard></MonitoringSystemCard>
@@ -67,7 +45,7 @@
             <SupportSystemCard></SupportSystemCard>
         </article>
         <article class="article-hosting article-work-with-us">
-            <ForClientsCard></ForClientsCard>
+            <BlueView :inf="getYourClients"></BlueView>
         </article>
         <article class="article-hosting black-block">
             <PersonalAreaCard></PersonalAreaCard>
@@ -98,40 +76,44 @@ import MobileAppCard from "../modules/hosting/Components/MobileAppCard.vue";
 import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
 import ConnectCard from "../modules/hosting/Components/ConnectCard.vue";
 import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
+import AboutView from "../modules/common/landing/Components/AboutView.vue";
+import BlueView from "../modules/common/landing/Components/BlueView.vue";
 
 
 export default {
     name: 'hosting-page',
     components: {
-         HeaderComponent,
-         ButtonBlue,
-         WorkingWithUsCard,
-         MonitoringSystemCard,
-         SupportSystemCard,
-         ForClientsCard,
-         PersonalAreaCard,
-         MobileAppCard,
-         GuaranteeCard,
-         ConnectCard,
-         FooterHosting
-    },
+    HeaderComponent,
+    ButtonBlue,
+    WorkingWithUsCard,
+    MonitoringSystemCard,
+    SupportSystemCard,
+    ForClientsCard,
+    PersonalAreaCard,
+    MobileAppCard,
+    GuaranteeCard,
+    ConnectCard,
+    FooterHosting,
+    AboutView,
+    BlueView
+},
     data() {
         return {
-            facts: [
+            factsHosting: [
                 {
                     num: '>3',
                     grayText: 'лет',
-                    mainText: 'Работаем на рынке цифровых активо',
+                    mainText: ['Работаем на рынке', 'цифровых активо'],
                 },
                 {
                     num: '5',
                     grayText: 'крупнейших дата-центров РФ',
-                    mainText: 'Успешно работают с нами',
+                    mainText: ['Успешно работают', 'с нами'],
                 },
                 {
                     num: '>1,7',
                     grayText: 'EH /s',
-                    mainText: 'Общий хешрейт Allbtc Pool',
+                    mainText: ['Общий хешрейт', 'Allbtc Pool'],
                 },
             ],
             offers:[
@@ -145,7 +127,16 @@ export default {
                     title: 'ваши вознаграждения  по партнерской программе',
                     text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
                 }
-            ]
+            ],
+            titleHostings: ['Эффективный пул ', 'для добычи Bitcoin,', 'оптимизированный', 'для работы ', 'дата-центров'],
+            getYourClients: {
+                title: 'Что получат ваши клиенты',
+                text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
+            },
+            workingWithUs: {
+                title: 'плюсы работы с нами',
+                text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool',
+            }
         }
     },
 }
@@ -167,30 +158,6 @@ export default {
 .text-end{
     display: flex;
     justify-content: end;
-}
-.facts-container{
-    display: flex;
-    position: relative;
-}
-.fact-item{
-    border-left: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
-    padding: 82px 143px 0 30px;
-}
-.fact-item:last-child{
-    border-right: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
-    padding: 82px 144px 0 30px;
-}
-.item-content{
-    width: 431px;
-    display: flex;
-    flex-direction: column;
-    gap: 150px;
-    height: 90%;
-}
-.fact-row{
-    display: flex;
-    gap: 10px;
-    align-items: end;
 }
 .first-text{
     flex-direction: column;
@@ -231,33 +198,6 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 110%; /* 19.8px */
-}
-.fact-num{
-    color: var(--gray-2100, #E4E7EC);
-    font-family: Unbounded;
-    font-size: 110px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 100%; /* 110px */
-    text-transform: uppercase;
-}
-.fact-gray-text{
-    color: var(--gray-370, rgba(208, 213, 221, 0.70));
-    font-family: Unbounded;
-    font-size: 22px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%; /* 26.4px */
-    margin-bottom: 4px;
-}
-.fact-main-text{
-    color: var(--gray-2100, #E4E7EC);
-    font-family: Unbounded;
-    font-size: 24px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 28.8px */
-    text-transform: uppercase;
 }
 .main-hosting{
     width: 100vw;
@@ -330,27 +270,6 @@ export default {
     line-height: 120%; /* 24px */
     text-transform: uppercase;
 }
-.help-button{
-    border-radius: 40px;
-    border: 0.5px solid rgba(192, 228, 255, 0.60);
-    background: var(--gray-470, rgba(13, 13, 13, 0.70));
-    position: absolute;
-    color: var(--gray-2100, #E4E7EC);
-    font-family: Unbounded;
-    font-size: 27px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%; /* 32.4px */
-    text-transform: uppercase;
-    top: -76px;
-    right: -56px;
-    width: 60px;
-    height: 60px;
-    padding: 8px 20px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
 .article-work-with-us{
     border-radius: 70px;
     background: linear-gradient(165deg, #002195 8.98%, #007AF3 122.43%);
@@ -376,40 +295,6 @@ export default {
     background: var(--gray-4100, #0D0D0D);
     box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     padding: 100px 100px 50px;
-}
-@media(max-width:1800px){
-    .item-content{
-        width: 400px;
-    }
-    .fact-item{
-        padding: 82px 35.5px 0 30px;
-    }
-    .fact-item:last-child{
-        padding: 82px 36.5px 0 30px;
-    }
-}
-@media(max-width:1500px){
-    .item-content{
-        width: 172px;
-    }
-    .fact-item{
-        padding: 82px 40px 0 30px;
-    }
-    .fact-item:last-child{
-        padding: 82px 41px 0 30px;
-    }
-    .fact-num{
-        font-size: 60px;
-    }
-    .fact-gray-text{
-        font-size: 12px;
-    }
-    .fact-main-text{
-        font-size: 12px;
-    }
-    .who-we-are-text{
-        /* font-size: 30px; */
-    }
 }
 @media(max-width: 850px){
     .help-button{
@@ -438,23 +323,6 @@ export default {
     .get-consultation{
         width: 400px;
     }
-    .who-we-are-text{
-        font-size: 20px;
-        line-height: 120%; /* 24px */
-    }
-    .how-we-are-content{
-        width: 304px;
-        height: 120px;
-    }
-    .fact-item{
-        padding: 33px 20px 0 20px;
-    }
-    .fact-item:last-child{
-        padding: 33px 21px 0 20px;
-    }
-    .item-content{
-        gap: 70px;
-    }
 }
 @media(max-width: 450px){
     .hosting-content{
@@ -475,33 +343,6 @@ export default {
     }
     .black-block{
         gap: 40px;
-    }
-    .who-we-are-text{
-        font-size: 18px;
-    }
-    .how-we-are-content{
-        width: 273px;
-        height: 118px;
-    }
-    .facts-container{
-        flex-direction: column;
-        width: 100%;
-
-    }
-    .fact-item{
-        border-top: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
-        border-left: none;
-        padding: 20px 0 44px 0;
-        display: flex;
-        width: 100%;
-        justify-content: center;
-    }
-    .fact-item:last-child{
-        border-right: none;
-        padding: 20px 0 44px 0;
-    }
-    .item-content{
-        gap: 20px;
     }
     .how-are-we{
         font-size: 12px;
