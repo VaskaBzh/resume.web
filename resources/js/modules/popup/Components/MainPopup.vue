@@ -1,6 +1,6 @@
 <template>
     <div class="popup" :id="id" :class="{ 'popup-show': service.isOpened }">
-        <un-click-view :wait="wait" />
+<!--        <un-click-view :wait="wait" />-->
         <div class="popup__wrapper">
             <div class="popup__content-fake">
                 <div class="popup__block-fake">

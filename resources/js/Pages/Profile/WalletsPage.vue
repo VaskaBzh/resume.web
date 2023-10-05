@@ -150,8 +150,10 @@
         :errors="errors"
         @closed="wallets.clearForm(wallets.form)"
         v-if="wallets.form"
+        :makeResize="makeResize"
     >
         <form
+            v-if="!wallets.isCodeSend"
             @submit.prevent="wallets.changeWallet"
             class="form form-popup popup__form"
         >
@@ -208,6 +210,10 @@
                 {{ $t("wallets.popups.change.button") }}
             </button>
         </form>
+        <verify-form
+            v-if="wallets.isCodeSend"
+            @sendForm="changeWallet($event)"
+        />
     </main-popup>
     <main-popup
         id="addWallet"
@@ -215,8 +221,10 @@
         :closed="wallets.closed"
         @closed="wallets.clearForm(wallets.form)"
         v-if="wallets.form"
+        :makeResize="makeResize"
     >
         <form
+            v-if="!wallets.isCodeSend"
             @submit.prevent="wallets.addWallet"
             class="form form-popup popup__form"
         >
@@ -274,6 +282,10 @@
                 {{ $t("wallets.popups.add.button") }}
             </button>
         </form>
+        <verify-form
+            v-if="wallets.isCodeSend"
+            @sendForm="createWallet($event)"
+        />
     </main-popup>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
@@ -295,9 +307,11 @@ import { InstructionService } from "@/modules/instruction/services/InstructionSe
 import { mapGetters } from "vuex";
 import { WalletsService } from "@/services/WalletsService";
 import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
+import VerifyForm from "../../modules/verify/Components/VerifyForm.vue";
 
 export default {
     components: {
+        VerifyForm,
         InstructionButton,
         WalletsWarning,
         MainPopup,
@@ -329,6 +343,7 @@ export default {
             waitWallet: true,
             wallets: new WalletsService(this.$t),
             isActiveLabelEmail: false,
+            makeResize: false,
             isActiveLabelName: false,
             isActiveLabelMinWithdrawal: false,
             verifyButtonName: this.$t("wallets.no_info.verify_text"),
@@ -344,9 +359,27 @@ export default {
         },
         user(newUserData) {
             this.wallets.setUser(newUserData);
+        },
+        "wallets.isCodeSend"() {
+            this.makeResize = true;
+
+            setTimeout(() => this.makeResize = false, 300);
         }
     },
     methods: {
+        changeWallet(code) {
+            this.setCode(code);
+
+            this.wallets.changeWallet();
+        },
+        createWallet(code) {
+            this.setCode(code);
+
+            this.wallets.addWallet();
+        },
+        setCode(code) {
+            this.wallets.form.code = code;
+        },
         setForm(wallet) {
             this.wallets.setForm(wallet)
         },

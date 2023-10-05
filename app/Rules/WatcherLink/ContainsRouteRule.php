@@ -6,15 +6,15 @@ use Illuminate\Contracts\Validation\InvokableRule;
 
 class ContainsRouteRule implements InvokableRule
 {
-    private const ALLOWED_ROUTES = [
+    private const ALLOWABLE_ROUTES = [
         'v1.sub.show',
-        'v1.hashrate.list',
+        'v1.statistic.show',
         'v1.worker.show',
         'v1.worker.list',
         'v1.worker_hashrate.list',
         'v1.income.list',
         'v1.payout.list',
-        'v1.allowed-routes'
+        'v1.allowed-routes',
     ];
 
    public function __invoke($attribute, $value, $fail)
@@ -24,7 +24,7 @@ class ContainsRouteRule implements InvokableRule
        }
 
        foreach ($value as $routeName) {
-           if (!in_array($routeName, self::ALLOWED_ROUTES)) {
+           if (!in_array($routeName, self::ALLOWABLE_ROUTES)) {
                $fail('This route can not be allowed');
            }
        }

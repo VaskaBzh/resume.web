@@ -63,6 +63,7 @@ export default {
     transform: translateY(-50%) scale(0);
     opacity: 0;
     min-height: 40px;
+    display: inline-flex;
     align-items: center;
     padding: 4px 12px;
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
@@ -76,6 +77,7 @@ export default {
     transition: all 0.3s ease 0s;
     transform-origin: right center;
     width: fit-content;
+    white-space: nowrap;
 }
 .button_icon {
     fill: var(--text-focus, #2E90FA);

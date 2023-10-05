@@ -2,7 +2,6 @@
 
 use App\Http\Controllers\Api\AllowedRoutesController;
 use App\Http\Controllers\Api\ChartController;
-use App\Http\Controllers\Api\HashRateListController;
 use App\Http\Controllers\Api\Incomes\ListController;
 use App\Http\Controllers\Api\MinerStatController;
 use App\Http\Controllers\Api\Payout\ListController as PayoutListController;
@@ -14,6 +13,7 @@ use App\Http\Controllers\Api\SendCodeController;
 use App\Http\Controllers\Api\Sub\CreateController as SubCreateController;
 use App\Http\Controllers\Api\Sub\ListController as SubListController;
 use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
+use App\Http\Controllers\Api\StatisticController as SubStatisticController;
 use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
@@ -60,7 +60,7 @@ Route::group([
         Route::get('/worker/{worker}', WorkerShowController::class)->name('worker.show');
     });
 
-    Route::get('/hashrate/{sub}', HashRateListController::class)->name('hashrate.list');
+    Route::get('/statistic/{sub}', SubStatisticController::class)->name('statistic.show');
     Route::get('/incomes/{sub}', ListController::class)->name('income.list');
     Route::get('/payouts/{sub}', PayoutListController::class)->name('payout.list');
     Route::get('/workerhashrate/{worker}', WorkerHashRateController::class)->name('worker_hashrate.list');

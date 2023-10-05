@@ -27,6 +27,7 @@ export class WalletsService extends DefaultSubsService {
         this.wait = false;
         this.closed = false;
         this.opened = false;
+        this.isCodeSend = false;
 
         this.user = {};
     }
@@ -80,6 +81,8 @@ export class WalletsService extends DefaultSubsService {
         setTimeout(() => {
             this.closed = false;
         }, 600);
+
+        this.isCodeSend = false;
     }
 
     async index() {
@@ -119,27 +122,58 @@ export class WalletsService extends DefaultSubsService {
     async addWallet() {
         if (this.group_id !== -1) {
             this.wait = true;
-            try {
-                const response = await ProfileApi.post("/wallets/create", this.form);
 
-                openNotification(
-                    true,
-                    this.translate("validate_messages.success"),
-                    response.data.message
-                );
-                await this.index();
-                this.clearForm();
-                this.closePopup();
-            } catch (err) {
-                console.error("Error with: " + err);
-                store.dispatch("setFullErrors", err.response.data.errors);
+            if (!this.form.code) {
+                try {
+                    const response = await ProfileApi.post(`/send/code/${this.user.id}`, this.form);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                    this.isCodeSend = true;
+
+                    openNotification(
+                        true,
+                        this.translate("validate_messages.success"),
+                        response.data.data.message
+                    );
+                } catch (err) {
+                    console.error("Error with: " + err);
+                    store.dispatch("setFullErrors", err.response.data.errors);
+
+                    openNotification(
+                        false,
+                        this.translate("validate_messages.error"),
+                        err.response.data.message
+                    );
+                }
+            } else {
+                try {
+                    const form = {
+                        wallet_address: this.form.wallet,
+                        name: this.form.name,
+                        group_id: this.group_id,
+                        confirmation_code: this.form.code,
+                    }
+                    const response = await ProfileApi.post("/wallets/create", form);
+
+                    openNotification(
+                        true,
+                        this.translate("validate_messages.success"),
+                        response.data.message
+                    );
+                    await this.index();
+                    this.clearForm();
+                    this.closePopup();
+                } catch (err) {
+                    console.error("Error with: " + err);
+                    store.dispatch("setFullErrors", err.response.data.errors);
+
+                    openNotification(
+                        false,
+                        this.translate("validate_messages.error"),
+                        err.response.data.message
+                    );
+                }
             }
+
             this.wait = false;
         } else {
             store.dispatch("getMessage", this.translate("wallets.messages[0]"));
@@ -183,7 +217,12 @@ export class WalletsService extends DefaultSubsService {
                 }
                 if (this.form.code) {
                     try {
-                        const response = await ProfileApi.put(`/wallets/change/address/${currentWallet.wallet_address}`, this.form);
+                        const form = {
+                            wallet_address: this.form.wallet,
+                            group_id: this.form.group_id,
+                            confirmation_code: this.form.code,
+                        }
+                        const response = await ProfileApi.put(`/wallets/change/address/${currentWallet.wallet_address}`, form);
 
                         openNotification(
                             true,
@@ -215,7 +254,9 @@ export class WalletsService extends DefaultSubsService {
                 }
                 if (currentWallet.wallet_address !== this.form.wallet) {
                     try {
-                        const response = await ProfileApi.put(`/send/code/${this.user.id}`, this.form);
+                        const response = await ProfileApi.post(`/send/code/${this.user.id}`, this.form);
+
+                        this.isCodeSend = true;
 
                         openNotification(
                             true,
