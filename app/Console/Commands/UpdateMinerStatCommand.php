@@ -18,23 +18,24 @@ class UpdateMinerStatCommand extends Command
         BtcComService $btcComService
     ): void
     {
-        $stats = $btcComService->getStats();
+        $stats = $btcComService->getFppsRate();
+
         $difficulty = Http::get('https://blockchain.info/q/getdifficulty')
             ->collect()
             ->first();
 
-        if (empty($stats) && !$difficulty) {
-            Log::error('Mining stats request is empty');
-
-            return;
-        }
-
-        $minerstat = Upsert::execute(stats: $stats, difficulty: $difficulty);
-
-        Log::channel('commands')->info('MINER STATS COMMAND', [
-            'minerstats' => $minerstat
-        ]);
-
-        $this->line('Miner stats created');
+//        if (empty($stats) && !$difficulty) {
+//            Log::error('Mining stats request is empty');
+//
+//            return;
+//        }
+//
+//        $minerstat = Upsert::execute(stats: $stats, difficulty: $difficulty);
+//
+//        Log::channel('commands')->info('MINER STATS COMMAND', [
+//            'minerstats' => $minerstat
+//        ]);
+//
+//        $this->line('Miner stats created');
     }
 }

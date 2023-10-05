@@ -98,6 +98,7 @@ class BtcComService
     public function createSub(UserData $userData): array
     {
         if ($this->btcHasUser(userData: $userData)) {
+
             return [
                 'errors' => [
                     'name' => trans('validation.unique', [
@@ -166,17 +167,14 @@ class BtcComService
             ]);
     }
 
-    public function getStats(): array
+    public function getFppsRate(): float|int
     {
-        $stats = $this->call(['pool', 'status']);
         $fppsRate = $this->call(['account', 'earn-history'], params: [
             'puid' => self::PU_ID,
             "page_size" => "1",
         ])['list'];
 
-        return array_merge($stats, [
-            'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
-        ]);
+         return collect($fppsRate)->first()['more_than_pps96_rate'];
     }
 
     /* End requests */
