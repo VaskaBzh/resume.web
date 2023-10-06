@@ -1,6 +1,100 @@
 export const InstructionMessage = {
-    en: {},
+    en: {
+        button_titles: {
+            statistic: "Get acquainted with 'Statistics'",
+            connecting: "Get acquainted with 'Connection'",
+            incomes: "Get acquainted with 'Incomes'",
+            settings: "Get acquainted with 'Settings'",
+            wallets: "Get acquainted with 'Wallets'",
+            watchers: "Get acquainted with 'Watchers'",
+            workers: "Get acquainted with 'Workers'",
+        },
+        step: "Step",
+        titles: {
+            common: [
+                "Convenient navigation",
+                "Header",
+            ],
+            statistic: [
+                "Interactive chart",
+                "Worker metrics",
+                "Earnings forecast",
+                "Accruals",
+            ],
+            income: [
+                "Accruals",
+                "Monthly income",
+                "History of accruals and payouts",
+            ],
+            workers: [
+                "Worker hashrate",
+                "Worker table",
+            ],
+            connecting: [
+                "Connecting a worker",
+                "Worker connection",
+            ],
+            wallets: [
+                "Auto payout",
+                "Wallets",
+            ],
+            watchers: [
+                "Observer mode",
+                "Observer mode",
+            ],
+            settings: [
+                "Email",
+                "Security",
+            ],
+        },
+        texts: {
+            common: [
+                "Side navigation menu for switching between pages and changing the active subaccount.",
+                "To the left is the currency rate. On the right is the theme switcher (light/dark) and a button to change the language.",
+            ],
+            statistic: [
+                "Here you see a chart of the average hashrate from all your devices.",
+                "Main performance metrics of your devices and the number of active and inactive workers.",
+                "Today's forecast: Expected accrual for today. Yesterday's income: Accrual for yesterday. Monthly forecast: Expected income for the month.",
+                "Accrued: Shows how much you have accrued now and how much more you need to accrue for a bitcoin payout to your wallet. Monthly income chart: Shows daily accruals for the current month.",
+            ],
+            income: [
+                "Total accrued over time: The sum of all accruals since creating the subaccount. Accrued: Shows how much you have accrued now and how much more you need to accrue for a bitcoin payout to your wallet. Yesterday's income: The sum accrued from mining yesterday.",
+                "Monthly income: The total accruals for the past month. Monthly income chart: Shows daily accruals for the current month.",
+                "History of your accruals and payouts.",
+            ],
+            workers: [
+                "Current hashrate: Subaccount's average hashrate at the moment. Hashrate/24h: Subaccount's average hashrate for the day.",
+                "The worker table displays the state of the ASICs and their power over different periods, as well as reject.",
+            ],
+            connecting: [
+                "To connect, enter the pool URLs in your worker's settings.",
+                "For the worker's name, use the template Paverl120TH.worker_name, where “worker_name” is your worker's name.",
+            ],
+            wallets: [
+                "Auto payout occurs when the accrual amount exceeds the minimum payout threshold: 0.005, 0.05, 0.5. With auto payout, you receive all accruals to your wallet without a fee.",
+                "You can add one wallet for auto payouts. The wallet can be changed (address and label). Editing the wallet requires confirmation via email or 2FA. When editing the wallet, auto payout will occur after 48 hours.",
+            ],
+            watchers: [
+                "Here you can create an observer link. The observer link allows you to check the working status of workers and view the hashrate without access to data changes, and the user doesn't need to log into the mining account.",
+                "Specify a name for the observer link in the popup window. Set access to pages for the observer and click the 'Add' button.",
+            ],
+            settings: [
+                "Here you can change your email by clicking the 'Change' button.",
+                "Specify a name for the observer link in the popup window. Set access to pages for the observer and click the 'Add' button.",
+            ],
+        }
+    },
     ru: {
+        button_titles: {
+            statistic: "Знакомсто со «Статистикой»",
+            connecting: "Знакомсто с «Подключением»",
+            incomes: "Знакомсто с «Доходами»",
+            settings: "Знакомсто с «Настройками",
+            wallets: "Знакомсто с «Кошельками»",
+            watchers: "Знакомсто с «Наблюдателями»",
+            workers: "Знакомсто с «Воркерами»",
+        },
         step: "Шаг",
         titles: {
             common: [

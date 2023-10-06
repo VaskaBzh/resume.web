@@ -98,7 +98,7 @@
     </workers-popup-card>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
-        hint="Знакомсто с «Воркерами»"
+        hint="workers"
     />
 </template>
 <script>

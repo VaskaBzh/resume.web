@@ -80,7 +80,7 @@
         white-space: nowrap;
         outline: none;
         @media (max-width: 479.98px) {
-            min-width: 50%;
+            width: 100%;
         }
         &:hover {
             color: var(--primary-500, #2E90FA);

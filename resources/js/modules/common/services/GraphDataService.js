@@ -2,9 +2,8 @@ import { DefaultSubsService } from "./DefaultSubsService";
 import { HashrateUnitEnum } from "../enums/HashrateUnitEnum";
 
 export class GraphDataService extends DefaultSubsService {
-    constructor(titles, offset = 96) {
+    constructor(offset = 96) {
         super();
-        this.titles = titles;
         this.offset = offset;
 
         this.graph = {};
@@ -21,15 +20,15 @@ export class GraphDataService extends DefaultSubsService {
         this.offset = offset;
     }
 
-    getTranslateRoute() {
-        return "chart.labels";
-    }
+    // getTranslateRoute() {
+    //     return "chart.labels";
+    // }
 
-    setTitles() {
-        return this.titles.map((title) =>
-            this.translate(`${this.getTranslateRoute()}[${title}]`)
-        );
-    }
+    // setTitles() {
+    //     return this.titles.map((title) =>
+    //         this.translate(`${this.getTranslateRoute()}[${title}]`)
+    //     );
+    // }
 
     setDates() {
         const currentTime = new Date().getTime();
@@ -44,9 +43,9 @@ export class GraphDataService extends DefaultSubsService {
     }
 
     setDefaultKeys() {
+        // title: this.setTitles(),
         this.graph = {
             ...this.graph,
-            title: this.setTitles(),
             dates: this.setDates(),
         };
     }
@@ -96,7 +95,7 @@ export class GraphDataService extends DefaultSubsService {
 
                 return acc;
             },
-            [[], [], []]
+            [[]]
         );
 
         while (amount.length < 30) {

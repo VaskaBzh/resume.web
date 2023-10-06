@@ -35,6 +35,11 @@ export default {
     props: {
         closed: Boolean,
         wait: Boolean,
+        title: Boolean,
+        text: Boolean,
+        placeholder: Boolean,
+        re_verify_text: Boolean,
+        button_text: Boolean,
     },
     i18n: {
         sharedMessages: VerifyMessages,
@@ -59,5 +64,24 @@ export default {
 </script>
 
 <style scoped>
-
+.verify__head {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 40px;
+}
+.verify__content {
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+.verify__buttons {
+    display: grid;
+    gap: 8px;
+    width: 100%;
+    grid-template-columns: repeat(2, 1fr);
+}
+.verify_input {
+    mb18px
+}
 </style>

@@ -5,8 +5,8 @@ import { ProfileApi } from "@/api/api";
 import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
 
 export class StatisticService extends GraphDataService {
-    constructor(titles, offset, route) {
-        super(titles, offset);
+    constructor(offset, route) {
+        super(offset);
 
         this.waitGraph = true;
         this.waitGraphChange = true;
@@ -23,24 +23,9 @@ export class StatisticService extends GraphDataService {
         ];
     }
 
-    async fetchIncomes(page = 1, per_page = 30) {
-        return await ProfileApi.get(
-            `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    ...(this.route?.query?.access_key
-                        ? { "X-Access-Key": this.route.query.access_key }
-                        : {
-                              Authorization: `Bearer ${store.getters.token}`,
-                          }),
-                },
-            }
-        );
-    }
-
     async fetch() {
         return await ProfileApi.get(
-            `/hashrate/${this.group_id}?offset=${this.offset}`,
+            `/statistic/${this.group_id}?offset=${this.offset}`,
             {
                 headers: {
                     ...(this.route?.query?.access_key
@@ -59,14 +44,18 @@ export class StatisticService extends GraphDataService {
 
             this.setDefaultKeys();
 
-            this.records = (await this.fetch()).data.data.map((el) => {
-                return new LineGraphData(el);
-            });
+            try {
+                const response = (await this.fetch()).data;
 
-            await this.makeFullValues();
+                this.records = response.hashes.map(hashEl => new LineGraphData(hashEl));
 
-            this.waitGraph = false;
-            this.waitGraphChange = false;
+                await this.makeFullValues();
+
+                this.waitGraph = false;
+                this.waitGraphChange = false;
+            } catch (err) {
+                console.error(err);
+            }
         }
     }
 
@@ -76,13 +65,20 @@ export class StatisticService extends GraphDataService {
 
             this.setDefaultKeys();
 
-            this.records = (await this.fetchIncomes()).data.data.map((el) => {
-                return new BarGraphData(el);
-            });
+            try {
+                const response = (await this.fetch()).data;
 
-            await this.makeFullBarValues();
+                this.records = response.incomes.map(incomeEl => new BarGraphData(incomeEl));
 
-            this.waitGraphChange = false;
+                await this.makeFullBarValues();
+
+                this.waitGraph = false;
+                this.waitGraphChange = false;
+            } catch (err) {
+                console.error(err);
+
+                this.waitGraphChange = false;
+            }
         }
     }
 }

@@ -297,6 +297,7 @@ export default {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
+    margin-bottom: 8px;
 }
 .card__block-selects {
     padding: 16px;

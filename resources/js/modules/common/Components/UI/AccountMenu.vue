@@ -1,5 +1,5 @@
 <template>
-    <div @click="toggleMenu" class="button">
+    <div @click.prevent="toggleMenu" class="button">
         <div
             class="button_name"
             :class="{ 'button_name-target': target }"
@@ -163,10 +163,13 @@ export default {
                     response.data.message
                 );
                 closed.value = true;
+
                 store.dispatch("accounts_all", store.getters.user.id);
             } catch (err) {
                 console.error("Error with: " + err);
+
                 store.dispatch("setFullErrors", err.response.data.errors);
+
                 openNotification(
                     false,
                     t("validate_messages.error"),
@@ -175,7 +178,6 @@ export default {
             }
 
             wait.value = false;
-            store.dispatch("accounts_all", store.getters.user.id);
         };
 
         return {
@@ -290,10 +292,11 @@ export default {
         },
         hideMenuClick(e) {
             if (
-                !e.target.closest(".nav__container .button .button_name") &&
-                !e.target.closest(".nav__container .button .button__row")
-            )
+                !e.target.closest(".button_name") &&
+                !e.target.closest(".nav__tabs .button .button__row")
+            ) {
                 this.hideMenu();
+            }
         },
         toggleMenu() {
             this.target = !this.target;
@@ -382,6 +385,9 @@ export default {
     position: relative;
     width: 270px;
     margin-bottom: 16px;
+    @media (max-width: 500px) {
+        width: 100%;
+    }
     &_name {
         width: 100%;
         cursor: pointer;

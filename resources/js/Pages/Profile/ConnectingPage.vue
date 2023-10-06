@@ -4,6 +4,9 @@
             <main-title class="title-connecting" tag="h4">{{
                 $t("connection.title")
             }}</main-title>
+            <main-description class="connecting_description">
+                {{ $t("connection.block.title") }}
+            </main-description>
             <div class="connecting__content">
                 <copy-block
                     v-for="(object, i) in this.copyObject"
@@ -37,13 +40,18 @@
                 </copy-row>
             </div>
             <div class="note-card">
+                <connection-icon class="note_icon" />
                 <span class="note-text">{{ $t("connection.note") }}</span>
             </div>
+            <warning-block
+                text="connecting_text"
+                link="connecting_feedback"
+            />
         </div>
     </div>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
-        hint="Знакомсто с «Подключением»"
+        hint="connecting"
     />
 </template>
 
@@ -52,18 +60,24 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 import CopyRow from "@/modules/common/Components/UI/CopyRow.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import ConnectionIcon from "@/modules/connecting/icons/ConnectionIcon.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { mapGetters } from "vuex";
-import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
+import WarningBlock from "../../modules/common/Components/UI/WarningBlock.vue";
 
 export default {
     components: {
+        WarningBlock,
+        MainDescription,
         InstructionButton,
         CopyRow,
         MainTitle,
         CopyBlock,
         InstructionStep,
+        ConnectionIcon,
     },
     data() {
         return {
@@ -85,7 +99,6 @@ export default {
         copyObject() {
             return [
                 {
-                    title: this.$t("connection.block.title"),
                     copyObject: [
                         { link: "btc.all-btc.com:4444", title: "Port1" },
                         { link: "btc.all-btc.com:3333", title: "Port 2" },
@@ -108,13 +121,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .title-connecting{
-    margin-bottom: 8px;
-    color: var(--text-primary-80);
+    margin-bottom: 4px;
+    color: var(--text-primary, #1D2939);
     font-family: Unbounded, serif;
-    font-size: 18px;
+    font-size: 20px;
     font-style: normal;
     font-weight: 400;
-    line-height: 155%; /* 27.9px */
+    line-height: 32px;
 }
 .note-card{
     border-radius: 12px;
@@ -125,6 +138,12 @@ export default {
     justify-content: space-between;
     gap: 12px;
     margin-top: 40px;
+    margin-bottom: 16px;
+}
+.note_icon {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
 }
 .note-text{
     color: var(--primary-400, #53B1FD);
@@ -148,10 +167,18 @@ export default {
     align-items: center;
     justify-content: center;
     flex: 1 1 auto;
+    &_description{
+        color: var(--text-teritary, #98A2B3);
+        font-family: NunitoSans, serif;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 24px;
+        margin-bottom: 40px;
+    }
     &__content {
         display: flex;
         flex-direction: column;
-        gap: 22px;
+        gap: 16px;
     }
     // .connecting_question
     &__question {

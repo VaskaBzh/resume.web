@@ -106,7 +106,7 @@
     </div>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
-        hint="Знакомсто со «Статистикой»"
+        hint="statistic"
     />
 </template>
 <script>
@@ -120,11 +120,11 @@ import NoInformation from "@/modules/statistic/Components/NoInformation.vue";
 import DayHashrateIcon from "@/modules/common/icons/DayHashrateIcon.vue";
 import MinuteHashrateIcon from "@/modules/common/icons/MinuteHashrateIcon.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { StatisticService } from "@/modules/statistic/service/StatisticService";
 import { mapGetters } from "vuex";
-import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
     components: {
@@ -143,11 +143,10 @@ export default {
     data() {
         return {
             lineChartService: new StatisticService(
-                [0, 1],
                 this.offset,
                 this.$route
             ),
-            barChartService: new StatisticService([0, 1], 30),
+            barChartService: new StatisticService(30),
             instructionService: new InstructionService(),
         };
     },
@@ -155,8 +154,8 @@ export default {
         "$i18n.locale"() {
             document.title = this.$t("header.links.statistic")
 
-            this.lineChartService.setTranslate(this.$t);
-            this.barChartService.setTranslate(this.$t);
+            // this.lineChartService.setTranslate(this.$t);
+            // this.barChartService.setTranslate(this.$t);
         },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
@@ -201,6 +200,12 @@ export default {
 };
 </script>
 <style lang="scss">
+.onboarding_block {
+    transition: none;
+}
+.onboarding_block-target {
+    background: var(--background-globe);
+}
 .title-statistic {
     display: none;
 }
@@ -233,6 +238,14 @@ export default {
         @media (max-width: 2100px) {
             grid-template-columns: repeat(6, 1fr);
             grid-column: 1 / 7;
+        }
+        @media (max-width: 1100px) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+        }
+        @media (max-width: 900px) {
+            display: flex;
+            flex-direction: column;
         }
     }
     &__cabinet {
@@ -296,11 +309,17 @@ export default {
             @media (max-width: 2100px) {
                 grid-column: 1 / 3;
             }
+            @media (max-width: 1100px) {
+                grid-column: 1 / 2;
+            }
         }
         &-second {
             grid-column: 2 / 3;
             @media (max-width: 2100px) {
                 grid-column: 3 / 5;
+            }
+            @media (max-width: 1100px) {
+                grid-column: 2 / 3;
             }
         }
         &-third {
@@ -308,11 +327,19 @@ export default {
             @media (max-width: 2100px) {
                 grid-column: 5 / 6;
             }
+            @media (max-width: 1100px) {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
+            }
         }
         &-fourth {
             grid-column: 4 / 5;
             @media (max-width: 2100px) {
                 grid-column: 6 / 7;
+            }
+            @media (max-width: 1100px) {
+                grid-column: 2 / 3;
+                grid-row: 2 / 3;
             }
         }
     }

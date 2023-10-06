@@ -2,8 +2,15 @@
     <div class="warning">
         <warning-icon class="warning_icon" />
         <p class="warning_text">
-            В случае изменения адреса кошелька автовыплаты не будут работать в течении 24 часов. Вы будете получать вознаграждения за майнинг, но не сможете вывести их
-            на свой кошелек в течении указанного времени.
+            <span class="warning_text-elem">{{ $t(text) }}</span>
+            <a
+                href="https://t.me/allbtc_support"
+                target="_blank"
+                class="warning_text-link"
+                v-if="!!link"
+            >
+                {{ $t(link) }}
+            </a>
         </p>
     </div>
 </template>
@@ -11,8 +18,20 @@
 <script>
 import WarningIcon from "@/modules/common/icons/WarningIcon.vue";
 
+import { WarningMessages } from "@/modules/common/lang/WarningMessages";
+
 export default {
-    name: "wallets-warning",
+    name: "warning-block",
+    props: {
+        text: String,
+        link: {
+            type: String,
+            default: null,
+        },
+    },
+    i18n: {
+        sharedMessages: WarningMessages,
+    },
     components: {
         WarningIcon,
     }
@@ -39,5 +58,11 @@ export default {
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+}
+.warning_text-link {
+    text-decoration: underline;
 }
 </style>

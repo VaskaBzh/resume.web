@@ -18,7 +18,10 @@
                     />
                 </div>
             </div>
-            <div class="settings__card">
+            <div class="settings__card onboarding_block"
+                 :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                }">
                 <main-title class="cabinet_title card_title" tag="h3">{{
                     $t("title[1]")
                 }}</main-title>
@@ -34,6 +37,18 @@
                         />
                     </div>
                 </article>
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.settings[0]"
+                    title="titles.settings[0]"
+                    className="onboarding__card-bottom"
+                />
             </div>
         </div>
     </div>
@@ -66,18 +81,25 @@
         :formData="settingsService.passwordForm"
         @sendPassword="sendPassword($event)"
     />
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="settings"
+    />
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
-import { SettingsService } from "@/modules/settings/services/SettingsService";
-import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
-import { mapGetters } from "vuex";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
 import SettingsPasswordPopup from "@/modules/settings/Components/blocks/SettingsPasswordPopup.vue";
 
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
+import { SettingsService } from "@/modules/settings/services/SettingsService";
+import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import { mapGetters } from "vuex";
 export default {
     i18n: {
         sharedMessages: SettingsMessage,
@@ -89,6 +111,8 @@ export default {
         SettingsPopup,
         SafetyCard,
         FacPopup,
+        InstructionStep,
+        InstructionButton,
     },
     props: {
         message: String,
@@ -106,6 +130,7 @@ export default {
     data() {
         return {
             settingsService: new SettingsService(this.$t, this.$router),
+            instructionService: new InstructionService(),
             is_checked: true,
             notification: true,
             password_confirmation: "",
@@ -158,6 +183,8 @@ export default {
         },
     },
     mounted() {
+        this.instructionService.setStepsCount(1);
+
         document.title = this.$t("header.links.settings");
         this.$refs.page.style.opacity = 1;
 

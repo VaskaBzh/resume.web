@@ -99,7 +99,7 @@
     </div>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
-        hint="Знакомсто с «Доходами»"
+        hint="incomes"
     />
 </template>
 <script>
@@ -139,7 +139,7 @@ export default {
                 { title: "Выполнено", value: "completed" },
             ],
             date: {},
-            per_page: 25,
+            per_page: 1000,
             page: 1,
             filter: "",
             incomes: new IncomeService(

@@ -111,7 +111,7 @@ export class WalletsService extends DefaultSubsService {
                 openNotification(
                     false,
                     this.translate("validate_messages.error"),
-                    err.response.data.message
+                    err.response?.data?.message
                 );
             }
 
@@ -321,12 +321,12 @@ export class WalletsService extends DefaultSubsService {
                     await ProfileApi.get(`/wallets/${this.group_id}`)
                 ).data.data;
             } catch (err) {
-                store.dispatch("setFullErrors", err.response.data.errors);
+                store.dispatch("setFullErrors", err?.response?.data?.errors);
 
                 openNotification(
                     false,
                     this.translate("validate_messages.error"),
-                    err.response.data.message
+                    err?.response?.data?.message
                 );
 
                 this.emptyTable = true;

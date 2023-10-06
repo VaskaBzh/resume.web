@@ -165,8 +165,9 @@ export default {
     gap: 0;
     .form-auth_forgot-password {
         font-size: 20px;
-        font-weight: 400;
         margin-left: 36px;
+        color: rgb(63, 123, 221);
+        font-weight: 600;
     }
     &__content {
         display: flex;

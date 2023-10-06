@@ -8,7 +8,7 @@
 			<button class="nav_button" v-show="step > 1" @click="prevSlide">
 				<arrow-left-icon class="nav_icon" />
 			</button>
-			<button class="nav_button nav_button-next" @click="nextSlide">
+			<button class="nav_button nav_button-next" v-show="step < steps_count" @click="nextSlide">
 				<arrow-right-icon class="nav_icon" />
 			</button>
 			<button class="nav_button nav_button-next" @click="closeSlide">

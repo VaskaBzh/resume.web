@@ -2,7 +2,7 @@
     <div class="month-income-card">
         <div class="income-card">
             <MainIncomeCardRow>
-                <template v-slot:title>Доход за месяц</template>
+                <template v-slot:title>{{ $t('month_earn') }}</template>
                 <template v-slot:num>{{ this.yesterdayProfit }}</template>
             </MainIncomeCardRow>
         </div>
@@ -17,17 +17,21 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
 import MainIncomeCardRow from "@/modules/income/Components/MainIncomeCardRow.vue";
-import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import MainBarGraph from "@/modules/graphs/Components/MainBarGraph.vue";
 import WaitPreloader from "@/modules/preloader/Components/WaitPreloader.vue";
+
+import { IncomeMessages } from "@/modules/income/lang/IncomeMessages";
+import { mapGetters } from "vuex";
 
 export default {
     components: {
         MainIncomeCardRow,
         WaitPreloader,
         MainBarGraph,
+    },
+    i18n: {
+        sharedMessages: IncomeMessages,
     },
     props: {
         wait: Boolean,
