@@ -1,37 +1,21 @@
 <template>
     <div class="security-view">
         <div class="security-view__container">
-            <head-line class="security-view_btn">Безопасность</head-line>
+            <head-line class="security-view_btn">{{ $t("safety") }}</head-line>
             <div id="smooth-wrapper" class="security-view__wrapper">
                 <div id="smooth-content" class="security-view__left">
                     <div class="security-view__left__item__wrapper">
                         <div class="security-view_item">
-                            <h3 class="security-view_item_title">Шифрование данных майнера</h3>
-                            <p class="security-view_item_text">Шифрование данных, передаваемых между пользователями и
-                                сервером
-                                пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя
-                                безопасные каналы, такие как
-                                SSL/TLS, Allbtc Pool гарантирует,
-                                что данные остаются конфиденциальными и безопасными во время передачи и защищенными от
-                                несанкционированного доступа.</p>
+                            <h3 class="security-view_item_title">{{ $t("safety.encryption.title") }}</h3>
+                            <p class="security-view_item_text">{{ $t("safety.encryption.text") }}</p>
                         </div>
                         <div class="security-view_item">
-                            <h3 class="security-view_item_title">регулярные обновления ПО</h3>
-                            <p class="security-view_item_text">Регулярные обновления обеспечивают
-                                улучшение системы безопасности:
-                                обнаружение уязвимостей, их закрытие, и, как следствие, повышение надежности. Также
-                                регулярные обновления программного
-                                обеспечения пула обеспечивают совместимость с последними изменениями, вызванными
-                                динамикой развития криптоиндустрии.</p>
+                            <h3 class="security-view_item_title">{{ $t("safety.updates.title") }}</h3>
+                            <p class="security-view_item_text">{{ $t("safety.updates.text") }}</p>
                         </div>
                         <div class="security-view_item">
-                            <h3 class="security-view_item_title">защита от DDOS-атак</h3>
-                            <p class="security-view_item_text">Когда майнинг-пул подвержен DDoS-атакам, это может
-                                привести
-                                к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от
-                                DDoS-атак
-                                гарантирует, что Allbtc Pool всегда будет работоспособным и обеспечит непрерывное
-                                надежное обслуживание своих пользователей.</p>
+                            <h3 class="security-view_item_title">{{ $t("safety.DDoS.title") }}</h3>
+                            <p class="security-view_item_text">{{ $t("safety.DDoS.text") }}</p>
                         </div>
                     </div>
                 </div>
@@ -47,12 +31,15 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import {animatedScroll} from "../../Services/ScrollAnime";
-
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
 
     name: "SecurityView",
     components: {HeadLine},
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
     mounted() {
         animatedScroll()
     }

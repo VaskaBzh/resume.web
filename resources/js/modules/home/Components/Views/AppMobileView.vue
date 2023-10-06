@@ -1,16 +1,12 @@
 <template>
     <div class="mobile-view">
         <div class="mobile-view__container">
-            <head-line class="mobile-view__title">Мобильное приложение</head-line>
+            <head-line class="mobile-view__title">{{ $t("mobile_app.button") }}</head-line>
             <div class="mobile-view__wrapper">
                 <div class="mobile-view_inner">
                     <div class="mobile-view_item active">
-                        <h3 class="mobile-view_subtitle">Прозрачный мониторинг
-                            и эффективное управление</h3>
-                        <p class="mobile-view_text">Наша команда, будучи экспертами
-                            и практикующими майнерами, специализируется на биткоине, знает все тонкости
-                            добычи криптовалюты и внедряет новые идеи и механизмы в
-                            развитие пула. Все внедренные инструменты помогают зарабатывать больше.</p>
+                        <h3 class="mobile-view_subtitle">{{ $t("mobile_app.title") }}</h3>
+                        <p class="mobile-view_text">{{ $t("mobile_app.text") }}</p>
                     </div>
                     <div class="mobile-view_item">
                         <h3 class="mobile-view_subtitle">Хороший мониторинг
@@ -69,7 +65,7 @@
                         </div>
                     </div>
                 </div>
-                <button-blue class="mobile-view__btn">Скоро в AppStore</button-blue>
+                <button-blue class="mobile-view__btn">{{ $t("mobile_app.note") }}</button-blue>
             </div>
         </div>
         <div class="mobile-view__run">
@@ -87,10 +83,14 @@ import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
 import {slideMobileView} from "../../Services/LandSlideAnime";
 import {onMounted} from "vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "AppMobileView",
     components: {ButtonBlue, HeadLine},
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
     setup() {
 
         onMounted(()=> {

@@ -1,7 +1,7 @@
 <template>
     <nav class="nav">
         <div class="nav__container">
-            <button-blue class="button-black"> Личный кабинет</button-blue>
+            <button-blue class="button-black"> {{ $t("footer.button") }}</button-blue>
             <nav-links/>
             <select-language-land />
         </div>
@@ -12,10 +12,13 @@
 
 import NavLinks from "../../navs/Components/NavLinks.vue";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     components: {SelectLanguageLand, NavLinks},
-
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
 }
 
 </script>

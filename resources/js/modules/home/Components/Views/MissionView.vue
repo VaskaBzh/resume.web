@@ -1,26 +1,19 @@
 <template>
 <div class="mission-view">
     <div class="mission-view__container">
-        <head-line class="mission-view_btn">Главное</head-line>
+        <head-line class="mission-view_btn">{{ $t("main.button") }}</head-line>
         <div class="mission-view_items">
             <div class="mission-view_item">
-                <h3 class="mission-view_item_title">Ценности</h3>
-                <p class="mission-view_item_text">Мы поддерживаем честность, прозрачность и
-                    постоянное развитие во всем, что мы делаем. Поощряем
-                    творчество, принимаем перемены и постоянно ищем новые способы улучшения
-                    наших предложений и процессов.</p>
+                <h3 class="mission-view_item_title">{{ $t("main.title[0]") }}</h3>
+                <p class="mission-view_item_text">{{ $t("main.text[0]") }}</p>
             </div>
             <div class="mission-view_item">
-                <h3 class="mission-view_item_title">Миссия</h3>
-                <p class="mission-view_item_text">Сделать майнинг биткоина
-                    максимально эффективным и удобным, обеспечивая
-                    высокую безопасность данных клиентов и их цифровых активов.</p>
+                <h3 class="mission-view_item_title">{{ $t("main.title[1]") }}</h3>
+                <p class="mission-view_item_text">{{ $t("main.text[1]") }}.</p>
             </div>
             <div class="mission-view_item">
-                <h3 class="mission-view_item_title">Цели</h3>
-                <p class="mission-view_item_text">Мы стремимся создать максимально безопасную среду для
-                    управления своими цифровыми активами и
-                    объединить майнеров в большое комьюнити единомышленников.</p>
+                <h3 class="mission-view_item_title">{{ $t("main.title[2]") }}</h3>
+                <p class="mission-view_item_text">{{ $t("main.text[2]") }}</p>
             </div>
         </div>
     </div>
@@ -31,10 +24,14 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "MissionView",
-    components: {HeadLine}
+    components: {HeadLine},
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
 }
 </script>
 

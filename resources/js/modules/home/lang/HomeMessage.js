@@ -46,22 +46,23 @@ export const HomeMessage = {
             text: 'Allows you to evaluate and predict possible approximate income and profit for a certain period. Actual earnings may vary slightly. ',
         },
         safety: {
+            button: 'security',
             encryption: {
-                title: ['encryption', 'data', 'miner'],
+                title: 'encryption data miner',
                 text: 'Encrypting data transmitted between users and the pool server helps prevent eavesdropping or interception by attackers. Using secure channels such as SSL/TLS, Allbtc Pool ensures that data remains private and secure during transmission and protected from unauthorized access.'
             },
             updates: {
-                title: ['regular', 'updates', 'by'],
+                title: 'Regular software updates',
                 text: 'Regular updates improve the security system: detect vulnerabilities, close them, and, as a result, increase reliability. Also, regular updates of the pool software ensure compatibility with the latest changes caused by the dynamics of the crypto industry.'
             },
             DDoS: {
-                title: ['protection', 'against DDoS attacks'],
+                title: 'protection against DDoS attacks',
                 text: 'When a mining pool is subject to DDoS attacks, it can lead to disruptions in mining operations, resulting in reduced payouts to the pool\'s clients. DDoS protection ensures that Allbtc Pool is always up and running and provides continuous reliable service to its users.'
             },
         },
         mobile_app: {
             button: 'mobile application',
-            title: ['Transparent', 'monitoring', 'and efficient', 'controlling'],
+            title: 'Transparent monitoring and efficient controlling',
             text: 'Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.',
             note: 'coming soon to the appstore'
         },
@@ -71,6 +72,7 @@ export const HomeMessage = {
             text: ['A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.']
         },
         main: {
+            button: 'main',
             title: ['Values', 'mission', 'goals'],
             text: [
                 'We support honesty, transparency and continuous development in everything we do. We encourage creativity, embrace change and constantly look for new ways to improve our offerings and processes.',
@@ -142,22 +144,23 @@ export const HomeMessage = {
             text: 'Позволяет оценить и спрогнозировать возможный приблизательный доход и прибыль за определенный период. Фактические доходы могут незначительно отличаться. ',
         },
         safety: {
+            button: 'безопасность',
             encryption: {
-                title: ['шифрование', 'данных', 'майнера'],
+                title: 'шифрование данных майнера',
                 text: 'Шифрование данных, передаваемых между пользователями и сервером пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как SSL/TLS, Allbtc Pool гарантирует, что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.'
             },
             updates: {
-                title: ['регулярные', 'обновления', 'по'],
+                title: 'регулярные обновления по',
                 text: 'Регулярные обновления обеспечивают улучшение системы безопасности: обнаружение уязвимостей, их закрытие, и, как следствие, повышение надежности. Также регулярные обновления программного обеспечения пула обеспечивают совместимость с последними изменениями, вызванными динамикой развития криптоиндустрии.'
             },
             DDoS: {
-                title: ['защита', 'от DDoS-атак'],
+                title: 'защита от DDoS-атак',
                 text: 'Когда майнинг-пул подвержен DDoS-атакам, это может привести к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что Allbtc Pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.'
             },
         },
         mobile_app: {
             button: 'мобильное приложение',
-            title: ['Прозрачный', 'мониторинг', 'и эффективное', 'управление'],
+            title: 'Прозрачный мониторинг и эффективное управление',
             text: 'Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.',
             note: 'скоро в appstore'
         },
@@ -167,6 +170,7 @@ export const HomeMessage = {
             text: ['Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.']
         },
         main: {
+            button: 'главное',
             title: ['Ценности', 'миссия', 'цели'],
             text: [
                 'Мы поддерживаем честность, прозрачность и постоянное развитие во всем, что мы делаем. Поощряем творчество, принимаем перемены и постоянно ищем новые способы улучшения наших предложений и процессов.и процессов.',

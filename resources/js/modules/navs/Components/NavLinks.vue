@@ -10,21 +10,25 @@
 </template>
 
 <script>
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
     data() {
         return {
             link: [
                 {
-                    name: 'Главная' ,
+                    name: this.$t("footer.list[0]") ,
                     url: '/'
                 },
                 {
-                    name: 'Дата-центра',
+                    name: this.$t("footer.list[1]"),
                     url: '/hosting'
                 },
                 {
-                    name:  'Майнерам',
+                    name:  this.$t("footer.list[2]"),
                     url: '/miners'
                 }
                

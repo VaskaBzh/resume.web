@@ -1,37 +1,22 @@
 <template>
 <div class="payments-view">
     <div class="payments-view__container">
-        <head-line class="payments-view_title">Выплаты</head-line>
+        <head-line class="payments-view_title">{{ $t("payments.button") }}</head-line>
         <div class="payments-view__items">
             <div class="payments-view__item" @click="isOpen = !isOpen">
-                <div class="payments-view__item_title">метод вознаграждения</div>
+                <div class="payments-view__item_title">{{ $t("payments.title[0]") }}</div>
                 <div class="payments-view__item_info">fPPS+</div>
-                <div class="payments-view__item_text" :class="{opened: isOpen}">Модернизированная система вознаграждений,
-                    которая исключает риск снижения доходов майнеров из-за колебаний комиссий
-                    за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий
-                    за транзакции в одно значение. Также гарантирует справедливое распределение
-                    вознаграждений
-                    между участниками пула.</div>
+                <div class="payments-view__item_text" :class="{opened: isOpen}">{{ $t("payments.text[0]") }}</div>
             </div>
             <div class="payments-view__item">
-                <div class="payments-view__item_title">автовыплаты</div>
+                <div class="payments-view__item_title">{{ $t("payments.title[1]") }}</div>
                 <div class="payments-view__item_info"><span>(msk)</span> 12:00-13:00</div>
-                <div class="payments-view__item_text">Модернизированная система вознаграждений,
-                    которая исключает риск снижения доходов майнеров из-за колебаний комиссий
-                    за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий
-                    за транзакции в одно значение. Также гарантирует справедливое распределение
-                    вознаграждений
-                    между участниками пула.</div>
+                <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
             </div>
             <div class="payments-view__item">
-                <div class="payments-view__item_title">средняя дневная выплата</div>
+                <div class="payments-view__item_title">{{ $t("payments.title[2]") }}</div>
                 <div class="payments-view__item_info">0.8 BTC</div>
-                <div class="payments-view__item_text">Модернизированная система вознаграждений,
-                    которая исключает риск снижения доходов майнеров из-за колебаний комиссий
-                    за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий
-                    за транзакции в одно значение. Также гарантирует справедливое распределение
-                    вознаграждений
-                    между участниками пула.</div>
+                <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
             </div>
         </div>
     </div>
@@ -42,10 +27,14 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "PaymantsView",
     components: {HeadLine},
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
     data() {
         return {
             isOpen: false

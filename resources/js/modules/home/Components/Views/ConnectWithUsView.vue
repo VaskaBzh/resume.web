@@ -1,19 +1,19 @@
 <template>
     <div class="connect-withus">
         <div class="connect-withus__run">
-            <p class="connect-withus_text">Связаться с нами</p>
+            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn"/>
         </div>
         <div class="connect-withus__run">
-            <p class="connect-withus_text">Связаться с нами</p>
+            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn"/>
         </div>
         <div class="connect-withus__run">
-            <p class="connect-withus_text">Связаться с нами</p>
+            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn"/>
         </div>
         <div class="connect-withus__run">
-            <p class="connect-withus_text">Связаться с нами</p>
+            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn"/>
         </div>
     </div>
@@ -23,10 +23,14 @@
 <script>
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
 import {run} from "../../Services/RunString";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "ConnectWithUsView",
     components: {ButtonBlue},
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
     mounted() {
         run()
     }

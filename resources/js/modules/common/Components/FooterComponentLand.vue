@@ -2,7 +2,7 @@
 <footer class="footer-land">
     <div class="footer-land__container">
         <div class="footer-land_info">
-            <button-blue class="footer-land_btn">личный кабинет</button-blue>
+            <button-blue class="footer-land_btn">{{ $t("footer.button") }}</button-blue>
             <nav-links class="footer-land__links"></nav-links>
             <div class="footer-land_contacts">
                 <div class="footer-land_contacts_support">support@all-btc.com</div>
@@ -16,7 +16,7 @@
         </div>
         <h2 class="footer-land_name">Allbtc Pool</h2>
         <div class="footer-land_confidential">
-            <router-link to="#">Политика конфиденциальности</router-link>
+            <router-link to="#">{{ $t("footer.text") }}</router-link>
             <router-link to="#">© 2023 Allbtc Pool</router-link>
         </div>
     </div>
@@ -28,10 +28,14 @@
 <script>
 import ButtonBlue from "./UI/ButtonBlue.vue";
 import NavLinks from "../../navs/Components/NavLinks.vue";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "FooterComponentLand",
-    components: {NavLinks, ButtonBlue}
+    components: {NavLinks, ButtonBlue},
+    i18n: {
+        sharedMessages: HomeMessage,
+    },
 }
 </script>
 
