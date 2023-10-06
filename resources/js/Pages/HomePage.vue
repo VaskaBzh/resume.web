@@ -86,7 +86,7 @@ export default {
             -webkit-background-clip: text;
 
 
-            -webkit-text-fill-color: white;
+            -webkit-text-fill-color: rgb(255,255,255,0.7);
             opacity: .7;
 
             line-height: 120%;
@@ -101,12 +101,12 @@ export default {
             display: flex;
             align-items: center;
             justify-content: flex-end;
-            margin-right: auto;
+            align-self: flex-start;
             overflow: hidden;
         }
 
         &_block-two {
-            margin-left: auto;
+            align-self: flex-end;
             display: flex;
             align-items: center;
             justify-content: flex-start;

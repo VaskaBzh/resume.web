@@ -3,7 +3,7 @@ import ScrollTrigger from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger)
 
-export function animatedScroll () {
+export function animatedScroll() {
     ScrollTrigger.normalizeScroll(true)
     let tl = new gsap.timeline()
     gsap.to(('.security-view_item'), {
@@ -23,29 +23,84 @@ export function animatedScroll () {
 
 
 export function scroolingHeader() {
+    const tl = gsap.timeline()
+    tl.addLabel('my-label')
+    tl.addLabel('transparent-logo', 0.5)
+    gsap.timeline({
+        paused: true
+    })
+    const animation = tl
+        .to('.app_back_transparent', {
+            position: 'fixed'
+        }, 'my-label')
+        .fromTo('.header-land_title_expert-one', {opacity: 1}, {
+            xPercent: -100,
+            opacity: 0,
+            duration: 1,
+        }, 'my-label')
+        .fromTo('.header-land_title_expert-two', {opacity: 1}, {
+            xPercent: -100,
+            opacity: 0,
+            duration: 1,
+        }, 'my-label')
+        .fromTo('.header-land_title_approach', {opacity: 1}, {
+            xPercent: 100,
+            opacity: 0,
+            duration: 1,
+        }, 'my-label')
+        .fromTo('.header-land_title_mining-one', {opacity: 1}, {
+            xPercent: -100,
+            opacity: 0,
+            duration: 1,
+        }, 'my-label')
+        .fromTo('.header-land_title_span', {opacity: 1}, {
+            xPercent: -100,
+            opacity: 0,
+        }, 'my-label')
+        .fromTo('.header-land_title_text', {opacity: 1}, {
+            xPercent: 100,
+            opacity: 0,
+            duration: 1,
+        }, 'my-label')
+        .fromTo('.app_back_transparent_block-one', {
+                alignSelf: 'flex-start',
+                duration: .3
+            },
+            {
+                alignSelf: 'center',
+                duration: .3
+            }, 'transparent-logo')
 
-    gsap.to(".header-land_title_expert-one", {
-        scrollTrigger: {
-            trigger: ".header-land_title",
-            scrub: true,
-            start: "top top",
-            end: "bottom bottom",
-            toggleClass: "active",
-            ease: "power2",
-            markers: true
-        }
-    });
+        .fromTo('.app_back_transparent_block-two', {
+                alignSelf: 'flex-end',
+                duration: .3
+            },
+            {
+                alignSelf: 'center',
+                duration: .3
+            }, 'transparent-logo')
+        .fromTo('.app_back_transparent__container', {rotateX: 0, opacity: 1, yPercent: 0, duration: 1.5, scale: 1}, {
+            rotateX: 60,
+            opacity: 0,
+            yPercent: -30,
+            duration: 1,
+            scale: 0,
 
-    gsap.to(".header-land_title_expert-one", {
-        scrollTrigger: {
-            trigger: ".header-land_title",
-            scrub: 1.5,
-            start: "top top",
-            end: "bottom bottom",
-            ease: "power2"
-        },
-        xPercent: -100
-    });
+        })
+
+
+    ScrollTrigger.create({
+        animation: animation,
+        trigger: ".header-land",
+        start: "top 0",
+        end: document.querySelector('.header-land').offsetHeight/2,
+        pin: true,
+        scrub: 2,
+        id: '.header-land',
+        smoothChildTiming: true
+
+    })
+
 
 }
 

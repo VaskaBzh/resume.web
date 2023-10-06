@@ -53,6 +53,8 @@ export default {
     align-items: center;
     justify-content: center;
     background: transparent;
+    position: relative;
+    min-height: 400px;
 
 
     &_title {
@@ -103,6 +105,7 @@ export default {
             font-weight: 400;
             line-height: 110%;
             padding-left: 10px;
+            align-self: center;
         }
     }
 

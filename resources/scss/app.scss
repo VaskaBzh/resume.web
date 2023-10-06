@@ -489,8 +489,7 @@ h6 {
 
 .app {
     &_back {
-        display: flex;
-        flex-direction: column;
+        display: block;
         min-height: auto;
         transition: all 0.8s ease 0s;
         overflow: hidden;
