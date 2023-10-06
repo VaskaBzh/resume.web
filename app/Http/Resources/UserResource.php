@@ -16,6 +16,7 @@ class UserResource extends JsonResource
             'email_verified_at' => $this->email_verified_at,
             'phone' => $this->phone,
             'sms' => $this->sms,
+            '2fa' => !is_null($this->google2fa_secret),
             'referral_code' => $this->referral_code,
             'notifications_count' => $this->notifications_count,
             'owner_count' => $this->owner_count,
