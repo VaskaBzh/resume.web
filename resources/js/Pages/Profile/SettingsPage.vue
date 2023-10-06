@@ -244,7 +244,7 @@ export default {
         transition: all 0.3s ease 0s;
     }
     @media (max-width: 900px) {
-        padding: 24px 12px 24px;
+        padding: 24px 12px;
     }
     &__main {
         width: 100%;

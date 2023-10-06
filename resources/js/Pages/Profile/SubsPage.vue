@@ -114,7 +114,7 @@ export default {
     flex-direction: column;
 }
 @media (max-width: 900px) {
-  padding: 24px 12px 24px;
+  padding: 24px 12px;
 }
 .subs_title {
     display: none;
