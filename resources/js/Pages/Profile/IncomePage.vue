@@ -1,17 +1,51 @@
 <template>
     <div class="income" ref="page">
-        <main-title class="title-income" tag="h4">{{
-                    $t("income.title")
-         }}</main-title>
+        <main-title class="title-income" tag="h4">
+            {{ $t("income.title") }}
+        </main-title>
         <article class="income-cards-article">
-            <div class="income-cards-container">
+            <div
+                class="income-cards-container onboarding_block"
+                :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                }"
+            >
                 <AccrualsCard />
                 <YesterdayIncomeCard />
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.income[0]"
+                    title="titles.income[0]"
+                    className="onboarding__card-top"
+                />
             </div>
-            <div class="month-card-container">
+            <div
+                class="month-card-container onboarding_block"
+                :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
+                }"
+            >
                 <MonthIncome
                     :wait="incomes.waitGraphChange"
                     :graph="incomes.incomeBarGraph"
+                />
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="2"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.income[1]"
+                    title="titles.income[1]"
+                    className="onboarding__card-right"
                 />
             </div>
         </article>
@@ -37,34 +71,61 @@
 
         <!--        incomes.incomeBarGraph-->
         <main-slider
-            class="income__slider"
+            class="income__slider onboarding_block"
+            :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 3
+                }"
             :wait="incomes.waitTable"
             :empty="incomes.emptyTable"
             rowsNum="1000"
             :haveNav="false"
         >
+            <template v-slot:instruction>
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="3"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.income[2]"
+                    title="titles.income[2]"
+                    className="onboarding__card-bottom"
+                />
+            </template>
             <main-table :table="incomes.table"></main-table>
         </main-slider>
     </div>
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="incomes"
+    />
 </template>
 <script>
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import AccrualsCard from "@/modules/income/Components/AccrualsCard.vue";
 import YesterdayIncomeCard from "@/modules/income/Components/YesterdayIncomeCard.vue";
-import { mapGetters } from "vuex";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import { IncomeService } from "@/services/IncomeService";
-import MonthIncome from "../../modules/income/Components/MonthIncome.vue";
+import MonthIncome from "@/modules/income/Components/MonthIncome.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+
+import { IncomeService } from "@/services/IncomeService";
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
+import { mapGetters } from "vuex";
+import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
     components: {
+        InstructionButton,
         MainSlider,
         AccrualsCard,
         YesterdayIncomeCard,
         MonthIncome,
         MainTable,
-        MainTitle
+        MainTitle,
+        InstructionStep,
     },
     props: ["errors", "message", "user"],
     data() {
@@ -78,7 +139,7 @@ export default {
                 { title: "Выполнено", value: "completed" },
             ],
             date: {},
-            per_page: 25,
+            per_page: 1000,
             page: 1,
             filter: "",
             incomes: new IncomeService(
@@ -86,6 +147,7 @@ export default {
                 [0, 1, 2, 3, 4, 5, 8],
                 this.$route
             ),
+            instructionService: new InstructionService(),
         };
     },
     computed: {
@@ -119,6 +181,9 @@ export default {
         },
     },
     watch: {
+        '$i18n.locale'() {
+            this.incomes.graphService.setTranslate(this.$t);
+        },
         page() {
             this.initIncomes();
         },
@@ -171,8 +236,13 @@ export default {
         this.handleResize();
     },
     async mounted() {
+        this.instructionService.setStepsCount(3);
+
         document.title = this.$t("header.links.income");
         this.$refs.page.style.opacity = 1;
+        if (this.$t) {
+            this.incomes.graphService.setTranslate(this.$t);
+        }
         if (this.getActive !== -1) {
             this.incomes.setActive(this.getActive);
             await this.initIncomes();
@@ -185,12 +255,7 @@ export default {
 .title-income {
     display: none;
 }
-@media (max-width: 500px) {
-    .title-income {
-        display: inline-block;
-        padding: 0 0 16px 16px;
-    }
-}
+
 .income-cards-container {
     display: flex;
     flex-direction: column;
@@ -208,6 +273,21 @@ export default {
         gap: 12px;
     }
 }
+@media (max-width: 500px) {
+    .title-income {
+        display: inline-block;
+        padding: 0 0 16px 16px;
+        color: var(--text-primary);
+        font-family: Unbounded !important;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
+    }
+    .income-cards-container {
+        gap: 8px;
+    }
+}
 .month-card-container {
     width: 100%;
 }
@@ -223,7 +303,7 @@ export default {
         transition: all 0.3s ease 0s;
     }
     @media (max-width: 900px) {
-        padding: 24px 12px 24px;
+        padding: 24px 12px;
     }
     &__slider {
         height: fit-content;
@@ -375,11 +455,11 @@ export default {
         padding: 12px;
         // width: 32%;
         border-radius: 8px;
-        color: rgba(129, 140, 153, 1);
+        color: var(--buttons-tabs-text-default);
         font-size: 18px;
     }
     .tabs-active {
-        color: rgba(121, 163, 232, 1);
+        color: var(--buttons-tabs-text-focus, #2E90FA);
         background: var(--buttons-tabs-fill-border-focus);
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     }

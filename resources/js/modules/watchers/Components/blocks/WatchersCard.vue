@@ -38,7 +38,7 @@
                                 :key="i"
                                 :is_checked="route.checked"
                                 class="checkbox-sm"
-                                :editable="isEditable"
+                                :editable="isEditable ? route.editable : isEditable"
                                 @is_checked="setAllowedRoutes($event, i)"
                             >
                                 {{ route.name }}
@@ -146,15 +146,17 @@ export default {
                 {
                     name: this.$t("tabs[0]"),
                     checked: false,
+                    editable: false,
                     routes: [
                         "v1.sub.show",
-                        "v1.hashrate.list",
+                        "v1.statistic.show",
                         "v1.allowed-routes",
                     ],
                 },
                 {
                     name: this.$t("tabs[2]"),
                     checked: false,
+                    editable: true,
                     routes: [
                         "v1.worker.show",
                         "v1.worker.list",
@@ -164,6 +166,7 @@ export default {
                 {
                     name: this.$t("tabs[1]"),
                     checked: false,
+                    editable: true,
                     routes: ["v1.income.list", "v1.payout.list"],
                 },
             ],
@@ -259,6 +262,8 @@ export default {
     flex: 1 1 auto;
     padding-top: 40px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
 }
 .card_img {
     width: 240px;
@@ -287,11 +292,12 @@ export default {
 }
 .card_label {
     padding: 0 16px;
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans, serif;
     font-size: 14px;
     font-weight: 400;
     line-height: 20px;
+    margin-bottom: 8px;
 }
 .card__block-selects {
     padding: 16px;

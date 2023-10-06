@@ -46,7 +46,7 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     background: transparent !important;
     font-family: NunitoSans, serif;
     font-size: 16px;

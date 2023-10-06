@@ -311,7 +311,7 @@ export class GraphService {
 
     formatTime(date) {
         const hours = date.getHours().toString().padStart(2, "0");
-        if (this.graphData.dates.length > 24) {
+        if (this.graphData.dates.length > 96) {
             const day = date.getDate().toString().padStart(2, "0");
             return `${day}/${(date.getUTCMonth() + 1)
                 .toString()

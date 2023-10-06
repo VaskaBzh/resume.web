@@ -1,7 +1,7 @@
 import { MetaTableService } from "@/modules/common/services/MetaTableService";
 import { WatchersData } from "@/modules/watchers/DTO/WatchersData";
 import { WatchersFormData } from "@/modules/watchers/DTO/WatchersFormData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
@@ -57,7 +57,7 @@ export class WatchersService extends MetaTableService {
     }
 
     async fetch(page = 1, per_page = 10) {
-        return await api.get(
+        return await ProfileApi.get(
             `/watchers/${store.getters.user.id}/${this.group_id}`,
             {
                 headers: {
@@ -68,7 +68,7 @@ export class WatchersService extends MetaTableService {
     }
 
     async fetchCard(id) {
-        return await api.get(`/watchers/${id}`, {
+        return await ProfileApi.get(`/watchers/${id}`, {
             headers: {
                 Authorization: `Bearer ${store.getters.token}`,
             },
@@ -127,7 +127,7 @@ export class WatchersService extends MetaTableService {
     async createWatcher() {
         if (this.group_id !== -1) {
             try {
-                const response = await api.post(
+                const response = await ProfileApi.post(
                     `/watchers/create/${this.group_id}`,
                     this.form,
                     {
@@ -160,7 +160,7 @@ export class WatchersService extends MetaTableService {
     async changeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                const response = await api.put(
+                const response = await ProfileApi.put(
                     `/watchers/update/${id}`,
                     this.form,
                     {
@@ -186,6 +186,7 @@ export class WatchersService extends MetaTableService {
                     this.translate("validate_messages.error"),
                     err.response.data.message
                 );
+
                 await this.getCard(id);
             }
         }
@@ -194,7 +195,7 @@ export class WatchersService extends MetaTableService {
     async removeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                const response = await api.delete(`/watchers/delete/${id}`, {
+                const response = await ProfileApi.delete(`/watchers/delete/${id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -207,8 +208,6 @@ export class WatchersService extends MetaTableService {
 
                 this.dropForm();
                 this.closePopup();
-
-                this.dropCard();
             } catch (err) {
                 console.error(err);
 

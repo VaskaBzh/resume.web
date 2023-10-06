@@ -6,7 +6,7 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="errorsExpired.error"
+                :error="errorsExpired.error ?? errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
@@ -70,6 +70,12 @@
                 this.$t("auth.login.button")
             }}</a></blue-button
         >
+        <verify-link
+            class="form-auth_forgot-password"
+            verifyUrl="/password/forgot"
+            verifyText="Забыли пароль?"
+            :data="service.form"
+        />
         <p class="text text-light form-auth_text">
             {{ this.$t("auth.login.link[0]") }}
             <router-link :to="{ name: 'registration' }" class="form-auth_link">
@@ -77,6 +83,13 @@
             >
         </p>
     </form>
+    <password-popup
+        :opened="service.openedPasswordPopup"
+        :wait="service.waitAjax"
+        :closed="service.closedPasswordPopup"
+        :validateService="service"
+        @sendPassword="sendPassword($event)"
+    />
 </template>
 
 <script>
@@ -86,18 +99,27 @@ import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
+import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 
+import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
+import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export default {
     name: "login-form",
     components: {
+        VerifyLink,
         AuthInput,
         MainPassword,
         AuthErrors,
         MainTitle,
         BlueButton,
+        PasswordPopup,
+    },
+    i18n: {
+        sharedMessages: AuthMessages,
     },
     computed: {
         ...mapGetters(["errors", "errorsExpired"]),
@@ -105,11 +127,35 @@ export default {
     data() {
         return {
             pdf,
-            service: new LoginService(this.$router),
+            service: new LoginService(this.$router, this.$route),
         };
+    },
+    methods: {
+        async sendPassword(form) {
+            await this.service.sendPassword(form);
+        },
+        async openPasswordPopup() {
+            await this.service.openPasswordPopup();
+        },
+    },
+    watch: {
+        '$i18n.locale'() {
+            this.service.setTranslate(this.$t);
+        }
     },
     mounted() {
         this.service.setForm();
+
+        if (this.$route.query?.action === "password") {
+            this.openPasswordPopup();
+        }
+        if (this.$route.query?.action === "email") {
+            openNotification(true, this.$t("validate_messages.success"), this.$t("validate_messages.verify_message"));
+        }
+
+        if (this.$t) {
+            this.service.setTranslate(this.$t);
+        }
     },
 };
 </script>
@@ -117,6 +163,12 @@ export default {
 <style scoped lang="scss">
 .form-auth {
     gap: 0;
+    .form-auth_forgot-password {
+        font-size: 20px;
+        margin-left: 36px;
+        color: rgb(63, 123, 221);
+        font-weight: 600;
+    }
     &__content {
         display: flex;
         flex-direction: column;

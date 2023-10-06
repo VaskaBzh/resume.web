@@ -98,6 +98,7 @@ class BtcComService
     public function createSub(UserData $userData): array
     {
         if ($this->btcHasUser(userData: $userData)) {
+
             return [
                 'errors' => [
                     'name' => trans('validation.unique', [
@@ -125,14 +126,15 @@ class BtcComService
      * Следует обратить внимание, метод принимает в строке запроса
      * параметр group (не group_id)
      */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): Collection
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID, ?string $workerStatus = 'all'): Collection
     {
         $response = $this->call(
             segments: ['worker'],
             params: [
                 'puid' => self::PU_ID,
                 'group' => $groupId,
-                'page_size' => self::DEFAULT_PAGE_SIZE
+                'page_size' => self::DEFAULT_PAGE_SIZE,
+                'status' => $workerStatus
             ]
         );
 
@@ -166,17 +168,14 @@ class BtcComService
             ]);
     }
 
-    public function getStats(): array
+    public function getFppsRate(): float|int
     {
-        $stats = $this->call(['pool', 'status']);
         $fppsRate = $this->call(['account', 'earn-history'], params: [
             'puid' => self::PU_ID,
             "page_size" => "1",
         ])['list'];
 
-        return array_merge($stats, [
-            'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
-        ]);
+         return collect($fppsRate)->first()['more_than_pps96_rate'];
     }
 
     /* End requests */

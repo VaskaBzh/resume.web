@@ -43,7 +43,15 @@ export default {
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
+}
+@media(max-width:500px){
+  .flex-jc{
+    align-items: center;
+  }
+  .income-card{
+    padding: 16px;
+  }
 }
 .icome-container{
   width: 100%;

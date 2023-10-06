@@ -160,7 +160,8 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
-            'group_id_unique' => ':attribute already taken by this sub-account'
+            'group_id_unique' => ':attribute already taken by this sub-account',
+            'confirmation_code_exists' => 'Wrong confirmation code',
         ],
     ],
 

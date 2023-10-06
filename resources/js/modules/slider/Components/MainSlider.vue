@@ -1,12 +1,15 @@
 <template>
     <div class="slider">
+        <slot
+            name="instruction"
+        />
         <main-preloader
             class="cabinet__preloader"
             :wait="wait"
             :interval="35"
             :end="!wait"
             :empty="empty"
-            v-if="havePreloader"
+            v-if="havePreloader && (wait || empty)"
         />
         <slot v-if="!wait && !empty" />
         <div class="slider__nav" v-if="haveNav && !wait && !empty">
@@ -123,6 +126,9 @@ export default {
     width: 100%;
     @media(max-width: 500px){
         height: auto;
+    }
+    &.onboarding_block-target {
+        border-radius: 12   px;
     }
     &__wrap {
         width: 100%;

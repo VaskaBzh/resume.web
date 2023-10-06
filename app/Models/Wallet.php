@@ -24,7 +24,17 @@ class Wallet extends Model
         'name',
         'wallet',
         'percent',
+        'wallet_updated_at',
     ];
+
+    protected $casts = [
+        'wallet_updated_at' => 'date'
+    ];
+
+    public function getRouteKeyName(): string
+    {
+        return 'wallet';
+    }
 
     /*
      * Relations
@@ -42,6 +52,7 @@ class Wallet extends Model
     {
         return $this->hasMany(Payout::class);
     }
+
     /* end relations */
 
     /*
@@ -57,5 +68,14 @@ class Wallet extends Model
         return Attribute::make(
             get: fn() => $this->payouts()->sum('payout')
         );
+    }
+
+    public function isUnlocked(): bool
+    {
+        if ($this->wallet_updated_at) {
+            return now()->gt($this->wallet_updated_at->addHours(48));
+        }
+
+        return now()->gt($this->created_at->addHours(48));
     }
 }

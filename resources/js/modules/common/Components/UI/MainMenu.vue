@@ -173,7 +173,7 @@ export default {
     align-items: center;
     border-radius: 16px;
     background: var(--background-island);
-    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
+    box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.05);
     z-index: 5;
     transition: all 0.5s ease 0s;
     overflow: hidden;
@@ -187,6 +187,7 @@ export default {
         left: auto;
         top: 0;
         min-width: 200px;
+        z-index: 1001;
     }
     @media (max-width: 767.98px) {
         position: fixed;
@@ -196,8 +197,8 @@ export default {
         width: calc(100% - 20px) !important;
         max-height: 50vh;
         height: fit-content;
-        z-index: 350 !important;
         padding: 10px;
+        z-index: 1001 !important;
         top: auto !important;
         transition: all 0.8s ease 0s;
         max-width: 100%;

@@ -1,5 +1,5 @@
 import { TabsData } from "../DTO/TabsData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 export class TabsService {
     constructor(router, route) {
@@ -11,6 +11,7 @@ export class TabsService {
     }
 
     setLinks(user) {
+        this.links = [];
         this.links = [
             ...this.links,
             {
@@ -75,7 +76,7 @@ export class TabsService {
     async setAllowedRoutes() {
         try {
             this.allowedRoutes = (
-                await api.get(`/allowed/${this.route?.query?.access_key}`, {
+                await ProfileApi.get(`/allowed/${this.route?.query?.access_key}`, {
                     headers: {
                         "X-Access-Key": this.route?.query?.access_key,
                     },

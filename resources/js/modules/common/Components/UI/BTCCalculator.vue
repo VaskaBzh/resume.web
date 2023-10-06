@@ -11,12 +11,13 @@
                 </div>
             </div>
             <div class="convertor-container is-web">
-                <span class="convertor-calc">{{ converter.usd }} $</span>
+                <span class="convertor-calc">$ {{ converter.usd }} </span>
                 <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter.rub }} ₽</span>
             </div>
-            <tooltip-card class="is-mobile"
-                            :text="'$' + converter.usd + ' ≈ ' + converter.rub + ' ₽'"
-            ></tooltip-card>
+            <tooltip-card
+                class="is-mobile"
+                :text="'$' + converter.usd + ' ≈ ' + converter.rub + ' ₽'"
+            />
         </div>
     </div>
 </template>
@@ -77,18 +78,19 @@ export default {
 </script>
 <style lang="scss" scoped>
 .is-web{
-    display: inline-block
+    display: inline-flex;
+    gap: 4px;
 }
 .is-mobile{
-    display: none
+    display: none !important;
 }
-@media(max-width:500px){
+@media(max-width:500px) {
     .is-web{
         display: none
-    } 
-    .is-mobile{
+    }
+    .is-mobile {
         display: inline-block
-}
+    }
 }
 .btn-about{
     margin-left: 8px;
@@ -103,33 +105,39 @@ export default {
     line-height: 147%;
 }
 .convertor-calc{
-    color: var(--light-gray-300, var(--gray-3100, #D0D5DD));
+    color: var(--text-fourth);
     font-family: Unbounded, serif;
     font-size: 14px;
-    font-style: normal;
     font-weight: 400;
-    line-height: 145%;
+    line-height: 20px;
 }
 .converter-container {
     display: flex;
     align-items: center;
+    gap: 4px;
 }
 .btc {
     &__block {
         display: flex;
         flex-direction: column;
         position: relative;
-        gap: 4px;
     }
 
     &_unit {
-        color: var(--light-gray-300, #D0D5DD);
+        color: var(--text-fourth, #D0D5DD);
         font-family: Unbounded, serif;
         font-size: 20px;
         font-weight: 400;
         line-height: 32px;
+        @media(max-width: 500px){
+            line-height: 34px;
+            font-family: Unbounded, serif;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+        }
         @media(max-width: 900px){
-            line-height: 36px;
+            line-height: 39px;
         }
     }
 

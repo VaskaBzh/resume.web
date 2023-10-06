@@ -28,6 +28,10 @@ export default {
     justify-content: center;
     color: #2e90fa;
     padding: 0 16px;
+    font-family: NunitoSans, serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 32px;
 }
 .button-blue {
     background: var(--old-primary-500, #2e90fa);

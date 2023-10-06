@@ -9,7 +9,7 @@
     }
     @media (max-width: 479.98px) {
         margin-bottom: 32px;
-        gap: 16px;
+        gap: 8px;
     }
     &:last-child {
         margin-bottom: 0;
@@ -49,18 +49,20 @@
     &__buttons {
         display: flex;
         align-items: center;
-        height: 40px;
+        height: 44px;
         gap: 9px;
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--background-island-inner-3);
+        background: var(--background-globe);
+        padding: 2px;
         @media (max-width: 479.98px) {
             margin-top: 20px;
             gap: 0;
+            padding: 2px;
             width: 100%;
         }
     }
     &_button {
-        color: var(--light-gray-300, #D0D5DD);
+        color: var(--buttons-tabs-text-default);
         font-family: NunitoSans, serif;
         font-size: 14px;
         font-style: normal;
@@ -73,18 +75,17 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        border-radius: 8px;
+        border-radius: var(--surface-border-radius-radius-s-md, 12px);
         transition: all 0.5s ease 0s;
         white-space: nowrap;
         outline: none;
         @media (max-width: 479.98px) {
-            min-width: 50%;
+            width: 100%;
         }
         &:hover {
             color: var(--primary-500, #2E90FA);
         }
         &.active {
-            border-radius: 12px;
             background: var(--background-island);
             box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
             color: var(--primary-500, #2E90FA);
@@ -96,6 +97,7 @@
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
         @media (max-width: 767.98px) {
             padding: 16px;
+            border-radius: 24px;
         }
         &-card {
             padding: 16px 24px;

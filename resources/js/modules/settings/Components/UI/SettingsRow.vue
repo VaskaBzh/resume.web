@@ -1,11 +1,11 @@
 <template>
     <div
         class="cabinet__block cabinet__block-light row"
-        :data-popup="!!this.user.email_verified_at ? '#changes' : ''"
+        :data-popup="!!user.email_verified_at ? '#changes' : ''"
         @mousedown="change_val"
     >
         <div class="data_value">
-            <div v-html="svg"></div>
+            <div v-html="svg" class="svg-settings-input"></div>
             <span class="text text-black text-b">{{ this.value }}</span>
         </div>
         <span class="change-text">
@@ -16,8 +16,7 @@
 
 <script>
 import { SettingsMessage } from "../../lang/SettingsMessage";
-import api from "@/api/api";
-import { useRoute } from "vue-router";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { mapGetters } from "vuex";
 
@@ -88,11 +87,7 @@ export default {
                 };
 
                 try {
-                    await api.post(`/change/${this.user.id}`, form, {
-                        headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
-                        },
-                    });
+                    await ProfileApi.post(`/change/${this.user.id}`, form);
                 } catch (e) {
                     console.error("Error with: " + e);
                 }
@@ -131,9 +126,10 @@ export default {
 .cabinet__block {
     display: flex;
     gap: 8px;
+    min-height: 56px;
     align-items: center;
     justify-content: space-between;
-    padding: 12px 16px;
+    padding: 16px;
     width: 100%;
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
@@ -157,15 +153,31 @@ export default {
     font-weight: 600;
     line-height: 150%; /* 24px */
 }
-@media(max-width: 900px){
-    .change-text {
-        font-size: 12px;
-        line-height: 16px; /* 133.333% */
-    }
+.svg-settings-input{
+    display: flex;
+    align-items: center;
 }
 .data_value {
     display: flex;
     gap: 16px;
     align-items: center;
+}
+@media(max-width: 900px){
+    .change-text {
+        font-size: 12px;
+        line-height: 16px; /* 133.333% */
+        text-align: end;
+    }
+    .cabinet__block {
+      padding: 9px 12px;
+    }
+    .data_value {
+        gap: 9px;
+    }
+}
+@media(max-width: 500px){
+    .cabinet__block {
+        min-height: 48px;
+    }
 }
 </style>

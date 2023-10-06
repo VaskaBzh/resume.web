@@ -1,10 +1,10 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { SubHashrateData } from "@/DTO/SubHashrateData";
 import store from "@/store";
 
 export class SubHashrateService {
-    constructor(translate, titles, offset = 24) {
+    constructor(translate, titles, offset = 96) {
         this.group_id = -1;
         this.offset = offset;
         this.titles = titles;
@@ -33,9 +33,9 @@ export class SubHashrateService {
     }
 
     setDefaultKeys() {
+        // title: this.setTitles(),
         this.graph = {
             ...this.graph,
-            title: this.setTitles(),
             dates: this.setDates(),
         };
     }
@@ -73,7 +73,7 @@ export class SubHashrateService {
     }
 
     async fetch() {
-        return await api.get(
+        return await ProfileApi.get(
             `/hashrate/${this.group_id}?offset=${this.offset}`,
             {
                 headers: {

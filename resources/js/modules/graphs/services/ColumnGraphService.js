@@ -36,16 +36,18 @@ export class ColumnGraphService extends GraphService {
     updateTooltip(event, position) {
         this.tooltipInit(event);
 
-        this.tooltip
-            .style("top", position.y - this.tooltipHtml.clientHeight + "px")
-            .style("opacity", 1);
+        if (position?.y) {
+            this.tooltip
+                .style("top", position.y - this.tooltipHtml.clientHeight + "px")
+                .style("opacity", 1);
+        }
     }
 
     dropBarsStyles() {
         const bars = this.svg.selectAll("path").nodes();
 
         bars.forEach((bar) => {
-            bar.setAttribute("style", "transition: all 0.3s ease 0s;");
+            bar.setAttribute("style", "transition: all 0.1s ease 0s;");
         });
     }
 
@@ -54,7 +56,7 @@ export class ColumnGraphService extends GraphService {
         let closestBar = null;
 
         bars.forEach((bar, i) => {
-            bar.setAttribute("style", "transition: all 0.3s ease 0s;");
+            bar.setAttribute("style", "transition: all 0.1s ease 0s;");
 
             const barWidth = (this.chartHtml.offsetWidth + 18) / bars.length;
             const barIndex = Math.floor(touchX / barWidth);
@@ -64,7 +66,7 @@ export class ColumnGraphService extends GraphService {
 
                 bar.setAttribute(
                     "style",
-                    "fill: #2E90FA; transition: all 0.3s ease 0s;"
+                    "fill: #2E90FA; transition: all 0.1s ease 0s;"
                 );
             }
         });
@@ -121,7 +123,7 @@ export class ColumnGraphService extends GraphService {
                 const width = this.chartHtml.offsetWidth / 30;
                 const height =
                     this.y(0) - this.y(d) <= 1 ? 1 : this.y(0) - this.y(d);
-                const rx = this.y(0) - this.y(d) <= 1 ? 0 : 6;
+                const rx = (this.y(0) - this.y(d)) <= 1 ? 0 : 6;
 
                 return `
                     M ${x + rx} ${y}

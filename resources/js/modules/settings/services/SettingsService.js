@@ -2,14 +2,14 @@ import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
 import { BlockData } from "../DTO/BlockData";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class SettingsService {
-    constructor(translate, user) {
+    constructor(translate, router) {
         this.translate = translate;
         this.profit = "";
         this.clearProfit = null;
@@ -17,8 +17,11 @@ export class SettingsService {
         this.rows = [];
         this.blocks = [];
         this.form = {};
+        this.passwordForm = {};
         this.validate = {};
         this.user = null;
+
+        this.router = router;
 
         this.userData = "";
 
@@ -26,9 +29,13 @@ export class SettingsService {
         this.code = null;
 
         this.closed = false;
+        this.waitAjax = false;
+
         this.openedFacPopup = false;
         this.closedFacPopup = false;
-        this.waitAjax = false;
+
+        this.openedPasswordPopup = false;
+        this.closedPasswordPopup = false;
 
         this.validateService = new ValidateService();
     }
@@ -47,7 +54,6 @@ export class SettingsService {
 
             this.closeFacPopup();
 
-            console.log(response);
             openNotification(true, this.translate("validate_messages.connected"), response.data.message);
         } catch (err) {
             console.error(err);
@@ -59,6 +65,59 @@ export class SettingsService {
             );
             store.dispatch("setFullErrors", err.response.data);
         }
+    }
+
+    removeRouteQuery() {
+        this.router.push({
+            name: "settings",
+        })
+    }
+
+    setPasswordForm(form = null) {
+        const formData =
+            form ?? {
+                old_password: "",
+                password: "",
+                "password_confirmation": "",
+            }
+
+        this.passwordForm = {
+            ...this.passwordForm,
+            ...formData,
+        }
+    }
+
+    async sendPassword() {
+        try {
+            const response = await this.fetchPassword();
+
+            this.closePasswordPopup();
+            this.removeRouteQuery();
+            this.setPasswordForm();
+
+            openNotification(true, this.translate("validate_messages.changed"), response.message);
+        } catch (err) {
+            console.error(err);
+
+            openNotification(
+                false,
+                this.translate("validate_messages.error"),
+                err.response.data.message
+            );
+            store.dispatch("setFullErrors", err.response.data);
+        }
+    }
+
+    openPasswordPopup() {
+        this.openedPasswordPopup = true;
+
+        setTimeout(() => (this.openedPasswordPopup = false), 300);
+    }
+
+    closePasswordPopup() {
+        this.closedPasswordPopup = true;
+
+        setTimeout(() => (this.closedPasswordPopup = false), 300);
     }
 
     async sendFac() {
@@ -85,9 +144,19 @@ export class SettingsService {
         setTimeout(() => (this.closedFacPopup = false), 300);
     }
 
+    async fetchPassword() {
+        return (
+            await ProfileApi.put(`/password/change/${this.user.id}`, this.passwordForm, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
     async fetchFac() {
         return (
-            await api.get("/2fac/enable", {
+            await ProfileApi.put("/2fac/enable", {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -97,7 +166,7 @@ export class SettingsService {
 
     async fetchVerifyFac(form) {
         return (
-            await api.post("/2fac/verify", form, {
+            await ProfileApi.post("/2fac/verify", form, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -115,14 +184,7 @@ export class SettingsService {
 
     async sendEmailVerification() {
         try {
-            const response = await api.post("/email/reverify",
-                {},
-                {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                }
-            );
+            const response = await ProfileApi.post("/email/reverify");
 
             openNotification(true, this.translate("validate_messages.success"), response.data.message);
         } catch (err) {
@@ -153,12 +215,6 @@ export class SettingsService {
                 "email"
             ),
             // new RowData(
-            //     this.translate("settings.block.settings_block.labels.password"),
-            //     "password",
-            //     this.userData.password,
-            //     "password"
-            // ),
-            // new RowData(
             //     this.translate("settings.block.settings_block.labels.phone"),
             //     "phone",
             //     this.userData.phone,
@@ -174,15 +230,17 @@ export class SettingsService {
                 this.translate("safety.text[0]"),
                 "2fac",
                 "two-factor-icon.png",
-                this.translate("safety.button[0]")
+                this.translate("safety.button[0]"),
+                "openFacForm"
             ),
-            // new BlockData(
-            //     this.translate("safety.title[2]"),
-            //     this.translate("safety.text[2]"),
-            //     "password",
-            //     "change-password-icon.png",
-            //     this.translate("safety.button[1]")
-            // ),
+            new BlockData(
+                this.translate("safety.title[2]"),
+                this.translate("safety.text[2]"),
+                "verify_password",
+                "change-password-icon.png",
+                this.translate("safety.button[1]"),
+                "openPasswordForm"
+            ),
         ];
     }
 
@@ -190,7 +248,7 @@ export class SettingsService {
         this.profit = newProfit;
     }
 
-    setForm() {
+    setDefaultForm() {
         this.form = new FormData("", "", "", "", "");
     }
 
@@ -202,7 +260,7 @@ export class SettingsService {
         };
 
         try {
-            const response = await api.put(
+            const response = await ProfileApi.put(
                 `/change/${this.user.id}`,
                 sendForm,
                 {
@@ -244,14 +302,6 @@ export class SettingsService {
         }
     };
 
-    // async send2Fac() {
-    //     let form = useForm({
-    //         "2fac": true,
-    //     });
-    //
-    //     await form.post("/2fac/enable", {});
-    // }
-
     setProfits() {
         this.profit = localStorage.getItem("clearProfit") || "";
         this.clearProfit = this.profit;
@@ -263,14 +313,10 @@ export class SettingsService {
     }
 
     async getHtml(data) {
-        // item: data.name === "пароль" ? "" : data.val,
         if (data.verify) {
             this.form = {
                 ...this.form,
-                item:
-                    data.name === this.translate("inputs.password")
-                        ? this.translate("inputs.old_password")
-                        : data.val,
+                item: data.val,
                 type: data.name,
                 key: data.key,
             };

@@ -3,7 +3,9 @@
         class="cabinet__block cabinet__block-light cabinet__block-card card"
         :class="[page == 'worker' ? 'max-width' : '']"
     >
-
+        <div class="card_icon" v-show="this.$slots.svg">
+            <slot name="svg" />
+        </div>
         <div class="card__content">
             <main-title class="headline">
                 {{ title }}
@@ -29,24 +31,27 @@ export default {
     },
     components: {
         MainTitle,
-    },
+    }
 };
 </script>
 <style scoped>
 .card {
     background: var(--background-island, #ffffff);
-
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    gap: 24px;
+    width: 100%;
 }
 
-.max-width {
-    width: 48%;
+.card_icon {
+    fill: var(--icons-accent);
 }
 
-.card_svg {
-    margin-right: 24px;
+@media (max-width: 1880px) {
+  .card_icon {
+    display: none;
+  }
 }
 
 .card__content {
@@ -71,21 +76,29 @@ export default {
     line-height: 137%;
     display: inline-flex;
     gap: 8px;
-    align-items: flex-end;
+    align-items: baseline;
     opacity: 0.8;
     flex-wrap: wrap;
 }
+.workers__card .card_num{
+    font-size: 27px;
+    line-height: 40px; /* 148.148% */
+}
+
 .card_unit {
-    color: var(--light-gray-300, #d0d5dd);
+    color: var(--text-fourth);
     font-family: Unbounded, serif;
     font-size: 27px;
     font-weight: 400;
     line-height: 147%;
 }
+.workers__card .card_unit{
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+}
 @media (max-width: 1450px) {
-    .card_num {
-        font-size: 31px;
-    }
     .card_unit {
         font-size: 25px;
     }
@@ -106,10 +119,29 @@ export default {
         font-size: 14px;
     }
 }
-
+@media(max-width: 900px){
+    .card_num {
+        font-size: 27px;
+    }
+    .card_unit {
+        color: var(--text-fourth, #595E68);
+        font-family: Unbounded;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 31px; /* 155.556% */
+    }
+}
 @media (max-width: 497.98px) {
     .card_svg {
         display: none;
+    }
+    /* Почему не работает?? */
+    .workers__card .card_unit{
+        font-size: 12px;
+    }
+    .workers__card .card_num{
+        font-size: 20px;
     }
 }
 </style>

@@ -1,10 +1,18 @@
 <template>
     <div class="popup" :id="id" :class="{ 'popup-show': service.isOpened }">
-        <un-click-view :wait="wait" />
+<!--        <un-click-view :wait="wait" />-->
         <div class="popup__wrapper">
+            <div class="popup__content-fake">
+                <div class="popup__block-fake">
+                    <slot name="instruction" />
+                </div>
+            </div>
             <div
-                class="popup__content"
-                :class="{ 'popup__content_block-loading': wait }"
+                class="popup__content onboarding_block"
+                :class="[
+                    wait ? 'popup__content_block-loading' : '',
+                    className,
+                ]"
                 ref="popup_block"
             >
                 <div class="popup__block-logo" ref="popup_logo">
@@ -30,13 +38,13 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { PopupService } from "@/modules/popup/services/PopupService";
 import LogoLight from "@/modules/popup/icons/LogoLight.vue";
 import LogoDark from "@/modules/popup/icons/LogoDark.vue";
 import UnClickView from "@/modules/popup/Components/UnClickView.vue";
 import PopupCrossIcon from "@/modules/popup/icons/PopupCrossIcon.vue";
-import anime from "animejs";
+
+import { mapGetters } from "vuex";
+import { PopupService } from "@/modules/popup/services/PopupService";
 
 export default {
     name: "main-popup",
@@ -61,6 +69,8 @@ export default {
             type: Boolean,
             default: false,
         },
+        instructionConfig: Object,
+        className: String,
     },
     data() {
         return {
@@ -144,6 +154,17 @@ export default {
     position: relative;
     overflow: hidden;
 }
+.popup__content-fake {
+    position: absolute;
+    width: 560px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.popup__block-fake {
+    position: relative;
+    width: 100%;
+}
 .popup__content .popup__block-logo {
     position: absolute;
     top: 50%;
@@ -161,8 +182,10 @@ export default {
     position: absolute;
     top: -8px;
     right: -8px;
-    padding: 8px;
+    padding: 10px;
     z-index: 2;
+    height: 44px;
+    width: 44px;
 }
 @media (max-width: 900px) {
     .popup__wrapper {

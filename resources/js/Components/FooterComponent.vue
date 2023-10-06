@@ -272,7 +272,7 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
 import { useRoute } from "vue-router";
-import api from "@/api/api";
+import { MainApi } from "@/api/api";
 import store from "@/store";
 
 export default {
@@ -300,11 +300,7 @@ export default {
         const sendFeedback = async () => {
             wait.value = true;
             try {
-                await api.post("/send_message", form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                await MainApi.post("/send_message", form);
 
                 form.message = "";
                 form.contacts = "";

@@ -1,6 +1,20 @@
 <template>
-    <nav class="header-content">
-        <div class="svg-mobile">
+    <nav class="header-content onboarding_block" :class="{
+        'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 2
+    }">
+        <instruction-step
+            @next="endCommonInstruction"
+            @prev="instructionConfig.prevStep()"
+            @close="endCommonInstruction"
+            :step_active="2"
+            :steps_count="instructionConfig.steps_count"
+            :step="instructionConfig.step"
+            :isVisible="instructionConfig.isVisible"
+            text="texts.common[1]"
+            title="titles.common[1]"
+            className="onboarding__card-top"
+        />
+        <router-link :to="{ name: 'home' }" class="svg-mobile">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"
@@ -42,7 +56,7 @@
                     </linearGradient>
                 </defs>
             </svg>
-        </div>
+        </router-link>
         <div>
             <CurrentExchangeRate />
         </div>
@@ -80,16 +94,16 @@
 </template>
 
 <script>
-import { useForm } from "@inertiajs/vue3";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
 import AccountMenu from "@/modules/common/Components/UI/AccountMenu.vue";
-import { defineComponent, ref } from "vue";
+import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
+import CurrentExchangeRate from "@/Components/technical/blocks/CurrentExchangeRate.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 import "swiper/css";
 import "swiper/css/pagination";
+import { defineComponent, ref } from "vue";
 import { mapGetters } from "vuex";
-import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
-import CurrentExchangeRate from "../../../Components/technical/blocks/CurrentExchangeRate.vue";
 
 export default defineComponent({
     components: {
@@ -98,6 +112,7 @@ export default defineComponent({
         SelectLanguage,
         SelectTheme,
         CurrentExchangeRate,
+        InstructionStep,
     },
     data() {
         return {
@@ -119,6 +134,7 @@ export default defineComponent({
         isOpenBurger: {
             type: Boolean,
         },
+        instructionConfig: Object,
     },
     created() {
         window.addEventListener("resize", this.handleResize);
@@ -129,19 +145,8 @@ export default defineComponent({
         let noInfo = ref(false);
         let closed = ref(false);
 
-        const form = useForm({
-            email: "",
-            password: "",
-            remember: false,
-        });
-
-        // const reverify = () => {
-        //     form.post("/reverify", {});
-        // };
-
         return {
             runCallbacksOnInit: {},
-            form,
             message,
             noInfo,
             closed,
@@ -157,6 +162,13 @@ export default defineComponent({
         },
     },
     methods: {
+        endCommonInstruction() {
+            this.instructionConfig.nextStep(6);
+
+            this.$router.push({
+                name: "statistic",
+            });
+        },
         handleResize() {
             this.viewportWidth = window.innerWidth;
         },
@@ -334,6 +346,9 @@ export default defineComponent({
 }
 </style> -->
 <style scoped>
+.onboarding_block-target {
+    background: var(--background-island);
+}
 .header-content {
     padding: 0 24px;
     display: flex;

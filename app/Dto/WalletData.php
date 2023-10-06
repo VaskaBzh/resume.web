@@ -31,7 +31,7 @@ readonly final class WalletData
     {
         return new self(
             name: Arr::get($requestData, 'name'),
-            walletAddress: Arr::get($requestData, 'wallet'),
+            walletAddress: Arr::get($requestData, 'wallet_address'),
             groupId: (int) $requestData['group_id'],
             percent: (int) Arr::get($requestData, 'percent'),
             minWithdrawal: (float) Arr::get($requestData, 'minWithdrawal'),

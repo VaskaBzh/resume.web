@@ -4,6 +4,7 @@ import { RouteReferralData } from "../DTO/RouteReferralData";
 import { RouteAuthData } from "../DTO/RouteAuthData";
 import { RouteConfirmData } from "../DTO/RouteConfirmData";
 import { RouteNamesMap } from "@/router/map/RouteNamesMap";
+import {VerifyMiddleware} from "../middlewares/VerifyMiddleware";
 
 export class RouteServices {
     constructor() {
@@ -45,6 +46,7 @@ export class RouteServices {
                     middleware: [
                         "LoadLayoutMiddleware",
                         "DropErrorsMiddleware",
+                        "ActionValidateMiddleware",
                     ],
                     link: "LayoutView",
                 },
@@ -71,13 +73,17 @@ export class RouteServices {
                 ],
             },
             // {
-            //     path: "/verify",
+            //     path: "/v1/verify",
             //     name: "verify",
             //     meta: {
-            //         middleware: ["EmailVerifyController"],
+            //         middleware: ["VerifyMiddleware"],
             //     },
-            //     query: {
-            //         verify_hash: null,
+            // },
+            // {
+            //     path: "/v1/password/reset/verify/",
+            //     name: "password_reset",
+            //     meta: {
+            //         middleware: ["VerifyMiddleware"],
             //     },
             // },
             {

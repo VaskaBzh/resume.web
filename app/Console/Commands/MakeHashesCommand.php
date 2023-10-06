@@ -27,30 +27,37 @@ class MakeHashesCommand extends Command
         BtcComService $btcComService
     ): void
     {
-        $progress = $this->output->createProgressBar();
+        $btcSubList  = $btcComService->filterUngrouped();
+        $progress = $this->output->createProgressBar($btcSubList->count());
 
-        Sub::hasWorkerHashRate()->each(static function (Sub $sub) use ($btcComService, $progress) {
-            $progress->advance();
+        $btcSubList->each(static function (array $btcSub) use ($progress) {
 
-            DeleteOldHashrates::execute(
-                groupId: $sub->group_id,
-                date: now()->subMonths(2)->toDateTimeString()
-            );
+                $progress->start();
 
-            $subInfo = $btcComService->getSub($sub->group_id);
+                if (filled($btcSub)) {
+                    $localSub = Sub::find($btcSub['gid']);
 
-            if (filled($subInfo)) {
-                Hash::create([
-                    'group_id' => $sub->group_id,
-                    'hash' => Arr::get($subInfo, 'shares_1m', 0),
-                    'unit' => Arr::get($subInfo, 'shares_unit', 'T'),
-                    'worker_count' => Arr::get($subInfo, 'workers_active', 0)
-                ]);
-            }
-        });
+                    if (!is_null($localSub)) {
+
+                        $progress->advance();
+
+                        DeleteOldHashrates::execute(
+                            groupId: $localSub->group_id,
+                            date: now()->subMonths(2)->toDateTimeString()
+                        );
+
+                        Hash::create([
+                            'group_id' => $localSub->group_id,
+                            'hash' => Arr::get($btcSub, 'shares_1m', 0),
+                            'unit' => Arr::get($btcSub, 'shares_unit', 'T'),
+                            'worker_count' => Arr::get($btcSub, 'workers_active', 0)
+                        ]);
+                    }
+                }
+            });
 
         $progress->finish();
 
-        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE');
+        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE: ' . $progress->getProgress());
     }
 }

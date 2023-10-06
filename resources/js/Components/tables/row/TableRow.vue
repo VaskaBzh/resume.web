@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
     name: "table-row",
@@ -153,10 +153,12 @@ export default {
 <style scoped lang="scss">
 .table {
     &_column {
-        font-size: 18px;
+        font-family: NunitoSans, serif;
+        font-size: 14px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 135%;
-        color: var(--text-secondary);
+        line-height: 20px;
+        color: var(--text-teritary);
         white-space: nowrap;
         // text-align: center;
         -moz-user-select: -moz-none;
@@ -284,7 +286,9 @@ export default {
         }
         &.error,
         &.complete,
-        &.pending {
+        &.completed,
+        &.pending,
+        &.rejected {
             span {
                 &.status,
                 &.name {
@@ -310,7 +314,8 @@ export default {
                 background: #13d60e;
             }
         }
-        &.complete {
+        &.complete,
+        &.completed {
             span.status:before {
                 background: #13d60e;
             }
@@ -325,7 +330,8 @@ export default {
                 background: #ff0000;
             }
         }
-        &.error {
+        &.error,
+        &.rejected {
             span.status:before {
                 background: #ff0000;
             }

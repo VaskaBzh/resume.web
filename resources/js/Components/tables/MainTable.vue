@@ -139,7 +139,7 @@ export default {
         .table {
             &_column {
                 position: relative;
-                color: var(--text-teritary-day, #98a2b3);
+                color: var(--text-table-title);
                 font-family: NunitoSans;
                 font-size: 14px;
                 font-style: normal;
@@ -153,10 +153,22 @@ export default {
         text-align: left;
         position: relative;
         &[data-popup="#seeChart"] {
+            border-width: 1px;
+            border-style: solid;
             td {
                 transition: all 0.3s ease 0s;
                 &:nth-child(4) {
                     border-radius: 0 8px 8px 0;
+                }
+                border-bottom-width: 1px;
+                border-top-width: 1px;
+                border-color: transparent;
+                border-style: solid;
+                &:first-child {
+                    border-left-width: 1px;
+                }
+                &:last-child {
+                    border-right-width: 1px;
                 }
             }
             svg {
@@ -164,23 +176,29 @@ export default {
                     display: inline;
                 }
             }
-            &:hover,
-            &:active {
+            //&:before {
+            //    content: "";
+            //    border-radius: 0 4px 4px 0;
+            //    background: #2E90FA;
+            //    position: absolute;
+            //    left: 0;
+            //    top: 50%;
+            //    transform: translateX(-50%);
+            //    transition: all 0.3s ease 0s;
+            //}
+            //&:active {
+            //    position: relative;
+            //    &:before {
+            //        opacity: 1;
+            //    }
+            //}
+            &:hover {
                 @media (max-width: 767.98px) {
-                    background: var(
-                        --background-island-inner-1,
-                        rgba(83, 177, 253, 0.07)
-                    );
+                    border-color: var(--states-broder-hover, #43474E);
                 }
                 @media (min-width: 767.98px) {
                     td {
-                        background: var(
-                            --background-island-inner-1,
-                            rgba(83, 177, 253, 0.07)
-                        );
-                    }
-                    svg {
-                        stroke: #343434;
+                        border-color: var(--states-broder-hover, #43474E);
                     }
                 }
             }

@@ -8,7 +8,7 @@
                 class="settings__card"
                 v-if="!this.user.email_verified_at"
             >
-                <main-title class="cabinet_title" tag="h3">{{
+                <main-title class="cabinet_title card_title" tag="h3">{{
                     $t("title[0]")
                 }}</main-title>
                 <div class="settings__content">
@@ -18,8 +18,11 @@
                     />
                 </div>
             </div>
-            <div class="settings__card">
-                <main-title class="cabinet_title" tag="h3">{{
+            <div class="settings__card onboarding_block"
+                 :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                }">
+                <main-title class="cabinet_title card_title" tag="h3">{{
                     $t("title[1]")
                 }}</main-title>
                 <article class="card__article">
@@ -27,9 +30,25 @@
                         class="card__container"
                         v-for="card in settingsService.blocks"
                     >
-                        <SafetyCard :card="card" @send2fac="sendFac" />
+                        <safety-card
+                            :card="card"
+                            @openFacForm="sendFac"
+                            @openPasswordForm="openPasswordPopup"
+                        />
                     </div>
                 </article>
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.settings[0]"
+                    title="titles.settings[0]"
+                    className="onboarding__card-bottom"
+                />
             </div>
         </div>
     </div>
@@ -54,27 +73,46 @@
         :code="settingsService.code"
         @sendVerify="sendVerify($event)"
     />
+    <settings-password-popup
+        :opened="settingsService.openedPasswordPopup"
+        :wait="settingsService.waitAjax"
+        :closed="settingsService.closedPasswordPopup"
+        :validateService="settingsService"
+        :formData="settingsService.passwordForm"
+        @sendPassword="sendPassword($event)"
+    />
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="settings"
+    />
 </template>
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SettingsList from "@/modules/settings/Components/blocks/SettingsList.vue";
 import SettingsPopup from "@/modules/settings/Components/blocks/SettingsPopup.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
+import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
+import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
+import SettingsPasswordPopup from "@/modules/settings/Components/blocks/SettingsPasswordPopup.vue";
+
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { SettingsService } from "@/modules/settings/services/SettingsService";
 import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
-import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
-import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
-
 export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
     components: {
+        SettingsPasswordPopup,
         MainTitle,
         SettingsList,
         SettingsPopup,
         SafetyCard,
         FacPopup,
+        InstructionStep,
+        InstructionButton,
     },
     props: {
         message: String,
@@ -91,7 +129,8 @@ export default {
     },
     data() {
         return {
-            settingsService: new SettingsService(this.$t),
+            settingsService: new SettingsService(this.$t, this.$router),
+            instructionService: new InstructionService(),
             is_checked: true,
             notification: true,
             password_confirmation: "",
@@ -114,21 +153,38 @@ export default {
         },
     },
     methods: {
+        setPasswordForm(form = null) {
+            this.settingsService.setPasswordForm(form);
+        },
+        async openPasswordPopup() {
+            await this.settingsService.openPasswordPopup();
+        },
         async sendFac() {
             await this.settingsService.sendFac();
+        },
+        async sendPassword(form = null) {
+			this.settingsService.setPasswordForm(form);
+
+            await this.settingsService.sendPassword();
         },
         async sendVerify(form) {
             await this.settingsService.sendVerify(form);
         },
         settingsProcess() {
+            // if (this.$route.query.action === "password") {
+            //     this.openPasswordPopup();
+            // }
             this.settingsService.setUserData();
-            this.settingsService.setForm();
+            this.settingsService.setPasswordForm();
+            this.settingsService.setDefaultForm();
             this.settingsService.setRows();
             this.settingsService.setBlocks();
             this.settingsService.setProfits();
         },
     },
     mounted() {
+        this.instructionService.setStepsCount(1);
+
         document.title = this.$t("header.links.settings");
         this.$refs.page.style.opacity = 1;
 
@@ -153,6 +209,7 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 32px;
+    margin-top: 8px;
 }
 .card__container {
     display: flex;
@@ -164,7 +221,19 @@ export default {
         gap: 16px;
         padding: 0;
     }
+    .card_title{
+        font-size: 16px;
+        line-height: 24px; /* 150% */
+        margin-bottom: 12px;
+    }
 }
+@media (max-width: 500px) {
+    .card__article {
+       margin-top: 28px;
+       gap: 40px;
+    }
+}
+
 .settings {
     padding: 24px;
     width: 100%;
@@ -175,7 +244,7 @@ export default {
         transition: all 0.3s ease 0s;
     }
     @media (max-width: 900px) {
-        padding: 24px 12px 24px;
+        padding: 24px 12px;
     }
     &__main {
         width: 100%;
@@ -187,6 +256,7 @@ export default {
         gap: 12px;
         @media(max-width: 500px){
             height: auto;
+            gap: 8px;
         }
     }
     &__content {
@@ -231,6 +301,7 @@ export default {
         width: 711px;
         @media (max-width: 900px) {
             width: 90vw;
+            padding: 16px;
         }
     }
 }

@@ -16,6 +16,7 @@
 		</span>
 		<transition-group name="tabs">
 			<nav-tab
+                @click="$emit('closeBurger')"
 				v-for="(tab, i) in tabs"
 				:tab="tab"
 				:key="i"
@@ -49,7 +50,7 @@ export default {
 		change_height(isOpen) {
 			const height = isOpen ? this.$refs.group.scrollHeight : 32;
 
-			// this.$refs.group.style.maxHeight = `${height}px`;
+			this.$refs.group.style.maxHeight = `${height}px`;
 		},
 	},
 	watch: {
@@ -104,6 +105,7 @@ export default {
 }
 .group_icon {
 	transition: all 0.5s ease 0s;
+	stroke: var(--svg-fill)
 }
 .group-closed .group_icon {
 	transform: rotate(180deg);

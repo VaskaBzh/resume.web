@@ -28,12 +28,16 @@
     --text-table-title: #98A2B3;
     --text-primary-inverse: #FFFFFF;
     --text-focus: #2E90FA;
+    --text-accent: #53B1FD;
 
-    --background-waiting-day: #fff8f0;
+    /* states */
+    --states-broder-hover: #D0D5DD;
 
       /* status */
     --death: #667085;
     --status-waiting: #ffb868;
+    --status-succesfull: #1FB96C;
+    --status-failed: #F1404A;
 
     /* select */
     --text-no-value : #D0D5DD;
@@ -41,8 +45,15 @@
     /* button */
     --buttons-fourth-fill-border-default: #F2F4F7;
     --buttons-tabs-fill-border-focus: #FFF;
+    --buttons-tabs-text-default: #D0D5DD;
     --buttons-stroke-text: #475467;
     --buttons-primary-text: #FFF;
 
     --main-checkbox-default: #F2F4F7;
+
+    /* svg */
+    --svg-fill: #D0D5DD;
+    --icons-accent: #53B1FD4D;
+    --icons-primary: #98A2B3;
+    --icons-secondary: #D0D5DD;
 }

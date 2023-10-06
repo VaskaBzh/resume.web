@@ -11,6 +11,7 @@ const messages = {
             added: "Added",
             changed: "Changed",
             watcher_message: "Watcher created successfully",
+            verify_message: "Email verified successfully",
         },
         more: "More",
         auth: {
@@ -137,7 +138,7 @@ const messages = {
                 income: "Earnings",
                 connecting: "Connection",
                 wallets: "Wallets",
-                watchers: "Watchers",
+                watchers: "Watchers links",
                 home: "Home",
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
@@ -437,7 +438,7 @@ const messages = {
             workers: "Worker",
             income: "Earnings",
             connecting: "Connection",
-            watchers: "Watchers",
+            watchers: "Watchers links",
             wallets: "Wallets",
             referral: "Ref. cabinet",
             faq: "FAQ",
@@ -446,6 +447,7 @@ const messages = {
         },
         days: "Days",
         hours: "Hours",
+        month: "Month",
         chart: {
             buttons: {
                 day: "24 days",
@@ -483,7 +485,7 @@ const messages = {
                     "Specify the cost of electricity to calculate net income.",
                 button_clear: "Specify",
                 payment: {
-                    titles: ["Yesterday", "Projected for today"],
+                    titles: ["Forecast for today", "Yesterday's income", "Forecast for the month"],
                 },
                 clear: {
                     titles: ["Today", "For month"],
@@ -498,6 +500,7 @@ const messages = {
                     title: "Worker",
                     types: ["Active", "Unstable", "Inactive"],
                 },
+                tooltip: ["On your subaccount", "Autopayment occurs when the balance is >"]
             },
         },
         accounts: {
@@ -505,9 +508,9 @@ const messages = {
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
-                    "Avg.hashrate / 1h",
+                    "Current hashrate",,
                     "Worker",
-                    "Projected earnings for today",
+                    "Hashrate / 24h",
                     "Total paid out",
                 ],
                 workers_status: ["Active", "All"],
@@ -727,6 +730,7 @@ const messages = {
             added: "Добавлено",
             changed: "Изменено",
             watcher_message: "Вотчер успешно создан",
+            verify_message: "Почта успешно подтверждена",
         },
         more: "Подробнее",
         auth: {
@@ -855,7 +859,7 @@ const messages = {
                 income: "Доходы",
                 connecting: "Подключение",
                 wallets: "Кошельки",
-                watchers: "Вотчеры",
+                watchers: "Наблюдатели",
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
@@ -1170,6 +1174,7 @@ const messages = {
         },
         days: "Дней",
         hours: "Часа",
+        month: "Месяц",
         chart: {
             buttons: {
                 day: "24 часа",
@@ -1207,7 +1212,7 @@ const messages = {
                     "Укажите расходы на электроэнергию для расчета чистой прибыли. ",
                 button_clear: "Указать",
                 payment: {
-                    titles: ["Вчера", "Прогноз на сегодня"],
+                    titles: ["Прогноз на сегодня", "Вчерашний доход", "Прогноз на месяц"],
                 },
                 clear: {
                     titles: ["Сегодня", "За месяц"],
@@ -1222,6 +1227,7 @@ const messages = {
                     title: "Воркеры",
                     types: ["Активные", "Нестабильные", "Неактивные"],
                 },
+                tooltip: ["На вашем субаккаунте ", "Автовыплата происходит при  балансе >"]
             },
         },
         accounts: {
@@ -1229,9 +1235,9 @@ const messages = {
             toggle: ["Активный", "Переключить"],
             block: {
                 titles: [
-                    "Ср.хешрейт / 1ч",
+                    "Текущий хешрейт",
                     "Воркеры",
-                    "Прогноз на сегодня",
+                    "Хешрейт / 24ч",
                     "Всего выплачено",
                 ],
                 workers_status: ["Активные", "Все"],

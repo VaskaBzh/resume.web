@@ -1,7 +1,7 @@
 import { TableService } from "@/services/extends/TableService";
 
 import { PaymentData } from "@/modules/referral/DTO/PaymentData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 
 export class PaymentService extends TableService {
@@ -29,7 +29,7 @@ export class PaymentService extends TableService {
     }
 
     async fetchIncomes(page, per_page) {
-        return await api.get(
+        return await ProfileApi.get(
             `/referrals/incomes/${this.user.id}?page=${page}&per_page=${per_page}`,
             {
                 headers: {

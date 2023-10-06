@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { workerData } from "@/DTO/workerData";
 import store from "@/store";
@@ -14,15 +14,21 @@ export class WorkerService {
         this.rows = [];
         this.workers_graph = {};
         this.records = [];
+        this.filterButtons = [];
+        this.status = "all";
 
         this.table = new Map();
 
         this.waitWorkers = true;
         this.emptyWorkers = false;
-        this.waitTargetWorkers = true;
+        this.emptyTableWorkers = false;
+
         this.popupCardOpened = false;
         this.popupCardClosed = false;
+
         this.target_worker = {};
+        this.waitTargetWorker = true;
+        this.visibleCard = false;
 
         this.route = route;
     }
@@ -69,8 +75,30 @@ export class WorkerService {
         this.worker_id = -1;
     }
 
+    setStatus(status) {
+        this.status = status;
+
+        return this;
+    }
+
+    setFilterButtons() {
+        this.filterButtons = [
+            {
+                name: "all",
+            },
+            {
+                name: "active",
+            },
+            {
+                name: "inactive",
+            },
+        ]
+
+        return this;
+    }
+
     async fetchList() {
-        return await api.get(`/workers/${this.group_id}`, {
+        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }
@@ -82,7 +110,7 @@ export class WorkerService {
     }
 
     async fetchWorker() {
-        return await api.get(`/workers/worker/${this.worker_id}`, {
+        return await ProfileApi.get(`/workers/worker/${this.worker_id}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }
@@ -94,7 +122,7 @@ export class WorkerService {
     }
 
     async fetchWorkerGraph() {
-        return await api.get(`/workerhashrate/${this.worker_id}`, {
+        return await ProfileApi.get(`/workerhashrate/${this.worker_id}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }
@@ -111,8 +139,11 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
+
+
             this.useTranslater(this.titleIndexes);
             this.emptyWorkers = false;
+            this.emptyTableWorkers = false;
             this.waitWorkers = true;
 
             try {
@@ -123,8 +154,12 @@ export class WorkerService {
                 });
 
                 // this.rows.unshift(this.setFirstRow());
-
-                if (this.rows.length === 0) this.emptyWorkers = true;
+                if (this.rows.length === 0) {
+                    if (this.status === "all") {
+                        this.emptyWorkers = true;
+                    }
+                    this.emptyTableWorkers = true;
+                }
 
                 this.waitWorkers = false;
             } catch (e) {
@@ -144,7 +179,7 @@ export class WorkerService {
 
     async getWorker() {
         if (this.group_id !== -1) {
-            this.waitTargetWorkers = true;
+            this.waitTargetWorker = true;
 
             Object.assign(
                 this.target_worker,
@@ -157,6 +192,9 @@ export class WorkerService {
 
     dropWorker() {
         this.target_worker = {};
+
+        this.visibleCard = false;
+        this.waitTargetWorker = true;
     }
 
     setGraphTitles() {
@@ -224,6 +262,8 @@ export class WorkerService {
     }
 
     async getPopup(worker_id) {
+        this.visibleCard = true;
+
         this.updateGroup_id();
 
         this.worker_id = worker_id;
@@ -234,12 +274,12 @@ export class WorkerService {
         await this.makeFullValues();
         await this.getWorker();
 
-        this.waitTargetWorkers = false;
+        this.waitTargetWorker = false;
     }
 
     async getWorkerGraph() {
         if (this.group_id !== -1) {
-            this.waitTargetWorkers = true;
+            this.waitTargetWorker = true;
 
             this.records = (await this.fetchWorkerGraph()).data.data.map(
                 (el) => {

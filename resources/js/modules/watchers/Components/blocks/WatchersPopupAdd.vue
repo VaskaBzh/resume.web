@@ -1,9 +1,21 @@
 <template>
-    <main-popup id="addWatcher" :wait="wait" :closed="closed">
+    <main-popup
+        id="addWatcher"
+        :wait="wait"
+        :opened="opened"
+        :closed="closed"
+        :instructionConfig="instructionConfig"
+        :className="
+            instructionConfig.isVisible && instructionConfig.step === 2
+              ? 'onboarding_block-target'
+              : ''
+        "
+        @closed="instructionConfig.nextStep()"
+    >
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers-add">
-                    <main-title tag="h3" class="watcher-card-title">{{
+                    <main-title tag="h3" class="watcher_title">{{
                         $t("add_watcher_card.title")
                     }}</main-title>
                     <main-description>{{
@@ -27,6 +39,7 @@
                             v-for="(route, i) in allowedRoutes"
                             :key="i"
                             :is_checked="route.checked"
+                            :editable="route.editable"
                             class="checkbox-sm"
                             @is_checked="setAllowedRoutes($event, i)"
                         >
@@ -45,6 +58,20 @@
                 </template>
             </main-button>
         </div>
+        <template v-slot:instruction>
+            <instruction-step
+                @next="instructionConfig.nextStep()"
+                @prev="instructionConfig.prevStep()"
+                @close="instructionConfig.nextStep(6)"
+                :step_active="2"
+                :steps_count="instructionConfig.steps_count"
+                :step="instructionConfig.step"
+                :isVisible="instructionConfig.isVisible"
+                text="texts.watchers[1]"
+                title="titles.watchers[1]"
+                className="onboarding__card-right"
+            />
+        </template>
     </main-popup>
 </template>
 
@@ -55,6 +82,8 @@ import MainDescription from "@/modules/common/Components/UI/MainDescription.vue"
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+
 import { mapGetters } from "vuex";
 import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
@@ -67,10 +96,13 @@ export default {
         MainPopup,
         MainTitle,
         MainDescription,
+        InstructionStep,
     },
     props: {
         wait: Boolean,
+        opened: Boolean,
         closed: Boolean,
+        instructionConfig: Boolean,
     },
     i18n: {
         sharedMessages: WatchersMessage,
@@ -86,7 +118,8 @@ export default {
                 this.allowedRoutes = [
                     {
                         name: this.$t("tabs[0]"),
-                        checked: false,
+                        checked: true,
+                        editable: false,
                         routes: [
                             "v1.sub.show",
                             "v1.hashrate.list",
@@ -96,6 +129,7 @@ export default {
                     {
                         name: this.$t("tabs[2]"),
                         checked: false,
+                        editable: true,
                         routes: [
                             "v1.worker.show",
                             "v1.worker.list",
@@ -105,6 +139,7 @@ export default {
                     {
                         name: this.$t("tabs[1]"),
                         checked: false,
+                        editable: true,
                         routes: ["v1.income.list", "v1.payout.list"],
                     },
                 ];
@@ -151,16 +186,18 @@ export default {
             allowedRoutes: [
                 {
                     name: this.$t("tabs[0]"),
-                    checked: false,
+                    checked: true,
+                    editable: false,
                     routes: [
                         "v1.sub.show",
-                        "v1.hashrate.list",
+                        "v1.statistic.show",
                         "v1.allowed-routes",
                     ],
                 },
                 {
                     name: this.$t("tabs[2]"),
                     checked: false,
+                    editable: true,
                     routes: [
                         "v1.worker.show",
                         "v1.worker.list",
@@ -170,6 +207,7 @@ export default {
                 {
                     name: this.$t("tabs[1]"),
                     checked: false,
+                    editable: true,
                     routes: ["v1.income.list", "v1.payout.list"],
                 },
             ],
@@ -188,10 +226,13 @@ export default {
     gap: 80px;
     width: 100%;
 }
-@media(max-width: 500px){
-    .watcher-card-title{
-    font-size: 19px;
+.watcher_title {
+    margin-bottom: 4px;
 }
+@media(max-width: 500px){
+    .watcher_title{
+        font-size: 16px;
+    }
 }
 .watchers__column {
     display: flex;
@@ -217,7 +258,7 @@ export default {
 }
 .watchers_label {
     padding: 0 16px;
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans, serif;
     font-size: 14px;
     font-weight: 400;

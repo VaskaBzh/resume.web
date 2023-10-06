@@ -2,11 +2,11 @@ import anime from "animejs/lib/anime.es.js";
 import { ref } from "vue";
 
 export class PreloaderService {
-    constructor(translate) {
+    constructor() {
         this.progressPercentage = 0;
         this.interval = null;
 
-        this.translate = translate;
+        this.translate = null;
 
         this.endTable = false;
         this.resizeEnd = false;
@@ -23,8 +23,41 @@ export class PreloaderService {
         this.cross = null;
     }
 
+    setTranslate(translate) {
+        this.translate = translate;
+    }
+
+    dropResizeAnimation() {
+        if (this.animateLineResizeConst) {
+            this.animateLineResizeConst.pause(this.polygon);
+            this.animateLineResizeConst.remove(this.polygon);
+        }
+    }
+
+    dropLineAnimation() {
+        if (this.animateLineConst) {
+            this.animateLineConst.pause(this.polygon);
+            this.animateLineConst.remove(this.polygon);
+
+            const rotate = this.polygon.style.webkitTransform.substr(7, 3);
+
+            this.animateLineConst = anime({
+                targets: this.polygon,
+                rotate: rotate <= 360 ? 360 : 720,
+                duration: (100 - rotate / 7.2) * 12.5,
+                easing: "linear",
+                complete: (anim) => {
+                    this.animateCloseLine();
+                }
+            });
+        }
+    }
+
     endAnimation() {
         this.endTable = true;
+
+        this.dropResizeAnimation();
+        this.dropLineAnimation();
     }
 
     dropEndAnimation() {
@@ -140,14 +173,14 @@ export class PreloaderService {
                 loop: true,
                 easing: "easeInOutSine",
                 direction: "alternate",
-                update: (anim) => {
-                    if (this.endTable && Math.round(anim.progress) === 0) {
-                        this.animateLineResizeConst.pause(this.polygon);
-                        this.animateLineResizeConst.remove(this.polygon);
-
-                        this.resizeEnd = true;
-                    }
-                },
+                // update: (anim) => {
+                //     if (this.endTable && Math.round(anim.progress) === 0) {
+                //         this.animateLineResizeConst.pause(this.polygon);
+                //         this.animateLineResizeConst.remove(this.polygon);
+                //
+                //         this.resizeEnd = true;
+                //     }
+                // },
             });
         }
     }
@@ -167,17 +200,17 @@ export class PreloaderService {
                 duration: 2500,
                 loop: true,
                 easing: "linear",
-                changeComplete: (anim) => {
-                    if (this.endTable && this.resizeEnd) {
-                        this.animateLineConst.pause(this.polygon);
-                        this.animateLineConst.remove(this.polygon);
-
-                        this.dropResizeState();
-                        this.dropEndAnimation();
-
-                        this.animateCloseLine();
-                    }
-                },
+                // changeComplete: (anim) => {
+                //     if (this.endTable && this.resizeEnd) {
+                //         this.animateLineConst.pause(this.polygon);
+                //         this.animateLineConst.remove(this.polygon);
+                //
+                //         this.dropResizeState();
+                //         this.dropEndAnimation();
+                //
+                //         this.animateCloseLine();
+                //     }
+                // },
             });
         }
     }
@@ -188,11 +221,13 @@ export class PreloaderService {
         if (this.animateLineCloseConst?.remove) {
             this.animateLineCloseConst.restart();
         } else {
+            const strokeDashOffset = this.polygon.style.strokeDashoffset.split("px")[0];
+
             this.animateLineCloseConst = anime({
                 targets: this.polygon,
-                strokeDashoffset: [-890, -1247],
+                strokeDashoffset: [strokeDashOffset, -1247],
                 easing: "easeInOutSine",
-                duration: 1000,
+                duration: (100 - strokeDashOffset / 12.47) * 16,
                 begin: (anim) => {
                     this.animateCross();
 

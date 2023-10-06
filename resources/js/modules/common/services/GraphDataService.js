@@ -2,14 +2,17 @@ import { DefaultSubsService } from "./DefaultSubsService";
 import { HashrateUnitEnum } from "../enums/HashrateUnitEnum";
 
 export class GraphDataService extends DefaultSubsService {
-    constructor(titles, translate, offset = 24) {
+    constructor(offset = 96) {
         super();
-        this.titles = titles;
         this.offset = offset;
 
         this.graph = {};
         this.records = [];
 
+        this.translate = null;
+    }
+
+    setTranslate(translate) {
         this.translate = translate;
     }
 
@@ -17,19 +20,18 @@ export class GraphDataService extends DefaultSubsService {
         this.offset = offset;
     }
 
-    getTranslateRoute() {
-        return "chart.labels";
-    }
+    // getTranslateRoute() {
+    //     return "chart.labels";
+    // }
 
-    setTitles() {
-        return this.titles.map((title) =>
-            this.translate(`${this.getTranslateRoute()}[${title}]`)
-        );
-    }
+    // setTitles() {
+    //     return this.titles.map((title) =>
+    //         this.translate(`${this.getTranslateRoute()}[${title}]`)
+    //     );
+    // }
 
-    setDates() {
+    setDates(interval = 60 * 60 * 1000) {
         const currentTime = new Date().getTime();
-        const interval = 60 * 60 * 1000;
 
         return Array.from({ length: this.offset }, (_, i) => {
             const date = new Date(
@@ -39,11 +41,11 @@ export class GraphDataService extends DefaultSubsService {
         });
     }
 
-    setDefaultKeys() {
+    setDefaultKeys(interval) {
+        // title: this.setTitles(),
         this.graph = {
             ...this.graph,
-            title: this.setTitles(),
-            dates: this.setDates(),
+            dates: this.setDates(interval),
         };
     }
 
@@ -92,7 +94,7 @@ export class GraphDataService extends DefaultSubsService {
 
                 return acc;
             },
-            [[], [], []]
+            [[]]
         );
 
         while (amount.length < 30) {

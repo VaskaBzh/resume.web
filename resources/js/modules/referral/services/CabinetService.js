@@ -1,7 +1,7 @@
 import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class CabinetService {
@@ -59,7 +59,7 @@ export class CabinetService {
         let result = {};
 
         try {
-            result = await api.post(
+            result = await ProfileApi.post(
                 `/referrals/generate/`,
                 {
                     group_id: id,
@@ -116,7 +116,7 @@ export class CabinetService {
 
         try {
             response = (
-                await api.get(`/referrals/statistic/`, {
+                await ProfileApi.get(`/referrals/statistic/`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },

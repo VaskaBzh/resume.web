@@ -1,5 +1,5 @@
 <template>
-    <div @click="toggleMenu" class="button">
+    <div @click.prevent="toggleMenu" class="button">
         <div
             class="button_name"
             :class="{ 'button_name-target': target }"
@@ -52,7 +52,7 @@
             :errors="errors"
         >
             <form @submit.prevent="addAcc" class="form form-popup popup__form">
-                <main-title tag="h3">{{
+                <main-title tag="h3" class="account-title">{{
                     $t("accounts.popups.add.title")
                 }}</main-title>
                 <p class="popup-text">
@@ -101,7 +101,7 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "../../../../store";
 import { ref } from "vue";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import i18n from "@/lang/vue-translate";
 
 export default {
@@ -156,21 +156,20 @@ export default {
         const addAcc = async () => {
             wait.value = true;
             try {
-                const response = await api.post("/subs/create", form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await ProfileApi.post("/subs/create", form);
                 openNotification(
                     true,
                     t("validate_messages.added"),
                     response.data.message
                 );
                 closed.value = true;
+
                 store.dispatch("accounts_all", store.getters.user.id);
             } catch (err) {
                 console.error("Error with: " + err);
+
                 store.dispatch("setFullErrors", err.response.data.errors);
+
                 openNotification(
                     false,
                     t("validate_messages.error"),
@@ -179,7 +178,6 @@ export default {
             }
 
             wait.value = false;
-            store.dispatch("accounts_all", store.getters.user.id);
         };
 
         return {
@@ -294,10 +292,11 @@ export default {
         },
         hideMenuClick(e) {
             if (
-                !e.target.closest(".nav__container .button .button_name") &&
-                !e.target.closest(".nav__container .button .button__row")
-            )
+                !e.target.closest(".button_name") &&
+                !e.target.closest(".nav__tabs .button .button__row")
+            ) {
                 this.hideMenu();
+            }
         },
         toggleMenu() {
             this.target = !this.target;
@@ -313,13 +312,13 @@ export default {
 
 <style scoped lang="scss">
 .popup-text {
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
     line-height: 24px; /* 150% */
-    margin-bottom: 40px;
+    margin: 4px 0 40px;
 }
 .user-name-text {
     color: var(--text-primary-inverse);
@@ -336,6 +335,13 @@ export default {
     font-weight: 600;
     line-height: 135%; /* 16.2px */
 }
+.account-title{
+    font-family: Unbounded;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+}
 .popup__input {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-island, #fff);
@@ -351,6 +357,14 @@ export default {
 }
 .popup__input:focus {
     border: 1px solid #2E90FA;
+}
+.popup__input::placeholder{
+    color: var(--select-text-no-value, var(--gray-3100, #D0D5DD));
+    font-family: NunitoSans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 150% */
 }
 .blue-button {
     border-radius: 12px;
@@ -371,6 +385,9 @@ export default {
     position: relative;
     width: 270px;
     margin-bottom: 16px;
+    @media (max-width: 500px) {
+        width: 100%;
+    }
     &_name {
         width: 100%;
         cursor: pointer;

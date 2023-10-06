@@ -28,31 +28,41 @@ class MakeWorkerHashesCommand extends Command
      */
     public function handle(BtcComService $btcComService): void
     {
-        Worker::all()->each(static function (Worker $worker) use ($btcComService) {
+        $btcWorkerList = collect($btcComService->getWorkerList(0));
 
-            DeleteOldWorkerHashrates::execute(
-                workerId: $worker->worker_id,
-                date: now()->subMonths(2)->toDateTimeString()
-            );
+        $progressBar = $this->output->createProgressBar($btcWorkerList->count());
 
-            $btcWorker = $btcComService->getWorker($worker->worker_id);
+        $progressBar->start();
+        $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
+            if (array_key_exists('worker_id', $btcComWorker)) {
 
-            if ($btcWorker->isNotEmpty()) {
+                $progressBar->advance();
+
+                $localWorker = Worker::where('worker_id', $btcComWorker['worker_id'])
+                    ->first();
+
+                DeleteOldWorkerHashrates::execute(
+                    workerId: $localWorker->worker_id,
+                    date: now()->subMonths(2)->toDateTimeString()
+                );
+
                 WorkerHashrate::create([
-                    'worker_id' => $worker->worker_id,
-                    'hash' => $btcWorker['shares_1m'] ?? 0,
-                    'unit' => $btcWorker['shares_unit'] ?? 'T',
+                    'worker_id' => $localWorker->worker_id,
+                    'hash' => $btcComWorker['shares_1m'] ?? 0,
+                    'unit' => $btcComWorker['shares_unit'] ?? 'T',
                 ]);
 
-                Update::execute($worker, workerData: WorkerData::fromRequest([
-                    'worker_id' => $worker->worker_id,
-                    'group_id' => $worker->group_id,
-                    'approximate_hash_rate' => $btcWorker['shares_1d']
+                Update::execute($localWorker, workerData: WorkerData::fromRequest([
+                    'worker_id' => $localWorker->worker_id,
+                    'group_id' => $localWorker->group_id,
+                    'approximate_hash_rate' => $btcComWorker['shares_1d']
                 ]));
             }
-
-            Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE');
         });
+
+        $progressBar->finish();
+
+        Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE: ' . $progressBar->getProgress());
 
         Artisan::call('make:sub-hashes');
     }

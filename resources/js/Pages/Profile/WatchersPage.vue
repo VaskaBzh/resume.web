@@ -1,6 +1,11 @@
 <template>
     <div class="watchers">
-        <div class="watchers__head">
+        <div
+            class="watchers__head onboarding_block"
+            :class="{
+                'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+            }"
+        >
             <div class="watchers__head__block">
                 <main-title tag="h4">{{ $t("title") }}</main-title>
                 <main-description class="is-vis-text-mobile">{{
@@ -12,6 +17,18 @@
                     <plus-icon />
                 </template>
             </main-button>
+            <instruction-step
+                @next="instructionService.nextStep()"
+                @prev="instructionService.prevStep()"
+                @close="instructionService.nextStep(6)"
+                :step_active="1"
+                :steps_count="instructionService.steps_count"
+                :step="instructionService.step"
+                :isVisible="instructionService.isVisible"
+                text="texts.watchers[0]"
+                title="titles.watchers[0]"
+                className="onboarding__card-top"
+            />
         </div>
         <div class="cabinet watchers__wrapper">
             <main-preloader
@@ -55,7 +72,9 @@
     </div>
     <watchers-popup-add
         :wait="service.wait"
-        :closed="service.popupClosed"
+        :opened="openOnBoardingPopup"
+        :closed="service.popupClosed || closeOnBoardingPopup"
+        :instructionConfig="instructionService"
         @createWatcher="createWatcher($event)"
     />
     <watchers-popup-remove
@@ -77,7 +96,12 @@
             :watcher="activeCard"
             @changeWatcher="changeWatcher"
             @removeWatcher="removeWatcher"
-    /></watchers-popup-card>
+        />
+    </watchers-popup-card>
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="watchers"
+    />
 </template>
 
 <script>
@@ -92,13 +116,18 @@ import WatchersCard from "@/modules/watchers/Components/blocks/WatchersCard.vue"
 import WatchersPopupRemove from "@/modules/watchers/Components/blocks/WatchersPopupRemove.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WatchersPopupCard from "@/modules/watchers/Components/blocks/WatchersPopupCard.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { WatchersService } from "@/modules/watchers/services/WatchersService";
 import { mapGetters } from "vuex";
 import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
     name: "watchers-page",
     components: {
+        InstructionButton,
         WatchersList,
         MainSlider,
         PlusIcon,
@@ -110,6 +139,7 @@ export default {
         WatchersPopupCard,
         WatchersCard,
         MainPreloader,
+        InstructionStep,
     },
     i18n: {
         sharedMessages: WatchersMessage,
@@ -117,6 +147,9 @@ export default {
     data() {
         return {
             service: new WatchersService(this.$t),
+            instructionService: new InstructionService(),
+            openOnBoardingPopup: false,
+            closeOnBoardingPopup: false,
         };
     },
     computed: {
@@ -143,7 +176,8 @@ export default {
             await this.service.index();
         },
         async removeWatcher(id) {
-            await this.service.removeWatcher(id);
+            await this.service.removeWatcher(id)
+                .dropCard();
             await this.service.index();
         },
     },
@@ -159,8 +193,22 @@ export default {
         "$i18n.locale"() {
             document.title = this.$t("header.links.watchers");
         },
+        "instructionService.step"(newStepValue) {
+            if (newStepValue === 2) {
+                this.openOnBoardingPopup = true;
+
+                setTimeout(() => this.openOnBoardingPopup = false, 300);
+            }
+            if (newStepValue === 3) {
+                this.closeOnBoardingPopup = true;
+
+                setTimeout(() => this.closeOnBoardingPopup = false, 300);
+            }
+        }
     },
     async mounted() {
+        this.instructionService.setStepsCount(2);
+
         document.title = this.$t("header.links.watchers");
         this.service.setGroupId(this.getActive);
         this.service.setForm();
@@ -171,6 +219,12 @@ export default {
 </script>
 
 <style scoped>
+.onboarding_block {
+    transition: none;
+}
+.onboarding_block-target {
+    background: var(--background-island);
+}
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.5s ease;
@@ -198,6 +252,11 @@ export default {
     top: 50%;
     transform: translate(-50%, -50%);
 }
+.watchers__head.onboarding_block-target {
+    padding: 8px;
+    margin: -8px -8px 24px;
+    width: calc(100% + 16px);
+}
 .watchers__head {
     display: flex;
     justify-content: space-between;
@@ -205,7 +264,6 @@ export default {
     margin-bottom: 32px;
     align-items: center;
 }
-
 .watchers__head__block {
     display: flex;
     flex-direction: column;
@@ -223,7 +281,7 @@ export default {
 }
 @media (max-width: 900px) {
     .watchers {
-        padding: 24px 12px 24px;
+        padding: 24px 12px;
     }
 }
 @media (max-width: 700px) {

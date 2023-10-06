@@ -93,6 +93,11 @@ export default {
     methods: {
         graphInit() {
             if (this.graphData) {
+                const colors = {
+                    circle: this.isDark ? "#212327" : "#ffffff",
+                    bands: this.isDark ? "rgba(47, 47, 47, 0.95)" : "#D0D5DD",
+                }
+
                 this.service
                     .setContainerHeight(this.height)
                     .createSvg()
@@ -110,7 +115,7 @@ export default {
                     .setLineGenerator()
                     .setAreaGenerator()
                     .setYBand()
-                    .graphAppends()
+                    .graphAppends(colors)
                     .setTooltip();
 
                 if (this.service.isMobile) {
@@ -142,7 +147,7 @@ export default {
 }
 .tooltip {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island, #fff);
+    background: var(--background-tooltip, rgba(44, 47, 52, 0.90));
     box-shadow: 0px 2px 12px -1px rgba(16, 24, 40, 0.08);
     padding: 12px;
     min-width: 160px;
@@ -167,7 +172,7 @@ export default {
     line-height: 16px;
 }
 .tooltip_label {
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
 }
 .tooltip_value {
     color: var(--text-secondary, #475467);

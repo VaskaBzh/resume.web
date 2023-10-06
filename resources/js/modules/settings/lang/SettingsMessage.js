@@ -54,6 +54,16 @@ export const SettingsMessage = {
             title: '2FA connection',
             button: ['Continue', 'Back', 'Connect'],
             label: ["Settings key", "Code from application"],
+        },
+        password_popup: {
+            title: 'Change Password',
+            description: 'To change the password, you need to remember the current one',
+            placeholders: {
+                current_password: "Current Password",
+                new_password: "New Password",
+                confirm_password: "Confirm New Password",
+            },
+            button: "Change",
         }
     },
     ru: {
@@ -111,6 +121,16 @@ export const SettingsMessage = {
             title: 'Подключение 2FA',
             button: ['Продолжить', 'Назад', 'Подключить'],
             label: ["Ключ настройки", "Код из приложения"],
+        },
+        password_popup:{
+            title: 'Смена пароля',
+            description: 'Чтобы сменить пароль нужно помнить текущий',
+            placeholders: {
+                current_password: "Текущий пароль",
+                new_password: "Новый пароль",
+                confirm_password: "Повторите новый пароль",
+            },
+            button: "Сменить",
         }
     },
 };

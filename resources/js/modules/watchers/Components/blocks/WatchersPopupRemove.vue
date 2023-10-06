@@ -3,7 +3,7 @@
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers__head">
-                    <main-title tag="h3">{{
+                    <main-title tag="h3" class="watchers_title">{{
                         $t("delete_card.title")
                     }}</main-title>
                     <main-description>{{
@@ -87,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+.watchers_title {
+    margin-bottom: 4px;
+}
 .watchers__form {
     display: flex;
     flex-direction: column;
@@ -115,6 +118,7 @@ export default {
     display: flex;
     align-items: center;
     gap: 16px;
+    background: var(--background-modal-input, #ffffff);
 }
 .watchers_text {
     color: var(--text-secondary, #475467);

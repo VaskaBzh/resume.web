@@ -25,6 +25,7 @@ class Kernel extends ConsoleKernel
         GiveRoleCommand::class,
         EmailVerifyNotificationCommand::class,
     ];
+
     /**
      * Define the application's command schedule.
      *

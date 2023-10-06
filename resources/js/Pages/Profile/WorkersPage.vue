@@ -14,19 +14,61 @@
             <main-title class="title-worker" tag="h4">{{
                 $t("workers.title")
             }}</main-title>
-            <div class="cards-container">
+            <div
+                class="cards-container onboarding_block"
+                :class="{
+                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                }"
+            >
                 <main-hashrate-cards />
+                <instruction-step
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
+                    :step_active="1"
+                    :steps_count="instructionService.steps_count"
+                    :step="instructionService.step"
+                    :isVisible="instructionService.isVisible"
+                    text="texts.workers[0]"
+                    title="titles.workers[0]"
+                    className="onboarding__card-top"
+                />
             </div>
             <div class="workers__content">
+                <worker-tabs
+                    :tabs="worker_service.filterButtons"
+                    :active_tab="worker_service.status"
+                    @changeStatus="setStatus"
+                />
                 <main-slider
+                    class="onboarding_block"
+                    :class="{
+                        'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
+                    }"
                     :wait="worker_service.waitWorkers"
                     :empty="worker_service.emptyWorkers"
                     rowsNum="1000"
                     :haveNav="false"
                 >
+                    <template v-slot:instruction>
+                        <instruction-step
+                            @next="instructionService.nextStep()"
+                            @prev="instructionService.prevStep()"
+                            @close="instructionService.nextStep(6)"
+                            :step_active="2"
+                            :steps_count="instructionService.steps_count"
+                            :step="instructionService.step"
+                            :isVisible="instructionService.isVisible"
+                            text="texts.workers[1]"
+                            title="titles.workers[1]"
+                            className="onboarding__card-bottom"
+                        />
+                    </template>
                     <main-table
                         :table="worker_service.table"
                         :removePercent="removePercent"
+                        :empty="worker_service.emptyTableWorkers"
+                        :wait="worker_service.waitWorkers"
                         @getData="getTargetWorker($event)"
                     ></main-table>
                 </main-slider>
@@ -34,10 +76,9 @@
                     <worker-card
                         class="workers__card"
                         v-if="
-                            viewportWidth > 1200 &&
-                            Object.entries(worker_service.target_worker)
-                                .length > 0
+                            viewportWidth > 1200 && worker_service.visibleCard
                         "
+                        :wait="worker_service.waitTargetWorker"
                         :target_worker="worker_service.target_worker"
                         :graph="worker_service.workers_graph"
                         @closeCard="dropWorkers"
@@ -58,13 +99,16 @@
             v-if="Object.entries(worker_service.target_worker).length > 0"
             :target_worker="worker_service.target_worker"
             :graph="worker_service.workers_graph"
+            :wait="worker_service.waitTargetWorker"
             @closeCard="dropWorkers"
     />
     </workers-popup-card>
+    <instruction-button
+        @openInstruction="instructionService.setStep().setVisible()"
+        hint="workers"
+    />
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { WorkerService } from "@/services/WorkerService";
 import MainHashrateCards from "@/modules/common/Components/UI/MainHashrateCards.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import MainTable from "@/Components/tables/MainTable.vue";
@@ -72,9 +116,18 @@ import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WorkersPopupCard from "@/modules/workers/Components/WorkersPopupCard.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
+import WorkerTabs from "@/modules/workers/Components/WorkerTabs.vue";
+
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
+import { WorkerService } from "@/services/WorkerService";
+import { mapGetters } from "vuex";
 
 export default {
     components: {
+        WorkerTabs,
+        InstructionButton,
         MainHashrateCards,
         MainSlider,
         MainTable,
@@ -82,6 +135,7 @@ export default {
         WorkerCard,
         MainTitle,
         WorkersPopupCard,
+        InstructionStep,
     },
     data() {
         return {
@@ -95,6 +149,7 @@ export default {
                 [0, 1, 3, 4],
                 this.$route
             ),
+            instructionService: new InstructionService(),
         };
     },
     watch: {
@@ -108,15 +163,21 @@ export default {
         },
     },
     methods: {
+        setStatus(status) {
+            this.worker_service.setStatus(status);
+
+            this.initWorkers();
+        },
         async initWorkers() {
             await this.worker_service.fillTable();
         },
         async getTargetWorker(data) {
-            await this.worker_service.getPopup(data.id);
+            if (this.viewportWidth > 1200) {
+                this.removePercent = true
+            }
 
-            this.viewportWidth > 1200
-                ? (this.removePercent = true)
-                : this.worker_service.openPopupCard();
+            await this.worker_service.getPopup(data.id);
+            this.worker_service.openPopupCard()
         },
         dropWorkers() {
             this.worker_service.dropWorker();
@@ -135,18 +196,6 @@ export default {
             "getAccount",
             "viewportWidth",
         ]),
-        copyObject() {
-            return [
-                {
-                    title: this.$t("connection.block.title"),
-                    copyObject: [
-                        { link: "btc.all-btc.com:4444", title: "Port" },
-                        { link: "btc.all-btc.com:3333", title: "Port 1" },
-                        { link: "btc.all-btc.com:2222", title: "Port 2" },
-                    ],
-                },
-            ];
-        },
         statuses() {
             return [
                 { title: this.$t("workers.select[0]"), value: "all" },
@@ -157,6 +206,10 @@ export default {
         },
     },
     mounted() {
+        this.instructionService.setStepsCount(2);
+
+        this.worker_service.setFilterButtons();
+
         this.initWorkers();
 
         document.title = this.$t("header.links.workers");
@@ -171,6 +224,12 @@ export default {
     .title-worker {
         display: inline-block;
         padding: 0 0 16px 16px;
+        color: var(--text-primary);
+        font-family: Unbounded !important;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 32px; /* 160% */
     }
 }
 .cards-container {
@@ -189,7 +248,8 @@ export default {
     .cards-container {
         flex-direction: row;
         flex-wrap: nowrap;
-        gap: 16px;
+        gap: 0px;
+        margin-bottom: 24px;
     }
 }
 .workers {
@@ -198,7 +258,7 @@ export default {
     display: flex;
     flex-direction: column;
     @media (max-width: 900px) {
-        padding: 24px 12px 24px;
+        padding: 24px 12px;
     }
     .form .title {
         margin-bottom: 0;
@@ -206,13 +266,11 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
-        @media (max-width: 1300px) {
-            flex-direction: column;
-        }
+        flex-direction: column;
     }
     &__card {
         min-width: calc(50% - 6px);
-        min-height: 474px;
+        min-height: 440px;
         @media (max-width: 1300px) {
             min-height: 437px;
         }
@@ -231,7 +289,7 @@ export default {
             min-height: 550px;
         }
         @media (max-width: 390px) {
-            min-height: 470px;
+            min-height: 490px;
         }
     }
     &__button {

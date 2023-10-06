@@ -262,7 +262,7 @@ export default {
 .btn-back {
     border-radius: 12px;
     width: 49%;
-    border: 1px solid var(--light-gray-400, #98a2b3);
+    border: 1px solid var(--text-teritary, #98a2b3);
     padding: 12px 16px;
     background: inherit;
     color: var(--text-secondary, #475467);
@@ -273,7 +273,7 @@ export default {
     line-height: 175%; /* 31.5px */
 }
 .popup-text {
-    color: var(--light-gray-400, #98a2b3);
+    color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;

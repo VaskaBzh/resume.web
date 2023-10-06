@@ -62,7 +62,7 @@ h4 {
     font-size: 24px;
     line-height: 107.6%;
     @media (max-width: 767.98px) {
-        font-size: 18px;
+        // font-size: 18px;
         line-height: 135%;
     }
 }
@@ -70,8 +70,9 @@ h4 {
 
 
 .title {
-    font-family: AmpleSoftPro, serif;
+    font-family: Unbounded;
     color: var(--text-primary);
+    opacity: 0.8;
     font-weight: 400;
     &.profile {
         margin: 0 0 40px;
@@ -81,11 +82,17 @@ h4 {
         justify-content: space-between;
     }
     &.headline {
-        color: var(--light-gray-400, #98a2b3);
+        color: var(--text-teritary);
         font-family: NunitoSans, serif;
         font-size: 14px;
         font-weight: 600;
-        line-height: 145%;
+        line-height: 142%;
+        opacity: 1;
+        @media(max-width: 900px){
+            .title{
+                font-size: 12px;
+            }
+        }
     }
 
     &-blue {

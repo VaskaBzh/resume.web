@@ -137,7 +137,7 @@ return [
         'string' => 'The :attribute must be :size characters.',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
+    'string' => 'Вводимый :attribute должен быть строкой',
     'timezone' => 'The :attribute must be a valid timezone.',
     'unique' => 'Такой :attribute уже зарегистрирован.',
     'uploaded' => 'The :attribute failed to upload.',
@@ -160,7 +160,8 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
-            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте'
+            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте',
+            'confirmation_code_exists' => 'Неверный код подверждения',
         ],
     ],
 
@@ -179,8 +180,8 @@ return [
         'password' => 'пароль',
         'name' => 'имя',
         'referral_code' => 'реферальный код',
-        'wallet.address' => 'адрес кошелька',
-        'wallet.name' => 'имя кошелька',
+        'wallet_address' => 'адрес кошелька',
+        'wallet_name' => 'имя кошелька',
     ],
 
 ];

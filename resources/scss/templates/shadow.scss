@@ -6,11 +6,17 @@
         left: 0;
         top: 0;
         background: rgba(#464646, 0.15);
-        z-index: 90;
+        z-index: 1000;
         backdrop-filter: blur(5px);
     }
 }
-
+.nav__container {
+    .shadow {
+        &_container {
+            z-index: 90;
+        }
+    }
+}
 .shadow-enter-active,
 .shadow-leave-active {
     transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
