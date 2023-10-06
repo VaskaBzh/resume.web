@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Wallet;
 
-use App\Actions\User\DeleteConfirmationCode;
 use App\Actions\Wallet\ChangeAddress;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallet\ChangeAddressRequest;
@@ -20,8 +19,6 @@ class ChangeAddressController extends Controller
         if (!ChangeAddress::execute($wallet, $request->wallet_address)) {
             return new JsonResource(['message' => __('actions.failed')]);
         }
-
-        DeleteConfirmationCode::execute(auth()->user());
 
         return new JsonResource(['message' => __('actions.wallet_update')]);
     }

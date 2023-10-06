@@ -268,7 +268,7 @@ export class WalletsService extends DefaultSubsService {
                         openNotification(
                             true,
                             this.translate("validate_messages.success"),
-                            response.data.data.message
+                            response.data.message
                         );
 
                         requestCount++;

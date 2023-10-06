@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Actions\User\DeleteConfirmationCode;
 use App\Builders\UserBuilder;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -13,7 +14,6 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Illuminate\Support\Facades\Hash as HashFacade;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -93,12 +93,24 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
-    public function confirmationCode(): string
+    public function generateConfirmationCode(): string
     {
         $min = pow(10, 5 - 1);
         $max = pow(10, 5) - 1;
 
         return (string) mt_rand($min, $max);
+    }
+
+    public function confirmationCode(): Attribute
+    {
+        return Attribute::make(
+            get: function (?string $confirmationCode): ?string {
+
+                DeleteConfirmationCode::execute($this);
+
+                return $confirmationCode;
+            }
+        );
     }
 
     public function isEmailAllowed(): bool

@@ -9,7 +9,7 @@ class UpdateConfirmationCode
 {
     public static function execute(User $user): string
     {
-        $code = $user->confirmationCode();
+        $code = $user->generateConfirmationCode();
 
         $user->update(['confirmation_code' => Hash::make($code)]);
 

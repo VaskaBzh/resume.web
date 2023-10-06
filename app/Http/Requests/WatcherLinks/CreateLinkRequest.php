@@ -11,7 +11,7 @@ class CreateLinkRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:200|'
+            'name' => 'required|string|max:16'
                 . Rule::unique('watcher_links', 'name')->where('user_id', auth()->user()->id),
             'allowed_routes' => ['required', 'array',  new ContainsRouteRule],
         ];
