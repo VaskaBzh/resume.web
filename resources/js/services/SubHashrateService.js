@@ -33,9 +33,9 @@ export class SubHashrateService {
     }
 
     setDefaultKeys() {
+        // title: this.setTitles(),
         this.graph = {
             ...this.graph,
-            title: this.setTitles(),
             dates: this.setDates(),
         };
     }

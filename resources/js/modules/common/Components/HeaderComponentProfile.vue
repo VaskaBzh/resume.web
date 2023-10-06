@@ -5,7 +5,7 @@
         <instruction-step
             @next="endCommonInstruction"
             @prev="instructionConfig.prevStep()"
-@close="instructionConfig.nextStep(6)"
+            @close="endCommonInstruction"
             :step_active="2"
             :steps_count="instructionConfig.steps_count"
             :step="instructionConfig.step"
@@ -14,7 +14,7 @@
             title="titles.common[1]"
             className="onboarding__card-top"
         />
-        <div class="svg-mobile">
+        <router-link :to="{ name: 'home' }" class="svg-mobile">
             <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="40"
@@ -56,7 +56,7 @@
                     </linearGradient>
                 </defs>
             </svg>
-        </div>
+        </router-link>
         <div>
             <CurrentExchangeRate />
         </div>
@@ -163,7 +163,7 @@ export default defineComponent({
     },
     methods: {
         endCommonInstruction() {
-            this.instructionConfig.nextStep();
+            this.instructionConfig.nextStep(6);
 
             this.$router.push({
                 name: "statistic",
@@ -346,6 +346,9 @@ export default defineComponent({
 }
 </style> -->
 <style scoped>
+.onboarding_block-target {
+    background: var(--background-island);
+}
 .header-content {
     padding: 0 24px;
     display: flex;

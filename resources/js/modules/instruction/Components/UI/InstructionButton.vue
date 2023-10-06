@@ -2,7 +2,7 @@
     <div class="button" @click="$emit('openInstruction')">
         <div class="button__block">
             <div class="button_hint">
-                {{ hint }}
+                {{ $t(`button_titles.${hint}`) }}
             </div>
             <info-icon
                 class="button_icon"
@@ -14,10 +14,15 @@
 <script>
 import InfoIcon from "@/modules/instruction/icons/InfoIcon.vue";
 
+import { InstructionMessage } from "@/modules/instruction/lang/InstructionMessage";
+
 export default {
     name: "instruction-button",
     components: {
         InfoIcon
+    },
+    i18n: {
+        sharedMessages: InstructionMessage,
     },
     props: {
         hint: String,

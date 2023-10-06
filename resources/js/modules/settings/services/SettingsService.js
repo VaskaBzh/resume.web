@@ -156,7 +156,7 @@ export class SettingsService {
 
     async fetchFac() {
         return (
-            await ProfileApi.get("/2fac/enable", {
+            await ProfileApi.put("/2fac/enable", {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },

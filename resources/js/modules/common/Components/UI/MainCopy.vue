@@ -1,7 +1,7 @@
 <template>
     <div class="copy" :class="{ 'copy-active': hasCopy }" @click="copy">
         <p class="copy_label" v-show="label">{{ label }}</p>
-        <p class="copy_input">{{ cuttedCode }}</p>
+        <p class="copy_text">{{ cuttedCode }}</p>
         <transition name="copy">
             <copy-icon class="copy_icon" v-show="!hasCopy" />
         </transition>
@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import CopyIcon from "../../icons/CopyIcon.vue";
-import TickIcon from "../../icons/TickIcon.vue";
+import CopyIcon from "@/modules/common/icons/CopyIcon.vue";
+import TickIcon from "@/modules/common/icons/TickIcon.vue";
 
 export default {
     name: "main-copy",
@@ -82,11 +82,11 @@ export default {
     opacity: 0;
 }
 .copy {
-    min-height: 48px;
+    min-height: 56px;
     width: 100%;
     display: flex;
     justify-content: center;
-    padding: var(--py-4, 16px) var(--px-4, 16px);
+    padding: 4px var(--px-4, 16px);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-modal-input, #ffffff);
     cursor: pointer;
@@ -100,12 +100,7 @@ export default {
             &_icon {
                 stroke: #4182ec;
             }
-            &_tick {
-                fill: #4182ec;
-            }
         }
-        //&-active {
-        //}
     }
     &_label {
         color: var(--text-teritary);
@@ -114,9 +109,7 @@ export default {
         font-weight: 400;
         line-height: 16px;
     }
-    &_input {
-        width: 100%;
-        height: 100%;
+    &_text {
         outline: none;
         border: none;
         background: transparent;

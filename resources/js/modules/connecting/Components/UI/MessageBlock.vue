@@ -1,6 +1,6 @@
 <template>
-    <div class="message">
-        <connection-icon />
+        <div class="message">
+            <connection-icon />
     </div>
 </template>
 
@@ -10,7 +10,7 @@ import ConnectionIcon from "@/modules/connecting/icons/ConnectionIcon.vue";
 export default {
     name: "message-block",
     components: {
-        ConnectionIcon
+        ConnectionIcon,
     },
 }
 </script>

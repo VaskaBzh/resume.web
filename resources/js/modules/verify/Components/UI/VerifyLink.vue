@@ -61,7 +61,7 @@ export default {
 
 <style scoped>
 .verify {
-    color: var(--icons-accent, #53B1FD);
+    color: var(--buttons-ghost-text-default, #53B1FD);
     font-family: NunitoSans, serif;
     font-size: 14px;
     font-weight: 600;

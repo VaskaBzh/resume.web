@@ -436,6 +436,14 @@ h6 {
         padding-bottom: 40px;
     }
 }
+.statistic_graph {
+    .y-axis-container {
+        @media(max-width:900px){
+            left: 10px;
+            top: 100px;
+        }
+    }
+}
 .y-axis-container {
     position: absolute;
     left: 30px;

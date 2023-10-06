@@ -100,7 +100,7 @@
     </watchers-popup-card>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
-        hint="Знакомсто с «Наблюдателями»"
+        hint="watchers"
     />
 </template>
 
@@ -176,7 +176,8 @@ export default {
             await this.service.index();
         },
         async removeWatcher(id) {
-            await this.service.removeWatcher(id);
+            await this.service.removeWatcher(id)
+                .dropCard();
             await this.service.index();
         },
     },
@@ -218,6 +219,12 @@ export default {
 </script>
 
 <style scoped>
+.onboarding_block {
+    transition: none;
+}
+.onboarding_block-target {
+    background: var(--background-island);
+}
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.5s ease;

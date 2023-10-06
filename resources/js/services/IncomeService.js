@@ -12,29 +12,13 @@ export class IncomeService extends TableService {
     constructor(translate, titleIndexes, route) {
         super(translate, titleIndexes);
 
-        this.graphService = new GraphDataService(titleIndexes, 30);
+        this.graphService = new GraphDataService(30);
         this.route = route;
         this.waitGraphChange = true;
         this.incomeBarGraph = {};
     }
 
-    async fetchChartIncomes(page = 1, per_page = 30) {
-        console.log(this.route?.query?.access_key)
-        return await ProfileApi.get(
-            `/incomes/${this.group_id}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    ...(this.route?.query?.access_key
-                        ? { "X-Access-Key": this.route.query.access_key }
-                        : {
-                              Authorization: `Bearer ${store.getters.token}`,
-                          }),
-                },
-            }
-        );
-    }
-
-    async fetchIncomes(page = 1, per_page = 15) {
+    async fetchIncomes(page = 1, per_page = 1000) {
         return await ProfileApi.get(
             `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
             {
@@ -174,7 +158,7 @@ export class IncomeService extends TableService {
                         delete item.type
                         return item
                     });
-                    tableTitleIndexes = this.titleIndexes;
+                    tableTitleIndexes = [...this.titleIndexes];
                     tableTitleIndexes.shift();
                     this.titles = this.useTranslater(tableTitleIndexes)
                 }
@@ -212,12 +196,14 @@ export class IncomeService extends TableService {
         if (this.group_id !== -1) {
             this.waitGraphChange = true;
 
-            this.graphService.setDefaultKeys();
+            this.graphService.setDefaultKeys(60 * 60 * 1000 * 24);
 
             try {
-                this.graphService.records = (
-                    await this.fetchIncomes()
-                ).data.data.map((el) => {
+                const response = (
+                    await this.fetchIncomes(1, 30)
+                ).data.data;
+
+                this.graphService.records = response.map((el) => {
                     return new BarGraphData(el);
                 });
             } catch (e) {

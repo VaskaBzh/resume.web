@@ -5,9 +5,6 @@
             'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1
         }"
     >
-        <span class="connecting-description">
-            {{ this.copyObject.title }}
-        </span>
         <copy-row
             v-for="(copy, i) in this.copyObject.copyObject"
             :key="i"
@@ -16,7 +13,6 @@
         <instruction-step
             @next="instructionConfig.nextStep()"
             @prev="instructionConfig.prevStep()"
-@close="instructionConfig.nextStep(6)"
             @close="instructionConfig.nextStep(6)"
             :step_active="1"
             :steps_count="instructionConfig.steps_count"
@@ -49,17 +45,12 @@ export default {
 <style scoped lang="scss">
 .onboarding_block {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    transition: none;
 }
-.connecting-description{
-    color: var(--text-teritary, #98A2B3);
-    font-family: NunitoSans, serif;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 24px */;
-    margin-bottom: 18px;
+.onboarding_block-target {
+    background: var(--background-island);
 }
-@media(max-width: 500px){
+@media(max-width: 500px) {
     .connecting-description{
         font-size: 12px;
         line-height: 16px
@@ -69,7 +60,7 @@ export default {
     &__block {
         display: flex;
         flex-direction: column;
-        gap: 22px;
+        gap: 16px;
         flex: 1 1 auto;
         @media(max-width:500px){
              gap: 8px;

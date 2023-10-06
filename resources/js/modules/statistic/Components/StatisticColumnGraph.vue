@@ -21,7 +21,7 @@
         <instruction-step
             @next="instructionConfig.nextStep()"
             @prev="instructionConfig.prevStep()"
-@close="instructionConfig.nextStep(6)"
+            @close="instructionConfig.nextStep(6)"
             :step_active="4"
             :steps_count="instructionConfig.steps_count"
             :step="instructionConfig.step"

@@ -22,7 +22,7 @@ export const WatchersMessage = {
         delete_card: {
             title: "Delete Observer",
             labels: ["Observer Name", "Observer Link"],
-            text: "Delete observer",
+            text: "Do you really want to remove the observer ?",
             buttons: ["Cancel", "Delete"],
         },
     },
@@ -49,7 +49,7 @@ export const WatchersMessage = {
         delete_card: {
             title: "Удалить наблюдателя",
             labels: ["Имя наблюдателя", "Ссылка наблюдателя"],
-            text: "Удалить наблюдателя",
+            text: "Вы действительно хотите удалить наблюдателя ?",
             buttons: ["Отменить", "Удалить"],
         },
     },

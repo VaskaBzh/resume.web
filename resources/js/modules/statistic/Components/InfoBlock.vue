@@ -20,7 +20,7 @@
         <instruction-step
             @next="instructionConfig.nextStep()"
             @prev="instructionConfig.prevStep()"
-@close="instructionConfig.nextStep(6)"
+            @close="instructionConfig.nextStep(6)"
             :step_active="3"
             :steps_count="instructionConfig.steps_count"
             :step="instructionConfig.step"
@@ -56,7 +56,7 @@ export default {
             return Number(val).toFixed(8);
         },
         monthAmount() {
-            let val = this.getAccount?.yesterday_amount || 0;
+            let val = this.getAccount?.today_forecast * 30 || 0;
             return Number(val).toFixed(8);
         },
         ...mapGetters([

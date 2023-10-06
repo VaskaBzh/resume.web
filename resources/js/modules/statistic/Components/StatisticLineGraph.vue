@@ -5,7 +5,7 @@
             'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1
         }"
     >
-        <div class="cabinet__head">
+        <div class="cabinet__head graph__head">
             <main-title tag="h3" class="chart-title-statistic">
                 {{ $t("statistic.chart.title") }}
             </main-title>
@@ -24,7 +24,7 @@
         <instruction-step
             @next="instructionConfig.nextStep()"
             @prev="instructionConfig.prevStep()"
-@close="instructionConfig.nextStep(6)"
+            @close="instructionConfig.nextStep(6)"
             :step_active="1"
             :steps_count="instructionConfig.steps_count"
             :step="instructionConfig.step"
@@ -79,6 +79,9 @@ export default {
 </script>
 
 <style scoped>
+.graph__head {
+    flex-wrap: nowrap;
+}
 @media(max-width:500px){
     .chart-title-statistic{
         display: none;

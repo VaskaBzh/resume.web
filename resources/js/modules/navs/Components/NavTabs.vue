@@ -1,44 +1,51 @@
 <template>
-    <div class="nav onboarding_block" :class="{
-        'open-burger': isOpenBurger,
-        'close-burger': !isOpenBurger,
-        'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1,
-        'nav-untouchable': $route.query?.onboarding === 'true'
-    }">
-        <div class="nav__content">
-            <div class="nav__block">
-                <logo-block class="nav_logo" />
-                <div class="header-select-container">
-                    <select-theme></select-theme>
-                    <select-language></select-language>
+    <transition name="burger">
+        <div
+            class="nav onboarding_block"
+            :class="{
+                'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1,
+            }"
+            v-show="isOpenBurger || viewportWidth >= 900 || !viewportWidth"
+        >
+            <div class="nav__content"
+                :class="{
+                    'nav-untouchable': $route.query?.onboarding === 'true'
+                }"
+            >
+                <div class="nav__block">
+                    <logo-block class="nav_logo" />
+                    <div class="header-select-container">
+                        <select-theme></select-theme>
+                        <select-language></select-language>
+                    </div>
+                    <div class="nav__tabs">
+                        <account-menu></account-menu>
+                        <nav class="nav__column">
+                            <nav-group
+                                @closeBurger="$emit('closeBurger')"
+                                v-for="(group, i) in service.links"
+                                :group="group"
+                                :key="i"
+                            />
+                        </nav>
+                    </div>
                 </div>
-                <div class="nav__tabs">
-                    <account-menu></account-menu>
-                    <nav class="nav__column">
-                        <nav-group
-                            @click="$emit('closeBurger')"
-                            v-for="(group, i) in service.links"
-                            :group="group"
-                            :key="i"
-                        />
-                    </nav>
-                </div>
+                <logout-link class="nav_logout" />
             </div>
-            <logout-link class="nav_logout" />
+            <instruction-step
+                @next="instructionConfig.nextStep()"
+                @prev="instructionConfig.prevStep()"
+                @close="endCommonInstruction"
+                :step_active="1"
+                :steps_count="instructionConfig.steps_count"
+                :step="instructionConfig.step"
+                :isVisible="instructionConfig.isVisible"
+                text="texts.common[0]"
+                title="titles.common[0]"
+                className="onboarding__card-left"
+            />
         </div>
-        <instruction-step
-            @next="instructionConfig.nextStep()"
-            @prev="instructionConfig.prevStep()"
-@close="instructionConfig.nextStep(6)"
-            :step_active="1"
-            :steps_count="instructionConfig.steps_count"
-            :step="instructionConfig.step"
-            :isVisible="instructionConfig.isVisible"
-            text="texts.common[0]"
-            title="titles.common[0]"
-            className="onboarding__card-left"
-        />
-    </div>
+    </transition>
     <div
         class="nav-bg-mobile"
         :class="[isOpenBurger ? 'open-bg' : 'close-bg']"
@@ -78,7 +85,21 @@ export default defineComponent({
             service: new TabsService(this.$router, this.$route),
         };
     },
+    methods: {
+        endCommonInstruction() {
+            this.instructionConfig.nextStep(6);
+
+            this.$router.push({
+                name: "statistic",
+            });
+        },
+    },
     mounted() {
+        this.$route?.query?.access_key
+            ? this.service.setWatcherLinks()
+            : this.service.setLinks(this.user);
+    },
+    beforeUpdate() {
         this.$route?.query?.access_key
             ? this.service.setWatcherLinks()
             : this.service.setLinks(this.user);
@@ -92,13 +113,18 @@ export default defineComponent({
 });
 </script>
 <style scoped>
+.onboarding_block-target {
+    background: var(--background-island);
+}
+.burger-enter-active,
+.burger-leave-active {
+    transition: all 0.5s ease;
+}
+.burger-enter-from,
+.burger-leave-to {
+    transform: translateX(100vw);
+}
 .nav {
-    height: 100vh;
-    /*
-    min-height: 100vh;
-    overflow-y: scroll;
-    overflow-x: hidden;
-    */
     min-width: 320px;
     position: relative;
 }
@@ -117,30 +143,32 @@ export default defineComponent({
     z-index: 1000;
     display: block;
 }
-.nav::-webkit-scrollbar {
-    width: 0;
-    height: 0;
-}
 .nav__content {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     width: 100%;
+    overflow: scroll;
     padding: 40px 16px 16px;
     gap: 8px;
-
-    min-height: 100vh;
+    height: 100vh;
+}
+.nav__content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 @media (max-width: 900px) {
     .nav__content {
-        padding: 0px 16px 56px;
+        padding: 0 16px 112px;
     }
 }
 .header-select-container {
     display: none;
 }
-.open-bg {
-    z-index: 5;
+@media (max-width: 500px) {
+    .nav {
+        min-width: 100vw;
+    }
 }
 @media (max-width: 900px) {
     .nav {
@@ -150,8 +178,7 @@ export default defineComponent({
         padding: 20px 24px 24px;
         z-index: 100;
         background: var(--background-island);
-        box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-        display: none;
+        box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
     }
     .header-select-container {
         display: flex;
@@ -165,37 +192,7 @@ export default defineComponent({
         position: fixed;
         background: rgba(0, 0, 0, 0.15);
         left: 0;
-        right: 0;
-        bottom: 0;
         top: 71px;
-        display: none;
-    }
-    .open-burger {
-        display: inline-block;
-        animation: openBurger 0.4s linear;
-        min-width: 100%;
-    }
-    @keyframes openBurger {
-        0% {
-            transform: translateX(350px);
-        }
-        100% {
-            transform: translateX(0px);
-        }
-    }
-    .close-burger {
-        animation: closeBurger 0.4s linear;
-    }
-    @keyframes closeBurger {
-        0% {
-            display: inline-block;
-
-            transform: translateX(0px);
-        }
-        100% {
-            transform: translateX(350px);
-            display: none;
-        }
     }
     .open-bg {
         display: inline-block;

@@ -11,6 +11,7 @@ export class TabsService {
     }
 
     setLinks(user) {
+        this.links = [];
         this.links = [
             ...this.links,
             {

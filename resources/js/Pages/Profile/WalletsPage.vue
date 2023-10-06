@@ -34,6 +34,7 @@
                                 type="text"
                                 class="input popup__input autopayout-input"
                                 placeholder="0.005"
+                                disabled
                             />
                             <label for="min" class="main__label autopayout-label">{{
                                     $t("wallets.popups.change.labels.minWithdrawal")
@@ -188,7 +189,10 @@
                     "
                 />
             </div>
-            <wallets-warning class="wallets_warning" />
+            <warning-block
+                class="wallets_warning"
+                text="wallets_change"
+            />
             <button type="submit" class="all-link change-autopyout_button">
                 <svg
                     width="24"
@@ -212,7 +216,13 @@
         </form>
         <verify-form
             v-if="wallets.isCodeSend"
+            title="form.wallets.title"
+            text="form.wallets.text"
+            placeholder="form.wallets.placeholder"
+            re_verify_text="form.wallets.re_verify_text"
+            button_text="form.wallets.button_text"
             @sendForm="changeWallet($event)"
+            @back="wallets.back()"
         />
     </main-popup>
     <main-popup
@@ -285,11 +295,17 @@
         <verify-form
             v-if="wallets.isCodeSend"
             @sendForm="createWallet($event)"
+            title="form.wallets.title"
+            text="form.wallets.text"
+            placeholder="form.wallets.placeholder"
+            re_verify_text="form.wallets.re_verify_text"
+            button_text="form.wallets.button_text"
+            @back="wallets.back()"
         />
     </main-popup>
     <instruction-button
         @openInstruction="instructionService.setStep().setVisible()"
-        hint="Знакомсто с «Кошельками»"
+        hint="wallets"
     />
 </template>
 <script>
@@ -300,20 +316,20 @@ import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
-import WalletsWarning from "@/modules/wallets/Components/WalletsWarning.vue";
+import WarningBlock from "@/modules/common/Components/UI/WarningBlock.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
+import VerifyForm from "@/modules/verify/Components/VerifyForm.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { mapGetters } from "vuex";
 import { WalletsService } from "@/services/WalletsService";
-import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
-import VerifyForm from "../../modules/verify/Components/VerifyForm.vue";
 
 export default {
     components: {
         VerifyForm,
         InstructionButton,
-        WalletsWarning,
+        WarningBlock,
         MainPopup,
         MainButton,
         MainTitle,
@@ -410,7 +426,13 @@ export default {
     props: ["message", "auth_user"],
 };
 </script>
-<style lang="scss">
+<style lang="scss" scoped>
+.onboarding_block {
+    transition: none;
+}
+.onboarding_block-target {
+    background: var(--background-island);
+}
 .wallets_warning {
     margin: 80px 0 0;
     width: 100%;
@@ -531,10 +553,11 @@ input:focus {
     &:last-child {
         padding: 16px 40px 32px;
     }
-}
-@media(max-width: 500px){
-    .wallet-wrapper {
-        padding: 16px;
+    @media (max-width: 767.98px) {
+        padding: 16px 16px 8px;
+        &:last-child {
+            padding: 8px 16px 16px;
+        }
     }
 }
 .blue-button-container {
@@ -681,9 +704,6 @@ input:focus {
     }
 
     &__block {
-        background: var(--background-island);
-        border-radius: 12px;
-        width: 100%;
         @media (max-width: 767.98px) {
             padding: 10px 0 10px;
             border-top: 1px solid #d7d8d9;

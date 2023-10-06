@@ -186,6 +186,7 @@ export class WatchersService extends MetaTableService {
                     this.translate("validate_messages.error"),
                     err.response.data.message
                 );
+
                 await this.getCard(id);
             }
         }
@@ -207,8 +208,6 @@ export class WatchersService extends MetaTableService {
 
                 this.dropForm();
                 this.closePopup();
-
-                this.dropCard();
             } catch (err) {
                 console.error(err);
 
