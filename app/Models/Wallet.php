@@ -72,6 +72,6 @@ class Wallet extends Model
 
     public function isUnlocked(): bool
     {
-        return now() > $this->wallet_updated_at->addDay();
+        return now()->gt($this->wallet_updated_at->addHours(48));
     }
 }

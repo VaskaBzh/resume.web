@@ -103,7 +103,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public function isEmailAllowed(): bool
     {
-        return now() > $this->email_verified_at->addHours(48);
+        return now()->gt($this->email_verified_at->addHours(48));
     }
 
     /* End attributes */
