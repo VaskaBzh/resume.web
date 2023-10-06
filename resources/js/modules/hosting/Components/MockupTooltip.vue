@@ -44,4 +44,20 @@ export default {
 .position-right{
   transform: translate(46px, -42px);
 }
+@media(max-width:900px){
+  .tooltip-card{
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 12px;
+  }
+  .position-up{
+    transform: translate(-77px, -57px);
+  }
+  .position-down {
+    transform: translate(-98px, 2px);
+}
+.position-right {
+    transform: translate(40px, -38px);
+}
+}
 </style>
