@@ -63,27 +63,23 @@ export function scroolingHeader() {
             duration: 1,
         }, 'my-label')
         .fromTo('.app_back_transparent_block-one', {
-                // alignSelf: 'flex-start',
                 duration: .6,
                 xPercent: 0
 
             },
             {
-                // alignSelf: 'center',
                 duration: .6,
-                xPercent: 40
+                xPercent: 35
 
             }, 'transparent-logo')
 
         .fromTo('.app_back_transparent_block-two', {
-                // alignSelf: 'flex-end',
                 duration: .6,
                 xPercent: 0
 
             },
             {
-                // alignSelf: 'center',
-                xPercent: -40,
+                xPercent: -35,
                 duration: .6
             }, 'transparent-logo')
         .fromTo('.app_back_transparent__container', {rotateX: 0, opacity: 1, yPercent: 0, duration: 1.5, scale: 1}, {
@@ -104,11 +100,18 @@ export function scroolingHeader() {
         pin: true,
         scrub: 2,
         id: '.header-land',
-        smoothChildTiming: true
+        smoothChildTiming: true,
+        onUpdate: self => {
+            let btnHeaderScrooll = document.querySelector('.header-land_btn')
+            if(self.progress < 0.5) {
+                btnHeaderScrooll.style.opacity = 1
+            } else {
+
+                btnHeaderScrooll.style.opacity = 1 - self.progress
+            }
+        }
 
     })
-
-
 }
 
 

@@ -1,5 +1,5 @@
 <template>
-    <div class="connect-withus">
+    <div class="connect-withus scroll-section">
         <div class="connect-withus__run">
             <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn"/>

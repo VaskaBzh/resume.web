@@ -1,5 +1,5 @@
 <template>
-    <div class="mobile-view">
+    <div class="mobile-view scroll-section">
         <div class="mobile-view__container">
             <head-line class="mobile-view__title">{{ $t("mobile_app.button") }}</head-line>
             <div class="mobile-view__wrapper">

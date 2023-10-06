@@ -1,5 +1,5 @@
 <template>
-    <div class="security-view">
+    <div class="security-view scroll-section">
         <div class="security-view__container">
             <head-line class="security-view_btn">{{ $t("safety") }}</head-line>
             <div id="smooth-wrapper" class="security-view__wrapper">

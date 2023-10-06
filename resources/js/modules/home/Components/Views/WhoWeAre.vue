@@ -1,54 +1,61 @@
 <template>
-<div class="about">
+<div class="about about-view scroll-section">
     <head-line>{{ $t("who_we_are.button") }}</head-line>
     <div class="about__wrapper">
         <div class="about__inner">
-            <div class="about_item">
-                <h2 class="about_item_title">{{ $t("who_we_are.card_private.title[0]") }}</h2>
-                <div class="about_item_cards">
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">7</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[0]") }}</div>
+            <div class="about__inner_wrap">
+                <div class="about_item">
+                    <h2 class="about_item_title">{{ $t("who_we_are.card_private.title[0]") }}</h2>
+                    <div class="about_item_cards">
+                        <div class="about_item_card">
+                            <div class="about_item_card_num">7</div>
+                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[0]") }}</div>
+                        </div>
+                        <div class="about_item_card">
+                            <div class="about_item_card_num">1.7</div>
+                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[1]") }}</div>
+                        </div>
+                        <div class="about_item_card">
+                            <div class="about_item_card_num">30</div>
+                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[2]") }}</div>
+                        </div>
+                        <div class="about_item_card">
+                            <div class="about_item_card_num"><span>{{ $t("who_we_are.card_private.text[3]") }}</span>75%</div>
+                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[4]") }}</div>
+                        </div>
                     </div>
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">1.7</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[1]") }}</div>
-                    </div>
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">30</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[2]") }}</div>
-                    </div>
-                    <div class="about_item_card">
-                        <div class="about_item_card_num"><span>{{ $t("who_we_are.card_private.text[3]") }}</span>75%</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[4]") }}</div>
-                    </div>
+                    <!--                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>-->
                 </div>
-                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>
             </div>
-            <div class="about_item">
-                <h2 class="about_item_title">{{ $t("who_we_are.card_community.title[0]") }}</h2>
-                <div class="about_item_cards">
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">№1</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[0]") }}</div>
-                    </div>
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">24/7</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[1]") }}</div>
-                    </div>
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">1</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[2]") }}</div>
-                    </div>
-                    <div class="about_item_card">
-                        <div class="about_item_card_num">4%</div>
-                        <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[3]") }}</div>
-                    </div>
-                </div>
-                <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
-            </div>
+           <div class="about__inner_wrap">
+               <div class="about_item">
+                   <h2 class="about_item_title">{{ $t("who_we_are.card_community.title[0]") }}</h2>
+                   <div class="about_item_cards">
+                       <div class="about_item_card">
+                           <div class="about_item_card_num">№1</div>
+                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[0]") }}</div>
+                       </div>
+                       <div class="about_item_card">
+                           <div class="about_item_card_num">24/7</div>
+                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[1]") }}</div>
+                       </div>
+                       <div class="about_item_card">
+                           <div class="about_item_card_num">1</div>
+                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[2]") }}</div>
+                       </div>
+                       <div class="about_item_card">
+                           <div class="about_item_card_num">4%</div>
+                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[3]") }}</div>
+                       </div>
+                   </div>
+               </div>
+           </div>
+
         </div>
-        <div class="about_stiky"></div>
+        <div class="about_stiky">
+            <div class="about_stiky_block"></div>
+        </div>
+<!--        <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>-->
     </div>
 
     <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
@@ -59,6 +66,7 @@
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {scrollingAbout} from "../../Services/AboutScroll";
 
 export default {
     name: "WhoWeAre",
@@ -66,6 +74,9 @@ export default {
     i18n: {
             sharedMessages: HomeMessage,
     },
+    mounted() {
+        scrollingAbout()
+    }
 }
 </script>
 
@@ -78,19 +89,38 @@ export default {
     flex-flow: column nowrap;
     gap: 30px;
     padding: 100px 0 186px;
-    background: #4A96FF;
+    background: #1c293e;
 
 
     &__wrapper {
+        position: relative;
         display: flex;
         flex-flow: row nowrap;
     }
 
     &__inner {
-        width: 75%;
+        position: absolute;
+        height: 100vh;
+        left: -25%;
+        top: 0;
+        width: 100%;
         display: flex;
         flex-flow: column nowrap;
         margin: 0 auto;
+
+        &_wrap {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+
+            &:nth-child(2) {
+                opacity: 0;
+            }
+        }
+
+
     }
 
     &_item {
@@ -102,6 +132,9 @@ export default {
         top: 0;
         gap: 30px;
         z-index: 99;
+        position: relative;
+
+
 
         &_title {
             color: #F5FAFF;
@@ -111,7 +144,7 @@ export default {
             font-weight: 400;
             line-height: 120%;
             text-transform: uppercase;
-            width: 50%;
+            width: 70%;
         }
 
         &_cards {
@@ -158,20 +191,27 @@ export default {
     }
 
     &_stiky {
-        width: 700px;
-        height: 554px;
-        border-radius: 40px;
-        border-top: 2px solid #555353;
-        border-bottom: 0.5px solid #555353;
-        background: rgba(13, 13, 13, 0.5);
-        backdrop-filter: blur(10px);
+        position: relative;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100vh;
         display: flex;
-        align-items: center;
         flex-flow: column nowrap;
+        align-items: center;
         justify-content: center;
-        position: absolute;
-        left: 50%;
-        transform: translate(-50%, 50%);
+
+        &_block {
+            width: 860px;
+            height: 680px;
+            max-width: 860px;
+            max-height: 680px;
+            border-radius: 40px;
+            border-top: 2px solid #555353;
+            border-bottom: 0.5px solid #555353;
+            background: rgba(13, 13, 13, 0.5);
+            backdrop-filter: blur(10px);
+        }
     }
 
 }

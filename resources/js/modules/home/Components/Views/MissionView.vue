@@ -1,5 +1,5 @@
 <template>
-<div class="mission-view">
+<div class="mission-view scroll-section">
     <div class="mission-view__container">
         <head-line class="mission-view_btn">{{ $t("main.button") }}</head-line>
         <div class="mission-view_items">

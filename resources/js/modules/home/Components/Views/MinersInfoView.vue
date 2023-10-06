@@ -1,5 +1,5 @@
 <template>
-    <div class="miners-info-view">
+    <div class="miners-info-view scroll-section">
         <div class="miners-info-view__container">
             <head-line class="miners-info-view_title"> {{ $t("why_allbtc.button") }}</head-line>
             <h3 class="miners-info-view_subtitle">

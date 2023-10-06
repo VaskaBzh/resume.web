@@ -59,7 +59,7 @@ export function animateHeader() {
         yPercent: 0,
         duration: 1.2,
     }, 'my-label')
-    tl.fromTo(headerText, {opacity: 0}, {
+    tl.fromTo(headerText, {opacity: 1}, {
         opacity: 1,
         duration: 2,
     }, 'my-label+=0.5')

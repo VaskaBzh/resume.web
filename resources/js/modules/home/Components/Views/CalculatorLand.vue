@@ -1,5 +1,5 @@
 <template>
-<div class="calculator-land">
+<div class="calculator-land scroll-section">
     <div class="calculator-land__container">
         <head-line class="calculator-land_title_default">{{ $t("profitability_calculator.button[0]") }}</head-line>
         <h3 class="calculator-land_title">

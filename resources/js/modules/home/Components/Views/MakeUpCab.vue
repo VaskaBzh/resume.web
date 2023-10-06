@@ -1,5 +1,5 @@
 <template>
-<div class="make-up-cab">
+<div class="make-up-cab scroll-section">
     <div class="make-up-cab__container">
         <head-line class="make-up-cab_title">{{ $t("personal_account.button[0]") }}</head-line>
         <h3 class="make-up-cab_subtitle">

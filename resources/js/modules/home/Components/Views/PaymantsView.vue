@@ -1,5 +1,5 @@
 <template>
-<div class="payments-view">
+<div class="payments-view scroll-section">
     <div class="payments-view__container">
         <head-line class="payments-view_title">{{ $t("payments.button") }}</head-line>
         <div class="payments-view__items">
