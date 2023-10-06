@@ -15,7 +15,7 @@ class ListController extends Controller
     public function __invoke(Request $request, Sub $sub, BtcComService $btcComService): JsonResponse
     {
         return new JsonResponse([
-            'data' => $btcComService->getWorkerList($sub->group_id, $request->status)
+            'data' => $btcComService->getWorkerList($sub->group_id, $request->status ?? 'all')
         ]);
     }
 }

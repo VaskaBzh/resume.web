@@ -24,6 +24,11 @@ class Wallet extends Model
         'name',
         'wallet',
         'percent',
+        'wallet_updated_at',
+    ];
+
+    protected $casts = [
+        'wallet_updated_at' => 'date'
     ];
 
     public function getRouteKeyName(): string
@@ -63,5 +68,10 @@ class Wallet extends Model
         return Attribute::make(
             get: fn() => $this->payouts()->sum('payout')
         );
+    }
+
+    public function isUnlocked(): bool
+    {
+        return now() > $this->wallet_updated_at->addDay();
     }
 }

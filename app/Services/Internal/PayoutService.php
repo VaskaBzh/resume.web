@@ -81,11 +81,11 @@ class PayoutService
      */
     public function payOut(): ?string
     {
-        if ($this->wallet && now() < $this->sub?->user->email_verified_at->addDay()) {
+        if ($this->isAllowedTransaction()) {
             return $this
                 ->remoteWallet
                 ->sendBalance(
-                    wallet: $this->sub->wallets()->first(),
+                    wallet: $this->wallet,
                     balance: $this->sub->pending_amount
                 );
         }
@@ -159,5 +159,15 @@ class PayoutService
         Log::channel('payouts')->info('WALLET LOCKED', [
             'sub' => $this->sub->id,
         ]);
+    }
+
+    /**
+     * Проверяем локальный кошелек на существование и блокировку
+     *
+     * @return bool
+     */
+    private function isAllowedTransaction(): bool
+    {
+        return !is_null($this->wallet) && $this->wallet->isUnlocked();
     }
 }

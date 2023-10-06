@@ -126,7 +126,7 @@ class BtcComService
      * Следует обратить внимание, метод принимает в строке запроса
      * параметр group (не group_id)
      */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID, string $workerStatus = 'all'): Collection
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID, ?string $workerStatus = 'all'): Collection
     {
         $response = $this->call(
             segments: ['worker'],
