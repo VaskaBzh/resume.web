@@ -39,7 +39,15 @@ export const HostingMessage = {
         personal_account:{
             title: 'convenient personal account',
             text: 'Convenient personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the end user. ',
-            button: 'try personal account'
+            button: 'try personal account',
+            tooltip: [
+                'Nothing superfluous, only', 'the most current data',
+                'Average hashrate of', 'all your devices',
+                'Convenient navigation panel',
+                'Be aware of your', 'income',
+                'Progress until accruals', 'are paid',
+                'Current exchange rates, theme', 'switching and language change'
+            ]
         },
         mobile_app: {
             title: 'mobile application',
@@ -110,7 +118,15 @@ export const HostingMessage = {
         personal_account:{
             title: 'удобный личный кабинет',
             text: 'Удобный личный кабинет со всей необходимой статистикой с интуитивно понятной навигацией. Только нужные функции для конечного пользователя. ',
-            button: 'попробовать личный кабинет'
+            button: 'попробовать личный кабинет',
+            tooltip: [
+                'Ничего лишнего, только самые', 'актуальные данные',
+                'Средний хешрейт всех', 'ваших устройств', 
+                'Удобная панель навигации', 
+                'Будьте в курсе своего', 'дохода', 
+                'Прогресс до выплаты', 'начислений', 
+                'Актуальный курс валют, переключение', 'темы и смена языка'
+            ]
         },
         mobile_app: {
             title: 'мобильное приложение',

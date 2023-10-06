@@ -3,10 +3,141 @@
     <p class="system-card-title">{{ $t("personal_account.title") }}</p>
     <p class="system-card-text">{{ $t("personal_account.text") }}</p>
   </div>
-  <div class="system-card-img">
+  <div class="system-card-img" @mouseleave="changeShadow('blank')">
+    <!-- Web -->
     <img src="../assets/img/Mockup-mac.png" class="img-mac img-system web">
     <img src="../assets/img/Mockup-statistic.png" class="img-statistic img-system web">
+    
+    <!-- Наложение тени -->
+    <img :src="img" class="img-shadow" :class="{'add-opacity': addOpacity}">
 
+    <!-- Кнопки для смены -->
+    <button class="navbar-note-buttton" @mouseenter="changeShadow('navbar')"  @mouseleave="addOpacity = false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <g filter="url(#filter0_b_833_7493)">
+          <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'navbar' ? '#0D0D0D' : '#175CD3']"/>
+        </g>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)" :fill="[currentShadow == 'navbar' ? '#2E90FA' : '#F5FAFF']"/>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)" :fill="[currentShadow == 'navbar' ? '#2E90FA' : '#F5FAFF']"/>
+        <defs>
+          <filter id="filter0_b_833_7493" x="-20" y="-20" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="10"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_833_7493"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_833_7493" result="shape"/>
+          </filter>
+        </defs>
+      </svg>
+      <transition name="fade">
+        <MockupTooltip :firstRow="$t('personal_account.tooltip[4]')" position="right" v-if="currentShadow == 'navbar'"></MockupTooltip>
+      </transition>
+    </button>
+    <button class="cards-note-buttton" @mouseenter="changeShadow('cards')" @mouseleave="addOpacity = false">
+      <transition name="fade">
+        <MockupTooltip :firstRow="$t('personal_account.tooltip[0]')" :secondRow="$t('personal_account.tooltip[1]')" position="up" v-if="currentShadow == 'cards'"></MockupTooltip>
+      </transition>
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <g filter="url(#filter0_b_833_7493)">
+          <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'cards' ? '#0D0D0D' : '#175CD3']"/>
+        </g>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)" :fill="[currentShadow == 'cards' ? '#2E90FA' : '#F5FAFF']"/>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)" :fill="[currentShadow == 'cards' ? '#2E90FA' : '#F5FAFF']"/>
+        <defs>
+          <filter id="filter0_b_833_7493" x="-20" y="-20" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="10"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_833_7493"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_833_7493" result="shape"/>
+          </filter>
+        </defs>
+      </svg>
+    </button>
+
+    <button class="hasrate-note-buttton" @mouseenter="changeShadow('chart-hasrate')" @mouseleave="addOpacity = false">
+      <transition name="fade">
+        <MockupTooltip :firstRow="$t('personal_account.tooltip[2]')" :secondRow="$t('personal_account.tooltip[3]')" position="up" v-if="currentShadow == 'chart-hasrate'"></MockupTooltip>
+      </transition>
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <g filter="url(#filter0_b_833_7493)">
+          <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'chart-hasrate' ? '#0D0D0D' : '#175CD3']"/>
+        </g>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)" :fill="[currentShadow == 'chart-hasrate' ? '#2E90FA' : '#F5FAFF']"/>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)" :fill="[currentShadow == 'chart-hasrate' ? '#2E90FA' : '#F5FAFF']"/>
+        <defs>
+          <filter id="filter0_b_833_7493" x="-20" y="-20" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="10"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_833_7493"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_833_7493" result="shape"/>
+          </filter>
+        </defs>
+      </svg>
+    </button>
+
+    <button class="forecast-note-buttton" @mouseenter="changeShadow('forecast')" @mouseleave="addOpacity = false">
+      <transition name="fade">
+        <MockupTooltip :firstRow="$t('personal_account.tooltip[5]')" :secondRow="$t('personal_account.tooltip[6]')" position="up"  v-if="currentShadow == 'forecast'"></MockupTooltip>
+      </transition>
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <g filter="url(#filter0_b_833_7493)">
+          <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'forecast' ? '#0D0D0D' : '#175CD3']"/>
+        </g>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)" :fill="[currentShadow == 'forecast' ? '#2E90FA' : '#F5FAFF']"/>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)" :fill="[currentShadow == 'forecast' ? '#2E90FA' : '#F5FAFF']"/>
+        <defs>
+          <filter id="filter0_b_833_7493" x="-20" y="-20" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="10"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_833_7493"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_833_7493" result="shape"/>
+          </filter>
+        </defs>
+      </svg>
+    </button>
+
+    <button class="accrued-note-buttton" @mouseenter="changeShadow('chart-accrued')" @mouseleave="addOpacity = false">
+      <transition name="fade">
+        <MockupTooltip :firstRow="$t('personal_account.tooltip[7]')" :secondRow="$t('personal_account.tooltip[8]')" position="up"  v-if="currentShadow == 'chart-accrued'"></MockupTooltip>
+      </transition>
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <g filter="url(#filter0_b_833_7493)">
+          <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'chart-accrued' ? '#0D0D0D' : '#175CD3']"/>
+        </g>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)" :fill="[currentShadow == 'chart-accrued' ? '#2E90FA' : '#F5FAFF']"/>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)" :fill="[currentShadow == 'chart-accrued' ? '#2E90FA' : '#F5FAFF']"/>
+        <defs>
+          <filter id="filter0_b_833_7493" x="-20" y="-20" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="10"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_833_7493"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_833_7493" result="shape"/>
+          </filter>
+        </defs>
+      </svg>
+    </button>
+
+    <button class="header-note-buttton" @mouseenter="changeShadow('header')" @mouseleave="addOpacity = false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+        <g filter="url(#filter0_b_833_7493)">
+          <circle cx="17" cy="17" r="17"  :fill="[currentShadow == 'header' ? '#0D0D0D' : '#175CD3']"/>
+        </g>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)" :fill="[currentShadow == 'header' ? '#2E90FA' : '#F5FAFF']"/>
+        <rect width="15.6923" height="0.980769" rx="0.490385" transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)" :fill="[currentShadow == 'header' ? '#2E90FA' : '#F5FAFF']"/>
+        <defs>
+          <filter id="filter0_b_833_7493" x="-20" y="-20" width="74" height="74" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+            <feFlood flood-opacity="0" result="BackgroundImageFix"/>
+            <feGaussianBlur in="BackgroundImageFix" stdDeviation="10"/>
+            <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_833_7493"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_833_7493" result="shape"/>
+          </filter>
+        </defs>
+      </svg>
+      <transition name="fade">
+        <MockupTooltip :firstRow="$t('personal_account.tooltip[9]')" :secondRow="$t('personal_account.tooltip[10]')" position="down"  v-if="currentShadow == 'header'"></MockupTooltip>
+      </transition>
+    </button>
+
+    <!-- Mobile -->
     <img src="../assets/img/Mockup-iphone.png" class="img-mac img-system mobile">
     <img src="../assets/img/Mockup-mobile-statistic.png" class="img-monitoring img-system mobile">
   </div>
@@ -14,14 +145,116 @@
 </template>
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-
+import MockupTooltip from './MockupTooltip.vue'
 export default {
+  components: {
+    MockupTooltip
+  },
   i18n: {
           sharedMessages: HostingMessage,
         },
+  data() {
+    return {
+          currentShadow: 'blank',
+          addOpacity: false
+    }
+   },
+  methods: {
+    changeShadow(name){
+      this.currentShadow = name
+      this.addOpacity = true
+    }
+  },
+  computed: {
+        img() {
+            // this.addOpacity = !this.addOpacity 
+            return new URL(
+                `/resources/js/modules/hosting/assets/img/${this.currentShadow}-shadow.png`,
+                import.meta.url
+            );
+        },
+    },
+    mounted() {
+        this.$i18n.locale = "ru";
+        console.log(this.$i18n.locale);
+    }
 }
 </script>
 <style scoped>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+.navbar-note-buttton{
+  position: absolute;
+  top: 38%;
+  left: 23%;
+  /* color: #FFF;
+  font-family: NunitoSans;
+  font-size: 31px;
+  font-style: normal;
+  font-weight: 100;
+  text-transform: uppercase;
+  background: #175CD3;
+  border-radius: 100px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center; */
+  z-index: 10;
+}
+.cards-note-buttton{
+  position: absolute;
+  top: 52%;
+  left: 67.5%;
+  z-index: 10;
+}
+.hasrate-note-buttton{
+  position: absolute;
+  top: 16%;
+  left: 44%;
+  z-index: 10;
+}
+.forecast-note-buttton{
+  position: absolute;
+  top: 67%;
+  left: 47%;
+  z-index: 10;
+}
+.accrued-note-buttton{
+  position: absolute;
+  top: 67%;
+  left: 77.5%;
+  z-index: 10;
+}
+.header-note-buttton{
+  position: absolute;
+  top: 5.5%;
+  left: 63%;
+  z-index: 10;
+}
+.img-shadow{
+  position: absolute;
+  top: 36px;
+  left: 150px;
+}
+.add-opacity{
+  animation: test 1s forwards;
+}
+/* @keyframes test{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+} */
 .system-card-inf{
   width: 464px;
 }
