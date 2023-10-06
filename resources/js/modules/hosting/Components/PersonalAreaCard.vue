@@ -194,19 +194,6 @@ export default {
   position: absolute;
   top: 38%;
   left: 23%;
-  /* color: #FFF;
-  font-family: NunitoSans;
-  font-size: 31px;
-  font-style: normal;
-  font-weight: 100;
-  text-transform: uppercase;
-  background: #175CD3;
-  border-radius: 100px;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center; */
   z-index: 10;
 }
 .cards-note-buttton{
@@ -314,7 +301,7 @@ export default {
     width: 736px;
     height: 423px;
   }
-  .img-statistic{
+  .img-statistic, .img-shadow{
     width: 584px;
     height: 365px;
     left: 80px;

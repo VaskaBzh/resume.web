@@ -103,6 +103,7 @@ export default {
             justify-content: flex-end;
             align-self: flex-start;
             overflow: hidden;
+            transform: translateX(0px);
         }
 
         &_block-two {

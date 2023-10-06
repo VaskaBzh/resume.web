@@ -63,21 +63,28 @@ export function scroolingHeader() {
             duration: 1,
         }, 'my-label')
         .fromTo('.app_back_transparent_block-one', {
-                alignSelf: 'flex-start',
-                duration: .3
+                // alignSelf: 'flex-start',
+                duration: .6,
+                xPercent: 0
+
             },
             {
-                alignSelf: 'center',
-                duration: .3
+                // alignSelf: 'center',
+                duration: .6,
+                xPercent: 40
+
             }, 'transparent-logo')
 
         .fromTo('.app_back_transparent_block-two', {
-                alignSelf: 'flex-end',
-                duration: .3
+                // alignSelf: 'flex-end',
+                duration: .6,
+                xPercent: 0
+
             },
             {
-                alignSelf: 'center',
-                duration: .3
+                // alignSelf: 'center',
+                xPercent: -40,
+                duration: .6
             }, 'transparent-logo')
         .fromTo('.app_back_transparent__container', {rotateX: 0, opacity: 1, yPercent: 0, duration: 1.5, scale: 1}, {
             rotateX: 60,
