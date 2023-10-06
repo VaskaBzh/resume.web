@@ -5,7 +5,8 @@
   </div>
   <div class="system-card-img">
     <img src="../assets/img/Mockup-iphone.png" class="img-iphone img-system">
-    <img src="../assets/img/Mockup-support.png" class="img-support img-system">
+    <img src="../assets/img/Mockup-support.png" class="img-support img-system" v-if="$i18n.locale == 'ru'">
+    <img src="../assets/img/Mockup-support-en.png" class="img-support img-system" v-else>
   </div>
 </template>
 <script>

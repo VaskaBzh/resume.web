@@ -12,8 +12,8 @@
     <img :src="img" class="img-shadow" :class="{'add-opacity': addOpacity}">
 
     <!-- Кнопки для смены -->
-    <button class="navbar-note-buttton" @mouseenter="changeShadow('navbar')"  @mouseleave="addOpacity = false">
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+    <button class="navbar-note-buttton note-button" @mouseenter="changeShadow('navbar')"  @mouseleave="addOpacity = false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none" class="svg-note">
         <g filter="url(#filter0_b_833_7493)">
           <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'navbar' ? '#0D0D0D' : '#175CD3']"/>
         </g>
@@ -32,11 +32,11 @@
         <MockupTooltip :firstRow="$t('personal_account.tooltip[4]')" position="right" v-if="currentShadow == 'navbar'"></MockupTooltip>
       </transition>
     </button>
-    <button class="cards-note-buttton" @mouseenter="changeShadow('cards')" @mouseleave="addOpacity = false">
+    <button class="cards-note-buttton note-button" @mouseenter="changeShadow('cards')" @mouseleave="addOpacity = false">
       <transition name="fade">
         <MockupTooltip :firstRow="$t('personal_account.tooltip[0]')" :secondRow="$t('personal_account.tooltip[1]')" position="up" v-if="currentShadow == 'cards'"></MockupTooltip>
       </transition>
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none" class="svg-note">
         <g filter="url(#filter0_b_833_7493)">
           <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'cards' ? '#0D0D0D' : '#175CD3']"/>
         </g>
@@ -53,11 +53,11 @@
       </svg>
     </button>
 
-    <button class="hasrate-note-buttton" @mouseenter="changeShadow('chart-hasrate')" @mouseleave="addOpacity = false">
+    <button class="hasrate-note-buttton note-button" @mouseenter="changeShadow('chart-hasrate')" @mouseleave="addOpacity = false">
       <transition name="fade">
         <MockupTooltip :firstRow="$t('personal_account.tooltip[2]')" :secondRow="$t('personal_account.tooltip[3]')" position="up" v-if="currentShadow == 'chart-hasrate'"></MockupTooltip>
       </transition>
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none" class="svg-note">
         <g filter="url(#filter0_b_833_7493)">
           <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'chart-hasrate' ? '#0D0D0D' : '#175CD3']"/>
         </g>
@@ -74,11 +74,11 @@
       </svg>
     </button>
 
-    <button class="forecast-note-buttton" @mouseenter="changeShadow('forecast')" @mouseleave="addOpacity = false">
+    <button class="forecast-note-buttton note-button" @mouseenter="changeShadow('forecast')" @mouseleave="addOpacity = false">
       <transition name="fade">
         <MockupTooltip :firstRow="$t('personal_account.tooltip[5]')" :secondRow="$t('personal_account.tooltip[6]')" position="up"  v-if="currentShadow == 'forecast'"></MockupTooltip>
       </transition>
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none" class="svg-note">
         <g filter="url(#filter0_b_833_7493)">
           <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'forecast' ? '#0D0D0D' : '#175CD3']"/>
         </g>
@@ -95,11 +95,11 @@
       </svg>
     </button>
 
-    <button class="accrued-note-buttton" @mouseenter="changeShadow('chart-accrued')" @mouseleave="addOpacity = false">
+    <button class="accrued-note-buttton note-button" @mouseenter="changeShadow('chart-accrued')" @mouseleave="addOpacity = false">
       <transition name="fade">
         <MockupTooltip :firstRow="$t('personal_account.tooltip[7]')" :secondRow="$t('personal_account.tooltip[8]')" position="up"  v-if="currentShadow == 'chart-accrued'"></MockupTooltip>
       </transition>
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none" class="svg-note">
         <g filter="url(#filter0_b_833_7493)">
           <circle cx="17" cy="17" r="17" :fill="[currentShadow == 'chart-accrued' ? '#0D0D0D' : '#175CD3']"/>
         </g>
@@ -116,8 +116,8 @@
       </svg>
     </button>
 
-    <button class="header-note-buttton" @mouseenter="changeShadow('header')" @mouseleave="addOpacity = false">
-      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none">
+    <button class="header-note-buttton note-button" @mouseenter="changeShadow('header')" @mouseleave="addOpacity = false">
+      <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 34 34" fill="none" class="svg-note">
         <g filter="url(#filter0_b_833_7493)">
           <circle cx="17" cy="17" r="17"  :fill="[currentShadow == 'header' ? '#0D0D0D' : '#175CD3']"/>
         </g>
@@ -228,8 +228,8 @@ export default {
 }
 .img-shadow{
   position: absolute;
-  top: 36px;
-  left: 150px;
+  top: 35.5px;
+  left: 148px;
 }
 .add-opacity{
   animation: test 1s forwards;
@@ -314,12 +314,18 @@ export default {
     font-size: 24px;
   }
 }
-@media(max-width:450px){
-  .mobile{
-    display: inline-block;
+@media(max-width:1000px){
+  .svg-note{
+    width: 30px;
+    height: 30px;
   }
+}
+@media(max-width: 760px){
   .web{
     display: none;
+  }
+  .mobile{
+    display: inline-block;
   }
   .system-card-img, .img-mac{
     width: 281px;
@@ -331,6 +337,15 @@ export default {
     left: 29px;
     top: 9px;
   }
+  .note-button{
+    display: none;
+  }
+  .get-consultation{
+    width: 328px;
+    font-size: 12px;
+  }
+}
+@media(max-width:450px){
   .system-card-inf{
     width: 244px;
   }
@@ -339,11 +354,6 @@ export default {
   }
   .system-card-text{
     font-size: 14px;
-  }
-  .get-consultation{
-    width: 328px;
-    font-size: 12px;
-
   }
 }
 </style>
