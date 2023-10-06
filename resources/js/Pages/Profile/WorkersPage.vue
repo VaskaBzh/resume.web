@@ -35,6 +35,11 @@
                 />
             </div>
             <div class="workers__content">
+                <worker-tabs
+                    :tabs="worker_service.filterButtons"
+                    :active_tab="worker_service.status"
+                    @changeStatus="setStatus"
+                />
                 <main-slider
                     class="onboarding_block"
                     :class="{
@@ -62,6 +67,8 @@
                     <main-table
                         :table="worker_service.table"
                         :removePercent="removePercent"
+                        :empty="worker_service.emptyTableWorkers"
+                        :wait="worker_service.waitWorkers"
                         @getData="getTargetWorker($event)"
                     ></main-table>
                 </main-slider>
@@ -110,14 +117,16 @@ import WorkerCard from "@/modules/workers/Components/WorkerCard.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WorkersPopupCard from "@/modules/workers/Components/WorkersPopupCard.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
+import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
+import WorkerTabs from "@/modules/workers/Components/WorkerTabs.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { WorkerService } from "@/services/WorkerService";
 import { mapGetters } from "vuex";
-import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
     components: {
+        WorkerTabs,
         InstructionButton,
         MainHashrateCards,
         MainSlider,
@@ -154,6 +163,11 @@ export default {
         },
     },
     methods: {
+        setStatus(status) {
+            this.worker_service.setStatus(status);
+
+            this.initWorkers();
+        },
         async initWorkers() {
             await this.worker_service.fillTable();
         },
@@ -193,6 +207,8 @@ export default {
     },
     mounted() {
         this.instructionService.setStepsCount(2);
+
+        this.worker_service.setFilterButtons();
 
         this.initWorkers();
 
@@ -250,9 +266,7 @@ export default {
     &__content {
         display: flex;
         gap: 12px;
-        @media (max-width: 1300px) {
-            flex-direction: column;
-        }
+        flex-direction: column;
     }
     &__card {
         min-width: calc(50% - 6px);

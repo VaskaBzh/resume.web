@@ -10,6 +10,9 @@ class ChangeAddress
 {
     public static function execute(Wallet $wallet, string $address): bool
     {
-        return $wallet->update(['wallet' => $address]);
+        return $wallet->update([
+            'wallet' => $address,
+            'wallet_updated_at' => now()
+        ]);
     }
 }

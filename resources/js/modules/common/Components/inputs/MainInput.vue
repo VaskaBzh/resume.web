@@ -59,6 +59,8 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    background: var(--background-island-inner-3, #F8FAFD);
     &_row {
         min-height: 56px;
         background: inherit;

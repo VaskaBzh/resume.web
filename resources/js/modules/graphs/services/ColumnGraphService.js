@@ -36,9 +36,11 @@ export class ColumnGraphService extends GraphService {
     updateTooltip(event, position) {
         this.tooltipInit(event);
 
-        this.tooltip
-            .style("top", position.y - this.tooltipHtml.clientHeight + "px")
-            .style("opacity", 1);
+        if (position?.y) {
+            this.tooltip
+                .style("top", position.y - this.tooltipHtml.clientHeight + "px")
+                .style("opacity", 1);
+        }
     }
 
     dropBarsStyles() {

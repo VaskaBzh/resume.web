@@ -196,7 +196,7 @@ export class IncomeService extends TableService {
         if (this.group_id !== -1) {
             this.waitGraphChange = true;
 
-            this.graphService.setDefaultKeys();
+            this.graphService.setDefaultKeys(60 * 60 * 1000 * 24);
 
             try {
                 const response = (

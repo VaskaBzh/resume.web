@@ -14,11 +14,14 @@ export class WorkerService {
         this.rows = [];
         this.workers_graph = {};
         this.records = [];
+        this.filterButtons = [];
+        this.status = "all";
 
         this.table = new Map();
 
         this.waitWorkers = true;
         this.emptyWorkers = false;
+        this.emptyTableWorkers = false;
 
         this.popupCardOpened = false;
         this.popupCardClosed = false;
@@ -72,8 +75,30 @@ export class WorkerService {
         this.worker_id = -1;
     }
 
+    setStatus(status) {
+        this.status = status;
+
+        return this;
+    }
+
+    setFilterButtons() {
+        this.filterButtons = [
+            {
+                name: "all",
+            },
+            {
+                name: "active",
+            },
+            {
+                name: "inactive",
+            },
+        ]
+
+        return this;
+    }
+
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}`, {
+        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`, {
             headers: {
                 ...(this.route?.query?.access_key
                     ? { "X-Access-Key": this.route.query.access_key }
@@ -114,8 +139,11 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
+
+
             this.useTranslater(this.titleIndexes);
             this.emptyWorkers = false;
+            this.emptyTableWorkers = false;
             this.waitWorkers = true;
 
             try {
@@ -126,8 +154,12 @@ export class WorkerService {
                 });
 
                 // this.rows.unshift(this.setFirstRow());
-
-                if (this.rows.length === 0) this.emptyWorkers = true;
+                if (this.rows.length === 0) {
+                    if (this.status === "all") {
+                        this.emptyWorkers = true;
+                    }
+                    this.emptyTableWorkers = true;
+                }
 
                 this.waitWorkers = false;
             } catch (e) {

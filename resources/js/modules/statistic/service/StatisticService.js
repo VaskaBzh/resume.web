@@ -63,13 +63,12 @@ export class StatisticService extends GraphDataService {
         if (this.group_id !== -1) {
             this.waitGraphChange = true;
 
-            this.setDefaultKeys();
-
             try {
                 const response = (await this.fetch()).data;
 
                 this.records = response.incomes.map(incomeEl => new BarGraphData(incomeEl));
 
+                this.setDefaultKeys(60 * 60 * 1000 * 24);
                 await this.makeFullBarValues();
 
                 this.waitGraph = false;

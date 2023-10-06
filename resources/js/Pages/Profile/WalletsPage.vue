@@ -216,7 +216,13 @@
         </form>
         <verify-form
             v-if="wallets.isCodeSend"
+            title="form.wallets.title"
+            text="form.wallets.text"
+            placeholder="form.wallets.placeholder"
+            re_verify_text="form.wallets.re_verify_text"
+            button_text="form.wallets.button_text"
             @sendForm="changeWallet($event)"
+            @back="wallets.back()"
         />
     </main-popup>
     <main-popup
@@ -289,6 +295,12 @@
         <verify-form
             v-if="wallets.isCodeSend"
             @sendForm="createWallet($event)"
+            title="form.wallets.title"
+            text="form.wallets.text"
+            placeholder="form.wallets.placeholder"
+            re_verify_text="form.wallets.re_verify_text"
+            button_text="form.wallets.button_text"
+            @back="wallets.back()"
         />
     </main-popup>
     <instruction-button

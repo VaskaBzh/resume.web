@@ -101,6 +101,11 @@ class User extends Authenticatable implements MustVerifyEmail
         return (string) mt_rand($min, $max);
     }
 
+    public function isEmailAllowed(): bool
+    {
+        return now()->gt($this->email_verified_at->addHours(48));
+    }
+
     /* End attributes */
 
     public function sendEmailVerificationNotification(): void

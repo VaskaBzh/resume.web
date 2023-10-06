@@ -30,9 +30,8 @@ export class GraphDataService extends DefaultSubsService {
     //     );
     // }
 
-    setDates() {
+    setDates(interval = 60 * 60 * 1000) {
         const currentTime = new Date().getTime();
-        const interval = 60 * 60 * 1000;
 
         return Array.from({ length: this.offset }, (_, i) => {
             const date = new Date(
@@ -42,11 +41,11 @@ export class GraphDataService extends DefaultSubsService {
         });
     }
 
-    setDefaultKeys() {
+    setDefaultKeys(interval) {
         // title: this.setTitles(),
         this.graph = {
             ...this.graph,
-            dates: this.setDates(),
+            dates: this.setDates(interval),
         };
     }
 

@@ -132,7 +132,7 @@ export class WalletsService extends DefaultSubsService {
                     openNotification(
                         true,
                         this.translate("validate_messages.success"),
-                        response.data.data.message
+                        response.data.message
                     );
                 } catch (err) {
                     console.error("Error with: " + err);
@@ -153,6 +153,8 @@ export class WalletsService extends DefaultSubsService {
                         confirmation_code: this.form.code,
                     }
                     const response = await ProfileApi.post("/wallets/create", form);
+
+                    this.isCodeSend = false;
 
                     openNotification(
                         true,
@@ -182,6 +184,11 @@ export class WalletsService extends DefaultSubsService {
 
     setUser(user) {
         this.user = user;
+    }
+
+    back() {
+        this.isCodeSend = false;
+        this.form.code = "";
     }
 
     async changeWallet() {
