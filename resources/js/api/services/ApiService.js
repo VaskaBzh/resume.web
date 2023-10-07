@@ -1,7 +1,6 @@
 import axios from "axios";
 import store from "@/store";
 import { router } from "@/router/index";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class ApiService {
     constructor() {

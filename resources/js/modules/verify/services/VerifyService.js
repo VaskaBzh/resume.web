@@ -1,5 +1,4 @@
 import { ProfileApi } from "@/api/api";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "@/store";
 import { CodeFormData } from "@/modules/verify/DTO/CodeFormData";
 
@@ -31,7 +30,11 @@ export class VerifyService {
             try {
                 const response = await this.fetchVerify(verifyUrl, data);
 
-                openNotification(true, this.translate("validate_messages.success"), response.data.message);
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: response.data.message,
+                });
 
                 return false;
             } catch (err) {
@@ -41,7 +44,11 @@ export class VerifyService {
                 this.setOverTime(secondsEnd);
                 this.setText();
 
-                openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
 
                 store.dispatch("setFullErrors", err.response.data.errors)
 

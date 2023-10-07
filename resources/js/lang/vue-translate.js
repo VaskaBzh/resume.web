@@ -5,11 +5,6 @@ import { createI18n } from "vue-i18n";
 const messages = {
     en: {
         validate_messages: {
-            success: "Success",
-            error: "Error",
-            connected: "Connected",
-            added: "Added",
-            changed: "Changed",
             watcher_message: "Watcher created successfully",
             verify_message: "Email verified successfully",
         },
@@ -724,11 +719,6 @@ const messages = {
     },
     ru: {
         validate_messages: {
-            success: "Успешно",
-            error: "Ошибка",
-            connected: "Подключено",
-            added: "Добавлено",
-            changed: "Изменено",
             watcher_message: "Вотчер успешно создан",
             verify_message: "Почта успешно подтверждена",
         },

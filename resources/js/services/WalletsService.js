@@ -2,7 +2,6 @@ import { ProfileApi } from "@/api/api";
 
 import { WalletData } from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import { DefaultSubsService } from "@/modules/common/services/DefaultSubsService";
 import { VerifyService } from "@/modules/verify/services/VerifyService";
 
@@ -108,11 +107,11 @@ export class WalletsService extends DefaultSubsService {
             } catch (err) {
                 console.error(err);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response?.data?.message
-                );
+                store.dispatch("setNotification", {
+                    status: "warning",
+                    title: "warning",
+                    text: err.response?.data?.message,
+                });
             }
 
             this.waitWallets = false;
@@ -129,20 +128,20 @@ export class WalletsService extends DefaultSubsService {
 
                     this.isCodeSend = true;
 
-                    openNotification(
-                        true,
-                        this.translate("validate_messages.success"),
-                        response.data.message
-                    );
+                    store.dispatch("setNotification", {
+                        status: "success",
+                        title: "success",
+                        text: response.data.message,
+                    });
                 } catch (err) {
                     console.error("Error with: " + err);
                     store.dispatch("setFullErrors", err.response.data.errors);
 
-                    openNotification(
-                        false,
-                        this.translate("validate_messages.error"),
-                        err.response.data.message
-                    );
+                    store.dispatch("setNotification", {
+                        status: "error",
+                        title: "error",
+                        text: err.response.data.message,
+                    });
                 }
             } else {
                 try {
@@ -156,11 +155,12 @@ export class WalletsService extends DefaultSubsService {
 
                     this.isCodeSend = false;
 
-                    openNotification(
-                        true,
-                        this.translate("validate_messages.success"),
-                        response.data.message
-                    );
+                    store.dispatch("setNotification", {
+                        status: "success",
+                        title: "success",
+                        text: response.data.message,
+                    });
+
                     await this.index();
                     this.clearForm();
                     this.closePopup();
@@ -168,11 +168,19 @@ export class WalletsService extends DefaultSubsService {
                     console.error("Error with: " + err);
                     store.dispatch("setFullErrors", err.response.data.errors);
 
-                    openNotification(
-                        false,
-                        this.translate("validate_messages.error"),
-                        err.response.data.message
-                    );
+                    if (err.response.status === 403) {
+                        store.dispatch("setNotification", {
+                            status: "warning",
+                            title: "warning",
+                            text: err.response.data.message,
+                        });
+                    } else {
+                        store.dispatch("setNotification", {
+                            status: "error",
+                            title: "error",
+                            text: err.response.data.message,
+                        });
+                    }
                 }
             }
 
@@ -204,22 +212,22 @@ export class WalletsService extends DefaultSubsService {
                     try {
                         const response = await ProfileApi.put(`/wallets/update/${currentWallet.wallet_address}`, this.form);
 
-                        openNotification(
-                            true,
-                            this.translate("validate_messages.changed"),
-                            response.data.data.message
-                        );
+                        store.dispatch("setNotification", {
+                            status: "success",
+                            title: "changed",
+                            text: response.data.data.message,
+                        });
 
                         requestCount++;
                     } catch (err) {
                         console.error("Error with: " + err);
                         store.dispatch("setFullErrors", err.response.data.errors);
 
-                        openNotification(
-                            false,
-                            this.translate("validate_messages.error"),
-                            err.response.data.message
-                        );
+                        store.dispatch("setNotification", {
+                            status: "error",
+                            title: "error",
+                            text: err.response.data.message,
+                        });
                     }
                 }
                 if (this.form.code) {
@@ -231,11 +239,11 @@ export class WalletsService extends DefaultSubsService {
                         }
                         const response = await ProfileApi.put(`/wallets/change/address/${currentWallet.wallet_address}`, form);
 
-                        openNotification(
-                            true,
-                            this.translate("validate_messages.changed"),
-                            response.data.data.message
-                        );
+                        store.dispatch("setNotification", {
+                            status: "success",
+                            title: "changed",
+                            text: response.data.data.message,
+                        });
 
                         await this.index();
                         this.clearForm();
@@ -246,11 +254,11 @@ export class WalletsService extends DefaultSubsService {
                         console.error("Error with: " + err);
                         store.dispatch("setFullErrors", err.response.data.errors);
 
-                        openNotification(
-                            false,
-                            this.translate("validate_messages.error"),
-                            err.response.data.message
-                        );
+                        store.dispatch("setNotification", {
+                            status: "error",
+                            title: "error",
+                            text: err.response.data.message,
+                        });
 
                         await this.index();
                         this.clearForm();
@@ -265,22 +273,22 @@ export class WalletsService extends DefaultSubsService {
 
                         this.isCodeSend = true;
 
-                        openNotification(
-                            true,
-                            this.translate("validate_messages.success"),
-                            response.data.message
-                        );
+                        store.dispatch("setNotification", {
+                            status: "success",
+                            title: "success",
+                            text: response.data.message,
+                        });
 
                         requestCount++;
                     } catch (err) {
                         console.error("Error with: " + err);
                         store.dispatch("setFullErrors", err.response.data.errors);
 
-                        openNotification(
-                            false,
-                            this.translate("validate_messages.error"),
-                            err.response.data.message
-                        );
+                        store.dispatch("setNotification", {
+                            status: "error",
+                            title: "error",
+                            text: err.response.data.message,
+                        });
                     }
                 }
 
@@ -330,11 +338,11 @@ export class WalletsService extends DefaultSubsService {
             } catch (err) {
                 store.dispatch("setFullErrors", err?.response?.data?.errors);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err?.response?.data?.message
-                );
+                store.dispatch("setNotification", {
+                    status: "warning",
+                    title: "warning",
+                    text: err.response.data.message,
+                });
 
                 this.emptyTable = true;
                 this.waitWallets = false;

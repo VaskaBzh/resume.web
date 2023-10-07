@@ -98,7 +98,6 @@ import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "../../../../store";
 import { ref } from "vue";
 import { ProfileApi } from "@/api/api";
@@ -157,11 +156,12 @@ export default {
             wait.value = true;
             try {
                 const response = await ProfileApi.post("/subs/create", form);
-                openNotification(
-                    true,
-                    t("validate_messages.added"),
-                    response.data.message
-                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "added",
+                    text: response.data.message,
+                });
                 closed.value = true;
 
                 store.dispatch("accounts_all", store.getters.user.id);
@@ -170,11 +170,11 @@ export default {
 
                 store.dispatch("setFullErrors", err.response.data.errors);
 
-                openNotification(
-                    false,
-                    t("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
             }
 
             wait.value = false;

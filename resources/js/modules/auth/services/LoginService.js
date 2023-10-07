@@ -2,7 +2,6 @@ import { LoginFormData } from "@/modules/auth/DTO/LoginFormData";
 import { MainApi } from "@/api/api";
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import store from "@/store";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class LoginService {
     constructor(router, route) {
@@ -58,15 +57,19 @@ export class LoginService {
             this.closePasswordPopup();
             this.removeRouteQuery();
 
-            openNotification(true, this.translate("validate_messages.changed"), response.message);
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.message,
+            });
         } catch (err) {
             console.error(err);
 
-            openNotification(
-                false,
-                this.translate("validate_messages.error"),
-                err.response.data.error ?? err.response.data.message
-            );
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.error ?? err.response.data.message,
+            });
         }
     }
 

@@ -105,7 +105,6 @@ import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export default {
     name: "login-form",
@@ -150,7 +149,11 @@ export default {
             this.openPasswordPopup();
         }
         if (this.$route.query?.action === "email") {
-            openNotification(true, this.$t("validate_messages.success"), this.$t("validate_messages.verify_message"));
+            this.$store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: this.$t("validate_messages.verify_message"),
+            });
         }
 
         if (this.$t) {
