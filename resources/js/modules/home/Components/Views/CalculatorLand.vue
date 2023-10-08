@@ -3,7 +3,7 @@
     <div class="calculator-land__container">
         <head-line class="calculator-land_title_default">{{ $t("profitability_calculator.button[0]") }}</head-line>
         <h3 class="calculator-land_title">
-            <span>{{ $t("profitability_calculator.title[0]") }}</span>
+            <span class="calculator-land_title_base">{{ $t("profitability_calculator.title[0]") }}</span>
             <span class="calculator-land_title_one">{{ $t("profitability_calculator.title[1]") }}</span>
             <span class="calculator-land_title_two">{{ $t("profitability_calculator.title[2]") }}</span>
             <span class="calculator-land_title_three">{{ $t("profitability_calculator.title[3]") }}</span>
@@ -21,6 +21,7 @@
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import LightCalculatorView from "../../../calculator/Components/views/LightCalculatorView.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {animatedCalcView} from "../../Services/AnimateCalculatorView";
 
 
 export default {
@@ -29,6 +30,9 @@ export default {
     i18n: {
             sharedMessages: HomeMessage,
     },
+    mounted() {
+        animatedCalcView()
+    }
 }
 </script>
 

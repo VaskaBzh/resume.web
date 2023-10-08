@@ -49,9 +49,10 @@ export default {
 }
 
 .about_btn {
-    width: 40%;
-    height: 40px;
+    width: 45%;
+    height: 56px;
     margin: 0 auto;
+    padding: 14px 0;
     backdrop-filter: unset;
     display: flex;
     align-items: center;

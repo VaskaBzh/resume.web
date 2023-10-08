@@ -15,7 +15,6 @@ export function animatedScroll() {
             scrub: true,
             pin: '.security-view_right',
             pinSpacing: false,
-            marker: true
 
         }
     })

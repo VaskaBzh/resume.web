@@ -8,7 +8,7 @@ export const HomeMessage = {
             card_private: {
                 title: ['private pool for data-centers'],
                 num: ['7', '1.7', '30' ,'75%'],
-                text: ['years in the crypto industry', 'EH/ s pool hashrate', 'Total BTC mined', 'up to', 'more profit per kW'],
+                text: ['years in the crypto industry', 'EH/ s pool hashrate', 'Total BTC mined', 'to', 'more profit per kW'],
                 button: ['Learn more', 'get personal conditions']
             },
             card_community: {

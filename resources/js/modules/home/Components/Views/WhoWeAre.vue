@@ -29,21 +29,21 @@
             </div>
            <div class="about__inner_wrap">
                <div class="about_item">
-                   <h2 class="about_item_title">{{ $t("who_we_are.card_community.title[0]") }}</h2>
+                   <h2 class="about_item_title-two">{{ $t("who_we_are.card_community.title[0]") }}</h2>
                    <div class="about_item_cards">
-                       <div class="about_item_card">
+                       <div class="about_item_card-two">
                            <div class="about_item_card_num">№1</div>
                            <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[0]") }}</div>
                        </div>
-                       <div class="about_item_card">
+                       <div class="about_item_card-two">
                            <div class="about_item_card_num">24/7</div>
                            <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[1]") }}</div>
                        </div>
-                       <div class="about_item_card">
+                       <div class="about_item_card-two">
                            <div class="about_item_card_num">1</div>
                            <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[2]") }}</div>
                        </div>
-                       <div class="about_item_card">
+                       <div class="about_item_card-two">
                            <div class="about_item_card_num">4%</div>
                            <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[3]") }}</div>
                        </div>
@@ -109,22 +109,19 @@ export default {
         margin: 0 auto;
 
         &_wrap {
-            height: 100vh;
+            height: 75vh;
             display: flex;
             align-items: center;
             justify-content: center;
             position: absolute;
 
-            &:nth-child(2) {
-                opacity: 0;
-            }
         }
 
 
     }
 
     &_item {
-        width: 80%;
+        width: 100%;
         display: flex;
         flex-flow: row nowrap;
         align-items: center;
@@ -145,6 +142,18 @@ export default {
             line-height: 120%;
             text-transform: uppercase;
             width: 70%;
+        }
+
+        &_title-two {
+            color: #F5FAFF;
+            font-family: Unbounded, serif;
+            font-size: clamp(14px, 5vw, 65px);
+            font-style: normal;
+            font-weight: 400;
+            line-height: 120%;
+            text-transform: uppercase;
+            width: 70%;
+            opacity: 0;
         }
 
         &_cards {
@@ -188,6 +197,39 @@ export default {
                 color: rgba(208, 213, 221, 0.60);
             }
         }
+
+        &_card-two {
+            display: flex;
+            flex-flow: column nowrap;
+
+            &_num {
+                color: #D0D5DD;
+                font-family: Unbounded, serif;
+                font-size: 75px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 100%; /* 75px */
+                text-transform: uppercase;
+
+                span {
+                    font-family: NunitoSans, serif;
+                    font-size: 20px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 110%;
+                    color: rgba(208, 213, 221, 0.60);
+                }
+            }
+
+            &_description {
+                font-family: NunitoSans, serif;
+                font-size: 20px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: 110%;
+                color: rgba(208, 213, 221, 0.60);
+            }
+        }
     }
 
     &_stiky {
@@ -195,7 +237,7 @@ export default {
         left: 0;
         top: 0;
         width: 100%;
-        height: 100vh;
+        height: 75vh;
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
