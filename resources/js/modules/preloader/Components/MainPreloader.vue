@@ -7,8 +7,8 @@
         <div
             class="preloader__wrap"
             :class="{
-                'preloader__wrap-no-info': crossVisible,
-                'preloader__wrap-no-info-after': service.animationIsEnd,
+                'preloader__wrap-no-info':
+                    service.animateService.isCrossVisible?.animateState,
             }"
         >
             <div class="preloader__icon">
@@ -16,13 +16,14 @@
                     class="preloader_cross"
                     id="preloader_cross"
                     @getCross="service.setCross($event)"
-                    v-show="crossVisible"
+                    v-show="service.animateService.isCrossVisible?.animateState"
                 />
                 <preloader-logo-icon
                     class="preloader_logo"
                     id="preloader_logo"
                     :class="{
-                        'preloader_logo-center': isLogoCenter,
+                        'preloader_logo-center':
+                            service.animateService.isLogoCenter?.animateState,
                     }"
                 />
                 <preloader-container-icon
@@ -32,7 +33,14 @@
             </div>
 
             <transition name="progress">
-                <span class="preloader_progress" v-show="progressVisible">
+                <span
+                    class="preloader_progress"
+                    v-show="
+                        service.animateService.isProgressVisible
+                            ?.animateState ||
+                        service.animateService.isCrossVisible?.animateState
+                    "
+                >
                     {{ progressValue }}
                 </span>
             </transition>
@@ -68,11 +76,12 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive"]),
-        end() {
-            return !this.wait;
-        },
         killPreloaderCondition() {
-            return !this.wait && !this.empty && this.end;
+            return (
+                !this.service.waitTable &&
+                !this.service.emptyTable &&
+                this.service.endTable
+            );
         },
         progressValue() {
             return this.service.progressPercentage.length > 3
@@ -83,56 +92,39 @@ export default {
     data() {
         return {
             service: new PreloaderService(),
-            crossVisible: false,
-            progressVisible: true,
-            isLogoCenter: false,
         };
     },
     watch: {
-        '$i18n.locale'() {
+        wait(newWaitState) {
+            this.service.setWaitState(newWaitState).setEndState(!newWaitState);
+        },
+        empty(newEmptyState) {
+            this.service
+                .setEmptyState(newEmptyState)
+                .setProgressVisible(false)
+                .setCrossVisible(false)
+                .setLogoCenter(newEmptyState);
+        },
+        "$i18n.locale"() {
             this.service.setTranslate(this.$t);
         },
-        empty(newStateEmpty) {
-            if (newStateEmpty) {
-                this.progressVisible = false;
-            }
-            this.crossVisible = false;
-            this.isLogoCenter = !!newStateEmpty;
-        },
-        end(newEndVal) {
+        "service.endTable.state"(newEndVal) {
             this.service.endProcess(newEndVal);
-        },
-        "service.crossVisible"(newCrossState) {
-            if (newCrossState) {
-                this.crossVisible = true;
-
-                setTimeout(() => {
-                    this.progressVisible = true;
-                }, 1000);
-            }
         },
         getActive(newId, oldId) {
             if (oldId !== -1) {
-                this.progressVisible = true;
-                this.crossVisible = false;
-
                 this.service.startProcess(this.interval);
             }
         },
     },
     mounted() {
-        // if (!this.killPreloaderCondition) {
-        this.service.startProcess(this.interval);
         if (this.$t) {
             this.service.setTranslate(this.$t);
         }
-        // } else {
-        //     this.service.dropEndAnimation();
-        //     this.service.animateCloseLine();
-        // }
+        this.service.startProcess(this.interval);
     },
     unmounted() {
-        this.service.killPreloader();
+        this.service.endProcess(true);
     },
 };
 </script>
@@ -175,23 +167,6 @@ export default {
                     bottom: 0;
                     font-weight: 400;
                     font-family: NunitoSans, serif;
-                }
-            }
-            &-after {
-                //width: 160px;
-                //height: 160px;
-                .preloader {
-                    &_progress {
-                        //color: var(--old-light-gray-300, #D0D5DD);
-                        //bottom: -48px;
-                    }
-                    &__icon {
-                        //transition: none;
-                        //position: absolute;
-                        //top: 0;
-                        //left: 50%;
-                        //transform: translateX(-50%);
-                    }
                 }
             }
         }

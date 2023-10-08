@@ -194,11 +194,14 @@ export class WatchersService extends MetaTableService {
     async removeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                const response = await ProfileApi.delete(`/watchers/delete/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                const response = await ProfileApi.delete(
+                    `/watchers/delete/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
 
                 store.dispatch("setNotification", {
                     status: "success",
