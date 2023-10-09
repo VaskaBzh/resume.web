@@ -140,12 +140,18 @@ export default {
 .calculator {
     &_title {
         margin-bottom: 48px;
+        @media(max-width:850px){
+             margin-bottom: 40px;
+        }
     }
     &__form {
         display: flex;
         flex-direction: column;
         gap: 20px;
         margin-bottom: 40px;
+        @media(max-width:850px){
+            gap: 10px;
+        }
         .row {
             transition-delay: 0.25s;
             &:nth-child(2) {

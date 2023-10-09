@@ -69,7 +69,9 @@ export default {
         font-weight: 600;
         line-height: 100%;
         text-transform: uppercase;
-
+        @media(max-width:850px){
+            font-size: 32px;
+        }
         &_one {
             position: relative;
             left: -100px;
@@ -104,7 +106,15 @@ export default {
         line-height: 110%;
         margin: 0 auto;
         width: 420px;
+        @media(max-width:850px){
+            font-size: 18px;
+        }
     }
-
+}
+@media(max-width:850px){
+    .calculator-land_content{
+        width: 92vw;
+        padding: 50px 32px;
+}
 }
 </style>

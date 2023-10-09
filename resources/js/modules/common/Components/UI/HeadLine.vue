@@ -52,6 +52,13 @@ export default {
     border-radius: 40px;
     border: 1px solid rgba(192, 228, 255, 0.60);
     background: rgba(13, 13, 13, 0.80);
+    @media(max-width:850px){
+        font-size: 14px;
+    }
+    @media(max-width:450px){
+        font-size: 12px;
+        width: 70%;
+    }
 }
 
 .miners-info-view_title {
