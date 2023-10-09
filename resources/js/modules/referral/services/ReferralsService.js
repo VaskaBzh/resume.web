@@ -1,4 +1,4 @@
-import { TableService } from "@/services/extends/TableService";
+import { TableService } from "@/services/default/TableService";
 import { ReferralsData } from "@/modules/referral/DTO/ReferralsData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 

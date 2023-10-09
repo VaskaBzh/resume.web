@@ -1,4 +1,4 @@
-import { GraphDataService } from "@/modules/common/services/GraphDataService";
+import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
 import store from "@/store";
 import { LineGraphData } from "@/modules/statistic/DTO/LineGraphData";
 import { ProfileApi } from "@/api/api";

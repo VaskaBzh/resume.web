@@ -1,5 +1,5 @@
-import { DefaultSubsService } from "@/modules/common/services/DefaultSubsService";
-import { PageService } from "@/modules/common/services/PageService";
+import { DefaultSubsService } from "@/modules/common/services/extends/DefaultSubsService";
+import { PageService } from "@/modules/common/services/extends/PageService";
 import store from "@/store";
 
 export class SubService extends DefaultSubsService {

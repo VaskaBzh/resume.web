@@ -1,8 +1,8 @@
 import anime from "animejs";
 
-import { AnimateDataService } from "@/modules/preloader/services/default/extends/AnimateDataService";
-import { StylesService } from "@/modules/preloader/services/default/StylesService";
-import { AnimateStatesService } from "@/modules/preloader/services/default/extends/AnimateStatesService";
+import { StatesService } from "@/modules/common/services/extends/base/StatesService";
+import { AnimateDataService } from "@/modules/preloader/services/extends/base/AnimateDataService";
+import { StylesService } from "@/modules/preloader/services/extends/StylesService";
 
 export class AnimateService extends StylesService {
     constructor() {
@@ -13,19 +13,25 @@ export class AnimateService extends StylesService {
         this.crossAnimate = this.createAnimateDataService();
         this.lineCloseAnimate = this.createAnimateDataService();
 
-        this.isCrossVisible = this.createAnimateStatesService();
-        this.isProgressVisible = this.createAnimateStatesService();
-        this.isLogoCenter = this.createAnimateStatesService();
+        this.isCrossVisible = this.createStatesService();
+        this.isProgressVisible = this.createStatesService();
+        this.isLogoCenter = this.createStatesService();
 
-        this.isProgressVisible.setAnimateState();
+        this.isProgressVisible.setState();
     }
 
-    createAnimateStatesService() {
-        return new AnimateStatesService();
+    createStatesService() {
+        return new StatesService();
     }
 
     createAnimateDataService() {
         return new AnimateDataService();
+    }
+
+    setCrossDataGetter() {
+        this.cross.getData = function () {
+            return this.element.querySelectorAll("rect");
+        }
     }
 
     endAnimation() {
@@ -119,9 +125,11 @@ export class AnimateService extends StylesService {
 
     animateCross() {
         if (this.cross) {
-            this.isCrossVisible.setAnimateState();
+            this.isCrossVisible.setState();
 
-            const rects = this.cross.getRect();
+            this.setCrossDataGetter();
+
+            const rects = this.cross.getData();
 
             const easing = "linear";
             const duration = 300;
@@ -135,7 +143,7 @@ export class AnimateService extends StylesService {
                 height: heightValue,
                 delay: anime.stagger(staggerDelay),
                 complete: () => {
-                    this.isProgressVisible.setAnimateState();
+                    this.isProgressVisible.setState();
                 }
             };
 

@@ -2,7 +2,7 @@ import { ProfileApi } from "@/api/api";
 
 import { WalletData } from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
-import { DefaultSubsService } from "../../common/services/DefaultSubsService";
+import { DefaultSubsService } from "../../common/services/extends/DefaultSubsService";
 import { VerifyService } from "../../verify/services/VerifyService";
 
 export class WalletService extends DefaultSubsService {

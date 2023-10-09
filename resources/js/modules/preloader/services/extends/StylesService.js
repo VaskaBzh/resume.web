@@ -1,4 +1,4 @@
-import { DomElementsService } from "@/modules/preloader/services/default/extends/DomElementsService";
+import { DomElementService } from "@/modules/common/services/extends/base/DomElementService";
 
 export class StylesService {
     constructor() {
@@ -10,7 +10,7 @@ export class StylesService {
     }
 
     createDomElementService() {
-        return new DomElementsService();
+        return new DomElementService();
     }
 
     getRotate() {

@@ -1,6 +1,6 @@
-import { ProgressService } from "@/modules/preloader/services/default/ProgressService";
-import { StatesService } from "@/modules/preloader/services/default/extends/StatesService";
-import { AnimateService } from "@/modules/preloader/services/default/AnimateService";
+import { ProgressService } from "@/modules/preloader/services/extends/ProgressService";
+import { StatesService } from "@/modules/common/services/extends/base/StatesService";
+import { AnimateService } from "@/modules/preloader/services/extends/AnimateService";
 
 export class PreloaderService extends ProgressService {
     constructor() {
@@ -48,7 +48,7 @@ export class PreloaderService extends ProgressService {
     }
 
     setProgressVisible(newProgressVisibleState) {
-        this.animateService.isProgressVisible.setAnimateState(
+        this.animateService.isProgressVisible.setState(
             newProgressVisibleState
         );
 
@@ -56,13 +56,13 @@ export class PreloaderService extends ProgressService {
     }
 
     setLogoCenter(newLogoCenterState) {
-        this.animateService.isLogoCenter.setAnimateState(newLogoCenterState);
+        this.animateService.isLogoCenter.setState(newLogoCenterState);
 
         return this;
     }
 
     setCrossVisible(newCrossVisibleState) {
-        this.animateService.isCrossVisible.setAnimateState(
+        this.animateService.isCrossVisible.setState(
             newCrossVisibleState
         );
 

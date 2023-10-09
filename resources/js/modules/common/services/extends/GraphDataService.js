@@ -1,5 +1,5 @@
 import { DefaultSubsService } from "./DefaultSubsService";
-import { HashrateUnitEnum } from "../enums/HashrateUnitEnum";
+import { HashrateUnitEnum } from "../../enums/HashrateUnitEnum";
 
 export class GraphDataService extends DefaultSubsService {
     constructor(offset = 96) {

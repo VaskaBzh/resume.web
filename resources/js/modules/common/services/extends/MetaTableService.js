@@ -1,4 +1,4 @@
-import { DefaultSubsService } from "@/modules/common/services/DefaultSubsService";
+import { DefaultSubsService } from "@/modules/common/services/extends/DefaultSubsService";
 
 export class MetaTableService extends DefaultSubsService {
     constructor(translate, titleIndexes = [0, 1, 2, 3, 6, 7]) {

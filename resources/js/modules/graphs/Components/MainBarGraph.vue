@@ -2,7 +2,7 @@
     <div class="chart">
         <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
         <div ref="chart" class="container-chart">
-            <div ref="tooltip" class="tooltip" style="opacity: 0">
+            <div ref="tooltip" class="tooltip">
                 <div class="tooltip__content">
                     <p class="tooltip_text">
                         <span class="tooltip_value"

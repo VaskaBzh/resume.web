@@ -8,7 +8,7 @@
             class="preloader__wrap"
             :class="{
                 'preloader__wrap-no-info':
-                    service.animateService.isCrossVisible?.animateState,
+                    service.animateService.isCrossVisible?.state,
             }"
         >
             <div class="preloader__icon">
@@ -18,7 +18,7 @@
                     @getCross="service.setCross($event)"
                     v-if="
                         !service.animateService.cross.element
-                        || service.animateService.isCrossVisible?.animateState
+                        || service.animateService.isCrossVisible?.state
                     "
                 />
                 <preloader-logo-icon
@@ -26,7 +26,7 @@
                     id="preloader_logo"
                     :class="{
                         'preloader_logo-center':
-                            service.animateService.isLogoCenter?.animateState,
+                            service.animateService.isLogoCenter?.state,
                     }"
                 />
                 <preloader-container-icon
@@ -37,7 +37,7 @@
             <transition name="progress">
                 <span
                     class="preloader_progress"
-                    v-if="service.animateService.isProgressVisible?.animateState"
+                    v-if="service.animateService.isProgressVisible?.state"
                 >
                     {{
                         String(service.progressPercentage).length <= 3

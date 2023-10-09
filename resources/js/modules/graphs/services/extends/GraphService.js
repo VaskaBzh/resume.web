@@ -1,221 +1,201 @@
-import store from "@/store";
 import * as d3 from "d3";
 
-export class GraphService {
-    constructor(graphData, translate) {
-        this.svg = null;
-        this.mouseX = null;
-        this.clientX = null;
-        this.axis = null;
-        this.tooltip = null;
-        this.yBand = null;
-        this.xBand = null;
-        this.xAxis = null;
-        this.yAxis = null;
-        this.areaGenerator = null;
-        this.lineGenerator = null;
-        this.x = null;
-        this.y = null;
+import { DomElementService } from "@/modules/common/services/extends/base/DomElementService";
+import { StatesService } from "@/modules/common/services/extends/base/StatesService";
+import { ValuesService } from "@/modules/common/services/extends/base/ValuesService";
+import { D3ElementService } from "@/modules/graph/services/extends/base/D3ElementService";
+import { GraphDataService } from "@/modules/graph/services/extends/base/GraphDataService";
+import { TooltipContentService } from "@/modules/graph/services/extends/TooltipContentService";
+import { DefaultStatesService } from "@/modules/common/services/extends/DefaultStatesService";
+import { FormatValuesService } from "@/modules/graph/services/extends/FormatValuesService";
+import { ValidateDataService } from "@/modules/graph/services/extends/ValidateDataService";
 
-        this.fullDate = null;
-        this.time = null;
-        this.hashrate = null;
-        this.workersCountActive = null;
-        this.unit = null;
+export class GraphService extends DefaultStatesService {
+    constructor() {
+        this.svg = this.createD3ElementService();
+        this.axis = this.createD3ElementService();
+        this.tooltip = this.createD3ElementService();
 
-        this.contentTooltip = null;
+        this.isTooltipVisible = this.createStatesService();
 
-        this.translate = translate;
+        this.clientX = this.createD3ElementService();
+        this.yBand = this.createD3ElementService();
+        this.xAxis = this.createD3ElementService();
+        this.yAxis = this.createD3ElementService();
+        this.areaGenerator = this.createD3ElementService();
+        this.lineGenerator = this.createD3ElementService();
+        this.x = this.createD3ElementService();
+        this.y = this.createD3ElementService();
 
-        this.tooltipHtml = null;
-        this.chartHtml = null;
-        this.graphData = graphData;
+        this.mouseX = this.createGraphDataService();
+        this.graphData = this.createGraphDataService();
 
-        this.containerWidth = 0;
-        this.containerHeight = 0;
+        this.containerHeight = this.createValuesService();
 
-        this.isMobile = false;
-        this.isDark = false;
+        this.tooltipContentService = this.createTooltipContentService();
+        this.formatValuesService = this.createFormatValuesService();
 
-        this.setDarkState();
-        this.setIsMobileState();
+        this.tooltipHtml = this.createDomElementService();
+        this.chartHtml = this.createDomElementService();
+
+        this.validateData = this.createValidateDataService();
+    }
+
+    createValidateDataService() {
+        return new ValidateDataService();
+    }
+
+    createValuesService() {
+        return new ValuesService();
+    }
+
+    createStatesService() {
+        return new StatesService();
+    }
+
+    createGraphDataService() {
+        return new GraphDataService();
+    }
+
+    createD3ElementService() {
+        return new D3ElementService();
+    }
+
+    createFormatValuesService() {
+        return new FormatValuesService();
+    }
+
+    createDomElementService() {
+        return new DomElementService();
+    }
+
+    createTooltipContentService() {
+        return new TooltipContentService();
+    }
+
+    setSvgDataFunction() {
+        this.svg.getData = function () {
+            return this.svg.node().getBoundingClientRect().left;
+        }
     }
 
     setChartHtml(newChartHtml) {
-        this.chartHtml = newChartHtml;
+        this.chartHtml.setElement(newChartHtml);
 
         return this;
     }
 
     setTooltipHtml(newTooltipHtml) {
-        this.tooltipHtml = newTooltipHtml;
+        this.tooltipHtml.setElement(newTooltipHtml);
 
         return this;
     }
 
-    setGraphData(newGraphData) {
-        this.graphData = newGraphData;
-
-        return this;
-    }
-
-    setIsMobileState(newViewportWidth = store.getters.viewportWidth) {
-        this.isMobile = newViewportWidth <= 767.98;
-
-        return this;
-    }
-
-    setDarkState(isDarkState = store.getters.isDark) {
-        this.isDark = isDarkState;
+    createSvg() {
+        this.svg.d3ActionSvgElement("select", this.chartHtml)
+            .actionSvgElement("append", "svg")
+            .actionSvgElement("width", "100%")
+            .actionSvgElement("height", this.containerHeight);
 
         return this;
     }
 
     dropGraph() {
-        if (this.svg) {
-            this.svg.selectAll("*").remove();
-            this.axis.selectAll("*").remove();
-            this.svg._groups[0][0].remove();
-        }
+        this.svg.dropGraph();
+        this.axis.dropGraph();
     }
 
-    setYBand() {
-        this.yBand = d3
-            .scaleBand()
-            .domain(this.yAxis.scale().ticks())
-            .range([this.containerHeight, 0]);
+    setGraphData(newGraphData) {
+        this.graphData.setGraphData(newGraphData);
 
         return this;
     }
 
-    setAxis() {
-        this.axis = d3.select(".y-axis-container");
+    setYBand() {
+        this.yBand.d3ActionSvgElement("scaleBand")
+            .actionSvgElement("domain", this.yAxis.scale().ticks())
+            .actionSvgElement("range", [this.containerHeight, 0])
 
         return this;
     }
 
     setXAxis(ticks) {
-        this.xAxis = d3
-            .axisBottom(this.x)
-            .ticks(ticks)
-            .tickFormat((d) => this.formatTime(new Date(d)));
+        this.xAxis.d3ActionSvgElement("axisBottom", this.x)
+            .actionSvgElement("ticks", ticks)
+            .actionSvgElement("tickFormat", (d) => this.formatTime(new Date(d)));
 
         return this;
     }
 
     setYAxis(ticks) {
-        this.yAxis = d3
-            .axisLeft(this.y)
-            .ticks(ticks)
-            .tickFormat((d, i) => this.formatNumberWithUnit(d, i));
+        this.yAxis.d3ActionSvgElement("axisLeft", this.y)
+            .actionSvgElement("ticks", ticks)
+            .actionSvgElement("tickFormat", (d, i) => this.formatNumberWithUnit(d, i));
 
         return this;
     }
 
     setDefaultX() {
-        this.x = d3
-            .scaleLinear()
-            .domain(d3.extent(this.graphData.dates, (d) => d))
-            .range([0, this.chartHtml.offsetWidth]);
+        this.x.d3ActionSvgElement("scaleLinear")
+            .actionSvgElement("domain", d3.extent(this.graphData.dates, (d) => d))
+            .actionSvgElement("range", [0, this.chartHtml.offsetWidth]);
 
         return this;
     }
 
     setNumberX() {
-        this.x = d3
-            .scaleLinear()
-            .domain(d3.extent(this.graphData.dates, (d, i) => i))
-            .range([0, this.chartHtml.offsetWidth]);
+        this.x.d3ActionSvgElement("scaleLinear")
+            .actionSvgElement("domain", d3.extent(this.graphData.dates, (d, i) => i))
+            .actionSvgElement("range", [0, this.chartHtml.offsetWidth]);
 
         return this;
     }
 
-    emptyValidationRules() {
-        return d3.max(this.graphData.values) !== 0
-            ? d3.max(this.graphData.values) +
-                  d3.max(this.graphData.values) * 0.2
-            : 120;
-    }
-
     setY() {
-        this.y = d3
-            .scaleLinear()
-            .domain([0, this.emptyValidationRules()])
-            .range([this.containerHeight, 0]);
+        this.y.d3ActionSvgElement("scaleLinear")
+            .actionSvgElement("domain", [0, this.valueValidationRules()])
+            .actionSvgElement("range", [this.containerHeight, 0]);
 
         return this;
     }
 
     setAreaGenerator() {
-        this.areaGenerator = d3
-            .area()
-            .x((d, i) => this.x(i))
-            .y0(this.containerHeight)
-            .y1((d) => this.y(d))
-            .curve(d3.curveBasis);
+        this.areaGenerator.d3ActionSvgElement("area")
+            .actionSvgElement("x", (d, i) => this.x(i))
+            .actionSvgElement("y0", this.containerHeight)
+            .actionSvgElement("y1", (d) => this.y(d))
+            .actionSvgElement("curve", d3.curveBasis);
 
         return this;
     }
 
     setLineGenerator() {
-        this.lineGenerator = d3
-            .line()
-            .x((d, i) => this.x(i))
-            .y((d) => this.y(d))
-            .curve(d3.curveBasis);
+        this.lineGenerator.d3ActionSvgElement("line")
+            .actionSvgElement("x", (d, i) => this.x(i))
+            .actionSvgElement("y", (d) => this.y(d))
+            .actionSvgElement("curve", d3.curveBasis);
 
         return this;
     }
 
     setTooltip() {
-        if (!this.tooltip) this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip) {
+            this.tooltip.d3ActionSvgElement("select", this.tooltipHtml);
+        }
 
         return this;
     }
 
     setMouseX() {
-        this.mouseX =
-            this.clientX - this.svg.node().getBoundingClientRect().left;
+        this.setSvgDataFunction();
+
+        this.mouseX.setValue(this.clientX.value - this.svg.getData());
     }
 
     setContainerHeight(height) {
-        this.containerHeight = height;
+        this.containerHeight.setValue(height);
 
         return this;
-    }
-
-    tooltipFormatNumberWithUnit(num, i) {
-        return (
-            this.adjustValue(num, this.graphData.unit[i]).val +
-            " " +
-            this.adjustValue(num, this.graphData.unit[i]).unit +
-            "H"
-        );
-    }
-
-    setDate(nearestIndex) {
-        const date = new Date(this.graphData.dates[nearestIndex]);
-
-        this.fullDate = date.getUTCFullYear();
-        this.time =
-            date.getDate().toString().padStart(2, "0") +
-            "." +
-            (date.getMonth() + 1).toString().padStart(2, "0");
-    }
-
-    setUnit(nearestIndex) {
-        this.unit = this.graphData.unit
-            ? this.graphData.unit[nearestIndex]
-            : "T";
-    }
-
-    setHashrate(nearestIndex) {
-        this.hashrate = this.graphData.values[nearestIndex];
-    }
-
-    setWorkers(nearestIndex) {
-        if (this.graphData.amount)
-            this.workersCountActive = this.graphData.amount[nearestIndex];
     }
 
     getNearestIndex() {
@@ -223,20 +203,19 @@ export class GraphService {
     }
 
     setVerticalLine() {
-        this.svg
-            .selectAll(".vertical-line")
-            .attr("x1", this.mouseX)
-            .attr("x2", this.mouseX)
-            .attr("y1", 0)
-            .attr("y2", this.containerHeight)
-            .style("opacity", 1);
+        this.svg.actionSvgElement("selectAll",".vertical-line")
+            .actionSvgElement("x1", this.mouseX.value)
+            .actionSvgElement("x2", this.mouseX.value)
+            .actionSvgElement("y1", 0)
+            .actionSvgElement("y2", this.containerHeight.value)
+            .actionSvgElement("opacity", 1);
     }
 
     setActualValues(nearestIndex) {
-        this.setUnit(nearestIndex);
-        this.setHashrate(nearestIndex);
-        this.setWorkers(nearestIndex);
-        this.setDate(nearestIndex);
+        this.tooltipContentService.setUnit(nearestIndex);
+        this.tooltipContentService.setHashrate(nearestIndex);
+        this.tooltipContentService.setWorkers(nearestIndex);
+        this.tooltipContentService.setDate(nearestIndex);
     }
 
     setOtherElements() {
@@ -358,16 +337,6 @@ export class GraphService {
         }
     }
 
-    createSvg() {
-        this.svg = d3
-            .select(this.chartHtml)
-            .append("svg")
-            .attr("width", "100%")
-            .attr("height", this.containerHeight);
-
-        return this;
-    }
-
     validateXAxis() {
         // return store.getters.viewportWidth <= 991.98 ? 8 : 12;
         return 6;
@@ -460,7 +429,7 @@ export class GraphService {
 
             this.svg.selectAll(".vertical-line").style("opacity", 0);
 
-            this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+            this.svg.selectAll(".dot").style("opacity", 0);
         });
 
         return this;

@@ -1,4 +1,4 @@
-import { MetaTableService } from "@/modules/common/services/MetaTableService";
+import { MetaTableService } from "@/modules/common/services/extends/MetaTableService";
 import { WatchersData } from "@/modules/watchers/DTO/WatchersData";
 import { WatchersFormData } from "@/modules/watchers/DTO/WatchersFormData";
 import { ProfileApi } from "@/api/api";

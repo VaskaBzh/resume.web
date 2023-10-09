@@ -6,7 +6,7 @@ import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
 import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
-import { GraphDataService } from "@/modules/common/services/GraphDataService";
+import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
 
 export class IncomeService extends TableService {
     constructor(translate, titleIndexes, route) {

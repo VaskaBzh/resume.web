@@ -1,4 +1,4 @@
-import { GraphService } from "@/modules/graphs/services/extends/GraphService";
+import { GraphService } from "@/modules/graphs/services/default/GraphService";
 
 export class LineGraphService extends GraphService {
     constructor(graphData, translate) {
