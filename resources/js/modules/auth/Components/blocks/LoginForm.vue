@@ -90,6 +90,18 @@
         :validateService="service"
         @sendPassword="sendPassword($event)"
     />
+	<verify-popup
+		:closed="service.closedTwoFacPopup"
+		:opened="service.openedTwoFacPopup"
+	>
+		<two-fac-form
+			title="form.fac.title"
+			text="form.fac.text"
+			placeholder="form.fac.placeholder"
+			button_text="form.fac.button_text"
+			@sendForm="console.log('send')"
+		/>
+	</verify-popup>
 </template>
 
 <script>
@@ -105,10 +117,14 @@ import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
+import VerifyPopup from "../../../verify/Components/VerifyPopup.vue";
+import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
 
 export default {
     name: "login-form",
     components: {
+	    TwoFacForm,
+	    VerifyPopup,
         VerifyLink,
         AuthInput,
         MainPassword,

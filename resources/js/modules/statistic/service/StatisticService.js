@@ -1,8 +1,9 @@
-import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
 import store from "@/store";
+
 import { LineGraphData } from "@/modules/statistic/DTO/LineGraphData";
 import { ProfileApi } from "@/api/api";
 import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
+import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
 
 export class StatisticService extends GraphDataService {
     constructor(offset, route) {
@@ -19,7 +20,7 @@ export class StatisticService extends GraphDataService {
         this.buttons = [
             { title: `24 ${this.translate("hours")}`, value: 96 },
             { title: `7 ${this.translate("days")}`, value: 672 },
-            { title: `1 ${this.translate("month")}`, value: 2880 },
+            // { title: `1 ${this.translate("month")}`, value: 2880 },
         ];
     }
 

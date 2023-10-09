@@ -1,4 +1,4 @@
-import { GraphService } from "@/modules/graphs/services/default/GraphService";
+import { GraphService } from "@/modules/graphs/services/extends/GraphService";
 
 export class LineGraphService extends GraphService {
     constructor(graphData, translate) {
@@ -150,8 +150,8 @@ export class LineGraphService extends GraphService {
 
     graphAppends(colors) {
         this.appendBands(colors.bands)
-            .appendGradient()
             .createMouseLine()
+            .appendGradient()
             .createLine()
             .createCircle(colors.circle)
             .appendXAxis();

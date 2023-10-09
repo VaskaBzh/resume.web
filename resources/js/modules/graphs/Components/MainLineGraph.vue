@@ -1,6 +1,6 @@
 <template>
     <div ref="chart" class="container-chart">
-        <div ref="tooltip" class="tooltip">
+        <div ref="tooltip" class="tooltip" style="opacity: 0">
             <div class="tooltip__content">
                 <p class="tooltip_text">
                     <span class="tooltip_label"
@@ -42,9 +42,10 @@
 </template>
 
 <script>
+import TooltipIcon from "@/modules/graphs/icons/TooltipIcon.vue";
+
 import { LineGraphService } from "@/modules/graphs/services/LineGraphService";
 import { mapGetters } from "vuex";
-import TooltipIcon from "../icons/TooltipIcon.vue";
 
 export default {
     name: "main-line-graph",

@@ -1,4 +1,4 @@
-import { GraphService } from "@/modules/graphs/services/default/GraphService";
+import { GraphService } from "@/modules/graphs/services/extends/GraphService";
 import * as d3 from "d3";
 
 export class ColumnGraphService extends GraphService {

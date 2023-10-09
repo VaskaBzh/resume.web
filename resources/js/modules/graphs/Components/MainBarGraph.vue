@@ -2,7 +2,7 @@
     <div class="chart">
         <main-title class="headline">{{ $t("statistic.graph[0]") }}</main-title>
         <div ref="chart" class="container-chart">
-            <div ref="tooltip" class="tooltip">
+            <div ref="tooltip" class="tooltip" style="opacity: 0">
                 <div class="tooltip__content">
                     <p class="tooltip_text">
                         <span class="tooltip_value"
@@ -29,9 +29,10 @@
 </template>
 
 <script>
-import { ColumnGraphService } from "../services/ColumnGraphService";
-import MainTitle from "../../common/Components/UI/MainTitle.vue";
-import TooltipBarIcon from "../icons/TooltipBarIcon.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import TooltipBarIcon from "@/modules/graphs/icons/TooltipBarIcon.vue";
+
+import { ColumnGraphService } from "@/modules/graphs/services/ColumnGraphService";
 import { mapGetters } from "vuex";
 
 export default {

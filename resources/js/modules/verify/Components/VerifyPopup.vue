@@ -3,28 +3,30 @@
 		id="verify"
 		:wait="wait"
 		:closed="closed"
+		:opened="opened"
 	>
-		<div class="verify__head">
-			<main-title tag="h3">{{ $t("popup.title") }}</main-title>
-			<main-description>{{ $t("popup.description") }}</main-description>
-		</div>
-		<div class="verify__content">
-            <main-input
-                class="verify_input"
-                inputName="code"
-                :inputLabel="$t('popup.label[0]')"
-                :inputValue="service.form.code"
-                @getValue="service.form.code = $event"
-            />
-			<main-button
-				class="button-blue verify_button button-full"
-				@click="sendEmailMessage"
-			>
-				<template v-slot:text>
-                    {{ $t("popup.button") }}
-                </template>
-			</main-button>
-		</div>
+		<slot />
+<!--		<div class="verify__head">-->
+<!--			<main-title tag="h3">{{ $t("popup.title") }}</main-title>-->
+<!--			<main-description>{{ $t("popup.description") }}</main-description>-->
+<!--		</div>-->
+<!--		<div class="verify__content">-->
+<!--            <main-input-->
+<!--                class="verify_input"-->
+<!--                inputName="code"-->
+<!--                :inputLabel="$t('popup.label[0]')"-->
+<!--                :inputValue="service.form.code"-->
+<!--                @getValue="service.form.code = $event"-->
+<!--            />-->
+<!--			<main-button-->
+<!--				class="button-blue verify_button button-full"-->
+<!--				@click="sendEmailMessage"-->
+<!--			>-->
+<!--				<template v-slot:text>-->
+<!--                    {{ $t("popup.button") }}-->
+<!--                </template>-->
+<!--			</main-button>-->
+<!--		</div>-->
 	</main-popup>
 </template>
 
@@ -43,6 +45,7 @@ export default {
 	props: {
 		wait: Boolean,
 		closed: Boolean,
+		opened: Boolean,
 	},
 	i18n: VerifyMessages,
 	components: {

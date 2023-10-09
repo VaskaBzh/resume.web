@@ -15,6 +15,8 @@ export class LoginService {
 
         this.openedPasswordPopup = false;
         this.closedPasswordPopup = false;
+        this.openedTwoFacPopup = false;
+        this.closedTwoFacPopup = false;
 
         this.validate = {};
         this.validateService = new ValidateService();
@@ -91,14 +93,26 @@ export class LoginService {
         setTimeout(() => (this.closedPasswordPopup = false), 300);
     }
 
+    openTwoFacPopup() {
+        this.openedTwoFacPopup = true;
+
+        setTimeout(() => (this.openedTwoFacPopup = false), 300);
+    }
+
+    closeTwoFacPopup() {
+        this.closedTwoFacPopup = true;
+
+        setTimeout(() => (this.closedTwoFacPopup = false), 300);
+    }
+
     async login() {
         try {
-            const response = await MainApi.post("/login", this.form);
-
-            const user = response.data.user;
-            const token = response.data.token;
-            store.dispatch("setToken", token);
-            store.dispatch("setUser", user);
+            // const response = await MainApi.post("/login", this.form);
+            //
+            // const user = response.data.user;
+            // const token = response.data.token;
+            // store.dispatch("setToken", token);
+            // store.dispatch("setUser", user);
 
             // if (this.route?.query?.verify_hash) {
             //     await ProfileApi.post("/verify", {
@@ -106,16 +120,18 @@ export class LoginService {
             //     });
             // }
 
-            this.router.push({
-                name: "statistic",
-                query: {
-                    ...this.route.query?.action === "email" ?
-                        {
-                            onboarding: true
-                        } :
-                        {},
-                }
-            });
+            // this.router.push({
+            //     name: "statistic",
+            //     query: {
+            //         ...this.route.query?.action === "email" ?
+            //             {
+            //                 onboarding: true
+            //             } :
+            //             {},
+            //     }
+            // });
+
+            this.openTwoFacPopup();
         } catch (err) {
             store.dispatch("setFullErrors", {
                 ...err.response.data,
