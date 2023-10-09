@@ -26,6 +26,7 @@ class EmailVerifyNotificationCommand extends Command
                 }
 
                 $user->sendEmailVerificationNotification();
+
                 $this->info('email send to ' . $user->email . '!');
 
                 break;
