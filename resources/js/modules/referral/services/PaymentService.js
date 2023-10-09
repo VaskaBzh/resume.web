@@ -1,4 +1,4 @@
-import { TableService } from "@/services/default/TableService";
+import { TableService } from "@/services/extends/TableService";
 
 import { PaymentData } from "@/modules/referral/DTO/PaymentData";
 import { ProfileApi } from "@/api/api";
