@@ -163,12 +163,19 @@ export default {
             await this.settingsService.sendFac();
         },
         async sendPassword(form = null) {
-			this.settingsService.setPasswordForm(form);
+			      this.settingsService.setPasswordForm(form);
 
             await this.settingsService.sendPassword();
         },
         async sendVerify(form) {
             await this.settingsService.sendVerify(form);
+	          this.settingsService.closeFacPopup();
+
+            this.$store.dispatch("setNotification", {
+                status: "success",
+                title: "connected",
+                text: this.translate("validate_message.two_fa_message"),
+            });
         },
         settingsProcess() {
             // if (this.$route.query.action === "password") {

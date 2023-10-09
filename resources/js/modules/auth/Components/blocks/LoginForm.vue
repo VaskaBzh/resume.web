@@ -99,7 +99,7 @@
 			text="form.fac.text"
 			placeholder="form.fac.placeholder"
 			button_text="form.fac.button_text"
-			@sendForm="console.log('send')"
+			@sendForm="loginWithSecretCode($event)"
 		/>
 	</verify-popup>
 </template>
@@ -146,6 +146,10 @@ export default {
         };
     },
     methods: {
+        async loginWithSecretCode(secret) {
+            this.service.form.two_fa_secret = secret;
+            await this.service.login();
+        },
         async sendPassword(form) {
             await this.service.sendPassword(form);
         },

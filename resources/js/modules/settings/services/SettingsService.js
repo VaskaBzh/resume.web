@@ -48,26 +48,27 @@ export class SettingsService {
     }
 
     async sendVerify(form) {
-        try {
-            const response = await this.fetchVerifyFac(form);
-
-            this.closeFacPopup();
-
-            store.dispatch("setNotification", {
-                status: "success",
-                title: "connected",
-                text: response.data.message,
-            });
-        } catch (err) {
-            console.error(err);
-
-            store.dispatch("setNotification", {
-                status: "error",
-                title: "error",
-                text: err.response.data.error ?? err.response.data.message,
-            });
-            store.dispatch("setFullErrors", err.response.data);
-        }
+        store.dispatch("setUser");
+        // try {
+        //     const response = await this.fetchVerifyFac(form);
+        //
+        //     this.closeFacPopup();
+        //
+        //     store.dispatch("setNotification", {
+        //         status: "success",
+        //         title: "connected",
+        //         text: response.data.message,
+        //     });
+        // } catch (err) {
+        //     console.error(err);
+        //
+        //     store.dispatch("setNotification", {
+        //         status: "error",
+        //         title: "error",
+        //         text: err.response.data.error ?? err.response.data.message,
+        //     });
+        //     store.dispatch("setFullErrors", err.response.data);
+        // }
     }
 
     removeRouteQuery() {
@@ -163,7 +164,7 @@ export class SettingsService {
 
     async fetchFac() {
         return (
-            await ProfileApi.put("/2fac/enable", {
+            await ProfileApi.put(`/2fac/enable/${this.user.id}`, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -171,15 +172,15 @@ export class SettingsService {
         ).data;
     }
 
-    async fetchVerifyFac(form) {
-        return (
-            await ProfileApi.post("/2fac/verify", form, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            })
-        ).data;
-    }
+    // async fetchVerifyFac(form) {
+    //     return (
+    //         await ProfileApi.post("/2fac/verify", form, {
+    //             headers: {
+    //                 Authorization: `Bearer ${store.getters.token}`,
+    //             },
+    //         })
+    //     ).data;
+    // }
 
     validateProcess(event) {
         this.validate = this.validateService.validateProcess(

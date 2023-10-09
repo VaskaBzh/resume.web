@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\Auth;
 
 Auth::routes(['logout' => false, 'reset' => false, 'login' => false]);
 
-Route::post('/login', [LoginController::class, 'login']);
+Route::post('/login', [LoginController::class, 'login'])
+    ->middleware('two-factor');
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth:sanctum')
     ->name('logout');

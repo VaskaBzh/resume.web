@@ -4,6 +4,11 @@
         <main-description>{{ $t(text) }}</main-description>
     </div>
     <div class="verify__content">
+<!--	    <two-fac-input-->
+<!--		    class="verify_input"-->
+<!--		    :inputLabel="$t(placeholder)"-->
+<!--		    @getSecret="service.form.code = $event"-->
+<!--	    />-->
         <main-input
             class="verify_input"
             inputName="code"
@@ -42,7 +47,7 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
-// import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
+import TwoFacInput from "@/modules/common/Components/inputs/TwoFacInput.vue";
 
 import { mapGetters } from "vuex";
 import { VerifyMessages } from "@/modules/verify/lang/VerifyMessages";
@@ -63,7 +68,7 @@ export default {
         sharedMessages: VerifyMessages,
     },
     components: {
-        // VerifyLink,
+	    TwoFacInput,
         MainInput,
         MainTitle,
         MainDescription,
@@ -100,8 +105,8 @@ export default {
     grid-template-columns: repeat(2, 1fr);
 }
 .verify_input {
-	margin-bottom: 18px;
-    background: var(--background-modal-input, #2c2f34);
+	margin-bottom: 40px;
+  background: var(--background-modal-input);
 }
 .verify_link {
 	padding-bottom: 10px;

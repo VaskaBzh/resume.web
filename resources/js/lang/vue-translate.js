@@ -7,6 +7,7 @@ const messages = {
         validate_messages: {
             watcher_message: "Watcher created successfully",
             verify_message: "Email verified successfully",
+            two_fa_message: "Two-factor authentication has been successfully linked",
         },
         more: "More",
         auth: {
@@ -722,6 +723,7 @@ const messages = {
         validate_messages: {
             watcher_message: "Вотчер успешно создан",
             verify_message: "Почта успешно подтверждена",
+            two_fa_message: "Двухфакторная аутентификация успешно привязана",
         },
         more: "Подробнее",
         auth: {

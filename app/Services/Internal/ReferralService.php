@@ -72,10 +72,8 @@ class ReferralService
     public static function getReferralIncomes(int $groupId, int $perPage): LengthAwarePaginator
     {
         return resolve(IncomeRepository::class)
-            ->getReferralIncomeCollection(
-                groupId: $groupId,
-                perPage: $perPage
-            );
+            ->getReferralIncomeCollection(groupId: $groupId,)
+            ->paginate($perPage);
     }
 
     public static function attach(User $referral, string $code): void

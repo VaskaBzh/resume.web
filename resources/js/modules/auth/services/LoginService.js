@@ -107,44 +107,41 @@ export class LoginService {
 
     async login() {
         try {
-            // const response = await MainApi.post("/login", this.form);
-            //
-            // const user = response.data.user;
-            // const token = response.data.token;
-            // store.dispatch("setToken", token);
-            // store.dispatch("setUser", user);
+            const response = await MainApi.post("/login", this.form);
 
-            // if (this.route?.query?.verify_hash) {
-            //     await ProfileApi.post("/verify", {
-            //         user: user,
-            //     });
-            // }
+            const user = response.data.user;
+            const token = response.data.token;
+            store.dispatch("setToken", token);
+            store.dispatch("setUser", user);
 
-            // this.router.push({
-            //     name: "statistic",
-            //     query: {
-            //         ...this.route.query?.action === "email" ?
-            //             {
-            //                 onboarding: true
-            //             } :
-            //             {},
-            //     }
-            // });
-
-            this.openTwoFacPopup();
-        } catch (err) {
-            store.dispatch("setFullErrors", {
-                ...err.response.data,
+            this.router.push({
+                name: "statistic",
+                query: {
+                    ...this.route.query?.action === "email" ?
+                        {
+                            onboarding: true
+                        } :
+                        {},
+                }
             });
 
-            console.log(err);
+            this.closedTwoFacPopup();
+        } catch (err) {
+            console.error(err);
+            if (err.response.status === 400) {
+                this.openTwoFacPopup();
+            } else {
+                if (err.response.status === 403) {
+                    this.router.push({
+                        name: "confirm",
+                        query: {
+                            email: this.form.email,
+                        },
+                    });
+                }
 
-            if (err.response.status === 403) {
-                this.router.push({
-                    name: "confirm",
-                    query: {
-                        email: this.form.email,
-                    },
+                store.dispatch("setFullErrors", {
+                    ...err.response.data,
                 });
             }
             // store.dispatch("setFullErrors", {

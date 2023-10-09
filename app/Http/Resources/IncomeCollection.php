@@ -18,7 +18,7 @@ class IncomeCollection extends ResourceCollection
                     'amount' => $income->daily_amount,
                     'hash' => $income->hash,
                     'status' => $income->status,
-                    'message' => $income->message,
+                    'message' => __('statuses.' . $income->message),
                     'created_at' => $income->created_at,
                     'updated_at' => $income->updated_at,
                 ]
