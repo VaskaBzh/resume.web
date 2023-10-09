@@ -112,7 +112,9 @@ export default {
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    @media (max-width: 900px) {
+}
+@media (max-width: 900px) {
+    .subs {
         padding: 24px 12px 24px;
     }
 }

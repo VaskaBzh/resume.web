@@ -125,7 +125,7 @@ export class LoginService {
                 }
             });
 
-            this.closedTwoFacPopup();
+            this.closeTwoFacPopup();
         } catch (err) {
             console.error(err);
             if (err.response.status === 422) {

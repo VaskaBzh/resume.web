@@ -367,6 +367,11 @@ export default {
         };
     },
     watch: {
+        'wallets.form.name'(newValue, oldValue) {
+            if (newValue.length >= 16) {
+                this.wallets.form.name = oldValue;
+            }
+        },
         getActive() {
             this.walletInit();
         },
@@ -606,6 +611,7 @@ input:focus {
 }
 .autopayput_input {
     background: inherit !important;
+    color: var(--text-secondary, #475467);
 }
 .cancel-button {
     border: 1px solid var(--text-teritary, #98a2b3);
