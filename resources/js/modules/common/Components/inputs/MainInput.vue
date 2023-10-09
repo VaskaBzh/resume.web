@@ -75,6 +75,11 @@ export default {
         justify-content: center;
         padding: 4px 16px;
         cursor: text;
+        &::placeholder {
+            font-size: 24px;
+            font-family: AmpleSoftPro, serif;
+            line-height: 135%;
+        }
         &-error {
             border-color: #ed1818;
         }

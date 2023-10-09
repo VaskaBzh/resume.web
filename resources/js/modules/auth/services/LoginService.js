@@ -26,7 +26,7 @@ export class LoginService {
 
     setForm() {
         this.form = {
-            ...new LoginFormData("", "", false),
+            ...new LoginFormData("", "", true),
         };
     }
 

@@ -5,7 +5,7 @@
             :class="{ 'button_name-target': target }"
             ref="name"
         >
-            <div>
+            <div class="button_name_text">
                 <p class="user-name-text">{{ name }}</p>
                 <p class="user-title-text">{{ $t("header.user_title") }}</p>
             </div>
@@ -329,6 +329,7 @@ export default {
     line-height: 150%; /* 24px */
 }
 .user-title-text {
+    margin-top: auto;
     color: var(--text-primary-inverse);
     font-family: NunitoSans;
     font-size: 12px;
@@ -382,7 +383,6 @@ export default {
 }
 .button {
     position: relative;
-    width: 270px;
     margin-bottom: 16px;
     width: 100%;
     @media (max-width: 500px) {
@@ -409,6 +409,13 @@ export default {
         align-items: center;
         gap: 16px;
         align-self: stretch;
+        min-height: 73px;
+        &_text {
+            display: flex;
+            flex-direction: column;
+            min-height: 44px;
+            justify-content: flex-end;
+        }
         &-target {
             svg {
                 &:last-child {
@@ -417,7 +424,6 @@ export default {
             }
         }
         svg {
-            fill: #3f7bdd;
             transition: all 0.5s ease 0s;
             &:last-child {
                 margin-left: auto;
