@@ -4,16 +4,23 @@ import {ScrollTrigger} from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger)
 
 export function scroolingHeader() {
-    const tl = gsap.timeline()
+    const tl = gsap.timeline({
+        scrollTrigger: {
+            trigger: ".app_back_transparent",
+            start: "top top",
+            end: "+=500",
+            pin: true,
+            scrub: 2.5,
+            id: '.app_back_transparent',
+            smoothChildTiming: true
+        }
+    })
     tl.addLabel('my-label')
     tl.addLabel('transparent-logo', 0.5)
     gsap.timeline({
         paused: true
     })
     const animation = tl
-        .to('.app_back_transparent', {
-            position: 'fixed'
-        }, 'my-label')
         .fromTo('.header-land_title_expert-one', {opacity: 1}, {
             xPercent: -100,
             opacity: 0,
@@ -78,15 +85,17 @@ export function scroolingHeader() {
         animation: animation,
         trigger: ".header-land",
         start: "top 0",
-        end: document.querySelector('.header-land').offsetHeight/2,
+        end: "+=500",
         pin: true,
         scrub: 2.5,
         id: '.header-land',
         smoothChildTiming: true,
         onUpdate: self => {
             let btnHeaderScrooll = document.querySelector('.header-land_btn')
+
             if(self.progress < 0.5) {
                 btnHeaderScrooll.style.opacity = 1
+
             } else {
 
                 btnHeaderScrooll.style.opacity = 1 - self.progress

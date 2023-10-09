@@ -1,6 +1,6 @@
 <template>
     <header-component/>
-    <div class="app_back_transparent scroll-section">
+    <div class="app_back_transparent">
         <div class="app_back_transparent__container">
             <div class="app_back_transparent_block-one"><span class="app_back_transparent_one">allbtc</span></div>
             <div class="app_back_transparent_block-two"><span class="app_back_transparent_two">pool</span></div>
@@ -116,6 +116,7 @@ export default {
 
         &_one, &_two {
             display: block;
+            padding: 3px;
         }
 
     }
