@@ -12,7 +12,7 @@
             :final="0.005"
             unit="BTC"
         />
-        <wait-preloader :wait="waitGraphChange" :interval="35" />
+<!--        <wait-preloader :wait="waitGraphChange" :interval="35" />-->
         <main-column-graph
             v-if="!waitGraphChange"
             :height="height"

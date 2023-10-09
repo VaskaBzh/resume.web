@@ -23,7 +23,7 @@
             >
                 <main-password
                     name="password"
-                    :placeholder="this.$t('auth.reg.placeholders[1]')"
+                    :placeholder="this.$t('auth.login.placeholders[1]')"
                     :model="service.form.password"
                     :errors="errors"
                     @change="
@@ -90,6 +90,18 @@
         :validateService="service"
         @sendPassword="sendPassword($event)"
     />
+	<verify-popup
+		:closed="service.closedTwoFacPopup"
+		:opened="service.openedTwoFacPopup"
+	>
+		<two-fac-form
+			title="form.fac.title"
+			text="form.fac.text"
+			placeholder="form.fac.placeholder"
+			button_text="form.fac.button_text"
+			@sendForm="loginWithSecretCode($event)"
+		/>
+	</verify-popup>
 </template>
 
 <script>
@@ -105,11 +117,14 @@ import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
+import VerifyPopup from "../../../verify/Components/VerifyPopup.vue";
+import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
 
 export default {
     name: "login-form",
     components: {
+	    TwoFacForm,
+	    VerifyPopup,
         VerifyLink,
         AuthInput,
         MainPassword,
@@ -131,6 +146,10 @@ export default {
         };
     },
     methods: {
+        async loginWithSecretCode(secret) {
+            this.service.form.two_fa_secret = secret;
+            await this.service.login();
+        },
         async sendPassword(form) {
             await this.service.sendPassword(form);
         },
@@ -150,7 +169,11 @@ export default {
             this.openPasswordPopup();
         }
         if (this.$route.query?.action === "email") {
-            openNotification(true, this.$t("validate_messages.success"), this.$t("validate_messages.verify_message"));
+            this.$store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: this.$t("validate_messages.verify_message"),
+            });
         }
 
         if (this.$t) {

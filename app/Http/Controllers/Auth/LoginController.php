@@ -37,22 +37,23 @@ class LoginController extends Controller
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = User::whereEmail($request->email)->first();
-
-        if (!$user->hasVerifiedEmail()) {
+        if (!$request->user->hasVerifiedEmail()) {
             return new JsonResponse([
-                'error' => [__('auth.email.not.verified', ['email' => $user->email])]
+                'error' => [__('auth.email.not.verified', ['email' => $request->user->email])]
             ], Response::HTTP_FORBIDDEN);
         }
 
-        $user->tokens()->delete();
-        $token = $user->createToken($user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
+        $request
+            ->user
+            ->tokens()
+            ->delete();
+        $token = $request->user->createToken($request->user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
 
         return new JsonResponse([
-            'user' => new UserResource($user),
+            'user' => new UserResource($request->user),
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
-            'has_referral_role' => $user->hasRole('referral')
+            'has_referral_role' => $request->user->hasRole('referral')
         ]);
     }
 

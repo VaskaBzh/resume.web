@@ -30,7 +30,7 @@ class MakeWorkerHashesCommand extends Command
     {
         $btcWorkerList = collect($btcComService->getWorkerList(0));
 
-        $progressBar = $this->output->createProgressBar($btcWorkerList->count());
+        $progressBar = $this->output->createProgressBar();
 
         $progressBar->start();
         $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
@@ -41,22 +41,24 @@ class MakeWorkerHashesCommand extends Command
                 $localWorker = Worker::where('worker_id', $btcComWorker['worker_id'])
                     ->first();
 
-                DeleteOldWorkerHashrates::execute(
-                    workerId: $localWorker->worker_id,
-                    date: now()->subMonths(2)->toDateTimeString()
-                );
+                if ($localWorker) {
+                    DeleteOldWorkerHashrates::execute(
+                        workerId: $localWorker->worker_id,
+                        date: now()->subMonths(2)->toDateTimeString()
+                    );
 
-                WorkerHashrate::create([
-                    'worker_id' => $localWorker->worker_id,
-                    'hash' => $btcComWorker['shares_1m'] ?? 0,
-                    'unit' => $btcComWorker['shares_unit'] ?? 'T',
-                ]);
+                    WorkerHashrate::create([
+                        'worker_id' => $localWorker->worker_id,
+                        'hash' => $btcComWorker['shares_1m'] ?? 0,
+                        'unit' => $btcComWorker['shares_unit'] ?? 'T',
+                    ]);
 
-                Update::execute($localWorker, workerData: WorkerData::fromRequest([
-                    'worker_id' => $localWorker->worker_id,
-                    'group_id' => $localWorker->group_id,
-                    'approximate_hash_rate' => $btcComWorker['shares_1d']
-                ]));
+                    Update::execute($localWorker, workerData: WorkerData::fromRequest([
+                        'worker_id' => $localWorker->worker_id,
+                        'group_id' => $localWorker->group_id,
+                        'approximate_hash_rate' => $btcComWorker['shares_1d']
+                    ]));
+                }
             }
         });
 

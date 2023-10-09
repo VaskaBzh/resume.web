@@ -33,6 +33,7 @@
                         <safety-card
                             :card="card"
                             @openFacForm="sendFac"
+                            @dropFac="dropFac"
                             @openPasswordForm="openPasswordPopup"
                         />
                     </div>
@@ -162,13 +163,29 @@ export default {
         async sendFac() {
             await this.settingsService.sendFac();
         },
+        async dropFac() {
+            await this.settingsService.dropFac();
+
+            this.$store.dispatch("setUser");
+
+            this.settingsService.setBlocks();
+        },
         async sendPassword(form = null) {
-			this.settingsService.setPasswordForm(form);
+			      this.settingsService.setPasswordForm(form);
 
             await this.settingsService.sendPassword();
         },
         async sendVerify(form) {
             await this.settingsService.sendVerify(form);
+	        this.settingsService.closeFacPopup();
+
+            this.$store.dispatch("setNotification", {
+                status: "success",
+                title: "connected",
+                text: this.$t("validate_messages.two_fa_message"),
+            });
+
+            this.settingsService.setBlocks();
         },
         settingsProcess() {
             // if (this.$route.query.action === "password") {
@@ -244,7 +261,7 @@ export default {
         transition: all 0.3s ease 0s;
     }
     @media (max-width: 900px) {
-        padding: 24px 12px;
+        padding: 24px 12px 24px;
     }
     &__main {
         width: 100%;

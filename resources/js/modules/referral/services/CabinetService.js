@@ -2,7 +2,6 @@ import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 import { ProfileApi } from "@/api/api";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class CabinetService {
     constructor(translate, route) {
@@ -70,21 +69,21 @@ export class CabinetService {
                     },
                 }
             );
-            openNotification(
-                true,
-                this.translate("validate_messages.success"),
-                result.data.message
-            );
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.data.message,
+            });
 
             this.sendMessage(result.data.message);
         } catch (err) {
             this.sendMessage(err.response.data.message);
 
-            openNotification(
-                false,
-                this.translate("validate_messages.error"),
-                err.response.data.message
-            );
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
         }
 
         await this.index();

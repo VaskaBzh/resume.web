@@ -9,7 +9,7 @@ class TwoFactorVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'twoFactorSecret' => 'required|string|numeric'
+            'two_fa_secret' => 'required|string|numeric'
         ];
     }
 

@@ -11,7 +11,7 @@
 			<button class="nav_button nav_button-next" v-show="step < steps_count" @click="nextSlide">
 				<arrow-right-icon class="nav_icon" />
 			</button>
-			<button class="nav_button nav_button-next" @click="closeSlide">
+			<button class="nav_button" @click="closeSlide">
 				<close-icon class="nav_icon" />
 			</button>
 		</div>

@@ -281,7 +281,7 @@ export default {
 }
 @media (max-width: 900px) {
     .watchers {
-        padding: 24px 12px;
+        padding: 24px 12px 24px;
     }
 }
 @media (max-width: 700px) {

@@ -2,8 +2,7 @@ import { ProfileApi } from "@/api/api";
 
 import { WalletData } from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
-import { DefaultSubsService } from "../../common/services/DefaultSubsService";
+import { DefaultSubsService } from "../../common/services/extends/DefaultSubsService";
 import { VerifyService } from "../../verify/services/VerifyService";
 
 export class WalletService extends DefaultSubsService {
@@ -94,11 +93,11 @@ export class WalletService extends DefaultSubsService {
             } catch (err) {
                 console.error(err);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "warning",
+                    title: "warning",
+                    text: err.response.data.message,
+                });
             }
 
             this.waitWallets = false;
@@ -111,11 +110,12 @@ export class WalletService extends DefaultSubsService {
             try {
                 const response = await ProfileApi.post("/wallets/create", this.form);
 
-                openNotification(
-                    true,
-                    this.translate("validate_messages.success"),
-                    response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: response.data.message,
+                });
+
                 await this.index();
                 this.clearForm();
                 this.closePopup();
@@ -123,11 +123,11 @@ export class WalletService extends DefaultSubsService {
                 console.error("Error with: " + err);
                 store.dispatch("setFullErrors", err.response.data.errors);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
             }
             this.wait = false;
         } else {
@@ -142,11 +142,11 @@ export class WalletService extends DefaultSubsService {
             try {
                 const response = await ProfileApi.put("/wallets/update", this.form);
 
-                openNotification(
-                    true,
-                    this.translate("validate_messages.connected"),
-                    response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "connected",
+                    text: response.data.message,
+                });
 
                 await this.index();
                 this.clearForm();
@@ -155,11 +155,11 @@ export class WalletService extends DefaultSubsService {
                 console.error("Error with: " + err);
                 store.dispatch("setFullErrors", err.response.data.errors);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
             }
             this.wait = false;
         } else {
@@ -198,11 +198,11 @@ export class WalletService extends DefaultSubsService {
             } catch (err) {
                 store.dispatch("setFullErrors", err.response.data.errors);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
 
                 this.emptyTable = true;
                 this.waitWallets = false;

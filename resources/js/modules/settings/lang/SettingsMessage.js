@@ -48,7 +48,7 @@ export const SettingsMessage = {
         safety: {
             title: ["Two-Factor Authentication", "Login via SMS", "Change password"],
             text: ["This is a security mechanism used to protect your profile by linking your login to a physical device.", "Receive an SMS with a code to confirm your account login on your mobile phone.", "To change your password, you need to remember the current one."],
-            button:["Connect","Change"]
+            button:["Connect","Change","Disconnect"]
         },
         fac_popup:{
             title: '2FA connection',
@@ -115,7 +115,7 @@ export const SettingsMessage = {
         safety: {
             title: ["Two-Factor Authentication", "Вход по SMS", "Сменить пароль"],
             text: ["Это механизм безопасности, используемый для защиты вашего профиля путем привязки вашего входа к физическому устройству.", "Получай SMS с кодом для подтверждения входа в аккаунт на свой мобильный телефон.", "Для смены пароля вам нужно помнить текущий."],
-            button:["Подключить","Сменить"]
+            button:["Подключить","Сменить","Отключить"]
         },
         fac_popup:{
             title: 'Подключение 2FA',

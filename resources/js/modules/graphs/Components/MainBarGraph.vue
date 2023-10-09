@@ -29,9 +29,10 @@
 </template>
 
 <script>
-import { ColumnGraphService } from "../services/ColumnGraphService";
-import MainTitle from "../../common/Components/UI/MainTitle.vue";
-import TooltipBarIcon from "../icons/TooltipBarIcon.vue";
+import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
+import TooltipBarIcon from "@/modules/graphs/icons/TooltipBarIcon.vue";
+
+import { ColumnGraphService } from "@/modules/graphs/services/ColumnGraphService";
 import { mapGetters } from "vuex";
 
 export default {

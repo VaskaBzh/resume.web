@@ -46,12 +46,9 @@ export default {
 
 .card_icon {
     fill: var(--icons-accent);
-}
-
-@media (max-width: 1880px) {
-  .card_icon {
-    display: none;
-  }
+     @media (max-width: 1880px) {
+         display: none;
+     }
 }
 
 .card__content {

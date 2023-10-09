@@ -2,7 +2,6 @@ import { LoginFormData } from "@/modules/auth/DTO/LoginFormData";
 import { MainApi } from "@/api/api";
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import store from "@/store";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class LoginService {
     constructor(router, route) {
@@ -16,6 +15,8 @@ export class LoginService {
 
         this.openedPasswordPopup = false;
         this.closedPasswordPopup = false;
+        this.openedTwoFacPopup = false;
+        this.closedTwoFacPopup = false;
 
         this.validate = {};
         this.validateService = new ValidateService();
@@ -27,7 +28,7 @@ export class LoginService {
 
     setForm() {
         this.form = {
-            ...new LoginFormData("", "", false),
+            ...new LoginFormData("", "", true),
         };
     }
 
@@ -58,15 +59,19 @@ export class LoginService {
             this.closePasswordPopup();
             this.removeRouteQuery();
 
-            openNotification(true, this.translate("validate_messages.changed"), response.message);
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.message,
+            });
         } catch (err) {
             console.error(err);
 
-            openNotification(
-                false,
-                this.translate("validate_messages.error"),
-                err.response.data.error ?? err.response.data.message
-            );
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.error ?? err.response.data.message,
+            });
         }
     }
 
@@ -88,6 +93,18 @@ export class LoginService {
         setTimeout(() => (this.closedPasswordPopup = false), 300);
     }
 
+    openTwoFacPopup() {
+        this.openedTwoFacPopup = true;
+
+        setTimeout(() => (this.openedTwoFacPopup = false), 300);
+    }
+
+    closeTwoFacPopup() {
+        this.closedTwoFacPopup = true;
+
+        setTimeout(() => (this.closedTwoFacPopup = false), 300);
+    }
+
     async login() {
         try {
             const response = await MainApi.post("/login", this.form);
@@ -96,12 +113,6 @@ export class LoginService {
             const token = response.data.token;
             store.dispatch("setToken", token);
             store.dispatch("setUser", user);
-
-            // if (this.route?.query?.verify_hash) {
-            //     await ProfileApi.post("/verify", {
-            //         user: user,
-            //     });
-            // }
 
             this.router.push({
                 name: "statistic",
@@ -113,19 +124,24 @@ export class LoginService {
                         {},
                 }
             });
+
+            this.closedTwoFacPopup();
         } catch (err) {
-            store.dispatch("setFullErrors", {
-                ...err.response.data,
-            });
+            console.error(err);
+            if (err.response.status === 422) {
+                this.openTwoFacPopup();
+            } else {
+                if (err.response.status === 403) {
+                    this.router.push({
+                        name: "confirm",
+                        query: {
+                            email: this.form.email,
+                        },
+                    });
+                }
 
-            console.log(err);
-
-            if (err.response.status === 403) {
-                this.router.push({
-                    name: "confirm",
-                    query: {
-                        email: this.form.email,
-                    },
+                store.dispatch("setFullErrors", {
+                    ...err.response.data,
                 });
             }
             // store.dispatch("setFullErrors", {

@@ -7,8 +7,8 @@
         <div
             class="preloader__wrap"
             :class="{
-                'preloader__wrap-no-info': crossVisible,
-                'preloader__wrap-no-info-after': service.animationIsEnd,
+                'preloader__wrap-no-info':
+                    service.animateService.isCrossVisible?.state,
             }"
         >
             <div class="preloader__icon">
@@ -16,13 +16,17 @@
                     class="preloader_cross"
                     id="preloader_cross"
                     @getCross="service.setCross($event)"
-                    v-show="crossVisible"
+                    v-if="
+                        !service.animateService.cross.element
+                        || service.animateService.isCrossVisible?.state
+                    "
                 />
                 <preloader-logo-icon
                     class="preloader_logo"
                     id="preloader_logo"
                     :class="{
-                        'preloader_logo-center': isLogoCenter,
+                        'preloader_logo-center':
+                            service.animateService.isLogoCenter?.state,
                     }"
                 />
                 <preloader-container-icon
@@ -30,10 +34,16 @@
                     @getPolygon="service.setPolygon($event)"
                 />
             </div>
-
             <transition name="progress">
-                <span class="preloader_progress" v-show="progressVisible">
-                    {{ progressValue }}
+                <span
+                    class="preloader_progress"
+                    v-if="service.animateService.isProgressVisible?.state"
+                >
+                    {{
+                        String(service.progressPercentage).length <= 3
+                            ? `${service.progressPercentage}%`
+                            : $t(service.progressPercentage)
+                    }}
                 </span>
             </transition>
         </div>
@@ -68,71 +78,45 @@ export default {
     },
     computed: {
         ...mapGetters(["getActive"]),
-        end() {
-            return !this.wait;
-        },
         killPreloaderCondition() {
-            return !this.wait && !this.empty && this.end;
-        },
-        progressValue() {
-            return this.service.progressPercentage.length > 3
-                ? this.service.progressPercentage
-                : `${this.service.progressPercentage}%`;
+            return (
+                !this.service.waitTable.state &&
+                !this.service.emptyTable.state &&
+                this.service.endTable.state
+            );
         },
     },
     data() {
         return {
             service: new PreloaderService(),
-            crossVisible: false,
-            progressVisible: true,
-            isLogoCenter: false,
         };
     },
     watch: {
-        '$i18n.locale'() {
-            this.service.setTranslate(this.$t);
+        wait(newWaitState) {
+            this.service.setWaitState(newWaitState)
+                .setEndState(!newWaitState);
         },
-        empty(newStateEmpty) {
-            if (newStateEmpty) {
-                this.progressVisible = false;
-            }
-            this.crossVisible = false;
-            this.isLogoCenter = !!newStateEmpty;
+        empty(newEmptyState) {
+            this.service
+                .setEmptyState(newEmptyState)
+                .setCrossVisible(newEmptyState)
+                .setLogoCenter(newEmptyState);
         },
-        end(newEndVal) {
-            this.service.endProcess(newEndVal);
-        },
-        "service.crossVisible"(newCrossState) {
-            if (newCrossState) {
-                this.crossVisible = true;
-
-                setTimeout(() => {
-                    this.progressVisible = true;
-                }, 1000);
-            }
+        "service.endTable.state"(newEndVal) {
+            this.service.setProgressVisible(!newEndVal)
+                .endProcess(newEndVal);
         },
         getActive(newId, oldId) {
             if (oldId !== -1) {
-                this.progressVisible = true;
-                this.crossVisible = false;
-
                 this.service.startProcess(this.interval);
             }
         },
     },
     mounted() {
-        // if (!this.killPreloaderCondition) {
         this.service.startProcess(this.interval);
-        if (this.$t) {
-            this.service.setTranslate(this.$t);
-        }
-        // } else {
-        //     this.service.dropEndAnimation();
-        //     this.service.animateCloseLine();
-        // }
     },
     unmounted() {
-        this.service.killPreloader();
+        this.service.endProcess(true);
     },
 };
 </script>
@@ -175,23 +159,6 @@ export default {
                     bottom: 0;
                     font-weight: 400;
                     font-family: NunitoSans, serif;
-                }
-            }
-            &-after {
-                //width: 160px;
-                //height: 160px;
-                .preloader {
-                    &_progress {
-                        //color: var(--old-light-gray-300, #D0D5DD);
-                        //bottom: -48px;
-                    }
-                    &__icon {
-                        //transition: none;
-                        //position: absolute;
-                        //top: 0;
-                        //left: 50%;
-                        //transform: translateX(-50%);
-                    }
                 }
             }
         }

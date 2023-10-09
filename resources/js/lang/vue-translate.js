@@ -5,13 +5,9 @@ import { createI18n } from "vue-i18n";
 const messages = {
     en: {
         validate_messages: {
-            success: "Success",
-            error: "Error",
-            connected: "Connected",
-            added: "Added",
-            changed: "Changed",
             watcher_message: "Watcher created successfully",
             verify_message: "Email verified successfully",
+            two_fa_message: "Two-factor authentication has been successfully linked",
         },
         more: "More",
         auth: {
@@ -596,9 +592,10 @@ const messages = {
                     no_wallet:
                         "Configure your account for withdrawal (enter the wallet).",
                     less_minWithdrawal: "Insufficient funds for withdrawal.",
-                    error: "An error occurred while making the payment.",
+                    error: "An error occurred while processing the payment. Please check the accuracy of your wallet address and the network for receiving the transaction (It should be bitcoin).",
                     error_payout: "An error occurred while making the payout.",
                     completed: "Payout successfully completed.",
+                    ready_to_payout: "Ready to payout.",
                 },
                 status: {
                     pending: "Pending",
@@ -724,13 +721,9 @@ const messages = {
     },
     ru: {
         validate_messages: {
-            success: "Успешно",
-            error: "Ошибка",
-            connected: "Подключено",
-            added: "Добавлено",
-            changed: "Изменено",
             watcher_message: "Вотчер успешно создан",
             verify_message: "Почта успешно подтверждена",
+            two_fa_message: "Двухфакторная аутентификация успешно привязана",
         },
         more: "Подробнее",
         auth: {
@@ -1314,9 +1307,10 @@ const messages = {
                     no_wallet:
                         "Настройте аккаунт для вывода (введите кошелек).",
                     less_minWithdrawal: "Недостаточно средств для вывода",
-                    error: "Произошла ошибка при выполнении выплаты.",
+                    error: "Произошла ошибка при выполнении выплаты. Проверьте правильность адреса вашего кошелька и сети для получения транзакции (Должна быть bitcoin).",
                     error_payout: "Произошла ошибка при выполнении выплаты.",
                     completed: "Выплата успешно выполнена.",
+                    ready_to_payout: "Ready to payout.",
                 },
                 status: {
                     pending: "В ожидании",

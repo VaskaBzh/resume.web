@@ -159,20 +159,11 @@ export default {
         },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
-            await this.barChartService.barGraphIndex();
         },
         async getActive(newActiveId) {
             this.lineChartService.setGroupId(newActiveId);
             this.barChartService.setGroupId(newActiveId);
 
-            await this.lineChartService.lineGraphIndex();
-            await this.barChartService.barGraphIndex();
-        },
-        async offset() {
-            await this.lineChartService.lineGraphIndex();
-            // await this.barChartService.barGraphIndex();
-        },
-        async getAccount() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
         },
@@ -227,7 +218,7 @@ export default {
     position: relative;
     flex: 1 1 auto;
     @media (max-width: 900px) {
-        padding: 24px 12px;
+        padding: 24px 12px 24px;
     }
     &__cards {
         width: 100%;

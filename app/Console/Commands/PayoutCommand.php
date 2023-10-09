@@ -49,15 +49,15 @@ class PayoutCommand extends Command
                 'sub' => $sub->group_id,
             ]);
 
-            $payoutService->setMessage(message: Message::ERROR_PAYOUT->value);
+            $payoutService->setMessage(Message::ERROR_PAYOUT->value);
             $payoutService->complete();
 
             return;
         }
 
         $payoutService
-            ->setStatus(status: Status::COMPLETED->value)
-            ->setMessage(message: Message::COMPLETED->value)
+            ->setStatus(Status::COMPLETED->value)
+            ->setMessage(Message::COMPLETED->value)
             ->setTxId(txId: $txId)
             ->createPayout()
             ->clearPendingAmount()

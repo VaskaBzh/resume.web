@@ -8,7 +8,7 @@
 		<div class="head__buttons">
 			<main-button data-popup="#addAcc">
 				<template v-slot:svg>
-					<add-sub-icon />
+					<add-sub-icon class="head_icon" />
 				</template>
 			</main-button>
 			<sub-type-buttons
@@ -23,9 +23,9 @@
 import MainSearch from "@/modules/common/Components/inputs/MainSearch.vue";
 import AddSubIcon from "@/modules/subs/icons/AddSubIcon.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import SubTypeButtons from "@/modules/subs/Components/UI/SubTypeButtons.vue";
 
 import { SubMessages } from "@/modules/subs/lang/SubMessages";
-import SubTypeButtons from "./UI/SubTypeButtons.vue";
 
 export default {
 	name: "sub-header",
@@ -56,5 +56,13 @@ export default {
 	display: flex;
 	align-items: center;
 	gap: 12px;
+}
+.head_icon {
+    fill: var(--icons-primary);
+    transition: all 0.5s ease 0s;
+    stroke: transparent;
+}
+.head_icon:hover {
+    fill: var(--buttons-tabs-text-focus, #2E90FA);
 }
 </style>

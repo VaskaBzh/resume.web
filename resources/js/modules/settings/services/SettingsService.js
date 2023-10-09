@@ -6,7 +6,6 @@ import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
 import { BlockData } from "../DTO/BlockData";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class SettingsService {
     constructor(translate, router) {
@@ -48,23 +47,49 @@ export class SettingsService {
         this.qrCode = qrCode;
     }
 
-    async sendVerify(form) {
+    async dropFac() {
         try {
-            const response = await this.fetchVerifyFac(form);
+            const response = await this.fetchDropFac();
 
-            this.closeFacPopup();
-
-            openNotification(true, this.translate("validate_messages.connected"), response.data.message);
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.message,
+            });
         } catch (err) {
             console.error(err);
 
-            openNotification(
-                false,
-                this.translate("validate_messages.error"),
-                err.response.data.error ?? err.response.data.message
-            );
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
             store.dispatch("setFullErrors", err.response.data);
         }
+    }
+
+    async sendVerify(form) {
+        store.dispatch("setUser");
+        // try {
+        //     const response = await this.fetchVerifyFac(form);
+        //
+        //     this.closeFacPopup();
+        //
+        //     store.dispatch("setNotification", {
+        //         status: "success",
+        //         title: "connected",
+        //         text: response.data.message,
+        //     });
+        // } catch (err) {
+        //     console.error(err);
+        //
+        //     store.dispatch("setNotification", {
+        //         status: "error",
+        //         title: "error",
+        //         text: err.response.data.error ?? err.response.data.message,
+        //     });
+        //     store.dispatch("setFullErrors", err.response.data);
+        // }
     }
 
     removeRouteQuery() {
@@ -95,15 +120,19 @@ export class SettingsService {
             this.removeRouteQuery();
             this.setPasswordForm();
 
-            openNotification(true, this.translate("validate_messages.changed"), response.message);
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.message,
+            });
         } catch (err) {
             console.error(err);
 
-            openNotification(
-                false,
-                this.translate("validate_messages.error"),
-                err.response.data.message
-            );
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
             store.dispatch("setFullErrors", err.response.data);
         }
     }
@@ -156,7 +185,7 @@ export class SettingsService {
 
     async fetchFac() {
         return (
-            await ProfileApi.put("/2fac/enable", {
+            await ProfileApi.put(`/2fac/enable/${this.user.id}`, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -164,13 +193,9 @@ export class SettingsService {
         ).data;
     }
 
-    async fetchVerifyFac(form) {
+    async fetchDropFac() {
         return (
-            await ProfileApi.post("/2fac/verify", form, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            })
+            await ProfileApi.put(`/2fac/disable/${this.user.id}`)
         ).data;
     }
 
@@ -186,11 +211,19 @@ export class SettingsService {
         try {
             const response = await ProfileApi.post("/email/reverify");
 
-            openNotification(true, this.translate("validate_messages.success"), response.data.message);
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.data.message,
+            });
         } catch (err) {
             console.error("Error with: " + err);
 
-            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
         }
     }
 
@@ -230,8 +263,8 @@ export class SettingsService {
                 this.translate("safety.text[0]"),
                 "2fac",
                 "two-factor-icon.png",
-                this.translate("safety.button[0]"),
-                "openFacForm"
+                this.translate(this.user["2fa"] ? "safety.button[2]" : "safety.button[0]"),
+                this.user["2fa"] ? "dropFac" : "openFacForm"
             ),
             new BlockData(
                 this.translate("safety.title[2]"),
@@ -271,13 +304,22 @@ export class SettingsService {
             );
 
             this.wait = false;
-            openNotification(true, this.translate("validate_messages.changed"), response.data.message);
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.data.message,
+            });
 
             this.setRows();
         } catch (err) {
             console.error("Error with: " + err);
 
-            openNotification(false, this.translate("validate_messages.error"), err.response.data.message);
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
         }
     }
 

@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-// use Illuminate\Support\Facades\Gate;
 use App\Models\Sub;
+use App\Models\User;
 use App\Models\Wallet;
 use App\Models\WatcherLink;
 use App\Policies\SubPolicy;
@@ -22,6 +22,7 @@ class AuthServiceProvider extends ServiceProvider
         WatcherLink::class => WatcherLinkPolicy::class,
         Sub::class => SubPolicy::class,
         Wallet::class => WalletPolicy::class,
+        User::class => SubPolicy::class,
     ];
 
     /**

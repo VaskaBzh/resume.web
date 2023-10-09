@@ -5,15 +5,16 @@
         :opened="opened"
         :wait="wait"
         :closed="closed"
-        :makeResize="makeResize"
     >
+	<!--        :makeResize="makeResize"-->
         <div class="fac__head">
             <main-title tag="h3">{{ $t("fac_popup.title") }}</main-title>
             <main-description
                 >{{ $t("popup.text[4]") }}</main-description
             >
         </div>
-        <div class="fac__content" v-show="!hasCode">
+<!--	    v-show="!hasCode">-->
+        <div class="fac__content">
             <div class="fac_qrcode" v-html="qrCode"></div>
             <main-copy
                 class="fac_code"
@@ -23,35 +24,36 @@
             />
             <main-button
                 class="button-blue fac_button button-full"
-                @click.prevent="hasCode = true"
+                @click="closePopup"
             >
+	        <!--                @click.prevent="hasCode = true"-->
                 <template v-slot:text>{{ $t("fac_popup.button[0]") }}</template>
             </main-button>
         </div>
-        <div class="fac__content" v-show="hasCode">
-            <main-input
-                class="fac_input"
-                inputName="twoFactorSecret"
-                :inputLabel="$t('fac_popup.label[1]')"
-                :inputValue="form.twoFactorSecret"
-                :error="errorsExpired.error"
-                @getValue="form.twoFactorSecret = $event"
-            />
-            <div class="fac__buttons">
-                <main-button
-                    class="button-reverse fac_button button-full"
-                    @click.prevent="hasCode = false"
-                >
-                    <template v-slot:text>{{ $t("fac_popup.button[1]") }}</template>
-                </main-button>
-                <main-button
-                    class="button-blue fac_button button-full"
-                    @click="closePopup"
-                >
-                    <template v-slot:text>{{ $t("fac_popup.button[2]") }}</template>
-                </main-button>
-            </div>
-        </div>
+<!--        <div class="fac__content" v-show="hasCode">-->
+<!--            <main-input-->
+<!--                class="fac_input"-->
+<!--                inputName="twoFactorSecret"-->
+<!--                :inputLabel="$t('fac_popup.label[1]')"-->
+<!--                :inputValue="form.twoFactorSecret"-->
+<!--                :error="errorsExpired.error"-->
+<!--                @getValue="form.twoFactorSecret = $event"-->
+<!--            />-->
+<!--            <div class="fac__buttons">-->
+<!--                <main-button-->
+<!--                    class="button-reverse fac_button button-full"-->
+<!--                    @click.prevent="hasCode = false"-->
+<!--                >-->
+<!--                    <template v-slot:text>{{ $t("fac_popup.button[1]") }}</template>-->
+<!--                </main-button>-->
+<!--                <main-button-->
+<!--                    class="button-blue fac_button button-full"-->
+<!--                    @click="closePopup"-->
+<!--                >-->
+<!--                    <template v-slot:text>{{ $t("fac_popup.button[2]") }}</template>-->
+<!--                </main-button>-->
+<!--            </div>-->
+<!--        </div>-->
     </main-popup>
 </template>
 
@@ -78,27 +80,26 @@ export default {
     i18n: {
         sharedMessages: SettingsMessage,
     },
-    data() {
-        return {
-            hasCode: false,
-            makeResize: false,
-            form: {
-                twoFactorSecret: "",
-            },
-        };
-    },
-    watch: {
-        errorsExpired() {},
-
-        hasCode() {
-            this.makeResize = true;
-
-            setTimeout(() => (this.makeResize = false), 300);
-        },
-    },
-    computed: {
-        ...mapGetters(["errorsExpired"]),
-    },
+    // data() {
+    //     return {
+    //         // hasCode: false,
+    //         // makeResize: false,
+    //         form: {
+    //             two_fa_secret: "",
+    //         },
+    //     };
+    // },
+    // watch: {
+    //     errorsExpired() {},
+    //     // hasCode() {
+    //     //     this.makeResize = true;
+	// 	//
+    //     //     setTimeout(() => (this.makeResize = false), 300);
+    //     // },
+    // },
+    // computed: {
+    //     ...mapGetters(["errorsExpired"]),
+    // },
     components: {
         MainDescription,
         MainPopup,

@@ -16,4 +16,6 @@ return [
     'account.password.update' => 'Password changed successfully',
     'account.update' => 'Account successfully updated',
     'failed' => 'Something went wrong',
+    'two_fa_disabled' => 'Two factor is disabled',
+    'two_fa_enabled' => 'Two factor is enabled',
 ];

@@ -30,6 +30,7 @@ export class GraphService {
         this.tooltipHtml = null;
         this.chartHtml = null;
         this.graphData = graphData;
+        this.approximateGraphData = graphData;
 
         this.containerWidth = 0;
         this.containerHeight = 0;
@@ -39,7 +40,44 @@ export class GraphService {
 
         this.setDarkState();
         this.setIsMobileState();
+
+        // this.getApproximateData();
     }
+
+    // getApproximateValue(key, isString = false) {
+    //     const dataLength = this.graphData[key].length;
+    //     const pointLength = 96;
+    //     const approximatePosition = dataLength / pointLength;
+    //
+    //     let sum = 0;
+    //
+    //     return this.graphData[key].map((value, i) => {
+    //         let approximate = value;
+    //
+    //         if (!isString) {
+    //             sum = sum + Number(value);
+    //
+    //             approximate = Math.abs(sum / approximatePosition);
+    //             console.log(approximate, i % approximatePosition === 0)
+    //         }
+    //
+    //         if (i % approximatePosition === 0) {
+    //             sum = 0;
+    //             return approximate;
+    //         }
+    //     }).filter(elem => elem !== undefined);
+    // }
+    //
+    // getApproximateData() {
+    //     this.approximateGraphData = {
+    //         values: this.getApproximateValue("values"),
+    //         amount: this.getApproximateValue("amount"),
+    //         dates: this.getApproximateValue("dates", true),
+    //         unit: this.getApproximateValue("unit", true),
+    //     }
+    //
+    //     console.log(this.approximateGraphData);
+    // }
 
     setChartHtml(newChartHtml) {
         this.chartHtml = newChartHtml;
@@ -55,6 +93,8 @@ export class GraphService {
 
     setGraphData(newGraphData) {
         this.graphData = newGraphData;
+
+        // this.getApproximateData();
 
         return this;
     }
@@ -133,7 +173,7 @@ export class GraphService {
     emptyValidationRules() {
         return d3.max(this.graphData.values) !== 0
             ? d3.max(this.graphData.values) +
-                  d3.max(this.graphData.values) * 0.2
+            d3.max(this.graphData.values) * 0.2
             : 120;
     }
 
@@ -329,8 +369,8 @@ export class GraphService {
             const isRight =
                 this.mouseX >
                 this.chartHtml.clientWidth -
-                    this.tooltipHtml.clientWidth -
-                    padding;
+                this.tooltipHtml.clientWidth -
+                padding;
             let width = this.tooltipHtml.clientWidth;
 
             if (isLeft) {
@@ -352,8 +392,8 @@ export class GraphService {
                 position: isLeft
                     ? this.mouseX + padding
                     : isRight
-                    ? this.mouseX - padding - this.tooltipHtml.clientWidth
-                    : this.mouseX - padding - width,
+                        ? this.mouseX - padding - this.tooltipHtml.clientWidth
+                        : this.mouseX - padding - width,
             };
         }
     }
@@ -395,7 +435,7 @@ export class GraphService {
         this.svg.on("touchend", () => {
             this.tooltip.style("opacity", 0);
             this.svg.selectAll(".vertical-line").style("opacity", 0);
-            this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+            this.svg.selectAll(".dot").style("opacity", 0);
         });
     }
 

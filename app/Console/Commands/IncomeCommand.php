@@ -70,7 +70,7 @@ class IncomeCommand extends Command
             $incomeService->createLocalIncome(wallet: $wallet);
         } else {
             $incomeService
-                ->setMessage(message: Message::LESS_MIN_WITHDRAWAL)
+                ->setMessage(message: Message::NO_WALLET)
                 ->setStatus(status: Status::PENDING);
 
             $incomeService->createLocalIncome(wallet: null);

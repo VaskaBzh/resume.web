@@ -42,9 +42,10 @@
 </template>
 
 <script>
+import TooltipIcon from "@/modules/graphs/icons/TooltipIcon.vue";
+
 import { LineGraphService } from "@/modules/graphs/services/LineGraphService";
 import { mapGetters } from "vuex";
-import TooltipIcon from "../icons/TooltipIcon.vue";
 
 export default {
     name: "main-line-graph",
@@ -95,7 +96,7 @@ export default {
             if (this.graphData) {
                 const colors = {
                     circle: this.isDark ? "#212327" : "#ffffff",
-                    bands: this.isDark ? "rgba(47, 47, 47, 0.95)" : "#D0D5DD",
+                    bands: this.isDark ? "rgba(47, 47, 47, 0.95)" : "rgba(208, 213, 221, 0.2)",
                 }
 
                 this.service

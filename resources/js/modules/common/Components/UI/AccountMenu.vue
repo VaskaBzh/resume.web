@@ -5,7 +5,7 @@
             :class="{ 'button_name-target': target }"
             ref="name"
         >
-            <div>
+            <div class="button_name_text">
                 <p class="user-name-text">{{ name }}</p>
                 <p class="user-title-text">{{ $t("header.user_title") }}</p>
             </div>
@@ -98,7 +98,6 @@ import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 import store from "../../../../store";
 import { ref } from "vue";
 import { ProfileApi } from "@/api/api";
@@ -157,11 +156,12 @@ export default {
             wait.value = true;
             try {
                 const response = await ProfileApi.post("/subs/create", form);
-                openNotification(
-                    true,
-                    t("validate_messages.added"),
-                    response.data.message
-                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "added",
+                    text: response.data.message,
+                });
                 closed.value = true;
 
                 store.dispatch("accounts_all", store.getters.user.id);
@@ -170,11 +170,11 @@ export default {
 
                 store.dispatch("setFullErrors", err.response.data.errors);
 
-                openNotification(
-                    false,
-                    t("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
             }
 
             wait.value = false;
@@ -329,6 +329,7 @@ export default {
     line-height: 150%; /* 24px */
 }
 .user-title-text {
+    margin-top: auto;
     color: var(--text-primary-inverse);
     font-family: NunitoSans;
     font-size: 12px;
@@ -344,16 +345,15 @@ export default {
 }
 .popup__input {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island, #fff);
+    background: var(--background-modal-input, #FFF);
     padding: var(--py-4, 16px) var(--px-4, 16px);
-    color: var(-text-secondary);
-    font-family: NunitoSans;
+    color: var(--select-text-no-value, #D0D5DD);
+    font-family: NunitoSans, serif;
     font-size: 16px;
-    font-style: normal;
     font-weight: 400;
     outline: none;
     border: 1px solid transparent;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
 }
 .popup__input:focus {
     border: 1px solid #2E90FA;
@@ -383,8 +383,8 @@ export default {
 }
 .button {
     position: relative;
-    width: 270px;
     margin-bottom: 16px;
+    width: 100%;
     @media (max-width: 500px) {
         width: 100%;
     }
@@ -409,6 +409,13 @@ export default {
         align-items: center;
         gap: 16px;
         align-self: stretch;
+        min-height: 73px;
+        &_text {
+            display: flex;
+            flex-direction: column;
+            min-height: 44px;
+            justify-content: flex-end;
+        }
         &-target {
             svg {
                 &:last-child {
@@ -417,7 +424,6 @@ export default {
             }
         }
         svg {
-            fill: #3f7bdd;
             transition: all 0.5s ease 0s;
             &:last-child {
                 margin-left: auto;

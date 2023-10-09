@@ -718,7 +718,6 @@
                      color: #e1e1e1;
                  }
                  .input {
-                     background: #333639;
                      &::placeholder {
                          color: #989898;
                      }
@@ -726,8 +725,6 @@
              }
          }
          .input {
-             background: #161b20;
-             color: #e1e1e1;
              outline: none;
 
              &::placeholder {

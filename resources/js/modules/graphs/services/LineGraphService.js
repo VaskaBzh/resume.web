@@ -99,7 +99,7 @@ export class LineGraphService extends GraphService {
             .attr("class", "main_line")
             .attr("width", "100%")
             .attr("stroke", "#2E90FA")
-            .attr("stroke-width", 3);
+            .attr("stroke-width", 1);
 
         return this;
     }
@@ -142,7 +142,6 @@ export class LineGraphService extends GraphService {
             .attr("y", (d) => this.y(d) - 1)
             .attr("height", 1)
             .attr("width", "100%")
-            .attr("opacity", 0.2)
             .attr("fill", bandColor);
         //this.bandColor
 
@@ -151,8 +150,8 @@ export class LineGraphService extends GraphService {
 
     graphAppends(colors) {
         this.appendBands(colors.bands)
-            .appendGradient()
             .createMouseLine()
+            .appendGradient()
             .createLine()
             .createCircle(colors.circle)
             .appendXAxis();

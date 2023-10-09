@@ -1,9 +1,8 @@
-import { MetaTableService } from "@/modules/common/services/MetaTableService";
+import { MetaTableService } from "@/modules/common/services/extends/MetaTableService";
 import { WatchersData } from "@/modules/watchers/DTO/WatchersData";
 import { WatchersFormData } from "@/modules/watchers/DTO/WatchersFormData";
 import { ProfileApi } from "@/api/api";
 import store from "@/store";
-import { openNotification } from "@/modules/notifications/services/NotificationServices";
 
 export class WatchersService extends MetaTableService {
     constructor(translate, titleIndexes) {
@@ -137,22 +136,22 @@ export class WatchersService extends MetaTableService {
                     }
                 );
 
-                openNotification(
-                    true,
-                    this.translate("validate_messages.success"),
-                    this.translate("validate_messages.watcher_message")
-                );
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: this.translate("validate_message.watcher_message"),
+                });
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response?.data?.message,
+                });
             }
         }
     }
@@ -170,22 +169,22 @@ export class WatchersService extends MetaTableService {
                     }
                 );
 
-                openNotification(
-                    true,
-                    this.translate("validate_messages.success"),
-                    response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: response.data.message,
+                });
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "false",
+                    title: "error",
+                    text: err.response.data.message,
+                });
 
                 await this.getCard(id);
             }
@@ -195,27 +194,31 @@ export class WatchersService extends MetaTableService {
     async removeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                const response = await ProfileApi.delete(`/watchers/delete/${id}`, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
-                openNotification(
-                    true,
-                    this.translate("validate_messages.success"),
-                    response.data.message
+                const response = await ProfileApi.delete(
+                    `/watchers/delete/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
                 );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: response.data.message,
+                });
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
 
-                openNotification(
-                    false,
-                    this.translate("validate_messages.error"),
-                    err.response.data.message
-                );
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
             }
         }
     }
