@@ -76,6 +76,5 @@ export function animateHeader() {
         opacity: 1
     }, 'my-label+=2')
 
-
 }
 

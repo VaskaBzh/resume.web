@@ -1,19 +1,19 @@
 <template>
-<div class="payments-view scroll-section">
+<div class="payments-view">
     <div class="payments-view__container">
         <head-line class="payments-view_title">{{ $t("payments.button") }}</head-line>
         <div class="payments-view__items">
-            <div class="payments-view__item" @click="isOpen = !isOpen">
+            <div class="payments-view__item payments-view__item-one " @click="isOpen = !isOpen">
                 <div class="payments-view__item_title">{{ $t("payments.title[0]") }}</div>
                 <div class="payments-view__item_info">fPPS+</div>
                 <div class="payments-view__item_text" :class="{opened: isOpen}">{{ $t("payments.text[0]") }}</div>
             </div>
-            <div class="payments-view__item">
+            <div class="payments-view__item payments-view__item-two">
                 <div class="payments-view__item_title">{{ $t("payments.title[1]") }}</div>
                 <div class="payments-view__item_info"><span>(msk)</span> 12:00-13:00</div>
                 <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
             </div>
-            <div class="payments-view__item">
+            <div class="payments-view__item payments-view__item-three">
                 <div class="payments-view__item_title">{{ $t("payments.title[2]") }}</div>
                 <div class="payments-view__item_info">0.8 BTC</div>
                 <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
@@ -28,6 +28,7 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {animatePayView} from "../../Services/AnimatePaymentsView";
 
 export default {
     name: "PaymantsView",
@@ -40,11 +41,11 @@ export default {
             isOpen: false
         }
     },
-    // computed: {
-    //     openText() {
-    //         this.isOpen = true
-    //     }
-    // }
+
+    mounted() {
+        animatePayView()
+    }
+
 }
 </script>
 
@@ -153,6 +154,7 @@ export default {
             overflow: hidden;
             transition: max-height .3s ease-in;
         }
+
     }
 }
 

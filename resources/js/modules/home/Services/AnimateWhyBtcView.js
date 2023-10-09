@@ -50,4 +50,6 @@ export function animateWhyBtcView() {
         scrub: 1.5,
         id: '.miners-info-view'
     })
+
+    tl.scrollTrigger.refresh();
 }

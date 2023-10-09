@@ -73,6 +73,7 @@ export function scroolingHeader() {
         })
 
 
+
     ScrollTrigger.create({
         animation: animation,
         trigger: ".header-land",
@@ -93,6 +94,7 @@ export function scroolingHeader() {
         }
 
     })
+    ScrollTrigger.refresh()
 }
 
 

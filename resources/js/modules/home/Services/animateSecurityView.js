@@ -63,7 +63,10 @@ export function animatedSecurityView() {
         pin: true,
         scrub: 2,
         markers: true,
+        pinSpacing: true,
         id: ".security-view",
         smoothChildTiming: true,
     })
+
+    tl.scrollTrigger.refresh();
 }

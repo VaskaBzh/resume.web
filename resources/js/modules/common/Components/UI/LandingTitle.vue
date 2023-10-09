@@ -13,7 +13,7 @@
             </div>
             <div class="header-land__block-four">
             <span class="header-land_title_text">
-                Bitcoin
+                <span class="header-land_title_btc">Bitcoin</span>
                 <span class="header-land_title_span">
                     {{ $t("text") }}
                 </span>
@@ -84,11 +84,6 @@ export default {
             opacity: 0;
         }
 
-        //&_approach {
-        //    position: relative;
-        //    left: -10%;
-        //    top: 0;
-        //}
 
         &_text {
             display: flex;

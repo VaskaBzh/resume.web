@@ -53,5 +53,5 @@ export function animatedCalcView() {
 
     })
 
-
+    tl.scrollTrigger.refresh();
 }

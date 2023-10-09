@@ -48,4 +48,6 @@ export function scrollingAbout() {
 
     })
 
+    tl.scrollTrigger.refresh();
+
 }

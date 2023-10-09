@@ -165,7 +165,6 @@ export default {
             align-items: flex-start;
             justify-content: flex-end;
             white-space: nowrap;
-            -ms-word-break: break-all;
             word-break: break-word;
             transition: white-space .3s linear;
         }
