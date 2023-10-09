@@ -47,6 +47,27 @@ export class SettingsService {
         this.qrCode = qrCode;
     }
 
+    async dropFac() {
+        try {
+            const response = await this.fetchDropFac();
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.message,
+            });
+        } catch (err) {
+            console.error(err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
+            store.dispatch("setFullErrors", err.response.data);
+        }
+    }
+
     async sendVerify(form) {
         store.dispatch("setUser");
         // try {
@@ -172,15 +193,11 @@ export class SettingsService {
         ).data;
     }
 
-    // async fetchVerifyFac(form) {
-    //     return (
-    //         await ProfileApi.post("/2fac/verify", form, {
-    //             headers: {
-    //                 Authorization: `Bearer ${store.getters.token}`,
-    //             },
-    //         })
-    //     ).data;
-    // }
+    async fetchDropFac() {
+        return (
+            await ProfileApi.put(`/2fac/disable/${this.user.id}`)
+        ).data;
+    }
 
     validateProcess(event) {
         this.validate = this.validateService.validateProcess(
@@ -246,8 +263,8 @@ export class SettingsService {
                 this.translate("safety.text[0]"),
                 "2fac",
                 "two-factor-icon.png",
-                this.translate("safety.button[0]"),
-                "openFacForm"
+                this.translate(this.user["2fa"] ? "safety.button[2]" : "safety.button[0]"),
+                this.user["2fa"] ? "dropFac" : "openFacForm"
             ),
             new BlockData(
                 this.translate("safety.title[2]"),

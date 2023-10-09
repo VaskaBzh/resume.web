@@ -128,7 +128,7 @@ export class LoginService {
             this.closedTwoFacPopup();
         } catch (err) {
             console.error(err);
-            if (err.response.status === 400) {
+            if (err.response.status === 422) {
                 this.openTwoFacPopup();
             } else {
                 if (err.response.status === 403) {

@@ -24,7 +24,7 @@ class TwoFactorMiddleware
             if (!$request->two_fa_secret) {
                 return new JsonResponse([
                     'error' => 'Pass two_fa_secret!'
-                ], Response::HTTP_BAD_REQUEST);
+                ], Response::HTTP_UNPROCESSABLE_ENTITY);
             }
             try {
                 $isValid = resolve(Google2FA::class)
