@@ -154,7 +154,7 @@ class IncomeService
     }
 
     /**
-     * Проверяем достигнуто ли минимальное значение для вывода средств текущего саба
+     * Проверяем достигнуто ли минимальное значение для вывода средств
      *
      * @return bool
      */
@@ -173,7 +173,6 @@ class IncomeService
     {
         return ($this->owner->pending_amount + $this->params['ownerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
-
 
     private function buildDto(?Wallet $wallet): IncomeCreateData
     {
@@ -237,14 +236,10 @@ class IncomeService
                         ?->id,
                     'referral_id' => $this->owner->pivot->id,
                     'dailyAmount' => $this->params['ownerProfit'],
-                    'status' => $this->isLessThenMinWithdrawOwner()
-                        ? Status::PENDING->value
-                        : Status::READY_TO_PAYOUT->value,
-                    'message' => $this->isLessThenMinWithdrawOwner()
-                        ? Message::LESS_MIN_WITHDRAWAL->value
-                        : Message::READY_TO_PAYOUT,
+                    'status' => $this->params['status'],
+                    'message' => $this->params['message'],
                     'hash' => $this->params['hash'],
-                    'diff' => $this->params['diff'],
+                    'diff' => $this->params['diff']
                 ])
             );
 
