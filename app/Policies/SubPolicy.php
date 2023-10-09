@@ -14,4 +14,9 @@ class SubPolicy
     {
         return $user->id === $sub->user_id;
     }
+
+    public function viewAny(User $user, User $targetUser): bool
+    {
+        return $user->id === $targetUser->id;
+    }
 }

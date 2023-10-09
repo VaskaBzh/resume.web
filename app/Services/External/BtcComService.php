@@ -189,22 +189,23 @@ class BtcComService
     {
         return [
             'sub' => $sub->sub,
+            'user_id' => $sub->user->id,
             'pending_amount' => $sub->pending_amount,
             'group_id' => $sub->group_id,
             'workers_count_active' => $btcComSub['workers_active'],
             'workers_count_in_active' => $btcComSub['workers_inactive'],
             'workers_count_unstable' => $btcComSub['workers_dead'],
-            'hash_per_min' => $btcComSub['shares_1m'],
+            'hash_per_min' => (float) $btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay,
             'today_forecast' => number_format(Helper::calculateEarn(
                 stats: $stats,
                 hashRate: $hashPerDay,
                 fee: BtcComService::FEE
             ), 8, '.', ' '),
-            'reject_percent' => $btcComSub['reject_percent'],
+            'reject_percent' => (float) $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
             'total_payout' => $sub->total_payout,
-            'yesterday_amount' => $sub->yesterday_amount,
+            'yesterday_amount' => (float) $sub->yesterday_amount,
         ];
     }
 
