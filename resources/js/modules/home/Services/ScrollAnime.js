@@ -1,29 +1,7 @@
 import gsap from "gsap";
-import ScrollTrigger from "gsap/ScrollTrigger";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger)
-
-// export function animatedScroll() {
-//     gsap.registerPlugin(ScrollTrigger)
-//     let tl = gsap.timeline()
-//
-//     const animateSecurityView = tl
-//         .fromTo('.security-view_item', {opacity: 0}, {
-//             opacity: 1
-//         })
-//
-//
-//     ScrollTrigger.create({
-//         animation: animateSecurityView,
-//         trigger: '.security-view',
-//         start: 'top top',
-//         end: '+=1000',
-//         pin: true,
-//         scrub: 1.5,
-//         id: '.security-view',
-//     })
-// }
-
 
 export function scroolingHeader() {
     const tl = gsap.timeline()

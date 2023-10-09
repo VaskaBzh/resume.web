@@ -42,9 +42,6 @@ export function scrollingAbout() {
         scrub: 1,
         id: '.about-view',
         smoothChildTiming: true,
-        // onUpdate: self => {
-        //     console.log(self.progress)
-        // }
     })
 
 }
