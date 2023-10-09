@@ -23,7 +23,7 @@
             >
                 <main-password
                     name="password"
-                    :placeholder="this.$t('auth.reg.placeholders[1]')"
+                    :placeholder="this.$t('auth.login.placeholders[1]')"
                     :model="service.form.password"
                     :errors="errors"
                     @change="

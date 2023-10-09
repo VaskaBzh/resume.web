@@ -62,6 +62,8 @@ export class IncomeService extends TableService {
                 return this.translate("income.table.messages.error_payout");
             case "completed":
                 return this.translate("income.table.messages.completed");
+            case "ready to payout":
+                return this.translate("income.table.messages.wallet");
         }
     }
 
@@ -78,6 +80,8 @@ export class IncomeService extends TableService {
             case "rejected":
                 return this.translate("income.table.status.rejected");
             case "pending":
+                return this.translate("income.table.status.pending");
+            case "ready to payout":
                 return this.translate("income.table.status.pending");
         }
     }

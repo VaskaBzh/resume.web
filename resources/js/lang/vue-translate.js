@@ -591,9 +591,10 @@ const messages = {
                     no_wallet:
                         "Configure your account for withdrawal (enter the wallet).",
                     less_minWithdrawal: "Insufficient funds for withdrawal.",
-                    error: "An error occurred while making the payment.",
+                    error: "An error occurred while processing the payment. Please check the accuracy of your wallet address and the network for receiving the transaction (It should be bitcoin).",
                     error_payout: "An error occurred while making the payout.",
                     completed: "Payout successfully completed.",
+                    ready_to_payout: "Ready to payout.",
                 },
                 status: {
                     pending: "Pending",
@@ -1304,9 +1305,10 @@ const messages = {
                     no_wallet:
                         "Настройте аккаунт для вывода (введите кошелек).",
                     less_minWithdrawal: "Недостаточно средств для вывода",
-                    error: "Произошла ошибка при выполнении выплаты.",
+                    error: "Произошла ошибка при выполнении выплаты. Проверьте правильность адреса вашего кошелька и сети для получения транзакции (Должна быть bitcoin).",
                     error_payout: "Произошла ошибка при выполнении выплаты.",
                     completed: "Выплата успешно выполнена.",
+                    ready_to_payout: "Ready to payout.",
                 },
                 status: {
                     pending: "В ожидании",

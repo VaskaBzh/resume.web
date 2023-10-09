@@ -1,14 +1,10 @@
-import { TranslateService } from "@/modules/common/services/TranslateService";
-
-export class ProgressService extends TranslateService {
+export class ProgressService {
     constructor() {
-        super();
-
         this.progressPercentage = 0;
         this.interval = null;
     }
 
-    dropProgressPercentage() {
+    nullProgressPercentage() {
         this.progressPercentage = 0;
 
         return this;
@@ -22,7 +18,7 @@ export class ProgressService extends TranslateService {
             if (this.progressPercentage < limit) {
                 this.progressPercentage += percentStep;
             } else {
-                this.slowProcess();
+                this.setSlowInterval();
             }
         }, intervalMillisecondsTime);
 
@@ -70,8 +66,6 @@ export class ProgressService extends TranslateService {
     }
 
     setProgressEnd() {
-        this.progressPercentage = this.translate
-            ? this.translate("preloader.text")
-            : "No info";
+        this.progressPercentage = "preloader.text";
     }
 }

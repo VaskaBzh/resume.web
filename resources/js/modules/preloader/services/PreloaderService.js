@@ -6,11 +6,6 @@ export class PreloaderService extends ProgressService {
     constructor() {
         super();
 
-        this.progressPercentage = 0;
-        this.interval = null;
-
-        this.translate = null;
-
         this.endTable = this.createStatesService();
         this.waitTable = this.createStatesService();
         this.emptyTable = this.createStatesService();
@@ -75,9 +70,7 @@ export class PreloaderService extends ProgressService {
     }
 
     startProcess(intervalMillisecondsTime) {
-        this.animateService.isCrossVisible.setAnimateState(false);
-
-        this.dropProgressPercentage()
+        this.nullProgressPercentage()
             .killInterval()
             .setInterval(intervalMillisecondsTime);
 

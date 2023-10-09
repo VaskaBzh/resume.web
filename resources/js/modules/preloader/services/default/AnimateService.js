@@ -121,9 +121,7 @@ export class AnimateService extends StylesService {
         if (this.cross) {
             this.isCrossVisible.setAnimateState();
 
-            const rect = this.cross.getRect();
-
-            this.crossAnimate.restartAnimation();
+            const rects = this.cross.getRect();
 
             const easing = "linear";
             const duration = 300;
@@ -131,11 +129,14 @@ export class AnimateService extends StylesService {
             const staggerDelay = 400;
 
             const animateConfig = {
-                targets: rect,
+                targets: rects,
                 easing: easing,
                 duration: duration,
                 height: heightValue,
                 delay: anime.stagger(staggerDelay),
+                complete: () => {
+                    this.isProgressVisible.setAnimateState();
+                }
             };
 
             this.crossAnimate.setAnimateData(anime(animateConfig));

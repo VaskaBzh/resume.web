@@ -159,20 +159,11 @@ export default {
         },
         async "lineChartService.offset"() {
             await this.lineChartService.lineGraphIndex();
-            await this.barChartService.barGraphIndex();
         },
         async getActive(newActiveId) {
             this.lineChartService.setGroupId(newActiveId);
             this.barChartService.setGroupId(newActiveId);
 
-            await this.lineChartService.lineGraphIndex();
-            await this.barChartService.barGraphIndex();
-        },
-        async offset() {
-            await this.lineChartService.lineGraphIndex();
-            // await this.barChartService.barGraphIndex();
-        },
-        async getAccount() {
             await this.lineChartService.lineGraphIndex();
             await this.barChartService.barGraphIndex();
         },

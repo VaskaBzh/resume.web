@@ -344,16 +344,15 @@ export default {
 }
 .popup__input {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-island, #fff);
+    background: var(--background-modal-input, #FFF);
     padding: var(--py-4, 16px) var(--px-4, 16px);
-    color: var(-text-secondary);
-    font-family: NunitoSans;
+    color: var(--select-text-no-value, #D0D5DD);
+    font-family: NunitoSans, serif;
     font-size: 16px;
-    font-style: normal;
     font-weight: 400;
     outline: none;
     border: 1px solid transparent;
-    line-height: 24px; /* 150% */
+    line-height: 24px;
 }
 .popup__input:focus {
     border: 1px solid #2E90FA;
@@ -385,6 +384,7 @@ export default {
     position: relative;
     width: 270px;
     margin-bottom: 16px;
+    width: 100%;
     @media (max-width: 500px) {
         width: 100%;
     }

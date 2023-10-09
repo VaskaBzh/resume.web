@@ -16,7 +16,10 @@
                     class="preloader_cross"
                     id="preloader_cross"
                     @getCross="service.setCross($event)"
-                    v-show="service.animateService.isCrossVisible?.animateState"
+                    v-if="
+                        !service.animateService.cross.element
+                        || service.animateService.isCrossVisible?.animateState
+                    "
                 />
                 <preloader-logo-icon
                     class="preloader_logo"
@@ -31,17 +34,16 @@
                     @getPolygon="service.setPolygon($event)"
                 />
             </div>
-
             <transition name="progress">
                 <span
                     class="preloader_progress"
-                    v-show="
-                        service.animateService.isProgressVisible
-                            ?.animateState ||
-                        service.animateService.isCrossVisible?.animateState
-                    "
+                    v-if="service.animateService.isProgressVisible?.animateState"
                 >
-                    {{ progressValue }}
+                    {{
+                        String(service.progressPercentage).length <= 3
+                            ? `${service.progressPercentage}%`
+                            : $t(service.progressPercentage)
+                    }}
                 </span>
             </transition>
         </div>
@@ -78,15 +80,10 @@ export default {
         ...mapGetters(["getActive"]),
         killPreloaderCondition() {
             return (
-                !this.service.waitTable &&
-                !this.service.emptyTable &&
-                this.service.endTable
+                !this.service.waitTable.state &&
+                !this.service.emptyTable.state &&
+                this.service.endTable.state
             );
-        },
-        progressValue() {
-            return this.service.progressPercentage.length > 3
-                ? this.service.progressPercentage
-                : `${this.service.progressPercentage}%`;
         },
     },
     data() {
@@ -96,20 +93,18 @@ export default {
     },
     watch: {
         wait(newWaitState) {
-            this.service.setWaitState(newWaitState).setEndState(!newWaitState);
+            this.service.setWaitState(newWaitState)
+                .setEndState(!newWaitState);
         },
         empty(newEmptyState) {
             this.service
                 .setEmptyState(newEmptyState)
-                .setProgressVisible(false)
-                .setCrossVisible(false)
+                .setCrossVisible(newEmptyState)
                 .setLogoCenter(newEmptyState);
         },
-        "$i18n.locale"() {
-            this.service.setTranslate(this.$t);
-        },
         "service.endTable.state"(newEndVal) {
-            this.service.endProcess(newEndVal);
+            this.service.setProgressVisible(!newEndVal)
+                .endProcess(newEndVal);
         },
         getActive(newId, oldId) {
             if (oldId !== -1) {
@@ -118,9 +113,6 @@ export default {
         },
     },
     mounted() {
-        if (this.$t) {
-            this.service.setTranslate(this.$t);
-        }
         this.service.startProcess(this.interval);
     },
     unmounted() {
