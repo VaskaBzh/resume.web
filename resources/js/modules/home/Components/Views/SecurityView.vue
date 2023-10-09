@@ -2,8 +2,8 @@
     <div class="security-view scroll-section">
         <div class="security-view__container">
             <head-line class="security-view_btn">{{ $t("safety") }}</head-line>
-            <div id="smooth-wrapper" class="security-view__wrapper">
-                <div id="smooth-content" class="security-view__left">
+            <div class="security-view__wrapper">
+                <div  class="security-view__left">
                     <div class="security-view__left__item__wrapper">
                         <div class="security-view_item">
                             <h3 class="security-view_item_title">{{ $t("safety.encryption.title") }}</h3>
@@ -30,7 +30,7 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-import {animatedScroll} from "../../Services/ScrollAnime";
+// import {animatedScroll} from "../../Services/ScrollAnime";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
@@ -41,7 +41,7 @@ export default {
         sharedMessages: HomeMessage,
     },
     mounted() {
-        animatedScroll()
+        // animatedScroll()
     }
 
 }
@@ -52,34 +52,61 @@ export default {
 .security-view {
     width: 100vw;
     padding: 100px 0;
+    height: 100vh;
 
     &__container {
-        margin: 0 auto;
         max-width: 1600px;
+        display: flex;
+        box-sizing: content-box;
+        flex-flow: column nowrap;
+        align-items: center;
+        margin: 0 auto;
+        justify-content: center;
+
     }
 
     &__wrapper {
         display: flex;
+        flex-flow: row nowrap;
+        align-items: center;
+        width: 100%;
+        height: 100vh;
         position: relative;
-        justify-content: center;
     }
 
     &__left {
-        position: relative;
-        left: -10%;
-        z-index: 99999;
+        width: 63%;
+        display: flex;
+        flex-flow: column nowrap;
+        align-items: center;
+        justify-content: flex-start;
+        height: 100vh;
+        position: absolute;
+        z-index: 9;
+        left: 10%;
+
 
         &__item__wrapper {
-            width: 40vw;
+            height: 100vh;
+            width: 100%;
+            display: flex;
+            flex-flow: column nowrap;
+            align-items: center;
+            position: absolute;
         }
+
     }
 
-    &_item {
-        height: 100vh;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        grid-column-gap: 30px;
 
+    &_item {
+        display: flex;
+        flex-flow: row nowrap;
+        width: 100%;
+        height: 100vh;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+        position: absolute;
 
         &_title {
             color: #F5FAFF;
@@ -89,7 +116,6 @@ export default {
             font-weight: 400;
             line-height: 120%;
             text-transform: uppercase;
-            align-self: center;
         }
 
         &_text {
@@ -100,7 +126,6 @@ export default {
             font-style: normal;
             font-weight: 400;
             line-height: 110%;
-            align-self: center;
         }
     }
 
@@ -111,7 +136,6 @@ export default {
         flex-direction: column;
         justify-content: center;
         position: absolute;
-        left: 0;
         transform: translate(50%, 0%);
 
         &_item {

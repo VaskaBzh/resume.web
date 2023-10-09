@@ -3,24 +3,24 @@
         <div class="miners-info-view__container">
             <head-line class="miners-info-view_title"> {{ $t("why_allbtc.button") }}</head-line>
             <h3 class="miners-info-view_subtitle">
-                <span>{{ $t("why_allbtc.title[0]") }}</span>
+                <span class="miners-info-view_subtitle_base">{{ $t("why_allbtc.title[0]") }}</span>
                 <span class="miners-info-view_subtitle_one">{{ $t("why_allbtc.title[1]") }}</span>
-                <span>{{ $t("why_allbtc.title[2]") }}</span>
-                <span>{{ $t("why_allbtc.title[3]") }}</span>
+                <span class="miners-info-view_subtitle_two">{{ $t("why_allbtc.title[2]") }}</span>
+                <span class="miners-info-view_subtitle_three">{{ $t("why_allbtc.title[3]") }}</span>
             </h3>
             <div class="miners-info-view__items">
-                <div class="miners-info-view_item">
+                <div class="miners-info-view_item miners-info-view_item-one">
                     <p class="miners-info-view_item_text">{{ $t("why_allbtc.list.text[0]") }}
                     </p>
                     <h3 class="miners-info-view_item_title">{{ $t("why_allbtc.list.title[0]") }}</h3>
                 </div>
-                <div class="miners-info-view_item">
+                <div class="miners-info-view_item miners-info-view_item-two">
                     <p class="miners-info-view_item_text">{{ $t("why_allbtc.list.text[1]") }}
                     </p>
                     <h3 class="miners-info-view_item_title">{{ $t("why_allbtc.list.title[1]") }}</h3>
 
                 </div>
-                <div class="miners-info-view_item">
+                <div class="miners-info-view_item miners-info-view_item-three">
                     <p class="miners-info-view_item_text">{{ $t("why_allbtc.list.text[2]") }}
                     </p>
                     <h3 class="miners-info-view_item_title">{{ $t("why_allbtc.list.title[2]") }}</h3>
@@ -35,6 +35,7 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {animateWhyBtcView} from "../../Services/AnimateWhyBtcView";
 
 export default {
     name: "MinersInfoView",
@@ -42,6 +43,9 @@ export default {
     i18n: {
             sharedMessages: HomeMessage,
     },
+    mounted() {
+        animateWhyBtcView()
+    }
 
 }
 </script>

@@ -20,46 +20,37 @@ export function animatedCalcView() {
         }, 'titleCalc')
         .fromTo('.calculator-land_title_two', {opacity: 0, xPercent: -50}, {
             opacity: 1,
-
+            duration: 1,
             xPercent: 0
         }, 'titleCalc')
         .fromTo('.calculator-land_title_three', {opacity: 0, xPercent: 50}, {
             opacity: 1,
-
+            duration: 1,
             xPercent: 0
         }, 'titleCalc')
         .fromTo('.calculator-land_title_four', {opacity: 0, xPercent: -50}, {
             opacity: 1,
             xPercent: 0
         }, 'titleCalc')
-
-    let animateCalcTwo = tl
         .fromTo('.calculator-land_subtitle', {opacity: 0}, {
-            opacity: 1
-        })
+            opacity: 1,
+            duration: 1
+        }, 'titleCalc')
+
+    gsap.timeline({
+        paused: true
+    })
+
     ScrollTrigger.create({
         animation: animateCalc,
         trigger: ".calculator-land",
         start: "top +=300",
         end: 'center center',
         pin: true,
-        scrub: 1,
+        scrub: 1.5,
         id: '.calculator-land',
-        markers: true,
         smoothChildTiming: true,
-        onComplete: () => {
-            ScrollTrigger.create({
-                animation: animateCalcTwo,
-                trigger: ".calculator-land",
-                start: "top top",
-                end: '+=1700',
-                pin: true,
-                scrub: 1,
-                id: '.calculator-land',
-                markers: true,
-                smoothChildTiming: true,
-            })
-        }
+
     })
 
 
