@@ -85,7 +85,9 @@ export default {
     position: absolute;
     right: -5%;
     transform: rotate(-20deg);
-    top: -30%;
+    top: 20%;
+    cursor: pointer;
+    opacity: 0;
 }
 
 .make-up-cab_link {

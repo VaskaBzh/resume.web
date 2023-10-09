@@ -55,7 +55,7 @@
         <div class="about_stiky">
             <div class="about_stiky_block"></div>
         </div>
-<!--        <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>-->
+       <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
     </div>
 
     <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>

@@ -81,13 +81,13 @@ export default {
         height: 100vh;
         left: -25%;
         top: 0;
-        width: 100%;
+        width: 115%;
         display: flex;
         flex-flow: column nowrap;
         margin: 0 auto;
 
         &_wrap {
-            height: 75vh;
+            height: 65vh;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -150,6 +150,7 @@ export default {
             flex-flow: column nowrap;
             align-items: flex-start;
             justify-content: center;
+            overflow: hidden;
 
             &__text {
                 color: rgba(245, 250, 255, 0.70);
@@ -192,7 +193,7 @@ export default {
         display: flex;
         flex-flow: column nowrap;
         align-items: center;
-        justify-content: center;
+        justify-content: flex-start;
 
         &_block {
             width: 860px;

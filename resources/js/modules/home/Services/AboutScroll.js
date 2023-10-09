@@ -28,6 +28,9 @@ export function scrollingAbout() {
             yPercent: 0,
             duration: 1.7
         }, '>-0.7')
+        .fromTo('.about_link', {opacity: 0, scale: 0, yPercent: 100, xPercent: 100}, {
+        opacity: 1, scale: 1, yPercent: 0, xPercent: 0, duration: 2
+    }, '>-0.2')
 
     gsap.timeline({
         paused: true
@@ -39,9 +42,10 @@ export function scrollingAbout() {
         start: "top top",
         end: '+=1700',
         pin: true,
-        scrub: 1,
+        scrub: 1.9,
         id: '.about-view',
         smoothChildTiming: true,
+
     })
 
 }

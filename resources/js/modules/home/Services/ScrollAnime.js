@@ -79,7 +79,7 @@ export function scroolingHeader() {
         start: "top 0",
         end: document.querySelector('.header-land').offsetHeight/2,
         pin: true,
-        scrub: 2,
+        scrub: 2.5,
         id: '.header-land',
         smoothChildTiming: true,
         onUpdate: self => {
