@@ -1,23 +1,21 @@
 <template>
-    <div class="app_back">
-        <slot />
+    <div class="layout">
+	    <header-component/>
+	    <div class="layout__container">
+		    <slot />
+	    </div>
+	    <footer-component-land/>
     </div>
 </template>
 
 <script>
+import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
+import FooterComponentLand from "@/modules/common/Components/FooterComponentLand.vue";
 
-import HomaPage from "../Pages/HomePage.vue";
-import gsap from 'gsap';
 export default {
-    data() {
-        return {
-            show: false
-        }
-    },
-    components: {HomaPage},
-    methods: {
-
-
+    components: {
+		HeaderComponent,
+		FooterComponentLand,
     },
     async created() {
         await this.$store.dispatch("getMiningStat");

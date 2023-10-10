@@ -1,7 +1,10 @@
 <template>
-    <div class="cabinet__block cabinet__block-light cabinet__block-card card" :class="[page == 'worker' ? 'max-width' : '']">
-        <div class="card_svg" v-if="this.$slots.svg">
-            <slot name="svg"></slot>
+    <div
+        class="cabinet__block cabinet__block-light cabinet__block-card card"
+        :class="[page == 'worker' ? 'max-width' : '']"
+    >
+        <div class="card_icon" v-show="this.$slots.svg">
+            <slot name="svg" />
         </div>
         <div class="card__content">
             <main-title class="headline">
@@ -10,8 +13,8 @@
             <p class="card_num">
                 {{ value }}
                 <span class="card_unit" v-show="unit">
-                {{ unit }}
-            </span>
+                    {{ unit }}
+                </span>
             </p>
         </div>
     </div>
@@ -33,44 +36,112 @@ export default {
 </script>
 <style scoped>
 .card {
+    background: var(--background-island, #ffffff);
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
+    gap: 24px;
+    width: 100%;
 }
-.max-width{
-    width: 48%;
+
+.card_icon {
+    fill: var(--icons-accent);
 }
-.card_svg {
-    margin-right: 24px;
+
+@media (max-width: 1880px) {
+    .card_icon {
+        display: none;
+    }
 }
+
 .card__content {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
+
 .card-active .card_num {
-    color: var(--light-green-100, #1FB96C);
+    color: #1fb96c;
 }
+
 .card-in-active .card_num {
-    color: var(--light-red-100, #F1404A);
+    color: #f1404a;
 }
+
 .card_num {
-    color: var(--light-gray-800, #1D2939);
+    color: var(--text-primary-80);
     font-family: Unbounded, serif;
     font-size: 41px;
     font-weight: 400;
     line-height: 137%;
     display: inline-flex;
     gap: 8px;
-    align-items: flex-end;
+    align-items: baseline;
     opacity: 0.8;
+    flex-wrap: wrap;
 }
+.workers__card .card_num{
+    font-size: 27px;
+    line-height: 40px; /* 148.148% */
+}
+
 .card_unit {
-    color: var(--light-gray-300, #D0D5DD);
+    color: var(--text-fourth);
     font-family: Unbounded, serif;
     font-size: 27px;
     font-weight: 400;
     line-height: 147%;
 }
-
+.workers__card .card_unit{
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 32px; /* 160% */
+}
+@media (max-width: 1450px) {
+    .card_unit {
+        font-size: 25px;
+    }
+}
+@media (max-width: 1350px) {
+    .card_num {
+        font-size: 25px;
+    }
+    .card_unit {
+        font-size: 20px;
+    }
+}
+@media (max-width: 1200px) {
+    .card_num {
+        font-size: 20px;
+    }
+    .card_unit {
+        font-size: 14px;
+    }
+}
+@media(max-width: 900px){
+    .card_num {
+        font-size: 27px;
+    }
+    .card_unit {
+        color: var(--text-fourth, #595E68);
+        font-family: Unbounded;
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 31px; /* 155.556% */
+    }
+}
+@media (max-width: 497.98px) {
+    .card_svg {
+        display: none;
+    }
+    /* Почему не работает?? */
+    .workers__card .card_unit{
+        font-size: 12px;
+    }
+    .workers__card .card_num{
+        font-size: 20px;
+    }
+}
 </style>

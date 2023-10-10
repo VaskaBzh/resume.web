@@ -1,12 +1,16 @@
 import store from "@/store";
 
-export async function AuthCheckProfileMiddleware(_, router) {
-    const user = store.getters.user;
+export async function AuthCheckProfileMiddleware(route, router) {
+    const token = store.getters.token;
 
-    if (!!user && Object.entries(user).length === 0) {
+    if (
+        !token &&
+        !route?.query?.access_key
+    ) {
         router.push({ name: "home" });
+
         store.dispatch("drop_all");
-    } else {
-        store.dispatch("set_accounts", user.id);
+        store.dispatch("dropUser");
+        store.dispatch("dropToken");
     }
 }

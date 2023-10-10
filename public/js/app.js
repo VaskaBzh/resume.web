@@ -2210,7 +2210,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
   var DEFAULT_TRUNC_LENGTH = 30,
       DEFAULT_TRUNC_OMISSION = '...';
 
-  /** Used to detect hot functions by number of calls within a span of milliseconds. */
+  /** Used to detect hot functionsMap by number of calls within a span of milliseconds. */
   var HOT_COUNT = 800,
       HOT_SPAN = 16;
 
@@ -3621,7 +3621,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /** Used to detect overreaching core-js shims. */
     var coreJsData = context['__core-js_shared__'];
 
-    /** Used to resolve the decompiled source of functions. */
+    /** Used to resolve the decompiled source of functionsMap. */
     var funcToString = funcProto.toString;
 
     /** Used to check objects for own properties. */
@@ -3710,7 +3710,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /** Used to lookup unminified function names. */
     var realNames = {};
 
-    /** Used to detect maps, sets, and weakmaps. */
+    /** Used to detect functionsMap, sets, and weakmaps. */
     var dataViewCtorString = toSource(DataView),
         mapCtorString = toSource(Map),
         promiseCtorString = toSource(Promise),
@@ -3727,7 +3727,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * Creates a `lodash` object which wraps `value` to enable implicit method
      * chain sequences. Methods that operate on and return arrays, collections,
-     * and functions can be chained together. Methods that retrieve a single value
+     * and functionsMap can be chained together. Methods that retrieve a single value
      * or may return a primitive value will automatically end the chain sequence
      * and return the unwrapped value. Otherwise, the value must be unwrapped
      * with `_#value`.
@@ -3770,7 +3770,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * `difference`, `differenceBy`, `differenceWith`, `drop`, `dropRight`,
      * `dropRightWhile`, `dropWhile`, `extend`, `extendWith`, `fill`, `filter`,
      * `flatMap`, `flatMapDeep`, `flatMapDepth`, `flatten`, `flattenDeep`,
-     * `flattenDepth`, `flip`, `flow`, `flowRight`, `fromPairs`, `functions`,
+     * `flattenDepth`, `flip`, `flow`, `flowRight`, `fromPairs`, `functionsMap`,
      * `functionsIn`, `groupBy`, `initial`, `intersection`, `intersectionBy`,
      * `intersectionWith`, `invert`, `invertBy`, `invokeMap`, `iteratee`, `keyBy`,
      * `keys`, `keysIn`, `map`, `mapKeys`, `mapValues`, `matches`, `matchesProperty`,
@@ -4710,7 +4710,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
     /**
      * The base implementation of `_.assign` without support for multiple sources
-     * or `customizer` functions.
+     * or `customizer` functionsMap.
      *
      * @private
      * @param {Object} object The destination object.
@@ -4723,7 +4723,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
     /**
      * The base implementation of `_.assignIn` without support for multiple sources
-     * or `customizer` functions.
+     * or `customizer` functionsMap.
      *
      * @private
      * @param {Object} object The destination object.
@@ -5152,7 +5152,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * The base implementation of `baseForOwn` which iterates over `object`
      * properties returned by `keysFunc` and invokes `iteratee` for each property.
-     * Iteratee functions may exit iteration early by explicitly returning `false`.
+     * Iteratee functionsMap may exit iteration early by explicitly returning `false`.
      *
      * @private
      * @param {Object} object The object to iterate over.
@@ -5199,7 +5199,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     }
 
     /**
-     * The base implementation of `_.functions` which creates an array of
+     * The base implementation of `_.functionsMap` which creates an array of
      * `object` function property names filtered from `props`.
      *
      * @private
@@ -8261,7 +8261,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      */
     var getTag = baseGetTag;
 
-    // Fallback for data views, maps, sets, and weak maps in IE 11 and promises in Node.js < 6.
+    // Fallback for data views, functionsMap, sets, and weak functionsMap in IE 11 and promises in Node.js < 6.
     if ((DataView && getTag(new DataView(new ArrayBuffer(1))) != dataViewTag) ||
         (Map && getTag(new Map) != mapTag) ||
         (Promise && getTag(Promise.resolve()) != promiseTag) ||
@@ -8659,7 +8659,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * may be applied regardless of execution order. Methods like `_.ary` and
      * `_.rearg` modify function arguments, making the order in which they are
      * executed important, preventing the merging of metadata. However, we make
-     * an exception for a safe combined case where curried functions have `_.ary`
+     * an exception for a safe combined case where curried functionsMap have `_.ary`
      * and or `_.rearg` applied.
      *
      * @private
@@ -11532,7 +11532,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * Iterates over elements of `collection` and invokes `iteratee` for each element.
      * The iteratee is invoked with three arguments: (value, index|key, collection).
-     * Iteratee functions may exit iteration early by explicitly returning `false`.
+     * Iteratee functionsMap may exit iteration early by explicitly returning `false`.
      *
      * **Note:** As with other "Collections" methods, objects with a "length"
      * property are iterated like arrays. To avoid this behavior use `_.forIn`
@@ -12286,7 +12286,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * may be used as a placeholder for partially applied arguments.
      *
      * **Note:** Unlike native `Function#bind`, this method doesn't set the "length"
-     * property of bound functions.
+     * property of bound functionsMap.
      *
      * @static
      * @memberOf _
@@ -12326,7 +12326,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * Creates a function that invokes the method at `object[key]` with `partials`
      * prepended to the arguments it receives.
      *
-     * This method differs from `_.bind` by allowing bound functions to reference
+     * This method differs from `_.bind` by allowing bound functionsMap to reference
      * methods that may be redefined or don't yet exist. See
      * [Peter Michaux's article](http://peter.michaux.ca/articles/lazy-function-definition-pattern)
      * for more details.
@@ -12386,7 +12386,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * The `_.curry.placeholder` value, which defaults to `_` in monolithic builds,
      * may be used as a placeholder for provided arguments.
      *
-     * **Note:** This method doesn't set the "length" property of curried functions.
+     * **Note:** This method doesn't set the "length" property of curried functionsMap.
      *
      * @static
      * @memberOf _
@@ -12431,7 +12431,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * The `_.curryRight.placeholder` value, which defaults to `_` in monolithic
      * builds, may be used as a placeholder for provided arguments.
      *
-     * **Note:** This method doesn't set the "length" property of curried functions.
+     * **Note:** This method doesn't set the "length" property of curried functionsMap.
      *
      * @static
      * @memberOf _
@@ -12897,7 +12897,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * builds, may be used as a placeholder for partially applied arguments.
      *
      * **Note:** This method doesn't set the "length" property of partially
-     * applied functions.
+     * applied functionsMap.
      *
      * @static
      * @memberOf _
@@ -12934,7 +12934,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * builds, may be used as a placeholder for partially applied arguments.
      *
      * **Note:** This method doesn't set the "length" property of partially
-     * applied functions.
+     * applied functionsMap.
      *
      * @static
      * @memberOf _
@@ -13227,11 +13227,11 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      *
      * **Note:** This method is loosely based on the
      * [structured clone algorithm](https://mdn.io/Structured_clone_algorithm)
-     * and supports cloning arrays, array buffers, booleans, date objects, maps,
+     * and supports cloning arrays, array buffers, booleans, date objects, functionsMap,
      * numbers, `Object` objects, regexes, sets, strings, symbols, and typed
      * arrays. The own enumerable properties of `arguments` objects are cloned
      * as plain objects. An empty object is returned for uncloneable values such
-     * as error objects, functions, DOM nodes, and WeakMaps.
+     * as error objects, functionsMap, DOM nodes, and WeakMaps.
      *
      * @static
      * @memberOf _
@@ -13673,7 +13673,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      *
      * Array-like values such as `arguments` objects, arrays, buffers, strings, or
      * jQuery-like collections are considered empty if they have a `length` of `0`.
-     * Similarly, maps and sets are considered empty if they have a `size` of `0`.
+     * Similarly, functionsMap and sets are considered empty if they have a `size` of `0`.
      *
      * @static
      * @memberOf _
@@ -13727,7 +13727,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * equivalent.
      *
      * **Note:** This method supports comparing arrays, array buffers, booleans,
-     * date objects, error objects, maps, numbers, `Object` objects, regexes,
+     * date objects, error objects, functionsMap, numbers, `Object` objects, regexes,
      * sets, strings, symbols, and typed arrays. `Object` objects are compared
      * by their own, not inherited, enumerable properties. Functions and DOM
      * nodes are compared by strict equality, i.e. `===`.
@@ -13940,7 +13940,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * Checks if `value` is the
      * [language type](http://www.ecma-international.org/ecma-262/7.0/#sec-ecmascript-language-types)
-     * of `Object`. (e.g. arrays, functions, objects, regexes, `new Number(0)`, and `new String('')`)
+     * of `Object`. (e.g. arrays, functionsMap, objects, regexes, `new Number(0)`, and `new String('')`)
      *
      * @static
      * @memberOf _
@@ -14121,7 +14121,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * Checks if `value` is a pristine native function.
      *
-     * **Note:** This method can't reliably detect native functions in the presence
+     * **Note:** This method can't reliably detect native functionsMap in the presence
      * of the core-js package because core-js circumvents this kind of detection.
      * Despite multiple requests, the core-js maintainer has made it clear: any
      * attempt to fix the detection will be obstructed. As a result, we're left
@@ -15141,7 +15141,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * Iterates over own and inherited enumerable string keyed properties of an
      * object and invokes `iteratee` for each property. The iteratee is invoked
-     * with three arguments: (value, key, object). Iteratee functions may exit
+     * with three arguments: (value, key, object). Iteratee functionsMap may exit
      * iteration early by explicitly returning `false`.
      *
      * @static
@@ -15207,7 +15207,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     /**
      * Iterates over own enumerable string keyed properties of an object and
      * invokes `iteratee` for each property. The iteratee is invoked with three
-     * arguments: (value, key, object). Iteratee functions may exit iteration
+     * arguments: (value, key, object). Iteratee functionsMap may exit iteration
      * early by explicitly returning `false`.
      *
      * @static
@@ -15286,7 +15286,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      *
      * Foo.prototype.c = _.constant('c');
      *
-     * _.functions(new Foo);
+     * _.functionsMap(new Foo);
      * // => ['a', 'b']
      */
     function functions(object) {
@@ -15984,7 +15984,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * potentially mutating the `accumulator` object. If `accumulator` is not
      * provided, a new object with the same `[[Prototype]]` will be used. The
      * iteratee is invoked with four arguments: (accumulator, value, key, object).
-     * Iteratee functions may exit iteration early by explicitly returning `false`.
+     * Iteratee functionsMap may exit iteration early by explicitly returning `false`.
      *
      * @static
      * @memberOf _
@@ -17487,7 +17487,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * Binds methods of an object to the object itself, overwriting the existing
      * method.
      *
-     * **Note:** This method doesn't set the "length" property of bound functions.
+     * **Note:** This method doesn't set the "length" property of bound functionsMap.
      *
      * @static
      * @since 0.1.0
@@ -17646,7 +17646,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
     }
 
     /**
-     * Creates a function that returns the result of invoking the given functions
+     * Creates a function that returns the result of invoking the given functionsMap
      * with the `this` binding of the created function, where each successive
      * invocation is supplied the return value of the previous.
      *
@@ -17654,7 +17654,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @memberOf _
      * @since 3.0.0
      * @category Util
-     * @param {...(Function|Function[])} [funcs] The functions to invoke.
+     * @param {...(Function|Function[])} [funcs] The functionsMap to invoke.
      * @returns {Function} Returns the new composite function.
      * @see _.flowRight
      * @example
@@ -17671,13 +17671,13 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
 
     /**
      * This method is like `_.flow` except that it creates a function that
-     * invokes the given functions from right to left.
+     * invokes the given functionsMap from right to left.
      *
      * @static
      * @since 3.0.0
      * @memberOf _
      * @category Util
-     * @param {...(Function|Function[])} [funcs] The functions to invoke.
+     * @param {...(Function|Function[])} [funcs] The functionsMap to invoke.
      * @returns {Function} Returns the new composite function.
      * @see _.flow
      * @example
@@ -17906,7 +17906,7 @@ var __WEBPACK_AMD_DEFINE_RESULT__;/**
      * @memberOf _
      * @category Util
      * @param {Function|Object} [object=lodash] The destination object.
-     * @param {Object} source The object of functions to add.
+     * @param {Object} source The object of functionsMap to add.
      * @param {Object} [options={}] The options object.
      * @param {boolean} [options.chain=true] Specify whether mixins are chainable.
      * @returns {Function|Object} Returns `object`.
@@ -21083,7 +21083,7 @@ __webpack_require__.r(__webpack_exports__);
 /**
  * Transform the data for a request or a response
  *
- * @param {Array|Function} fns A single function or Array of functions
+ * @param {Array|Function} fns A single function or Array of functionsMap
  * @param {?Object} response The response object
  *
  * @returns {*} The resulting transformed data
@@ -21581,7 +21581,7 @@ function buildURL(url, params, options) {
   if (!params) {
     return url;
   }
-  
+
   const _encode = options && options.encode || encode;
 
   const serializeFn = options && options.serialize;
@@ -22710,7 +22710,7 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-// utils is a library of generic helper functions non-specific to axios
+// utils is a library of generic helper functionsMap non-specific to axios
 
 const {toString} = Object.prototype;
 const {getPrototypeOf} = Object;
@@ -23391,7 +23391,7 @@ const toJSONObject = (obj) => {
 /************************************************************************/
 /******/ 	// The module cache
 /******/ 	var __webpack_module_cache__ = {};
-/******/ 	
+/******/
 /******/ 	// The require function
 /******/ 	function __webpack_require__(moduleId) {
 /******/ 		// Check if module is in cache
@@ -23405,20 +23405,20 @@ const toJSONObject = (obj) => {
 /******/ 			loaded: false,
 /******/ 			exports: {}
 /******/ 		};
-/******/ 	
+/******/
 /******/ 		// Execute the module function
 /******/ 		__webpack_modules__[moduleId].call(module.exports, module, module.exports, __webpack_require__);
-/******/ 	
+/******/
 /******/ 		// Flag the module as loaded
 /******/ 		module.loaded = true;
-/******/ 	
+/******/
 /******/ 		// Return the exports of the module
 /******/ 		return module.exports;
 /******/ 	}
-/******/ 	
+/******/
 /******/ 	// expose the modules object (__webpack_modules__)
 /******/ 	__webpack_require__.m = __webpack_modules__;
-/******/ 	
+/******/
 /************************************************************************/
 /******/ 	/* webpack/runtime/chunk loaded */
 /******/ 	(() => {
@@ -23451,7 +23451,7 @@ const toJSONObject = (obj) => {
 /******/ 			return result;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/compat get default export */
 /******/ 	(() => {
 /******/ 		// getDefaultExport function for compatibility with non-harmony modules
@@ -23463,10 +23463,10 @@ const toJSONObject = (obj) => {
 /******/ 			return getter;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/define property getters */
 /******/ 	(() => {
-/******/ 		// define getter functions for harmony exports
+/******/ 		// define getter functionsMap for harmony exports
 /******/ 		__webpack_require__.d = (exports, definition) => {
 /******/ 			for(var key in definition) {
 /******/ 				if(__webpack_require__.o(definition, key) && !__webpack_require__.o(exports, key)) {
@@ -23475,7 +23475,7 @@ const toJSONObject = (obj) => {
 /******/ 			}
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/global */
 /******/ 	(() => {
 /******/ 		__webpack_require__.g = (function() {
@@ -23487,12 +23487,12 @@ const toJSONObject = (obj) => {
 /******/ 			}
 /******/ 		})();
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/hasOwnProperty shorthand */
 /******/ 	(() => {
 /******/ 		__webpack_require__.o = (obj, prop) => (Object.prototype.hasOwnProperty.call(obj, prop))
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/make namespace object */
 /******/ 	(() => {
 /******/ 		// define __esModule on exports
@@ -23503,7 +23503,7 @@ const toJSONObject = (obj) => {
 /******/ 			Object.defineProperty(exports, '__esModule', { value: true });
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/node module decorator */
 /******/ 	(() => {
 /******/ 		__webpack_require__.nmd = (module) => {
@@ -23512,11 +23512,11 @@ const toJSONObject = (obj) => {
 /******/ 			return module;
 /******/ 		};
 /******/ 	})();
-/******/ 	
+/******/
 /******/ 	/* webpack/runtime/jsonp chunk loading */
 /******/ 	(() => {
 /******/ 		// no baseURI
-/******/ 		
+/******/
 /******/ 		// object to store loaded and loading chunks
 /******/ 		// undefined = chunk not loaded, null = chunk preloaded/prefetched
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
@@ -23524,19 +23524,19 @@ const toJSONObject = (obj) => {
 /******/ 			"/js/app": 0,
 /******/ 			"css/app": 0
 /******/ 		};
-/******/ 		
+/******/
 /******/ 		// no chunk on demand loading
-/******/ 		
+/******/
 /******/ 		// no prefetching
-/******/ 		
+/******/
 /******/ 		// no preloaded
-/******/ 		
+/******/
 /******/ 		// no HMR
-/******/ 		
+/******/
 /******/ 		// no HMR manifest
-/******/ 		
+/******/
 /******/ 		__webpack_require__.O.j = (chunkId) => (installedChunks[chunkId] === 0);
-/******/ 		
+/******/
 /******/ 		// install a JSONP callback for chunk loading
 /******/ 		var webpackJsonpCallback = (parentChunkLoadingFunction, data) => {
 /******/ 			var [chunkIds, moreModules, runtime] = data;
@@ -23561,20 +23561,20 @@ const toJSONObject = (obj) => {
 /******/ 			}
 /******/ 			return __webpack_require__.O(result);
 /******/ 		}
-/******/ 		
+/******/
 /******/ 		var chunkLoadingGlobal = self["webpackChunk"] = self["webpackChunk"] || [];
 /******/ 		chunkLoadingGlobal.forEach(webpackJsonpCallback.bind(null, 0));
 /******/ 		chunkLoadingGlobal.push = webpackJsonpCallback.bind(null, chunkLoadingGlobal.push.bind(chunkLoadingGlobal));
 /******/ 	})();
-/******/ 	
+/******/
 /************************************************************************/
-/******/ 	
+/******/
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
 /******/ 	__webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/js/app.js")))
 /******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["css/app"], () => (__webpack_require__("./resources/css/app.css")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
-/******/ 	
+/******/
 /******/ })()
 ;

@@ -17,6 +17,7 @@
                 <div class="page__container">
                     <div class="auth__main">
                         <div class="page__content">
+                            <notification-list />
                             <router-link :to="{ name: 'home' }">
                                 <img
                                     v-show="!isDark"
@@ -54,23 +55,15 @@
 
 <script>
 import HeaderComponentAuth from "@/Components/HeaderComponentAuth.vue";
+import NotificationList from "@/modules/notification/Components/NotificationList.vue";
+
 import { mapGetters } from "vuex";
-import { Link } from "@inertiajs/vue3";
 
 export default {
-    props: {
-        auth_user: {
-            type: Boolean,
-            default: false,
-        },
-        message: {
-            type: String,
-        },
-        errors: {
-            type: Object,
-        },
+    components: {
+        HeaderComponentAuth,
+        NotificationList
     },
-    components: { HeaderComponentAuth, Link },
     computed: {
         ...mapGetters(["getMessage", "isDark"]),
     },
@@ -80,24 +73,33 @@ export default {
 <style lang="scss" scoped>
 .page.auth {
     padding: 0;
+    position: relative;
 }
 .auth {
     display: flex;
     justify-content: center;
+    flex: 1 1 auto;
     // .auth__con
     &__con {
+        flex: 1 1 auto;
+        display: flex;
         & .page {
             // .page__container
             &__container {
                 height: 100%;
+                flex: 1 1 auto;
+                margin: 0 auto;
             }
             // .page__content
             &__content {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                flex: 1 0 40%;
+                flex: 1 0 60%;
                 z-index: 2;
+	            @media (max-width: 1279.98px) {
+		            flex: 1 0 50%;
+	            }
 
                 & a {
                     display: block;

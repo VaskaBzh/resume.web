@@ -10,7 +10,7 @@ export class workerData {
         this.hashrate_per_day = `${workerRecord.shares_1d} ${workerRecord.shares_1d_unit}h/s`;
         // this.unit = workerRecord.shares_unit;
         // this.unit_per_day = workerRecord.shares_1d_unit;
-        this.reject_percent = `${workerRecord.reject_percent} %`;
+        this.reject_percent = `${Number(workerRecord.reject_percent).toFixed(0)} %`;
         this.graphId = workerRecord.worker_id;
         this.data = "#seeChart";
     }

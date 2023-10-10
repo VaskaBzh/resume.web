@@ -1,13 +1,19 @@
 <template>
     <div class="slider">
+        <slot
+            name="instruction"
+        />
         <main-preloader
             class="cabinet__preloader"
             :wait="wait"
             :interval="35"
             :end="!wait"
             :empty="empty"
+            v-if="havePreloader && (wait || empty)"
         />
-        <slot v-if="!wait && !empty" />
+        <div class="slider__content" v-if="!wait && !empty">
+            <slot />
+        </div>
         <div class="slider__nav" v-if="haveNav && !wait && !empty">
             <!--            <page-info-->
             <!--                :startPage=""-->
@@ -56,6 +62,10 @@ export default {
         table: Object,
         wait: Boolean,
         haveNav: {
+            type: Boolean,
+            default: true,
+        },
+        havePreloader: {
             type: Boolean,
             default: true,
         },
@@ -116,7 +126,15 @@ export default {
 .slider {
     height: 100%;
     width: 100%;
-    // .slider__wrap
+    &__content {
+        width: 100%;
+    }
+    @media(max-width: 500px){
+        height: auto;
+    }
+    &.onboarding_block-target {
+        border-radius: 12px;
+    }
     &__wrap {
         width: 100%;
         padding: 24px 16px;
@@ -170,7 +188,7 @@ export default {
             min-height: 40px;
             display: flex;
             padding: 0 5px;
-            background: #fafafa;
+            background: var(--background-island);
             border-radius: 8px;
             align-items: center;
             @media (max-width: 767.98px) {

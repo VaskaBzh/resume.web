@@ -9,7 +9,7 @@ export const RouteNamesMap = {
         miners: "MinersPage",
         login: "LoginPage",
         registration: "RegPage",
-
+        confirm: "ConfirmPage",
     },
     profile: {
         accounts: "SubsPage",

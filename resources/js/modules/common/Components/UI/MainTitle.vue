@@ -1,4 +1,4 @@
---<template>
+<template>
     <h1 v-if="tag === 'h1'" class="title">
         <slot></slot>
     </h1>
@@ -26,13 +26,25 @@ export default {
 </script>
 <style lang="scss" scoped>
 h1 {
-    font-size: 27px;
-    line-height: 40px;
+    font-size: 64px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 107.6%;
+    @media (max-width: 479.98px) {
+        font-size: 36px;
+    }
 }
 
 h2 {
-    font-size: 20px;
-    line-height: 32px;
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 105%;
+
+    @media (max-width: 479.98px) {
+        font-size: 36px;
+    }
+
 }
 
 h3 {
@@ -40,11 +52,8 @@ h3 {
     font-style: normal;
     font-weight: 400;
     line-height: 160%; /* 32px */
-    @media (max-width: 767.98px) {
-        font-size: 32px;
-    }
     @media (max-width: 479.98px) {
-        font-size: 24px;
+        font-size: 20px;
     }
 }
 
@@ -53,13 +62,17 @@ h4 {
     font-size: 24px;
     line-height: 107.6%;
     @media (max-width: 767.98px) {
-        font-size: 18px;
+        // font-size: 18px;
         line-height: 135%;
     }
 }
+
+
+
 .title {
-    font-family: Unbounded, serif;
-    color: var(--light-gray-800, #1D2939);
+    font-family: Unbounded;
+    color: var(--text-primary);
+    opacity: 0.8;
     font-weight: 400;
     &.profile {
         margin: 0 0 40px;
@@ -69,11 +82,21 @@ h4 {
         justify-content: space-between;
     }
     &.headline {
-        color: var(--light-gray-400, #98A2B3);
+        color: var(--text-teritary);
         font-family: NunitoSans, serif;
         font-size: 14px;
         font-weight: 600;
-        line-height: 145%;
+        line-height: 142%;
+        opacity: 1;
+        @media(max-width: 900px){
+            .title{
+                font-size: 12px;
+            }
+        }
+    }
+
+    &-blue {
+        color: #3F7BDD;
     }
 }
 </style>

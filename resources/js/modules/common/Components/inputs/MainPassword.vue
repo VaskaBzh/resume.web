@@ -124,7 +124,6 @@ export default {
     &_input {
         letter-spacing: normal;
         width: 100%;
-        color: #343434;
         font-size: 24px;
         font-family: AmpleSoftPro, serif;
         line-height: 135%;
@@ -133,6 +132,7 @@ export default {
         min-height: 56px;
         transition: all 0.5s ease 0s;
         padding: 0 16px;
+        color: #000;
         background: linear-gradient(
             179deg,
             #e6eaf0 0%,

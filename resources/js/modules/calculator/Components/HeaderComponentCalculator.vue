@@ -69,7 +69,7 @@ export default {
         NavLinksBurger,
     },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["isDark"]),
         accountLink() {
             let url = this.$route.fullPath.startsWith("http")
                 ? new URL(this.$route.fullPath).pathname

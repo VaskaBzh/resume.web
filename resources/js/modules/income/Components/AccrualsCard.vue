@@ -2,12 +2,12 @@
     <div class="accrual-card">
         <div class="accrual-all-time">
             <MainIncomeCardRow>
-                <template v-slot:title>Начислено за все время</template>
+                <template v-slot:title>{{ $t("income.income_info.card[0]") }}</template>
                 <template v-slot:num>{{ this.payed }}</template>
             </MainIncomeCardRow>
         </div>
         <main-progress-bar
-        title="Начислено"
+        :title="$t('income.income_info.card[1]')"
         hint="На вашем субаккаунте 0.00051380 BTC Автовыплата происходит при  балансе > 0.005 BTC"
         :progress="pendingAmount"
         :final="0.005"
@@ -56,14 +56,14 @@ export default {
   gap: 16px;
   align-self: stretch;
   border-radius: 24px;
-  background: var(--secondary-white, #FFF);
+  background: var(--background-island, #FFF);
   box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
 .flex-jc{
   display: flex;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 }
 .accrual-all-time, .accrual-today{
   width: 100%;
@@ -77,7 +77,7 @@ export default {
   margin-bottom: 4px;
 }
 .data-num{
-  color: var(--gray-800, #1D2939);
+  color: var(--text-primary-80, #1D2939);
   font-family: Unbounded;
   font-size: 27px;
   font-style: normal;
@@ -131,5 +131,16 @@ export default {
   border-radius: 16px;
   opacity: 0.8;
   background: var(--primary-500, #2E90FA);
+}
+@media(max-width:500px){
+  .flex-jc{
+    align-items: center;
+  }
+  .accrual-card{
+    padding: 16px;
+  }
+  .title{
+    margin-bottom: 0px;
+  }
 }
 </style>

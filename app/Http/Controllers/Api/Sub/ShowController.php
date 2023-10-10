@@ -14,6 +14,8 @@ class ShowController extends Controller
 {
     public function __invoke(Sub $sub, BtcComService $btcComService): JsonResource
     {
+        $this->authorize('viewOrChange', $sub);
+
         return new SubResource($btcComService->transformSub($sub));
     }
 }

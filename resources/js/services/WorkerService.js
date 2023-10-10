@@ -1,47 +1,61 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { workerData } from "@/DTO/workerData";
 import store from "@/store";
 import { workerHashrateData } from "@/DTO/workerHashrateData";
 
 export class WorkerService {
-    constructor(translate, titles) {
+    constructor(translate, titles, route) {
         this.group_id = store.getters.getActive;
         this.worker_id = -1;
         this.translate = translate;
-        this.titles = this.useTranslater(titles);
+        this.titles = [];
+        this.titleIndexes = titles;
         this.rows = [];
+        this.workers_graph = {};
+        this.records = [];
+        this.filterButtons = [];
+        this.status = "all";
 
         this.table = new Map();
 
         this.waitWorkers = true;
-        this.waitTargetWorkers = true;
+        this.emptyWorkers = false;
+        this.emptyTableWorkers = false;
+
+        this.popupCardOpened = false;
+        this.popupCardClosed = false;
+
         this.target_worker = {};
+        this.waitTargetWorker = true;
+        this.visibleCard = false;
+
+        this.route = route;
     }
 
     useTranslater(indexes) {
-        return indexes.map((index) =>
+        this.titles = indexes.map((index) =>
             this.translate(`workers.table.thead[${index}]`)
         );
     }
 
-    setFirstRow() {
-        return {
-            class: "main",
-            name: this.translate("workers.table.sub_thead"),
-            hashrate:
-                store.getters.getAccount.hash_per_min +
-                store.getters.getAccount.unit +
-                "h/s",
-            // unit: store.getters.getAccount.unit,
-            hashRate24:
-                store.getters.getAccount.hash_per_day +
-                store.getters.getAccount.unit +
-                "h/s",
-            // unit24: store.getters.getAccount.unit,
-            rejectRate: store.getters.getAccount.reject_percent + " %",
-        };
-    }
+    // setFirstRow() {
+    //     return {
+    //         class: "main",
+    //         name: this.translate("workers.table.sub_thead"),
+    //         hashrate:
+    //             store.getters.getAccount.hash_per_min +
+    //             store.getters.getAccount.unit +
+    //             "h/s",
+    //         // unit: store.getters.getAccount.unit,
+    //         hashRate24:
+    //             store.getters.getAccount.hash_per_day +
+    //             store.getters.getAccount.unit +
+    //             "h/s",
+    //         // unit24: store.getters.getAccount.unit,
+    //         rejectRate: store.getters.getAccount.reject_percent + " %",
+    //     };
+    // }
 
     updateGroup_id() {
         this.group_id = store.getters.getActive;
@@ -61,28 +75,38 @@ export class WorkerService {
         this.worker_id = -1;
     }
 
-    async fetchList() {
-        return await api.get(`/workers/${this.group_id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
+    setStatus(status) {
+        this.status = status;
+
+        return this;
+    }
+
+    setFilterButtons() {
+        this.filterButtons = [
+            {
+                name: "all",
             },
-        });
+            {
+                name: "active",
+            },
+            {
+                name: "inactive",
+            },
+        ]
+
+        return this;
+    }
+
+    async fetchList() {
+        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
     }
 
     async fetchWorker() {
-        return await api.get(`/workers/worker/${this.worker_id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        return await ProfileApi.get(`/workers/worker/${this.worker_id}`);
     }
 
     async fetchWorkerGraph() {
-        return await api.get(`/workerhashrate/${this.worker_id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        return await ProfileApi.get(`/workerhashrate/${this.worker_id}`);
     }
 
     clearTable() {
@@ -91,6 +115,11 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
+
+
+            this.useTranslater(this.titleIndexes);
+            this.emptyWorkers = false;
+            this.emptyTableWorkers = false;
             this.waitWorkers = true;
 
             try {
@@ -100,18 +129,33 @@ export class WorkerService {
                     });
                 });
 
-                this.rows.unshift(this.setFirstRow());
+                // this.rows.unshift(this.setFirstRow());
+                if (this.rows.length === 0) {
+                    if (this.status === "all") {
+                        this.emptyWorkers = true;
+                    }
+                    this.emptyTableWorkers = true;
+                }
 
                 this.waitWorkers = false;
             } catch (e) {
                 console.error(`Error with: ${e}`);
+
+                this.emptyWorkers = true;
             }
         }
     }
 
+    setButtons() {
+        this.buttons = [
+            { title: `24 ${this.translate("hours")}`, value: 24 },
+            { title: `7 ${this.translate("days")}`, value: 168 },
+        ];
+    }
+
     async getWorker() {
         if (this.group_id !== -1) {
-            this.waitTargetWorkers = true;
+            this.waitTargetWorker = true;
 
             Object.assign(
                 this.target_worker,
@@ -120,6 +164,13 @@ export class WorkerService {
                 })
             );
         }
+    }
+
+    dropWorker() {
+        this.target_worker = {};
+
+        this.visibleCard = false;
+        this.waitTargetWorker = true;
     }
 
     setGraphTitles() {
@@ -137,8 +188,8 @@ export class WorkerService {
     }
 
     setDefaultKeys() {
-        this.graph = {
-            ...this.graph,
+        this.workers_graph = {
+            ...this.workers_graph,
             title: this.setGraphTitles(),
             dates: this.setDates(),
         };
@@ -149,49 +200,64 @@ export class WorkerService {
     }
 
     async makeFullValues() {
-        const [values, unit] = this.workers_graph.slice(-24).reduce(
+        const [hashrate, unit] = this.records.slice(-24).reduce(
             (acc, el) => {
-                let hashrate = el.hashrate ?? 0;
-                if (el.unit === "P") hashrate *= 1000;
-                else if (el.unit === "E") hashrate *= 1000000;
-                acc[0].push(Number(hashrate));
-                acc[1].push("T");
+                acc[0].push(el.hashrate);
+                acc[1].push(el.unit);
 
                 return acc;
             },
             [[], [], []]
         );
 
-        while (values.length < 24) {
-            values.push(0);
+        while (hashrate.length < 24) {
+            hashrate.push(0);
             unit.push("T");
         }
 
-        Object.assign(this.graph, {
-            values: values.reverse(),
+        Object.assign(this.workers_graph, {
+            values: hashrate.reverse(),
             unit: unit.reverse(),
         });
     }
 
+    openPopupCard() {
+        this.popupCardOpened = true;
+
+        setTimeout(() => {
+            this.popupCardOpened = false;
+        }, 300);
+    }
+
+    closePopupCard() {
+        this.popupCardClosed = true;
+
+        setTimeout(() => {
+            this.popupCardClosed = false;
+        }, 300);
+    }
+
     async getPopup(worker_id) {
+        this.visibleCard = true;
+
         this.updateGroup_id();
 
         this.worker_id = worker_id;
-        await this.getWorkerGraph();
-
         await this.setDefaultKeys();
+
+        await this.getWorkerGraph();
 
         await this.makeFullValues();
         await this.getWorker();
 
-        this.waitTargetWorkers = false;
+        this.waitTargetWorker = false;
     }
 
     async getWorkerGraph() {
         if (this.group_id !== -1) {
-            this.waitTargetWorkers = true;
+            this.waitTargetWorker = true;
 
-            this.workers_graph = (await this.fetchWorkerGraph()).data.data.map(
+            this.records = (await this.fetchWorkerGraph()).data.data.map(
                 (el) => {
                     return new workerHashrateData({
                         ...el,

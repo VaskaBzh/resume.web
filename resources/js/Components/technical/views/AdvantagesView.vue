@@ -9,7 +9,7 @@
                     class="description"
                     v-html="this.$t('hosting.get_block.text')"
                 ></p>
-                <blue-button class="button button-md button-reverce">
+                <blue-button class="button button-md button-reverce btn-consultation">
                     <a class="all-link" href="https://t.me/allbtc_support">
                         <svg
                             width="21"
@@ -59,6 +59,9 @@ export default {
 
 <style scoped lang="scss">
 .advantages {
+    &__container {
+        margin: 0 auto;
+    }
     &__content {
         display: flex;
         flex-direction: column;
@@ -84,6 +87,9 @@ export default {
     &_title {
         max-width: 1216px;
         text-align: center;
+    }
+    .btn-consultation {
+        margin-top: 20px;
     }
 }
 </style>

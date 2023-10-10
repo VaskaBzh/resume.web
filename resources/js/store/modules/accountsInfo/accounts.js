@@ -1,4 +1,4 @@
-import api from "@/api/api";
+import { MainApi } from "@/api/api";
 
 import { accountData } from "@/DTO/accountData";
 import store from "@/store";
@@ -9,28 +9,22 @@ export default {
         async destroy_accounts({ commit, state }) {
             commit("destroy_acc");
         },
-        async set_active({ commit, state }, index) {
-            let sub = new accountData(
-                (
-                    await api.get(`/subs/sub/${index}`, {
-                        headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
-                        },
-                    })
-                ).data.data
-            );
+        async set_active({ commit, state }, data) {
+            if (data.index) {
+                let sub = new accountData(
+                    (
+                        await MainApi.get(`/subs/sub/${data.index}`)
+                    ).data.data
+                );
 
-            commit("updateActive", index);
+                commit("updateActive", data.index);
 
-            // let sub = Object.values(state.accounts).filter(
-            //     (el) => el.group_id === index
-            // )
-
-            commit("updateActiveAccount", sub);
+                commit("updateActiveAccount", sub);
+            }
         },
         async accounts_all({ commit, state }, user_id) {
             let subsList = (
-                await api.get(`/subs/${user_id}`, {
+                await MainApi.get(`/subs/${user_id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -41,21 +35,27 @@ export default {
 
             commit("updateAccounts", subsList);
             if (state.active === -1) {
-                this.dispatch(
-                    "set_active",
-                    Object.values(subsList)[firstSubIndex].group_id
-                );
+                this.dispatch("set_active", {
+                    index: Object.values(subsList)[firstSubIndex].group_id,
+                });
             }
         },
-        async set_accounts({ commit, state }, user_id) {
-            if (state.valid) {
-                await this.dispatch("accounts_all", user_id);
-                this.dispatch("getMiningStat");
-                this.dispatch("getGraph");
-                commit("setValid")
+        async set_accounts({ commit, state }, data) {
+            if (data.route?.query?.access_key) {
+                this.dispatch("set_active", {
+                    access_key: null,
+                    index: data.route.query.puid,
+                });
+            } else {
+                if (state.valid) {
+                    await this.dispatch("accounts_all", data.user_id);
+                    this.dispatch("getMiningStat");
+                    this.dispatch("getGraph");
+                    commit("setValid", false);
+                }
+                this.dispatch("drop_interval");
+                this.dispatch("set_interval", data.user_id);
             }
-            this.dispatch("drop_interval");
-            this.dispatch("set_interval", user_id);
         },
         set_interval({ state }, user_id) {
             state.interval = setInterval(async () => {
@@ -65,8 +65,8 @@ export default {
         drop_interval({ state }) {
             clearInterval(state.interval);
         },
-        drop_all({ commit, state }) {
-            clearInterval(state.interval);
+        drop_all({ commit }) {
+            this.dispatch("drop_interval");
 
             commit("destroy_acc");
         },
@@ -76,15 +76,16 @@ export default {
             state.accounts = {};
             state.activeAccount = {};
             state.active = -1;
+            state.valid = true;
         },
         updateActive(state, index) {
             state.active = index;
         },
-        setValid(state) {
-            state.valid = false;
+        setValid(state, validState) {
+            state.valid = validState;
         },
         updateAccounts(state, accounts) {
-            state.accounts = { ...accounts };
+            state.accounts = [ ...accounts ];
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
@@ -93,7 +94,7 @@ export default {
     state: {
         valid: true,
         active: -1,
-        accounts: {},
+        accounts: [],
         activeAccount: {},
         interval: null,
     },

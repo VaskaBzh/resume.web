@@ -80,7 +80,7 @@
             id="checkbox"
             v-model="service.checkbox"
         />
-        <label for="checkbox" :class="{ error: service.checkbox }">
+        <label for="checkbox" :class="{ error: service.checkboxState }">
             <div class="fake">
                 <svg
                     width="24"

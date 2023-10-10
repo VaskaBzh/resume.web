@@ -1,8 +1,12 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Auth\LoginRequest;
+use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -23,39 +27,33 @@ class LoginController extends Controller
     |
     */
 
-//
-
     use AuthenticatesUsers;
 
-    public function login(Request $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
     {
-        $request->validate([
-            'email' => 'required|string',
-            'password' => 'required|string'
-        ]);
-
-        if (auth()->check()) {
-            return new JsonResponse([
-                'error' => ['Already login in']
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
-                'error' => ['Credentials do not match']
+                'error' => [__('auth.failed')]
             ], Response::HTTP_BAD_REQUEST);
         }
 
-        $user = User::whereEmail($request->email)->first();
-        $user->tokens()->delete();
+        if (!$request->user->hasVerifiedEmail()) {
+            return new JsonResponse([
+                'error' => [__('auth.email.not.verified', ['email' => $request->user->email])]
+            ], Response::HTTP_FORBIDDEN);
+        }
 
-        $token = $user->createToken($user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
+        $request
+            ->user
+            ->tokens()
+            ->delete();
+        $token = $request->user->createToken($request->user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
 
         return new JsonResponse([
-            'user' => $user,
+            'user' => new UserResource($request->user),
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
-            'has_referral_role' => $user->hasRole('referral')
+            'has_referral_role' => $request->user->hasRole('referral')
         ]);
     }
 
@@ -70,34 +68,10 @@ class LoginController extends Controller
 
     public function decreaseTokenTime(): void
     {
-        auth()->user()
-            ->currentAccessToken()
+        auth()
+            ->user()
+            ->tokens()
+            ->first()
             ->update(['expires_at' => now()->addHours(2)]);
     }
-
-    public function reVerify(Request $request): JsonResponse
-    {
-        if (!Auth::attempt($request->only('email', 'password'), $request->filled('remember'))) {
-            return new JsonResponse([
-                'error' => ['Credentials do not match']
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
-        User::whereEmail($request->email)
-            ->first()
-            ->sendEmailVerificationNotification();
-
-        if (app()->getLocale() === 'ru') {
-            return response()->json([
-                $request->email => [trans('Сообщение с подтверждением отправлено на почту.')],
-            ]);
-        } else if (app()->getLocale() === 'en') {
-            return response()->json([
-                $request->email => [trans('A confirmation email has been sent to your email address.')],
-            ]);
-        }
-
-        return $this->logout();
-    }
-
 }

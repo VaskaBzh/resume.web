@@ -156,7 +156,7 @@ export default {
         min-width: 350px;
         z-index: 101;
         &_text {
-            color: #818c99;
+            color: var(--text-secondary);
             font-size: 12px;
             font-weight: 400;
             line-height: 130%;

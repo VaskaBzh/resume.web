@@ -54,11 +54,15 @@ export default {
 
 <style scoped lang="scss">
 .consultation {
+    &__container {
+        margin: 0 auto;
+    }
     &__main {
         display: flex;
         flex-direction: column;
         align-items: center;
         gap: 40px;
+        padding: 40px;
         @media (max-width: 479.98px) {
             gap: 32px;
         }
@@ -88,11 +92,16 @@ export default {
         }
         .input {
             max-width: 386px;
-            width: 100%;
+            width: 100%;;
+            height: 56px;
             font-size: 18px;
             color: #c5c5c5;
             line-height: 181.1%;
             font-weight: 500;
+            border-radius: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.16);
+            outline: none;
+            padding-left: 2em;
             &::placeholder {
                 color: #c5c5c5;
                 font-weight: 300;

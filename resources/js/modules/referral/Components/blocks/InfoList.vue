@@ -25,13 +25,13 @@ export default {
     i18n: {
         sharedMessages: ReferralsMessage,
     },
-    data() {
-        return {
-            mainRow: {
+    computed: {
+        mainRow() {
+            return {
                 percent: this.$t("grade.labels[0]"),
                 hashrate: this.$t("grade.labels[1]"),
-            },
-        };
+            };
+        },
     },
 };
 </script>

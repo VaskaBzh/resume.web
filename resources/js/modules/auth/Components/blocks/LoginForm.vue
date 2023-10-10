@@ -6,7 +6,7 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="errorsExpired.error"
+                :error="errorsExpired.error ?? errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="this.$t('auth.login.placeholders[0]')"
                 name="email"
@@ -23,7 +23,7 @@
             >
                 <main-password
                     name="password"
-                    :placeholder="this.$t('auth.reg.placeholders[1]')"
+                    :placeholder="this.$t('auth.login.placeholders[1]')"
                     :model="service.form.password"
                     :errors="errors"
                     @change="
@@ -70,6 +70,12 @@
                 this.$t("auth.login.button")
             }}</a></blue-button
         >
+        <verify-link
+            class="form-auth_forgot-password"
+            verifyUrl="/password/forgot"
+            :verifyText="$t('auth.login.reset')"
+            :data="service.form"
+        />
         <p class="text text-light form-auth_text">
             {{ this.$t("auth.login.link[0]") }}
             <router-link :to="{ name: 'registration' }" class="form-auth_link">
@@ -77,6 +83,25 @@
             >
         </p>
     </form>
+    <password-popup
+        :opened="service.openedPasswordPopup"
+        :wait="service.waitAjax"
+        :closed="service.closedPasswordPopup"
+        :validateService="service"
+        @sendPassword="sendPassword($event)"
+    />
+	<verify-popup
+		:closed="service.closedTwoFacPopup"
+		:opened="service.openedTwoFacPopup"
+	>
+		<two-fac-form
+			title="form.fac.title"
+			text="form.fac.text"
+			placeholder="form.fac.placeholder"
+			button_text="form.fac.button_text"
+			@sendForm="loginWithSecretCode($event)"
+		/>
+	</verify-popup>
 </template>
 
 <script>
@@ -86,18 +111,30 @@ import MainPassword from "@/modules/common/Components/inputs/MainPassword.vue";
 import AuthErrors from "@/modules/auth/Components/UI/AuthErrors.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
+import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
+import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 
+import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 import { LoginService } from "@/modules/auth/services/LoginService";
 import { mapGetters } from "vuex";
+import VerifyPopup from "../../../verify/Components/VerifyPopup.vue";
+import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
 
 export default {
     name: "login-form",
     components: {
+	    TwoFacForm,
+	    VerifyPopup,
+        VerifyLink,
         AuthInput,
         MainPassword,
         AuthErrors,
         MainTitle,
         BlueButton,
+        PasswordPopup,
+    },
+    i18n: {
+        sharedMessages: AuthMessages,
     },
     computed: {
         ...mapGetters(["errors", "errorsExpired"]),
@@ -105,11 +142,43 @@ export default {
     data() {
         return {
             pdf,
-            service: new LoginService(this.$router),
+            service: new LoginService(this.$router, this.$route),
         };
+    },
+    methods: {
+        async loginWithSecretCode(secret) {
+            this.service.form.two_fa_secret = secret;
+            await this.service.login();
+        },
+        async sendPassword(form) {
+            await this.service.sendPassword(form);
+        },
+        async openPasswordPopup() {
+            await this.service.openPasswordPopup();
+        },
+    },
+    watch: {
+        '$i18n.locale'() {
+            this.service.setTranslate(this.$t);
+        }
     },
     mounted() {
         this.service.setForm();
+
+        if (this.$route.query?.action === "password") {
+            this.openPasswordPopup();
+        }
+        if (this.$route.query?.action === "email") {
+            this.$store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: this.$t("validate_messages.verify_message"),
+            });
+        }
+
+        if (this.$t) {
+            this.service.setTranslate(this.$t);
+        }
     },
 };
 </script>
@@ -117,12 +186,28 @@ export default {
 <style scoped lang="scss">
 .form-auth {
     gap: 0;
+    width: 100%;
+    .form-auth_forgot-password {
+        font-size: 20px;
+        color: rgb(63, 123, 221);
+        font-weight: 600;
+        min-height: 56px;
+        display: inline-flex;
+        align-items: center;
+        margin-left: 36px;
+        @media (max-width: 1279.98px) {
+            width: 100%;
+            margin-left: 0;
+        }
+    }
     &__content {
         display: flex;
         flex-direction: column;
-        max-width: 536px;
         width: 100%;
         gap: 16px;
+        @media (min-width: 991.98px) {
+            max-width: 536px;
+        }
     }
     &_title {
         margin-bottom: 32px;
@@ -201,6 +286,7 @@ export default {
             line-height: 135%;
             margin: 16px 0 40px;
             position: relative;
+            width: 100%;
             .form-auth_link {
                 @media (max-width: $tablet) {
                     display: block;

@@ -60,7 +60,7 @@
                     <!--                    </div>-->
                 </div>
                 <img
-                    v-if="!getTheme"
+                    v-if="!isDark"
                     class="popup__content_logo"
                     src="../../../assets/img/logo_high_quality.svg"
                     alt="logo"
@@ -132,7 +132,7 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["isDark"]),
     },
     methods: {
         async close() {

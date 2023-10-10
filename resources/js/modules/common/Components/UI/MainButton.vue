@@ -10,8 +10,7 @@
 <script>
 export default {
     name: "main-button",
-
-}
+};
 </script>
 
 <style scoped>
@@ -20,34 +19,39 @@ export default {
     width: fit-content;
     min-height: 40px;
     border-radius: 12px;
-    background: var(--old-light-secondary-wb, #FFF);
+    background: var(--background-island, #fff);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border: none;
     outline: none;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    color: #2E90FA;
+    color: #2e90fa;
     padding: 0 16px;
+    font-family: NunitoSans, serif;
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 32px;
 }
 .button-blue {
-    background: var(--old-primary-500, #2E90FA);
-    color: var(--old-light-secondary-wb, var(--main-gohan, #FFF));
-    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.10);
+    background: var(--old-primary-500, #2e90fa);
+    color: var(--buttons-primary-text, var(--main-gohan, #fff));
+    box-shadow: 0px 10px 10px -6px rgba(0, 0, 0, 0.1);
 }
 .button-red {
-    background: var(--old-light-red-100, #F1404A);
-    color: var(--old-light-secondary-wb, var(--main-gohan, #FFF));
-    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.40), 0px 8px 24px -6px rgba(0, 0, 0, 0.16);
+    background: var(--old-light-red-100, #f1404a);
+    color: var(--buttons-delete-text, var(--main-gohan, #fff));
+    box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
+        0px 8px 24px -6px rgba(0, 0, 0, 0.16);
 }
 .button-blue .button_icon,
 .button-red .button_icon {
-    stroke: var(--old-light-secondary-wb, var(--main-gohan, #FFF));
+    stroke: var(--background-island, var(--background-island, #fff));
 }
 .button-reverse {
     background: transparent;
-    border: 1px solid var(--old-light-gray-400, #98A2B3);
-    color: var(--old-light-gray-600, #475467);
+    border: 1px solid var(--old-light-gray-400, #98a2b3);
+    color: var(--buttons-stroke-text, #475467);
 }
 .button-reverse .button_icon {
     stroke: var(--old-light-gray-600, #475467);
@@ -61,6 +65,9 @@ export default {
 .button_icon {
     width: 24px;
     height: 24px;
-    stroke: #2E90FA;
+    stroke: #2e90fa;
+}
+.button-disabled {
+    opacity: 0.5;
 }
 </style>

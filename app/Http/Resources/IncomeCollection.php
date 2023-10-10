@@ -14,13 +14,11 @@ class IncomeCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection->map(static fn(Income $income) => [
-                    'wallet' => $income->wallet?->wallet,
                     'referral_id' => $income->referral_id,
-                    'user_email' => $income->user_email,
                     'amount' => $income->daily_amount,
                     'hash' => $income->hash,
                     'status' => $income->status,
-                    'message' => $income->message,
+                    'message' => __('statuses.' . $income->message),
                     'created_at' => $income->created_at,
                     'updated_at' => $income->updated_at,
                 ]

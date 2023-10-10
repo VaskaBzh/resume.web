@@ -2,7 +2,7 @@
     font-weight: 300;
     font-size: 20px;
     line-height: 140%;
-    color: #7C7C7C;
+    color: var(--text-teritary);
     @media (max-width: $mobile) {
         font-size: 16px;
         line-height: 140%;

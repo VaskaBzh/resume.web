@@ -3,7 +3,7 @@
         <div class="profit__container">
             <div class="profit__main">
                 <img
-                    v-if="!getTheme"
+                    v-if="!isDark"
                     src="../../../../assets/img/profit_view_img-1.svg"
                     alt="img"
                     class="profit__image"
@@ -33,7 +33,7 @@ export default {
         MainTitle,
     },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["isDark"]),
     },
 };
 </script>
@@ -52,6 +52,7 @@ export default {
         }
     }
     &__container {
+        margin: 0 auto;
         position: relative;
         @media (min-width: 991.98px) {
             width: 100%;

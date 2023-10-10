@@ -92,7 +92,7 @@ export default {
     min-height: 0;
     border-radius: 12px;
     overflow: hidden;
-    background: #fafafa;
+    background: var(--background-island);;
     box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     &.validate,
     &__list {

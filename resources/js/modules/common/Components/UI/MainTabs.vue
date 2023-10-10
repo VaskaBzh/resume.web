@@ -1,7 +1,7 @@
 <template>
     <div class="cabinet__buttons">
         <button
-            class="cabinet_button"
+            class="cabinet_button referal-btns"
             :key="tab.title + i"
             v-for="(tab, i) in tabs"
             :class="{
@@ -27,4 +27,16 @@ export default {
 };
 </script>
 
-<style scoped lang="scss"></style>
+<style scoped lang="scss">
+@media (max-width: 497.98px) {
+    .referal-btns {
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 16px;
+        padding: 10px 12px;
+        height: 34px;
+    }
+}
+
+</style>

@@ -9,4 +9,13 @@ return [
     'wallet_update' => 'Wallet successfully updated',
     'wallet_delete' => 'Wallet successfully deleted',
     'wallet_prevent_last_delete' => 'You cannot delete the only wallet',
+    'referral.confirmed' => 'Referral relation is confirmed',
+    'referral.code.created' => 'Referral code successfully created',
+    'referral.exists' => 'Referral not exists',
+    'referral.code.exists' => 'Referral code not exists',
+    'account.password.update' => 'Password changed successfully',
+    'account.update' => 'Account successfully updated',
+    'failed' => 'Something went wrong',
+    'two_fa_disabled' => 'Two factor is disabled',
+    'two_fa_enabled' => 'Two factor is enabled',
 ];

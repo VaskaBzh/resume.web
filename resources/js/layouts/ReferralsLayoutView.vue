@@ -73,16 +73,24 @@ export default {
     opacity: 0;
 }
 .referral {
+    padding: 24px;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+
     &__wrapper {
         display: flex;
         flex-direction: column;
+        flex: 1 1 auto;
     }
     &__buttons {
         min-height: 48px;
+
     }
     &__cabinet {
         gap: 24px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
     &__tabs {
         @media (max-width: $mobile) {
@@ -93,9 +101,21 @@ export default {
                 width: 0;
                 display: none;
             }
+
+
+
         }
+
         &-list {
-            min-width: fit-content;
+            width: fit-content;
+            @media (max-width: 497.98px) {
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: 16px;
+                padding: 12px 0;
+                background: transparent;
+            }
         }
     }
 }

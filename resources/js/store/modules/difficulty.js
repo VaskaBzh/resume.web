@@ -1,6 +1,6 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
-import api from "@/api/api";
+import { MainApi } from "@/api/api";
 
 export default {
     actions: {
@@ -21,7 +21,7 @@ export default {
             }
         },
         async getMiningStat({ commit, state }) {
-            let minerstats = (await api.get("/miner_stat")).data.minerstats;
+            let minerstats = (await MainApi.get("/miner_stat")).data.minerstats;
 
             try {
                 let converterModel = {
