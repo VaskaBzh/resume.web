@@ -15,6 +15,7 @@
     <app-mobile-view/>
     <paymants-view/>
     <mission-view/>
+    <history-pool-view/>
     <connect-with-us-view/>
     <footer-component-land/>
 </template>
@@ -33,11 +34,13 @@ import MissionView from "../modules/home/Components/Views/MissionView.vue";
 import ConnectWithUsView from "../modules/home/Components/Views/ConnectWithUsView.vue";
 import FooterComponentLand from "../modules/common/Components/FooterComponentLand.vue";
 import {animateHeader} from "../modules/home/Services/LandHeaderAnime";
+import HistoryPoolView from "../modules/home/Components/Views/HistoryPoolView.vue";
 
 
 export default {
     name: 'homa-page',
     components: {
+        HistoryPoolView,
         FooterComponentLand,
         ConnectWithUsView,
         MissionView,
