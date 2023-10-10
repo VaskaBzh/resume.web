@@ -183,6 +183,16 @@ export class SettingsService {
         ).data;
     }
 
+    async generateFac() {
+        return (
+            await ProfileApi.put(`/2fac/generate/${this.user.id}`, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
     async fetchFac() {
         return (
             await ProfileApi.put(`/2fac/enable/${this.user.id}`, {
