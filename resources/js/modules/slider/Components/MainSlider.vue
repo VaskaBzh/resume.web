@@ -11,7 +11,9 @@
             :empty="empty"
             v-if="havePreloader && (wait || empty)"
         />
-        <slot v-if="!wait && !empty" />
+        <div class="slider__content" v-if="!wait && !empty">
+            <slot />
+        </div>
         <div class="slider__nav" v-if="haveNav && !wait && !empty">
             <!--            <page-info-->
             <!--                :startPage=""-->
@@ -124,11 +126,14 @@ export default {
 .slider {
     height: 100%;
     width: 100%;
+    &__content {
+        width: 100%;
+    }
     @media(max-width: 500px){
         height: auto;
     }
     &.onboarding_block-target {
-        border-radius: 12   px;
+        border-radius: 12px;
     }
     &__wrap {
         width: 100%;

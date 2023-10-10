@@ -22,7 +22,7 @@ export class SubService extends DefaultSubsService {
     }
 
     setTranslate(translate) {
-        this.translate = translate;
+        // this.translate = translate;
     }
 
     setWait(newWaitState) {
@@ -110,9 +110,7 @@ export class SubService extends DefaultSubsService {
     }
 
     useTranslater(indexes) {
-        return indexes.map((index) =>
-            this.translate(`table.titles[${index}]`)
-        );
+        return indexes.map((index) => `sub_table.titles[${index}]`);
     }
 
     setTable() {

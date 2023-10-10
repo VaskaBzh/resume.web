@@ -58,9 +58,6 @@ export default {
 	mounted() {
 		this.service.rowProcess(this.columns, this.titles);
 	},
-	updated() {
-		this.service.rowProcess(this.columns, this.titles);
-	}
 };
 </script>
 
