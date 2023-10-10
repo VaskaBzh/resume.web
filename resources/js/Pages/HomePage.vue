@@ -1,11 +1,11 @@
 <template>
-	<logo-animate-view/>
-<!--    <div class="app_back_transparent">-->
-<!--        <div class="app_back_transparent__container">-->
-<!--            <div class="app_back_transparent_block-one"><span class="app_back_transparent_one">allbtc</span></div>-->
-<!--            <div class="app_back_transparent_block-two"><span class="app_back_transparent_two">pool</span></div>-->
-<!--        </div>-->
-<!--    </div>-->
+    <header-component/>
+    <div class="app_back_transparent">
+        <div class="app_back_transparent__container">
+            <div class="app_back_transparent_block-one"><span class="app_back_transparent_one"><allbtc-logo-icon /></span></div>
+            <div class="app_back_transparent_block-two"><span class="app_back_transparent_two"><pool-logo-icon /></span></div>
+        </div>
+    </div>
     <landing-title/>
     <who-we-are/>
     <calculator-land/>
@@ -16,6 +16,7 @@
     <payments-view/>
     <mission-view/>
     <connect-with-us-view/>
+    <footer-component-land/>
 </template>
 <script>
 
@@ -31,13 +32,16 @@ import PaymentsView from "@/modules/home/Components/Views/PaymentsView.vue";
 import MissionView from "@/modules/home/Components/Views/MissionView.vue";
 import ConnectWithUsView from "@/modules/home/Components/Views/ConnectWithUsView.vue";
 import FooterComponentLand from "@/modules/common/Components/FooterComponentLand.vue";
+import PoolLogoIcon from "@/modules/home/icons/PoolLogoIcon.vue";
+import AllbtcLogoIcon from "@/modules/home/icons/AllbtcLogoIcon.vue";
+
 import {animateHeader} from "@/modules/home/Services/LandHeaderAnime";
-import LogoAnimateView from "../modules/home/Components/Views/LogoAnimateView.vue";
 
 export default {
     name: 'home-page',
     components: {
-	    LogoAnimateView,
+	    AllbtcLogoIcon,
+	    PoolLogoIcon,
         FooterComponentLand,
         ConnectWithUsView,
         MissionView,
@@ -120,9 +124,15 @@ export default {
         &_one, &_two {
             display: block;
             padding: 3px;
-	        text-shadow: 0px 5.13397216796875px 8.984451293945312px rgba(14, 14, 14, 0.05);
         }
 
+        &_one {
+	        width: clamp(1070px, 5vw, 324px);
+        }
+
+	    &_two {
+		    width: clamp(778px, 5vw, 237px);
+        }
     }
 }
 </style>
