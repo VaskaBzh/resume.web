@@ -1,5 +1,5 @@
 <template>
-    <div class="mobile-view scroll-section">
+    <div class="mobile-view">
         <div class="mobile-view__container">
             <head-line class="mobile-view__title">{{ $t("mobile_app.button") }}</head-line>
             <div class="mobile-view__wrapper">
@@ -110,6 +110,7 @@ export default {
     top: 0;
     left: 0;
     display: flex;
+    padding: 100px 0 70px;
     flex-flow: column;
     align-items: center;
     justify-content: space-evenly;

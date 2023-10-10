@@ -62,7 +62,6 @@ export function animatedSecurityView() {
         end: "+=1300",
         pin: true,
         scrub: 2,
-        markers: true,
         pinSpacing: true,
         id: ".security-view",
         smoothChildTiming: true,

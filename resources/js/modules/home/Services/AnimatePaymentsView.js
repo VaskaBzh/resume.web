@@ -14,7 +14,6 @@ export function animatePayView() {
             pin: false,
             scrub: 1.5,
             id: '.payments-view',
-            markers: true,
         }
     })
 
