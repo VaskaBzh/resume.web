@@ -1,7 +1,6 @@
 import store from "@/store";
 
 export async function AuthCheckProfileMiddleware(route, router) {
-    const user = store.getters.localUser;
     const token = store.getters.token;
 
     if (
@@ -13,7 +12,5 @@ export async function AuthCheckProfileMiddleware(route, router) {
         store.dispatch("drop_all");
         store.dispatch("dropUser");
         store.dispatch("dropToken");
-    } else {
-        store.dispatch("set_accounts", { route: route, user_id: user?.id });
     }
 }

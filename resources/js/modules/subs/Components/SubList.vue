@@ -9,7 +9,6 @@
                 :key="i"
                 :subData="subData"
             />
-<!--            <add-block />-->
         </div>
         <div class="sub__table" v-show="!subsType && table.get('rows').length > 0">
             <main-slider
@@ -44,14 +43,10 @@ import SubsRow from "@/modules/table/Components/SubsRow.vue";
 import TableTitles from "@/modules/table/Components/TableTitles.vue";
 import SubBlock from "@/modules/subs/Components/SubBlock.vue";
 import AddBlock from "@/modules/subs/Components/AddBlock.vue";
-import { mapGetters } from "vuex";
 import SubsNoInfo from "@/modules/subs/Components/SubsNoInfo.vue";
 
 export default {
     name: "sub-list",
-    computed: {
-        ...mapGetters(["allAccounts"]),
-    },
     props: {
         table: Object,
         empty: Boolean,

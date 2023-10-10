@@ -1,6 +1,6 @@
 <template>
     <th class="column">
-        <span class="column_value">{{ title }}</span>
+        <span class="column_value">{{ $t(title) }}</span>
         <span class="column__block" v-show="$slots">
             <slot />
         </span>
@@ -8,8 +8,13 @@
 </template>
 
 <script>
+import { TableMessages } from "@/modules/table/lang/TableMessages";
+
 export default {
     name: "title-column",
+    i18n: {
+        sharedMessages: TableMessages,
+    },
     props: {
         title: String,
     }

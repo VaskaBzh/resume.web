@@ -53,15 +53,22 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(["getActive"]),
+        ...mapGetters(["getActive", "user"]),
     },
-    mounted() {
+    async mounted() {
+        if (!this.$route?.query.access_key) {
+            this.$store.dispatch("setToken");
+            await this.$store.dispatch("setUser");
+        }
+
+        this.$store.dispatch("set_accounts", { route: this.$route, user_id: this.user?.id });
+
         if (
             this.$route.query?.onboarding === "true"
         ) {
             this.instructionService.setStepsCount(2).setVisible();
         }
-    }
+    },
 };
 </script>
 <style scoped>

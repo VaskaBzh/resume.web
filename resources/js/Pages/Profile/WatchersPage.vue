@@ -76,6 +76,7 @@
         :closed="service.popupClosed || closeOnBoardingPopup"
         :instructionConfig="instructionService"
         @createWatcher="createWatcher($event)"
+        @closed="instructionService.nextStep()"
     />
     <watchers-popup-remove
         :wait="service.wait"

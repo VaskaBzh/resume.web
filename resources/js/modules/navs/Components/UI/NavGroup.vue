@@ -8,10 +8,10 @@
 	>
 		<span
 			class="group_name"
-			v-show="group.group_name"
+			v-if="group.group_name"
 			@click="toggleDropdown"
 		>
-			{{ group.group_name }}
+			{{ $t(group.group_name) }}
 			<dropdown-icon class="group_icon" />
 		</span>
 		<transition-group name="tabs">

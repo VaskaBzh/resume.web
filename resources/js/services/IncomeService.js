@@ -20,32 +20,12 @@ export class IncomeService extends TableService {
 
     async fetchIncomes(page = 1, per_page = 1000) {
         return await ProfileApi.get(
-            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    ...(this.route?.query?.access_key
-                        ? { "X-Access-Key": this.route.query.access_key }
-                        : {
-                              Authorization: `Bearer ${store.getters.token}`,
-                          }),
-                },
-            }
-        );
+            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`);
     }
 
     async fetchPayout(page = 1, per_page = 15) {
         return await ProfileApi.get(
-            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    ...(this.route?.query?.access_key
-                        ? { "X-Access-Key": this.route.query.access_key }
-                        : {
-                              Authorization: `Bearer ${store.getters.token}`,
-                          }),
-                },
-            }
-        );
+            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`);
     }
 
     setMessage(message) {

@@ -26,6 +26,7 @@
 <script>
 import TableRow from "@/modules/table/Components/TableRow.vue";
 import TableTitles from "@/modules/table/Components/TableTitles.vue";
+
 import { mapGetters } from "vuex";
 
 export default {
@@ -60,35 +61,7 @@ export default {
     data() {
         return {
             redraw: true,
-            height: 360,
-            indexWorker: 0,
         };
-    },
-    watch: {
-        viewportWidth() {
-            if (this.viewportWidth >= 991.98) {
-                this.height = 360;
-            }
-            if (this.viewportWidth < 991.98) {
-                this.height = 352;
-            }
-        },
-        async indexWorker(newVal, oldVal) {
-            if (newVal !== oldVal && newVal !== -1) {
-                await setTimeout(() => (this.redraw = true), 1700);
-            }
-        },
-    },
-    methods: {
-        async getUser(data) {
-            this.$emit("getData", data);
-            // data.id ? await this.worker_service?.getPopup(data.id) : null;
-        },
-        dropUser() {
-            Object.values(this.worker_service).length > 0
-                ? this.worker_service.clearWorkerId()
-                : null;
-        },
     },
 };
 </script>

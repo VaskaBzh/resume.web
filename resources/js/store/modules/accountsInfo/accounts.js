@@ -13,17 +13,7 @@ export default {
             if (data.index) {
                 let sub = new accountData(
                     (
-                        await MainApi.get(`/subs/sub/${data.index}`, {
-                            headers: {
-                                ...(data?.access_key
-                                    ? {
-                                          "X-Access-Key": data.access_key,
-                                      }
-                                    : {
-                                          Authorization: `Bearer ${store.getters.token}`,
-                                      }),
-                            },
-                        })
+                        await MainApi.get(`/subs/sub/${data.index}`)
                     ).data.data
                 );
 
@@ -53,7 +43,7 @@ export default {
         async set_accounts({ commit, state }, data) {
             if (data.route?.query?.access_key) {
                 this.dispatch("set_active", {
-                    access_key: data.route.query.access_key,
+                    access_key: null,
                     index: data.route.query.puid,
                 });
             } else {

@@ -75,54 +75,6 @@ export default {
     padding: 0;
     position: relative;
 }
-.notification-card {
-    border-radius: 12px;
-    padding: 16px;
-    width: 285px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: var(--background-success, #e9f8f1);
-    color: var(--status-succesfull, #1fb96c);
-    font-family: Unbounded, serif;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 20px; /* 142.857% */
-}
-.green-card {
-    background: var(--background-success);
-    color: var(--status-succesfull, #1fb96c);
-}
-.red-card {
-    background: var(--background-failed);
-    color: var(--status-failed, #f1404a);
-}
-.note-animation {
-    z-index: 9999999999;
-    animation: noteAnimation 6s linear;
-    position: fixed;
-    top: 112px;
-    right: 0px;
-    opacity: 0;
-}
-@keyframes noteAnimation {
-    0% {
-        transform: translateX(280px);
-        opacity: 1;
-    }
-    5% {
-        transform: translateX(-24px);
-    }
-    95% {
-        transform: translateX(-24px);
-        opacity: 1;
-    }
-    100% {
-        transform: translateX(260px);
-        opacity: 0;
-    }
-}
 .auth {
     display: flex;
     justify-content: center;
@@ -143,8 +95,11 @@ export default {
                 display: flex;
                 flex-direction: column;
                 justify-content: space-between;
-                flex: 1 0 40%;
+                flex: 1 0 60%;
                 z-index: 2;
+	            @media (max-width: 1279.98px) {
+		            flex: 1 0 50%;
+	            }
 
                 & a {
                     display: block;

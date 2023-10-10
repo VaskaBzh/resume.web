@@ -1,8 +1,6 @@
-export const SubMessages = {
+export const TableMessages = {
     en: {
-        title: "Subaccounts",
-        search_placeholder: "Search by name",
-        table: {
+        sub_table: {
             titles: [
                 "Subaccount name",
                 "Workers",
@@ -11,12 +9,9 @@ export const SubMessages = {
                 "Total paid out",
             ]
         },
-        no_information: "No results found for your query",
     },
     ru: {
-        title: "Субаккаунты",
-        search_placeholder: "Поиск по имени",
-        table: {
+        sub_table: {
             titles: [
                 "Имя субаккаунта",
                 "Воркеры",
@@ -25,6 +20,5 @@ export const SubMessages = {
                 "Выплачено всего",
             ]
         },
-        no_information: "По вашему запросу ничего не найдено",
     }
 }

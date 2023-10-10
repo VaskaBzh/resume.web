@@ -43,11 +43,13 @@ export default {
     data() {
         return {
             searchValue: "",
+            timeOut: null,
         };
     },
     watch: {
         searchValue(newValue) {
-            this.$emit("searched", newValue);
+            clearTimeout(this.timeOut);
+            this.timeOut = setTimeout(() => this.$emit("searched", newValue), 1000);
         },
     },
     methods: {

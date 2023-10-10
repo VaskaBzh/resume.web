@@ -196,102 +196,102 @@
                                         <span></span>
                                     </div>
                                 </li>
-                                <li class="home-im__content_item">
-                                    <p class="text">
-                                        {{ $t("home.bitcoin_block.next_diff") }}
-                                    </p>
-                                    <div class="subtitle subtitle-value">
-                                        <span
-                                            v-value-scroll
-                                            v-if="this.btcInfo.btc"
-                                            >{{
-                                                this.btcInfo.btc.nextDiff.toLocaleString(
-                                                    "en-US"
-                                                )
-                                            }}</span
-                                        >
-                                        <span v-else>...</span>
-                                        <span v-if="this.btcInfo.btc"
-                                            >{{ this.btcInfo.btc.diff_change }}
-                                            /
-                                            {{
-                                                (
-                                                    (Number(
-                                                        this.btcInfo.btc
-                                                            .nextDiff
-                                                    ) -
-                                                        Number(
-                                                            this.btcInfo.btc
-                                                                .diff
-                                                        )) /
-                                                    1000000000000
-                                                ).toFixed(2)
-                                            }}
-                                            T</span
-                                        >
-                                        <span v-else>... / ...</span>
-                                    </div>
-                                </li>
-                                <li class="home-im__content_item">
-                                    <p class="text">
-                                        {{
-                                            $t(
-                                                "home.bitcoin_block.date_diff[0]"
-                                            )
-                                        }}
-                                    </p>
-                                    <div
-                                        class="subtitle subtitle-value"
-                                        v-if="this.btcInfo.btc"
-                                    >
-                                        <span v-if="days !== 0"
-                                            >{{ days }}
-                                            {{
-                                                days === 1
-                                                    ? $t(
-                                                          "home.bitcoin_block.date_diff[1]"
-                                                      )
-                                                    : days > 1 && days <= 4
-                                                    ? $t(
-                                                          "home.bitcoin_block.date_diff[2]"
-                                                      )
-                                                    : $t(
-                                                          "home.bitcoin_block.date_diff[3]"
-                                                      )
-                                            }}</span
-                                        >
-                                        <span v-if="hours !== 0"
-                                            >{{ hours }}
-                                            {{
-                                                hours === 1
-                                                    ? $t(
-                                                          "home.bitcoin_block.date_diff[4]"
-                                                      )
-                                                    : hours > 1 && hours <= 4
-                                                    ? $t(
-                                                          "home.bitcoin_block.date_diff[5]"
-                                                      )
-                                                    : $t(
-                                                          "home.bitcoin_block.date_diff[6]"
-                                                      )
-                                            }}</span
-                                        >
-                                    </div>
-                                    <div class="subtitle subtitle-value" v-else>
-                                        ...
-                                        {{
-                                            $t(
-                                                "home.bitcoin_block.date_diff[1]"
-                                            )
-                                        }}
-                                        ...
-                                        {{
-                                            $t(
-                                                "home.bitcoin_block.date_diff[2]"
-                                            )
-                                        }}
-                                    </div>
-                                </li>
+<!--                                <li class="home-im__content_item">-->
+<!--                                    <p class="text">-->
+<!--                                        {{ $t("home.bitcoin_block.next_diff") }}-->
+<!--                                    </p>-->
+<!--                                    <div class="subtitle subtitle-value">-->
+<!--                                        <span-->
+<!--                                            v-value-scroll-->
+<!--                                            v-if="this.btcInfo.btc"-->
+<!--                                            >{{-->
+<!--                                                this.btcInfo.btc.nextDiff.toLocaleString(-->
+<!--                                                    "en-US"-->
+<!--                                                )-->
+<!--                                            }}</span-->
+<!--                                        >-->
+<!--                                        <span v-else>...</span>-->
+<!--                                        <span v-if="this.btcInfo.btc"-->
+<!--                                            >{{ this.btcInfo.btc.diff_change }}-->
+<!--                                            /-->
+<!--                                            {{-->
+<!--                                                (-->
+<!--                                                    (Number(-->
+<!--                                                        this.btcInfo.btc-->
+<!--                                                            .nextDiff-->
+<!--                                                    ) - -->
+<!--                                                        Number(-->
+<!--                                                            this.btcInfo.btc-->
+<!--                                                                .diff-->
+<!--                                                        )) /-->
+<!--                                                    1000000000000-->
+<!--                                                ).toFixed(2)-->
+<!--                                            }}-->
+<!--                                            T</span-->
+<!--                                        >-->
+<!--                                        <span v-else>... / ...</span>-->
+<!--                                    </div>-->
+<!--                                </li>-->
+<!--                                <li class="home-im__content_item">-->
+<!--                                    <p class="text">-->
+<!--                                        {{-->
+<!--                                            $t(-->
+<!--                                                "home.bitcoin_block.date_diff[0]"-->
+<!--                                            )-->
+<!--                                        }}-->
+<!--                                    </p>-->
+<!--                                    <div-->
+<!--                                        class="subtitle subtitle-value"-->
+<!--                                        v-if="this.btcInfo.btc"-->
+<!--                                    >-->
+<!--                                        <span v-if="days !== 0"-->
+<!--                                            >{{ days }}-->
+<!--                                            {{-->
+<!--                                                days === 1-->
+<!--                                                    ? $t(-->
+<!--                                                          "home.bitcoin_block.date_diff[1]"-->
+<!--                                                      )-->
+<!--                                                    : days > 1 && days <= 4-->
+<!--                                                    ? $t(-->
+<!--                                                          "home.bitcoin_block.date_diff[2]"-->
+<!--                                                      )-->
+<!--                                                    : $t(-->
+<!--                                                          "home.bitcoin_block.date_diff[3]"-->
+<!--                                                      )-->
+<!--                                            }}</span-->
+<!--                                        >-->
+<!--                                        <span v-if="hours !== 0"-->
+<!--                                            >{{ hours }}-->
+<!--                                            {{-->
+<!--                                                hours === 1-->
+<!--                                                    ? $t(-->
+<!--                                                          "home.bitcoin_block.date_diff[4]"-->
+<!--                                                      )-->
+<!--                                                    : hours > 1 && hours <= 4-->
+<!--                                                    ? $t(-->
+<!--                                                          "home.bitcoin_block.date_diff[5]"-->
+<!--                                                      )-->
+<!--                                                    : $t(-->
+<!--                                                          "home.bitcoin_block.date_diff[6]"-->
+<!--                                                      )-->
+<!--                                            }}</span-->
+<!--                                        >-->
+<!--                                    </div>-->
+<!--                                    <div class="subtitle subtitle-value" v-else>-->
+<!--                                        ...-->
+<!--                                        {{-->
+<!--                                            $t(-->
+<!--                                                "home.bitcoin_block.date_diff[1]"-->
+<!--                                            )-->
+<!--                                        }}-->
+<!--                                        ...-->
+<!--                                        {{-->
+<!--                                            $t(-->
+<!--                                                "home.bitcoin_block.date_diff[2]"-->
+<!--                                            )-->
+<!--                                        }}-->
+<!--                                    </div>-->
+<!--                                </li>-->
                             </ul>
                             <blue-button
                                 class="big btn-line-graph"

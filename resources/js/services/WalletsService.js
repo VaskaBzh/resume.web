@@ -280,6 +280,8 @@ export class WalletsService extends DefaultSubsService {
                         });
 
                         requestCount++;
+
+                        return;
                     } catch (err) {
                         console.error("Error with: " + err);
                         store.dispatch("setFullErrors", err.response.data.errors);
@@ -293,9 +295,9 @@ export class WalletsService extends DefaultSubsService {
                 }
 
                 if (requestCount > 0) {
+                    this.closePopup();
                     await this.index();
                     this.clearForm();
-                    this.closePopup();
                 }
             } catch (err) {
                 console.error(err);

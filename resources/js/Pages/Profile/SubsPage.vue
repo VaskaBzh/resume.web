@@ -2,7 +2,7 @@
     <div class="subs">
         <div class="subs__wrapper">
             <main-title class="subs_title" tag="h4">{{
-                $t("subs.title")
+                $t("title")
             }}</main-title>
             <div class="subs__wrapper" v-if="!service.waitSubs && !service.emptySubs">
                 <sub-header
@@ -56,9 +56,6 @@ export default {
         sharedMessages: SubMessages,
     },
     watch: {
-        "$i18n.locale"() {
-            this.service.setDocumentTitle(this.$t("subs.title"));
-        },
         allAccounts(newAccountsList) {
             this.service.setSubList(newAccountsList)
                 .statesProcess()
@@ -66,11 +63,12 @@ export default {
                 .tableStatesProcess();
         },
         '$i18n.locale'() {
+            this.service.setDocumentTitle(this.$t("title"));
+
             this.service.setSubList(this.allAccounts)
                 .statesProcess()
                 .tableProcess()
-                .tableStatesProcess()
-                .setTranslate(this.$t);
+                .tableStatesProcess();
         },
     },
     data() {
@@ -90,14 +88,11 @@ export default {
     methods: {
         toggleIsTable() {
             this.service.toggleSubsType();
-        }
+        },
     },
     mounted() {
-        if (this.$t) {
-            this.service.setTranslate(this.$t);
-        }
+        this.service.setDocumentTitle(this.$t("title"));
 
-        this.service.setDocumentTitle(this.$t("accounts.title"));
         this.service.setSubList(this.allAccounts)
             .statesProcess()
             .tableStatesProcess()
