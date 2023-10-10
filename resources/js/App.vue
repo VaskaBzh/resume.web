@@ -1,47 +1,59 @@
 <template>
     <keep-alive>
-        <component :is="route.meta.layoutComponent">
+        <component :is="$route.meta.layoutComponent">
             <router-view />
         </component>
     </keep-alive>
 </template>
 
 <script>
-import { useRoute } from "vue-router";
-import ThemeService from '@/modules/interface/Services/ThemeService';
 import { mapGetters } from "vuex";
+import { ProfileApi } from "@/api/api";
+
 export default {
     name: "app-layout-view",
     computed: {
-        ...mapGetters(["isDark"]),
-        route() {
-            return useRoute();
-        },
+        ...mapGetters(["isDark", "token", "user"]),
     },
     data() {
         return {
-            service: new ThemeService()
-        }
+            isPageHidden: false,
+        };
     },
     methods: {
         handleResize() {
             this.$store.dispatch("getViewportWidth", window.innerWidth);
         },
+        async onClose() {
+            try {
+                if (this.token && !this.$route?.query?.access_key)
+                    await ProfileApi.put("/decrease/token");
+            } catch (error) {
+                console.error("Error decreasing token:", error);
+            }
+        },
+        handleVisibilityChange() {
+            this.isPageHidden = document.hidden;
+        },
     },
-    created() {
-        this.$store.dispatch("setUser");
-        this.$store.dispatch("setToken");
+    async created() {
+        await this.$store.dispatch("setCurrency");
 
+		this.$store.dispatch("setToken");
         window.addEventListener("resize", this.handleResize);
+        document.addEventListener(
+            "visibilitychange",
+            this.handleVisibilityChange
+        );
+        window.addEventListener("beforeunload", this.onClose);
         this.handleResize();
     },
-    mounted() {
-        const themeNames = {
-            false: "light",
-            true: "dark",
-        }
-        if (this.isDark)
-            this.service.toggleTheme(themeNames[this.isDark]);
+    async unmounted() {
+        document.removeEventListener(
+            "visibilitychange",
+            this.handleVisibilityChange
+        );
+        window.removeEventListener("beforeunload", this.onClose);
     },
 };
 </script>

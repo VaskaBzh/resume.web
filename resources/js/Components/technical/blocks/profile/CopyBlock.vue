@@ -1,44 +1,70 @@
 <template>
-    <div class="copy__block">
-        <span class="connecting-description">
-            {{ this.copyObject.title }}
-        </span>
+    <div
+        class="copy__block onboarding_block"
+        :class="{
+            'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1
+        }"
+    >
         <copy-row
             v-for="(copy, i) in this.copyObject.copyObject"
             :key="i"
             :copyObject="copy"
         ></copy-row>
+        <instruction-step
+            @next="instructionConfig.nextStep()"
+            @prev="instructionConfig.prevStep()"
+            @close="instructionConfig.nextStep(6)"
+            :step_active="1"
+            :steps_count="instructionConfig.steps_count"
+            :step="instructionConfig.step"
+            :isVisible="instructionConfig.isVisible"
+            text="texts.connecting[0]"
+            title="titles.connecting[0]"
+            className="onboarding__card-right"
+        />
     </div>
 </template>
 
 <script>
 import CopyRow from "@/modules/common/Components/UI/CopyRow.vue";
+import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
 export default {
-    components: { CopyRow },
+    components: {
+        CopyRow,
+        InstructionStep,
+    },
     name: "copy-block",
     props: {
         copyObject: Object,
+        instructionConfig: Object,
     },
 };
 </script>
 
 <style scoped lang="scss">
-.connecting-description{
-    color: var(--light-gray-400, #98A2B3);
-    font-family: NunitoSans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 24px */;
-    margin-bottom: 18px;
+.onboarding_block {
+    border-radius: var(--surface-border-radius-radius-s-md, 12px);
+    transition: none;
+}
+.onboarding_block-target {
+    background: var(--background-island);
+}
+@media(max-width: 500px) {
+    .connecting-description{
+        font-size: 12px;
+        line-height: 16px
+    }
 }
 .copy {
     &__block {
         display: flex;
         flex-direction: column;
-        gap: 22px;
+        gap: 16px;
         flex: 1 1 auto;
+        @media(max-width:500px){
+             gap: 8px;
+        }
         //@media (max-width: 767.98px) {
         //.connecting__row {
         //    &:first-child {

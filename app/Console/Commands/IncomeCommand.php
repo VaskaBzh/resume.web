@@ -68,15 +68,15 @@ class IncomeCommand extends Command
                 ->setStatus(status: Status::READY_TO_PAYOUT);
 
             $incomeService->createLocalIncome(wallet: $wallet);
-            $incomeService->updateLocalSub();
         } else {
             $incomeService
-                ->setMessage(Message::LESS_MIN_WITHDRAWAL)
-                ->setStatus(Status::PENDING);
+                ->setMessage(message: Message::NO_WALLET)
+                ->setStatus(status: Status::PENDING);
 
             $incomeService->createLocalIncome(wallet: null);
-            $incomeService->createFinance();
-            $incomeService->updateLocalSub();
         }
+
+        $incomeService->createFinance();
+        $incomeService->updateLocalSub();
     }
 }

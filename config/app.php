@@ -64,7 +64,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Here you may specify the default timezone for your application, which
-    | will be used by the PHP date and date-time functions. We have gone
+    | will be used by the PHP date and date-time functionsMap. We have gone
     | ahead and set this to a sensible default for you out of the box.
     |
     */
@@ -196,7 +196,6 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-
     ],
 
     /*

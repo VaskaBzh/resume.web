@@ -4,6 +4,11 @@ import { createI18n } from "vue-i18n";
 // Ready translated locale messages
 const messages = {
     en: {
+        validate_messages: {
+            watcher_message: "Watcher created successfully",
+            verify_message: "Email verified successfully",
+            two_fa_message: "Two-factor authentication has been successfully linked",
+        },
         more: "More",
         auth: {
             error: "",
@@ -44,7 +49,7 @@ const messages = {
             hash: "Hashrate",
             difficulty: "Difficulty",
             rejected: "Rejected",
-            workers: "Active workers",
+            workers: "Workers",
         },
         header: {
             login_button: "Account",
@@ -129,6 +134,7 @@ const messages = {
                 income: "Earnings",
                 connecting: "Connection",
                 wallets: "Wallets",
+                watchers: "Watchers links",
                 home: "Home",
                 own_cabinet: "Profile",
                 complexity: "Difficulty",
@@ -423,21 +429,23 @@ const messages = {
             ],
         },
         tabs: {
+            subs_group: "Subaccounts",
+            settings_group: "Settings",
             statistic: "Statistics",
             accounts: "Subaccounts",
-            workers: "Worker",
+            workers: "Workers",
             income: "Earnings",
             connecting: "Connection",
-            watchers: "Watchers",
+            watchers: "Watcher's links",
             wallets: "Wallets",
             referral: "Ref. cabinet",
             faq: "FAQ",
             support: "Support",
-            settings: "Account"
-
+            settings: "Account",
         },
         days: "Days",
         hours: "Hours",
+        month: "Month",
         chart: {
             buttons: {
                 day: "24 days",
@@ -467,6 +475,7 @@ const messages = {
                 title: "Hashrate",
                 no_workers_title: "Connect to allbtc pool",
             },
+            graph: ["Monthly income graph", "Mining", "Accrued"],
             info_blocks: {
                 title: "Earnings",
                 title_clear: "Net income",
@@ -474,7 +483,7 @@ const messages = {
                     "Specify the cost of electricity to calculate net income.",
                 button_clear: "Specify",
                 payment: {
-                    titles: ["Yesterday", "Projected for today"],
+                    titles: ["Forecast for today", "Yesterday's income", "Forecast for the month"],
                 },
                 clear: {
                     titles: ["Today", "For month"],
@@ -489,6 +498,7 @@ const messages = {
                     title: "Worker",
                     types: ["Active", "Unstable", "Inactive"],
                 },
+                tooltip: ["On your subaccount", "Autopayment occurs when the balance is >"]
             },
         },
         accounts: {
@@ -496,9 +506,9 @@ const messages = {
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
-                    "Avg.hashrate / 1h",
+                    "Current hashrate",,
                     "Worker",
-                    "Projected earnings for today",
+                    "Hashrate / 24h",
                     "Total paid out",
                 ],
                 workers_status: ["Active", "All"],
@@ -558,6 +568,11 @@ const messages = {
             income_info: {
                 title: "Earnings",
                 titles: ["Paid", "Unpaid", "Yesterday's income"],
+                card: [
+                    "Accrued for all time",
+                    "Accrued",
+                    "Income for the month",
+                ],
             },
             table: {
                 title: "Transaction history",
@@ -579,9 +594,10 @@ const messages = {
                     no_wallet:
                         "Configure your account for withdrawal (enter the wallet).",
                     less_minWithdrawal: "Insufficient funds for withdrawal.",
-                    error: "An error occurred while making the payment.",
+                    error: "An error occurred while processing the payment. Please check the accuracy of your wallet address and the network for receiving the transaction (It should be bitcoin).",
                     error_payout: "An error occurred while making the payout.",
                     completed: "Payout successfully completed.",
+                    ready_to_payout: "Ready to payout.",
                 },
                 status: {
                     pending: "Pending",
@@ -598,9 +614,19 @@ const messages = {
             },
         },
         wallets: {
-            title:[ "Setting up auto payout", "Wallets"],
-            no_info: "Add Wallet",
-            messages: ["Wait 5 seconds.", "You can delete your wallet through tech support."],
+            title: ["Setting up auto payout", "Wallets"],
+            no_info: {
+                description: "To enable automatic payouts, add your wallet address",
+                message: "To add a wallet, you need to verify your email",
+                verify_text: "Verify email",
+                button_text: "Add",
+            },
+            tooltip:
+                "As soon as the accrual amount increases the specified value will be automatically paid out to your active wallet",
+            messages: [
+                "Wait 5 seconds.",
+                "You can delete your wallet through tech support.",
+            ],
             block: {
                 title: "Wallets list",
                 filter: "Hide with zero balance",
@@ -638,11 +664,11 @@ const messages = {
                     },
                     button: "Save",
                 },
-                remove:{
+                remove: {
                     title: "Delete wallet",
                     note: "Are you sure you want to delete your wallet?",
-                    button: ["Cancel", "Delete"]
-                }
+                    button: ["Cancel", "Delete"],
+                },
             },
         },
         settings: {
@@ -691,8 +717,16 @@ const messages = {
             },
             confidence: "Privacy policy",
         },
+        preloader: {
+            text: "Nothing was found for your request",
+        },
     },
     ru: {
+        validate_messages: {
+            watcher_message: "Вотчер успешно создан",
+            verify_message: "Почта успешно подтверждена",
+            two_fa_message: "Двухфакторная аутентификация успешно привязана",
+        },
         more: "Подробнее",
         auth: {
             login: {
@@ -735,7 +769,7 @@ const messages = {
             hash: "Хешрейт",
             difficulty: "Сложность",
             rejected: "Отклоненный",
-            workers: "Активные воркеры",
+            workers: "Воркеры",
         },
         header: {
             login_button: "Личный кабинет",
@@ -820,6 +854,7 @@ const messages = {
                 income: "Доходы",
                 connecting: "Подключение",
                 wallets: "Кошельки",
+                watchers: "Наблюдатели",
                 home: "Главная",
                 own_cabinet: "Личный кабинет",
                 complexity: "Сложность",
@@ -1120,6 +1155,8 @@ const messages = {
             ],
         },
         tabs: {
+            subs_group: "Субаккаунты",
+            settings_group: "Настройки",
             statistic: "Статистика",
             accounts: "Субаккаунты",
             workers: "Воркеры",
@@ -1134,6 +1171,7 @@ const messages = {
         },
         days: "Дней",
         hours: "Часа",
+        month: "Месяц",
         chart: {
             buttons: {
                 day: "24 часа",
@@ -1163,6 +1201,7 @@ const messages = {
                 title: "График хешрейта",
                 no_workers_title: "Подключиться к allbtc pool",
             },
+            graph: ["График дохода за месяц", "Майнинг", "Начислено"],
             info_blocks: {
                 title: "Начисления",
                 title_clear: "Чистая прибыль",
@@ -1170,7 +1209,7 @@ const messages = {
                     "Укажите расходы на электроэнергию для расчета чистой прибыли. ",
                 button_clear: "Указать",
                 payment: {
-                    titles: ["Вчера", "Прогноз на сегодня"],
+                    titles: ["Прогноз на сегодня", "Вчерашний доход", "Прогноз на месяц"],
                 },
                 clear: {
                     titles: ["Сегодня", "За месяц"],
@@ -1185,6 +1224,7 @@ const messages = {
                     title: "Воркеры",
                     types: ["Активные", "Нестабильные", "Неактивные"],
                 },
+                tooltip: ["На вашем субаккаунте ", "Автовыплата происходит при  балансе >"]
             },
         },
         accounts: {
@@ -1192,9 +1232,9 @@ const messages = {
             toggle: ["Активный", "Переключить"],
             block: {
                 titles: [
-                    "Ср.хешрейт / 1ч",
+                    "Текущий хешрейт",
                     "Воркеры",
-                    "Прогноз на сегодня",
+                    "Хешрейт / 24ч",
                     "Всего выплачено",
                 ],
                 workers_status: ["Активные", "Все"],
@@ -1249,6 +1289,7 @@ const messages = {
             income_info: {
                 title: "Платежи",
                 titles: ["Оплачено", "Неоплачено", "Вчерашний доход"],
+                card: ["Начислено за все время", "Начислено", "Доход за месяц"],
             },
             table: {
                 title: "История транзакций",
@@ -1270,9 +1311,10 @@ const messages = {
                     no_wallet:
                         "Настройте аккаунт для вывода (введите кошелек).",
                     less_minWithdrawal: "Недостаточно средств для вывода",
-                    error: "Произошла ошибка при выполнении выплаты.",
+                    error: "Произошла ошибка при выполнении выплаты. Проверьте правильность адреса вашего кошелька и сети для получения транзакции (Должна быть bitcoin).",
                     error_payout: "Произошла ошибка при выполнении выплаты.",
                     completed: "Выплата успешно выполнена.",
+                    ready_to_payout: "Ready to payout.",
                 },
                 status: {
                     pending: "В ожидании",
@@ -1289,9 +1331,19 @@ const messages = {
             },
         },
         wallets: {
-            title:[ "Настройка автовыплаты", "Кошельки"],
-            no_info: "Добавить кошелек",
-            messages: ["Подождите 5 секунд.", "Удалить кошелек можно через тех поддержку."],
+            title: ["Настройка автовыплаты", "Кошельки"],
+            no_info: {
+                description: "Для автовыплаты начислений добавьте адрес вашего кошелька",
+                message: "Чтобы добавить кошелек вам необходимо подтвердить почту",
+                verify_text: "Подтвердить почту",
+                button_text: "Добавить",
+            },
+            tooltip:
+                "Как только сумма начислений станет больше указанного значения произойдет автовыплата на ваш активный кошелек",
+            messages: [
+                "Подождите 5 секунд.",
+                "Удалить кошелек можно через тех поддержку.",
+            ],
             block: {
                 title: "Список кошельков",
                 filter: "Скрыть с нулевым балансом",
@@ -1326,11 +1378,11 @@ const messages = {
                     },
                     button: "Сохранить",
                 },
-                remove:{
+                remove: {
                     title: "Удалить кошелек",
                     note: "Вы действительно хотите удалить кошелек?",
-                    button: ["Отменить", "Удалить"]
-                }
+                    button: ["Отменить", "Удалить"],
+                },
             },
         },
         settings: {
@@ -1378,11 +1430,16 @@ const messages = {
             },
             confidence: "Конфиденциальность",
         },
+        preloader: {
+            text: "По вашему запросу ничего не найдено",
+        },
     },
 };
 
-// Create VueI18n instance with options
-export const i18n = createI18n({
+const i18n = createI18n({
     locale: "en",
     messages,
 });
+
+// Create VueI18n instance with options
+export default i18n;

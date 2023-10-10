@@ -1,32 +1,31 @@
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
 import { TableService } from "./extends/TableService";
 
 import { incomeData } from "@/DTO/incomeData";
 import { paymentData } from "@/DTO/paymentData";
 import store from "@/store";
+import { BarGraphData } from "@/modules/statistic/DTO/BarGraphData";
+import { GraphDataService } from "@/modules/common/services/extends/GraphDataService";
 
 export class IncomeService extends TableService {
-    async fetchIncomes(page = 1, per_page = 15) {
-        return await api.get(
-            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            }
-        );
+    constructor(translate, titleIndexes, route) {
+        super(translate, titleIndexes);
+
+        this.graphService = new GraphDataService(30);
+        this.route = route;
+        this.waitGraphChange = true;
+        this.incomeBarGraph = {};
+    }
+
+    async fetchIncomes(page = 1, per_page = 1000) {
+        return await ProfileApi.get(
+            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`);
     }
 
     async fetchPayout(page = 1, per_page = 15) {
-        return await api.get(
-            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            }
-        );
+        return await ProfileApi.get(
+            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`);
     }
 
     setMessage(message) {
@@ -43,16 +42,26 @@ export class IncomeService extends TableService {
                 return this.translate("income.table.messages.error_payout");
             case "completed":
                 return this.translate("income.table.messages.completed");
+            case "ready to payout":
+                return this.translate("income.table.messages.wallet");
         }
     }
 
     setStatus(status) {
         switch (status) {
+            case "complete":
+                return this.translate("income.table.status.fullfill");
             case "completed":
                 return this.translate("income.table.status.fullfill");
+            case "error":
+                return this.translate("income.table.status.rejected");
+            case "error payout":
+                return this.translate("income.table.status.rejected");
             case "rejected":
                 return this.translate("income.table.status.rejected");
             case "pending":
+                return this.translate("income.table.status.pending");
+            case "ready to payout":
                 return this.translate("income.table.status.pending");
         }
     }
@@ -108,26 +117,50 @@ export class IncomeService extends TableService {
     }
 
     async index(filter, page = 1, per_page = 15) {
-        this.waitTable = true;
         if (store.getters.getActive !== -1) {
-            let response;
+            this.emptyTable = false;
+            this.waitTable = true;
+            let tableTitleIndexes = null;
 
-            if (filter) {
-                response = await this.fetchPayout(page, per_page);
-            } else {
-                response = await this.fetchIncomes(page, per_page);
+            try {
+                let response;
+
+                if (filter) {
+                    response = await this.fetchPayout(page, per_page);
+                } else {
+                    response = await this.fetchIncomes(page, per_page);
+                }
+
+                this.meta = response.data;
+
+                this.rows = response.data.data.map((el) => {
+                    return this.setter(el, filter);
+                });
+
+                if (this.rows.filter(row => row.type === this.translate("income.types[0]")).length === 0) {
+                    this.rows = this.rows.map((item) => {
+                        delete item.type
+                        return item
+                    });
+                    tableTitleIndexes = [...this.titleIndexes];
+                    tableTitleIndexes.shift();
+                    this.titles = this.useTranslater(tableTitleIndexes)
+                }
+
+
+                if (this.rows.length === 0) this.emptyTable = true;
+
+                this.waitTable = false;
+            } catch (err) {
+                this.emptyTable = true;
             }
 
-            this.meta = response.data;
-
-            this.rows = response.data.data.map((el) => {
-                return this.setter(el, filter);
-            });
-
-            if (filter) {
-                this.titles = this.useTranslater([1, 4, 5, 6]);
-            } else {
-                this.titles = this.useTranslater([0, 1, 2, 3, 4, 7, 8]);
+            if (!tableTitleIndexes) {
+                if (filter) {
+                    this.titles = this.useTranslater([1, 4, 5, 6]);
+                } else {
+                    this.titles = this.useTranslater([0, 1, 2, 3, 4, 7, 8]);
+                }
             }
 
             return this;
@@ -140,10 +173,34 @@ export class IncomeService extends TableService {
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 
-        if (store.getters.getActive !== -1) {
-            this.waitTable = false;
-        }
-
         return this;
+    }
+
+    async barGraphIndex() {
+        if (this.group_id !== -1) {
+            this.waitGraphChange = true;
+
+            this.graphService.setDefaultKeys(60 * 60 * 1000 * 24);
+
+            try {
+                const response = (
+                    await this.fetchIncomes(1, 30)
+                ).data.data;
+
+                this.graphService.records = response.map((el) => {
+                    return new BarGraphData(el);
+                });
+            } catch (e) {
+                console.error(e);
+
+                this.graphService.records = new BarGraphData({ amount: 0 });
+            }
+
+            await this.graphService.makeFullBarValues();
+
+            this.incomeBarGraph = this.graphService.graph;
+
+            this.waitGraphChange = false;
+        }
     }
 }

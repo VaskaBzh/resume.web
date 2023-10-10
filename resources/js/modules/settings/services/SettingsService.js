@@ -2,27 +2,211 @@ import { FormData } from "@/modules/settings/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
 import { RowData } from "@/modules/settings/DTO/RowData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 import { SettingsUserData } from "../DTO/SettingsUserData";
+import { BlockData } from "../DTO/BlockData";
 
 export class SettingsService {
-    constructor(translate, user) {
+    constructor(translate, router) {
         this.translate = translate;
         this.profit = "";
         this.clearProfit = null;
 
         this.rows = [];
+        this.blocks = [];
         this.form = {};
+        this.passwordForm = {};
         this.validate = {};
         this.user = null;
 
+        this.router = router;
+
         this.userData = "";
+
+        this.qrCode = null;
+        this.code = null;
 
         this.closed = false;
         this.waitAjax = false;
 
+        this.openedFacPopup = false;
+        this.closedFacPopup = false;
+
+        this.openedPasswordPopup = false;
+        this.closedPasswordPopup = false;
+
         this.validateService = new ValidateService();
+    }
+
+    setCode(code) {
+        this.code = code;
+    }
+
+    setQrCode(qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    async dropFac() {
+        try {
+            const response = await this.fetchDropFac();
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.message,
+            });
+        } catch (err) {
+            console.error(err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
+            store.dispatch("setFullErrors", err.response.data);
+        }
+    }
+
+    async sendVerify(form) {
+        store.dispatch("setUser");
+        // try {
+        //     const response = await this.fetchVerifyFac(form);
+        //
+        //     this.closeFacPopup();
+        //
+        //     store.dispatch("setNotification", {
+        //         status: "success",
+        //         title: "connected",
+        //         text: response.data.message,
+        //     });
+        // } catch (err) {
+        //     console.error(err);
+        //
+        //     store.dispatch("setNotification", {
+        //         status: "error",
+        //         title: "error",
+        //         text: err.response.data.error ?? err.response.data.message,
+        //     });
+        //     store.dispatch("setFullErrors", err.response.data);
+        // }
+    }
+
+    removeRouteQuery() {
+        this.router.push({
+            name: "settings",
+        })
+    }
+
+    setPasswordForm(form = null) {
+        const formData =
+            form ?? {
+                old_password: "",
+                password: "",
+                "password_confirmation": "",
+            }
+
+        this.passwordForm = {
+            ...this.passwordForm,
+            ...formData,
+        }
+    }
+
+    async sendPassword() {
+        try {
+            const response = await this.fetchPassword();
+
+            this.closePasswordPopup();
+            this.removeRouteQuery();
+            this.setPasswordForm();
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.message,
+            });
+        } catch (err) {
+            console.error(err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
+            store.dispatch("setFullErrors", err.response.data);
+        }
+    }
+
+    openPasswordPopup() {
+        this.openedPasswordPopup = true;
+
+        setTimeout(() => (this.openedPasswordPopup = false), 300);
+    }
+
+    closePasswordPopup() {
+        this.closedPasswordPopup = true;
+
+        setTimeout(() => (this.closedPasswordPopup = false), 300);
+    }
+
+    async sendFac() {
+        try {
+            const response = await this.fetchFac();
+
+            this.setCode(response.secret);
+            this.setQrCode(response.qrCode);
+            this.openFacPopup();
+        } catch (err) {
+            console.error(err);
+        }
+    }
+
+    openFacPopup() {
+        this.openedFacPopup = true;
+
+        setTimeout(() => (this.openedFacPopup = false), 300);
+    }
+
+    closeFacPopup() {
+        this.closedFacPopup = true;
+
+        setTimeout(() => (this.closedFacPopup = false), 300);
+    }
+
+    async fetchPassword() {
+        return (
+            await ProfileApi.put(`/password/change/${this.user.id}`, this.passwordForm, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
+    async generateFac() {
+        return (
+            await ProfileApi.put(`/2fac/generate/${this.user.id}`, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
+    async fetchFac() {
+        return (
+            await ProfileApi.put(`/2fac/enable/${this.user.id}`, {
+                headers: {
+                    Authorization: `Bearer ${store.getters.token}`,
+                },
+            })
+        ).data;
+    }
+
+    async fetchDropFac() {
+        return (
+            await ProfileApi.put(`/2fac/disable/${this.user.id}`)
+        ).data;
     }
 
     validateProcess(event) {
@@ -33,6 +217,26 @@ export class SettingsService {
         );
     }
 
+    async sendEmailVerification() {
+        try {
+            const response = await ProfileApi.post("/email/reverify");
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.data.message,
+            });
+        } catch (err) {
+            console.error("Error with: " + err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
+        }
+    }
+
     setUser(user) {
         this.user = user;
     }
@@ -41,7 +245,6 @@ export class SettingsService {
         this.userData = new SettingsUserData(
             this.user.name,
             this.user.email,
-            "*********",
             this.user.phone ?? this.translate("inputs.phone")
         );
     }
@@ -55,16 +258,31 @@ export class SettingsService {
                 "email"
             ),
             // new RowData(
-            //     this.translate("settings.block.settings_block.labels.password"),
-            //     "password",
-            //     this.userData.password,
-            //     "password"
+            //     this.translate("settings.block.settings_block.labels.phone"),
+            //     "phone",
+            //     this.userData.phone,
+            //     "phone"
             // ),
-            new RowData(
-                this.translate("settings.block.settings_block.labels.phone"),
-                "phone",
-                this.userData.phone,
-                "phone"
+        ];
+    }
+
+    setBlocks() {
+        this.blocks = [
+            new BlockData(
+                this.translate("safety.title[0]"),
+                this.translate("safety.text[0]"),
+                "2fac",
+                "two-factor-icon.png",
+                this.translate(this.user["2fa"] ? "safety.button[2]" : "safety.button[0]"),
+                this.user["2fa"] ? "dropFac" : "openFacForm"
+            ),
+            new BlockData(
+                this.translate("safety.title[2]"),
+                this.translate("safety.text[2]"),
+                "verify_password",
+                "change-password-icon.png",
+                this.translate("safety.button[1]"),
+                "openPasswordForm"
             ),
         ];
     }
@@ -73,7 +291,7 @@ export class SettingsService {
         this.profit = newProfit;
     }
 
-    setForm() {
+    setDefaultForm() {
         this.form = new FormData("", "", "", "", "");
     }
 
@@ -85,17 +303,33 @@ export class SettingsService {
         };
 
         try {
-            await api.put(`/change/${this.user.id}`, sendForm, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            });
+            const response = await ProfileApi.put(
+                `/change/${this.user.id}`,
+                sendForm,
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            );
 
             this.wait = false;
 
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "changed",
+                text: response.data.message,
+            });
+
             this.setRows();
-        } catch (e) {
-            console.error("Error with: " + e);
+        } catch (err) {
+            console.error("Error with: " + err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message,
+            });
         }
     }
 
@@ -120,14 +354,6 @@ export class SettingsService {
         }
     };
 
-    // async send2Fac() {
-    //     let form = useForm({
-    //         "2fac": true,
-    //     });
-    //
-    //     await form.post("/2fac/enable", {});
-    // }
-
     setProfits() {
         this.profit = localStorage.getItem("clearProfit") || "";
         this.clearProfit = this.profit;
@@ -138,17 +364,16 @@ export class SettingsService {
         this.clearProfit = newProfit;
     }
 
-    getHtml(data) {
-        // item: data.name === "пароль" ? "" : data.val,
-        this.form = {
-            ...this.form,
-            item:
-                data.name === this.translate("inputs.password")
-                    ? this.translate("inputs.old_password")
-                    : data.val,
-            type: data.name,
-            key: data.key,
-        };
-        console.log(data.key)
+    async getHtml(data) {
+        if (data.verify) {
+            this.form = {
+                ...this.form,
+                item: data.val,
+                type: data.name,
+                key: data.key,
+            };
+        } else {
+            await this.sendEmailVerification()
+        }
     }
 }

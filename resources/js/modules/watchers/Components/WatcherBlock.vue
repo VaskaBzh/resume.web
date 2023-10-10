@@ -1,7 +1,5 @@
 <template>
-    <div
-        class="block cabinet__block cabinet__block-card cabinet__block-light"
-    >
+    <div class="block cabinet__block cabinet__block-card cabinet__block-light">
         <span class="block_name">
             {{ name }}
         </span>
@@ -32,16 +30,36 @@ export default {
     flex-direction: column;
     gap: 16px;
     cursor: pointer;
+    position: relative;
+}
+.block::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    transition: all 0.5s ease 0s;
+    background: transparent;
+    border-radius: 0px 4px 4px 0px;
+    width: 3px;
+    height: 48px;
 }
 .block_name {
-    color: var(--old-light-gray-500, #667085);
+    color: var(--text-teritary, #6f7682);
     font-family: Unbounded, serif;
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
+    transition: all 0.5s ease 0s;
 }
 .block__tags {
     display: flex;
     gap: 8px;
+}
+.list_block-active .block_name {
+    color: var(--text-focus, #2e90fa);
+}
+.list_block-active::before {
+    background: var(--text-focus, #2e90fa);
 }
 </style>

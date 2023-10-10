@@ -1,7 +1,7 @@
 import { FormData } from "@/modules/auth/DTO/FormData";
 
 import { ValidateService } from "@/modules/validate/services/ValidateService";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 
 export class RegistrationService {
@@ -9,6 +9,7 @@ export class RegistrationService {
         this.form = {};
         this.validate = {};
         this.checkbox = false;
+        this.checkboxState = false;
 
         this.router = router;
         this.route = route;
@@ -28,15 +29,19 @@ export class RegistrationService {
         if (this.checkbox) {
             if (Object.entries(this.validate).length === 0) {
                 try {
-                    const response = await api.post("/register", this.form);
+                    const response = await ProfileApi.post("/register", this.form);
 
                     const user = response.data.user;
                     const token = response.data.token;
-                    store.dispatch("setUser", user);
                     store.dispatch("setToken", token);
+                    store.dispatch("setUser", user);
 
                     this.router.push({
-                        name: "statistic",
+                        name: "confirm",
+                        query: {
+                            email: user.email,
+                            action: "registration",
+                        },
                     });
                 } catch (err) {
                     console.error("Error with: " + err);
@@ -45,7 +50,9 @@ export class RegistrationService {
                 }
             }
         } else {
-            this.checkbox = true;
+            this.checkboxState = true;
+
+            setTimeout(() => this.checkboxState = false, 1500)
         }
     }
 

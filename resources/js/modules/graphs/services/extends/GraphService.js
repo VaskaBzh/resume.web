@@ -17,6 +17,12 @@ export class GraphService {
         this.x = null;
         this.y = null;
 
+        this.fullDate = null;
+        this.time = null;
+        this.hashrate = null;
+        this.workersCountActive = null;
+        this.unit = null;
+
         this.contentTooltip = null;
 
         this.translate = translate;
@@ -24,6 +30,7 @@ export class GraphService {
         this.tooltipHtml = null;
         this.chartHtml = null;
         this.graphData = graphData;
+        this.approximateGraphData = graphData;
 
         this.containerWidth = 0;
         this.containerHeight = 0;
@@ -33,7 +40,44 @@ export class GraphService {
 
         this.setDarkState();
         this.setIsMobileState();
+
+        // this.getApproximateData();
     }
+
+    // getApproximateValue(key, isString = false) {
+    //     const dataLength = this.graphData[key].length;
+    //     const pointLength = 96;
+    //     const approximatePosition = dataLength / pointLength;
+    //
+    //     let sum = 0;
+    //
+    //     return this.graphData[key].map((value, i) => {
+    //         let approximate = value;
+    //
+    //         if (!isString) {
+    //             sum = sum + Number(value);
+    //
+    //             approximate = Math.abs(sum / approximatePosition);
+    //             console.log(approximate, i % approximatePosition === 0)
+    //         }
+    //
+    //         if (i % approximatePosition === 0) {
+    //             sum = 0;
+    //             return approximate;
+    //         }
+    //     }).filter(elem => elem !== undefined);
+    // }
+    //
+    // getApproximateData() {
+    //     this.approximateGraphData = {
+    //         values: this.getApproximateValue("values"),
+    //         amount: this.getApproximateValue("amount"),
+    //         dates: this.getApproximateValue("dates", true),
+    //         unit: this.getApproximateValue("unit", true),
+    //     }
+    //
+    //     console.log(this.approximateGraphData);
+    // }
 
     setChartHtml(newChartHtml) {
         this.chartHtml = newChartHtml;
@@ -49,6 +93,8 @@ export class GraphService {
 
     setGraphData(newGraphData) {
         this.graphData = newGraphData;
+
+        // this.getApproximateData();
 
         return this;
     }
@@ -69,7 +115,6 @@ export class GraphService {
         if (this.svg) {
             this.svg.selectAll("*").remove();
             this.axis.selectAll("*").remove();
-            this.tooltip.selectAll("*").remove();
             this.svg._groups[0][0].remove();
         }
     }
@@ -129,16 +174,13 @@ export class GraphService {
         return d3.max(this.graphData.values) !== 0
             ? d3.max(this.graphData.values) +
             d3.max(this.graphData.values) * 0.2
-            : 120
+            : 120;
     }
 
     setY() {
         this.y = d3
             .scaleLinear()
-            .domain([
-                0,
-                this.emptyValidationRules(),
-            ])
+            .domain([0, this.emptyValidationRules()])
             .range([this.containerHeight, 0]);
 
         return this;
@@ -166,13 +208,14 @@ export class GraphService {
     }
 
     setTooltip() {
-        this.tooltip = d3.select(this.tooltipHtml);
+        if (!this.tooltip) this.tooltip = d3.select(this.tooltipHtml);
 
         return this;
     }
 
-    setMouseX(mouseX) {
-        this.mouseX = mouseX;
+    setMouseX() {
+        this.mouseX =
+            this.clientX - this.svg.node().getBoundingClientRect().left;
     }
 
     setContainerHeight(height) {
@@ -190,54 +233,29 @@ export class GraphService {
         );
     }
 
-    getAmount(nearestIndex) {
-        let a = this.graphData.amount
-            ? this.graphData.amount[nearestIndex]
-            : "0";
+    setDate(nearestIndex) {
+        const date = new Date(this.graphData.dates[nearestIndex]);
 
-        return this.graphData.amount
-            ? `<span>${this.translate(
-                  "tooltip.workers"
-              )} <span class="value">${a}</span></span>`
-            : ``;
+        this.fullDate = date.getUTCFullYear();
+        this.time =
+            date.getDate().toString().padStart(2, "0") +
+            "." +
+            (date.getMonth() + 1).toString().padStart(2, "0");
     }
 
-    getHashrate(values, unit) {
-        return `<span>
-                ${this.translate("tooltip.hash")}
-                <span class="value">
-                    ${this.tooltipFormatNumberWithUnit(values, unit)}
-                </span>
-            </span>`;
+    setUnit(nearestIndex) {
+        this.unit = this.graphData.unit
+            ? this.graphData.unit[nearestIndex]
+            : "T";
     }
 
-    getRejectRate() {
-        return `<span>${this.translate("tooltip.rejected")}
-                        <span class="value">0.000%</span>
-                    </span>`;
+    setHashrate(nearestIndex) {
+        this.hashrate = this.graphData.values[nearestIndex];
     }
 
-    getDate(time) {
-        return `<span class="time">
-                        ${new Date(time).getUTCFullYear() + "."}
-                        ${
-                            new Date(time)
-                                .getDate()
-                                .toString()
-                                .padStart(2, "0") + "."
-                        }
-                        ${(new Date(time).getMonth() + 1)
-                            .toString()
-                            .padStart(2, "0")}
-                        ${new Date(time)
-                            .getUTCHours()
-                            .toString()
-                            .padStart(2, "0")}:00
-                    </span>`;
-    }
-
-    getUnit(nearestIndex) {
-        return this.graphData.unit ? this.graphData.unit[nearestIndex] : "T";
+    setWorkers(nearestIndex) {
+        if (this.graphData.amount)
+            this.workersCountActive = this.graphData.amount[nearestIndex];
     }
 
     getNearestIndex() {
@@ -254,21 +272,15 @@ export class GraphService {
             .style("opacity", 1);
     }
 
-    setContentTooltip(contentArray) {
-        const content = [];
-        let finillyContent = "";
+    setActualValues(nearestIndex) {
+        this.setUnit(nearestIndex);
+        this.setHashrate(nearestIndex);
+        this.setWorkers(nearestIndex);
+        this.setDate(nearestIndex);
+    }
 
-        contentArray.forEach((contentElem) => {
-            content.push(contentElem);
-        });
-
-        finillyContent = content.join("");
-
-        this.contentTooltip = `
-                <div class="tooltip-wrapper">
-                    ${finillyContent}
-                </div>
-            `;
+    setOtherElements() {
+        this.setVerticalLine();
     }
 
     tooltipInit(event) {
@@ -277,33 +289,25 @@ export class GraphService {
                 ? (this.clientX = event.touches[0].clientX)
                 : (this.clientX = event.clientX);
 
-            this.setMouseX(
-                this.clientX - this.svg.node().getBoundingClientRect().left
-            );
+            this.setMouseX();
 
             const nearestIndex = this.getNearestIndex();
 
-            const values = this.graphData.values[nearestIndex];
-            const unit = this.getUnit(nearestIndex);
-            const time = this.graphData.dates[nearestIndex];
+            this.setActualValues(nearestIndex);
 
-            this.setVerticalLine();
+            this.setOtherElements();
 
-            let workers = this.getAmount(nearestIndex);
-            let hashrate = this.getHashrate(values, unit);
-            let reject = this.getRejectRate();
-            let date = this.getDate(time);
-
-            this.setContentTooltip([workers, hashrate, reject, date]);
-
-            if (new Date(time).toLocaleTimeString() !== "Invalid Date") {
+            if (
+                new Date(
+                    this.graphData.dates[nearestIndex]
+                ).toLocaleTimeString() !== "Invalid Date"
+            ) {
                 this.tooltip
                     .style("opacity", 1)
                     .style(
                         this.getPosition()?.side,
                         this.getPosition()?.position + "px"
-                    )
-                    .html(this.contentTooltip);
+                    );
             }
         } catch (error) {
             console.error(error);
@@ -347,7 +351,7 @@ export class GraphService {
 
     formatTime(date) {
         const hours = date.getHours().toString().padStart(2, "0");
-        if (this.graphData.dates.length > 24) {
+        if (this.graphData.dates.length > 96) {
             const day = date.getDate().toString().padStart(2, "0");
             return `${day}/${(date.getUTCMonth() + 1)
                 .toString()
@@ -359,23 +363,37 @@ export class GraphService {
 
     getPosition() {
         if (this.mouseX) {
-            const padding = 8;
+            const padding = 16;
 
             const isLeft = this.mouseX < this.tooltipHtml.clientWidth - padding;
             const isRight =
                 this.mouseX >
                 this.chartHtml.clientWidth -
-                    this.tooltipHtml.clientWidth -
-                    padding;
+                this.tooltipHtml.clientWidth -
+                padding;
             let width = this.tooltipHtml.clientWidth;
+
+            if (isLeft) {
+                this.tooltip
+                    .select(".tooltip_icon")
+                    .style("left", "-20px")
+                    .style("right", "auto")
+                    .style("transform", "translateY(-50%) rotate(180deg)");
+            } else {
+                this.tooltip
+                    .select(".tooltip_icon")
+                    .style("right", "-20px")
+                    .style("left", "auto")
+                    .style("transform", "translateY(-50%)");
+            }
 
             return {
                 side: "left",
                 position: isLeft
                     ? this.mouseX + padding
                     : isRight
-                    ? this.mouseX - padding - this.tooltipHtml.clientWidth
-                    : this.mouseX - padding - width,
+                        ? this.mouseX - padding - this.tooltipHtml.clientWidth
+                        : this.mouseX - padding - width,
             };
         }
     }
@@ -391,7 +409,8 @@ export class GraphService {
     }
 
     validateXAxis() {
-        return store.getters.viewportWidth <= 991.98 ? 8 : 12;
+        // return store.getters.viewportWidth <= 991.98 ? 8 : 12;
+        return 6;
     }
 
     setSvgEventsMobile() {
@@ -416,7 +435,7 @@ export class GraphService {
         this.svg.on("touchend", () => {
             this.tooltip.style("opacity", 0);
             this.svg.selectAll(".vertical-line").style("opacity", 0);
-            this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
+            this.svg.selectAll(".dot").style("opacity", 0);
         });
     }
 
@@ -437,7 +456,7 @@ export class GraphService {
             }
             if (position.x > touchX) end = target;
             else if (position.x < touchX) beginning = target;
-            else break; //position.x === touchX
+            else break;
         }
 
         return position;
@@ -447,7 +466,10 @@ export class GraphService {
         this.tooltipInit(event);
 
         this.tooltip
-            .style("top", position.y - this.tooltipHtml.clientHeight - 7 + "px")
+            .style(
+                "top",
+                position.y - this.tooltipHtml.clientHeight / 2 - 1 + "px"
+            )
             .style("opacity", 1);
     }
 
@@ -471,25 +493,6 @@ export class GraphService {
             const position = this.getClosestPoint(mouseX);
             this.updateLineAndDot(event, position);
             this.updateTooltip(event, position);
-        });
-
-        this.svg.on("mouseleave", () => {
-            this.tooltip.style("opacity", 0);
-
-            this.svg.selectAll(".vertical-line").style("opacity", 0);
-
-            this.svg.selectAll(".dot").style("opacity", 0); // Прячем точку, когда мышь покидает область графика
-        });
-
-        return this;
-    }
-
-    setBarSvgEvents() {
-        this.svg.on("mousemove", (event) => {
-            const mouseX = d3.pointer(event)[0];
-            const position = mouseX;
-            // this.updateLineAndDot(event, position);
-            // this.updateTooltip(event, position);
         });
 
         this.svg.on("mouseleave", () => {

@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Log;
 class PayoutService
 {
     private Sub $sub;
-    public readonly Wallet $wallet;
+    public readonly ?Wallet $wallet;
     private array $params = [
         'status' => Status::REJECTED->value,
         'message' => Message::ERROR_PAYOUT->value
@@ -81,16 +81,16 @@ class PayoutService
      */
     public function payOut(): ?string
     {
-        if (!filled($this->wallet)) {
-            return null;
+        if ($this->isAllowedTransaction()) {
+            return $this
+                ->remoteWallet
+                ->sendBalance(
+                    wallet: $this->wallet,
+                    balance: $this->sub->pending_amount
+                );
         }
 
-        return $this
-            ->remoteWallet
-            ->sendBalance(
-                wallet: $this->sub->wallets()->first(),
-                balance: $this->sub->pending_amount
-            );
+        return null;
     }
 
     /**
@@ -159,5 +159,15 @@ class PayoutService
         Log::channel('payouts')->info('WALLET LOCKED', [
             'sub' => $this->sub->id,
         ]);
+    }
+
+    /**
+     * Проверяем локальный кошелек на существование и блокировку
+     *
+     * @return bool
+     */
+    private function isAllowedTransaction(): bool
+    {
+        return !is_null($this->wallet) && $this->wallet->isUnlocked();
     }
 }

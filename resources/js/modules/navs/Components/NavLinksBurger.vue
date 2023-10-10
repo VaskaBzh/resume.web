@@ -80,9 +80,7 @@ import { mapGetters } from "vuex";
 import MainLink from "@/modules/common/Components/UI/MainLink.vue";
 import SelectLanguage from "@/Components/technical/language/SelectLanguage.vue";
 import SelectTheme from "@/Components/technical/theme/SelectTheme.vue";
-import api from "@/api/api";
 import { useRouter } from "vue-router";
-import store from "@/store";
 
 export default {
     components: {
@@ -116,25 +114,7 @@ export default {
             this.$store.dispatch("set_active", data);
         },
         async logout() {
-            try {
-                await api.post(
-                    "/logout",
-                    {},
-                    {
-                        headers: {
-                            Authorization: `Bearer ${store.getters.token}`,
-                        },
-                    }
-                );
-
-                await this.router.push({ name: "home" });
-
-                store.dispatch("dropUser");
-                store.dispatch("dropToken");
-                store.dispatch("drop_all");
-            } catch (e) {
-                console.error("Error with: " + e);
-            }
+            this.$store.dispatch("logout");
         },
         closeBurger() {
             this.is_opened = false;
@@ -345,7 +325,7 @@ export default {
 
     &_con {
         position: fixed;
-        background: #fafafa;
+        background: var(--background-island);;
         box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
         max-width: 384px;
         overflow: scroll;
@@ -362,6 +342,7 @@ export default {
             top: 59px;
             padding: 32px 16px 24px;
             max-width: 100%;
+            min-width: 100%;
         }
 
         &.open {

@@ -3,7 +3,6 @@
 namespace App\Http;
 
 use App\Http\Middleware\HandleInertiaRequests;
-use App\Http\Middleware\SetLocale;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -73,5 +72,8 @@ class Kernel extends HttpKernel
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'role_or_permission' => \Spatie\Permission\Middlewares\RoleOrPermissionMiddleware::class,
         'watcher-link' => \App\Http\Middleware\WatcherLinkMiddleware::class,
+        'verify-expiration' => \App\Http\Middleware\EmailVerificationExpirationMiddleware::class,
+        'verify-confirm' => \App\Http\Middleware\VerifyEmailConfirmationMiddleware::class,
+        'two-factor' => \App\Http\Middleware\TwoFactorMiddleware::class,
     ];
 }

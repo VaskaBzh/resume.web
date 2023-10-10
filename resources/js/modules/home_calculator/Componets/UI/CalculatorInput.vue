@@ -21,7 +21,7 @@
     </div>
 </template>
 <script>
-import currency from "@/api/currency";
+import { mapGetters } from "vuex";
 
 export default {
     name: "calculator-input",
@@ -36,15 +36,16 @@ export default {
     data() {
         return {
             value: this.inputValue,
-            currency: ["Р", "$"],
+            currencyArray: ["Р", "$"],
             baseValue: "",
             usd: 0,
         };
     },
     computed: {
+        ...mapGetters(["currency"]),
         newCurrencyValue() {
             const firstIndex = 0;
-            const currency = this.currency.filter(
+            const currency = this.currencyArray.filter(
                 (cur) => cur !== this.baseValue
             )[firstIndex];
 
@@ -82,8 +83,8 @@ export default {
 
             this.baseValue =
                 this.$i18n?.locale === "ru"
-                    ? this.currency[firstIndex]
-                    : this.currency[secondIndex];
+                    ? this.currencyArray[firstIndex]
+                    : this.currencyArray[secondIndex];
         },
         setValue(value) {
             this.baseValue = value;
@@ -101,7 +102,7 @@ export default {
             }
         },
         async currencyApi() {
-            this.usd = (await currency()).data.rates.USD;
+            this.usd = this.currency.rates.USD;
         },
     },
     async mounted() {
@@ -110,6 +111,7 @@ export default {
     },
 };
 </script>
+
 <style scoped lang="scss">
 .list-leave-active,
 .list-enter-active {

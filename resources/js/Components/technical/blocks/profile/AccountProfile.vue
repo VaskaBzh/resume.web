@@ -13,14 +13,23 @@
                     accountInfo.group_id === getActive
                 "
             >
-                {{ this.$t("accounts.toggle[0]") }}
+            <div class="current-account">
+            </div>
+                <!-- {{ this.$t("accounts.toggle[0]") }} -->
             </span>
             <span
                 class="profile_status"
                 v-else-if="Object.entries(allAccounts).length > 0"
             >
-                {{ this.$t("accounts.toggle[1]") }}</span
-            >
+            <div>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M12 21C12.8284 21 13.5 20.3284 13.5 19.5C13.5 18.6716 12.8284 18 12 18C11.1716 18 10.5 18.6716 10.5 19.5C10.5 20.3284 11.1716 21 12 21Z" stroke="#595E68" stroke-width="1.5"/>
+                    <path d="M12 13.5C12.8284 13.5 13.5 12.8284 13.5 12C13.5 11.1716 12.8284 10.5 12 10.5C11.1716 10.5 10.5 11.1716 10.5 12C10.5 12.8284 11.1716 13.5 12 13.5Z" stroke="#595E68" stroke-width="1.5"/>
+                    <path d="M12 6C12.8284 6 13.5 5.32843 13.5 4.5C13.5 3.67157 12.8284 3 12 3C11.1716 3 10.5 3.67157 10.5 4.5C10.5 5.32843 11.1716 6 12 6Z" stroke="#595E68" stroke-width="1.5"/>
+                </svg>
+            </div>
+                <!-- {{ this.$t("accounts.toggle[1]") }} -->
+                </span>
             <!--            <div class="profile__settings" @click="toggleOpen">-->
             <!--                <svg-->
             <!--                    xmlns="http://www.w3.org/2000/svg"-->
@@ -51,14 +60,23 @@
             <!--            </div>-->
         </div>
         <div class="profile__body">
-            <div class="profile__body-block">
-                <span class="text-md">{{
-                    $t("accounts.block.titles[0]")
-                }}</span>
-                <span class="text-md" v-hash>
-                    {{ hashRate }} {{ accountInfo.unit }}H/s</span
-                >
+            <div class="profile_row">
+                <div class="profile__body-block">
+                    <span class="text-md">{{
+                        $t("accounts.block.titles[0]")
+                    }}</span>
+                    <span class="text-md" v-hash>
+                        {{ hashRateCurrent }}  {{ accountInfo.unit }}H/s </span
+                    >
+                </div>
+                <div class="profile__body-block">
+                    <span class="text-md">{{
+                        $t("accounts.block.titles[2]")
+                    }}</span>
+                    <span class="text-md" v-hash> {{ hashRateDay }} {{ accountInfo.unit }}H/s</span>
+                </div>
             </div>
+            <div class="profile_row">
             <div class="profile__body-block">
                 <span class="text-md">{{
                     $t("accounts.block.titles[1]")
@@ -72,18 +90,15 @@
                     >
                 </span>
             </div>
-            <div class="profile__body-block">
-                <span class="text-md">{{
-                    $t("accounts.block.titles[2]")
-                }}</span>
-                <span class="text-md"> {{ todayEarn }} BTC</span>
-            </div>
+
             <div class="profile__body-block">
                 <span class="text-md">{{
                     $t("accounts.block.titles[3]")
                 }}</span>
                 <span class="text-md"> {{ myPayment }} BTC</span>
             </div>
+        </div>
+
         </div>
     </div>
 </template>
@@ -113,7 +128,9 @@ export default {
             return router;
         },
         chageActive() {
-            this.$store.dispatch("set_active", this.accountInfo.group_id);
+            this.$store.dispatch("set_active", {
+                index: this.accountInfo.group_id,
+            });
         },
     },
     computed: {
@@ -137,8 +154,12 @@ export default {
             let val = Number(this.account.total_payout);
             return val ? val.toFixed(8) : "0.00000000";
         },
-        hashRate() {
+        hashRateCurrent() {
             let val = Number(this.accountInfo.hash_per_min);
+            return val ? val.toFixed(8) : "0.00000000";
+        },
+        hashRateDay() {
+            let val = Number(this.accountInfo.hash_per_day);
             return val ? val.toFixed(8) : "0.00000000";
         },
     },
@@ -146,13 +167,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.current-account{
+    width: 3px;
+    height: 88px;
+    position: absolute;
+    bottom: calc((100% - 88px) / 2);
+    left: 0;
+    border-radius: 0px 4px 4px 0px;
+    background: var(--primary-500, #2E90FA);
+}
+
 .profile {
     width: 100%;
     display: flex;
     flex-direction: column;
     gap: 16px;
-    padding: 24px;
+    padding: 16px 24px;
     cursor: pointer;
+    position: relative;
     //svg {
     //    stroke: #417fe5;
     //    width: 24px;
@@ -182,6 +214,11 @@ export default {
     //&__settings {
     //    position: relative;
     //}
+    &_row{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+    }
     &__head {
         display: flex;
         justify-content: space-between;
@@ -192,10 +229,12 @@ export default {
         }
     }
     &_name {
-        color: #3f7bdd;
-        font-weight: 700;
-        font-size: 24px;
-        line-height: 30px;
+        color: #2E90FA;
+        font-family: Unbounded;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px; /* 150% */
         z-index: 1;
         @media (max-width: 991.98px) {
             font-size: 20px;
@@ -205,49 +244,38 @@ export default {
         }
     }
     &_status {
-        color: #989898;
-        font-family: AmpleSoftPro, serif;
-        font-weight: 500;
-        font-size: 18px;
-        line-height: 22px;
-        transition: all 0.5s ease 0s;
         cursor: pointer;
-        @media (max-width: 991.98px) {
-            &:not(.active) {
-                display: none;
-            }
-        }
-        &.active {
-            color: #86ff83;
-        }
     }
     &__body {
-        display: grid;
+        // display: grid;
+        display: flex;
+        flex-direction: column;
         border-radius: 21px;
         transition: all 0.5s ease 0.2s;
-        gap: 24px;
-        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        // grid-template-columns: repeat(2, 1fr);
         @media (max-width: 991.98px) {
-            grid-template-columns: 1fr;
-            gap: 12px;
+            // grid-template-columns: 1fr;
+            // gap: 12px;
         }
         &-block {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 8px;
+            gap: 4px;
             .text-md {
+                color: var(--text-teritary);
                 &:last-child {
-                    color: #818c99;
-                    font-weight: 700;
-                    line-height: 115%;
-                    @media (max-width: 991.98px) {
-                        text-align: right;
-                    }
+                    color: var(--text-secondary);
+                    font-family: NunitoSans;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: 20px; /* 142.857% */
                 }
             }
             @media (max-width: 991.98px) {
-                flex-direction: row;
+                flex-direction: column;
                 justify-content: space-between;
                 .text-md {
                     font-size: 14px;

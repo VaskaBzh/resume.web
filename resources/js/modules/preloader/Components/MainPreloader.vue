@@ -2,45 +2,48 @@
     <div
         class="preloader cabinet__block"
         v-scroll="'opacity transition--fast'"
-        v-if="!killPreloaderCondition"
+        v-show="!killPreloaderCondition"
     >
-<!--        :class="{ 'preloader-full': service.animationIsEnd }"-->
-        <div class="preloader__wrap" :class="{
-            'preloader__wrap-no-info': crossVisible,
-            'preloader__wrap-no-info-after': service.animationIsEnd
-        }">
-<!--            <transition name="preloader">-->
-<!--            v-show="!service.animationIsEnd"-->
-                <div class="preloader__icon">
-                    <preloader-end-icon
-                        class="preloader_cross"
-                        id="preloader_cross"
-                        @getCross="service.setCross($event)"
-                        v-show="crossVisible"
-                    />
-                    <preloader-logo-icon
-                        class="preloader_logo"
-                        id="preloader_logo"
-                        :class="{ 'preloader_logo-center': endConditionWithoutSlots }"
-                    />
-                    <preloader-container-icon
-                        class="preloader__icon-custom"
-                        @getPolygon="service.setPolygon($event)"
-                    />
-                </div>
-<!--            </transition>-->
-<!--            <transition name="preloader">-->
-<!--                <img-->
-<!--                    class="preloader_img"-->
-<!--                    v-show="service.animationIsEnd"-->
-<!--                    src="../imgs/img_no-information.png"-->
-<!--                    alt="no-information"-->
-<!--                >-->
-<!--            </transition>-->
-
+        <div
+            class="preloader__wrap"
+            :class="{
+                'preloader__wrap-no-info':
+                    service.animateService.isCrossVisible?.state,
+            }"
+        >
+            <div class="preloader__icon">
+                <preloader-end-icon
+                    class="preloader_cross"
+                    id="preloader_cross"
+                    @getCross="service.setCross($event)"
+                    v-if="
+                        !service.animateService.cross.element
+                        || service.animateService.isCrossVisible?.state
+                    "
+                />
+                <preloader-logo-icon
+                    class="preloader_logo"
+                    id="preloader_logo"
+                    :class="{
+                        'preloader_logo-center':
+                            service.animateService.isLogoCenter?.state,
+                    }"
+                />
+                <preloader-container-icon
+                    class="preloader__icon-custom"
+                    @getPolygon="service.setPolygon($event)"
+                />
+            </div>
             <transition name="progress">
-                <span class="preloader_progress" v-show="!endConditionWithoutSlots || progressVisible">
-                    {{ progressValue }}
+                <span
+                    class="preloader_progress"
+                    v-if="service.animateService.isProgressVisible?.state"
+                >
+                    {{
+                        String(service.progressPercentage).length <= 3
+                            ? `${service.progressPercentage}%`
+                            : $t(service.progressPercentage)
+                    }}
                 </span>
             </transition>
         </div>
@@ -53,12 +56,12 @@ import PreloaderLogoIcon from "../icons/PreloaderLogoIcon.vue";
 
 import { PreloaderService } from "../services/PreloaderService";
 import PreloaderContainerIcon from "../icons/PreloaderContainerIcon.vue";
+import { mapGetters } from "vuex";
 
 export default {
     name: "main-preloader",
     props: {
         wait: Boolean,
-        end: Boolean,
         empty: {
             type: Boolean,
             default: false,
@@ -68,55 +71,57 @@ export default {
             default: 15,
         },
     },
-    computed: {
-        endConditionWithoutSlots() {
-            return !this.wait && this.empty;
-        },
-        killPreloaderCondition() {
-            return !this.wait && !this.empty && this.end;
-        },
-        progressValue() {
-            // this.$t('no_info')
-            return this.progressVisible ? "По вашему запросу ничего не найдено" : `${this.service.progressPercentage}%`;
-        },
-    },
     components: {
         PreloaderEndIcon,
         PreloaderLogoIcon,
         PreloaderContainerIcon,
     },
+    computed: {
+        ...mapGetters(["getActive"]),
+        killPreloaderCondition() {
+            return (
+                !this.service.waitTable.state &&
+                !this.service.emptyTable.state &&
+                this.service.endTable.state
+            );
+        },
+    },
     data() {
         return {
             service: new PreloaderService(),
-            crossVisible: false,
-            progressVisible: false,
         };
     },
     watch: {
-        end(newEndVal) {
-            this.service.endProcess(newEndVal);
+        wait(newWaitState) {
+            this.service.setWaitState(newWaitState)
+                .setEndState(!newWaitState);
         },
-        progressPercentage() {
-            this.service.slowProcess();
+        empty(newEmptyState) {
+            this.service
+                .setEmptyState(newEmptyState)
+                .setCrossVisible(newEmptyState)
+                .setLogoCenter(newEmptyState);
         },
-        'service.crossVisible'() {
-            this.crossVisible = true;
-
-            setTimeout(() => {
-                this.progressVisible = true;
-            }, 1000)
+        "service.endTable.state"(newEndVal) {
+            this.service.setProgressVisible(!newEndVal)
+                .endProcess(newEndVal);
+        },
+        getActive(newId, oldId) {
+            if (oldId !== -1) {
+                this.service.startProcess(this.interval);
+            }
         },
     },
     mounted() {
         this.service.startProcess(this.interval);
     },
-    beforeUnmount() {
-        this.service.killInterval();
+    unmounted() {
+        this.service.endProcess(true);
     },
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .preloader {
     display: flex;
     justify-content: center;
@@ -156,23 +161,6 @@ export default {
                     font-family: NunitoSans, serif;
                 }
             }
-            &-after {
-                //width: 160px;
-                //height: 160px;
-                .preloader {
-                    &_progress {
-                        //color: var(--old-light-gray-300, #D0D5DD);
-                        //bottom: -48px;
-                    }
-                    &__icon {
-                        //transition: none;
-                        //position: absolute;
-                        //top: 0;
-                        //left: 50%;
-                        //transform: translateX(-50%);
-                    }
-                }
-            }
         }
     }
     &_logo {
@@ -201,7 +189,7 @@ export default {
         right: 34px;
     }
     &_progress {
-        color: #4066B5;
+        color: #4066b5;
         font-size: 16px;
         font-weight: 700;
         line-height: 24px;

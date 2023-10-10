@@ -35,14 +35,14 @@ export default {
     border-radius: 8px;
     background: transparent;
     transition: all 0.3s ease 0s;
-    color: #818c99;
+    color: var(--text-secondary);
     font-size: 16px;
     line-height: 150%;
     min-height: 40px;
     &.active {
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
-        background: var(--background-island-inner-1, rgba(83, 177, 253, 0.07));
-        color: #333639;
+background: var(--background-island-inner-1, rgba(83, 177, 253, 0.07));
+        color: var(--text-focus)
     }
     &_button {
         width: 16px;

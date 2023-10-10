@@ -34,10 +34,8 @@
 @import "./templates/socials";
 @import "./templates/contacts";
 @import "./templates/quote";
-//@import "./templates/popup";
 @import "./templates/line";
 @import "./templates/datePicker";
-//@import "./templates/input";
 @import "./templates/search";
 @import "./templates/form";
 @import "./templates/shadow";
@@ -45,7 +43,7 @@
 
 //========================================================================================================================================================
 // импорты тем
-// @import "./theme/theme-dark";
+ @import "./theme/theme-dark";
 
 //========================================================================================================================================================
 // Обнуляющие стили
@@ -80,6 +78,7 @@ body {
 
 body {
     position: relative;
+    // color: $mainColor;
     line-height: 1;
     font-family: $fontFamily;
     font-size: $fontSize;
@@ -437,6 +436,14 @@ h6 {
         padding-bottom: 40px;
     }
 }
+.statistic_graph {
+    .y-axis-container {
+        @media(max-width:900px){
+            left: 10px;
+            top: 100px;
+        }
+    }
+}
 .y-axis-container {
     position: absolute;
     left: 30px;
@@ -452,6 +459,10 @@ h6 {
         font-size: 12px;
         line-height: 130%;
         color: #818c99;
+    }
+    @media(max-width:900px){
+        left: 10px;
+        top: 360px;
     }
 }
 .container-chart {
@@ -499,7 +510,7 @@ h6 {
         padding: 0 0 0;
         &-auth {
             &:before {
-                background: #fafafa;
+                background: var(--background-island);
             }
         }
     }
@@ -759,31 +770,26 @@ h6 {
     cursor: pointer;
 }
 
-
-
-.table {
-    &_column {
-        span {
-            .workers {
-                &-active {
-                    color: #13d60e;
-                }
-                &-inactive {
-                    color: #EB5757;
-                }
-            }
-        }
+.card__content .y-axis-container {
+    @media (max-width: 900px) {
+        left: 2px;
+        top: 53px;
     }
 }
 
-// Временный блок ререндера
-.hidden {
-    position: absolute;
-    left: 0;
-    top: 0;
-    opacity: 0;
-    z-index: -1;
-    visibility: hidden;
+// Стили воркеров в таблице
+
+.column_value-worker:not(:last-child) {
+    margin-right: 4px;
+}
+.column_value-worker-active {
+    color: var(--status-succesfull, #1FB96C);
+}
+.column_value-worker-unstable {
+    color: var(--status-failed, #F1404A);
+}
+.column_value-worker-in-active {
+    color: var(--text-teritary, #6F7682);
 }
 
 //========================================================================================================================================================

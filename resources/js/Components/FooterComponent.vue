@@ -79,7 +79,7 @@
                     <router-link :to="{ name: 'home' }">
                         <img
                             class="nav__logo"
-                            v-if="!getTheme"
+                            v-if="!isDark"
                             src="../../assets/img/logo_high_quality.svg"
                             alt="logo"
                         />
@@ -272,14 +272,14 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { ref } from "vue";
 import { mapGetters } from "vuex";
 import { useRoute } from "vue-router";
-import api from "@/api/api";
+import { MainApi } from "@/api/api";
 import store from "@/store";
 
 export default {
     name: "footer-component",
     components: { MainTitle, MainPopup, BlueButton },
     computed: {
-        ...mapGetters(["getTheme", "errors"]),
+        ...mapGetters(["isDark", "errors"]),
         route() {
             return useRoute();
         },
@@ -300,11 +300,7 @@ export default {
         const sendFeedback = async () => {
             wait.value = true;
             try {
-                await api.post("/send_message", form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                });
+                await MainApi.post("/send_message", form);
 
                 form.message = "";
                 form.contacts = "";
@@ -341,9 +337,11 @@ export default {
     }
     @media (min-width: 767.98px) {
         right: 60px;
+        min-width: 200px;
     }
-    @media (min-width: 479.98px) {
+    @media (max-width: 479.98px) {
         bottom: 50px;
+        min-width: 140px;
     }
     right: 15px;
     bottom: calc(30px);
@@ -351,6 +349,7 @@ export default {
 }
 .footer {
     &__container {
+        margin: 110px auto 0;
         z-index: 1;
     }
     // .footer__main

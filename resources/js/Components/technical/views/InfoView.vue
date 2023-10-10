@@ -91,11 +91,30 @@ export default {
 <style lang="scss">
 .info {
     &__container {
+
+        margin: 0 auto;
         @media (max-width: 991.98px) {
             max-width: 100%;
             padding: 0;
         }
     }
+
+
+    @media (max-width: 900px) {
+        .card.sm {
+            min-height: 525px;
+        }
+    }
+
+    @media (max-width: 497.98px) {
+        .card.sm {
+            min-height: 404px;
+        }
+    }
+
+
+
+
     &_wrapper {
         display: grid;
         grid-template-columns: repeat(3, 1fr);

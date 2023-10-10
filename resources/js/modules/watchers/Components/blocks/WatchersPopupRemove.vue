@@ -3,8 +3,12 @@
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers__head">
-                    <main-title tag="h3">Удалить наблюдателя</main-title>
-                    <main-description>Удалить наблюдателя</main-description>
+                    <main-title tag="h3" class="watchers_title">{{
+                        $t("delete_card.title")
+                    }}</main-title>
+                    <main-description>{{
+                        $t("delete_card.text")
+                    }}</main-description>
                 </div>
                 <div
                     class="watchers__card cabinet__block-card cabinet__block cabinet__block-light"
@@ -22,13 +26,17 @@
                     @click.prevent="closePopup"
                     class="button-reverse button-full watchers_button"
                 >
-                    <template v-slot:text> Удалить </template>
+                    <template v-slot:text>
+                        {{ $t("delete_card.buttons[0]") }}
+                    </template>
                 </main-button>
                 <main-button
                     @click.prevent="removeWatcher"
                     class="button-red button-full watchers_button"
                 >
-                    <template v-slot:text> Удалить </template>
+                    <template v-slot:text>
+                        {{ $t("delete_card.buttons[1]") }}
+                    </template>
                 </main-button>
             </div>
         </div>
@@ -40,6 +48,7 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-popup-remove",
@@ -53,6 +62,9 @@ export default {
         wait: Boolean,
         name: String,
         id: Number,
+    },
+    i18n: {
+        sharedMessages: WatchersMessage,
     },
     methods: {
         closePopup() {
@@ -75,6 +87,9 @@ export default {
 </script>
 
 <style scoped>
+.watchers_title {
+    margin-bottom: 4px;
+}
 .watchers__form {
     display: flex;
     flex-direction: column;
@@ -103,9 +118,10 @@ export default {
     display: flex;
     align-items: center;
     gap: 16px;
+    background: var(--background-modal-input, #ffffff);
 }
 .watchers_text {
-    color: var(--text-secondary-day, #475467);
+    color: var(--text-secondary, #475467);
     font-family: Unbounded, serif;
     font-size: 16px;
     font-weight: 400;

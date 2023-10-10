@@ -51,7 +51,6 @@ export default {
     },
     methods: {
         setValue(name, value) {
-            console.log(name, value);
         },
     },
     data() {

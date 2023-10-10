@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
-use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 
 class IncomeRepository
 {
-    public function getReferralIncomeCollection(int $groupId, ?int $perPage = 15): LengthAwarePaginator
+    public function getReferralIncomeCollection(int $groupId): Builder
     {
         return DB::table('referrals')
             ->where('referrals.group_id', $groupId)
@@ -26,8 +26,7 @@ class IncomeRepository
                 count(workers.id) as worker_count'
             )
             ->groupBy('incomes.id')
-            ->latest()
-            ->paginate($perPage);
+            ->latest();
     }
 
     public function getReferralTotalAmount(int $referralId): string|float|null

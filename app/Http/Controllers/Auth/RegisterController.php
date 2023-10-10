@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
@@ -51,7 +52,6 @@ class RegisterController extends Controller
         $userData = UserData::fromRequest($request->all());
 
         try {
-
             $user = $this->create(userData: $userData);
             auth()->login($user);
             $btcComService->createSub(userData: $userData);
@@ -67,7 +67,7 @@ class RegisterController extends Controller
 
             return new JsonResponse([
                 'message' => 'success',
-                'user' => $user,
+                'user' => new UserResource($user),
                 'token' => $user->createToken(
                     $user->name,
                     ['*'],

@@ -9,8 +9,11 @@ export class PopupService {
         this.popupContentHtml = null;
         this.popupBlockHtml = null;
         this.popupLogoHtml = null;
+        this.clicked = ref(false);
 
         this.animate = null;
+
+        this.pageContainer = document.querySelector(".page-container");
     }
 
     setPopupContentHtml(newPopupContentHtml) {
@@ -26,11 +29,15 @@ export class PopupService {
     }
 
     setBodyHidden() {
-        document.querySelector("body").style.overflow = "hidden";
+        if (this.pageContainer) {
+            this.pageContainer.style.overflowY = "hidden";
+        }
     }
 
     setBodyScroll() {
-        document.querySelector("body").style.overflow = "scroll";
+        if (this.pageContainer) {
+            this.pageContainer.removeAttribute("style");
+        }
     }
 
     dropAnimate() {
@@ -39,6 +46,18 @@ export class PopupService {
             this.animate.remove(this.popupBlockHtml);
             this.animate.remove(this.popupLogoHtml);
         }
+    }
+
+    animateOnUpdate() {
+        this.animate = anime({
+            targets: this.popupBlockHtml,
+            height: `${this.popupContentHtml.scrollHeight + 64}px`,
+            easing: "easeInCubic",
+            duration: 500,
+            complete: () => {
+                this.dropAnimate();
+            },
+        });
     }
 
     closeAnimate() {
@@ -73,7 +92,7 @@ export class PopupService {
             targets: this.popupContentHtml,
             opacity: 1,
             easing: "easeOutCubic",
-            duration: 300,
+            duration: 150,
             complete: () => {
                 this.dropAnimate();
             },
@@ -85,7 +104,7 @@ export class PopupService {
             targets: this.popupLogoHtml,
             opacity: 0,
             easing: "easeInCubic",
-            duration: 300,
+            duration: 150,
             complete: () => {
                 this.dropAnimate();
 
@@ -97,9 +116,9 @@ export class PopupService {
     animateHeight() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.popupContentHtml.scrollHeight + 15}px`,
+            height: `${this.popupContentHtml.scrollHeight + 64}px`,
             easing: "easeInCubic",
-            duration: 500,
+            duration: 350,
             complete: () => {
                 this.dropAnimate();
 
@@ -113,7 +132,7 @@ export class PopupService {
             targets: this.popupBlockHtml,
             width: "560px",
             easing: "easeInOutCubic",
-            duration: 400,
+            duration: 250,
             complete: () => {
                 this.dropAnimate();
 
@@ -127,7 +146,7 @@ export class PopupService {
             targets: this.popupBlockHtml,
             translateY: 0,
             easing: "easeInCubic",
-            duration: 300,
+            duration: 150,
             complete: () => {
                 this.dropAnimate();
 
@@ -145,6 +164,8 @@ export class PopupService {
         this.animateContent();
         this.isOpened.value = true;
 
+        this.pageContainer = document.querySelector(".page-container");
+
         this.setBodyHidden();
     };
 
@@ -152,6 +173,8 @@ export class PopupService {
         this.emit("closed");
         this.closeAnimate();
         this.isOpened.value = false;
+
+        this.pageContainer = document.querySelector(".page-container");
 
         this.setBodyScroll();
     };

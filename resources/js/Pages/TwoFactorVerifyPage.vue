@@ -41,10 +41,8 @@ export default {
                     twoFactorSecret: this.secretKey,
                 })
                 .then((response) => {
-                    console.log(response.data);
                 })
                 .then((error) => {
-                    console.log(error);
                 });
         },
     },

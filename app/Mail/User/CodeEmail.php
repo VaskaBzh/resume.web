@@ -3,7 +3,6 @@
 namespace App\Mail\User;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
@@ -13,16 +12,15 @@ class CodeEmail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $code;
-
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($code)
+    public function __construct(
+        private readonly string $code
+    )
     {
-        $this->code = $code;
     }
 
     /**
@@ -46,6 +44,9 @@ class CodeEmail extends Mailable
     {
         return new Content(
             markdown: 'mail.user.code-email',
+            with: [
+                'code' => $this->code
+            ]
         );
     }
 

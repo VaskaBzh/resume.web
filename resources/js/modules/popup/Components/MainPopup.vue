@@ -1,16 +1,25 @@
 <template>
-    <div class="popup" :class="{ 'popup-show': service.isOpened }">
-        <un-click-view :wait="wait" />
+    <div class="popup" :id="id" :class="{ 'popup-show': service.isOpened }">
+<!--        <un-click-view :wait="wait" />-->
         <div class="popup__wrapper">
+            <div class="popup__content-fake">
+                <div class="popup__block-fake">
+                    <slot name="instruction" />
+                </div>
+            </div>
             <div
-                class="popup__content"
-                :class="{ 'popup__content_block-loading': wait }"
+                class="popup__content onboarding_block"
+                :class="[
+                    wait ? 'popup__content_block-loading' : '',
+                    className,
+                ]"
                 ref="popup_block"
             >
                 <div class="popup__block-logo" ref="popup_logo">
-                    <logo-light class="popup_logo" />
+                    <logo-light class="popup_logo" v-show="!isDark" />
+                    <logo-dark class="popup_logo" v-show="isDark" />
                 </div>
-                <!--					v-if="!getTheme"-->
+                <!--					v-if="!isDark"-->
                 <!--				<logo-dark-->
                 <!--					v-else-->
                 <!--				/>-->
@@ -29,12 +38,13 @@
     </div>
 </template>
 <script>
-import { mapGetters } from "vuex";
-import { PopupService } from "@/modules/popup/services/PopupService";
 import LogoLight from "@/modules/popup/icons/LogoLight.vue";
 import LogoDark from "@/modules/popup/icons/LogoDark.vue";
 import UnClickView from "@/modules/popup/Components/UnClickView.vue";
 import PopupCrossIcon from "@/modules/popup/icons/PopupCrossIcon.vue";
+
+import { mapGetters } from "vuex";
+import { PopupService } from "@/modules/popup/services/PopupService";
 
 export default {
     name: "main-popup",
@@ -55,6 +65,12 @@ export default {
             type: Boolean,
             default: false,
         },
+        makeResize: {
+            type: Boolean,
+            default: false,
+        },
+        instructionConfig: Object,
+        className: String,
     },
     data() {
         return {
@@ -69,22 +85,18 @@ export default {
         },
         opened(newBool) {
             if (newBool) {
-                console.log(this.id);
-                this.service.popupOpen();
+                this.service.popupOpen(this.$refs.popup_block.scrollHeight);
             }
         },
-        "$refs.popup_content"(newPopupContentHtml) {
-            this.service.setPopupContentHtml(newPopupContentHtml);
-        },
-        "$refs.popup_block"(newPopupBlockHtml) {
-            this.service.setPopupBlockHtml(newPopupBlockHtml);
-        },
-        "$refs.popup_logo"(newPopupLogoHtml) {
-            this.service.setPopupLogoHtml(newPopupLogoHtml);
+        makeResize(newResizeState) {
+            if (newResizeState)
+                setTimeout(() => {
+                    this.service.animateOnUpdate();
+                }, 150);
         },
     },
     computed: {
-        ...mapGetters(["getTheme"]),
+        ...mapGetters(["getTheme", "isDark"]),
     },
     mounted() {
         this.service.setPopupContentHtml(this.$refs.popup_content);
@@ -101,7 +113,7 @@ export default {
 .popup {
     width: 100vw;
     height: 100vh;
-    background: rgba(0, 0, 0, 0.15);
+    background: rgba(0, 0, 0, 0.5);
     position: fixed;
     z-index: -1;
     top: 50%;
@@ -115,26 +127,43 @@ export default {
     transition: all 0.5s ease 0s, z-index 0s ease 0s;
     overflow: visible;
     opacity: 1;
-    z-index: 1;
+    z-index: 112;
 }
 .popup__wrapper {
     width: 100%;
     height: 100%;
     display: flex;
     align-items: center;
-    overflow: scroll;
+    overflow-x: hidden;
+    overflow-y: scroll;
     justify-content: center;
+}
+.popup__wrapper::-webkit-scrollbar {
+    width: 0;
+    height: 0;
 }
 .popup__content {
     border-radius: 24px;
-    background: var(--background-modal-day, #f8fafd);
+    background: var(--background-modal, #212327);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     width: 280px;
     height: 122px;
     transform: translateY(220px);
-    padding: 32px;
     transition: all 0.5s ease 0s;
+    padding: 32px;
     position: relative;
+    overflow: hidden;
+}
+.popup__content-fake {
+    position: absolute;
+    width: 560px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+.popup__block-fake {
+    position: relative;
+    width: 100%;
 }
 .popup__content .popup__block-logo {
     position: absolute;
@@ -147,11 +176,26 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
+    min-width: 496px;
 }
 .popup_close {
     position: absolute;
     top: -8px;
     right: -8px;
-    padding: 8px;
+    padding: 10px;
+    z-index: 2;
+    height: 44px;
+    width: 44px;
+}
+@media (max-width: 900px) {
+    .popup__wrapper {
+        padding: 16px;
+    }
+    .popup__content {
+        padding: 16px;
+    }
+    .popup__block {
+        min-width: auto;
+    }
 }
 </style>

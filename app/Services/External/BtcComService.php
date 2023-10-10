@@ -15,6 +15,7 @@ use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class BtcComService
 {
@@ -50,7 +51,10 @@ class BtcComService
                 ->client
                 ->$method(implode('/', $segments), $params);
 
+            Log::channel('btc_com')->info('BTC.COM RESPONSE', ['Response' => $response->json()]);
+
             if (filled($response['data'])) {
+
                 return $response['data'];
             }
 
@@ -81,7 +85,7 @@ class BtcComService
     /**
      * Инвормация о сабаккаунте
      */
-    public function getSub(int $groupId): array
+    public function getSub(int $groupId): ?array
     {
         return $this->call(segments: ['groups', $groupId], params: [
             'puid' => self::PU_ID,
@@ -94,6 +98,7 @@ class BtcComService
     public function createSub(UserData $userData): array
     {
         if ($this->btcHasUser(userData: $userData)) {
+
             return [
                 'errors' => [
                     'name' => trans('validation.unique', [
@@ -121,14 +126,15 @@ class BtcComService
      * Следует обратить внимание, метод принимает в строке запроса
      * параметр group (не group_id)
      */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID): Collection
+    public function getWorkerList(?int $groupId = self::UNGROUPED_ID, ?string $workerStatus = 'all'): Collection
     {
         $response = $this->call(
             segments: ['worker'],
             params: [
                 'puid' => self::PU_ID,
                 'group' => $groupId,
-                'page_size' => self::DEFAULT_PAGE_SIZE
+                'page_size' => self::DEFAULT_PAGE_SIZE,
+                'status' => $workerStatus
             ]
         );
 
@@ -162,17 +168,14 @@ class BtcComService
             ]);
     }
 
-    public function getStats(): array
+    public function getFppsRate(): float|int
     {
-        $stats = $this->call(['pool', 'status']);
         $fppsRate = $this->call(['account', 'earn-history'], params: [
             'puid' => self::PU_ID,
             "page_size" => "1",
         ])['list'];
 
-        return array_merge($stats, [
-            'more_than_pps96_rate' => collect($fppsRate)->first()['more_than_pps96_rate']
-        ]);
+         return collect($fppsRate)->first()['more_than_pps96_rate'];
     }
 
     /* End requests */
@@ -186,22 +189,23 @@ class BtcComService
     {
         return [
             'sub' => $sub->sub,
+            'user_id' => $sub->user->id,
             'pending_amount' => $sub->pending_amount,
             'group_id' => $sub->group_id,
             'workers_count_active' => $btcComSub['workers_active'],
             'workers_count_in_active' => $btcComSub['workers_inactive'],
             'workers_count_unstable' => $btcComSub['workers_dead'],
-            'hash_per_min' => $btcComSub['shares_1m'],
+            'hash_per_min' => (float) $btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay,
             'today_forecast' => number_format(Helper::calculateEarn(
                 stats: $stats,
                 hashRate: $hashPerDay,
                 fee: BtcComService::FEE
             ), 8, '.', ' '),
-            'reject_percent' => $btcComSub['reject_percent'],
+            'reject_percent' => (float) $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
             'total_payout' => $sub->total_payout,
-            'yesterday_amount' => $sub->yesterday_amount,
+            'yesterday_amount' => (float) $sub->yesterday_amount,
         ];
     }
 
@@ -268,14 +272,23 @@ class BtcComService
             ->contains($userData->name);
     }
 
-    private function createLocalSub(UserData $userData, $groupId): void
+    private function createLocalSub(UserData $userData, $groupId): string
     {
-        Create::execute(
-            subData: SubData::fromRequest([
-                'user_id' => auth()->user()->id,
-                'group_id' => $groupId,
-                'group_name' => $userData->name,
-            ])
-        );
+        try {
+            $sub = Create::execute(
+                subData: SubData::fromRequest([
+                    'user_id' => auth()->user()->id,
+                    'group_id' => $groupId,
+                    'group_name' => $userData->name,
+                ])
+            );
+
+            return $sub->sub;
+        } catch (\Exception $e) {
+            report($e);
+
+            throw new \Exception($e->getMessage());
+        }
+
     }
 }

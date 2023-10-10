@@ -64,6 +64,7 @@ export default {
         }
     }
     &__container {
+        margin: 0 auto;
         @media (min-width: 479.98px) {
             position: relative;
         }

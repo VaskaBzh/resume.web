@@ -1,11 +1,11 @@
 <template>
     <div class="progress">
         <div class="progress__head">
-            <main-title class="headline">
+            <main-title class="headline card-title">
                 {{ title }}
             </main-title>
             <div class="progress_icon">
-                <progress-hint-icon />
+                <TooltipCard :text=" $t('statistic.info_blocks.tooltip[0]') + progress + unit + '. ' + $t('statistic.info_blocks.tooltip[1]') + ' ' + final + unit"></TooltipCard>
             </div>
         </div>
         <div class="progress__block">
@@ -22,9 +22,8 @@
 
 <script>
 import MainTitle from "./MainTitle.vue";
-import ProgressHintIcon from "../../icons/ProgressHintIcon.vue";
 import anime from "animejs/lib/anime.es.js";
-
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
 export default {
     name: "main-progress-bar",
     props: {
@@ -36,7 +35,7 @@ export default {
     },
     components: {
         MainTitle,
-        ProgressHintIcon,
+        TooltipCard
     },
     computed: {
         percent() {
@@ -76,9 +75,12 @@ export default {
     gap: 12px;
     margin-bottom: 16px;
 }
+
 .progress_icon {
     width: 20px;
     height: 20px;
+    display: flex;
+    align-items: center;
 }
 .progress__block {
     display: flex;
@@ -91,7 +93,7 @@ export default {
     align-items: center;
 }
 .progress_value {
-    color: var(--light-secondary-bw, #101828);
+    color: var(--text-primary);
     font-family: Unbounded, serif;
     font-size: 14px;
     font-weight: 400;
@@ -100,19 +102,37 @@ export default {
 .progress__bar {
     min-height: 16px;
     border-radius: 16px;
-    background: var(--primary-4007, rgba(83, 177, 253, 0.07));
+    background: var(--background-island-inner-1, rgba(83, 177, 253, 0.07));
     position: relative;
     width: 100%;
+}
+@media(max-width:900px){
+    .progress__head{
+        margin-bottom: 12px;
+    }
+    .progress_value{
+        font-size: 12px;
+    }
+}
+@media(max-width:500px){
+    .progress__bar{
+        min-height: 12px;
+    }
 }
 .progress_line {
     border-radius: 16px;
     opacity: 0.8;
-    background: var(--primary-500, #2E90FA);
+    background: var(--background-accient, #2E90FA);
     position: absolute;
     left: 0;
     top: 0;
     height: 100%;
     width: 0;
     max-width: 100%;
+}
+@media(max-width:500px){
+   .card-title{
+        font-size: 12px !important;
+   }
 }
 </style>

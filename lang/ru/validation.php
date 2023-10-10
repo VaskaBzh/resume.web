@@ -90,8 +90,8 @@ return [
     'max' => [
         'array' => 'The :attribute must not have more than :max items.',
         'file' => 'The :attribute must not be greater than :max kilobytes.',
-        'numeric' => ':attribute должен быть не более :max.',
-        'string' => ':attribute должен быть не более :max символов.',
+        'numeric' => ':attribute не более :max.',
+        'string' => ':attribute не более :max символов.',
     ],
     'max_digits' => 'The :attribute must not have more than :max digits.',
     'mimes' => 'The :attribute must be a file of type: :values.',
@@ -99,8 +99,8 @@ return [
     'min' => [
         'array' => 'The :attribute must have at least :min items.',
         'file' => 'The :attribute must be at least :min kilobytes.',
-        'numeric' => ':attribute должен быть не менее :min.',
-        'string' => ':attribute должен быть не менее :min символов.',
+        'numeric' => ':attribute не менее :min.',
+        'string' => ':attribute не менее :min символов.',
     ],
     'min_digits' => 'The :attribute must have at least :min digits.',
     'multiple_of' => 'The :attribute must be a multiple of :value.',
@@ -137,7 +137,7 @@ return [
         'string' => 'The :attribute must be :size characters.',
     ],
     'starts_with' => 'The :attribute must start with one of the following: :values.',
-    'string' => 'The :attribute must be a string.',
+    'string' => 'Вводимый :attribute должен быть строкой',
     'timezone' => 'The :attribute must be a valid timezone.',
     'unique' => 'Такой :attribute уже зарегистрирован.',
     'uploaded' => 'The :attribute failed to upload.',
@@ -160,6 +160,8 @@ return [
     'custom' => [
         'attribute-name' => [
             'rule-name' => 'custom-message',
+            'group_id-unique' => ':attribute уже зарегистрирован на этом саб-аккаунте',
+            'confirmation_code_exists' => 'Неверный код подверждения',
         ],
     ],
 
@@ -177,7 +179,9 @@ return [
     'attributes' => [
         'password' => 'пароль',
         'name' => 'имя',
-        'referral_code' => 'реферальный код'
+        'referral_code' => 'реферальный код',
+        'wallet_address' => 'адрес кошелька',
+        'wallet_name' => 'имя кошелька',
     ],
 
 ];

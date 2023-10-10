@@ -19,6 +19,7 @@ class WalletResource extends JsonResource
             'wallet' => $this->wallet,
             'name' => $this->name,
             'total_payout' => $this->total_payout,
+            'is_unlocked' => $this->isUnlocked(),
         ];
     }
 }

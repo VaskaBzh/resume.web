@@ -24,9 +24,9 @@ class IncomeService
     private Sub $sub;
     private ?Sub $owner;
     private float $dailyEarn;
+    private float $fee;
 
     private array $params = [
-        'allBtcFee' => 3.5,
         'status' => Status::REJECTED->value,
         'unit' => 'T',
         'totalPayment' => null,
@@ -60,7 +60,7 @@ class IncomeService
         }
 
         $this->setNetworkDifficulty();
-/*        $this->calculateFee();*/
+        $this->setFee();
         $this->setDailyEarn();
         $this->setDailyAmount();
         $this->setPendingAmount();
@@ -102,8 +102,17 @@ class IncomeService
         $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: BtcComService::FEE - $this->sub->percent
+            fee: $this->fee
         );
+    }
+
+    private function setFee(): void
+    {
+        $this->fee = $this->sub->percent;
+
+        if ($this->owner) {
+            $this->fee -= $this->owner->pivot->referral_percent;
+        }
     }
 
     public function sumTotalAmount(): void
@@ -133,21 +142,6 @@ class IncomeService
     }
 
     /**
-     * Получаем камиссию allbtc с учетом дискаунта реферальной программы
-     *
-     * @return void
-     */
-    /*public function calculateFee(): void
-    {
-        $referralUserDiscount = $this
-            ->owner
-            ?->pivot
-            ->referral_percent ?? 0;
-
-        $this->params['allBtcFee'] = $this->sub->percent - $referralUserDiscount;
-    }*/
-
-    /**
      * Устанавливаем доход овнера от реферала
      *
      * @return void
@@ -160,7 +154,7 @@ class IncomeService
     }
 
     /**
-     * Проверяем достигнуто ли минимальное значение для вывода средств
+     * Проверяем достигнуто ли минимальное значение для вывода средств текущего саба
      *
      * @return bool
      */
@@ -169,13 +163,24 @@ class IncomeService
         return ($this->sub->pending_amount + $this->params['dailyAmount']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
+    /**
+     * Проверяем достигнуто ли минимальное значение для вывода средств для рефовода,
+     * если такого имеется
+     *
+     * @return bool
+     */
+    private function isLessThenMinWithdrawOwner(): bool
+    {
+        return ($this->owner->pending_amount + $this->params['ownerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
+    }
+
+
     private function buildDto(?Wallet $wallet): IncomeCreateData
     {
         return IncomeCreateData::fromRequest(requestData: array_merge([
             'group_id' => $this->sub->group_id,
             'wallet_id' => $wallet?->id,
-        ], $this->params)
-        );
+        ], $this->params));
     }
 
     /**
@@ -232,10 +237,14 @@ class IncomeService
                         ?->id,
                     'referral_id' => $this->owner->pivot->id,
                     'dailyAmount' => $this->params['ownerProfit'],
-                    'status' => $this->params['status'],
-                    'message' => $this->params['message'],
+                    'status' => $this->isLessThenMinWithdrawOwner()
+                        ? Status::PENDING->value
+                        : Status::READY_TO_PAYOUT->value,
+                    'message' => $this->isLessThenMinWithdrawOwner()
+                        ? Message::LESS_MIN_WITHDRAWAL->value
+                        : Message::READY_TO_PAYOUT,
                     'hash' => $this->params['hash'],
-                    'diff' => $this->params['diff']
+                    'diff' => $this->params['diff'],
                 ])
             );
 
@@ -261,8 +270,8 @@ class IncomeService
             'group_id' => $this->sub->group_id,
             'earn' => $this->dailyEarn,
             'user_total' => $this->params['dailyAmount'],
-            'percent' => $this->params['allBtcFee'],
-            'profit' => $this->dailyEarn * ($this->params['allBtcFee'] / 100),
+            'percent' => $this->fee,
+            'profit' => $this->dailyEarn * ($this->sub->percent / 100),
         ]));
     }
 }

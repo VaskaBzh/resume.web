@@ -108,7 +108,7 @@ export default {
   justify-content: space-between;
   border-radius: 12px;
   padding: 16px;
-  background: var(--background-island-day, #FFF);
+  background: var(--background-island);
   box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
   margin-bottom: 4px;
 }
@@ -142,7 +142,7 @@ background: var(--old-primary-4007, rgba(83, 177, 253, 0.07));
 }
 .choose-country__block{
   border-radius: var(--surface-border-radius-radius-s-md, 12px);
-  background: var(--main-gohan, #FFF);
+  background: var(--background-island, #FFF);
   box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
   width: 480px;
   padding-bottom: var(--gap-0, 0px);
@@ -160,6 +160,7 @@ background: var(--old-primary-4007, rgba(83, 177, 253, 0.07));
 .search-input{
   /* width: 100%; */
   margin-left: 52px;
+  background: transparent;
   padding:  16px 16px 16px 0;
   font-family: NunitoSans;
   font-size: 16px;

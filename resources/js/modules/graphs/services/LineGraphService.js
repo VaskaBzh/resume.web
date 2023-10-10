@@ -5,6 +5,22 @@ export class LineGraphService extends GraphService {
         super(graphData, translate);
     }
 
+    setDate(nearestIndex) {
+        const date = new Date(this.graphData.dates[nearestIndex]);
+
+        this.fullDate = date.getUTCFullYear() +
+            "." +
+            date.getDate().toString().padStart(2, "0") +
+            "." +
+            (date.getMonth() + 1).toString().padStart(2, "0");
+        if (this.graphData.values.length > 96)
+            this.time =
+                date.getDate().toString().padStart(2, "0") +
+                "." +
+                (date.getMonth() + 1).toString().padStart(2, "0");
+        else this.time = date.getUTCHours().toString().padStart(2, "0") + ":00";
+    }
+
     gradientInit() {
         const gradient = this.svg
             .append("defs")
@@ -61,22 +77,20 @@ export class LineGraphService extends GraphService {
         return this;
     }
 
-    createCircle() {
+    createCircle(lineFill) {
         this.svg
             .append("circle")
             .attr("class", "dot")
             .attr("r", 6)
             .style("opacity", 0)
-            .attr("fill", "#ffffff")
+            .attr("fill", lineFill)
             .attr("stroke", "#2E90FA")
             .attr("stroke-width", 2);
-        // this.circleColor
-        // this.circleBorder
 
         return this;
     }
 
-    createLines() {
+    createLine() {
         this.svg
             .append("path")
             .datum(this.graphData.values)
@@ -86,8 +100,6 @@ export class LineGraphService extends GraphService {
             .attr("width", "100%")
             .attr("stroke", "#2E90FA")
             .attr("stroke-width", 1);
-        // this.lineColor
-        // this.lineWidth
 
         return this;
     }
@@ -102,6 +114,7 @@ export class LineGraphService extends GraphService {
             .attr("y2", this.containerHeight)
             .attr("stroke-width", 1)
             .style("opacity", 0)
+            .attr("stroke-dasharray", "10")
             .attr("stroke", "rgba(152, 162, 179, 0.5)");
         // this.mouseLineColor
 
@@ -119,7 +132,7 @@ export class LineGraphService extends GraphService {
         return this;
     }
 
-    appendBands() {
+    appendBands(bandColor) {
         this.svg
             .selectAll(".band")
             .data(this.yBand.domain())
@@ -129,19 +142,18 @@ export class LineGraphService extends GraphService {
             .attr("y", (d) => this.y(d) - 1)
             .attr("height", 1)
             .attr("width", "100%")
-            .attr("opacity", 0.2)
-            .attr("fill", "#D0D5DD");
+            .attr("fill", bandColor);
         //this.bandColor
 
         return this;
     }
 
-    graphAppends() {
-        this.appendBands()
-            .appendGradient()
+    graphAppends(colors) {
+        this.appendBands(colors.bands)
             .createMouseLine()
-            .createLines()
-            .createCircle()
+            .appendGradient()
+            .createLine()
+            .createCircle(colors.circle)
             .appendXAxis();
 
         !this.isMobile ? this.appendYAxis() : this.createAxis();

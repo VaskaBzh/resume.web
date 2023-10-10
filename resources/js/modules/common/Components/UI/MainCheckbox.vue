@@ -37,7 +37,7 @@ export default {
     watch: {
         is_checked(newCheckState) {
             this.isChecked = newCheckState;
-        }
+        },
     },
 };
 </script>
@@ -46,7 +46,8 @@ export default {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    color: var(--text-teritary-day, #98a2b3);
+    color: var(--text-teritary);
+    background: transparent !important;
     font-family: NunitoSans, serif;
     font-size: 16px;
     font-weight: 400;
@@ -60,7 +61,7 @@ export default {
         display: inline-block;
         width: 60px;
         height: 32px;
-        background: #f2f4f7;
+        background: var(--main-checkbox-default);
         transition: all 0.3s ease;
         border-radius: 32px;
     }

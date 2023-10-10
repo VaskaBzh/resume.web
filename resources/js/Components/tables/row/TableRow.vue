@@ -19,7 +19,9 @@
             <span class="label" v-show="viewportWidth <= 767.98">{{
                 renderTitles[i]
             }}</span>
-            <span v-hash ref="row_content" :class="column[0]">{{ column[1] }}</span>
+            <span v-hash ref="row_content" :class="column[0]">{{
+                column[1]
+            }}</span>
         </td>
         <!--        <span class="more" v-if="viewportWidth <= 767.98">{{-->
         <!--            $t("more")-->
@@ -30,7 +32,7 @@
             height="24"
             viewBox="0 0 24 24"
             fill="none"
-            v-if="!!this.columns.graphId"
+            v-if="!!this.columns.graphId && !removePercent"
         >
             <path
                 d="M10 6L16 12L10 18"
@@ -43,16 +45,21 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+
 export default {
     name: "table-row",
     props: {
-        viewportWidth: Number,
         columns: Array,
         titles: Array,
+        removePercent: Boolean,
     },
     computed: {
+        ...mapGetters(["viewportWidth"]),
         getWorkersStats() {
-            return this.$refs?.row_content.find(el => el.className === "workers_stats");
+            return this.$refs?.row_content?.find(
+                (el) => el.className === "workers_stats"
+            );
         },
         updatedColumns() {
             if (this.columns) {
@@ -92,16 +99,18 @@ export default {
         renderColumns() {
             let obj = {};
             if (this.columns) {
-                obj = Object.entries(this.updatedColumns).filter(
-                    (col) =>
+                obj = Object.entries(this.updatedColumns).filter((col) => {
+                    return (
                         col[0] !== "class" &&
                         col[0] !== "graphId" &&
                         col[0] !== "data" &&
                         col[0] !== "unit" &&
                         col[0] !== "unit24" &&
                         col[0] !== "message" &&
-                        col[0] !== "validate"
-                );
+                        col[0] !== "validate" &&
+                        col[0] !== (this.removePercent ? "reject_percent" : "")
+                    );
+                });
                 if (
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
@@ -118,7 +127,7 @@ export default {
     },
     methods: {
         setWorkersStats() {
-            if (!!this.getWorkersStats) {
+            if (this.getWorkersStats) {
                 const splitedText = this.getWorkersStats.textContent.split("/");
 
                 const firstSpan = `<span class="workers-active">${splitedText[0]}</span>`;
@@ -130,24 +139,26 @@ export default {
             }
         },
         openPopup() {
-            this.$emit("openGraph", {
+            this.$emit("tableProcess", {
                 id: this.columns.graphId,
             });
         },
     },
     mounted() {
         this.setWorkersStats();
-    }
+    },
 };
 </script>
 
 <style scoped lang="scss">
 .table {
     &_column {
-        font-size: 18px;
+        font-family: NunitoSans, serif;
+        font-size: 14px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 135%;
-        color: #343434;
+        line-height: 20px;
+        color: var(--text-teritary);
         white-space: nowrap;
         // text-align: center;
         -moz-user-select: -moz-none;
@@ -168,7 +179,7 @@ export default {
             }
         }
         @media (min-width: 767.98px) {
-            background: #fafafa;
+            background: var(--background-island);
         }
         &:first-child {
             @media (min-width: 767.98px) {
@@ -187,6 +198,7 @@ export default {
             -webkit-user-select: text;
             user-select: text;
             display: inline-flex;
+            align-items: center;
             &.workers {
                 color: #13d60e;
                 &_stats {
@@ -199,7 +211,7 @@ export default {
                     color: #13d60e;
                 }
                 &-inactive {
-                    color: #EB5757;
+                    color: #eb5757;
                 }
             }
         }
@@ -213,7 +225,7 @@ export default {
             padding: 8px 0;
             &:not(.main) {
                 padding: 16px;
-                background: #fafafa;
+                background: var(--background-island);
                 border-radius: 16px;
                 box-shadow: 0 4px 10px 0 rgba(85, 85, 85, 0.1);
                 .more {
@@ -272,9 +284,11 @@ export default {
                 }
             }
         }
-        &.rejected,
+        &.error,
+        &.complete,
         &.completed,
-        &.pending {
+        &.pending,
+        &.rejected {
             span {
                 &.status,
                 &.name {
@@ -300,6 +314,7 @@ export default {
                 background: #13d60e;
             }
         }
+        &.complete,
         &.completed {
             span.status:before {
                 background: #13d60e;
@@ -315,6 +330,7 @@ export default {
                 background: #ff0000;
             }
         }
+        &.error,
         &.rejected {
             span.status:before {
                 background: #ff0000;

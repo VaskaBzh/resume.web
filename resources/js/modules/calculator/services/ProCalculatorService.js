@@ -2,7 +2,7 @@ import { Profit } from "../../../Scripts/profit";
 
 import { InputData } from "../../common/DTO/InputData";
 
-import currency from "@/api/currency";
+import store from "@/store";
 
 export class ProCalculatorService {
     constructor() {
@@ -185,7 +185,6 @@ export class ProCalculatorService {
         const seconds = formulDifficulty / (formulHashrate * earnTime);
 
         /* Время на окупаемость в месяцах */
-        console.log(seconds / convertmultiplier);
 
         /* result: 4.898917437665151 */
     }
@@ -203,7 +202,7 @@ export class ProCalculatorService {
 
     async converted(btc) {
         const rubleCost = btc.toFixed(8);
-        const usdCourse = (await currency()).data.rates.USD || 0;
+        const usdCourse = store.getters.currency.rates.USD || 0;
         const btcCourse = this.btcInfo.price;
         const btcCost = rubleCost * usdCourse;
         const result = btcCost / btcCourse;

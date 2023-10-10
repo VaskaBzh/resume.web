@@ -1,7 +1,7 @@
-import { MetaTableService } from "@/modules/common/services/MetaTableService";
+import { MetaTableService } from "@/modules/common/services/extends/MetaTableService";
 import { WatchersData } from "@/modules/watchers/DTO/WatchersData";
 import { WatchersFormData } from "@/modules/watchers/DTO/WatchersFormData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 
 export class WatchersService extends MetaTableService {
@@ -10,8 +10,14 @@ export class WatchersService extends MetaTableService {
 
         this.form = {};
         this.popupClosed = false;
+        this.popupCardOpened = false;
+        this.popupCardClosed = false;
         this.blocks = [];
         this.card = null;
+    }
+
+    useTranslater() {
+        return;
     }
 
     closePopup() {
@@ -19,6 +25,22 @@ export class WatchersService extends MetaTableService {
 
         setTimeout(() => {
             this.popupClosed = false;
+        }, 300);
+    }
+
+    closeCardPopup() {
+        this.popupCardClosed = true;
+
+        setTimeout(() => {
+            this.popupCardClosed = false;
+        }, 300);
+    }
+
+    openCardPopup() {
+        this.popupCardOpened = true;
+
+        setTimeout(() => {
+            this.popupCardOpened = false;
         }, 300);
     }
 
@@ -33,16 +55,8 @@ export class WatchersService extends MetaTableService {
         this.form = {};
     }
 
-    setBlocks(newBlocks) {
-        this.blocks = [...newBlocks];
-    }
-
-    dropBlocks() {
-        this.blocks = [];
-    }
-
     async fetch(page = 1, per_page = 10) {
-        return await api.get(
+        return await ProfileApi.get(
             `/watchers/${store.getters.user.id}/${this.group_id}`,
             {
                 headers: {
@@ -53,7 +67,7 @@ export class WatchersService extends MetaTableService {
     }
 
     async fetchCard(id) {
-        return await api.get(`/watchers/${id}`, {
+        return await ProfileApi.get(`/watchers/${id}`, {
             headers: {
                 Authorization: `Bearer ${store.getters.token}`,
             },
@@ -61,12 +75,14 @@ export class WatchersService extends MetaTableService {
     }
 
     setCard(card) {
-        this.card = new WatchersData(
-            card.name,
-            card.allowed_routes,
-            card.id,
-            card.url
-        );
+        this.card = {
+            ...new WatchersData(
+                card.name,
+                card.allowed_routes,
+                card.id,
+                card.url
+            ),
+        };
     }
 
     dropCard() {
@@ -74,14 +90,16 @@ export class WatchersService extends MetaTableService {
     }
 
     async getCard(id) {
-        this.dropCard();
-
         try {
             const card = (await this.fetchCard(id)).data.data;
 
             this.setCard(card);
+
+            this.openCardPopup();
         } catch (e) {
             console.error(`Error with: ${e}`);
+
+            this.dropCard();
         }
     }
 
@@ -108,16 +126,32 @@ export class WatchersService extends MetaTableService {
     async createWatcher() {
         if (this.group_id !== -1) {
             try {
-                await api.post(`/watchers/create/${this.group_id}`, this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
+                const response = await ProfileApi.post(
+                    `/watchers/create/${this.group_id}`,
+                    this.form,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: this.translate("validate_messages.watcher_message"),
                 });
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
+
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response?.data?.message,
+                });
             }
         }
     }
@@ -125,16 +159,34 @@ export class WatchersService extends MetaTableService {
     async changeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                await api.put(`/watchers/update/${id}`, this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
+                const response = await ProfileApi.put(
+                    `/watchers/update/${id}`,
+                    this.form,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: response.data.message,
                 });
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
+
+                store.dispatch("setNotification", {
+                    status: "false",
+                    title: "error",
+                    text: err.response.data.message,
+                });
+
+                await this.getCard(id);
             }
         }
     }
@@ -142,16 +194,31 @@ export class WatchersService extends MetaTableService {
     async removeWatcher(id) {
         if (this.group_id !== -1) {
             try {
-                await api.delete(`/watchers/delete/${id}`, this.form, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
+                const response = await ProfileApi.delete(
+                    `/watchers/delete/${id}`,
+                    {
+                        headers: {
+                            Authorization: `Bearer ${store.getters.token}`,
+                        },
+                    }
+                );
+
+                store.dispatch("setNotification", {
+                    status: "success",
+                    title: "success",
+                    text: response.data.message,
                 });
 
                 this.dropForm();
                 this.closePopup();
             } catch (err) {
                 console.error(err);
+
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.message,
+                });
             }
         }
     }

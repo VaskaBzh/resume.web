@@ -1,26 +1,11 @@
 <template>
-    <div class="search" @click="$refs.input.focus()">
-        <svg
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-        >
-            <g clip-path="url(#clip0_1727_35762)">
-                <path
-                    fill-rule="evenodd"
-                    clip-rule="evenodd"
-                    d="M10.4993 2C9.14387 2.00012 7.80814 2.32436 6.60353 2.94569C5.39893 3.56702 4.36037 4.46742 3.57451 5.57175C2.78866 6.67609 2.27829 7.95235 2.08599 9.29404C1.89368 10.6357 2.02503 12.004 2.46906 13.2846C2.91308 14.5652 3.65692 15.7211 4.63851 16.6557C5.6201 17.5904 6.81098 18.2768 8.11179 18.6576C9.4126 19.0384 10.7856 19.1026 12.1163 18.8449C13.447 18.5872 14.6967 18.015 15.7613 17.176L19.4133 20.828C19.6019 21.0102 19.8545 21.111 20.1167 21.1087C20.3789 21.1064 20.6297 21.0012 20.8151 20.8158C21.0005 20.6304 21.1057 20.3796 21.108 20.1174C21.1102 19.8552 21.0094 19.6026 20.8273 19.414L17.1753 15.762C18.1633 14.5086 18.7784 13.0024 18.9504 11.4157C19.1223 9.82905 18.8441 8.22602 18.1475 6.79009C17.4509 5.35417 16.3642 4.14336 15.0116 3.29623C13.659 2.44911 12.0952 1.99989 10.4993 2ZM3.99928 10.5C3.99928 8.77609 4.6841 7.12279 5.90308 5.90381C7.12207 4.68482 8.77537 4 10.4993 4C12.2232 4 13.8765 4.68482 15.0955 5.90381C16.3145 7.12279 16.9993 8.77609 16.9993 10.5C16.9993 12.2239 16.3145 13.8772 15.0955 15.0962C13.8765 16.3152 12.2232 17 10.4993 17C8.77537 17 7.12207 16.3152 5.90308 15.0962C4.6841 13.8772 3.99928 12.2239 3.99928 10.5Z"
-                    fill="#417FE5"
-                />
-            </g>
-            <defs>
-                <clipPath id="clip0_1727_35762">
-                    <rect width="24" height="24" fill="white" />
-                </clipPath>
-            </defs>
-        </svg>
+    <div class="search" @click="focusInput">
+        <transition name="fade_in">
+            <search-icon
+                class="search_icon"
+                v-show="searchValue.length === 0"
+            />
+        </transition>
         <input
             ref="input"
             type="text"
@@ -28,58 +13,104 @@
             v-model="searchValue"
             :placeholder="placeholder"
         />
+        <transition name="fade_in">
+            <div
+                class="search_drop"
+                 @click="dropSearchValue"
+                v-show="searchValue.length > 0"
+            >
+                {{ $t("search.drop") }}
+            </div>
+        </transition>
     </div>
 </template>
 
 <script>
+import SearchIcon from "@/modules/common/icons/SearchIcon.vue";
+import { CommonMessages } from "@/modules/common/lang/CommonMessages";
+
 export default {
     name: "main-search",
+    components: {
+        SearchIcon
+    },
+    i18n: {
+        sharedMessages: CommonMessages,
+    },
     props: {
         placeholder: String,
     },
     data() {
         return {
             searchValue: "",
+            timeOut: null,
         };
     },
     watch: {
         searchValue(newValue) {
-            this.$emit("searched", newValue);
+            clearTimeout(this.timeOut);
+            this.timeOut = setTimeout(() => this.$emit("searched", newValue), 1000);
         },
     },
+    methods: {
+        dropSearchValue() {
+            this.searchValue = "";
+        },
+        focusInput() {
+            this.$refs.input.focus();
+        }
+    }
 };
 </script>
 
 <style scoped lang="scss">
+.fade_in-enter-active,
+.fade_in-leave-active {
+    transition: all 0.5s ease;
+}
+.fade_in-enter-from,
+.fade_in-leave-to {
+    opacity: 0;
+}
 .search {
-    max-width: 340px;
+    max-width: 250px;
     width: 100%;
-    min-height: 48px;
+    min-height: 40px;
     display: inline-flex;
     align-items: center;
-    padding: 0 16px;
+    padding: 0 12px;
     gap: 8px;
-    border-radius: 8px;
     cursor: pointer;
-    background: var(--light-theme-second-bg, #fafafa);
+    border-radius: 12px;
+    background: var(--background-island, #FFF);
+    box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
     @media (max-width: $mobile) {
         max-width: 100%;
     }
-    svg {
+    &_icon {
         width: 24px;
         height: 24px;
     }
     &_input {
-        color: #343434;
-        font-size: 18px;
-        font-weight: 400;
-        line-height: 135%;
         outline: none;
         border: none;
         background: transparent;
+        color: var(--text-secondary, #475467);
+        font-family: NunitoSans , serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
         &::placeholder {
-            color: #d6d6d6;
+            color: var(--select-text-no-value, var(--gray-3100, #D0D5DD));
         }
+    }
+    &_drop {
+        color: var(--buttons-ghost-text-default, #53B1FD);
+        text-align: center;
+        font-family: NunitoSans, serif;
+        font-size: 12px;
+        font-weight: 600;
+        line-height: 16px;
     }
 }
 </style>

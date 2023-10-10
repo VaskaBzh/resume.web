@@ -1,6 +1,6 @@
 export const SettingsMessage = {
     en: {
-        title: ["Personal Information", "Safety"],
+        title: ["Personal Information", "Safety", "Account"],
         labels: {
             login: "Login",
             email: "Email",
@@ -44,14 +44,30 @@ export const SettingsMessage = {
             button: ["Back", "Change", "Send code"],
          },
         button: "Change",
+        button_verify: "Verify email",
         safety: {
             title: ["Two-Factor Authentication", "Login via SMS", "Change password"],
             text: ["This is a security mechanism used to protect your profile by linking your login to a physical device.", "Receive an SMS with a code to confirm your account login on your mobile phone.", "To change your password, you need to remember the current one."],
-            button:["Connect","Change"]
+            button:["Connect","Change","Disconnect"]
+        },
+        fac_popup:{
+            title: '2FA connection',
+            button: ['Continue', 'Back', 'Connect'],
+            label: ["Settings key", "Code from application"],
+        },
+        password_popup: {
+            title: 'Change Password',
+            description: 'To change the password, you need to remember the current one',
+            placeholders: {
+                current_password: "Current Password",
+                new_password: "New Password",
+                confirm_password: "Confirm New Password",
+            },
+            button: "Change",
         }
     },
     ru: {
-        title:[ "Персональные данные", "Безопасность"],
+        title:[ "Персональные данные", "Безопасность",  "Аккаунт"],
         labels: {
             login: "Логин",
             email: "Почту",
@@ -95,10 +111,26 @@ export const SettingsMessage = {
             button: ["Назад", "Сменить", "Отправить код"],
         },
         button: "Сменить",
+        button_verify: "Подтвердите почту",
         safety: {
             title: ["Two-Factor Authentication", "Вход по SMS", "Сменить пароль"],
             text: ["Это механизм безопасности, используемый для защиты вашего профиля путем привязки вашего входа к физическому устройству.", "Получай SMS с кодом для подтверждения входа в аккаунт на свой мобильный телефон.", "Для смены пароля вам нужно помнить текущий."],
-            button:["Подключить","Сменить"]
+            button:["Подключить","Сменить","Отключить"]
+        },
+        fac_popup:{
+            title: 'Подключение 2FA',
+            button: ['Продолжить', 'Назад', 'Подключить'],
+            label: ["Ключ настройки", "Код из приложения"],
+        },
+        password_popup:{
+            title: 'Смена пароля',
+            description: 'Чтобы сменить пароль нужно помнить текущий',
+            placeholders: {
+                current_password: "Текущий пароль",
+                new_password: "Новый пароль",
+                confirm_password: "Повторите новый пароль",
+            },
+            button: "Сменить",
         }
     },
 };

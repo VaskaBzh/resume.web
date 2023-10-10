@@ -1,7 +1,7 @@
 import { TableService } from "@/services/extends/TableService";
 
 import { PaymentData } from "@/modules/referral/DTO/PaymentData";
-import api from "@/api/api";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
 
 export class PaymentService extends TableService {
@@ -29,7 +29,7 @@ export class PaymentService extends TableService {
     }
 
     async fetchIncomes(page, per_page) {
-        return await api.get(
+        return await ProfileApi.get(
             `/referrals/incomes/${this.user.id}?page=${page}&per_page=${per_page}`,
             {
                 headers: {
@@ -46,8 +46,8 @@ export class PaymentService extends TableService {
     }
 
     async index(page = 1, per_page = 15) {
-        if (store.getters.getActive !== -1)
-            this.waitTable = true;
+        this.emptyTable = false;
+        this.waitTable = true;
 
         let response = {};
 
@@ -63,9 +63,15 @@ export class PaymentService extends TableService {
                 return this.setter(el);
             });
 
+            if (this.rows.length === 0) {
+                this.emptyTable = true;
+            }
+
             this.titles = this.useTranslater([0, 1, 2, 3, 4]);
         } catch (err) {
             console.error(`FetchError: ${err}`);
+
+            this.emptyTable = true;
         }
 
         return this;
@@ -74,7 +80,6 @@ export class PaymentService extends TableService {
     async setTable(page = 1, per_page = 15) {
         await this.index(page, per_page);
 
-        console.log(this.titles);
         this.table.set("titles", this.titles);
         this.table.set("rows", this.rows);
 

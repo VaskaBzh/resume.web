@@ -1,41 +1,41 @@
 <template>
-    <ul class="nav__links">
-        <li
-            class="nav_link"
-            v-for="item in link"
-            @click="$router.push(item.url)"
-        >{{ item.name }}
-        </li>
-    </ul>
+	<ul class="nav__links">
+		<li
+			class="nav_link"
+			v-for="item in link"
+			@click="$router.push(item.url)"
+		>{{ item.name }}
+		</li>
+	</ul>
 </template>
 
 <script>
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
-    i18n: {
-        sharedMessages: HomeMessage,
-    },
-    data() {
-        return {
-            link: [
-                {
-                    name: this.$t("footer.list[0]") ,
-                    url: '/'
-                },
-                {
-                    name: this.$t("footer.list[1]"),
-                    url: '/hosting'
-                },
-                {
-                    name:  this.$t("footer.list[2]"),
-                    url: '/miners'
-                }
-               
-            ],
-            active: false,
-        }
-    },
+	i18n: {
+		sharedMessages: HomeMessage,
+	},
+	data() {
+		return {
+			link: [
+				{
+					name: this.$t("footer.list[0]") ,
+					url: '/'
+				},
+				{
+					name: this.$t("footer.list[1]"),
+					url: '/hosting'
+				},
+				{
+					name:  this.$t("footer.list[2]"),
+					url: '/miners'
+				}
+
+			],
+			active: false,
+		}
+	},
 
 };
 </script>
@@ -43,74 +43,74 @@ export default {
 <style lang="scss">
 .shadow-enter-active,
 .shadow-leave-active {
-    transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
-    visibility: visible;
-    opacity: 1;
+	transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
+	visibility: visible;
+	opacity: 1;
 }
 .shadow-enter-from,
 .shadow-leave-to {
-    visibility: hidden;
-    opacity: 0;
+	visibility: hidden;
+	opacity: 0;
 }
 .fade-enter-active,
 .fade-leave-active {
-    transition: opacity 0.8s ease;
+	transition: opacity 0.8s ease;
 }
 .fade-enter-from,
 .fade-leave-to {
-    opacity: 0;
+	opacity: 0;
 }
 .nav_link {
-    color: rgba(228, 231, 236, 0.60);
-    font-family: Unbounded, serif;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%; /* 21.6px */
-    text-transform: uppercase;
-    cursor: pointer;
-    position: relative;
-    left: 0;
-    top: 0;
-    transition: all .2s ease-in;
+	color: rgba(228, 231, 236, 0.60);
+	font-family: Unbounded, serif;
+	font-size: 18px;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 120%; /* 21.6px */
+	text-transform: uppercase;
+	cursor: pointer;
+	position: relative;
+	left: 0;
+	top: 0;
+	transition: all .2s ease-in;
 
-    &:before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        position: absolute;
-        left: -10px;
-        background: white;
-        top: 30%;
-        opacity: 0;
-    }
+	&:before {
+		content: '';
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		position: absolute;
+		left: -10px;
+		background: white;
+		top: 30%;
+		opacity: 0;
+	}
 
-    &:hover{
-        color: white;
-    }
+	&:hover{
+		color: white;
+	}
 
-    &:hover:before {
-        opacity: 1;
-    }
+	&:hover:before {
+		opacity: 1;
+	}
 
 }
 .active__link {
-    position: relative;
-    left: 0;
-    top: 0;
+	position: relative;
+	left: 0;
+	top: 0;
 
-    &:before {
-        content: '';
-        width: 8px;
-        height: 8px;
-        border-radius: 50%;
-        position: absolute;
-        left: -10px;
-        background: white;
-        top: 30%;
-        opacity: 1;
-    }
+	&:before {
+		content: '';
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		position: absolute;
+		left: -10px;
+		background: white;
+		top: 30%;
+		opacity: 1;
+	}
 }
 
 

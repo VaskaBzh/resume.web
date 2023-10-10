@@ -28,7 +28,7 @@
                         v-html="option.svg"
                     ></span>
                     <img v-if="option.img" :src="imgs[i]" alt="" />
-                    {{ option.value }}
+                    {{ option.value || option.name }}
                 </button>
             </div>
         </transition>
@@ -39,7 +39,7 @@
 export default {
     name: "main-menu",
     props: {
-        options:Object,
+        options: Object,
         opened: Boolean,
         className: String,
     },
@@ -172,8 +172,8 @@ export default {
     flex-direction: column;
     align-items: center;
     border-radius: 16px;
-    background: var(--light-secondary-wb, #FFF);
-    box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
+    background: var(--background-island);
+    box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.05);
     z-index: 5;
     transition: all 0.5s ease 0s;
     overflow: hidden;
@@ -187,18 +187,18 @@ export default {
         left: auto;
         top: 0;
         min-width: 200px;
+        z-index: 1001;
     }
     @media (max-width: 767.98px) {
         position: fixed;
         bottom: 10px;
         left: 50% !important;
         transform: translateX(-50%);
-        background: #ffffff;
         width: calc(100% - 20px) !important;
         max-height: 50vh;
         height: fit-content;
-        z-index: 350 !important;
         padding: 10px;
+        z-index: 1001 !important;
         top: auto !important;
         transition: all 0.8s ease 0s;
         max-width: 100%;
@@ -212,8 +212,9 @@ export default {
         &-remove {
             color: #ff3b30;
         }
-        color: var(--light-gray-600, #475467);
-        font-family: NunitoSans;
+        border-radius: 12px;
+        color: var(--text-secondary, #475467);
+        font-family: NunitoSans, serif;
         font-size: 14px;
         font-style: normal;
         font-weight: 400;
@@ -227,7 +228,10 @@ export default {
         transition: all 0.3s ease 0s;
 
         &:hover {
-            background: #f6f8fa;
+            background: var(
+                --background-island-inner-1,
+                rgba(83, 177, 253, 0.07)
+            );
         }
     }
     &_column {
@@ -259,8 +263,9 @@ export default {
 .select {
     &__options {
         left: 0;
-        min-width: 168px;
-        top: calc(100% + 11px);
+        // min-width: 168px;
+        width: auto;
+        top: calc(100% + 12px);
         z-index: 2;
     }
 }

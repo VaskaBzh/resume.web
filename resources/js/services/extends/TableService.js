@@ -13,6 +13,11 @@ export class TableService {
         this.activeId = store.getters.getActive;
 
         this.waitTable = true;
+        this.emptyTable = false;
+    }
+
+    setActive(id) {
+        this.activeId = id;
     }
 
     dateFormatter(date) {

@@ -8,14 +8,15 @@
 	>
 		<span
 			class="group_name"
-			v-show="group.group_name"
+			v-if="group.group_name"
 			@click="toggleDropdown"
 		>
-			{{ group.group_name }}
+			{{ $t(group.group_name) }}
 			<dropdown-icon class="group_icon" />
 		</span>
 		<transition-group name="tabs">
 			<nav-tab
+                @click="$emit('closeBurger')"
 				v-for="(tab, i) in tabs"
 				:tab="tab"
 				:key="i"
@@ -94,7 +95,7 @@ export default {
 	gap: 8px;
 	justify-content: space-between;
 	align-items: center;
-	color: var(--light-gray-800, #1D2939);
+	color: var(--text-primary-80);
 	font-family: NunitoSans, serif;
 	font-size: 18px;
 	font-weight: 700;
@@ -104,6 +105,7 @@ export default {
 }
 .group_icon {
 	transition: all 0.5s ease 0s;
+	stroke: var(--svg-fill)
 }
 .group-closed .group_icon {
 	transform: rotate(180deg);

@@ -26,16 +26,13 @@ class CreateController extends Controller
                 return new JsonResponse(['error' => $result['errors']]);
             }
 
-        } catch (\Exception $e) {
-            report($e);
-
+        } catch (\Exception) {
             return new JsonResponse([
-                'error' => trans('actions.fail_sub_create')
+                'error' => __('actions.fail_sub_create')
             ]);
         }
-
         return new JsonResponse([
-            'message' => trans('actions.success_sub_create')
+            'message' => __('actions.success_sub_create')
         ]);
     }
 }
