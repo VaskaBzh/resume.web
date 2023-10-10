@@ -77,6 +77,7 @@ export default {
         border-radius: 24px;
         background: var(--background-island-inner-3, #F8FAFD);
         box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
+        width: 100%;
         .main__number {
             padding: 16px 16px 0;
             margin-bottom: 8px;

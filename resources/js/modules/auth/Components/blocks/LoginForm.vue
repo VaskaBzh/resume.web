@@ -73,7 +73,7 @@
         <verify-link
             class="form-auth_forgot-password"
             verifyUrl="/password/forgot"
-            verifyText="Забыли пароль?"
+            :verifyText="$t('auth.login.reset')"
             :data="service.form"
         />
         <p class="text text-light form-auth_text">
@@ -186,18 +186,28 @@ export default {
 <style scoped lang="scss">
 .form-auth {
     gap: 0;
+    width: 100%;
     .form-auth_forgot-password {
         font-size: 20px;
-        margin-left: 36px;
         color: rgb(63, 123, 221);
         font-weight: 600;
+        min-height: 56px;
+        display: inline-flex;
+        align-items: center;
+        margin-left: 36px;
+        @media (max-width: 1279.98px) {
+            width: 100%;
+            margin-left: 0;
+        }
     }
     &__content {
         display: flex;
         flex-direction: column;
-        max-width: 536px;
         width: 100%;
         gap: 16px;
+        @media (min-width: 991.98px) {
+            max-width: 536px;
+        }
     }
     &_title {
         margin-bottom: 32px;
