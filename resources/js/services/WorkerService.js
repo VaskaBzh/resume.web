@@ -98,39 +98,15 @@ export class WorkerService {
     }
 
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`, {
-            headers: {
-                ...(this.route?.query?.access_key
-                    ? { "X-Access-Key": this.route.query.access_key }
-                    : {
-                          Authorization: `Bearer ${store.getters.token}`,
-                      }),
-            },
-        });
+        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
     }
 
     async fetchWorker() {
-        return await ProfileApi.get(`/workers/worker/${this.worker_id}`, {
-            headers: {
-                ...(this.route?.query?.access_key
-                    ? { "X-Access-Key": this.route.query.access_key }
-                    : {
-                          Authorization: `Bearer ${store.getters.token}`,
-                      }),
-            },
-        });
+        return await ProfileApi.get(`/workers/worker/${this.worker_id}`);
     }
 
     async fetchWorkerGraph() {
-        return await ProfileApi.get(`/workerhashrate/${this.worker_id}`, {
-            headers: {
-                ...(this.route?.query?.access_key
-                    ? { "X-Access-Key": this.route.query.access_key }
-                    : {
-                          Authorization: `Bearer ${store.getters.token}`,
-                      }),
-            },
-        });
+        return await ProfileApi.get(`/workerhashrate/${this.worker_id}`);
     }
 
     clearTable() {

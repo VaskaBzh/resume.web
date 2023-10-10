@@ -31,7 +31,17 @@ export class ApiService {
     setTokenHeaders() {
         this.instance.interceptors.request.use((config) => {
             const token = store.getters.token;
-            if (token) config.headers["Authorization"] = `Bearer ${token}`;
+            let access_key = null;
+
+            if (router.currentRoute.value.query?.access_key) {
+                access_key = router.currentRoute.value.query?.access_key;
+
+                config.headers["X-Access-Key"] = access_key;
+            }
+
+            if (token && !access_key) {
+                config.headers["Authorization"] = `Bearer ${token}`;
+            }
 
             return config;
         });

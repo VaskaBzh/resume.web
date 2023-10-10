@@ -13,7 +13,7 @@ import { ProfileApi } from "@/api/api";
 export default {
     name: "app-layout-view",
     computed: {
-        ...mapGetters(["isDark", "token"]),
+        ...mapGetters(["isDark", "token", "user"]),
     },
     data() {
         return {
@@ -38,12 +38,6 @@ export default {
     },
     async created() {
         await this.$store.dispatch("setCurrency");
-
-        if (!this.route?.query.access_key) {
-            this.$store.dispatch("setToken");
-            await this.$store.dispatch("setUser");
-        }
-
         window.addEventListener("resize", this.handleResize);
         document.addEventListener(
             "visibilitychange",

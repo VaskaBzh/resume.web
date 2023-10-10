@@ -10,7 +10,7 @@
               ? 'onboarding_block-target'
               : ''
         "
-        @closed="instructionConfig.nextStep()"
+        @closed="$emit('closed')"
     >
         <div class="watchers__form">
             <div class="watchers__column">
@@ -122,7 +122,7 @@ export default {
                         editable: false,
                         routes: [
                             "v1.sub.show",
-                            "v1.hashrate.list",
+                            "v1.statistic.show",
                             "v1.allowed-routes",
                         ],
                     },

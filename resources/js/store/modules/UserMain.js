@@ -77,6 +77,7 @@ export default {
     mutations: {
         changeUser(state, user) {
             state.user = { ...user };
+            console.log(state.user);
         },
         changeToken(state, token) {
             state.token = token;

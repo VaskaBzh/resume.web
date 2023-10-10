@@ -139,7 +139,7 @@ export class WatchersService extends MetaTableService {
                 store.dispatch("setNotification", {
                     status: "success",
                     title: "success",
-                    text: this.translate("validate_message.watcher_message"),
+                    text: this.translate("validate_messages.watcher_message"),
                 });
 
                 this.dropForm();

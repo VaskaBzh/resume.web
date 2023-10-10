@@ -26,16 +26,7 @@ export class StatisticService extends GraphDataService {
 
     async fetch() {
         return await ProfileApi.get(
-            `/statistic/${this.group_id}?offset=${this.offset}`,
-            {
-                headers: {
-                    ...(this.route?.query?.access_key
-                        ? { "X-Access-Key": this.route.query.access_key }
-                        : {
-                              Authorization: `Bearer ${store.getters.token}`,
-                          }),
-                },
-            }
+            `/statistic/${this.group_id}?offset=${this.offset}`
         );
     }
 
