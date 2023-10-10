@@ -51,5 +51,6 @@ export default {
 	right: 32px;
 	align-items: flex-end;
 	transition: all 0.5s ease 0s;
+    z-index: 1000;
 }
 </style>
