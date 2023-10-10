@@ -43,7 +43,7 @@ export class TabsService {
                 ],
             },
             {
-                group_name: "Субаккаунт",
+                group_name: "tabs.subs_group",
                 links: [
                     new TabsData(
                         "/profile/connecting",
@@ -141,7 +141,7 @@ export class TabsService {
         this.links = [
             ...this.links,
             {
-                group_name: "Настройки",
+                group_name: "tabs.settings_group",
                 links: [
                     new TabsData(
                         "/profile/settings",
@@ -166,7 +166,7 @@ export class TabsService {
         this.links = [
             ...this.links,
             {
-                group_name: "Настройки",
+                group_name: "tabs.settings_group",
                 links: [
                     new TabsData(
                         "/profile/settings",
