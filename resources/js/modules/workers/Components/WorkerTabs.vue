@@ -48,6 +48,7 @@ export default {
     border-radius: 12px;
     background: transparent;
     cursor: pointer;
+	min-width: 48px;
 }
 .tab:hover {
     color: var(--text-focus, #2E90FA);

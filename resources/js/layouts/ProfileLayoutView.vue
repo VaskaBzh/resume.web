@@ -57,7 +57,6 @@ export default {
     },
     async mounted() {
         if (!this.$route?.query.access_key) {
-            this.$store.dispatch("setToken");
             await this.$store.dispatch("setUser");
         }
 

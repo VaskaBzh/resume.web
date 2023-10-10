@@ -38,6 +38,8 @@ export default {
     },
     async created() {
         await this.$store.dispatch("setCurrency");
+
+		this.$store.dispatch("setToken");
         window.addEventListener("resize", this.handleResize);
         document.addEventListener(
             "visibilitychange",

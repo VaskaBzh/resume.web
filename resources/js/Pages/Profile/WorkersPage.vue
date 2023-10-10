@@ -40,50 +40,52 @@
                     :active_tab="worker_service.status"
                     @changeStatus="setStatus"
                 />
-                <main-slider
-                    class="onboarding_block"
-                    :class="{
+	            <div class="workers__table">
+		            <main-slider
+			            class="onboarding_block"
+			            :class="{
                         'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
                     }"
-                    :wait="worker_service.waitWorkers"
-                    :empty="worker_service.emptyWorkers"
-                    rowsNum="1000"
-                    :haveNav="false"
-                >
-                    <template v-slot:instruction>
-                        <instruction-step
-                            @next="instructionService.nextStep()"
-                            @prev="instructionService.prevStep()"
-                            @close="instructionService.nextStep(6)"
-                            :step_active="2"
-                            :steps_count="instructionService.steps_count"
-                            :step="instructionService.step"
-                            :isVisible="instructionService.isVisible"
-                            text="texts.workers[1]"
-                            title="titles.workers[1]"
-                            className="onboarding__card-bottom"
-                        />
-                    </template>
-                    <main-table
-                        :table="worker_service.table"
-                        :removePercent="removePercent"
-                        :empty="worker_service.emptyTableWorkers"
-                        :wait="worker_service.waitWorkers"
-                        @getData="getTargetWorker($event)"
-                    ></main-table>
-                </main-slider>
-                <transition name="slide">
-                    <worker-card
-                        class="workers__card"
-                        v-if="
+			            :wait="worker_service.waitWorkers"
+			            :empty="worker_service.emptyWorkers"
+			            rowsNum="1000"
+			            :haveNav="false"
+		            >
+			            <template v-slot:instruction>
+				            <instruction-step
+					            @next="instructionService.nextStep()"
+					            @prev="instructionService.prevStep()"
+					            @close="instructionService.nextStep(6)"
+					            :step_active="2"
+					            :steps_count="instructionService.steps_count"
+					            :step="instructionService.step"
+					            :isVisible="instructionService.isVisible"
+					            text="texts.workers[1]"
+					            title="titles.workers[1]"
+					            className="onboarding__card-bottom"
+				            />
+			            </template>
+			            <main-table
+				            :table="worker_service.table"
+				            :removePercent="removePercent"
+				            :empty="worker_service.emptyTableWorkers"
+				            :wait="worker_service.waitWorkers"
+				            @getData="getTargetWorker($event)"
+			            ></main-table>
+		            </main-slider>
+		            <transition name="slide">
+			            <worker-card
+				            class="workers__card"
+				            v-if="
                             viewportWidth > 1200 && worker_service.visibleCard
                         "
-                        :wait="worker_service.waitTargetWorker"
-                        :target_worker="worker_service.target_worker"
-                        :graph="worker_service.workers_graph"
-                        @closeCard="dropWorkers"
-                    />
-                </transition>
+				            :wait="worker_service.waitTargetWorker"
+				            :target_worker="worker_service.target_worker"
+				            :graph="worker_service.workers_graph"
+				            @closeCard="dropWorkers"
+			            />
+		            </transition>
+	            </div>
             </div>
         </div>
     </div>
@@ -268,6 +270,10 @@ export default {
         gap: 12px;
         flex-direction: column;
     }
+	&__table {
+		display: flex;
+		gap: 12px;
+	}
     &__card {
         min-width: calc(50% - 6px);
         min-height: 440px;
