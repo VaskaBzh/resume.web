@@ -1,7 +1,7 @@
 <template>
 <div class="about about-view scroll-section">
     <head-line>{{ $t("who_we_are.button") }}</head-line>
-    <div class="about__wrapper">
+    <div class="about__wrapper bg">
         <div class="about__inner">
             <div class="about__inner_wrap">
                 <div class="about_item">
@@ -89,7 +89,7 @@ export default {
     flex-flow: column nowrap;
     gap: 30px;
     padding: 100px 0 186px;
-    background: #1c293e;
+    background: #040d15;
 
 
     &__wrapper {
@@ -251,7 +251,7 @@ export default {
             border-radius: 40px;
             border-top: 2px solid #555353;
             border-bottom: 0.5px solid #555353;
-            background: rgba(13, 13, 13, 0.5);
+            background: rgba(13, 13, 13, 0.9);
             backdrop-filter: blur(10px);
         }
     }

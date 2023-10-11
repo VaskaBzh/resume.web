@@ -7,9 +7,9 @@ export function scroolingHeader() {
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".app_back_transparent",
-            start: "top top",
-            end: "+=3000",
-            pin: true,
+            start: "top -=30",
+            end: "center center",
+            pin: false,
             scrub: 3,
             id: ".app_back_transparent",
             smoothChildTiming: true,
@@ -120,16 +120,17 @@ export function scroolingHeader() {
     ScrollTrigger.create({
         animation: animation,
         trigger: ".header-land",
-        start: "top 0",
-        end: "+=3000",
-        pin: true,
+        start: "top -=30",
+        end: "center center",
+        pin: false,
         scrub: 3,
         id: ".header-land",
+        markers: true,
         invalidateOnRefresh: true,
         smoothChildTiming: true,
         onUpdate: (self) => {
             let btnHeaderScrooll = document.querySelector(".header-land_btn");
-
+            console.log(self.progress)
             if (self.progress < 0.5) {
                 btnHeaderScrooll.style.opacity = 1;
             } else {
@@ -138,4 +139,5 @@ export function scroolingHeader() {
         },
     });
     ScrollTrigger.refresh();
+    console.log(document.querySelectorAll('.scroll-section'))
 }

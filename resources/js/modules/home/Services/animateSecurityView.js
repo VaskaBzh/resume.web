@@ -8,14 +8,10 @@ export function animatedSecurityView() {
     let tl = gsap.timeline()
 
     const animateSecurityView = tl
-        .fromTo('.security-view_item_title', {opacity: 0}, {
+        .fromTo(['.security-view_item_title', '.security-view_item_cards__text'], {opacity: 1}, {
             opacity: 1,
             duration: 1
         })
-        .fromTo('.security-view_item_cards__text', {opacity: 0}, {
-            opacity: 1,
-            duration: 1
-        }, '>-0.5')
         .fromTo(['.security-view_item_title', '.security-view_item_cards__text'], {opacity: 1, yPercent: 0}, {
             opacity: 0,
             yPercent: -60,
@@ -46,9 +42,6 @@ export function animatedSecurityView() {
             yPercent: 0,
             duration: 1
         }, '>-0.5')
-        .fromTo('.security-view__wrapper', {opacity: 1}, {
-            opacity: 0
-        }, '>+1')
 
 
     gsap.timeline({
@@ -59,11 +52,9 @@ export function animatedSecurityView() {
         animation: animateSecurityView,
         trigger: ".security-view",
         start: "top top",
-        end: "+=3000",
+        end: "+=2000",
         pin: true,
         scrub: 3,
-        markers: true,
-        smoothChildTiming: true,
         id: ".security-view",
         invalidateOnRefresh: true
     })

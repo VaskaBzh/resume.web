@@ -71,7 +71,7 @@ export default {
     flex-flow: column nowrap;
     gap: 30px;
     padding: 100px 0 186px;
-    background: #1c293e;
+    background: #040d15;
 
 
     &__wrapper {

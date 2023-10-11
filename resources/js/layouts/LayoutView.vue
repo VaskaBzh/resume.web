@@ -7,7 +7,7 @@
 <script>
 
 import HomaPage from "../Pages/HomePage.vue";
-import gsap from 'gsap';
+
 export default {
     data() {
         return {
@@ -15,10 +15,7 @@ export default {
         }
     },
     components: {HomaPage},
-    methods: {
 
-
-    },
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");

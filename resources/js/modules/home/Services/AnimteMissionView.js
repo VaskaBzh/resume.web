@@ -8,13 +8,11 @@ export function animateMissionView() {
         scrollTrigger: {
             trigger: '.mission-view',
             start: 'top top',
-            end: "+=2300",
+            end: "+=3000",
             pin: true,
-            scrub: 2,
-            markers: true,
+            scrub: 3,
             id: '.mission-view',
         },
-        duration: 1.5
     })
     gsap.timeline({
         paused: true
@@ -33,10 +31,10 @@ export function animateMissionView() {
         }
 
     }, 'mission-one')
-    tl.fromTo(['.mission-view_item_title-two', '.mission-view_item_title-three'], {opacity: 1, yPercent: -100}, {
-        opacity: 1,
-        yPercent: 0,
-    }, 'mission-one')
+    // tl.fromTo(['.mission-view_item_title-two', '.mission-view_item_title-three'], {opacity: 1, yPercent: -100}, {
+    //     opacity: 1,
+    //     yPercent: 0,
+    // }, 'mission-one')
     tl.fromTo('.mission-view_item_title', {opacity: 0, yPercent: -100}, {
         yPercent: 0,
         opacity: 1,

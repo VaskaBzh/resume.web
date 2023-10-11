@@ -79,6 +79,7 @@ export default {
     flex-flow: column nowrap;
     align-items: center;
     justify-content: flex-start;
+    padding: 100px 0 70px 0;
 
     &__items {
         width: fit-content;
@@ -93,7 +94,8 @@ export default {
         flex-flow: row nowrap;
         gap: 511px;
         margin-left: auto;
-        padding-left: 200px;
+        padding-left: 50vw;
+        background: rgba(208, 213, 221, 0.20);
 
         &-block {
             width: 310px;
@@ -140,5 +142,9 @@ export default {
             line-height: 110%;
         }
     }
+}
+
+.notActive {
+    opacity: .6;
 }
 </style>

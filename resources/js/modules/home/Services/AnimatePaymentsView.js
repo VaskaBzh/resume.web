@@ -9,10 +9,10 @@ export function animatePayView() {
     const tl = gsap.timeline({
         scrollTrigger: {
             trigger: ".payments-view",
-            start: 'top top',
-            end: 'center center',
+            start: 'top +=300',
+            end: 'bottom bottom',
             pin: false,
-            scrub: 1.5,
+            scrub: false,
             id: '.payments-view',
         }
     })
@@ -23,10 +23,10 @@ export function animatePayView() {
     })
     tl.fromTo('.payments-view__item-two', {opacity: 0}, {
         opacity: 1,
-    }, '>+0.9')
+    })
     tl.fromTo('.payments-view__item-three', {opacity: 0}, {
         opacity: 1,
-    }, '>+1')
+    })
 
     tl.scrollTrigger.refresh();
 

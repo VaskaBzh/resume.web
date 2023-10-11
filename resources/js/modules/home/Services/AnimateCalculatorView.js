@@ -8,30 +8,15 @@ export function animatedCalcView() {
     let tl = gsap.timeline()
     tl.addLabel('titleCalc')
     let animateCalc = tl
-        .fromTo('.calculator-land_title_base', {opacity: 0, xPercent: -50}, {
+        .fromTo(['.calculator-land_title_base','.calculator-land_title_two','.calculator-land_title_four'], {opacity: 0, xPercent: -50}, {
             opacity: 1,
             xPercent: 0,
             duration: 1
         }, 'titleCalc')
-        .fromTo('.calculator-land_title_one', {opacity: 0, xPercent: 50}, {
+        .fromTo(['.calculator-land_title_one','.calculator-land_title_three'], {opacity: 0, xPercent: 50}, {
             opacity: 1,
             duration: 1,
             xPercent: 0
-        }, 'titleCalc')
-        .fromTo('.calculator-land_title_two', {opacity: 0, xPercent: -50}, {
-            opacity: 1,
-            duration: 1,
-            xPercent: 0
-        }, 'titleCalc')
-        .fromTo('.calculator-land_title_three', {opacity: 0, xPercent: 50}, {
-            opacity: 1,
-            duration: 1,
-            xPercent: 0
-        }, 'titleCalc')
-        .fromTo('.calculator-land_title_four', {opacity: 0, xPercent: -50}, {
-            opacity: 1,
-            xPercent: 0,
-            duration: 1
         }, 'titleCalc')
         .fromTo('.calculator-land_subtitle', {opacity: 0}, {
             opacity: 1,
@@ -45,10 +30,10 @@ export function animatedCalcView() {
     ScrollTrigger.create({
         animation: animateCalc,
         trigger: ".calculator-land",
-        start: "top top",
-        end: '+=2000',
+        start: "top +=200",
+        end: 'bottom bottom',
         pin: true,
-        scrub: 3,
+        scrub: false,
         id: '.calculator-land',
         smoothChildTiming: true,
         invalidateOnRefresh: true

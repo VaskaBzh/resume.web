@@ -1,5 +1,5 @@
 <template>
-<footer class="footer-land scroll-section">
+<footer class="footer-land">
     <div class="footer-land__container">
         <div class="footer-land_info">
             <button-blue class="footer-land_btn">{{ $t("footer.button") }}</button-blue>

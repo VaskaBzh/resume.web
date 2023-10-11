@@ -9,7 +9,7 @@ export function scrollingAbout() {
 
     tl.addLabel('about')
     let animation = tl
-        .fromTo(['.about_item_card', '.about_item_title'], {opacity: 0}, {
+        .fromTo(['.about_item_card', '.about_item_title'], {opacity: 1}, {
             opacity: 1,
             duration: 2
         })
@@ -40,7 +40,7 @@ export function scrollingAbout() {
         animation: animation,
         trigger: ".about-view",
         start: "top top",
-        end: '+=3000',
+        end: '+=2000',
         pin: true,
         scrub: 3,
         id: '.about-view',

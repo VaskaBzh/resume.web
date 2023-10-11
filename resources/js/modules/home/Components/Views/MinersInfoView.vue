@@ -1,6 +1,6 @@
 <template>
-    <div class="miners-info-view">
-        <div class="miners-info-view__container">
+    <div class="miners-info-view scroll-section">
+        <div class="miners-info-view__container bg">
             <head-line class="miners-info-view_title"> {{ $t("why_allbtc.button") }}</head-line>
             <h3 class="miners-info-view_subtitle">
                 <span class="miners-info-view_subtitle_base">{{ $t("why_allbtc.title[0]") }}</span>

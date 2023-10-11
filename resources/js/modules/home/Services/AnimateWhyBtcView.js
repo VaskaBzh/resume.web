@@ -78,10 +78,10 @@ export function animateWhyBtcView() {
     ScrollTrigger.create({
         animation: animateWhyBtc,
         trigger: ".miners-info-view",
-        start: "top top",
-        end: "+=3000",
+        start: "top +=300",
+        end: "bottom bottom",
         pin: true,
-        scrub: 3,
+        scrub: false,
         id: ".miners-info-view",
     });
 

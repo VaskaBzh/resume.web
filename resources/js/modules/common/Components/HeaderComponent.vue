@@ -4,7 +4,7 @@
             <button-blue class="button-black"> {{ $t("footer.button") }}</button-blue>
             <nav-links/>
             <select-language-land />
-            <burger-menu/>
+<!--            <burger-menu/>-->
         </div>
     </nav>
 </template>
