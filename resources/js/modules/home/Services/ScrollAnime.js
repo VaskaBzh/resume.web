@@ -8,9 +8,9 @@ export function scroolingHeader() {
         scrollTrigger: {
             trigger: ".app_back_transparent",
             start: "top top",
-            end: "+=500",
+            end: "+=3000",
             pin: true,
-            scrub: 2.5,
+            scrub: 3,
             id: '.app_back_transparent',
             smoothChildTiming: true
         }
@@ -85,11 +85,11 @@ export function scroolingHeader() {
         animation: animation,
         trigger: ".header-land",
         start: "top 0",
-        end: "+=500",
+        end: "+=3000",
         pin: true,
-        scrub: 2.5,
+        scrub: 3,
         id: '.header-land',
-        smoothChildTiming: true,
+        invalidateOnRefresh: true,
         onUpdate: self => {
             let btnHeaderScrooll = document.querySelector('.header-land_btn')
 

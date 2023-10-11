@@ -56,15 +56,16 @@ export function animatedSecurityView() {
     })
 
     ScrollTrigger.create({
+        invalidateOnRefresh: true,
         animation: animateSecurityView,
         trigger: ".security-view",
         start: "top top",
-        end: "+=1300",
+        end: "+=3000",
         pin: true,
-        scrub: 2,
-        pinSpacing: true,
-        id: ".security-view",
+        scrub: 3,
+        markers: true,
         smoothChildTiming: true,
+
     })
 
     tl.scrollTrigger.refresh();

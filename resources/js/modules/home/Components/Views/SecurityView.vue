@@ -42,6 +42,8 @@
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import {animatedSecurityView} from "../../Services/animateSecurityView";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import gsap from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 export default {
 
@@ -51,8 +53,10 @@ export default {
         sharedMessages: HomeMessage,
     },
     mounted() {
+
         animatedSecurityView()
     }
+
 
 }
 </script>

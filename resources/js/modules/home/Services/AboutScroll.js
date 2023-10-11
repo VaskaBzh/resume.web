@@ -37,12 +37,13 @@ export function scrollingAbout() {
     })
 
     ScrollTrigger.create({
+        invalidateOnRefresh: true,
         animation: animation,
         trigger: ".about-view",
         start: "top top",
-        end: '+=1700',
+        end: '+=3000',
         pin: true,
-        scrub: 1.9,
+        scrub: 3,
         id: '.about-view',
         smoothChildTiming: true,
 

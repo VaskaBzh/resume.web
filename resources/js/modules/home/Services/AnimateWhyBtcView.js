@@ -45,10 +45,11 @@ export function animateWhyBtcView() {
         animation: animateWhyBtc,
         trigger: '.miners-info-view',
         start: 'top top',
-        end: '+=1000',
+        end: '+=3000',
         pin: true,
-        scrub: 1.5,
-        id: '.miners-info-view'
+        scrub: 3,
+        id: '.miners-info-view',
+
     })
 
     tl.scrollTrigger.refresh();
