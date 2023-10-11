@@ -27,7 +27,7 @@
 <script>
 import ButtonBlue from "./ButtonBlue.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
-import {scroolingHeader} from "../../../home/Services/ScrollAnime";
+import {scroolingHeader} from '../../../home/Services/ScrollAnime';
 
 
 export default {
