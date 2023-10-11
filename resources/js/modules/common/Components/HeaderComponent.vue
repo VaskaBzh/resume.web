@@ -4,6 +4,7 @@
             <button-blue class="button-black"> {{ $t("footer.button") }}</button-blue>
             <nav-links/>
             <select-language-land />
+            <burger-menu/>
         </div>
     </nav>
 </template>
@@ -13,9 +14,10 @@
 import NavLinks from "../../navs/Components/NavLinks.vue";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import BurgerMenu from "../../burger/Components/BurgerMenu.vue";
 
 export default {
-    components: {SelectLanguageLand, NavLinks},
+    components: { SelectLanguageLand, NavLinks, BurgerMenu },
     i18n: {
         sharedMessages: HomeMessage,
     },

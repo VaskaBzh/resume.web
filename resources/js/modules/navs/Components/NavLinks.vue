@@ -113,5 +113,17 @@ export default {
 	}
 }
 
-
+.menu-container .nav__links{
+	width: 90vw;
+}
+.menu-container .nav_link{
+	margin-bottom: 20px;
+	padding-bottom: 15px;
+	border-bottom: 0.5px solid rgba(208, 213, 221, 0.60);
+}
+.menu-container .nav_link:before{
+	right: 0px;
+	left: auto;
+	top: 20%;
+}
 </style>
