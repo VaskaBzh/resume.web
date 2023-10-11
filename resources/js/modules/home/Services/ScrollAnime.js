@@ -90,7 +90,6 @@ export function scroolingHeader() {
         scrub: 3,
         id: '.header-land',
         invalidateOnRefresh: true,
-        smoothChildTiming: true,
         onUpdate: self => {
             let btnHeaderScrooll = document.querySelector('.header-land_btn')
 
