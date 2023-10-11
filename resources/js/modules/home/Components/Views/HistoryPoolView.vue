@@ -18,9 +18,6 @@
                 <div class="history-pool__item-line-block">
                     <div class="history-pool__item-line_cycle"></div>
                 </div>
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
             </div>
             <div class="history-pool__item-infos">
                 <div class="history-pool__item-info">
@@ -88,6 +85,7 @@ export default {
         display: flex;
         flex-flow: column nowrap;
         gap: 38px;
+        margin-left: auto;
     }
 
     &__item-line {

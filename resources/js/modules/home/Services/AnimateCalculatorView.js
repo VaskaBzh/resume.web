@@ -10,8 +10,8 @@ export function animatedCalcView() {
     let animateCalc = tl
         .fromTo('.calculator-land_title_base', {opacity: 0, xPercent: -50}, {
             opacity: 1,
-
-            xPercent: 0
+            xPercent: 0,
+            duration: 1
         }, 'titleCalc')
         .fromTo('.calculator-land_title_one', {opacity: 0, xPercent: 50}, {
             opacity: 1,
@@ -30,7 +30,8 @@ export function animatedCalcView() {
         }, 'titleCalc')
         .fromTo('.calculator-land_title_four', {opacity: 0, xPercent: -50}, {
             opacity: 1,
-            xPercent: 0
+            xPercent: 0,
+            duration: 1
         }, 'titleCalc')
         .fromTo('.calculator-land_subtitle', {opacity: 0}, {
             opacity: 1,
@@ -44,12 +45,13 @@ export function animatedCalcView() {
     ScrollTrigger.create({
         animation: animateCalc,
         trigger: ".calculator-land",
-        start: "top +=300",
-        end: 'center center',
+        start: "top top",
+        end: '+=2000',
         pin: true,
-        scrub: 1.5,
+        scrub: 3,
         id: '.calculator-land',
         smoothChildTiming: true,
+        invalidateOnRefresh: true
 
     })
 

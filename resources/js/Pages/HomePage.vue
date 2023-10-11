@@ -35,7 +35,8 @@ import ConnectWithUsView from "@/modules/home/Components/Views/ConnectWithUsView
 import FooterComponentLand from "@/modules/common/Components/FooterComponentLand.vue";
 import PoolLogoIcon from "@/modules/home/icons/PoolLogoIcon.vue";
 import AllbtcLogoIcon from "@/modules/home/icons/AllbtcLogoIcon.vue";
-
+import gsap from "gsap";
+import {ScrollTrigger} from "gsap/ScrollTrigger";
 import {animateHeader} from "@/modules/home/Services/LandHeaderAnime";
 import HistoryPoolView from "../modules/home/Components/Views/HistoryPoolView.vue";
 
@@ -59,6 +60,8 @@ export default {
         HeaderComponent
     },
     mounted() {
+        gsap.registerPlugin(ScrollTrigger)
+        ScrollTrigger.refresh()
         animateHeader()
     }
 }
