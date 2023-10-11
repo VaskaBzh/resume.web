@@ -75,13 +75,6 @@ Route::group([
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
     Route::group([
-        'prefix' => '2fac'
-    ], function () {
-        Route::put('enable/{user}', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::put('disable/{user}', [TwoFactorController::class, 'disable'])->name('2fa.verify');
-    });
-
-    Route::group([
         'prefix' => 'subs',
     ], function () {
         Route::post('/create', SubCreateController::class)->name('sub.create');

@@ -7,6 +7,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ResendVerifyEmailController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,4 +40,13 @@ Route::group([
         ->name('password.reset.verify');
     Route::put('/change/{user}', PasswordChangeController::class)
         ->middleware('auth:sanctum');
+});
+
+Route::group([
+    'prefix' => '2fac',
+    'middleware' => 'auth:sanctum',
+], function () {
+    Route::get('/qrcode/{user}', [TwoFactorController::class, 'qrCode'])->name('2fa.qrcode');
+    Route::put('/enable/{user}', [TwoFactorController::class, 'enable'])->name('2fa.enable');
+    Route::put('/disable/{user}', [TwoFactorController::class, 'disable'])->name('2fa.verify');
 });

@@ -8,36 +8,60 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TwoFactorVerifyRequest;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Resources\Json\JsonResource;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
 
 class TwoFactorController extends Controller
 {
-    public function __construct(readonly private Google2FA $googleTwoFactor)
-    {
-    }
-
-    public function enable(User $user): JsonResponse
+    public function qrCode(User $user, Google2FA $googleTwoFactor): JsonResponse
     {
         try {
-            $secretKey = $this->googleTwoFactor->generateSecretKey();
-            $user->google2fa_secret = $secretKey;
-            $user->save();
+            $secretKey = $googleTwoFactor->generateSecretKey();
 
-            $QRImage = $this->googleTwoFactor->getQRCodeInline(
+            $QRImage = $googleTwoFactor->getQRCodeInline(
                 config('app.name'),
                 $user->email,
-                $user->google2fa_secret
+                $secretKey
             );
 
+            cache()->put('2fa_secret|' . $user->id, $secretKey);
+        } catch (\Throwable $e) {
+            report($e);
+
             return new JsonResponse([
-                'qrCode' => $QRImage,
-                'secret' => $user->google2fa_secret,
-                'message' => __('actions.two_fa_enabled')
+                'message' => __('actions.failed')
             ]);
+        }
+
+        return new JsonResponse([
+            'qrCode' => $QRImage,
+            'secret' => $secretKey,
+        ]);
+    }
+
+    public function enable(
+        TwoFactorVerifyRequest $request,
+        User $user,
+        Google2FA $googleTwoFactor,
+    ): JsonResponse
+    {
+
+        try {
+            $secretKey = cache()->get('2fa_secret|' . $user->id);
+
+            $isValid = $googleTwoFactor->verifyKey($secretKey, $request->two_fa_secret);
+
+            if (!$isValid) {
+                return new JsonResponse([
+                    'error' => 'Не верный код'
+                ], Response::HTTP_BAD_REQUEST);
+            }
+
+            $user->update(['google2fa_secret' => $secretKey]);
+
+            cache()->forget('2fa_secret|' . $user->id);
+
+            return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
         } catch (\Exception $e) {
             report($e);
 
@@ -49,10 +73,8 @@ class TwoFactorController extends Controller
 
     public function disable(User $user): JsonResponse
     {
-        $user->google2fa_secret = null;
-        $user->save();
-
         return new JsonResponse([
+            'status' => $user->update(['google2fa_secret' => null]),
             'message' => __('actions.two_fa_disabled')
         ]);
     }
