@@ -48,8 +48,9 @@ export function animateWhyBtcView() {
         end: '+=3000',
         pin: true,
         scrub: 3,
-        id: '.miners-info-view'
+        id: '.miners-info-view',
+
     })
 
-    ScrollTrigger.refresh();
+    tl.scrollTrigger.refresh();
 }

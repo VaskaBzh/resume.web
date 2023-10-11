@@ -37,6 +37,7 @@ export function scrollingAbout() {
     })
 
     ScrollTrigger.create({
+        invalidateOnRefresh: true,
         animation: animation,
         trigger: ".about-view",
         start: "top top",
