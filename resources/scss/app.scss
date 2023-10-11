@@ -498,6 +498,11 @@ h6 {
     }
 }
 
+#app {
+    display: flex;
+    flex-direction: column;
+}
+
 .app {
     &_back {
         display: block;
