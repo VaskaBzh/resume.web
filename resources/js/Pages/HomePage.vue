@@ -9,7 +9,7 @@
     <landing-title/>
     <who-we-are/>
     <calculator-land/>
-    <miners-info-view></miners-info-view>
+    <miners-info-view />
     <make-up-cab/>
     <security-view/>
     <app-mobile-view/>
@@ -40,20 +40,20 @@ import {animateHeader} from "@/modules/home/Services/LandHeaderAnime";
 export default {
     name: 'home-page',
     components: {
-	    AllbtcLogoIcon,
-	    PoolLogoIcon,
+        AllbtcLogoIcon,
+        PoolLogoIcon,
         FooterComponentLand,
         ConnectWithUsView,
         MissionView,
         PaymentsView,
         AppMobileView,
         SecurityView,
-	    MakeUpCab,
-	    MinersInfoView,
-	    CalculatorLand,
-	    WhoWeAre,
-	    LandingTitle,
-	    HeaderComponent
+        MakeUpCab,
+        MinersInfoView,
+        CalculatorLand,
+        WhoWeAre,
+        LandingTitle,
+        HeaderComponent
     },
     mounted() {
         animateHeader()
@@ -83,7 +83,7 @@ export default {
             justify-content: center;
             flex-flow: column nowrap;
             font-feature-settings: 'clig' off, 'liga' off;
-	        text-shadow: 0px 5.13397216796875px 8.984451293945312px rgba(14, 14, 14, 0.05);
+            text-shadow: 0px 5.13397216796875px 8.984451293945312px rgba(14, 14, 14, 0.05);
             font-family: Unbounded, serif;
             color: transparent;
             //-webkit-text-stroke: 1px white;
@@ -127,11 +127,11 @@ export default {
         }
 
         &_one {
-	        width: clamp(1070px, 5vw, 324px);
+            width: clamp(1070px, 5vw, 324px);
         }
 
-	    &_two {
-		    width: clamp(778px, 5vw, 237px);
+        &_two {
+            width: clamp(778px, 5vw, 237px);
         }
     }
 }
