@@ -2,8 +2,16 @@
     <header-component/>
     <div class="app_back_transparent">
         <div class="app_back_transparent__container">
-            <div class="app_back_transparent_block-one"><span class="app_back_transparent_one"><allbtc-logo-icon /></span></div>
-            <div class="app_back_transparent_block-two"><span class="app_back_transparent_two"><pool-logo-icon /></span></div>
+            <div class="app_back_transparent_block-one">
+                <span class="app_back_transparent_one">
+                    <allbtc-logo-icon />
+                </span>
+            </div>
+            <div class="app_back_transparent_block-two">
+                <span class="app_back_transparent_two">
+                    <pool-logo-icon />
+                </span>
+            </div>
         </div>
     </div>
     <landing-title/>
