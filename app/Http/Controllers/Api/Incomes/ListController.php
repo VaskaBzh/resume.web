@@ -10,15 +10,21 @@ use App\Models\Income;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 class ListController extends Controller
 {
     public function __invoke(Sub $sub, Request $request): JsonResource
     {
-        $collection = Income::getByGroupId($sub->group_id)
-            ->orderByDesc('created_at')
-            ->paginate($request->per_page ?? 15);
-
-        return new IncomeCollection($collection);
+        return new IncomeCollection(
+            Income::getByGroupId($sub->group_id)
+                ->between(
+                    column:'created_at',
+                    from: $request->from,
+                    to:$request->to
+                )
+                ->orderByDesc('created_at')
+                ->paginate($request->per_page ?? 15)
+        );
     }
 }
