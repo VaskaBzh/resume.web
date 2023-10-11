@@ -92,6 +92,7 @@ export default {
 
     &_picture {
         width: 100%;
+        height: 740px;
         margin: 0 auto 50px;
         display: flex;
         align-items: center;

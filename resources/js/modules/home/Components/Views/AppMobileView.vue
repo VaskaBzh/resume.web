@@ -66,7 +66,6 @@
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
 import {slideMobileView} from "../../Services/LandSlideAnime";
-import {onMounted} from "vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
@@ -75,14 +74,8 @@ export default {
     i18n: {
         sharedMessages: HomeMessage,
     },
-    setup() {
-
-        onMounted(()=> {
-            slideMobileView()
-        })
-        return {
-
-        }
+    mounted() {
+        slideMobileView()
     }
 }
 </script>
@@ -120,7 +113,7 @@ export default {
         width: 25%;
     }
     &__content {
-        height: 100%;
+        height: 875px;
         position: relative;
         padding: 15px;
         max-height: 875px;
@@ -209,6 +202,7 @@ export default {
 
     &__run {
         display: flex;
+        height: 232px;
         align-items: center;
         justify-content: center;
 
