@@ -15,6 +15,7 @@
     <app-mobile-view/>
     <payments-view/>
     <mission-view/>
+    <history-pool-view />
     <connect-with-us-view/>
     <footer-component-land/>
 </template>
@@ -36,10 +37,12 @@ import PoolLogoIcon from "@/modules/home/icons/PoolLogoIcon.vue";
 import AllbtcLogoIcon from "@/modules/home/icons/AllbtcLogoIcon.vue";
 
 import {animateHeader} from "@/modules/home/Services/LandHeaderAnime";
+import HistoryPoolView from "../modules/home/Components/Views/HistoryPoolView.vue";
 
 export default {
     name: 'home-page',
     components: {
+        HistoryPoolView,
         AllbtcLogoIcon,
         PoolLogoIcon,
         FooterComponentLand,
