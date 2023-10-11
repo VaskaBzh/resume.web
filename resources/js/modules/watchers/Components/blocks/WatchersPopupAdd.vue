@@ -16,11 +16,13 @@
             <div class="watchers__column">
                 <div class="watchers-add">
                     <main-title tag="h3" class="watcher_title">{{
-                        $t("add_watcher_card.title")
-                    }}</main-title>
+                            $t("add_watcher_card.title")
+                        }}
+                    </main-title>
                     <main-description>{{
-                        $t("add_watcher_card.text[0]")
-                    }}</main-description>
+                            $t("add_watcher_card.text[0]")
+                        }}
+                    </main-description>
                 </div>
                 <main-input
                     class="watchers_input"
@@ -79,13 +81,13 @@
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
-import { mapGetters } from "vuex";
-import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+import {mapGetters} from "vuex";
+import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-popup-add",
@@ -226,24 +228,29 @@ export default {
     gap: 80px;
     width: 100%;
 }
+
 .watcher_title {
     margin-bottom: 4px;
 }
-@media(max-width: 500px){
-    .watcher_title{
+
+@media (max-width: 500px) {
+    .watcher_title {
         font-size: 16px;
     }
 }
+
 .watchers__column {
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
+
 .watchers__block {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
+
 .watchers__block-selects {
     padding: 16px;
     display: flex;
@@ -253,9 +260,11 @@ export default {
     background: var(--background-modal-input, #2c2f34);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
 }
+
 .watchers_input {
     background: var(--background-modal-input, #2c2f34);
 }
+
 .watchers_label {
     padding: 0 16px;
     color: var(--text-teritary);
@@ -264,6 +273,7 @@ export default {
     font-weight: 400;
     line-height: 20px;
 }
+
 .watchers_button {
     min-height: 56px;
 }

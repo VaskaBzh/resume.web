@@ -9,12 +9,13 @@
             <div class="watchers__head__block">
                 <main-title tag="h4">{{ $t("title") }}</main-title>
                 <main-description class="is-vis-text-mobile">{{
-                    $t("text")
-                }}</main-description>
+                        $t("text")
+                    }}
+                </main-description>
             </div>
             <main-button data-popup="#addWatcher">
                 <template v-slot:svg>
-                    <plus-icon />
+                    <plus-icon/>
                 </template>
             </main-button>
             <instruction-step
@@ -108,7 +109,7 @@
 <script>
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
 import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
@@ -119,10 +120,10 @@ import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WatchersPopupCard from "@/modules/watchers/Components/blocks/WatchersPopupCard.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
-import { InstructionService } from "@/modules/instruction/services/InstructionService";
-import { WatchersService } from "@/modules/watchers/services/WatchersService";
-import { mapGetters } from "vuex";
-import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+import {InstructionService} from "@/modules/instruction/services/InstructionService";
+import {WatchersService} from "@/modules/watchers/services/WatchersService";
+import {mapGetters} from "vuex";
+import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
 import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
@@ -223,17 +224,21 @@ export default {
 .onboarding_block {
     transition: none;
 }
+
 .onboarding_block-target {
     background: var(--background-island);
 }
+
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.5s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
 }
+
 .watchers {
     flex: 1 1 auto;
     padding: 24px;
@@ -241,23 +246,28 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .is-vis-text-mobile {
     display: inline-block;
 }
+
 .is-vis-add-button-mobile {
     display: none;
 }
+
 .watchers__preloader {
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
 }
+
 .watchers__head.onboarding_block-target {
     padding: 8px;
     margin: -8px -8px 24px;
     width: calc(100% + 16px);
 }
+
 .watchers__head {
     display: flex;
     justify-content: space-between;
@@ -265,11 +275,13 @@ export default {
     margin-bottom: 32px;
     align-items: center;
 }
+
 .watchers__head__block {
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
+
 .watchers__wrapper {
     height: 100%;
     width: 100%;
@@ -280,23 +292,28 @@ export default {
     grid-template-columns: repeat(2, 1fr);
     position: relative;
 }
+
 @media (max-width: 900px) {
     .watchers {
         padding: 24px 12px 24px;
     }
 }
+
 @media (max-width: 700px) {
     .watchers__wrapper {
         display: flex;
     }
 }
+
 @media (max-width: 500px) {
     .watchers__head {
         margin: 16px 16px 32px;
     }
+
     .is-vis-text-mobile {
         display: none;
     }
+
     .is-vis-add-button-mobile {
         display: flex;
         align-items: center;

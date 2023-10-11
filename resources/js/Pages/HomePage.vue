@@ -14,7 +14,7 @@
             </div>
         </div>
     </div>
-    <landing-title/>
+    <home-title/>
     <who-we-are/>
     <calculator-land/>
     <miners-info-view/>
@@ -29,7 +29,7 @@
 </template>
 <script>
 import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
-import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import HomeTitle from "@/modules/home/Components/Views/HomeTitle.vue";
 import WhoWeAre from "@/modules/home/Components/Views/WhoWeAre.vue";
 import CalculatorLand from "@/modules/home/Components/Views/CalculatorLand.vue";
 import MinersInfoView from "@/modules/home/Components/Views/MinersInfoView.vue";
@@ -64,7 +64,7 @@ export default {
         MinersInfoView,
         CalculatorLand,
         WhoWeAre,
-        LandingTitle,
+        HomeTitle,
         HeaderComponent,
     },
     mounted() {

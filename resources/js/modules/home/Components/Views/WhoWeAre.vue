@@ -1,78 +1,105 @@
 <template>
-<div class="about about-view scroll-section">
-    <head-line>{{ $t("who_we_are.button") }}</head-line>
-    <div class="about__wrapper">
-        <div class="about__inner">
-            <div class="about__inner_wrap">
-                <div class="about_item">
-                    <h2 class="about_item_title">{{ $t("who_we_are.card_private.title[0]") }}</h2>
-                    <div class="about_item_cards">
-                        <div class="about_item_card">
-                            <div class="about_item_card_num">7</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[0]") }}</div>
+    <div class="about about-view scroll-section">
+        <landing-headline>{{ $t("who_we_are.button") }}</landing-headline>
+        <div class="about__wrapper">
+            <div class="about__inner">
+                <div class="about__inner_wrap">
+                    <div class="about_item">
+                        <h2 class="about_item_title">{{ $t("who_we_are.card_private.title[0]") }}</h2>
+                        <div class="about_item_cards">
+                            <div class="about_item_card">
+                                <div class="about_item_card_num">7</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_private.text[0]")
+                                    }}
+                                </div>
+                            </div>
+                            <div class="about_item_card">
+                                <div class="about_item_card_num">1.7</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_private.text[1]")
+                                    }}
+                                </div>
+                            </div>
+                            <div class="about_item_card">
+                                <div class="about_item_card_num">30</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_private.text[2]")
+                                    }}
+                                </div>
+                            </div>
+                            <div class="about_item_card">
+                                <div class="about_item_card_num"><span>{{
+                                        $t("who_we_are.card_private.text[3]")
+                                    }}</span>75%
+                                </div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_private.text[4]")
+                                    }}
+                                </div>
+                            </div>
                         </div>
-                        <div class="about_item_card">
-                            <div class="about_item_card_num">1.7</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[1]") }}</div>
-                        </div>
-                        <div class="about_item_card">
-                            <div class="about_item_card_num">30</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[2]") }}</div>
-                        </div>
-                        <div class="about_item_card">
-                            <div class="about_item_card_num"><span>{{ $t("who_we_are.card_private.text[3]") }}</span>75%</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[4]") }}</div>
+                        <!--                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>-->
+                    </div>
+                </div>
+                <div class="about__inner_wrap">
+                    <div class="about_item">
+                        <h2 class="about_item_title-two">{{ $t("who_we_are.card_community.title[0]") }}</h2>
+                        <div class="about_item_cards">
+                            <div class="about_item_card-two">
+                                <div class="about_item_card_num">№1</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_community.text[0]")
+                                    }}
+                                </div>
+                            </div>
+                            <div class="about_item_card-two">
+                                <div class="about_item_card_num">24/7</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_community.text[1]")
+                                    }}
+                                </div>
+                            </div>
+                            <div class="about_item_card-two">
+                                <div class="about_item_card_num">1</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_community.text[2]")
+                                    }}
+                                </div>
+                            </div>
+                            <div class="about_item_card-two">
+                                <div class="about_item_card_num">4%</div>
+                                <div class="about_item_card_description">{{
+                                        $t("who_we_are.card_community.text[3]")
+                                    }}
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <!--                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>-->
                 </div>
+
             </div>
-           <div class="about__inner_wrap">
-               <div class="about_item">
-                   <h2 class="about_item_title-two">{{ $t("who_we_are.card_community.title[0]") }}</h2>
-                   <div class="about_item_cards">
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">№1</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[0]") }}</div>
-                       </div>
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">24/7</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[1]") }}</div>
-                       </div>
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">1</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[2]") }}</div>
-                       </div>
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">4%</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[3]") }}</div>
-                       </div>
-                   </div>
-               </div>
-           </div>
+            <div class="about_stiky">
+                <div class="about_stiky_block"></div>
+            </div>
+            <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
+        </div>
 
-        </div>
-        <div class="about_stiky">
-            <div class="about_stiky_block"></div>
-        </div>
-       <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
+        <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
     </div>
-
-    <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
-</div>
 </template>
 
 <script>
-import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import {scrollingAbout} from "../../Services/AboutScroll";
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 
 export default {
     name: "WhoWeAre",
-    components: {ButtonBlue, HeadLine},
+    components: {LandingHeadline, ButtonBlue},
     i18n: {
-            sharedMessages: HomeMessage,
+        sharedMessages: HomeMessage,
     },
     mounted() {
         scrollingAbout()
@@ -130,7 +157,6 @@ export default {
         gap: 30px;
         z-index: 99;
         position: relative;
-
 
 
         &_title {
