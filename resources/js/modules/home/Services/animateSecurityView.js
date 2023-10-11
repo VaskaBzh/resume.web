@@ -59,13 +59,11 @@ export function animatedSecurityView() {
         animation: animateSecurityView,
         trigger: ".security-view",
         start: "top top",
-        end: "+=1300",
+        end: "+=3000",
         pin: true,
-        scrub: 2,
-        pinSpacing: true,
+        scrub: 3,
+        markers: true,
         id: ".security-view",
-        smoothChildTiming: true,
+        invalidateOnRefresh: true
     })
-
-    tl.scrollTrigger.refresh();
 }

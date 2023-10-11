@@ -32,7 +32,7 @@ export default {
     backdrop-filter: unset;
     display: flex;
     position: absolute;
-    bottom: 25%;
+    bottom: 15%;
     align-items: center;
     justify-content: center;
     color: #F5FAFF;
