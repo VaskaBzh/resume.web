@@ -91,10 +91,9 @@ export default {
             line-height: 120%;
             background: transparent;
             padding-bottom: 12rem;
-            // z-index: 99;
+             z-index: 99;
 
         }
-
 
         &_block-one {
             display: flex;
