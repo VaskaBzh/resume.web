@@ -13,8 +13,7 @@ class ObserveCustomPercentTimeCommand extends Command
 
     public function handle(): void
     {
-        Sub::whereNotNull('custom_percent_expired_at')
-            ->where('custom_percent_expired_at', '<=', now())
+        Sub::whereExpiredCustomPercent()
             ->update(['percent' => 3.5, 'custom_percent_expired_at' => null]);
     }
 }

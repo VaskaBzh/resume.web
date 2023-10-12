@@ -41,4 +41,11 @@ class SubBuilder extends BaseBuilder
         )
             ->hasWorkerHashRate();
     }
+
+    public function whereExpiredCustomPercent(): Builder
+    {
+        return $this
+            ->whereNotNull('custom_percent_expired_at')
+            ->where('custom_percent_expired_at', '<=', now());
+    }
 }
