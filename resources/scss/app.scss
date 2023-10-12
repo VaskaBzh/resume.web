@@ -14,7 +14,6 @@
 
 //========================================================================================================================================================
 // импорты кастомных стилей blocks
-@import "./blocks/wrap";
 @import "./blocks/page";
 @import "./blocks/legend";
 @import "./blocks/swiper";
@@ -43,7 +42,7 @@
 
 //========================================================================================================================================================
 // импорты тем
- @import "./theme/theme-dark";
+@import "./theme/theme-dark";
 
 //========================================================================================================================================================
 // Обнуляющие стили
@@ -274,9 +273,11 @@ h6 {
             line-height: 23px;
             color: #818c99;
             font-weight: 400;
+
             span {
                 padding: 0 !important;
             }
+
             @media (max-width: $mobile) {
                 font-size: 16px;
             }
@@ -424,6 +425,7 @@ h6 {
         display: inline-flex;
     }
 }
+
 .statistic {
     .cabinet {
         .preloader {
@@ -431,19 +433,22 @@ h6 {
         }
     }
 }
+
 .home-im__image {
     .container-chart {
         padding-bottom: 40px;
     }
 }
+
 .statistic_graph {
     .y-axis-container {
-        @media(max-width:900px){
+        @media(max-width: 900px) {
             left: 10px;
             top: 100px;
         }
     }
 }
+
 .y-axis-container {
     position: absolute;
     left: 30px;
@@ -454,21 +459,26 @@ h6 {
     height: 100%;
     width: fit-content;
     justify-content: space-between;
+
     .tick {
         font-weight: 400;
         font-size: 12px;
         line-height: 130%;
         color: #818c99;
     }
-    @media(max-width:900px){
+
+    @media(max-width: 900px) {
         left: 10px;
         top: 360px;
     }
 }
+
 .container-chart {
     position: relative;
+
     svg {
         overflow: visible;
+
         g {
             g.tick {
                 font-weight: 400;
@@ -482,16 +492,20 @@ h6 {
                 }
             }
         }
+
         .dot {
             z-index: 2;
         }
     }
+
     .main_line {
         z-index: 5;
     }
+
     .band {
         z-index: 2;
     }
+
     .horizontal-line,
     .vertical-line {
         transition: all 0.5s ease 0s;
@@ -513,6 +527,7 @@ h6 {
         background: #040d15;
         opacity: 1;
         padding: 0 0 0;
+
         &-auth {
             &:before {
                 background: var(--background-island);
@@ -530,9 +545,11 @@ h6 {
     pointer-events: none;
     z-index: 10;
     border-radius: 5px;
+
     &.complexity {
         background: rgba(129, 140, 153, 1);
         border-radius: 8px;
+
         .tooltip-wrapper {
             background: #fff;
             border-radius: 8px;
@@ -546,6 +563,7 @@ h6 {
                 font-weight: 500;
                 line-height: 120%;
             }
+
             .time {
                 width: 100%;
                 text-align: center;
@@ -555,6 +573,7 @@ h6 {
             }
         }
     }
+
     .tooltip-wrapper {
         position: relative;
         font-family: Ubuntu, serif;
@@ -571,6 +590,7 @@ h6 {
         font-weight: 400;
         z-index: 10;
         min-width: 171px;
+
         span {
             width: 100%;
             text-align: left;
@@ -578,11 +598,13 @@ h6 {
             justify-content: space-between;
             align-items: center;
         }
+
         .value {
             color: #3f7bdd;
             display: inline;
             width: fit-content;
         }
+
         .time {
             font-weight: 300;
             margin-top: 8px;
@@ -600,12 +622,15 @@ h6 {
             height: 24px;
             stroke: transparent !important;
         }
+
         svg:not(.stroke) {
             fill: #417fe5 !important;
         }
+
         svg.stroke {
             stroke: #417fe5 !important;
         }
+
         .icon,
         svg {
             width: 24px;
@@ -617,6 +642,7 @@ h6 {
 .indicators {
     .swiper {
         overflow-y: visible;
+
         &-pagination {
             &-bullet {
                 position: relative;
@@ -626,12 +652,14 @@ h6 {
                 opacity: 1;
                 background: transparent;
                 border-radius: 3px;
+
                 &.swiper-pagination-bullet-active {
                     &:after {
                         opacity: 1;
                         visibility: visible;
                     }
                 }
+
                 &:before,
                 &:after {
                     content: "";
@@ -642,9 +670,11 @@ h6 {
                     left: 50%;
                     transform: translate(-50%, -50%);
                 }
+
                 &:before {
                     border: 5px solid rgba(63, 123, 222, 0.16);
                 }
+
                 &:after {
                     border: 8px solid #3f7bde;
                     transition: all 0.3s ease 0s;
@@ -654,6 +684,7 @@ h6 {
             }
         }
     }
+
     .wrap {
         height: fit-content;
         @media (max-width: 991.98px) {
@@ -670,6 +701,7 @@ h6 {
             min-height: 232px;
             transition: all 0.8s ease 0s;
         }
+
         &__row {
             min-height: 263px;
             @media (max-width: 991.98px) {
@@ -683,12 +715,15 @@ h6 {
                         @media (max-width: $mobileSmall) {
                             padding: 10px;
                         }
+
                         h3 {
                             margin-bottom: 0;
+
                             &:after {
                                 content: none;
                             }
                         }
+
                         &-blue {
                             position: absolute;
                             top: 0;
@@ -697,9 +732,10 @@ h6 {
                             z-index: 10;
                         }
                     }
+
                     &__menu {
                         transition: all 0.8s ease 0s, visibility 0s ease 0.8s,
-                            opacity 0s ease 0.8s;
+                        opacity 0s ease 0.8s;
                         visibility: hidden;
                         opacity: 0;
                         margin-top: 0;
@@ -714,7 +750,7 @@ h6 {
                             visibility: visible;
                             opacity: 1;
                             transition: all 0.8s ease 0s, visibility 0s ease 0s,
-                                opacity 0s ease 0s, max-height 1.6s ease 0s;
+                            opacity 0s ease 0s, max-height 1.6s ease 0s;
                             @media (max-width: $mobile) {
                                 max-height: 500px;
                             }
@@ -724,6 +760,7 @@ h6 {
             }
         }
     }
+
     .open-button {
         width: 107px;
         display: flex;
@@ -755,6 +792,7 @@ h6 {
     min-height: 24px;
     background: transparent;
     gap: 10px;
+
     svg {
         max-width: 0;
         max-height: 0;
@@ -771,6 +809,7 @@ h6 {
         min-height: auto;
     }
 }
+
 #myChart {
     cursor: pointer;
 }
@@ -787,12 +826,15 @@ h6 {
 .column_value-worker:not(:last-child) {
     margin-right: 4px;
 }
+
 .column_value-worker-active {
     color: var(--status-succesfull, #1FB96C);
 }
+
 .column_value-worker-unstable {
     color: var(--status-failed, #F1404A);
 }
+
 .column_value-worker-in-active {
     color: var(--text-teritary, #6F7682);
 }

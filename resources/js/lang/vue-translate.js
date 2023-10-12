@@ -1,5 +1,5 @@
 // If using a module system (e.g. via vue-cli), import Vue and VueI18n and then call Vue.use(VueI18n).
-import { createI18n } from "vue-i18n";
+import {createI18n} from "vue-i18n";
 
 // Ready translated locale messages
 const messages = {
@@ -506,7 +506,7 @@ const messages = {
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
-                    "Current hashrate",,
+                    "Current hashrate", ,
                     "Worker",
                     "Hashrate / 24h",
                     "Total paid out",
@@ -1437,7 +1437,7 @@ const messages = {
 };
 
 const i18n = createI18n({
-    locale: "en",
+    locale: "ru",
     messages,
 });
 

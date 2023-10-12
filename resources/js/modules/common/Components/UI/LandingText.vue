@@ -21,6 +21,7 @@ export default {
     font-size: clamp(18px, 50vw, 20px);
     font-weight: 400;
     line-height: 110%;
+    text-transform: none;
 }
 
 .text-gray-140 {

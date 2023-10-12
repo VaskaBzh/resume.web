@@ -1,107 +1,143 @@
 <template>
-    <div class="mobile-view">
-        <div class="mobile-view__container">
-            <head-line class="mobile-view__title">{{ $t("mobile_app.button") }}</head-line>
+    <div class="mobile-view mobile__section mobile__section-wrap">
+        <div class="mobile-view__block">
+            <landing-headline class="mobile-view__title"
+            >{{ $t("mobile_app.button") }}
+            </landing-headline>
             <div class="mobile-view__wrapper">
                 <div class="mobile-view_inner">
                     <div class="mobile-view_item active">
-                        <h3 class="mobile-view_subtitle">{{ $t("mobile_app.title") }}</h3>
-                        <p class="mobile-view_text">{{ $t("mobile_app.text") }}</p>
+                        <landing-title tag="h3" class="mobile-view_subtitle">
+                            {{ $t("mobile_app.title") }}
+                        </landing-title>
                     </div>
                     <div class="mobile-view_item">
-                        <h3 class="mobile-view_subtitle">Хороший мониторинг
-                            и эффективное управление</h3>
+                        <landing-title tag="h3" class="mobile-view_subtitle">
+                            Хороший> мониторинг и эффективное управление
+                        </landing-title>
                     </div>
                     <div class="mobile-view_item">
-                        <h3 class="mobile-view_subtitle">Четкий мониторинг
-                            и эффективное управление</h3>
+                        <landing-title tag="h3" class="mobile-view_subtitle">
+                            Четкий мониторинг и эффективное управление
+                        </landing-title>
                     </div>
                     <div class="mobile-view_item">
-                        <h3 class="mobile-view_subtitle">Прекрасный мониторинг
-                            и эффективное управление</h3>
+                        <landing-title tag="h3" class="mobile-view_subtitle">
+                            Прекрасный мониторинг и эффективное управление
+                        </landing-title>
                     </div>
                     <div class="mobile-view_item">
-                        <h3 class="mobile-view_subtitle">Офигенный мониторинг
-                            и эффективное управление</h3>
+                        <landing-title tag="h3" class="mobile-view_subtitle">
+                            Офигенный мониторинг и эффективное управление
+                        </landing-title>
                     </div>
                     <div class="mobile-view_prev_next">
-                        <button-blue class="mobile-view_prev prev"></button-blue>
-                        <button-blue class="mobile-view_prev next"></button-blue>
+                        <button-blue
+                            class="mobile-view_prev prev"
+                        ></button-blue>
+                        <button-blue
+                            class="mobile-view_prev next"
+                        ></button-blue>
                     </div>
                 </div>
                 <div class="mobile-view__content">
-                    <img class="iphone" src="../../../../../assets/img/iPhone-14.png" alt="">
+                    <img
+                        class="iphone"
+                        src="../../../../../assets/img/iPhone-14.png"
+                        alt=""
+                    />
                     <div class="mobile-view_swiper-picture">
                         <div class="mobile-view_image active">
-                            <img src="../../../../../assets/img/iphone-14-screen1.png" alt="">
+                            <img
+                                src="../../../../../assets/img/iphone-14-screen1.png"
+                                alt=""
+                            />
                         </div>
                         <div class="mobile-view_image">
-                            <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
+                            <img
+                                src="../../../../../assets/img/iphone-14-sreen2.png.png"
+                                alt=""
+                            />
                         </div>
                         <div class="mobile-view_image">
-                            <img src="../../../../../assets/img/iphone-14-screen3.png" alt="">
+                            <img
+                                src="../../../../../assets/img/iphone-14-screen3.png"
+                                alt=""
+                            />
                         </div>
                         <div class="mobile-view_image">
-                            <img src="../../../../../assets/img/iphone-14-screen4.png" alt="">
+                            <img
+                                src="../../../../../assets/img/iphone-14-screen4.png"
+                                alt=""
+                            />
                         </div>
                         <div class="mobile-view_image">
-                            <img src="../../../../../assets/img/iphone-14-screen1.png" alt="">
+                            <img
+                                src="../../../../../assets/img/iphone-14-screen1.png"
+                                alt=""
+                            />
                         </div>
                     </div>
                 </div>
-                <button-blue class="mobile-view__btn">{{ $t("mobile_app.note") }}</button-blue>
+                <button-blue class="mobile-view__btn"
+                >{{ $t("mobile_app.note") }}
+                </button-blue>
             </div>
         </div>
         <div class="mobile-view__run">
-            <img src="../../../../../assets/img/transparent-name.png" alt="">
-            <img src="../../../../../assets/img/transparent-name.png" alt="">
-            <img src="../../../../../assets/img/transparent-name.png" alt="">
-            <img src="../../../../../assets/img/transparent-name.png" alt="">
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
         </div>
     </div>
 </template>
 
-
 <script>
-import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
+// import {slideMobileView} from "../../Services/LandSlideAnime";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
+import LogoRunIcon from "../../icons/LogoRunIcon.vue";
+import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 
 export default {
     name: "AppMobileView",
-    components: {ButtonBlue, HeadLine},
+    components: {LandingHeadline, LogoRunIcon, LandingTitle, ButtonBlue},
     i18n: {
         sharedMessages: HomeMessage,
     },
-    mounted() {
-        // slideMobileView()
-    }
-}
+    // mounted() {
+    //     slideMobileView()
+    // }
+};
 </script>
-
 
 <style scoped lang="scss">
 .mobile-view {
-    width: 100vw;
-    top: 0;
-    left: 0;
     display: flex;
-    padding: 100px 0 70px;
     flex-flow: column;
     align-items: center;
     justify-content: space-evenly;
+    padding-bottom: clamp(30px, 5vw, 70px);
 
-    &__container {
-        margin: 0 auto;
-
+    &__block {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     &__wrapper {
         display: flex;
-        height: 100vh;
+        min-height: 100vh;
         flex-flow: row nowrap;
         justify-content: space-between;
-        margin: 0 calc(-50vw + 75%);
+        width: 100%;
+        position: relative;
     }
 
     &_inner {
@@ -114,9 +150,12 @@ export default {
 
     &__content {
         height: 875px;
-        position: relative;
+        position: absolute;
         padding: 15px;
         max-height: 875px;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
 
         img.iphone {
             width: 100%;
@@ -148,10 +187,13 @@ export default {
         justify-content: center;
         gap: 30px;
         overflow: hidden;
+        @media (min-width: 767.98px) {
+            margin-bottom: 60px;
+        }
     }
 
     &_subtitle {
-        color: #F5FAFF;
+        color: #f5faff;
         font-family: Unbounded, serif;
         font-size: 44px;
         font-style: normal;
@@ -172,7 +214,7 @@ export default {
         justify-content: center;
         display: none;
 
-        img {
+        svg {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -181,7 +223,7 @@ export default {
     }
 
     &_text {
-        color: rgba(245, 250, 255, 0.70);
+        color: rgba(245, 250, 255, 0.7);
         text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
         font-family: NunitoSans, serif;
         font-size: 20px;
@@ -205,11 +247,12 @@ export default {
         height: 232px;
         align-items: center;
         justify-content: center;
+        overflow: hidden;
+        gap: clamp(30px, 5vw, 50px);
 
-        img {
-            width: 100%;
-            height: 100%;
-            margin-left: 170px;
+        svg {
+            height: clamp(66px, 50vw, 187px);
+            width: clamp(357px, 50vw, 1012px);
             animation: animMarqueeRtl 7s infinite linear;
 
             @keyframes animMarqueeRtl {
@@ -217,7 +260,7 @@ export default {
                     transform: translateX(0%);
                 }
                 100% {
-                    transform: translateX(100%);
+                    transform: translateX(105%);
                 }
             }
         }

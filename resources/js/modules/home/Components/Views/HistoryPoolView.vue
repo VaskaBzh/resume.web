@@ -1,6 +1,6 @@
 <template>
-    <div class="history-pool">
-        <head-line class="history-pool__btn">История нашего пула</head-line>
+    <div class="history history__section history__section-wrap">
+        <landing-headline>История нашего пула</landing-headline>
         <div class="history-pool__items">
             <div class="history-pool__item-line">
                 <div class="history-pool__item-line-block">
@@ -62,13 +62,11 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
+import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 
 export default {
     name: "HistoryPoolView",
-    components: {HeadLine},
-    mounted() {
-        // animeteHistoryView()
-    }
+    components: {LandingHeadline, HeadLine},
 }
 </script>
 
@@ -76,7 +74,6 @@ export default {
 <style scoped lang="scss">
 .history-pool {
     display: flex;
-    height: 100vh;
     flex-flow: column nowrap;
     align-items: center;
     justify-content: flex-start;

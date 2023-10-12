@@ -34,9 +34,6 @@ export default {
     i18n: {
         sharedMessages: HomeMessage,
     },
-    mounted() {
-        // animateMissionView()
-    }
 }
 </script>
 
@@ -44,7 +41,6 @@ export default {
 <style scoped lang="scss">
 
 .mission-view {
-    width: 100vw;
     height: 100vh;
     display: flex;
     flex-flow: column nowrap;

@@ -22,6 +22,7 @@ export default {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    margin-bottom: clamp(50px, 10vw, 100px);
 }
 
 .headline_text {

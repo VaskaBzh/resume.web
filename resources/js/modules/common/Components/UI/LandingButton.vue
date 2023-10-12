@@ -9,7 +9,7 @@
 
 <script>
 export default {
-    name: "main-button",
+    name: "landing-button",
 };
 </script>
 
