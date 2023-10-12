@@ -24,7 +24,7 @@ class TwoFactorController extends Controller
                 $secretKey
             );
 
-            cache()->put('2fa_secret|' . $user->id, $secretKey);
+            cache()->put('2fa_secret|' . $user->id, $secretKey, now()->addMinutes(30));
         } catch (\Throwable $e) {
             report($e);
 
@@ -62,7 +62,7 @@ class TwoFactorController extends Controller
             cache()->forget('2fa_secret|' . $user->id);
 
             return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
-        } catch (\Exception $e) {
+        } catch (\Throwable $e) {
             report($e);
 
             return new JsonResponse([

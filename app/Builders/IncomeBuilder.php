@@ -26,17 +26,4 @@ class IncomeBuilder extends BaseBuilder
             ->getByGroupId($groupId)
             ->whereDate('created_at', Carbon::yesterday());
     }
-
-    public function between(string $column, ?string $from, ?string $to): Builder
-    {
-        return $this
-            ->when($from, fn($query, $from) => $query->where($column, '>=', $from))
-            ->when(
-                value: Carbon::createFromFormat(
-                    format: 'Y-m-d',
-                    time: $to ?? now()->format('Y-m-d')
-                )->endOfDay(),
-                callback: fn($query, $to) => $query->where($column, '<=', $to)
-            );
-    }
 }

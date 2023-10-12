@@ -27,7 +27,6 @@ use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 

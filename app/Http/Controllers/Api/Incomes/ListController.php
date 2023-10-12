@@ -10,7 +10,6 @@ use App\Models\Income;
 use App\Models\Sub;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Illuminate\Support\Carbon;
 
 class ListController extends Controller
 {
@@ -18,12 +17,8 @@ class ListController extends Controller
     {
         return new IncomeCollection(
             Income::getByGroupId($sub->group_id)
-                ->between(
-                    column:'created_at',
-                    from: $request->from,
-                    to:$request->to
-                )
-                ->orderByDesc('created_at')
+                ->between('created_at', $request->from, $request->to)
+                ->latest()
                 ->paginate($request->per_page ?? 15)
         );
     }

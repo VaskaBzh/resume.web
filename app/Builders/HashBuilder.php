@@ -17,6 +17,8 @@ class HashBuilder extends BaseBuilder
 
     public function getByOffset(int $groupId, ?int $count = 24): Builder
     {
-        return $this->getByGroupId($groupId)->latest()->take($count);
+        return $this->getByGroupId($groupId)
+            ->latest()
+            ->take($count);
     }
 }
