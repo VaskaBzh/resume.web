@@ -20,6 +20,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .tooltip-card{
   border-radius: 20px;
   background: var(--primary-700, #175CD3);

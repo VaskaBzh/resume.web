@@ -181,6 +181,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;

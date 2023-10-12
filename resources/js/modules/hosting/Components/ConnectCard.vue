@@ -29,6 +29,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .connect-with-us{
   color: var(--gray-3100, #D0D5DD);
   font-family: Unbounded;

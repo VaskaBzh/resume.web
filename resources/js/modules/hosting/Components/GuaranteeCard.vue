@@ -42,6 +42,9 @@ export default {
 
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .guarantee-block{
   display: flex;
   flex-direction: column;
