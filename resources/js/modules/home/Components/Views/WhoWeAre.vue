@@ -1,7 +1,7 @@
 <template>
 <div class="about about-view scroll-section">
-    <head-line>{{ $t("who_we_are.button") }}</head-line>
-    <div class="about__wrapper bg">
+    <head-line class="about_title">{{ $t("who_we_are.button") }}</head-line>
+    <div class="about__wrapper">
         <div class="about__inner">
             <div class="about__inner_wrap">
                 <div class="about_item">
@@ -67,11 +67,10 @@ import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import {scrollingAbout} from "../../Services/AboutScroll";
-import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 
 export default {
     name: "WhoWeAre",
-    components: {LandingHeadline, ButtonBlue},
+    components: {HeadLine, ButtonBlue},
     i18n: {
         sharedMessages: HomeMessage,
     },

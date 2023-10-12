@@ -80,6 +80,25 @@ export default {
     color: #D0D5DD;
 }
 
+.about_title {
+  padding: 14px 24px;
+  width: 340px;
+  text-align: center;
+  display: block;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 50px;
+  border-radius: 30px;
+  border: 0.5px solid #98A2B3;
+  font-family: Unbounded, serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 120%;
+  text-transform: uppercase;
+  color: #D0D5DD;
+}
+
 .make-up-cab_title {
     padding: 14px 24px;
     width: 293px;

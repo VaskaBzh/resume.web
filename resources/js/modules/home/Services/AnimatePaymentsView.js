@@ -23,10 +23,10 @@ export function animatePayView() {
     })
     tl.fromTo('.payments-view__item-two', {opacity: 0}, {
         opacity: 1,
-    })
+    },'>-0.1')
     tl.fromTo('.payments-view__item-three', {opacity: 0}, {
         opacity: 1,
-    })
+    }, '>-0.1')
 
     tl.scrollTrigger.refresh();
 

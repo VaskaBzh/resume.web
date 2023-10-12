@@ -80,7 +80,7 @@ export function animateWhyBtcView() {
         trigger: ".miners-info-view",
         start: "top +=300",
         end: "bottom bottom",
-        pin: true,
+        pin: false,
         scrub: false,
         id: ".miners-info-view",
     });
