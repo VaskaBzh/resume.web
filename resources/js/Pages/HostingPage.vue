@@ -1,68 +1,69 @@
 <template>
     <header-component/>
     <main class="main-hosting">
+      <div class="main-hosting__container">
         <article class="article-hosting first-text">
-            <div class="hosting-content">
-                <span class="text-on">{{ $t("title[0]") }}</span>
-                <span class="text-fifty">{{ $t("title[1]") }} <br></span>
-                <span class="text-increase">{{ $t("title[2]") }} <br></span>
-                <span class="text-income">{{ $t("title[3]") }} <br></span>
-                <span class="text-cvt">{{ $t("title[4]") }}</span>
-            </div>
-            <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
+          <div class="hosting-content">
+            <span class="text-on">{{ $t("title[0]") }}</span>
+            <span class="text-fifty">{{ $t("title[1]") }} <br></span>
+            <span class="text-increase">{{ $t("title[2]") }} <br></span>
+            <span class="text-income">{{ $t("title[3]") }} <br></span>
+            <span class="text-cvt">{{ $t("title[4]") }}</span>
+          </div>
+          <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
 
-      </article>
-      <article class="article-hosting test-color second-text">
-        <AboutView :facts="factsHosting" :title="titleHostings"></AboutView>
-      </article>
-      <article class="article-hosting third-text">
-        <div class="how-are-we">{{ $t("offer.button") }}</div>
-        <div class="offer-content">
-          <span class="text-offer">{{ $t("offer.title[0]") }}</span>
-          <div class="text-offer-column">
-            <span class="text-offer">{{ $t("offer.title[1]") }}<br></span>
-            <span class="text-offer">{{ $t("offer.title[2]") }}<br></span>
-          </div>
-          <span class="text-offer text-end">{{ $t("offer.title[3]") }}<br></span>
-        </div>
-        <div class="offer-card-container">
-          <div class="offer-card" v-for="offer in offers">
-            <div>
-              <p class="offer-title">{{ offer.percent }}</p>
-              <p class="offer-title">{{ offer.title }}</p>
+        </article>
+        <article class="article-hosting test-color second-text">
+          <AboutView :facts="factsHosting" :title="titleHostings"></AboutView>
+        </article>
+        <article class="article-hosting third-text">
+          <div class="how-are-we">{{ $t("offer.button") }}</div>
+          <div class="offer-content">
+            <span class="text-offer">{{ $t("offer.title[0]") }}</span>
+            <div class="text-offer-column">
+              <span class="text-offer">{{ $t("offer.title[1]") }}<br></span>
+              <span class="text-offer">{{ $t("offer.title[2]") }}<br></span>
             </div>
-            <p class="offer-text">{{ offer.text }}</p>
+            <span class="text-offer text-end">{{ $t("offer.title[3]") }}<br></span>
           </div>
-        </div>
-      </article>
-      <article class="article-hosting article-work-with-us">
-        <BlueView :inf="workingWithUs"></BlueView>
-      </article>
-      <article class="article-hosting black-block">
-        <MonitoringSystemCard></MonitoringSystemCard>
-      </article>
-      <article class="article-hosting black-block">
-        <SupportSystemCard></SupportSystemCard>
-      </article>
-      <article class="article-hosting article-work-with-us">
-        <BlueView :inf="getYourClients"></BlueView>
-      </article>
-      <article class="article-hosting black-block">
-        <PersonalAreaCard></PersonalAreaCard>
-      </article>
-      <article class="article-hosting black-block">
-        <MobileAppCard></MobileAppCard>
-      </article>
-      <article class="article-hosting article-work-with-us">
-        <GuaranteeCard></GuaranteeCard>
-      </article>
-      <article class="article-hosting second-text">
-        <ConnectCard></ConnectCard>
-      </article>
-      <footer class="footer-hosting">
-        <FooterHosting></FooterHosting>
-      </footer>
-    </div>
+          <div class="offer-card-container">
+            <div class="offer-card" v-for="offer in offers">
+              <div>
+                <p class="offer-title">{{ offer.percent }}</p>
+                <p class="offer-title">{{ offer.title }}</p>
+              </div>
+              <p class="offer-text">{{ offer.text }}</p>
+            </div>
+          </div>
+        </article>
+        <article class="article-hosting article-work-with-us">
+          <BlueView :inf="workingWithUs"></BlueView>
+        </article>
+        <article class="article-hosting black-block">
+          <MonitoringSystemCard></MonitoringSystemCard>
+        </article>
+        <article class="article-hosting black-block">
+          <SupportSystemCard></SupportSystemCard>
+        </article>
+        <article class="article-hosting article-work-with-us">
+          <BlueView :inf="getYourClients"></BlueView>
+        </article>
+        <article class="article-hosting black-block">
+          <PersonalAreaCard></PersonalAreaCard>
+        </article>
+        <article class="article-hosting black-block">
+          <MobileAppCard></MobileAppCard>
+        </article>
+        <article class="article-hosting article-work-with-us">
+          <GuaranteeCard></GuaranteeCard>
+        </article>
+        <article class="article-hosting second-text">
+          <ConnectCard></ConnectCard>
+        </article>
+        <footer class="footer-hosting">
+          <FooterHosting></FooterHosting>
+        </footer>
+      </div>
   </main>
 </template>
 <script>
@@ -432,6 +433,7 @@ export default {
   .footer-hosting {
     padding: 40px 16px;
   }
+}
 @media(max-width: 450px){
     .hosting-content{
         font-size: 22px;

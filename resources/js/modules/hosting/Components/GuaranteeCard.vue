@@ -127,7 +127,7 @@ export default {
   .accordion-button{
     display: inline-block;
     height: 30px;
-    margin-top: 32px;
+    align-self: center;
   }
   .guarantee-block{
     padding: 0;
