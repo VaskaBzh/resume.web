@@ -18,6 +18,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .system-card-inf{
   width: 399px;
 }

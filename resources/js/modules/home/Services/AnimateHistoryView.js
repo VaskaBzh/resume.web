@@ -27,10 +27,6 @@ export function animeteHistoryView() {
         animation:tween,
         scrub:1,
         invalidateOnRefresh:true,
-        toggleClass: {
-            targets: '.history-pool__item-info',
-            className: 'notActive'
-        }
     })
 
 }

@@ -1,26 +1,33 @@
 <template>
   <div @click="actionBurger">
-      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" v-if="isOpen">
+    <!-- <transition name="bounce"> -->
+      <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none" v-if="isOpen" :class="{'close-cross': isOpen }">
         <rect x="0.824219" y="16.0254" width="21.757" height="0.870282" rx="0.435141" transform="rotate(-45 0.824219 16.0254)" fill="#E4E7EC"/>
         <rect x="1.43945" y="0.359375" width="21.757" height="0.870282" rx="0.435141" transform="rotate(45 1.43945 0.359375)" fill="#E4E7EC"/>
       </svg>
-      <svg width="25" height="13" viewBox="0 0 25 13" fill="none" xmlns="http://www.w3.org/2000/svg" v-else>
+      <svg width="25" height="13" viewBox="0 0 25 13" fill="none" xmlns="http://www.w3.org/2000/svg" v-else :class="{'open-cross': isOpen }">
         <rect x="10" width="15" height="1" rx="0.5" fill="#E4E7EC"/>
         <rect y="6" width="25" height="1" rx="0.5" fill="#E4E7EC"/>
         <rect y="12" width="25" height="1" rx="0.5" fill="#E4E7EC"/>
       </svg>
-  </div>
+    <!-- </transition> -->
 
+  </div>
   <div class="burger-background" v-if="isOpen" :class="{'open-burger': isOpen ,'close-burger': closeBurger}">
-    <div class="menu-container">
+    <div class="menu-container" :class="{'start-opacity': isOpen ,'end-opacity': closeBurger}">
       <nav-links/>
     </div>
     <div class="menu-footer">
       <button class="headline-menu">{{ $t("footer.button") }}</button>
       <select-language-land />
+      <button  class="headline-menu link-tg">
+        <a target="_blank" href="https://t.me/allbtc_support">
+          ?
+        </a>
+      </button>
     </div>
-  </div>
 
+  </div>
 </template>
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
@@ -96,6 +103,10 @@ svg{
   text-transform: uppercase;
   height: 48px;
 }
+.link-tg{
+  font-size: 27px;
+  line-height: 120%; /* 32.4px */
+}
 .open-burger{
   animation: openBg 0.4s ease-in;
 }
@@ -136,10 +147,10 @@ svg{
     border-bottom-right-radius: 0px;
   }
 }
-.menu-container{
-  animation: visList 0.7s linear;
+.start-opacity{
+  animation: startList 0.7s linear;
 }
-@keyframes visList{
+@keyframes startList{
   0%{
     opacity: 0;
   }
@@ -150,5 +161,30 @@ svg{
     opacity: 1;
   }
 }
+.end-opacity{
+  animation: endList 0.5s linear;
+}
+@keyframes endList{
+  100%{
+    opacity: 0;
+  }
+  50%{
+    opacity: 0;
+  }
+  0%{
+    opacity: 1;
+  }
+}
+.close-cross{
+  animation: closeCross 0.5s linear;
+}
+@keyframes closeCross{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity:1;
 
+  }
+}
 </style>

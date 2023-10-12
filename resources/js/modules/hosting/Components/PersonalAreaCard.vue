@@ -7,7 +7,7 @@
     <!-- Web -->
     <img src="../assets/img/Mockup-mac.png" class="img-mac img-system web">
     <img src="../assets/img/Mockup-statistic.png" class="img-statistic img-system web">
-    
+
     <!-- Наложение тени -->
     <img :src="img" class="img-shadow" :class="{'add-opacity': addOpacity}">
 
@@ -167,7 +167,7 @@ export default {
   },
   computed: {
         img() {
-            // this.addOpacity = !this.addOpacity 
+            // this.addOpacity = !this.addOpacity
             return new URL(
                 `/resources/js/modules/hosting/assets/img/${this.currentShadow}-shadow.png`,
                 import.meta.url
@@ -181,6 +181,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 0.3s ease;
@@ -307,9 +310,6 @@ export default {
     left: 80px;
     top: 20px;
   }
-  .get-consultation{
-    width: 704px;
-  }
   .system-card-title{
     font-size: 24px;
   }
@@ -321,7 +321,7 @@ export default {
   }
 }
 @media(max-width: 760px){
-  .web{
+  .web, .img-shadow{
     display: none;
   }
   .mobile{
@@ -340,8 +340,8 @@ export default {
   .note-button{
     display: none;
   }
-  .get-consultation{
-    width: 328px;
+  .get-consultation {
+    width: 80%;
     font-size: 12px;
   }
 }
@@ -354,6 +354,9 @@ export default {
   }
   .system-card-text{
     font-size: 14px;
+  }
+  .get-consultation{
+    width: 90vw;
   }
 }
 </style>

@@ -14,6 +14,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .working-card{
   width: 432px;
   display: flex;

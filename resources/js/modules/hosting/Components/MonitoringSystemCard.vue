@@ -26,6 +26,9 @@ export default {
 }
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .system-card-inf{
   width: 399px;
 }
@@ -92,7 +95,7 @@ export default {
     top: 20px;
   }
   .get-consultation{
-    width: 704px;
+    width: 80%;
   }
   .system-card-title{
     font-size: 24px;

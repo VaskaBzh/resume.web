@@ -93,6 +93,9 @@ export default {
 
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .first-text{
     flex-direction: column;
 }
@@ -168,7 +171,7 @@ export default {
 }
 .article-hosting{
     width: 100vw;
-    height: 120vh;
+    height: 100vh;
     margin: 0 auto;
     display: flex;
     align-items: center;
@@ -181,7 +184,6 @@ export default {
 }
 .article-work-with-us{
     border-radius: 70px;
-    background: linear-gradient(165deg, #002195 8.98%, #007AF3 122.43%);
     box-shadow: -5px 4px 15px 10px rgba(9, 36, 68, 0.10);
 }
 @media(max-width: 768px){
@@ -201,7 +203,7 @@ export default {
         height: auto;
     }
     .get-consultation{
-        width: 328px;
+        width: 90vw;
         font-size: 12px;
         font-style: normal;
         font-weight: 600;
@@ -212,6 +214,7 @@ export default {
     }
     .black-block{
         gap: 40px;
+        padding: 15px 0;
     }
     .footer-hosting{
         padding: 40px 16px;

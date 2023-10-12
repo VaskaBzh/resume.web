@@ -125,6 +125,8 @@ export default {
                 this.closeBurger();
             }
         },
+
+
     },
     mounted() {
         // document.addEventListener("click", this.close);

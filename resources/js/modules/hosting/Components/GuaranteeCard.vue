@@ -42,6 +42,9 @@ export default {
 
 </script>
 <style scoped>
+*{
+    transition: all 0.3s linear;
+}
 .guarantee-block{
   display: flex;
   flex-direction: column;
@@ -124,7 +127,7 @@ export default {
   .accordion-button{
     display: inline-block;
     height: 30px;
-    margin-top: 32px;
+    align-self: center;
   }
   .guarantee-block{
     padding: 0;

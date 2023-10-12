@@ -6,8 +6,10 @@
             </button-blue
             >
             <nav-links/>
-            <select-language-land/>
-            <!--            <burger-menu/>-->
+            <select-language-land />
+            <div class="burger-mobile">
+                <burger-menu />
+            </div>
         </div>
     </nav>
 </template>
@@ -61,5 +63,13 @@ export default {
         background: transparent;
         backdrop-filter: blur(10px);
     }
+}
+.burger-mobile{
+    display: none;
+}
+@media(max-width: 760px){
+    .burger-mobile{
+        display: inline-block;
+    }  
 }
 </style>
