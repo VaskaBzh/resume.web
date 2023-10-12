@@ -1,0 +1,114 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Allbtc Swagger UI",
+        "description": "Документация OpenApi для Allbtc pool",
+        "contact": {
+            "email": "ognevoy.bima@gmail.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/v1/"
+        }
+    ],
+    "paths": {
+        "/subs/{user}": {
+            "get": {
+                "tags": [
+                    "Subaccounts"
+                ],
+                "summary": "Get subaccount list for a user",
+                "operationId": "ef5047d345d06fb5a2930762969b708d",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/SubResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "SubResource": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "group_id": {
+                        "type": "integer"
+                    },
+                    "workers_count_active": {
+                        "type": "integer"
+                    },
+                    "workers_count_in_active": {
+                        "type": "integer"
+                    },
+                    "workers_count_unstable": {
+                        "type": "integer"
+                    },
+                    "hash_per_min": {
+                        "type": "integer"
+                    },
+                    "hash_per_day": {
+                        "type": "integer"
+                    },
+                    "today_forecast": {
+                        "type": "integer"
+                    },
+                    "reject_percent": {
+                        "type": "number"
+                    },
+                    "unit": {
+                        "type": "string"
+                    },
+                    "total_payout": {
+                        "type": "number"
+                    },
+                    "yesterday_amount": {
+                        "type": "number"
+                    },
+                    "pending_amount": {
+                        "type": "number"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    }
+}
