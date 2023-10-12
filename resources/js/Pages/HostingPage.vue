@@ -336,7 +336,7 @@ export default {
         font-size: 60px;
     }
     .get-consultation{
-        width: 328px;
+        width: 90vw;
         font-size: 12px;
         font-style: normal;
         font-weight: 600;
