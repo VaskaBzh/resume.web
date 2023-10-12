@@ -114,6 +114,7 @@ export default {
         gap: 511px;
         margin-left: auto;
         padding-left: 200px;
+      opacity: .6;
     }
 
     &__item-info {
@@ -145,6 +146,6 @@ export default {
 }
 
 .notActive {
-    opacity: .6;
+    opacity: 1;
 }
 </style>
