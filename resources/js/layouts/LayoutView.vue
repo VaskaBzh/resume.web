@@ -11,13 +11,17 @@
 <script>
 import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
 import FooterComponentLand from "@/modules/common/Components/FooterComponentLand.vue";
+import {paralaxLayot} from "../modules/home/Services/ParalaxEffect";
 
 export default {
     components: {
         FooterComponentLand,
         HeaderComponent,
     },
-    async created() {
+  mounted() {
+      paralaxLayot()
+  },
+  async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");
     },
@@ -39,7 +43,6 @@ export default {
     flex-direction: column;
     max-width: 1920px;
     width: 100%;
-    padding: 0 100px;
     margin: 0 auto;
     z-index: 10;
 }

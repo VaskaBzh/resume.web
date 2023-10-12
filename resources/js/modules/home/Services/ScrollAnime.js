@@ -125,7 +125,6 @@ export function scroolingHeader() {
         pin: false,
         scrub: 3,
         id: ".header-land",
-        markers: true,
         invalidateOnRefresh: true,
         smoothChildTiming: true,
         onUpdate: (self) => {
