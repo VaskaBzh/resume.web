@@ -42,10 +42,6 @@ import ConnectWithUsView from "@/modules/home/Components/Views/ConnectWithUsView
 import FooterComponentLand from "@/modules/common/Components/FooterComponentLand.vue";
 import PoolLogoIcon from "@/modules/home/icons/PoolLogoIcon.vue";
 import AllbtcLogoIcon from "@/modules/home/icons/AllbtcLogoIcon.vue";
-
-import gsap from "gsap";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
-import {animateHeader} from "@/modules/home/Services/LandHeaderAnime";
 import HistoryPoolView from "../modules/home/Components/Views/HistoryPoolView.vue";
 
 export default {
@@ -68,9 +64,9 @@ export default {
         HeaderComponent,
     },
     mounted() {
-        gsap.registerPlugin(ScrollTrigger);
-        ScrollTrigger.refresh();
-        animateHeader();
+        // gsap.registerPlugin(ScrollTrigger);
+        // ScrollTrigger.refresh();
+        // animateHeader();
     },
 };
 </script>
@@ -84,6 +80,7 @@ export default {
         position: absolute;
         top: 0;
         left: 0;
+        z-index: 0;
 
         &__container {
             max-width: 1580px;
@@ -111,6 +108,7 @@ export default {
             line-height: 120%;
             background: transparent;
             padding-bottom: 12rem;
+            // z-index: 99;
         }
 
         &_block-one {

@@ -34,17 +34,16 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
-import {animateWhyBtcView} from "../../Services/AnimateWhyBtcView";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "MinersInfoView",
     components: {HeadLine},
     i18n: {
-            sharedMessages: HomeMessage,
+        sharedMessages: HomeMessage,
     },
     mounted() {
-        animateWhyBtcView()
+        // animateWhyBtcView()
     }
 
 }
@@ -121,12 +120,12 @@ export default {
             max-height: 1000px;
             grid-template-columns: repeat(1, 400px 1fr);
             transition: max-height 5s linear;
-    }
+        }
 
         &:hover &_text {
             max-height: 100%;
             overflow: unset;
-            opacity:1;
+            opacity: 1;
             transition: opacity .2s;
         }
 

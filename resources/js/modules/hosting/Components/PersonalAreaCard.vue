@@ -321,7 +321,7 @@ export default {
   }
 }
 @media(max-width: 760px){
-  .web{
+  .web, .img-shadow{
     display: none;
   }
   .mobile{
@@ -354,6 +354,9 @@ export default {
   }
   .system-card-text{
     font-size: 14px;
+  }
+  .get-consultation{
+    width: 90vw;
   }
 }
 </style>

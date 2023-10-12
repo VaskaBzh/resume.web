@@ -1,6 +1,6 @@
 <template>
-    <component :is="tagHtml" class="title title-h1">
-        <slot></slot>
+    <component :is="tag" class="title title-h1">
+        <slot/>
     </component>
 </template>
 
@@ -9,11 +9,6 @@ export default {
     name: "landing-title",
     props: {
         tag: String,
-    },
-    computed: {
-        tagHtml() {
-            return document.createElement(this.tag ?? "div");
-        },
     },
 };
 </script>
@@ -27,25 +22,25 @@ export default {
 }
 
 .title-h1 {
-    font-size: 110px;
+    font-size: clamp(32px, 10vw, 110px);
     font-weight: 600;
     line-height: 100%;
 }
 
 .title-h2 {
-    font-size: 65px;
+    font-size: clamp(28px, 10vw, 65px);
     font-weight: 400;
     line-height: 120%;
 }
 
 .title-h3 {
-    font-size: 46px;
+    font-size: clamp(30px, 10vw, 46px);
     font-weight: 600;
     line-height: 120%;
 }
 
 .title-h4 {
-    font-size: 110px;
+    font-size: clamp(32px, 10vw, 110px);
     font-weight: 600;
     line-height: 100%;
 }

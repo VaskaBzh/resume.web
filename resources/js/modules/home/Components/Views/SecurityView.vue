@@ -40,10 +40,7 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-import {animatedSecurityView} from "../../Services/animateSecurityView";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
-import gsap from "gsap";
-import {ScrollTrigger} from "gsap/ScrollTrigger";
 
 export default {
 
@@ -54,7 +51,7 @@ export default {
     },
     mounted() {
 
-        animatedSecurityView()
+        // animatedSecurityView()
     }
 
 
@@ -165,6 +162,7 @@ export default {
                 font-weight: 400;
                 line-height: 110%;
             }
+
             &__text-two {
                 color: rgba(245, 250, 255, 0.70);
                 text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
@@ -175,6 +173,7 @@ export default {
                 line-height: 110%;
                 opacity: 0;
             }
+
             &__text-three {
                 color: rgba(245, 250, 255, 0.70);
                 text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
@@ -188,6 +187,7 @@ export default {
 
         }
     }
+
     &_stiky {
         position: relative;
         left: 0;

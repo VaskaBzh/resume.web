@@ -31,9 +31,7 @@ export default {
     line-height: 120%;
     text-transform: uppercase;
     border-radius: 40px;
-}
-
-.button-full {
+    max-width: 860px;
     width: 100%;
 }
 

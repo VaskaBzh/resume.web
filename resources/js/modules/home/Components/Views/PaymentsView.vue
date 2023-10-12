@@ -1,39 +1,37 @@
 <template>
-	<div class="payments-view">
-	    <div class="payments-view__container">
-	        <head-line class="payments-view_title">{{ $t("payments.button") }}</head-line>
-	        <div class="payments-view__items">
-	            <div class="payments-view__item payments-view__item-one " @click="isOpen = !isOpen">
-	                <div class="payments-view__item_title">{{ $t("payments.title[0]") }}</div>
-	                <div class="payments-view__item_info">fPPS+</div>
-	                <div class="payments-view__item_text" :class="{opened: isOpen}">{{ $t("payments.text[0]") }}</div>
-	            </div>
-	            <div class="payments-view__item payments-view__item-two">
-	                <div class="payments-view__item_title">{{ $t("payments.title[1]") }}</div>
-	                <div class="payments-view__item_info"><span>(msk)</span> 12:00-13:00</div>
-	                <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
-	            </div>
-	            <div class="payments-view__item payments-view__item-three">
-	                <div class="payments-view__item_title">{{ $t("payments.title[2]") }}</div>
-	                <div class="payments-view__item_info">0.8 BTC</div>
-	                <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
-	            </div>
-	        </div>
-	    </div>
-	</div>
+    <div class="payments-view">
+        <div class="payments-view__container">
+            <head-line class="payments-view_title">{{ $t("payments.button") }}</head-line>
+            <div class="payments-view__items">
+                <div class="payments-view__item payments-view__item-one " @click="isOpen = !isOpen">
+                    <div class="payments-view__item_title">{{ $t("payments.title[0]") }}</div>
+                    <div class="payments-view__item_info">fPPS+</div>
+                    <div class="payments-view__item_text" :class="{opened: isOpen}">{{ $t("payments.text[0]") }}</div>
+                </div>
+                <div class="payments-view__item payments-view__item-two">
+                    <div class="payments-view__item_title">{{ $t("payments.title[1]") }}</div>
+                    <div class="payments-view__item_info"><span>(msk)</span> 12:00-13:00</div>
+                    <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
+                </div>
+                <div class="payments-view__item payments-view__item-three">
+                    <div class="payments-view__item_title">{{ $t("payments.title[2]") }}</div>
+                    <div class="payments-view__item_info">0.8 BTC</div>
+                    <div class="payments-view__item_text">{{ $t("payments.text[0]") }}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </template>
-
 
 
 <script>
 import HeadLine from "@/modules/common/Components/UI/HeadLine.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
-import { animatePayView } from "@/modules/home/Services/AnimatePaymentsView";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "payments-view",
     components: {
-		HeadLine
+        HeadLine
     },
     i18n: {
         sharedMessages: HomeMessage,
@@ -45,7 +43,7 @@ export default {
     },
 
     mounted() {
-        animatePayView()
+        // animatePayView()
     }
 
 }
@@ -136,7 +134,6 @@ export default {
         &:nth-child(3) &_info {
             color: #F39C19;
         }
-
 
 
         &_text {

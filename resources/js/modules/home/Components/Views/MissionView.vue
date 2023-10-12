@@ -1,34 +1,32 @@
 <template>
-<div class="mission-view">
-    <div class="mission-view__container">
-        <head-line class="mission-view_btn">{{ $t("main.button") }}</head-line>
-        <div class="mission-view_items">
-            <div class="mission-view_item">
-                <h3 class="mission-view_item_transparent-one">{{ $t("main.title[0]") }}</h3>
-                <h3 class="mission-view_item_title">{{ $t("main.title[0]") }}</h3>
-                <p class="mission-view_item_text">{{ $t("main.text[0]") }}</p>
-            </div>
-            <div class="mission-view_item">
-                <h3 class="mission-view_item_transparent-two">{{ $t("main.title[1]") }}</h3>
-                <h3 class="mission-view_item_title-two">{{ $t("main.title[1]") }}</h3>
-                <p class="mission-view_item_text-two">{{ $t("main.text[1]") }}.</p>
-            </div>
-            <div class="mission-view_item">
-                <h3 class="mission-view_item_transparent-three">{{ $t("main.title[2]") }}</h3>
-                <h3 class="mission-view_item_title-three">{{ $t("main.title[2]") }}</h3>
-                <p class="mission-view_item_text-three">{{ $t("main.text[2]") }}</p>
+    <div class="mission-view">
+        <div class="mission-view__container">
+            <head-line class="mission-view_btn">{{ $t("main.button") }}</head-line>
+            <div class="mission-view_items">
+                <div class="mission-view_item">
+                    <h3 class="mission-view_item_transparent-one">{{ $t("main.title[0]") }}</h3>
+                    <h3 class="mission-view_item_title">{{ $t("main.title[0]") }}</h3>
+                    <p class="mission-view_item_text">{{ $t("main.text[0]") }}</p>
+                </div>
+                <div class="mission-view_item">
+                    <h3 class="mission-view_item_transparent-two">{{ $t("main.title[1]") }}</h3>
+                    <h3 class="mission-view_item_title-two">{{ $t("main.title[1]") }}</h3>
+                    <p class="mission-view_item_text-two">{{ $t("main.text[1]") }}.</p>
+                </div>
+                <div class="mission-view_item">
+                    <h3 class="mission-view_item_transparent-three">{{ $t("main.title[2]") }}</h3>
+                    <h3 class="mission-view_item_title-three">{{ $t("main.title[2]") }}</h3>
+                    <p class="mission-view_item_text-three">{{ $t("main.text[2]") }}</p>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </template>
-
 
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
-import {animateMissionView} from "../../Services/AnimteMissionView";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "MissionView",
@@ -37,11 +35,10 @@ export default {
         sharedMessages: HomeMessage,
     },
     mounted() {
-        animateMissionView()
+        // animateMissionView()
     }
 }
 </script>
-
 
 
 <style scoped lang="scss">
@@ -98,7 +95,7 @@ export default {
         &_transparent-two {
             -webkit-text-fill-color: transparent;
             -webkit-background-clip: text;
-            -webkit-text-stroke: 0.5px rgb(255,255,255, 0.5);
+            -webkit-text-stroke: 0.5px rgb(255, 255, 255, 0.5);
             color: transparent;
             text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
             font-family: Unbounded, serif;
@@ -117,7 +114,7 @@ export default {
         &_transparent-three {
             -webkit-text-fill-color: transparent;
             -webkit-background-clip: text;
-            -webkit-text-stroke: 0.5px rgb(255,255,255, 0.5);
+            -webkit-text-stroke: 0.5px rgb(255, 255, 255, 0.5);
             color: transparent;
             text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
             font-family: Unbounded, serif;
@@ -145,6 +142,7 @@ export default {
             width: 50%;
 
         }
+
         &_title-two {
             color: #f5faff;
             text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
@@ -156,6 +154,7 @@ export default {
             text-transform: uppercase;
             width: 50%;
         }
+
         &_title-three {
             color: #F5FAFF;
             text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);

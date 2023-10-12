@@ -1,16 +1,15 @@
 <template>
-  <header-component/>
-  <main class="main-hosting">
-    <div class="main-hosting__container">
-      <article class="article-hosting first-text">
-        <div class="hosting-content">
-          <span class="text-on">{{ $t("title[0]") }}</span>
-          <span class="text-fifty">{{ $t("title[1]") }} <br></span>
-          <span class="text-increase">{{ $t("title[2]") }} <br></span>
-          <span class="text-income">{{ $t("title[3]") }} <br></span>
-          <span class="text-cvt">{{ $t("title[4]") }}</span>
-        </div>
-        <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
+    <header-component/>
+    <main class="main-hosting">
+        <article class="article-hosting first-text">
+            <div class="hosting-content">
+                <span class="text-on">{{ $t("title[0]") }}</span>
+                <span class="text-fifty">{{ $t("title[1]") }} <br></span>
+                <span class="text-increase">{{ $t("title[2]") }} <br></span>
+                <span class="text-income">{{ $t("title[3]") }} <br></span>
+                <span class="text-cvt">{{ $t("title[4]") }}</span>
+            </div>
+            <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
 
       </article>
       <article class="article-hosting test-color second-text">
@@ -433,5 +432,60 @@ export default {
   .footer-hosting {
     padding: 40px 16px;
   }
+@media(max-width: 450px){
+    .hosting-content{
+        font-size: 22px;
+        width: 244px;
+        height: auto;
+    }
+    .text-fifty{
+        font-size: 60px;
+    }
+    .get-consultation{
+        width: 90vw;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        margin-top: 70px;
+        line-height: 120%; /* 14.4px */
+    }
+    .black-block{
+        gap: 40px;
+    }
+    .how-are-we{
+        font-size: 12px;
+        padding: 8px 10px;
+    }
+    .second-text{
+        gap: 50px;
+    }
+    .offer-content{
+        font-size: 22px;
+        padding: 0 16px;
+        margin-top: 30px;
+    }
+    .text-offer-column{
+        margin-left: 75px;
+    }
+    .offer-card-container{
+        flex-direction: column;
+    }
+    .offer-card{
+        width: 328px;
+        padding: 20px;
+    }
+    .offer-title{
+        font-size: 14px;
+    }
+    .offer-text{
+        font-size: 14px;
+        width: auto;
+    }
+    .third-text{
+        gap: 50px;
+    }
+    .footer-hosting{
+        padding: 40px 16px;
+    }
 }
 </style>

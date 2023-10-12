@@ -1,83 +1,138 @@
 <template>
-<div class="about about-view scroll-section">
-    <head-line class="about_title">{{ $t("who_we_are.button") }}</head-line>
-    <div class="about__wrapper">
-        <div class="about__inner">
-            <div class="about__inner_wrap">
-                <div class="about_item">
-                    <h2 class="about_item_title">{{ $t("who_we_are.card_private.title[0]") }}</h2>
-                    <div class="about_item_cards">
-                        <div class="about_item_card">
-                            <div class="about_item_card_num">7</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[0]") }}</div>
+    <div class="about about-view scroll-section">
+        <landing-headline>{{ $t("who_we_are.button") }}</landing-headline>
+        <div class="about__wrapper bg">
+            <div class="about__inner">
+                <div class="about__inner_wrap">
+                    <div class="about_item">
+                        <landing-title tag="h2" class="about_item_title">
+                            {{ $t("who_we_are.card_private.title[0]") }}
+                        </landing-title>
+                        <div class="about_item_cards">
+                            <about-info
+                                title="7"
+                                :text="$t('who_we_are.card_private.text[0]')"
+                            />
+                            <about-info
+                                title="1.7"
+                                :text="$t('who_we_are.card_private.text[1]')"
+                            />
+                            <about-info
+                                title="30"
+                                :text="$t('who_we_are.card_private.text[2]')"
+                            />
+                            <about-info
+                                :prefix="$t('who_we_are.card_private.text[3]')"
+                                title="50%"
+                                :text="$t('who_we_are.card_private.text[4]')"
+                                hint="При больших мощностях вы можете получить персональную сниженную комиссию"
+                            />
+                            <!--                            <div class="about_item_card">-->
+                            <!--                                <div class="about_item_card_num">7</div>-->
+                            <!--                                <div class="about_item_card_description">-->
+                            <!--                                    {{ $t("who_we_are.card_private.text[0]") }}-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="about_item_card">-->
+                            <!--                                <div class="about_item_card_num">1.7</div>-->
+                            <!--                                <div class="about_item_card_description">-->
+                            <!--                                    {{ $t("who_we_are.card_private.text[1]") }}-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="about_item_card">-->
+                            <!--                                <div class="about_item_card_num">30</div>-->
+                            <!--                                <div class="about_item_card_description">-->
+                            <!--                                    {{ $t("who_we_are.card_private.text[2]") }}-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
+                            <!--                            <div class="about_item_card">-->
+                            <!--                                <div class="about_item_card_num">-->
+                            <!--                                    <span>{{-->
+                            <!--                                            $t("who_we_are.card_private.text[3]")-->
+                            <!--                                        }}</span-->
+                            <!--                                    >75%-->
+                            <!--                                </div>-->
+                            <!--                                <div class="about_item_card_description">-->
+                            <!--                                    {{ $t("who_we_are.card_private.text[4]") }}-->
+                            <!--                                </div>-->
+                            <!--                            </div>-->
                         </div>
-                        <div class="about_item_card">
-                            <div class="about_item_card_num">1.7</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[1]") }}</div>
-                        </div>
-                        <div class="about_item_card">
-                            <div class="about_item_card_num">30</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[2]") }}</div>
-                        </div>
-                        <div class="about_item_card">
-                            <div class="about_item_card_num"><span>{{ $t("who_we_are.card_private.text[3]") }}</span>75%</div>
-                            <div class="about_item_card_description">{{ $t("who_we_are.card_private.text[4]") }}</div>
-                        </div>
+                        <!--                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>-->
                     </div>
-                    <!--                <button-blue class="about_link">{{ $t("who_we_are.card_private.button") }}</button-blue>-->
                 </div>
+                <!--                <div class="about__inner_wrap">-->
+                <!--                    <div class="about_item">-->
+                <!--                        <h2 class="about_item_title-two">-->
+                <!--                            {{ $t("who_we_are.card_community.title[0]") }}-->
+                <!--                        </h2>-->
+                <!--                        <div class="about_item_cards">-->
+                <!--                            <div class="about_item_card-two">-->
+                <!--                                <div class="about_item_card_num">№1</div>-->
+                <!--                                <div class="about_item_card_description">-->
+                <!--                                    {{-->
+                <!--                                        $t("who_we_are.card_community.text[0]")-->
+                <!--                                    }}-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                            <div class="about_item_card-two">-->
+                <!--                                <div class="about_item_card_num">24/7</div>-->
+                <!--                                <div class="about_item_card_description">-->
+                <!--                                    {{-->
+                <!--                                        $t("who_we_are.card_community.text[1]")-->
+                <!--                                    }}-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                            <div class="about_item_card-two">-->
+                <!--                                <div class="about_item_card_num">1</div>-->
+                <!--                                <div class="about_item_card_description">-->
+                <!--                                    {{-->
+                <!--                                        $t("who_we_are.card_community.text[2]")-->
+                <!--                                    }}-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                            <div class="about_item_card-two">-->
+                <!--                                <div class="about_item_card_num">4%</div>-->
+                <!--                                <div class="about_item_card_description">-->
+                <!--                                    {{-->
+                <!--                                        $t("who_we_are.card_community.text[3]")-->
+                <!--                                    }}-->
+                <!--                                </div>-->
+                <!--                            </div>-->
+                <!--                        </div>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
-           <div class="about__inner_wrap">
-               <div class="about_item">
-                   <h2 class="about_item_title-two">{{ $t("who_we_are.card_community.title[0]") }}</h2>
-                   <div class="about_item_cards">
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">№1</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[0]") }}</div>
-                       </div>
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">24/7</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[1]") }}</div>
-                       </div>
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">1</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[2]") }}</div>
-                       </div>
-                       <div class="about_item_card-two">
-                           <div class="about_item_card_num">4%</div>
-                           <div class="about_item_card_description">{{ $t("who_we_are.card_community.text[3]") }}</div>
-                       </div>
-                   </div>
-               </div>
-           </div>
-
+            <div class="about_stiky">
+                <div class="about_stiky_block"></div>
+            </div>
+            <button-blue class="about_link"
+            >{{ $t("who_we_are.card_community.button[0]") }}
+            </button-blue>
         </div>
-        <div class="about_stiky">
-            <div class="about_stiky_block"></div>
-        </div>
-       <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
-    </div>
 
-        <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
+        <button-blue class="about_btn"
+        >{{ $t("who_we_are.card_private.button[1]") }}
+        </button-blue>
     </div>
 </template>
 
 <script>
-import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
-import {scrollingAbout} from "../../Services/AboutScroll";
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
+import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
+import AboutInfo from "../blocks/AboutInfo.vue";
 
 export default {
     name: "WhoWeAre",
-    components: {HeadLine, ButtonBlue},
+    components: {AboutInfo, LandingTitle, LandingHeadline, ButtonBlue},
     i18n: {
         sharedMessages: HomeMessage,
     },
     mounted() {
-        scrollingAbout()
-    }
-}
+        // scrollingAbout();
+    },
+};
 </script>
 
 <style scoped lang="scss">
@@ -89,8 +144,6 @@ export default {
     flex-flow: column nowrap;
     gap: 30px;
     padding: 100px 0 186px;
-    background: #1c293e;
-
 
     &__wrapper {
         position: relative;
@@ -114,10 +167,7 @@ export default {
             align-items: center;
             justify-content: center;
             position: absolute;
-
         }
-
-
     }
 
     &_item {
@@ -131,9 +181,8 @@ export default {
         z-index: 99;
         position: relative;
 
-
         &_title {
-            color: #F5FAFF;
+            color: #f5faff;
             font-family: Unbounded, serif;
             font-size: clamp(14px, 5vw, 65px);
             font-style: normal;
@@ -144,7 +193,7 @@ export default {
         }
 
         &_title-two {
-            color: #F5FAFF;
+            color: #f5faff;
             font-family: Unbounded, serif;
             font-size: clamp(14px, 5vw, 65px);
             font-style: normal;
@@ -161,7 +210,6 @@ export default {
             align-items: flex-start;
             justify-content: center;
             gap: 50px;
-
         }
 
         &_card {
@@ -169,7 +217,7 @@ export default {
             flex-flow: column nowrap;
 
             &_num {
-                color: #D0D5DD;
+                color: #d0d5dd;
                 font-family: Unbounded, serif;
                 font-size: 75px;
                 font-style: normal;
@@ -183,7 +231,7 @@ export default {
                     font-style: normal;
                     font-weight: 400;
                     line-height: 110%;
-                    color: rgba(208, 213, 221, 0.60);
+                    color: rgba(208, 213, 221, 0.6);
                 }
             }
 
@@ -193,7 +241,7 @@ export default {
                 font-style: normal;
                 font-weight: 400;
                 line-height: 110%;
-                color: rgba(208, 213, 221, 0.60);
+                color: rgba(208, 213, 221, 0.6);
             }
         }
 
@@ -202,7 +250,7 @@ export default {
             flex-flow: column nowrap;
 
             &_num {
-                color: #D0D5DD;
+                color: #d0d5dd;
                 font-family: Unbounded, serif;
                 font-size: 75px;
                 font-style: normal;
@@ -216,7 +264,7 @@ export default {
                     font-style: normal;
                     font-weight: 400;
                     line-height: 110%;
-                    color: rgba(208, 213, 221, 0.60);
+                    color: rgba(208, 213, 221, 0.6);
                 }
             }
 
@@ -226,7 +274,7 @@ export default {
                 font-style: normal;
                 font-weight: 400;
                 line-height: 110%;
-                color: rgba(208, 213, 221, 0.60);
+                color: rgba(208, 213, 221, 0.6);
             }
         }
     }
@@ -254,6 +302,5 @@ export default {
             backdrop-filter: blur(10px);
         }
     }
-
 }
 </style>
