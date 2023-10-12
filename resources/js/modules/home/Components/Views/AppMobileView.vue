@@ -35,16 +35,16 @@
                         <div class="mobile-view_image active">
                             <img src="../../../../../assets/img/iphone-14-screen1.png" alt="">
                         </div>
-                        <div class="mobile-view_image" >
+                        <div class="mobile-view_image">
                             <img src="../../../../../assets/img/iphone-14-sreen2.png.png" alt="">
                         </div>
-                        <div class="mobile-view_image" >
+                        <div class="mobile-view_image">
                             <img src="../../../../../assets/img/iphone-14-screen3.png" alt="">
                         </div>
-                        <div class="mobile-view_image" >
+                        <div class="mobile-view_image">
                             <img src="../../../../../assets/img/iphone-14-screen4.png" alt="">
                         </div>
-                        <div class="mobile-view_image" >
+                        <div class="mobile-view_image">
                             <img src="../../../../../assets/img/iphone-14-screen1.png" alt="">
                         </div>
                     </div>
@@ -65,8 +65,7 @@
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import {slideMobileView} from "../../Services/LandSlideAnime";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "AppMobileView",
@@ -75,7 +74,7 @@ export default {
         sharedMessages: HomeMessage,
     },
     mounted() {
-        slideMobileView()
+        // slideMobileView()
     }
 }
 </script>
@@ -112,6 +111,7 @@ export default {
         align-self: center;
         width: 25%;
     }
+
     &__content {
         height: 875px;
         position: relative;

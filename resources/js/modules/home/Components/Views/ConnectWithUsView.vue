@@ -22,8 +22,7 @@
 
 <script>
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import {run} from "../../Services/RunString";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "ConnectWithUsView",
@@ -32,7 +31,7 @@ export default {
         sharedMessages: HomeMessage,
     },
     mounted() {
-        run()
+        // run()
     }
 }
 </script>
@@ -49,8 +48,12 @@ export default {
     animation: scroll 5s linear 1s infinite;;
 
     @keyframes scroll {
-        0% { transform: translateX(-100%); }
-        100% { transform: translateX(100%); }
+        0% {
+            transform: translateX(-100%);
+        }
+        100% {
+            transform: translateX(100%);
+        }
     }
 
     &_text {

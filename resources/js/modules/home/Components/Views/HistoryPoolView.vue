@@ -24,7 +24,8 @@
                     <h3 class="history-pool__item-info-year">2019</h3>
                     <p class="history-pool__item-info-discription">Создаем площадки под
                         размещение дата-центов, хостингов и майнинг-отелей.
-                        Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до введения фермы
+                        Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до
+                        введения фермы
                         в эксплуатацию.</p>
                 </div>
                 <div class="history-pool__item-info">
@@ -42,7 +43,8 @@
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2022</h3>
-                    <p class="history-pool__item-info-discription">Официально зарегистрировали пул для майнинга криптовалют.
+                    <p class="history-pool__item-info-discription">Официально зарегистрировали пул для майнинга
+                        криптовалют.
                         К системе подключились первые дата-центры. На 50% увеличили их прибыль
                         за каждый потраченный киловатт энергии.</p>
                 </div>
@@ -60,13 +62,12 @@
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
-import {animeteHistoryView} from "../../Services/AnimateHistoryView";
 
 export default {
     name: "HistoryPoolView",
     components: {HeadLine},
     mounted() {
-        animeteHistoryView()
+        // animeteHistoryView()
     }
 }
 </script>
@@ -100,6 +101,7 @@ export default {
         &-block {
             width: 310px;
         }
+
         &_cycle {
             width: 20px;
             height: 20px;

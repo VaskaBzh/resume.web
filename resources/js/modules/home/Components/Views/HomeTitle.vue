@@ -1,6 +1,6 @@
 <template>
     <div class="header-land">
-        <div class="header-land_title">
+        <landing-title tag="h1" class="header-land_title">
             <div class="header-land__block">
                 <span class="header-land_title_expert-one">{{
                         $t("title[0]")
@@ -26,35 +26,35 @@
             <div class="header-land__block-four">
                 <span class="header-land_title_text">
                     <span class="header-land_title_btc">Bitcoin</span>
-                    <span class="header-land_title_span">
-                        {{ $t("text") }}
-                    </span>
+                    <landing-text tag="span" class="header-land_title_span">{{
+                            $t("text")
+                        }}</landing-text>
                 </span>
             </div>
-        </div>
-        <!--        header_button button-full-->
-        <!--        <landing-button class="header-land_btn">-->
-        <!--            <template v-slot:text>{{ $t("button") }}</template>-->
-        <!--        </landing-button>-->
+        </landing-title>
 
-        <button-blue class="header-land_btn">{{ $t("button") }}</button-blue>
+        <landing-button class="header-land_btn header_button button-full">
+            <template v-slot:text>{{ $t("button") }}</template>
+        </landing-button>
+        <!--        <button-blue class="header-land_btn">{{ $t("button") }}</button-blue>-->
     </div>
 </template>
 
 <script>
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
-import {scroolingHeader} from "../../Services/ScrollAnime";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import ButtonBlue from "@/modules/common/Components/UI/ButtonBlue.vue";
+import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 
 export default {
     name: "home-title",
-    components: {LandingButton, ButtonBlue},
+    components: {LandingText, LandingTitle, LandingButton, ButtonBlue},
     i18n: {
         sharedMessages: HomeMessage,
     },
     mounted() {
-        scroolingHeader();
+        // scroolingHeader();
     },
 };
 </script>
@@ -62,31 +62,28 @@ export default {
 <style scoped lang="scss">
 .header {
     &_button {
-        max-width: 820px;
+        max-width: 860px;
     }
 
     &-land {
-        width: 100vw;
-        height: 100vh;
         display: flex;
-        align-items: center;
         justify-content: center;
         background: transparent;
-        position: relative;
+        flex-direction: column;
         min-height: 400px;
+        height: 100vh;
+        gap: 50px;
+        max-width: 1060px;
+        width: 100%;
+        padding: 0 100px;
+        margin: 0 auto;
+        @media (max-width: 991.98px) {
+            padding: 0 32px;
+        }
 
         &_title {
-            color: #f5faff;
             display: flex;
             flex-flow: column nowrap;
-            position: absolute;
-            text-shadow: 0px 4.897561073303223px 8.570732116699219px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 120%;
-            text-transform: uppercase;
             max-width: 965px;
 
             &_expert-one,
@@ -97,7 +94,7 @@ export default {
             &_text,
             &_span {
                 display: flex;
-                opacity: 0;
+                //opacity: 0;
             }
 
             &_text {
@@ -107,22 +104,16 @@ export default {
 
             &_span {
                 display: flex;
-                font-family: NunitoSans, serif;
-                color: rgba(245, 250, 255, 0.7);
-                text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-                font-size: 20px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: 110%;
                 padding-left: 10px;
                 align-self: center;
+                min-width: 406px;
             }
         }
 
         &__block,
         &__block-two,
         &__block-three,
-        &__block-four {
+        &_title-btc {
             display: flex;
             flex-flow: row nowrap;
             overflow: hidden;
