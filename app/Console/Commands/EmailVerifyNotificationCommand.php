@@ -15,26 +15,19 @@ class EmailVerifyNotificationCommand extends Command
 
     public function handle(): void
     {
-        while (true) {
-            $email = $this->ask(question: 'To which user would you like to send verification email?');
-            $user = User::where('email', $email)
-                ->first();
+        $email = $this->ask(question: 'To which user would you like to send verification email?');
+        $user = User::where('email', $email)
+            ->firstOrFail();
 
-            if ($user) {
-                if ($user->hasVerifiedEmail()) {
-                    $this->error('ERROR: This user already verified!');
+        if ($user->hasVerifiedEmail()) {
+            $this->error('ERROR: This user already verified!');
 
-                    break;
-                }
-
-                $user->sendEmailVerificationNotification();
-
-                $this->info('email send to ' . $user->email . '!');
-
-                break;
-            } else {
-                $this->error('ERROR: USER NOT FOUND');
-            }
+            die();
         }
+
+        $user->sendEmailVerificationNotification();
+
+        $this->info('email send to ' . $user->email . '!');
     }
+
 }

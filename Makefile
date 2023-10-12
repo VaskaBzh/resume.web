@@ -56,3 +56,5 @@ income:
 	$(ARTISAN) income
 role:
 	$(ARTISAN) give:role
+percent:
+	$(ARTISAN) set:percent
