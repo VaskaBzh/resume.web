@@ -181,13 +181,23 @@ li{
     width: 100%;
   }
   .footer-title{
-    width: 100%;
-    margin-bottom: 50px;
+    width: 30%;
+    min-width: 229px;
+    margin: 0 auto 50px;
   }
 }
 @media(max-width:858px){
   .allbtc-pool{
     font-size: 80px;
+  }
+}
+
+@media (max-width: 650px) {
+  .footer-inf {
+    width: 100%;
+    justify-content: space-between;
+    flex-flow: column nowrap;
+    gap: 30px;
   }
 }
 @media(max-width: 450px){

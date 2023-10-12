@@ -33,6 +33,8 @@ export default {
     transition: all 0.3s linear;
 }
 .connect-with-us{
+  width: 50%;
+  text-align: center;
   color: var(--gray-3100, #D0D5DD);
   font-family: Unbounded;
   font-size: 16px;
@@ -139,6 +141,11 @@ export default {
   text-transform: uppercase;
   width: 195px;
 }
+@media (min-width: 768px) {
+  .card-connect{
+    padding-left: 90px;
+  }
+}
 @media(max-width: 768px){
   .card-title{
     font-size: 24px;
@@ -165,6 +172,8 @@ export default {
     width: 49%;
   }
   .connect-with-us{
+    width: 50%;
+    text-align: center;
     font-size: 14px;
   }
 }

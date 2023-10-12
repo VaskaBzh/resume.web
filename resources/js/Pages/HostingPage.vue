@@ -172,7 +172,6 @@ export default {
 
 .offer-card-container {
   display: flex;
-  align-items: center;
   justify-content: flex-end;
   width: 100%;
   margin-right: 137px;
@@ -231,7 +230,6 @@ export default {
 
 .article-hosting {
   height: 120vh;
-  margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -278,9 +276,8 @@ export default {
   color: var(--gray-1100, #F5FAFF);
   border-radius: 40px;
   border: 1px solid rgba(192, 228, 255, 0.60);
-  width: 607px;
   background: var(--gray-480, rgba(13, 13, 13, 0.80));
-  font-family: Unbounded;
+  font-family: Unbounded, serif;
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
@@ -302,6 +299,7 @@ export default {
 }
 
 .article-work-with-us {
+  width: 100vw;
   border-radius: 70px;
   background: linear-gradient(165deg, #002195 8.98%, #007AF3 122.43%);
   box-shadow: -5px 4px 15px 10px rgba(9, 36, 68, 0.10);
@@ -315,7 +313,8 @@ export default {
   border-bottom: 1px solid #585757;
   background: var(--gray-4100, #0D0D0D);
   box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-  /* margin-top: -120px; */
+  margin-top: -120px;
+  width: 100vw;
 }
 
 .footer-hosting {
@@ -361,8 +360,26 @@ export default {
   }
 
   .get-consultation {
-    width: 400px;
+    width: 80%;
   }
+
+  .second-text{
+    width: 85%;
+    gap: 50px;
+  }
+
+  .offer-card-container {
+    margin-right: 0px;
+    justify-content: center;
+    align-items: center;
+    flex-flow: column nowrap;
+  }
+
+  .black-block {
+    width: 100vw;
+    margin-top: -100px;
+  }
+
 }
 
 @media (max-width: 450px) {

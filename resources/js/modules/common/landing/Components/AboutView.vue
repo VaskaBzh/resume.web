@@ -2,7 +2,7 @@
       <div class="who-are-we">{{ $t("who_are_we.button") }}</div>
       <div class="hosting-content who-we-are-content">
           <p class="who-we-are-text">
-              {{ title[0] }} <br>  
+              {{ title[0] }} <br>
               {{ title[1] }} <br>
               {{ title[2] }} <br v-if="title.length > 3">
               {{ title[3] }} <br v-if="title.length > 3">
@@ -23,7 +23,7 @@
                    </div>
 
                </div>
-  
+
           </div>
       </div>
 </template>
@@ -208,6 +208,26 @@ export default {
     .item-content{
         gap: 70px;
     }
+}
+
+@media (max-width: 650px) {
+  .facts-container{
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .fact-item{
+    border-top: .5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
+    border-left: none;
+    padding: 20px 0 44px 0;
+    display: flex;
+    width: 100%;
+    justify-content: center;
+  }
+  .fact-item:last-child{
+    border-right: none;
+    padding: 20px 0 44px 0;
+  }
 }
 @media(max-width: 450px){
     .hosting-content{
