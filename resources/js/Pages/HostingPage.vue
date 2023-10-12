@@ -173,7 +173,7 @@ export default {
 .offer-card-container {
   display: flex;
   justify-content: flex-end;
-  width: 100%;
+  width: 100vw;
   margin-right: 137px;
   gap: 20px;
 }

@@ -192,7 +192,7 @@ li{
   }
 }
 
-@media (max-width: 650px) {
+@media (max-width: 670px) {
   .footer-inf {
     width: 100%;
     justify-content: space-between;
