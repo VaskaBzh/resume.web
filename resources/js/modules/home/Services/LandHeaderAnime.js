@@ -31,8 +31,8 @@ export function animateHeader() {
         opacity: 1,
         yPercent: 110,
         duration: 1.2,
-        callbackScope: function onComplete () {
-            tl.fromTo([elemExpertOne, elemMiningOne], {opacity: 0},{
+        callbackScope: function onComplete() {
+            tl.fromTo([elemExpertOne, elemMiningOne], {opacity: 0}, {
                 opacity: 0,
                 yPercent: -100
             })
@@ -46,7 +46,7 @@ export function animateHeader() {
         opacity: 1,
         yPercent: 0,
         duration: 1.2,
-    },'my-label')
+    }, 'my-label')
 
     tl.fromTo([elemExpertTwo, elemMiningTwo, elemApproach], {opacity: 0, yPercent: 100}, {
         opacity: 1,

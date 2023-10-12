@@ -1,8 +1,9 @@
 <template>
     <div class="card">
         <main-title tag="h3" class="card_title title-mobile">{{
-            $t("settings_card.title")
-        }}</main-title>
+                $t("settings_card.title")
+            }}
+        </main-title>
         <div class="card__wrapper">
             <transition name="fade">
                 <div
@@ -15,7 +16,7 @@
                         alt="chose-watcher"
                     />
                     <main-description class="card_description"
-                        >{{ $t("default_text") }}
+                    >{{ $t("default_text") }}
                     </main-description>
                 </div>
                 <div class="card__content" v-else>
@@ -59,15 +60,20 @@
                             @click="buttonProcess"
                         >
                             <template v-slot:text>{{
-                                firstButtonText
-                            }}</template></main-button
+                                    firstButtonText
+                                }}
+                            </template>
+                        </main-button
                         >
                         <main-button
                             class="button-blue card_button"
                             @click="changeWatcher"
-                            ><template v-slot:text>{{
-                                secondButtonText
-                            }}</template></main-button
+                        >
+                            <template v-slot:text>{{
+                                    secondButtonText
+                                }}
+                            </template>
+                        </main-button
                         >
                     </div>
                 </div>
@@ -82,9 +88,9 @@ import MainDescription from "@/modules/common/Components/UI/MainDescription.vue"
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import { mapGetters } from "vuex";
-import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import {mapGetters} from "vuex";
+import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-card",
@@ -236,10 +242,12 @@ export default {
 .fade-leave-active {
     transition: all 0.5s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
 }
+
 .card {
     border-radius: 24px;
     background: var(--background-island);
@@ -249,14 +257,17 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .title-mobile {
     display: inline-block;
 }
-@media(max-width: 500px){
-    .title-mobile{
-    font-size: 19px;
+
+@media (max-width: 500px) {
+    .title-mobile {
+        font-size: 19px;
+    }
 }
-}
+
 .card__wrapper {
     position: relative;
     flex: 1 1 auto;
@@ -265,19 +276,23 @@ export default {
     display: flex;
     flex-direction: column;
 }
+
 .card_img {
     width: 240px;
     height: 240px;
 }
+
 .card_description {
     white-space: nowrap;
 }
+
 .card__content {
     display: flex;
     flex-direction: column;
     gap: 40px;
     flex: 1 1 auto;
 }
+
 .card__content-empty {
     align-items: center;
     justify-content: center;
@@ -287,9 +302,11 @@ export default {
     left: 50%;
     transform: translate(-50%, -50%);
 }
+
 .card_input {
     background: var(--background-island-inner-3);
 }
+
 .card_label {
     padding: 0 16px;
     color: var(--text-teritary);
@@ -299,6 +316,7 @@ export default {
     line-height: 20px;
     margin-bottom: 8px;
 }
+
 .card__block-selects {
     padding: 16px;
     display: flex;
@@ -308,12 +326,14 @@ export default {
     background: var(--background-island-inner-3);
     box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.01);
 }
+
 .card__buttons {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin-top: auto;
 }
+
 .card_button {
     min-height: 56px;
     width: 100%;

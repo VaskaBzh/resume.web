@@ -58,21 +58,22 @@
        <button-blue class="about_link">{{ $t("who_we_are.card_community.button[0]") }}</button-blue>
     </div>
 
-    <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
-</div>
+        <button-blue class="about_btn">{{ $t("who_we_are.card_private.button[1]") }}</button-blue>
+    </div>
 </template>
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import {scrollingAbout} from "../../Services/AboutScroll";
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 
 export default {
     name: "WhoWeAre",
-    components: {ButtonBlue, HeadLine},
+    components: {LandingHeadline, ButtonBlue},
     i18n: {
-            sharedMessages: HomeMessage,
+        sharedMessages: HomeMessage,
     },
     mounted() {
         scrollingAbout()
@@ -89,7 +90,7 @@ export default {
     flex-flow: column nowrap;
     gap: 30px;
     padding: 100px 0 186px;
-    background: #040d15;
+    background: #1c293e;
 
 
     &__wrapper {
@@ -130,7 +131,6 @@ export default {
         gap: 30px;
         z-index: 99;
         position: relative;
-
 
 
         &_title {
@@ -251,7 +251,7 @@ export default {
             border-radius: 40px;
             border-top: 2px solid #555353;
             border-bottom: 0.5px solid #555353;
-            background: rgba(13, 13, 13, 0.9);
+            background: rgba(13, 13, 13, 0.5);
             backdrop-filter: blur(10px);
         }
     }

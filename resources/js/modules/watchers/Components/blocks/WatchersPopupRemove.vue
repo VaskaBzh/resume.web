@@ -4,11 +4,13 @@
             <div class="watchers__column">
                 <div class="watchers__head">
                     <main-title tag="h3" class="watchers_title">{{
-                        $t("delete_card.title")
-                    }}</main-title>
+                            $t("delete_card.title")
+                        }}
+                    </main-title>
                     <main-description>{{
-                        $t("delete_card.text")
-                    }}</main-description>
+                            $t("delete_card.text")
+                        }}
+                    </main-description>
                 </div>
                 <div
                     class="watchers__card cabinet__block-card cabinet__block cabinet__block-light"
@@ -47,8 +49,8 @@
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
+import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
     name: "watchers-popup-remove",
@@ -90,36 +92,43 @@ export default {
 .watchers_title {
     margin-bottom: 4px;
 }
+
 .watchers__form {
     display: flex;
     flex-direction: column;
     gap: 80px;
     width: 100%;
 }
+
 .watchers__column {
     display: flex;
     flex-direction: column;
     gap: 40px;
 }
+
 .watchers__buttons {
     width: 100%;
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 16px;
 }
+
 .watchers_button {
     min-height: 56px;
 }
+
 .watchers_img {
     width: 72px;
     height: 72px;
 }
+
 .watchers__card {
     display: flex;
     align-items: center;
     gap: 16px;
     background: var(--background-modal-input, #ffffff);
 }
+
 .watchers_text {
     color: var(--text-secondary, #475467);
     font-family: Unbounded, serif;
