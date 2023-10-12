@@ -27,7 +27,6 @@ use App\Http\Controllers\Api\Worker\ListController as WorkerListController;
 use App\Http\Controllers\Api\Worker\ShowController as WorkerShowController;
 use App\Http\Controllers\Api\WorkerHashRateController;
 use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -73,13 +72,6 @@ Route::group([
 ], function () {
     Route::get('/user', UserController::class)->name('user.show');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
-
-    Route::group([
-        'prefix' => '2fac'
-    ], function () {
-        Route::put('enable/{user}', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-        Route::put('disable/{user}', [TwoFactorController::class, 'disable'])->name('2fa.verify');
-    });
 
     Route::group([
         'prefix' => 'subs',

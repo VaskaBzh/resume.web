@@ -37,7 +37,7 @@ class MakeHashesCommand extends Command
                 if (filled($btcSub)) {
                     $localSub = Sub::find($btcSub['gid']);
 
-                    if (!is_null($localSub)) {
+                    if (!is_null($localSub) && $btcSub['workers_active'] > 0) {
 
                         $progress->advance();
 

@@ -51,8 +51,6 @@ class BtcComService
                 ->client
                 ->$method(implode('/', $segments), $params);
 
-            Log::channel('btc_com')->info('BTC.COM RESPONSE', ['Response' => $response->json()]);
-
             if (filled($response['data'])) {
 
                 return $response['data'];

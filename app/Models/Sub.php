@@ -26,6 +26,7 @@ class Sub extends Model
         'pending_amount',
         'total_amount',
         'percent',
+        'custom_percent_expired_at'
     ];
 
     protected $casts = [

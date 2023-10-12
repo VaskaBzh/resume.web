@@ -8,7 +8,7 @@ use App\Http\Resources\UserResource;
 
 class UserController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): UserResource
     {
         return new UserResource(auth()->user());
     }

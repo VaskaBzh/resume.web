@@ -9,7 +9,9 @@ use App\Console\Commands\GiveRoleCommand;
 use App\Console\Commands\IncomeCommand;
 use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
+use App\Console\Commands\ObserveCustomPercentTimeCommand;
 use App\Console\Commands\PayoutCommand;
+use App\Console\Commands\SetSubCustomPercentCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use App\Console\Commands\UpdateMinerStatCommand;
@@ -24,6 +26,8 @@ class Kernel extends ConsoleKernel
         PayoutCommand::class,
         GiveRoleCommand::class,
         EmailVerifyNotificationCommand::class,
+        SetSubCustomPercentCommand::class,
+        ObserveCustomPercentTimeCommand::class,
     ];
 
     /**
@@ -36,6 +40,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('update:stats')->everyTwoHours();
         $schedule->command('sync:worker')->everyMinute();
         $schedule->command('make:worker-hashes')->everyFifteenMinutes();
+        $schedule->command('observe:custom-percent-time')->dailyAt('00:00');
     }
 
     /**
