@@ -5,16 +5,97 @@
   </div>
   <div class="system-card-img">
     <img src="../assets/img/Mockup-iphone.png" class="img-iphone img-system">
-    <img src="../assets/img/Mockup-mobile-app.png" class="img-support img-system">
+    <img src="../assets/img/status-bar.png" class="img-status-bar img-system">
+    <img :src="imgTabBar" class="img-tab-bar img-system">
+    <swiper
+      :slides-per-view="1"
+      :space-between="14"
+      :pagination="{
+          clickable: true,
+      }" 
+      :loop="true"
+      :modules="modules"
+      class="img-support img-system"
+      @slideChange="currentSlide"
+    >
+       <swiper-slide>
+         <img src="../assets/img/Mockup-mobile-app-home.png" class="img-content">         
+       </swiper-slide>
+       <swiper-slide>
+         <img src="../assets/img/Mockup-mobile-app-statistic.png" class="img-content">         
+       </swiper-slide>
+       <swiper-slide>
+         <img src="../assets/img/Mockup-mobile-app-income.png" class="img-content">         
+       </swiper-slide>
+       <swiper-slide>
+         <img src="../assets/img/Mockup-mobile-app-worker.png" class="img-content">         
+       </swiper-slide>
+       <swiper-slide>
+         <img src="../assets/img/Mockup-mobile-app-settings.png" class="img-content">         
+       </swiper-slide>
+    </swiper>
   </div>
 </template>
 <script>
+import { Swiper, SwiperSlide } from "swiper/vue";
+import "swiper/css";
+import "swiper/css/pagination";
+import { Pagination } from "swiper";
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
+  components: {
+        Swiper,
+        SwiperSlide,
+    },
   i18n: {
           sharedMessages: HostingMessage,
         },
+  data() {
+    return {
+      slide: 1,
+      tabBarName: 'home'
+    }
+  },
+  methods: {
+    currentSlide(e){
+      this.slide = e.activeIndex
+    }
+  },
+  watch: {
+     slide(newSlide) {
+          switch (newSlide) {
+            case 1:
+              this.tabBarName = 'home'
+              break;
+            case 2:
+              this.tabBarName = 'statistic'
+             break;         
+            case 3:
+              this.tabBarName = 'income'
+              break;
+            case 4:
+              this.tabBarName = 'worker'
+            break;
+            case 5:
+              this.tabBarName = 'settings'
+            break;
+          }
+        },
+    },
+    computed: {
+        imgTabBar() {
+            return new URL(
+                `/resources/js/modules/hosting/assets/img/Tab-bar-${this.tabBarName}.png`,
+                import.meta.url
+            );
+        },
+    },
+  setup() {
+    return {
+      modules: [Pagination],
+    };
+  },
 }
 </script>
 <style scoped>
@@ -42,6 +123,16 @@ export default {
   font-weight: 400;
   line-height: 110%; /* 19.8px */
 }
+.img-status-bar{
+  z-index: 2;
+  top: 24px;
+  left: 42px;
+}
+.img-tab-bar{
+  z-index: 2;
+  bottom: 20px;
+  left: 47px;
+}
 .system-card-img{
   position: relative;
   width: 408px;
@@ -51,11 +142,17 @@ export default {
   position: absolute;
 }
 .img-support{
-  left: 42px;
-  top: 12px;
+  left: 39px;
+    top: 24px;
+    height: auto;
+    width: 310px;
+    border: 1px solid rgba(255, 0, 0, 0);
+    border-radius: 30px;
+    margin: 0 10px;
 }
+
 .img-iphone{
-  z-index: 10;
+  /* z-index: 10; */
 }
 @media(max-width: 768px){
   .system-card-title{
@@ -78,9 +175,23 @@ export default {
   }
   .img-support {
     width: 224px;
-    height: 482px;
-    left: 29px;
+    left: 35px;
     top: 9px;
+    margin: auto;
+  }
+  .img-content{
+    width: 208px;
+    height: auto;
+  }
+  .img-status-bar{
+    width: 208px;
+    top: 13px;
+    left: 34px;
+  }
+  .img-tab-bar{
+    width: 208px;
+    bottom: 18px;
+    left: 36px;
   }
 }
 </style>

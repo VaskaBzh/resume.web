@@ -48,13 +48,13 @@ export default {
 
 @media (max-width: 991.98px) {
     .layout__container {
-        padding: 0 32px;
+        /* padding: 0 32px; */
     }
 }
 
 @media (max-width: 479.98px) {
     .layout__container {
-        padding: 0 16px;
+        /* padding: 0 16px; */
     }
 }
 </style>
