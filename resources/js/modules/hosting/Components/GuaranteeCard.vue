@@ -167,49 +167,42 @@ export default {
     width: 100%;
 }
 
-@media (max-width: 950px) {
-    .title-card {
-        font-size: 24px;
-    }
-
-    .guarantee-card {
-        width: 354px;
-        margin-bottom: 80px;
-        margin-top: 100px;
-    }
-
-    .card-row {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
-
-    .title-hosting {
-        text-align: inherit;
-        width: 100%;
-        font-size: 44px;
-    }
-
-    .accordion-button {
-        display: inline-block;
-        height: 30px;
-        align-self: center;
-    }
-
-    .guarantee-block {
-        padding: 0;
-    }
-
-    .text-system {
-        width: 590px;
-    }
-
-    .gray-line {
-        padding: 30px 32px;
-    }
-
-    .text-web {
-        display: none;
-    }
+@media(max-width:950px){
+  .title-card{
+    font-size: 24px;
+  }
+  .guarantee-card{
+    width: 354px;
+    margin-bottom: 80px;
+    margin-top: 100px;
+  }
+  .card-row{
+    flex-direction: column-reverse;
+    align-items: flex-start;
+  }
+  .title-hosting{
+    text-align:inherit;
+    width: 100%;
+    font-size: 44px;
+  }
+  .accordion-button{
+    display: inline-block;
+    height: 30px;
+    margin-top: 32px;
+    /* align-self: center; */
+  }
+  .guarantee-block{
+    padding: 0;
+  }
+  .text-system{
+    width: 590px;
+  }
+  .gray-line{
+    padding: 30px 32px;
+  }
+  .text-web{
+    display: none;
+  }
 }
 
 @media (max-width: 450px) {

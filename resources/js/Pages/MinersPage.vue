@@ -101,7 +101,7 @@ export default {
 }
 .article-miners{
     width: 100vw;
-    height: 120vh;
+    height: 100vh;
     margin: 0 auto;
     display: flex;
     align-items: center;
