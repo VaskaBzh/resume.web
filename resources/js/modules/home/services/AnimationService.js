@@ -40,14 +40,10 @@ export function upLeft() {
     timeline.add({
         targets: '.calculator_title_base .calculator_title_two .calculator_title_four',
         translateY: ['100%', '0%']
-    })
-}
-
-export function upRight() {
-    const timeline = anime.timeline(timelineConfig)
-
+    }, '+=1')
     timeline.add({
         targets: '.calculator_title_o .calculator_title_three',
         translateY: ['-100%', '0%']
-    })
+    }, '+=1')
 }
+
