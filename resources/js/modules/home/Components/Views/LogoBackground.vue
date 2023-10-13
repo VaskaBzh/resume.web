@@ -48,13 +48,26 @@ export default {
     display: inline-block;
 }
 
+.logo_elem svg {
+    width: 100%;
+    height: 100%;
+}
+
 .logo_elem-first {
-    width: clamp(1070px, 10vw, 324px);
+    width: clamp(324px, 34vw, 1070px);
+    height: clamp(106px, 12vw, 348px);
 }
 
 .logo_elem-last {
     margin-left: auto;
     margin-top: -46px;
-    width: clamp(778px, 10vw, 237px);
+    width: clamp(237px, 34vw, 778px);
+    height: clamp(106px, 12vw, 348px);
+}
+
+@media (max-width: 1300px) {
+    .logo_elem-last {
+        margin-top: 16px;
+    }
 }
 </style>

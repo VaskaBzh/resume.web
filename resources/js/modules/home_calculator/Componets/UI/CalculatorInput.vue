@@ -159,10 +159,14 @@ export default {
         }
     }
     &_unit {
-        color: var(--light-theme-gray-3, #818c99);
-        font-size: 18px;
+        color: var(--gray-160, rgba(245, 250, 255, 0.60));
+        text-align: justify;
+        text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
+        font-family: NunitoSans;
+        font-size: 20px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 135%;
+        line-height: 110%; /* 22px */
         position: relative;
         display: inline-flex;
         align-items: center;

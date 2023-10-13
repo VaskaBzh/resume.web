@@ -1,71 +1,76 @@
 <template>
     <div class="mission-view mission__section" ref="view">
-        <div class="mission-view__container">
-            <head-line class="mission-view_btn"
+        <div class="mission__content">
+            <landing-headline class="mission__headline"
             >{{ $t("main.button") }}
-            </head-line>
-            <div class="mission-view_items">
-                <div class="mission-view_item">
-                    <h3 class="mission-view_item_transparent-one">
-                        {{ $t("main.title[0]") }}
-                    </h3>
-                    <h3 class="mission-view_item_title">
-                        {{ $t("main.title[0]") }}
-                    </h3>
-                    <p class="mission-view_item_text">
-                        {{ $t("main.text[0]") }}
-                    </p>
-                </div>
-                <div class="mission-view_item">
-                    <h3 class="mission-view_item_transparent-two">
-                        {{ $t("main.title[1]") }}
-                    </h3>
-                    <h3 class="mission-view_item_title-two">
-                        {{ $t("main.title[1]") }}
-                    </h3>
-                    <p class="mission-view_item_text-two">
-                        {{ $t("main.text[1]") }}.
-                    </p>
-                </div>
-                <div class="mission-view_item">
-                    <h3 class="mission-view_item_transparent-three">
-                        {{ $t("main.title[2]") }}
-                    </h3>
-                    <h3 class="mission-view_item_title-three">
-                        {{ $t("main.title[2]") }}
-                    </h3>
-                    <p class="mission-view_item_text-three">
-                        {{ $t("main.text[2]") }}
-                    </p>
-                </div>
-            </div>
+            </landing-headline>
+            <landing-wrap
+                :title="$t('main.title[0]')"
+            >
+                <template v-slot:content>
+                    <landing-text>
+                        <div class="mission__cards animation-up animation-opacity">
+                            <p class="mission-view_item_text">
+                                {{ $t("main.text[0]") }}
+                            </p>
+                            <p class="mission-view_item_text-two">
+                                {{ $t("main.text[1]") }}.
+                            </p>
+                            <p class="mission-view_item_text-three">
+                                {{ $t("main.text[2]") }}
+                            </p>
+                        </div>
+                    </landing-text>
+                </template>
+            </landing-wrap>
         </div>
     </div>
 </template>
 
 <script>
-import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
+import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
+import LandingWrap from "@/modules/common/Components/blocks/LandingWrap.vue";
+import LandingText from "../../../common/Components/UI/LandingText.vue";
 
 export default {
     name: "MissionView",
-    components: {HeadLine},
+    components: {
+        LandingText,
+        LandingWrap,
+        LandingButton,
+        LandingTitle,
+        LandingHeadline,
+    },
     i18n: {
         sharedMessages: HomeMessage,
     },
     data() {
         return {
             validScroll: false,
+            startY: null,
+            touchY: null,
         };
     },
     props: {
         start: Boolean,
     },
     methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (this.startY
+                ? this.startY - this.touchY > 110
+                : e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -78,9 +83,11 @@ export default {
                     this.$emit("next");
                 }
             }
-            if (e.deltaY < -50) {
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -94,11 +101,27 @@ export default {
         scroll() {
             if (this.$refs.view) {
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
         remove() {
             if (this.$refs.view) {
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
     },
@@ -121,160 +144,36 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.mission-view {
-    height: 100vh;
-    display: flex;
-    flex-flow: column nowrap;
-    align-items: center;
-    justify-content: center;
+.mission {
+    width: 100%;
 
-    &_items {
-        width: 50vw;
-        height: 40vh;
-        border-radius: 40px;
-        border-top: 2px solid #555353;
-        border-bottom: 0.5px solid #555353;
-        background: rgba(13, 13, 13, 0.5);
-        backdrop-filter: blur(10px);
+    &__content {
+        width: 100%;
         display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        gap: 10px;
+        flex-direction: column;
+        align-items: center;
     }
 
-    &_item {
-        width: 115%;
+    &__headline {
+        @media (max-width: 1500.87px) {
+            margin-bottom: 160px;
+        }
+        @media (max-width: 991.87px) {
+            margin-bottom: 135px;
+        }
+    }
+
+    &__wrapper {
         display: flex;
-        flex-flow: row nowrap;
+        flex-direction: column;
+        width: 100%;
         align-items: center;
-        justify-content: space-between;
-        overflow: hidden;
-        position: relative;
-        left: -327px;
-        top: 0;
+    }
 
-        &_transparent-one {
-            color: #f5faff;
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 100%;
-            text-transform: uppercase;
-            width: 50%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: translate(0%, 110%);
-        }
-
-        &_transparent-two {
-            -webkit-text-fill-color: transparent;
-            -webkit-background-clip: text;
-            -webkit-text-stroke: 0.5px rgb(255, 255, 255, 0.5);
-            color: transparent;
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 100%;
-            text-transform: uppercase;
-            width: 50%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: translate(0%, -100%);
-        }
-
-        &_transparent-three {
-            -webkit-text-fill-color: transparent;
-            -webkit-background-clip: text;
-            -webkit-text-stroke: 0.5px rgb(255, 255, 255, 0.5);
-            color: transparent;
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 100%;
-            text-transform: uppercase;
-            width: 50%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            transform: translate(0%, -100%);
-        }
-
-        &_title {
-            color: #f5faff;
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 100%;
-            text-transform: uppercase;
-            width: 50%;
-        }
-
-        &_title-two {
-            color: #f5faff;
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 100%;
-            text-transform: uppercase;
-            width: 50%;
-        }
-
-        &_title-three {
-            color: #f5faff;
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: Unbounded, serif;
-            font-size: 110px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: 100%;
-            text-transform: uppercase;
-            width: 50%;
-        }
-
-        &_text {
-            width: 380px;
-            color: rgba(245, 250, 255, 0.7);
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: NunitoSans, serif;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 110%;
-        }
-
-        &_text-two {
-            width: 380px;
-            color: rgba(245, 250, 255, 0.7);
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: NunitoSans, serif;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 110%;
-        }
-
-        &_text-three {
-            width: 380px;
-            color: rgba(245, 250, 255, 0.7);
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: NunitoSans, serif;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 110%;
-        }
+    &_link {
+        width: 100%;
+        height: 100%;
+        white-space: pre-wrap;
     }
 }
 </style>

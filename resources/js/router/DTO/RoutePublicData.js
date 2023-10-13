@@ -1,4 +1,4 @@
-import { RouteNamesMap } from "../map/RouteNamesMap";
+import {RouteNamesMap} from "../map/RouteNamesMap";
 
 export class RoutePublicData {
     constructor(name, component) {
@@ -11,7 +11,7 @@ export class RoutePublicData {
                 "LoadLayoutMiddleware",
                 "DropErrorsMiddleware",
                 "DropSubsMiddleware",
-                ],
+            ],
             layout: "LayoutView",
         };
     }

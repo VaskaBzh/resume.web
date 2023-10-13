@@ -67,12 +67,12 @@ export function destroy() {
     });
 }
 
-export function reDestroy() {
+export function reDestroy(margin) {
     const timeline = anime.timeline(timelineConfig);
 
     timeline.add({
         targets: ".animation-destroy",
-        maxHeight: [300, 300],
+        maxHeight: [0, 300],
     });
 }
 

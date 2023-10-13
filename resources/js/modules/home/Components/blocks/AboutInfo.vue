@@ -40,7 +40,7 @@ export default {
 .block_title {
     color: var(--gray-3100, #d0d5dd);
     font-family: Unbounded, serif;
-    font-size: 75px;
+    font-size: clamp(44px, 5vw, 75px);
     font-weight: 600;
     line-height: 100%;
     text-transform: uppercase;

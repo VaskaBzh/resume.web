@@ -76,11 +76,32 @@ export default {
     position: relative;
 }
 
+@media (max-width: 1500.87px) {
+    .wrap {
+        flex-direction: column;
+    }
+}
+
 .wrap__content {
     position: absolute;
     overflow: hidden;
     left: 50%;
     max-width: 380px;
+}
+
+@media (max-width: 1500.87px) {
+    .wrap__content {
+        top: clamp(50%, 40vw, 60%);
+        transform: translate(-50%, -50%);
+    }
+}
+
+@media (max-width: 768.87px) {
+    .wrap__content {
+        left: 50px;
+        top: 50%;
+        transform: translateY(-50%);
+    }
 }
 
 .wrap_link {
@@ -107,10 +128,36 @@ export default {
 }
 
 .wrap_title {
-    transform: translateX(-50%);
     max-width: 600px;
     display: flex;
     flex-wrap: wrap;
     gap: 0 10px;
+    overflow: visible;
+}
+
+@media (min-width: 1500.98px) {
+    .wrap_title {
+        transform: translateX(-50%);
+    }
+}
+
+
+@media (max-width: 1500.98px) {
+    .wrap_title {
+        transform: translateY(-50%);
+    }
+}
+
+@media (max-width: 991.98px) {
+    .wrap_title {
+        transform: translateY(-50%);
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768.98px) {
+    .wrap_title {
+        max-width: 335px;
+    }
 }
 </style>

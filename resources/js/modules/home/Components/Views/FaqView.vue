@@ -1,5 +1,5 @@
 <template>
-    <div class="faq faq__section">
+    <div class="faq">
         <div class="faq__content">
             <landing-headline>
                 {{ headline }}
