@@ -42,7 +42,7 @@ export class BackgroundService {
     resizeEventProcess = () => {
         this.setWidth = this.ctx.canvas.width = window.innerWidth;
         this.setHeight = this.ctx.canvas.height = window.innerHeight;
-        this.ctx.filter = "blur(50px) brightness(0.6)";
+        this.ctx.filter = "blur(70px) brightness(0.3)";
         this.ctx.globalCompositeOperation = "lighter";
     }
 
@@ -114,8 +114,8 @@ export class BackgroundService {
             this.particles.push({
                 x: Math.random() * this.setWidth,
                 y: Math.random() * this.setHeight,
-                vx: Math.random() * 2 - 1,
-                vy: Math.random() * 2 - 1,
+                vx: Math.random() * 4 - 2,
+                vy: Math.random() * 4 - 2,
                 hue: Math.random() * 80 - 40,
                 rad: Math.random() * 300 + 10,
             });
