@@ -42,7 +42,7 @@ export class BackgroundService {
     resizeEventProcess = () => {
         this.setWidth = this.ctx.canvas.width = window.innerWidth;
         this.setHeight = this.ctx.canvas.height = window.innerHeight;
-        this.ctx.filter = "blur(40px)";
+        this.ctx.filter = "blur(50px) brightness(0.6)";
         this.ctx.globalCompositeOperation = "lighter";
     }
 

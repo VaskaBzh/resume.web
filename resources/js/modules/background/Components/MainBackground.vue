@@ -44,6 +44,6 @@ export default {
     top: 0;
     left: 0;
     z-index: 0;
-    -webkit-backdrop-filter: blur(40px) brightness(0.7);
+    -webkit-backdrop-filter: blur(50px) brightness(0.9);
 }
 </style>
