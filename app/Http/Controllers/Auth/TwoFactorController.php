@@ -24,7 +24,7 @@ class TwoFactorController extends Controller
                 $secretKey
             );
 
-            cache()->put('2fa_secret|' . $user->id, $secretKey, now()->addMinutes(30));
+            cache()->put('2fa_secret|' . $user->id, $secretKey, now()->addMinutes(5));
         } catch (\Throwable $e) {
             report($e);
 
@@ -45,7 +45,6 @@ class TwoFactorController extends Controller
         Google2FA $googleTwoFactor,
     ): JsonResponse
     {
-
         try {
             $secretKey = cache()->get('2fa_secret|' . $user->id);
 

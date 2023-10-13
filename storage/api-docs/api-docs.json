@@ -18,12 +18,284 @@
         }
     ],
     "paths": {
+        "/allowed/{token}": {
+            "get": {
+                "tags": [
+                    "Watcher links"
+                ],
+                "summary": "Get allowed routes for a watcher link",
+                "parameters": [
+                    {
+                        "name": "token",
+                        "in": "path",
+                        "description": "Watcher Link Token",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "watcher_link": {
+                                            "$ref": "#/components/schemas/AllowedRouteResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Watcher link not found"
+                    }
+                }
+            }
+        },
+        "/chart": {
+            "get": {
+                "tags": [
+                    "Home page chart"
+                ],
+                "summary": "Get chart data",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ChartResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/incomes/{sub}": {
+            "get": {
+                "tags": [
+                    "Income list"
+                ],
+                "summary": "Get list of incomes",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "Start date for filtering incomes",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "End date for filtering incomes",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Number of items per page (default: 15)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/IncomeCollection"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Sub not found"
+                    }
+                }
+            }
+        },
+        "/minerstats": {
+            "get": {
+                "tags": [
+                    "Miner Stats"
+                ],
+                "summary": "Get miner statistics",
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "minerstats": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer"
+                                                },
+                                                "network_hashrate": {
+                                                    "type": "string"
+                                                },
+                                                "network_unit": {
+                                                    "type": "string"
+                                                },
+                                                "network_difficulty": {
+                                                    "type": "integer"
+                                                },
+                                                "next_difficulty": {
+                                                    "type": "integer"
+                                                },
+                                                "change_difficulty": {
+                                                    "type": "string"
+                                                },
+                                                "reward_block": {
+                                                    "type": "string"
+                                                },
+                                                "fpps_rate": {
+                                                    "type": "number",
+                                                    "format": "float"
+                                                },
+                                                "price_USD": {
+                                                    "type": "integer"
+                                                },
+                                                "time_remain": {
+                                                    "type": "integer"
+                                                },
+                                                "created_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string",
+                                                    "format": "date-time"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                }
+            }
+        },
+        "/statistic/{sub}": {
+            "get": {
+                "tags": [
+                    "Statistics"
+                ],
+                "summary": "Get statistics for a sub",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "Offset for hash rate data",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "hashes": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/HashRateResource"
+                                            }
+                                        },
+                                        "incomes": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/IncomeCollection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Sub not found"
+                    }
+                }
+            }
+        },
         "/subs/{user}": {
             "get": {
                 "tags": [
-                    "Subaccounts"
+                    "Subaccount"
                 ],
-                "summary": "Get subaccount list for a user",
+                "summary": "Get list",
                 "operationId": "ef5047d345d06fb5a2930762969b708d",
                 "parameters": [
                     {
@@ -61,10 +333,169 @@
                     }
                 }
             }
+        },
+        "/subs/sub/{sub}": {
+            "get": {
+                "tags": [
+                    "Subaccount"
+                ],
+                "summary": "Get subaccount",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/SubResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
+        },
+        "/user/{user}": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Get user",
+                "operationId": "ea7e097720d247531b4ddff682780fef",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/UserResource"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "User not found"
+                    }
+                }
+            }
         }
     },
     "components": {
         "schemas": {
+            "AllowedRouteResource": {
+                "properties": {
+                    "allowed_routes": {
+                        "type": "array",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ChartResource": {
+                "properties": {
+                    "values": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "x": {
+                                    "type": "integer"
+                                },
+                                "y": {
+                                    "type": "integer"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "HashRateResource": {
+                "properties": {
+                    "hash": {
+                        "type": "integer"
+                    },
+                    "unit": {
+                        "type": "string"
+                    },
+                    "worker_count": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
+            "IncomeCollection": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "referral_id": {
+                                    "type": "integer"
+                                },
+                                "amount": {
+                                    "type": "number"
+                                },
+                                "hash": {
+                                    "type": "integer"
+                                },
+                                "status": {
+                                    "type": "string"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "created_at": {
+                                    "type": "string"
+                                },
+                                "updated_at": {
+                                    "type": "string"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
             "SubResource": {
                 "properties": {
                     "name": {
@@ -105,6 +536,61 @@
                     },
                     "pending_amount": {
                         "type": "number"
+                    }
+                },
+                "type": "object"
+            },
+            "Role": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "guard_name": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string"
+                    },
+                    "updated_at": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "UserResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "email_verified_at": {
+                        "type": "string"
+                    },
+                    "phone": {
+                        "type": "integer"
+                    },
+                    "sms": {
+                        "type": "boolean"
+                    },
+                    "2fa": {
+                        "type": "boolean"
+                    },
+                    "referral_code": {
+                        "type": "string"
+                    },
+                    "roles": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Role"
+                        }
                     }
                 },
                 "type": "object"

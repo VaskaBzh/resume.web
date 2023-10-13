@@ -7,7 +7,28 @@ namespace App\Http\Resources;
 use App\Models\Income;
 use Illuminate\Http\Resources\Json\ResourceCollection;
 
-/** @see \App\Models\Income */
+/**
+ * @see Income
+ *
+ * @OA\Schema(
+ *     schema="IncomeCollection",
+ *     type="object",
+ *     @OA\Property(
+ *         property="data",
+ *         type="array",
+ *         @OA\Items(
+ *             type="object",
+ *             @OA\Property(property="referral_id", type="integer"),
+ *             @OA\Property(property="amount", type="number"),
+ *             @OA\Property(property="hash", type="integer"),
+ *             @OA\Property(property="status", type="string"),
+ *             @OA\Property(property="message", type="string"),
+ *             @OA\Property(property="created_at", type="string"),
+ *             @OA\Property(property="updated_at", type="string"),
+ *         )
+ *     ),
+ * )
+ */
 class IncomeCollection extends ResourceCollection
 {
     public function toArray($request): array

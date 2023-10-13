@@ -2,11 +2,12 @@ APP=php
 COMPOSE=docker-compose exec
 ARTISAN=$(COMPOSE) $(APP) php artisan
 
-up: down
+kill:
+	docker kill $$(docker ps -a -q) || true
+up: kill
 	docker-compose up -d
 down:
 	docker-compose down
-restart: down up
 build: install composer npm key migrate front
 install:
 	cp .env.example .env || true
@@ -44,6 +45,8 @@ test:
 	$(ARTISAN) test --env=testing
 remote_test:
 	ssh mainuser@92.205.188.112
+docs:
+	$(ARTISAN) l5-swagger:generate
 
 # app commands
 worker-hashes:

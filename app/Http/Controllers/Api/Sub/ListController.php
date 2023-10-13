@@ -15,8 +15,8 @@ class ListController extends Controller
     /**
      * @OA\Get(
      *     path="/subs/{user}",
-     *     summary="Get subaccount list for a user",
-     *     tags={"Subaccounts"},
+     *     summary="Get list",
+     *     tags={"Subaccount"},
      *     @OA\Parameter(
      *         name="user",
      *         in="path",
