@@ -37,7 +37,7 @@ export default {
     justify-content: space-between;
     background: transparent;
     z-index: 100;
-    padding: 50px 0;
+    padding: 50px 15px;
     //opacity: 0;
     &__container {
         margin: 0 auto;
@@ -70,6 +70,6 @@ export default {
 @media(max-width: 760px){
     .burger-mobile{
         display: inline-block;
-    }  
+    }
 }
 </style>

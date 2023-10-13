@@ -1,5 +1,5 @@
 <template>
-    <div class="faq__row">
+    <div class="faq__row" ref="view">
         <div class="faq__block">
             <span class="faq_subtitle" v-show="preTitle">{{ preTitle }}</span>
             <landing-text class="faq_text">{{ text }}</landing-text>
@@ -11,6 +11,7 @@
 <script>
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
 
 export default {
     name: "faq-row",
@@ -20,6 +21,7 @@ export default {
         text: String,
         preTitle: String,
     },
+
 };
 </script>
 

@@ -4,22 +4,20 @@
         <div class="layout__container">
             <slot/>
         </div>
-        <footer-component-land/>
+        <FooterHosting></FooterHosting>
     </div>
 </template>
 
 <script>
 import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
-import FooterComponentLand from "@/modules/common/Components/FooterComponentLand.vue";
+import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
 
 export default {
     components: {
-        FooterComponentLand,
+        FooterHosting,
         HeaderComponent,
     },
-    // mounted() {
-    //     paralaxLayot();
-    // },
+
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");

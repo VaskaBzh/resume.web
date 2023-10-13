@@ -21,6 +21,7 @@ export default {
 <style scoped>
 .system-card-inf{
   width: 399px;
+    margin-bottom: 50px;
 }
 .system-card-title{
   color: var(--gray-1100, #F5FAFF);

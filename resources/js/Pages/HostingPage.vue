@@ -1,7 +1,5 @@
 <template>
-    <header-component/>
     <main class="main-hosting">
-        <!--        main-hosting__container-->
         <div class=" hosting__section">
             <article class="article-hosting first-text hosting__section">
                 <div class="hosting-content">
@@ -61,9 +59,6 @@
             <article class="article-hosting second-text hosting__section">
                 <ConnectCard></ConnectCard>
             </article>
-            <footer class="footer-hosting hosting__section">
-                <FooterHosting></FooterHosting>
-            </footer>
         </div>
     </main>
 </template>
@@ -232,7 +227,7 @@ export default {
 */
 
 .article-hosting {
-    height: 120vh;
+    height: auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -276,6 +271,7 @@ export default {
     margin-top: 50px;
     padding: 8px 20px;
     width: 100%;
+    max-width: 534px;
     color: var(--gray-1100, #F5FAFF);
     border-radius: 40px;
     border: 1px solid rgba(192, 228, 255, 0.60);
@@ -348,6 +344,10 @@ export default {
     .offer-card-container {
         margin-right: 0px;
         justify-content: center;
+    }
+
+    .article-hosting {
+        height: auto;
     }
 }
 

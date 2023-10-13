@@ -126,6 +126,7 @@ export default {
 
 .system-card-inf {
     width: 399px;
+    margin-bottom: 50px;
 }
 
 .system-card-title {
