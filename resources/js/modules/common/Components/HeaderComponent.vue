@@ -5,10 +5,10 @@
                 {{ $t("footer.button") }}
             </button-blue
             >
-            <nav-links/>
-            <select-language-land />
+            <nav-links class="nav__navigation"/>
+            <select-language-land class="nav_lang"/>
             <div class="burger-mobile">
-                <burger-menu />
+                <burger-menu/>
             </div>
         </div>
     </nav>
@@ -46,6 +46,19 @@ export default {
         width: 100%;
     }
 
+    &_lang {
+        @media (max-width: 760.98px) {
+            display: none;
+        }
+    }
+
+    &__navigation {
+        margin-left: clamp(30px, 15vw, 500px);
+        @media (max-width: 760.98px) {
+            display: none;
+        }
+    }
+
     .button-black {
         width: 200px;
         height: 50px;
@@ -62,14 +75,20 @@ export default {
         border: 0.5px solid rgba(192, 228, 255, 0.6);
         background: transparent;
         backdrop-filter: blur(10px);
+        @media (max-width: 760.98px) {
+            display: none;
+        }
     }
 }
-.burger-mobile{
+
+.burger-mobile {
     display: none;
 }
-@media(max-width: 760px){
-    .burger-mobile{
+
+@media(max-width: 760px) {
+    .burger-mobile {
         display: inline-block;
+        margin-left: auto;
     }
 }
 </style>

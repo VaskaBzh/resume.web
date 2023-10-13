@@ -4,91 +4,44 @@
             <p class="title-card">{{ $t("guarantees.title") }}</p>
             <p class="text-card">{{ $t("guarantees.text") }}</p>
         </div>
-        <div class="income-system-card gray-line gray-line-top">
-            <div class="card-row">
-                <p class="text-card text-system text-web">
-                    {{ $t("guarantees.list.text[0]") }}
-                </p>
-                <p class="text-card text-system" v-if="isOpenAccordion">
-                    {{ $t("guarantees.list.text[0]") }}
-                </p>
-                <p class="title-hosting">
-                    {{ $t("guarantees.list.title[0]") }}<br/>
-                    {{ $t("guarantees.list.title[1]") }}
-                </p>
-            </div>
-
-            <button
-                class="accordion-button"
-                @click="isOpenAccordion = !isOpenAccordion"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="29"
-                    height="30"
-                    viewBox="0 0 29 30"
-                    fill="none"
-                    v-if="!isOpenAccordion"
-                >
-                    <rect
-                        width="26.9622"
-                        height="1.07849"
-                        rx="0.539243"
-                        transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 14.3242 28.6074)"
-                        fill="#D0D5DD"
-                        fill-opacity="0.6"
-                    />
-                    <rect
-                        width="26.9622"
-                        height="1.07849"
-                        rx="0.539243"
-                        transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 1.25781 14.457)"
-                        fill="#D0D5DD"
-                        fill-opacity="0.6"
-                    />
-                </svg>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="29"
-                    height="29"
-                    viewBox="0 0 29 29"
-                    fill="none"
-                    v-else
-                >
-                    <rect
-                        width="26.9622"
-                        height="1.07849"
-                        rx="0.539243"
-                        transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 1.50391 14.0801)"
-                        fill="#D0D5DD"
-                        fill-opacity="0.6"
-                    />
-                </svg>
-            </button>
-        </div>
-        <p class="title-hosting gray-line">
-            {{ $t("guarantees.list.title[2]") }}
-        </p>
-        <p class="title-hosting gray-line">
-            {{ $t("guarantees.list.title[3]") }}
-        </p>
-        <p class="title-hosting gray-line">
-            {{ $t("guarantees.list.title[4]") }}а
-        </p>
+        <faq-view :faq="faq">
+        </faq-view>
     </div>
 </template>
 <script>
 import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import FaqView from "../../home/Components/Views/FaqView.vue";
 
 export default {
     i18n: {
         sharedMessages: HostingMessage,
+    },
+    components: {
+        FaqView,
     },
     data() {
         return {
             isOpenAccordion: false,
         };
     },
+    computed: {
+        faq() {
+            return [
+                {
+                    title: this.$t("guarantees.list.title[0]"),
+                    text: this.$t("guarantees.list.text[0]"),
+                },
+                {
+                    title: this.$t("guarantees.list.title[1]"),
+                    text: this.$t("guarantees.list.text[1]"),
+                },
+                {
+                    title: this.$t("guarantees.list.title[2]"),
+                    text: this.$t("guarantees.list.text[2]"),
+                },
+            ];
+        }
+    }
 };
 </script>
 <style scoped>
@@ -167,42 +120,50 @@ export default {
     width: 100%;
 }
 
-@media(max-width:950px){
-  .title-card{
-    font-size: 24px;
-  }
-  .guarantee-card{
-    width: 354px;
-    margin-bottom: 80px;
-    margin-top: 100px;
-  }
-  .card-row{
-    flex-direction: column-reverse;
-    align-items: flex-start;
-  }
-  .title-hosting{
-    text-align:inherit;
-    width: 100%;
-    font-size: 44px;
-  }
-  .accordion-button{
-    display: inline-block;
-    height: 30px;
-    margin-top: 32px;
-    /* align-self: center; */
-  }
-  .guarantee-block{
-    padding: 0;
-  }
-  .text-system{
-    width: 590px;
-  }
-  .gray-line{
-    padding: 30px 32px;
-  }
-  .text-web{
-    display: none;
-  }
+@media (max-width: 950px) {
+    .title-card {
+        font-size: 24px;
+    }
+
+    .guarantee-card {
+        width: 354px;
+        margin-bottom: 80px;
+        margin-top: 100px;
+    }
+
+    .card-row {
+        flex-direction: column-reverse;
+        align-items: flex-start;
+    }
+
+    .title-hosting {
+        text-align: inherit;
+        width: 100%;
+        font-size: 44px;
+    }
+
+    .accordion-button {
+        display: inline-block;
+        height: 30px;
+        margin-top: 32px;
+        /* align-self: center; */
+    }
+
+    .guarantee-block {
+        padding: 0;
+    }
+
+    .text-system {
+        width: 590px;
+    }
+
+    .gray-line {
+        padding: 30px 32px;
+    }
+
+    .text-web {
+        display: none;
+    }
 }
 
 @media (max-width: 450px) {

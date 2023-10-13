@@ -40,8 +40,8 @@ export default {
     display: flex;
     flex-direction: column;
     max-width: 1920px;
-    padding: 0 100px;
     margin: 0 auto;
+    padding: 0 clamp(16px, 10vw, 100px);
 }
 
 .logo_elem {
@@ -54,15 +54,15 @@ export default {
 }
 
 .logo_elem-first {
-    width: clamp(324px, 34vw, 1070px);
-    height: clamp(106px, 12vw, 348px);
+    width: clamp(324px, 50vw, 1070px);
+    height: clamp(106px, 24vw, 348px);
 }
 
 .logo_elem-last {
     margin-left: auto;
     margin-top: -46px;
-    width: clamp(237px, 34vw, 778px);
-    height: clamp(106px, 12vw, 348px);
+    width: clamp(237px, 50vw, 778px);
+    height: clamp(106px, 24vw, 348px);
 }
 
 @media (max-width: 1300px) {

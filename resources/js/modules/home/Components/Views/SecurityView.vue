@@ -1,7 +1,10 @@
 <template>
     <div class="security security__section" ref="view">
         <div class="security__wrapper">
-            <landing-headline class="security__headline">{{ $t("safety.button") }}</landing-headline>
+            <landing-headline class="security__headline">{{
+                    $t("safety.button")
+                }}
+            </landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
                     <landing-text
@@ -72,11 +75,9 @@ export default {
             this.handleWheel();
         },
         handleWheel(e) {
-            if (this.startY
-                ? this.startY - this.touchY > 110
-                : e.deltaY > 10) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 300);
+                setTimeout(this.scroll, 650);
                 if (this.progress === 0) {
                     this.key = "encryption";
                     this.progress++;
@@ -86,7 +87,10 @@ export default {
                 } else if (this.progress === 2) {
                     this.key = "DDoS";
 
-                    if (!this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 && !this.validScroll) {
                         this.$refs.view.style.transform = `translateY(-${
                             this.$refs.view.offsetHeight -
                             document.scrollingElement.clientHeight
@@ -102,7 +106,7 @@ export default {
                 this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
             ) {
                 this.remove();
-                setTimeout(this.scroll, 300);
+                setTimeout(this.scroll, 650);
 
                 if (this.progress === 2) {
                     this.key = "DDoS";
@@ -113,7 +117,10 @@ export default {
                 } else if (this.progress === 0) {
                     this.key = "encryption";
 
-                    if (this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 && this.validScroll) {
                         this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;
@@ -125,6 +132,7 @@ export default {
         },
         scroll() {
             if (this.$refs.view) {
+                this.$refs.view.focus();
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
                 this.$refs.view.addEventListener(
                     "touchstart",
@@ -174,7 +182,9 @@ export default {
 }
 
 @media (max-width: 767.87px) {
-    min-width: calc(100% - 64px);
+    .security {
+        min-width: calc(100% - 64px);
+    }
 }
 
 .security__hidden {

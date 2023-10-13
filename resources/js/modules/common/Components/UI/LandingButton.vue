@@ -33,6 +33,7 @@ export default {
     border-radius: 40px;
     max-width: 860px;
     width: 100%;
+    white-space: pre-wrap;
 }
 
 .button_icon {

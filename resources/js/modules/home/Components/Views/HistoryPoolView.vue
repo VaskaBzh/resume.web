@@ -74,6 +74,9 @@
             </swiper-slide>
         </Swiper>
         <connect-with-us-view/>
+            </div>
+        </div>
+        <!--        <connect-with-us-view/>-->
     </div>
 </template>
 

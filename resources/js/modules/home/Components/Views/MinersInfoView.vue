@@ -84,16 +84,17 @@ export default {
             this.handleWheel();
         },
         handleWheel(e) {
-            if (this.startY
-                ? this.startY - this.touchY > 110
-                : e.deltaY > 10) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
                 if (this.progress === 0) {
                     this.progress++;
                 } else if (this.progress === 1) {
-                    if (!this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 && !this.validScroll) {
                         this.$refs.view.style.transform = `translateY(-${
                             this.$refs.view.offsetHeight -
                             document.scrollingElement.clientHeight
@@ -114,7 +115,10 @@ export default {
                 if (this.progress === 1) {
                     this.progress--;
                 } else if (this.progress === 0) {
-                    if (this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 && this.validScroll) {
                         this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;
@@ -126,6 +130,7 @@ export default {
         },
         scroll() {
             if (this.$refs.view) {
+                this.$refs.view.focus();
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
                 this.$refs.view.addEventListener(
                     "touchstart",
@@ -197,7 +202,7 @@ export default {
             &-left {
                 transform: translateX(-180px);
                 @media (max-width: 798.98px) {
-                    transform: translateX(-95px);
+                    transform: translateX(-55px);
                 }
             }
         }

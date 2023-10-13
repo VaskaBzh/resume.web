@@ -156,8 +156,26 @@ export default {
 }
 
 @media (max-width: 768.98px) {
+    .wrap__content {
+        margin: auto 0;
+    }
+
+    .wrap {
+        width: 100vw;
+        padding: 0 clamp(16px, 10vw, 32px);
+    }
+
     .wrap_title {
         max-width: 335px;
+    }
+}
+
+@media (max-width: 479.98px) {
+    .wrap__content {
+        position: relative;
+        transform: none;
+        left: 0;
+        top: 0;
     }
 }
 </style>

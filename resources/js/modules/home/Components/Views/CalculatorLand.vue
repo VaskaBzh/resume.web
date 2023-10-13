@@ -102,7 +102,10 @@ export default {
                     // destroy();
                     this.progress++;
                 } else if (this.progress === 1) {
-                    if (!this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 && !this.validScroll) {
                         this.$refs.view.style.transform = `translateY(-${
                             this.$refs.view.offsetHeight -
                             document.scrollingElement.clientHeight
@@ -136,6 +139,7 @@ export default {
         },
         scroll() {
             if (this.$refs.view) {
+                this.$refs.view.focus();
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
                 this.$refs.view.addEventListener(
                     "touchstart",
@@ -185,7 +189,7 @@ export default {
 
 <style scoped lang="scss">
 .calculator {
-    height: 100vh;
+    min-height: 100vh;
     max-width: 860px;
     width: 100%;
     margin: 0 auto;
@@ -193,6 +197,7 @@ export default {
     &__content {
         display: flex;
         flex-direction: column;
+        width: 100%;
         align-items: center;
     }
 
@@ -213,6 +218,9 @@ export default {
             position: relative;
             left: -100px;
             top: 0;
+            @media (max-width: 768.98px) {
+                left: -60px;
+            }
         }
 
         &_two {
@@ -234,7 +242,8 @@ export default {
     }
 
     &_text {
-        width: 420px;
+        width: 100%;
+        max-width: 420px;
         margin-bottom: clamp(30px, 10vw, 70px);
         max-height: 300px;
         transition: all 1.2s ease 0s, opacity 0.5s ease 0.5s;

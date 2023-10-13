@@ -28,6 +28,7 @@ export default {
                 "payments",
                 "mission",
                 "history",
+                "contact",
             ],
             component: null,
             direction: true,
@@ -40,13 +41,13 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : `translateY(${this.direction ? 150 : -150}%)`;
+                : `translateY(${this.direction ? 200 : -200}%)`;
 
             setTimeout(() => {
                 view.style.transform = `translateY(0%)`;
-                view.style.opacity = 1;
-            }, 300);
+            }, 400);
             setTimeout(() => {
+                view.style.opacity = 1;
                 done();
             }, 600);
         },
@@ -62,7 +63,7 @@ export default {
             }, 100);
             setTimeout(() => {
                 view.style.transform = `translateY(${
-                    this.direction ? -150 : 150
+                    this.direction ? -200 : 200
                 }%)`;
             }, 300);
             setTimeout(() => {
