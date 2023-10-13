@@ -167,7 +167,8 @@ export default {
                         this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                        this.validScroll) {
+                        this.validScroll
+                    ) {
                         this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;
@@ -179,6 +180,7 @@ export default {
         },
         scroll() {
             if (this.$refs.view) {
+                this.$refs.view.focus();
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
                 this.$refs.view.addEventListener(
                     "touchstart",

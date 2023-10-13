@@ -97,6 +97,7 @@ export default {
         },
         scroll() {
             if (this.$refs.view) {
+                this.$refs.view.focus();
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
                 this.$refs.view.addEventListener(
                     "touchstart",

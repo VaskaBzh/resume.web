@@ -70,7 +70,9 @@ export default {
                 if (
                     this.$refs.view.offsetHeight -
                     document.scrollingElement.clientHeight >
-                    20 && !this.validScroll) {
+                    20 &&
+                    !this.validScroll
+                ) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight
@@ -90,7 +92,9 @@ export default {
                 if (
                     this.$refs.view.offsetHeight -
                     document.scrollingElement.clientHeight >
-                    20 && this.validScroll) {
+                    20 &&
+                    this.validScroll
+                ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
 
                     this.validScroll = false;
@@ -101,13 +105,31 @@ export default {
         },
         scroll() {
             if (this.$refs.view) {
+                this.$refs.view.focus();
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
         remove() {
             if (this.$refs.view) {
                 this.$refs.view.style.minHeight = `100vh`;
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
     },
@@ -130,7 +152,7 @@ export default {
                 document.querySelector(".footer-content").offsetHeight +
                 document.querySelector(".all-content").offsetHeight
             }px)`;
-        }, 800)
+        }, 800);
     },
     unmounted() {
         this.remove();
