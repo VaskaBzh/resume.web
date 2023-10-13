@@ -7,7 +7,20 @@ namespace App\Http\Resources;
 use App\Models\Wallet;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin Wallet */
+/** @see Wallet
+ *
+ * @OA\Schema(
+ *      schema="WalletResource",
+ *      type="object",
+ *      @OA\Property(property="id", type="integer"),
+ *      @OA\Property(property="percent", type="float"),
+ *      @OA\Property(property="minWithdrawal", type="float"),
+ *      @OA\Property(property="wallet", type="string"),
+ *      @OA\Property(property="name", type="string"),
+ *      @OA\Property(property="total_payout", type="float"),
+ *      @OA\Property(property="is_unlocked", type="boolean"),
+ * )
+ */
 class WalletResource extends JsonResource
 {
     public function toArray($request): array

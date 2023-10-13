@@ -12,12 +12,34 @@ use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @OA\Get(
+ *     path="/referrals/statistic/{user}",
+ *     summary="Get referral statistics for a user",
+ *     tags={"Referral"},
+ *     @OA\Parameter(
+ *         name="user",
+ *         in="path",
+ *         description="User's ID",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful response",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="statistic", ref="#/components/schemas/ReferralStatisticResource"),
+ *         )
+ *     ),
+ *     @OA\Response(response=422, description="Unprocessable Entity"),
+ *     @OA\Response(response=500, description="Internal Server Error"),
+ * )
+ */
 class StatisticController extends Controller
 {
-    public function __invoke()
+    public function __invoke(User $user)
     {
-        $user = auth()->user();
-
         if (!$user?->referral_code) {
             return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

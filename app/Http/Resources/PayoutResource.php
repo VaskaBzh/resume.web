@@ -7,7 +7,19 @@ namespace App\Http\Resources;
 use App\Models\Payout;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin Payout */
+/**
+ * @see Payout
+ *
+ *  @OA\Schema(
+ *      schema="PayoutResource",
+ *      type="object",
+ *      @OA\Property(property="wallet", type="string"),
+ *      @OA\Property(property="payout", type="float"),
+ *      @OA\Property(property="txid", type="string"),
+ *      @OA\Property(property="created_at", type="string", format="date-time"),
+ *  )
+ *
+ */
 class PayoutResource extends JsonResource
 {
     public function toArray($request): array

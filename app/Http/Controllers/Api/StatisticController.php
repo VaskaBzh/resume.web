@@ -17,7 +17,7 @@ use Illuminate\Http\Request;
  * @OA\Get(
  *     path="/statistic/{sub}",
  *     summary="Get statistics for a sub",
- *     tags={"Statistics"},
+ *     tags={"Subaccount"},
  *     @OA\Parameter(
  *         name="sub",
  *         in="path",

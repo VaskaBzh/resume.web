@@ -6,12 +6,23 @@ use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Schema(
+ *     schema="ReferralStatisticResource",
+ *     type="object",
+ *     @OA\Property(property="group_id", type="integer"),
+ *     @OA\Property(property="attached_referrals_count", type="integer"),
+ *     @OA\Property(property="active_referrals_count", type="integer"),
+ *     @OA\Property(property="referrals_total_amount", type="float"),
+ *     @OA\Property(property="code", type="string"),
+ * )
+ */
 class ReferralStatisticResource extends JsonResource
 {
     public function __construct(
-        User $resource,
-        private array $statistic,
-        private array $referralCodeData
+        User                   $resource,
+        private readonly array $statistic,
+        private readonly array $referralCodeData
     )
     {
         parent::__construct($resource);

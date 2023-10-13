@@ -94,10 +94,10 @@ Route::group([
         'prefix' => 'referrals',
         'middleware' => 'role:referral'
     ], function () {
-        Route::get('', ReferralListController::class)->name('referral.list');
-        Route::post('/generate', ReferralCodeController::class)->name('code');
-        Route::get('/statistic', ReferralStatisticController::class)->name('referral.show');
-        Route::get('/incomes', ReferralIncomeListController::class)->name('referral.income.list');
+        Route::get('/{user}', ReferralListController::class)->name('referral.list');
+        Route::post('/generate/{user}', ReferralCodeController::class)->name('code');
+        Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');
+        Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
     });
 
     Route::group(['prefix' => 'watchers'], function () {

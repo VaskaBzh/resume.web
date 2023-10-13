@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
  * @OA\Get(
  *     path="/chart",
  *     summary="Get chart data",
- *     tags={"Home page chart"},
+ *     tags={"Main chart"},
  *     @OA\Response(
  *         response=200,
  *         description="Successful response",

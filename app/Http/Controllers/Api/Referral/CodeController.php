@@ -13,11 +13,11 @@ use Illuminate\Http\Request;
 
 class CodeController extends Controller
 {
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(User $user, Request $request): JsonResponse
     {
         try {
             $code = ReferralService::generateCode(
-                user: auth()->user(),
+                user: $user,
                 sub: Sub::findOrFail($request->group_id)
             );
 

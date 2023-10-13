@@ -15,10 +15,34 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ListController extends Controller
 {
-    public function __invoke(BtcComService $btcComService)
+    /**
+     * @OA\Get(
+     *     path="/referrals/{user}",
+     *     summary="Get referral subs for a user",
+     *     tags={"Referral"},
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="User's ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(
+     *                 property="referral_subs", type="array",
+     *                 @OA\Items(ref="#/components/schemas/ReferralResourceCollection")
+     *             ),
+     *         )
+     *     ),
+     *     @OA\Response(response=422, description="Unprocessable Entity"),
+     * )
+     */
+    public function __invoke(User $user, BtcComService $btcComService)
     {
-        $user = auth()->user();
-
         if (!$user?->referral_code) {
             return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
         }

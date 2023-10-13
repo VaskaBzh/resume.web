@@ -14,7 +14,7 @@ use Symfony\Component\HttpFoundation\Response;
  * @OA\Get(
  *     path="/allowed/{token}",
  *     summary="Get allowed routes for a watcher link",
- *     tags={"Watcher links"},
+ *     tags={"Watcher Links"},
  *     @OA\Parameter(
  *         name="token",
  *         in="path",

@@ -21,7 +21,7 @@
         "/allowed/{token}": {
             "get": {
                 "tags": [
-                    "Watcher links"
+                    "Watcher Links"
                 ],
                 "summary": "Get allowed routes for a watcher link",
                 "parameters": [
@@ -60,7 +60,7 @@
         "/chart": {
             "get": {
                 "tags": [
-                    "Home page chart"
+                    "Main chart"
                 ],
                 "summary": "Get chart data",
                 "responses": {
@@ -89,7 +89,7 @@
         "/incomes/{sub}": {
             "get": {
                 "tags": [
-                    "Income list"
+                    "Income"
                 ],
                 "summary": "Get list of incomes",
                 "parameters": [
@@ -103,7 +103,7 @@
                         }
                     },
                     {
-                        "name": "from",
+                        "name": "from_date",
                         "in": "query",
                         "description": "Start date for filtering incomes",
                         "required": false,
@@ -113,7 +113,7 @@
                         }
                     },
                     {
-                        "name": "to",
+                        "name": "to_date",
                         "in": "query",
                         "description": "End date for filtering incomes",
                         "required": false,
@@ -123,9 +123,18 @@
                         }
                     },
                     {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
                         "name": "per_page",
                         "in": "query",
-                        "description": "Number of items per page (default: 15)",
+                        "description": "Items per page (default: 15)",
                         "required": false,
                         "schema": {
                             "type": "integer"
@@ -138,10 +147,48 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/IncomeCollection"
-                                    }
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/IncomeCollection"
+                                            }
+                                        },
+                                        "first_page_url": {
+                                            "type": "string"
+                                        },
+                                        "from": {
+                                            "type": "integer"
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "last_page_url": {
+                                            "type": "string"
+                                        },
+                                        "next_page_url": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string"
+                                        },
+                                        "to": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -227,10 +274,327 @@
                 }
             }
         },
+        "/payouts/{sub}": {
+            "get": {
+                "tags": [
+                    "Payouts"
+                ],
+                "summary": "Get list of payouts",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "from_date",
+                        "in": "query",
+                        "description": "Start date for filtering payouts",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "to_date",
+                        "in": "query",
+                        "description": "End date for filtering payouts",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "format": "date"
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page (default: 15)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/PayoutResource"
+                                            }
+                                        },
+                                        "first_page_url": {
+                                            "type": "string"
+                                        },
+                                        "from": {
+                                            "type": "integer"
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "last_page_url": {
+                                            "type": "string"
+                                        },
+                                        "next_page_url": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string"
+                                        },
+                                        "to": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Sub not found"
+                    }
+                }
+            }
+        },
+        "/referrals/incomes/{user}": {
+            "get": {
+                "tags": [
+                    "Referral"
+                ],
+                "summary": "Get referral incomes list for a user",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "email": {
+                                                        "type": "string"
+                                                    },
+                                                    "daily_amount": {
+                                                        "type": "string"
+                                                    },
+                                                    "hash": {
+                                                        "type": "number",
+                                                        "format": "float"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "worker_count": {
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "first_page_url": {
+                                            "type": "string"
+                                        },
+                                        "from": {
+                                            "type": "integer"
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "last_page_url": {
+                                            "type": "string"
+                                        },
+                                        "links": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "url": {
+                                                        "type": "string"
+                                                    },
+                                                    "label": {
+                                                        "type": "string"
+                                                    },
+                                                    "active": {
+                                                        "type": "boolean"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        },
+                                        "next_page_url": {
+                                            "type": "string"
+                                        },
+                                        "path": {
+                                            "type": "string"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        },
+                                        "prev_page_url": {
+                                            "type": "string"
+                                        },
+                                        "to": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            }
+        },
+        "/referrals/{user}": {
+            "get": {
+                "tags": [
+                    "Referral"
+                ],
+                "summary": "Get referral subs for a user",
+                "operationId": "df834cce778d87e0953d60ee172b9889",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "referral_subs": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/ReferralResourceCollection"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                }
+            }
+        },
+        "/referrals/statistic/{user}": {
+            "get": {
+                "tags": [
+                    "Referral"
+                ],
+                "summary": "Get referral statistics for a user",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "statistic": {
+                                            "$ref": "#/components/schemas/ReferralStatisticResource"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    },
+                    "500": {
+                        "description": "Internal Server Error"
+                    }
+                }
+            }
+        },
         "/statistic/{sub}": {
             "get": {
                 "tags": [
-                    "Statistics"
+                    "Subaccount"
                 ],
                 "summary": "Get statistics for a sub",
                 "parameters": [
@@ -374,6 +738,397 @@
                 }
             }
         },
+        "/wallets/{sub}": {
+            "get": {
+                "tags": [
+                    "Wallets"
+                ],
+                "summary": "Get wallets for a sub",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WalletResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Sub not found"
+                    }
+                }
+            }
+        },
+        "/watchers/{user}/{sub}": {
+            "get": {
+                "tags": [
+                    "Watcher Links"
+                ],
+                "summary": "Get watcher links for a user's sub",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WatcherLinkResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "User or sub not found"
+                    }
+                }
+            }
+        },
+        "/workers/{sub}": {
+            "get": {
+                "tags": [
+                    "Worker"
+                ],
+                "summary": "Get sub's worker list",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "status",
+                        "in": "query",
+                        "description": "Filter workers by status (all, active, inactive)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "all",
+                                "active",
+                                "inactive"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "gid": {
+                                                "type": "integer"
+                                            },
+                                            "group_name": {
+                                                "type": "string"
+                                            },
+                                            "worker_id": {
+                                                "type": "string"
+                                            },
+                                            "worker_name": {
+                                                "type": "string"
+                                            },
+                                            "is_top": {
+                                                "type": "boolean"
+                                            },
+                                            "shares_1m": {
+                                                "type": "string"
+                                            },
+                                            "shares_5m": {
+                                                "type": "string"
+                                            },
+                                            "shares_15m": {
+                                                "type": "string"
+                                            },
+                                            "accept_count": {
+                                                "type": "string"
+                                            },
+                                            "last_share_time": {
+                                                "type": "integer"
+                                            },
+                                            "last_share_ip": {
+                                                "type": "string"
+                                            },
+                                            "reject_percent": {
+                                                "type": "string"
+                                            },
+                                            "first_share_time": {
+                                                "type": "integer"
+                                            },
+                                            "miner_agent": {
+                                                "type": "string"
+                                            },
+                                            "shares_unit": {
+                                                "type": "string"
+                                            },
+                                            "status": {
+                                                "type": "string"
+                                            },
+                                            "shares_1h": {
+                                                "type": "integer"
+                                            },
+                                            "shares_1d": {
+                                                "type": "string"
+                                            },
+                                            "shares_1m_pure": {
+                                                "type": "string"
+                                            },
+                                            "shares_5m_pure": {
+                                                "type": "string"
+                                            },
+                                            "shares_15m_pure": {
+                                                "type": "string"
+                                            },
+                                            "shares_1h_pure": {
+                                                "type": "integer"
+                                            },
+                                            "shares_1d_pure": {
+                                                "type": "integer"
+                                            },
+                                            "shares_1d_unit": {
+                                                "type": "string"
+                                            },
+                                            "reject_percent_1d": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Sub not found"
+                    }
+                }
+            }
+        },
+        "/worker/{worker}": {
+            "get": {
+                "tags": [
+                    "Worker"
+                ],
+                "summary": "Get worker details",
+                "parameters": [
+                    {
+                        "name": "worker",
+                        "in": "path",
+                        "description": "Worker's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "worker_id": {
+                                                    "type": "string"
+                                                },
+                                                "worker_name": {
+                                                    "type": "string"
+                                                },
+                                                "shares_1m": {
+                                                    "type": "string"
+                                                },
+                                                "shares_5m": {
+                                                    "type": "string"
+                                                },
+                                                "shares_15m": {
+                                                    "type": "string"
+                                                },
+                                                "accept_count": {
+                                                    "type": "integer"
+                                                },
+                                                "accept_percent": {
+                                                    "type": "integer"
+                                                },
+                                                "reject_percent": {
+                                                    "type": "string"
+                                                },
+                                                "last_share_ip": {
+                                                    "type": "string"
+                                                },
+                                                "ip2location": {
+                                                    "type": "string"
+                                                },
+                                                "last_share_time": {
+                                                    "type": "integer"
+                                                },
+                                                "shares_unit": {
+                                                    "type": "string"
+                                                },
+                                                "worker_status": {
+                                                    "type": "string"
+                                                },
+                                                "shares_1h": {
+                                                    "type": "integer"
+                                                },
+                                                "shares_1d": {
+                                                    "type": "string"
+                                                },
+                                                "shares_1m_pure": {
+                                                    "type": "string"
+                                                },
+                                                "shares_5m_pure": {
+                                                    "type": "string"
+                                                },
+                                                "shares_15m_pure": {
+                                                    "type": "string"
+                                                },
+                                                "shares_1h_pure": {
+                                                    "type": "integer"
+                                                },
+                                                "shares_1d_pure": {
+                                                    "type": "integer"
+                                                },
+                                                "shares_1d_unit": {
+                                                    "type": "string"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Worker not found"
+                    }
+                }
+            }
+        },
+        "/workerhashrate/{worker}": {
+            "get": {
+                "tags": [
+                    "Worker"
+                ],
+                "summary": "Get hash rates for a worker",
+                "parameters": [
+                    {
+                        "name": "worker",
+                        "in": "path",
+                        "description": "Worker's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "Limit the number of hash rates to retrieve (default: 24)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WorkerHashRateResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Worker not found"
+                    }
+                }
+            }
+        },
         "/user/{user}": {
             "get": {
                 "tags": [
@@ -496,6 +1251,76 @@
                 },
                 "type": "object"
             },
+            "PayoutResource": {
+                "properties": {
+                    "wallet": {
+                        "type": "string"
+                    },
+                    "payout": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "txid": {
+                        "type": "string"
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            },
+            "ReferralResourceCollection": {
+                "properties": {
+                    "data": {
+                        "type": "array",
+                        "items": {
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "referral_active_workers_count": {
+                                    "type": "integer"
+                                },
+                                "referral_inactive_workers_count": {
+                                    "type": "integer"
+                                },
+                                "referral_hash_per_day": {
+                                    "type": "number",
+                                    "format": "float"
+                                },
+                                "total_amount": {
+                                    "type": "number",
+                                    "format": "float"
+                                }
+                            },
+                            "type": "object"
+                        }
+                    }
+                },
+                "type": "object"
+            },
+            "ReferralStatisticResource": {
+                "properties": {
+                    "group_id": {
+                        "type": "integer"
+                    },
+                    "attached_referrals_count": {
+                        "type": "integer"
+                    },
+                    "active_referrals_count": {
+                        "type": "integer"
+                    },
+                    "referrals_total_amount": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "SubResource": {
                 "properties": {
                     "name": {
@@ -591,6 +1416,79 @@
                         "items": {
                             "$ref": "#/components/schemas/Role"
                         }
+                    }
+                },
+                "type": "object"
+            },
+            "WalletResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "percent": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "minWithdrawal": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "wallet": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_payout": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "is_unlocked": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object"
+            },
+            "WatcherLinkResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "user_id": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "allowed_routes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/AllowedRouteResource"
+                        }
+                    },
+                    "access_count": {
+                        "type": "integer"
+                    },
+                    "url": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
+            "WorkerHashRateResource": {
+                "properties": {
+                    "id": {
+                        "type": "integer"
+                    },
+                    "hash": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "unit": {
+                        "type": "string"
+                    },
+                    "worker_id": {
+                        "type": "integer"
                     }
                 },
                 "type": "object"

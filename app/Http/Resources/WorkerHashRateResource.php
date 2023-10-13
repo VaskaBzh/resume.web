@@ -7,7 +7,18 @@ namespace App\Http\Resources;
 use App\Models\WorkerHashrate;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @mixin WorkerHashrate */
+/**
+ * @see WorkerHashrate
+ *
+ * @OA\Schema(
+ * schema="WorkerHashRateResource",
+ * type="object",
+ * @OA\Property(property="id", type="integer"),
+ * @OA\Property(property="hash", type="number", format="float"),
+ * @OA\Property(property="unit", type="string"),
+ * @OA\Property(property="worker_id", type="integer"),
+ * )
+ */
 class WorkerHashRateResource extends JsonResource
 {
     public function toArray($request): array

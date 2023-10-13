@@ -15,7 +15,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
  * @OA\Get(
  *     path="/incomes/{sub}",
  *     summary="Get list of incomes",
- *     tags={"Income list"},
+ *     tags={"Income"},
  *     @OA\Parameter(
  *         name="sub",
  *         in="path",
@@ -24,31 +24,52 @@ use Illuminate\Http\Resources\Json\JsonResource;
  *         @OA\Schema(type="integer")
  *     ),
  *     @OA\Parameter(
- *         name="from",
+ *         name="from_date",
  *         in="query",
  *         description="Start date for filtering incomes",
  *         required=false,
  *         @OA\Schema(type="string", format="date")
  *     ),
  *     @OA\Parameter(
- *         name="to",
+ *         name="to_date",
  *         in="query",
  *         description="End date for filtering incomes",
  *         required=false,
  *         @OA\Schema(type="string", format="date")
  *     ),
  *     @OA\Parameter(
+ *         name="page",
+ *         in="query",
+ *         description="Page number",
+ *         required=false,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Parameter(
  *         name="per_page",
  *         in="query",
- *         description="Number of items per page (default: 15)",
+ *         description="Items per page (default: 15)",
  *         required=false,
  *         @OA\Schema(type="integer")
  *     ),
  *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(type="array", @OA\Items(ref="#/components/schemas/IncomeCollection")),
- *     ),
+ *          response=200,
+ *          description="Successful response",
+ *          @OA\JsonContent(
+ *              type="object",
+ *              @OA\Property(property="current_page", type="integer"),
+ *              @OA\Property(property="data", type="array", @OA\Items(ref="#/components/schemas/IncomeCollection")),
+ *              @OA\Property(property="first_page_url", type="string"),
+ *              @OA\Property(property="from", type="integer"),
+ *              @OA\Property(property="last_page", type="integer"),
+ *              @OA\Property(property="last_page_url", type="string"),
+ *              @OA\Property(property="next_page_url", type="string"),
+ *              @OA\Property(property="path", type="string"),
+ *              @OA\Property(property="per_page", type="integer"),
+ *              @OA\Property(property="prev_page_url", type="string"),
+ *              @OA\Property(property="to", type="integer"),
+ *              @OA\Property(property="total", type="integer")
+ *          ),
+ *      ),
  *     @OA\Response(response=401, description="Unauthorized"),
  *     @OA\Response(response=403, description="Forbidden"),
  *     @OA\Response(response=404, description="Sub not found"),
@@ -60,7 +81,7 @@ class ListController extends Controller
     {
         return new IncomeCollection(
             Income::getByGroupId($sub->group_id)
-                ->between('created_at', $request->from, $request->to)
+                ->between('created_at', $request->from_date, $request->to_date)
                 ->latest()
                 ->paginate($request->per_page ?? 15)
         );
