@@ -76,14 +76,25 @@ export default {
         return {
             validScroll: false,
             progress: 0,
+            startY: null,
+            touchY: null,
         };
     },
     props: {
         start: Boolean,
     },
     methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
         handleWheel(e) {
-            if (e.deltaY > 10) {
+            if (this.startY
+                ? this.startY - this.touchY > 110
+                : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
@@ -103,7 +114,9 @@ export default {
                     }
                 }
             }
-            if (e.deltaY < -10) {
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
@@ -124,11 +137,27 @@ export default {
         scroll() {
             if (this.$refs.view) {
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
         remove() {
             if (this.$refs.view) {
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
     },
@@ -217,7 +246,7 @@ export default {
         background: linear-gradient(113deg, #0043AE 24.37%, #3A8FE3 111.64%);
         padding: 50px 30px;
         box-shadow: 0px 4px 7px 0px rgba(14, 14, 14, 0.05);
-        @media(max-width: 550px){
+        @media(max-width: 550px) {
             padding: 20px 16px;
         }
     }

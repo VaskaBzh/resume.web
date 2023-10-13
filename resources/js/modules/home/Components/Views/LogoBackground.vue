@@ -55,14 +55,14 @@ export default {
 
 .logo_elem-first {
     width: clamp(324px, 34vw, 1070px);
-    height: clamp(106px, 5vw, 348px);
+    height: clamp(106px, 12vw, 348px);
 }
 
 .logo_elem-last {
     margin-left: auto;
     margin-top: -46px;
     width: clamp(237px, 34vw, 778px);
-    height: clamp(106px, 5vw, 348px);
+    height: clamp(106px, 12vw, 348px);
 }
 
 @media (max-width: 1300px) {

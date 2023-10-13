@@ -1,9 +1,8 @@
 <template>
     <div class="about about__section" ref="view">
         <div class="about__wrapper">
-            <landing-headline class="about__headline">{{
-                    $t("who_we_are.button")
-                }}
+            <landing-headline class="about__headline"
+            >{{ $t("who_we_are.button") }}
             </landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
@@ -113,14 +112,23 @@ export default {
             keys: ["hostings", "miners"],
             validScroll: false,
             progress: 0,
+            startY: null,
+            touchY: null,
         };
     },
     props: {
         start: Boolean,
     },
     methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
         handleWheel(e) {
-            if (e.deltaY > 10) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
                 if (this.progress === 0) {
@@ -139,7 +147,9 @@ export default {
                     }
                 }
             }
-            if (e.deltaY < -10) {
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
@@ -160,11 +170,27 @@ export default {
         scroll() {
             if (this.$refs.view) {
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
         remove() {
             if (this.$refs.view) {
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
     },
@@ -191,7 +217,7 @@ export default {
     width: 100%;
 
     &__headline {
-        @media (max-width: 767.87px) {
+        @media (max-width: 1500.87px) {
             margin-bottom: 135px;
         }
     }

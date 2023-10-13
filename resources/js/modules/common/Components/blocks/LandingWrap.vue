@@ -137,14 +137,27 @@ export default {
 
 @media (min-width: 1500.98px) {
     .wrap_title {
-        transform: translateX(-50%) translateY(-50%);
+        transform: translateX(-50%);
+    }
+}
+
+
+@media (max-width: 1500.98px) {
+    .wrap_title {
+        transform: translateY(-50%);
     }
 }
 
 @media (max-width: 991.98px) {
     .wrap_title {
         transform: translateY(-50%);
-        max-width: 250px;
+        max-width: 500px;
+    }
+}
+
+@media (max-width: 768.98px) {
+    .wrap_title {
+        max-width: 335px;
     }
 }
 </style>

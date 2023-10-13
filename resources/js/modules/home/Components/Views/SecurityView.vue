@@ -58,12 +58,23 @@ export default {
             key: "encryption",
             keys: ["encryption", "updates", "DDoS"],
             validScroll: false,
+            startY: null,
+            touchY: null,
             progress: 0,
         };
     },
     methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
         handleWheel(e) {
-            if (e.deltaY > 10) {
+            if (this.startY
+                ? this.startY - this.touchY > 110
+                : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
                 if (this.progress === 0) {
@@ -87,7 +98,9 @@ export default {
                     }
                 }
             }
-            if (e.deltaY < -10) {
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
@@ -113,11 +126,27 @@ export default {
         scroll() {
             if (this.$refs.view) {
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
         remove() {
             if (this.$refs.view) {
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
     },

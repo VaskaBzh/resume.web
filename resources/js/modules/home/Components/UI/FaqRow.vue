@@ -33,9 +33,14 @@ export default {
     position: relative;
 }
 
-@media (max-width: 767.98px) {
+@media (max-width: 991.98px) {
     .faq__row {
         flex-direction: column;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .faq__row {
         gap: 10px;
     }
 

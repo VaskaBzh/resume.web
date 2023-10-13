@@ -1,36 +1,37 @@
 <template>
     <div class="hero hero__section" ref="view">
         <div class="hero__content">
-            <logo-background />
+            <logo-background/>
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
                         <span class="hero_title_elem">{{
-                            $t("title[0]")
-                        }}</span>
+                                $t("title[0]")
+                            }}</span>
                         <span class="hero_title_elem">{{
-                            $t("title[1]")
-                        }}</span>
+                                $t("title[1]")
+                            }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-left">
                         <span class="hero_title_elem">{{
-                            $t("title[2]")
-                        }}</span>
+                                $t("title[2]")
+                            }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-top">
                         <span class="hero_title_elem"
-                            >{{ $t("title[3]")
+                        >{{
+                                $t("title[3]")
                             }}<span class="hero_title_elem">{{
-                                $t("title[4]")
-                            }}</span></span
+                                    $t("title[4]")
+                                }}</span></span
                         >
                     </span>
                     <span class="hero_title_row">
                         <span class="hero_title_elem hero_title_elem-last"
-                            >Bitcoin</span
+                        >Bitcoin</span
                         >
                         <landing-text tag="span" class="hero_text"
-                            >{{ $t("text") }}
+                        >{{ $t("text") }}
                         </landing-text>
                     </span>
                 </landing-title>
@@ -44,7 +45,7 @@
 </template>
 
 <script>
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
@@ -64,6 +65,8 @@ export default {
     data() {
         return {
             validScroll: false,
+            startY: null,
+            touchY: null,
         };
     },
     props: {
@@ -73,8 +76,15 @@ export default {
         },
     },
     methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
         handleWheel(e) {
-            if (e.deltaY > 10) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
                 if (!this.validScroll) {
@@ -88,7 +98,9 @@ export default {
                     this.$emit("next");
                 }
             }
-            if (e.deltaY < -10) {
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
@@ -104,11 +116,27 @@ export default {
         scroll() {
             if (this.$refs.view) {
                 this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
         remove() {
             if (this.$refs.view) {
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
             }
         },
     },
