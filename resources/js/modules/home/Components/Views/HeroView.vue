@@ -1,5 +1,5 @@
 <template>
-    <div class="hero">
+    <div class="hero hero__section" ref="view">
         <div class="hero__content">
             <logo-background/>
             <div class="hero__head">
@@ -59,6 +59,46 @@ export default {
     },
     i18n: {
         sharedMessages: HomeMessage,
+    },
+    data() {
+        return {
+            validScroll: false,
+        };
+    },
+    methods: {
+        handleWheel(e) {
+            if (e.deltaY > 10) {
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (e.deltaY < -10) {
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+    },
+    mounted() {
+        this.$refs.view.addEventListener("wheel", this.handleWheel);
+    },
+    unmounted() {
+        if (this.$refs.view) {
+            if (this.$refs.view) {
+                this.$refs.view.removeEventListener("wheel", this.handleWheel);
+            }
+        }
     },
 };
 </script>

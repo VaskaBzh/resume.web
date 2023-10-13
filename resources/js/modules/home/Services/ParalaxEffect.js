@@ -1,54 +1,70 @@
 import gsap from "gsap";
 import {ScrollTrigger} from "gsap/ScrollTrigger";
 
-
 export function paralaxLayot() {
-    gsap.registerPlugin(ScrollTrigger)
-    const go = ()=> {
-        gsap.fromTo('.hero', {opacity: 1, yPercent: 0}, {opacity: 1, yPercent: -100, duration: 1})
-        gsap.fromTo('.about__section', {position: 'relative', top: 0, opacity: 0}, {
-            position: 'relative',
-            top: () => {
-                let aboutElemHeight = document.querySelector('.about__section').offsetHeight
-                return -(aboutElemHeight-window.scrollY)
-            },
-            opacity: 1,
-            duration: 2
-        })
-        console.log('ab')
-    }
+    gsap.registerPlugin(ScrollTrigger);
+    const go = () => {
+        gsap.fromTo(
+            ".hero",
+            {opacity: 1, yPercent: 0},
+            {opacity: 1, yPercent: -100, duration: 1}
+        );
+        gsap.fromTo(
+            ".about__section",
+            {position: "relative", top: 0, opacity: 0},
+            {
+                position: "relative",
+                top: () => {
+                    let aboutElemHeight =
+                        document.querySelector(".about__section").offsetHeight;
+                    return -(aboutElemHeight - window.scrollY);
+                },
+                opacity: 1,
+                duration: 2,
+            }
+        );
+        console.log("ab");
+    };
 
-    const goBack = ()=> {
-        gsap.fromTo('.hero', {opacity: 1, }, {opacity: 1, yPercent: 0, duration: 1})
-        gsap.fromTo('.about__section', {position: 'relative', opacity: 0}, {
-            position: 'relative',
-            top: () => {
-                let aboutElemHeight = document.querySelector('.about__section').offsetHeight
-                return (aboutElemHeight-window.scrollY)
-            },
-            opacity: 1,
-            duration: 2
-        })
-    }
+    const goBack = () => {
+        gsap.fromTo(
+            ".hero",
+            {opacity: 1},
+            {opacity: 1, yPercent: 0, duration: 1}
+        );
+        gsap.fromTo(
+            ".about__section",
+            {position: "relative", opacity: 0},
+            {
+                position: "relative",
+                top: () => {
+                    let aboutElemHeight =
+                        document.querySelector(".about__section").offsetHeight;
+                    return aboutElemHeight - window.scrollY;
+                },
+                opacity: 1,
+                duration: 2,
+            }
+        );
+    };
     ScrollTrigger.create({
-        trigger: '.layout__container',
-        start: '+=200',
-        end: '+=200 top',
+        trigger: ".layout__container",
+        start: "+=200",
+        end: "+=200 top",
         invalidateOnRefresh: true,
         scrub: 0.5,
         fastScrollEnd: true,
         markers: {
-                    fontSize: '2rem'
-                },
+            fontSize: "2rem",
+        },
         smoothTouch: true,
         onLeave: () => {
-            go()
+            go();
         },
         onEnterBack: () => {
-            goBack()
-
+            goBack();
         },
-    })
+    });
     // ScrollTrigger.refresh()
     // ScrollTrigger.create({
     //     invalidateOnRefresh: true,

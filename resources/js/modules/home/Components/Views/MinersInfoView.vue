@@ -1,5 +1,5 @@
 <template>
-    <div class="miners miners__section">
+    <div class="miners miners__section" ref="view">
         <faq-view :faq="faq" :headline="$t('why_allbtc.button')">
             <template v-slot:title>
                 <landing-title tag="h3" class="faq_title miners_title">
@@ -52,6 +52,44 @@ export default {
     },
     i18n: {
         sharedMessages: HomeMessage,
+    },
+    data() {
+        return {
+            validScroll: false,
+        };
+    },
+    methods: {
+        handleWheel(e) {
+            if (e.deltaY > 10) {
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (e.deltaY < -10) {
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+    },
+    mounted() {
+        this.$refs.view.addEventListener("wheel", this.handleWheel);
+    },
+    unmounted() {
+        if (this.$refs.view) {
+            this.$refs.view.removeEventListener("wheel", this.handleWheel);
+        }
     },
 };
 </script>

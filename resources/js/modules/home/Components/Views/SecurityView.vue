@@ -1,5 +1,5 @@
 <template>
-    <div class="security security__section">
+    <div class="security security__section" ref="view">
         <div class="security__wrapper">
             <landing-headline>{{ $t("safety.button") }}</landing-headline>
             <landing-wrap :title="infoCards[key].title">
@@ -51,7 +51,41 @@ export default {
         return {
             key: "encryption",
             keys: ["encryption", "updates", "DDoS"],
+            validScroll: false,
         };
+    },
+    methods: {
+        handleWheel(e) {
+            if (e.deltaY > 10) {
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (e.deltaY < -10) {
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+    },
+    mounted() {
+        this.$refs.view.addEventListener("wheel", this.handleWheel);
+    },
+    unmounted() {
+        if (this.$refs.view) {
+            this.$refs.view.removeEventListener("wheel", this.handleWheel);
+        }
     },
 };
 </script>

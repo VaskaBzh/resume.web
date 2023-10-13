@@ -1,5 +1,5 @@
 <template>
-    <div class="history history__section history__section-wrap">
+    <div class="history history__section history__section-wrap" ref="view">
         <landing-headline>История нашего пула</landing-headline>
         <div class="history-pool__items">
             <div class="history-pool__item-line">
@@ -22,54 +22,103 @@
             <div class="history-pool__item-infos">
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2019</h3>
-                    <p class="history-pool__item-info-discription">Создаем площадки под
-                        размещение дата-центов, хостингов и майнинг-отелей.
-                        Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до
-                        введения фермы
-                        в эксплуатацию.</p>
+                    <p class="history-pool__item-info-discription">
+                        Создаем площадки под размещение дата-центов, хостингов и
+                        майнинг-отелей. Сотрудничаем с подрядчиками в РФ и СНГ.
+                        Создаем зоны для майнинга «под ключ»: от аренды до
+                        введения фермы в эксплуатацию.
+                    </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2020</h3>
-                    <p class="history-pool__item-info-discription">Произошел халвинг, сложность майнинга
-                        выросла. Появилась команда разработчиков. Наша цель – создание актуальных решений
-                        для оптимизации работы промышленных майнеров
-                        и дата-центров.</p>
+                    <p class="history-pool__item-info-discription">
+                        Произошел халвинг, сложность майнинга выросла. Появилась
+                        команда разработчиков. Наша цель – создание актуальных
+                        решений для оптимизации работы промышленных майнеров и
+                        дата-центров.
+                    </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2021</h3>
-                    <p class="history-pool__item-info-discription">Биткоин значительно подорожал. Мы кратно расширили
-                        штат и сформировали систему мониторинга для дата-центров. В этом же году заключили
-                        первые договоры на кастомную интеграцию.</p>
+                    <p class="history-pool__item-info-discription">
+                        Биткоин значительно подорожал. Мы кратно расширили штат
+                        и сформировали систему мониторинга для дата-центров. В
+                        этом же году заключили первые договоры на кастомную
+                        интеграцию.
+                    </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2022</h3>
-                    <p class="history-pool__item-info-discription">Официально зарегистрировали пул для майнинга
-                        криптовалют.
-                        К системе подключились первые дата-центры. На 50% увеличили их прибыль
-                        за каждый потраченный киловатт энергии.</p>
+                    <p class="history-pool__item-info-discription">
+                        Официально зарегистрировали пул для майнинга
+                        криптовалют. К системе подключились первые дата-центры.
+                        На 50% увеличили их прибыль за каждый потраченный
+                        киловатт энергии.
+                    </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2023</h3>
-                    <p class="history-pool__item-info-discription">Перестали работать только лишь как закрытый пул для
-                        дата-центров, вышли на международный рынок.
-                        К концу 2023 года у нас амбициозные планы.</p>
+                    <p class="history-pool__item-info-discription">
+                        Перестали работать только лишь как закрытый пул для
+                        дата-центров, вышли на международный рынок. К концу 2023
+                        года у нас амбициозные планы.
+                    </p>
                 </div>
             </div>
         </div>
+        <connect-with-us-view/>
     </div>
 </template>
-
 
 <script>
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
+import ConnectWithUsView from "./ConnectWithUsView.vue";
 
 export default {
     name: "HistoryPoolView",
-    components: {LandingHeadline, HeadLine},
-}
-</script>
+    components: {ConnectWithUsView, LandingHeadline, HeadLine},
 
+    data() {
+        return {
+            validScroll: false,
+        };
+    },
+    methods: {
+        handleWheel(e) {
+            if (e.deltaY > 10) {
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (e.deltaY < -10) {
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+    },
+    mounted() {
+        this.$refs.view.addEventListener("wheel", this.handleWheel);
+    },
+    unmounted() {
+        if (this.$refs.view) {
+            this.$refs.view.removeEventListener("wheel", this.handleWheel);
+        }
+    },
+};
+</script>
 
 <style scoped lang="scss">
 .history-pool {
@@ -93,7 +142,7 @@ export default {
         gap: 511px;
         margin-left: auto;
         padding-left: 50vw;
-        background: rgba(208, 213, 221, 0.20);
+        background: rgba(208, 213, 221, 0.2);
 
         &-block {
             width: 310px;
@@ -103,7 +152,7 @@ export default {
             width: 20px;
             height: 20px;
             border-radius: 50%;
-            background: #F5FAFF;
+            background: #f5faff;
         }
     }
 
@@ -113,7 +162,7 @@ export default {
         gap: 511px;
         margin-left: auto;
         padding-left: 200px;
-      opacity: .6;
+        opacity: 0.6;
     }
 
     &__item-info {
@@ -124,7 +173,7 @@ export default {
         flex-flow: column nowrap;
 
         &-year {
-            color: #F5FAFF;
+            color: #f5faff;
             font-family: Unbounded, serif;
             font-size: 30px;
             font-style: normal;
@@ -134,7 +183,7 @@ export default {
         }
 
         &-discription {
-            color: rgba(245, 250, 255, 0.70);
+            color: rgba(245, 250, 255, 0.7);
             font-family: NunitoSans, serif;
             font-size: 20px;
             font-style: normal;

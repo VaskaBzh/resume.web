@@ -1,5 +1,5 @@
 <template>
-    <div class="about about__section">
+    <div class="about about__section" ref="view">
         <div class="about__wrapper">
             <landing-headline>{{ $t("who_we_are.button") }}</landing-headline>
             <landing-wrap :title="infoCards[key].title">
@@ -24,9 +24,8 @@
                 </template>
             </landing-wrap>
             <landing-button>
-                <template v-slot:text>{{
-                        $t("who_we_are.card_private.button[1]")
-                    }}
+                <template v-slot:text
+                >{{ $t("who_we_are.card_private.button[1]") }}
                 </template>
             </landing-button>
         </div>
@@ -109,7 +108,41 @@ export default {
         return {
             key: "hostings",
             keys: ["hostings", "miners"],
+            validScroll: false,
         };
+    },
+    methods: {
+        handleWheel(e) {
+            if (e.deltaY > 10) {
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (e.deltaY < -10) {
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+    },
+    mounted() {
+        this.$refs.view.addEventListener("wheel", this.handleWheel);
+    },
+    unmounted() {
+        if (this.$refs.view) {
+            this.$refs.view.removeEventListener("wheel", this.handleWheel);
+        }
     },
 };
 </script>

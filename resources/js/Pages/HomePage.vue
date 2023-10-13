@@ -1,44 +1,95 @@
 <template>
-    <home-title/>
-    <who-we-are/>
-    <calculator-land/>
-    <miners-info-view/>
-    <make-up-cab/>
-    <security-view/>
-    <app-mobile-view/>
-    <payments-view/>
-    <mission-view/>
-    <history-pool-view/>
-    <connect-with-us-view/>
+    <transition name="paralax" @enter="enter" @leave="leave">
+        <component
+            :is="component"
+            ref="view"
+            @next="nextView"
+            @prev="prevView"
+        />
+    </transition>
 </template>
 
 <script>
-import HomeTitle from "@/modules/home/Components/Views/HeroView.vue";
-import WhoWeAre from "@/modules/home/Components/Views/AboutView.vue";
-import CalculatorLand from "@/modules/home/Components/Views/CalculatorLand.vue";
-import MinersInfoView from "@/modules/home/Components/Views/MinersInfoView.vue";
-import MakeUpCab from "@/modules/home/Components/Views/CabinetView.vue";
-import SecurityView from "@/modules/home/Components/Views/SecurityView.vue";
-import AppMobileView from "@/modules/home/Components/Views/AppMobileView.vue";
-import PaymentsView from "@/modules/home/Components/Views/PaymentsView.vue";
-import MissionView from "@/modules/home/Components/Views/MissionView.vue";
-import ConnectWithUsView from "@/modules/home/Components/Views/ConnectWithUsView.vue";
-import HistoryPoolView from "@/modules/home/Components/Views/HistoryPoolView.vue";
+import {ComponentsEnum} from "@/modules/home/enums/ComponentsEnum";
 
 export default {
     name: "home-page",
-    components: {
-        HistoryPoolView,
-        ConnectWithUsView,
-        MissionView,
-        PaymentsView,
-        AppMobileView,
-        SecurityView,
-        MakeUpCab,
-        MinersInfoView,
-        CalculatorLand,
-        WhoWeAre,
-        HomeTitle,
+    data() {
+        return {
+            keys: [
+                "home",
+                "about",
+                "calculator",
+                "miners",
+                "cabinet",
+                "security",
+                "mobile",
+                "payments",
+                "mission",
+                "history",
+            ],
+            component: null,
+            direction: true,
+            index: 0,
+        };
+    },
+    methods: {
+        enter(view, done) {
+            view.style.transform = `translateY(${
+                this.direction ? 150 : -150
+            }%)`;
+            view.style.opacity = 0;
+
+            setTimeout(() => {
+                view.style.transform = `translateY(0%)`;
+            }, 100);
+            setTimeout(() => {
+                view.style.opacity = 1;
+                view.focus();
+                done();
+            }, 300);
+        },
+        leave(view, done) {
+            view.style.opacity = 1;
+            view.style.transform = `translateY(0%)`;
+
+            setTimeout(() => {
+                view.style.transform = `translateY(${
+                    this.direction ? -150 : 150
+                }%)`;
+                view.style.opacity = 0;
+            }, 100);
+            setTimeout(() => {
+                view.focus();
+                done();
+            }, 300);
+        },
+        nextView() {
+            this.index = this.index + 1;
+
+            this.direction = true;
+            this.renderView();
+        },
+        prevView() {
+            this.index = this.index - 1;
+
+            this.direction = false;
+            this.renderView();
+        },
+        renderView() {
+            this.component = ComponentsEnum[this.keys[this.index]];
+        },
+    },
+    watch: {
+        index(newIndex, oldIndex) {
+            if (newIndex === this.keys.length - 1 || newIndex === 0) {
+                this.index = oldIndex;
+            }
+        },
+    },
+    mounted() {
+        document.querySelector("body").style.overflow = "hidden";
+        this.renderView();
     },
 };
 </script>

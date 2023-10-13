@@ -1,5 +1,5 @@
 <template>
-    <div class="mobile-view mobile__section mobile__section-wrap">
+    <div class="mobile-view mobile__section mobile__section-wrap" ref="view">
         <div class="mobile-view__block">
             <landing-headline class="mobile-view__title"
             >{{ $t("mobile_app.button") }}
@@ -113,6 +113,44 @@ export default {
     // mounted() {
     //     slideMobileView()
     // }
+    data() {
+        return {
+            validScroll: false,
+        };
+    },
+    methods: {
+        handleWheel(e) {
+            if (e.deltaY > 10) {
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (e.deltaY < -10) {
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+    },
+    mounted() {
+        this.$refs.view.addEventListener("wheel", this.handleWheel);
+    },
+    unmounted() {
+        if (this.$refs.view) {
+            this.$refs.view.removeEventListener("wheel", this.handleWheel);
+        }
+    },
 };
 </script>
 
