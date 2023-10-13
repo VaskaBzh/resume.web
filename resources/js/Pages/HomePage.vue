@@ -35,9 +35,9 @@ export default {
     },
     methods: {
         enter(view, done) {
-            view.style.transform = `translateY(${
-                this.direction ? 150 : -150
-            }%)`;
+            view.style.transform = view.style.transform
+                ? view.style.transform
+                : `translateY(${this.direction ? 150 : -150}%)`;
             view.style.opacity = 0;
 
             setTimeout(() => {
@@ -51,7 +51,9 @@ export default {
         },
         leave(view, done) {
             view.style.opacity = 1;
-            view.style.transform = `translateY(0%)`;
+            view.style.transform = view.style.transform
+                ? view.style.transform
+                : `translateY(0%)`;
 
             setTimeout(() => {
                 view.style.transform = `translateY(${
