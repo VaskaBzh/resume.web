@@ -6,29 +6,37 @@ namespace App\Http\Resources;
 
 use App\Models\Income;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use OpenApi\Attributes as OA;
 
 /**
  * @see Income
- *
- * @OA\Schema(
- *     schema="IncomeCollection",
- *     type="object",
- *     @OA\Property(
- *         property="data",
- *         type="array",
- *         @OA\Items(
- *             type="object",
- *             @OA\Property(property="referral_id", type="integer"),
- *             @OA\Property(property="amount", type="number"),
- *             @OA\Property(property="hash", type="integer"),
- *             @OA\Property(property="status", type="string"),
- *             @OA\Property(property="message", type="string"),
- *             @OA\Property(property="created_at", type="string"),
- *             @OA\Property(property="updated_at", type="string"),
- *         )
- *     ),
- * )
  */
+
+#[
+    OA\Schema(
+        schema: "IncomeCollection",
+        properties: [
+            new OA\Property(
+                property: "data",
+                type: "array",
+                items: new OA\Items(
+                    properties: [
+                        new OA\Property(property: "referral_id", type: "integer"),
+                        new OA\Property(property: "amount", type: "number"),
+                        new OA\Property(property: "hash", type: "integer"),
+                        new OA\Property(property: "status", type: "string"),
+                        new OA\Property(property: "message", type: "string"),
+                        new OA\Property(property: "created_at", type: "string"),
+                        new OA\Property(property: "updated_at", type: "string"),
+                    ],
+                    type: "object"
+                )
+            ),
+        ],
+        type: "object"
+    )
+]
+
 class IncomeCollection extends ResourceCollection
 {
     public function toArray($request): array

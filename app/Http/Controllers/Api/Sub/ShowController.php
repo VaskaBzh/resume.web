@@ -10,31 +10,48 @@ use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Get(
- *     path="/subs/sub/{sub}",
- *     summary="Get subaccount",
- *     tags={"Subaccount"},
- *     @OA\Parameter(
- *         name="sub",
- *         in="path",
- *         description="Sub's ID",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(ref="#/components/schemas/SubResource")
- *     ),
- *     @OA\Response(response=401, description="Unauthorized"),
- *     @OA\Response(response=403, description="Forbidden"),
- *     @OA\Response(response=404, description="User not found"),
- * )
- */
+
 class ShowController extends Controller
 {
+    #[
+        OA\Get(
+            path: '/subs/sub/{sub}',
+            summary: 'Get subaccount',
+            security: [['bearerAuth' => []]],
+            tags: ['Subaccount'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'sub',
+                    description: "Sub's ID",
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Successful response',
+                    content: [
+                        new OA\JsonContent(
+                            ref: '#/components/schemas/SubResource'
+                        )
+                    ],
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNAUTHORIZED,
+                    description: 'Unauthorized',
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                    description: 'User not found',
+                ),
+            ],
+        )
+    ]
     public function __invoke(
         Request       $request,
         Sub           $sub,

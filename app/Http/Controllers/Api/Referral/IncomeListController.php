@@ -10,59 +10,79 @@ use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Get(
- *     path="/referrals/incomes/{user}",
- *     summary="Get referral incomes list for a user",
- *     tags={"Referral"},
- *     @OA\Parameter(
- *         name="user",
- *         in="path",
- *         description="User's ID",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="current_page", type="integer"),
- *             @OA\Property(property="data", type="array",
- *                 @OA\Items(
- *                     @OA\Property(property="email", type="string"),
- *                     @OA\Property(property="daily_amount", type="string"),
- *                     @OA\Property(property="hash", type="float"),
- *                     @OA\Property(property="created_at", type="string"),
- *                     @OA\Property(property="worker_count", type="integer")
- *                 )
- *             ),
- *             @OA\Property(property="first_page_url", type="string"),
- *             @OA\Property(property="from", type="integer"),
- *             @OA\Property(property="last_page", type="integer"),
- *             @OA\Property(property="last_page_url", type="string"),
- *             @OA\Property(property="links", type="array",
- *                 @OA\Items(
- *                     @OA\Property(property="url", type="string"),
- *                     @OA\Property(property="label", type="string"),
- *                     @OA\Property(property="active", type="boolean")
- *                 )
- *             ),
- *             @OA\Property(property="next_page_url", type="string"),
- *             @OA\Property(property="path", type="string"),
- *             @OA\Property(property="per_page", type="integer"),
- *             @OA\Property(property="prev_page_url", type="string"),
- *             @OA\Property(property="to", type="integer"),
- *             @OA\Property(property="total", type="integer")
- *         )
- *     ),
- *     @OA\Response(response=401, description="Unauthorized"),
- *     @OA\Response(response=422, description="Unprocessable Entity"),
- * )
- */
 class IncomeListController extends Controller
 {
+    #[
+        OA\Get(
+            path: "/referrals/incomes/{user}",
+            summary: "Get referral incomes list for a user",
+            security: [['bearerAuth' => []]],
+            tags: ["Referral"],
+            parameters: [
+                new OA\Parameter(
+                    name: "user",
+                    description: "User's ID",
+                    in: "path",
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: 200,
+                    description: "Successful response",
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(property: "current_page", type: "integer"),
+                                new OA\Property(
+                                    property: "data",
+                                    type: "array",
+                                    items: new OA\Items(
+                                        properties: [
+                                            new OA\Property(property: "email", type: "string"),
+                                            new OA\Property(property: "daily_amount", type: "string"),
+                                            new OA\Property(property: "hash", type: "float"),
+                                            new OA\Property(property: "created_at", type: "string"),
+                                            new OA\Property(property: "worker_count", type: "integer"),
+                                        ],
+                                        type: "object"
+                                    ),
+                                ),
+                                new OA\Property(property: "first_page_url", type: "string"),
+                                new OA\Property(property: "from", type: "integer"),
+                                new OA\Property(property: "last_page", type: "integer"),
+                                new OA\Property(property: "last_page_url", type: "string"),
+                                new OA\Property(
+                                    property: "links",
+                                    type: "array",
+                                    items: new OA\Items(
+                                        properties: [
+                                            new OA\Property(property: "url", type: "string"),
+                                            new OA\Property(property: "label", type: "string"),
+                                            new OA\Property(property: "active", type: "boolean"),
+                                        ],
+                                        type: "object"
+                                    ),
+                                ),
+                                new OA\Property(property: "next_page_url", type: "string"),
+                                new OA\Property(property: "path", type: "string"),
+                                new OA\Property(property: "per_page", type: "integer"),
+                                new OA\Property(property: "prev_page_url", type: "string"),
+                                new OA\Property(property: "to", type: "integer"),
+                                new OA\Property(property: "total", type: "integer"),
+                            ],
+                            type: "object"
+                        ),
+                    ]
+                ),
+                new OA\Response(response: 401, description: "Unauthorized"),
+                new OA\Response(response: 422, description: "Unprocessable Entity"),
+            ]
+        )
+    ]
     public function __invoke(User $user, Request $request)
     {
         if (!$user?->referral_code) {

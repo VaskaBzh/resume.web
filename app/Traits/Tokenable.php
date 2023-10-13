@@ -9,43 +9,67 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 trait Tokenable
 {
-    /**
-     * @OA\Get(
-     *     path="/password/reset/verify/{id}/{hash}",
-     *     summary="Verify password reset token",
-     *     tags={"Auth"},
-     *     @OA\Parameter(
-     *         name="id",
-     *         in="path",
-     *         description="User's ID",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Parameter(
-     *         name="hash",
-     *         in="path",
-     *         description="Reset token hash",
-     *         required=true,
-     *         @OA\Schema(type="string")
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request, token not exists or expired",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="status", type="string", description="Error message")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=302,
-     *         description="Token is valid, redirect to password reset page",
-     *         @OA\Header(header="Location", @OA\Schema(type="string"), description="Password reset URL")
-     *     )
-     * )
-     */
+    #[
+        OA\Get(
+            path: '/password/reset/verify/{id}/{hash}',
+            summary: 'Verify password reset token',
+            tags: ['Auth'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'id',
+                    description: "User's ID",
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(
+                        type: 'string'
+                    )
+                ),
+                new OA\Parameter(
+                    name: 'hash',
+                    description: 'Reset token hash',
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(
+                        type: 'string'
+                    )
+                )
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_BAD_REQUEST,
+                    description: 'Bad request, token not exists or expired',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'status',
+                                    description: 'Error message',
+                                    type: 'string'
+                                )
+                            ]
+                        )
+                    ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_MOVED_PERMANENTLY,
+                    description: 'Token is valid, redirect to password reset page',
+                    headers: [
+                        new OA\Header(
+                            header: 'Location',
+                            description: 'Password reset URL',
+                            schema: new OA\Schema(
+                                type: 'string'
+                            )
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
     public function verifyPasswordReset(Request $request, $id, $hash): JsonResponse|RedirectResponse
     {
         $user = User::find($id);

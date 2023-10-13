@@ -10,46 +10,58 @@ use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 class TwoFactorController extends Controller
 {
-    /**
-     * @OA\Get(
-     *     path="/2fac/qrcode/{user}",
-     *     summary="Generate QR code for two-factor authentication",
-     *     tags={"Auth"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="QR code and secret key generated successfully",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                  property="qrCode",
-     *                  type="string",
-     *                  description="QR code image data"
-     *             ),
-     *             @OA\Property(
-     *                  property="secret",
-     *                  type="string",
-     *                  description="Secret key for two-factor authentication"
-     *             ),
-     *         ),
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  description="Error message"
-     *             ),
-     *         ),
-     *     ),
-     * )
-     */
+    #[
+        OA\Get(
+            path: '/2fac/qrcode/{user}',
+            summary: 'Generate QR code for two-factor authentication',
+            security: [['bearerAuth' => []]],
+            tags: ['Auth'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'user',
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'QR code and secret key generated successfully',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'qrCode',
+                                    description: 'QR code image data',
+                                    type: 'string'
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_BAD_REQUEST,
+                    description: 'Bad request',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'message',
+                                    description: 'Error message',
+                                    type: 'string'
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+            ]
+        )
+    ]
     public function qrCode(User $user, Google2FA $googleTwoFactor): JsonResponse
     {
         try {
@@ -72,53 +84,73 @@ class TwoFactorController extends Controller
 
         return new JsonResponse([
             'qrCode' => $QRImage,
-            'secret' => $secretKey,
         ]);
     }
 
-    /**
-     * @OA\Put(
-     *     path="/2fac/enable/{user}",
-     *     summary="Enable two-factor authentication with secret key",
-     *     tags={"Auth"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"two_fa_secret"},
-     *             @OA\Property(
-     *                  property="two_fa_secret",
-     *                  type="string",
-     *                  description="Two-factor authentication secret key"
-     *              ),
-     *         ),
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Two-factor authentication enabled successfully",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  description="Success message"
-     *             ),
-     *         ),
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                  property="error",
-     *                  type="string",
-     *                  description="Error message"
-     *             ),
-     *         ),
-     *     ),
-     * )
-     */
+
+    #[
+        OA\Put(
+            path: '/2fac/enable/{user}',
+            summary: 'Enable two-factor authentication with secret key',
+            security: [['bearerAuth' => []]],
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: [
+                    new OA\JsonContent(
+                        required: ['two_fa_secret'],
+                        properties: [
+                            new OA\Property(
+                                property: 'two_fa_secret',
+                                description: 'Two-factor authentication secret key',
+                                type: 'string'
+                            ),
+                        ]
+                    )
+                ]
+            ),
+            tags: ['Auth'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'user',
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_ACCEPTED,
+                    description: 'Two-factor authentication enabled successfully',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'message',
+                                    description: 'Success message',
+                                    type: 'string'
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_BAD_REQUEST,
+                    description: 'Bad request',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'error',
+                                    description: 'Error message',
+                                    type: 'string'
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+            ]
+        )
+    ]
     public function enable(
         TwoFactorVerifyRequest $request,
         User $user,
@@ -150,31 +182,45 @@ class TwoFactorController extends Controller
         }
     }
 
-    /**
-     * @OA\Put(
-     *     path="/2fac/disable/{user}",
-     *     summary="Disable two-factor authentication",
-     *     tags={"Auth"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Two-factor authentication disabled successfully",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                  property="status",
-     *                  type="boolean",
-     *                  description="True if two-factor authentication was successfully disabled, otherwise false"
-     *             ),
-     *             @OA\Property(
-     *                  property="message",
-     *                  type="string",
-     *                  description="Success message"
-     *             ),
-     *         ),
-     *     ),
-     * )
-     */
+
+    #[
+        OA\Put(
+            path: '/2fac/disable/{user}',
+            summary: 'Disable two-factor authentication',
+            security: [['bearerAuth' => []]],
+            tags: ['Auth'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'user',
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_ACCEPTED,
+                    description: 'Two-factor authentication disabled successfully',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'status',
+                                    description: 'True if two-factor authentication was successfully disabled, otherwise false',
+                                    type: 'boolean'
+                                ),
+                                new OA\Property(
+                                    property: 'message',
+                                    description: 'Success message',
+                                    type: 'string'
+                                ),
+                            ]
+                        )
+                    ]
+                ),
+            ]
+        )
+    ]
     public function disable(User $user): JsonResponse
     {
         return new JsonResponse([

@@ -11,33 +11,52 @@ use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Get(
- *     path="/referrals/statistic/{user}",
- *     summary="Get referral statistics for a user",
- *     tags={"Referral"},
- *     @OA\Parameter(
- *         name="user",
- *         in="path",
- *         description="User's ID",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="statistic", ref="#/components/schemas/ReferralStatisticResource"),
- *         )
- *     ),
- *     @OA\Response(response=422, description="Unprocessable Entity"),
- *     @OA\Response(response=500, description="Internal Server Error"),
- * )
- */
 class StatisticController extends Controller
 {
+    #[
+        OA\Get(
+            path: '/referrals/statistic/{user}',
+            summary: 'Get referral statistics for a user',
+            security: [['bearerAuth' => []]],
+            tags: ['Referral'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'user',
+                    description: "User's ID",
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Successful response',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'statistic',
+                                    ref: '#/components/schemas/ReferralStatisticResource'
+                                )
+                            ],
+                            type: 'object',
+                        ),
+                    ],
+                ),
+                new OA\Response(
+                    response: 422,
+                    description: 'Unprocessable Entity',
+                ),
+                new OA\Response(
+                    response: 500,
+                    description: 'Internal Server Error',
+                ),
+            ],
+        )
+    ]
     public function __invoke(User $user)
     {
         if (!$user?->referral_code) {

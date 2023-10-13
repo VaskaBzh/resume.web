@@ -6,10 +6,6 @@
         "contact": {
             "email": "ognevoy.bima@gmail.com"
         },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
-        },
         "version": "1.0.0"
     },
     "servers": [
@@ -25,6 +21,16 @@
                 ],
                 "summary": "Change user's password",
                 "operationId": "f2330ec3079fdf32137febd2f6c7eafd",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -55,7 +61,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "202": {
                         "description": "Password changed successfully",
                         "content": {
                             "application/json": {
@@ -71,8 +77,8 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Bad request",
+                    "422": {
+                        "description": "Unprocessable entity",
                         "content": {
                             "application/json": {
                                 "schema": {
@@ -134,7 +140,12 @@
                     "404": {
                         "description": "Watcher link not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/chart": {
@@ -157,9 +168,6 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
                     "404": {
                         "description": "User not found"
                     }
@@ -172,6 +180,7 @@
                     "Income"
                 ],
                 "summary": "Get list of incomes",
+                "operationId": "5a67eed1bb6a258ba46d5d91fac020b4",
                 "parameters": [
                     {
                         "name": "sub",
@@ -276,13 +285,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Sub not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/minerstats": {
@@ -360,6 +371,7 @@
                     "Payouts"
                 ],
                 "summary": "Get list of payouts",
+                "operationId": "5987494749780bb8c95ac8101e2081d5",
                 "parameters": [
                     {
                         "name": "sub",
@@ -464,13 +476,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Sub not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/referrals/incomes/{user}": {
@@ -479,6 +493,7 @@
                     "Referral"
                 ],
                 "summary": "Get referral incomes list for a user",
+                "operationId": "bd064a506bca14db30d915f59a1df025",
                 "parameters": [
                     {
                         "name": "user",
@@ -583,7 +598,12 @@
                     "422": {
                         "description": "Unprocessable Entity"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/referrals/{user}": {
@@ -626,7 +646,12 @@
                     "422": {
                         "description": "Unprocessable Entity"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/referrals/statistic/{user}": {
@@ -635,6 +660,7 @@
                     "Referral"
                 ],
                 "summary": "Get referral statistics for a user",
+                "operationId": "bc1e9ab56a6a658e4c4810678d8b758f",
                 "parameters": [
                     {
                         "name": "user",
@@ -668,7 +694,12 @@
                     "500": {
                         "description": "Internal Server Error"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/statistic/{sub}": {
@@ -725,13 +756,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Sub not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/subs/{user}": {
@@ -769,13 +802,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "User not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/subs/sub/{sub}": {
@@ -784,6 +819,7 @@
                     "Subaccount"
                 ],
                 "summary": "Get subaccount",
+                "operationId": "de4bc46d9d83c09cf40f2070219356d3",
                 "parameters": [
                     {
                         "name": "sub",
@@ -809,13 +845,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "User not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/wallets/{sub}": {
@@ -852,13 +890,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Sub not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/watchers/{user}/{sub}": {
@@ -904,13 +944,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "User or sub not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/workers/{sub}": {
@@ -1038,13 +1080,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Sub not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/worker/{worker}": {
@@ -1148,13 +1192,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Worker not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/workerhashrate/{worker}": {
@@ -1200,13 +1246,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
+                    "422": {
                         "description": "Worker not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/password/forgot": {
@@ -1221,9 +1269,6 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "email"
-                                ],
                                 "properties": {
                                     "email": {
                                         "description": "User's email",
@@ -1416,8 +1461,8 @@
                 "summary": "Decrease the expiration time of the current token",
                 "operationId": "d890f17da1689552b7634a281537ab19",
                 "responses": {
-                    "204": {
-                        "description": "No content (Token expiration time decreased successfully)"
+                    "202": {
+                        "description": "Accept (Token expiration time decreased successfully)"
                     },
                     "401": {
                         "description": "Unauthorized",
@@ -1450,27 +1495,16 @@
                 ],
                 "summary": "Resend email verification link",
                 "operationId": "1f169d9c284bc9666a818c9203a7d52e",
-                "requestBody": {
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "required": [
-                                    "email"
-                                ],
-                                "properties": {
-                                    "email": {
-                                        "description": "User's email address",
-                                        "type": "string",
-                                        "format": "email",
-                                        "example": "user@example.com"
-                                    }
-                                },
-                                "type": "object"
-                            }
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
-                },
+                ],
                 "responses": {
                     "200": {
                         "description": "Email verification link sent successfully",
@@ -1488,7 +1522,7 @@
                             }
                         }
                     },
-                    "422": {
+                    "400": {
                         "description": "Unprocessable Entity",
                         "content": {
                             "application/json": {
@@ -1514,6 +1548,16 @@
                 ],
                 "summary": "Restore user password",
                 "operationId": "32f1d997410a360dd6c53797b3bf0453",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1581,6 +1625,16 @@
                 ],
                 "summary": "Generate QR code for two-factor authentication",
                 "operationId": "5ef0571bbe6220eac0159e40af3de571",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
                     "200": {
                         "description": "QR code and secret key generated successfully",
@@ -1590,10 +1644,6 @@
                                     "properties": {
                                         "qrCode": {
                                             "description": "QR code image data",
-                                            "type": "string"
-                                        },
-                                        "secret": {
-                                            "description": "Secret key for two-factor authentication",
                                             "type": "string"
                                         }
                                     },
@@ -1633,6 +1683,16 @@
                 ],
                 "summary": "Enable two-factor authentication with secret key",
                 "operationId": "07e4762404b45088d9963a2c61d942f8",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "requestBody": {
                     "required": true,
                     "content": {
@@ -1653,7 +1713,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "202": {
                         "description": "Two-factor authentication enabled successfully",
                         "content": {
                             "application/json": {
@@ -1700,8 +1760,18 @@
                 ],
                 "summary": "Disable two-factor authentication",
                 "operationId": "120760ac55eac317c0924677c2c44288",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
                 "responses": {
-                    "200": {
+                    "202": {
                         "description": "Two-factor authentication disabled successfully",
                         "content": {
                             "application/json": {
@@ -1757,19 +1827,8 @@
                     }
                 ],
                 "responses": {
-                    "204": {
-                        "description": "No content (Email address verified successfully)"
-                    },
-                    "302": {
-                        "description": "Found (Redirect to the specified URL)",
-                        "headers": {
-                            "Location": {
-                                "description": "Redirect URL",
-                                "schema": {
-                                    "type": "string"
-                                }
-                            }
-                        }
+                    "301": {
+                        "description": "Found (Redirect to the specified URL)"
                     },
                     "422": {
                         "description": "Unprocessable Entity",
@@ -1822,13 +1881,15 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "403": {
-                        "description": "Forbidden"
-                    },
-                    "404": {
-                        "description": "User not found"
+                    "422": {
+                        "description": "Unprocessable entity"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/password/reset/verify/{id}/{hash}": {
@@ -1845,7 +1906,7 @@
                         "description": "User's ID",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string"
                         }
                     },
                     {
@@ -1875,7 +1936,7 @@
                             }
                         }
                     },
-                    "302": {
+                    "301": {
                         "description": "Token is valid, redirect to password reset page",
                         "headers": {
                             "Location": {

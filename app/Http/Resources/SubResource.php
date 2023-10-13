@@ -6,28 +6,30 @@ namespace App\Http\Resources;
 
 use App\Models\Sub;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
-/**
- * @mixin Sub
- *
- * @OA\Schema(
- *     schema="SubResource",
- *     type="object",
- *     @OA\Property(property="name", type="string"),
- *     @OA\Property(property="group_id", type="integer"),
- *     @OA\Property(property="workers_count_active", type="integer"),
- *     @OA\Property(property="workers_count_in_active", type="integer"),
- *     @OA\Property(property="workers_count_unstable", type="integer"),
- *     @OA\Property(property="hash_per_min", type="integer"),
- *     @OA\Property(property="hash_per_day", type="integer"),
- *     @OA\Property(property="today_forecast", type="integer"),
- *     @OA\Property(property="reject_percent", type="number"),
- *     @OA\Property(property="unit", type="string"),
- *     @OA\Property(property="total_payout", type="number"),
- *     @OA\Property(property="yesterday_amount", type="number"),
- *     @OA\Property(property="pending_amount", type="number"),
- * )
- */
+/** @mixin Sub */
+#[
+    OA\Schema(
+        schema: 'SubResource',
+        properties: [
+            new OA\Property(property: 'name', type: 'string'),
+            new OA\Property(property: 'group_id', type: 'integer'),
+            new OA\Property(property: 'workers_count_active', type: 'integer'),
+            new OA\Property(property: 'workers_count_in_active', type: 'integer'),
+            new OA\Property(property: 'workers_count_unstable', type: 'integer'),
+            new OA\Property(property: 'hash_per_min', type: 'integer'),
+            new OA\Property(property: 'hash_per_day', type: 'integer'),
+            new OA\Property(property: 'today_forecast', type: 'integer'),
+            new OA\Property(property: 'reject_percent', type: 'number'),
+            new OA\Property(property: 'unit', type: 'string'),
+            new OA\Property(property: 'total_payout', type: 'number'),
+            new OA\Property(property: 'yesterday_amount', type: 'number'),
+            new OA\Property(property: 'pending_amount', type: 'number'),
+        ],
+        type: 'object'
+    )
+]
 class SubResource extends JsonResource
 {
     public function toArray($request): array

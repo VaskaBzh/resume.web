@@ -9,30 +9,46 @@ use App\Http\Resources\AllowedRouteResource;
 use App\Models\WatcherLink;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Get(
- *     path="/allowed/{token}",
- *     summary="Get allowed routes for a watcher link",
- *     tags={"Watcher Links"},
- *     @OA\Parameter(
- *         name="token",
- *         in="path",
- *         description="Watcher Link Token",
- *         required=true,
- *         @OA\Schema(type="string")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="watcher_link", ref="#/components/schemas/AllowedRouteResource"),
- *         )
- *     ),
- *     @OA\Response(response=404, description="Watcher link not found"),
- * )
- */
+#[
+    OA\Get(
+        path: '/allowed/{token}',
+        summary: 'Get allowed routes for a watcher link',
+        security: [['bearerAuth' => []]],
+        tags: ['Watcher Links'],
+        parameters: [
+            new OA\Parameter(
+                name: 'token',
+                description: 'Watcher Link Token',
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'string')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: Response::HTTP_OK,
+                description: 'Successful response',
+                content: [
+                    new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: 'watcher_link',
+                                ref: '#/components/schemas/AllowedRouteResource'
+                            ),
+                        ],
+                        type: 'object'
+                    )
+                ],
+            ),
+            new OA\Response(
+                response: Response::HTTP_NOT_FOUND,
+                description: 'Watcher link not found',
+            ),
+        ],
+    )
+]
 class AllowedRoutesController extends Controller
 {
     public function __invoke(string $token)
