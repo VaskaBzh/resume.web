@@ -5,13 +5,25 @@
             >{{ $t("personal_account.button[0]") }}
             </landing-headline>
             <landing-title tag="h3" class="cabinet_title">
-                <span class="cabinet_title_elem cabinet_title_elem-right">{{
-                        $t("personal_account.title[0]")
-                    }}</span>
-                <span class="cabinet_title_elem cabinet_title_elem-left">{{
-                        $t("personal_account.title[1]")
-                    }}</span>
-                <span>{{ $t("personal_account.title[2]") }}</span>
+                <span
+                    class="cabinet_title_elem cabinet_title_elem-right animation-up_line"
+                >
+                    <span class="animation-right">{{
+                            $t("personal_account.title[0]")
+                        }}</span>
+                </span>
+                <span
+                    class="cabinet_title_elem cabinet_title_elem-left animation-up_line"
+                >
+                    <span class="animation-left">{{
+                            $t("personal_account.title[1]")
+                        }}</span>
+                </span>
+                <span class="cabinet_title_elem animation-up_line">
+                    <span class="animation-right">{{
+                            $t("personal_account.title[2]")
+                        }}</span>
+                </span>
             </landing-title>
             <landing-text class="cabinet_text"
             >{{ $t("personal_account.text") }}
@@ -36,6 +48,7 @@ import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import LandingButton from "../../../common/Components/UI/LandingButton.vue";
 import LandingText from "../../../common/Components/UI/LandingText.vue";
+import {upLeft, upRight} from "../../services/AnimationService";
 
 export default {
     name: "MakeUpCab",
@@ -53,9 +66,10 @@ export default {
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
+
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
@@ -67,9 +81,9 @@ export default {
                     this.$emit("next");
                 }
             }
-            if (e.deltaY < -50) {
+            if (e.deltaY < -10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -102,6 +116,10 @@ export default {
     },
     mounted() {
         this.scroll();
+        setTimeout(() => {
+            upLeft();
+            upRight();
+        }, 1000);
     },
     unmounted() {
         this.remove();

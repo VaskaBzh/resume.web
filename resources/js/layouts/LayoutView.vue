@@ -46,15 +46,22 @@ export default {
     z-index: 10;
 }
 
+@media (max-width: 1920px) {
+    .layout__container {
+        margin: 0;
+    }
+}
+
 @media (max-width: 991.98px) {
     .layout__container {
-        /* padding: 0 32px; */
+        padding: 0 32px;
+        width: auto;
     }
 }
 
 @media (max-width: 479.98px) {
     .layout__container {
-        /* padding: 0 16px; */
+        padding: 0 16px;
     }
 }
 </style>

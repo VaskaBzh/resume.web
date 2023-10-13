@@ -1,35 +1,36 @@
 <template>
     <div class="hero hero__section" ref="view">
         <div class="hero__content">
-            <logo-background/>
+            <logo-background />
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
-                    <span class="hero_title_row">
+                    <span class="hero_title_row hero_title_row-first">
                         <span class="hero_title_elem">{{
-                                $t("title[0]")
-                            }}</span>
+                            $t("title[0]")
+                        }}</span>
                         <span class="hero_title_elem">{{
-                                $t("title[1]")
-                            }}</span>
+                            $t("title[1]")
+                        }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-left">
                         <span class="hero_title_elem">{{
-                                $t("title[2]")
-                            }}</span>
+                            $t("title[2]")
+                        }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-top">
                         <span class="hero_title_elem"
-                        >{{
-                                $t("title[3]")
+                            >{{ $t("title[3]")
                             }}<span class="hero_title_elem">{{
-                                    $t("title[4]")
-                                }}</span></span
+                                $t("title[4]")
+                            }}</span></span
                         >
                     </span>
                     <span class="hero_title_row">
-                        <span class="hero_title_elem">Bitcoin</span>
+                        <span class="hero_title_elem hero_title_elem-last"
+                            >Bitcoin</span
+                        >
                         <landing-text tag="span" class="hero_text"
-                        >{{ $t("text") }}
+                            >{{ $t("text") }}
                         </landing-text>
                     </span>
                 </landing-title>
@@ -43,7 +44,7 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
@@ -73,9 +74,9 @@ export default {
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
@@ -87,9 +88,9 @@ export default {
                     this.$emit("next");
                 }
             }
-            if (e.deltaY < -50) {
+            if (e.deltaY < -10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -137,7 +138,7 @@ export default {
     min-height: 400px;
     height: 100vh;
     display: flex;
-    padding: clamp(60px, 10vw, 120px) 0;
+    padding: clamp(60px, 5vw, 120px) 0;
     align-items: center;
 }
 
@@ -147,7 +148,7 @@ export default {
 }
 
 .hero__head {
-    margin-bottom: clamp(60px, 10vw, 50px);
+    margin-bottom: clamp(60px, 5vw, 50px);
     z-index: 2;
 }
 
@@ -157,14 +158,49 @@ export default {
     gap: 12px;
 }
 
+@media (max-width: 991.98px) {
+    .hero_title {
+        align-items: center;
+    }
+}
+
 .hero_text {
     padding-left: 10px;
-    min-width: 406px;
+    max-width: 406px;
+    width: 100%;
+}
+
+@media (max-width: 991.98px) {
+    .hero_text {
+        max-width: 100%;
+        padding: 70px 280px 0 120px;
+    }
+}
+
+@media (max-width: 768.98px) {
+    .hero_text {
+        max-width: 100%;
+        padding: 70px 70px 0 40px;
+    }
 }
 
 .hero_title_row {
     display: inline-flex;
     align-items: center;
+}
+
+@media (max-width: 991.98px) {
+    .hero_title_row {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 660.98px) {
+    .hero_title_row-first {
+        margin-right: auto;
+    }
 }
 
 .hero_title_row-left {
@@ -173,5 +209,11 @@ export default {
 
 .hero_title_row-top {
     margin-top: 6px;
+}
+
+@media (max-width: 660.98px) {
+    .hero_title_elem-last {
+        margin-left: auto;
+    }
 }
 </style>

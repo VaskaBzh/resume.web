@@ -3,18 +3,28 @@
         <faq-view :faq="faq" :headline="$t('why_allbtc.button')">
             <template v-slot:title>
                 <landing-title tag="h3" class="faq_title miners_title">
-                    <span class="miners_title_elem">{{
-                            $t("why_allbtc.title[0]")
-                        }}</span>
-                    <span class="miners_title_elem miners_title_elem-left">{{
-                            $t("why_allbtc.title[1]")
-                        }}</span>
-                    <span class="miners_title_elem">{{
-                            $t("why_allbtc.title[2]")
-                        }}</span>
-                    <span class="miners_title_elem">{{
-                            $t("why_allbtc.title[3]")
-                        }}</span>
+                    <span class="miners_title_elem animation-up_line">
+                        <span class="animation-right">{{
+                                $t("why_allbtc.title[0]")
+                            }}</span>
+                    </span>
+                    <span
+                        class="miners_title_elem-left miners_title_elem animation-up_line"
+                    >
+                        <span class="animation-left">{{
+                                $t("why_allbtc.title[1]")
+                            }}</span>
+                    </span>
+                    <span class="miners_title_elem animation-up_line">
+                        <span class="animation-right">{{
+                                $t("why_allbtc.title[2]")
+                            }}</span>
+                    </span>
+                    <span class="miners_title_elem animation-up_line">
+                        <span class="animation-left">{{
+                                $t("why_allbtc.title[3]")
+                            }}</span>
+                    </span>
                 </landing-title>
             </template>
         </faq-view>
@@ -25,6 +35,7 @@
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import FaqView from "@/modules/home/Components/Views/FaqView.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import {upLeft, upRight} from "../../services/AnimationService";
 
 export default {
     name: "MinersInfoView",
@@ -56,6 +67,7 @@ export default {
     data() {
         return {
             validScroll: false,
+            progress: 0,
         };
     },
     props: {
@@ -63,30 +75,39 @@ export default {
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
-                if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+                setTimeout(this.scroll, 300);
 
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
+                if (this.progress === 0) {
+                    this.progress++;
+                } else if (this.progress === 1) {
+                    if (!this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(-${
+                            this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight
+                        }px)`;
+
+                        this.validScroll = true;
+                    } else {
+                        this.$emit("next");
+                    }
                 }
             }
-            if (e.deltaY < -50) {
+            if (e.deltaY < -10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
-                if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                if (this.progress === 1) {
+                    this.progress--;
+                } else if (this.progress === 0) {
+                    if (this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(0px)`;
 
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
+                        this.validScroll = false;
+                    } else {
+                        this.$emit("prev");
+                    }
                 }
             }
         },
@@ -112,6 +133,10 @@ export default {
     },
     mounted() {
         this.scroll();
+        setTimeout(() => {
+            upLeft();
+            upRight();
+        }, 1000);
     },
     unmounted() {
         this.remove();
@@ -133,11 +158,18 @@ export default {
         flex-direction: column;
         margin-bottom: clamp(70px, 5vw, 140px);
 
+        @media (max-width: 798.98px) {
+            max-width: 200px;
+        }
+
         &_elem {
             white-space: nowrap;
 
             &-left {
                 transform: translateX(-180px);
+                @media (max-width: 798.98px) {
+                    transform: translateX(-95px);
+                }
             }
         }
     }

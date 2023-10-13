@@ -63,9 +63,9 @@ export default {
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -78,9 +78,9 @@ export default {
                     this.$emit("next");
                 }
             }
-            if (e.deltaY < -50) {
+            if (e.deltaY < -10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;

@@ -1,7 +1,10 @@
 <template>
     <div class="about about__section" ref="view">
         <div class="about__wrapper">
-            <landing-headline>{{ $t("who_we_are.button") }}</landing-headline>
+            <landing-headline class="about__headline">{{
+                    $t("who_we_are.button")
+                }}
+            </landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
                     <div class="about__cards animation-up animation-opacity">
@@ -117,9 +120,9 @@ export default {
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
                 if (this.progress === 0) {
                     this.key = "miners";
                     this.progress++;
@@ -136,9 +139,9 @@ export default {
                     }
                 }
             }
-            if (e.deltaY < -50) {
+            if (e.deltaY < -10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
                 if (this.progress === 1) {
                     this.key = "hostings";
@@ -186,6 +189,12 @@ export default {
 <style scoped lang="scss">
 .about {
     width: 100%;
+
+    &__headline {
+        @media (max-width: 767.87px) {
+            margin-bottom: 135px;
+        }
+    }
 
     &__cards {
         display: flex;

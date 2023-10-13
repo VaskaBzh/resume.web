@@ -1,15 +1,18 @@
 <template>
     <div class="security security__section" ref="view">
         <div class="security__wrapper">
-            <landing-headline>{{ $t("safety.button") }}</landing-headline>
+            <landing-headline class="security__headline">{{ $t("safety.button") }}</landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
-                    <landing-text class="security_text">
+                    <landing-text
+                        class="security_text animation-up animation-opacity"
+                    >
                         {{ infoCards[key].text }}
                     </landing-text>
                 </template>
             </landing-wrap>
         </div>
+        <div class="security__hidden"></div>
     </div>
 </template>
 
@@ -55,34 +58,55 @@ export default {
             key: "encryption",
             keys: ["encryption", "updates", "DDoS"],
             validScroll: false,
+            progress: 0,
         };
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 50) {
+            if (e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
-                if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+                setTimeout(this.scroll, 300);
+                if (this.progress === 0) {
+                    this.key = "encryption";
+                    this.progress++;
+                } else if (this.progress === 1) {
+                    this.key = "updates";
+                    this.progress++;
+                } else if (this.progress === 2) {
+                    this.key = "DDoS";
 
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
+                    if (!this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(-${
+                            this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight
+                        }px)`;
+
+                        this.validScroll = true;
+                    } else {
+                        this.$emit("next");
+                    }
                 }
             }
-            if (e.deltaY < -50) {
+            if (e.deltaY < -10) {
                 this.remove();
-                setTimeout(this.scroll, 500);
+                setTimeout(this.scroll, 300);
 
-                if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                if (this.progress === 2) {
+                    this.key = "DDoS";
+                    this.progress--;
+                } else if (this.progress === 1) {
+                    this.key = "updates";
+                    this.progress--;
+                } else if (this.progress === 0) {
+                    this.key = "encryption";
 
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
+                    if (this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(0px)`;
+
+                        this.validScroll = false;
+                    } else {
+                        this.$emit("prev");
+                    }
                 }
             }
         },
@@ -120,11 +144,27 @@ export default {
     width: 100%;
 }
 
+@media (max-width: 767.87px) {
+    min-width: calc(100% - 64px);
+}
+
+.security__hidden {
+    opacity: 0;
+    height: 0;
+    max-width: 860px;
+    width: 100%;
+}
+
+.security__headline {
+    @media (max-width: 767.87px) {
+        margin-bottom: 135px;
+    }
+}
+
 .security__wrapper {
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 100%;
 }
-
 </style>
