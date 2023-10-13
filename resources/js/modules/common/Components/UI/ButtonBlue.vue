@@ -30,6 +30,7 @@ export default {
     height: 40px;
     margin: 0 auto;
     backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
     display: flex;
     position: absolute;
     bottom: 15%;
@@ -54,6 +55,7 @@ export default {
     margin: 0 auto;
     padding: 14px 0;
     backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -74,6 +76,7 @@ export default {
     height: 170px;
     border-radius: 50%;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 24px;
     background: grey;
     font-family: Unbounded, serif;
@@ -95,6 +98,7 @@ export default {
     height: 40px;
     margin: 0 auto;
     backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -117,8 +121,9 @@ export default {
     fill: rgba(208, 213, 221, 0.20);
     background: rgba(208, 213, 221, 0.20);
     backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
     bottom: 50%;
-    color:#D0D5DD;
+    color: #D0D5DD;
     text-align: center;
     font-family: Unbounded, serif;
     font-size: 14px;
@@ -129,6 +134,7 @@ export default {
     text-transform: uppercase;
     border: none;
 }
+
 .connect-withus_btn {
     width: 72px;
     height: 72px;
@@ -138,6 +144,7 @@ export default {
     stroke-width: 0.5px;
     stroke: rgba(208, 213, 221, 0.20);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 
 }
 
@@ -152,6 +159,7 @@ export default {
     border: 0.5px solid rgba(192, 228, 255, 0.60);
     background: rgba(13, 13, 13, 0.70);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     color: #E4E7EC;
     font-family: Unbounded, serif;
     font-size: 18px;

@@ -1,13 +1,12 @@
 <template>
     <div class="select-language" @click="selectMassage">
-        <span > {{ $i18n.locale }}</span>
+        <span> {{ $i18n.locale }}</span>
     </div>
 </template>
 
 
-
 <script>
-import { SettingsMessage } from "../settings/lang/SettingsMessage";
+import {SettingsMessage} from "../settings/lang/SettingsMessage";
 
 export default {
 
@@ -19,7 +18,6 @@ export default {
     }
 }
 </script>
-
 
 
 <style scoped lang="scss">
@@ -35,6 +33,7 @@ export default {
     border: 0.5px solid rgba(192, 228, 255, 0.60);
     background: rgba(13, 13, 13, 0.70);
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     text-transform: uppercase;
     cursor: pointer;
 }

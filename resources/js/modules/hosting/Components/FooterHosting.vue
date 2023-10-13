@@ -99,6 +99,7 @@ export default {
     flex-direction: row;
     min-height: fit-content;
     max-width: 1920px;
+    position: relative;
     width: 100%;
     padding: 0 clamp(16px, 5vw, 100px);
     margin: 0 auto;
@@ -121,15 +122,28 @@ export default {
     height: 100%;
     left: 50%;
     top: 50%;
-    z-index: 0;
+    z-index: 1;
     transform: translate(-50%, -50%);
-    border-radius: 70px;
+    border-radius: 70px 70px 0 0;
     border-top: 1px solid #585757;
+    background: var(--gray-4100, #0d0d0d);
+}
+
+.all-content::before {
+    content: "";
+    position: absolute;
+    width: 100vw;
+    height: 100%;
+    left: 50%;
+    top: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
     background: var(--gray-4100, #0d0d0d);
 }
 
 .allbtc-pool {
     background: var(--gray-4100, #0d0d0d);
+    z-index: 1;
 }
 
 @media (max-width: 1920px) {

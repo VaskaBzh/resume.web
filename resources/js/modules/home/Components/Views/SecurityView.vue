@@ -194,8 +194,8 @@ export default {
     width: 100%;
 }
 
-.security__headline {
-    @media (max-width: 767.87px) {
+@media (max-width: 767.87px) {
+    .security__headline {
         margin-bottom: 135px;
     }
 }

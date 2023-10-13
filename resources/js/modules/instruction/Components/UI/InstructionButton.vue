@@ -14,7 +14,7 @@
 <script>
 import InfoIcon from "@/modules/instruction/icons/InfoIcon.vue";
 
-import { InstructionMessage } from "@/modules/instruction/lang/InstructionMessage";
+import {InstructionMessage} from "@/modules/instruction/lang/InstructionMessage";
 
 export default {
     name: "instruction-button",
@@ -34,6 +34,7 @@ export default {
 .button {
     filter: drop-shadow(0px 10px 10px rgba(0, 0, 0, 0.10));
     backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
     background: var(--background-tooltip, rgba(44, 47, 52, 0.90));
     position: fixed;
     width: 48px;
@@ -44,11 +45,13 @@ export default {
     border-radius: 50%;
     cursor: pointer;
 }
+
 @media (min-width: 1279.98px) {
     .button {
         display: flex;
     }
 }
+
 .button__block {
     width: 100%;
     height: 100%;
@@ -57,10 +60,12 @@ export default {
     align-items: center;
     justify-content: center;
 }
+
 .button__block:hover .button_hint {
     transform: translateY(-50%) scale(1);
     opacity: 1;
 }
+
 .button_hint {
     position: absolute;
     right: calc(100% + 8px);
@@ -84,6 +89,7 @@ export default {
     width: fit-content;
     white-space: nowrap;
 }
+
 .button_icon {
     fill: var(--text-focus, #2E90FA);
     width: 24px;

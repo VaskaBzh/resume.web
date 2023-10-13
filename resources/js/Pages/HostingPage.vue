@@ -274,11 +274,6 @@ export default {
 }
 */
 
-.second-text {
-    background: var(--gray-4100, #0d0d0d);
-    flex-direction: column;
-    gap: 100px;
-}
 
 .third-text {
     flex-direction: column;

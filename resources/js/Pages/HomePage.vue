@@ -94,7 +94,14 @@ export default {
     },
     mounted() {
         document.querySelector("body").style.overflow = "hidden";
+        document.querySelector(".layout").style.overflow = "hidden";
+        document.querySelector("#app").style.overflow = "hidden";
         this.renderView();
+    },
+    unmounted() {
+        document.querySelector("body").style.overflow = "visible";
+        document.querySelector(".layout").style.overflow = "visible";
+        document.querySelector("#app").style.overflow = "visible";
     },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <main-background/>
+        <!--        <main-background/>-->
         <header-component/>
         <div class="layout__container">
             <slot/>

@@ -75,6 +75,7 @@ export default {
         border: 0.5px solid rgba(192, 228, 255, 0.6);
         background: transparent;
         backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
         @media (max-width: 760.98px) {
             display: none;
         }

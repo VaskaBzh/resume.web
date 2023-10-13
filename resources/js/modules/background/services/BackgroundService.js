@@ -31,7 +31,7 @@ export class BackgroundService {
         this.ctx.clearRect(0, 0, this.setWidth, this.setHeight);
         this.draw();
         requestAnimationFrame(this.render);
-    }
+    };
 
     resizeEvent() {
         window.onresize = this.resizeEventProcess;
@@ -44,7 +44,7 @@ export class BackgroundService {
         this.setHeight = this.ctx.canvas.height = window.innerHeight;
         this.ctx.filter = "blur(40px)";
         this.ctx.globalCompositeOperation = "lighter";
-    }
+    };
 
     mouseEvent() {
         this.canvas.element.onmousemove = this.mouseEventProcess;
@@ -62,7 +62,7 @@ export class BackgroundService {
                 this.particles[i].vy = (my - this.particles[i].y) / 30;
             }
         }
-    }
+    };
 
     dist(x1, y1, x2, y2) {
         let a = x1 - x2;

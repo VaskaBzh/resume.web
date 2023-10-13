@@ -39,6 +39,7 @@ export default {
     height: 40px;
     margin: 0 auto 100px;
     backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -52,10 +53,10 @@ export default {
     border-radius: 40px;
     border: 1px solid rgba(192, 228, 255, 0.60);
     background: rgba(13, 13, 13, 0.80);
-    @media(max-width:850px){
+    @media(max-width: 850px) {
         font-size: 14px;
     }
-    @media(max-width:450px){
+    @media(max-width: 450px) {
         font-size: 12px;
         width: 70%;
     }
@@ -81,22 +82,22 @@ export default {
 }
 
 .about_title {
-  padding: 14px 24px;
-  width: 340px;
-  text-align: center;
-  display: block;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto 50px;
-  border-radius: 30px;
-  border: 0.5px solid #98A2B3;
-  font-family: Unbounded, serif;
-  font-size: 20px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 120%;
-  text-transform: uppercase;
-  color: #D0D5DD;
+    padding: 14px 24px;
+    width: 340px;
+    text-align: center;
+    display: block;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 50px;
+    border-radius: 30px;
+    border: 0.5px solid #98A2B3;
+    font-family: Unbounded, serif;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%;
+    text-transform: uppercase;
+    color: #D0D5DD;
 }
 
 .make-up-cab_title {

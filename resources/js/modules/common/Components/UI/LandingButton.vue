@@ -18,6 +18,7 @@ export default {
     border: 1px solid rgba(192, 228, 255, 0.6);
     background: var(--gray-480, rgba(13, 13, 13, 0.8));
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     padding: 8px 20px;
     min-height: 56px;
     display: inline-flex;

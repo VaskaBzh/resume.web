@@ -66,6 +66,7 @@ export default {
     border-bottom: 0.5px solid #555353;
     background: var(--gray-480, rgba(13, 13, 13, 0.8));
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     gap: 50px;

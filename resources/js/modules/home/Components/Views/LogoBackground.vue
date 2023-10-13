@@ -29,10 +29,10 @@ export default {
     width: 100vw;
     min-height: 400px;
     position: absolute;
-    top: 242px;
+    top: 40%;
     left: 50%;
-    transform: translateX(-50%);
-    z-index: 0;
+    transform: translate(-50%, -50%);
+    z-index: -1;
 }
 
 .logo__content {
