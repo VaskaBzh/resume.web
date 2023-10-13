@@ -1,8 +1,15 @@
 <template>
     <div class="history history__section history__section-wrap" ref="view">
         <landing-headline>История нашего пула</landing-headline>
-        <div class="history-pool__items">
-            <div class="history-pool__item-line">
+        <Swiper class="history-pool__items"
+                :freeMode="true"
+                slidesPerView="auto"
+                :modules="modules"
+                :pagination="{
+      clickable: true,
+    }"
+        >
+            <swiper-slide class="history-pool__item-line">
                 <div class="history-pool__item-line-block">
                     <div class="history-pool__item-line_cycle"></div>
                 </div>
@@ -18,8 +25,8 @@
                 <div class="history-pool__item-line-block">
                     <div class="history-pool__item-line_cycle"></div>
                 </div>
-            </div>
-            <div class="history-pool__item-infos">
+            </swiper-slide>
+            <swiper-slide class="history-pool__item-infos">
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2019</h3>
                     <p class="history-pool__item-info-discription">
@@ -64,8 +71,8 @@
                         года у нас амбициозные планы.
                     </p>
                 </div>
-            </div>
-        </div>
+            </swiper-slide>
+        </Swiper>
         <connect-with-us-view/>
     </div>
 </template>
@@ -74,11 +81,20 @@
 import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import ConnectWithUsView from "./ConnectWithUsView.vue";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {FreeMode} from "swiper";
+import 'swiper/css';
+
+
 
 export default {
     name: "HistoryPoolView",
-    components: {ConnectWithUsView, LandingHeadline, HeadLine},
-
+    components: {ConnectWithUsView, LandingHeadline, HeadLine, Swiper, SwiperSlide},
+    setup() {
+        return {
+            modules: [FreeMode]
+        }
+    },
     data() {
         return {
             validScroll: false,
@@ -86,91 +102,91 @@ export default {
             touchY: null,
         };
     },
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY
-                ? this.startY - this.touchY > 110
-                : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-                if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-
-                if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        this.scroll();
-    },
-    unmounted() {
-        this.remove();
-    },
+    // props: {
+    //     start: Boolean,
+    // },
+    // methods: {
+    //     handleTouchStart(e) {
+    //         this.startY = e.touches[0].clientY;
+    //     },
+    //     handleTouchMove(e) {
+    //         this.touchY = e.touches[0].clientY;
+    //         this.handleWheel();
+    //     },
+    //     handleWheel(e) {
+    //         if (this.startY
+    //             ? this.startY - this.touchY > 110
+    //             : e.deltaY > 10) {
+    //             this.remove();
+    //             setTimeout(this.scroll, 300);
+    //             if (!this.validScroll) {
+    //                 this.$refs.view.style.transform = `translateY(-${
+    //                     this.$refs.view.offsetHeight -
+    //                     document.scrollingElement.clientHeight
+    //                 }px)`;
+    //
+    //                 this.validScroll = true;
+    //             } else {
+    //                 this.$emit("next");
+    //             }
+    //         }
+    //         if (
+    //             this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+    //         ) {
+    //             this.remove();
+    //             setTimeout(this.scroll, 300);
+    //
+    //             if (this.validScroll) {
+    //                 this.$refs.view.style.transform = `translateY(0px)`;
+    //
+    //                 this.validScroll = false;
+    //             } else {
+    //                 this.$emit("prev");
+    //             }
+    //         }
+    //     },
+    //     scroll() {
+    //         if (this.$refs.view) {
+    //             this.$refs.view.addEventListener("wheel", this.handleWheel);
+    //             this.$refs.view.addEventListener(
+    //                 "touchstart",
+    //                 this.handleTouchStart
+    //             );
+    //             this.$refs.view.addEventListener(
+    //                 "touchmove",
+    //                 this.handleTouchMove
+    //             );
+    //         }
+    //     },
+    //     remove() {
+    //         if (this.$refs.view) {
+    //             this.$refs.view.removeEventListener("wheel", this.handleWheel);
+    //             this.$refs.view.removeEventListener(
+    //                 "touchstart",
+    //                 this.handleTouchStart
+    //             );
+    //             this.$refs.view.removeEventListener(
+    //                 "touchmove",
+    //                 this.handleTouchMove
+    //             );
+    //         }
+    //     },
+    // },
+    // watch: {
+    //     start(newStartState) {
+    //         if (newStartState) {
+    //             this.scroll();
+    //         } else {
+    //             this.remove();
+    //         }
+    //     },
+    // },
+    // mounted() {
+    //     this.scroll();
+    // },
+    // unmounted() {
+    //     this.remove();
+    // },
 };
 </script>
 
@@ -215,8 +231,8 @@ export default {
         flex-flow: row nowrap;
         gap: 511px;
         margin-left: auto;
-        padding-left: 200px;
-        opacity: 0.6;
+        padding-left: 50vw;
+        opacity: 1;
     }
 
     &__item-info {
@@ -250,4 +266,6 @@ export default {
 .notActive {
     opacity: 1;
 }
+
+
 </style>

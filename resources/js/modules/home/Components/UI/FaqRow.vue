@@ -11,7 +11,6 @@
 <script>
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
-import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
 
 export default {
     name: "faq-row",

@@ -21,7 +21,6 @@
 import FaqRow from "../UI/FaqRow.vue";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
-import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
 
 export default {
     name: "faq-view",
