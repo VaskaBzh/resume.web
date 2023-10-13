@@ -12,6 +12,31 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 
 class ListController extends Controller
 {
+    /**
+     * @OA\Get(
+     *     path="/subs/{user}",
+     *     summary="Get list",
+     *     tags={"Subaccount"},
+     *     @OA\Parameter(
+     *         name="user",
+     *         in="path",
+     *         description="User's ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Successful response",
+     *         @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/SubResource")
+     *         )
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=403, description="Forbidden"),
+     *     @OA\Response(response=404, description="User not found"),
+     * )
+     */
     public function __invoke(User $user, BtcComService $btcComService): ResourceCollection
     {
         $this->authorize('viewAny', $user);

@@ -33,7 +33,7 @@ use Illuminate\Support\Facades\Route;
 
 /* _________________ Public routes ____________________ */
 
-Route::get('/miner_stat', MinerStatController::class)->name('miner_stat');
+Route::get('/minerstats', MinerStatController::class)->name('miner_stat');
 Route::get('/chart', ChartController::class)->name('chart');
 
 /* _________________ End public routes ____________________ */
@@ -48,7 +48,7 @@ Route::group([
     Route::group([
         'prefix' => 'subs',
     ], function () {
-        Route::get('{user}', SubListController::class)->name('sub.list');
+        Route::get('/{user}', SubListController::class)->name('sub.list');
         Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
     });
 
@@ -70,7 +70,7 @@ Route::group([
 Route::group([
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
-    Route::get('/user', UserController::class)->name('user.show');
+    Route::get('/user/{user}', UserController::class)->name('user.show');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
 
     Route::group([

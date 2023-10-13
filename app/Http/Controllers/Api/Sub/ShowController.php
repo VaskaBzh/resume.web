@@ -11,6 +11,28 @@ use App\Services\External\BtcComService;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
+/**
+ * @OA\Get(
+ *     path="/subs/sub/{sub}",
+ *     summary="Get subaccount",
+ *     tags={"Subaccount"},
+ *     @OA\Parameter(
+ *         name="sub",
+ *         in="path",
+ *         description="Sub's ID",
+ *         required=true,
+ *         @OA\Schema(type="integer")
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Successful response",
+ *         @OA\JsonContent(ref="#/components/schemas/SubResource")
+ *     ),
+ *     @OA\Response(response=401, description="Unauthorized"),
+ *     @OA\Response(response=403, description="Forbidden"),
+ *     @OA\Response(response=404, description="User not found"),
+ * )
+ */
 class ShowController extends Controller
 {
     public function __invoke(
