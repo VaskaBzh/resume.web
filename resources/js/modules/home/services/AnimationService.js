@@ -33,3 +33,17 @@ export function opacity() {
         opacity: [0, 1],
     });
 }
+
+export function upLeft() {
+    const timeline = anime.timeline(timelineConfig)
+
+    timeline.add({
+        targets: '.calculator_title_base .calculator_title_two .calculator_title_four',
+        translateY: ['100%', '0%']
+    }, '+=1')
+    timeline.add({
+        targets: '.calculator_title_o .calculator_title_three',
+        translateY: ['-100%', '0%']
+    }, '+=1')
+}
+
