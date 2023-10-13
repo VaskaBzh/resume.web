@@ -65,9 +65,15 @@ export default {
             validScroll: false,
         };
     },
+    props: {
+        start: {
+            type: Boolean,
+            default: false,
+        },
+    },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 10) {
+            if (e.deltaY > 50) {
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
@@ -79,7 +85,7 @@ export default {
                     this.$emit("next");
                 }
             }
-            if (e.deltaY < -10) {
+            if (e.deltaY < -50) {
                 if (this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
 
@@ -89,16 +95,29 @@ export default {
                 }
             }
         },
-    },
-    mounted() {
-        this.$refs.view.addEventListener("wheel", this.handleWheel);
-    },
-    unmounted() {
-        if (this.$refs.view) {
+        scroll() {
+            this.$refs.view.addEventListener("wheel", this.handleWheel);
+        },
+        remove() {
             if (this.$refs.view) {
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
             }
-        }
+        },
+    },
+    watch: {
+        start(newStartState) {
+            if (newStartState) {
+                this.scroll();
+            } else {
+                this.remove();
+            }
+        },
+    },
+    mounted() {
+        this.scroll();
+    },
+    unmounted() {
+        this.remove();
     },
 };
 </script>

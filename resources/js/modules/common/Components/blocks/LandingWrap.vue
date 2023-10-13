@@ -1,8 +1,6 @@
 <template>
     <div class="wrap">
-        <landing-title tag="h2" class="wrap_title">
-            {{ title }}
-        </landing-title>
+        <landing-title tag="h2" class="wrap_title" ref="title"></landing-title>
         <div class="wrap__content">
             <slot name="content"/>
         </div>
@@ -14,6 +12,7 @@
 
 <script>
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import {LineUp, LineUpBack, opacity,} from "../../../home/services/AnimationService.js";
 
 export default {
     name: "landing-wrap",
@@ -22,6 +21,40 @@ export default {
     },
     props: {
         title: String,
+    },
+    methods: {
+        splitUpTitle() {
+            if (this.$refs.title) {
+                this.$refs.title.$el.innerHTML = "";
+
+                this.title.split(" ").forEach((titleElem) => {
+                    this.$refs.title.$el.innerHTML += `<span class="animation-up_line"><span class="animation-up">${titleElem}</span></span>`;
+                });
+            }
+        },
+        splitOpacityTitle() {
+            if (this.$refs.title) {
+                this.$refs.title.$el.innerHTML = "";
+
+                this.title.split(" ").forEach((titleElem) => {
+                    this.$refs.title.$el.innerHTML += `<span class="animation-up_line"><span class="animation-opacity animation-up">${titleElem}</span></span>`;
+                });
+            }
+        },
+    },
+    watch: {
+        title() {
+            LineUpBack();
+
+            setTimeout(() => {
+                this.splitUpTitle();
+                LineUp();
+            }, 450);
+        },
+    },
+    mounted() {
+        this.splitOpacityTitle();
+        setTimeout(opacity, 500);
     },
 };
 </script>
@@ -45,6 +78,7 @@ export default {
 
 .wrap__content {
     position: absolute;
+    overflow: hidden;
     left: 50%;
     max-width: 380px;
 }
@@ -75,5 +109,8 @@ export default {
 .wrap_title {
     transform: translateX(-50%);
     max-width: 600px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0 10px;
 }
 </style>

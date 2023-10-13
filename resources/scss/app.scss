@@ -840,3 +840,19 @@ h6 {
 }
 
 //========================================================================================================================================================
+
+.animation-up_line {
+    overflow: hidden;
+    display: flex;
+}
+
+.animation {
+    &-up {
+        transform: translateY(110%);
+    }
+
+    &-opacity {
+        opacity: 0;
+        transform: translateY(0);
+    }
+}

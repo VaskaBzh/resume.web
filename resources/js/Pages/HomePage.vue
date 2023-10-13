@@ -2,6 +2,7 @@
     <transition name="paralax" @enter="enter" @leave="leave">
         <component
             :is="component"
+            :start="true"
             ref="view"
             @next="nextView"
             @prev="prevView"
@@ -35,6 +36,7 @@ export default {
     },
     methods: {
         enter(view, done) {
+            view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
                 : `translateY(${this.direction ? 150 : -150}%)`;
@@ -45,11 +47,11 @@ export default {
             }, 100);
             setTimeout(() => {
                 view.style.opacity = 1;
-                view.focus();
                 done();
             }, 300);
         },
         leave(view, done) {
+            view.focus();
             view.style.opacity = 1;
             view.style.transform = view.style.transform
                 ? view.style.transform
@@ -62,7 +64,6 @@ export default {
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                view.focus();
                 done();
             }, 300);
         },
@@ -70,13 +71,11 @@ export default {
             this.index = this.index + 1;
 
             this.direction = true;
-            this.renderView();
         },
         prevView() {
             this.index = this.index - 1;
 
             this.direction = false;
-            this.renderView();
         },
         renderView() {
             this.component = ComponentsEnum[this.keys[this.index]];
@@ -84,9 +83,10 @@ export default {
     },
     watch: {
         index(newIndex, oldIndex) {
-            if (newIndex === this.keys.length - 1 || newIndex === 0) {
+            if (newIndex === this.keys.length - 1 || newIndex === -1) {
                 this.index = oldIndex;
             }
+            this.renderView();
         },
     },
     mounted() {

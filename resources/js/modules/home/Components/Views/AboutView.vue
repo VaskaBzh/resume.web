@@ -4,7 +4,7 @@
             <landing-headline>{{ $t("who_we_are.button") }}</landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
-                    <div class="about__cards">
+                    <div class="about__cards animation-up animation-opacity">
                         <about-info
                             class="about__card"
                             v-for="(card, i) in infoCards[key].cards"
@@ -109,40 +109,69 @@ export default {
             key: "hostings",
             keys: ["hostings", "miners"],
             validScroll: false,
+            progress: 0,
         };
+    },
+    props: {
+        start: Boolean,
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 10) {
-                if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+            if (e.deltaY > 150) {
+                if (this.progress === 0) {
+                    this.key = "miners";
+                    this.progress++;
+                } else if (this.progress === 1) {
+                    if (!this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(-${
+                            this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight
+                        }px)`;
 
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
+                        this.validScroll = true;
+                    } else {
+                        this.$emit("next");
+                    }
                 }
             }
-            if (e.deltaY < -10) {
-                if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+            if (e.deltaY < -150) {
+                if (this.progress === 1) {
+                    this.key = "hostings";
+                    this.progress--;
+                } else if (this.progress === 0) {
+                    if (this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(0px)`;
 
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
+                        this.validScroll = false;
+                    } else {
+                        this.$emit("prev");
+                    }
                 }
+            }
+        },
+        scroll() {
+            this.$refs.view.addEventListener("wheel", this.handleWheel);
+        },
+        remove() {
+            if (this.$refs.view) {
+                this.$refs.view.removeEventListener("wheel", this.handleWheel);
+            }
+        },
+    },
+    watch: {
+        start(newStartState) {
+            if (newStartState) {
+                this.scroll();
+            } else {
+                this.remove();
             }
         },
     },
     mounted() {
-        this.$refs.view.addEventListener("wheel", this.handleWheel);
+        this.scroll();
     },
     unmounted() {
-        if (this.$refs.view) {
-            this.$refs.view.removeEventListener("wheel", this.handleWheel);
-        }
+        this.remove();
     },
 };
 </script>
