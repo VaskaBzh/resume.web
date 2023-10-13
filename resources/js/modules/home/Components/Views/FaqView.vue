@@ -1,7 +1,7 @@
 <template>
     <div class="faq">
         <div class="faq__content">
-            <landing-headline>
+            <landing-headline v-show="headline">
                 {{ headline }}
             </landing-headline>
             <slot name="title"/>
@@ -21,7 +21,7 @@
 import FaqRow from "../UI/FaqRow.vue";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
-import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
+// import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
 
 export default {
     name: "faq-view",
@@ -29,7 +29,7 @@ export default {
     props: {
         faq: Array,
         headline: String,
-        }
+    }
 
 };
 </script>

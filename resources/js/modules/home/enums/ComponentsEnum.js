@@ -8,8 +8,11 @@ import AppMobileView from "@/modules/home/Components/Views/AppMobileView.vue";
 import PaymentsView from "@/modules/home/Components/Views/PaymentsView.vue";
 import MissionView from "@/modules/home/Components/Views/MissionView.vue";
 import HistoryPoolView from "@/modules/home/Components/Views/HistoryPoolView.vue";
+import ConnectWithUsView from "@/modules/home/Components/Views/ConnectWithUsView.vue";
+
 
 export const ComponentsEnum = {
+    contact: ConnectWithUsView,
     history: HistoryPoolView,
     mission: MissionView,
     payments: PaymentsView,

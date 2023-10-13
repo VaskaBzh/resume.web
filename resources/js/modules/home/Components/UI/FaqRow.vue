@@ -11,7 +11,7 @@
 <script>
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
-import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
+// import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
 
 export default {
     name: "faq-row",
@@ -35,9 +35,17 @@ export default {
     position: relative;
 }
 
+.faq_title {
+    text-align: right;
+}
+
 @media (max-width: 991.98px) {
     .faq__row {
         flex-direction: column;
+    }
+
+    .faq_title {
+        text-align: left;
     }
 }
 

@@ -40,6 +40,7 @@ export default {
     flex-direction: column;
     max-width: 1920px;
     width: 100%;
+    padding: 0 clamp(16px, 5vw, 100px);
     margin: 0 auto;
     z-index: 10;
 }
@@ -47,19 +48,7 @@ export default {
 @media (max-width: 1920px) {
     .layout__container {
         margin: 0;
-    }
-}
-
-@media (max-width: 991.98px) {
-    .layout__container {
-        padding: 0 32px;
         width: auto;
-    }
-}
-
-@media (max-width: 479.98px) {
-    .layout__container {
-        padding: 0 16px;
     }
 }
 </style>

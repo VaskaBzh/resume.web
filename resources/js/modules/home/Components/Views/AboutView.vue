@@ -130,12 +130,18 @@ export default {
         handleWheel(e) {
             if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
-                setTimeout(this.scroll, 300);
+                setTimeout(this.scroll, 650);
+
                 if (this.progress === 0) {
                     this.key = "miners";
                     this.progress++;
                 } else if (this.progress === 1) {
-                    if (!this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                        !this.validScroll
+                    ) {
                         this.$refs.view.style.transform = `translateY(-${
                             this.$refs.view.offsetHeight -
                             document.scrollingElement.clientHeight
@@ -151,13 +157,17 @@ export default {
                 this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
             ) {
                 this.remove();
-                setTimeout(this.scroll, 300);
+                setTimeout(this.scroll, 650);
 
                 if (this.progress === 1) {
                     this.key = "hostings";
                     this.progress--;
                 } else if (this.progress === 0) {
-                    if (this.validScroll) {
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                        this.validScroll) {
                         this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;

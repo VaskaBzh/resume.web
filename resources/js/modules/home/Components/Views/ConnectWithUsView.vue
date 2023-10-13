@@ -64,12 +64,13 @@ export default {
             this.handleWheel();
         },
         handleWheel(e) {
-            if (this.startY
-                ? this.startY - this.touchY > 110
-                : e.deltaY > 10) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
-                if (!this.validScroll) {
+                if (
+                    this.$refs.view.offsetHeight -
+                    document.scrollingElement.clientHeight >
+                    20 && !this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight
@@ -86,7 +87,10 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
-                if (this.validScroll) {
+                if (
+                    this.$refs.view.offsetHeight -
+                    document.scrollingElement.clientHeight >
+                    20 && this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
 
                     this.validScroll = false;
@@ -102,6 +106,7 @@ export default {
         },
         remove() {
             if (this.$refs.view) {
+                this.$refs.view.style.minHeight = `100vh`;
                 this.$refs.view.removeEventListener("wheel", this.handleWheel);
             }
         },
@@ -117,6 +122,15 @@ export default {
     },
     mounted() {
         this.scroll();
+
+        this.$refs.view.style.minHeight = `100vh`;
+
+        setTimeout(() => {
+            this.$refs.view.style.minHeight = `calc(100vh - ${
+                document.querySelector(".footer-content").offsetHeight +
+                document.querySelector(".all-content").offsetHeight
+            }px)`;
+        }, 800)
     },
     unmounted() {
         this.remove();
@@ -126,12 +140,13 @@ export default {
 
 <style scoped lang="scss">
 .connect-withus {
-    height: 20vh;
     display: flex;
+    min-height: 100vh;
     align-items: center;
     font-size: 0;
     justify-content: center;
     animation: scroll 7s linear 1s infinite;
+    transition: all 0.5s ease 0s;
 
     @keyframes scroll {
         0% {

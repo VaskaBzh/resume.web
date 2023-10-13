@@ -33,7 +33,7 @@
                 alt="all-btc"
                 class="cabinet_image"
             />
-            <landing-button class="cabinet_button">
+            <landing-button>
                 <template v-slot:text>
                     {{ $t("personal_account.button[1]") }}
                 </template>
@@ -81,7 +81,10 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
-                if (!this.validScroll) {
+                if (
+                    this.$refs.view.offsetHeight -
+                    document.scrollingElement.clientHeight >
+                    20 && !this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight
@@ -98,7 +101,10 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 300);
 
-                if (this.validScroll) {
+                if (
+                    this.$refs.view.offsetHeight -
+                    document.scrollingElement.clientHeight >
+                    20 && this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
 
                     this.validScroll = false;

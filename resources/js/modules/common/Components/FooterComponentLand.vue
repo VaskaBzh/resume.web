@@ -1,34 +1,49 @@
 <template>
-<footer class="footer-land">
-    <div class="footer-land__container">
-        <div class="footer-land_info">
-            <button-blue class="footer-land_btn">{{ $t("footer.button") }}</button-blue>
-            <nav-links class="footer-land__links"></nav-links>
-            <div class="footer-land_contacts">
-                <div class="footer-land_contacts_support">support@all-btc.com</div>
-                <div class="footer-land_contacts_adress">BDubai Silicon Oasis, DDP, Building A2<br> Dubai, United Arab Eirates</div>
-                <div class="footer-land__massagers">
-                    <button-blue class="footer-land_contacts_btn">telegram</button-blue>
-                    <button-blue class="footer-land_contacts_btn">instagram</button-blue>
-                    <button-blue class="footer-land_contacts_btn">youtube</button-blue>
+    <footer class="footer-land">
+        <div class="footer-land__container">
+            <div class="footer-land_info">
+                <button-blue class="footer-land_btn">{{
+                        $t("footer.button")
+                    }}
+                </button-blue>
+                <nav-links class="footer-land__links"></nav-links>
+                <div class="footer-land_contacts">
+                    <div class="footer-land_contacts_support">
+                        support@all-btc.com
+                    </div>
+                    <div class="footer-land_contacts_adress">
+                        BDubai Silicon Oasis, DDP, Building A2<br/>
+                        Dubai, United Arab Eirates
+                    </div>
+                    <div class="footer-land__massagers">
+                        <button-blue class="footer-land_contacts_btn"
+                        >telegram
+                        </button-blue
+                        >
+                        <button-blue class="footer-land_contacts_btn"
+                        >instagram
+                        </button-blue
+                        >
+                        <button-blue class="footer-land_contacts_btn"
+                        >youtube
+                        </button-blue
+                        >
+                    </div>
                 </div>
             </div>
+            <h2 class="footer-land_name">Allbtc Pool</h2>
+            <div class="footer-land_confidential">
+                <router-link to="#">{{ $t("footer.text") }}</router-link>
+                <router-link to="#">© 2023 Allbtc Pool</router-link>
+            </div>
         </div>
-        <h2 class="footer-land_name">Allbtc Pool</h2>
-        <div class="footer-land_confidential">
-            <router-link to="#">{{ $t("footer.text") }}</router-link>
-            <router-link to="#">© 2023 Allbtc Pool</router-link>
-        </div>
-    </div>
-</footer>
+    </footer>
 </template>
-
-
 
 <script>
 import ButtonBlue from "./UI/ButtonBlue.vue";
 import NavLinks from "../../navs/Components/NavLinks.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "FooterComponentLand",
@@ -36,10 +51,8 @@ export default {
     i18n: {
         sharedMessages: HomeMessage,
     },
-}
+};
 </script>
-
-
 
 <style scoped lang="scss">
 .footer-land {
@@ -57,14 +70,13 @@ export default {
     }
 
     &__links {
-            color: rgba(245, 250, 255, 0.70);
-            text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
-            font-family: NunitoSans, serif;
-            font-size: 20px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: 110%;
-
+        color: rgba(245, 250, 255, 0.7);
+        text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
+        font-family: NunitoSans, serif;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 110%;
     }
 
     &_info {
@@ -80,9 +92,9 @@ export default {
         flex-flow: column nowrap;
         gap: 20px;
 
-
-        &_support, &_adress {
-            color: rgba(245, 250, 255, 0.70);
+        &_support,
+        &_adress {
+            color: rgba(245, 250, 255, 0.7);
             text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
             font-family: NunitoSans, serif;
             font-size: 20px;
@@ -96,7 +108,6 @@ export default {
         display: flex;
         flex-flow: row nowrap;
         gap: 10px;
-
     }
 
     &_name {
@@ -108,7 +119,7 @@ export default {
         -webkit-text-fill-color: transparent;
         -webkit-background-clip: text;
         color: transparent;
-        -webkit-text-stroke: 0.5px rgb(255,255,255, 0.5);
+        -webkit-text-stroke: 0.5px rgb(255, 255, 255, 0.5);
     }
 
     &_confidential {
@@ -116,7 +127,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        color: rgba(245, 250, 255, 0.20);
+        color: rgba(245, 250, 255, 0.2);
         text-align: right;
         text-shadow: 0px 4.87313985824585px 8.527995109558105px rgba(14, 14, 14, 0.05);
         font-family: NunitoSans, serif;

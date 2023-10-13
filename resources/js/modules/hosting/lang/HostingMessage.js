@@ -5,7 +5,7 @@ export const HostingMessage = {
         who_are_we: {
             button: 'who we are',
             title: ['Efficient pool', 'for Bitcoin mining,', 'optimized', 'for work', 'data centers'],
-            column:{
+            column: {
                 num: ['>3', '5', '>1.7'],
                 gray_text: ['years', 'the largest data centers in the Russian Federation', 'EH /s'],
                 main_text: ['We work in the market', 'digital assets', 'Work successfully', 'with us', 'Total hashrate', 'Allbtc Pool']
@@ -36,7 +36,7 @@ export const HostingMessage = {
             button: 'What will your customers receive',
             text: 'A personal manager will work with you to help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool'
         },
-        personal_account:{
+        personal_account: {
             title: 'convenient personal account',
             text: 'Convenient personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the end user. ',
             button: 'try personal account',
@@ -58,7 +58,7 @@ export const HostingMessage = {
             title: 'Guarantees of reliability and safety',
             text: 'A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool',
             list: {
-                title: ['FPPS+', 'payment system', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
+                title: ['FPPS+ payment system', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
                 text: ['The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.']
             }
         },
@@ -84,7 +84,7 @@ export const HostingMessage = {
         who_are_we: {
             button: 'кто мы',
             title: ['Эффективный пул', 'для добычи Bitcoin,', 'оптимизированный', 'для работы', 'дата-центров'],
-            column:{
+            column: {
                 num: ['>3', '5', '>1,7'],
                 gray_text: ['лет', 'крупнейших дата-центров РФ', 'EH /s'],
                 main_text: ['Работаем на рынке', 'цифровых активов', 'Успешно работают ', 'с нами', 'Общий хешрейт', 'Allbtc Pool']
@@ -115,16 +115,16 @@ export const HostingMessage = {
             button: 'Что получат ваши клиенты',
             text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool'
         },
-        personal_account:{
+        personal_account: {
             title: 'удобный личный кабинет',
             text: 'Удобный личный кабинет со всей необходимой статистикой с интуитивно понятной навигацией. Только нужные функции для конечного пользователя. ',
             button: 'попробовать личный кабинет',
             tooltip: [
                 'Ничего лишнего, только самые', 'актуальные данные',
-                'Средний хешрейт всех', 'ваших устройств', 
-                'Удобная панель навигации', 
-                'Будьте в курсе своего', 'дохода', 
-                'Прогресс до выплаты', 'начислений', 
+                'Средний хешрейт всех', 'ваших устройств',
+                'Удобная панель навигации',
+                'Будьте в курсе своего', 'дохода',
+                'Прогресс до выплаты', 'начислений',
                 'Актуальный курс валют, переключение', 'темы и смена языка'
             ]
         },
@@ -137,7 +137,7 @@ export const HostingMessage = {
             title: 'Гарантии надежности и безопасности',
             text: 'С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool',
             list: {
-                title: ['система выплаты', 'FPPS+', 'гарантия безопасности', 'автовыплаты', 'оперативная техподдержка', 'своевременные уведомления'],
+                title: ['система выплаты FPPS+', 'гарантия безопасности', 'автовыплаты', 'оперативная техподдержка', 'своевременные уведомления'],
                 text: ['Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.']
             }
         },
