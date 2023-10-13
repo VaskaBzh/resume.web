@@ -15,6 +15,39 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PasswordChangeController
 {
+    /**
+     * @OA\Put(
+     *     path="/password/change/{user}",
+     *     summary="Change user's password",
+     *     tags={"Auth"},
+     *     security={{"bearerAuth": {}}},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"old_password", "password", "password_confirmation"},
+     *             @OA\Property(property="old_password", type="string", description="User's old password"),
+     *             @OA\Property(property="password", type="string", description="User's new password"),
+     *             @OA\Property(property="password_confirmation", type="string", description="Confirmation of the new password")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Password changed successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", description="Success message")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="error", type="array", @OA\Items(type="string", description="Error message(s)"))
+     *         )
+     *     )
+     * )
+     */
     public function __invoke(Request $request, User $user): JsonResponse
     {
         $validator = Validator::make($request->only('old_password', 'password', 'password_confirmation'),[

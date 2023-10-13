@@ -25,7 +25,7 @@ Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
 });
 
 Route::group(['middleware' => 'throttle:3,1'], function () {
-    Route::post('/email/verify', ResendVerifyEmailController::class)
+    Route::post('/email/verify/{user}', ResendVerifyEmailController::class)
         ->name('resend-verify-email');
 });
 
@@ -34,7 +34,7 @@ Route::group([
     'middleware' => 'throttle:6,1'
 ], function () {
     Route::put('/restore/{user}', [ResetPasswordController::class, 'changePassword']);
-    Route::post('/forgot', [ForgotPasswordController::class, 'sendResetLinkEmail']);
+    Route::post('/forgot', [ForgotPasswordController::class, 'sendLink']);
     Route::get('/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordReset'])
         ->middleware('signed')
         ->name('password.reset.verify');

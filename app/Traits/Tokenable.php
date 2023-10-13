@@ -12,6 +12,40 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait Tokenable
 {
+    /**
+     * @OA\Get(
+     *     path="/password/reset/verify/{id}/{hash}",
+     *     summary="Verify password reset token",
+     *     tags={"Auth"},
+     *     @OA\Parameter(
+     *         name="id",
+     *         in="path",
+     *         description="User's ID",
+     *         required=true,
+     *         @OA\Schema(type="integer")
+     *     ),
+     *     @OA\Parameter(
+     *         name="hash",
+     *         in="path",
+     *         description="Reset token hash",
+     *         required=true,
+     *         @OA\Schema(type="string")
+     *     ),
+     *     @OA\Response(
+     *         response=400,
+     *         description="Bad request, token not exists or expired",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="status", type="string", description="Error message")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=302,
+     *         description="Token is valid, redirect to password reset page",
+     *         @OA\Header(header="Location", @OA\Schema(type="string"), description="Password reset URL")
+     *     )
+     * )
+     */
     public function verifyPasswordReset(Request $request, $id, $hash): JsonResponse|RedirectResponse
     {
         $user = User::find($id);

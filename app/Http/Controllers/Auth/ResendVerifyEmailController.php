@@ -12,7 +12,37 @@ use Illuminate\Support\Facades\Validator;
 
 class ResendVerifyEmailController extends Controller
 {
-    public function __invoke(Request $request): JsonResponse
+    /**
+     * @OA\Post(
+     *     path="/email/verify/{user}",
+     *     summary="Resend email verification link",
+     *     tags={"Auth"},
+     *     @OA\RequestBody(
+     *         required=true,
+     *         @OA\JsonContent(
+     *             required={"email"},
+     *             @OA\Property(property="email", type="string", format="email", example="user@example.com", description="User's email address")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Email verification link sent successfully",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="message", type="string", description="Success message")
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=422,
+     *         description="Unprocessable Entity",
+     *         @OA\JsonContent(
+     *             type="object",
+     *             @OA\Property(property="errors", type="object", description="Validation errors")
+     *         )
+     *     ),
+     * )
+     */
+    public function __invoke(User $user, Request $request): JsonResponse
     {
         $validator = Validator::make($request->all(), ['email' => 'required|email|exists:users,email'], [
             'email.required' => __('validation.required', ['attribute' => 'email']),
@@ -21,8 +51,6 @@ class ResendVerifyEmailController extends Controller
         ]);
 
         $validator->validate();
-
-        $user = User::whereEmail($request->email)->first();
 
         if ($user->hasVerifiedEmail()) {
             return new JsonResponse(['message' => __('auth.email.already_verify', [
