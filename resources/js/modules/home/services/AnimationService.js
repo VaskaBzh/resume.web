@@ -2,7 +2,7 @@ import anime from "animejs";
 
 const timelineConfig = {
     easing: "easeInOutSine",
-    duration: 450,
+    duration: 600,
 };
 
 export function LineUp() {

@@ -56,6 +56,8 @@ export default {
     methods: {
         handleWheel(e) {
             if (e.deltaY > 50) {
+                this.remove();
+                setTimeout(this.scroll, 500);
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
                         this.$refs.view.offsetHeight -
@@ -68,6 +70,9 @@ export default {
                 }
             }
             if (e.deltaY < -50) {
+                this.remove();
+                setTimeout(this.scroll, 500);
+
                 if (this.validScroll) {
                     this.$refs.view.style.transform = `translateY(0px)`;
 
@@ -78,7 +83,9 @@ export default {
             }
         },
         scroll() {
-            this.$refs.view.addEventListener("wheel", this.handleWheel);
+            if (this.$refs.view) {
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+            }
         },
         remove() {
             if (this.$refs.view) {

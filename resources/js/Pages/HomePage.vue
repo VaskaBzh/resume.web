@@ -36,36 +36,38 @@ export default {
     },
     methods: {
         enter(view, done) {
+            view.style.opacity = 0;
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
                 : `translateY(${this.direction ? 150 : -150}%)`;
-            view.style.opacity = 0;
 
             setTimeout(() => {
                 view.style.transform = `translateY(0%)`;
-            }, 100);
-            setTimeout(() => {
                 view.style.opacity = 1;
-                done();
             }, 300);
+            setTimeout(() => {
+                done();
+            }, 600);
         },
         leave(view, done) {
-            view.focus();
             view.style.opacity = 1;
+            view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
                 : `translateY(0%)`;
 
             setTimeout(() => {
-                view.style.transform = `translateY(${
-                    this.direction ? -150 : 150
-                }%)`;
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                done();
+                view.style.transform = `translateY(${
+                    this.direction ? -150 : 150
+                }%)`;
             }, 300);
+            setTimeout(() => {
+                done();
+            }, 600);
         },
         nextView() {
             this.index = this.index + 1;
@@ -83,7 +85,7 @@ export default {
     },
     watch: {
         index(newIndex, oldIndex) {
-            if (newIndex === this.keys.length - 1 || newIndex === -1) {
+            if (newIndex === this.keys.length || newIndex === -1) {
                 this.index = oldIndex;
             }
             this.renderView();

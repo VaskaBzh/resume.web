@@ -117,7 +117,9 @@ export default {
     },
     methods: {
         handleWheel(e) {
-            if (e.deltaY > 150) {
+            if (e.deltaY > 50) {
+                this.remove();
+                setTimeout(this.scroll, 500);
                 if (this.progress === 0) {
                     this.key = "miners";
                     this.progress++;
@@ -134,7 +136,10 @@ export default {
                     }
                 }
             }
-            if (e.deltaY < -150) {
+            if (e.deltaY < -50) {
+                this.remove();
+                setTimeout(this.scroll, 500);
+
                 if (this.progress === 1) {
                     this.key = "hostings";
                     this.progress--;
@@ -150,7 +155,9 @@ export default {
             }
         },
         scroll() {
-            this.$refs.view.addEventListener("wheel", this.handleWheel);
+            if (this.$refs.view) {
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+            }
         },
         remove() {
             if (this.$refs.view) {
