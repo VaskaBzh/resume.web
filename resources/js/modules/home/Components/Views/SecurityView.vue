@@ -182,7 +182,9 @@ export default {
 }
 
 @media (max-width: 767.87px) {
-    min-width: calc(100% - 64px);
+    .security {
+        min-width: calc(100% - 64px);
+    }
 }
 
 .security__hidden {

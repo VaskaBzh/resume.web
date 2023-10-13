@@ -1,5 +1,6 @@
 <template>
     <div class="layout">
+        <main-background/>
         <header-component/>
         <div class="layout__container">
             <slot/>
@@ -11,9 +12,11 @@
 <script>
 import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
 import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
+import MainBackground from "../modules/background/Components/MainBackground.vue";
 
 export default {
     components: {
+        MainBackground,
         FooterHosting,
         HeaderComponent,
     },
