@@ -45,5 +45,6 @@ export default {
     left: 0;
     z-index: 0;
     -webkit-backdrop-filter: blur(50px) brightness(0.9);
+    pointer-events: none;
 }
 </style>
