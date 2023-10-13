@@ -84,22 +84,32 @@ export default {
     position: relative;
     width: 100%;
     border-radius: 16px;
-    border: 0.5px solid #84caff;
+    border: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
     padding: 0 16px;
     min-height: 48px;
     gap: 12px;
     cursor: text;
     &__label {
-        color: rgba(255, 255, 255, 0.7);
-        font-size: 18px;
+        color: var(--gray-160, rgba(245, 250, 255, 0.60));
+        text-align: justify;
+        text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
+        font-family: NunitoSans;
+        font-size: 20px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 150%;
+        line-height: 110%; /* 22px */
         display: inline-flex;
         gap: 4px;
         align-items: center;
         margin-right: auto;
         cursor: text;
         white-space: nowrap;
+        @media(max-width:890px){
+         font-size: 18px;
+        }
+        @media(max-width:450px){
+         font-size: 14px;
+        }
         svg {
             margin-bottom: auto;
             cursor: pointer;
@@ -113,18 +123,33 @@ export default {
         line-height: 28px;
         letter-spacing: 0.35px;
         white-space: nowrap;
+        @media(max-width:890px){
+         font-size: 18px;
+        }
+        @media(max-width:450px){
+         font-size: 14px;
+        }
     }
     &__input {
-        color: #ffffff;
+        color: var(--gray-3100, #D0D5DD);
         text-align: right;
+        font-family: Unbounded;
         font-size: 18px;
-        font-weight: 500;
-        line-height: 150%;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 120%; /* 21.6px */
+        text-transform: uppercase;
         width: 100%;
         outline: none;
         border: none;
         background: transparent;
         cursor: text;
+        @media(max-width:890px){
+         font-size: 16px;
+        }
+        @media(max-width:450px){
+         font-size: 12px;
+        }
         &::placeholder {
             color: #ffffff;
         }
