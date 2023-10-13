@@ -1,7 +1,7 @@
 <template>
     <div class="background">
         <div class="background_filter"></div>
-        <canvas id="background" ref="canvas" width="100%" height="100%">
+        <canvas ref="canvas" width="100%" height="100%">
             Oh no! Your browser doesn't support canvas!
         </canvas>
     </div>
@@ -38,12 +38,13 @@ export default {
 }
 
 .background_filter {
-    position: fixed;
+    position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     z-index: 0;
-    -webkit-backdrop-filter: blur(40px) brightness(0.7);
+    -webkit-backdrop-filter: blur(70px) brightness(0.5);
+    pointer-events: none;
 }
 </style>
