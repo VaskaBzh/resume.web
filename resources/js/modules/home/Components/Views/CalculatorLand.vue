@@ -204,6 +204,13 @@ export default {
 
     &__block {
         width: 100%;
+        border-radius: 40px;
+        background: linear-gradient(113deg, #0043AE 24.37%, #3A8FE3 111.64%);
+        padding: 50px 30px;
+        box-shadow: 0px 4px 7px 0px rgba(14, 14, 14, 0.05);
+        @media(max-width: 550px){
+            padding: 20px 16px;
+        }
     }
 }
 </style>

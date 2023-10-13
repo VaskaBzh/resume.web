@@ -1,13 +1,16 @@
 <template>
     <transition name="newResult">
         <div class="result" v-if="setted">
-            <span class="result_value"> {{ converter.btc }} </span>
-            <span class="result_value result_value-converted">
-                ≈ ${{ converter.usd }}
-            </span>
-            <span class="result_value result_value-converted">
-                ≈ ₽{{ converter.rub }}
-            </span>
+            <p class="result_value"> {{ converter.btc }} BTC</p>
+            <div>
+                <span class="result_value result_value-converted">
+                    ≈ ${{ converter.usd }}
+                </span>
+                <span class="result_value result_value-converted">
+                    ≈ ₽{{ converter.rub }}
+                </span>
+            </div>
+
         </div>
     </transition>
 </template>
@@ -66,22 +69,38 @@ export default {
 }
 .result {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
+    flex-direction: column;
     gap: 8px;
     justify-content: center;
+    @media(max-width:550px){
+        align-items: center;
+    }
     &_value {
-        color: #fff;
-        font-feature-settings: "case" on;
-        font-size: 18px;
+        color: var(--gray-3100, #D0D5DD);
+        text-align: center;
+        font-family: Unbounded;
+        font-size: 41px;
+        font-style: normal;
         font-weight: 600;
-        line-height: 110%;
-        letter-spacing: 0.35px;
-        &-converted {
-            color: rgba(255, 255, 255, 0.5);
+        line-height: 120%; /* 49.2px */
+        text-transform: uppercase;
+        @media(max-width:890px){
+            font-size: 24px;
+        }
+        @media(max-width:550px){
             font-size: 16px;
+        }
+        &-converted {
+            color: var(--gray-170, rgba(245, 250, 255, 0.70));
+            font-size: 20px;
             font-weight: 400;
-            line-height: 110%;
-            letter-spacing: 0.35px;
+            @media(max-width:890px){
+            font-size: 18px;
+        }
+            @media(max-width:550px){
+            font-size: 12px;
+        }
         }
     }
 }
