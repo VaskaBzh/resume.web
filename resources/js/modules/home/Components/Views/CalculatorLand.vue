@@ -1,27 +1,44 @@
 <template>
-    <div class="calculator alculator__section calculator__section-wrap" ref="view">
+    <div
+        class="calculator alculator__section calculator__section-wrap"
+        ref="view"
+    >
         <div class="calculator__content">
             <landing-headline class="calculator_title_default"
             >{{ $t("profitability_calculator.button[0]") }}
             </landing-headline>
-            <landing-title tag="h3" class="calculator_title">
-                <span class="calculator_title_base">{{
-                        $t("profitability_calculator.title[0]")
-                    }}</span>
-                <span class="calculator_title_one">{{
-                        $t("profitability_calculator.title[1]")
-                    }}</span>
-                <span class="calculator_title_two">{{
-                        $t("profitability_calculator.title[2]")
-                    }}</span>
-                <span class="calculator_title_three">{{
-                        $t("profitability_calculator.title[3]")
-                    }}</span>
-                <span class="calculator_title_four">{{
-                        $t("profitability_calculator.title[4]")
-                    }}</span>
+            <landing-title
+                tag="h3"
+                class="calculator_title animation-destroy"
+            >
+                    <span class="calculator_title_elem calculator_title_base">
+                        <span class="animation-left">{{
+                                $t("profitability_calculator.title[0]")
+                            }}</span>
+                    </span>
+                <span class="calculator_title_elem calculator_title_one">
+                        <span class="animation-right">{{
+                                $t("profitability_calculator.title[1]")
+                            }}</span>
+                    </span>
+                <span class="calculator_title_elem calculator_title_two">
+                        <span class="animation-left">{{
+                                $t("profitability_calculator.title[2]")
+                            }}</span>
+                    </span>
+                <span class="calculator_title_elem calculator_title_three">
+                        <span class="animation-right">{{
+                                $t("profitability_calculator.title[3]")
+                            }}</span>
+                    </span>
+                <span class="calculator_title_elem calculator_title_four">
+                        <span class="animation-left">{{
+                                $t("profitability_calculator.title[4]")
+                            }}</span></span
+                >
             </landing-title>
-            <landing-text class="calculator_text"
+            <landing-text
+                class="calculator_text animation-destroy"
             >{{ $t("profitability_calculator.text") }}
             </landing-text>
             <light-calculator-view class="calculator__block"/>
@@ -30,12 +47,12 @@
 </template>
 
 <script>
-import HeadLine from "@/modules/common/Components/UI/HeadLine.vue";
 import LightCalculatorView from "@/modules/calculator/Components/views/LightCalculatorView.vue";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
+import {destroy, reDestroy, upLeft, upRight,} from "../../services/AnimationService";
 
 export default {
     name: "CalculatorLand",
@@ -44,7 +61,6 @@ export default {
         LandingHeadline,
         LandingTitle,
         LightCalculatorView,
-        HeadLine,
     },
     i18n: {
         sharedMessages: HomeMessage,
@@ -52,6 +68,7 @@ export default {
     data() {
         return {
             validScroll: false,
+            progress: 0,
         };
     },
     props: {
@@ -62,27 +79,38 @@ export default {
             if (e.deltaY > 50) {
                 this.remove();
                 setTimeout(this.scroll, 500);
-                if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
 
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
+                if (this.progress === 0) {
+                    destroy();
+                    this.progress++;
+                } else if (this.progress === 1) {
+                    if (!this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(-${
+                            this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight
+                        }px)`;
+
+                        this.validScroll = true;
+                    } else {
+                        this.$emit("next");
+                    }
                 }
             }
             if (e.deltaY < -50) {
                 this.remove();
                 setTimeout(this.scroll, 500);
 
-                if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                if (this.progress === 1) {
+                    this.progress--;
+                    reDestroy();
+                } else if (this.progress === 0) {
+                    if (this.validScroll) {
+                        this.$refs.view.style.transform = `translateY(0px)`;
 
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
+                        this.validScroll = false;
+                    } else {
+                        this.$emit("prev");
+                    }
                 }
             }
         },
@@ -108,6 +136,10 @@ export default {
     },
     mounted() {
         this.scroll();
+        setTimeout(() => {
+            upLeft();
+            upRight();
+        }, 1000);
     },
     unmounted() {
         this.remove();
@@ -133,6 +165,12 @@ export default {
         display: flex;
         flex-flow: column nowrap;
         margin-bottom: clamp(20px, 10vw, 40px);
+        max-height: 300px;
+
+        &_elem {
+            width: fit-content;
+            display: flex;
+        }
 
         &_one {
             position: relative;
@@ -161,6 +199,7 @@ export default {
     &_text {
         width: 420px;
         margin-bottom: clamp(30px, 10vw, 70px);
+        max-height: 300px;
     }
 
     &__block {

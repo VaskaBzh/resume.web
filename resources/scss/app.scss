@@ -855,4 +855,14 @@ h6 {
         opacity: 0;
         transform: translateY(0);
     }
+
+    &-left {
+        opacity: 0;
+        transform: translateX(100%);
+    }
+
+    &-right {
+        opacity: 0;
+        transform: translateX(-100%);
+    }
 }
