@@ -198,6 +198,11 @@ export default {
     &_text {
         max-width: 430px;
         margin-bottom: clamp(40px, 5vw, 70px);
+
+        @media (max-width: 497px) {
+            max-width: 247px;
+            margin: 0 auto 30px;
+        }
     }
 }
 </style>

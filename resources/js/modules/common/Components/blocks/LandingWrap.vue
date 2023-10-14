@@ -150,6 +150,7 @@ export default {
 @media (max-width: 1500.98px) {
     .wrap_title {
         transform: translateY(-50%);
+        max-width: 625px;
     }
 }
 

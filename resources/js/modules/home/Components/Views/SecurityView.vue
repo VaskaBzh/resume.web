@@ -206,4 +206,10 @@ export default {
     align-items: center;
     width: 100%;
 }
+
+@media (max-width: 1500.87px) {
+    .security__wrapper {
+        gap: 50px;
+    }
+}
 </style>
