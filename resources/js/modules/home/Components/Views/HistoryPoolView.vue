@@ -1,13 +1,14 @@
 <template>
     <div class="history history__section history__section-wrap" ref="view">
         <landing-headline>История нашего пула</landing-headline>
-        <Swiper class="history-pool__items"
-                :freeMode="true"
-                slidesPerView="auto"
-                :modules="modules"
-                :pagination="{
-      clickable: true,
-    }"
+        <Swiper
+            class="history-pool__items"
+            :freeMode="true"
+            slidesPerView="auto"
+            :modules="modules"
+            :pagination="{
+                clickable: true,
+            }"
         >
             <swiper-slide class="history-pool__item-line">
                 <div class="history-pool__item-line-block">
@@ -73,30 +74,28 @@
                 </div>
             </swiper-slide>
         </Swiper>
+    </div>
 
-            </div>
-
-        <!--        <connect-with-us-view/>-->
-
+    <!--        <connect-with-us-view/>-->
 </template>
 
 <script>
-import HeadLine from "../../../common/Components/UI/HeadLine.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
-import ConnectWithUsView from "./ConnectWithUsView.vue";
-import {Swiper, SwiperSlide} from "swiper/vue";
-import {FreeMode} from "swiper";
-import 'swiper/css';
-
-
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { FreeMode } from "swiper";
+import "swiper/css";
 
 export default {
     name: "HistoryPoolView",
-    components: {ConnectWithUsView, LandingHeadline, HeadLine, Swiper, SwiperSlide},
+    components: {
+        LandingHeadline,
+        Swiper,
+        SwiperSlide,
+    },
     setup() {
         return {
-            modules: [FreeMode]
-        }
+            modules: [FreeMode],
+        };
     },
     data() {
         return {
@@ -105,91 +104,89 @@ export default {
             touchY: null,
         };
     },
-    // props: {
-    //     start: Boolean,
-    // },
-    // methods: {
-    //     handleTouchStart(e) {
-    //         this.startY = e.touches[0].clientY;
-    //     },
-    //     handleTouchMove(e) {
-    //         this.touchY = e.touches[0].clientY;
-    //         this.handleWheel();
-    //     },
-    //     handleWheel(e) {
-    //         if (this.startY
-    //             ? this.startY - this.touchY > 110
-    //             : e.deltaY > 10) {
-    //             this.remove();
-    //             setTimeout(this.scroll, 300);
-    //             if (!this.validScroll) {
-    //                 this.$refs.view.style.transform = `translateY(-${
-    //                     this.$refs.view.offsetHeight -
-    //                     document.scrollingElement.clientHeight
-    //                 }px)`;
-    //
-    //                 this.validScroll = true;
-    //             } else {
-    //                 this.$emit("next");
-    //             }
-    //         }
-    //         if (
-    //             this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-    //         ) {
-    //             this.remove();
-    //             setTimeout(this.scroll, 300);
-    //
-    //             if (this.validScroll) {
-    //                 this.$refs.view.style.transform = `translateY(0px)`;
-    //
-    //                 this.validScroll = false;
-    //             } else {
-    //                 this.$emit("prev");
-    //             }
-    //         }
-    //     },
-    //     scroll() {
-    //         if (this.$refs.view) {
-    //             this.$refs.view.addEventListener("wheel", this.handleWheel);
-    //             this.$refs.view.addEventListener(
-    //                 "touchstart",
-    //                 this.handleTouchStart
-    //             );
-    //             this.$refs.view.addEventListener(
-    //                 "touchmove",
-    //                 this.handleTouchMove
-    //             );
-    //         }
-    //     },
-    //     remove() {
-    //         if (this.$refs.view) {
-    //             this.$refs.view.removeEventListener("wheel", this.handleWheel);
-    //             this.$refs.view.removeEventListener(
-    //                 "touchstart",
-    //                 this.handleTouchStart
-    //             );
-    //             this.$refs.view.removeEventListener(
-    //                 "touchmove",
-    //                 this.handleTouchMove
-    //             );
-    //         }
-    //     },
-    // },
-    // watch: {
-    //     start(newStartState) {
-    //         if (newStartState) {
-    //             this.scroll();
-    //         } else {
-    //             this.remove();
-    //         }
-    //     },
-    // },
-    // mounted() {
-    //     this.scroll();
-    // },
-    // unmounted() {
-    //     this.remove();
-    // },
+    props: {
+        start: Boolean,
+    },
+    methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
+        handleWheel(e) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
+                this.remove();
+                setTimeout(this.scroll, 300);
+                if (!this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
+                this.remove();
+                setTimeout(this.scroll, 300);
+
+                if (this.validScroll) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+        scroll() {
+            if (this.$refs.view) {
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+        remove() {
+            if (this.$refs.view) {
+                this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+    },
+    watch: {
+        start(newStartState) {
+            if (newStartState) {
+                this.scroll();
+            } else {
+                this.remove();
+            }
+        },
+    },
+    mounted() {
+        this.scroll();
+    },
+    unmounted() {
+        this.remove();
+    },
 };
 </script>
 
@@ -263,7 +260,6 @@ export default {
             font-weight: 400;
             line-height: 110%;
         }
-
     }
 }
 
@@ -298,7 +294,6 @@ export default {
             &-year {
                 font-size: 14px;
                 line-height: 100%;
-
             }
 
             &-discription {
@@ -307,8 +302,5 @@ export default {
             }
         }
     }
-
 }
-
-
 </style>
