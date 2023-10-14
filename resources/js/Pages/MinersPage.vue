@@ -94,6 +94,18 @@ export default {
                 this.index = oldIndex;
             }
             this.renderView();
+            if (newIndex === 0) {
+                setTimeout(() => {
+                    document.querySelector(".nav").style.opacity = 1;
+                    document.querySelector(".nav").style.transform =
+                        "translateY(0)";
+                }, 1500);
+            }
+            if (newIndex > 0) {
+                document.querySelector(".nav").style.opacity = 1;
+                document.querySelector(".nav").style.transform =
+                    "translateY(-100%)";
+            }
         },
     },
     mounted() {
@@ -106,6 +118,8 @@ export default {
         document.querySelector("body").style.overflow = "visible";
         document.querySelector(".layout").style.overflow = "visible";
         document.querySelector("#app").style.overflow = "visible";
+        document.querySelector(".nav").style.opacity = 1;
+        document.querySelector(".nav").style.transform = "translateY(0)";
     },
 }
 
