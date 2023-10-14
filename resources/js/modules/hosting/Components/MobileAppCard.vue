@@ -1,68 +1,70 @@
 <template>
-    <div class="system-card-inf">
-        <p class="system-card-title">{{ $t("mobile_app.title") }}</p>
-        <p class="system-card-text">{{ $t("mobile_app.text") }}</p>
-    </div>
-    <div class="system-card-img">
-        <img
-            src="../assets/img/Mockup-iphone.png"
-            class="img-iphone img-system"
-        />
-        <img
-            src="../assets/img/status-bar.png"
-            class="img-status-bar img-system"
-        />
-        <img :src="imgTabBar" class="img-tab-bar img-system"/>
-        <swiper
-            :slides-per-view="1"
-            :space-between="14"
-            :pagination="{
-                clickable: true,
-            }"
-            :loop="true"
-            :modules="modules"
-            class="img-support img-system"
-            @slideChange="currentSlide"
-        >
-            <swiper-slide>
-                <img
-                    src="../assets/img/Mockup-mobile-app-home.png"
-                    class="img-content"
-                />
-            </swiper-slide>
-            <swiper-slide>
-                <img
-                    src="../assets/img/Mockup-mobile-app-statistic.png"
-                    class="img-content"
-                />
-            </swiper-slide>
-            <swiper-slide>
-                <img
-                    src="../assets/img/Mockup-mobile-app-income.png"
-                    class="img-content"
-                />
-            </swiper-slide>
-            <swiper-slide>
-                <img
-                    src="../assets/img/Mockup-mobile-app-worker.png"
-                    class="img-content"
-                />
-            </swiper-slide>
-            <swiper-slide>
-                <img
-                    src="../assets/img/Mockup-mobile-app-settings.png"
-                    class="img-content"
-                />
-            </swiper-slide>
-        </swiper>
+    <div class="system__section system__section-wrap" ref="view">
+        <div class="system-card-inf">
+            <p class="system-card-title">{{ $t("mobile_app.title") }}</p>
+            <p class="system-card-text">{{ $t("mobile_app.text") }}</p>
+        </div>
+        <div class="system-card-img">
+            <img
+                src="../assets/img/Mockup-iphone.png"
+                class="img-iphone img-system"
+            />
+            <img
+                src="../assets/img/status-bar.png"
+                class="img-status-bar img-system"
+            />
+            <img :src="imgTabBar" class="img-tab-bar img-system" />
+            <swiper
+                :slides-per-view="1"
+                :space-between="14"
+                :pagination="{
+                    clickable: true,
+                }"
+                :loop="true"
+                :modules="modules"
+                class="img-support img-system"
+                @slideChange="currentSlide"
+            >
+                <swiper-slide>
+                    <img
+                        src="../assets/img/Mockup-mobile-app-home.png"
+                        class="img-content"
+                    />
+                </swiper-slide>
+                <swiper-slide>
+                    <img
+                        src="../assets/img/Mockup-mobile-app-statistic.png"
+                        class="img-content"
+                    />
+                </swiper-slide>
+                <swiper-slide>
+                    <img
+                        src="../assets/img/Mockup-mobile-app-income.png"
+                        class="img-content"
+                    />
+                </swiper-slide>
+                <swiper-slide>
+                    <img
+                        src="../assets/img/Mockup-mobile-app-worker.png"
+                        class="img-content"
+                    />
+                </swiper-slide>
+                <swiper-slide>
+                    <img
+                        src="../assets/img/Mockup-mobile-app-settings.png"
+                        class="img-content"
+                    />
+                </swiper-slide>
+            </swiper>
+        </div>
     </div>
 </template>
 <script>
-import {Swiper, SwiperSlide} from "swiper/vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import {Pagination} from "swiper";
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { Pagination } from "swiper";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     components: {
@@ -76,12 +78,96 @@ export default {
         return {
             slide: 1,
             tabBarName: "home",
+            validScroll: false,
+            startY: null,
+            touchY: null,
         };
     },
     methods: {
         currentSlide(e) {
             this.slide = e.activeIndex;
         },
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
+        handleWheel(e) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
+                this.remove();
+                setTimeout(this.scroll, 650);
+
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
+                this.remove();
+                setTimeout(this.scroll, 650);
+
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+        scroll() {
+            if (this.$refs.view) {
+                this.$refs.view.focus();
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+        remove() {
+            if (this.$refs.view) {
+                this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+    },
+    mounted() {
+        this.scroll();
+    },
+    unmounted() {
+        this.remove();
     },
     watch: {
         slide(newSlide) {
@@ -120,9 +206,6 @@ export default {
 };
 </script>
 <style scoped>
-* {
-    transition: all 0.3s linear;
-}
 
 .system-card-inf {
     width: 399px;

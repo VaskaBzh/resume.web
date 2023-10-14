@@ -38,8 +38,8 @@
     </main>
 </template>
 <script>
-import AboutView from '../modules/common/landing/Components/AboutView.vue';
-import BlueView from "../modules/common/landing/Components/BlueView.vue";
+import AboutView from '../modules/hosting/Components/AboutView.vue';
+import BlueView from "../modules/hosting/Components/WorkingView.vue";
 import PersonalAreaCard from "../modules/hosting/Components/PersonalAreaCard.vue";
 import MobileAppCard from "../modules/hosting/Components/MobileAppCard.vue";
 import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
@@ -94,9 +94,6 @@ export default {
 
 </script>
 <style scoped>
-* {
-    transition: all 0.3s linear;
-}
 
 .first-text {
     flex-direction: column;

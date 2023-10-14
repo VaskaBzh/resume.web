@@ -1,46 +1,147 @@
 <template>
-    <div class="system-card-inf">
-        <p class="system-card-title">
-            {{ $t("system_monitoring.title[0]") }} <br/>
-            {{ $t("system_monitoring.title[1]") }} <br/>
-            {{ $t("system_monitoring.title[2]") }}
-        </p>
-        <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
-    </div>
-    <div class="system-card-img">
-        <img
-            src="../assets/img/Mockup-mac.png"
-            class="img-mac img-system web"
-        />
-        <img
-            src="../assets/img/Mockup-monitoring.png"
-            class="img-monitoring img-system web"
-        />
+    <div class="system__section system__section-wrap" ref="view">
+        <div class="system-card-inf">
+            <p class="system-card-title">
+                {{ $t("system_monitoring.title[0]") }} <br />
+                {{ $t("system_monitoring.title[1]") }} <br />
+                {{ $t("system_monitoring.title[2]") }}
+            </p>
+            <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
+        </div>
+        <div class="system-card-img">
+            <img
+                src="../assets/img/Mockup-mac.png"
+                class="img-mac img-system web"
+            />
+            <img
+                src="../assets/img/Mockup-monitoring.png"
+                class="img-monitoring img-system web"
+            />
 
-        <img
-            src="../assets/img/Mockup-iphone.png"
-            class="img-mac img-system mobile"
-        />
-        <img
-            src="../assets/img/Mockup-monitoring-iphone.png"
-            class="img-monitoring img-system mobile"
-        />
+            <img
+                src="../assets/img/Mockup-iphone.png"
+                class="img-mac img-system mobile"
+            />
+            <img
+                src="../assets/img/Mockup-monitoring-iphone.png"
+                class="img-monitoring img-system mobile"
+            />
+        </div>
+        <p class="get-consultation">{{ $t("system_monitoring.button") }}</p>
     </div>
-    <p class="get-consultation">{{ $t("system_monitoring.button") }}</p>
 </template>
 <script>
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
+    data() {
+        return {
+            validScroll: false,
+            startY: null,
+            touchY: null,
+        };
+    },
+    props: {
+        start: Boolean,
+    },
+    methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
+        handleWheel(e) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
+                this.remove();
+                setTimeout(this.scroll, 650);
+
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
+                this.remove();
+                setTimeout(this.scroll, 650);
+
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+        scroll() {
+            if (this.$refs.view) {
+                this.$refs.view.focus();
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+        remove() {
+            if (this.$refs.view) {
+                this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+    },
+    watch: {
+        start(newStartState) {
+            if (newStartState) {
+                this.scroll();
+            } else {
+                this.remove();
+            }
+        },
+    },
+    mounted() {
+        this.scroll();
+    },
+    unmounted() {
+        this.remove();
+    },
 };
 </script>
 <style scoped>
-* {
-    transition: all 0.3s linear;
-}
 
 .system-card-inf {
     width: 100%;

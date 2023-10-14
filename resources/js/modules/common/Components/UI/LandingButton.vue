@@ -27,7 +27,7 @@ export default {
     outline: none;
     color: var(--gray-1100, #F5FAFF);
     font-family: Unbounded, serif;
-    font-size: 18px;
+    font-size: clamp(12px, 5vw, 18px);
     font-weight: 600;
     line-height: 120%;
     text-transform: uppercase;

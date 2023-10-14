@@ -1,44 +1,153 @@
 <template>
-    <landing-headline>{{ $t("connect.button") }}</landing-headline>
-    <div class="card-connect">
-        <div>
-            <p class="card-title">{{ $t("connect.title") }}</p>
-            <p class="card-text">{{ $t("connect.text") }}</p>
-        </div>
-        <form class="connect-form">
-            <input class="connect-input" :placeholder="$t('connect.form.placeholder')">
-            <input class="connect-input" placeholder="+7">
-            <div class="buttons-connect-container">
-                <button class="connect-order">{{ $t("connect.form.button[0]") }}</button>
-                <p class="or-text">{{ $t("connect.form.text") }}</p>
-                <div class="or-container">
-                    <button class="or-button">{{ $t("connect.form.button[1]") }}</button>
-                    <button class="or-button">{{ $t("connect.form.button[2]") }}</button>
-                </div>
+    <div class="connect__section" ref="view">
+        <landing-headline>{{ $t("connect.button") }}</landing-headline>
+        <div class="card-connect">
+            <div>
+                <p class="card-title">{{ $t("connect.title") }}</p>
+                <p class="card-text">{{ $t("connect.text") }}</p>
             </div>
-        </form>
+            <form class="connect-form">
+                <input
+                    class="connect-input"
+                    :placeholder="$t('connect.form.placeholder')"
+                />
+                <input class="connect-input" placeholder="+7" />
+                <div class="buttons-connect-container">
+                    <button class="connect-order">
+                        {{ $t("connect.form.button[0]") }}
+                    </button>
+                    <p class="or-text">{{ $t("connect.form.text") }}</p>
+                    <div class="or-container">
+                        <button class="or-button">
+                            {{ $t("connect.form.button[1]") }}
+                        </button>
+                        <button class="or-button">
+                            {{ $t("connect.form.button[2]") }}
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </template>
 <script>
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 import LandingHeadline from "../../common/Components/UI/LandingHeadline.vue";
 
 export default {
-    components: {LandingHeadline},
+    components: { LandingHeadline },
     i18n: {
         sharedMessages: HostingMessage,
     },
-}
+    data() {
+        return {
+            validScroll: false,
+            startY: null,
+            touchY: null,
+        };
+    },
+    props: {
+        start: Boolean,
+    },
+    methods: {
+        handleTouchStart(e) {
+            this.startY = e.touches[0].clientY;
+        },
+        handleTouchMove(e) {
+            this.touchY = e.touches[0].clientY;
+            this.handleWheel();
+        },
+        handleWheel(e) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
+                this.remove();
+                setTimeout(this.scroll, 650);
+
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
+
+                    this.validScroll = true;
+                } else {
+                    this.$emit("next");
+                }
+            }
+            if (
+                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
+            ) {
+                this.remove();
+                setTimeout(this.scroll, 650);
+
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validScroll = false;
+                } else {
+                    this.$emit("prev");
+                }
+            }
+        },
+        scroll() {
+            if (this.$refs.view) {
+                this.$refs.view.focus();
+                this.$refs.view.addEventListener("wheel", this.handleWheel);
+                this.$refs.view.addEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.addEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+        remove() {
+            if (this.$refs.view) {
+                this.$refs.view.removeEventListener("wheel", this.handleWheel);
+                this.$refs.view.removeEventListener(
+                    "touchstart",
+                    this.handleTouchStart
+                );
+                this.$refs.view.removeEventListener(
+                    "touchmove",
+                    this.handleTouchMove
+                );
+            }
+        },
+    },
+    watch: {
+        start(newStartState) {
+            if (newStartState) {
+                this.scroll();
+            } else {
+                this.remove();
+            }
+        },
+    },
+    mounted() {
+        this.scroll();
+    },
+    unmounted() {
+        this.remove();
+    },
+};
 </script>
 <style scoped>
-* {
-    transition: all 0.3s linear;
-}
-
 .connect-with-us {
     width: 50%;
     text-align: center;
-    color: var(--gray-3100, #D0D5DD);
+    color: var(--gray-3100, #d0d5dd);
     font-family: Unbounded;
     font-size: 16px;
     font-style: normal;
@@ -46,13 +155,13 @@ export default {
     line-height: 120%; /* 19.2px */
     text-transform: uppercase;
     border-radius: 20px;
-    border: 0.5px solid var(--secondary-gray, #98A2B3);
-    background: rgba(13, 13, 13, 0.10);
+    border: 0.5px solid var(--secondary-gray, #98a2b3);
+    background: rgba(13, 13, 13, 0.1);
     padding: 10px 20px;
 }
 
 .card-title {
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     margin-bottom: 20px;
     /* Text Web/Headline 5 */
     font-family: Unbounded;
@@ -64,7 +173,7 @@ export default {
 }
 
 .card-text {
-    color: var(--gray-170, rgba(245, 250, 255, 0.70));
+    color: var(--gray-170, rgba(245, 250, 255, 0.7));
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
@@ -81,12 +190,12 @@ export default {
 
 .connect-input {
     border-radius: 30px;
-    border: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
+    border: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
     width: 400px;
     height: 48px;
     padding: 4px 20px;
     background: inherit;
-    color: #F5FAFF;
+    color: #f5faff;
 }
 
 .connect-form {
@@ -106,11 +215,11 @@ export default {
 
 .connect-order {
     border-radius: 40px;
-    border: 1px solid rgba(192, 228, 255, 0.60);
-    background: var(--gray-480, rgba(13, 13, 13, 0.80));
+    border: 1px solid rgba(192, 228, 255, 0.6);
+    background: var(--gray-480, rgba(13, 13, 13, 0.8));
     padding: 8px 20px;
     width: 400px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     text-align: center;
     font-family: Unbounded;
     font-size: 14px;
@@ -122,7 +231,7 @@ export default {
 }
 
 .or-text {
-    color: var(--gray-3100, #D0D5DD);
+    color: var(--gray-3100, #d0d5dd);
     font-family: Unbounded;
     font-size: 14px;
     font-style: normal;
@@ -141,10 +250,10 @@ export default {
 
 .or-button {
     border-radius: 20px;
-    border: 1px solid var(--secondary-gray-2, rgba(152, 162, 179, 0.50));
+    border: 1px solid var(--secondary-gray-2, rgba(152, 162, 179, 0.5));
     background: var(--gray-25, rgba(228, 231, 236, 0.05));
     padding: 10px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     text-align: center;
     font-family: Unbounded;
     font-size: 14px;

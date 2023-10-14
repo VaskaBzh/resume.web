@@ -1,48 +1,33 @@
 <template>
-    <div class="guarantee__section guarantee__section-blue" ref="view">
-        <div class="guarantee-card">
-            <p class="title-card">{{ $t("guarantees.title") }}</p>
-            <p class="text-card">{{ $t("guarantees.text") }}</p>
+    <article class="article-hosting first-text hosting__section" ref="view">
+        <div class="hosting__content">
+            <span class="text-on">{{ $t("title[0]") }}</span>
+            <span class="text-fifty">{{ $t("title[1]") }} <br /></span>
+            <span class="text-increase">{{ $t("title[2]") }} <br /></span>
+            <span class="text-income">{{ $t("title[3]") }} <br /></span>
+            <span class="text-cvt">{{ $t("title[4]") }}</span>
         </div>
-        <faq-view :faq="faq"> </faq-view>
-    </div>
+        <landing-button class="get-consultation"
+            ><template v-slot:text>{{ $t("button") }}</template>
+        </landing-button>
+    </article>
 </template>
-<script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-import FaqView from "../../home/Components/Views/FaqView.vue";
 
+<script>
+import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 export default {
+    name: "hero-view",
     i18n: {
         sharedMessages: HostingMessage,
     },
-    components: {
-        FaqView,
-    },
+    components: { LandingButton },
     data() {
         return {
-            isOpenAccordion: false,
             validScroll: false,
             startY: null,
             touchY: null,
         };
-    },
-    computed: {
-        faq() {
-            return [
-                {
-                    title: this.$t("guarantees.list.title[0]"),
-                    text: this.$t("guarantees.list.text[0]"),
-                },
-                {
-                    title: this.$t("guarantees.list.title[1]"),
-                    text: this.$t("guarantees.list.text[1]"),
-                },
-                {
-                    title: this.$t("guarantees.list.title[2]"),
-                    text: this.$t("guarantees.list.text[2]"),
-                },
-            ];
-        },
     },
     props: {
         start: Boolean,
@@ -141,156 +126,52 @@ export default {
     },
 };
 </script>
+
 <style scoped>
-.guarantee-block {
-    display: flex;
-    flex-direction: column;
+.hosting__content {
+    max-width: 607px;
     width: 100%;
-}
-
-.title-card {
+    max-height: 317px;
     color: var(--gray-1100, #f5faff);
-    font-family: Unbounded;
-    font-size: 36px;
+    font-feature-settings: "clig" off, "liga" off;
+    font-family: Unbounded, serif;
+    font-size: clamp(44px, 7vw, 24px);
     font-style: normal;
     font-weight: 600;
-    line-height: 120%; /* 43.2px */
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.text-system {
-    width: 380px;
-}
-
-.text-card {
-    color: var(--gray-170, rgba(245, 250, 255, 0.7));
-    font-family: NunitoSans;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 110%; /* 19.8px */
-}
-
-.title-hosting {
-    color: var(--gray-1100, #f5faff);
-    text-align: right;
-    font-family: Unbounded;
-    font-size: 55px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 66px */
+    line-height: 120%;
     text-transform: uppercase;
 }
-
-.guarantee-card {
-    width: 464px;
-    margin: 0 auto;
-    margin-bottom: 100px;
-}
-
-.income-system-card {
+.text-income {
     display: flex;
-    justify-content: space-between;
+    align-items: end;
+    justify-content: end;
 }
-
-.gray-line {
-    padding: 32px 100px;
-    border-bottom: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
+.text-fifty {
+    font-size: clamp(156px, 11vw, 60px);
 }
-
-.gray-line-top {
-    border-top: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
-}
-
-.accordion-button {
-    display: none;
-}
-
-.card-row {
-    display: flex;
-    justify-content: space-between;
+.get-consultation {
+    margin-top: clamp(70px, 5vw, 50px);
     width: 100%;
+    max-width: 534px;
 }
-
-@media (max-width: 950px) {
-    .title-card {
-        font-size: 24px;
+@media (max-width: 768px) {
+    .hosting__content {
+        font-size: 36px;
+        line-height: 120%; /* 43.2px */
+        max-width: 400px;
     }
-
-    .guarantee-card {
-        width: 354px;
-        margin-bottom: 80px;
-        margin-top: 100px;
-    }
-
-    .card-row {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
-
-    .title-hosting {
-        text-align: inherit;
-        width: 100%;
-        font-size: 44px;
-    }
-
-    .accordion-button {
-        display: inline-block;
-        height: 30px;
-        margin-top: 32px;
-        /* align-self: center; */
-    }
-
-    .guarantee-block {
-        padding: 0;
-    }
-
-    .text-system {
-        width: 590px;
-    }
-
-    .gray-line {
-        padding: 30px 32px;
-    }
-
-    .text-web {
-        display: none;
+    .text-fifty {
+        font-size: 106px;
     }
 }
-
 @media (max-width: 450px) {
-    .title-card {
-        font-size: 18px;
-    }
-
-    .text-card {
-        font-size: 14px;
-    }
-
-    .title-hosting {
+    .hosting__content {
         font-size: 22px;
+        max-width: 244px;
+        height: auto;
     }
-
-    .guarantee-card {
-        width: 244px;
-        margin-bottom: 70px;
-    }
-
-    .gray-line {
-        padding: 20px 16px;
-    }
-
-    .text-system {
-        width: 328px;
-    }
-
-    .card-row {
-        gap: 10px;
-    }
-
-    .accordion-button {
-        margin-top: 12px;
+    .text-fifty {
+        font-size: 60px;
     }
 }
 </style>

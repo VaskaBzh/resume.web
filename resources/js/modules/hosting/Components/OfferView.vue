@@ -1,48 +1,57 @@
 <template>
-    <div class="guarantee__section guarantee__section-blue" ref="view">
-        <div class="guarantee-card">
-            <p class="title-card">{{ $t("guarantees.title") }}</p>
-            <p class="text-card">{{ $t("guarantees.text") }}</p>
+    <article class="third-text hosting__section" ref="view">
+        <landing-headline class="how-are-we">{{
+            $t("offer.button")
+        }}</landing-headline>
+        <div class="offer-content">
+            <span class="text-offer">{{ $t("offer.title[0]") }}</span>
+            <div class="text-offer-column">
+                <span class="text-offer">{{ $t("offer.title[1]") }}<br /></span>
+                <span class="text-offer">{{ $t("offer.title[2]") }}<br /></span>
+            </div>
+            <span class="text-offer text-end"
+                >{{ $t("offer.title[3]") }}<br
+            /></span>
         </div>
-        <faq-view :faq="faq"> </faq-view>
-    </div>
+        <div class="offer-card-container">
+            <div class="offer-card" v-for="offer in offers">
+                <div>
+                    <p class="offer-title">{{ offer.percent }}</p>
+                    <p class="offer-title">{{ offer.title }}</p>
+                </div>
+                <p class="offer-text">{{ offer.text }}</p>
+            </div>
+        </div>
+    </article>
 </template>
-<script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-import FaqView from "../../home/Components/Views/FaqView.vue";
 
+<script>
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 export default {
+    name: "offer-view",
+    components: { LandingHeadline },
     i18n: {
         sharedMessages: HostingMessage,
     },
-    components: {
-        FaqView,
-    },
     data() {
         return {
-            isOpenAccordion: false,
+            offers: [
+                {
+                    percent: this.$t("offer.cards.title[0]"),
+                    title: this.$t("offer.cards.title[1]"),
+                    text: this.$t("offer.cards.text[0]"),
+                },
+                {
+                    percent: this.$t("offer.cards.title[2]"),
+                    title: this.$t("offer.cards.title[3]"),
+                    text: this.$t("offer.cards.text[1]"),
+                },
+            ],
             validScroll: false,
             startY: null,
             touchY: null,
         };
-    },
-    computed: {
-        faq() {
-            return [
-                {
-                    title: this.$t("guarantees.list.title[0]"),
-                    text: this.$t("guarantees.list.text[0]"),
-                },
-                {
-                    title: this.$t("guarantees.list.title[1]"),
-                    text: this.$t("guarantees.list.text[1]"),
-                },
-                {
-                    title: this.$t("guarantees.list.title[2]"),
-                    text: this.$t("guarantees.list.text[2]"),
-                },
-            ];
-        },
     },
     props: {
         start: Boolean,
@@ -141,40 +150,33 @@ export default {
     },
 };
 </script>
+
 <style scoped>
-.guarantee-block {
+.text-end {
     display: flex;
-    flex-direction: column;
-    width: 100%;
+    justify-content: end;
 }
-
-.title-card {
-    color: var(--gray-1100, #f5faff);
-    font-family: Unbounded;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 43.2px */
-    text-transform: uppercase;
-    margin-bottom: 20px;
-}
-
-.text-system {
-    width: 380px;
-}
-
-.text-card {
+.offer-text {
     color: var(--gray-170, rgba(245, 250, 255, 0.7));
     font-family: NunitoSans;
     font-size: 18px;
     font-style: normal;
     font-weight: 400;
     line-height: 110%; /* 19.8px */
+    width: 280px;
 }
-
-.title-hosting {
+.offer-title {
+    color: var(--gray-3100, #d0d5dd);
+    font-family: Unbounded;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 19.2px */
+    text-transform: uppercase;
+}
+.offer-content {
     color: var(--gray-1100, #f5faff);
-    text-align: right;
+    text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
     font-family: Unbounded;
     font-size: 55px;
     font-style: normal;
@@ -182,115 +184,66 @@ export default {
     line-height: 120%; /* 66px */
     text-transform: uppercase;
 }
-
-.guarantee-card {
-    width: 464px;
-    margin: 0 auto;
-    margin-bottom: 100px;
+.text-offer-column {
+    margin-left: 195px;
 }
-
-.income-system-card {
+.offer-card-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    margin-right: 137px;
+    gap: 20px;
 }
-
-.gray-line {
-    padding: 32px 100px;
-    border-bottom: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
+.offer-card {
+    border-radius: 40px;
+    border-top: 2px solid #555353;
+    border-bottom: 0.5px solid #555353;
+    background: var(--gray-480, rgba(13, 13, 13, 0.8));
+    display: inline-flex;
+    padding: 30px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    width: 385px;
 }
-
-.gray-line-top {
-    border-top: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
-}
-
-.accordion-button {
-    display: none;
-}
-
-.card-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-@media (max-width: 950px) {
-    .title-card {
-        font-size: 24px;
+@media (max-width: 850px) {
+    .offer-card-container {
+        margin-right: 0px;
+        justify-content: center;
     }
-
-    .guarantee-card {
-        width: 354px;
-        margin-bottom: 80px;
-        margin-top: 100px;
-    }
-
-    .card-row {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
-
-    .title-hosting {
-        text-align: inherit;
-        width: 100%;
-        font-size: 44px;
-    }
-
-    .accordion-button {
-        display: inline-block;
-        height: 30px;
-        margin-top: 32px;
-        /* align-self: center; */
-    }
-
-    .guarantee-block {
-        padding: 0;
-    }
-
-    .text-system {
-        width: 590px;
-    }
-
-    .gray-line {
-        padding: 30px 32px;
-    }
-
-    .text-web {
-        display: none;
+    .offer-content {
+        font-size: 36px;
     }
 }
-
+@media (max-width: 768px) {
+    .offer-card-container {
+        margin-right: 0px;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column nowrap;
+    }
+}
 @media (max-width: 450px) {
-    .title-card {
-        font-size: 18px;
+    .offer-card-container {
+        flex-direction: column;
     }
-
-    .text-card {
-        font-size: 14px;
-    }
-
-    .title-hosting {
+    .offer-content {
         font-size: 22px;
+        padding: 0 16px;
+        margin-top: 30px;
     }
-
-    .guarantee-card {
-        width: 244px;
-        margin-bottom: 70px;
+    .offer-text {
+        font-size: 14px;
+        width: auto;
     }
-
-    .gray-line {
-        padding: 20px 16px;
-    }
-
-    .text-system {
+    .offer-card {
         width: 328px;
+        padding: 20px;
     }
-
-    .card-row {
-        gap: 10px;
+    .text-offer-column {
+        margin-left: 75px;
     }
-
-    .accordion-button {
-        margin-top: 12px;
+    .offer-title {
+        font-size: 14px;
     }
 }
 </style>

@@ -1,48 +1,28 @@
 <template>
-    <div class="guarantee__section guarantee__section-blue" ref="view">
-        <div class="guarantee-card">
-            <p class="title-card">{{ $t("guarantees.title") }}</p>
-            <p class="text-card">{{ $t("guarantees.text") }}</p>
+    <div class="working__section working__section-blue" ref="view">
+        <div class="working-card">
+            <p class="working-title">{{ inf.title }}</p>
+            <p class="working-text">{{ inf.text }}</p>
         </div>
-        <faq-view :faq="faq"> </faq-view>
     </div>
 </template>
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-import FaqView from "../../home/Components/Views/FaqView.vue";
 
 export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
-    components: {
-        FaqView,
-    },
     data() {
         return {
-            isOpenAccordion: false,
+            inf: {
+                title: this.$t("for_clients.button"),
+                text: this.$t("for_clients.text"),
+            },
             validScroll: false,
             startY: null,
             touchY: null,
         };
-    },
-    computed: {
-        faq() {
-            return [
-                {
-                    title: this.$t("guarantees.list.title[0]"),
-                    text: this.$t("guarantees.list.text[0]"),
-                },
-                {
-                    title: this.$t("guarantees.list.title[1]"),
-                    text: this.$t("guarantees.list.text[1]"),
-                },
-                {
-                    title: this.$t("guarantees.list.title[2]"),
-                    text: this.$t("guarantees.list.text[2]"),
-                },
-            ];
-        },
     },
     props: {
         start: Boolean,
@@ -62,8 +42,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -84,8 +64,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -142,28 +122,27 @@ export default {
 };
 </script>
 <style scoped>
-.guarantee-block {
+.working-card {
+    width: 432px;
     display: flex;
     flex-direction: column;
-    width: 100%;
+    align-items: center;
+    gap: 30px;
 }
-
-.title-card {
-    color: var(--gray-1100, #f5faff);
+.working-title {
+    color: var(--gray-3100, #d0d5dd);
     font-family: Unbounded;
-    font-size: 36px;
+    font-size: 16px;
     font-style: normal;
     font-weight: 600;
-    line-height: 120%; /* 43.2px */
+    line-height: 120%; /* 19.2px */
     text-transform: uppercase;
-    margin-bottom: 20px;
+    border-radius: 20px;
+    border: 0.5px solid var(--secondary-gray, #98a2b3);
+    padding: 10px 20px;
+    display: inline-flex;
 }
-
-.text-system {
-    width: 380px;
-}
-
-.text-card {
+.working-text {
     color: var(--gray-170, rgba(245, 250, 255, 0.7));
     font-family: NunitoSans;
     font-size: 18px;
@@ -171,126 +150,17 @@ export default {
     font-weight: 400;
     line-height: 110%; /* 19.8px */
 }
-
-.title-hosting {
-    color: var(--gray-1100, #f5faff);
-    text-align: right;
-    font-family: Unbounded;
-    font-size: 55px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 120%; /* 66px */
-    text-transform: uppercase;
-}
-
-.guarantee-card {
-    width: 464px;
-    margin: 0 auto;
-    margin-bottom: 100px;
-}
-
-.income-system-card {
-    display: flex;
-    justify-content: space-between;
-}
-
-.gray-line {
-    padding: 32px 100px;
-    border-bottom: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
-}
-
-.gray-line-top {
-    border-top: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
-}
-
-.accordion-button {
-    display: none;
-}
-
-.card-row {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-@media (max-width: 950px) {
-    .title-card {
-        font-size: 24px;
-    }
-
-    .guarantee-card {
-        width: 354px;
-        margin-bottom: 80px;
-        margin-top: 100px;
-    }
-
-    .card-row {
-        flex-direction: column-reverse;
-        align-items: flex-start;
-    }
-
-    .title-hosting {
-        text-align: inherit;
-        width: 100%;
-        font-size: 44px;
-    }
-
-    .accordion-button {
-        display: inline-block;
-        height: 30px;
-        margin-top: 32px;
-        /* align-self: center; */
-    }
-
-    .guarantee-block {
-        padding: 0;
-    }
-
-    .text-system {
-        width: 590px;
-    }
-
-    .gray-line {
-        padding: 30px 32px;
-    }
-
-    .text-web {
-        display: none;
-    }
-}
-
 @media (max-width: 450px) {
-    .title-card {
-        font-size: 18px;
+    .working-title {
+        font-size: 12px;
+        padding: 8px 10px;
     }
-
-    .text-card {
+    .working-text {
         font-size: 14px;
     }
-
-    .title-hosting {
-        font-size: 22px;
-    }
-
-    .guarantee-card {
-        width: 244px;
-        margin-bottom: 70px;
-    }
-
-    .gray-line {
-        padding: 20px 16px;
-    }
-
-    .text-system {
-        width: 328px;
-    }
-
-    .card-row {
-        gap: 10px;
-    }
-
-    .accordion-button {
-        margin-top: 12px;
+    .working-card {
+        width: 266px;
+        gap: 20px;
     }
 }
 </style>
