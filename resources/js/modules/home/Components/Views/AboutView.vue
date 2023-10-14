@@ -25,7 +25,7 @@
                     </a>
                 </template>
             </landing-wrap>
-            <landing-button>
+            <landing-button class="about-view_btn">
                 <template v-slot:text
                 >{{ $t("who_we_are.card_private.button[1]") }}
                 </template>

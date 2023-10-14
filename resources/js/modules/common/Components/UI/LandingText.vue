@@ -18,7 +18,7 @@ export default {
     color: var(--gray-170, rgba(245, 250, 255, 0.7));
     text-shadow: 0 4px 7px rgba(14, 14, 14, 0.05);
     font-family: NunitoSans, serif;
-    font-size: clamp(18px, 5vw, 20px);
+    font-size: clamp(14px, 4vw, 20px);
     font-weight: 400;
     line-height: 110%;
     text-transform: none;
