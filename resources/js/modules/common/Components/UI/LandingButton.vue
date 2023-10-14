@@ -55,7 +55,7 @@ export default {
         min-height: 40px;
     }
 
-    .about-view_btn {
+    .about-view_btn, .cabinet_btn {
         font-size: 12px;
         min-height: 45px;
     }

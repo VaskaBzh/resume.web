@@ -33,7 +33,7 @@
                 alt="all-btc"
                 class="cabinet_image"
             />
-            <landing-button>
+            <landing-button class="cabinet_btn">
                 <template v-slot:text>
                     {{ $t("personal_account.button[1]") }}
                 </template>
