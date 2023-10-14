@@ -46,4 +46,20 @@ export default {
 .button-disabled {
     opacity: 0.5;
 }
+
+@media (max-width: 485px) {
+    .hero_button, .about-view_btn {
+        width: 100%;
+        font-size: 14px;
+        margin: 0 auto;
+        min-height: 40px;
+    }
+
+    .about-view_btn, .cabinet_btn {
+        font-size: 12px;
+        min-height: 45px;
+    }
+
+}
+
 </style>

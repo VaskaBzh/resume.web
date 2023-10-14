@@ -263,11 +263,51 @@ export default {
             font-weight: 400;
             line-height: 110%;
         }
+
     }
 }
 
 .notActive {
     opacity: 1;
+}
+
+@media (max-width: 479.98px) {
+    .history-pool {
+        &__item-line {
+            gap: 65px;
+            padding-left: 15vw;
+
+            &-block {
+                width: 190px;
+            }
+
+            &_cycle {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        &__item-infos {
+            gap: 65px;
+            padding-left: 15vw;
+        }
+
+        &__item-info {
+            width: 190px;
+
+            &-year {
+                font-size: 14px;
+                line-height: 100%;
+
+            }
+
+            &-discription {
+                font-size: 14px;
+                line-height: 100%;
+            }
+        }
+    }
+
 }
 
 

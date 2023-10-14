@@ -103,6 +103,10 @@ export default {
         top: 50%;
         transform: translateY(-50%);
     }
+    .wrap {
+        align-items: flex-start;
+        gap: unset;
+    }
 }
 
 .wrap_link {
@@ -146,6 +150,7 @@ export default {
 @media (max-width: 1500.98px) {
     .wrap_title {
         transform: translateY(-50%);
+        max-width: 625px;
     }
 }
 
@@ -177,6 +182,12 @@ export default {
         transform: none;
         left: 0;
         top: 0;
+        margin-top: 0;
+    }
+
+    .wrap {
+       height: auto;
+        padding: 0 clamp(16px, 10vw, 32px) 30px;
     }
 }
 </style>

@@ -247,6 +247,11 @@ export default {
         margin-bottom: clamp(30px, 10vw, 70px);
         max-height: 300px;
         transition: all 1.2s ease 0s, opacity 0.5s ease 0.5s;
+
+        @media (max-width: 497px) {
+            width: 80%;
+            margin: 0 auto 30px;
+        }
     }
 
     &__block {

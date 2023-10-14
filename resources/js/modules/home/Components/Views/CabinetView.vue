@@ -33,7 +33,7 @@
                 alt="all-btc"
                 class="cabinet_image"
             />
-            <landing-button>
+            <landing-button class="cabinet_btn">
                 <template v-slot:text>
                     {{ $t("personal_account.button[1]") }}
                 </template>
@@ -198,6 +198,11 @@ export default {
     &_text {
         max-width: 430px;
         margin-bottom: clamp(40px, 5vw, 70px);
+
+        @media (max-width: 497px) {
+            max-width: 247px;
+            margin: 0 auto 30px;
+        }
     }
 }
 </style>

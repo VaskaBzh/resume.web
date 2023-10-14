@@ -22,13 +22,13 @@ export default {
 }
 
 .title-h1 {
-    font-size: clamp(32px, 5vw, 110px);
+    font-size: clamp(32px, 10vw, 110px);
     font-weight: 600;
     line-height: 100%;
 }
 
 .title-h2 {
-    font-size: clamp(28px, 5vw, 65px);
+    font-size: clamp(22px, 5vw, 65px);
     font-weight: 400;
     line-height: 120%;
 }
