@@ -38,6 +38,7 @@ export default {
     background: transparent;
     z-index: 100;
     padding: 50px 15px;
+    transition: all 0.8s ease 0s;
     //opacity: 0;
     &__container {
         margin: 0 auto;

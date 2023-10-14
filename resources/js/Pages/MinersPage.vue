@@ -2,31 +2,41 @@
     <main class="main-miners">
         <article class="article-miners first-text miners__section">
             <div class="miners-content">
-                <span class="">{{ $t("title[0]") }} <br></span>
-                <span class="">{{ $t("title[1]") }}<br></span>
-                <span class="text-mining">{{ $t("title[2]") }} <br></span>
-                <span class="text-bitcoin">{{ $t("title[3]") }} <br></span>
+                <span class="">{{ $t("title[0]") }} <br /></span>
+                <span class="">{{ $t("title[1]") }}<br /></span>
+                <span class="text-mining">{{ $t("title[2]") }} <br /></span>
+                <span class="text-bitcoin">{{ $t("title[3]") }} <br /></span>
             </div>
-            <button-blue class="get-consultation">{{ $t("button") }}</button-blue>
-        </article>
-        <article class="article-hosting test-color second-text miners__section miners__section-wrap">
-            <AboutView :facts="factsMiners" :title="titleMiners"></AboutView>
-        </article>
-        <article class="article-hosting article-work-with-us miners__section miners__section-blue">
-            <BlueView :inf="ourOffer"></BlueView>
-        </article>
-        <article class="article-hosting black-block miners__section miners__section-wrap">
-            <PersonalAreaCard></PersonalAreaCard>
-        </article>
-        <article class="article-hosting black-block miners__section miners__section-wrap">
-            <MobileAppCard></MobileAppCard>
+            <button-blue class="get-consultation">{{
+                $t("button")
+            }}</button-blue>
         </article>
         <article
-            class="article-hosting article-work-with-us hosting__section"
+            class="article-hosting test-color second-text miners__section miners__section-wrap"
         >
+            <AboutView :facts="factsMiners" :title="titleMiners"></AboutView>
+        </article>
+        <article
+            class="article-hosting article-work-with-us miners__section miners__section-blue"
+        >
+            <BlueView :inf="ourOffer"></BlueView>
+        </article>
+        <article
+            class="article-hosting black-block miners__section miners__section-wrap"
+        >
+            <PersonalAreaCard></PersonalAreaCard>
+        </article>
+        <article
+            class="article-hosting black-block miners__section miners__section-wrap"
+        >
+            <MobileAppCard></MobileAppCard>
+        </article>
+        <article class="article-hosting article-work-with-us hosting__section">
             <GuaranteeCard></GuaranteeCard>
         </article>
-        <article class="article-hosting black-block miners__section miners__section-wrap">
+        <article
+            class="article-hosting black-block miners__section miners__section-wrap"
+        >
             <CommunityCard></CommunityCard>
         </article>
         <article class="article-hosting second-text miners__section">
@@ -38,7 +48,7 @@
     </main>
 </template>
 <script>
-import AboutView from '../modules/hosting/Components/AboutView.vue';
+import AboutView from "../modules/hosting/Components/AboutView.vue";
 import BlueView from "../modules/hosting/Components/WorkingView.vue";
 import PersonalAreaCard from "../modules/hosting/Components/PersonalAreaCard.vue";
 import MobileAppCard from "../modules/hosting/Components/MobileAppCard.vue";
@@ -46,11 +56,10 @@ import GuaranteeCard from "../modules/hosting/Components/GuaranteeCard.vue";
 import ConnectCard from "../modules/hosting/Components/ConnectCard.vue";
 import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
 import CommunityCard from "../modules/miners/Components/CommunityCard.vue";
-import {MinersMessage} from "@/modules/miners/lang/MinersMessage";
-
+import { MinersMessage } from "@/modules/miners/lang/MinersMessage";
 
 export default {
-    name: 'miners-page',
+    name: "miners-page",
     components: {
         AboutView,
         BlueView,
@@ -59,7 +68,7 @@ export default {
         GuaranteeCard,
         ConnectCard,
         FooterHosting,
-        CommunityCard
+        CommunityCard,
     },
     i18n: {
         sharedMessages: MinersMessage,
@@ -68,33 +77,44 @@ export default {
         return {
             factsMiners: [
                 {
-                    num: '>3',
+                    num: ">3",
                     grayText: this.$t("who_are_we.column.gray_text[0]"),
-                    mainText: [this.$t("who_are_we.column.main_text[0]"), this.$t("who_are_we.title[1]")],
+                    mainText: [
+                        this.$t("who_are_we.column.main_text[0]"),
+                        this.$t("who_are_we.title[1]"),
+                    ],
                 },
                 {
-                    num: '4%',
-                    grayText: '',
-                    mainText: [this.$t("who_are_we.title[2]"), this.$t("who_are_we.title[3]")],
+                    num: "4%",
+                    grayText: "",
+                    mainText: [
+                        this.$t("who_are_we.title[2]"),
+                        this.$t("who_are_we.title[3]"),
+                    ],
                 },
                 {
-                    num: '>1,7',
-                    grayText: 'EH /s',
-                    mainText: [this.$t("who_are_we.title[4]"), this.$t("who_are_we.title[5]")],
+                    num: ">1,7",
+                    grayText: "EH /s",
+                    mainText: [
+                        this.$t("who_are_we.title[4]"),
+                        this.$t("who_are_we.title[5]"),
+                    ],
                 },
             ],
-            titleMiners: [this.$t("who_are_we.title[0]"), this.$t("who_are_we.title[1]"), this.$t("who_are_we.title[2]")],
+            titleMiners: [
+                this.$t("who_are_we.title[0]"),
+                this.$t("who_are_we.title[1]"),
+                this.$t("who_are_we.title[2]"),
+            ],
             ourOffer: {
                 title: this.$t("offer.title"),
-                text: this.$t("offer.text")
-            }
-        }
+                text: this.$t("offer.text"),
+            },
+        };
     },
-}
-
+};
 </script>
 <style scoped>
-
 .first-text {
     flex-direction: column;
 }
@@ -102,7 +122,7 @@ export default {
 .miners-content {
     width: 660px;
     height: 381px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     font-family: Unbounded;
     font-size: 55px;
     font-style: normal;
@@ -120,8 +140,9 @@ export default {
     border-radius: 70px 70px 0px 0px;
     border-top: 1px solid #585757;
     border-bottom: 1px solid #585757;
-    background: var(--gray-4100, #0D0D0D);
-    box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    background: var(--gray-4100, #0d0d0d);
+    box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25),
+        0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     padding: 100px 100px 50px;
 }
 
@@ -142,7 +163,7 @@ export default {
     align-items: center;
     gap: 10px;
     padding: 8px 20px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     font-family: Unbounded;
     font-size: 18px;
     font-style: normal;
@@ -150,8 +171,8 @@ export default {
     line-height: 120%; /* 21.6px */
     text-transform: uppercase;
     border-radius: 40px;
-    border: 1px solid rgba(192, 228, 255, 0.60);
-    background: var(--gray-480, rgba(13, 13, 13, 0.80));
+    border: 1px solid rgba(192, 228, 255, 0.6);
+    background: var(--gray-480, rgba(13, 13, 13, 0.8));
     cursor: pointer;
 }
 

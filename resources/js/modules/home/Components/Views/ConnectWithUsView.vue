@@ -64,43 +64,47 @@ export default {
             this.handleWheel();
         },
         handleWheel(e) {
-            // if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-            //     this.remove();
-            //     setTimeout(this.scroll, 300);
-            //     if (
-            //         this.$refs.view.offsetHeight -
-            //             document.scrollingElement.clientHeight >
-            //             20 &&
-            //         !this.validScroll
-            //     ) {
-            //         this.$refs.view.style.transform = `translateY(-${
-            //             this.$refs.view.offsetHeight -
-            //             document.scrollingElement.clientHeight
-            //         }px)`;
-            //
-            //         this.validScroll = true;
-            //     } else {
-            //         this.$emit("next");
-            //     }
-            // }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-
+            if (this.$refs.view) {
+                // if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
+                //     this.remove();
+                //     setTimeout(this.scroll, 300);
+                //     if (
+                //         this.$refs.view.offsetHeight -
+                //             document.scrollingElement.clientHeight >
+                //             20 &&
+                //         !this.validScroll
+                //     ) {
+                //         this.$refs.view.style.transform = `translateY(-${
+                //             this.$refs.view.offsetHeight -
+                //             document.scrollingElement.clientHeight
+                //         }px)`;
+                //
+                //         this.validScroll = true;
+                //     } else {
+                //         this.$emit("next");
+                //     }
+                // }
                 if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    this.validScroll
+                    this.startY
+                        ? this.touchY - this.startY > 110
+                        : e.deltaY < -10
                 ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
                     this.remove();
-                    this.$emit("prev");
+                    setTimeout(this.scroll, 300);
+
+                    if (
+                        this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight >
+                            20 &&
+                        this.validScroll
+                    ) {
+                        this.$refs.view.style.transform = `translateY(0px)`;
+
+                        this.validScroll = false;
+                    } else {
+                        this.remove();
+                        this.$emit("prev");
+                    }
                 }
             }
         },
@@ -113,9 +117,10 @@ export default {
             // }
         },
         remove() {
-            if (this.$refs.view) {
-                this.$refs.view.style.minHeight = `100vh`;
-            }
+            // console.log(this.$refs.view);
+            // if (this.$refs.view) {
+            //     this.$refs.view.style.minHeight = `100vh`;
+            // }
             document.body.removeEventListener("wheel", this.handleWheel);
             document.body.removeEventListener(
                 "touchstart",
