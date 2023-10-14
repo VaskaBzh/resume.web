@@ -1,65 +1,76 @@
 export const HostingMessage = {
     en: {
-        title: ['by', '50%', 'Increase', 'your income', 'per kW'],
-        button: 'get advice',
+        title: ['by', '50%', 'per each kwt', 'increase', 'your income'],
+        button: 'get consultation',
         who_are_we: {
             button: 'who we are',
-            title: ['Efficient pool', 'for Bitcoin mining,', 'optimized', 'for work', 'data centers'],
-            column: {
+            title: ['Efficient pool', 'for mining Bitcoin', 'optimized', 'for data centers'],
+            column:{
                 num: ['>3', '5', '>1.7'],
-                gray_text: ['years', 'the largest data centers in the Russian Federation', 'EH /s'],
-                main_text: ['We work in the market', 'digital assets', 'Work successfully', 'with us', 'Total hashrate', 'Allbtc Pool']
+                gray_text: ['years', 'the largest data centers in Russia', 'EH /s'],
+                main_text: [
+                    'We work in the', 
+                    'crypto industry', 
+                    'Work successfully',
+                    'with us', 
+                    'Total hashrate', 
+                    'of our pool']
             }
         },
         offer: {
             button: 'what we offer',
-            title: ['increase', 'your income', 'for every kW', 'by 50%'],
+            title: ["we'll increase", 'your income', 'per each kWt', 'by 50%'],
             cards: {
-                title: ['up to 4%', 'personal commission for your clients', 'up to 75%', 'your affiliate program rewards'],
-                text: ['The commission of our pool is customizable. We give you a choice: give a discount to your clients and provide an advantageous offer or increase your profits through the affiliate program. Check with the manager for more details. ', 'You receive a large reward through the affiliate program, which will allow you to earn more from each of your clients. The reward percentage depends on the connected hashrate.']
+                title: [
+                    'up to 4%', 
+                    'personal commission for your clients', 
+                    'up to 75%',
+                    'your affiliate program rewards'
+                ],
+                text: ['The commission of our pool is customizable. We give you a choice: give a discount to your clients and provide an advantageous offer or increase your profits through the affiliate program. Contact to the manager for more details. ', 'You receive a large reward through the affiliate program, which will allow you to earn more from each of your clients. The reward percentage depends on the connected hashrate.']
             }
         },
         pluse: {
-            button: 'advantages of working with us',
-            text: 'A personal manager will work with you to help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool'
+            button: 'more advantages',
+            text: 'We offer a set of tools to optimize the work and increase profits of data centers. Personal support resolves all issues without the participationof your specialists.'
         },
         system_monitoring: {
-            title: ['Introducing', 'the monitoring', 'system'],
-            text: 'The hosting monitoring and management system allows you to optimize the operation of your data center. You can track your devices, monitor movements and repairs. It also includes statistics on all devices and timely actions when problems are identified.',
-            button: 'get advice'
+            title: ['hosting', 'management', 'system'],
+            text: 'The hosting monitoring and management system allows you to optimize the operation of your data center. You can track your devices, monitor movements and repairs. It also includes statistics on all devices and timely actions when problems are identified.', 
+            button: 'get consultation'
         },
         support: {
-            title: 'premium custom support',
-            text: 'We are creating a separate private chat with dedicated support just for your clients. The chat contains your elements such as name and logo to support your brand. '
+            title: 'premium customer support',
+            text: 'We are creating a separate private chat with dedicated support just for your clients. The chat contains your elements such as name and logo to support your brand. ' 
         },
         for_clients: {
-            button: 'What will your customers receive',
-            text: 'A personal manager will work with you to help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool'
+            button: 'Your customers are going to get',
+            text: 'Your clients will receive a set of tools for stable and transparent earnings. Plus access to premium support and guarantees of safety and reliability.'
         },
-        personal_account: {
-            title: 'convenient personal account',
-            text: 'Convenient personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the end user. ',
-            button: 'try personal account',
-            tooltip: [
-                'Nothing superfluous, only', 'the most current data',
-                'Average hashrate of', 'all your devices',
-                'Convenient navigation panel',
-                'Be aware of your', 'income',
-                'Progress until accruals', 'are paid',
-                'Current exchange rates, theme', 'switching and language change'
-            ]
+        personal_account:{
+          title: 'user-friendly personal account',
+          text: 'User friendly personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the user. ',
+          button: 'try personal account',
+          tooltip: [
+            'Nothing superfluous, only', 'the most current data',
+            'Average hashrate of', 'all your devices',
+            'Convenient navigation panel',
+            'Be aware of your', 'income',
+            'Progress until accruals', 'are paid',
+            'Current exchange rates, theme', 'switching and language change'
+          ]
         },
         mobile_app: {
-            title: 'mobile application',
-            text: 'Optimized and intuitive mobile application. Hashrate monitoring, notifications and access to income information at any time on your phone.',
-            button: 'coming soon to the appstore'
+          title: 'mobile application',
+          text: 'Optimized and intuitive mobile application. Hashrate monitoring notifications and access to income information at any time on your phone.',
+          button: 'coming soon to the appstore'
         },
         guarantees: {
-            title: 'Guarantees of reliability and safety',
-            text: 'A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool',
-            list: {
-                title: ['FPPS+ payment system', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
-                text: ['The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.']
+          title: 'Guarantees of reliability and safety',
+          text: 'A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool',
+          list: {
+            title: ['FPPS+', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],        
+            text: ['The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.'] 
             }
         },
         connect: {
