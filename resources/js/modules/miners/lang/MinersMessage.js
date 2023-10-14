@@ -1,36 +1,36 @@
 export const MinersMessage = {
     en: {
-        title: ['transparent', 'and efficient', 'mining', 'bitcoin'],
-        button: 'get advice',
+        title: ['transparent', 'and efficient', 'mining', 'of bitcoin'],
+        button: 'get a consultation',
         who_are_we: {
             title: ['mining pool and', 'community for', 'miners'],
             column:{
                 num: ['>3', '4%', '>1.7'],
                 gray_text: ['years', '', 'EH /s'],
-                main_text: ['We work in the market', 'digital assets', 'permanent', 'commission', 'Total hashrate', 'Allbtc Pool']
+                main_text: ['We work in the', 'crypto industry', 'maximum', 'commission', 'Total hashrate', 'of the pool']
             }
         },
         offer: {
             title: 'what we offer',
-            text: 'Efficient and stable mining pool with personal commission, optimized for Bitcoin mining. As well as a set of tools for a transparent and convenient analysis of your assets.'
+            text: 'Efficient and stable mining pool with personal commission, optimized for Bitcoin mining. As well as a set of tools for a transparent and convenient analysis of your assets.' 
         },
         personal_account:{
-            title: 'convenient personal account',
-            text: 'Convenient personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the end user. ',
-            button: 'try personal account'
+            title: 'user-friendly personal account',
+            text: 'User-friendly personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the user. ',
+            button: 'try personal account',
         },
         mobile_app: {
             title: 'mobile application',
-            text: 'Optimized and intuitive mobile application. Hashrate monitoring, notifications and access to income information at any time on your phone.',
-            button: 'coming soon to the appstore'
+            text: 'Optimized and intuitive mobile application. Hashrate monitoring notifications and access to income information at any time on your phone.',
+            button: 'coming soon in appstore'
         },
         guarantees: {
             title: 'Guarantees of reliability and safety',
-            text: 'A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool',
+            text: 'A set of tools created to improve the security of crypto assets through automation. The most favorable payment system and prompt technical support.',
             list: {
-                title: ['FPPS+ payment system', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
+                title: ['FPPS+', 'security guarantee', 'automatic payments', 'prompt technical support', 'timely notifications'],
                 text: ['The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.']
-            }
+            },
         },
         community: {
             title: 'Large mining community and industry news',
@@ -39,7 +39,7 @@ export const MinersMessage = {
             list: {
                 title: ['join the community', 'read our blogs'],
                 buttons: ['Telegram community', 'telegram channel']
-            }
+            },
         },
         connect: {
             title: 'interested in working with us?',
@@ -49,7 +49,7 @@ export const MinersMessage = {
                 placeholder: 'Enter a name',
                 button: ['request a call', 'TELEGRAM', 'what’s app'],
                 text: 'or'
-            }
+            },
         },
         footer: {
             button: 'Personal account',
