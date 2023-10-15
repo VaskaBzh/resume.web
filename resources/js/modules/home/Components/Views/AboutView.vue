@@ -2,7 +2,7 @@
     <div class="about about__section" ref="view">
         <div class="about__wrapper">
             <landing-headline class="about__headline"
-            >{{ $t("who_we_are.button") }}
+                >{{ $t("who_we_are.button") }}
             </landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
@@ -21,13 +21,13 @@
                 <template v-slot:link>
                     <a href="#" class="about_link">
                         {{ $t("who_we_are.card_private.button[0]") }}
-                        <landing-arrow-right class="about_icon"/>
+                        <landing-arrow-right class="about_icon" />
                     </a>
                 </template>
             </landing-wrap>
             <landing-button class="about-view_btn">
                 <template v-slot:text
-                >{{ $t("who_we_are.card_private.button[1]") }}
+                    >{{ $t("who_we_are.card_private.button[1]") }}
                 </template>
             </landing-button>
         </div>
@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import AboutInfo from "@/modules/home/Components/blocks/AboutInfo.vue";
@@ -138,14 +138,20 @@ export default {
                 } else if (this.progress === 1) {
                     if (
                         this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                            document.scrollingElement.clientHeight >
+                            20 &&
                         !this.validScroll
                     ) {
-                        this.$refs.view.style.transform = `translateY(-${
-                            this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight
-                        }px)`;
+                        this.$refs.view.style.transform =
+                            window.innerHeight >= 900
+                                ? `translateY(-${
+                                    this.$refs.view.offsetHeight -
+                                    document.scrollingElement.clientHeight
+                                }px)`
+                                : `translateY(-${
+                                    this.$refs.view.offsetHeight -
+                                    document.scrollingElement.clientHeight
+                                }px) scale(0.8)`;
 
                         this.validScroll = true;
                     } else {
@@ -165,11 +171,14 @@ export default {
                 } else if (this.progress === 0) {
                     if (
                         this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                            document.scrollingElement.clientHeight >
+                            20 &&
                         this.validScroll
                     ) {
-                        this.$refs.view.style.transform = `translateY(0px)`;
+                        this.$refs.view.style.transform =
+                            window.innerHeight >= 900
+                                ? `translateY(0px)`
+                                : `translateY(0px) scale(0.8)`;
 
                         this.validScroll = false;
                     } else {

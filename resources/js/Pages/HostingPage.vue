@@ -44,10 +44,15 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : `translateY(${this.direction ? 200 : -200}%)`;
+                : window.innerHeight >= 900
+                ? `translateY(${this.direction ? 200 : -200}%)`
+                : `translateY(${this.direction ? 200 : -200}%) scale(0.8)`;
 
             setTimeout(() => {
-                view.style.transform = `translateY(0%)`;
+                view.style.transform =
+                    window.innerHeight >= 900
+                        ? `translateY(0%)`
+                        : `translateY(0%) scale(0.8)`;
             }, 400);
             setTimeout(() => {
                 view.style.opacity = 1;
@@ -59,15 +64,20 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : `translateY(0%)`;
+                : window.innerHeight >= 900
+                ? `translateY(0%)`
+                : `translateY(0%)) scale(0.8)`;
 
             setTimeout(() => {
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                view.style.transform = `translateY(${
-                    this.direction ? -200 : 200
-                }%)`;
+                view.style.transform =
+                    window.innerHeight >= 900
+                        ? `translateY(${this.direction ? -200 : 200}%)`
+                        : `translateY(${
+                              this.direction ? -200 : 200
+                          }%) scale(0.8)`;
             }, 300);
             setTimeout(() => {
                 done();
@@ -91,6 +101,11 @@ export default {
         index(newIndex, oldIndex) {
             if (newIndex === this.keys.length || newIndex === -1) {
                 this.index = oldIndex;
+            }
+            if (newIndex >= this.keys.length) {
+                document.querySelector(".footer-content").style.opacity = 1;
+            } else {
+                document.querySelector(".footer-content").style.opacity = 0;
             }
             this.renderView();
             if (newIndex === 0) {
@@ -119,6 +134,7 @@ export default {
         document.querySelector("#app").style.overflow = "visible";
         document.querySelector(".nav").style.opacity = 1;
         document.querySelector(".nav").style.transform = "translateY(0)";
+        document.querySelector(".footer-content").style.opacity = 1;
     },
 };
 </script>

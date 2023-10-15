@@ -8,7 +8,7 @@
             <div class="footer-location">
                 <p><a href="#">support@all-btc.com</a></p>
                 <p>
-                    BDubai Silicon Oasis, DDP, Building A2, <br/>
+                    BDubai Silicon Oasis, DDP, Building A2, <br />
                     Dubai, United Arab Eirates
                 </p>
                 <div class="connect-buttons">
@@ -47,7 +47,7 @@
     </div>
 </template>
 <script>
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     i18n: {
@@ -115,6 +115,13 @@ export default {
     padding: clamp(50px, 10vw, 100px) clamp(16px, 5vw, 100px) 0;
 }
 
+@media (max-height: 1200px) {
+    .footer-content {
+        transform: scale(1);
+        margin-top: 0;
+    }
+}
+
 .footer-content::before {
     content: "";
     position: absolute;
@@ -127,6 +134,13 @@ export default {
     border-radius: 70px 70px 0 0;
     border-top: 1px solid #585757;
     background: var(--gray-4100, #0d0d0d);
+}
+
+@media (max-height: 1200px) {
+    .footer-content::before {
+        transform: scale(1);
+        height: 100%;
+    }
 }
 
 .all-content::before {

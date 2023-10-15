@@ -98,7 +98,10 @@ export default {
                             20 &&
                         this.validScroll
                     ) {
-                        this.$refs.view.style.transform = `translateY(0px)`;
+                        this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(0px)`
+                            : `translateY(0px) scale(0.8)`;
 
                         this.validScroll = false;
                     } else {

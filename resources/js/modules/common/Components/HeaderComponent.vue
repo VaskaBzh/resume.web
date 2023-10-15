@@ -3,12 +3,13 @@
         <div class="nav__container">
             <button-blue class="button-black">
                 {{ $t("footer.button") }}
-            </button-blue
-            >
-            <nav-links class="nav__navigation"/>
-            <select-language-land class="nav_lang"/>
+            </button-blue>
+
+            <header-logo-icon class="nav_logo" />
+            <nav-links class="nav__navigation" />
+            <select-language-land class="nav_lang" />
             <div class="burger-mobile">
-                <burger-menu/>
+                <burger-menu />
             </div>
         </div>
     </nav>
@@ -17,11 +18,12 @@
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import BurgerMenu from "../../burger/Components/BurgerMenu.vue";
+import HeaderLogoIcon from "@/modules/common/icons/HeaderLogoIcon.vue";
 
 export default {
-    components: {SelectLanguageLand, NavLinks, BurgerMenu},
+    components: { SelectLanguageLand, NavLinks, BurgerMenu, HeaderLogoIcon },
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -40,11 +42,20 @@ export default {
     padding: 50px 15px;
     transition: all 0.8s ease 0s;
     //opacity: 0;
+
+    &_logo {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
+
     &__container {
         margin: 0 auto;
         display: flex;
         justify-content: space-between;
         width: 100%;
+        position: relative;
     }
 
     &_lang {
@@ -54,7 +65,7 @@ export default {
     }
 
     &__navigation {
-        margin-left: clamp(30px, 15vw, 500px);
+        margin-left: clamp(30px, 32vw, 500px);
         @media (max-width: 760.98px) {
             display: none;
         }
@@ -87,7 +98,7 @@ export default {
     display: none;
 }
 
-@media(max-width: 760px) {
+@media (max-width: 760px) {
     .burger-mobile {
         display: inline-block;
         margin-left: auto;

@@ -120,10 +120,16 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 300);
                 if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px)`
+                            : `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px) scale(0.8)`;
 
                     this.validScroll = true;
                 } else {
@@ -137,7 +143,10 @@ export default {
                 setTimeout(this.scroll, 300);
 
                 if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(0px)`
+                            : `translateY(0px) scale(0.8)`;
 
                     this.validScroll = false;
                 } else {
