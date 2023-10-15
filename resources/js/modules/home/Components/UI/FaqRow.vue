@@ -79,17 +79,18 @@ export default {
     text-transform: uppercase;
     padding-top: 24px;
 }
-
-.faq__row::after {
-    content: "";
-    position: absolute;
-    background: var(--gray-240, rgba(228, 231, 236, 0.4));
-    bottom: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    height: 0.5px;
-    width: 100vw;
-}
+/*
+//.faq__row::after {
+//    content: "";
+//    position: absolute;
+//    background: var(--gray-240, rgba(228, 231, 236, 0.4));
+//    bottom: 0;
+//    left: 50%;
+//    transform: translateX(-50%);
+//    height: 0.5px;
+//    width: 100vw;
+//}
+ */
 
 .faq__row::before {
     content: "";

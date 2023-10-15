@@ -67,12 +67,21 @@ export function destroy() {
     });
 }
 
-export function reDestroy(margin) {
+export function reDestroy() {
     const timeline = anime.timeline(timelineConfig);
 
     timeline.add({
         targets: ".animation-destroy",
         maxHeight: [0, 300],
+    });
+}
+
+export function scaleAnimation() {
+    const timeline = anime.timeline(timelineConfigLonger);
+
+    timeline.add({
+        targets: ".animation-scale",
+        scale: [1, 1.25],
     });
 }
 

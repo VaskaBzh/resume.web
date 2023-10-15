@@ -131,6 +131,14 @@ export default {
         document.querySelector(
             ".footer-content"
         ).style.transform = `translateY(100%)`;
+        document.querySelector(".all-content").style.opacity = 0;
+        document.querySelector(
+            ".all-content"
+        ).style.transform = `translateY(100%)`;
+        document.querySelector(".layout__container").style.opacity = 1;
+        document.querySelector(
+            ".layout__container"
+        ).style.transform = `translateY(0)`;
         this.renderView();
     },
     unmounted() {

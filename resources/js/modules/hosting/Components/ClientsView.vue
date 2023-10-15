@@ -1,6 +1,6 @@
 <template>
     <div class="working__section working__section-blue" ref="view">
-        <div class="working-card">
+        <div class="working-card animation-scale">
             <p class="working-title">{{ inf.title }}</p>
             <p class="working-text">{{ inf.text }}</p>
         </div>
@@ -8,6 +8,7 @@
 </template>
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {scaleAnimation} from "@/modules/home/services/AnimationService";
 
 export default {
     i18n: {
@@ -115,6 +116,7 @@ export default {
     },
     mounted() {
         setTimeout(this.scroll, 500);
+        setTimeout(scaleAnimation, 1300);
     },
     unmounted() {
         this.remove();

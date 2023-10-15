@@ -157,6 +157,7 @@ export default {
     data() {
         return {
             validScroll: false,
+            validHalfScroll: false,
             startY: null,
             touchY: null,
         };
@@ -177,6 +178,19 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 300);
                 if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validHalfScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        (this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight) /
+                        2
+                    }px)`;
+
+                    this.validHalfScroll = true;
+                } else if (
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
@@ -202,9 +216,22 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    this.validScroll
+                    this.validHalfScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validHalfScroll = false;
+                } else if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        (this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight) /
+                        2
+                    }px)`;
 
                     this.validScroll = false;
                 } else {
@@ -266,6 +293,12 @@ export default {
     justify-content: space-evenly;
     padding-bottom: clamp(30px, 5vw, 70px);
 
+    &__btn {
+        @media (max-width: 1600px) {
+            margin-top: 20px;
+        }
+    }
+
     &__block {
         width: 100%;
         display: flex;
@@ -281,7 +314,7 @@ export default {
         width: 100%;
         position: relative;
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1600px) {
             flex-flow: column nowrap;
             justify-content: flex-start;
         }
@@ -297,7 +330,7 @@ export default {
         gap: 0;
         margin: 0 auto 0 0;
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1600px) {
             margin: 0 auto;
             max-width: 80%;
         }
@@ -329,7 +362,7 @@ export default {
             transform: translate(-50%, -50%);
         }
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1600px) {
             max-width: 330px;
             height: 655px;
             padding: 15px;
@@ -344,7 +377,6 @@ export default {
             justify-content: center;
         }
     }
-
     &_swiper-picture {
         display: flex;
         flex-flow: row nowrap;
@@ -369,7 +401,7 @@ export default {
     &_subtitle {
         padding: 32px 32px 0 32px;
 
-        @media (max-width: 1500px) {
+        @media (max-width: 1600px) {
             text-align: center;
         }
     }
@@ -418,7 +450,7 @@ export default {
         justify-content: flex-start;
         gap: 30px;
 
-        @media (max-width: 1500.98px) {
+        @media (max-width: 1600.98px) {
             justify-content: center;
             order: -1;
         }

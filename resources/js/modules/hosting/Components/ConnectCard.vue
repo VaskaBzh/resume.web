@@ -106,11 +106,6 @@ export default {
                             20 &&
                         !this.validScroll
                     ) {
-                        this.$refs.view.style.transform =
-                            window.innerHeight >= 1100 ||
-                            window.innerWidth < 991
-                                ? ``
-                                : `scale(0.8)`;
                         document.querySelector(
                             ".footer-content"
                         ).style.transform = `translateY(-${
@@ -148,11 +143,7 @@ export default {
                             20 &&
                         this.validScroll
                     ) {
-                        this.$refs.view.style.transform =
-                            window.innerHeight >= 1100 ||
-                            window.innerWidth < 991
-                                ? `translateY(0px)`
-                                : `translateY(0px) scale(0.8)`;
+                        this.$refs.view.style.transform = `translateY(0px)`;
                         document.querySelector(
                             ".footer-content"
                         ).style.transform = `translateY(100%)`;

@@ -65,7 +65,9 @@ export default {
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                view.style.transform = `translateY(${this.direction ? -200 : 200}%)`;
+                view.style.transform = `translateY(${
+                    this.direction ? -200 : 200
+                }%)`;
             }, 300);
             setTimeout(() => {
                 done();
@@ -93,11 +95,10 @@ export default {
             this.renderView();
             if (newIndex >= this.keys.length - 1) {
                 document.querySelector(".footer-content").style.opacity = 1;
-                document.querySelector(
-                    ".footer-content"
-                ).style.transform = `translateY(0)`;
+                document.querySelector(".all-content").style.opacity = 1;
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
+                document.querySelector(".all-content").style.opacity = 0;
                 document.querySelector(
                     ".footer-content"
                 ).style.transform = `translateY(100%)`;
@@ -125,6 +126,14 @@ export default {
         document.querySelector(
             ".footer-content"
         ).style.transform = `translateY(100%)`;
+        document.querySelector(".all-content").style.opacity = 0;
+        document.querySelector(
+            ".all-content"
+        ).style.transform = `translateY(100%)`;
+        document.querySelector(".layout__container").style.opacity = 1;
+        document.querySelector(
+            ".layout__container"
+        ).style.transform = `translateY(0)`;
         this.renderView();
     },
     unmounted() {
@@ -141,6 +150,18 @@ export default {
             document.querySelector(".footer-content").style.opacity = 1;
             document.querySelector(
                 ".footer-content"
+            ).style.transform = `translateY(0)`;
+        }
+        if (document.querySelector(".all-content")) {
+            document.querySelector(".all-content").style.opacity = 1;
+            document.querySelector(
+                ".all-content"
+            ).style.transform = `translateY(0)`;
+        }
+        if (document.querySelector(".layout__container")) {
+            document.querySelector(".layout__container").style.opacity = 1;
+            document.querySelector(
+                ".layout__container"
             ).style.transform = `translateY(0)`;
         }
     },
