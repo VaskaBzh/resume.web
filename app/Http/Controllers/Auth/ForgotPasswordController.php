@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ForgotPasswordController extends Controller
 {
@@ -22,28 +24,45 @@ class ForgotPasswordController extends Controller
     use SendsPasswordResetEmails;
 
 
-    /**
-     * @OA\Post(
-     *     path="/password/forgot",
-     *     summary="Send password reset link by email",
-     *     tags={"Auth"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"email"},
-     *             @OA\Property(property="email", type="string", format="email", description="User's email")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Password reset link sent successfully",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="message", type="string", description="Success message")
-     *         )
-     *     )
-     * )
-     */
+    #[
+        OA\Post(
+            path: '/password/forgot',
+            summary: 'Send password reset link to user email address',
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: [
+                    new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: 'email',
+                                description: "User's email",
+                                type: 'string',
+                                format: 'email'
+                            )
+                        ]
+                    )
+                ]
+            ),
+            tags: ['Auth'],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Password reset link sent successfully',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'message',
+                                    description: 'Success message',
+                                    type: 'string'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
     public function sendLink(Request $request)
     {
         return $this->sendResetLinkEmail($request);

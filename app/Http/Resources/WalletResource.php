@@ -4,23 +4,27 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use OpenApi\Attributes as OA;
 use App\Models\Wallet;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-/** @see Wallet
- *
- * @OA\Schema(
- *      schema="WalletResource",
- *      type="object",
- *      @OA\Property(property="id", type="integer"),
- *      @OA\Property(property="percent", type="float"),
- *      @OA\Property(property="minWithdrawal", type="float"),
- *      @OA\Property(property="wallet", type="string"),
- *      @OA\Property(property="name", type="string"),
- *      @OA\Property(property="total_payout", type="float"),
- *      @OA\Property(property="is_unlocked", type="boolean"),
- * )
- */
+/** @see Wallet */
+
+#[
+    OA\Schema(
+        schema: 'WalletResource',
+        properties: [
+            new OA\Property(property: 'id', type: 'integer'),
+            new OA\Property(property: 'percent', type: 'float'),
+            new OA\Property(property: 'minWithdrawal', type: 'float'),
+            new OA\Property(property: 'wallet', type: 'string'),
+            new OA\Property(property: 'name', type: 'string'),
+            new OA\Property(property: 'total_payout', type: 'float'),
+            new OA\Property(property: 'is_unlocked', type: 'boolean'),
+        ],
+        type: 'object'
+    )
+]
 class WalletResource extends JsonResource
 {
     public function toArray($request): array

@@ -3,20 +3,22 @@
 namespace App\Http\Resources;
 
 use App\Models\User;
-use App\Services\Internal\ReferralService;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
-/**
- * @OA\Schema(
- *     schema="ReferralStatisticResource",
- *     type="object",
- *     @OA\Property(property="group_id", type="integer"),
- *     @OA\Property(property="attached_referrals_count", type="integer"),
- *     @OA\Property(property="active_referrals_count", type="integer"),
- *     @OA\Property(property="referrals_total_amount", type="float"),
- *     @OA\Property(property="code", type="string"),
- * )
- */
+#[
+    OA\Schema(
+        schema: 'ReferralStatisticResource',
+        properties: [
+            new OA\Property(property: 'group_id', type: 'integer'),
+            new OA\Property(property: 'attached_referrals_count', type: 'integer'),
+            new OA\Property(property: 'active_referrals_count', type: 'integer'),
+            new OA\Property(property: 'referrals_total_amount', type: 'float'),
+            new OA\Property(property: 'code', type: 'string'),
+        ],
+        type: 'object'
+    )
+]
 class ReferralStatisticResource extends JsonResource
 {
     public function __construct(

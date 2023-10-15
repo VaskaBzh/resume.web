@@ -12,39 +12,52 @@ use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 class ListController extends Controller
 {
-    /**
-     * @OA\Get(
-     *     path="/referrals/{user}",
-     *     summary="Get referral subs for a user",
-     *     tags={"Referral"},
-     *     @OA\Parameter(
-     *         name="user",
-     *         in="path",
-     *         description="User's ID",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful response",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(
-     *                 property="referral_subs", type="array",
-     *                 @OA\Items(ref="#/components/schemas/ReferralResourceCollection")
-     *             ),
-     *         )
-     *     ),
-     *     @OA\Response(response=422, description="Unprocessable Entity"),
-     * )
-     */
+    #[
+        OA\Get(
+            path: '/referrals/{user}',
+            summary: 'Get referral subs for a user',
+            security: [['bearerAuth' => []]],
+            tags: ['Referral'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'user',
+                    description: "User's ID",
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Successful response',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'referral_subs',
+                                    type: 'array',
+                                    items: new OA\Items(
+                                        ref: '#/components/schemas/ReferralResourceCollection'
+                                    )
+                                )
+                            ],
+                            type: 'object',
+                        ),
+                    ],
+                ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User or referral code nof found'),
+            ],
+        )
+    ]
     public function __invoke(User $user, BtcComService $btcComService)
     {
         if (!$user?->referral_code) {
-            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_NOT_FOUND);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);

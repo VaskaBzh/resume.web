@@ -10,39 +10,53 @@ use App\Models\Worker;
 use App\Models\WorkerHashrate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\ResourceCollection;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Get(
- *     path="/workerhashrate/{worker}",
- *     summary="Get hash rates for a worker",
- *     tags={"Worker"},
- *     @OA\Parameter(
- *         name="worker",
- *         in="path",
- *         description="Worker's ID",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Parameter(
- *         name="limit",
- *         in="query",
- *         description="Limit the number of hash rates to retrieve (default: 24)",
- *         required=false,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(
- *             type="array",
- *             @OA\Items(ref="#/components/schemas/WorkerHashRateResource")
- *         )
- *     ),
- *     @OA\Response(response=401, description="Unauthorized"),
- *     @OA\Response(response=403, description="Forbidden"),
- *     @OA\Response(response=404, description="Worker not found"),
- * )
- */
+#[
+    OA\Get(
+        path: '/workerhashrate/{worker}',
+        summary: 'Get hash rates for a worker',
+        security: [['bearerAuth' => []]],
+        tags: ['Worker'],
+        parameters: [
+            new OA\Parameter(
+                name: 'worker',
+                description: "Worker's ID",
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+            new OA\Parameter(
+                name: 'limit',
+                description: 'Limit the number of hash rates to retrieve (default: 24)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: Response::HTTP_OK,
+                description: 'Successful response',
+                content: [
+                    new OA\JsonContent(
+                        type: 'array',
+                        items: new OA\Items(ref: '#/components/schemas/WorkerHashRateResource')
+                    ),
+                ],
+            ),
+            new OA\Response(
+                response: Response::HTTP_UNAUTHORIZED,
+                description: 'Unauthorized',
+            ),
+            new OA\Response(
+                response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                description: 'Worker not found',
+            ),
+        ],
+    )
+]
 class WorkerHashRateController extends Controller
 {
     public function __invoke(Request $request, Worker $worker): ResourceCollection

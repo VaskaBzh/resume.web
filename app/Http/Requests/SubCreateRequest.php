@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Rules\User\OnlyEngNameRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubCreateRequest extends FormRequest
@@ -16,7 +17,7 @@ class SubCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:16|min:3'
+            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule],
         ];
     }
 

@@ -12,48 +12,64 @@ use App\Models\Income;
 use App\Models\Sub;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Get(
- *     path="/statistic/{sub}",
- *     summary="Get statistics for a sub",
- *     tags={"Subaccount"},
- *     @OA\Parameter(
- *         name="sub",
- *         in="path",
- *         description="Sub's ID",
- *         required=true,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Parameter(
- *         name="offset",
- *         in="query",
- *         description="Offset for hash rate data",
- *         required=false,
- *         @OA\Schema(type="integer")
- *     ),
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(
- *              type="object",
- *              @OA\Property(
- *                  property="hashes",
- *                  type="array",
- *                  @OA\Items(ref="#/components/schemas/HashRateResource")
- *              ),
- *              @OA\Property(
- *                  property="incomes",
- *                  type="array",
- *                  @OA\Items(ref="#/components/schemas/IncomeCollection")
- *              ),
- *          )
- *     ),
- *     @OA\Response(response=401, description="Unauthorized"),
- *     @OA\Response(response=403, description="Forbidden"),
- *     @OA\Response(response=404, description="Sub not found"),
- * )
- */
+#[
+    OA\Get(
+        path: '/statistic/{sub}',
+        summary: 'Get statistics for a sub',
+        security: [['bearerAuth' => []]],
+        tags: ['Subaccount'],
+        parameters: [
+            new OA\Parameter(
+                name: 'sub',
+                description: "Sub's ID",
+                in: 'path',
+                required: true,
+                schema: new OA\Schema(type: 'integer')
+            ),
+            new OA\Parameter(
+                name: 'offset',
+                description: 'Offset for hash rate data',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'integer')
+            ),
+        ],
+        responses: [
+            new OA\Response(
+                response: Response::HTTP_OK,
+                description: 'Successful response',
+                content: [
+                    new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: 'hashes',
+                                type: 'array',
+                                items: new OA\Items(ref: '#/components/schemas/HashRateResource')
+                            ),
+                            new OA\Property(
+                                property: 'incomes',
+                                type: 'array',
+                                items: new OA\Items(ref: '#/components/schemas/IncomeCollection')
+                            ),
+                        ],
+                        type: 'object',
+                    ),
+                ],
+            ),
+            new OA\Response(
+                response: Response::HTTP_UNAUTHORIZED,
+                description: 'Unauthorized',
+            ),
+            new OA\Response(
+                response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                description: 'Sub not found',
+            ),
+        ],
+    )
+]
 class StatisticController extends Controller
 {
     public function __invoke(Request $request, Sub $sub): JsonResponse

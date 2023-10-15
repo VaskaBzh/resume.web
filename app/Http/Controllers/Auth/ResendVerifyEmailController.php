@@ -6,62 +6,85 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResendVerifyEmailController extends Controller
 {
-    /**
-     * @OA\Post(
-     *     path="/email/verify/{user}",
-     *     summary="Resend email verification link",
-     *     tags={"Auth"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *             required={"email"},
-     *             @OA\Property(property="email", type="string", format="email", example="user@example.com", description="User's email address")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Email verification link sent successfully",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="message", type="string", description="Success message")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=422,
-     *         description="Unprocessable Entity",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="errors", type="object", description="Validation errors")
-     *         )
-     *     ),
-     * )
-     */
-    public function __invoke(User $user, Request $request): JsonResponse
-    {
-        $validator = Validator::make($request->all(), ['email' => 'required|email|exists:users,email'], [
-            'email.required' => __('validation.required', ['attribute' => 'email']),
-            'email.email' => __('validation.email', ['attribute' => 'email']),
-            'email.exists' => __('validation.exists', ['attribute' => 'Email'])
-        ]);
+    use SendsPasswordResetEmails;
 
-        $validator->validate();
+    #[
+        OA\Post(
+            path: '/email/verify/',
+            summary: 'Resend email verification link',
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: new OA\JsonContent(
+                    type: 'object',
+                    example: [
+                        "email" => "user@example.com",
+                    ]
+                )
+            ),
+            tags: ['Auth'],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Email verification link sent successfully',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'message',
+                                    description: 'Success message',
+                                    type: 'string'
+                                )
+                            ]
+                        )
+                    ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_BAD_REQUEST,
+                    description: 'Unprocessable Entity',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'errors',
+                                    description: 'Validation errors',
+                                    type: 'object'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
+    public function __invoke(Request $request): JsonResponse
+    {
+        $this->validateEmail($request->email);
+
+        $user = User::whereEmail($request->email)
+            ->firstOrFail();
 
         if ($user->hasVerifiedEmail()) {
             return new JsonResponse(['message' => __('auth.email.already_verify', [
-                    'value' => $user->email,
-                    'date' => $user->email_verified_at
-                ])
-            ], );
+                'value' => $user->email,
+                'date' => $user->email_verified_at
+            ], Response::HTTP_BAD_REQUEST)
+            ]);
         }
 
         $user->sendEmailVerificationNotification();
 
-        return new JsonResponse(['message' => __('auth.email.verify', ['value' => $user->email])]);
+        return new JsonResponse([
+                'message' => __('auth.email.verify', [
+                    'value' => $user->email
+                ])]
+        );
     }
 }

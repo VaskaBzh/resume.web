@@ -10,12 +10,6 @@ class Delete
 {
     public static function execute(WatcherLink $watcherLink): void
     {
-        try {
-            $watcherLink->delete();
-        } catch (\Exception $e) {
-            report($e);
-
-            throw new \Exception('Something went wrong');
-        }
+        $watcherLink->delete();
     }
 }

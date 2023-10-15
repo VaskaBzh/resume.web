@@ -7,28 +7,49 @@ namespace App\Http\Controllers\Api\WatcherLink;
 use App\Actions\WatcherLink\Delete;
 use App\Http\Controllers\Controller;
 use App\Models\WatcherLink;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 class DeleteController extends Controller
 {
-    public function __invoke(?WatcherLink $watcher): JsonResponse
+    #[
+        OA\Delete(
+            path: '/watchers/delete/{watcher}',
+            summary: 'Delete a watcher link',
+            security: [['bearerAuth' => []]],
+            tags: ['Watcher Links'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'watcher',
+                    description: "Watcher Link's ID",
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Watcher link deleted successfully',
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNAUTHORIZED,
+                    description: 'Unauthorized',
+                ),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Watcher link not found',
+                ),
+            ],
+        )
+    ]
+    public function __invoke(WatcherLink $watcher): JsonResponse
     {
-        try {
-            $this->authorize('viewOrChange', $watcher);
+        $this->authorize('viewOrChange', $watcher);
 
-            Delete::execute(
-                watcherLink: $watcher,
-            );
+        Delete::execute(watcherLink: $watcher);
 
-            return new JsonResponse(['message' => 'success']);
-        } catch (AuthorizationException) {
-
-            return new JsonResponse(['error' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
-        } catch (\Exception $e) {
-
-            return new JsonResponse(['error' => $e->getMessage()], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        return new JsonResponse(['message' => 'success']);
     }
 }

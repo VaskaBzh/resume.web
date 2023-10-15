@@ -6,31 +6,47 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 {
-    /**
-     * @OA\Get(
-     *     path="/user/{user}",
-     *     summary="Get user",
-     *     tags={"User"},
-     *     @OA\Parameter(
-     *         name="user",
-     *         in="path",
-     *         description="User's ID",
-     *         required=true,
-     *         @OA\Schema(type="integer")
-     *     ),
-     *     @OA\Response(
-     *          response=200,
-     *          description="Successful response",
-     *          @OA\JsonContent(ref="#/components/schemas/UserResource")
-     *      ),
-     *     @OA\Response(response=401, description="Unauthorized"),
-     *     @OA\Response(response=403, description="Forbidden"),
-     *     @OA\Response(response=404, description="User not found"),
-     * )
-     */
+    #[
+        OA\Get(
+            path: '/user/{user}',
+            summary: 'Get user',
+            security: [['bearerAuth' => []]],
+            tags: ['User'],
+            parameters: [
+                new OA\Parameter(
+                    name: 'user',
+                    description: 'User\'s ID',
+                    in: 'path',
+                    required: true,
+                    schema: new OA\Schema(type: 'integer')
+                ),
+            ],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Successful response',
+                    content: [
+                        new OA\JsonContent(
+                            ref: '#/components/schemas/UserResource'
+                        )
+                    ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNAUTHORIZED,
+                    description: 'Unauthorized'
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                    description: 'Unprocessable entity'
+                ),
+            ]
+        )
+    ]
     public function __invoke(User $user): UserResource
     {
         $this->authorize('viewAny', $user);

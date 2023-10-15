@@ -76,7 +76,7 @@ Route::group([
     Route::group([
         'prefix' => 'subs',
     ], function () {
-        Route::post('/create', SubCreateController::class)->name('sub.create');
+        Route::post('/create/{user}', SubCreateController::class)->name('sub.create');
     });
 
     Route::group([

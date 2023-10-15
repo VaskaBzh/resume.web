@@ -6,20 +6,24 @@ namespace App\Http\Resources;
 
 use App\Models\Payout;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
 /**
  * @see Payout
- *
- *  @OA\Schema(
- *      schema="PayoutResource",
- *      type="object",
- *      @OA\Property(property="wallet", type="string"),
- *      @OA\Property(property="payout", type="float"),
- *      @OA\Property(property="txid", type="string"),
- *      @OA\Property(property="created_at", type="string", format="date-time"),
- *  )
- *
  */
+
+#[
+    OA\Schema(
+        schema: 'PayoutResource',
+        properties: [
+            new OA\Property(property: 'wallet', type: 'string'),
+            new OA\Property(property: 'payout', type: 'float'),
+            new OA\Property(property: 'txid', type: 'string'),
+            new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+        ],
+        type: 'object'
+    )
+]
 class PayoutResource extends JsonResource
 {
     public function toArray($request): array

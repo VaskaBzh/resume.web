@@ -6,6 +6,7 @@ use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use App\Rules\User\OnlyEngNameRule;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
 use Illuminate\Auth\Events\Registered;
@@ -14,34 +15,102 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\MessageBag;
-use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 class RegisterController extends Controller
 {
     use RegistersUsers;
 
-    /**
-     * Get a validator for an incoming registration request.
-     *
-     * @param array $data
-     * @return \Illuminate\Contracts\Validation\Validator
-     */
-    protected function validator(array $data)
-    {
-        return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255', 'regex:/^[A-aZ-z0-9]+$/'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
-            'referral_code' => ['string', 'nullable', 'exists:users,referral_code']
-        ], $this->messages());
-    }
-
-    /**
-     * Handle a registration request for the application.
-     *
-     */
+    #[
+        OA\Post(
+            path: '/register',
+            summary: 'Register a user',
+            requestBody: new OA\RequestBody(
+                description: 'Request body for user registration',
+                required: true,
+                content: [
+                    new OA\JsonContent(
+                        required: [
+                            'name',
+                            'email',
+                            'password',
+                            'password_confirmation',
+                        ],
+                        properties: [
+                            new OA\Property(
+                                property: 'name',
+                                type: 'string',
+                            ),
+                            new OA\Property(
+                                property: 'email',
+                                type: 'string',
+                                format: 'email',
+                            ),
+                            new OA\Property(
+                                property: 'password',
+                                type: 'string',
+                                maxLength: 50,
+                                minLength: 10,
+                            ),
+                            new OA\Property(
+                                property: 'password_confirmation',
+                                type: 'string',
+                                maxLength: 50,
+                                minLength: 10,
+                            ),
+                            new OA\Property(
+                                property: 'referral_code',
+                                type: 'string',
+                            ),
+                        ],
+                        type: 'object',
+                    ),
+                ],
+            ),
+            tags: ['Auth'],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'User registered successfully',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'message',
+                                    type: 'string',
+                                ),
+                                new OA\Property(
+                                    property: 'user',
+                                    ref: '#/components/schemas/UserResource',
+                                ),
+                                new OA\Property(
+                                    property: 'token',
+                                    type: 'string',
+                                ),
+                            ],
+                            type: 'object',
+                        ),
+                    ],
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                    description: 'Error while registering user',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'error',
+                                    type: 'string',
+                                ),
+                            ],
+                            type: 'object',
+                        ),
+                    ],
+                ),
+            ],
+        )
+    ]
     public function register(
         Request       $request,
         BtcComService $btcComService
@@ -81,6 +150,22 @@ class RegisterController extends Controller
                 'error' => 'Something went wrong! Please contact with tech support'
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+    }
+
+    /**
+     * Get a validator for an incoming registration request.
+     *
+     * @param array $data
+     * @return \Illuminate\Contracts\Validation\Validator
+     */
+    protected function validator(array $data)
+    {
+        return Validator::make($data, [
+            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
+            'referral_code' => ['string', 'nullable', 'exists:users,referral_code']
+        ], $this->messages());
     }
 
     protected function messages(): array

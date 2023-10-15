@@ -9,10 +9,9 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
 class LoginController extends Controller
 {
@@ -29,58 +28,107 @@ class LoginController extends Controller
 
     use AuthenticatesUsers;
 
-    /**
-     * @OA\Post(
-     *     path="/login",
-     *     summary="User login",
-     *     tags={"Auth"},
-     *     @OA\RequestBody(
-     *         required=true,
-     *         @OA\JsonContent(
-     *              type="object",
-     *              oneOf={
-     *                  @OA\Property(property="email", type="string", format="email", description="User's email"),
-     *                  @OA\Property(property="password", type="string", description="User's password"),
-     *                  @OA\Property(property="google2fa_code", type="string", description="Google Authenticator code")
-     *              },
-     *              example={"email": "user@example.com", "password": "password"}
-     *          )
-     *     ),
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successful login",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="user", ref="#/components/schemas/UserResource"),
-     *             @OA\Property(property="token", type="string", description="User access token"),
-     *             @OA\Property(property="expired_at", type="string", format="date-time", description="Token expiration date"),
-     *             @OA\Property(property="has_referral_role", type="boolean", description="Indicates if the user has the referral role")
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=400,
-     *         description="Bad request",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="array", @OA\Items(type="string", description="Error message(s)"))
-     *         )
-     *     ),
-     *     @OA\Response(
-     *         response=403,
-     *         description="Forbidden",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="array", @OA\Items(type="string", description="Error message(s)"))
-     *         )
-     *     )
-     * )
-     */
+    #[
+        OA\Post(
+            path: '/login',
+            summary: 'User login',
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: new OA\JsonContent(
+                    type: 'object',
+                    example: [
+                        "email" => "user@example.com",
+                        "password" => "password",
+                    ],
+                    oneOf: [
+                        new OA\Property(
+                            property: "email",
+                            description: "User's email",
+                            type: "string",
+                            format: "email",
+                        ),
+                        new OA\Property(
+                            property: "password",
+                            description: "User's password",
+                            type: "string",
+                        ),
+                        new OA\Property(
+                            property: "google2fa_code",
+                            description: "Google Authenticator code",
+                            type: "string"
+                        ),
+                    ]
+                )
+            ),
+            tags: ['Auth'],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: "Successful login",
+                    content: new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: "user",
+                                ref: "#/components/schemas/UserResource"
+                            ),
+                            new OA\Property(
+                                property: "token",
+                                description: "User access token",
+                                type: "string"
+                            ),
+                            new OA\Property(
+                                property: "expired_at",
+                                description: "Token expiration date",
+                                type: "string",
+                                format: "date-time"
+                            ),
+                        ],
+                        type: 'object'
+                    )
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNAUTHORIZED,
+                    description: "Bad request",
+                    content: new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: "error",
+                                type: "array",
+                                items: new OA\Items(
+                                    description: "Error message(s)",
+                                    type: "string"
+                                )
+                            )
+                        ],
+                        type: 'object'
+                    )
+                ),
+                new OA\Response(
+                    response: Response::HTTP_FORBIDDEN,
+                    description: "Forbidden",
+                    content: new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: "error",
+                                type: "array",
+                                items: new OA\Items(
+                                    description: "Error message(s)",
+                                    type: "string"
+                                )
+                            )
+                        ],
+                        type: 'object'
+                    )
+                )
+            ]
+        )
+    ]
     public function login(LoginRequest $request): JsonResponse
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
                 'error' => [__('auth.failed')]
-            ], Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         if (!$request->user->hasVerifiedEmail()) {
@@ -93,37 +141,54 @@ class LoginController extends Controller
             ->user
             ->tokens()
             ->delete();
-        $token = $request->user->createToken($request->user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
+
+        $token = $request
+            ->user
+            ->createToken($request->user->name,
+                ['*'],
+                now()->addMinutes(config('sanctum.expiration'))
+            );
 
         return new JsonResponse([
             'user' => new UserResource($request->user),
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
-            'has_referral_role' => $request->user->hasRole('referral')
         ]);
     }
 
-    /**
-     * @OA\Post(
-     *     path="/logout",
-     *     summary="User logout",
-     *     tags={"Auth"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Response(
-     *         response=200,
-     *         description="Successfully logged out",
-     *         @OA\JsonContent(type="string", description="Logout confirmation message")
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="string", description="Error message")
-     *         )
-     *     )
-     * )
-     */
+
+    #[
+        OA\Post(
+            path: '/logout',
+            summary: 'User logout',
+            security: [['bearerAuth' => []]],
+            tags: ['Auth'],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Successfully logged out',
+                    content: new OA\JsonContent(
+                        description: 'Logout confirmation message',
+                        type: 'string'
+                    )
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNAUTHORIZED,
+                    description: 'Unauthorized',
+                    content: new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: 'error',
+                                description: 'Error message',
+                                type: 'string'
+                            )
+                        ],
+                        type: 'object'
+                    )
+                )
+            ]
+        )
+    ]
     public function logout(): JsonResponse
     {
         auth()->user()
@@ -133,26 +198,36 @@ class LoginController extends Controller
         return response()->json('Logged out');
     }
 
-    /**
-     * @OA\Put(
-     *     path="/decrease/token",
-     *     summary="Decrease the expiration time of the current token",
-     *     tags={"Auth"},
-     *     security={{"bearerAuth": {}}},
-     *     @OA\Response(
-     *         response=204,
-     *         description="No content (Token expiration time decreased successfully)"
-     *     ),
-     *     @OA\Response(
-     *         response=401,
-     *         description="Unauthorized",
-     *         @OA\JsonContent(
-     *             type="object",
-     *             @OA\Property(property="error", type="string", description="Error message")
-     *         )
-     *     )
-     * )
-     */
+
+    #[
+        OA\Put(
+            path: '/decrease/token',
+            summary: 'Decrease the expiration time of the current token',
+            security: [['bearerAuth' => []]],
+            tags: ['Auth'],
+            responses: [
+                new OA\Response(
+                    response: Response::HTTP_OK,
+                    description: 'Accept (Token expiration time decreased successfully)'
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNAUTHORIZED,
+                    description: 'Unauthorized',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'error',
+                                    description: 'Error message',
+                                    type: 'string'
+                                )
+                            ]
+                        )
+                    ]
+                )
+            ]
+        )
+    ]
     public function decreaseTokenTime(): void
     {
         auth()

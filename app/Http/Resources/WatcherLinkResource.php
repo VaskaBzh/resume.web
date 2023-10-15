@@ -4,21 +4,28 @@ namespace App\Http\Resources;
 
 use App\Models\WatcherLink;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
-/**
- * @see WatcherLink
- *
- * @OA\Schema(
- *     schema="WatcherLinkResource",
- *     type="object",
- *     @OA\Property(property="id", type="integer"),
- *     @OA\Property(property="user_id", type="integer"),
- *     @OA\Property(property="name", type="string"),
- *     @OA\Property(property="allowed_routes", type="array", @OA\Items(ref="#/components/schemas/AllowedRouteResource")),
- *     @OA\Property(property="access_count", type="integer"),
- *     @OA\Property(property="url", type="string"),
- * )
- */
+/** @see WatcherLink */
+
+#[
+    OA\Schema(
+        schema: 'WatcherLinkResource',
+        properties: [
+            new OA\Property(property: 'id', type: 'integer'),
+            new OA\Property(property: 'user_id', type: 'integer'),
+            new OA\Property(property: 'name', type: 'string'),
+            new OA\Property(
+                property: 'allowed_routes',
+                type: 'array',
+                items: new OA\Items(ref: '#/components/schemas/AllowedRouteResource')
+            ),
+            new OA\Property(property: 'access_count', type: 'integer'),
+            new OA\Property(property: 'url', type: 'string'),
+        ],
+        type: 'object'
+    )
+]
 class WatcherLinkResource extends JsonResource
 {
     public function toArray($request): array

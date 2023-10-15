@@ -12,18 +12,12 @@ class ToggleRoute
      * @param WatcherLink $watcherLink
      * @param array $allowedRoutes
      * @return void
-     * @throws \Exception
      */
     public static function execute(
         WatcherLink $watcherLink,
-        array $allowedRoutes,
-    ): void {
-        try {
-            $watcherLink->update(['allowed_routes' => $allowedRoutes]);
-        } catch (\Exception $e) {
-            report($e);
-
-            throw new \Exception('Something went wrong');
-        }
+        array       $allowedRoutes,
+    ): void
+    {
+        $watcherLink->update(['allowed_routes' => $allowedRoutes]);
     }
 }

@@ -6,36 +6,51 @@ namespace App\Http\Controllers\Api;
 
 use App\Models\MinerStat;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
-/**
- * @OA\Get(
- *     path="/minerstats",
- *     summary="Get miner statistics",
- *     tags={"Miner Stats"},
- *     @OA\Response(
- *         response=200,
- *         description="Successful response",
- *         @OA\JsonContent(
- *             type="object",
- *             @OA\Property(property="minerstats", type="object",
- *                 @OA\Property(property="id", type="integer"),
- *                 @OA\Property(property="network_hashrate", type="string"),
- *                 @OA\Property(property="network_unit", type="string"),
- *                 @OA\Property(property="network_difficulty", type="integer"),
- *                 @OA\Property(property="next_difficulty", type="integer"),
- *                 @OA\Property(property="change_difficulty", type="string"),
- *                 @OA\Property(property="reward_block", type="string"),
- *                 @OA\Property(property="fpps_rate", type="float"),
- *                 @OA\Property(property="price_USD", type="integer"),
- *                 @OA\Property(property="time_remain", type="integer"),
- *                 @OA\Property(property="created_at", type="string", format="date-time"),
- *                 @OA\Property(property="updated_at", type="string", format="date-time"),
- *             ),
- *         )
- *     ),
- *     @OA\Response(response=404, description="Not found"),
- * )
- */
+#[
+    OA\Get(
+        path: '/minerstats',
+        summary: 'Get miner statistics',
+        tags: ['Miner Stats'],
+        responses: [
+            new OA\Response(
+                response: Response::HTTP_OK,
+                description: 'Successful response',
+                content: [
+                    new OA\JsonContent(
+                        properties: [
+                            new OA\Property(
+                                property: 'minerstats',
+                                properties: [
+                                    new OA\Property(property: 'id', type: 'integer'),
+                                    new OA\Property(property: 'network_hashrate', type: 'string'),
+                                    new OA\Property(property: 'network_unit', type: 'string'),
+                                    new OA\Property(property: 'network_difficulty', type: 'integer'),
+                                    new OA\Property(property: 'next_difficulty', type: 'integer'),
+                                    new OA\Property(property: 'change_difficulty', type: 'string'),
+                                    new OA\Property(property: 'reward_block', type: 'string'),
+                                    new OA\Property(property: 'fpps_rate', type: 'float'),
+                                    new OA\Property(property: 'price_USD', type: 'integer'),
+                                    new OA\Property(property: 'time_remain', type: 'integer'),
+                                    new OA\Property(property: 'created_at', type: 'string', format: 'date-time'),
+                                    new OA\Property(property: 'updated_at', type: 'string', format: 'date-time'),
+                                ],
+                                type: 'object',
+                            ),
+                        ],
+                        type: 'object',
+                    ),
+                ],
+            ),
+            new OA\Response(
+                response: Response::HTTP_NOT_FOUND,
+                description: 'Not found',
+            ),
+        ],
+    )
+]
 class MinerStatController
 {
     public function __invoke(): JsonResponse
