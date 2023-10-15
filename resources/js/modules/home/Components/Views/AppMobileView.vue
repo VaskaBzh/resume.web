@@ -5,79 +5,83 @@
                 >{{ $t("mobile_app.button") }}
             </landing-headline>
             <div class="mobile-view__wrapper">
-                <div class="mobile-view_inner">
-                    <div class="mobile-view_item active">
+                <Swiper class="mobile-view_inner" :modules="[Controller]"
+                        :controller="{ control: controllerSlide }"
+                :set-wrapper-size="true"
+                :loop="true"
+                :space-between="0">
+                    <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
                             {{ $t("mobile_app.title") }}
                         </landing-title>
-                    </div>
-                    <div class="mobile-view_item">
+                    </swiper-slide>
+                    <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
                             Хороший> мониторинг и эффективное управление
                         </landing-title>
-                    </div>
-                    <div class="mobile-view_item">
+                    </swiper-slide>
+                    <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
                             Четкий мониторинг и эффективное управление
                         </landing-title>
-                    </div>
-                    <div class="mobile-view_item">
+                    </swiper-slide>
+                    <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
                             Прекрасный мониторинг и эффективное управление
                         </landing-title>
-                    </div>
-                    <div class="mobile-view_item">
+                    </swiper-slide>
+                    <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
                             Офигенный мониторинг и эффективное управление
                         </landing-title>
-                    </div>
+                    </swiper-slide>
                     <div class="mobile-view_prev_next">
                         <button-blue
                             class="mobile-view_prev prev"
+                            @click="swiper.slideNext()"
                         ></button-blue>
-                        <button-blue
-                            class="mobile-view_prev next"
-                        ></button-blue>
+                        <button-blue class="mobile-view_prev next"></button-blue>
                     </div>
-                </div>
+                </Swiper>
                 <div class="mobile-view__content">
                     <img
                         class="iphone"
                         src="../../../../../assets/img/iPhone-14.png"
                         alt=""
                     />
-                    <div class="mobile-view_swiper-picture">
-                        <div class="mobile-view_image active">
+                    <Swiper class="mobile-view_swiper-picture" :loop="true" :modules="[Controller]" @swiper="setControlledSwiper" :set-wrapper-size="true"
+                    :space-between="0">
+                        <swiper-slide class="mobile-view_image active">
                             <img
                                 src="../../../../../assets/img/iphone-14-screen1.png"
                                 alt=""
                             />
-                        </div>
-                        <div class="mobile-view_image">
+                        </swiper-slide>
+                        <swiper-slide class="mobile-view_image">
                             <img
                                 src="../../../../../assets/img/iphone-14-sreen2.png.png"
                                 alt=""
                             />
-                        </div>
-                        <div class="mobile-view_image">
+                        </swiper-slide>
+                        <swiper-slide class="mobile-view_image">
                             <img
                                 src="../../../../../assets/img/iphone-14-screen3.png"
                                 alt=""
                             />
-                        </div>
-                        <div class="mobile-view_image">
+                        </swiper-slide>
+                        <swiper-slide class="mobile-view_image">
                             <img
                                 src="../../../../../assets/img/iphone-14-screen4.png"
                                 alt=""
                             />
-                        </div>
-                        <div class="mobile-view_image">
+                        </swiper-slide>
+                        <swiper-slide class="mobile-view_image">
                             <img
                                 src="../../../../../assets/img/iphone-14-screen1.png"
                                 alt=""
                             />
-                        </div>
-                    </div>
+                        </swiper-slide>
+                    </Swiper>
                 </div>
                 <button-blue class="mobile-view__btn"
                     >{{ $t("mobile_app.note") }}
@@ -102,13 +106,33 @@ import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {Controller} from "swiper";
+import {ref} from "vue";
+import {useSwiper} from "swiper/vue";
 
 export default {
     name: "AppMobileView",
-    components: { LandingHeadline, LogoRunIcon, LandingTitle, ButtonBlue },
+    components: {LandingHeadline, LogoRunIcon, LandingTitle, ButtonBlue, Swiper, SwiperSlide},
     i18n: {
         sharedMessages: HomeMessage,
     },
+
+    setup() {
+        const swiper = useSwiper()
+        const controllerSlide = ref(null);
+        const setControlledSwiper = (swiper) => {
+            controllerSlide.value = swiper;
+        };
+
+        return {
+            swiper,
+            Controller,
+            controllerSlide,
+            setControlledSwiper,
+        }
+    },
+
     data() {
         return {
             validScroll: false,
@@ -251,10 +275,14 @@ export default {
         flex-flow: column nowrap;
         align-items: flex-start;
         align-self: center;
-        width: 25%;
+        max-width: 557px;
+        height: auto;
+        gap: 0;
+        margin: 0 auto 0 0;
     }
 
     &__content {
+        max-width: 429px;
         height: 875px;
         position: absolute;
         padding: 15px;
@@ -273,6 +301,8 @@ export default {
             top: 50%;
             transform: translate(-50%, -50%);
         }
+
+
     }
 
     &_swiper-picture {
@@ -283,15 +313,14 @@ export default {
         height: 100%;
         position: relative;
         max-width: 479px;
+        border-radius: 50px;
+
     }
 
     &_item {
-        display: none;
         flex-flow: column nowrap;
         align-items: center;
-        opacity: 0;
         justify-content: center;
-        gap: 30px;
         overflow: hidden;
         @media (min-width: 767.98px) {
             margin-bottom: 60px;
@@ -318,7 +347,13 @@ export default {
         overflow: hidden;
         z-index: 1;
         justify-content: center;
-        display: none;
+
+        img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 50px;
+        }
 
         svg {
             width: 100%;
@@ -373,9 +408,13 @@ export default {
     }
 }
 
-.active {
-    display: flex;
-    opacity: 1;
-    visibility: visible;
+//.active {
+//    display: flex;
+//    opacity: 1;
+//    visibility: visible;
+//}
+
+.mobile-view_inner .swiper-wrapper {
+    gap: 0;
 }
 </style>
