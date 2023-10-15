@@ -123,13 +123,6 @@ export default {
     padding: clamp(50px, 10vw, 100px) clamp(16px, 5vw, 100px) 0;
 }
 
-@media (max-height: 1100px) {
-    .footer-content {
-        transform: scale(1);
-        margin-top: 0;
-    }
-}
-
 .footer-content::before {
     content: "";
     position: absolute;
