@@ -106,10 +106,16 @@ export default {
                         this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 && !this.validScroll) {
-                        this.$refs.view.style.transform = `translateY(-${
-                            this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight
-                        }px)`;
+                        this.$refs.view.style.transform =
+                            window.innerHeight >= 900
+                                ? `translateY(-${
+                                    this.$refs.view.offsetHeight -
+                                    document.scrollingElement.clientHeight
+                                }px)`
+                                : `translateY(-${
+                                    this.$refs.view.offsetHeight -
+                                    document.scrollingElement.clientHeight
+                                }px) scale(0.8)`;
 
                         this.validScroll = true;
                     } else {
@@ -128,7 +134,10 @@ export default {
                     // reDestroy();
                 } else if (this.progress === 0) {
                     if (this.validScroll) {
-                        this.$refs.view.style.transform = `translateY(0px)`;
+                        this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(0px)`
+                            : `translateY(0px) scale(0.8)`;
 
                         this.validScroll = false;
                     } else {
@@ -193,6 +202,9 @@ export default {
     max-width: 860px;
     width: 100%;
     margin: 0 auto;
+    @media (max-height: 1200px) {
+        margin-top: -10vh;
+    }
 
     &__content {
         display: flex;

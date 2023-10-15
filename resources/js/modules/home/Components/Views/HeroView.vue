@@ -1,37 +1,36 @@
 <template>
     <div class="hero hero__section" ref="view">
         <div class="hero__content">
-            <logo-background/>
+            <logo-background />
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
                         <span class="hero_title_elem">{{
-                                $t("title[0]")
-                            }}</span>
+                            $t("title[0]")
+                        }}</span>
                         <span class="hero_title_elem">{{
-                                $t("title[1]")
-                            }}</span>
+                            $t("title[1]")
+                        }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-left">
                         <span class="hero_title_elem">{{
-                                $t("title[2]")
-                            }}</span>
+                            $t("title[2]")
+                        }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-top">
                         <span class="hero_title_elem"
-                        >{{
-                                $t("title[3]")
+                            >{{ $t("title[3]")
                             }}<span class="hero_title_elem">{{
-                                    $t("title[4]")
-                                }}</span></span
+                                $t("title[4]")
+                            }}</span></span
                         >
                     </span>
                     <span class="hero_title_row">
                         <span class="hero_title_elem hero_title_elem-last"
-                        >Bitcoin</span
+                            >Bitcoin</span
                         >
                         <landing-text tag="span" class="hero_text"
-                        >{{ $t("text") }}
+                            >{{ $t("text") }}
                         </landing-text>
                     </span>
                 </landing-title>
@@ -45,7 +44,7 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
@@ -89,12 +88,20 @@ export default {
                 setTimeout(this.scroll, 300);
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 && !this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validScroll
+                ) {
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px)`
+                            : `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px) scale(0.8)`;
 
                     this.validScroll = true;
                 } else {
@@ -109,9 +116,14 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 && this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(0px)`
+                            : `translateY(0px) scale(0.8)`;
 
                     this.validScroll = false;
                 } else {
@@ -170,10 +182,9 @@ export default {
     max-width: 860px;
     margin: 0 auto;
     width: 100%;
-    min-height: 400px;
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
-    padding: clamp(60px, 5vw, 120px) 0;
+    padding: clamp(60px, 20vw, 120px) 0;
     align-items: center;
 }
 
@@ -240,6 +251,18 @@ export default {
 
 .hero_title_row-left {
     margin-left: -102px;
+}
+
+@media (max-width: 1200px) {
+    .hero_title_row-left {
+        margin-left: -62px;
+    }
+}
+
+@media (max-width: 991.98px) {
+    .hero_title_row-left {
+        margin-left: 0;
+    }
 }
 
 .hero_title_row-top {

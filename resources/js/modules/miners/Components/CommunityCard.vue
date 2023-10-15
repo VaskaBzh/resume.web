@@ -83,10 +83,16 @@ export default {
                     20 &&
                     !this.validScroll
                 ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px)`
+                            : `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px) scale(0.8)`;
 
                     this.validScroll = true;
                 } else {
@@ -105,7 +111,10 @@ export default {
                     20 &&
                     this.validScroll
                 ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(0px)`
+                            : `translateY(0px) scale(0.8)`;
 
                     this.validScroll = false;
                 } else {

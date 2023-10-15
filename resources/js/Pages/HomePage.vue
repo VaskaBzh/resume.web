@@ -33,6 +33,7 @@ export default {
             component: null,
             direction: true,
             index: 0,
+            timeout: null,
         };
     },
     methods: {
@@ -41,10 +42,15 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : `translateY(${this.direction ? 200 : -200}%)`;
+                : window.innerHeight >= 900
+                ? `translateY(${this.direction ? 200 : -200}%)`
+                : `translateY(${this.direction ? 200 : -200}%) scale(0.8)`;
 
             setTimeout(() => {
-                view.style.transform = `translateY(0%)`;
+                view.style.transform =
+                    window.innerHeight >= 900
+                        ? `translateY(0%)`
+                        : `translateY(0%) scale(0.8)`;
             }, 400);
             setTimeout(() => {
                 view.style.opacity = 1;
@@ -56,15 +62,20 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : `translateY(0%)`;
+                : window.innerHeight >= 900
+                ? `translateY(0%)`
+                : `translateY(0%)) scale(0.8)`;
 
             setTimeout(() => {
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                view.style.transform = `translateY(${
-                    this.direction ? -200 : 200
-                }%)`;
+                view.style.transform =
+                    window.innerHeight >= 900
+                        ? `translateY(${this.direction ? -200 : 200}%)`
+                        : `translateY(${
+                              this.direction ? -200 : 200
+                          }%) scale(0.8)`;
             }, 300);
             setTimeout(() => {
                 done();
@@ -90,15 +101,21 @@ export default {
                 this.index = oldIndex;
             }
             this.renderView();
+            if (newIndex >= this.keys.length - 1) {
+                document.querySelector(".footer-content").style.opacity = 1;
+            } else {
+                document.querySelector(".footer-content").style.opacity = 0;
+            }
             if (newIndex === 0) {
-                setTimeout(() => {
+                this.timeout = setTimeout(() => {
                     document.querySelector(".nav").style.opacity = 1;
                     document.querySelector(".nav").style.transform =
                         "translateY(0)";
                 }, 1500);
             }
             if (newIndex > 0) {
-                document.querySelector(".nav").style.opacity = 1;
+                clearTimeout(this.timeout);
+                document.querySelector(".nav").style.opacity = 0;
                 document.querySelector(".nav").style.transform =
                     "translateY(-100%)";
             }
@@ -116,6 +133,7 @@ export default {
         document.querySelector("#app").style.overflow = "visible";
         document.querySelector(".nav").style.opacity = 1;
         document.querySelector(".nav").style.transform = "translateY(0)";
+        document.querySelector(".footer-content").style.opacity = 1;
     },
 };
 </script>

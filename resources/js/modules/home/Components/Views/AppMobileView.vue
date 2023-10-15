@@ -2,7 +2,7 @@
     <div class="mobile-view mobile__section mobile__section-wrap" ref="view">
         <div class="mobile-view__block">
             <landing-headline class="mobile-view__title"
-            >{{ $t("mobile_app.button") }}
+                >{{ $t("mobile_app.button") }}
             </landing-headline>
             <div class="mobile-view__wrapper">
                 <Swiper class="mobile-view_inner" :modules="[Controller]"
@@ -84,25 +84,25 @@
                     </Swiper>
                 </div>
                 <button-blue class="mobile-view__btn"
-                >{{ $t("mobile_app.note") }}
+                    >{{ $t("mobile_app.note") }}
                 </button-blue>
             </div>
         </div>
         <div class="mobile-view__run">
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
+            <logo-run-icon />
+            <logo-run-icon />
+            <logo-run-icon />
+            <logo-run-icon />
+            <logo-run-icon />
+            <logo-run-icon />
+            <logo-run-icon />
         </div>
     </div>
 </template>
 
 <script>
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
@@ -152,19 +152,25 @@ export default {
             this.handleWheel();
         },
         handleWheel(e) {
-            if (this.startY
-                ? this.startY - this.touchY > 110
-                : e.deltaY > 10) {
+            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
                 this.remove();
                 setTimeout(this.scroll, 300);
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 && !this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validScroll
+                ) {
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px)`
+                            : `translateY(-${
+                                  this.$refs.view.offsetHeight -
+                                  document.scrollingElement.clientHeight
+                              }px) scale(0.8)`;
 
                     this.validScroll = true;
                 } else {
@@ -179,9 +185,14 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 && this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform =
+                        window.innerHeight >= 900
+                            ? `translateY(0px)`
+                            : `translateY(0px) scale(0.8)`;
 
                     this.validScroll = false;
                 } else {
