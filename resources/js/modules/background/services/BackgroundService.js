@@ -1,4 +1,5 @@
 import {DomElementService} from "@/modules/common/services/extends/base/DomElementService";
+import {log10} from "chart.js/helpers";
 
 export class BackgroundService {
     constructor() {
@@ -110,15 +111,29 @@ export class BackgroundService {
         }
     }
 
+    getMultiplier() {
+        const width = window.innerWidth;
+        if (width <= 480) return 0.5;
+        if (width <= 768) return 0.75;
+        return 1;
+    }
+
     pushParticles() {
-        for (let i = 0; i < 20; i++) {
+        const multiplier = this.getMultiplier();
+
+        const numberOfParticles = Math.floor(20 * multiplier);
+        const maxParticleSize = 300 * multiplier;
+
+        console.log(maxParticleSize)
+
+        for (let i = 0; i < numberOfParticles; i++) {
             this.particles.push({
                 x: Math.random() * this.setWidth,
                 y: Math.random() * this.setHeight,
                 vx: Math.random() * 4 - 2,
                 vy: Math.random() * 4 - 2,
                 hue: Math.random() * 80 - 40,
-                rad: Math.random() * 300 + 10,
+                rad: Math.random() * maxParticleSize + 10,
             });
         }
     }
