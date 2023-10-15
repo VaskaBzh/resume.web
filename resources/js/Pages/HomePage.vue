@@ -42,15 +42,10 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : window.innerHeight >= 1100 || window.innerWidth < 991
-                ? `translateY(${this.direction ? 200 : -200}%)`
-                : `translateY(${this.direction ? 200 : -200}%) scale(0.8)`;
+                : `translateY(${this.direction ? 200 : -200}%)`;
 
             setTimeout(() => {
-                view.style.transform =
-                    window.innerHeight >= 1100 || window.innerWidth < 991
-                        ? `translateY(0%)`
-                        : `translateY(0%) scale(0.8)`;
+                view.style.transform = `translateY(0%)`;
             }, 400);
             setTimeout(() => {
                 view.style.opacity = 1;
@@ -62,20 +57,13 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : window.innerHeight >= 1100 || window.innerWidth < 991
-                ? `translateY(0%)`
-                : `translateY(0%)) scale(0.8)`;
+                : `translateY(0%)`;
 
             setTimeout(() => {
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                view.style.transform =
-                    window.innerHeight >= 1100 || window.innerWidth < 991
-                        ? `translateY(${this.direction ? -200 : 200}%)`
-                        : `translateY(${
-                              this.direction ? -200 : 200
-                          }%) scale(0.8)`;
+                view.style.transform = `translateY(${this.direction ? -200 : 200}%)`;
             }, 300);
             setTimeout(() => {
                 done();
@@ -106,10 +94,18 @@ export default {
                 document.querySelector(
                     ".footer-content"
                 ).style.transform = `translateY(0)`;
+                document.querySelector(".all-content").style.opacity = 1;
+                document.querySelector(
+                    ".all-content"
+                ).style.transform = `translateY(0)`;
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
                 document.querySelector(
                     ".footer-content"
+                ).style.transform = `translateY(100%)`;
+                document.querySelector(".all-content").style.opacity = 0;
+                document.querySelector(
+                    ".all-content"
                 ).style.transform = `translateY(100%)`;
             }
             if (newIndex === 0) {
