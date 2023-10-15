@@ -47,7 +47,6 @@
 //}
 
 .swiper {
-    padding-bottom: 172px !important;
     @media (max-width: 991.98px) {
         padding-bottom: 100px !important;
     }
@@ -56,8 +55,7 @@
     }
     &-wrapper {
         height: fit-content;
-        flex-flow: column nowrap;
-        gap: 30px;
+        flex-flow: row nowrap;
     }
     &-slide {
         height: 100%;

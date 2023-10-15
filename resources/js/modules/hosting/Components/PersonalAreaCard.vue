@@ -728,6 +728,7 @@ export default {
     top: 67%;
     left: 77.5%;
     z-index: 10;
+
 }
 
 .header-note-buttton {
