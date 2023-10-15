@@ -46,6 +46,7 @@ export default {
     padding: 0 clamp(16px, 5vw, 100px);
     margin: 0 auto;
     z-index: 10;
+    transition: all 1.2s ease 0s;
 }
 
 @media (max-width: 1920px) {

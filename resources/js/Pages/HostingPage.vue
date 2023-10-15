@@ -102,24 +102,27 @@ export default {
             if (newIndex === this.keys.length || newIndex === -1) {
                 this.index = oldIndex;
             }
+            this.renderView();
             if (newIndex >= this.keys.length - 1) {
                 document.querySelector(".footer-content").style.opacity = 1;
-                document.querySelector(".footer-content").style.display =
-                    "flex";
+                document.querySelector(
+                    ".footer-content"
+                ).style.transform = `translateY(0)`;
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
-                document.querySelector(".footer-content").style.display =
-                    "none";
+                document.querySelector(
+                    ".footer-content"
+                ).style.transform = `translateY(100%)`;
             }
-            this.renderView();
             if (newIndex === 0) {
-                setTimeout(() => {
+                this.timeout = setTimeout(() => {
                     document.querySelector(".nav").style.opacity = 1;
                     document.querySelector(".nav").style.transform =
                         "translateY(0)";
                 }, 1500);
             }
             if (newIndex > 0) {
+                clearTimeout(this.timeout);
                 document.querySelector(".nav").style.opacity = 0;
                 document.querySelector(".nav").style.transform =
                     "translateY(-100%)";
@@ -131,7 +134,9 @@ export default {
         document.querySelector(".layout").style.overflow = "hidden";
         document.querySelector("#app").style.overflow = "hidden";
         document.querySelector(".footer-content").style.opacity = 0;
-        document.querySelector(".footer-content").style.display = "none";
+        document.querySelector(
+            ".footer-content"
+        ).style.transform = `translateY(100%)`;
         this.renderView();
     },
     unmounted() {
@@ -146,7 +151,9 @@ export default {
         }
         if (document.querySelector(".footer-content")) {
             document.querySelector(".footer-content").style.opacity = 1;
-            document.querySelector(".footer-content").style.display = "flex";
+            document.querySelector(
+                ".footer-content"
+            ).style.transform = `translateY(0)`;
         }
     },
 };

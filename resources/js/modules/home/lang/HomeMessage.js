@@ -64,6 +64,8 @@ export const HomeMessage = {
                 ],
                 text: [
                     "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
+                    "Up-to-date information in your personal account about the pool hashrate, worker productivity, accruals, payments and other statistics that allow you to evaluate how the pool’s performance and predict future income.",
+                    "The advanced technology we created, Stratum 3.0, allows us to reduce the time of synchronization of mining equipment with the pool. Advanced security system, both physical and virtual.",
                 ],
             },
         },
@@ -111,6 +113,8 @@ export const HomeMessage = {
             title: ["FPPS+", "autopayouts", "free funds transfer"],
             text: [
                 "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
+                "Automatic payments are made without any action on the part of the miner. Since payments are possible when predetermined conditions are met (reaching a given minimum threshold), funds are received without delay. Moreover, the possibility of an error (incorrectly entered wallet address or transaction amount) caused by a human factor is eliminated.",
+                "Automatic withdrawal of funds is completely free, no commission is charged. Moreover, withdrawals to any wallets are also made without commission.",
             ],
         },
         main: {
@@ -204,6 +208,8 @@ export const HomeMessage = {
                 ],
                 text: [
                     "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
+                    "Актуальная информация в личном кабинете о хешрейте пула, производительности воркеров, начислениях, выплатах и других статистических данных, позволяющие оценивать работу пула и прогнозировать будущие доходы.",
+                    "Продвинутая созданная нами Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
                 ],
             },
         },
@@ -255,6 +261,9 @@ export const HomeMessage = {
             ],
             text: [
                 "Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.",
+                "Автоматические выплаты осуществляются без каких-либо действий со стороны майнера. \n" +
+                    "Так как выплаты возможны при выполнении заранее заданных условий (достижение заданного минимального порога), поступление средств производится без задержек. Более того, исключается возможность допущения ошибки (неправильно введенный адрес кошелька или сумма транзакции), вызванной человеческим фактором.",
+                "Автовывод средств полностью бесплатный, никакая комиссия не начисляется. Более того, вывод на любые кошельки также производится без комиссии.",
             ],
         },
         main: {

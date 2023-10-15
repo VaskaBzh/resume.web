@@ -88,19 +88,19 @@ export default {
                     cards: [
                         {
                             title: "№1",
-                            text: this.$t("who_we_are.card_community.text[1]"),
+                            text: this.$t("who_we_are.card_community.text[0]"),
                         },
                         {
                             title: "24/7",
-                            text: this.$t("who_we_are.card_community.text[2]"),
+                            text: this.$t("who_we_are.card_community.text[1]"),
                         },
                         {
                             title: "1",
-                            text: this.$t("who_we_are.card_community.text[3]"),
+                            text: this.$t("who_we_are.card_community.text[2]"),
                         },
                         {
                             title: "4%",
-                            text: this.$t("who_we_are.card_community.text[4]"),
+                            text: this.$t("who_we_are.card_community.text[3]"),
                             hint: this.$t("who_we_are.card_community.tooltip"),
                         },
                     ],

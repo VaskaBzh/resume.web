@@ -28,7 +28,11 @@
                     </a>
                     <p class="or-text">{{ $t("connect.form.text") }}</p>
                     <div class="or-container">
-                        <a href="https://t.me/allbtc_support" target="_blank" class="or-button">
+                        <a
+                            href="https://t.me/allbtc_support"
+                            target="_blank"
+                            class="or-button"
+                        >
                             {{ $t("connect.form.button[1]") }}
                         </a>
                         <!--                        <button class="or-button">-->
@@ -83,81 +87,104 @@ export default {
             this.handleWheel();
         },
         handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
+            if (this.$refs.view) {
                 if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    !this.validScroll
+                    this.startY
+                        ? this.startY - this.touchY > 110
+                        : e.deltaY > 10
                 ) {
-                    this.$refs.view.style.transform =
-                        window.innerHeight >= 1100 || window.innerWidth < 991
-                            ? `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`
-                            : `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px) scale(0.8)`;
+                    this.remove();
+                    setTimeout(this.scroll, 650);
 
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
+                    if (
+                        this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight +
+                            document.querySelector(".footer-content")
+                                .offsetHeight +
+                            document.querySelector(".all-content")
+                                .offsetHeight >
+                            20 &&
+                        !this.validScroll
+                    ) {
+                        this.$refs.view.style.transform =
+                            window.innerHeight >= 1100 ||
+                            window.innerWidth < 991
+                                ? ``
+                                : `scale(0.8)`;
+                        document.querySelector(
+                            ".footer-content"
+                        ).style.transform = `translateY(-${
+                            document.querySelector(".all-content").offsetHeight
+                        }px)`;
+                        document.querySelector(
+                            ".layout__container"
+                        ).style.transform = `translateY(-${
+                            document.querySelector(".all-content").offsetHeight
+                        }px)`;
+                        document.querySelector(
+                            ".all-content"
+                        ).style.transform = `translateY(-${
+                            document.querySelector(".all-content").offsetHeight
+                        }px)`;
+
+                        this.validScroll = true;
+                    } else {
+                        this.$emit("next");
+                    }
                 }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
                 if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    this.validScroll
+                    this.startY
+                        ? this.touchY - this.startY > 110
+                        : e.deltaY < -10
                 ) {
-                    this.$refs.view.style.transform =
-                        window.innerHeight >= 1100 || window.innerWidth < 991
-                            ? `translateY(0px)`
-                            : `translateY(0px) scale(0.8)`;
+                    this.remove();
+                    setTimeout(this.scroll, 650);
 
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
+                    if (
+                        this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight +
+                            document.querySelector(".footer-content")
+                                .offsetHeight >
+                            20 &&
+                        this.validScroll
+                    ) {
+                        this.$refs.view.style.transform =
+                            window.innerHeight >= 1100 ||
+                            window.innerWidth < 991
+                                ? `translateY(0px)`
+                                : `translateY(0px) scale(0.8)`;
+                        document.querySelector(
+                            ".footer-content"
+                        ).style.transform = `translateY(100%)`;
+                        document.querySelector(
+                            ".layout__container"
+                        ).style.transform = `translateY(0)`;
+                        document.querySelector(
+                            ".all-content"
+                        ).style.transform = `translateY(100%)`;
+
+                        this.validScroll = false;
+                    } else {
+                        this.$emit("prev");
+                    }
                 }
             }
         },
         scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
+            document.body.addEventListener("wheel", this.handleWheel);
+            document.body.addEventListener("touchstart", this.handleTouchStart);
+            document.body.addEventListener("touchmove", this.handleTouchMove);
         },
         remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
+            document.body.removeEventListener("wheel", this.handleWheel);
+            document.body.removeEventListener(
+                "touchstart",
+                this.handleTouchStart
+            );
+            document.body.removeEventListener(
+                "touchmove",
+                this.handleTouchMove
+            );
         },
     },
     watch: {
@@ -170,6 +197,15 @@ export default {
         },
     },
     mounted() {
+        document.querySelector(
+            ".footer-content"
+        ).style.transform = `translateY(100%)`;
+        document.querySelector(
+            ".layout__container"
+        ).style.transform = `translateY(0)`;
+        document.querySelector(
+            ".all-content"
+        ).style.transform = `translateY(100%)`;
         setTimeout(this.scroll, 500);
     },
     unmounted() {

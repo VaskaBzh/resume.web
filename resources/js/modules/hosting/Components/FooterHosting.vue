@@ -115,6 +115,7 @@ export default {
 .all-content {
     padding: 0 clamp(16px, 5vw, 100px) clamp(50px, 10vw, 100px);
     flex-direction: column;
+    transition: all 1.5s ease 0s;
 }
 
 .footer-content {

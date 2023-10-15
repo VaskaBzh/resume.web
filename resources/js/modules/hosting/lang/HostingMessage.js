@@ -96,6 +96,8 @@ export const HostingMessage = {
                 ],
                 text: [
                     "The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.",
+                    "We provide maximum protection for your crypto assets and user data. Using physical security, data encryption, protection against DDoS attacks, the use of 2FA and VPN tunnels. As well as regular security audits, including penetration testing.",
+                    "We have automated payouts to improve security and simplify the process. You configure the minimum amount of funds for withdrawal and the payment occurs automatically when the required numbers are reached.",
                 ],
             },
         },
@@ -209,6 +211,8 @@ export const HostingMessage = {
                 ],
                 text: [
                     "Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.",
+                    "Мы обеспечиваем максимальную защиту ваших крипто активов и данных пользователя. При помощи физической безопасности, шифрования данных, защиты от DDoS-атак, использования 2FA и VPN-туннелей. А также регулярных аудитов безопасности, включая тестирование на проникновение.",
+                    "Мы автоматизировали выплаты для улучшения безопасности и упрощения процесса. Вы настраиваете минимальную сумму средств для вывода и выплата происходит автоматически при достижении нужных цифр. ",
                 ],
             },
         },

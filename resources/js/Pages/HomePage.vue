@@ -103,10 +103,14 @@ export default {
             this.renderView();
             if (newIndex >= this.keys.length - 1) {
                 document.querySelector(".footer-content").style.opacity = 1;
-                document.querySelector(".footer-content").style.display =
-                    "flex";
+                document.querySelector(
+                    ".footer-content"
+                ).style.transform = `translateY(0)`;
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
+                document.querySelector(
+                    ".footer-content"
+                ).style.transform = `translateY(100%)`;
             }
             if (newIndex === 0) {
                 this.timeout = setTimeout(() => {
@@ -127,8 +131,10 @@ export default {
         document.querySelector("body").style.overflow = "hidden";
         document.querySelector(".layout").style.overflow = "hidden";
         document.querySelector("#app").style.overflow = "hidden";
-        document.querySelector(".footer-content").style.display = "none";
         document.querySelector(".footer-content").style.opacity = 0;
+        document.querySelector(
+            ".footer-content"
+        ).style.transform = `translateY(100%)`;
         this.renderView();
     },
     unmounted() {
@@ -142,8 +148,10 @@ export default {
             document.querySelector(".nav").style.transform = "translateY(0)";
         }
         if (document.querySelector(".footer-content")) {
-            document.querySelector(".footer-content").style.display = "flex";
             document.querySelector(".footer-content").style.opacity = 1;
+            document.querySelector(
+                ".footer-content"
+            ).style.transform = `translateY(0)`;
         }
     },
 };
