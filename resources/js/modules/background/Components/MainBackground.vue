@@ -2,7 +2,6 @@
     <div class="background">
         <div class="background_filter"></div>
         <canvas ref="canvas" width="100%" height="100%">
-            Oh no! Your browser doesn't support canvas!
         </canvas>
     </div>
 </template>

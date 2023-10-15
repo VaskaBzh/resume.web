@@ -5,25 +5,25 @@
                 <landing-title tag="h3" class="faq_title miners_title">
                     <span class="miners_title_elem animation-up_line">
                         <span class="animation-right">{{
-                                $t("why_allbtc.title[0]")
-                            }}</span>
+                            $t("why_allbtc.title[0]")
+                        }}</span>
                     </span>
                     <span
                         class="miners_title_elem-left miners_title_elem animation-up_line"
                     >
                         <span class="animation-left">{{
-                                $t("why_allbtc.title[1]")
-                            }}</span>
+                            $t("why_allbtc.title[1]")
+                        }}</span>
                     </span>
                     <span class="miners_title_elem animation-up_line">
                         <span class="animation-right">{{
-                                $t("why_allbtc.title[2]")
-                            }}</span>
+                            $t("why_allbtc.title[2]")
+                        }}</span>
                     </span>
                     <span class="miners_title_elem animation-up_line">
                         <span class="animation-left">{{
-                                $t("why_allbtc.title[3]")
-                            }}</span>
+                            $t("why_allbtc.title[3]")
+                        }}</span>
                     </span>
                 </landing-title>
             </template>
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import FaqView from "@/modules/home/Components/Views/FaqView.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
-import {upLeft, upRight} from "../../services/AnimationService";
+import { upLeft, upRight } from "../../services/AnimationService";
 
 export default {
     name: "MinersInfoView",
@@ -93,12 +93,14 @@ export default {
                 } else if (this.progress === 1) {
                     if (
                         this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 && !this.validScroll) {
+                            document.scrollingElement.clientHeight >
+                            20 &&
+                        !this.validScroll
+                    ) {
                         this.$refs.view.style.transform = `translateY(-${
-                                    this.$refs.view.offsetHeight -
-                                    document.scrollingElement.clientHeight
-                                }px)`;
+                            this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight
+                        }px)`;
 
                         this.validScroll = true;
                     } else {
@@ -117,9 +119,11 @@ export default {
                 } else if (this.progress === 0) {
                     if (
                         this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 && this.validScroll) {
-                        this.$refs.view.style.transform =`translateY(0px)`;
+                            document.scrollingElement.clientHeight >
+                            20 &&
+                        this.validScroll
+                    ) {
+                        this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;
                     } else {

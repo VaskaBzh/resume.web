@@ -25,7 +25,11 @@
                     </a>
                 </template>
             </landing-wrap>
-            <a href="https://t.me/allbtc_support" target="_blank" class="about-view_btn">
+            <a
+                href="https://t.me/allbtc_support"
+                target="_blank"
+                class="about-view_btn"
+            >
                 <landing-button>
                     <template v-slot:text
                         >{{ $t("who_we_are.card_private.button[1]") }}
@@ -113,6 +117,7 @@ export default {
             key: "hostings",
             keys: ["hostings", "miners"],
             validScroll: false,
+            validHalfScroll: false,
             progress: 0,
             startY: null,
             touchY: null,
@@ -134,7 +139,20 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 650);
 
-                if (this.progress === 0) {
+                if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    !this.validHalfScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        (this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight) /
+                        2
+                    }px)`;
+
+                    this.validHalfScroll = true;
+                } else if (this.progress === 0) {
                     this.key = "miners";
                     this.progress++;
                 } else if (this.progress === 1) {
@@ -145,9 +163,9 @@ export default {
                         !this.validScroll
                     ) {
                         this.$refs.view.style.transform = `translateY(-${
-                                      this.$refs.view.offsetHeight -
-                                      document.scrollingElement.clientHeight
-                                  }px)`;
+                            this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight
+                        }px)`;
 
                         this.validScroll = true;
                     } else {
@@ -171,7 +189,7 @@ export default {
                             20 &&
                         this.validScroll
                     ) {
-                        this.$refs.view.style.transform = `translateY(0px)`
+                        this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;
                     } else {

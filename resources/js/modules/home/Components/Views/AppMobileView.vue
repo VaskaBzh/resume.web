@@ -172,6 +172,7 @@ export default {
     data() {
         return {
             validScroll: false,
+            validHalfScroll: false,
             startY: null,
             touchY: null,
         };
@@ -201,12 +202,25 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
+                    !this.validHalfScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        (this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight) /
+                        2
+                    }px)`;
+
+                    this.validHalfScroll = true;
+                } else if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -223,9 +237,22 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    this.validScroll
+                    this.validHalfScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
+
+                    this.validHalfScroll = false;
+                } else if (
+                    this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                    this.validScroll
+                ) {
+                    this.$refs.view.style.transform = `translateY(-${
+                        (this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight) /
+                        2
+                    }px)`;
 
                     this.validScroll = false;
                 } else {
@@ -287,10 +314,11 @@ export default {
     justify-content: space-evenly;
     padding-bottom: clamp(30px, 5vw, 70px);
 
-
-
-
-
+    &__btn {
+        @media (max-width: 1600px) {
+            margin-top: 20px;
+        }
+    }
 
     &__block {
         width: 100%;
@@ -307,7 +335,7 @@ export default {
         width: 100%;
         position: relative;
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1600px) {
             flex-flow: column nowrap;
             justify-content: flex-start;
             gap: 30px;
@@ -324,7 +352,7 @@ export default {
         gap: 0;
         margin: 0 auto 0 0;
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1600px) {
             margin: 0 auto;
             max-width: 80%;
         }
@@ -356,7 +384,7 @@ export default {
             transform: translate(-50%, -50%);
         }
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1600px) {
             max-width: 330px;
             height: 655px;
             padding: 15px;
@@ -376,7 +404,6 @@ export default {
             height: 430px;
         }
     }
-
     &_swiper-picture {
         display: flex;
         flex-flow: row nowrap;
@@ -404,17 +431,10 @@ export default {
     }
 
     &_subtitle {
-        color: #f5faff;
-        font-family: Unbounded, serif;
-        font-size: 44px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 120%;
-        text-transform: uppercase;
-        padding: 32px 32px 0 0;
+        padding: 32px 32px 0 32px;
 
-        @media (max-width: 1200px) {
-           text-align: center;
+        @media (max-width: 1600px) {
+            text-align: center;
         }
         @media (max-width: 768px) {
             text-align: center;
@@ -475,6 +495,11 @@ export default {
         align-items: center;
         justify-content: flex-start;
         gap: 30px;
+
+        @media (max-width: 1600.98px) {
+            justify-content: center;
+            order: -1;
+        }
     }
 
     &__run {

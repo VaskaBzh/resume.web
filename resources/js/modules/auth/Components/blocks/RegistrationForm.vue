@@ -164,6 +164,9 @@ export default {
 <style scoped lang="scss">
 .form-auth {
     gap: 0;
+    @media (max-width: 991.98px) {
+        padding: 0 clamp(16px, 5vw, 60px);
+    }
     &__content {
         display: flex;
         flex-direction: column;
@@ -186,15 +189,25 @@ export default {
     &_button {
         padding: 0;
         margin: 0;
+        background: rgb(63, 123, 221);
+        color: #fff;
+        text-transform: lowercase;
+        border: none;
+        width: fit-content;
+        display: inline-flex;
+        border-radius: 16px;
         @media (max-width: $mobileSmall) {
             min-width: 100%;
         }
         & .all-link {
-            padding: 16px 45px;
+            padding: 0;
             font-size: 20px;
             font-weight: 500;
             line-height: 135%;
-            min-width: 300px;
+            min-width: 400px;
+            @media (max-width: $mobileSmall) {
+                min-width: 100%;
+            }
         }
         @media (max-width: $tablet) {
             width: 100%;

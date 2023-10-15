@@ -1,9 +1,9 @@
 <template>
     <div class="layout">
-        <!--                <main-background/>-->
-        <header-component />
+<!--        <main-background/>-->
+        <header-component/>
         <div class="layout__container">
-            <slot />
+            <slot/>
         </div>
         <FooterHosting></FooterHosting>
     </div>

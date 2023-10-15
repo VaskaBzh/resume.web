@@ -1,13 +1,14 @@
 <template>
     <div class="working__section working__section-blue" ref="view">
-        <div class="working-card">
+        <div class="working-card animation-scale">
             <p class="working-title">{{ ourOffer.title }}</p>
             <p class="working-text">{{ ourOffer.text }}</p>
         </div>
     </div>
 </template>
 <script>
-import {MinersMessage} from "../lang/MinersMessage";
+import { MinersMessage } from "../lang/MinersMessage";
+import { scaleAnimation } from "@/modules/home/services/AnimationService";
 
 export default {
     i18n: {
@@ -17,7 +18,7 @@ export default {
         return {
             ourOffer: {
                 title: this.$t("offer.title"),
-                text: this.$t("offer.text")
+                text: this.$t("offer.text"),
             },
             validScroll: false,
             startY: null,
@@ -42,14 +43,14 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -64,8 +65,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -115,6 +116,7 @@ export default {
     },
     mounted() {
         setTimeout(this.scroll, 500);
+        setTimeout(scaleAnimation, 1300);
     },
     unmounted() {
         this.remove();
