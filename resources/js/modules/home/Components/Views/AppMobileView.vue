@@ -7,10 +7,15 @@
             <div class="mobile-view__wrapper">
                 <Swiper
                     class="mobile-view_inner"
-                    :modules="[Controller, Navigation]"
+                    :modules="[Controller, Navigation, Pagination]"
                     :controller="{ control: controllerSlide }"
                     :set-wrapper-size="true"
                     :loop="true"
+                    :pagination="{clickable:true,
+                    el: '.pagination_bulets',
+                    type: 'custom',
+                    bulletClass: 'bulets-one',
+                    bulletActiveClass:'active-bullet',}"
                     :navigation="{nextEl: '.next', prevEl: '.prev'}"
                     :space-between="0"
                 >
@@ -42,9 +47,11 @@
                     <div class="mobile-view_prev_next">
                         <button-blue
                             class="mobile-view_prev prev"
+                            v-if="viewportWidth>1200"
                         ></button-blue>
                         <button-blue
                             class="mobile-view_prev next"
+                            v-if="viewportWidth>1200"
                         ></button-blue>
                     </div>
                 </Swiper>
@@ -57,7 +64,7 @@
                     <Swiper
                         class="mobile-view_swiper-picture"
                         :loop="true"
-                        :modules="[Controller, Navigation]"
+                        :modules="[Controller, Navigation, Pagination]"
                         @swiper="setControlledSwiper"
                     >
                         <swiper-slide class="mobile-view_image active">
@@ -92,6 +99,13 @@
                         </swiper-slide>
                     </Swiper>
                 </div>
+                <div class="pagination_bulets" v-if="viewportWidth < 1200">
+                    <div class="bulets-one"></div>
+                    <div class="bulets-one"></div>
+                    <div class="bulets-one"></div>
+                    <div class="bulets-one"></div>
+                    <div class="bulets-one"></div>
+                </div>
                 <button-blue class="mobile-view__btn"
                     >{{ $t("mobile_app.note") }}
                 </button-blue>
@@ -116,9 +130,9 @@ import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Controller,Navigation } from "swiper";
+import { Controller,Navigation, Pagination } from "swiper";
 import { ref } from "vue";
-import {onMounted} from "vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "AppMobileView",
@@ -149,6 +163,7 @@ export default {
         return {
             Controller,
             Navigation,
+            Pagination,
             controllerSlide,
             setControlledSwiper,
         };
@@ -163,6 +178,12 @@ export default {
     },
     props: {
         start: Boolean,
+    },
+
+    computed: {
+        ...mapGetters([
+            "viewportWidth"
+        ])
     },
     methods: {
         handleTouchStart(e) {
@@ -266,6 +287,11 @@ export default {
     justify-content: space-evenly;
     padding-bottom: clamp(30px, 5vw, 70px);
 
+
+
+
+
+
     &__block {
         width: 100%;
         display: flex;
@@ -284,6 +310,7 @@ export default {
         @media (max-width: 1200px) {
             flex-flow: column nowrap;
             justify-content: flex-start;
+            gap: 30px;
         }
     }
 
@@ -343,6 +370,11 @@ export default {
             align-items: center;
             justify-content: center;
         }
+
+        @media (max-width: 768px) {
+            max-width: 70%;
+            height: 430px;
+        }
     }
 
     &_swiper-picture {
@@ -354,6 +386,11 @@ export default {
         position: relative;
         max-width: 479px;
         border-radius: 50px;
+
+        @media (max-width: 768px) {
+            border-radius: 25px;
+            max-width: 195px;
+        }
     }
 
     &_item {
@@ -379,6 +416,12 @@ export default {
         @media (max-width: 1200px) {
            text-align: center;
         }
+        @media (max-width: 768px) {
+            text-align: center;
+            padding: 0;
+            font-size: 14px;
+        }
+
     }
 
     &_image {
@@ -391,11 +434,19 @@ export default {
         z-index: 1;
         justify-content: center;
 
+        @media (max-width: 768px) {
+            border-radius: 25px;
+        }
+
         img {
             width: 100%;
             height: auto;
             object-fit: cover;
             border-radius: 50px;
+
+            @media (max-width: 768px) {
+                border-radius: 20px;
+            }
         }
 
         svg {
@@ -460,4 +511,26 @@ export default {
 .mobile-view_inner .swiper-wrapper {
     gap: 0;
 }
+
+.pagination_bulets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.bulets-one {
+    width: 10px;
+    height: 10px;
+    background: #43474E;
+    border-radius: 50%;
+}
+
+.active-bullet {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #2E90FA;
+}
+
 </style>
