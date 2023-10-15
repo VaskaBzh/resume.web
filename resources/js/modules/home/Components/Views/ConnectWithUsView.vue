@@ -1,5 +1,10 @@
 <template>
-    <a href="https://t.me/allbtc_support" target="_blank" class="connect-withus" ref="view">
+    <a
+        href="https://t.me/allbtc_support"
+        target="_blank"
+        class="connect-withus"
+        ref="view"
+    >
         <div class="connect-withus__run">
             <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn" />
@@ -65,25 +70,6 @@ export default {
         },
         handleWheel(e) {
             if (this.$refs.view) {
-                // if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                //     this.remove();
-                //     setTimeout(this.scroll, 300);
-                //     if (
-                //         this.$refs.view.offsetHeight -
-                //             document.scrollingElement.clientHeight >
-                //             20 &&
-                //         !this.validScroll
-                //     ) {
-                //         this.$refs.view.style.transform = `translateY(-${
-                //             this.$refs.view.offsetHeight -
-                //             document.scrollingElement.clientHeight
-                //         }px)`;
-                //
-                //         this.validScroll = true;
-                //     } else {
-                //         this.$emit("next");
-                //     }
-                // }
                 if (
                     this.startY
                         ? this.touchY - this.startY > 110
@@ -99,7 +85,8 @@ export default {
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 1100 || window.innerWidth < 991
+                            window.innerHeight >= 1100 ||
+                            window.innerWidth < 991
                                 ? `translateY(0px)`
                                 : `translateY(0px) scale(0.8)`;
 
@@ -112,18 +99,11 @@ export default {
             }
         },
         scroll() {
-            // if (this.$refs.view) {
-            //     this.$refs.view.focus();
             document.body.addEventListener("wheel", this.handleWheel);
             document.body.addEventListener("touchstart", this.handleTouchStart);
             document.body.addEventListener("touchmove", this.handleTouchMove);
-            // }
         },
         remove() {
-            // console.log(this.$refs.view);
-            // if (this.$refs.view) {
-            //     this.$refs.view.style.minHeight = `100vh`;
-            // }
             document.body.removeEventListener("wheel", this.handleWheel);
             document.body.removeEventListener(
                 "touchstart",
@@ -154,9 +134,10 @@ export default {
                 document.querySelector(".footer-content").offsetHeight +
                 document.querySelector(".all-content").offsetHeight
             }px)`;
-        }, 800);
+        }, 100);
     },
     unmounted() {
+        if (this.$refs.view) this.$refs.view.style.minHeight = `100vh`;
         this.remove();
     },
 };

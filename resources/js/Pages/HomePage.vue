@@ -106,10 +106,18 @@ export default {
                 document.querySelector(
                     ".footer-content"
                 ).style.transform = `translateY(0)`;
+                document.querySelector(".all-content").style.opacity = 1;
+                document.querySelector(
+                    ".all-content"
+                ).style.transform = `translateY(0)`;
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
                 document.querySelector(
                     ".footer-content"
+                ).style.transform = `translateY(100%)`;
+                document.querySelector(".all-content").style.opacity = 0;
+                document.querySelector(
+                    ".all-content"
                 ).style.transform = `translateY(100%)`;
             }
             if (newIndex === 0) {
