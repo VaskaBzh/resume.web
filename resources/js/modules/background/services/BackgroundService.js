@@ -79,8 +79,9 @@ export class BackgroundService {
                 this.setWidth,
                 this.setHeight
             );
-            gradient.addColorStop(0, "#064FC3");
-            gradient.addColorStop(1, "#2077E1");
+            gradient.addColorStop(0, "#183ED7");
+            gradient.addColorStop(1, "#2E90FA");
+
 
             this.ctx.fillStyle = gradient;
             this.ctx.arc(
