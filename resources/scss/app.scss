@@ -635,7 +635,14 @@ h6 {
         }
     }
 }
+.history-pool {
 
+    &__items {
+        .swiper-wrapper {
+            flex-flow: column nowrap;
+        }
+    }
+}
 .indicators {
     .swiper {
         overflow-y: visible;

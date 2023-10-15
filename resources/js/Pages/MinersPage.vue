@@ -28,7 +28,7 @@ export default {
                 "personal-card",
                 "mobile-card",
                 "guarante",
-                "community",
+                // "community",
                 "connect-card",
             ],
             component: null,
@@ -43,16 +43,13 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : window.innerHeight >= 900
+                : window.innerHeight >= 1100 || window.innerWidth < 991
                 ? `translateY(${this.direction ? 200 : -200}%)`
                 : `translateY(${this.direction ? 200 : -200}%) scale(0.8)`;
 
-            if (newIndex >= this.keys.length) {
-                document.querySelector(".footer-content").style.opacity = 1;
-            }
             setTimeout(() => {
                 view.style.transform =
-                    window.innerHeight >= 900
+                    window.innerHeight >= 1100 || window.innerWidth < 991
                         ? `translateY(0%)`
                         : `translateY(0%) scale(0.8)`;
             }, 400);
@@ -66,7 +63,7 @@ export default {
             view.focus();
             view.style.transform = view.style.transform
                 ? view.style.transform
-                : window.innerHeight >= 900
+                : window.innerHeight >= 1100 || window.innerWidth < 991
                 ? `translateY(0%)`
                 : `translateY(0%)) scale(0.8)`;
 
@@ -75,7 +72,7 @@ export default {
             }, 100);
             setTimeout(() => {
                 view.style.transform =
-                    window.innerHeight >= 900
+                    window.innerHeight >= 1100 || window.innerWidth < 991
                         ? `translateY(${this.direction ? -200 : 200}%)`
                         : `translateY(${
                               this.direction ? -200 : 200
@@ -104,10 +101,15 @@ export default {
             if (newIndex === this.keys.length || newIndex === -1) {
                 this.index = oldIndex;
             }
-            if (newIndex >= this.keys.length) {
+
+            if (newIndex >= this.keys.length - 1) {
                 document.querySelector(".footer-content").style.opacity = 1;
+                document.querySelector(".footer-content").style.display =
+                    "flex";
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
+                document.querySelector(".footer-content").style.display =
+                    "none";
             }
             this.renderView();
             if (newIndex === 0) {
@@ -128,15 +130,24 @@ export default {
         document.querySelector("body").style.overflow = "hidden";
         document.querySelector(".layout").style.overflow = "hidden";
         document.querySelector("#app").style.overflow = "hidden";
+        document.querySelector(".footer-content").style.opacity = 0;
+        document.querySelector(".footer-content").style.display = "none";
         this.renderView();
     },
     unmounted() {
         document.querySelector("body").style.overflow = "visible";
-        document.querySelector(".layout").style.overflow = "visible";
+        if (document.querySelector(".layout")) {
+            document.querySelector(".layout").style.overflow = "visible";
+        }
         document.querySelector("#app").style.overflow = "visible";
-        document.querySelector(".nav").style.opacity = 1;
-        document.querySelector(".nav").style.transform = "translateY(0)";
-        document.querySelector(".footer-content").style.opacity = 1;
+        if (document.querySelector(".nav")) {
+            document.querySelector(".nav").style.opacity = 1;
+            document.querySelector(".nav").style.transform = "translateY(0)";
+        }
+        if (document.querySelector(".footer-content")) {
+            document.querySelector(".footer-content").style.opacity = 1;
+            document.querySelector(".footer-content").style.display = "flex";
+        }
     },
 };
 </script>

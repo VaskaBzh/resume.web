@@ -5,11 +5,15 @@
                 >{{ $t("mobile_app.button") }}
             </landing-headline>
             <div class="mobile-view__wrapper">
-                <Swiper class="mobile-view_inner" :modules="[Controller]"
-                        :controller="{ control: controllerSlide }"
-                :set-wrapper-size="true"
-                :loop="true"
-                :space-between="0">
+                <Swiper
+                    class="mobile-view_inner"
+                    :modules="[Controller, Navigation]"
+                    :controller="{ control: controllerSlide }"
+                    :set-wrapper-size="true"
+                    :loop="true"
+                    :navigation="{nextEl: '.next', prevEl: '.prev'}"
+                    :space-between="0"
+                >
                     <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
                             {{ $t("mobile_app.title") }}
@@ -39,7 +43,9 @@
                         <button-blue
                             class="mobile-view_prev prev"
                         ></button-blue>
-                        <button-blue class="mobile-view_prev next"></button-blue>
+                        <button-blue
+                            class="mobile-view_prev next"
+                        ></button-blue>
                     </div>
                 </Swiper>
                 <div class="mobile-view__content">
@@ -48,8 +54,12 @@
                         src="../../../../../assets/img/iPhone-14.png"
                         alt=""
                     />
-                    <Swiper class="mobile-view_swiper-picture" :loop="true" :modules="[Controller]" @swiper="setControlledSwiper" :set-wrapper-size="true"
-                    :space-between="0">
+                    <Swiper
+                        class="mobile-view_swiper-picture"
+                        :loop="true"
+                        :modules="[Controller, Navigation]"
+                        @swiper="setControlledSwiper"
+                    >
                         <swiper-slide class="mobile-view_image active">
                             <img
                                 src="../../../../../assets/img/iphone-14-screen1.png"
@@ -82,7 +92,7 @@
                         </swiper-slide>
                     </Swiper>
                 </div>
-                <button-blue class="mobile-view__btn "
+                <button-blue class="mobile-view__btn"
                     >{{ $t("mobile_app.note") }}
                 </button-blue>
             </div>
@@ -105,13 +115,21 @@ import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
-import {Swiper, SwiperSlide} from "swiper/vue";
-import {Controller, Navigation} from "swiper";
-import {onMounted, ref} from "vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Controller,Navigation } from "swiper";
+import { ref } from "vue";
+import {onMounted} from "vue";
 
 export default {
     name: "AppMobileView",
-    components: {LandingHeadline, LogoRunIcon, LandingTitle, ButtonBlue, Swiper, SwiperSlide},
+    components: {
+        LandingHeadline,
+        LogoRunIcon,
+        LandingTitle,
+        ButtonBlue,
+        Swiper,
+        SwiperSlide,
+    },
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -119,24 +137,21 @@ export default {
     setup() {
         const controllerSlide = ref(null);
 
-        onMounted(()=> {
-            Swiper.use([Navigation])
-            new Swiper('swiper', {
-                navigation: {
-                    nextEl: '.next',
-                    prev: '.prev',
-                },
-            })
-        })
+        // onMounted(()=> {
+        //     const swiper = new Swiper()
+        //     swiper.nextEl = '.next'
+        //         swiper.prevEl = '.prev'
+        // })
         const setControlledSwiper = (swiper) => {
             controllerSlide.value = swiper;
         };
 
         return {
             Controller,
+            Navigation,
             controllerSlide,
             setControlledSwiper,
-        }
+        };
     },
 
     data() {
@@ -168,7 +183,7 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(-${
                                   this.$refs.view.offsetHeight -
                                   document.scrollingElement.clientHeight
@@ -196,7 +211,7 @@ export default {
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 
@@ -244,7 +259,7 @@ export default {
         },
     },
     mounted() {
-        this.scroll();
+        setTimeout(this.scroll, 500);
     },
     unmounted() {
         this.remove();
@@ -307,8 +322,6 @@ export default {
             top: 50%;
             transform: translate(-50%, -50%);
         }
-
-
     }
 
     &_swiper-picture {
@@ -320,7 +333,6 @@ export default {
         position: relative;
         max-width: 479px;
         border-radius: 50px;
-
     }
 
     &_item {

@@ -36,9 +36,14 @@
                 </landing-title>
             </div>
 
-            <landing-button class="hero_button">
-                <template v-slot:text>{{ $t("button") }}</template>
-            </landing-button>
+            <a
+                class="hero_link"
+                href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+            >
+                <landing-button class="hero_button">
+                    <template v-slot:text>{{ $t("button") }}</template>
+                </landing-button>
+            </a>
         </div>
     </div>
 </template>
@@ -93,7 +98,7 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(-${
                                   this.$refs.view.offsetHeight -
                                   document.scrollingElement.clientHeight
@@ -121,7 +126,7 @@ export default {
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 
@@ -169,7 +174,7 @@ export default {
         },
     },
     mounted() {
-        this.scroll();
+        setTimeout(this.scroll, 500);
     },
     unmounted() {
         this.remove();
@@ -178,6 +183,10 @@ export default {
 </script>
 
 <style scoped>
+.hero_link {
+    max-width: 860px;
+    width: 100%;
+}
 .hero {
     max-width: 860px;
     margin: 0 auto;

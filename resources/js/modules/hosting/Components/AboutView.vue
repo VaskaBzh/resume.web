@@ -99,7 +99,7 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(-${
                                   this.$refs.view.offsetHeight -
                                   document.scrollingElement.clientHeight
@@ -127,7 +127,7 @@ export default {
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 
@@ -175,7 +175,7 @@ export default {
         },
     },
     mounted() {
-        this.scroll();
+        setTimeout(this.scroll, 500);
     },
     unmounted() {
         this.remove();

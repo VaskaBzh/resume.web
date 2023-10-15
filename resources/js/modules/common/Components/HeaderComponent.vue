@@ -1,11 +1,12 @@
 <template>
     <nav class="nav">
         <div class="nav__container">
-            <button-blue class="button-black">
+            <router-link to="login" class="button-black">
                 {{ $t("footer.button") }}
-            </button-blue>
-
-            <header-logo-icon class="nav_logo" />
+            </router-link>
+            <router-link to="/">
+                <header-logo-icon class="nav_logo" />
+            </router-link>
             <nav-links class="nav__navigation" />
             <select-language-land class="nav_lang" />
             <div class="burger-mobile">
