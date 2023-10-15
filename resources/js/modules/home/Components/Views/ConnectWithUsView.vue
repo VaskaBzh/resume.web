@@ -1,5 +1,5 @@
 <template>
-    <a href="https://t.me/allbtc_support" class="connect-withus" ref="view">
+    <a href="https://t.me/allbtc_support" target="_blank" class="connect-withus" ref="view">
         <div class="connect-withus__run">
             <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn" />
@@ -99,7 +99,7 @@ export default {
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 900 || window.innerWidth < 991
+                            window.innerHeight >= 1100 || window.innerWidth < 991
                                 ? `translateY(0px)`
                                 : `translateY(0px) scale(0.8)`;
 
@@ -145,7 +145,7 @@ export default {
         },
     },
     mounted() {
-        this.scroll();
+        setTimeout(this.scroll, 500);
 
         this.$refs.view.style.minHeight = `100vh`;
 

@@ -25,7 +25,7 @@
                     </a>
                 </template>
             </landing-wrap>
-            <a href="https://t.me/allbtc_support" class="about-view_btn">
+            <a href="https://t.me/allbtc_support" target="_blank" class="about-view_btn">
                 <landing-button>
                     <template v-slot:text
                         >{{ $t("who_we_are.card_private.button[1]") }}
@@ -145,7 +145,7 @@ export default {
                         !this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 900 || window.innerWidth < 991
+                            window.innerHeight >= 1100 || window.innerWidth < 991
                                 ? `translateY(-${
                                       this.$refs.view.offsetHeight -
                                       document.scrollingElement.clientHeight
@@ -178,7 +178,7 @@ export default {
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 900 || window.innerWidth < 991
+                            window.innerHeight >= 1100 || window.innerWidth < 991
                                 ? `translateY(0px)`
                                 : `translateY(0px) scale(0.8)`;
 
@@ -227,7 +227,7 @@ export default {
         },
     },
     mounted() {
-        this.scroll();
+        setTimeout(this.scroll, 500);
     },
     unmounted() {
         this.remove();

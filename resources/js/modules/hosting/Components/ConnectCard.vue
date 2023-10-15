@@ -28,7 +28,7 @@
                     </a>
                     <p class="or-text">{{ $t("connect.form.text") }}</p>
                     <div class="or-container">
-                        <a href="https://t.me/allbtc_support" class="or-button">
+                        <a href="https://t.me/allbtc_support" target="_blank" class="or-button">
                             {{ $t("connect.form.button[1]") }}
                         </a>
                         <!--                        <button class="or-button">-->
@@ -94,7 +94,7 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900 || window.innerWidth < 991
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(-${
                                   this.$refs.view.offsetHeight -
                                   document.scrollingElement.clientHeight
@@ -122,7 +122,7 @@ export default {
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900 || window.innerWidth < 991
+                        window.innerHeight >= 1100 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 
@@ -170,7 +170,7 @@ export default {
         },
     },
     mounted() {
-        this.scroll();
+        setTimeout(this.scroll, 500);
     },
     unmounted() {
         this.remove();

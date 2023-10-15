@@ -1,26 +1,30 @@
 <template>
     <div class="footer-content footer__section">
-        <p class="footer-title">{{ $t("footer.button") }}</p>
+        <router-link to="login" class="footer-title">{{ $t("footer.button") }}</router-link>
         <div class="footer-inf">
-            <ul class="footer-links">
-                <li v-for="link in links">{{ link.title }}</li>
-            </ul>
+            <nav-links />
             <div class="footer-location">
-                <p><a href="#">support@all-btc.com</a></p>
+                <p>
+                    <a href="mailto:support@all-btc.com" target="_blank"
+                        >support@all-btc.com</a
+                    >
+                </p>
                 <p>
                     BDubai Silicon Oasis, DDP, Building A2, <br />
                     Dubai, United Arab Eirates
                 </p>
                 <div class="connect-buttons">
                     <button class="connect-button">
-                        <a href="#">TELEGRAM</a>
+                        <a href="https://t.me/allbtc_support" target="_blank"
+                            >TELEGRAM</a
+                        >
                     </button>
-                    <button class="connect-button">
-                        <a href="#">instagram</a>
-                    </button>
-                    <button class="connect-button">
-                        <a href="#">youtube</a>
-                    </button>
+                    <!--                    <button class="connect-button">-->
+                    <!--                        <a href="#">instagram</a>-->
+                    <!--                    </button>-->
+                    <!--                    <button class="connect-button">-->
+                    <!--                        <a href="#">youtube</a>-->
+                    <!--                    </button>-->
                 </div>
             </div>
         </div>
@@ -48,8 +52,11 @@
 </template>
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import NavLinks from "@/modules/navs/Components/NavLinks.vue";
 
 export default {
+    components: { NavLinks },
+
     i18n: {
         sharedMessages: HostingMessage,
     },
@@ -115,7 +122,7 @@ export default {
     padding: clamp(50px, 10vw, 100px) clamp(16px, 5vw, 100px) 0;
 }
 
-@media (max-height: 1200px) {
+@media (max-height: 1100px) {
     .footer-content {
         transform: scale(1);
         margin-top: 0;
