@@ -119,7 +119,7 @@ class TwoFactorController extends Controller
             ],
             responses: [
                 new OA\Response(
-                    response: Response::HTTP_ACCEPTED,
+                    response: Response::HTTP_OK,
                     description: 'Two-factor authentication enabled successfully',
                     content: [
                         new OA\JsonContent(

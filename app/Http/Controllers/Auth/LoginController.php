@@ -82,17 +82,12 @@ class LoginController extends Controller
                                 type: "string",
                                 format: "date-time"
                             ),
-                            new OA\Property(
-                                property: "has_referral_role",
-                                description: "Indicates if the user has the referral role",
-                                type: "boolean",
-                            ),
                         ],
                         type: 'object'
                     )
                 ),
                 new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
+                    response: Response::HTTP_UNAUTHORIZED,
                     description: "Bad request",
                     content: new OA\JsonContent(
                         properties: [
@@ -133,7 +128,7 @@ class LoginController extends Controller
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
                 'error' => [__('auth.failed')]
-            ], Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_UNAUTHORIZED);
         }
 
         if (!$request->user->hasVerifiedEmail()) {
@@ -146,13 +141,18 @@ class LoginController extends Controller
             ->user
             ->tokens()
             ->delete();
-        $token = $request->user->createToken($request->user->name, ['*'], now()->addMinutes(config('sanctum.expiration')));
+
+        $token = $request
+            ->user
+            ->createToken($request->user->name,
+                ['*'],
+                now()->addMinutes(config('sanctum.expiration'))
+            );
 
         return new JsonResponse([
             'user' => new UserResource($request->user),
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
-            'has_referral_role' => $request->user->hasRole('referral')
         ]);
     }
 
@@ -207,7 +207,7 @@ class LoginController extends Controller
             tags: ['Auth'],
             responses: [
                 new OA\Response(
-                    response: Response::HTTP_ACCEPTED,
+                    response: Response::HTTP_OK,
                     description: 'Accept (Token expiration time decreased successfully)'
                 ),
                 new OA\Response(

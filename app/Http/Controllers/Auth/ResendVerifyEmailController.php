@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use Illuminate\Foundation\Auth\SendsPasswordResetEmails;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use OpenApi\Attributes as OA;
@@ -13,19 +14,22 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ResendVerifyEmailController extends Controller
 {
+    use SendsPasswordResetEmails;
+
     #[
         OA\Post(
-            path: '/email/verify/{user}',
+            path: '/email/verify/',
             summary: 'Resend email verification link',
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: new OA\JsonContent(
+                    type: 'object',
+                    example: [
+                        "email" => "user@example.com",
+                    ]
+                )
+            ),
             tags: ['Auth'],
-            parameters: [
-                new OA\Parameter(
-                    name: 'user',
-                    in: 'path',
-                    required: true,
-                    schema: new OA\Schema(type: 'integer')
-                ),
-            ],
             responses: [
                 new OA\Response(
                     response: Response::HTTP_OK,
@@ -60,22 +64,27 @@ class ResendVerifyEmailController extends Controller
             ]
         )
     ]
-    public function __invoke(User $user, Request $request): JsonResponse
+    public function __invoke(Request $request): JsonResponse
     {
+        $this->validateEmail($request->email);
+
+        $user = User::whereEmail($request->email)
+            ->firstOrFail();
+
         if ($user->hasVerifiedEmail()) {
             return new JsonResponse(['message' => __('auth.email.already_verify', [
-                    'value' => $user->email,
-                    'date' => $user->email_verified_at
-                ], Response::HTTP_BAD_REQUEST)
+                'value' => $user->email,
+                'date' => $user->email_verified_at
+            ], Response::HTTP_BAD_REQUEST)
             ]);
         }
 
         $user->sendEmailVerificationNotification();
 
         return new JsonResponse([
-            'message' => __('auth.email.verify', [
-                'value' => $user->email
-            ])]
+                'message' => __('auth.email.verify', [
+                    'value' => $user->email
+                ])]
         );
     }
 }

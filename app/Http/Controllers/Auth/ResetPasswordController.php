@@ -86,7 +86,7 @@ class ResetPasswordController extends Controller
             ]
         )
     ]
-    public function changePassword(ChangePasswordRequest $request, User $user)
+    public function resetPassword(ChangePasswordRequest $request, User $user)
     {
         if (!hash_equals(hash('sha256', $user->getEmailForVerification()), $request->hash)) {
 

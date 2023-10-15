@@ -40,6 +40,19 @@ trait Tokenable
             ],
             responses: [
                 new OA\Response(
+                    response: Response::HTTP_MOVED_PERMANENTLY,
+                    description: 'Token is valid, redirect to password reset page',
+                    headers: [
+                        new OA\Header(
+                            header: 'Location',
+                            description: 'Password reset URL',
+                            schema: new OA\Schema(
+                                type: 'string'
+                            )
+                        )
+                    ]
+                ),
+                new OA\Response(
                     response: Response::HTTP_BAD_REQUEST,
                     description: 'Bad request, token not exists or expired',
                     content: [
@@ -54,19 +67,6 @@ trait Tokenable
                         )
                     ]
                 ),
-                new OA\Response(
-                    response: Response::HTTP_MOVED_PERMANENTLY,
-                    description: 'Token is valid, redirect to password reset page',
-                    headers: [
-                        new OA\Header(
-                            header: 'Location',
-                            description: 'Password reset URL',
-                            schema: new OA\Schema(
-                                type: 'string'
-                            )
-                        )
-                    ]
-                )
             ]
         )
     ]
@@ -104,6 +104,8 @@ trait Tokenable
 
     public function deleteToken(User $user): void
     {
-        DB::table('password_resets')->where('email', $user->email)->delete();
+        DB::table('password_resets')
+            ->where('email', $user->email)
+            ->delete();
     }
 }

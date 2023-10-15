@@ -57,7 +57,7 @@ class PasswordChangeController
             ],
             responses: [
                 new OA\Response(
-                    response: Response::HTTP_ACCEPTED,
+                    response: Response::HTTP_OK,
                     description: 'Password changed successfully',
                     content: [
                         new OA\JsonContent(
@@ -90,32 +90,31 @@ class PasswordChangeController
                             type: 'object'
                         )
                     ]
-                )
+                ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Watcher not found'),
             ]
         )
     ]
     public function __invoke(Request $request, User $user): JsonResponse
     {
-        $validator = Validator::make($request->only('old_password', 'password', 'password_confirmation'),[
+        $validator = Validator::make($request->only('old_password', 'password', 'password_confirmation'), [
             'old_password' => 'required',
             'password' => 'required|confirmed'
         ]);
 
         $validator->validate();
 
-        if (!Hash::check($request->old_password, $user->password)) {
-            return new JsonResponse([
-                'error' => [__('auth.failed')]
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        if (Hash::check($request->old_password, $user->password)) {
 
-        if ($user->update(['password' => Hash::make($request->password)])) {
-
+            $user->update(['password' => Hash::make($request->password)]);
             Mail::to($user->email)->send(new PasswordChangeConfirmationMail);
 
-            return new JsonResponse(['message' => 'success'], Response::HTTP_ACCEPTED);
+            return new JsonResponse(['message' => 'success'], Response::HTTP_OK);
+
         }
 
-        return new JsonResponse(['message' => 'Something wend wrong'], Response::HTTP_UNPROCESSABLE_ENTITY);
+        return new JsonResponse([
+            'error' => [__('auth.failed')]
+        ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

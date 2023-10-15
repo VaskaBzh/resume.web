@@ -61,7 +61,7 @@
                     }
                 },
                 "responses": {
-                    "202": {
+                    "200": {
                         "description": "Password changed successfully",
                         "content": {
                             "application/json": {
@@ -95,6 +95,9 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Watcher not found"
                     }
                 },
                 "security": [
@@ -285,7 +288,7 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "Sub not found"
                     }
                 },
@@ -476,8 +479,74 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "Sub not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/referrals/generate/{user}": {
+            "post": {
+                "tags": [
+                    "Referral"
+                ],
+                "summary": "Generate a referral code for a user",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body for generating a referral code",
+                    "required": false,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "group_id": {
+                                        "type": "integer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Referral code generated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "referral_url": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error while generating a referral code"
                     }
                 },
                 "security": [
@@ -595,8 +664,8 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "404": {
+                        "description": "User or referral code not found"
                     }
                 },
                 "security": [
@@ -643,8 +712,8 @@
                             }
                         }
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
+                    "404": {
+                        "description": "User or referral code nof found"
                     }
                 },
                 "security": [
@@ -688,11 +757,8 @@
                             }
                         }
                     },
-                    "422": {
-                        "description": "Unprocessable Entity"
-                    },
-                    "500": {
-                        "description": "Internal Server Error"
+                    "404": {
+                        "description": "User or referral code not found"
                     }
                 },
                 "security": [
@@ -767,6 +833,85 @@
                 ]
             }
         },
+        "/subs/create/{user}": {
+            "post": {
+                "tags": [
+                    "Subaccount"
+                ],
+                "summary": "Create a sub",
+                "operationId": "f5b3d23a19f6c9bf26e53feb0ab8ff40",
+                "parameters": [
+                    {
+                        "name": "user",
+                        "in": "path",
+                        "description": "User's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body for creating a sub",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Sub created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error while creating a sub",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Error while creating a sub"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/subs/{user}": {
             "get": {
                 "tags": [
@@ -802,7 +947,7 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "User not found"
                     }
                 },
@@ -845,8 +990,8 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
-                        "description": "User not found"
+                    "404": {
+                        "description": "Sub not found"
                     }
                 },
                 "security": [
@@ -854,6 +999,67 @@
                         "bearerAuth": []
                     }
                 ]
+            }
+        },
+        "/wallets/create": {
+            "post": {
+                "tags": [
+                    "Wallets"
+                ],
+                "summary": "Create a wallet",
+                "operationId": "5222293cd78a435e191142bf2fe37eaf",
+                "requestBody": {
+                    "description": "Request body for creating a wallet",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "wallet_address",
+                                    "group_id",
+                                    "confirmation_code"
+                                ],
+                                "properties": {
+                                    "wallet_address": {
+                                        "type": "string",
+                                        "maxLength": 191,
+                                        "minLength": 20
+                                    },
+                                    "group_id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 3
+                                    },
+                                    "confirmation_code": {
+                                        "type": "string",
+                                        "maxLength": 5,
+                                        "minLength": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Wallet created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
             }
         },
         "/wallets/{sub}": {
@@ -890,8 +1096,117 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "Sub not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/watchers/create/{sub}": {
+            "post": {
+                "tags": [
+                    "Watcher Links"
+                ],
+                "summary": "Create a watcher link",
+                "operationId": "920a9673e63bb597d00e3c74ad1b4d72",
+                "parameters": [
+                    {
+                        "name": "sub",
+                        "in": "path",
+                        "description": "Sub's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body for creating a watcher link",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "allowed_routes"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 16
+                                    },
+                                    "allowed_routes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Watcher link created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WatcherLinkResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Sub account not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/watchers/delete/{watcher}": {
+            "delete": {
+                "tags": [
+                    "Watcher Links"
+                ],
+                "summary": "Delete a watcher link",
+                "operationId": "f3c94d8e26cc829df5265404c0f6c27d",
+                "parameters": [
+                    {
+                        "name": "watcher",
+                        "in": "path",
+                        "description": "Watcher Link's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Watcher link deleted successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Watcher link not found"
                     }
                 },
                 "security": [
@@ -906,7 +1221,7 @@
                 "tags": [
                     "Watcher Links"
                 ],
-                "summary": "Get watcher links for a user's sub",
+                "summary": "Get list of watcher links for a user's sub",
                 "parameters": [
                     {
                         "name": "user",
@@ -944,8 +1259,117 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "User or sub not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/watchers/{watcher}": {
+            "get": {
+                "tags": [
+                    "Watcher Links"
+                ],
+                "summary": "Get specified watcher link for a user's sub",
+                "operationId": "db44ebe104398e20e7cb86f7476450e7",
+                "parameters": [
+                    {
+                        "name": "watcher",
+                        "in": "path",
+                        "description": "Watcher's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/WatcherLinkResource"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Watcher not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/watchers/update/{watcher}": {
+            "put": {
+                "tags": [
+                    "Watcher Links"
+                ],
+                "summary": "Update a watcher link",
+                "operationId": "527fba126cefa15b4303c4aa6804e4b0",
+                "parameters": [
+                    {
+                        "name": "watcher",
+                        "in": "path",
+                        "description": "Watcher Link's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body for updating a watcher link",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "allowed_routes"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 16
+                                    },
+                                    "allowed_routes": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Watcher link updated successfully"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Watcher link not found"
                     }
                 },
                 "security": [
@@ -1080,7 +1504,7 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "Sub not found"
                     }
                 },
@@ -1192,7 +1616,7 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
+                    "404": {
                         "description": "Worker not found"
                     }
                 },
@@ -1262,7 +1686,7 @@
                 "tags": [
                     "Auth"
                 ],
-                "summary": "Send password reset link by email",
+                "summary": "Send password reset link to user email address",
                 "operationId": "dd7d00be3e3a7d81bfacaef20b5cbb1f",
                 "requestBody": {
                     "required": true,
@@ -1358,10 +1782,6 @@
                                             "description": "Token expiration date",
                                             "type": "string",
                                             "format": "date-time"
-                                        },
-                                        "has_referral_role": {
-                                            "description": "Indicates if the user has the referral role",
-                                            "type": "boolean"
                                         }
                                     },
                                     "type": "object"
@@ -1369,7 +1789,7 @@
                             }
                         }
                     },
-                    "400": {
+                    "401": {
                         "description": "Bad request",
                         "content": {
                             "application/json": {
@@ -1461,7 +1881,7 @@
                 "summary": "Decrease the expiration time of the current token",
                 "operationId": "d890f17da1689552b7634a281537ab19",
                 "responses": {
-                    "202": {
+                    "200": {
                         "description": "Accept (Token expiration time decreased successfully)"
                     },
                     "401": {
@@ -1488,23 +1908,112 @@
                 ]
             }
         },
-        "/email/verify/{user}": {
+        "/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register a user",
+                "operationId": "6cb93c5db517a3e6e369c44ede7f22fd",
+                "requestBody": {
+                    "description": "Request body for user registration",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "email",
+                                    "password",
+                                    "password_confirmation"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email"
+                                    },
+                                    "password": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "minLength": 10
+                                    },
+                                    "password_confirmation": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "minLength": 10
+                                    },
+                                    "referral_code": {
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "User registered successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "user": {
+                                            "$ref": "#/components/schemas/UserResource"
+                                        },
+                                        "token": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Error while registering user",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/email/verify/": {
             "post": {
                 "tags": [
                     "Auth"
                 ],
                 "summary": "Resend email verification link",
-                "operationId": "1f169d9c284bc9666a818c9203a7d52e",
-                "parameters": [
-                    {
-                        "name": "user",
-                        "in": "path",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
+                "operationId": "3ac85fae764e9aaf484e039031c21345",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object"
+                            },
+                            "example": {
+                                "email": "user@example.com"
+                            }
                         }
                     }
-                ],
+                },
                 "responses": {
                     "200": {
                         "description": "Email verification link sent successfully",
@@ -1547,7 +2056,7 @@
                     "Auth"
                 ],
                 "summary": "Restore user password",
-                "operationId": "32f1d997410a360dd6c53797b3bf0453",
+                "operationId": "bdc371d3a4332cbf3ca2dd2eb39dc483",
                 "parameters": [
                     {
                         "name": "user",
@@ -1713,7 +2222,7 @@
                     }
                 },
                 "responses": {
-                    "202": {
+                    "200": {
                         "description": "Two-factor authentication enabled successfully",
                         "content": {
                             "application/json": {
@@ -1920,6 +2429,17 @@
                     }
                 ],
                 "responses": {
+                    "301": {
+                        "description": "Token is valid, redirect to password reset page",
+                        "headers": {
+                            "Location": {
+                                "description": "Password reset URL",
+                                "schema": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    },
                     "400": {
                         "description": "Bad request, token not exists or expired",
                         "content": {
@@ -1932,17 +2452,6 @@
                                         }
                                     },
                                     "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "301": {
-                        "description": "Token is valid, redirect to password reset page",
-                        "headers": {
-                            "Location": {
-                                "description": "Password reset URL",
-                                "schema": {
-                                    "type": "string"
                                 }
                             }
                         }
@@ -2191,11 +2700,8 @@
                     "referral_code": {
                         "type": "string"
                     },
-                    "roles": {
-                        "type": "array",
-                        "items": {
-                            "$ref": "#/components/schemas/Role"
-                        }
+                    "has_referral_role": {
+                        "type": "boolean"
                     }
                 },
                 "type": "object"
@@ -2272,6 +2778,14 @@
                     }
                 },
                 "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "sanctum": {
+                "type": "apiKey",
+                "description": "Enter token in format (Bearer <token>)",
+                "name": "Authorization",
+                "in": "header"
             }
         }
     }

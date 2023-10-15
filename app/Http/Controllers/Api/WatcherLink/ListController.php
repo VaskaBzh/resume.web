@@ -16,7 +16,7 @@ use Symfony\Component\HttpFoundation\Response;
 #[
     OA\Get(
         path: '/watchers/{user}/{sub}',
-        summary: "Get watcher links for a user's sub",
+        summary: "Get list of watcher links for a user's sub",
         security: [['bearerAuth' => []]],
         tags: ['Watcher Links'],
         parameters: [
@@ -48,18 +48,11 @@ use Symfony\Component\HttpFoundation\Response;
                     )
                 ],
             ),
-            new OA\Response(
-                response: Response::HTTP_UNAUTHORIZED,
-                description: 'Unauthorized',
-            ),
-            new OA\Response(
-                response: Response::HTTP_UNPROCESSABLE_ENTITY,
-                description: 'User or sub not found',
-            ),
+            new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized',),
+            new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User or sub not found',),
         ],
     )
 ]
-
 class ListController extends Controller
 {
     public function __invoke(User $user, Sub $sub): ResourceCollection

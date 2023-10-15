@@ -15,25 +15,25 @@ Auth::routes(['logout' => false, 'reset' => false, 'login' => false]);
 
 Route::post('/login', [LoginController::class, 'login'])
     ->middleware('two-factor');
+
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth:sanctum')
     ->name('logout');
 
-Route::group(['middleware' => ['signed', 'throttle:6,1']], function () {
-    Route::get('/verify/{id}/{hash}', VerificationController::class)
-        ->name('verification.verify');
-});
+Route::get('/verify/{id}/{hash}', VerificationController::class)
+    ->name('verification.verify')
+    ->middleware('throttle:6,1')
+    ->middleware('signed');
 
-Route::group(['middleware' => 'throttle:3,1'], function () {
-    Route::post('/email/verify/{user}', ResendVerifyEmailController::class)
-        ->name('resend-verify-email');
-});
+Route::post('/email/verify', ResendVerifyEmailController::class)
+    ->name('resend-verify-email')
+    ->middleware('throttle:3,1');
 
 Route::group([
     'prefix' => 'password',
     'middleware' => 'throttle:6,1'
 ], function () {
-    Route::put('/restore/{user}', [ResetPasswordController::class, 'changePassword']);
+    Route::put('/restore/{user}', [ResetPasswordController::class, 'resetPassword']);
     Route::post('/forgot', [ForgotPasswordController::class, 'sendLink']);
     Route::get('/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordReset'])
         ->middleware('signed')

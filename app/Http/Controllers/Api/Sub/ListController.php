@@ -40,14 +40,8 @@ class ListController extends Controller
                         )
                     ],
                 ),
-                new OA\Response(
-                    response: 401,
-                    description: 'Unauthorized',
-                ),
-                new OA\Response(
-                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
-                    description: 'User not found',
-                ),
+                new OA\Response(response: 401, description: 'Unauthorized'),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User not found'),
             ],
         )
     ]

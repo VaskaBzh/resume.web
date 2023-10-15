@@ -27,7 +27,7 @@ class ForgotPasswordController extends Controller
     #[
         OA\Post(
             path: '/password/forgot',
-            summary: 'Send password reset link by email',
+            summary: 'Send password reset link to user email address',
             requestBody: new OA\RequestBody(
                 required: true,
                 content: [

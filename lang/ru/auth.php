@@ -17,7 +17,7 @@ return [
     'password' => 'Пароль неверный',
     'throttle' => 'Слишком много запросов на вход. Пожалуйста, повторите попытку через :seconds секунд',
     'email.verify' => 'Сообщение подверждения отправлено на почту :value',
-    'email.already_verify' => 'Ваша почта :value была ранее подверждена :date',
+    'email.already_verify' => 'Ваша почта :value подверждена :date',
     'email.verify.delay' => 'Выша почта :value подверждена, время ожидания для полного доступа в часах (:time)',
     'email.not.verified' => 'Ваша почта :email не подтверждена'
 ];

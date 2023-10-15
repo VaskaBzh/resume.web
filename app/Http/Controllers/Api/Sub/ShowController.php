@@ -41,14 +41,8 @@ class ShowController extends Controller
                         )
                     ],
                 ),
-                new OA\Response(
-                    response: Response::HTTP_UNAUTHORIZED,
-                    description: 'Unauthorized',
-                ),
-                new OA\Response(
-                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
-                    description: 'User not found',
-                ),
+                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Sub not found'),
             ],
         )
     ]

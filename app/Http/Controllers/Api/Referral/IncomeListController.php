@@ -78,8 +78,8 @@ class IncomeListController extends Controller
                         ),
                     ]
                 ),
-                new OA\Response(response: 401, description: "Unauthorized"),
-                new OA\Response(response: 422, description: "Unprocessable Entity"),
+                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: "Unauthorized"),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: "User or referral code not found"),
             ]
         )
     ]
@@ -88,7 +88,7 @@ class IncomeListController extends Controller
         if (!$user?->referral_code) {
             return new JsonResponse([
                 'error' => __('actions.referral.exists')
-            ], Response::HTTP_UNPROCESSABLE_ENTITY);
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return ReferralService::getReferralIncomes($user->subs()->first()->group_id, 15);

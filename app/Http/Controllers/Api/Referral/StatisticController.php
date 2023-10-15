@@ -46,21 +46,14 @@ class StatisticController extends Controller
                         ),
                     ],
                 ),
-                new OA\Response(
-                    response: 422,
-                    description: 'Unprocessable Entity',
-                ),
-                new OA\Response(
-                    response: 500,
-                    description: 'Internal Server Error',
-                ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User or referral code not found'),
             ],
         )
     ]
     public function __invoke(User $user)
     {
         if (!$user?->referral_code) {
-            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_NOT_FOUND);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
@@ -68,7 +61,7 @@ class StatisticController extends Controller
         $owner = Sub::find($referralCodeData['group_id']);
 
         if (!$owner) {
-            return new JsonResponse(['error' => __('actions.referral.exists')], Response::HTTP_UNPROCESSABLE_ENTITY);
+            return new JsonResponse(['error' => __('actions.referral.exists')], Response::HTTP_NOT_FOUND);
         }
 
         $statistic = ReferralService::getOwnerStatistic(
