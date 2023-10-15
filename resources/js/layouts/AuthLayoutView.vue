@@ -151,6 +151,7 @@ export default {
         align-items: center;
         justify-content: space-between;
         height: 100%;
+        min-height: 100vh;
         padding: 56px 0 100px;
         gap: 100px;
         position: relative;
