@@ -136,13 +136,6 @@ export default {
     background: var(--gray-4100, #0d0d0d);
 }
 
-@media (max-height: 1200px) {
-    .footer-content::before {
-        transform: scale(1);
-        height: 100%;
-    }
-}
-
 .all-content::before {
     content: "";
     position: absolute;

@@ -1,5 +1,5 @@
 <template>
-    <div class="connect-withus" ref="view">
+    <a href="https://t.me/allbtc_support" class="connect-withus" ref="view">
         <div class="connect-withus__run">
             <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn" />
@@ -32,7 +32,7 @@
             <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
             <button-blue class="connect-withus_btn" />
         </div>
-    </div>
+    </a>
 </template>
 
 <script>
@@ -99,9 +99,9 @@ export default {
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                        window.innerHeight >= 900
-                            ? `translateY(0px)`
-                            : `translateY(0px) scale(0.8)`;
+                            window.innerHeight >= 900 || window.innerWidth < 991
+                                ? `translateY(0px)`
+                                : `translateY(0px) scale(0.8)`;
 
                         this.validScroll = false;
                     } else {
@@ -171,6 +171,8 @@ export default {
     justify-content: center;
     animation: scroll 7s linear 1s infinite;
     transition: all 0.5s ease 0s;
+    outline: none;
+    border: none;
 
     @keyframes scroll {
         0% {

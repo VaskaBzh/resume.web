@@ -6,24 +6,34 @@
                 <p class="card-title">{{ $t("connect.title") }}</p>
                 <p class="card-text">{{ $t("connect.text") }}</p>
             </div>
+            <!--            @submit.prevent="sendMessage"-->
             <form class="connect-form">
                 <input
                     class="connect-input"
                     :placeholder="$t('connect.form.placeholder')"
+                    v-model="form.message"
                 />
-                <input class="connect-input" placeholder="+7" />
+                <input
+                    class="connect-input"
+                    placeholder="+7"
+                    v-model="form.contacts"
+                />
                 <div class="buttons-connect-container">
-                    <button class="connect-order">
+                    <a
+                        href="https://t.me/allbtc_support"
+                        class="connect-order"
+                        type="submit"
+                    >
                         {{ $t("connect.form.button[0]") }}
-                    </button>
+                    </a>
                     <p class="or-text">{{ $t("connect.form.text") }}</p>
                     <div class="or-container">
-                        <button class="or-button">
+                        <a href="https://t.me/allbtc_support" class="or-button">
                             {{ $t("connect.form.button[1]") }}
-                        </button>
-                        <button class="or-button">
-                            {{ $t("connect.form.button[2]") }}
-                        </button>
+                        </a>
+                        <!--                        <button class="or-button">-->
+                        <!--                            {{ $t("connect.form.button[2]") }}-->
+                        <!--                        </button>-->
                     </div>
                 </div>
             </form>
@@ -33,6 +43,7 @@
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 import LandingHeadline from "../../common/Components/UI/LandingHeadline.vue";
+import { MainApi } from "@/api/api";
 
 export default {
     components: { LandingHeadline },
@@ -44,12 +55,26 @@ export default {
             validScroll: false,
             startY: null,
             touchY: null,
+            form: {
+                message: "",
+                contacts: "+7",
+            },
         };
     },
     props: {
         start: Boolean,
     },
     methods: {
+        async sendMessage() {
+            try {
+                await MainApi.put("/send_message", this.form);
+
+                this.form.message = "";
+                this.form.contacts = "";
+            } catch (e) {
+                console.error("Error with: " + e);
+            }
+        },
         handleTouchStart(e) {
             this.startY = e.touches[0].clientY;
         },
@@ -69,7 +94,7 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 900 || window.innerWidth < 991
                             ? `translateY(-${
                                   this.$refs.view.offsetHeight -
                                   document.scrollingElement.clientHeight
@@ -97,7 +122,7 @@ export default {
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 900 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 
@@ -237,6 +262,9 @@ export default {
     text-transform: uppercase;
     height: 48px;
     margin-top: 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .or-text {
@@ -270,7 +298,7 @@ export default {
     font-weight: 400;
     line-height: 120%; /* 16.8px */
     text-transform: uppercase;
-    width: 195px;
+    width: 100%;
 }
 
 @media (min-width: 768px) {

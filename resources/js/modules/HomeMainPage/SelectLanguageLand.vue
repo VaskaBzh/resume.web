@@ -4,21 +4,15 @@
     </div>
 </template>
 
-
 <script>
-import {SettingsMessage} from "../settings/lang/SettingsMessage";
-
 export default {
-
     methods: {
         selectMassage() {
-            const languageValue = Object.keys(SettingsMessage)
-            this.language = languageValue.filter(item => item !== this.language).join()
-        }
-    }
-}
+            this.$i18n.locale = this.$i18n.locale === "en" ? "ru" : "en";
+        },
+    },
+};
 </script>
-
 
 <style scoped lang="scss">
 .select-language {
@@ -30,8 +24,8 @@ export default {
     align-items: center;
     color: white;
     border-radius: 40px;
-    border: 0.5px solid rgba(192, 228, 255, 0.60);
-    background: rgba(13, 13, 13, 0.70);
+    border: 0.5px solid rgba(192, 228, 255, 0.6);
+    background: rgba(13, 13, 13, 0.7);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     text-transform: uppercase;

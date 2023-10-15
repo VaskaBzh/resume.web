@@ -25,11 +25,13 @@
                     </a>
                 </template>
             </landing-wrap>
-            <landing-button class="about-view_btn">
-                <template v-slot:text
-                    >{{ $t("who_we_are.card_private.button[1]") }}
-                </template>
-            </landing-button>
+            <a href="https://t.me/allbtc_support" class="about-view_btn">
+                <landing-button>
+                    <template v-slot:text
+                        >{{ $t("who_we_are.card_private.button[1]") }}
+                    </template>
+                </landing-button></a
+            >
         </div>
     </div>
 </template>
@@ -143,15 +145,15 @@ export default {
                         !this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 900
+                            window.innerHeight >= 900 || window.innerWidth < 991
                                 ? `translateY(-${
-                                    this.$refs.view.offsetHeight -
-                                    document.scrollingElement.clientHeight
-                                }px)`
+                                      this.$refs.view.offsetHeight -
+                                      document.scrollingElement.clientHeight
+                                  }px)`
                                 : `translateY(-${
-                                    this.$refs.view.offsetHeight -
-                                    document.scrollingElement.clientHeight
-                                }px) scale(0.8)`;
+                                      this.$refs.view.offsetHeight -
+                                      document.scrollingElement.clientHeight
+                                  }px) scale(0.8)`;
 
                         this.validScroll = true;
                     } else {
@@ -176,7 +178,7 @@ export default {
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 900
+                            window.innerHeight >= 900 || window.innerWidth < 991
                                 ? `translateY(0px)`
                                 : `translateY(0px) scale(0.8)`;
 
@@ -234,6 +236,12 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.about-view_btn {
+    max-width: 860px;
+    width: 100%;
+    outline: none;
+    border: none;
+}
 .about {
     width: 100%;
 

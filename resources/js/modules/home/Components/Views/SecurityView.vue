@@ -92,7 +92,7 @@ export default {
                         document.scrollingElement.clientHeight >
                         20 && !this.validScroll) {
                         this.$refs.view.style.transform =
-                            window.innerHeight >= 900
+                            window.innerHeight >= 900 || window.innerWidth < 991
                                 ? `translateY(-${
                                     this.$refs.view.offsetHeight -
                                     document.scrollingElement.clientHeight
@@ -128,7 +128,7 @@ export default {
                         document.scrollingElement.clientHeight >
                         20 && this.validScroll) {
                         this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 900 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 

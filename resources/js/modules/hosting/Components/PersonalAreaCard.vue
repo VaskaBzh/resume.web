@@ -549,7 +549,11 @@
                 class="img-monitoring img-system mobile"
             />
         </div>
-        <p class="get-consultation">{{ $t("personal_account.button") }}</p>
+        <a
+            href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+            class="get-consultation"
+            >{{ $t("personal_account.button") }}</a
+        >
     </div>
 </template>
 <script>
@@ -599,7 +603,7 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 900 || window.innerWidth < 991
                             ? `translateY(-${
                                   this.$refs.view.offsetHeight -
                                   document.scrollingElement.clientHeight
@@ -627,7 +631,7 @@ export default {
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform =
-                        window.innerHeight >= 900
+                        window.innerHeight >= 900 || window.innerWidth < 991
                             ? `translateY(0px)`
                             : `translateY(0px) scale(0.8)`;
 
