@@ -7,10 +7,11 @@
             <div class="mobile-view__wrapper">
                 <Swiper
                     class="mobile-view_inner"
-                    :modules="[Controller]"
+                    :modules="[Controller, Navigation]"
                     :controller="{ control: controllerSlide }"
                     :set-wrapper-size="true"
                     :loop="true"
+                    :navigation="{nextEl: '.next', prevEl: '.prev'}"
                     :space-between="0"
                 >
                     <swiper-slide class="mobile-view_item">
@@ -41,7 +42,6 @@
                     <div class="mobile-view_prev_next">
                         <button-blue
                             class="mobile-view_prev prev"
-                            @click="swiper.slideNext()"
                         ></button-blue>
                         <button-blue
                             class="mobile-view_prev next"
@@ -57,10 +57,8 @@
                     <Swiper
                         class="mobile-view_swiper-picture"
                         :loop="true"
-                        :modules="[Controller]"
+                        :modules="[Controller, Navigation]"
                         @swiper="setControlledSwiper"
-                        :set-wrapper-size="true"
-                        :space-between="0"
                     >
                         <swiper-slide class="mobile-view_image active">
                             <img
@@ -118,9 +116,9 @@ import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Controller } from "swiper";
+import { Controller,Navigation } from "swiper";
 import { ref } from "vue";
-import { useSwiper } from "swiper/vue";
+import {onMounted} from "vue";
 
 export default {
     name: "AppMobileView",
@@ -137,15 +135,20 @@ export default {
     },
 
     setup() {
-        const swiper = useSwiper();
         const controllerSlide = ref(null);
+
+        // onMounted(()=> {
+        //     const swiper = new Swiper()
+        //     swiper.nextEl = '.next'
+        //         swiper.prevEl = '.prev'
+        // })
         const setControlledSwiper = (swiper) => {
             controllerSlide.value = swiper;
         };
 
         return {
-            swiper,
             Controller,
+            Navigation,
             controllerSlide,
             setControlledSwiper,
         };
