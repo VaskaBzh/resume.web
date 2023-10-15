@@ -31,45 +31,31 @@
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2019</h3>
                     <p class="history-pool__item-info-discription">
-                        Создаем площадки под размещение дата-центов, хостингов и
-                        майнинг-отелей. Сотрудничаем с подрядчиками в РФ и СНГ.
-                        Создаем зоны для майнинга «под ключ»: от аренды до
-                        введения фермы в эксплуатацию.
+                        {{ $t("history_pool.texts[0]") }}
                     </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2020</h3>
                     <p class="history-pool__item-info-discription">
-                        Произошел халвинг, сложность майнинга выросла. Появилась
-                        команда разработчиков. Наша цель – создание актуальных
-                        решений для оптимизации работы промышленных майнеров и
-                        дата-центров.
+                        {{ $t("history_pool.texts[1]") }}
                     </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2021</h3>
                     <p class="history-pool__item-info-discription">
-                        Биткоин значительно подорожал. Мы кратно расширили штат
-                        и сформировали систему мониторинга для дата-центров. В
-                        этом же году заключили первые договоры на кастомную
-                        интеграцию.
+                        {{ $t("history_pool.texts[2]") }}
                     </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2022</h3>
                     <p class="history-pool__item-info-discription">
-                        Официально зарегистрировали пул для майнинга
-                        криптовалют. К системе подключились первые дата-центры.
-                        На 50% увеличили их прибыль за каждый потраченный
-                        киловатт энергии.
+                        {{ $t("history_pool.texts[3]") }}
                     </p>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2023</h3>
                     <p class="history-pool__item-info-discription">
-                        Перестали работать только лишь как закрытый пул для
-                        дата-центров, вышли на международный рынок. К концу 2023
-                        года у нас амбициозные планы.
+                        {{ $t("history_pool.texts[4]") }}
                     </p>
                 </div>
             </swiper-slide>
@@ -84,6 +70,7 @@ import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { FreeMode } from "swiper";
 import "swiper/css";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "HistoryPoolView",
@@ -91,6 +78,9 @@ export default {
         LandingHeadline,
         Swiper,
         SwiperSlide,
+    },
+    i18n: {
+        sharedMessages: HomeMessage,
     },
     setup() {
         return {
@@ -121,9 +111,9 @@ export default {
                 setTimeout(this.scroll, 300);
                 if (!this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {

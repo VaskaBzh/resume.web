@@ -1,5 +1,14 @@
 export const HomeMessage = {
     en: {
+        history_pool: {
+            texts: [
+                "We create sites for data centers, hosting, and mining hotels placement. We collaborate with contractors in Russia and the CIS. We create turnkey mining zones: from rent to commissioning the farm.",
+                "Halving occurred, mining difficulty increased. A team of developers appeared. Our goal is to create relevant solutions for the optimization of industrial miners and data centers.",
+                "Bitcoin has significantly increased in price. We expanded our staff manifold and established a monitoring system for data centers. In the same year, we signed the first custom integration contracts.",
+                "Officially registered a cryptocurrency mining pool. The first data centers connected to the system. We increased their profit by 50% for every kilowatt-hour spent.",
+                "We ceased to operate only as a closed pool for data centers and entered the international market. By the end of 2023, we have ambitious plans.",
+            ],
+        },
         title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
         text: "We use advanced technologies for efficient Bitcoin mining. Maximum transparency of mining in a couple of clicks.",
         button: "try demo version",
@@ -113,7 +122,6 @@ export const HomeMessage = {
                 "Excellent monitoring and effective management",
                 "Awesome monitoring and effective management",
             ],
-
         },
         payments: {
             button: "payouts",
@@ -151,6 +159,15 @@ export const HomeMessage = {
         },
     },
     ru: {
+        history_pool: {
+            texts: [
+                "Создаем площадки под размещение дата-центов, хостингов и майнинг-отелей. Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до введения фермы в эксплуатацию.",
+                "Произошел халвинг, сложность майнинга выросла. Появилась команда разработчиков. Наша цель – создание актуальных решений для оптимизации работы промышленных майнеров и дата-центров.",
+                "Биткоин значительно подорожал. Мы кратно расширили штат и сформировали систему мониторинга для дата-центров. В этом же году заключили первые договоры на кастомную интеграцию.",
+                "Официально зарегистрировали пул для майнинга криптовалют. К системе подключились первые дата-центры. На 50% увеличили их прибыль за каждый потраченный киловатт энергии.",
+                "Перестали работать только лишь как закрытый пул для дата-центров, вышли на международный рынок. К концу 2023 года у нас амбициозные планы.",
+            ],
+        },
         title: ["Экспер", "тный", "подход", "к майн", "ингу", "Bitcoin "],
         text: "Используем передовые технологии для эффективного майнинга биткоина. Максимальная прозрачность майнинга в пару кликов. ",
         button: "попробовать демо кабинет",
