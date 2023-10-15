@@ -682,8 +682,6 @@ export default {
         },
     },
     mounted() {
-        this.$i18n.locale = "ru";
-        console.log(this.$i18n.locale);
         this.scroll();
     },
 };

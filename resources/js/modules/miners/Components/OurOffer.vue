@@ -14,12 +14,16 @@ export default {
     i18n: {
         sharedMessages: MinersMessage,
     },
-    data() {
-        return {
-            ourOffer: {
+    computed: {
+        ourOffer() {
+            return {
                 title: this.$t("offer.title"),
                 text: this.$t("offer.text"),
-            },
+            };
+        },
+    },
+    data() {
+        return {
             validScroll: false,
             startY: null,
             touchY: null,

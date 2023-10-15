@@ -36,27 +36,45 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
+    computed: {
+        facts() {
+            return [
+                {
+                    num: ">3",
+                    grayText: this.$t("who_are_we.column.gray_text[0]"),
+                    mainText: [
+                        this.$t("who_are_we.column.main_text[0]"),
+                        this.$t("who_are_we.title[1]"),
+                    ],
+                },
+                {
+                    num: "4%",
+                    grayText: "",
+                    mainText: [
+                        this.$t("who_are_we.title[2]"),
+                        this.$t("who_are_we.title[3]"),
+                    ],
+                },
+                {
+                    num: ">1,7",
+                    grayText: "EH /s",
+                    mainText: [
+                        this.$t("who_are_we.title[4]"),
+                        this.$t("who_are_we.title[5]"),
+                    ],
+                },
+            ];
+        },
+        title() {
+            return [
+                this.$t("who_are_we.title[0]"),
+                this.$t("who_are_we.title[1]"),
+                this.$t("who_are_we.title[2]"),
+            ];
+        },
+    },
     data() {
         return {
-            facts: [
-                {
-                    num: '>3',
-                    grayText: this.$t("who_are_we.column.gray_text[0]"),
-                    mainText: [this.$t("who_are_we.column.main_text[0]"), this.$t("who_are_we.title[1]")],
-                },
-                {
-                    num: '4%',
-                    grayText: '',
-                    mainText: [this.$t("who_are_we.title[2]"), this.$t("who_are_we.title[3]")],
-                },
-                {
-                    num: '>1,7',
-                    grayText: 'EH /s',
-                    mainText: [this.$t("who_are_we.title[4]"), this.$t("who_are_we.title[5]")],
-                },
-            ],
-            title: [this.$t("who_are_we.title[0]"), this.$t("who_are_we.title[1]"), this.$t("who_are_we.title[2]")],
-
             validScroll: false,
             startY: null,
             touchY: null,
@@ -80,14 +98,14 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -102,8 +120,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;

@@ -36,9 +36,9 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
-    data() {
-        return {
-            facts: [
+    computed: {
+        facts() {
+            return [
                 {
                     num: ">3",
                     grayText: this.$t("who_are_we.column.gray_text[0]"),
@@ -63,14 +63,20 @@ export default {
                         this.$t("who_are_we.column.main_text[5]"),
                     ],
                 },
-            ],
-            title: [
+            ];
+        },
+        title() {
+            return [
                 this.$t("who_are_we.title[0]"),
                 this.$t("who_are_we.title[1]"),
                 this.$t("who_are_we.title[2]"),
                 this.$t("who_are_we.title[3]"),
                 this.$t("who_are_we.title[4]"),
-            ],
+            ];
+        },
+    },
+    data() {
+        return {
             validScroll: false,
             startY: null,
             touchY: null,

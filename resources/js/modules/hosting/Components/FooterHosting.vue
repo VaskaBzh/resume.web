@@ -60,36 +60,6 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
-    data() {
-        return {
-            links: [
-                {
-                    title: this.$t("footer.list[0]"),
-                    url: "",
-                },
-                {
-                    title: this.$t("footer.list[1]"),
-                    url: "",
-                },
-                {
-                    title: this.$t("footer.list[2]"),
-                    url: "",
-                },
-                // {
-                //   title: 'FAQ',
-                //   url: '',
-                // },
-                // {
-                //   title: 'Новости',
-                //   url: '',
-                // },
-                // {
-                //   title: 'Контакты',
-                //   url: '',
-                // },
-            ],
-        };
-    },
 };
 </script>
 <style scoped>

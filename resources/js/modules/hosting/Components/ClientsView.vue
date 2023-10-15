@@ -8,18 +8,22 @@
 </template>
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-import {scaleAnimation} from "@/modules/home/services/AnimationService";
+import { scaleAnimation } from "@/modules/home/services/AnimationService";
 
 export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
-    data() {
-        return {
-            inf: {
+    computed: {
+        inf() {
+            return {
                 title: this.$t("for_clients.button"),
                 text: this.$t("for_clients.text"),
-            },
+            };
+        },
+    },
+    data() {
+        return {
             validScroll: false,
             startY: null,
             touchY: null,
@@ -48,9 +52,9 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {

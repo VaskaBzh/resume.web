@@ -34,9 +34,9 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
-    data() {
-        return {
-            offers: [
+    computed: {
+        offers() {
+            return [
                 {
                     percent: this.$t("offer.cards.title[0]"),
                     title: this.$t("offer.cards.title[1]"),
@@ -47,7 +47,11 @@ export default {
                     title: this.$t("offer.cards.title[3]"),
                     text: this.$t("offer.cards.text[1]"),
                 },
-            ],
+            ];
+        },
+    },
+    data() {
+        return {
             validScroll: false,
             startY: null,
             touchY: null,

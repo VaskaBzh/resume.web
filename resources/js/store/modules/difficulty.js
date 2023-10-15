@@ -49,6 +49,7 @@ export default {
     mutations: {
         updateInfo(state, data) {
             Vue.set(state.convertInfo, data.key, data.item);
+            console.log(state.convertInfo)
         },
         updateHistoryDiff(state, data) {
             let hist = data.reverse();

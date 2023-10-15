@@ -14,12 +14,16 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
-    data() {
-        return {
-            inf: {
+    computed: {
+        inf() {
+            return {
                 title: this.$t("pluse.button"),
                 text: this.$t("pluse.text"),
-            },
+            };
+        },
+    },
+    data() {
+        return {
             validScroll: false,
             startY: null,
             touchY: null,

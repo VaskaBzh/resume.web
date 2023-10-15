@@ -11,30 +11,29 @@
 </template>
 
 <script>
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import { NavMessages } from "@/modules/navs/lang/NavMessages";
 
 export default {
     i18n: {
-        sharedMessages: HomeMessage,
+        sharedMessages: NavMessages,
     },
-    data() {
-        return {
-            link: [
+    computed: {
+        link() {
+            return [
                 {
-                    name: this.$t("footer.list[0]"),
+                    name: this.$t("nav_links.home"),
                     url: "/",
                 },
                 {
-                    name: this.$t("footer.list[1]"),
+                    name: this.$t("nav_links.hosting"),
                     url: "/hosting",
                 },
                 {
-                    name: this.$t("footer.list[2]"),
+                    name: this.$t("nav_links.miners"),
                     url: "/miners",
                 },
-            ],
-            active: false,
-        };
+            ];
+        },
     },
 };
 </script>
