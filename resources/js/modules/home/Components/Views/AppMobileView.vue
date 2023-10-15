@@ -15,7 +15,7 @@
                     el: '.pagination_bulets',
                     type: 'custom',
                     bulletClass: 'bulets-one',
-                    bulletActiveClass:'active-bullet',}"
+                    bulletActiveClass:'.active-bullet',}"
                     :navigation="{nextEl: '.next', prevEl: '.prev'}"
                     :space-between="0"
                 >
@@ -552,9 +552,6 @@ export default {
 }
 
 .active-bullet {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
     background: #2E90FA;
 }
 
