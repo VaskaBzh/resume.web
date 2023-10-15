@@ -11,7 +11,7 @@
                     :controller="{ control: controllerSlide }"
                     :set-wrapper-size="true"
                     :loop="true"
-                    :navigation="{nextEl: '.next', prevEl: '.prev'}"
+                    :navigation="{ nextEl: '.next', prevEl: '.prev' }"
                     :space-between="0"
                 >
                     <swiper-slide class="mobile-view_item">
@@ -116,9 +116,9 @@ import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Controller,Navigation } from "swiper";
+import { Controller, Navigation } from "swiper";
 import { ref } from "vue";
-import {onMounted} from "vue";
+import { onMounted } from "vue";
 
 export default {
     name: "AppMobileView",
@@ -183,9 +183,9 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -281,7 +281,7 @@ export default {
         width: 100%;
         position: relative;
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1500px) {
             flex-flow: column nowrap;
             justify-content: flex-start;
         }
@@ -297,7 +297,7 @@ export default {
         gap: 0;
         margin: 0 auto 0 0;
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1500px) {
             margin: 0 auto;
             max-width: 80%;
         }
@@ -329,7 +329,7 @@ export default {
             transform: translate(-50%, -50%);
         }
 
-        @media (max-width: 1200px) {
+        @media (max-width: 1500px) {
             max-width: 330px;
             height: 655px;
             padding: 15px;
@@ -367,17 +367,10 @@ export default {
     }
 
     &_subtitle {
-        color: #f5faff;
-        font-family: Unbounded, serif;
-        font-size: 44px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 120%;
-        text-transform: uppercase;
-        padding: 32px 32px 0 0;
+        padding: 32px 32px 0 32px;
 
-        @media (max-width: 1200px) {
-           text-align: center;
+        @media (max-width: 1500px) {
+            text-align: center;
         }
     }
 
@@ -424,6 +417,11 @@ export default {
         align-items: center;
         justify-content: flex-start;
         gap: 30px;
+
+        @media (max-width: 1500.98px) {
+            justify-content: center;
+            order: -1;
+        }
     }
 
     &__run {
