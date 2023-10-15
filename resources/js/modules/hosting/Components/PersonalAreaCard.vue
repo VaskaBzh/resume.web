@@ -1,8 +1,8 @@
 <template>
     <div class="system__section system__section-wrap" ref="view">
         <div class="system-card-inf">
-            <p class="system-card-title">{{ $t("personal_account.title") }}</p>
-            <p class="system-card-text">{{ $t("personal_account.text") }}</p>
+            <p class="system-card-title">{{ $t("hosting_personal_account.title") }}</p>
+            <p class="system-card-text">{{ $t("hosting_personal_account.text") }}</p>
         </div>
         <div class="system-card-img" @mouseleave="changeShadow('blank')">
             <!-- Web -->
@@ -100,7 +100,7 @@
                 </svg>
                 <transition name="fade">
                     <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[4]')"
+                        :firstRow="$t('hosting_personal_account.tooltip[4]')"
                         position="right"
                         v-if="currentShadow == 'navbar'"
                     ></MockupTooltip>
@@ -113,8 +113,8 @@
             >
                 <transition name="fade">
                     <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[0]')"
-                        :secondRow="$t('personal_account.tooltip[1]')"
+                        :firstRow="$t('hosting_personal_account.tooltip[0]')"
+                        :secondRow="$t('hosting_personal_account.tooltip[1]')"
                         position="up"
                         v-if="currentShadow == 'cards'"
                     ></MockupTooltip>
@@ -198,8 +198,8 @@
             >
                 <transition name="fade">
                     <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[2]')"
-                        :secondRow="$t('personal_account.tooltip[3]')"
+                        :firstRow="$t('hosting_personal_account.tooltip[2]')"
+                        :secondRow="$t('hosting_personal_account.tooltip[3]')"
                         position="up"
                         v-if="currentShadow == 'chart-hasrate'"
                     ></MockupTooltip>
@@ -287,8 +287,8 @@
             >
                 <transition name="fade">
                     <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[5]')"
-                        :secondRow="$t('personal_account.tooltip[6]')"
+                        :firstRow="$t('hosting_personal_account.tooltip[5]')"
+                        :secondRow="$t('hosting_personal_account.tooltip[6]')"
                         position="up"
                         v-if="currentShadow == 'forecast'"
                     ></MockupTooltip>
@@ -372,8 +372,8 @@
             >
                 <transition name="fade">
                     <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[7]')"
-                        :secondRow="$t('personal_account.tooltip[8]')"
+                        :firstRow="$t('hosting_personal_account.tooltip[7]')"
+                        :secondRow="$t('hosting_personal_account.tooltip[8]')"
                         position="up"
                         v-if="currentShadow == 'chart-accrued'"
                     ></MockupTooltip>
@@ -531,8 +531,8 @@
                 </svg>
                 <transition name="fade">
                     <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[9]')"
-                        :secondRow="$t('personal_account.tooltip[10]')"
+                        :firstRow="$t('hosting_personal_account.tooltip[9]')"
+                        :secondRow="$t('hosting_personal_account.tooltip[10]')"
                         position="down"
                         v-if="currentShadow == 'header'"
                     ></MockupTooltip>
@@ -552,7 +552,7 @@
         <a
             href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
             class="get-consultation"
-            >{{ $t("personal_account.button") }}</a
+            >{{ $t("hosting_personal_account.button") }}</a
         >
     </div>
 </template>

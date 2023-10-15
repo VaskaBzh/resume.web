@@ -17,8 +17,8 @@ export default {
     computed: {
         ourOffer() {
             return {
-                title: this.$t("offer.title"),
-                text: this.$t("offer.text"),
+                title: this.$t("miners_offer.title"),
+                text: this.$t("miners_offer.text"),
             };
         },
     },

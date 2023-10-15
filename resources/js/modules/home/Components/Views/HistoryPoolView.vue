@@ -70,7 +70,7 @@ import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
 import { FreeMode } from "swiper";
 import "swiper/css";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 export default {
     name: "HistoryPoolView",

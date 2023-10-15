@@ -1,13 +1,287 @@
 // If using a module system (e.g. via vue-cli), import Vue and VueI18n and then call Vue.use(VueI18n).
-import {createI18n} from "vue-i18n";
+import { createI18n } from "vue-i18n";
 
 // Ready translated locale messages
 const messages = {
     en: {
+        miners_offer: {
+            title: 'what we offer',
+            text: 'Efficient and stable mining pool with personal commission, optimized for Bitcoin mining. As well as a set of tools for a transparent and convenient analysis of your assets.'
+        },
+        hosting_title: ["by", "50%", "per each kwt", "increase", "your income"],
+        hosting_button: "get consultation",
+        who_are_we: {
+            button: "who we are",
+            title: [
+                "Efficient pool",
+                "for mining Bitcoin",
+                "optimized",
+                "for data centers",
+            ],
+            column: {
+                num: [">3", "5", ">1.7"],
+                gray_text: [
+                    "years",
+                    "the largest data centers in Russia",
+                    "EH /s",
+                ],
+                main_text: [
+                    "We work in the",
+                    "crypto industry",
+                    "Work successfully",
+                    "with us",
+                    "Total hashrate",
+                    "of our pool",
+                ],
+            },
+        },
+        offer: {
+            button: "what we offer",
+            title: ["we'll increase", "your income", "per each kWt", "by 50%"],
+            cards: {
+                title: [
+                    "up to 4%",
+                    "personal commission for your clients",
+                    "up to 75%",
+                    "your affiliate program rewards",
+                ],
+                text: [
+                    "The commission of our pool is customizable. We give you a choice: give a discount to your clients and provide an advantageous offer or increase your profits through the affiliate program. Contact to the manager for more details. ",
+                    "You receive a large reward through the affiliate program, which will allow you to earn more from each of your clients. The reward percentage depends on the connected hashrate.",
+                ],
+            },
+        },
+        pluse: {
+            button: "more advantages",
+            text: "We offer a set of tools to optimize the work and increase profits of data centers. Personal support resolves all issues without the participationof your specialists.",
+        },
+        system_monitoring: {
+            title: ["hosting", "management", "system"],
+            text: "The hosting monitoring and management system allows you to optimize the operation of your data center. You can track your devices, monitor movements and repairs. It also includes statistics on all devices and timely actions when problems are identified.",
+            button: "get consultation",
+        },
+        support: {
+            title: "premium customer support",
+            text: "We are creating a separate private chat with dedicated support just for your clients. The chat contains your elements such as name and logo to support your brand. ",
+        },
+        for_clients: {
+            button: "Your customers are going to get",
+            text: "Your clients will receive a set of tools for stable and transparent earnings. Plus access to premium support and guarantees of safety and reliability.",
+        },
+        hosting_personal_account: {
+            title: "user-friendly personal account",
+            text: "User friendly personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the user. ",
+            button: "try personal account",
+            tooltip: [
+                "Nothing superfluous, only",
+                "the most current data",
+                "Average hashrate of",
+                "all your devices",
+                "Convenient navigation panel",
+                "Be aware of your",
+                "income",
+                "Progress until accruals",
+                "are paid",
+                "Current exchange rates, theme",
+                "switching and language change",
+            ],
+        },
+        hosting_mobile_app: {
+            title: "mobile application",
+            text: "Optimized and intuitive mobile application. Hashrate monitoring notifications and access to income information at any time on your phone.",
+            button: "coming soon to the appstore",
+        },
+        guarantees: {
+            title: "Guarantees of reliability and safety",
+            text: "A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool",
+            list: {
+                title: [
+                    "FPPS+",
+                    "security guarantee",
+                    "automatic payments",
+                    "prompt technical support",
+                    "timely notifications",
+                ],
+                text: [
+                    "The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.",
+                    "We provide maximum protection for your crypto assets and user data. Using physical security, data encryption, protection against DDoS attacks, the use of 2FA and VPN tunnels. As well as regular security audits, including penetration testing.",
+                    "We have automated payouts to improve security and simplify the process. You configure the minimum amount of funds for withdrawal and the payment occurs automatically when the required numbers are reached.",
+                ],
+            },
+        },
+        connect: {
+            title: "interested in working with us?",
+            text: "Leave your phone number, the client manager will contact you and answer all your questions.",
+            button: "contact us",
+            form: {
+                placeholder: "Enter a name",
+                button: ["request a call", "TELEGRAM", "what’s app"],
+                text: "or",
+            },
+        },
+        history_pool: {
+            texts: [
+                "We create sites for data centers, hosting, and mining hotels placement. We collaborate with contractors in Russia and the CIS. We create turnkey mining zones: from rent to commissioning the farm.",
+                "Halving occurred, mining difficulty increased. A team of developers appeared. Our goal is to create relevant solutions for the optimization of industrial miners and data centers.",
+                "Bitcoin has significantly increased in price. We expanded our staff manifold and established a monitoring system for data centers. In the same year, we signed the first custom integration contracts.",
+                "Officially registered a cryptocurrency mining pool. The first data centers connected to the system. We increased their profit by 50% for every kilowatt-hour spent.",
+                "We ceased to operate only as a closed pool for data centers and entered the international market. By the end of 2023, we have ambitious plans.",
+            ],
+        },
+        /* */
+        title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
+        text: "We use advanced technologies for efficient Bitcoin mining. Maximum transparency of mining in a couple of clicks.",
+        button: "try demo version",
+        who_we_are: {
+            button: "who we are",
+            card_private: {
+                title: ["private pool for data-centers"],
+                num: ["7", "1.7", "30", "75%"],
+                text: [
+                    "years in the crypto industry",
+                    "EH/ s pool’s hashrate",
+                    "Total BTC mined",
+                    "to",
+                    "more profit per kW",
+                ],
+                button: ["Learn more", "get personal offer"],
+            },
+            card_community: {
+                title: ["community for miners"],
+                num: ["No.1", "24/7", "1", "4%"],
+                text: [
+                    "customer service",
+                    "fast technical support",
+                    "screen for all statistics",
+                    "max commission",
+                ],
+                button: ["Learn more"],
+                tooltip:
+                    "With high capacity, you can get personal commission redused",
+            },
+        },
+        profitability_calculator: {
+            button: ["profitability calculator", "calculator pro"],
+            title: [
+                "calculate",
+                "your income",
+                "with the help of",
+                "profitability",
+                "calculator",
+            ],
+            text: "Allows you to evaluate possible approximate income for a certain period. Actual earnings may vary slightly.",
+            form_calculator: {
+                title: "Calculator Light",
+                placeholder: ["Total hashrate", "Commission"],
+                tooltip: [
+                    "Average hashrate of all devices",
+                    "The commission depends on the average hashrate: the higher the hashrate, the lower the commission",
+                ],
+                item: ["Current difficulty", "BTC rate"],
+                segment: ["1 day", "1 month", "3 months"],
+                text: "For a more accurate profitability forecast please use Calculator Pro",
+            },
+        },
+        why_allbtc: {
+            button: "why allbtc pool",
+            title: ["Product,", "created", "for miners", "by miners"],
+            list: {
+                title: [
+                    "Focus on Bitcoin",
+                    "Transparent monitoring",
+                    "technology and safety",
+                ],
+                text: [
+                    "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
+                    "Up-to-date information in your personal account about the pool hashrate, worker productivity, accruals, payments and other statistics that allow you to evaluate how the pool’s performance and predict future income.",
+                    "The advanced technology we created, Stratum 3.0, allows us to reduce the time of synchronization of mining equipment with the pool. Advanced security system, both physical and virtual.",
+                ],
+            },
+        },
+        personal_account: {
+            button: ["personal account", "try personal account"],
+            title: ["user-friendly", "personal", "account"],
+            tooltip: [
+                "Nothing superfluous, only",
+                "the most current data",
+                "Average hashrate of",
+                "all your devices",
+                "Convenient navigation panel",
+                "Be aware of your",
+                "income",
+                "Progress until accruals",
+                "are paid",
+                "Current exchange rates, theme",
+                "switching and language change",
+            ],
+            text: "Convenient personal account with all the necessary statistics and intuitive navigation. Only the necessary functions for the user.",
+        },
+        safety: {
+            button: "security",
+            encryption: {
+                title: "miners data encryption",
+                text: "Encrypting data transmitted between users and the pool server helps prevent eavesdropping or interception by attackers. Using secure channels such as SSL/ TLS, Allbtc Pool ensures that data remains private and secure during transmission and protected from unauthorized access.",
+            },
+            updates: {
+                title: "Regular software updates",
+                text: "Regular updates improve the security system: detect vulnerabilities, close them, and, as a result, increase reliability. Also, regular updates of the pool software ensure compatibility with the latest changes caused by the dynamics of the crypto industry.",
+            },
+            DDoS: {
+                title: "DDoS attacks protection",
+                text: "When a mining pool is subject to DDoS attacks, it can lead to disruptions in mining operations, resulting in reduced payouts to the pool's clients. DDoS protection ensures that Allbtc Pool is always up and running and provides continuous reliable service to its users ",
+            },
+        },
+        mobile_app: {
+            button: "mobile application",
+            title: "User-friendly app with updated data",
+            text: "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
+            note: "coming soon in appstore",
+            slides: [
+                "Good monitoring and effective management",
+                "Clear monitoring and effective management",
+                "Excellent monitoring and effective management",
+                "Awesome monitoring and effective management",
+            ],
+        },
+        payments: {
+            button: "payouts",
+            title: ["FPPS+", "autopayouts", "free funds transfer"],
+            text: [
+                "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
+                "Automatic payments are made without any action on the part of the miner. Since payments are possible when predetermined conditions are met (reaching a given minimum threshold), funds are received without delay. Moreover, the possibility of an error (incorrectly entered wallet address or transaction amount) caused by a human factor is eliminated.",
+                "Automatic withdrawal of funds is completely free, no commission is charged. Moreover, withdrawals to any wallets are also made without commission.",
+            ],
+        },
+        main: {
+            button: "main things",
+            title: ["Values", "mission", "goals"],
+            text: [
+                "We support honesty, transparency and continuous development in everything we do. We encourage creativity, embrace change and constantly look for new ways to improve our offerings and processes.",
+                "Make Bitcoin mining as efficient and convenient as possible, ensuring high security for customer data and their digital assets.",
+                "We strive to create the most secure environment for managing your digital assets and unite miners into a large community of like-minded people.",
+            ],
+        },
+        history: {
+            button: "history of our pool",
+            text: [
+                "We’ve created sites for the placement of data centers, hosting and mining hotels. Also cooperated with contractors in Russia and the CIS. Created turnkey mining zones: from renting to putting the farm into operation.",
+                "Halving happened, mining difficulty increased. A development team has appeared. Our goal was to create up-to-date solutions to optimize the operation of industrial miners and data centers.",
+                "Bitcoin had risen in price significantly. We had expanded our staff several times and created a monitoring system for data centers. In the same year, the first contracts for custom integration were concluded.",
+                "We had officially registered a pool for mining cryptocurrencies. The first data centers connected to the system. Their profits increased by 50% for every kilowatt of energy spent.",
+                "We stopped working only as a closed pool for data centers and entered the international market. Now we have ambitious plans by the end of 2023.",
+            ],
+        },
+        connect_with_us: "contact us",
+        footer_home: {
+            button: "Personal account",
+            list: ["Home", "Data centers", "Miners", "FAQ", "News", "Contacts"],
+            text: "Privacy Policy",
+        },
         validate_messages: {
             watcher_message: "Watcher created successfully",
             verify_message: "Email verified successfully",
-            two_fa_message: "Two-factor authentication has been successfully linked",
+            two_fa_message:
+                "Two-factor authentication has been successfully linked",
         },
         more: "More",
         auth: {
@@ -483,7 +757,11 @@ const messages = {
                     "Specify the cost of electricity to calculate net income.",
                 button_clear: "Specify",
                 payment: {
-                    titles: ["Forecast for today", "Yesterday's income", "Forecast for the month"],
+                    titles: [
+                        "Forecast for today",
+                        "Yesterday's income",
+                        "Forecast for the month",
+                    ],
                 },
                 clear: {
                     titles: ["Today", "For month"],
@@ -498,7 +776,10 @@ const messages = {
                     title: "Worker",
                     types: ["Active", "Unstable", "Inactive"],
                 },
-                tooltip: ["On your subaccount", "Autopayment occurs when the balance is >"]
+                tooltip: [
+                    "On your subaccount",
+                    "Autopayment occurs when the balance is >",
+                ],
             },
         },
         accounts: {
@@ -506,7 +787,8 @@ const messages = {
             toggle: ["Active", "Toggle"],
             block: {
                 titles: [
-                    "Current hashrate", ,
+                    "Current hashrate",
+                    ,
                     "Worker",
                     "Hashrate / 24h",
                     "Total paid out",
@@ -616,7 +898,8 @@ const messages = {
         wallets: {
             title: ["Setting up auto payout", "Wallets"],
             no_info: {
-                description: "To enable automatic payouts, add your wallet address",
+                description:
+                    "To enable automatic payouts, add your wallet address",
                 message: "To add a wallet, you need to verify your email",
                 verify_text: "Verify email",
                 button_text: "Add",
@@ -722,6 +1005,287 @@ const messages = {
         },
     },
     ru: {
+        miners_offer: {
+            title: 'что мы предлагаем',
+            text: 'Эффективный и стабильный майнинг-пул с персональной комиссией, оптимизированный под добычу Bitcoin. А также комплекс инструментов для прозрачного и удобного анализа ваших активов.'
+        },
+        hosting_title: ["на", "50%", "Увеличьте", "ваш доход", "за каждый квт"],
+        hosting_button: "получить консультацию",
+        who_are_we: {
+            button: "кто мы",
+            title: [
+                "Эффективный пул",
+                "для добычи Bitcoin,",
+                "оптимизированный",
+                "для работы",
+                "дата-центров",
+            ],
+            column: {
+                num: [">3", "5", ">1,7"],
+                gray_text: ["лет", "крупнейших дата-центров РФ", "EH /s"],
+                main_text: [
+                    "Работаем на рынке",
+                    "цифровых активов",
+                    "Успешно работают ",
+                    "с нами",
+                    "Общий хешрейт",
+                    "Allbtc Pool",
+                ],
+            },
+        },
+        offer: {
+            button: "что мы предлагаем",
+            title: ["увеличим", "ваш доход", "за каждый квт", "на 50%"],
+            cards: {
+                title: [
+                    "до 4%",
+                    "персональная комиссия для ваших клиентов",
+                    "до 75%",
+                    "ваши вознаграждения по партнерской программе",
+                ],
+                text: [
+                    "Комиссия нашего пула настраивается кастомно. Мы предоставляем вам выбор: дать скидку вашим клиента и предоставить выгодное предложение или увеличить вашу прибыль по партнёрской программе. Подробнее уточняйте у менеджера. ",
+                    "Вы получаете большое вознаграждение по партнёрской программе, которое позволит зарабатывать больше от каждого вашего клиента. Процент вознаграждения зависит от подключенного хешрейта.",
+                ],
+            },
+        },
+        pluse: {
+            button: "плюсы работы с нами",
+            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+        },
+        system_monitoring: {
+            title: ["Представляем", "систему", "мониторинга"],
+            text: "Система мониторинга и управления хостингом позволяет оптимизировать работу вашего дата центра. Вы можете отслеживать ваши устройства, следить за перемещениями и ремонтами. Также это статистика по всем устройствам и своевременные действия при выявлении проблем.",
+            button: "получить консультацию",
+        },
+        support: {
+            title: "премиальная кастомная поддержка",
+            text: "Мы создаем отдельный закрытый чат с выделенной поддержкой только для ваших клиентов. Чат содержит ваши элементы, такие как название и лого для поддержки вашего бренда. ",
+        },
+        for_clients: {
+            button: "Что получат ваши клиенты",
+            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+        },
+        hosting_personal_account: {
+            title: "удобный личный кабинет",
+            text: "Удобный личный кабинет со всей необходимой статистикой с интуитивно понятной навигацией. Только нужные функции для конечного пользователя. ",
+            button: "попробовать личный кабинет",
+            tooltip: [
+                "Ничего лишнего, только самые",
+                "актуальные данные",
+                "Средний хешрейт всех",
+                "ваших устройств",
+                "Удобная панель навигации",
+                "Будьте в курсе своего",
+                "дохода",
+                "Прогресс до выплаты",
+                "начислений",
+                "Актуальный курс валют, переключение",
+                "темы и смена языка",
+            ],
+        },
+        hosting_mobile_app: {
+            title: "мобильное приложение",
+            text: "Оптимизированное и интуитивно понятное мобильное приложение. Мониторинг хэшрейта,  уведомления и доступ к инфо о доходах в любой момент в вашем телефоне.",
+            button: "скоро в appstore",
+        },
+        guarantees: {
+            title: "Гарантии надежности и безопасности",
+            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            list: {
+                title: [
+                    "система выплаты FPPS+",
+                    "гарантия безопасности",
+                    "автовыплаты",
+                    "оперативная техподдержка",
+                    "своевременные уведомления",
+                ],
+                text: [
+                    "Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.",
+                    "Мы обеспечиваем максимальную защиту ваших крипто активов и данных пользователя. При помощи физической безопасности, шифрования данных, защиты от DDoS-атак, использования 2FA и VPN-туннелей. А также регулярных аудитов безопасности, включая тестирование на проникновение.",
+                    "Мы автоматизировали выплаты для улучшения безопасности и упрощения процесса. Вы настраиваете минимальную сумму средств для вывода и выплата происходит автоматически при достижении нужных цифр. ",
+                ],
+            },
+        },
+        connect: {
+            title: "интересно поработать с нами?",
+            text: "Оставьте ваш номер телефона, клиентский менеджер свяжется с вами и ответит на все возникшие вопросы.",
+            button: "свяжитесь с нами",
+            form: {
+                placeholder: "Введите имя",
+                button: ["заказать звонок", "TELEGRAM", "what’s app"],
+                text: "или",
+            },
+        },
+        history_pool: {
+            texts: [
+                "Создаем площадки под размещение дата-центов, хостингов и майнинг-отелей. Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до введения фермы в эксплуатацию.",
+                "Произошел халвинг, сложность майнинга выросла. Появилась команда разработчиков. Наша цель – создание актуальных решений для оптимизации работы промышленных майнеров и дата-центров.",
+                "Биткоин значительно подорожал. Мы кратно расширили штат и сформировали систему мониторинга для дата-центров. В этом же году заключили первые договоры на кастомную интеграцию.",
+                "Официально зарегистрировали пул для майнинга криптовалют. К системе подключились первые дата-центры. На 50% увеличили их прибыль за каждый потраченный киловатт энергии.",
+                "Перестали работать только лишь как закрытый пул для дата-центров, вышли на международный рынок. К концу 2023 года у нас амбициозные планы.",
+            ],
+        },
+        title: ["Экспер", "тный", "подход", "к майн", "ингу", "Bitcoin "],
+        text: "Используем передовые технологии для эффективного майнинга биткоина. Максимальная прозрачность майнинга в пару кликов. ",
+        button: "попробовать демо кабинет",
+        who_we_are: {
+            button: "кто мы",
+            card_private: {
+                title: ["приватный пул для дата- центров"],
+                num: ["7", "1.7", "30", "75%"],
+                text: [
+                    "лет в крипто индустрии",
+                    "EH/ s хешрейт пула",
+                    "BTC добыто всего",
+                    "до",
+                    "больше прибыли за кВт",
+                ],
+                button: ["Узнать больше", "получить персональные условия"],
+            },
+            card_community: {
+                title: ["комьюнити для частных майнеров"],
+                num: ["№1", "24/7", "1", "4%"],
+                text: [
+                    "клиентский сервис",
+                    "быстрая техподдержка",
+                    "экран для статистики",
+                    "комиссия пула",
+                ],
+                button: ["Узнать больше"],
+                tooltip:
+                    "При больших мощностях вы можете получить персональную сниженную комиссию",
+            },
+        },
+        profitability_calculator: {
+            button: ["калькулятор доходности", "калькулятор pro"],
+            title: [
+                "рассчитайте ",
+                "свой доход",
+                "с помощью",
+                "калькулятора",
+                "доходности",
+            ],
+            text: "Позволяет оценить и спрогнозировать возможный приблизательный доход и прибыль за определенный период. Фактические доходы могут незначительно отличаться. ",
+            form_calculator: {
+                title: "Калькулятор Light",
+                placeholder: ["Общий хешрейт", "Комиссия"],
+                tooltip: [
+                    "Средний хешрейт всех устройств",
+                    "Комиссия зависит от общего среднего хешрейта: чем больше хешрейт, тем меньше комиссия",
+                ],
+                item: ["Текущая сложность", "Курс BTC"],
+                segment: ["1 день", "1 месяц", "3 месяца"],
+                text: "Для более точного прогноза доходности используйте Калькулятор Pro",
+            },
+        },
+        why_allbtc: {
+            button: "почему allbtc pool",
+            title: ["ПРодукт,", "созданный", "майнерами", "для майнеров"],
+            list: {
+                title: [
+                    "Фокус на Bitcoin",
+                    "Прозрачный мониторинг",
+                    "технологии и безопасность",
+                ],
+                text: [
+                    "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
+                    "Актуальная информация в личном кабинете о хешрейте пула, производительности воркеров, начислениях, выплатах и других статистических данных, позволяющие оценивать работу пула и прогнозировать будущие доходы.",
+                    "Продвинутая созданная нами Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
+                ],
+            },
+        },
+        personal_account: {
+            button: ["личный кабинет", "посмотреть личный кабинет"],
+            title: ["удобный", "личный", "кабинет"],
+            tooltip: [
+                "Ничего лишнего, только самые",
+                "актуальные данные",
+                "Средний хешрейт всех",
+                "ваших устройств",
+                "Удобная панель навигации",
+                "Будьте в курсе своего",
+                "дохода",
+                "Прогресс до выплаты",
+                "начислений",
+                "Актуальный курс валют, переключение",
+                "темы и смена языка",
+            ],
+            text: "Позволяет оценить и спрогнозировать возможный приблизательный доход и прибыль за определенный период. Фактические доходы могут незначительно отличаться. ",
+        },
+        safety: {
+            button: "безопасность",
+            encryption: {
+                title: "шифрование данных майнера",
+                text: "Шифрование данных, передаваемых между пользователями и сервером пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как SSL/TLS, Allbtc Pool гарантирует, что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.",
+            },
+            updates: {
+                title: "регулярные обновления по",
+                text: "Регулярные обновления обеспечивают улучшение системы безопасности: обнаружение уязвимостей, их закрытие, и, как следствие, повышение надежности. Также регулярные обновления программного обеспечения пула обеспечивают совместимость с последними изменениями, вызванными динамикой развития криптоиндустрии.",
+            },
+            DDoS: {
+                title: "защита от DDoS-атак",
+                text: "Когда майнинг-пул подвержен DDoS-атакам, это может привести к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что Allbtc Pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.",
+            },
+        },
+        mobile_app: {
+            button: "мобильное приложение",
+            title: "Прозрачный мониторинг и эффективное управление",
+            text: "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
+            note: "скоро в appstore",
+            slides: [
+                "Хороший мониторинг и эффективное управление",
+                "Четкий мониторинг и эффективное управление",
+                "Прекрасный мониторинг и эффективное управление",
+                "Офигенный мониторинг и эффективное управление",
+            ],
+        },
+        payments: {
+            button: "выплаты",
+            title: [
+                "метод вознаграждения",
+                "автовыплаты",
+                "средняя дневная выплата",
+            ],
+            text: [
+                "Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.",
+                "Автоматические выплаты осуществляются без каких-либо действий со стороны майнера. \n" +
+                    "Так как выплаты возможны при выполнении заранее заданных условий (достижение заданного минимального порога), поступление средств производится без задержек. Более того, исключается возможность допущения ошибки (неправильно введенный адрес кошелька или сумма транзакции), вызванной человеческим фактором.",
+                "Автовывод средств полностью бесплатный, никакая комиссия не начисляется. Более того, вывод на любые кошельки также производится без комиссии.",
+            ],
+        },
+        main: {
+            button: "главное",
+            title: ["Ценности миссия цели"],
+            text: [
+                "Мы поддерживаем честность, прозрачность и постоянное развитие во всем, что мы делаем. Поощряем творчество, принимаем перемены и постоянно ищем новые способы улучшения наших предложений и процессов.и процессов.",
+                "Сделать майнинг биткоина максимально эффективным и удобным, обеспечивая высокую безопасность данных клиентов и их цифровых активов.",
+                "Мы стремимся создать максимально безопасную среду для управления своими цифровыми активами и объединить майнеров в большое комьюнити единомышленников.",
+            ],
+        },
+        history: {
+            button: "история нашего пула",
+            text: [
+                "Создаем площадки под размещение дата-центов, хостингов и майнинг-отелей. Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до введения фермы в эксплуатацию.",
+                "Произошел халвинг, сложность майнинга выросла. Появилась команда разработчиков. Наша цель – создание актуальных решений для оптимизации работы промышленных майнеров и дата-центров.",
+                "Биткоин значительно подорожал. Мы кратно расширили штат и сформировали систему мониторинга для дата-центров. В этом же году заключили первые договоры на кастомную интеграцию.",
+                "Официально зарегистрировали пул для майнинга криптовалют. К системе подключились первые дата-центры. На 50% увеличили их прибыль за каждый потраченный киловатт энергии.",
+                "Перестали работать только лишь как закрытый пул для дата-центров, вышли на международный рынок. К концу 2023 года у нас амбициозные планы.",
+            ],
+        },
+        connect_with_us: "связаться с нами",
+        footer_home: {
+            button: "Личный кабинет",
+            list: [
+                "Главная",
+                "Дата-центрам",
+                "Майнерам",
+                "FAQ",
+                "Новости",
+                "Контакты",
+            ],
+            text: "Политика конфиденциальности",
+        },
         validate_messages: {
             watcher_message: "Вотчер успешно создан",
             verify_message: "Почта успешно подтверждена",
@@ -1209,7 +1773,11 @@ const messages = {
                     "Укажите расходы на электроэнергию для расчета чистой прибыли. ",
                 button_clear: "Указать",
                 payment: {
-                    titles: ["Прогноз на сегодня", "Вчерашний доход", "Прогноз на месяц"],
+                    titles: [
+                        "Прогноз на сегодня",
+                        "Вчерашний доход",
+                        "Прогноз на месяц",
+                    ],
                 },
                 clear: {
                     titles: ["Сегодня", "За месяц"],
@@ -1224,7 +1792,10 @@ const messages = {
                     title: "Воркеры",
                     types: ["Активные", "Нестабильные", "Неактивные"],
                 },
-                tooltip: ["На вашем субаккаунте ", "Автовыплата происходит при  балансе >"]
+                tooltip: [
+                    "На вашем субаккаунте ",
+                    "Автовыплата происходит при  балансе >",
+                ],
             },
         },
         accounts: {
@@ -1333,8 +1904,10 @@ const messages = {
         wallets: {
             title: ["Настройка автовыплаты", "Кошельки"],
             no_info: {
-                description: "Для автовыплаты начислений добавьте адрес вашего кошелька",
-                message: "Чтобы добавить кошелек вам необходимо подтвердить почту",
+                description:
+                    "Для автовыплаты начислений добавьте адрес вашего кошелька",
+                message:
+                    "Чтобы добавить кошелек вам необходимо подтвердить почту",
                 verify_text: "Подтвердить почту",
                 button_text: "Добавить",
             },

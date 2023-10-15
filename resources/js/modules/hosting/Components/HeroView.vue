@@ -1,15 +1,15 @@
 <template>
     <article class="article-hosting first-text hosting__section" ref="view">
         <div class="hosting__content">
-            <span class="text-on">{{ $t("title[0]") }}</span>
-            <span class="text-fifty">{{ $t("title[1]") }} <br /></span>
-            <span class="text-increase">{{ $t("title[2]") }} <br /></span>
-            <span class="text-income">{{ $t("title[3]") }} <br /></span>
-            <span class="text-cvt">{{ $t("title[4]") }}</span>
+            <span class="text-on">{{ $t("hosting_title[0]") }}</span>
+            <span class="text-fifty">{{ $t("hosting_title[1]") }} <br /></span>
+            <span class="text-increase">{{ $t("hosting_title[2]") }} <br /></span>
+            <span class="text-income">{{ $t("hosting_title[3]") }} <br /></span>
+            <span class="text-cvt">{{ $t("hosting_title[4]") }}</span>
         </div>
         <a href="https://t.me/allbtc_support" target="_blank">
             <landing-button class="get-consultation"
-                ><template v-slot:text>{{ $t("button") }}</template>
+                ><template v-slot:text>{{ $t("hosting_button") }}</template>
             </landing-button>
         </a>
     </article>
