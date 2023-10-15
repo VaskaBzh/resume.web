@@ -38,7 +38,6 @@
                     <div class="mobile-view_prev_next">
                         <button-blue
                             class="mobile-view_prev prev"
-                            @click="swiper.slideNext()"
                         ></button-blue>
                         <button-blue class="mobile-view_prev next"></button-blue>
                     </div>
@@ -83,7 +82,7 @@
                         </swiper-slide>
                     </Swiper>
                 </div>
-                <button-blue class="mobile-view__btn"
+                <button-blue class="mobile-view__btn "
                     >{{ $t("mobile_app.note") }}
                 </button-blue>
             </div>
@@ -107,9 +106,8 @@ import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import {Swiper, SwiperSlide} from "swiper/vue";
-import {Controller} from "swiper";
-import {ref} from "vue";
-import {useSwiper} from "swiper/vue";
+import {Controller, Navigation} from "swiper";
+import {onMounted, ref} from "vue";
 
 export default {
     name: "AppMobileView",
@@ -119,14 +117,22 @@ export default {
     },
 
     setup() {
-        const swiper = useSwiper()
         const controllerSlide = ref(null);
+
+        onMounted(()=> {
+            Swiper.use([Navigation])
+            new Swiper('swiper', {
+                navigation: {
+                    nextEl: '.next',
+                    prev: '.prev',
+                },
+            })
+        })
         const setControlledSwiper = (swiper) => {
             controllerSlide.value = swiper;
         };
 
         return {
-            swiper,
             Controller,
             controllerSlide,
             setControlledSwiper,
