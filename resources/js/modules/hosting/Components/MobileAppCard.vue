@@ -79,7 +79,6 @@ export default {
             slide: 1,
             tabBarName: "home",
             validScroll: false,
-            validHalfScroll: false,
             startY: null,
             touchY: null,
         };
@@ -104,19 +103,6 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    !this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
-
-                    this.validHalfScroll = true;
-                } else if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -136,15 +122,6 @@ export default {
                 setTimeout(this.scroll, 650);
 
                 if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validHalfScroll = false;
-                } else if (
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
@@ -284,6 +261,7 @@ export default {
     position: relative;
     width: 408px;
     height: 722px;
+    margin-bottom: clamp(20px, 6vw, 50px);
 }
 
 .img-system {

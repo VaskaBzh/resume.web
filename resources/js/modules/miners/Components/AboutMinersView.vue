@@ -179,7 +179,7 @@ export default {
     width: 400px;
     display: flex;
     flex-direction: column;
-    gap: 150px;
+    gap: clamp(20px, 3vw, 150px);
     height: 90%;
 }
 
@@ -220,12 +220,12 @@ export default {
 }
 
 .hosting-content {
-    width: 607px;
+    max-width: clamp(244px, 25vw, 607px);
     /* height: 317px; */
     color: var(--gray-1100, #f5faff);
     font-feature-settings: "clig" off, "liga" off;
     font-family: Unbounded;
-    font-size: 44px;
+    font-size: clamp(14px, 1.8vw, 44px);
     font-style: normal;
     font-weight: 600;
     line-height: 120%; /* 52.8px */
@@ -323,9 +323,7 @@ export default {
 
 @media (max-width: 768px) {
     .hosting-content {
-        font-size: 36px;
         line-height: 120%; /* 43.2px */
-        width: 400px;
     }
 
     .who-we-are-text {
@@ -344,10 +342,6 @@ export default {
 
     .fact-item:last-child {
         padding: 33px 21px 0 20px;
-    }
-
-    .item-content {
-        gap: 70px;
     }
 }
 
@@ -374,8 +368,6 @@ export default {
 
 @media (max-width: 450px) {
     .hosting-content {
-        font-size: 22px;
-        width: 244px;
         height: auto;
     }
 
@@ -405,10 +397,6 @@ export default {
     .fact-item:last-child {
         border-right: none;
         padding: 20px 0 44px 0;
-    }
-
-    .item-content {
-        gap: 20px;
     }
 
     .who-are-we {

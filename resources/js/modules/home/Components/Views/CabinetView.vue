@@ -590,7 +590,6 @@ export default {
     data() {
         return {
             validScroll: false,
-            validHalfScroll: false,
             startY: null,
             touchY: null,
             currentShadow: "blank",
@@ -621,19 +620,6 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    !this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
-
-                    this.validHalfScroll = true;
-                } else if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -656,22 +642,9 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validHalfScroll = false;
-                } else if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
                     this.validScroll
                 ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
+                    this.$refs.view.style.transform = `translateY(0px)`;
 
                     this.validScroll = false;
                 } else {
@@ -729,8 +702,14 @@ export default {
         },
     },
     mounted() {
-        this.$i18n.locale = "ru";
         this.scroll();
+        // setTimeout(() => {
+        //     this.$refs.view.style.transform = `translateY(-${
+        //         (this.$refs.view.offsetHeight -
+        //             document.scrollingElement.clientHeight) /
+        //         2
+        //     }px)`;
+        // }, 1800);
         setTimeout(() => {
             upLeft();
             upRight();
@@ -793,8 +772,10 @@ export default {
 
 .img-shadow {
     position: absolute;
-    top: 35.5px;
-    left: 148px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: calc(100% - 200px);
 }
 
 .add-opacity {
@@ -838,17 +819,21 @@ export default {
 .system-card-img {
     position: relative;
     width: 100%;
-    max-width: 1428px;
-    height: 820px;
+    max-width: 990px;
+    height: 560px;
+    margin: 0 auto;
 }
 
 .img-system {
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 }
 
 .img-statistic {
-    left: 148px;
-    top: 36px;
+    width: calc(100% - 200px);
 }
 
 .get-consultation {
@@ -902,9 +887,6 @@ export default {
     .img-shadow {
         width: 100%;
         max-width: 584px;
-        height: 365px;
-        left: 80px;
-        top: 20px;
     }
 
     .system-card-title {
@@ -941,8 +923,6 @@ export default {
         width: 100%;
         max-width: 224px;
         height: 482px;
-        left: 29px;
-        top: 9px;
     }
 
     .note-button {

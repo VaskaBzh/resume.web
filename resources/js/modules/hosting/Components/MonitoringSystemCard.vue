@@ -45,7 +45,6 @@ export default {
     data() {
         return {
             validScroll: false,
-            validHalfScroll: false,
             startY: null,
             touchY: null,
         };
@@ -70,19 +69,6 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    !this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
-
-                    this.validHalfScroll = true;
-                } else if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -102,15 +88,6 @@ export default {
                 setTimeout(this.scroll, 650);
 
                 if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validHalfScroll = false;
-                } else if (
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
@@ -198,14 +175,18 @@ export default {
 
 .system-card-img {
     position: relative;
-    max-width: 1428px;
+    max-width: 990px;
+    margin: 0 auto clamp(40px, 5vw, 50px);
     width: 100%;
-    height: 820px;
-    margin-bottom: clamp(40px, 5vw, 50px);
+    height: 560px;
 }
 
 .img-system {
     position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
 }
 
 .img-monitoring {
@@ -239,7 +220,7 @@ export default {
 .mobile {
     display: none;
     max-width: 80%;
-    transform: translateX(-50%);
+    transform: translate(-50%, -50%);
     left: 50%;
 }
 
@@ -282,7 +263,7 @@ export default {
 
     .img-monitoring {
         height: 482px;
-        top: 9px;
+        top: 50%;
         width: 65%;
     }
 

@@ -15,19 +15,18 @@ import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 
 export default {
     name: "faq-row",
-    components: {LandingTitle, LandingText},
+    components: { LandingTitle, LandingText },
     props: {
         title: String,
         text: String,
         preTitle: String,
     },
-
 };
 </script>
 
 <style scoped>
 .faq__row {
-    padding: clamp(20px, 5vw, 32px) clamp(16px, 5vw, 100px);
+    padding: clamp(20px, 2.8vw, 32px) clamp(16px, 2.8vw, 100px);
     display: flex;
     justify-content: space-between;
     cursor: pointer;
@@ -37,6 +36,7 @@ export default {
 
 .faq_title {
     text-align: right;
+    font-size: clamp(22px, 2.2vw, 65px);
 }
 
 @media (max-width: 991.98px) {
@@ -73,7 +73,7 @@ export default {
 .faq_subtitle {
     color: var(--gray-3100, #d0d5dd);
     font-family: Unbounded, serif;
-    font-size: clamp(4px, 5vw, 24px);
+    font-size: clamp(4px, 2.8vw, 24px);
     font-weight: 400;
     line-height: 120%;
     text-transform: uppercase;

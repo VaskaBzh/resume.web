@@ -54,9 +54,9 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -137,7 +137,7 @@ export default {
     color: var(--gray-1100, #f5faff);
     font-feature-settings: "clig" off, "liga" off;
     font-family: Unbounded, serif;
-    font-size: clamp(44px, 7vw, 24px);
+    font-size: clamp(14px, 2.8vw, 44px);
     font-style: normal;
     font-weight: 600;
     line-height: 120%;
@@ -149,7 +149,7 @@ export default {
     justify-content: end;
 }
 .text-fifty {
-    font-size: clamp(156px, 11vw, 60px);
+    font-size: clamp(32px, 8vw, 110px);
 }
 .get-consultation {
     margin-top: clamp(70px, 5vw, 50px);
@@ -158,22 +158,14 @@ export default {
 }
 @media (max-width: 768px) {
     .hosting__content {
-        font-size: 36px;
         line-height: 120%; /* 43.2px */
         max-width: 400px;
-    }
-    .text-fifty {
-        font-size: 106px;
     }
 }
 @media (max-width: 450px) {
     .hosting__content {
-        font-size: 22px;
         max-width: 244px;
         height: auto;
-    }
-    .text-fifty {
-        font-size: 60px;
     }
 }
 </style>

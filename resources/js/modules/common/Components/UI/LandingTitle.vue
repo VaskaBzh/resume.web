@@ -1,6 +1,6 @@
 <template>
     <component :is="tag" class="title" :class="[`title-${tag}`]">
-        <slot/>
+        <slot />
     </component>
 </template>
 
@@ -22,25 +22,25 @@ export default {
 }
 
 .title-h1 {
-    font-size: clamp(32px, 10vw, 110px);
+    font-size: clamp(32px, 5vw, 110px);
     font-weight: 600;
     line-height: 100%;
 }
 
 .title-h2 {
-    font-size: clamp(22px, 5vw, 65px);
+    font-size: clamp(22px, 3.8vw, 65px);
     font-weight: 400;
     line-height: 120%;
 }
 
 .title-h3 {
-    font-size: clamp(22px, 5vw, 46px);
+    font-size: clamp(22px, 2.7vw, 46px);
     font-weight: 600;
     line-height: 120%;
 }
 
 .title-subtitle {
-    font-size: clamp(14px, 10vw, 44px);
+    font-size: clamp(14px, 3.8vw, 44px);
     font-weight: 400;
     line-height: 120%;
 }

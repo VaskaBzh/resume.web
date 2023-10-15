@@ -171,10 +171,6 @@ export default {
 .first-text {
     flex-direction: column;
 }
-.third-text {
-    flex-direction: column;
-    gap: 110px;
-}
 
 .footer-hosting {
     /* height: 673px; */

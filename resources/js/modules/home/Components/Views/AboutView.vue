@@ -117,7 +117,6 @@ export default {
             key: "hostings",
             keys: ["hostings", "miners"],
             validScroll: false,
-            validHalfScroll: false,
             progress: 0,
             startY: null,
             touchY: null,
@@ -139,20 +138,7 @@ export default {
                 this.remove();
                 setTimeout(this.scroll, 650);
 
-                if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    !this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
-
-                    this.validHalfScroll = true;
-                } else if (this.progress === 0) {
+                if (this.progress === 0) {
                     this.key = "miners";
                     this.progress++;
                 } else if (this.progress === 1) {
@@ -237,6 +223,13 @@ export default {
     },
     mounted() {
         setTimeout(this.scroll, 500);
+        setTimeout(() => {
+            this.$refs.view.style.transform = `translateY(-${
+                (this.$refs.view.offsetHeight -
+                    document.scrollingElement.clientHeight) /
+                2
+            }px)`;
+        }, 1500);
     },
     unmounted() {
         this.remove();

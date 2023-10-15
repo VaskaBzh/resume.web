@@ -21,22 +21,22 @@
                     </swiper-slide>
                     <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
-                            Хороший> мониторинг и эффективное управление
+                            {{ $t("mobile_app.slides[0]") }}
                         </landing-title>
                     </swiper-slide>
                     <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
-                            Четкий мониторинг и эффективное управление
+                            {{ $t("mobile_app.slides[1]") }}
                         </landing-title>
                     </swiper-slide>
                     <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
-                            Прекрасный мониторинг и эффективное управление
+                            {{ $t("mobile_app.slides[2]") }}
                         </landing-title>
                     </swiper-slide>
                     <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
-                            Офигенный мониторинг и эффективное управление
+                            {{ $t("mobile_app.slides[3]") }}
                         </landing-title>
                     </swiper-slide>
                     <div class="mobile-view_prev_next">
@@ -157,7 +157,6 @@ export default {
     data() {
         return {
             validScroll: false,
-            validHalfScroll: false,
             startY: null,
             touchY: null,
         };
@@ -181,24 +180,12 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    !this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
-
-                    this.validHalfScroll = true;
-                } else if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
+                        (this.$refs.view.offsetHeight -
+                            document.scrollingElement.clientHeight - 100) /
+                        2
                     }px)`;
 
                     this.validScroll = true;
@@ -216,22 +203,9 @@ export default {
                     this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
                         20 &&
-                    this.validHalfScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validHalfScroll = false;
-                } else if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
                     this.validScroll
                 ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight) /
-                        2
-                    }px)`;
+                    this.$refs.view.style.transform = `translateY(0px)`;
 
                     this.validScroll = false;
                 } else {

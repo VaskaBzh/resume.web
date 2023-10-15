@@ -76,9 +76,9 @@ export default {
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -178,11 +178,12 @@ export default {
     color: var(--gray-1100, #f5faff);
     text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
     font-family: Unbounded;
-    font-size: 55px;
+    font-size: clamp(22px, 2.3vw, 65px);
     font-style: normal;
     font-weight: 600;
-    line-height: 120%; /* 66px */
+    line-height: 120%;
     text-transform: uppercase;
+    margin-bottom: clamp(32px, 2.9vw, 100px);
 }
 .text-offer-column {
     margin-left: 195px;
@@ -210,9 +211,6 @@ export default {
         margin-right: 0px;
         justify-content: center;
     }
-    .offer-content {
-        font-size: 36px;
-    }
 }
 @media (max-width: 768px) {
     .offer-card-container {
@@ -227,9 +225,7 @@ export default {
         flex-direction: column;
     }
     .offer-content {
-        font-size: 22px;
         padding: 0 16px;
-        margin-top: 30px;
     }
     .offer-text {
         font-size: 14px;

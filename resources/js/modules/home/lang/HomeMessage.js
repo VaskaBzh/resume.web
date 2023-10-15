@@ -107,6 +107,13 @@ export const HomeMessage = {
             title: "User-friendly app with updated data",
             text: "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
             note: "coming soon in appstore",
+            slides: [
+                "Good monitoring and effective management",
+                "Clear monitoring and effective management",
+                "Excellent monitoring and effective management",
+                "Awesome monitoring and effective management",
+            ],
+
         },
         payments: {
             button: "payouts",
@@ -251,6 +258,12 @@ export const HomeMessage = {
             title: "Прозрачный мониторинг и эффективное управление",
             text: "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
             note: "скоро в appstore",
+            slides: [
+                "Хороший мониторинг и эффективное управление",
+                "Четкий мониторинг и эффективное управление",
+                "Прекрасный мониторинг и эффективное управление",
+                "Офигенный мониторинг и эффективное управление",
+            ],
         },
         payments: {
             button: "выплаты",

@@ -143,6 +143,13 @@ export default {
     },
     mounted() {
         setTimeout(this.scroll, 500);
+        setTimeout(() => {
+            this.$refs.view.style.transform = `translateY(-${
+                (this.$refs.view.offsetHeight -
+                    document.scrollingElement.clientHeight) /
+                2
+            }px)`;
+        }, 1500);
     },
     unmounted() {
         this.remove();
