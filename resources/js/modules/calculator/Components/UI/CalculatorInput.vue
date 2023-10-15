@@ -1,7 +1,7 @@
 <template>
     <div class="row" @mousedown="$refs.input.focus()">
         <label :for="inputName" class="row__label"
-            >{{ inputLabel }}
+            >{{ $t(inputLabel) }}
             <svg
                 width="14"
                 height="15"

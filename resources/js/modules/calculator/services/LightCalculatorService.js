@@ -17,7 +17,7 @@ export class LightCalculatorService {
         this.inputs = [
             new InputData(
                 "hash",
-                "Хешрейт",
+                "hash",
                 "100",
                 "0",
                 "Th/ s",
@@ -57,7 +57,7 @@ export class LightCalculatorService {
             // ),
             new InputData(
                 "currency",
-                "Курс BTC",
+                "currency",
                 btcInfo.price.toLocaleString("en-US"),
                 null,
                 "USD",

@@ -11,12 +11,14 @@
                     :controller="{ control: controllerSlide }"
                     :set-wrapper-size="true"
                     :loop="true"
-                    :pagination="{clickable:true,
-                    el: '.pagination_bulets',
-                    type: 'custom',
-                    bulletClass: 'bulets-one',
-                    bulletActiveClass:'.active-bullet',}"
-                    :navigation="{nextEl: '.next', prevEl: '.prev'}"
+                    :pagination="{
+                        clickable: true,
+                        el: '.pagination_bulets',
+                        type: 'custom',
+                        bulletClass: 'bulets-one',
+                        bulletActiveClass: '.active-bullet',
+                    }"
+                    :navigation="{ nextEl: '.next', prevEl: '.prev' }"
                     :space-between="0"
                 >
                     <swiper-slide class="mobile-view_item">
@@ -47,11 +49,11 @@
                     <div class="mobile-view_prev_next">
                         <button-blue
                             class="mobile-view_prev prev"
-                            v-if="viewportWidth>1200"
+                            v-if="viewportWidth > 1200"
                         ></button-blue>
                         <button-blue
                             class="mobile-view_prev next"
-                            v-if="viewportWidth>1200"
+                            v-if="viewportWidth > 1200"
                         ></button-blue>
                     </div>
                 </Swiper>
@@ -106,9 +108,7 @@
                     <div class="bulets-one"></div>
                     <div class="bulets-one"></div>
                 </div>
-                <button-blue class="mobile-view__btn"
-                    >{{ $t("mobile_app.note") }}
-                </button-blue>
+                <div class="mobile-view__btn">{{ $t("mobile_app.note") }}</div>
             </div>
         </div>
         <div class="mobile-view__run">
@@ -130,9 +130,9 @@ import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { Controller,Navigation, Pagination } from "swiper";
+import { Controller, Navigation, Pagination } from "swiper";
 import { ref } from "vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
     name: "AppMobileView",
@@ -181,9 +181,7 @@ export default {
     },
 
     computed: {
-        ...mapGetters([
-            "viewportWidth"
-        ])
+        ...mapGetters(["viewportWidth"]),
     },
     methods: {
         handleTouchStart(e) {
@@ -205,7 +203,8 @@ export default {
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
                         (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight - 100) /
+                            document.scrollingElement.clientHeight -
+                            100) /
                         2
                     }px)`;
 
@@ -281,6 +280,29 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mobile-view__btn {
+    width: 170px;
+    height: 170px;
+    border-radius: 50%;
+    fill: rgba(208, 213, 221, 0.2);
+    background: rgba(208, 213, 221, 0.2);
+    backdrop-filter: unset;
+    -webkit-backdrop-filter: unset;
+    bottom: 50%;
+    color: #d0d5dd;
+    text-align: center;
+    font-family: Unbounded, serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 120%;
+    align-self: center;
+    text-transform: uppercase;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
 .mobile-view {
     display: flex;
     flex-flow: column;
@@ -415,7 +437,6 @@ export default {
             padding: 0;
             font-size: 14px;
         }
-
     }
 
     &_image {
@@ -521,12 +542,11 @@ export default {
 .bulets-one {
     width: 10px;
     height: 10px;
-    background: #43474E;
+    background: #43474e;
     border-radius: 50%;
 }
 
 .active-bullet {
-    background: #2E90FA;
+    background: #2e90fa;
 }
-
 </style>

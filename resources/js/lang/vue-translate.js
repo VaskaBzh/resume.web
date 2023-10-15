@@ -4,9 +4,12 @@ import { createI18n } from "vue-i18n";
 // Ready translated locale messages
 const messages = {
     en: {
+        hash: "Hashrate",
+        currency: "BTC Rate",
+        miners_title: ["transparent", "and efficient", "mining", "of bitcoin"],
         miners_offer: {
-            title: 'what we offer',
-            text: 'Efficient and stable mining pool with personal commission, optimized for Bitcoin mining. As well as a set of tools for a transparent and convenient analysis of your assets.'
+            title: "what we offer",
+            text: "Efficient and stable mining pool with personal commission, optimized for Bitcoin mining. As well as a set of tools for a transparent and convenient analysis of your assets.",
         },
         hosting_title: ["by", "50%", "per each kwt", "increase", "your income"],
         hosting_button: "get consultation",
@@ -1005,9 +1008,12 @@ const messages = {
         },
     },
     ru: {
+        miners_title: ["прозрачный", "и эффективный", "майнинг", "bitcoin"],
+        hash: "Хешрейт",
+        currency: "Курст BTC",
         miners_offer: {
-            title: 'что мы предлагаем',
-            text: 'Эффективный и стабильный майнинг-пул с персональной комиссией, оптимизированный под добычу Bitcoin. А также комплекс инструментов для прозрачного и удобного анализа ваших активов.'
+            title: "что мы предлагаем",
+            text: "Эффективный и стабильный майнинг-пул с персональной комиссией, оптимизированный под добычу Bitcoin. А также комплекс инструментов для прозрачного и удобного анализа ваших активов.",
         },
         hosting_title: ["на", "50%", "Увеличьте", "ваш доход", "за каждый квт"],
         hosting_button: "получить консультацию",
