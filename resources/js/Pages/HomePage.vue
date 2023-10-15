@@ -24,7 +24,7 @@ export default {
                 "miners",
                 "cabinet",
                 "security",
-                // "mobile",
+                "mobile",
                 "payments",
                 "mission",
                 "history",

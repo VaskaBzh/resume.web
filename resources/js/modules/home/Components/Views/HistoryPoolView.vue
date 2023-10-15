@@ -213,6 +213,9 @@ export default {
         flex-flow: column nowrap;
         gap: 38px;
         margin-left: auto;
+        .swiper-wrapper {
+            flex-flow: column nowrap;
+        }
     }
 
     &__item-line {
