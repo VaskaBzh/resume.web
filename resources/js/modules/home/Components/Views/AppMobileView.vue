@@ -289,6 +289,11 @@ export default {
         justify-content: space-between;
         width: 100%;
         position: relative;
+
+        @media (max-width: 1200px) {
+            flex-flow: column nowrap;
+            justify-content: flex-start;
+        }
     }
 
     &_inner {
@@ -300,6 +305,16 @@ export default {
         height: auto;
         gap: 0;
         margin: 0 auto 0 0;
+
+        @media (max-width: 1200px) {
+            margin: 0 auto;
+            max-width: 80%;
+        }
+
+        @media (max-width: 768px) {
+            margin: 0 auto;
+            max-width: 100%;
+        }
     }
 
     &__content {
@@ -321,6 +336,21 @@ export default {
             z-index: 10;
             top: 50%;
             transform: translate(-50%, -50%);
+        }
+
+        @media (max-width: 1200px) {
+            max-width: 330px;
+            height: 655px;
+            padding: 15px;
+            max-height: 655px;
+            margin: 0 auto;
+            position: relative;
+            display: flex;
+            left: 0;
+            top: 0;
+            transform: unset;
+            align-items: center;
+            justify-content: center;
         }
     }
 
@@ -354,6 +384,10 @@ export default {
         line-height: 120%;
         text-transform: uppercase;
         padding: 32px 32px 0 0;
+
+        @media (max-width: 1200px) {
+           text-align: center;
+        }
     }
 
     &_image {
