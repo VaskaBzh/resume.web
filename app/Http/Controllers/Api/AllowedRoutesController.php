@@ -15,7 +15,7 @@ use OpenApi\Attributes as OA;
     OA\Get(
         path: '/allowed/{token}',
         summary: 'Get allowed routes for a watcher link',
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         tags: ['Watcher Links'],
         parameters: [
             new OA\Parameter(

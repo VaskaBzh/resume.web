@@ -18,7 +18,7 @@ class TwoFactorController extends Controller
         OA\Get(
             path: '/2fac/qrcode/{user}',
             summary: 'Generate QR code for two-factor authentication',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Auth'],
             parameters: [
                 new OA\Parameter(
@@ -97,7 +97,7 @@ class TwoFactorController extends Controller
         OA\Put(
             path: '/2fac/enable/{user}',
             summary: 'Enable two-factor authentication with secret key',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 required: true,
                 content: [
@@ -195,7 +195,7 @@ class TwoFactorController extends Controller
         OA\Put(
             path: '/2fac/disable/{user}',
             summary: 'Disable two-factor authentication',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Auth'],
             parameters: [
                 new OA\Parameter(

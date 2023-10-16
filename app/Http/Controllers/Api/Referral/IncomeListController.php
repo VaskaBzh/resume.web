@@ -18,7 +18,7 @@ class IncomeListController extends Controller
         OA\Get(
             path: "/referrals/incomes/{user}",
             summary: "Get referral incomes list for a user",
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ["Referral"],
             parameters: [
                 new OA\Parameter(

@@ -2563,7 +2563,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }

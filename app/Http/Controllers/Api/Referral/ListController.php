@@ -20,7 +20,7 @@ class ListController extends Controller
         OA\Get(
             path: '/referrals/{user}',
             summary: 'Get referral subs for a user',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Referral'],
             parameters: [
                 new OA\Parameter(

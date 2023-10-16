@@ -20,7 +20,7 @@ class PasswordChangeController
         OA\Put(
             path: '/password/change/{user}',
             summary: 'Change user\'s password',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 required: true,
                 content: [

@@ -19,7 +19,7 @@ class CreateController extends Controller
         OA\Post(
             path: '/subs/create/{user}',
             summary: 'Create a sub',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for creating a sub',
                 required: true,
