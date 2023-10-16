@@ -90,18 +90,18 @@
         :validateService="service"
         @sendPassword="sendPassword($event)"
     />
-	<verify-popup
-		:closed="service.closedTwoFacPopup"
-		:opened="service.openedTwoFacPopup"
-	>
-		<two-fac-form
-			title="form.fac.title"
-			text="form.fac.text"
-			placeholder="form.fac.placeholder"
-			button_text="form.fac.button_text"
-			@sendForm="loginWithSecretCode($event)"
-		/>
-	</verify-popup>
+    <verify-popup
+        :closed="service.closedTwoFacPopup"
+        :opened="service.openedTwoFacPopup"
+    >
+        <two-fac-form
+            title="form.fac.title"
+            text="form.fac.text"
+            placeholder="form.fac.placeholder"
+            button_text="form.fac.button_text"
+            @sendForm="loginWithSecretCode($event)"
+        />
+    </verify-popup>
 </template>
 
 <script>
@@ -123,8 +123,8 @@ import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
 export default {
     name: "login-form",
     components: {
-	    TwoFacForm,
-	    VerifyPopup,
+        TwoFacForm,
+        VerifyPopup,
         VerifyLink,
         AuthInput,
         MainPassword,
@@ -158,9 +158,9 @@ export default {
         },
     },
     watch: {
-        '$i18n.locale'() {
+        "$i18n.locale"() {
             this.service.setTranslate(this.$t);
-        }
+        },
     },
     mounted() {
         this.service.setForm();
@@ -187,6 +187,9 @@ export default {
 .form-auth {
     gap: 0;
     width: 100%;
+    @media (max-width: 991.98px) {
+        padding: 0 clamp(16px, 5vw, 60px);
+    }
     .form-auth_forgot-password {
         font-size: 20px;
         color: rgb(63, 123, 221);
@@ -224,11 +227,17 @@ export default {
     &_button {
         padding: 0;
         margin: 0;
+        background: rgb(63, 123, 221);
+        color: #fff;
+        text-transform: lowercase;
+        border: none;
+        width: fit-content;
+        border-radius: 16px;
         @media (max-width: $mobileSmall) {
             min-width: 100%;
         }
         & .all-link {
-            padding: 16px 45px;
+            padding: 0;
             font-size: 20px;
             font-weight: 500;
             line-height: 135%;

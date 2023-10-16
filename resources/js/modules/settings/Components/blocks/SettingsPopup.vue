@@ -16,12 +16,13 @@
         >
             <div class="header_card">
                 <main-title tag="h3">{{
-                    `${
-                        form.type !== "почту"
-                            ? $t("popup.title")
-                            : $t("popup.title_email")
-                    } ${form.type}`
-                }}</main-title>
+                        `${
+                            form.type !== "почту"
+                                ? $t("popup.title")
+                                : $t("popup.title_email")
+                        } ${form.type}`
+                    }}
+                </main-title>
                 <p class="popup-text">
                     {{
                         form.key == "email"
@@ -111,14 +112,15 @@
 
 <script>
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
+import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
-import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import {SettingsMessage} from "@/modules/settings/lang/SettingsMessage";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SelectCountry from "@/modules/settings/Components/SelectCountry.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+
 export default {
     name: "settings-popup",
     i18n: {
@@ -227,6 +229,7 @@ export default {
 .header_card {
     margin-bottom: 40px;
 }
+
 .btn__block {
     display: flex;
     width: 100%;
@@ -234,6 +237,7 @@ export default {
     margin-top: 80px;
     gap: 12px;
 }
+
 .btn-send-code {
     width: 100%;
     border-radius: 12px;
@@ -247,6 +251,7 @@ export default {
     font-weight: 700;
     line-height: 32px; /* 177.778% */
 }
+
 .btn-active {
     width: 49%;
     border-radius: 12px;
@@ -259,6 +264,7 @@ export default {
     font-weight: 700;
     line-height: 32px; /* 177.778% */
 }
+
 .btn-back {
     border-radius: 12px;
     width: 49%;
@@ -272,6 +278,7 @@ export default {
     font-weight: 700;
     line-height: 175%; /* 31.5px */
 }
+
 .popup-text {
     color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
@@ -280,17 +287,20 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
+
 .form_wrapper-message {
     position: relative;
     left: 0;
     top: 0;
     opacity: 1;
     width: 100%;
+
     .form_message {
         opacity: 1;
         width: 100%;
     }
 }
+
 .blue-text {
     color: var(--buttons-ghost-text-default, #53b1fd);
     font-family: NunitoSans, serif;
@@ -301,6 +311,7 @@ export default {
     margin-top: 18px;
     line-height: 20px; /* 142.857% */
 }
+
 .popup__input {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
@@ -311,6 +322,7 @@ export default {
     background: var(--background-modal-input, #2c2f34) !important;
     color: var(--text-secondary, #c5c8cd) !important;
 }
+
 .popup__input::placeholder {
     font-family: NunitoSans, serif;
     color: var(--select-text-no-value, #43474e) !important;

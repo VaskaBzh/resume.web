@@ -19,7 +19,7 @@
                 :model="form.password"
                 @change="changePasswordForm('password', $event)"
             />
-            <main-validate :validate="validateService.validate" />
+            <main-validate :validate="validateService.validate"/>
             <profile-password
                 class="password_input password_input-last"
                 name="password"
@@ -32,8 +32,9 @@
                 @click="closePopup"
             >
                 <template v-slot:text>{{
-                    $t("password_popup.button")
-                }}</template>
+                        $t("password_popup.button")
+                    }}
+                </template>
             </main-button>
         </div>
     </main-popup>
@@ -44,9 +45,9 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
-import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import { mapGetters } from "vuex";
-import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import {mapGetters} from "vuex";
+import {SettingsMessage} from "@/modules/settings/lang/SettingsMessage";
 import ProfilePassword from "@/modules/common/Components/inputs/ProfilePassword.vue";
 import MainValidate from "../../../validate/Components/MainValidate.vue";
 
@@ -113,12 +114,15 @@ export default {
     gap: 4px;
     margin-bottom: 40px;
 }
+
 .password_button {
     min-height: 56px;
 }
+
 .password_input {
     margin-bottom: 16px;
 }
+
 .password_input-last {
     margin-bottom: 80px;
 }

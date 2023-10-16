@@ -1,40 +1,26 @@
 <template>
-    <div class="app_back">
-        <!--        <main-preloader></main-preloader>-->
-        <header-component :user="user" />
-        <div class="page">
-            <div class="hint">
-                <div class="hint_item" v-hide="this.getMessage !== ''">
-                    {{ this.getMessage }}
-                </div>
-                <div class="hint_item" v-hide="this.message !== null">
-                    {{ this.message }}
-                </div>
-            </div>
-            <div class="observer_block"></div>
-            <keep-alive>
-                <slot></slot>
-            </keep-alive>
+    <div class="layout">
+        <!--        <main-background/>-->
+        <header-component />
+        <div class="layout__container">
+            <slot />
         </div>
-        <footer-component />
+        <FooterHosting></FooterHosting>
     </div>
 </template>
 
 <script>
-import FooterComponent from "@/Components/FooterComponent.vue";
 import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
-import { mapGetters } from "vuex";
+import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
+import MainBackground from "../modules/background/Components/MainBackground.vue";
 
 export default {
-    props: {
-        message: {
-            type: String,
-        },
+    components: {
+        MainBackground,
+        FooterHosting,
+        HeaderComponent,
     },
-    components: { HeaderComponent, FooterComponent },
-    computed: {
-        ...mapGetters(["getMessage", "allAccounts", "user"]),
-    },
+
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");
@@ -42,66 +28,31 @@ export default {
 };
 </script>
 
-<style lang="scss">
-.page {
-    z-index: 1;
-}
-.nav__logo {
-    max-width: 170px;
-    @media (max-width: 767.98px) {
-        &.headder {
-            position: relative;
-            z-index: 100;
-        }
-        max-width: 138px;
-    }
+<style scoped>
+.layout {
+    background: #0d0d0d;
+    display: flex;
+    width: 100vw;
+    flex-direction: column;
+    overflow-x: hidden;
 }
 
-.swiper {
-    padding-bottom: 48px !important;
+.layout__container {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 1920px;
+    width: 100%;
+    padding: 0 clamp(16px, 5vw, 100px);
+    margin: 0 auto;
+    z-index: 10;
+    transition: all 1.2s ease 0s;
+}
 
-    .swiper-pagination {
-        .swiper-pagination-bullet {
-            position: relative;
-            width: 21px;
-            height: 21px;
-            overflow: hidden;
-            opacity: 1;
-            background: transparent;
-            border-radius: 3px;
-
-            &::before {
-                content: "";
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border: 5px solid rgba(63, 123, 222, 0.16);
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                border: 8px solid #3f7bde;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%);
-                transition: all 0.3s ease 0s;
-                opacity: 0;
-                visibility: hidden;
-            }
-
-            &.swiper-pagination-bullet-active {
-                &::after {
-                    opacity: 1;
-                    visibility: visible;
-                }
-            }
-        }
+@media (max-width: 1920px) {
+    .layout__container {
+        margin: 0;
+        width: auto;
     }
 }
 </style>

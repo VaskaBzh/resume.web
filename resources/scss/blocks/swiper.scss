@@ -47,15 +47,9 @@
 //}
 
 .swiper {
-    padding-bottom: 172px !important;
-    @media (max-width: 991.98px) {
-        padding-bottom: 100px !important;
-    }
-    @media (max-width: 767.98px) {
-        padding-bottom: 52px !important;
-    }
     &-wrapper {
         height: fit-content;
+        flex-flow: row nowrap;
     }
     &-slide {
         height: 100%;
@@ -84,4 +78,34 @@
             }
         }
     }
+}
+.system-card-img .swiper{
+    &-pagination {
+        transform: translateY(-80px);
+        @media(max-width:992px){
+            transform: translateY(-30px);
+        }
+        @media(max-width:768px){
+            transform: translateY(10px);
+        }
+        @media(max-width:450px){
+            transform: translateY(11px);
+        }
+        &-bullet {
+            height: 8px !important;
+            width: 8px !important;
+            border-radius: 10px !important;
+            background: #d9d9d9 !important;
+            transition: all 0.3s ease 0s !important;
+            &-active {
+                background: #2E90FA !important;
+                width: 8px !important;
+            }
+            &:before,
+            &:after {
+                content: none !important;
+            }
+        }
+    }
+
 }

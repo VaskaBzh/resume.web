@@ -1,10 +1,9 @@
-import { RoutePublicData } from "../DTO/RoutePublicData";
-import { RouteProfileData } from "../DTO/RouteProfileData";
-import { RouteReferralData } from "../DTO/RouteReferralData";
-import { RouteAuthData } from "../DTO/RouteAuthData";
-import { RouteConfirmData } from "../DTO/RouteConfirmData";
-import { RouteNamesMap } from "@/router/map/RouteNamesMap";
-import {VerifyMiddleware} from "../middlewares/VerifyMiddleware";
+import {RoutePublicData} from "../DTO/RoutePublicData";
+import {RouteProfileData} from "../DTO/RouteProfileData";
+import {RouteReferralData} from "../DTO/RouteReferralData";
+import {RouteAuthData} from "../DTO/RouteAuthData";
+import {RouteConfirmData} from "../DTO/RouteConfirmData";
+import {RouteNamesMap} from "@/router/map/RouteNamesMap";
 
 export class RouteServices {
     constructor() {
@@ -20,6 +19,7 @@ export class RouteServices {
             // new RoutePublicData('complexity', 'complexity'),
             new RoutePublicData("help", "help"),
             new RoutePublicData("hosting", "hosting"),
+            new RoutePublicData("miners", "miners"),
             new RouteAuthData("login", "login"),
             new RouteAuthData("registration", "registration"),
             new RouteConfirmData("confirm", "confirm"),

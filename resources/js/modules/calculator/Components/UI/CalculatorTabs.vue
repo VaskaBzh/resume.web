@@ -28,7 +28,7 @@ export default {
         display: flex;
         align-items: center;
         gap: 8px;
-        height: 36px;
+        height: 44px;
         border-radius: 16px;
         background: rgba(#ffffff, 0.2);
         flex-wrap: nowrap;
@@ -38,17 +38,28 @@ export default {
         border-radius: 16px;
         border: 1px solid transparent;
         transition: all 0.5s ease 0s;
-        color: rgba(255, 255, 255, 0.6);
-        font-size: 18px;
+        color: var(--gray-370, rgba(208, 213, 221, 0.70));
+        text-align: center;
+        text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
+        font-family: NunitoSans;
+        font-size: 20px;
+        font-style: normal;
         font-weight: 400;
-        line-height: 28px;
-        letter-spacing: 0.35px;
-        width: 100%;
+        line-height: 110%; /* 22px */
+        width: 250px;
         background: transparent;
+        @media(max-width: 890px){
+            width: 164px;
+            font-size: 18px;
+        }
+        @media(max-width: 550px){
+            width: 33%;
+            font-size: 12px;
+        }
         &-active,
         &:hover {
-            border-color: #fff;
-            color: #fff;
+            border-color: #D0D5DD;
+            color: #D0D5DD;
         }
     }
 }
