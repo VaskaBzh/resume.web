@@ -344,7 +344,7 @@
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";

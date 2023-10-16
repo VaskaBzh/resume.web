@@ -35,7 +35,7 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import {VerifyMessages} from "@/modules/verify/lang/VerifyMessages";
 import {VerifyService} from "@/modules/verify/services/VerifyService";

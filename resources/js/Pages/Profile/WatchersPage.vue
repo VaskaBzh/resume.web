@@ -109,7 +109,7 @@
 <script>
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
 import MainSlider from "@/modules/slider/Components/MainSlider.vue";
 import WatchersList from "@/modules/watchers/Components/blocks/WatchersList.vue";
