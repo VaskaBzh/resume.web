@@ -38,9 +38,9 @@
             v-else
             :class="{ 'open-cross': isOpen }"
         >
-            <rect x="10" width="15" height="1" rx="0.5" fill="#E4E7EC" />
-            <rect y="6" width="25" height="1" rx="0.5" fill="#E4E7EC" />
-            <rect y="12" width="25" height="1" rx="0.5" fill="#E4E7EC" />
+            <rect x="10" width="15" height="1" rx="0.5" fill="#E4E7EC"/>
+            <rect y="6" width="25" height="1" rx="0.5" fill="#E4E7EC"/>
+            <rect y="12" width="25" height="1" rx="0.5" fill="#E4E7EC"/>
         </svg>
         <!-- </transition> -->
     </div>
@@ -49,30 +49,43 @@
         v-if="isOpen"
         :class="{ 'open-burger': isOpen, 'close-burger': closeBurger }"
     >
-        <div
-            class="menu-container"
-            :class="{ 'start-opacity': isOpen, 'end-opacity': closeBurger }"
-        >
-            <nav-links @click="actionBurger" />
-        </div>
-        <div class="menu-footer">
-            <router-link to="login" class="headline-menu">{{
-                $t("footer.button")
-            }}</router-link>
-            <select-language-land />
-            <button class="headline-menu link-tg">
-                <a target="_blank" href="https://t.me/allbtc_support"> ? </a>
-            </button>
+        <div class="burger__content">
+            <router-link to="/">
+                <header-logo-icon class="burger_logo"/>
+            </router-link>
+            <div
+                class="menu-container"
+                :class="{ 'start-opacity': isOpen, 'end-opacity': closeBurger }"
+            >
+                <nav-links @click="actionBurger"/>
+            </div>
+            <div class="menu-footer">
+                <router-link to="login" class="headline-menu"
+                >{{ $t("footer.button") }}
+                </router-link>
+                <select-language-land/>
+                <button class="headline-menu link-tg">
+                    <a target="_blank" href="https://t.me/allbtc_support"> ? </a>
+                </button>
+            </div>
         </div>
     </div>
+    <transition name="fadeIn">
+        <div
+            class="burger__background"
+            @click="actionBurger"
+            v-show="isOpen"
+        ></div>
+    </transition>
 </template>
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
+import HeaderLogoIcon from "../../common/icons/HeaderLogoIcon.vue";
 
 export default {
-    components: { SelectLanguageLand, NavLinks },
+    components: {SelectLanguageLand, NavLinks, HeaderLogoIcon},
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -100,8 +113,56 @@ export default {
 <style scoped>
 svg {
     position: relative;
-    z-index: 10;
+    z-index: 100;
 }
+
+.fadeIn-enter-active,
+.fadeIn-leave-active {
+    transition: all 0.5s ease 0s, visibility 0.5s ease 0s;
+}
+
+.fadeIn-enter-from,
+.fadeIn-leave-to {
+    visibility: hidden;
+    opacity: 0;
+}
+
+.burger__background {
+    background: var(--gray-480, rgba(13, 13, 13, 0.8));
+    backdrop-filter: blur(2.5px);
+    position: fixed;
+    z-index: 80;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.burger__content {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+    gap: 32px;
+    position: relative;
+}
+
+.burger_logo {
+    position: absolute;
+    left: 0;
+    top: 50px;
+    width: clamp(87px, 15vw, 129px);
+    height: clamp(26px, 15vw, 40px);
+}
+
+.menu-container {
+    width: 100%;
+}
+
 .burger-background {
     background: var(--gray-4100, #0d0d0d);
     position: fixed;
@@ -110,14 +171,17 @@ svg {
     width: 100vw;
     height: 100vh;
     right: 0px;
-    display: flex;
-    align-items: center;
-    flex-direction: column;
-    flex-direction: column;
-    justify-content: center;
-    padding: 0px 16px;
-    gap: 190px;
+    padding: 0px clamp(16px, 5vw, 50px);
+    z-index: 90;
 }
+
+@media (min-width: 768.98px) {
+    .burger-background {
+        max-width: 730px;
+        width: 100%;
+    }
+}
+
 .menu-footer {
     display: flex;
     align-items: center;
@@ -125,6 +189,7 @@ svg {
     gap: 15px;
     width: 100%;
 }
+
 .headline-menu {
     border-radius: 40px;
     border: 0.5px solid rgba(192, 228, 255, 0.6);
@@ -142,52 +207,50 @@ svg {
     align-items: center;
     justify-content: center;
     text-align: center;
+    width: 100%;
 }
+
 .link-tg {
+    width: 48px;
+    color: var(--gray-2100, #e4e7ec);
+    font-family: Unbounded;
     font-size: 27px;
+    font-style: normal;
+    font-weight: 400;
     line-height: 120%; /* 32.4px */
+    text-transform: uppercase;
 }
+
 .open-burger {
-    animation: openBg 0.4s ease-in;
+    animation: openBg 0.8s ease;
 }
+
 .close-burger {
-    animation: closeBg 0.4s ease-in;
+    animation: closeBg 0.8s ease;
 }
+
 @keyframes openBg {
     0% {
-        width: 10vw;
-        height: 10vh;
-        border-top-left-radius: 600px;
-        border-bottom-left-radius: 1000px;
-        border-bottom-right-radius: 100px;
+        transform: translateX(100%);
     }
     100% {
-        width: 100vw;
-        height: 100vh;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
+        transform: translateX(0);
     }
 }
+
 @keyframes closeBg {
     100% {
-        width: 10vw;
-        height: 10vh;
-        border-top-left-radius: 600px;
-        border-bottom-left-radius: 1000px;
-        border-bottom-right-radius: 100px;
+        transform: translateX(100%);
     }
     0% {
-        width: 100vw;
-        height: 100vh;
-        border-top-left-radius: 0px;
-        border-bottom-left-radius: 0px;
-        border-bottom-right-radius: 0px;
+        transform: translateX(0);
     }
 }
+
 .start-opacity {
     animation: startList 0.7s linear;
 }
+
 @keyframes startList {
     0% {
         opacity: 0;
@@ -199,9 +262,11 @@ svg {
         opacity: 1;
     }
 }
+
 .end-opacity {
     animation: endList 0.5s linear;
 }
+
 @keyframes endList {
     100% {
         opacity: 0;
@@ -213,9 +278,11 @@ svg {
         opacity: 1;
     }
 }
+
 .close-cross {
     animation: closeCross 0.5s linear;
 }
+
 @keyframes closeCross {
     0% {
         opacity: 0;

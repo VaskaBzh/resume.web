@@ -53,8 +53,9 @@
         >
             <form @submit.prevent="addAcc" class="form form-popup popup__form">
                 <main-title tag="h3" class="account-title">{{
-                    $t("accounts.popups.add.title")
-                }}</main-title>
+                        $t("accounts.popups.add.title")
+                    }}
+                </main-title>
                 <p class="popup-text">
                     {{ $t("accounts.popups.add.text") }}
                 </p>
@@ -94,13 +95,13 @@
 
 <script>
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import store from "../../../../store";
-import { ref } from "vue";
-import { ProfileApi } from "@/api/api";
+import {ref} from "vue";
+import {ProfileApi} from "@/api/api";
 import i18n from "@/lang/vue-translate";
 
 export default {
@@ -155,7 +156,7 @@ export default {
         const addAcc = async () => {
             wait.value = true;
             try {
-                const response = await ProfileApi.post("/subs/create", form);
+                const response = await ProfileApi.post(`/subs/create/${store.getters.user.id}`, form);
 
                 store.dispatch("setNotification", {
                     status: "success",
@@ -173,7 +174,7 @@ export default {
                 store.dispatch("setNotification", {
                     status: "error",
                     title: "error",
-                    text: err.response.data.message,
+                    text: err.response.data.error,
                 });
             }
 
@@ -239,11 +240,11 @@ export default {
     },
     methods: {
         changeActiveAccount(id) {
-            this.$store.dispatch("set_active", { index: id });
+            this.$store.dispatch("set_active", {index: id});
         },
         async openAddPopup() {
             if (this.$route.fullPath !== "/profile/accounts") {
-                await this.$router.push({ name: "accounts" });
+                await this.$router.push({name: "accounts"});
 
                 this.linkAddClicked = true;
 
@@ -320,6 +321,7 @@ export default {
     line-height: 24px; /* 150% */
     margin: 4px 0 40px;
 }
+
 .user-name-text {
     color: var(--text-primary-inverse);
     font-family: Unbounded;
@@ -328,6 +330,7 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
+
 .user-title-text {
     margin-top: auto;
     color: var(--text-primary-inverse);
@@ -336,13 +339,15 @@ export default {
     font-weight: 600;
     line-height: 135%; /* 16.2px */
 }
-.account-title{
+
+.account-title {
     font-family: Unbounded;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
     line-height: 32px; /* 160% */
 }
+
 .popup__input {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
     background: var(--background-modal-input, #FFF);
@@ -355,10 +360,12 @@ export default {
     border: 1px solid transparent;
     line-height: 24px;
 }
+
 .popup__input:focus {
     border: 1px solid #2E90FA;
 }
-.popup__input::placeholder{
+
+.popup__input::placeholder {
     color: var(--select-text-no-value, var(--gray-3100, #D0D5DD));
     font-family: NunitoSans;
     font-size: 16px;
@@ -366,6 +373,7 @@ export default {
     font-weight: 400;
     line-height: 24px; /* 150% */
 }
+
 .blue-button {
     border-radius: 12px;
     background: var(--buttons-primary-fill-border-default, #2e90fa);
@@ -381,6 +389,7 @@ export default {
     line-height: 32px; /* 177.778% */
     margin: 80px 0 0px;
 }
+
 .button {
     position: relative;
     margin-bottom: 16px;
@@ -388,17 +397,18 @@ export default {
     @media (max-width: 500px) {
         width: 100%;
     }
+
     &_name {
         width: 100%;
         cursor: pointer;
         transition: all 0.5s ease 0s;
         border-radius: 16px;
         background: var(
-            --gradient-v-1,
-            linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
+                --gradient-v-1,
+                linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
         );
         box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
-            0px 8px 24px -6px rgba(0, 0, 0, 0.16);
+        0px 8px 24px -6px rgba(0, 0, 0, 0.16);
         display: flex;
         padding: 16px;
         color: var(--background-island, #fff);
@@ -410,12 +420,14 @@ export default {
         gap: 16px;
         align-self: stretch;
         min-height: 73px;
+
         &_text {
             display: flex;
             flex-direction: column;
             min-height: 44px;
             justify-content: flex-end;
         }
+
         &-target {
             svg {
                 &:last-child {
@@ -423,21 +435,26 @@ export default {
                 }
             }
         }
+
         svg {
             transition: all 0.5s ease 0s;
+
             &:last-child {
                 margin-left: auto;
             }
         }
     }
+
     .list_button {
         a {
             text-decoration: none;
         }
     }
+
     .mini {
         height: fit-content;
     }
+
     .target {
         &.button {
             &__menu {
@@ -447,12 +464,15 @@ export default {
             }
         }
     }
+
     &__row {
         cursor: pointer;
         position: relative;
+
         &:not(:first-child) {
             height: 40px;
         }
+
         &:not(:last-child) {
             &:after {
                 content: "";
@@ -465,12 +485,14 @@ export default {
             }
         }
     }
+
     &_title {
         font-weight: 500;
         font-size: 16px;
         line-height: 143.1%;
         color: #969797;
     }
+
     &__menu {
         visibility: hidden;
         opacity: 0;

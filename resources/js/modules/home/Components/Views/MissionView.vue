@@ -77,9 +77,9 @@ export default {
                     document.scrollingElement.clientHeight >
                     20 && !this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -144,11 +144,13 @@ export default {
     mounted() {
         setTimeout(this.scroll, 500);
         setTimeout(() => {
-            this.$refs.view.style.transform = `translateY(-${
-                (this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight) /
-                2
-            }px)`;
+            if (this.$refs.view) {
+                this.$refs.view.style.transform = `translateY(-${
+                    (this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight) /
+                    2
+                }px)`;
+            }
         }, 1500);
     },
     unmounted() {

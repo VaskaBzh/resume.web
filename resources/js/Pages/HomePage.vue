@@ -87,7 +87,9 @@ export default {
                 view.style.opacity = 0;
             }, 100);
             setTimeout(() => {
-                view.style.transform = `translateY(${this.direction ? -200 : 200}%)`;
+                view.style.transform = `translateY(${
+                    this.direction ? -200 : 200
+                }%)`;
             }, 300);
             setTimeout(() => {
                 done();
@@ -115,21 +117,12 @@ export default {
             this.renderView();
             if (newIndex >= this.keys.length - 1) {
                 document.querySelector(".footer-content").style.opacity = 1;
-                document.querySelector(
-                    ".footer-content"
-                ).style.transform = `translateY(0)`;
                 document.querySelector(".all-content").style.opacity = 1;
-                document.querySelector(
-                    ".all-content"
-                ).style.transform = `translateY(0)`;
             } else {
                 document.querySelector(".footer-content").style.opacity = 0;
-                document.querySelector(
-                    ".footer-content"
-                ).style.transform = `translateY(100%)`;
                 document.querySelector(".all-content").style.opacity = 0;
                 document.querySelector(
-                    ".all-content"
+                    ".footer-content"
                 ).style.transform = `translateY(100%)`;
             }
             if (newIndex === 0) {
@@ -138,12 +131,16 @@ export default {
                     document.querySelector(".nav").style.transform =
                         "translateY(0)";
                 }, 1500);
+                document
+                    .querySelector(".burger-mobile")
+                    .removeAttribute("style");
             }
             if (newIndex > 0) {
                 clearTimeout(this.timeout);
                 document.querySelector(".nav").style.opacity = 0;
                 document.querySelector(".nav").style.transform =
                     "translateY(-100%)";
+                document.querySelector(".burger-mobile").style.opacity = 1;
             }
         },
     },
@@ -171,6 +168,9 @@ export default {
             document.querySelector(".layout").style.overflow = "visible";
         }
         document.querySelector("#app").style.overflow = "visible";
+        if (document.querySelector(".burger-mobile")) {
+            document.querySelector(".burger-mobile").removeAttribute("style");
+        }
         if (document.querySelector(".nav")) {
             document.querySelector(".nav").style.opacity = 1;
             document.querySelector(".nav").style.transform = "translateY(0)";
@@ -179,6 +179,18 @@ export default {
             document.querySelector(".footer-content").style.opacity = 1;
             document.querySelector(
                 ".footer-content"
+            ).style.transform = `translateY(0)`;
+        }
+        if (document.querySelector(".all-content")) {
+            document.querySelector(".all-content").style.opacity = 1;
+            document.querySelector(
+                ".all-content"
+            ).style.transform = `translateY(0)`;
+        }
+        if (document.querySelector(".layout__container")) {
+            document.querySelector(".layout__container").style.opacity = 1;
+            document.querySelector(
+                ".layout__container"
             ).style.transform = `translateY(0)`;
         }
     },

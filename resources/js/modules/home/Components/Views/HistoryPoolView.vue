@@ -1,38 +1,35 @@
 <template>
     <div class="history history__section history__section-wrap" ref="view">
-        <landing-headline>История нашего пула</landing-headline>
+        <landing-headline class="history-pool_headline"
+        >История нашего пула
+        </landing-headline
+        >
         <Swiper
             class="history-pool__items"
-            :freeMode="true"
             slidesPerView="auto"
             :modules="modules"
+            :slides-per-view="
+                viewportWidth > 1200 ? 2.5 : viewportWidth > 800 ? 1.5 : 1
+            "
             :pagination="{
                 clickable: true,
             }"
+            :navigation="{ nextEl: '.next', prevEl: '.prev' }"
         >
             <swiper-slide class="history-pool__item-line">
                 <div class="history-pool__item-line-block">
                     <div class="history-pool__item-line_cycle"></div>
                 </div>
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="history-pool__item-infos">
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2019</h3>
                     <p class="history-pool__item-info-discription">
                         {{ $t("history_pool.texts[0]") }}
                     </p>
+                </div>
+            </swiper-slide>
+            <swiper-slide class="history-pool__item-line">
+                <div class="history-pool__item-line-block">
+                    <div class="history-pool__item-line_cycle"></div>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2020</h3>
@@ -40,17 +37,32 @@
                         {{ $t("history_pool.texts[1]") }}
                     </p>
                 </div>
+            </swiper-slide>
+            <swiper-slide class="history-pool__item-line">
+                <div class="history-pool__item-line-block">
+                    <div class="history-pool__item-line_cycle"></div>
+                </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2021</h3>
                     <p class="history-pool__item-info-discription">
                         {{ $t("history_pool.texts[2]") }}
                     </p>
                 </div>
+            </swiper-slide>
+            <swiper-slide class="history-pool__item-line">
+                <div class="history-pool__item-line-block">
+                    <div class="history-pool__item-line_cycle"></div>
+                </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2022</h3>
                     <p class="history-pool__item-info-discription">
                         {{ $t("history_pool.texts[3]") }}
                     </p>
+                </div>
+            </swiper-slide>
+            <swiper-slide class="history-pool__item-line">
+                <div class="history-pool__item-line-block">
+                    <div class="history-pool__item-line_cycle"></div>
                 </div>
                 <div class="history-pool__item-info">
                     <h3 class="history-pool__item-info-year">2023</h3>
@@ -60,6 +72,16 @@
                 </div>
             </swiper-slide>
         </Swiper>
+        <div class="history__buttons">
+            <button-blue
+                class="mobile-view_prev prev"
+                v-if="viewportWidth > 1200"
+            ></button-blue>
+            <button-blue
+                class="mobile-view_prev next"
+                v-if="viewportWidth > 1200"
+            ></button-blue>
+        </div>
     </div>
 
     <!--        <connect-with-us-view/>-->
@@ -67,14 +89,17 @@
 
 <script>
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { FreeMode } from "swiper";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {Navigation} from "swiper";
 import "swiper/css";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "HistoryPoolView",
     components: {
+        ButtonBlue,
         LandingHeadline,
         Swiper,
         SwiperSlide,
@@ -84,8 +109,11 @@ export default {
     },
     setup() {
         return {
-            modules: [FreeMode],
+            modules: [Navigation],
         };
+    },
+    computed: {
+        ...mapGetters(["viewportWidth"]),
     },
     data() {
         return {
@@ -181,6 +209,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.history__buttons {
+    display: flex;
+    gap: 50px;
+    align-items: center;
+    margin-top: 50px;
+    margin-right: auto;
+}
+
 .history-pool {
     display: flex;
     flex-flow: column nowrap;
@@ -188,24 +224,34 @@ export default {
     justify-content: flex-start;
     padding: 100px 0 70px 0;
 
+    &_headline {
+        margin-bottom: clamp(50px, 15vw, 250px);
+    }
+
     &__items {
-        width: fit-content;
         display: flex;
-        flex-flow: column nowrap;
-        gap: 38px;
-        margin-left: auto;
-        .swiper-wrapper {
-            flex-flow: column nowrap;
-        }
+        width: 100vw;
+        margin: 0 clamp(-16px, 5vw, -100px);
     }
 
     &__item-line {
         display: flex;
-        flex-flow: row nowrap;
-        gap: 511px;
         margin-left: auto;
-        padding-left: 50vw;
-        background: rgba(208, 213, 221, 0.2);
+        flex-direction: column;
+        position: relative;
+        gap: clamp(30px, 10vw, 35px);
+        padding-left: clamp(16px, 5vw, 100px);
+
+        &:before {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 20px;
+            background: rgba(208, 213, 221, 0.2);
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+        }
 
         &-block {
             width: 310px;
@@ -219,21 +265,13 @@ export default {
         }
     }
 
-    &__item-infos {
-        display: flex;
-        flex-flow: row nowrap;
-        gap: 511px;
-        margin-left: auto;
-        padding-left: 50vw;
-        opacity: 1;
-    }
-
     &__item-info {
         width: 310px;
         display: flex;
         align-items: flex-start;
         justify-content: flex-start;
         flex-flow: column nowrap;
+        gap: clamp(10px, 10vw, 20px);
 
         &-year {
             color: #f5faff;

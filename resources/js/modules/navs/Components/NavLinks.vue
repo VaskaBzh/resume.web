@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { NavMessages } from "@/modules/navs/lang/NavMessages";
+import {NavMessages} from "@/modules/navs/lang/NavMessages";
 
 export default {
     i18n: {
@@ -45,19 +45,23 @@ export default {
     visibility: visible;
     opacity: 1;
 }
+
 .shadow-enter-from,
 .shadow-leave-to {
     visibility: hidden;
     opacity: 0;
 }
+
 .fade-enter-active,
 .fade-leave-active {
     transition: opacity 0.8s ease;
 }
+
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
 }
+
 .nav_link {
     color: rgba(228, 231, 236, 0.6);
     font-family: Unbounded, serif;
@@ -92,6 +96,7 @@ export default {
         opacity: 1;
     }
 }
+
 .active__link {
     position: relative;
     left: 0;
@@ -111,13 +116,15 @@ export default {
 }
 
 .menu-container .nav__links {
-    width: 90vw;
+    width: 100%;
 }
+
 .menu-container .nav_link {
     margin-bottom: 20px;
     padding-bottom: 15px;
     border-bottom: 0.5px solid rgba(208, 213, 221, 0.6);
 }
+
 .menu-container .nav_link:before {
     right: 0px;
     left: auto;

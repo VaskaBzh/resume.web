@@ -2,7 +2,7 @@
     <div class="about about__section" ref="view">
         <div class="about__wrapper">
             <landing-headline class="about__headline"
-                >{{ $t("who_we_are.button") }}
+            >{{ $t("who_we_are.button") }}
             </landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
@@ -21,7 +21,7 @@
                 <template v-slot:link>
                     <a href="#" class="about_link">
                         {{ $t("who_we_are.card_private.button[0]") }}
-                        <landing-arrow-right class="about_icon" />
+                        <landing-arrow-right class="about_icon"/>
                     </a>
                 </template>
             </landing-wrap>
@@ -32,16 +32,16 @@
             >
                 <landing-button>
                     <template v-slot:text
-                        >{{ $t("who_we_are.card_private.button[1]") }}
+                    >{{ $t("who_we_are.card_private.button[1]") }}
                     </template>
-                </landing-button></a
-            >
+                </landing-button>
+            </a>
         </div>
     </div>
 </template>
 
 <script>
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import AboutInfo from "@/modules/home/Components/blocks/AboutInfo.vue";
@@ -70,16 +70,16 @@ export default {
                     cards: [
                         {
                             title: ">3",
+                            text: this.$t("who_we_are.card_private.text[0]"),
+                        },
+                        {
+                            title: "2.8",
                             text: this.$t("who_we_are.card_private.text[1]"),
                         },
-                        {
-                            title: "1.7",
-                            text: this.$t("who_we_are.card_private.text[2]"),
-                        },
-                        {
-                            title: "30",
-                            text: this.$t("who_we_are.card_private.text[3]"),
-                        },
+                        // {
+                        //     title: "30",
+                        //     text: this.$t("who_we_are.card_private.text[2]"),
+                        // },
                         {
                             prefix: this.$t("who_we_are.card_private.text[3]"),
                             title: "50%",
@@ -98,10 +98,10 @@ export default {
                             title: "24/7",
                             text: this.$t("who_we_are.card_community.text[1]"),
                         },
-                        {
-                            title: "1",
-                            text: this.$t("who_we_are.card_community.text[2]"),
-                        },
+                        // {
+                        //     title: "1",
+                        //     text: this.$t("who_we_are.card_community.text[2]"),
+                        // },
                         {
                             title: "4%",
                             text: this.$t("who_we_are.card_community.text[3]"),
@@ -144,8 +144,8 @@ export default {
                 } else if (this.progress === 1) {
                     if (
                         this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight >
-                            20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                         !this.validScroll
                     ) {
                         this.$refs.view.style.transform = `translateY(-${
@@ -171,8 +171,8 @@ export default {
                 } else if (this.progress === 0) {
                     if (
                         this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight >
-                            20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform = `translateY(0px)`;
@@ -224,11 +224,13 @@ export default {
     mounted() {
         setTimeout(this.scroll, 500);
         setTimeout(() => {
-            this.$refs.view.style.transform = `translateY(-${
-                (this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight) /
-                2
-            }px)`;
+            if (this.$refs.view) {
+                this.$refs.view.style.transform = `translateY(-${
+                    (this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight) /
+                    2
+                }px)`;
+            }
         }, 1500);
     },
     unmounted() {
@@ -244,6 +246,7 @@ export default {
     outline: none;
     border: none;
 }
+
 .about {
     width: 100%;
 

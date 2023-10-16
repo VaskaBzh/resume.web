@@ -27,11 +27,11 @@
             <div class="calculator__form_complexity">
                 <div class="calculator__form_complexity_row">
                     <span class="calculator__form_complexity_title">{{
-                        $t("profitability_calculator.form_calculator.item[0]")
-                    }}</span>
+                            $t("profitability_calculator.form_calculator.item[0]")
+                        }}</span>
                     <span class="calculator__form_complexity_data">{{
-                        btcInfo.btc.diff
-                    }}</span>
+                            btcInfo.btc.diff
+                        }}</span>
                 </div>
                 <!--                <div class="calculator__form_complexity_row">-->
                 <!--                    <span class="calculator__form_complexity_title">{{-->
@@ -63,28 +63,28 @@
                 <!--                v-if="inputs.graph"-->
                 <!--            ></column-graph>-->
                 <div class="calculator__result">
-                    <converted-result :bitcoinValue="lightService.profit" />
+                    <converted-result :bitcoinValue="lightService.profit"/>
                 </div>
             </div>
         </transition>
-        <transition name="slide">
-            <div class="calculator__form_text">
-                <p class="calculator__form_complexity_title text-pro">
-                    {{ $t("profitability_calculator.form_calculator.text") }}
-                </p>
-            </div>
-        </transition>
+        <!--        <transition name="slide">-->
+        <!--            <div class="calculator__form_text">-->
+        <!--                <p class="calculator__form_complexity_title text-pro">-->
+        <!--                    {{ $t("profitability_calculator.form_calculator.text") }}-->
+        <!--                </p>-->
+        <!--            </div>-->
+        <!--        </transition>-->
     </div>
 </template>
 
 <script>
 import CalculatorTitle from "../UI/CalculatorTitle.vue";
 import CalculatorInput from "../UI/CalculatorInput.vue";
-import { mapGetters } from "vuex";
-import { LightCalculatorService } from "../../services/LightCalculatorService.js";
+import {mapGetters} from "vuex";
+import {LightCalculatorService} from "../../services/LightCalculatorService.js";
 import CalculatorTabs from "../UI/CalculatorTabs.vue";
 import ConvertedResult from "../UI/ConvertedResult.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 
 // import ColumnGraph from "../graphs/ColumnGraph.vue";
 
@@ -169,16 +169,19 @@ export default {
 .slide-leave-active {
     transition: all 0.5s ease;
 }
+
 .slide-enter-from,
 .slide-leave-to {
     opacity: 0;
     transform: translateX(30px);
 }
+
 @media (max-width: 550px) {
     .text-pro {
         text-align: center;
     }
 }
+
 .calculator {
     &_title {
         margin-bottom: 40px;
@@ -194,6 +197,7 @@ export default {
             margin-bottom: 40px;
         }
     }
+
     &__form {
         display: flex;
         flex-direction: column;
@@ -203,20 +207,24 @@ export default {
         @media (max-width: 850px) {
             gap: 10px;
         }
+
         &_text {
             margin: 20px 40px 0;
         }
+
         &_complexity {
             display: flex;
             width: 100%;
             flex-direction: column;
             gap: 16px;
             margin-bottom: 40px;
+
             &_row {
                 display: flex;
                 width: 100%;
                 justify-content: space-between;
             }
+
             &_title {
                 color: var(--gray-160, rgba(245, 250, 255, 0.6));
                 text-align: justify;
@@ -233,6 +241,7 @@ export default {
                     font-size: 14px;
                 }
             }
+
             &_data {
                 color: var(--gray-3100, #d0d5dd);
                 text-align: right;
@@ -249,21 +258,26 @@ export default {
                     font-size: 14px;
                 }
             }
+
             &_btc {
                 display: flex;
                 gap: 12px;
             }
         }
+
         .row {
             transition-delay: 0.25s;
+
             &:nth-child(2) {
                 transition-delay: 0.5s;
             }
+
             &:nth-child(3) {
                 transition-delay: 0.75s;
             }
         }
     }
+
     &__graph {
         padding: 16px;
         display: flex;
@@ -285,6 +299,7 @@ export default {
     box-shadow: 0px 4px 7px 0px rgba(14, 14, 14, 0.05);
     padding: 30px 50px;
 }
+
 @media (max-width: 550px) {
     .text-pro {
         text-align: center;

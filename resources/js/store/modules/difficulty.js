@@ -1,10 +1,10 @@
 import Vue from "lodash";
 import difficulty from "@/api/difficulty";
-import { MainApi } from "@/api/api";
+import {MainApi} from "@/api/api";
 
 export default {
     actions: {
-        async getGraph({ commit }) {
+        async getGraph({commit}) {
             let difficulty_chart = await difficulty.fetch({
                 data: {
                     format: "json",
@@ -20,8 +20,8 @@ export default {
                 console.error("Catch blockchain error: \n" + err);
             }
         },
-        async getMiningStat({ commit, state }) {
-            let minerstats = (await MainApi.get("/miner_stat")).data.minerstats;
+        async getMiningStat({commit, state}) {
+            let minerstats = (await MainApi.get("/minerstats")).data.minerstats;
 
             try {
                 let converterModel = {
@@ -49,7 +49,6 @@ export default {
     mutations: {
         updateInfo(state, data) {
             Vue.set(state.convertInfo, data.key, data.item);
-            console.log(state.convertInfo)
         },
         updateHistoryDiff(state, data) {
             let hist = data.reverse();

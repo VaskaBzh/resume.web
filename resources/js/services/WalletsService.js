@@ -1,9 +1,9 @@
-import { ProfileApi } from "@/api/api";
+import {ProfileApi} from "@/api/api";
 
-import { WalletData } from "@/modules/wallets/DTO/WalletData";
+import {WalletData} from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
-import { DefaultSubsService } from "@/modules/common/services/extends/DefaultSubsService";
-import { VerifyService } from "@/modules/verify/services/VerifyService";
+import {DefaultSubsService} from "@/modules/common/services/extends/DefaultSubsService";
+import {VerifyService} from "@/modules/verify/services/VerifyService";
 
 export class WalletsService extends DefaultSubsService {
     constructor(translate) {
@@ -70,7 +70,7 @@ export class WalletsService extends DefaultSubsService {
     openPopup() {
         this.opened = true;
 
-        setTimeout(() => this.opened = false, 300);
+        setTimeout(() => (this.opened = false), 300);
     }
 
     closePopup() {
@@ -124,7 +124,10 @@ export class WalletsService extends DefaultSubsService {
 
             if (!this.form.code) {
                 try {
-                    const response = await ProfileApi.post(`/send/code/${this.user.id}`, this.form);
+                    const response = await ProfileApi.post(
+                        `/send/code/${this.user.id}`,
+                        this.form
+                    );
 
                     this.isCodeSend = true;
 
@@ -150,8 +153,11 @@ export class WalletsService extends DefaultSubsService {
                         name: this.form.name,
                         group_id: this.group_id,
                         confirmation_code: this.form.code,
-                    }
-                    const response = await ProfileApi.post("/wallets/create", form);
+                    };
+                    const response = await ProfileApi.post(
+                        "/wallets/create",
+                        form
+                    );
 
                     this.isCodeSend = false;
 
@@ -205,12 +211,17 @@ export class WalletsService extends DefaultSubsService {
 
             let requestCount = 0;
 
-            const currentWallet = this.wallets.filter(wallet => this.form.id === wallet.id)[0];
+            const currentWallet = this.wallets.filter(
+                (wallet) => this.form.id === wallet.id
+            )[0];
 
             try {
                 if (currentWallet.fullName !== this.form.name) {
                     try {
-                        const response = await ProfileApi.put(`/wallets/update/${currentWallet.wallet_address}`, this.form);
+                        const response = await ProfileApi.put(
+                            `/wallets/update/${currentWallet.wallet_address}`,
+                            this.form
+                        );
 
                         store.dispatch("setNotification", {
                             status: "success",
@@ -221,7 +232,10 @@ export class WalletsService extends DefaultSubsService {
                         requestCount++;
                     } catch (err) {
                         console.error("Error with: " + err);
-                        store.dispatch("setFullErrors", err.response.data.errors);
+                        store.dispatch(
+                            "setFullErrors",
+                            err.response.data.errors
+                        );
 
                         store.dispatch("setNotification", {
                             status: "error",
@@ -236,13 +250,16 @@ export class WalletsService extends DefaultSubsService {
                             wallet_address: this.form.wallet,
                             group_id: this.form.group_id,
                             confirmation_code: this.form.code,
-                        }
-                        const response = await ProfileApi.put(`/wallets/change/address/${currentWallet.wallet_address}`, form);
+                        };
+                        const response = await ProfileApi.put(
+                            `/wallets/change/address/${currentWallet.wallet_address}`,
+                            form
+                        );
 
                         store.dispatch("setNotification", {
                             status: "success",
                             title: "changed",
-                            text: response.data.data.message,
+                            text: response.data.message,
                         });
 
                         await this.index();
@@ -252,7 +269,10 @@ export class WalletsService extends DefaultSubsService {
                         return;
                     } catch (err) {
                         console.error("Error with: " + err);
-                        store.dispatch("setFullErrors", err.response.data.errors);
+                        store.dispatch(
+                            "setFullErrors",
+                            err.response.data.errors
+                        );
 
                         store.dispatch("setNotification", {
                             status: "error",
@@ -269,7 +289,10 @@ export class WalletsService extends DefaultSubsService {
                 }
                 if (currentWallet.wallet_address !== this.form.wallet) {
                     try {
-                        const response = await ProfileApi.post(`/send/code/${this.user.id}`, this.form);
+                        const response = await ProfileApi.post(
+                            `/send/code/${this.user.id}`,
+                            this.form
+                        );
 
                         this.isCodeSend = true;
 
@@ -284,7 +307,10 @@ export class WalletsService extends DefaultSubsService {
                         return;
                     } catch (err) {
                         console.error("Error with: " + err);
-                        store.dispatch("setFullErrors", err.response.data.errors);
+                        store.dispatch(
+                            "setFullErrors",
+                            err.response.data.errors
+                        );
 
                         store.dispatch("setNotification", {
                             status: "error",
@@ -334,9 +360,8 @@ export class WalletsService extends DefaultSubsService {
             let response = null;
 
             try {
-                response = (
-                    await ProfileApi.get(`/wallets/${this.group_id}`)
-                ).data.data;
+                response = (await ProfileApi.get(`/wallets/${this.group_id}`))
+                    .data.data;
             } catch (err) {
                 store.dispatch("setFullErrors", err?.response?.data?.errors);
 
