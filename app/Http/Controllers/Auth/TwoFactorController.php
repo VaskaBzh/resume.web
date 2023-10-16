@@ -40,6 +40,11 @@ class TwoFactorController extends Controller
                                     description: 'QR code image data',
                                     type: 'string'
                                 ),
+                                new OA\Property(
+                                    property: 'secret',
+                                    description: 'secret key',
+                                    type: 'string'
+                                ),
                             ]
                         )
                     ]
@@ -73,7 +78,6 @@ class TwoFactorController extends Controller
                 $secretKey
             );
 
-            cache()->put('2fa_secret|' . $user->id, $secretKey, now()->addMinutes(5));
         } catch (\Throwable $e) {
             report($e);
 
@@ -84,6 +88,7 @@ class TwoFactorController extends Controller
 
         return new JsonResponse([
             'qrCode' => $QRImage,
+            'secret' => $secretKey
         ]);
     }
 
@@ -97,12 +102,19 @@ class TwoFactorController extends Controller
                 required: true,
                 content: [
                     new OA\JsonContent(
-                        required: ['two_fa_secret'],
+                        required: ['code', 'secret'],
                         properties: [
                             new OA\Property(
-                                property: 'two_fa_secret',
-                                description: 'Two-factor authentication secret key',
-                                type: 'string'
+                                property: 'code',
+                                description: 'Google authenticator code',
+                                type: 'integer',
+                                maxLength: 6,
+                                minLength: 6,
+                            ),
+                            new OA\Property(
+                                property: 'secret',
+                                description: 'Secret key',
+                                type: 'string',
                             ),
                         ]
                     )
@@ -158,9 +170,7 @@ class TwoFactorController extends Controller
     ): JsonResponse
     {
         try {
-            $secretKey = cache()->get('2fa_secret|' . $user->id);
-
-            $isValid = $googleTwoFactor->verifyKey($secretKey, $request->two_fa_secret);
+            $isValid = $googleTwoFactor->verifyKey($request->secret, $request->code);
 
             if (!$isValid) {
                 return new JsonResponse([
@@ -168,9 +178,7 @@ class TwoFactorController extends Controller
                 ], Response::HTTP_BAD_REQUEST);
             }
 
-            $user->update(['google2fa_secret' => $secretKey]);
-
-            cache()->forget('2fa_secret|' . $user->id);
+            $user->update(['google2fa_secret' => $request->secret]);
 
             return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
         } catch (\Throwable $e) {
