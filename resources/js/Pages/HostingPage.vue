@@ -10,8 +10,8 @@
     </transition>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-import { ComponentsEnum } from "@/modules/hosting/enums/ComponentsEnum";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import {ComponentsEnum} from "@/modules/hosting/enums/ComponentsEnum";
 
 export default {
     name: "hosting-page",
@@ -109,12 +109,16 @@ export default {
                     document.querySelector(".nav").style.transform =
                         "translateY(0)";
                 }, 1500);
+                document
+                    .querySelector(".burger-mobile")
+                    .removeAttribute("style");
             }
             if (newIndex > 0) {
                 clearTimeout(this.timeout);
                 document.querySelector(".nav").style.opacity = 0;
                 document.querySelector(".nav").style.transform =
                     "translateY(-100%)";
+                document.querySelector(".burger-mobile").style.opacity = 1;
             }
         },
     },
@@ -142,6 +146,9 @@ export default {
             document.querySelector(".layout").style.overflow = "visible";
         }
         document.querySelector("#app").style.overflow = "visible";
+        if (document.querySelector(".burger-mobile")) {
+            document.querySelector(".burger-mobile").removeAttribute("style");
+        }
         if (document.querySelector(".nav")) {
             document.querySelector(".nav").style.opacity = 1;
             document.querySelector(".nav").style.transform = "translateY(0)";
@@ -180,7 +187,7 @@ export default {
     border-bottom: 1px solid #585757;
     background: var(--gray-4100, #0d0d0d);
     box-shadow: 0px -4px 4px 0px rgba(18, 31, 78, 0.25),
-        0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     padding: 100px 100px 50px;
 }
 
