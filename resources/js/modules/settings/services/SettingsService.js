@@ -71,7 +71,7 @@ export class SettingsService {
     async sendVerify(form) {
         try {
             this.form.code = Number(form.code);
-            await this.fetchFac();
+            const response = await this.fetchFac();
 
             this.closeFacPopup();
             store.dispatch("setNotification", {
@@ -79,6 +79,7 @@ export class SettingsService {
                 title: "connected",
                 text: response.data.message,
             });
+            this.settingsService.closeFacPopup();
             store.dispatch("setUser");
         } catch (err) {
             console.error(err);
@@ -86,7 +87,7 @@ export class SettingsService {
             store.dispatch("setNotification", {
                 status: "error",
                 title: "error",
-                text: err.response.data.error,
+                text: err.response.data.message,
             });
         }
         // try {

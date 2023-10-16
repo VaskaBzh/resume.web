@@ -182,7 +182,6 @@ export default {
         async sendVerify(form) {
             console.log(form);
             await this.settingsService.sendVerify(form);
-            this.settingsService.closeFacPopup();
 
             // this.$store.dispatch("setNotification", {
             //     status: "success",
