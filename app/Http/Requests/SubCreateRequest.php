@@ -17,7 +17,7 @@ class SubCreateRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule],
+            'name' => ['required', 'string', 'max:255', 'min:3' ,new OnlyEngNameRule],
         ];
     }
 

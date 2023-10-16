@@ -5,14 +5,14 @@ return [
     'documentations' => [
         'default' => [
             'api' => [
-                'title' => 'Allbtc Swagger UI',
+                'title' => 'Allbtc API',
             ],
 
             'routes' => [
                 /*
                  * Route for accessing api documentation interface
                 */
-                'api' => 'v1/documentation',
+                'api' => 'v1/docs',
             ],
             'paths' => [
                 /*
