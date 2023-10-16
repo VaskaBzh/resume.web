@@ -9,18 +9,17 @@ use Tests\TestCase;
 
 class AuthTest extends TestCase
 {
-    /*use DatabaseTransactions;
 
     private User $user;
 
     protected function setUp(): void
     {
         $this->user = User::factory()->create();
-        dd($this->user);
+        dd(User::all());
     }
 
-    public function test_login()
-    {
-        dd($this->user);
-    }*/
+//    public function test_login()
+//    {
+//        dd($this->user);
+//    }
 }
