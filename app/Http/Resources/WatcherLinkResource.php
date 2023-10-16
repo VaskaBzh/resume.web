@@ -18,7 +18,7 @@ use OpenApi\Attributes as OA;
             new OA\Property(
                 property: 'allowed_routes',
                 type: 'array',
-                items: new OA\Items(ref: '#/components/schemas/AllowedRouteResource')
+                items: new OA\Items(type: 'string')
             ),
             new OA\Property(property: 'access_count', type: 'integer'),
             new OA\Property(property: 'url', type: 'string'),
@@ -34,7 +34,7 @@ class WatcherLinkResource extends JsonResource
             'id' => $this->id,
             'user_id' => $this->user_id,
             'name' => $this->name,
-            'allowed_routes' => new AllowedRouteResource($this),
+            'allowed_routes' => $this->allowed_routes,
             'access_count' => $this->access_count,
             'url' => config('app.url')
                 . '/watcher?access_key='

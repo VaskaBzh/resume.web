@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
     OA\Get(
         path: '/watchers/{user}/{sub}',
         summary: "Get list of watcher links for a user's sub",
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         tags: ['Watcher Links'],
         parameters: [
             new OA\Parameter(

@@ -20,7 +20,7 @@ class UpdateController extends Controller
         OA\Put(
             path: '/wallets/update/{wallet}',
             summary: 'Update wallet',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for update a wallet',
                 required: true,

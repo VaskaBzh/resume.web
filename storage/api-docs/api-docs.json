@@ -900,9 +900,6 @@
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Error while creating a sub"
                     }
                 },
                 "security": [
@@ -1674,12 +1671,12 @@
                 ]
             }
         },
-        "/worker/{worker}": {
+        "/workers/worker/{worker}": {
             "get": {
                 "tags": [
                     "Worker"
                 ],
-                "summary": "Get worker details",
+                "summary": "Get worker",
                 "parameters": [
                     {
                         "name": "worker",
@@ -2313,6 +2310,10 @@
                                         "qrCode": {
                                             "description": "QR code image data",
                                             "type": "string"
+                                        },
+                                        "secret": {
+                                            "description": "secret key",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -2367,11 +2368,18 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "two_fa_secret"
+                                    "code",
+                                    "secret"
                                 ],
                                 "properties": {
-                                    "two_fa_secret": {
-                                        "description": "Two-factor authentication secret key",
+                                    "code": {
+                                        "description": "Google authenticator code",
+                                        "type": "integer",
+                                        "maxLength": 6,
+                                        "minLength": 6
+                                    },
+                                    "secret": {
+                                        "description": "Secret key",
                                         "type": "string"
                                     }
                                 },
@@ -2555,7 +2563,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2908,7 +2916,7 @@
                     "allowed_routes": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/AllowedRouteResource"
+                            "type": "string"
                         }
                     },
                     "access_count": {
