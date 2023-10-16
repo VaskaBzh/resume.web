@@ -30,6 +30,8 @@ class CreateController extends Controller
                             new OA\Property(
                                 property: 'name',
                                 type: 'string',
+                                maxLength: 255,
+                                minLength: 3
                             ),
                         ],
                         type: 'object',
