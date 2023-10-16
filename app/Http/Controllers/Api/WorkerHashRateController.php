@@ -17,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
     OA\Get(
         path: '/workerhashrate/{worker}',
         summary: 'Get hash rates for a worker',
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         tags: ['Worker'],
         parameters: [
             new OA\Parameter(

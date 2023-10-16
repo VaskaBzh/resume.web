@@ -13,8 +13,8 @@ use OpenApi\Attributes as OA;
 #[
     OA\Info(
         version: "1.0.0",
-        description: "Документация OpenApi для Allbtc pool",
-        title: "Allbtc Swagger UI"
+        description: "Документация Allbtc API",
+        title: "Allbtc API"
     ),
     OA\Contact(email: 'ognevoy.bima@gmail.com'),
 ]

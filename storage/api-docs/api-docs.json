@@ -1,8 +1,8 @@
 {
     "openapi": "3.0.0",
     "info": {
-        "title": "Allbtc Swagger UI",
-        "description": "Документация OpenApi для Allbtc pool",
+        "title": "Allbtc API",
+        "description": "Документация Allbtc API",
         "contact": {
             "email": "ognevoy.bima@gmail.com"
         },
@@ -102,7 +102,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -146,7 +146,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -294,7 +294,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -485,7 +485,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -551,7 +551,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -670,7 +670,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -718,7 +718,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -763,7 +763,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -828,7 +828,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -862,7 +862,9 @@
                                 ],
                                 "properties": {
                                     "name": {
-                                        "type": "string"
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "minLength": 3
                                     }
                                 },
                                 "type": "object"
@@ -900,14 +902,11 @@
                                 }
                             }
                         }
-                    },
-                    "400": {
-                        "description": "Error while creating a sub"
                     }
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -953,7 +952,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -996,7 +995,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1071,7 +1070,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1143,7 +1142,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1188,7 +1187,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1261,7 +1260,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1334,7 +1333,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1370,7 +1369,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1424,7 +1423,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1470,7 +1469,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1533,7 +1532,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1669,7 +1668,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1781,7 +1780,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -1835,7 +1834,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2027,7 +2026,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2062,7 +2061,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2313,6 +2312,10 @@
                                         "qrCode": {
                                             "description": "QR code image data",
                                             "type": "string"
+                                        },
+                                        "secret": {
+                                            "description": "secret key",
+                                            "type": "string"
                                         }
                                     },
                                     "type": "object"
@@ -2339,7 +2342,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2367,11 +2370,18 @@
                         "application/json": {
                             "schema": {
                                 "required": [
-                                    "two_fa_secret"
+                                    "code",
+                                    "secret"
                                 ],
                                 "properties": {
-                                    "two_fa_secret": {
-                                        "description": "Two-factor authentication secret key",
+                                    "code": {
+                                        "description": "Google authenticator code",
+                                        "type": "integer",
+                                        "maxLength": 6,
+                                        "minLength": 6
+                                    },
+                                    "secret": {
+                                        "description": "Secret key",
                                         "type": "string"
                                     }
                                 },
@@ -2416,7 +2426,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2462,7 +2472,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2555,7 +2565,7 @@
                 },
                 "security": [
                     {
-                        "bearerAuth": []
+                        "bearer": []
                     }
                 ]
             }
@@ -2908,7 +2918,7 @@
                     "allowed_routes": {
                         "type": "array",
                         "items": {
-                            "$ref": "#/components/schemas/AllowedRouteResource"
+                            "type": "string"
                         }
                     },
                     "access_count": {

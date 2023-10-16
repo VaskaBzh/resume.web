@@ -19,7 +19,7 @@ class CreateController extends Controller
         OA\Post(
             path: '/watchers/create/{sub}',
             summary: 'Create a watcher link',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for creating a watcher link',
                 required: true,

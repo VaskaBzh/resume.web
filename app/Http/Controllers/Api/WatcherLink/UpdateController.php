@@ -18,7 +18,7 @@ class UpdateController extends Controller
         OA\Put(
             path: '/watchers/update/{watcher}',
             summary: 'Update a watcher link',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for updating a watcher link',
                 required: true,

@@ -19,7 +19,7 @@ class StatisticController extends Controller
         OA\Get(
             path: '/referrals/statistic/{user}',
             summary: 'Get referral statistics for a user',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Referral'],
             parameters: [
                 new OA\Parameter(

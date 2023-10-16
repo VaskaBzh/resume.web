@@ -19,7 +19,7 @@ class CreateController extends Controller
         OA\Post(
             path: '/subs/create/{user}',
             summary: 'Create a sub',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for creating a sub',
                 required: true,
@@ -30,6 +30,8 @@ class CreateController extends Controller
                             new OA\Property(
                                 property: 'name',
                                 type: 'string',
+                                maxLength: 255,
+                                minLength: 3
                             ),
                         ],
                         type: 'object',
@@ -77,33 +79,24 @@ class CreateController extends Controller
                         ),
                     ],
                 ),
-                new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
-                    description: 'Error while creating a sub',
-                ),
             ],
         )
     ]
     public function __invoke(
         SubCreateRequest $request,
-        User $user,
+        User             $user,
         BtcComService    $btcComService,
     ): JsonResponse
     {
-        try {
-            $result = $btcComService->createSub(
-                userData: UserData::fromRequest(requestData: $request->all())
-            );
 
-            if (isset($result['errors'])) {
-                return new JsonResponse(['error' => $result['errors']], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
+        $result = $btcComService->createSub(
+            userData: UserData::fromRequest(requestData: $request->all())
+        );
 
-        } catch (\Exception) {
-            return new JsonResponse([
-                'error' => __('actions.fail_sub_create')
-            ], Response::HTTP_BAD_REQUEST);
+        if (isset($result['errors'])) {
+            return new JsonResponse(['error' => $result['errors']], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
+
         return new JsonResponse([
             'message' => __('actions.success_sub_create')
         ], Response::HTTP_CREATED);

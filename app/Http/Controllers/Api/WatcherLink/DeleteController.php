@@ -17,7 +17,7 @@ class DeleteController extends Controller
         OA\Delete(
             path: '/watchers/delete/{watcher}',
             summary: 'Delete a watcher link',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Watcher Links'],
             parameters: [
                 new OA\Parameter(

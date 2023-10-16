@@ -18,7 +18,7 @@ class ListController extends Controller
         OA\Get(
             path: '/subs/{user}',
             summary: 'Get list',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Subaccount'],
             parameters: [
                 new OA\Parameter(
