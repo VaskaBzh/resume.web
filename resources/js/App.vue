@@ -1,14 +1,12 @@
 <template>
-    <keep-alive>
-        <component :is="$route.meta.layoutComponent">
-            <router-view />
-        </component>
-    </keep-alive>
+    <component :is="$route.meta.layoutComponent">
+        <router-view/>
+    </component>
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { ProfileApi } from "@/api/api";
+import {mapGetters} from "vuex";
+import {ProfileApi} from "@/api/api";
 
 export default {
     name: "app-layout-view",
@@ -39,7 +37,7 @@ export default {
     async created() {
         await this.$store.dispatch("setCurrency");
 
-		this.$store.dispatch("setToken");
+        this.$store.dispatch("setToken");
         window.addEventListener("resize", this.handleResize);
         document.addEventListener(
             "visibilitychange",

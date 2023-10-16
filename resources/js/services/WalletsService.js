@@ -91,6 +91,7 @@ export class WalletsService extends DefaultSubsService {
             try {
                 const response = await this.fetch();
 
+                console.log(response);
                 if (response) {
                     this.wallets = response.map((el) => {
                         return new WalletData({
@@ -106,6 +107,8 @@ export class WalletsService extends DefaultSubsService {
                 }
             } catch (err) {
                 console.error(err);
+
+                console.log(err);
 
                 store.dispatch("setNotification", {
                     status: "warning",

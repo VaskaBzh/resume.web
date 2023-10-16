@@ -178,8 +178,8 @@ export default {
             await this.service.index();
         },
         async removeWatcher(id) {
-            await this.service.removeWatcher(id)
-                .dropCard();
+            await this.service.removeWatcher(id);
+            this.service.dropCard();
             await this.service.index();
         },
     },

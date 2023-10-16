@@ -200,7 +200,7 @@ export class SettingsService {
 
     async generateFac() {
         return (
-            await ProfileApi.put(`/2fac/qrcode/${this.user.id}`, {
+            await ProfileApi.get(`/2fac/qrcode/${this.user.id}`, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
