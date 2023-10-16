@@ -9,10 +9,7 @@
     >
         <div class="fac__head">
             <main-title tag="h3">{{ $t("fac_popup.title") }}</main-title>
-            <main-description
-            >{{ $t("popup.text[4]") }}
-            </main-description
-            >
+            <main-description>{{ $t("popup.text[4]") }}</main-description>
         </div>
         <div class="fac__content" v-show="!hasCode">
             <div class="fac_qrcode" v-html="qrCode"></div>
@@ -34,22 +31,26 @@
                 class="fac_input"
                 inputName="twoFactorSecret"
                 :inputLabel="$t('fac_popup.label[1]')"
-                :inputValue="form.twoFactorSecret"
+                :inputValue="form.code"
                 :error="errorsExpired.error"
-                @getValue="form.twoFactorSecret = $event"
+                @getValue="form.code = $event"
             />
             <div class="fac__buttons">
                 <main-button
                     class="button-reverse fac_button button-full"
                     @click.prevent="hasCode = false"
                 >
-                    <template v-slot:text>{{ $t("fac_popup.button[1]") }}</template>
+                    <template v-slot:text
+                    >{{ $t("fac_popup.button[1]") }}
+                    </template>
                 </main-button>
                 <main-button
                     class="button-blue fac_button button-full"
                     @click="closePopup"
                 >
-                    <template v-slot:text>{{ $t("fac_popup.button[2]") }}</template>
+                    <template v-slot:text
+                    >{{ $t("fac_popup.button[2]") }}
+                    </template>
                 </main-button>
             </div>
         </div>
@@ -65,7 +66,6 @@ import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import {SettingsMessage} from "@/modules/settings/lang/SettingsMessage";
 import {mapGetters} from "vuex";
-
 
 export default {
     name: "fac-popup",
@@ -84,7 +84,7 @@ export default {
             hasCode: false,
             makeResize: false,
             form: {
-                two_fa_secret: "",
+                code: "",
             },
         };
     },

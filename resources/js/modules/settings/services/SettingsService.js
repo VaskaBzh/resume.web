@@ -69,8 +69,8 @@ export class SettingsService {
     }
 
     async sendVerify(form) {
-        store.dispatch("setUser");
         try {
+            this.form.code = Number(form.code);
             await this.fetchFac();
 
             this.closeFacPopup();
@@ -79,8 +79,15 @@ export class SettingsService {
                 title: "connected",
                 text: response.data.message,
             });
+            store.dispatch("setUser");
         } catch (err) {
             console.error(err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.error,
+            });
         }
         // try {
         //     const response = await this.fetchVerifyFac(form);
@@ -95,11 +102,6 @@ export class SettingsService {
         // } catch (err) {
         //     console.error(err);
         //
-        //     store.dispatch("setNotification", {
-        //         status: "error",
-        //         title: "error",
-        //         text: err.response.data.error ?? err.response.data.message,
-        //     });
         //     store.dispatch("setFullErrors", err.response.data);
         // }
     }
@@ -166,6 +168,8 @@ export class SettingsService {
 
             this.setCode(response.secret);
             this.setQrCode(response.qrCode);
+
+            this.form.secret = response.secret;
             this.openFacPopup();
         } catch (err) {
             console.error(err);
@@ -210,7 +214,7 @@ export class SettingsService {
 
     async fetchFac() {
         return (
-            await ProfileApi.put(`/2fac/enable/${this.user.id}`, {
+            await ProfileApi.put(`/2fac/enable/${this.user.id}`, this.form, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },

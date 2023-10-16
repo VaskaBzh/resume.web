@@ -1,16 +1,18 @@
 <template>
     <div class="settings" ref="page">
         <main-title class="title-settings" tag="h3">{{
-                    $t("title[2]")
-                }}</main-title>
+                $t("title[2]")
+            }}
+        </main-title>
         <div class="settings__main">
             <div
                 class="settings__card"
                 v-if="!this.user.email_verified_at"
             >
                 <main-title class="cabinet_title card_title" tag="h3">{{
-                    $t("title[0]")
-                }}</main-title>
+                        $t("title[0]")
+                    }}
+                </main-title>
                 <div class="settings__content">
                     <settings-list
                         :rows="settingsService.rows"
@@ -23,8 +25,9 @@
                     'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
                 }">
                 <main-title class="cabinet_title card_title" tag="h3">{{
-                    $t("title[1]")
-                }}</main-title>
+                        $t("title[1]")
+                    }}
+                </main-title>
                 <article class="card__article">
                     <div
                         class="card__container"
@@ -97,10 +100,11 @@ import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
 import SettingsPasswordPopup from "@/modules/settings/Components/blocks/SettingsPasswordPopup.vue";
 
-import { InstructionService } from "@/modules/instruction/services/InstructionService";
-import { SettingsService } from "@/modules/settings/services/SettingsService";
-import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
-import { mapGetters } from "vuex";
+import {InstructionService} from "@/modules/instruction/services/InstructionService";
+import {SettingsService} from "@/modules/settings/services/SettingsService";
+import {SettingsMessage} from "@/modules/settings/lang/SettingsMessage";
+import {mapGetters} from "vuex";
+
 export default {
     i18n: {
         sharedMessages: SettingsMessage,
@@ -171,19 +175,20 @@ export default {
             this.settingsService.setBlocks();
         },
         async sendPassword(form = null) {
-			      this.settingsService.setPasswordForm(form);
+            this.settingsService.setPasswordForm(form);
 
             await this.settingsService.sendPassword();
         },
         async sendVerify(form) {
+            console.log(form);
             await this.settingsService.sendVerify(form);
-	        this.settingsService.closeFacPopup();
+            this.settingsService.closeFacPopup();
 
-            this.$store.dispatch("setNotification", {
-                status: "success",
-                title: "connected",
-                text: this.$t("validate_messages.two_fa_message"),
-            });
+            // this.$store.dispatch("setNotification", {
+            //     status: "success",
+            //     title: "connected",
+            //     text: this.$t("validate_messages.two_fa_message"),
+            // });
 
             this.settingsService.setBlocks();
         },
@@ -216,38 +221,43 @@ export default {
 .title-settings {
     display: none;
 }
+
 @media (max-width: 500px) {
     .title-settings {
         display: inline-block;
         padding: 0 0 16px 16px;
     }
 }
+
 .card__article {
     display: flex;
     flex-direction: column;
     gap: 32px;
     margin-top: 8px;
 }
+
 .card__container {
     display: flex;
     justify-content: space-between;
 }
+
 @media (max-width: 900px) {
     .card__container {
         flex-direction: column;
         gap: 16px;
         padding: 0;
     }
-    .card_title{
+    .card_title {
         font-size: 16px;
         line-height: 24px; /* 150% */
         margin-bottom: 12px;
     }
 }
+
 @media (max-width: 500px) {
     .card__article {
-       margin-top: 28px;
-       gap: 40px;
+        margin-top: 28px;
+        gap: 40px;
     }
 }
 
@@ -263,6 +273,7 @@ export default {
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
+
     &__main {
         width: 100%;
         height: calc(100vh - 135px);
@@ -271,11 +282,12 @@ export default {
         justify-content: center;
         flex-direction: column;
         gap: 12px;
-        @media(max-width: 500px){
+        @media(max-width: 500px) {
             height: auto;
             gap: 8px;
         }
     }
+
     &__content {
         width: 100%;
         display: flex;
@@ -288,6 +300,7 @@ export default {
             gap: 32px;
         }
     }
+
     &__column {
         display: flex;
         flex-direction: column;
@@ -310,6 +323,7 @@ export default {
             width: 100%;
         }
     }
+
     &__card {
         border-radius: 24px;
         background: var(--background-island, #fff);
