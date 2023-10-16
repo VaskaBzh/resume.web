@@ -73,9 +73,9 @@ class TwoFactorController extends Controller
             $secretKey = $googleTwoFactor->generateSecretKey();
 
             $QRImage = $googleTwoFactor->getQRCodeInline(
-                config('app.name'),
-                $user->email,
-                $secretKey
+                company: config('app.name'),
+                holder: $user->email,
+                secret: $secretKey
             );
 
         } catch (\Throwable $e) {
