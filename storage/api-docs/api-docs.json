@@ -1001,10 +1001,85 @@
                 ]
             }
         },
+        "/wallets/change/address/{wallet}": {
+            "put": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Change wallet address",
+                "operationId": "ab18c885ec7b599b410193a7b96115ce",
+                "parameters": [
+                    {
+                        "name": "wallet",
+                        "in": "path",
+                        "description": "Wallet's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body for update a wallet address",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "wallet_address",
+                                    "confirmation_code"
+                                ],
+                                "properties": {
+                                    "wallet_address": {
+                                        "type": "string",
+                                        "maxLength": 191,
+                                        "minLength": 20
+                                    },
+                                    "confirmation_code": {
+                                        "type": "numeric",
+                                        "maxLength": 5,
+                                        "minLength": 5
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Wallet successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Wallet not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
         "/wallets/create": {
             "post": {
                 "tags": [
-                    "Wallets"
+                    "Wallet"
                 ],
                 "summary": "Create a wallet",
                 "operationId": "5222293cd78a435e191142bf2fe37eaf",
@@ -1033,7 +1108,7 @@
                                         "minLength": 3
                                     },
                                     "confirmation_code": {
-                                        "type": "string",
+                                        "type": "numeric",
                                         "maxLength": 5,
                                         "minLength": 5
                                     }
@@ -1058,14 +1133,25 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Wallet not found"
                     }
-                }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
             }
         },
         "/wallets/{sub}": {
             "get": {
                 "tags": [
-                    "Wallets"
+                    "Wallet"
                 ],
                 "summary": "Get wallets for a sub",
                 "parameters": [
@@ -1098,6 +1184,79 @@
                     },
                     "404": {
                         "description": "Sub not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/wallets/update/{wallet}": {
+            "put": {
+                "tags": [
+                    "Wallet"
+                ],
+                "summary": "Update wallet",
+                "operationId": "520e7d86ced70aa06a80aa8570a48d1f",
+                "parameters": [
+                    {
+                        "name": "wallet",
+                        "in": "path",
+                        "description": "Wallet's ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "Request body for update a wallet",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "wallet_address",
+                                    "group_id",
+                                    "confirmation_code"
+                                ],
+                                "properties": {
+                                    "group_id": {
+                                        "type": "string"
+                                    },
+                                    "name": {
+                                        "type": "string",
+                                        "minLength": 3
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Wallet successfully updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "404": {
+                        "description": "Wallet not found"
                     }
                 },
                 "security": [

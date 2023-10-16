@@ -13,8 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 #[
     OA\Get(
-        path: '/worker/{worker}',
-        summary: 'Get worker details',
+        path: '/workers/worker/{worker}',
+        summary: 'Get worker',
         security: [['bearerAuth' => []]],
         tags: ['Worker'],
         parameters: [

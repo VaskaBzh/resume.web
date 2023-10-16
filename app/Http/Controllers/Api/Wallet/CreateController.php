@@ -18,6 +18,7 @@ class CreateController extends Controller
         OA\Post(
             path: '/wallets/create',
             summary: 'Create a wallet',
+            security: [['bearerAuth' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for creating a wallet',
                 required: true,
@@ -46,7 +47,7 @@ class CreateController extends Controller
                             ),
                             new OA\Property(
                                 property: 'confirmation_code',
-                                type: 'string',
+                                type: 'numeric',
                                 maxLength: 5,
                                 minLength: 5,
                             ),
@@ -55,7 +56,7 @@ class CreateController extends Controller
                     ),
                 ],
             ),
-            tags: ['Wallets'],
+            tags: ['Wallet'],
             responses: [
                 new OA\Response(
                     response: Response::HTTP_CREATED,
@@ -72,6 +73,8 @@ class CreateController extends Controller
                         ),
                     ],
                 ),
+                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Wallet not found'),
             ],
         )
     ]

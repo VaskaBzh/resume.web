@@ -179,6 +179,7 @@ return [
     'attributes' => [
         'password' => 'пароль',
         'name' => 'имя',
+        'subaccount' => 'сабаккаунт',
         'referral_code' => 'реферальный код',
         'wallet_address' => 'адрес кошелька',
         'wallet_name' => 'имя кошелька',

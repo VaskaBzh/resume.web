@@ -99,8 +99,8 @@ class BtcComService
 
             return [
                 'errors' => [
-                    'name' => trans('validation.unique', [
-                        'attribute' => 'Аккаунт'
+                    'name' => __('validation.unique', [
+                        'attribute' => __('validation.attributes.subaccount')
                     ])
                 ]
             ];
@@ -124,7 +124,10 @@ class BtcComService
      * Следует обратить внимание, метод принимает в строке запроса
      * параметр group (не group_id)
      */
-    public function getWorkerList(?int $groupId = self::UNGROUPED_ID, ?string $workerStatus = 'all'): Collection
+    public function getWorkerList(
+        ?int    $groupId = self::UNGROUPED_ID,
+        ?string $workerStatus = 'all'
+    ): Collection
     {
         $response = $this->call(
             segments: ['worker'],
@@ -173,7 +176,7 @@ class BtcComService
             "page_size" => "1",
         ])['list'];
 
-         return collect($fppsRate)->first()['more_than_pps96_rate'];
+        return collect($fppsRate)->first()['more_than_pps96_rate'];
     }
 
     /* End requests */
@@ -193,17 +196,17 @@ class BtcComService
             'workers_count_active' => $btcComSub['workers_active'],
             'workers_count_in_active' => $btcComSub['workers_inactive'],
             'workers_count_unstable' => $btcComSub['workers_dead'],
-            'hash_per_min' => (float) $btcComSub['shares_1m'],
+            'hash_per_min' => (float)$btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay,
             'today_forecast' => number_format(Helper::calculateEarn(
                 stats: $stats,
                 hashRate: $hashPerDay,
                 fee: BtcComService::FEE
             ), 8, '.', ' '),
-            'reject_percent' => (float) $btcComSub['reject_percent'],
+            'reject_percent' => (float)$btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
             'total_payout' => $sub->total_payout,
-            'yesterday_amount' => (float) $sub->yesterday_amount,
+            'yesterday_amount' => (float)$sub->yesterday_amount,
         ];
     }
 
