@@ -1674,12 +1674,12 @@
                 ]
             }
         },
-        "/worker/{worker}": {
+        "/workers/worker/{worker}": {
             "get": {
                 "tags": [
                     "Worker"
                 ],
-                "summary": "Get worker details",
+                "summary": "Get worker",
                 "parameters": [
                     {
                         "name": "worker",
