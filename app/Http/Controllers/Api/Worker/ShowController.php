@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
     OA\Get(
         path: '/workers/worker/{worker}',
         summary: 'Get worker',
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         tags: ['Worker'],
         parameters: [
             new OA\Parameter(

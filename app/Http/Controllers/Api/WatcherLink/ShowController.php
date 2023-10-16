@@ -16,7 +16,7 @@ class ShowController extends Controller
         OA\Get(
             path: '/watchers/{watcher}',
             summary: "Get specified watcher link for a user's sub",
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Watcher Links'],
             parameters: [
                 new OA\Parameter(

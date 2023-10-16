@@ -18,7 +18,7 @@ class CreateController extends Controller
         OA\Post(
             path: '/wallets/create',
             summary: 'Create a wallet',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for creating a wallet',
                 required: true,

@@ -161,7 +161,7 @@ class LoginController extends Controller
         OA\Post(
             path: '/logout',
             summary: 'User logout',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Auth'],
             responses: [
                 new OA\Response(
@@ -203,7 +203,7 @@ class LoginController extends Controller
         OA\Put(
             path: '/decrease/token',
             summary: 'Decrease the expiration time of the current token',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Auth'],
             responses: [
                 new OA\Response(
