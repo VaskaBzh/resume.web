@@ -107,7 +107,7 @@ class TwoFactorController extends Controller
                             new OA\Property(
                                 property: 'code',
                                 description: 'Google authenticator code',
-                                type: 'integer',
+                                type: 'string',
                                 maxLength: 6,
                                 minLength: 6,
                             ),
@@ -154,7 +154,8 @@ class TwoFactorController extends Controller
                                 new OA\Property(
                                     property: 'error',
                                     description: 'Error message',
-                                    type: 'string'
+                                    type: 'array',
+                                    items: new OA\Items(type: 'string')
                                 ),
                             ]
                         )

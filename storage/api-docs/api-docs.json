@@ -2415,7 +2415,10 @@
                                     "properties": {
                                         "error": {
                                             "description": "Error message",
-                                            "type": "string"
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
                                         }
                                     },
                                     "type": "object"
