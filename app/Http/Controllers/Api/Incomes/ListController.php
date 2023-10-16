@@ -19,7 +19,7 @@ class ListController extends Controller
         OA\Get(
             path: '/incomes/{sub}',
             summary: 'Get list of incomes',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Income'],
             parameters: [
                 new OA\Parameter(

@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
     OA\Get(
         path: '/wallets/{sub}',
         summary: 'Get wallets for a sub',
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         tags: ['Wallet'],
         parameters: [
             new OA\Parameter(

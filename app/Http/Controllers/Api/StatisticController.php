@@ -19,7 +19,7 @@ use Symfony\Component\HttpFoundation\Response;
     OA\Get(
         path: '/statistic/{sub}',
         summary: 'Get statistics for a sub',
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         tags: ['Subaccount'],
         parameters: [
             new OA\Parameter(

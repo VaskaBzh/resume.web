@@ -17,7 +17,7 @@ use OpenApi\Attributes as OA;
     OA\Post(
         path: '/referrals/generate/{user}',
         summary: 'Generate a referral code for a user',
-        security: [['bearerAuth' => []]],
+        security: [['bearer' => []]],
         requestBody: new OA\RequestBody(
             description: 'Request body for generating a referral code',
             required: false,

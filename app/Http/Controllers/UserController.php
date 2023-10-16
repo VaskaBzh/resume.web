@@ -15,7 +15,7 @@ class UserController extends Controller
         OA\Get(
             path: '/user/{user}',
             summary: 'Get user',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['User'],
             parameters: [
                 new OA\Parameter(

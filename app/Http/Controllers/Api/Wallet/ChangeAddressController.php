@@ -18,7 +18,7 @@ class ChangeAddressController extends Controller
         OA\Put(
             path: '/wallets/change/address/{wallet}',
             summary: 'Change wallet address',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             requestBody: new OA\RequestBody(
                 description: 'Request body for update a wallet address',
                 required: true,

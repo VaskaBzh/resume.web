@@ -11,7 +11,11 @@ use App\Http\Controllers\Auth\TwoFactorController;
 use App\Http\Controllers\Auth\VerificationController;
 use Illuminate\Support\Facades\Auth;
 
-Auth::routes(['logout' => false, 'reset' => false, 'login' => false]);
+Auth::routes([
+    'logout' => false,
+    'reset' => false,
+    'login' => false
+]);
 
 Route::post('/login', [LoginController::class, 'login'])
     ->middleware('two-factor');

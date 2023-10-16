@@ -20,7 +20,7 @@ class ShowController extends Controller
         OA\Get(
             path: '/subs/sub/{sub}',
             summary: 'Get subaccount',
-            security: [['bearerAuth' => []]],
+            security: [['bearer' => []]],
             tags: ['Subaccount'],
             parameters: [
                 new OA\Parameter(
