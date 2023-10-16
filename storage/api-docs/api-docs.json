@@ -1947,13 +1947,13 @@
                             }
                         }
                     },
-                    "401": {
-                        "description": "Bad request",
+                    "404": {
+                        "description": "Not found",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
+                                        "errors": {
                                             "type": "array",
                                             "items": {
                                                 "description": "Error message(s)",
@@ -1972,7 +1972,7 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
+                                        "errors": {
                                             "type": "array",
                                             "items": {
                                                 "description": "Error message(s)",
@@ -2013,9 +2013,12 @@
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
+                                        "errors": {
                                             "description": "Error message",
-                                            "type": "string"
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "string"
+                                            }
                                         }
                                     },
                                     "type": "object"
@@ -2135,13 +2138,25 @@
                         }
                     },
                     "422": {
-                        "description": "Error while registering user",
+                        "description": "Validation error",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
-                                        "error": {
-                                            "type": "string"
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "property": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
                                         }
                                     },
                                     "type": "object"
@@ -2189,14 +2204,46 @@
                             }
                         }
                     },
-                    "400": {
-                        "description": "Unprocessable Entity",
+                    "404": {
+                        "description": "Resource not found",
                         "content": {
                             "application/json": {
                                 "schema": {
                                     "properties": {
                                         "errors": {
-                                            "description": "Validation errors",
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            },
+                                            "example": [
+                                                "Requested resource not found"
+                                            ]
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "property": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            },
                                             "type": "object"
                                         }
                                     },

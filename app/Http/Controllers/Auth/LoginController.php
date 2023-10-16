@@ -87,12 +87,12 @@ class LoginController extends Controller
                     )
                 ),
                 new OA\Response(
-                    response: Response::HTTP_UNAUTHORIZED,
-                    description: "Bad request",
+                    response: Response::HTTP_NOT_FOUND,
+                    description: "Not found",
                     content: new OA\JsonContent(
                         properties: [
                             new OA\Property(
-                                property: "error",
+                                property: "errors",
                                 type: "array",
                                 items: new OA\Items(
                                     description: "Error message(s)",
@@ -109,7 +109,7 @@ class LoginController extends Controller
                     content: new OA\JsonContent(
                         properties: [
                             new OA\Property(
-                                property: "error",
+                                property: "errors",
                                 type: "array",
                                 items: new OA\Items(
                                     description: "Error message(s)",
@@ -127,13 +127,13 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
-                'error' => [__('auth.failed')]
-            ], Response::HTTP_UNAUTHORIZED);
+                'errors' => [__('auth.failed')]
+            ], Response::HTTP_NOT_FOUND);
         }
 
         if (!$request->user->hasVerifiedEmail()) {
             return new JsonResponse([
-                'error' => [__('auth.email.not.verified', ['email' => $request->user->email])]
+                'errors' => [__('auth.email.not.verified', ['email' => $request->user->email])]
             ], Response::HTTP_FORBIDDEN);
         }
 
@@ -178,9 +178,10 @@ class LoginController extends Controller
                     content: new OA\JsonContent(
                         properties: [
                             new OA\Property(
-                                property: 'error',
+                                property: 'errors',
                                 description: 'Error message',
-                                type: 'string'
+                                type: 'array',
+                                items: new OA\Items('string')
                             )
                         ],
                         type: 'object'

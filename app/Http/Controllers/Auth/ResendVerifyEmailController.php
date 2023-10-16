@@ -47,19 +47,50 @@ class ResendVerifyEmailController extends Controller
                     ]
                 ),
                 new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
-                    description: 'Unprocessable Entity',
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Resource not found',
                     content: [
                         new OA\JsonContent(
                             properties: [
                                 new OA\Property(
                                     property: 'errors',
-                                    description: 'Validation errors',
-                                    type: 'object'
-                                )
-                            ]
-                        )
-                    ]
+                                    type: 'array',
+                                    items: new OA\Items(
+                                        type: 'string',
+                                    ),
+                                    example: ['Requested resource not found'],
+                                ),
+                            ],
+                            type: 'object',
+                        ),
+                    ],
+                ),
+                new OA\Response(
+                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                    description: 'Validation error',
+                    content: [
+                        new OA\JsonContent(
+                            properties: [
+                                new OA\Property(
+                                    property: 'message',
+                                    type: 'string',
+                                    example: 'The given data was invalid.',
+                                ),
+                                new OA\Property(
+                                    property: 'errors',
+                                    properties: [
+                                        new OA\Property(
+                                            property: 'property',
+                                            type: 'array',
+                                            items: new OA\Items(type: 'string'),
+                                        ),
+                                    ],
+                                    type: 'object',
+                                ),
+                            ],
+                            type: 'object',
+                        ),
+                    ],
                 )
             ]
         )

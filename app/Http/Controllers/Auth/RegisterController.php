@@ -95,19 +95,31 @@ class RegisterController extends Controller
                 ),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
-                    description: 'Error while registering user',
+                    description: 'Validation error',
                     content: [
                         new OA\JsonContent(
                             properties: [
                                 new OA\Property(
-                                    property: 'error',
+                                    property: 'message',
                                     type: 'string',
+                                    example: 'The given data was invalid.',
+                                ),
+                                new OA\Property(
+                                    property: 'errors',
+                                    properties: [
+                                        new OA\Property(
+                                            property: 'property',
+                                            type: 'array',
+                                            items: new OA\Items(type: 'string'),
+                                        ),
+                                    ],
+                                    type: 'object',
                                 ),
                             ],
                             type: 'object',
                         ),
                     ],
-                ),
+                )
             ],
         )
     ]
@@ -122,17 +134,17 @@ class RegisterController extends Controller
 
         try {
             $user = $this->create(userData: $userData);
-            auth()->login($user);
-            $btcComService->createSub(userData: $userData);
-
-
-            if ($request->referral_code) {
-                ReferralService::attach(referral: $user, code: $request->referral_code);
-            }
-
-            event(new Registered(
-                user: $user
-            ));
+//            auth()->login($user);
+//            $btcComService->createSub(userData: $userData);
+//
+//
+//            if ($request->referral_code) {
+//                ReferralService::attach(referral: $user, code: $request->referral_code);
+//            }
+//
+//            event(new Registered(
+//                user: $user
+//            ));
 
             return new JsonResponse([
                 'message' => 'success',
@@ -147,7 +159,7 @@ class RegisterController extends Controller
             report($e);
 
             return new JsonResponse([
-                'error' => 'Something went wrong! Please contact with tech support'
+                'errors' => ['Something went wrong! Please contact with tech support']
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }
@@ -161,7 +173,7 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule],
+            'name' => ['required', 'string', 'max:255', new OnlyEngNameRule, 'min:3'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:10', 'max:50', 'confirmed', 'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'],
             'referral_code' => ['string', 'nullable', 'exists:users,referral_code']
@@ -176,6 +188,9 @@ class RegisterController extends Controller
             'password.required' => __('validation.required', ['attribute' => __('validation.attributes.password')]),
             'password.min' => __('validation.min.string', [
                     'attribute' => __('validation.attributes.password'), 'min' => 8]
+            ),
+            'name.min' => __('validation.min.string', [
+                    'attribute' => __('validation.attributes.name'), 'min' => 8]
             ),
             'password.confirmed' => __('validation.confirmed', ['attribute' => __('validation.attributes.password')]),
             'referral_code.exists' => __('validation.exists', ['attribute' => __('validation.attributes.referral_code')])
