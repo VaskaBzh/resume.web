@@ -79,7 +79,20 @@ class IncomeListController extends Controller
                     ]
                 ),
                 new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: "Unauthorized"),
-                new OA\Response(response: Response::HTTP_NOT_FOUND, description: "User or referral code not found"),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Not found',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
+                )
             ]
         )
     ]
@@ -87,7 +100,9 @@ class IncomeListController extends Controller
     {
         if (!$user?->referral_code) {
             return new JsonResponse([
-                'error' => __('actions.referral.exists')
+                'errors' => [
+                    'message' => [__('actions.referral.exists')]
+                ]
             ], Response::HTTP_NOT_FOUND);
         }
 

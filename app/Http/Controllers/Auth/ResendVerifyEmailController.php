@@ -36,30 +36,29 @@ class ResendVerifyEmailController extends Controller
                     description: 'Email verification link sent successfully',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'message',
-                                    description: 'Success message',
-                                    type: 'string'
-                                )
+                            type: 'object',
+                            example: [
+                                'message' => [
+                                    'email' => 'string'
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Resource not found'),
                 new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
-                    description: 'Unprocessable Entity',
+                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                    description: 'Validation error',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'errors',
-                                    description: 'Validation errors',
-                                    type: 'object'
-                                )
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 )
             ]
         )
@@ -68,18 +67,27 @@ class ResendVerifyEmailController extends Controller
     {
         $this->validateEmail($request->email);
 
-        $user = User::whereEmail($request->email)
-            ->firstOrFail();
+        try {
+            $user = User::whereEmail($request->email)
+                ->firstOrFail();
 
-        if ($user->hasVerifiedEmail()) {
-            return new JsonResponse(['message' => __('auth.email.already_verify', [
-                'value' => $user->email,
-                'date' => $user->email_verified_at
-            ], Response::HTTP_BAD_REQUEST)
+            if ($user->hasVerifiedEmail()) {
+                return new JsonResponse([
+                    'errors' => [
+                        'auth' => [__('auth.email.already_verify')]
+                    ]
+                ]);
+            }
+
+            $user->sendEmailVerificationNotification();
+        } catch (\Throwable) {
+            return new JsonResponse([
+                'errors' => [
+                    'auth' => ['Something went wrong']
+                ]
             ]);
         }
 
-        $user->sendEmailVerificationNotification();
 
         return new JsonResponse([
                 'message' => __('auth.email.verify', [

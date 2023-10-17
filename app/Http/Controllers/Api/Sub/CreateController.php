@@ -64,18 +64,18 @@ class CreateController extends Controller
                         ),
                     ],
                 ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found'),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
-                    description: 'Error while creating a sub',
+                    description: 'Validation errors',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'error',
-                                    type: 'string',
-                                ),
-                            ],
                             type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
                         ),
                     ],
                 ),

@@ -40,8 +40,21 @@ class ShowController extends Controller
                         )
                     ],
                 ),
-                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized',),
-                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Watcher not found',),
+                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Not found',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
+                )
             ],
         )
     ]

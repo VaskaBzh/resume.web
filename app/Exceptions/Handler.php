@@ -54,20 +54,21 @@ class Handler extends ExceptionHandler
 
         $this->renderable(static function (Throwable $e) {
             if ($e instanceof NotFoundHttpException) {
+
                 return new JsonResponse([
-                    'message' => 'Requested resource not found'
+                    'errors' => ['message' => ['Requested resource not found']]
                 ], Response::HTTP_NOT_FOUND);
             }
 
             if ($e instanceof UnauthorizedException) {
                 return new JsonResponse([
-                    'message' => $e->getMessage()
+                    'errors' => ['message' => [$e->getMessage()]]
                 ], Response::HTTP_UNAUTHORIZED);
             }
 
             if ($e instanceof HttpException) {
                 return new JsonResponse([
-                    'message' => $e->getMessage()
+                    'errors' => ['message' => [$e->getMessage()]]
                 ], Response::HTTP_FORBIDDEN);
             }
         });
