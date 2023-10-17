@@ -1,9 +1,8 @@
 <template>
     <div class="security security__section" ref="view">
         <div class="security__wrapper">
-            <landing-headline class="security__headline">{{
-                    $t("safety.button")
-                }}
+            <landing-headline class="security__headline"
+            >{{ $t("safety.button") }}
             </landing-headline>
             <landing-wrap :title="infoCards[key].title">
                 <template v-slot:content>
@@ -87,19 +86,23 @@ export default {
                 } else if (this.progress === 2) {
                     this.key = "DDoS";
 
-                    if (
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 && !this.validScroll) {
-                        this.$refs.view.style.transform = `translateY(-${
+                    setTimeout(() => {
+                        if (
                             this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight
-                        }px)`;
+                            document.scrollingElement.clientHeight >
+                            20 &&
+                            !this.validScroll
+                        ) {
+                            this.$refs.view.style.transform = `translateY(-${
+                                this.$refs.view.offsetHeight -
+                                document.scrollingElement.clientHeight
+                            }px)`;
 
-                        this.validScroll = true;
-                    } else {
-                        this.$emit("next");
-                    }
+                            this.validScroll = true;
+                        } else {
+                            this.$emit("next");
+                        }
+                    }, 1000);
                 }
             }
             if (
@@ -120,7 +123,9 @@ export default {
                     if (
                         this.$refs.view.offsetHeight -
                         document.scrollingElement.clientHeight >
-                        20 && this.validScroll) {
+                        20 &&
+                        this.validScroll
+                    ) {
                         this.$refs.view.style.transform = `translateY(0px)`;
 
                         this.validScroll = false;

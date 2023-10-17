@@ -8,7 +8,7 @@ const messages = {
         currency: "BTC Rate",
         miners_title: ["transparent", "and efficient", "mining", "of bitcoin"],
         miners_offer: {
-            title: "what we offer",
+            title: "what do we offer",
             text: "Efficient and stable mining pool with personal commission, optimized for Bitcoin mining. As well as a set of tools for a transparent and convenient analysis of your assets.",
         },
         hosting_title: ["by", "50%", "per each kwt", "increase", "your income"],
@@ -54,7 +54,7 @@ const messages = {
             },
         },
         offer: {
-            button: "what we offer",
+            button: "what do we offer",
             title: ["we'll increase", "your income", "per each kWt", "by 50%"],
             cards: {
                 title: [
@@ -71,7 +71,7 @@ const messages = {
         },
         pluse: {
             button: "more advantages",
-            text: "We offer a set of tools to optimize the work and increase profits of data centers. Personal support resolves all issues without the participationof your specialists.",
+            text: "We offer a set of tools to optimize the work and increase profits of data centers. Personal support resolves all issues without the participation of your specialists.",
         },
         system_monitoring: {
             title: ["hosting", "management", "system"],
@@ -84,7 +84,7 @@ const messages = {
         },
         for_clients: {
             button: "Your customers are going to get",
-            text: "Your clients will receive a set of tools for stable and transparent earnings. Plus access to premium support and guarantees of safety and reliability.",
+            text: "Your clients will receive a set of tools for stable and transparent earnings. Plus access to premium support and guarantees of safety and reliability",
         },
         hosting_personal_account: {
             title: "user-friendly personal account",
@@ -106,24 +106,25 @@ const messages = {
         },
         hosting_mobile_app: {
             title: "mobile application",
-            text: "Optimized and intuitive mobile application. Hashrate monitoring notifications and access to income information at any time on your phone.",
+            text: "Optimized and intuitive mobile application. Hashrate monitoring, notifications and access to income information at any time \n" +
+                "on your phone.",
             button: "coming soon to the appstore",
         },
         guarantees: {
             title: "Guarantees of reliability and safety",
-            text: "A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool",
+            text: "A set of tools created to improve the security of crypto assets through automation. The most profitable payment system and prompt technical support.",
             list: {
                 title: [
                     "FPPS+",
                     "security guarantee",
                     "automatic payments",
                     "prompt technical support",
-                    "timely notifications",
                 ],
                 text: [
                     "The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.",
                     "We provide maximum protection for your crypto assets and user data. Using physical security, data encryption, protection against DDoS attacks, the use of 2FA and VPN tunnels. As well as regular security audits, including penetration testing.",
                     "We have automated payouts to improve security and simplify the process. You configure the minimum amount of funds for withdrawal and the payment occurs automatically when the required numbers are reached.",
+                    "Technical support works 24/7 and takes on tasks and responds to the client within 5 minutes. Multilingual support will answer all questions.",
                 ],
             },
         },
@@ -139,11 +140,11 @@ const messages = {
         },
         history_pool: {
             texts: [
-                "We create sites for data centers, hosting, and mining hotels placement. We collaborate with contractors in Russia and the CIS. We create turnkey mining zones: from rent to commissioning the farm.",
-                "Halving occurred, mining difficulty increased. A team of developers appeared. Our goal is to create relevant solutions for the optimization of industrial miners and data centers.",
-                "Bitcoin has significantly increased in price. We expanded our staff manifold and established a monitoring system for data centers. In the same year, we signed the first custom integration contracts.",
-                "Officially registered a cryptocurrency mining pool. The first data centers connected to the system. We increased their profit by 50% for every kilowatt-hour spent.",
-                "We ceased to operate only as a closed pool for data centers and entered the international market. By the end of 2023, we have ambitious plans.",
+                "We’ve created sites for the placement of data centers, hosting and mining hotels. Also cooperated with contractors in Russia and the CIS. Created turnkey mining zones: from renting to putting the farm into operation.",
+                "Halving happened, mining difficulty increased. A development team has appeared. Our goal was to create up-to-date solutions to optimize the operation of industrial miners and data centers.",
+                "Bitcoin had risen in price significantly. We had expanded our staff several times and created a monitoring system for data centers. In the same year, the first contracts for custom integration were concluded.",
+                "We had officially registered a pool for mining cryptocurrencies. The first data centers connected to the system. Their profits increased by 50% for every kilowatt of energy spent.",
+                "We stopped working only as a closed pool for data centers and entered the international market. Now we have ambitious plans by the end of 2023.",
             ],
         },
         title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
@@ -211,7 +212,7 @@ const messages = {
                 text: [
                     "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
                     "Up-to-date information in your personal account about the pool hashrate, worker productivity, accruals, payments and other statistics that allow you to evaluate how the pool’s performance and predict future income.",
-                    "The advanced technology we created, Stratum 3.0, allows us to reduce the time of synchronization of mining equipment with the pool. Advanced security system, both physical and virtual.",
+                    "The advanced technology, Stratum 3.0, allows us to reduce the time of synchronization of mining equipment with the pool. Advanced security system, both physical and virtual.",
                 ],
             },
         },
@@ -237,7 +238,7 @@ const messages = {
             button: "security",
             encryption: {
                 title: "miners data encryption",
-                text: "Encrypting data transmitted between users and the pool server helps prevent eavesdropping or interception by attackers. Using secure channels such as SSL/ TLS, Allbtc Pool ensures that data remains private and secure during transmission and protected from unauthorized access.",
+                text: "Encrypting data transmitted between users and the pool server helps prevent eavesdropping or interception by attackers. Using secure channels such as SSL/ TLS, allbtc pool ensures that data remains private and secure during transmission and protected from unauthorized access.",
             },
             updates: {
                 title: "Regular software updates",
@@ -245,7 +246,7 @@ const messages = {
             },
             DDoS: {
                 title: "DDoS attacks protection",
-                text: "When a mining pool is subject to DDoS attacks, it can lead to disruptions in mining operations, resulting in reduced payouts to the pool's clients. DDoS protection ensures that Allbtc Pool is always up and running and provides continuous reliable service to its users ",
+                text: "When a mining pool is targets by to DDoS attacks, it can lead to disruptions in mining operations, resulting in reduced payouts to the pool's clients. DDoS protection ensures that allbtc pool is always up and running and provides continuous reliable service to its users.",
             },
         },
         mobile_app: {
@@ -262,6 +263,7 @@ const messages = {
         },
         payments: {
             button: "payouts",
+            main_title: ["fPPS+", "(msk) 09 am – 11 am", "comission 0%"],
             title: ["FPPS+", "autopayouts", "free funds transfer"],
             text: [
                 "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
@@ -271,7 +273,7 @@ const messages = {
         },
         main: {
             button: "main things",
-            title: ["Values", "mission", "goals"],
+            title: ["Values mission goals"],
             text: [
                 "We support honesty, transparency and continuous development in everything we do. We encourage creativity, embrace change and constantly look for new ways to improve our offerings and processes.",
                 "Make Bitcoin mining as efficient and convenient as possible, ensuring high security for customer data and their digital assets.",
@@ -1086,7 +1088,7 @@ const messages = {
         },
         pluse: {
             button: "плюсы работы с нами",
-            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            text: "Ваши клиенты получат комплекс инструментов для стабильного и прозрачного заработка. А также доступ к премиальной поддержке и гарантию безопасности и надежности.",
         },
         system_monitoring: {
             title: ["Представляем", "систему", "мониторинга"],
@@ -1099,7 +1101,7 @@ const messages = {
         },
         for_clients: {
             button: "Что получат ваши клиенты",
-            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            text: "Ваши клиенты получат комплекс инструментов для стабильного и прозрачного заработка. А также доступ к премиальной поддержке и гарантию безопасности и надежности.",
         },
         hosting_personal_account: {
             title: "удобный личный кабинет",
@@ -1121,24 +1123,24 @@ const messages = {
         },
         hosting_mobile_app: {
             title: "мобильное приложение",
-            text: "Оптимизированное и интуитивно понятное мобильное приложение. Мониторинг хэшрейта,  уведомления и доступ к инфо о доходах в любой момент в вашем телефоне.",
+            text: "Оптимизированное и интуитивно понятное мобильное приложение. Мониторинг хэшрейта,  уведомления и доступ к информации о доходах в любой момент в вашем телефоне.",
             button: "скоро в appstore",
         },
         guarantees: {
             title: "Гарантии надежности и безопасности",
-            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            text: "Совокупность инструментов созданных для повышения безопасности криптоактивов через автоматизацию. Самая выгодная систему выплат и оперативная техническая поддержка.",
             list: {
                 title: [
                     "система выплаты FPPS+",
                     "гарантия безопасности",
                     "автовыплаты",
                     "оперативная техподдержка",
-                    "своевременные уведомления",
                 ],
                 text: [
                     "Самый современный метод вознаграждения с наибольшей выплатой, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Пул выплачивает вознаграждение независимо от нахождения блока.",
                     "Мы обеспечиваем максимальную защиту ваших крипто активов и данных пользователя. При помощи физической безопасности, шифрования данных, защиты от DDoS-атак, использования 2FA и VPN-туннелей. А также регулярных аудитов безопасности, включая тестирование на проникновение.",
                     "Мы автоматизировали выплаты для улучшения безопасности и упрощения процесса. Вы настраиваете минимальную сумму средств для вывода и выплата происходит автоматически при достижении нужных цифр. ",
+                    "Техническая поддержка работает 24/7 и берёт задачи в работу и отвечает клиенту в течение 5 минут. Мультиязычная поддержка ответит на все вопросы.",
                 ],
             },
         },
@@ -1226,7 +1228,7 @@ const messages = {
                 text: [
                     "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
                     "Актуальная информация в личном кабинете о хешрейте пула, производительности воркеров, начислениях, выплатах и других статистических данных, позволяющие оценивать работу пула и прогнозировать будущие доходы.",
-                    "Продвинутая, созданная нами, Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
+                    "Продвинутая Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
                 ],
             },
         },
@@ -1252,7 +1254,10 @@ const messages = {
             button: "безопасность",
             encryption: {
                 title: "шифрование данных майнера",
-                text: "Шифрование данных, передаваемых между пользователями и сервером пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как SSL/TLS, Allbtc Pool гарантирует, что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.",
+                text: "Шифрование данных, передаваемых между пользователями и сервером \n" +
+                    "пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как \n" +
+                    "SSL/TLS, allbtc pool гарантирует, \n" +
+                    "что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.",
             },
             updates: {
                 title: "регулярные обновления по",
@@ -1260,7 +1265,8 @@ const messages = {
             },
             DDoS: {
                 title: "защита от DDoS-атак",
-                text: "Когда майнинг-пул подвержен DDoS-атакам, это может привести к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что Allbtc Pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.",
+                text: "Когда майнинг-пул подвержен DDoS-атакам, это может привести \n" +
+                    "к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что allbtc pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.",
             },
         },
         mobile_app: {
@@ -1277,10 +1283,11 @@ const messages = {
         },
         payments: {
             button: "выплаты",
+            main_title: ["fPPS+", "(msk) 09 am – 11 am", "комиссия 0%"],
             title: [
                 "метод вознаграждения",
                 "автовыплаты",
-                "средняя дневная выплата",
+                "бесплатный вывод",
             ],
             text: [
                 "Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.",

@@ -65,18 +65,22 @@
                 </router-link>
                 <select-language-land/>
                 <button class="headline-menu link-tg">
-                    <a target="_blank" href="https://t.me/allbtc_support"> ? </a>
+                    <a target="_blank" href="https://t.me/allbtc_support">
+                        ?
+                    </a>
                 </button>
             </div>
         </div>
     </div>
-    <transition name="fadeIn">
-        <div
-            class="burger__background"
-            @click="actionBurger"
-            v-show="isOpen"
-        ></div>
-    </transition>
+    <teleport to="body">
+        <transition name="fadeIn">
+            <div
+                class="burger__background"
+                @click="actionBurger"
+                v-show="isOpen"
+            ></div>
+        </transition>
+    </teleport>
 </template>
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
@@ -114,6 +118,7 @@ export default {
 svg {
     position: relative;
     z-index: 100;
+    top: 50px;
 }
 
 .fadeIn-enter-active,
@@ -136,8 +141,8 @@ svg {
     top: 0;
     bottom: 0;
     right: 0;
-    width: 100%;
-    height: 100%;
+    width: 100vw;
+    height: 100vh;
 }
 
 .burger__content {

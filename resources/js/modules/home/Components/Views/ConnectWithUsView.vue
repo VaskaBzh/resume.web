@@ -157,7 +157,7 @@ export default {
                 ".footer-content"
             ).style.transform = `translateY(-${
                 document.querySelector(".all-content").offsetHeight +
-                50 +
+                80 +
                 (this.viewportWidth < 768.98
                     ? document.querySelector(".footer-content").offsetHeight
                     : 0)
@@ -166,7 +166,7 @@ export default {
                 ".layout__container"
             ).style.transform = `translateY(-${
                 document.querySelector(".all-content").offsetHeight +
-                50 +
+                80 +
                 (this.viewportWidth < 768.98
                     ? document.querySelector(".footer-content").offsetHeight
                     : 0)
@@ -175,7 +175,7 @@ export default {
                 ".all-content"
             ).style.transform = `translateY(-${
                 document.querySelector(".all-content").offsetHeight +
-                50 +
+                80 +
                 (this.viewportWidth < 768.98
                     ? document.querySelector(".footer-content").offsetHeight
                     : 0)

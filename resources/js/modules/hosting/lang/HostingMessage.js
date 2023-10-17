@@ -28,7 +28,7 @@ export const HostingMessage = {
             },
         },
         offer: {
-            button: "what we offer",
+            button: "what do we offer",
             title: ["we'll increase", "your income", "per each kWt", "by 50%"],
             cards: {
                 title: [
@@ -45,7 +45,7 @@ export const HostingMessage = {
         },
         pluse: {
             button: "more advantages",
-            text: "We offer a set of tools to optimize the work and increase profits of data centers. Personal support resolves all issues without the participationof your specialists.",
+            text: "We offer a set of tools to optimize the work and increase profits of data centers. Personal support resolves all issues without the participation of your specialists.",
         },
         system_monitoring: {
             title: ["hosting", "management", "system"],
@@ -58,7 +58,7 @@ export const HostingMessage = {
         },
         for_clients: {
             button: "Your customers are going to get",
-            text: "Your clients will receive a set of tools for stable and transparent earnings. Plus access to premium support and guarantees of safety and reliability.",
+            text: "Your clients will receive a set of tools for stable and transparent earnings. Plus access to premium support and guarantees of safety and reliability",
         },
         personal_account: {
             title: "user-friendly personal account",
@@ -80,24 +80,25 @@ export const HostingMessage = {
         },
         mobile_app: {
             title: "mobile application",
-            text: "Optimized and intuitive mobile application. Hashrate monitoring notifications and access to income information at any time on your phone.",
+            text: "Optimized and intuitive mobile application. Hashrate monitoring, notifications and access to income information at any time \n" +
+                "on your phone.",
             button: "coming soon to the appstore",
         },
         guarantees: {
             title: "Guarantees of reliability and safety",
-            text: "A personal manager will work with you who will help resolve any issues, including questions from your clients. We value our clients and strive to provide the best experience with allbtc pool",
+            text: "A set of tools created to improve the security of crypto assets through automation. The most profitable payment system and prompt technical support.",
             list: {
                 title: [
                     "FPPS+",
                     "security guarantee",
                     "automatic payments",
                     "prompt technical support",
-                    "timely notifications",
                 ],
                 text: [
                     "The most advanced reward method with the highest payout as it combines block reward and transaction fee payments into one value. The pool pays rewards regardless of whether a block is found.",
                     "We provide maximum protection for your crypto assets and user data. Using physical security, data encryption, protection against DDoS attacks, the use of 2FA and VPN tunnels. As well as regular security audits, including penetration testing.",
                     "We have automated payouts to improve security and simplify the process. You configure the minimum amount of funds for withdrawal and the payment occurs automatically when the required numbers are reached.",
+                    "Technical support works 24/7 and takes on tasks and responds to the client within 5 minutes. Multilingual support will answer all questions.",
                 ],
             },
         },
@@ -160,7 +161,7 @@ export const HostingMessage = {
         },
         pluse: {
             button: "плюсы работы с нами",
-            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            text: "Ваши клиенты получат комплекс инструментов для стабильного и прозрачного заработка. А также доступ к премиальной поддержке и гарантию безопасности и надежности.",
         },
         system_monitoring: {
             title: ["Представляем", "систему", "мониторинга"],
@@ -173,7 +174,7 @@ export const HostingMessage = {
         },
         for_clients: {
             button: "Что получат ваши клиенты",
-            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            text: "Ваши клиенты получат комплекс инструментов для стабильного и прозрачного заработка. А также доступ к премиальной поддержке и гарантию безопасности и надежности.",
         },
         personal_account: {
             title: "удобный личный кабинет",
@@ -195,12 +196,12 @@ export const HostingMessage = {
         },
         mobile_app: {
             title: "мобильное приложение",
-            text: "Оптимизированное и интуитивно понятное мобильное приложение. Мониторинг хэшрейта,  уведомления и доступ к инфо о доходах в любой момент в вашем телефоне.",
+            text: "Оптимизированное и интуитивно понятное мобильное приложение. Мониторинг хэшрейта,  уведомления и доступ к информации о доходах в любой момент в вашем телефоне.",
             button: "скоро в appstore",
         },
         guarantees: {
             title: "Гарантии надежности и безопасности",
-            text: "С вами будет работать персональный менеджер, который поможет решить любые вопросы, в том числе вопросы ваших клиентов мы ценим наших клиентов и стремимся обеспечить лучший опыт работы с allbtc pool",
+            text: "Совокупность инструментов созданных для повышения безопасности криптоактивов через автоматизацию. Самая выгодная систему выплат и оперативная техническая поддержка.",
             list: {
                 title: [
                     "система выплаты FPPS+",
