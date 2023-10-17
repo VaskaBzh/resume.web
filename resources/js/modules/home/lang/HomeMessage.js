@@ -74,7 +74,7 @@ export const HomeMessage = {
                 text: [
                     "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
                     "Up-to-date information in your personal account about the pool hashrate, worker productivity, accruals, payments and other statistics that allow you to evaluate how the pool’s performance and predict future income.",
-                    "The advanced technology we created, Stratum 3.0, allows us to reduce the time of synchronization of mining equipment with the pool. Advanced security system, both physical and virtual.",
+                    "The advanced technology, Stratum 3.0, allows us to reduce the time of synchronization of mining equipment with the pool. Advanced security system, both physical and virtual.",
                 ],
             },
         },
@@ -100,7 +100,7 @@ export const HomeMessage = {
             button: "security",
             encryption: {
                 title: "miners data encryption",
-                text: "Encrypting data transmitted between users and the pool server helps prevent eavesdropping or interception by attackers. Using secure channels such as SSL/ TLS, Allbtc Pool ensures that data remains private and secure during transmission and protected from unauthorized access.",
+                text: "Encrypting data transmitted between users and the pool server helps prevent eavesdropping or interception by attackers. Using secure channels such as SSL/ TLS, allbtc pool ensures that data remains private and secure during transmission and protected from unauthorized access.",
             },
             updates: {
                 title: "Regular software updates",
@@ -108,7 +108,7 @@ export const HomeMessage = {
             },
             DDoS: {
                 title: "DDoS attacks protection",
-                text: "When a mining pool is subject to DDoS attacks, it can lead to disruptions in mining operations, resulting in reduced payouts to the pool's clients. DDoS protection ensures that Allbtc Pool is always up and running and provides continuous reliable service to its users ",
+                text: "When a mining pool is targets by to DDoS attacks, it can lead to disruptions in mining operations, resulting in reduced payouts to the pool's clients. DDoS protection ensures that allbtc pool is always up and running and provides continuous reliable service to its users.",
             },
         },
         mobile_app: {
@@ -125,6 +125,7 @@ export const HomeMessage = {
         },
         payments: {
             button: "payouts",
+            main_title: ["fPPS+", "(msk) 09 am – 11 am", "comission 0%"],
             title: ["FPPS+", "autopayouts", "free funds transfer"],
             text: [
                 "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
@@ -134,7 +135,7 @@ export const HomeMessage = {
         },
         main: {
             button: "main things",
-            title: ["Values", "mission", "goals"],
+            title: ["Values mission goals"],
             text: [
                 "We support honesty, transparency and continuous development in everything we do. We encourage creativity, embrace change and constantly look for new ways to improve our offerings and processes.",
                 "Make Bitcoin mining as efficient and convenient as possible, ensuring high security for customer data and their digital assets.",
@@ -233,7 +234,7 @@ export const HomeMessage = {
                 text: [
                     "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
                     "Актуальная информация в личном кабинете о хешрейте пула, производительности воркеров, начислениях, выплатах и других статистических данных, позволяющие оценивать работу пула и прогнозировать будущие доходы.",
-                    "Продвинутая, созданная нами, Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
+                    "Продвинутая Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
                 ],
             },
         },
@@ -259,7 +260,10 @@ export const HomeMessage = {
             button: "безопасность",
             encryption: {
                 title: "шифрование данных майнера",
-                text: "Шифрование данных, передаваемых между пользователями и сервером пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как SSL/TLS, Allbtc Pool гарантирует, что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.",
+                text: "Шифрование данных, передаваемых между пользователями и сервером \n" +
+                    "пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как \n" +
+                    "SSL/TLS, allbtc pool гарантирует, \n" +
+                    "что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.",
             },
             updates: {
                 title: "регулярные обновления по",
@@ -267,7 +271,8 @@ export const HomeMessage = {
             },
             DDoS: {
                 title: "защита от DDoS-атак",
-                text: "Когда майнинг-пул подвержен DDoS-атакам, это может привести к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что Allbtc Pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.",
+                text: "Когда майнинг-пул подвержен DDoS-атакам, это может привести \n" +
+                    "к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что allbtc pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.",
             },
         },
         mobile_app: {
@@ -284,10 +289,11 @@ export const HomeMessage = {
         },
         payments: {
             button: "выплаты",
+            main_title: ["fPPS+", "(msk) 09 am – 11 am", "комиссия 0%"],
             title: [
                 "метод вознаграждения",
                 "автовыплаты",
-                "средняя дневная выплата",
+                "бесплатный вывод",
             ],
             text: [
                 "Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.",
