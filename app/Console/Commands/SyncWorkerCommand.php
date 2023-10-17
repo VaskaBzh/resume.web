@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Worker\Create as WorkerCreate;
 use App\Actions\Worker\Upsert;
 use App\Actions\WorkerHashRate\Create as WorkerHashRateCreate;
-use App\Actions\WorkerHashRate\DeleteOldWorkerHashrates;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Models\Sub;
