@@ -1,9 +1,9 @@
 <template>
     <div class="layout">
-        <!--        <main-background/>-->
-        <header-component />
+        <main-background ref="mainBackground"/>
+        <header-component/>
         <div class="layout__container">
-            <slot />
+            <slot/>
         </div>
         <FooterHosting></FooterHosting>
     </div>
@@ -24,6 +24,23 @@ export default {
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");
+    },
+    mounted() {
+        const canvasBackgroundWorker = new Worker(
+            "../modules/background/animationWorkers/canvasBackground.js"
+        );
+
+        // console.log(canvasBackgroundWorker);
+
+        canvasBackgroundWorker.postMessage("startAnimation");
+
+        // Обработка сообщений от веб-воркера
+        canvasBackgroundWorker.onmessage = (e) => {
+            // Обработка сообщений (если необходимо)
+            // Например, можно проверить e.data и выполнять какие-либо действия на основе полученных данных
+        };
+
+        // canvasBackgroundWorker.postMessage("stopAnimation");
     },
 };
 </script>

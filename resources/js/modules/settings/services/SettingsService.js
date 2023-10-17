@@ -70,16 +70,16 @@ export class SettingsService {
 
     async sendVerify(form) {
         try {
-            this.form.code = Number(form.code);
+            this.form.code = form.code;
             const response = await this.fetchFac();
 
             this.closeFacPopup();
             store.dispatch("setNotification", {
                 status: "success",
                 title: "connected",
-                text: response.data.message,
+                text: response.message,
             });
-            this.settingsService.closeFacPopup();
+
             store.dispatch("setUser");
         } catch (err) {
             console.error(err);
@@ -87,7 +87,7 @@ export class SettingsService {
             store.dispatch("setNotification", {
                 status: "error",
                 title: "error",
-                text: err.response.data.message,
+                text: err.response.data.message || err.response.data.error,
             });
         }
         // try {
