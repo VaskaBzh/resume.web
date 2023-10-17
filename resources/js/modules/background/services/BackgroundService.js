@@ -47,23 +47,23 @@ export class BackgroundService {
         this.ctx.globalCompositeOperation = "lighter";
     };
 
-    mouseEvent() {
-        this.canvas.element.onmousemove = this.mouseEventProcess;
-    }
-
-    mouseEventProcess = (e) => {
-        let mx = e.clientX;
-        let my = e.clientY;
-
-        for (let i = 0; i < this.particles.length; i++) {
-            if (
-                this.dist(this.particles[i].x, this.particles[i].y, mx, my) < 80
-            ) {
-                this.particles[i].vx = (mx - this.particles[i].x) / 30;
-                this.particles[i].vy = (my - this.particles[i].y) / 30;
-            }
-        }
-    };
+    // mouseEvent() {
+    //     this.canvas.element.onmousemove = this.mouseEventProcess;
+    // }
+    //
+    // mouseEventProcess = (e) => {
+    //     let mx = e.clientX;
+    //     let my = e.clientY;
+    //
+    //     for (let i = 0; i < this.particles.length; i++) {
+    //         if (
+    //             this.dist(this.particles[i].x, this.particles[i].y, mx, my) < 80
+    //         ) {
+    //             this.particles[i].vx = (mx - this.particles[i].x) / 30;
+    //             this.particles[i].vy = (my - this.particles[i].y) / 30;
+    //         }
+    //     }
+    // };
 
     dist(x1, y1, x2, y2) {
         let a = x1 - x2;
