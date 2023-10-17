@@ -103,6 +103,7 @@ export default {
         top: 50%;
         transform: translateY(-50%);
     }
+
     .wrap {
         align-items: flex-start;
         gap: unset;
@@ -133,11 +134,12 @@ export default {
 }
 
 .wrap_title {
-    max-width: 600px;
+    max-width: 584px;
     display: flex;
     flex-wrap: wrap;
     gap: 0 10px;
     overflow: visible;
+    font-size: clamp(22px, 2.8vw, 65px);
 }
 
 @media (min-width: 1500.98px) {
@@ -145,7 +147,6 @@ export default {
         transform: translateX(-50%);
     }
 }
-
 
 @media (max-width: 1500.98px) {
     .wrap_title {
@@ -186,7 +187,7 @@ export default {
     }
 
     .wrap {
-       height: auto;
+        height: auto;
         padding: 0 clamp(16px, 10vw, 32px) 30px;
     }
 }

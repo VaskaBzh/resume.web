@@ -19,9 +19,9 @@
             <!--            <button @click="openNotification(false, 'title', 'text')">false</button>-->
 
             <div class="page-container">
-                <notification-list />
+                <notification-list/>
                 <keep-alive>
-                    <slot />
+                    <slot/>
                 </keep-alive>
             </div>
         </div>
@@ -32,8 +32,8 @@ import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
 import NotificationList from "@/modules/notification/Components/NotificationList.vue";
 
-import { InstructionService } from "@/modules/instruction/services/InstructionService";
-import { mapGetters } from "vuex";
+import {InstructionService} from "@/modules/instruction/services/InstructionService";
+import {mapGetters} from "vuex";
 
 export default {
     components: {
@@ -59,12 +59,14 @@ export default {
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
+        this.$store.dispatch("setToken");
 
-        this.$store.dispatch("set_accounts", { route: this.$route, user_id: this.user?.id });
+        this.$store.dispatch("set_accounts", {
+            route: this.$route,
+            user_id: this.user?.id,
+        });
 
-        if (
-            this.$route.query?.onboarding === "true"
-        ) {
+        if (this.$route.query?.onboarding === "true") {
             this.instructionService.setStepsCount(2).setVisible();
         }
     },
@@ -79,11 +81,13 @@ export default {
     display: flex;
     overflow: hidden;
 }
+
 .layout__content {
     width: 100%;
     display: flex;
     flex-direction: column;
 }
+
 .header-container {
     width: 100%;
     min-height: 72px;
@@ -91,6 +95,7 @@ export default {
     align-items: center;
     transition: all 0.3s ease 0s;
 }
+
 .page-container {
     /* padding: 24px; */
     overflow-x: hidden;
@@ -104,16 +109,19 @@ export default {
     flex: 1 1 auto;
     height: calc(100vh - 72px);
 }
+
 @media (max-width: 900px) {
     .page-container {
         border-radius: 0;
     }
 }
+
 .header-card {
     display: flex;
     gap: 12px;
     align-items: center;
 }
+
 .notification-card {
     border-radius: 12px;
     padding: 16px;
@@ -129,14 +137,17 @@ export default {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
 }
+
 .green-card {
     background: var(--background-success);
     color: var(--status-succesfull, #1fb96c);
 }
+
 .red-card {
     background: var(--background-failed);
     color: var(--status-failed, #f1404a);
 }
+
 .note-animation {
     z-index: 9999999999;
     animation: noteAnimation 6s linear;
@@ -145,6 +156,7 @@ export default {
     right: 0px;
     opacity: 0;
 }
+
 @keyframes noteAnimation {
     0% {
         transform: translateX(280px);

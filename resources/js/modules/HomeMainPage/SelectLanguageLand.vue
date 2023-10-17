@@ -30,5 +30,7 @@ export default {
     -webkit-backdrop-filter: blur(10px);
     text-transform: uppercase;
     cursor: pointer;
+    font-size: clamp(14px, 5vw, 18px);
+    font-family: Unbounded;
 }
 </style>

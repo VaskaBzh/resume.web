@@ -2,21 +2,21 @@
     <div class="footer-content footer__section">
         <router-link to="login" class="footer-title">{{ $t("footer.button") }}</router-link>
         <div class="footer-inf">
-            <nav-links />
+            <nav-links/>
             <div class="footer-location">
                 <p>
                     <a href="mailto:support@all-btc.com" target="_blank"
-                        >support@all-btc.com</a
+                    >support@all-btc.com</a
                     >
                 </p>
                 <p>
-                    BDubai Silicon Oasis, DDP, Building A2, <br />
+                    BDubai Silicon Oasis, DDP, Building A2, <br/>
                     Dubai, United Arab Eirates
                 </p>
                 <div class="connect-buttons">
                     <button class="connect-button">
                         <a href="https://t.me/allbtc_support" target="_blank"
-                            >TELEGRAM</a
+                        >TELEGRAM</a
                         >
                     </button>
                     <!--                    <button class="connect-button">-->
@@ -51,11 +51,11 @@
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
 
 export default {
-    components: { NavLinks },
+    components: {NavLinks},
 
     i18n: {
         sharedMessages: HostingMessage,
@@ -80,12 +80,12 @@ export default {
     width: 100%;
     padding: 0 clamp(16px, 5vw, 100px);
     margin: 0 auto;
+    transition: all 1.5s ease 0s, opacity 0.8s ease 0s;
 }
 
 .all-content {
     padding: 0 clamp(16px, 5vw, 100px) clamp(50px, 10vw, 100px);
     flex-direction: column;
-    transition: all 1.5s ease 0s;
 }
 
 .footer-content {
@@ -216,7 +216,7 @@ export default {
     font-style: normal;
     font-weight: 600;
     line-height: 120%; /* 14.4px */
-    width: 108px;
+    width: 108%;
     text-transform: uppercase;
     cursor: pointer;
 }

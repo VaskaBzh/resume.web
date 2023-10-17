@@ -10,7 +10,7 @@ export const HomeMessage = {
             ],
         },
         title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
-        text: "We use advanced technologies for efficient Bitcoin mining. Maximum transparency of mining in a couple of clicks.",
+        text: "Allbtc pool is a private mining pool optimized for BTC mining, with transparent analytics and timely payments.",
         button: "try demo version",
         who_we_are: {
             button: "who we are",
@@ -49,7 +49,7 @@ export const HomeMessage = {
                 "profitability",
                 "calculator",
             ],
-            text: "Allows you to evaluate possible approximate income for a certain period. Actual earnings may vary slightly.",
+            text: "Allows you to evaluate and predict possible approximate income for a certain period. Actual earnings may vary slightly. ",
             form_calculator: {
                 title: "Calculator Light",
                 placeholder: ["Total hashrate", "Commission"],
@@ -113,14 +113,14 @@ export const HomeMessage = {
         },
         mobile_app: {
             button: "mobile application",
-            title: "User-friendly app with updated data",
+            title: "User-friendly app with \n" + "updated data",
             text: "Our team, being experts and practicing miners, specializes in Bitcoin, knows all the intricacies of cryptocurrency mining and introduces new ideas and mechanisms into the development of the pool. All implemented tools help you earn more.",
             note: "coming soon in appstore",
             slides: [
-                "Good monitoring and effective management",
-                "Clear monitoring and effective management",
-                "Excellent monitoring and effective management",
-                "Awesome monitoring and effective management",
+                "Transparent monitoring and effective management",
+                "Timely accruals and automatic payouts to any wallet",
+                "control of all workers",
+                "Reliable account management system",
             ],
         },
         payments: {
@@ -169,7 +169,7 @@ export const HomeMessage = {
             ],
         },
         title: ["Экспер", "тный", "подход", "к майн", "ингу", "Bitcoin "],
-        text: "Используем передовые технологии для эффективного майнинга биткоина. Максимальная прозрачность майнинга в пару кликов. ",
+        text: "Allbtc pool  — приватный майнинг-пул, оптимизированный для добычи BTC, с прозрачной аналитикой и своевременными выплатами.",
         button: "попробовать демо кабинет",
         who_we_are: {
             button: "кто мы",
@@ -208,7 +208,7 @@ export const HomeMessage = {
                 "калькулятора",
                 "доходности",
             ],
-            text: "Позволяет оценить и спрогнозировать возможный приблизательный доход и прибыль за определенный период. Фактические доходы могут незначительно отличаться. ",
+            text: "Позволяет оценить и спрогнозировать возможный приблизительный доход за определенный период. Фактические доходы могут незначительно отличаться. ",
             form_calculator: {
                 title: "Калькулятор Light",
                 placeholder: ["Общий хешрейт", "Комиссия"],
@@ -233,7 +233,7 @@ export const HomeMessage = {
                 text: [
                     "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
                     "Актуальная информация в личном кабинете о хешрейте пула, производительности воркеров, начислениях, выплатах и других статистических данных, позволяющие оценивать работу пула и прогнозировать будущие доходы.",
-                    "Продвинутая созданная нами Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
+                    "Продвинутая, созданная нами, Stratum 3.0 технология, позволяющая сократить время синхронизации майнинг оборудования с пулом. Передовая система безопасности как физической так и виртуальной.",
                 ],
             },
         },
@@ -272,14 +272,14 @@ export const HomeMessage = {
         },
         mobile_app: {
             button: "мобильное приложение",
-            title: "Прозрачный мониторинг и эффективное управление",
+            title: "понятное приложение \n" + "с актуальными данными",
             text: "Наша команда, будучи экспертами и практикующими майнерами, специализируется на биткоине, знает все тонкости добычи криптовалюты и внедряет новые идеи и механизмы в развитие пула. Все внедренные инструменты помогают зарабатывать больше.",
             note: "скоро в appstore",
             slides: [
-                "Хороший мониторинг и эффективное управление",
-                "Четкий мониторинг и эффективное управление",
-                "Прекрасный мониторинг и эффективное управление",
-                "Офигенный мониторинг и эффективное управление",
+                "Прозрачный мониторинг \n" + "и эффективное управление",
+                "Своевременные начисления и автовывод на любой кошелек",
+                "контроль всех майнинговых устройств",
+                "Надежная \n" + "система управления аккаунтом ",
             ],
         },
         payments: {
@@ -292,7 +292,7 @@ export const HomeMessage = {
             text: [
                 "Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.",
                 "Автоматические выплаты осуществляются без каких-либо действий со стороны майнера. \n" +
-                    "Так как выплаты возможны при выполнении заранее заданных условий (достижение заданного минимального порога), поступление средств производится без задержек. Более того, исключается возможность допущения ошибки (неправильно введенный адрес кошелька или сумма транзакции), вызванной человеческим фактором.",
+                "Так как выплаты возможны при выполнении заранее заданных условий (достижение заданного минимального порога), поступление средств производится без задержек. Более того, исключается возможность допущения ошибки (неправильно введенный адрес кошелька или сумма транзакции), вызванной человеческим фактором.",
                 "Автовывод средств полностью бесплатный, никакая комиссия не начисляется. Более того, вывод на любые кошельки также производится без комиссии.",
             ],
         },

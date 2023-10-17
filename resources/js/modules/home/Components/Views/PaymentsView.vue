@@ -24,7 +24,7 @@ export default {
                     text: this.$t("payments.text[0]"),
                 },
                 {
-                    title: "(msk) 12:00-13:00",
+                    title: "(msk) 09:00-11:00",
                     preTitle: this.$t("payments.title[1]"),
                     text: this.$t("payments.text[1]"),
                 },
@@ -68,9 +68,9 @@ export default {
                     document.scrollingElement.clientHeight >
                     20 && !this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
