@@ -19,17 +19,17 @@ export default {
         faq() {
             return [
                 {
-                    title: "fPPS+",
+                    title: this.$t("payments.main_title[0]"),
                     preTitle: this.$t("payments.title[0]"),
                     text: this.$t("payments.text[0]"),
                 },
                 {
-                    title: "(msk) 09:00-11:00",
+                    title: this.$t("payments.main_title[1]"),
                     preTitle: this.$t("payments.title[1]"),
                     text: this.$t("payments.text[1]"),
                 },
                 {
-                    title: "fPPS+",
+                    title: this.$t("payments.main_title[2]"),
                     preTitle: this.$t("payments.title[2]"),
                     text: this.$t("payments.text[2]"),
                 },

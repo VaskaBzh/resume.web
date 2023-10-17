@@ -4,11 +4,11 @@
             <p class="title-card">{{ $t("guarantees.title") }}</p>
             <p class="text-card">{{ $t("guarantees.text") }}</p>
         </div>
-        <faq-view :faq="faq"> </faq-view>
+        <faq-view :faq="faq"></faq-view>
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 import FaqView from "../../home/Components/Views/FaqView.vue";
 
 export default {
@@ -41,6 +41,10 @@ export default {
                     title: this.$t("guarantees.list.title[2]"),
                     text: this.$t("guarantees.list.text[2]"),
                 },
+                {
+                    title: this.$t("guarantees.list.title[3]"),
+                    text: this.$t("guarantees.list.text[3]"),
+                },
             ];
         },
     },
@@ -62,14 +66,14 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -84,8 +88,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;

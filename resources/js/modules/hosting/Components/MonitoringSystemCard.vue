@@ -2,8 +2,8 @@
     <div class="system__section system__section-wrap" ref="view">
         <div class="system-card-inf">
             <p class="system-card-title">
-                {{ $t("system_monitoring.title[0]") }} <br />
-                {{ $t("system_monitoring.title[1]") }} <br />
+                {{ $t("system_monitoring.title[0]") }} <br/>
+                {{ $t("system_monitoring.title[1]") }} <br/>
                 {{ $t("system_monitoring.title[2]") }}
             </p>
             <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
@@ -13,8 +13,13 @@
                 src="../assets/img/Mockup-mac.png"
                 class="img-mac img-system web"
             />
+            <!--            <img-->
+            <!--                src="../assets/img/Mockup-monitoring-ru.png"-->
+            <!--                class="img-monitoring img-system web"-->
+            <!--                v-show="$i18n.locale === 'ru'"-->
+            <!--            />-->
             <img
-                src="../assets/img/Mockup-monitoring.png"
+                src="../assets/img/Mockup-monitoring-en.png"
                 class="img-monitoring img-system web"
             />
 
@@ -22,8 +27,13 @@
                 src="../assets/img/Mockup-iphone.png"
                 class="img-mac img-system mobile"
             />
+            <!--            <img-->
+            <!--                src="../assets/img/Mockup-monitoring-iphone-ru.png"-->
+            <!--                class="img-monitoring img-system mobile"-->
+            <!--                v-show="$i18n.locale === 'ru'"-->
+            <!--            />-->
             <img
-                src="../assets/img/Mockup-monitoring-iphone.png"
+                src="../assets/img/Mockup-monitoring-iphone-en.png"
                 class="img-monitoring img-system mobile"
             />
         </div>
@@ -31,12 +41,12 @@
             href="https://t.me/allbtc_support"
             target="_blank"
             class="get-consultation"
-            >{{ $t("system_monitoring.button") }}</a
+        >{{ $t("system_monitoring.button") }}</a
         >
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     i18n: {
@@ -67,8 +77,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -89,8 +99,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
