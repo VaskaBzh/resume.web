@@ -26,14 +26,6 @@ use Symfony\Component\HttpFoundation\Response;
                     )
                 ],
             ),
-            new OA\Response(
-                response: Response::HTTP_UNAUTHORIZED,
-                description: 'Unauthorized',
-            ),
-            new OA\Response(
-                response: Response::HTTP_NOT_FOUND,
-                description: 'User not found',
-            ),
         ],
     )
 ]
@@ -41,9 +33,8 @@ class ChartController extends Controller
 {
     public function __invoke(): JsonResource
     {
-        $response = Http::get('https://api.blockchain.info/charts/difficulty')
-            ->collect();
-
-        return new ChartResource($response);
+        return new ChartResource(
+            Http::get('https://api.blockchain.info/charts/difficulty')->collect()
+        );
     }
 }

@@ -44,8 +44,18 @@ use OpenApi\Attributes as OA;
             ),
             new OA\Response(
                 response: Response::HTTP_NOT_FOUND,
-                description: 'Watcher link not found',
-            ),
+                description: 'Not found',
+                content: [
+                    new OA\JsonContent(
+                        type: 'object',
+                        example: [
+                            'errors' => [
+                                'property' => ['message']
+                            ]
+                        ]
+                    ),
+                ],
+            )
         ],
     )
 ]
@@ -53,12 +63,8 @@ class AllowedRoutesController extends Controller
 {
     public function __invoke(string $token)
     {
-        $watcherLink = WatcherLink::where('token', $token)->first();
-
-        if (!$watcherLink) {
-            return new JsonResponse(['error' => 'Watcher link not exists'], Response::HTTP_NOT_FOUND);
-        }
-
-        return new AllowedRouteResource($watcherLink);
+        return new AllowedRouteResource(
+            WatcherLink::where('token', $token)->firstOrFail()
+        );
     }
 }

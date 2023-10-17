@@ -1,52 +1,54 @@
 <template>
-    <a
-        href="https://t.me/allbtc_support"
-        target="_blank"
-        class="connect-withus"
-        ref="view"
-    >
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-        <div class="connect-withus__run">
-            <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
-            <button-blue class="connect-withus_btn" />
-        </div>
-    </a>
+    <div class="connect-withus connect-withus__section" ref="view">
+        <a
+            href="https://t.me/allbtc_support"
+            class="connect-withus__content"
+            target="_blank"
+        >
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+            <div class="connect-withus__run">
+                <p class="connect-withus_text">{{ $t("connect_with_us") }}</p>
+                <button-blue class="connect-withus_btn"/>
+            </div>
+        </a>
+    </div>
 </template>
 
 <script>
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import {mapGetters} from "vuex";
 
 export default {
     name: "ConnectWithUsView",
-    components: { ButtonBlue },
+    components: {ButtonBlue},
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -56,6 +58,9 @@ export default {
             startY: null,
             touchY: null,
         };
+    },
+    computed: {
+        ...mapGetters(["viewportWidth"]),
     },
     props: {
         start: Boolean,
@@ -72,27 +77,39 @@ export default {
             if (this.$refs.view) {
                 if (
                     this.startY
+                        ? this.startY - this.touchY > 110
+                        : e.deltaY > 10
+                ) {
+                    this.remove();
+                    setTimeout(this.scroll, 650);
+
+                    if (
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight >
+                        20 &&
+                        !this.validScroll
+                    ) {
+                        this.validScroll = true;
+                    } else {
+                        this.$emit("next");
+                    }
+                }
+                if (
+                    this.startY
                         ? this.touchY - this.startY > 110
                         : e.deltaY < -10
                 ) {
                     this.remove();
-                    setTimeout(this.scroll, 300);
+                    setTimeout(this.scroll, 650);
 
                     if (
                         this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight >
-                            20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                         this.validScroll
                     ) {
-                        this.$refs.view.style.transform =
-                            window.innerHeight >= 1100 ||
-                            window.innerWidth < 991
-                                ? `translateY(0px)`
-                                : `translateY(0px) scale(0.8)`;
-
                         this.validScroll = false;
                     } else {
-                        this.remove();
                         this.$emit("prev");
                     }
                 }
@@ -125,42 +142,88 @@ export default {
         },
     },
     mounted() {
-        setTimeout(this.scroll, 500);
-
-        this.$refs.view.style.minHeight = `100vh`;
-
+        document.querySelector(
+            ".footer-content"
+        ).style.transform = `translateY(100%)`;
+        document.querySelector(
+            ".layout__container"
+        ).style.transform = `translateY(0)`;
+        document.querySelector(".layout__container").style.minHeight = `100vh`;
+        document.querySelector(
+            ".all-content"
+        ).style.transform = `translateY(100%)`;
         setTimeout(() => {
-            this.$refs.view.style.minHeight = `calc(100vh - ${
-                document.querySelector(".footer-content").offsetHeight +
-                document.querySelector(".all-content").offsetHeight
+            document.querySelector(
+                ".footer-content"
+            ).style.transform = `translateY(-${
+                document.querySelector(".all-content").offsetHeight +
+                50 +
+                (this.viewportWidth < 768.98
+                    ? document.querySelector(".footer-content").offsetHeight
+                    : 0)
             }px)`;
-        }, 100);
+            document.querySelector(
+                ".layout__container"
+            ).style.transform = `translateY(-${
+                document.querySelector(".all-content").offsetHeight +
+                50 +
+                (this.viewportWidth < 768.98
+                    ? document.querySelector(".footer-content").offsetHeight
+                    : 0)
+            }px)`;
+            document.querySelector(
+                ".all-content"
+            ).style.transform = `translateY(-${
+                document.querySelector(".all-content").offsetHeight +
+                50 +
+                (this.viewportWidth < 768.98
+                    ? document.querySelector(".footer-content").offsetHeight
+                    : 0)
+            }px)`;
+
+            this.$refs.view.style.minHeight = "100vh";
+            setTimeout(this.scroll, 500);
+        }, 1600);
     },
     unmounted() {
-        if (this.$refs.view) this.$refs.view.style.minHeight = `100vh`;
         this.remove();
+        document.querySelector(
+            ".footer-content"
+        ).style.transform = `translateY(100%)`;
+        document.querySelector(
+            ".layout__container"
+        ).style.transform = `translateY(0)`;
+        document.querySelector(".layout__container").style.minHeight = `auto`;
+        document.querySelector(
+            ".all-content"
+        ).style.transform = `translateY(100%)`;
+        setTimeout(this.scroll, 500);
     },
 };
 </script>
 
 <style scoped lang="scss">
 .connect-withus {
-    display: flex;
-    min-height: 100vh;
-    align-items: center;
-    font-size: 0;
-    justify-content: center;
-    animation: scroll 7s linear 1s infinite;
-    transition: all 0.5s ease 0s;
-    outline: none;
-    border: none;
+    min-height: 300px;
+    justify-content: flex-end;
+
+    &__content {
+        display: flex;
+        align-items: center;
+        font-size: 0;
+        justify-content: center;
+        flex-direction: row;
+        animation: scroll 3s linear 0s infinite;
+        outline: none;
+        border: none;
+    }
 
     @keyframes scroll {
         0% {
-            transform: translateX(-100%);
+            transform: translateX(0%);
         }
         100% {
-            transform: translateX(35%);
+            transform: translateX(12.5%);
         }
     }
 

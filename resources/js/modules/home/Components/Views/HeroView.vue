@@ -1,36 +1,37 @@
 <template>
     <div class="hero hero__section" ref="view">
         <div class="hero__content">
-            <logo-background />
+            <logo-background/>
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
                         <span class="hero_title_elem">{{
-                            $t("title[0]")
-                        }}</span>
+                                $t("title[0]")
+                            }}</span>
                         <span class="hero_title_elem">{{
-                            $t("title[1]")
-                        }}</span>
+                                $t("title[1]")
+                            }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-left">
                         <span class="hero_title_elem">{{
-                            $t("title[2]")
-                        }}</span>
+                                $t("title[2]")
+                            }}</span>
                     </span>
                     <span class="hero_title_row hero_title_row-top">
                         <span class="hero_title_elem"
-                            >{{ $t("title[3]")
+                        >{{
+                                $t("title[3]")
                             }}<span class="hero_title_elem">{{
-                                $t("title[4]")
-                            }}</span></span
+                                    $t("title[4]")
+                                }}</span></span
                         >
                     </span>
                     <span class="hero_title_row">
                         <span class="hero_title_elem hero_title_elem-last"
-                            >Bitcoin</span
+                        >Bitcoin</span
                         >
                         <landing-text tag="span" class="hero_text"
-                            >{{ $t("text") }}
+                        >{{ $t("text") }}
                         </landing-text>
                     </span>
                 </landing-title>
@@ -39,6 +40,7 @@
             <a
                 class="hero_link"
                 href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+                target="_blank"
             >
                 <landing-button class="hero_button">
                     <template v-slot:text>{{ $t("button") }}</template>
@@ -49,7 +51,7 @@
 </template>
 
 <script>
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
@@ -93,8 +95,8 @@ export default {
                 setTimeout(this.scroll, 300);
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -115,8 +117,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -178,6 +180,7 @@ export default {
     max-width: 860px;
     width: 100%;
 }
+
 .hero {
     max-width: 860px;
     margin: 0 auto;

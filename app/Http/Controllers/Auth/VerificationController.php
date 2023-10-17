@@ -60,15 +60,14 @@ class VerificationController extends Controller
                     description: 'Unprocessable Entity',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'errors',
-                                    description: 'Validation errors',
-                                    type: 'object'
-                                ),
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 ),
             ]
         )
@@ -78,7 +77,11 @@ class VerificationController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->hasVerifiedEmail()) {
-            return  new JsonResponse(['message' => 'already verified'], 204);
+            return new JsonResponse([
+                'errors' => [
+                    'auth' => ['already verified']
+                ]
+            ], Response::HTTP_BAD_REQUEST);
         }
 
         if ($user->markEmailAsVerified()) {

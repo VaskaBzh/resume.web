@@ -3,11 +3,11 @@
         <landing-headline>{{ $t("who_are_we.button") }}</landing-headline>
         <div class="hosting-content who-we-are-content">
             <p class="who-we-are-text">
-                {{ title[0] }} <br />
-                {{ title[1] }} <br />
-                {{ title[2] }} <br v-if="title.length > 3" />
-                {{ title[3] }} <br v-if="title.length > 3" />
-                {{ title[4] }} <br v-if="title.length > 3" />
+                {{ title[0] }} <br/>
+                {{ title[1] }} <br/>
+                {{ title[2] }} <br v-if="title.length > 3"/>
+                {{ title[3] }} <br v-if="title.length > 3"/>
+                {{ title[4] }} <br v-if="title.length > 3"/>
             </p>
         </div>
         <div class="facts-container">
@@ -28,39 +28,37 @@
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
-import LandingHeadline from "../../common/Components/UI/LandingHeadline.vue";
+import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 
 export default {
-    components: { LandingHeadline },
-    i18n: {
-        sharedMessages: HostingMessage,
-    },
+    components: {LandingHeadline},
+    // i18n: {
+    //     sharedMessages: HostingMessage,
+    // },
     computed: {
         facts() {
             return [
                 {
                     num: ">3",
-                    grayText: this.$t("who_are_we.column.gray_text[0]"),
+                    grayText: this.$t("miners_who_are_we.column.gray_text[0]"),
                     mainText: [
-                        this.$t("who_are_we.column.main_text[0]"),
-                        this.$t("who_are_we.title[1]"),
+                        this.$t("miners_who_are_we.column.main_text[0]"),
                     ],
                 },
                 {
                     num: "4%",
                     grayText: "",
                     mainText: [
-                        this.$t("who_are_we.title[2]"),
-                        this.$t("who_are_we.title[3]"),
+                        this.$t("miners_who_are_we.column.main_text[1]"),
+                        this.$t("miners_who_are_we.column.main_text[2]"),
                     ],
                 },
                 {
                     num: ">1,7",
                     grayText: "EH /s",
                     mainText: [
-                        this.$t("who_are_we.title[4]"),
-                        this.$t("who_are_we.title[5]"),
+                        this.$t("miners_who_are_we.column.main_text[3]"),
+                        this.$t("miners_who_are_we.column.main_text[4]"),
                     ],
                 },
             ];
@@ -98,8 +96,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -120,8 +118,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;

@@ -44,10 +44,6 @@ use Symfony\Component\HttpFoundation\Response;
                     ),
                 ],
             ),
-            new OA\Response(
-                response: Response::HTTP_NOT_FOUND,
-                description: 'Not found',
-            ),
         ],
     )
 ]
