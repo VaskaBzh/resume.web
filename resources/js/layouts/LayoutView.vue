@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <main-background/>
+        <main-background ref="mainBackground"/>
         <header-component/>
         <div class="layout__container">
             <slot/>
@@ -11,8 +11,8 @@
 
 <script>
 import HeaderComponent from "@/modules/common/Components/HeaderComponent.vue";
-import FooterHosting from "@/modules/hosting/Components/FooterHosting.vue";
-import MainBackground from "@/modules/background/Components/MainBackground.vue";
+import FooterHosting from "../modules/hosting/Components/FooterHosting.vue";
+import MainBackground from "../modules/background/Components/MainBackground.vue";
 
 export default {
     components: {
@@ -27,23 +27,18 @@ export default {
     },
     mounted() {
         const canvasBackgroundWorker = new Worker(
-            "/resources/js/modules/background/animationWorkers/canvasBackground.js"
+            "../modules/background/animationWorkers/canvasBackground.js"
         );
 
         canvasBackgroundWorker.postMessage("startAnimation");
 
+        // Обработка сообщений от веб-воркера
         canvasBackgroundWorker.onmessage = (e) => {
-            console.log(e);
-            if (e.data === "animationFrame") {
-                this.drawAnimationFrame();
-            }
+            // Обработка сообщений (если необходимо)
+            // Например, можно проверить e.data и выполнять какие-либо действия на основе полученных данных
         };
 
-        // canvasBackgroundWorker.postMessage('stopAnimation');
-    },
-    methods: {
-        drawAnimationFrame() {
-        },
+        canvasBackgroundWorker.postMessage("stopAnimation");
     },
 };
 </script>

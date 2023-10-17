@@ -1,5 +1,5 @@
 const canvas = new OffscreenCanvas(self.innerWidth, self.innerHeight);
-const ctx = canvas.getContext('2d');
+const ctx = canvas.getContext("2d");
 const particles = [];
 
 function updateAnimationFrame() {
@@ -8,7 +8,12 @@ function updateAnimationFrame() {
 
     for (let i = 0; i < particles.length; i++) {
         ctx.beginPath();
-        let gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+        let gradient = ctx.createLinearGradient(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+        );
         gradient.addColorStop(0, "#183ED7");
         gradient.addColorStop(1, "#2E90FA");
 
@@ -38,15 +43,20 @@ function updateAnimationFrame() {
             particles[i].vy = -particles[i].vy;
     }
 
-    self.postMessage('animationFrame');
+    // Отправить сообщение об обновлении кадра анимации в основной поток
+    self.postMessage("animationFrame");
+
+    // Запустить следующий кадр анимации
+    requestAnimationFrame(updateAnimationFrame);
 }
 
-self.addEventListener('message', (e) => {
-    if (e.data === 'startAnimation') {
-        // Запустить анимацию
+self.addEventListener("message", (e) => {
+    if (e.data === "startAnimation") {
+        // Запустить анимацию при получении сообщения
         startAnimation();
-    } else if (e.data === 'stopAnimation') {
-        stopAnimation();
+    } else if (e.data === "stopAnimation") {
+        // Остановить анимацию при получении сообщения (при необходимости)
+        // stopAnimation();
     }
 });
 
@@ -66,12 +76,8 @@ function startAnimation() {
         });
     }
 
-    function animate() {
-        updateAnimationFrame();
-        requestAnimationFrame(animate);
-    }
-
-    animate();
+    // Начать основной цикл анимации
+    requestAnimationFrame(updateAnimationFrame);
 }
 
 function getMultiplier() {
@@ -81,4 +87,5 @@ function getMultiplier() {
     return 1;
 }
 
+// Запустить анимацию при старте веб-воркера
 startAnimation();
