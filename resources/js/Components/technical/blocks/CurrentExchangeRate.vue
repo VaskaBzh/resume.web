@@ -63,11 +63,14 @@ export default {
       const response = await axios({
         method: "get",
         url: `https://blockchain.info/q/24hrprice`,
-        withCredentials: false,
+        xhrFields: {
+          withCredentials: true,
+        },
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Access-Control-Allow-Headers": "*",
-          "Access-Control-Allow-Methods": "*",
+          "Access-Control-Allow-Methods": "GET",
+          "Access-Control-Allow-Credentials": "true",
           "Content-Type": "application/json;charset=utf-8",
         },
       });
