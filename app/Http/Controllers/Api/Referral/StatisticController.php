@@ -46,14 +46,31 @@ class StatisticController extends Controller
                         ),
                     ],
                 ),
-                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User or referral code not found'),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Not found',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
+                )
             ],
         )
     ]
     public function __invoke(User $user)
     {
         if (!$user?->referral_code) {
-            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_NOT_FOUND);
+            return new JsonResponse([
+                'errors' => [
+                    'message' => [__('actions.referral.code.exists')]
+                ]
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
@@ -61,7 +78,11 @@ class StatisticController extends Controller
         $owner = Sub::find($referralCodeData['group_id']);
 
         if (!$owner) {
-            return new JsonResponse(['error' => __('actions.referral.exists')], Response::HTTP_NOT_FOUND);
+            return new JsonResponse([
+                'errors' => [
+                    'message' => [__('actions.referral.exists')]
+                ]
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $statistic = ReferralService::getOwnerStatistic(

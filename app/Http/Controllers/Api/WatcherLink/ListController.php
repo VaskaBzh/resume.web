@@ -48,8 +48,21 @@ use Symfony\Component\HttpFoundation\Response;
                     )
                 ],
             ),
-            new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized',),
-            new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User or sub not found',),
+            new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
+            new OA\Response(
+                response: Response::HTTP_NOT_FOUND,
+                description: 'Not found',
+                content: [
+                    new OA\JsonContent(
+                        type: 'object',
+                        example: [
+                            'errors' => [
+                                'property' => ['message']
+                            ]
+                        ]
+                    ),
+                ],
+            )
         ],
     )
 ]

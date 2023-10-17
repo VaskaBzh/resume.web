@@ -290,6 +290,5 @@ class BtcComService
 
             throw new \Exception($e->getMessage());
         }
-
     }
 }

@@ -77,27 +77,25 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Watcher not found"
+                    },
                     "422": {
                         "description": "Unprocessable entity",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "array",
-                                            "items": {
-                                                "description": "Error message(s)",
-                                                "type": "string"
-                                            }
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Watcher not found"
                     }
                 },
                 "security": [
@@ -141,7 +139,21 @@
                         }
                     },
                     "404": {
-                        "description": "Watcher link not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -167,12 +179,6 @@
                                 }
                             }
                         }
-                    },
-                    "401": {
-                        "description": "Unauthorized"
-                    },
-                    "404": {
-                        "description": "User not found"
                     }
                 }
             }
@@ -289,7 +295,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Sub not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -361,9 +381,6 @@
                                 }
                             }
                         }
-                    },
-                    "404": {
-                        "description": "Not found"
                     }
                 }
             }
@@ -480,7 +497,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Sub not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -546,7 +577,21 @@
                         }
                     },
                     "422": {
-                        "description": "Error while generating a referral code"
+                        "description": "Error while generating a referral code",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -665,7 +710,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "User or referral code not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -713,7 +772,21 @@
                         }
                     },
                     "404": {
-                        "description": "User or referral code nof found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -758,7 +831,21 @@
                         }
                     },
                     "404": {
-                        "description": "User or referral code not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -822,8 +909,22 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
-                        "description": "Sub not found"
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -888,17 +989,22 @@
                             }
                         }
                     },
+                    "404": {
+                        "description": "Not found"
+                    },
                     "422": {
-                        "description": "Error while creating a sub",
+                        "description": "Validation errors",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "type": "string"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -947,7 +1053,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "User not found"
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -990,7 +1110,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Sub not found"
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1138,6 +1272,23 @@
                     },
                     "404": {
                         "description": "Wallet not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1181,8 +1332,22 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "404": {
-                        "description": "Sub not found"
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1256,6 +1421,23 @@
                     },
                     "404": {
                         "description": "Wallet not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1327,8 +1509,22 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
-                        "description": "Sub account not found"
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1364,7 +1560,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Watcher link not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1418,7 +1628,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "User or sub not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1464,7 +1688,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Watcher not found"
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1528,6 +1766,23 @@
                     },
                     "404": {
                         "description": "Watcher link not found"
+                    },
+                    "422": {
+                        "description": "Validation errors",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1663,7 +1918,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Sub not found"
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1775,7 +2044,21 @@
                         "description": "Unauthorized"
                     },
                     "404": {
-                        "description": "Worker not found"
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1828,8 +2111,22 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
-                        "description": "Worker not found"
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -1879,6 +2176,23 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -1889,35 +2203,13 @@
                     "Auth"
                 ],
                 "summary": "User login",
-                "operationId": "a0bad38435a32b5ad173da486ba8f59d",
+                "operationId": "c4c9a0ce3e816d24f8b2f9c63937d49a",
                 "requestBody": {
                     "required": true,
                     "content": {
                         "application/json": {
                             "schema": {
-                                "type": "object",
-                                "oneOf": [
-                                    {
-                                        "description": "User's email",
-                                        "type": "string",
-                                        "format": "email",
-                                        "property": "email"
-                                    },
-                                    {
-                                        "description": "User's password",
-                                        "type": "string",
-                                        "property": "password"
-                                    },
-                                    {
-                                        "description": "Google Authenticator code",
-                                        "type": "string",
-                                        "property": "google2fa_code"
-                                    }
-                                ]
-                            },
-                            "example": {
-                                "email": "user@example.com",
-                                "password": "password"
+                                "$ref": "#/components/schemas/LoginRequest"
                             }
                         }
                     }
@@ -1948,39 +2240,24 @@
                         }
                     },
                     "404": {
-                        "description": "Not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "errors": {
-                                            "type": "array",
-                                            "items": {
-                                                "description": "Error message(s)",
-                                                "type": "string"
-                                            }
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Not found (Look validation error schema)"
                     },
                     "403": {
-                        "description": "Forbidden",
+                        "description": "Forbidden (Look validation error schema)"
+                    },
+                    "422": {
+                        "description": "Validation error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "errors": {
-                                            "type": "array",
-                                            "items": {
-                                                "description": "Error message(s)",
-                                                "type": "string"
-                                            }
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2012,16 +2289,14 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "errors": {
-                                            "description": "Error message",
-                                            "type": "array",
-                                            "items": {
-                                                "$ref": "string"
-                                            }
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2142,24 +2417,14 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "property": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2193,61 +2458,32 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "Success message",
-                                            "type": "string"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "message": {
+                                        "email": "string"
+                                    }
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Resource not found",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "errors": {
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            },
-                                            "example": [
-                                                "Requested resource not found"
-                                            ]
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
+                        "description": "Resource not found"
                     },
                     "422": {
                         "description": "Validation error",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "type": "string",
-                                            "example": "The given data was invalid."
-                                        },
-                                        "errors": {
-                                            "properties": {
-                                                "property": {
-                                                    "type": "array",
-                                                    "items": {
-                                                        "type": "string"
-                                                    }
-                                                }
-                                            },
-                                            "type": "object"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2313,18 +2549,19 @@
                             }
                         }
                     },
-                    "400": {
+                    "403": {
                         "description": "Bad request",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "Error message",
-                                            "type": "string"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2375,13 +2612,14 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "Error message",
-                                            "type": "string"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2454,21 +2692,22 @@
                             }
                         }
                     },
-                    "400": {
+                    "404": {
+                        "description": "Not found"
+                    },
+                    "403": {
                         "description": "Bad request",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "error": {
-                                            "description": "Error message",
-                                            "type": "array",
-                                            "items": {
-                                                "type": "string"
-                                            }
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2518,6 +2757,23 @@
                                 }
                             }
                         }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2563,13 +2819,14 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "errors": {
-                                            "description": "Validation errors",
-                                            "type": "object"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2609,8 +2866,22 @@
                     "401": {
                         "description": "Unauthorized"
                     },
-                    "422": {
-                        "description": "Unprocessable entity"
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
+                                }
+                            }
+                        }
                     }
                 },
                 "security": [
@@ -2659,18 +2930,19 @@
                             }
                         }
                     },
-                    "400": {
+                    "422": {
                         "description": "Bad request, token not exists or expired",
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "status": {
-                                            "description": "Error message",
-                                            "type": "string"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "errors": {
+                                        "property": [
+                                            "message"
+                                        ]
+                                    }
                                 }
                             }
                         }
@@ -2681,6 +2953,33 @@
     },
     "components": {
         "schemas": {
+            "LoginRequest": {
+                "type": "object",
+                "example": {
+                    "email": "user@example.com",
+                    "password": "password"
+                },
+                "oneOf": [
+                    {
+                        "description": "User's email",
+                        "type": "string",
+                        "format": "email",
+                        "property": "email"
+                    },
+                    {
+                        "description": "User's password",
+                        "type": "string",
+                        "property": "password"
+                    },
+                    {
+                        "description": "Google Authenticator code",
+                        "type": "string",
+                        "maxLength": 6,
+                        "minLength": 6,
+                        "property": "google2fa_code"
+                    }
+                ]
+            },
             "AllowedRouteResource": {
                 "properties": {
                     "allowed_routes": {

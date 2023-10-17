@@ -34,10 +34,9 @@ seed:
 optimize:
 	$(ARTISAN) optimize
 clear:
-	$(ARTISAN) route:clear
-	$(ARTISAN) cache:clear
-	$(ARTISAN) config:clear
-	$(ARTISAN) view:clear
+	$(COMPOSE) $(APP) composer cc
+	$(COMPOSE) $(APP) npm cache clean --force
+	$(ARTISAN) optimize:clear
 tinker:
 	$(ARTISAN) tinker
 test:

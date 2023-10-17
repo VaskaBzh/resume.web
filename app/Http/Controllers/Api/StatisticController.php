@@ -59,13 +59,20 @@ use Symfony\Component\HttpFoundation\Response;
                     ),
                 ],
             ),
+            new OA\Response(response: Response::HTTP_UNAUTHORIZED,description: 'Unauthorized'),
             new OA\Response(
-                response: Response::HTTP_UNAUTHORIZED,
-                description: 'Unauthorized',
-            ),
-            new OA\Response(
-                response: Response::HTTP_UNPROCESSABLE_ENTITY,
-                description: 'Sub not found',
+                response: Response::HTTP_NOT_FOUND,
+                description: 'Not Found',
+                content: [
+                    new OA\JsonContent(
+                        type: 'object',
+                        example: [
+                            'errors' => [
+                                'property' => ['message']
+                            ]
+                        ]
+                    ),
+                ],
             ),
         ],
     )

@@ -98,25 +98,12 @@ class RegisterController extends Controller
                     description: 'Validation error',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'message',
-                                    type: 'string',
-                                    example: 'The given data was invalid.',
-                                ),
-                                new OA\Property(
-                                    property: 'errors',
-                                    properties: [
-                                        new OA\Property(
-                                            property: 'property',
-                                            type: 'array',
-                                            items: new OA\Items(type: 'string'),
-                                        ),
-                                    ],
-                                    type: 'object',
-                                ),
-                            ],
                             type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
                         ),
                     ],
                 )
@@ -134,17 +121,17 @@ class RegisterController extends Controller
 
         try {
             $user = $this->create(userData: $userData);
-//            auth()->login($user);
-//            $btcComService->createSub(userData: $userData);
-//
-//
-//            if ($request->referral_code) {
-//                ReferralService::attach(referral: $user, code: $request->referral_code);
-//            }
-//
-//            event(new Registered(
-//                user: $user
-//            ));
+            auth()->login($user);
+            $btcComService->createSub(userData: $userData);
+
+
+            if ($request->referral_code) {
+                ReferralService::attach(referral: $user, code: $request->referral_code);
+            }
+
+            event(new Registered(
+                user: $user
+            ));
 
             return new JsonResponse([
                 'message' => 'success',
@@ -159,7 +146,9 @@ class RegisterController extends Controller
             report($e);
 
             return new JsonResponse([
-                'errors' => ['Something went wrong! Please contact with tech support']
+                'errors' => [
+                    'auth' => ['Something went wrong! Please contact with tech support']
+                ]
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Worker\Update;
-use App\Actions\WorkerHashRate\DeleteOldWorkerHashrates;
+use App\Actions\Worker\Upsert;
+use App\Actions\WorkerHashRate\Create as WorkerHashRateCreate;
 use App\Dto\WorkerData;
-use App\Models\Worker;
-use App\Models\WorkerHashrate;
+use App\Dto\WorkerHashRateData;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -36,29 +35,22 @@ class MakeWorkerHashesCommand extends Command
         $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
             if (array_key_exists('worker_id', $btcComWorker)) {
 
+                $workerData = WorkerData::fromRequest(requestData: [
+                    'group_id' => (int)$btcComWorker['gid'],
+                    'worker_id' => (int)$btcComWorker['worker_id'],
+                    'approximate_hash_rate' => $btcComWorker['shares_1d']
+                ]);
+
+                $workerHashrateData = WorkerHashRateData::fromRequest([
+                    'worker_id' => (int)$btcComWorker['worker_id'],
+                    'hash' => (int)$btcComWorker['shares_1m'],
+                    'unit' => $btcComWorker['shares_unit'],
+                ]);
+
                 $progressBar->advance();
 
-                $localWorker = Worker::where('worker_id', $btcComWorker['worker_id'])
-                    ->first();
-
-                if ($localWorker) {
-                    DeleteOldWorkerHashrates::execute(
-                        workerId: $localWorker->worker_id,
-                        date: now()->subMonths(2)->toDateTimeString()
-                    );
-
-                    WorkerHashrate::create([
-                        'worker_id' => $localWorker->worker_id,
-                        'hash' => $btcComWorker['shares_1m'] ?? 0,
-                        'unit' => $btcComWorker['shares_unit'] ?? 'T',
-                    ]);
-
-                    Update::execute($localWorker, workerData: WorkerData::fromRequest([
-                        'worker_id' => $localWorker->worker_id,
-                        'group_id' => $localWorker->group_id,
-                        'approximate_hash_rate' => $btcComWorker['shares_1d']
-                    ]));
-                }
+                WorkerHashRateCreate::execute(workerHashRateData: $workerHashrateData);
+                Upsert::execute(workerData: $workerData);
             }
         });
 

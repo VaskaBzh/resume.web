@@ -35,29 +35,8 @@ class LoginController extends Controller
             requestBody: new OA\RequestBody(
                 required: true,
                 content: new OA\JsonContent(
-                    type: 'object',
-                    example: [
-                        "email" => "user@example.com",
-                        "password" => "password",
-                    ],
-                    oneOf: [
-                        new OA\Property(
-                            property: "email",
-                            description: "User's email",
-                            type: "string",
-                            format: "email",
-                        ),
-                        new OA\Property(
-                            property: "password",
-                            description: "User's password",
-                            type: "string",
-                        ),
-                        new OA\Property(
-                            property: "google2fa_code",
-                            description: "Google Authenticator code",
-                            type: "string"
-                        ),
-                    ]
+                    ref: '#/components/schemas/LoginRequest',
+                    type: 'object'
                 )
             ),
             tags: ['Auth'],
@@ -86,39 +65,20 @@ class LoginController extends Controller
                         type: 'object'
                     )
                 ),
-                new OA\Response(
-                    response: Response::HTTP_NOT_FOUND,
-                    description: "Not found",
-                    content: new OA\JsonContent(
-                        properties: [
-                            new OA\Property(
-                                property: "errors",
-                                type: "array",
-                                items: new OA\Items(
-                                    description: "Error message(s)",
-                                    type: "string"
-                                )
-                            )
-                        ],
-                        type: 'object'
-                    )
-                ),
-                new OA\Response(
-                    response: Response::HTTP_FORBIDDEN,
-                    description: "Forbidden",
-                    content: new OA\JsonContent(
-                        properties: [
-                            new OA\Property(
-                                property: "errors",
-                                type: "array",
-                                items: new OA\Items(
-                                    description: "Error message(s)",
-                                    type: "string"
-                                )
-                            )
-                        ],
-                        type: 'object'
-                    )
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found (Look validation error schema)'),
+                new OA\Response(response: Response::HTTP_FORBIDDEN, description: 'Forbidden (Look validation error schema)'),
+                new OA\Response(response: Response::HTTP_UNPROCESSABLE_ENTITY,
+                    description: 'Validation error',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
                 )
             ]
         )
@@ -127,13 +87,17 @@ class LoginController extends Controller
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
             return new JsonResponse([
-                'errors' => [__('auth.failed')]
+                'errors' => [
+                    'auth' => [__('auth.failed')]
+                ]
             ], Response::HTTP_NOT_FOUND);
         }
 
         if (!$request->user->hasVerifiedEmail()) {
             return new JsonResponse([
-                'errors' => [__('auth.email.not.verified', ['email' => $request->user->email])]
+                'errors' => [
+                    'auth' => [__('auth.email.not.verified', ['email' => $request->user->email])]
+                ]
             ], Response::HTTP_FORBIDDEN);
         }
 
@@ -175,17 +139,16 @@ class LoginController extends Controller
                 new OA\Response(
                     response: Response::HTTP_UNAUTHORIZED,
                     description: 'Unauthorized',
-                    content: new OA\JsonContent(
-                        properties: [
-                            new OA\Property(
-                                property: 'errors',
-                                description: 'Error message',
-                                type: 'array',
-                                items: new OA\Items('string')
-                            )
-                        ],
-                        type: 'object'
-                    )
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
                 )
             ]
         )

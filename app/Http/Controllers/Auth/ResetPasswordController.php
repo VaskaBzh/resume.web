@@ -69,19 +69,18 @@ class ResetPasswordController extends Controller
                     ]
                 ),
                 new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
+                    response: Response::HTTP_FORBIDDEN,
                     description: 'Bad request',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'message',
-                                    description: 'Error message',
-                                    type: 'string'
-                                )
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 )
             ]
         )
@@ -90,10 +89,11 @@ class ResetPasswordController extends Controller
     {
         if (!hash_equals(hash('sha256', $user->getEmailForVerification()), $request->hash)) {
 
-            return new JsonResponse(
-                ['message' => __('auth.email.verify.link.expired')],
-                Response::HTTP_BAD_REQUEST
-            );
+            return new JsonResponse([
+                'errors' => [
+                    'auth' => [__('auth.email.verify.link.expired')]
+                ],
+            ], Response::HTTP_FORBIDDEN);
         }
 
         if ($user->update(['password' => Hash::make($request->password)])) {
@@ -103,6 +103,10 @@ class ResetPasswordController extends Controller
             return new JsonResponse(['message' => 'success']);
         }
 
-        return new JsonResponse(['message' => 'Something went wrong'], Response::HTTP_BAD_REQUEST);
+        return new JsonResponse([
+            'errors' => [
+                'auth' => ['Something went wrong']
+            ]
+        ], Response::HTTP_BAD_REQUEST);
     }
 }
