@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <main-background/>
+        <main-background ref="mainBackground"/>
         <header-component/>
         <div class="layout__container">
             <slot/>
@@ -27,22 +27,17 @@ export default {
     },
 
     mounted() {
-        const canvasBackgroundWorker = new Worker("/resources/js/modules/background/animationWorkers/canvasBackground.js?t=1697532300239");
+        const canvasBackgroundWorker = new Worker("../modules/background/animationWorkers/canvasBackground.js");
 
         canvasBackgroundWorker.postMessage('startAnimation');
 
+        // Обработка сообщений от веб-воркера
         canvasBackgroundWorker.onmessage = (e) => {
-            if (e.data === 'animationFrame') {
-                this.drawAnimationFrame();
-            }
+            // Обработка сообщений (если необходимо)
+            // Например, можно проверить e.data и выполнять какие-либо действия на основе полученных данных
         }
 
         // canvasBackgroundWorker.postMessage('stopAnimation');
-    },
-
-    methods: {
-        drawAnimationFrame() {
-        },
     },
 };
 </script>

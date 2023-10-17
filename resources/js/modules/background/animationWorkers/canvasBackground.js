@@ -38,15 +38,20 @@ function updateAnimationFrame() {
             particles[i].vy = -particles[i].vy;
     }
 
+    // Отправить сообщение об обновлении кадра анимации в основной поток
     self.postMessage('animationFrame');
+
+    // Запустить следующий кадр анимации
+    requestAnimationFrame(updateAnimationFrame);
 }
 
 self.addEventListener('message', (e) => {
     if (e.data === 'startAnimation') {
-        // Запустить анимацию
+        // Запустить анимацию при получении сообщения
         startAnimation();
     } else if (e.data === 'stopAnimation') {
-        stopAnimation();
+        // Остановить анимацию при получении сообщения (при необходимости)
+        // stopAnimation();
     }
 });
 
@@ -66,12 +71,8 @@ function startAnimation() {
         });
     }
 
-    function animate() {
-        updateAnimationFrame();
-        requestAnimationFrame(animate);
-    }
-
-    animate();
+    // Начать основной цикл анимации
+    requestAnimationFrame(updateAnimationFrame);
 }
 
 function getMultiplier() {
@@ -81,4 +82,5 @@ function getMultiplier() {
     return 1;
 }
 
+// Запустить анимацию при старте веб-воркера
 startAnimation();
