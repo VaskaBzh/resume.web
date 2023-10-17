@@ -1,6 +1,7 @@
 const canvas = new OffscreenCanvas(self.innerWidth, self.innerHeight);
 const ctx = canvas.getContext('2d');
 const particles = [];
+
 function updateAnimationFrame() {
     // Очистить холст
     ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -42,13 +43,14 @@ function updateAnimationFrame() {
 
 self.addEventListener('message', (e) => {
     if (e.data === 'startAnimation') {
+        // Запустить анимацию
         startAnimation();
     } else if (e.data === 'stopAnimation') {
         stopAnimation();
     }
 });
 
-export function startAnimation() {
+function startAnimation() {
     const multiplier = getMultiplier();
 
     const numberOfParticles = Math.floor(20 * multiplier);
