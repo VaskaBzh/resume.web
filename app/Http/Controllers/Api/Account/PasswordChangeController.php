@@ -72,26 +72,21 @@ class PasswordChangeController
                         )
                     ]
                 ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Watcher not found'),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
                     description: 'Unprocessable entity',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'error',
-                                    type: 'array',
-                                    items: new OA\Items(
-                                        description: 'Error message(s)',
-                                        type: 'string'
-                                    )
-                                )
-                            ],
-                            type: 'object'
-                        )
-                    ]
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
                 ),
-                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Watcher not found'),
             ]
         )
     ]
@@ -114,7 +109,9 @@ class PasswordChangeController
         }
 
         return new JsonResponse([
-            'error' => [__('auth.failed')]
+            'error' => [
+                'auth' => [__('auth.failed')]
+            ]
         ], Response::HTTP_UNPROCESSABLE_ENTITY);
     }
 }

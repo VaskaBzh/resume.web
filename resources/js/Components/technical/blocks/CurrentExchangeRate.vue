@@ -2,9 +2,7 @@
     <article class="rate-container">
         <div class="rate-block">
             <span class="rate-title">BTC</span>
-            <span class="rate-current-price">
-                ${{ this.btcInfo.btc?.price }}</span
-            >
+            <span class="rate-current-price"> ${{ price }}</span>
         </div>
         <div class="rate-block" v-if="isRu && isUSD">
             <span class="rate-title">USD</span>
@@ -13,7 +11,8 @@
     </article>
 </template>
 <script>
-import { mapGetters } from "vuex";
+import {mapGetters} from "vuex";
+import axios from "axios";
 
 export default {
     name: "current-exchange-rate",
@@ -21,30 +20,73 @@ export default {
         return {
             currentUSD: null,
             isRu: false,
+            interval: null,
+            intervalUsd: null,
+            price: "",
         };
     },
     computed: {
         ...mapGetters(["btcInfo", "currency"]),
         isUSD() {
-            if (this.currentUSD) {
-                return true;
-            } else {
-                return false;
-            }
+            return !!this.currentUSD;
+        },
+    },
+    watch: {
+        async "$i18n.locale"() {
+            await this.getUSD();
         },
     },
     methods: {
         async getUSD() {
             if (this.$i18n.locale === "ru") {
                 this.isRu = true;
+
+                if (this.intervalUsd) {
+                    clearInterval(this.intervalUsd);
+                }
+
                 this.currentUSD = (1 / this.currency.rates.USD).toFixed(2);
+
+                this.intervalUsd = setInterval(async () => {
+                    try {
+                        const response = (
+                            await axios.get(
+                                "https://www.cbr-xml-daily.ru/latest.js"
+                            )
+                        ).data;
+                        this.currentUSD = (1 / response.rates.USD).toFixed(2);
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }, 5000);
             } else {
                 this.isRu = false;
             }
         },
+        async fetchPrice() {
+            return (await axios.get('https://testnet.binancefuture.com/fapi/v1/premiumIndex?symbol=BTCUSDT')).data.indexPrice;
+        },
+        async setBitcoinCourse() {
+            this.interval = setInterval(async () => {
+                const response = await this.fetchPrice();
+
+                this.price = Number(response).toFixed(0);
+            }, 5000);
+        },
     },
-    mounted() {
-        this.getUSD();
+    async mounted() {
+        await this.getUSD();
+
+        const response = await this.fetchPrice();
+
+        this.price = Number(response).toFixed(0);
+        await this.setBitcoinCourse();
+    },
+    unmounted() {
+        clearInterval(this.interval);
+        if (this.intervalUsd) {
+            clearInterval(this.intervalUsd);
+        }
     },
 };
 </script>
@@ -56,12 +98,14 @@ export default {
     gap: 24px;
     font-family: Unbounded;
 }
+
 .rate-block {
     display: flex;
     align-items: center;
     gap: 8px;
     color: rgba(128, 128, 154, 1);
 }
+
 .rate-title {
     color: var(--text-teritary);
     font-size: 14px;
@@ -69,6 +113,7 @@ export default {
     font-weight: 400;
     line-height: 20px; /* 142.857% */
 }
+
 .rate-current-price {
     color: var(--text-primary);
     opacity: 0.8;

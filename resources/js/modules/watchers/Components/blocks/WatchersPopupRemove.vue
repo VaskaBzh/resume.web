@@ -49,7 +49,7 @@
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
 
 export default {

@@ -45,12 +45,13 @@
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 import LandingHeadline from "../../common/Components/UI/LandingHeadline.vue";
-import { MainApi } from "@/api/api";
+import {MainApi} from "@/api/api";
+import {mapGetters} from "vuex";
 
 export default {
-    components: { LandingHeadline },
+    components: {LandingHeadline},
     i18n: {
         sharedMessages: HostingMessage,
     },
@@ -67,6 +68,9 @@ export default {
     },
     props: {
         start: Boolean,
+    },
+    computed: {
+        ...mapGetters(["viewportWidth"]),
     },
     methods: {
         async sendMessage() {
@@ -98,28 +102,46 @@ export default {
 
                     if (
                         this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight +
-                            document.querySelector(".footer-content")
-                                .offsetHeight +
-                            document.querySelector(".all-content")
-                                .offsetHeight >
-                            20 &&
+                        document.scrollingElement.clientHeight +
+                        document.querySelector(".footer-content")
+                            .offsetHeight +
+                        document.querySelector(".all-content")
+                            .offsetHeight >
+                        20 &&
                         !this.validScroll
                     ) {
                         document.querySelector(
                             ".footer-content"
                         ).style.transform = `translateY(-${
-                            document.querySelector(".all-content").offsetHeight
+                            document.querySelector(".all-content")
+                                .offsetHeight +
+                            80 +
+                            (this.viewportWidth < 768.98
+                                ? document.querySelector(".footer-content")
+                                    .offsetHeight
+                                : 0)
                         }px)`;
                         document.querySelector(
                             ".layout__container"
                         ).style.transform = `translateY(-${
-                            document.querySelector(".all-content").offsetHeight
+                            document.querySelector(".all-content")
+                                .offsetHeight +
+                            80 +
+                            (this.viewportWidth < 768.98
+                                ? document.querySelector(".footer-content")
+                                    .offsetHeight
+                                : 0)
                         }px)`;
                         document.querySelector(
                             ".all-content"
                         ).style.transform = `translateY(-${
-                            document.querySelector(".all-content").offsetHeight
+                            document.querySelector(".all-content")
+                                .offsetHeight +
+                            80 +
+                            (this.viewportWidth < 768.98
+                                ? document.querySelector(".footer-content")
+                                    .offsetHeight
+                                : 0)
                         }px)`;
 
                         this.validScroll = true;
@@ -137,10 +159,10 @@ export default {
 
                     if (
                         this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight +
-                            document.querySelector(".footer-content")
-                                .offsetHeight >
-                            20 &&
+                        document.scrollingElement.clientHeight +
+                        document.querySelector(".footer-content")
+                            .offsetHeight >
+                        20 &&
                         this.validScroll
                     ) {
                         this.$refs.view.style.transform = `translateY(0px)`;
@@ -201,6 +223,16 @@ export default {
     },
     unmounted() {
         this.remove();
+        document.querySelector(
+            ".footer-content"
+        ).style.transform = `translateY(100%)`;
+        document.querySelector(
+            ".layout__container"
+        ).style.transform = `translateY(0)`;
+        document.querySelector(
+            ".all-content"
+        ).style.transform = `translateY(100%)`;
+        setTimeout(this.scroll, 500);
     },
 };
 </script>
@@ -360,10 +392,6 @@ export default {
 
     .connect-order {
         width: 90vw;
-    }
-
-    .or-button {
-        width: 49%;
     }
 
     .connect-with-us {

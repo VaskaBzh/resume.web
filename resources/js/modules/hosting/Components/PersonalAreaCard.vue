@@ -10,8 +10,13 @@
                 src="../assets/img/Mockup-mac.png"
                 class="img-mac img-system web"
             />
+            <!--            <img-->
+            <!--                src="../assets/img/Mockup-statistic-ru.png"-->
+            <!--                class="img-statistic img-system web"-->
+            <!--                v-show="$i18n.locale === 'ru'"-->
+            <!--            />-->
             <img
-                src="../assets/img/Mockup-statistic.png"
+                src="../assets/img/Mockup-statistic-en.png"
                 class="img-statistic img-system web"
             />
 
@@ -552,12 +557,12 @@
         <a
             href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
             class="get-consultation"
-            >{{ $t("hosting_personal_account.button") }}</a
+        >{{ $t("hosting_personal_account.button") }}</a
         >
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 import MockupTooltip from "./MockupTooltip.vue";
 
 export default {
@@ -598,8 +603,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -620,8 +625,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -830,12 +835,14 @@ export default {
 .mobile {
     display: none;
 }
+
 .cabinet_title {
     display: flex;
     flex-direction: column;
-    max-width: 300px;
+    max-width: 443px;
     margin-bottom: clamp(20px, 5vw, 40px);
 }
+
 .cabinet_title_elem-left {
     transform: translateX(-70px);
 }

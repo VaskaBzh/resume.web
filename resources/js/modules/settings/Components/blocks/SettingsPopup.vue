@@ -112,7 +112,7 @@
 
 <script>
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";

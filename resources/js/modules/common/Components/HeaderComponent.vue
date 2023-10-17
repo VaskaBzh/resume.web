@@ -5,26 +5,26 @@
                 {{ $t("footer.button") }}
             </router-link>
             <router-link to="/">
-                <header-logo-icon class="nav_logo" />
+                <header-logo-icon class="nav_logo"/>
             </router-link>
-            <nav-links class="nav__navigation" />
-            <select-language-land class="nav_lang" />
-            <div class="burger-mobile">
-                <burger-menu />
-            </div>
+            <nav-links class="nav__navigation"/>
+            <select-language-land class="nav_lang"/>
         </div>
     </nav>
+    <div class="burger-mobile">
+        <burger-menu/>
+    </div>
 </template>
 
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import BurgerMenu from "../../burger/Components/BurgerMenu.vue";
 import HeaderLogoIcon from "@/modules/common/icons/HeaderLogoIcon.vue";
 
 export default {
-    components: { SelectLanguageLand, NavLinks, BurgerMenu, HeaderLogoIcon },
+    components: {SelectLanguageLand, NavLinks, BurgerMenu, HeaderLogoIcon},
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -49,6 +49,14 @@ export default {
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
+        width: clamp(87px, 15vw, 187px);
+        height: clamp(26px, 15vw, 56px);
+        @media (max-width: 768.98px) {
+            position: relative;
+            left: 0;
+            top: 0;
+            transform: none;
+        }
     }
 
     &__container {
@@ -96,13 +104,31 @@ export default {
 }
 
 .burger-mobile {
-    display: none;
+    position: absolute;
+    height: 26px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.5s ease 0s;
+    align-items: center;
+    display: inline-flex;
+    cursor: pointer;
+    justify-content: flex-end;
+    padding: 0 clamp(16px, 5vw, 100px);
+    max-width: 2120px;
+    width: 100%;
+    z-index: 99;
+    outline: none;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-@media (max-width: 760px) {
+.burger-mobile:focus,
+.burger-mobile:active {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+@media (min-width: 760px) {
     .burger-mobile {
-        display: inline-block;
-        margin-left: auto;
+        opacity: 0;
     }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
     <div class="faq">
         <div class="faq__main">
-            <main-title tag="h2" class="faq_title"> FAQ </main-title>
+            <main-title tag="h2" class="faq_title"> FAQ</main-title>
             <p class="description-text">
                 {{ $t("faq[0].description") }}
             </p>
@@ -42,8 +42,9 @@
                     :key="i"
                 >
                     <main-title tag="h3" class="title-gray">{{
-                        accordion.title
-                    }}</main-title>
+                            accordion.title
+                        }}
+                    </main-title>
                     <div class="section__block section__block-light">
                         <main-accordion
                             v-for="(accordionList, index) in accordion.list"
@@ -63,7 +64,7 @@ import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainAccordion from "@/modules/common/Components/UI/MainAccordion.vue";
 
 export default {
-    components: { MainTitle, BlueButton, MainAccordion },
+    components: {MainTitle, BlueButton, MainAccordion},
     data() {
         return {
             searchQuery: "",
@@ -167,10 +168,12 @@ export default {
 .fade-leave-active {
     transition: all 0.3s ease;
 }
+
 .fade-enter,
 .fade-leave-to {
     opacity: 0;
 }
+
 .description-text {
     color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
@@ -180,6 +183,7 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
+
 .title-gray {
     color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans;
@@ -189,18 +193,20 @@ export default {
     line-height: 150%; /* 24px */
     margin-left: 24px;
 }
-@media(max-width: 500px){
-    .title-gray{
+
+@media(max-width: 500px) {
+    .title-gray {
         font-size: 12px;
         margin: 16px 16px 0;
     }
-    .faq__container{
+    .faq__container {
         padding: 0;
     }
-    .description-text{
+    .description-text {
         display: none;
     }
 }
+
 .faq {
     padding: 24px;
     flex: 1 1 auto;
@@ -209,9 +215,11 @@ export default {
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
+
     &__main {
         flex: 1 1 auto;
     }
+
     &_title {
         margin-top: 8px;
         font-size: 27px;
@@ -227,10 +235,11 @@ export default {
         @media (max-width: 767.98px) {
             margin-top: 0px;
         }
-        @media (max-width:500px) {
+        @media (max-width: 500px) {
             margin: 0px 0 0 16px;
         }
     }
+
     .search {
         margin: 56px 0 48px;
         @media (max-width: 991.98px) {
@@ -240,6 +249,7 @@ export default {
             margin: 24px 0 32px;
         }
     }
+
     &__list {
         margin-bottom: 40px;
         display: flex;
@@ -254,9 +264,11 @@ export default {
             margin-bottom: 32px;
             gap: 8px;
         }
+
         .section__block {
             border-radius: 24px;
             background: var(--background-island);
+            padding: 0 16px;
             box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.05);
         }
     }

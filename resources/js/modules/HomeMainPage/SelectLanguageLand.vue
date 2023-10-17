@@ -8,8 +8,13 @@
 export default {
     methods: {
         selectMassage() {
-            this.$i18n.locale = this.$i18n.locale === "en" ? "ru" : "en";
+            const lang = this.$i18n.locale === "en" ? "ru" : "en";
+            this.$i18n.locale = lang;
+            localStorage.setItem("location", lang);
         },
+    },
+    mounted() {
+        this.$i18n.locale = localStorage.getItem("location");
     },
 };
 </script>
@@ -30,5 +35,7 @@ export default {
     -webkit-backdrop-filter: blur(10px);
     text-transform: uppercase;
     cursor: pointer;
+    font-size: clamp(14px, 5vw, 18px);
+    font-family: Unbounded;
 }
 </style>

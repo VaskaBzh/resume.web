@@ -2,7 +2,7 @@
     <div class="mobile-view mobile__section mobile__section-wrap" ref="view">
         <div class="mobile-view__block">
             <landing-headline class="mobile-view__title"
-                >{{ $t("mobile_app.button") }}
+            >{{ $t("mobile_app.button") }}
             </landing-headline>
             <div class="mobile-view__wrapper">
                 <Swiper
@@ -69,33 +69,58 @@
                         :modules="[Controller, Navigation, Pagination]"
                         @swiper="setControlledSwiper"
                     >
-                        <swiper-slide class="mobile-view_image active">
+                        <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen1-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen1.png"
+                                src="../../../../../assets/img/iphone-14-screen1-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen2-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-sreen2.png.png"
+                                src="../../../../../assets/img/iphone-14-screen2-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen3-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen3.png"
+                                src="../../../../../assets/img/iphone-14-screen3-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen4-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen4.png"
+                                src="../../../../../assets/img/iphone-14-screen4-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen5-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen1.png"
+                                src="../../../../../assets/img/iphone-14-screen5-en.png"
                                 alt=""
                             />
                         </swiper-slide>
@@ -112,27 +137,27 @@
             </div>
         </div>
         <div class="mobile-view__run">
-            <logo-run-icon />
-            <logo-run-icon />
-            <logo-run-icon />
-            <logo-run-icon />
-            <logo-run-icon />
-            <logo-run-icon />
-            <logo-run-icon />
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
+            <logo-run-icon/>
         </div>
     </div>
 </template>
 
 <script>
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import { HomeMessage } from "@/modules/home/lang/HomeMessage";
+import {HomeMessage} from "@/modules/home/lang/HomeMessage";
 import LandingTitle from "../../../common/Components/UI/LandingTitle.vue";
 import LogoRunIcon from "../../icons/LogoRunIcon.vue";
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
-import { Swiper, SwiperSlide } from "swiper/vue";
-import { Controller, Navigation, Pagination } from "swiper";
-import { ref } from "vue";
-import { mapGetters } from "vuex";
+import {Swiper, SwiperSlide} from "swiper/vue";
+import {Controller, Navigation, Pagination} from "swiper";
+import {ref} from "vue";
+import {mapGetters} from "vuex";
 
 export default {
     name: "AppMobileView",
@@ -147,7 +172,6 @@ export default {
     i18n: {
         sharedMessages: HomeMessage,
     },
-
     setup() {
         const controllerSlide = ref(null);
 
@@ -197,8 +221,8 @@ export default {
                 setTimeout(this.scroll, 300);
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
@@ -221,8 +245,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
+                    document.scrollingElement.clientHeight >
+                    20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -303,6 +327,7 @@ export default {
     align-items: center;
     justify-content: center;
 }
+
 .mobile-view {
     display: flex;
     flex-flow: column;
@@ -400,6 +425,7 @@ export default {
             height: 430px;
         }
     }
+
     &_swiper-picture {
         display: flex;
         flex-flow: row nowrap;
@@ -427,10 +453,11 @@ export default {
     }
 
     &_subtitle {
-        padding: 32px 32px 0 32px;
+        padding: 32px 32px 0 0;
 
         @media (max-width: 1600px) {
             text-align: center;
+            padding: 32px 32px 0 32px;
         }
         @media (max-width: 768px) {
             text-align: center;
@@ -457,7 +484,7 @@ export default {
             width: 100%;
             height: auto;
             object-fit: cover;
-            border-radius: 50px;
+            border-radius: 30px;
 
             @media (max-width: 768px) {
                 border-radius: 20px;

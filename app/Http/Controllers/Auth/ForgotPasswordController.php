@@ -59,6 +59,20 @@ class ForgotPasswordController extends Controller
                             ]
                         )
                     ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Not found',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
                 )
             ]
         )

@@ -22,7 +22,7 @@
 <script>
 import MainSearch from "@/modules/common/Components/inputs/MainSearch.vue";
 import AddSubIcon from "@/modules/subs/icons/AddSubIcon.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import SubTypeButtons from "@/modules/subs/Components/UI/SubTypeButtons.vue";
 
 import {SubMessages} from "@/modules/subs/lang/SubMessages";

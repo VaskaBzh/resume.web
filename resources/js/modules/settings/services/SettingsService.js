@@ -1,11 +1,11 @@
-import { FormData } from "@/modules/settings/DTO/FormData";
+import {FormData} from "@/modules/settings/DTO/FormData";
 
-import { ValidateService } from "@/modules/validate/services/ValidateService";
-import { RowData } from "@/modules/settings/DTO/RowData";
-import { ProfileApi } from "@/api/api";
+import {ValidateService} from "@/modules/validate/services/ValidateService";
+import {RowData} from "@/modules/settings/DTO/RowData";
+import {ProfileApi} from "@/api/api";
 import store from "@/store";
-import { SettingsUserData } from "../DTO/SettingsUserData";
-import { BlockData } from "../DTO/BlockData";
+import {SettingsUserData} from "../DTO/SettingsUserData";
+import {BlockData} from "../DTO/BlockData";
 
 export class SettingsService {
     constructor(translate, router) {
@@ -69,7 +69,27 @@ export class SettingsService {
     }
 
     async sendVerify(form) {
-        store.dispatch("setUser");
+        try {
+            this.form.code = form.code;
+            const response = await this.fetchFac();
+
+            this.closeFacPopup();
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "connected",
+                text: response.message,
+            });
+
+            store.dispatch("setUser");
+        } catch (err) {
+            console.error(err);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.message || err.response.data.error,
+            });
+        }
         // try {
         //     const response = await this.fetchVerifyFac(form);
         //
@@ -83,11 +103,6 @@ export class SettingsService {
         // } catch (err) {
         //     console.error(err);
         //
-        //     store.dispatch("setNotification", {
-        //         status: "error",
-        //         title: "error",
-        //         text: err.response.data.error ?? err.response.data.message,
-        //     });
         //     store.dispatch("setFullErrors", err.response.data);
         // }
     }
@@ -95,21 +110,20 @@ export class SettingsService {
     removeRouteQuery() {
         this.router.push({
             name: "settings",
-        })
+        });
     }
 
     setPasswordForm(form = null) {
-        const formData =
-            form ?? {
-                old_password: "",
-                password: "",
-                "password_confirmation": "",
-            }
+        const formData = form ?? {
+            old_password: "",
+            password: "",
+            password_confirmation: "",
+        };
 
         this.passwordForm = {
             ...this.passwordForm,
             ...formData,
-        }
+        };
     }
 
     async sendPassword() {
@@ -151,10 +165,12 @@ export class SettingsService {
 
     async sendFac() {
         try {
-            const response = await this.fetchFac();
+            const response = await this.generateFac();
 
             this.setCode(response.secret);
             this.setQrCode(response.qrCode);
+
+            this.form.secret = response.secret;
             this.openFacPopup();
         } catch (err) {
             console.error(err);
@@ -175,17 +191,21 @@ export class SettingsService {
 
     async fetchPassword() {
         return (
-            await ProfileApi.put(`/password/change/${this.user.id}`, this.passwordForm, {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            })
+            await ProfileApi.put(
+                `/password/change/${this.user.id}`,
+                this.passwordForm,
+                {
+                    headers: {
+                        Authorization: `Bearer ${store.getters.token}`,
+                    },
+                }
+            )
         ).data;
     }
 
     async generateFac() {
         return (
-            await ProfileApi.put(`/2fac/generate/${this.user.id}`, {
+            await ProfileApi.get(`/2fac/qrcode/${this.user.id}`, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -195,7 +215,7 @@ export class SettingsService {
 
     async fetchFac() {
         return (
-            await ProfileApi.put(`/2fac/enable/${this.user.id}`, {
+            await ProfileApi.put(`/2fac/enable/${this.user.id}`, this.form, {
                 headers: {
                     Authorization: `Bearer ${store.getters.token}`,
                 },
@@ -204,9 +224,7 @@ export class SettingsService {
     }
 
     async fetchDropFac() {
-        return (
-            await ProfileApi.put(`/2fac/disable/${this.user.id}`)
-        ).data;
+        return (await ProfileApi.put(`/2fac/disable/${this.user.id}`)).data;
     }
 
     validateProcess(event) {
@@ -273,7 +291,9 @@ export class SettingsService {
                 this.translate("safety.text[0]"),
                 "2fac",
                 "two-factor-icon.png",
-                this.translate(this.user["2fa"] ? "safety.button[2]" : "safety.button[0]"),
+                this.translate(
+                    this.user["2fa"] ? "safety.button[2]" : "safety.button[0]"
+                ),
                 this.user["2fa"] ? "dropFac" : "openFacForm"
             ),
             new BlockData(
@@ -373,7 +393,7 @@ export class SettingsService {
                 key: data.key,
             };
         } else {
-            await this.sendEmailVerification()
+            await this.sendEmailVerification();
         }
     }
 }

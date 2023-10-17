@@ -88,7 +88,7 @@ import MainDescription from "@/modules/common/Components/UI/MainDescription.vue"
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
-import MainButton from "@/modules/common/Components/UI/LandingButton.vue";
+import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import {mapGetters} from "vuex";
 import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
 

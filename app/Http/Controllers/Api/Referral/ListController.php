@@ -50,14 +50,31 @@ class ListController extends Controller
                         ),
                     ],
                 ),
-                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User or referral code nof found'),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Not found',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
+                )
             ],
         )
     ]
     public function __invoke(User $user, BtcComService $btcComService)
     {
         if (!$user?->referral_code) {
-            return new JsonResponse(['error' => __('actions.referral.code.exists')], Response::HTTP_NOT_FOUND);
+            return new JsonResponse([
+                'errors' => [
+                    'message' => [__('actions.referral.code.exists')]
+                ]
+            ], Response::HTTP_NOT_FOUND);
         }
 
         $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);

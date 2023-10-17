@@ -19,17 +19,17 @@ export default {
         faq() {
             return [
                 {
-                    title: "fPPS+",
+                    title: this.$t("payments.main_title[0]"),
                     preTitle: this.$t("payments.title[0]"),
                     text: this.$t("payments.text[0]"),
                 },
                 {
-                    title: "(msk) 12:00-13:00",
+                    title: this.$t("payments.main_title[1]"),
                     preTitle: this.$t("payments.title[1]"),
                     text: this.$t("payments.text[1]"),
                 },
                 {
-                    title: "fPPS+",
+                    title: this.$t("payments.main_title[2]"),
                     preTitle: this.$t("payments.title[2]"),
                     text: this.$t("payments.text[2]"),
                 },
@@ -68,9 +68,9 @@ export default {
                     document.scrollingElement.clientHeight >
                     20 && !this.validScroll) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
