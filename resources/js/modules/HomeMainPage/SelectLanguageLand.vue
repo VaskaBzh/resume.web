@@ -14,7 +14,8 @@ export default {
         },
     },
     mounted() {
-        this.$i18n.locale = localStorage.getItem("location");
+        this.$i18n.locale =
+            localStorage.getItem("location") ?? this.$i18n.locale;
     },
 };
 </script>

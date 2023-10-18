@@ -35,12 +35,6 @@ class MakeWorkerHashesCommand extends Command
         $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
             if (array_key_exists('worker_id', $btcComWorker)) {
 
-                $workerData = WorkerData::fromRequest(requestData: [
-                    'group_id' => (int)$btcComWorker['gid'],
-                    'worker_id' => (int)$btcComWorker['worker_id'],
-                    'approximate_hash_rate' => $btcComWorker['shares_1d']
-                ]);
-
                 $workerHashrateData = WorkerHashRateData::fromRequest([
                     'worker_id' => (int)$btcComWorker['worker_id'],
                     'hash' => (int)$btcComWorker['shares_1m'],
@@ -50,7 +44,6 @@ class MakeWorkerHashesCommand extends Command
                 $progressBar->advance();
 
                 WorkerHashRateCreate::execute(workerHashRateData: $workerHashrateData);
-                Upsert::execute(workerData: $workerData);
             }
         });
 
