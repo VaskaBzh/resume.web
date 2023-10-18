@@ -89,7 +89,6 @@ class StatisticController extends Controller
             ),
             'incomes' => new IncomeCollection(
                 Income::getByGroupId($sub->group_id)
-                    ->selectRaw('daily_amount as amount')
                     ->latest()
                     ->take(30)
                     ->get()

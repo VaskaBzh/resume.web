@@ -13,11 +13,16 @@ class Upsert
         WorkerData $workerData,
     ): void
     {
-        Worker::updateOrCreate([
+        Worker::withTrashed()->updateOrCreate([
             'worker_id' => $workerData->worker_id,
             'group_id' => $workerData->group_id,
         ], [
-            'approximate_hash_rate' => $workerData->approximateHashRate
+            'name' => $workerData->name,
+            'approximate_hash_rate' => $workerData->approximateHashRate,
+            'status' => $workerData->status,
+            'unit' => $workerData->unit,
+            'pool_data' => $workerData->poolData,
+            'deleted_at' => null,
         ]);
     }
 }
