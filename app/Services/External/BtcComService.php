@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Actions\Sub\Create;
-use App\Actions\Worker\Upsert;
+use App\Actions\Worker\Update;
+use App\Actions\Worker\Create as WorkerCreate;
 use App\Actions\WorkerHashRate\Create as WorkerHashRateCreate;
 use App\Dto\SubData;
 use App\Dto\UserData;
@@ -361,7 +362,7 @@ class BtcComService
     {
         $btcComWorkers = $this->getGroupedWorkerCollection();
 
-        $btcComWorkers->each(static fn(WorkerData $workerData) => Upsert::execute(workerData: $workerData));
+        $btcComWorkers->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData));
 
         Log::channel('commands')->info('WORKERS UPDATE COMPLETE');
 
@@ -382,7 +383,7 @@ class BtcComService
         $btcComWorkers
             ->each(static function (array $firstWorkerData) {
 
-                Upsert::execute($firstWorkerData['worker_data']);
+                WorkerCreate::execute($firstWorkerData['worker_data']);
                 WorkerHashRateCreate::execute($firstWorkerData['worker_hash_rate']);
 
                 resolve(BtcComService::class)
