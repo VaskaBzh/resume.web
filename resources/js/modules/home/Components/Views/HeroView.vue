@@ -1,37 +1,31 @@
 <template>
-    <div class="hero hero__section" ref="view">
+    <div class="hero" ref="view">
         <div class="hero__content">
             <logo-background/>
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
-                        <span class="hero_title_elem">{{
-                                $t("title[0]")
-                            }}</span>
-                        <span class="hero_title_elem">{{
-                                $t("title[1]")
-                            }}</span>
+                        <span class="hero_title_elem">
+                            {{ $t("title[0]") }}
+                        </span>
+
                     </span>
                     <span class="hero_title_row hero_title_row-left">
-                        <span class="hero_title_elem">{{
-                                $t("title[2]")
-                            }}</span>
+                        <span class="hero_title_elem">
+                            {{ $t("title[1]") }}
+                        </span>
                     </span>
                     <span class="hero_title_row hero_title_row-top">
-                        <span class="hero_title_elem"
-                        >{{
-                                $t("title[3]")
-                            }}<span class="hero_title_elem">{{
-                                    $t("title[4]")
-                                }}</span></span
-                        >
+                        <span class="hero_title_elem">
+                            {{ $t("title[2]") }}
+                        </span>
                     </span>
                     <span class="hero_title_row">
-                        <span class="hero_title_elem hero_title_elem-last"
-                        >Bitcoin</span
-                        >
-                        <landing-text tag="span" class="hero_text"
-                        >{{ $t("text") }}
+                        <span class="hero_title_elem hero_title_elem-last">
+                            {{ $t("title[3]") }}
+                        </span>
+                        <landing-text tag="span" class="hero_text">
+                            {{ $t("text") }}
                         </landing-text>
                     </span>
                 </landing-title>
@@ -43,7 +37,9 @@
                 target="_blank"
             >
                 <landing-button class="hero_button">
-                    <template v-slot:text>{{ $t("button") }}</template>
+                    <template v-slot:text>
+                        {{ $t("button") }}
+                    </template>
                 </landing-button>
             </a>
         </div>
@@ -68,110 +64,6 @@ export default {
     i18n: {
         sharedMessages: HomeMessage,
     },
-    data() {
-        return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
-        };
-    },
-    props: {
-        start: {
-            type: Boolean,
-            default: false,
-        },
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
-    },
 };
 </script>
 
@@ -187,7 +79,8 @@ export default {
     width: 100%;
     min-height: 100vh;
     display: flex;
-    padding: clamp(60px, 20vw, 120px) 0;
+    justify-content: center;
+    padding-top: 6em;
     align-items: center;
 }
 
@@ -246,11 +139,6 @@ export default {
     }
 }
 
-@media (max-width: 660.98px) {
-    .hero_title_row-first {
-        margin-right: auto;
-    }
-}
 
 .hero_title_row-left {
     margin-left: -102px;
@@ -272,9 +160,4 @@ export default {
     margin-top: 6px;
 }
 
-@media (max-width: 660.98px) {
-    .hero_title_elem-last {
-        margin-left: auto;
-    }
-}
 </style>

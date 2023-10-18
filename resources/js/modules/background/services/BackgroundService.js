@@ -124,8 +124,6 @@ export class BackgroundService {
         const numberOfParticles = Math.floor(20 * multiplier);
         const maxParticleSize = 300 * multiplier;
 
-        console.log(maxParticleSize)
-
         for (let i = 0; i < numberOfParticles; i++) {
             this.particles.push({
                 x: Math.random() * this.setWidth,

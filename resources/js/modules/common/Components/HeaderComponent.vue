@@ -116,7 +116,7 @@ export default {
     padding: 0 clamp(16px, 5vw, 100px);
     max-width: 2120px;
     width: 100%;
-    z-index: 99;
+    z-index: 120;
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
