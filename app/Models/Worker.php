@@ -16,6 +16,8 @@ class Worker extends Model
 
     protected $table = 'workers';
 
+    protected $primaryKey = 'worker_id';
+
     protected $fillable = [
         'name',
         'worker_id',
@@ -47,7 +49,7 @@ class Worker extends Model
 
     public function workerHashrates(): HasMany
     {
-        return $this->hasMany(WorkerHashrate::class, 'worker_id', 'worker_id');
+        return $this->hasMany(WorkerHashrate::class, 'worker_id');
     }
 
     /* Custom builder */

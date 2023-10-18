@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\WorkerHashRate\Create as WorkerHashRateCreate;
-use App\Dto\WorkerHashRateData;
+use App\Actions\WorkerHashRate\DeleteOldWorkerHashrates;
+use App\Models\Worker;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -33,15 +33,16 @@ class MakeWorkerHashesCommand extends Command
         $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
             if (array_key_exists('worker_id', $btcComWorker)) {
 
-                $workerHashrateData = WorkerHashRateData::fromRequest([
-                    'worker_id' => (int)$btcComWorker['worker_id'],
-                    'hash' => (int)$btcComWorker['shares_1m'],
-                    'unit' => $btcComWorker['shares_unit'],
-                ]);
+                Worker::find($btcComWorker['worker_id'])
+                    ?->workerHashrates()
+                    ->create([
+                        'hash' => (int)$btcComWorker['shares_1m'],
+                        'unit' => $btcComWorker['shares_unit'],
+                    ]);
+
+                DeleteOldWorkerHashrates::execute(workerId: (int) $btcComWorker['worker_id']);
 
                 $progressBar->advance();
-
-                WorkerHashRateCreate::execute(workerHashRateData: $workerHashrateData);
             }
         });
 

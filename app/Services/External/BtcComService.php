@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Actions\Sub\Create;
-use App\Actions\WorkerHashRate\Create as WorkerHashRateCreate;
 use App\Actions\Worker\Update;
 use App\Actions\Worker\Create as WorkerCreate;
 use App\Dto\SubData;
@@ -25,8 +24,8 @@ use Illuminate\Support\Facades\Log;
 class BtcComService
 {
     private PendingRequest $client;
-    private static $retryCount = 3;
-    private static $pendingTimeSec = 1;
+    private static int $retryCount = 3;
+    private static int $pendingTimeSec = 1;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
@@ -383,8 +382,12 @@ class BtcComService
         $btcComWorkers
             ->each(static function (array $firstWorkerData) {
 
-                WorkerCreate::execute($firstWorkerData['worker_data']);
-                WorkerHashRateCreate::execute($firstWorkerData['worker_hash_rate']);
+                WorkerCreate::execute($firstWorkerData['worker_data'])
+                    ->workerHashrates()
+                    ->create([
+                        'hash' => (int)$firstWorkerData['worker_hash_rate']['shares_1m'],
+                        'unit' => $firstWorkerData['worker_hash_rate']['unit'],
+                    ]);
 
                 resolve(BtcComService::class)
                     ->updateWorker(workerData: $firstWorkerData['worker_data']);
