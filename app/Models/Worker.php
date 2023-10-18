@@ -3,25 +3,32 @@
 namespace App\Models;
 
 use App\Builders\WorkerBuilder;
-use App\Http\Controllers\Hashes\HashController;
-use App\Http\Controllers\Requests\RequestController;
-use App\Http\Controllers\Workers\WorkerController;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Worker extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     protected $table = 'workers';
 
     protected $fillable = [
+        'name',
         'worker_id',
         'group_id',
         'approximate_hash_rate',
+        'status',
+        'unit',
+        'pool_data',
+        'deleted_at',
+    ];
+
+    protected $casts = [
+        'pool_data' => 'array'
     ];
 
     public function getRouteKeyName(): string

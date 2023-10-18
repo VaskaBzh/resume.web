@@ -65,10 +65,10 @@ class ResendVerifyEmailController extends Controller
     ]
     public function __invoke(Request $request): JsonResponse
     {
-        $this->validateEmail($request->email);
+        $this->validateEmail($request);
 
         try {
-            $user = User::whereEmail($request->email)
+            $user = User::whereEmail($request)
                 ->firstOrFail();
 
             if ($user->hasVerifiedEmail()) {

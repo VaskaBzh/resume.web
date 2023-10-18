@@ -11,7 +11,11 @@ readonly final class WorkerData
     public function __construct(
         public int $group_id,
         public int $worker_id,
-        public ?float $approximateHashRate
+        public string $name,
+        public ?float $approximateHashRate,
+        public string $status,
+        public string $unit,
+        public array $poolData,
     )
     {
     }
@@ -21,7 +25,11 @@ readonly final class WorkerData
         return new self(
             group_id: (int) $requestData['group_id'],
             worker_id: (int) $requestData['worker_id'],
+            name: $requestData['name'],
             approximateHashRate: (float) Arr::get($requestData, 'approximate_hash_rate'),
+            status: $requestData['status'],
+            unit: $requestData['unit'],
+            poolData: $requestData['pool_data'],
         );
     }
 }
