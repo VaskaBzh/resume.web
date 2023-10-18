@@ -27,34 +27,36 @@ class MakeHashesCommand extends Command
         BtcComService $btcComService
     ): void
     {
-        $btcSubList  = $btcComService->filterUngrouped();
+        $btcSubList = $btcComService->filterUngrouped();
         $progress = $this->output->createProgressBar($btcSubList->count());
 
         $btcSubList->each(static function (array $btcSub) use ($progress) {
 
-                $progress->start();
+            $progress->start();
 
-                if (filled($btcSub)) {
-                    $localSub = Sub::find($btcSub['gid']);
+            if (filled($btcSub)) {
+                $localSub = Sub::find($btcSub['gid']);
 
-                    if (!is_null($localSub) && $btcSub['workers_active'] > 0) {
+                if (!is_null($localSub) && $btcSub['workers_active'] > 0) {
 
-                        $progress->advance();
+                    $progress->advance();
 
-                        DeleteOldHashrates::execute(
-                            groupId: $localSub->group_id,
-                            date: now()->subMonths(2)->toDateTimeString()
-                        );
+                    DeleteOldHashrates::execute(
+                        groupId: $localSub->group_id,
+                        date: now()->subMonths(2)->toDateTimeString()
+                    );
 
-                        Hash::create([
+                    $localSub
+                        ->hashes()
+                        ->create([
                             'group_id' => $localSub->group_id,
                             'hash' => Arr::get($btcSub, 'shares_1m', 0),
                             'unit' => Arr::get($btcSub, 'shares_unit', 'T'),
                             'worker_count' => Arr::get($btcSub, 'workers_active', 0)
                         ]);
-                    }
                 }
-            });
+            }
+        });
 
         $progress->finish();
 
