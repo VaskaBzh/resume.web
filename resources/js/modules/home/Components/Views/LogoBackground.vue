@@ -35,6 +35,12 @@ export default {
     z-index: -1;
 }
 
+@media (max-width: 768.98px) {
+    .logo {
+        top: 38vh;
+    }
+}
+
 .logo__content {
     width: 100%;
     display: flex;
@@ -60,9 +66,7 @@ export default {
 }
 
 .logo_elem-first {
-    //width: clamp(324px, 50vw, 1070px);
-    //height: clamp(106px, 24vw, 348px);
-    width: 1070px;
+//width: clamp(324px, 50vw, 1070px); //height: clamp(106px, 24vw, 348px); width: 1070px;
     height: 348px;
     @media (max-width: 1300px) {
         width: 600px;
@@ -89,7 +93,7 @@ export default {
     }
     @media (max-width: 768px) {
         width: 400px;
-        //height: unset;
+    //height: unset;
     }
     @media (max-width: 470px) {
         width: 300px;

@@ -43,8 +43,8 @@ export default {
     padding: 16px 15px;
     transition: all 0.8s ease 0s;
     border-radius: 0 0 clamp(20px, 5vw, 40px) clamp(20px, 5vw, 40px);
-    border-bottom: 2px solid #555353;
-    background: rgba(13, 13, 13, 0.95);
+    //border-bottom: 2px solid #555353;
+    //background: rgba(13, 13, 13, 0.95);
 
     &_logo {
         position: absolute;
@@ -63,6 +63,7 @@ export default {
 
     &__container {
         margin: 0 auto;
+        align-items: center;
         display: flex;
         justify-content: space-between;
         width: 100%;

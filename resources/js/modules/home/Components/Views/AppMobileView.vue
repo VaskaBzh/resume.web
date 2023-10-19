@@ -251,6 +251,10 @@ export default {
             justify-content: flex-start;
             gap: 30px;
         }
+
+        @media (min-width: 768.98px) {
+            min-height: 1000px;
+        }
     }
 
     &_inner {

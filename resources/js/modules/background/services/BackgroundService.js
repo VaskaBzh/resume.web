@@ -30,7 +30,7 @@ export class BackgroundService {
     render = () => {
         this.ctx.clearRect(0, 0, this.setWidth, this.setHeight);
         this.draw();
-        requestAnimationFrame(this.render);
+        // requestAnimationFrame(this.render);
     };
 
     resizeEvent() {
