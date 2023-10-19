@@ -1,9 +1,13 @@
 <template>
     <div class="wrap">
-        <landing-title tag="h2" class="wrap_title" ref="title"></landing-title>
+        <landing-title tag="h2" class="wrap_title" ref="title">
+            <slot name="title"></slot>
+        </landing-title>
         <div class="wrap__content">
             <slot name="content"/>
         </div>
+
+
         <div class="wrap_link" v-if="$slots.link">
             <slot name="link"/>
         </div>
@@ -12,7 +16,6 @@
 
 <script>
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
-import {LineUp, LineUpBack, opacity,} from "../../../home/services/AnimationService.js";
 
 export default {
     name: "landing-wrap",
@@ -22,49 +25,14 @@ export default {
     props: {
         title: String,
     },
-    methods: {
-        splitUpTitle() {
-            if (this.$refs.title) {
-                this.$refs.title.$el.innerHTML = "";
-
-                this.title.split(" ").forEach((titleElem) => {
-                    this.$refs.title.$el.innerHTML += `<span class="animation-up_line"><span class="animation-up">${titleElem}</span></span>`;
-                });
-            }
-        },
-        splitOpacityTitle() {
-            if (this.$refs.title) {
-                this.$refs.title.$el.innerHTML = "";
-
-                this.title.split(" ").forEach((titleElem) => {
-                    this.$refs.title.$el.innerHTML += `<span class="animation-up_line"><span class="animation-opacity animation-up">${titleElem}</span></span>`;
-                });
-            }
-        },
-    },
-    watch: {
-        title() {
-            LineUpBack();
-
-            setTimeout(() => {
-                this.splitUpTitle();
-                LineUp();
-            }, 450);
-        },
-    },
-    mounted() {
-        this.splitOpacityTitle();
-        setTimeout(opacity, 500);
-    },
 };
 </script>
 
 <style scoped>
 .wrap {
-    border-radius: 40px;
+    border-radius: clamp(20px, 5vw, 40px);
     border-top: 2px solid #555353;
-    border-bottom: 0.5px solid #555353;
-    background: var(--gray-480, rgba(13, 13, 13, 0.8));
+    background: rgba(13, 13, 13, 0.8);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     display: flex;
@@ -175,9 +143,7 @@ export default {
     .wrap_title {
         max-width: 335px;
     }
-}
 
-@media (max-width: 479.98px) {
     .wrap__content {
         position: relative;
         transform: none;
@@ -191,4 +157,5 @@ export default {
         padding: 0 clamp(16px, 10vw, 32px) 30px;
     }
 }
+
 </style>

@@ -1,6 +1,6 @@
 export default {
     actions: {
-        getViewportWidth({ commit }, viewportWidth) {
+        getViewportWidth({commit}, viewportWidth) {
             commit("setViewportWidth", viewportWidth);
         },
     },

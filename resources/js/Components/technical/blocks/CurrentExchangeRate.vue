@@ -97,6 +97,13 @@ export default {
     justify-content: end;
     gap: 24px;
     font-family: Unbounded;
+
+}
+
+@media (max-width: 410px) {
+    .rate-container .rate-block:not(:nth-child(1)) {
+        display: none;
+    }
 }
 
 .rate-block {
