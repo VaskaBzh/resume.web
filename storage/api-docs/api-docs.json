@@ -2203,7 +2203,7 @@
                     "Auth"
                 ],
                 "summary": "User login",
-                "operationId": "c4c9a0ce3e816d24f8b2f9c63937d49a",
+                "operationId": "a0bad38435a32b5ad173da486ba8f59d",
                 "requestBody": {
                     "required": true,
                     "content": {

@@ -75,12 +75,9 @@ class IncomeService
 
     private function setHashRate(): void
     {
-        $subHashRate = $this
+        $this->params['hash'] = $this
             ->sub
-            ->workers()
-            ->sum('approximate_hash_rate');
-
-        $this->params['hash'] = $subHashRate;
+            ->total_hash_rate;
     }
 
     private function setNetworkDifficulty(): void
