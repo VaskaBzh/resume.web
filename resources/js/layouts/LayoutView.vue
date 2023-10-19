@@ -47,9 +47,6 @@ export default {
 }
 
 .layout__block {
-    max-width: 1920px;
-    padding: 0 clamp(16px, 5vw, 100px);
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -81,8 +78,7 @@ export default {
 
 .layout__block-fixed {
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
+    right: clamp(16px, 5vw, 100px);
     bottom: clamp(16px, 5vw, 100px);
     z-index: 12;
     max-width: 100%;
