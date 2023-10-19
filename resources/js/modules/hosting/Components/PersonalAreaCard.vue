@@ -720,11 +720,10 @@ export default {
 .get-consultation {
     color: var(--gray-1100, #f5faff);
     text-align: center;
-    font-family: Unbounded;
+    font-family: Unbounded, serif;
     font-size: 14px;
-    font-style: normal;
     font-weight: 600;
-    line-height: 120%; /* 16.8px */
+    line-height: 120%;
     text-transform: uppercase;
     border-radius: 40px;
     border: 1px solid rgba(192, 228, 255, 0.6);
@@ -733,6 +732,7 @@ export default {
     width: 100%;
     max-width: 400px;
     margin-top: clamp(40px, 5vw, 50px);
+    z-index: 7;
 }
 
 .img-mac {
