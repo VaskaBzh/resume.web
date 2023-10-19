@@ -88,6 +88,9 @@ export default {
 	gap: 8px;
 	transition: all 0.5s ease;
 	overflow: hidden;
+    @media (max-width: 768px) {
+        max-height: unset !important;
+    }
 }
 .group_name {
 	min-height: 32px;

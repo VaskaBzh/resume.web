@@ -1,23 +1,33 @@
 <template>
     <div class="about about__section" ref="view">
         <div class="about__wrapper">
-            <landing-headline class="about__headline"
-            >{{ $t("who_we_are.button") }}
+            <landing-headline class="about__headline">
+                {{ $t("who_we_are.button") }}
             </landing-headline>
-            <landing-wrap :title="infoCards[key].title">
+            <landing-wrap>
+                <template v-slot:title>{{ $t("who_we_are.card_private.title[0]") }}</template>
                 <template v-slot:content>
-                    <div class="about__cards animation-up animation-opacity">
+                    <div class="about__cards">
                         <about-info
                             class="about__card"
-                            v-for="(card, i) in infoCards[key].cards"
-                            :key="i"
-                            :title="card.title"
-                            :text="card.text"
-                            :hint="card.hint"
-                            :prefix="card.prefix"
+                            :title="$t('who_we_are.card_private.num[0]')"
+                            :text="$t('who_we_are.card_private.text[0]')"
+                        />
+                        <about-info
+                            class="about__card"
+                            :title="$t('who_we_are.card_private.num[1]')"
+                            :text="$t('who_we_are.card_private.text[1]')"
+                        />
+                        <about-info
+                            class="about__card"
+                            :title="$t('who_we_are.card_private.num[3]')"
+                            :text="$t('who_we_are.card_private.text[4]')"
+                            :prefix="$t('who_we_are.card_private.text[3]')"
                         />
                     </div>
                 </template>
+
+
                 <template v-slot:link>
                     <a href="#" class="about_link">
                         {{ $t("who_we_are.card_private.button[0]") }}
@@ -31,11 +41,35 @@
                 class="about-view_btn"
             >
                 <landing-button>
-                    <template v-slot:text
-                    >{{ $t("who_we_are.card_private.button[1]") }}
+                    <template v-slot:text>
+                        {{ $t("who_we_are.card_private.button[1]") }}
                     </template>
                 </landing-button>
             </a>
+        </div>
+        <div class="about__wrapper">
+            <landing-wrap>
+                <template v-slot:title>{{ $t("who_we_are.card_private.title[0]") }}</template>
+                <template v-slot:content>
+                    <div class="about__cards">
+                        <about-info
+                            class="about__card"
+                            :title="$t('who_we_are.card_community.num[0]')"
+                            :text="$t('who_we_are.card_community.text[0]')"
+                        />
+                        <about-info
+                            class="about__card"
+                            :title="$t('who_we_are.card_community.num[1]')"
+                            :text="$t('who_we_are.card_community.text[1]')"
+                        />
+                        <about-info
+                            class="about__card"
+                            :title="$t('who_we_are.card_community.num[3]')"
+                            :text="$t('who_we_are.card_community.text[3]')"
+                        />
+                    </div>
+                </template>
+            </landing-wrap>
         </div>
     </div>
 </template>
@@ -116,125 +150,7 @@ export default {
         return {
             key: "hostings",
             keys: ["hostings", "miners"],
-            validScroll: false,
-            progress: 0,
-            startY: null,
-            touchY: null,
         };
-    },
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (this.progress === 0) {
-                    this.key = "miners";
-                    this.progress++;
-                } else if (this.progress === 1) {
-                    if (
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                        !this.validScroll
-                    ) {
-                        this.$refs.view.style.transform = `translateY(-${
-                            this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight
-                        }px)`;
-
-                        this.validScroll = true;
-                    } else {
-                        this.$emit("next");
-                    }
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (this.progress === 1) {
-                    this.key = "hostings";
-                    this.progress--;
-                } else if (this.progress === 0) {
-                    if (
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                        this.validScroll
-                    ) {
-                        this.$refs.view.style.transform = `translateY(0px)`;
-
-                        this.validScroll = false;
-                    } else {
-                        this.$emit("prev");
-                    }
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-        setTimeout(() => {
-            if (this.$refs.view) {
-                this.$refs.view.style.transform = `translateY(-${
-                    (this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight) /
-                    2
-                }px)`;
-            }
-        }, 1500);
-    },
-    unmounted() {
-        this.remove();
     },
 };
 </script>
@@ -249,6 +165,9 @@ export default {
 
 .about {
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(50px, 5vw, 100px);
 
     &__headline {
         @media (max-width: 1500.87px) {

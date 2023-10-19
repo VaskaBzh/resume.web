@@ -1,14 +1,27 @@
 <template>
     <div class="background">
         <div class="background_filter"></div>
-        <canvas ref="mainBackgroundCanvas" width="100%" height="100%">
+        <canvas ref="canvas" width="100%" height="100%">
         </canvas>
     </div>
 </template>
 
 <script>
+import {BackgroundService} from "../services/BackgroundService";
+
 export default {
     name: "main-background",
+    data() {
+        return {
+            service: new BackgroundService(),
+        };
+    },
+    mounted() {
+        this.service.canvas.setElement(this.$refs.canvas);
+        this.service.getContext();
+        this.service.resizeEvent();
+        this.service.startProcess();
+    },
 };
 </script>
 

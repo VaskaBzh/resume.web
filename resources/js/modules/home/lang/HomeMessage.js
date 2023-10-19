@@ -9,14 +9,14 @@ export const HomeMessage = {
                 "We ceased to operate only as a closed pool for data centers and entered the international market. By the end of 2023, we have ambitious plans.",
             ],
         },
-        title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
+        title: ["Expert", "approach", "to mining", "Bitcoin"],
         text: "Allbtc pool is a private mining pool optimized for BTC mining, with transparent analytics and timely payments.",
         button: "try demo version",
         who_we_are: {
             button: "who we are",
             card_private: {
                 title: ["private pool for data-centers"],
-                num: ["7", "1.7", "30", "75%"],
+                num: [">3", "2.8", "30", "50%"],
                 text: [
                     "years in the crypto industry",
                     "EH/ s pool’s hashrate",
@@ -169,14 +169,14 @@ export const HomeMessage = {
                 "Перестали работать только лишь как закрытый пул для дата-центров, вышли на международный рынок. К концу 2023 года у нас амбициозные планы.",
             ],
         },
-        title: ["Экспер", "тный", "подход", "к майн", "ингу", "Bitcoin "],
+        title: ["Экспертный", "подход", "к майнингу", "Bitcoin"],
         text: "Allbtc pool  — приватный майнинг-пул, оптимизированный для добычи BTC, с прозрачной аналитикой и своевременными выплатами.",
         button: "попробовать демо кабинет",
         who_we_are: {
             button: "кто мы",
             card_private: {
                 title: ["приватный пул для дата- центров"],
-                num: ["7", "1.7", "30", "75%"],
+                num: [">3", "2.8", "30", "50%"],
                 text: [
                     "лет в крипто индустрии",
                     "EH/ s хешрейт пула",

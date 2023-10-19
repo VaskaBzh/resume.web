@@ -103,11 +103,13 @@ export default {
         actionBurger() {
             if (this.isOpen) {
                 this.closeBurger = true;
+                document.body.removeAttribute("style");
                 setTimeout(() => {
                     this.isOpen = false;
                     this.closeBurger = false;
                 }, 400);
             } else {
+                document.body.style.overflow = "hidden";
                 this.isOpen = true;
             }
         },
@@ -118,7 +120,7 @@ export default {
 svg {
     position: relative;
     z-index: 100;
-    top: 50px;
+    top: 24px;
 }
 
 .fadeIn-enter-active,

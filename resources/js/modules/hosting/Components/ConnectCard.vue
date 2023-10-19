@@ -57,17 +57,11 @@ export default {
     },
     data() {
         return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
             form: {
                 message: "",
                 contacts: "+7",
             },
         };
-    },
-    props: {
-        start: Boolean,
     },
     computed: {
         ...mapGetters(["viewportWidth"]),
@@ -83,156 +77,6 @@ export default {
                 console.error("Error with: " + e);
             }
         },
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.$refs.view) {
-                if (
-                    this.startY
-                        ? this.startY - this.touchY > 110
-                        : e.deltaY > 10
-                ) {
-                    this.remove();
-                    setTimeout(this.scroll, 650);
-
-                    if (
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight +
-                        document.querySelector(".footer-content")
-                            .offsetHeight +
-                        document.querySelector(".all-content")
-                            .offsetHeight >
-                        20 &&
-                        !this.validScroll
-                    ) {
-                        document.querySelector(
-                            ".footer-content"
-                        ).style.transform = `translateY(-${
-                            document.querySelector(".all-content")
-                                .offsetHeight +
-                            80 +
-                            (this.viewportWidth < 768.98
-                                ? document.querySelector(".footer-content")
-                                    .offsetHeight
-                                : 0)
-                        }px)`;
-                        document.querySelector(
-                            ".layout__container"
-                        ).style.transform = `translateY(-${
-                            document.querySelector(".all-content")
-                                .offsetHeight +
-                            80 +
-                            (this.viewportWidth < 768.98
-                                ? document.querySelector(".footer-content")
-                                    .offsetHeight
-                                : 0)
-                        }px)`;
-                        document.querySelector(
-                            ".all-content"
-                        ).style.transform = `translateY(-${
-                            document.querySelector(".all-content")
-                                .offsetHeight +
-                            80 +
-                            (this.viewportWidth < 768.98
-                                ? document.querySelector(".footer-content")
-                                    .offsetHeight
-                                : 0)
-                        }px)`;
-
-                        this.validScroll = true;
-                    } else {
-                        this.$emit("next");
-                    }
-                }
-                if (
-                    this.startY
-                        ? this.touchY - this.startY > 110
-                        : e.deltaY < -10
-                ) {
-                    this.remove();
-                    setTimeout(this.scroll, 650);
-
-                    if (
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight +
-                        document.querySelector(".footer-content")
-                            .offsetHeight >
-                        20 &&
-                        this.validScroll
-                    ) {
-                        this.$refs.view.style.transform = `translateY(0px)`;
-                        document.querySelector(
-                            ".footer-content"
-                        ).style.transform = `translateY(100%)`;
-                        document.querySelector(
-                            ".layout__container"
-                        ).style.transform = `translateY(0)`;
-                        document.querySelector(
-                            ".all-content"
-                        ).style.transform = `translateY(100%)`;
-
-                        this.validScroll = false;
-                    } else {
-                        this.$emit("prev");
-                    }
-                }
-            }
-        },
-        scroll() {
-            document.body.addEventListener("wheel", this.handleWheel);
-            document.body.addEventListener("touchstart", this.handleTouchStart);
-            document.body.addEventListener("touchmove", this.handleTouchMove);
-        },
-        remove() {
-            document.body.removeEventListener("wheel", this.handleWheel);
-            document.body.removeEventListener(
-                "touchstart",
-                this.handleTouchStart
-            );
-            document.body.removeEventListener(
-                "touchmove",
-                this.handleTouchMove
-            );
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        document.querySelector(
-            ".footer-content"
-        ).style.transform = `translateY(100%)`;
-        document.querySelector(
-            ".layout__container"
-        ).style.transform = `translateY(0)`;
-        document.querySelector(
-            ".all-content"
-        ).style.transform = `translateY(100%)`;
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
-        document.querySelector(
-            ".footer-content"
-        ).style.transform = `translateY(100%)`;
-        document.querySelector(
-            ".layout__container"
-        ).style.transform = `translateY(0)`;
-        document.querySelector(
-            ".all-content"
-        ).style.transform = `translateY(100%)`;
-        setTimeout(this.scroll, 500);
     },
 };
 </script>

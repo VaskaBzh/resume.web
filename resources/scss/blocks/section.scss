@@ -24,7 +24,7 @@
         top: 50%;
         z-index: -1;
         transform: translate(-50%, -50%);
-        border-radius: 70px;
+        border-radius: clamp(20px, 5vw, 70px);
         border-top: 1px solid #585757;
         border-bottom: 1px solid #585757;
         background: #0D0D0D;
@@ -47,7 +47,7 @@
         top: 50%;
         z-index: -1;
         transform: translate(-50%, -50%);
-        border-radius: 70px;
+        border-radius: clamp(20px, 5vw, 70px);
         border-top: 1px solid #585757;
         border-bottom: 1px solid #585757;
         background: linear-gradient(165deg, #002195 8.98%, #007AF3 122.43%);

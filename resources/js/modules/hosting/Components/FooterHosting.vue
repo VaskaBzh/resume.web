@@ -102,7 +102,7 @@ export default {
     top: 50%;
     z-index: 1;
     transform: translate(-50%, -50%);
-    border-radius: 70px 70px 0 0;
+    border-radius: clamp(20px, 5vw, 70px) clamp(20px, 5vw, 70px) 0 0;
     border-top: 1px solid #585757;
     background: var(--gray-4100, #0d0d0d);
 }
