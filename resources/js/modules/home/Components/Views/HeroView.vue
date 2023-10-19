@@ -83,6 +83,12 @@ export default {
     align-items: center;
 }
 
+@media (max-width: 768.98px) {
+    .hero {
+        min-height: 600px;
+    }
+}
+
 .hero__content {
     display: flex;
     flex-direction: column;

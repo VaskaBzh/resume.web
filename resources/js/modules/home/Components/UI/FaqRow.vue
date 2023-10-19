@@ -35,16 +35,28 @@ export default {
 }
 
 .faq_title {
-    text-align: right;
     font-size: clamp(22px, 2.2vw, 65px);
     align-items: center;
     display: flex;
     gap: 6px;
-    justify-content: flex-end;
     max-width: 1920px;
     width: 100%;
-    padding: 0 clamp(16px, 5vw, 100px);§
+    padding: 0 clamp(16px, 5vw, 100px);
     margin: 0 auto;
+}
+
+@media (min-width: 768.98px) {
+    .faq_title {
+        text-align: right;
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 479.98px) {
+    .faq_title {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
 
 .faq_text {
@@ -58,10 +70,6 @@ export default {
     .faq__row {
         flex-direction: column;
     }
-
-    .faq_title {
-        text-align: left;
-    }
 }
 
 @media (max-width: 767.98px) {
@@ -69,8 +77,8 @@ export default {
         gap: 10px;
     }
 
-    .faq_title {
-        order: -1;
+    .faq_subtitle {
+        order: 2;
     }
 
     .faq_subtitle {

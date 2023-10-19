@@ -30,7 +30,7 @@ export default {
 
 <style scoped>
 .wrap {
-    border-radius: 40px;
+    border-radius: clamp(20px, 5vw, 40px);
     border-top: 2px solid #555353;
     background: rgba(13, 13, 13, 0.8);
     backdrop-filter: blur(10px);
@@ -143,9 +143,7 @@ export default {
     .wrap_title {
         max-width: 335px;
     }
-}
 
-@media (max-width: 479.98px) {
     .wrap__content {
         position: relative;
         transform: none;
@@ -159,4 +157,5 @@ export default {
         padding: 0 clamp(16px, 10vw, 32px) 30px;
     }
 }
+
 </style>
