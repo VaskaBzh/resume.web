@@ -3153,75 +3153,72 @@
             "WorkerResource": {
                 "properties": {
                     "data": {
-                        "type": "array",
-                        "items": {
-                            "properties": {
-                                "worker_id": {
-                                    "type": "string"
-                                },
-                                "worker_name": {
-                                    "type": "string"
-                                },
-                                "shares_1m": {
-                                    "type": "string"
-                                },
-                                "shares_5m": {
-                                    "type": "string"
-                                },
-                                "shares_15m": {
-                                    "type": "string"
-                                },
-                                "accept_count": {
-                                    "type": "integer"
-                                },
-                                "accept_percent": {
-                                    "type": "integer"
-                                },
-                                "reject_percent": {
-                                    "type": "string"
-                                },
-                                "last_share_ip": {
-                                    "type": "string"
-                                },
-                                "ip2location": {
-                                    "type": "string"
-                                },
-                                "last_share_time": {
-                                    "type": "integer"
-                                },
-                                "shares_unit": {
-                                    "type": "string"
-                                },
-                                "worker_status": {
-                                    "type": "string"
-                                },
-                                "shares_1h": {
-                                    "type": "integer"
-                                },
-                                "shares_1d": {
-                                    "type": "string"
-                                },
-                                "shares_1m_pure": {
-                                    "type": "string"
-                                },
-                                "shares_5m_pure": {
-                                    "type": "string"
-                                },
-                                "shares_15m_pure": {
-                                    "type": "string"
-                                },
-                                "shares_1h_pure": {
-                                    "type": "integer"
-                                },
-                                "shares_1d_pure": {
-                                    "type": "integer"
-                                },
-                                "shares_1d_unit": {
-                                    "type": "string"
-                                }
+                        "properties": {
+                            "worker_id": {
+                                "type": "string"
                             },
-                            "type": "object"
-                        }
+                            "worker_name": {
+                                "type": "string"
+                            },
+                            "shares_1m": {
+                                "type": "string"
+                            },
+                            "shares_5m": {
+                                "type": "string"
+                            },
+                            "shares_15m": {
+                                "type": "string"
+                            },
+                            "accept_count": {
+                                "type": "integer"
+                            },
+                            "accept_percent": {
+                                "type": "integer"
+                            },
+                            "reject_percent": {
+                                "type": "string"
+                            },
+                            "last_share_ip": {
+                                "type": "string"
+                            },
+                            "ip2location": {
+                                "type": "string"
+                            },
+                            "last_share_time": {
+                                "type": "integer"
+                            },
+                            "shares_unit": {
+                                "type": "string"
+                            },
+                            "worker_status": {
+                                "type": "string"
+                            },
+                            "shares_1h": {
+                                "type": "integer"
+                            },
+                            "shares_1d": {
+                                "type": "string"
+                            },
+                            "shares_1m_pure": {
+                                "type": "string"
+                            },
+                            "shares_5m_pure": {
+                                "type": "string"
+                            },
+                            "shares_15m_pure": {
+                                "type": "string"
+                            },
+                            "shares_1h_pure": {
+                                "type": "integer"
+                            },
+                            "shares_1d_pure": {
+                                "type": "integer"
+                            },
+                            "shares_1d_unit": {
+                                "type": "string"
+                            }
+                        },
+                        "type": "object"
                     }
                 },
                 "type": "object"
