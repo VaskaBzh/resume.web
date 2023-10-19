@@ -13,6 +13,7 @@
         "barryvdh/laravel-debugbar": "^3.8",
         "darkaonline/l5-swagger": "^8.5",
         "doctrine/dbal": "^3.6",
+        "fruitcake/laravel-cors": "^3.0",
         "guzzlehttp/guzzle": "^7.5",
         "illuminate/session": "*",
         "inertiajs/inertia-laravel": "^0.6.9",
