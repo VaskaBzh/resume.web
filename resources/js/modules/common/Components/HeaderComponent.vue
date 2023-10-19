@@ -115,16 +115,13 @@ export default {
 .burger-mobile {
     position: fixed;
     height: 26px;
-    left: 50%;
-    transform: translateX(-50%);
+    right: calc((100vw - clamp(0px, 100vw, 1920px)) / 2 + clamp(16px, 5vw, 100px));
     transition: all 0.5s ease 0s;
     align-items: center;
     display: inline-flex;
     cursor: pointer;
     justify-content: flex-end;
-    padding: 0 clamp(16px, 5vw, 100px);
-    max-width: 1920px;
-    width: 100%;
+    width: fit-content;
     z-index: 120;
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);

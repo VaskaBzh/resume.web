@@ -751,6 +751,7 @@ export default {
     width: 100%;
     max-width: 400px;
     margin-top: clamp(40px, 5vw, 50px);
+    z-index: 7;
 }
 
 .img-mac {
