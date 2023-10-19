@@ -12,9 +12,17 @@ import {BackgroundService} from "../services/BackgroundService";
 
 export default {
     name: "main-background",
+
     mounted() {
-        BackgroundService(this.$refs.canvas);
+        this.initBackgroundService();
     },
+    methods: {
+        initBackgroundService() {
+            const canvas = this.$refs.canvas;
+            BackgroundService(canvas);
+        }
+    }
+
 };
 </script>
 
@@ -28,6 +36,11 @@ export default {
     z-index: 0;
 }
 
+canvas {
+    filter: blur(70px) brightness(0.5);
+}
+
+
 .background_filter {
     position: absolute;
     width: 100%;
@@ -35,7 +48,7 @@ export default {
     top: 0;
     left: 0;
     z-index: 0;
-    -webkit-backdrop-filter: blur(70px) brightness(0.5);
+    //-webkit-backdrop-filter:  brightness(0.3);
     pointer-events: none;
 }
 </style>

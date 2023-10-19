@@ -1,77 +1,44 @@
 export function BackgroundService(cvs) {
     let canvas = cvs;
-    let ctx = null;
+    let ctx = canvas.getContext("2d");
     let particles = [];
-    let baseHue = 210;
-    let setWidth = 0;
-    let setHeight = 0;
+    let setWidth = window.innerWidth;
+    let setHeight = window.innerHeight;
 
-    ctx = canvas.getContext("2d");
+    // Создаем градиент один раз
+    let gradient = ctx.createLinearGradient(0, 0, setWidth, setHeight);
+    gradient.addColorStop(0, "#194185");
+    gradient.addColorStop(1, "#002564");
+
     const dist = (x1, y1, x2, y2) => {
-        let a = x1 - x2;
-        let b = y1 - y2;
-        return Math.sqrt(a * a + b * b);
+        return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
     }
 
-    const mouseEventProcess = (e) => {
-        let mx = e.clientX;
-        let my = e.clientY;
-
-        for (let i = 0; i < particles.length; i++) {
-            if (
-                dist(particles[i].x, particles[i].y, mx, my) < 80
-            ) {
-                particles[i].vx = (mx - particles[i].x) / 30;
-                particles[i].vy = (my - particles[i].y) / 30;
-            }
-        }
-    };
-
-
     const draw = () => {
-        const drawParticle = (particle) => {
+        for (let particle of particles) {
             ctx.beginPath();
-            let gradient = ctx.createLinearGradient(
-                0,
-                0,
-                setWidth,
-                setHeight
-            );
-            gradient.addColorStop(0, "#183ED7");
-            gradient.addColorStop(1, "#2E90FA");
             ctx.fillStyle = gradient;
-            ctx.arc(
-                particle.x,
-                particle.y,
-                particle.rad,
-                0,
-                2 * Math.PI
-            );
+            ctx.arc(particle.x, particle.y, particle.rad, 0, 2 * Math.PI);
             ctx.fill();
-            ctx.closePath();
 
             particle.x += particle.vx;
             particle.y += particle.vy;
 
-            if (particle.x < 0 + particle.rad || particle.x + particle.rad > setWidth)
+            if (particle.x < particle.rad || particle.x + particle.rad > setWidth)
                 particle.vx = -particle.vx;
-            if (particle.y - particle.rad < 0 || particle.y + particle.rad > setHeight)
+            if (particle.y < particle.rad || particle.y + particle.rad > setHeight)
                 particle.vy = -particle.vy;
         }
-
-        particles.forEach(drawParticle);
     }
 
     const getMultiplier = () => {
-        const width = window.innerWidth;
-        if (width <= 480) return 0.5;
-        if (width <= 768) return 0.75;
+        if (setWidth <= 480) return 0.5;
+        if (setWidth <= 768) return 0.75;
         return 1;
     }
 
     const pushParticles = () => {
         const multiplier = getMultiplier();
-
         const numberOfParticles = Math.floor(20 * multiplier);
         const maxParticleSize = 300 * multiplier;
 
@@ -81,7 +48,6 @@ export function BackgroundService(cvs) {
                 y: Math.random() * setHeight,
                 vx: Math.random() * 4 - 2,
                 vy: Math.random() * 4 - 2,
-                hue: Math.random() * 80 - 40,
                 rad: Math.random() * maxParticleSize + 10,
             });
         }
@@ -93,18 +59,14 @@ export function BackgroundService(cvs) {
     }
 
     const resizeEventProcess = () => {
-        setWidth = ctx.canvas.width = window.innerWidth;
-        setHeight = ctx.canvas.height = window.innerHeight;
-        ctx.filter = "blur(70px) brightness(0.3)";
-        ctx.globalCompositeOperation = "lighter";
+        setWidth = canvas.width = window.innerWidth;
+        setHeight = canvas.height = window.innerHeight;
 
-        render();
+        ctx.globalCompositeOperation = "lighter";
     };
 
-    canvas.onmousemove = mouseEventProcess;
     window.onresize = resizeEventProcess;
-
-    window.onresize();
+    resizeEventProcess();
 
     pushParticles();
     render();
