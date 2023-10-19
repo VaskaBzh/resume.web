@@ -7,20 +7,13 @@
 </template>
 
 <script>
+
 import {BackgroundService} from "../services/BackgroundService";
 
 export default {
     name: "main-background",
-    data() {
-        return {
-            service: new BackgroundService(),
-        };
-    },
     mounted() {
-        this.service.canvas.setElement(this.$refs.canvas);
-        this.service.getContext();
-        this.service.resizeEvent();
-        this.service.startProcess();
+        BackgroundService(this.$refs.canvas);
     },
 };
 </script>
