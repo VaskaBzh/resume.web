@@ -1,6 +1,6 @@
 <template>
     <div class="layout">
-        <main-background/>
+<!--        <main-background/>-->
         <header-component/>
         <div class="layout__container">
             <slot/>
@@ -60,8 +60,8 @@ export default {
     border: 0.5px solid rgba(192, 228, 255, 0.60);
     background: var(--gray-470, rgba(13, 13, 13, 0.70));
     backdrop-filter: blur(10px);
-    width: clamp(40px, 5vw, 80px);
-    height: clamp(40px, 5vw, 80px);
+    width: clamp(40px, 3vw, 80px);
+    height: clamp(40px, 3vw, 80px);
     border-radius: 50%;
     display: inline-flex;
     align-items: center;
