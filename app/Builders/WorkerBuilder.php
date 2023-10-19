@@ -12,4 +12,9 @@ class WorkerBuilder extends BaseBuilder
     {
         return $this->where('worker_id', $workerId)->withTrashed();
     }
+
+    public function onlyActive(): Builder
+    {
+        return $this->where('status', 'ACTIVE');
+    }
 }
