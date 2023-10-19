@@ -281,22 +281,22 @@ export function spollers() {
         }
 
         // Закрытие при клике вне спойлера
-        const spollersClose = document.querySelectorAll("[data-spoller-close]");
-        if (spollersClose.length) {
-            document.addEventListener("click", function (e) {
-                const el = e.target;
-                if (!el.closest("[data-spollers]")) {
-                    spollersClose.forEach((spollerClose) => {
-                        const spollersBlock = spollerClose.closest("[data-spollers]");
-                        const spollerSpeed = spollersBlock.dataset.spollersSpeed
-                            ? parseInt(spollersBlock.dataset.spollersSpeed)
-                            : 500;
-                        spollerClose.classList.remove("_spoller-active");
-                        _slideUp(spollerClose.nextElementSibling, spollerSpeed);
-                    });
-                }
-            });
-        }
+        // const spollersClose = document.querySelectorAll("[data-spoller-close]");
+        // if (spollersClose.length) {
+        //     document.addEventListener("click", function (e) {
+        //         const el = e.target;
+        //         if (!el.closest("[data-spollers]")) {
+        //             spollersClose.forEach((spollerClose) => {
+        //                 const spollersBlock = spollerClose.closest("[data-spollers]");
+        //                 const spollerSpeed = spollersBlock.dataset.spollersSpeed
+        //                     ? parseInt(spollersBlock.dataset.spollersSpeed)
+        //                     : 500;
+        //                 spollerClose.classList.remove("_spoller-active");
+        //                 _slideUp(spollerClose.nextElementSibling, spollerSpeed);
+        //             });
+        //         }
+        //     });
+        // }
     }
 }
 

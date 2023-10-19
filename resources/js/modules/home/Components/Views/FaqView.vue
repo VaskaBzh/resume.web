@@ -13,6 +13,7 @@
                     :text="elem.text"
                     :preTitle="elem.preTitle"
                     class="faq__row"
+                    :className="i === 0 ? '_spoller-active' : null"
                 />
             </div>
         </div>
@@ -49,8 +50,8 @@ export default {
 
 .faq__wrap {
     width: 100%;
-    
-    
+
+
 }
 
 .faq__content {

@@ -33,16 +33,18 @@ export default {
 
 <style lang="scss" scoped>
 .nav {
-    position: absolute;
+    position: fixed;
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: transparent;
+    //justify-content: space-between;
+    //background: transparent;
     z-index: 100;
-    padding: 50px 15px;
+    padding: 16px 15px;
     transition: all 0.8s ease 0s;
-    //opacity: 0;
+    border-radius: 0 0 clamp(20px, 5vw, 40px) clamp(20px, 5vw, 40px);
+    border-bottom: 2px solid #555353;
+    background: rgba(13, 13, 13, 0.95);
 
     &_logo {
         position: absolute;
@@ -104,7 +106,7 @@ export default {
 }
 
 .burger-mobile {
-    position: absolute;
+    position: fixed;
     height: 26px;
     left: 50%;
     transform: translateX(-50%);
@@ -114,7 +116,7 @@ export default {
     cursor: pointer;
     justify-content: flex-end;
     padding: 0 clamp(16px, 5vw, 100px);
-    max-width: 2120px;
+    max-width: 1920px;
     width: 100%;
     z-index: 120;
     outline: none;

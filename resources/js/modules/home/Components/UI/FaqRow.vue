@@ -1,6 +1,6 @@
 <template>
     <div class="faq__row">
-        <div class="faq__head" data-spoller>
+        <div class="faq__head" :class="className" data-spoller>
             <landing-title class="faq_title" tag="h2">
                 <span class="faq_subtitle" v-show="preTitle">
                     {{ preTitle }}
@@ -24,6 +24,7 @@ export default {
         title: String,
         text: String,
         preTitle: String,
+        className: String,
     },
 };
 </script>
