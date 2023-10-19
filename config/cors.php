@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['v1/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['https://all-btc.com/'],
+    'allowed_origins' => ['http://localhost:8000/', 'http://localhost:8100'],
 
     'allowed_origins_patterns' => [],
 
