@@ -1,5 +1,4 @@
 import {DomElementService} from "@/modules/common/services/extends/base/DomElementService";
-import {log10} from "chart.js/helpers";
 
 export class BackgroundService {
     constructor() {
@@ -31,7 +30,7 @@ export class BackgroundService {
     render = () => {
         this.ctx.clearRect(0, 0, this.setWidth, this.setHeight);
         this.draw();
-        requestAnimationFrame(this.render);
+        // requestAnimationFrame(this.render);
     };
 
     resizeEvent() {
@@ -45,6 +44,8 @@ export class BackgroundService {
         this.setHeight = this.ctx.canvas.height = window.innerHeight;
         this.ctx.filter = "blur(70px) brightness(0.3)";
         this.ctx.globalCompositeOperation = "lighter";
+
+        this.render();
     };
 
     // mouseEvent() {
@@ -72,7 +73,7 @@ export class BackgroundService {
     }
 
     draw() {
-        for (let i = 0; i < this.particles.length; i++) {
+        const drawParticle = (particle) => {
             this.ctx.beginPath();
             let gradient = this.ctx.createLinearGradient(
                 0,
@@ -82,33 +83,27 @@ export class BackgroundService {
             );
             gradient.addColorStop(0, "#183ED7");
             gradient.addColorStop(1, "#2E90FA");
-
-
             this.ctx.fillStyle = gradient;
             this.ctx.arc(
-                this.particles[i].x,
-                this.particles[i].y,
-                this.particles[i].rad,
+                particle.x,
+                particle.y,
+                particle.rad,
                 0,
                 2 * Math.PI
             );
             this.ctx.fill();
             this.ctx.closePath();
 
-            this.particles[i].x += this.particles[i].vx;
-            this.particles[i].y += this.particles[i].vy;
+            particle.x += particle.vx;
+            particle.y += particle.vy;
 
-            if (
-                this.particles[i].x < 0 + this.particles[i].rad ||
-                this.particles[i].x + this.particles[i].rad > this.setWidth
-            )
-                this.particles[i].vx = -this.particles[i].vx;
-            if (
-                this.particles[i].y - this.particles[i].rad < 0 ||
-                this.particles[i].y + this.particles[i].rad > this.setHeight
-            )
-                this.particles[i].vy = -this.particles[i].vy;
+            if (particle.x < 0 + particle.rad || particle.x + particle.rad > this.setWidth)
+                particle.vx = -particle.vx;
+            if (particle.y - particle.rad < 0 || particle.y + particle.rad > this.setHeight)
+                particle.vy = -particle.vy;
         }
+
+        this.particles.forEach(drawParticle);
     }
 
     getMultiplier() {
@@ -123,8 +118,6 @@ export class BackgroundService {
 
         const numberOfParticles = Math.floor(20 * multiplier);
         const maxParticleSize = 300 * multiplier;
-
-        console.log(maxParticleSize)
 
         for (let i = 0; i < numberOfParticles; i++) {
             this.particles.push({

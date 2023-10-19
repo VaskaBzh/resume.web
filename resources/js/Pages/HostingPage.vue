@@ -1,177 +1,48 @@
 <template>
-    <transition name="paralax" @enter="enter" @leave="leave">
-        <component
-            :is="component"
-            :start="true"
-            ref="view"
-            @next="nextView"
-            @prev="prevView"
-        />
-    </transition>
+    <hero-view/>
+    <about-view/>
+    <working-view/>
+    <monitoring-system-card/>
+    <support-system-card/>
+    <clients-view/>
+    <personal-area-card/>
+    <mobile-app-card/>
+    <guarantee-card/>
+    <connect-card/>
 </template>
 <script>
 import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
-import {ComponentsEnum} from "@/modules/hosting/enums/ComponentsEnum";
+import MonitoringSystemCard from "@/modules/hosting/Components/MonitoringSystemCard.vue";
+import SupportSystemCard from "@/modules/hosting/Components/SupportSystemCard.vue";
+import PersonalAreaCard from "@/modules/hosting/Components/PersonalAreaCard.vue";
+import MobileAppCard from "@/modules/hosting/Components/MobileAppCard.vue";
+import GuaranteeCard from "@/modules/hosting/Components/GuaranteeCard.vue";
+import ConnectCard from "@/modules/hosting/Components/ConnectCard.vue";
+import AboutView from "@/modules/hosting/Components/AboutView.vue";
+import HeroView from "@/modules/hosting/Components/HeroView.vue";
+import WorkingView from "@/modules/hosting/Components/WorkingView.vue";
+import ClientsView from "@/modules/hosting/Components/ClientsView.vue";
+import OfferView from "@/modules/hosting/Components/OfferView.vue";
+
 
 export default {
     name: "hosting-page",
     i18n: {
         sharedMessages: HostingMessage,
     },
-    data() {
-        return {
-            keys: [
-                "hero",
-                "about",
-                "offer",
-                "working",
-                "monitoring",
-                "support",
-                "clients",
-                "personal",
-                "mobile",
-                "guarantee",
-                "connect",
-            ],
-            component: null,
-            direction: true,
-            index: 0,
-        };
-    },
-    methods: {
-        enter(view, done) {
-            view.style.opacity = 0;
-            view.focus();
-            view.style.transform = view.style.transform
-                ? view.style.transform
-                : `translateY(${this.direction ? 200 : -200}%)`;
-
-            setTimeout(() => {
-                view.style.transform = `translateY(0%)`;
-            }, 400);
-            setTimeout(() => {
-                view.style.opacity = 1;
-                done();
-            }, 600);
-        },
-        leave(view, done) {
-            view.style.opacity = 1;
-            view.focus();
-            view.style.transform = view.style.transform
-                ? view.style.transform
-                : `translateY(0%)`;
-
-            setTimeout(() => {
-                view.style.opacity = 0;
-            }, 100);
-            setTimeout(() => {
-                view.style.transform = `translateY(${
-                    this.direction ? -200 : 200
-                }%)`;
-            }, 300);
-            setTimeout(() => {
-                done();
-            }, 600);
-        },
-        nextView() {
-            this.index = this.index + 1;
-
-            this.direction = true;
-        },
-        prevView() {
-            this.index = this.index - 1;
-
-            this.direction = false;
-        },
-        renderView() {
-            this.component = ComponentsEnum[this.keys[this.index]];
-        },
-    },
-    watch: {
-        index(newIndex, oldIndex) {
-            if (newIndex === this.keys.length || newIndex === -1) {
-                this.index = oldIndex;
-            }
-            this.renderView();
-            if (newIndex >= this.keys.length - 1) {
-                document.querySelector(".footer-content").style.opacity = 1;
-                document.querySelector(".all-content").style.opacity = 1;
-            } else {
-                document.querySelector(".footer-content").style.opacity = 0;
-                document.querySelector(".all-content").style.opacity = 0;
-                document.querySelector(
-                    ".footer-content"
-                ).style.transform = `translateY(100%)`;
-            }
-            if (newIndex === 0) {
-                this.timeout = setTimeout(() => {
-                    document.querySelector(".nav").style.opacity = 1;
-                    document.querySelector(".nav").style.transform =
-                        "translateY(0)";
-                }, 1500);
-                document
-                    .querySelector(".burger-mobile")
-                    .removeAttribute("style");
-            }
-            if (newIndex > 0) {
-                clearTimeout(this.timeout);
-                document.querySelector(".nav").style.opacity = 0;
-                document.querySelector(".nav").style.transform =
-                    "translateY(-100%)";
-                document.querySelector(".burger-mobile").style.opacity = 1;
-            }
-        },
-    },
-    mounted() {
-        document.querySelector("body").style.overflow = "hidden";
-        document.querySelector(".layout").style.overflow = "hidden";
-        document.querySelector("#app").style.overflow = "hidden";
-        document.querySelector(".footer-content").style.opacity = 0;
-        document.querySelector(
-            ".footer-content"
-        ).style.transform = `translateY(100%)`;
-        document.querySelector(".all-content").style.opacity = 0;
-        document.querySelector(
-            ".all-content"
-        ).style.transform = `translateY(100%)`;
-        document.querySelector(".layout__container").style.opacity = 1;
-        document.querySelector(
-            ".layout__container"
-        ).style.transform = `translateY(0)`;
-        this.renderView();
-    },
-    unmounted() {
-        document.querySelector("body").style.overflow = "visible";
-        if (document.querySelector(".layout")) {
-            document.querySelector(".layout").style.overflow = "visible";
-        }
-        document.querySelector("#app").style.overflow = "visible";
-        if (document.querySelector(".burger-mobile")) {
-            document.querySelector(".burger-mobile").removeAttribute("style");
-        }
-        if (document.querySelector(".nav")) {
-            document.querySelector(".nav").style.opacity = 1;
-            document.querySelector(".nav").style.transform = "translateY(0)";
-        }
-        if (document.querySelector(".footer-content")) {
-            document.querySelector(".footer-content").style.opacity = 1;
-            document.querySelector(
-                ".footer-content"
-            ).style.transform = `translateY(0)`;
-        }
-        if (document.querySelector(".all-content")) {
-            document.querySelector(".all-content").style.opacity = 1;
-            document.querySelector(
-                ".all-content"
-            ).style.transform = `translateY(0)`;
-        }
-        if (document.querySelector(".layout__container")) {
-            document.querySelector(".layout__container").style.opacity = 1;
-            document.querySelector(
-                ".layout__container"
-            ).style.transform = `translateY(0)`;
-        }
-    },
+    components: {
+        MonitoringSystemCard,
+        SupportSystemCard,
+        PersonalAreaCard,
+        MobileAppCard,
+        GuaranteeCard,
+        ConnectCard,
+        AboutView,
+        ClientsView,
+        WorkingView,
+        HeroView,
+        OfferView,
+    }
 };
 </script>
 <style scoped>

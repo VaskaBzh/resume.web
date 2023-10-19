@@ -1,5 +1,5 @@
 <template>
-    <nav class="nav">
+    <nav class="nav" id="header">
         <div class="nav__container">
             <router-link to="login" class="button-black">
                 {{ $t("footer.button") }}
@@ -37,12 +37,18 @@ export default {
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background: transparent;
+    //justify-content: space-between;
+    //background: transparent;
     z-index: 100;
-    padding: 50px 15px;
+    padding: 16px 0;
     transition: all 0.8s ease 0s;
-    //opacity: 0;
+    //border-radius: 0 0 clamp(20px, 5vw, 40px) clamp(20px, 5vw, 40px);
+    //border-bottom: 2px solid #555353;
+    //background: rgba(13, 13, 13, 0.95);
+
+    @media (max-width: 768.98px) {
+        padding: 8px 0;
+    }
 
     &_logo {
         position: absolute;
@@ -61,7 +67,10 @@ export default {
 
     &__container {
         margin: 0 auto;
+        align-items: center;
         display: flex;
+        max-width: 1920px;
+        padding: 0 clamp(16px, 5vw, 100px);
         justify-content: space-between;
         width: 100%;
         position: relative;
@@ -104,7 +113,7 @@ export default {
 }
 
 .burger-mobile {
-    position: absolute;
+    position: fixed;
     height: 26px;
     left: 50%;
     transform: translateX(-50%);
@@ -114,9 +123,9 @@ export default {
     cursor: pointer;
     justify-content: flex-end;
     padding: 0 clamp(16px, 5vw, 100px);
-    max-width: 2120px;
+    max-width: 1920px;
     width: 100%;
-    z-index: 99;
+    z-index: 120;
     outline: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }

@@ -8,18 +8,17 @@
                 <Swiper
                     class="mobile-view_inner"
                     :modules="[Controller, Navigation, Pagination]"
-                    :controller="{ control: controllerSlide }"
+                    :controller="{ control: secondSwiper }"
                     :set-wrapper-size="true"
                     :loop="true"
                     :pagination="{
                         clickable: true,
                         el: '.pagination_bulets',
-                        type: 'custom',
-                        bulletClass: 'bulets-one',
-                        bulletActiveClass: '.active-bullet',
+                        type: 'bullets',
                     }"
                     :navigation="{ nextEl: '.next', prevEl: '.prev' }"
                     :space-between="0"
+                    @swiper="setFirstSwiper"
                 >
                     <swiper-slide class="mobile-view_item">
                         <landing-title tag="h3" class="mobile-view_subtitle">
@@ -67,7 +66,9 @@
                         class="mobile-view_swiper-picture"
                         :loop="true"
                         :modules="[Controller, Navigation, Pagination]"
-                        @swiper="setControlledSwiper"
+                        :controller="{ control: firstSwiper }"
+                        :allowTouchMove="true"
+                        @swiper="setSecondSwiper"
                     >
                         <swiper-slide class="mobile-view_image">
                             <!--                            <img-->
@@ -127,11 +128,6 @@
                     </Swiper>
                 </div>
                 <div class="pagination_bulets" v-if="viewportWidth < 1200">
-                    <div class="bulets-one"></div>
-                    <div class="bulets-one"></div>
-                    <div class="bulets-one"></div>
-                    <div class="bulets-one"></div>
-                    <div class="bulets-one"></div>
                 </div>
                 <div class="mobile-view__btn">{{ $t("mobile_app.note") }}</div>
             </div>
@@ -173,132 +169,27 @@ export default {
         sharedMessages: HomeMessage,
     },
     setup() {
-        const controllerSlide = ref(null);
-
-        // onMounted(()=> {
-        //     const swiper = new Swiper()
-        //     swiper.nextEl = '.next'
-        //         swiper.prevEl = '.prev'
-        // })
-        const setControlledSwiper = (swiper) => {
-            controllerSlide.value = swiper;
+        const firstSwiper = ref(null);
+        const secondSwiper = ref(null);
+        const setFirstSwiper = (swiper) => {
+            firstSwiper.value = swiper;
+        };
+        const setSecondSwiper = (swiper) => {
+            secondSwiper.value = swiper;
         };
 
         return {
             Controller,
             Navigation,
             Pagination,
-            controllerSlide,
-            setControlledSwiper,
+            firstSwiper,
+            secondSwiper,
+            setFirstSwiper,
+            setSecondSwiper,
         };
     },
-
-    data() {
-        return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
-        };
-    },
-    props: {
-        start: Boolean,
-    },
-
     computed: {
         ...mapGetters(["viewportWidth"]),
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        (this.$refs.view.offsetHeight -
-                            document.scrollingElement.clientHeight -
-                            100) /
-                        2
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
     },
 };
 </script>
@@ -350,7 +241,6 @@ export default {
 
     &__wrapper {
         display: flex;
-        min-height: 100vh;
         flex-flow: row nowrap;
         justify-content: space-between;
         width: 100%;
@@ -360,6 +250,10 @@ export default {
             flex-flow: column nowrap;
             justify-content: flex-start;
             gap: 30px;
+        }
+
+        @media (min-width: 768.98px) {
+            min-height: 1000px;
         }
     }
 
@@ -400,7 +294,7 @@ export default {
             height: 100%;
             object-fit: unset;
             left: 50%;
-            z-index: 10;
+            //z-index: 10;
             top: 50%;
             transform: translate(-50%, -50%);
         }
