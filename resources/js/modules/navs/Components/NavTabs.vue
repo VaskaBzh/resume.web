@@ -15,11 +15,11 @@
                 <div class="nav__block">
                     <logo-block class="nav_logo" />
                     <div class="header-select-container">
-                        <select-theme></select-theme>
-                        <select-language></select-language>
+                        <select-theme />
+                        <select-language />
                     </div>
                     <div class="nav__tabs">
-                        <account-menu></account-menu>
+                        <account-menu />
                         <nav class="nav__column">
                             <nav-group
                                 @closeBurger="$emit('closeBurger')"
