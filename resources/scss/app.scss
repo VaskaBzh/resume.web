@@ -837,33 +837,3 @@ h6 {
 }
 
 //========================================================================================================================================================
-
-.animation-up_line {
-    overflow: hidden;
-    display: flex;
-    width: fit-content;
-}
-
-
-.animation {
-    &-up {
-        transform: translateY(110%);
-    }
-
-    &-opacity {
-        opacity: 0;
-        transform: translateY(0);
-    }
-
-    &-left {
-        opacity: 0;
-        transform: translateX(100%);
-    }
-
-    &-right {
-        opacity: 0;
-        transform: translateX(-100%);
-    }
-
-
-}

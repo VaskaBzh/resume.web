@@ -1,9 +1,9 @@
 <template>
     <div class="layout">
         <!--        <main-background/>-->
-        <header-component />
+        <header-component/>
         <div class="layout__container">
-            <slot />
+            <slot/>
         </div>
         <FooterHosting></FooterHosting>
     </div>
@@ -20,7 +20,6 @@ export default {
         FooterHosting,
         HeaderComponent,
     },
-
     async created() {
         await this.$store.dispatch("getMiningStat");
         await this.$store.dispatch("getGraph");

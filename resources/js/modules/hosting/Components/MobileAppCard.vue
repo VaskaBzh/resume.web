@@ -13,10 +13,10 @@
                 src="../assets/img/status-bar.png"
                 class="img-status-bar img-system"
             />
-            <img :src="imgTabBar" class="img-tab-bar img-system" />
+            <img :src="imgTabBar" class="img-tab-bar img-system"/>
             <swiper
                 :slides-per-view="1"
-                :space-between="14"
+                :space-between="0"
                 :pagination="{
                     clickable: true,
                 }"
@@ -26,32 +26,57 @@
                 @slideChange="currentSlide"
             >
                 <swiper-slide>
+                    <!--                    <img-->
+                    <!--                        src="../../../../assets/img/iphone-14-screen1-ru.png"-->
+                    <!--                        class="img-content"-->
+                    <!--                        v-show="$i18n.locale === 'ru'"-->
+                    <!--                    />-->
                     <img
-                        src="../assets/img/Mockup-mobile-app-home.png"
+                        src="../../../../assets/img/iphone-14-screen1-en.png"
                         class="img-content"
                     />
                 </swiper-slide>
                 <swiper-slide>
+                    <!--                    <img-->
+                    <!--                        src="../../../../assets/img/iphone-14-screen2-ru.png"-->
+                    <!--                        class="img-content"-->
+                    <!--                        v-show="$i18n.locale === 'ru'"-->
+                    <!--                    />-->
                     <img
-                        src="../assets/img/Mockup-mobile-app-statistic.png"
+                        src="../../../../assets/img/iphone-14-screen2-en.png"
                         class="img-content"
                     />
                 </swiper-slide>
                 <swiper-slide>
+                    <!--                    <img-->
+                    <!--                        src="../../../../assets/img/iphone-14-screen3-ru.png"-->
+                    <!--                        class="img-content"-->
+                    <!--                        v-show="$i18n.locale === 'ru'"-->
+                    <!--                    />-->
                     <img
-                        src="../assets/img/Mockup-mobile-app-income.png"
+                        src="../../../../assets/img/iphone-14-screen3-en.png"
                         class="img-content"
                     />
                 </swiper-slide>
                 <swiper-slide>
+                    <!--                    <img-->
+                    <!--                        src="../../../../assets/img/iphone-14-screen4-ru.png"-->
+                    <!--                        class="img-content"-->
+                    <!--                        v-show="$i18n.locale === 'ru'"-->
+                    <!--                    />-->
                     <img
-                        src="../assets/img/Mockup-mobile-app-worker.png"
+                        src="../../../../assets/img/iphone-14-screen4-en.png"
                         class="img-content"
                     />
                 </swiper-slide>
                 <swiper-slide>
+                    <!--                    <img-->
+                    <!--                        src="../../../../assets/img/iphone-14-screen5-ru.png"-->
+                    <!--                        class="img-content"-->
+                    <!--                        v-show="$i18n.locale === 'ru'"-->
+                    <!--                    />-->
                     <img
-                        src="../assets/img/Mockup-mobile-app-settings.png"
+                        src="../../../../assets/img/iphone-14-screen5-en.png"
                         class="img-content"
                     />
                 </swiper-slide>
@@ -60,11 +85,11 @@
     </div>
 </template>
 <script>
-import { Swiper, SwiperSlide } from "swiper/vue";
+import {Swiper, SwiperSlide} from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper";
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {Pagination} from "swiper";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     components: {
@@ -78,122 +103,28 @@ export default {
         return {
             slide: 1,
             tabBarName: "home",
-            validScroll: false,
-            startY: null,
-            touchY: null,
         };
     },
     methods: {
         currentSlide(e) {
             this.slide = e.activeIndex;
         },
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
     },
     watch: {
         slide(newSlide) {
-            switch (newSlide) {
-                case 1:
-                    this.tabBarName = "home";
-                    break;
-                case 2:
-                    this.tabBarName = "statistic";
-                    break;
-                case 3:
-                    this.tabBarName = "income";
-                    break;
-                case 4:
-                    this.tabBarName = "worker";
-                    break;
-                case 5:
-                    this.tabBarName = "settings";
-                    break;
-            }
+            this.tabBarName = {
+                1: "home",
+                2: "statistic",
+                3: "income",
+                4: "worker",
+                5: "settings",
+            }[newSlide ?? 1];
         },
     },
     computed: {
         imgTabBar() {
             return new URL(
-                `/resources/js/modules/hosting/assets/img/Tab-bar-${this.tabBarName}.png`,
+                `/resources/js/modules/hosting/assets/img/Tab-bar-${this.tabBarName}-en.png`,
                 import.meta.url
             );
         },
@@ -209,11 +140,17 @@ export default {
 .swiper {
     padding-bottom: 150px;
 }
+
 @media (max-width: 991.98px) {
     .swiper {
         padding-bottom: 100px !important;
     }
 }
+
+.img-content {
+    width: 100%;
+}
+
 @media (max-width: 767.98px) {
     .swiper {
         padding-bottom: 62px !important;
@@ -255,6 +192,7 @@ export default {
     z-index: 2;
     bottom: 20px;
     left: 47px;
+    width: 77%;
 }
 
 .system-card-img {

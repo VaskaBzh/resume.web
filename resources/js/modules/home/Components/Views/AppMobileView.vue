@@ -69,33 +69,58 @@
                         :modules="[Controller, Navigation, Pagination]"
                         @swiper="setControlledSwiper"
                     >
-                        <swiper-slide class="mobile-view_image active">
+                        <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen1-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen1.png"
+                                src="../../../../../assets/img/iphone-14-screen1-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen2-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-sreen2.png.png"
+                                src="../../../../../assets/img/iphone-14-screen2-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen3-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen3.png"
+                                src="../../../../../assets/img/iphone-14-screen3-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen4-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen4.png"
+                                src="../../../../../assets/img/iphone-14-screen4-en.png"
                                 alt=""
                             />
                         </swiper-slide>
                         <swiper-slide class="mobile-view_image">
+                            <!--                            <img-->
+                            <!--                                src="../../../../../assets/img/iphone-14-screen5-ru.png"-->
+                            <!--                                alt=""-->
+                            <!--                                v-show="$i18n.locale === 'ru'"-->
+                            <!--                            />-->
                             <img
-                                src="../../../../../assets/img/iphone-14-screen1.png"
+                                src="../../../../../assets/img/iphone-14-screen5-en.png"
                                 alt=""
                             />
                         </swiper-slide>

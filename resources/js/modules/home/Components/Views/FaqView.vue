@@ -5,14 +5,16 @@
                 {{ headline }}
             </landing-headline>
             <slot name="title"/>
-            <faq-row
-                v-for="(elem, i) in faq"
-                :key="i"
-                :title="elem.title"
-                :text="elem.text"
-                :preTitle="elem.preTitle"
-                class="faq__row"
-            />
+            <div class="faq__wrap" data-spollers data-one-spoller>
+                <faq-row
+                    v-for="(elem, i) in faq"
+                    :key="i"
+                    :title="elem.title"
+                    :text="elem.text"
+                    :preTitle="elem.preTitle"
+                    class="faq__row"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -21,7 +23,9 @@
 import FaqRow from "../UI/FaqRow.vue";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
+import {spollers} from "../../services/SpollersService";
 // import {closeOpacityTimeOut, showOpacityTimeOut} from "../../services/AnimationService";
+
 
 export default {
     name: "faq-view",
@@ -29,8 +33,10 @@ export default {
     props: {
         faq: Array,
         headline: String,
+    },
+    mounted() {
+        spollers();
     }
-
 };
 </script>
 
@@ -39,6 +45,12 @@ export default {
     width: 100%;
     display: flex;
     flex-direction: column;
+}
+
+.faq__wrap {
+    width: 100%;
+    
+    
 }
 
 .faq__content {

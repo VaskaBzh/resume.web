@@ -2,8 +2,8 @@
     <div class="system__section system__section-wrap" ref="view">
         <div class="system-card-inf">
             <p class="system-card-title">
-                {{ $t("system_monitoring.title[0]") }} <br />
-                {{ $t("system_monitoring.title[1]") }} <br />
+                {{ $t("system_monitoring.title[0]") }} <br/>
+                {{ $t("system_monitoring.title[1]") }} <br/>
                 {{ $t("system_monitoring.title[2]") }}
             </p>
             <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
@@ -13,8 +13,13 @@
                 src="../assets/img/Mockup-mac.png"
                 class="img-mac img-system web"
             />
+            <!--            <img-->
+            <!--                src="../assets/img/Mockup-monitoring-ru.png"-->
+            <!--                class="img-monitoring img-system web"-->
+            <!--                v-show="$i18n.locale === 'ru'"-->
+            <!--            />-->
             <img
-                src="../assets/img/Mockup-monitoring.png"
+                src="../assets/img/Mockup-monitoring-en.png"
                 class="img-monitoring img-system web"
             />
 
@@ -22,8 +27,13 @@
                 src="../assets/img/Mockup-iphone.png"
                 class="img-mac img-system mobile"
             />
+            <!--            <img-->
+            <!--                src="../assets/img/Mockup-monitoring-iphone-ru.png"-->
+            <!--                class="img-monitoring img-system mobile"-->
+            <!--                v-show="$i18n.locale === 'ru'"-->
+            <!--            />-->
             <img
-                src="../assets/img/Mockup-monitoring-iphone.png"
+                src="../assets/img/Mockup-monitoring-iphone-en.png"
                 class="img-monitoring img-system mobile"
             />
         </div>
@@ -31,118 +41,16 @@
             href="https://t.me/allbtc_support"
             target="_blank"
             class="get-consultation"
-            >{{ $t("system_monitoring.button") }}</a
+        >{{ $t("system_monitoring.button") }}</a
         >
     </div>
 </template>
 <script>
-import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     i18n: {
         sharedMessages: HostingMessage,
-    },
-    data() {
-        return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
-        };
-    },
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight >
-                        20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
     },
 };
 </script>

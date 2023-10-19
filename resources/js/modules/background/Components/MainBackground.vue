@@ -21,7 +21,6 @@ export default {
         this.service.getContext();
         this.service.resizeEvent();
         this.service.startProcess();
-        this.service.mouseEvent();
     },
 };
 </script>
