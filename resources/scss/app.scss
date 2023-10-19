@@ -141,7 +141,6 @@ h6 {
     [class*="__container"] {
         @if ($maxWidthContainer>0) {
             max-width: $maxWidthContainer;
-            box-sizing: content-box;
         }
         @if ($containerPadding>0) {
             padding: 0 $containerPadding / 2 + px;
@@ -152,7 +151,6 @@ h6 {
     [class*="__container"] {
         @if ($maxWidthContainer>0) {
             max-width: $maxWidthContainer;
-            box-sizing: content-box;
         } @else {
             @if ($containerPadding>0) {
                 padding: 0 calc($containerPadding / 2) + px;

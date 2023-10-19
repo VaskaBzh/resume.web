@@ -43,6 +43,7 @@ export default {
     justify-content: flex-end;
     max-width: 1920px;
     width: 100%;
+    padding: 0 clamp(16px, 5vw, 100px);§
     margin: 0 auto;
 }
 
