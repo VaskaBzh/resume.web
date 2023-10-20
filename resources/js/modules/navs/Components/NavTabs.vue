@@ -3,23 +3,24 @@
         <div
             class="nav onboarding_block"
             :class="{
-                'onboarding_block-target': instructionConfig.isVisible && instructionConfig.step === 1,
+               'onboarding_block-target':
+                    instructionConfig.isVisible && instructionConfig.step === 1,
             }"
             v-show="isOpenBurger || viewportWidth >= 900 || !viewportWidth"
         >
             <div class="nav__content"
-                :class="{
+                 :class="{
                     'nav-untouchable': $route.query?.onboarding === 'true'
                 }"
             >
                 <div class="nav__block">
-                    <logo-block class="nav_logo" />
+                    <logo-block class="nav_logo"/>
                     <div class="header-select-container">
-                        <select-theme />
-                        <select-language />
+                        <select-theme/>
+                        <select-language/>
                     </div>
                     <div class="nav__tabs">
-                        <account-menu />
+                        <account-menu/>
                         <nav class="nav__column">
                             <nav-group
                                 @closeBurger="$emit('closeBurger')"
@@ -30,7 +31,7 @@
                         </nav>
                     </div>
                 </div>
-                <logout-link class="nav_logout" />
+                <logout-link class="nav_logout"/>
             </div>
             <instruction-step
                 @next="instructionConfig.nextStep()"
@@ -53,10 +54,10 @@
     ></div>
 </template>
 <script>
-import { TabsService } from "@/modules/navs/services/TabsService";
-import { mapGetters } from "vuex";
+import {TabsService} from "@/modules/navs/services/TabsService";
+import {mapGetters} from "vuex";
 import AccountMenu from "@/modules/common/Components/UI/AccountMenu.vue";
-import { defineComponent } from "vue";
+import {defineComponent} from "vue";
 import LogoBlock from "@/modules/navs/Components/blocks/LogoBlock.vue";
 import LogoutLink from "@/modules/navs/Components/UI/LogoutLink.vue";
 import NavGroup from "@/modules/navs/Components/UI/NavGroup.vue";
@@ -95,11 +96,13 @@ export default defineComponent({
         },
     },
     mounted() {
+        this.service.dropLinks();
         this.$route?.query?.access_key
             ? this.service.setWatcherLinks()
             : this.service.setLinks(this.user);
     },
     beforeUpdate() {
+        this.service.dropLinks();
         this.$route?.query?.access_key
             ? this.service.setWatcherLinks()
             : this.service.setLinks(this.user);
@@ -116,18 +119,22 @@ export default defineComponent({
 .onboarding_block-target {
     background: var(--background-island);
 }
+
 .burger-enter-active,
 .burger-leave-active {
     transition: all 0.5s ease;
 }
+
 .burger-enter-from,
 .burger-leave-to {
     transform: translateX(100vw);
 }
+
 .nav {
     min-width: 320px;
     position: relative;
 }
+
 .nav::before {
     content: '';
     position: absolute;
@@ -139,10 +146,12 @@ export default defineComponent({
     z-index: -10;
     display: none;
 }
+
 .nav-untouchable::before {
     z-index: 1000;
     display: block;
 }
+
 .nav__content {
     display: flex;
     flex-direction: column;
@@ -153,23 +162,28 @@ export default defineComponent({
     gap: 8px;
     height: 100vh;
 }
+
 .nav__content::-webkit-scrollbar {
     width: 0;
     height: 0;
 }
+
 @media (max-width: 900px) {
     .nav__content {
         padding: 0 16px 112px;
     }
 }
+
 .header-select-container {
     display: none;
 }
+
 @media (max-width: 500px) {
     .nav {
         min-width: 100vw;
     }
 }
+
 @media (max-width: 900px) {
     .nav {
         position: fixed;
@@ -180,25 +194,30 @@ export default defineComponent({
         background: var(--background-island);
         box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);
     }
+
     .header-select-container {
         display: flex;
         justify-content: space-between;
         margin-bottom: 24px;
     }
+
     .nav_logo {
         display: none;
     }
+
     .nav-bg-mobile {
         position: fixed;
         background: rgba(0, 0, 0, 0.15);
         left: 0;
         top: 71px;
     }
+
     .open-bg {
         display: inline-block;
         transition: all 0.3s linear;
     }
 }
+
 .nav_logo {
     margin: 0 0 40px 16px;
 }
