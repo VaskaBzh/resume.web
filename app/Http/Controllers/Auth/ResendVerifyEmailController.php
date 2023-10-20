@@ -68,7 +68,7 @@ class ResendVerifyEmailController extends Controller
         $this->validateEmail($request);
 
         try {
-            $user = User::whereEmail($request)
+            $user = User::whereEmail($request->email)
                 ->firstOrFail();
 
             if ($user->hasVerifiedEmail()) {
