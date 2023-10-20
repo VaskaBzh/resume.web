@@ -1,18 +1,23 @@
 <template>
     <article class="article-miners first-text miners__section" ref="view">
         <div class="miners-content">
-            <span class="">{{ $t("miners_title[0]") }} <br></span>
-            <span class="">{{ $t("miners_title[1]") }}<br></span>
-            <span class="text-mining">{{ $t("miners_title[2]") }} <br></span>
-            <span class="text-bitcoin">{{ $t("miners_title[3]") }} <br></span>
+            <span class="">{{ $t("miners_title[0]") }} <br /></span>
+            <span class="">{{ $t("miners_title[1]") }}<br /></span>
+            <span class="text-mining">{{ $t("miners_title[2]") }} <br /></span>
+            <span class="text-bitcoin">{{ $t("miners_title[3]") }} <br /></span>
         </div>
-        <a href="https://t.me/allbtc_support" target="_blank" class="get-consultation">{{ $t("button") }}</a>
+        <a
+            href="https://t.me/allbtc_support"
+            target="_blank"
+            class="get-consultation"
+            >{{ $t("button") }}</a
+        >
     </article>
 </template>
 
 <script>
 import ButtonBlue from "../../common/Components/UI/ButtonBlue.vue";
-import {MinersMessage} from "../lang/MinersMessage";
+import { MinersMessage } from "../lang/MinersMessage";
 
 export default {
     name: "HeroView",
@@ -25,8 +30,7 @@ export default {
             validScroll: false,
             startY: null,
             touchY: null,
-        }
-
+        };
     },
 
     props: {
@@ -47,14 +51,14 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     !this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
+                        this.$refs.view.offsetHeight -
+                        document.scrollingElement.clientHeight
+                    }px)`;
 
                     this.validScroll = true;
                 } else {
@@ -69,8 +73,8 @@ export default {
 
                 if (
                     this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
+                        document.scrollingElement.clientHeight >
+                        20 &&
                     this.validScroll
                 ) {
                     this.$refs.view.style.transform = `translateY(0px)`;
@@ -124,9 +128,8 @@ export default {
     unmounted() {
         this.remove();
     },
-}
+};
 </script>
-
 
 <style scoped>
 .first-text {
@@ -143,7 +146,7 @@ export default {
 .miners-content {
     width: 660px;
     height: 381px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     font-family: Unbounded;
     font-size: 55px;
     font-style: normal;
@@ -163,7 +166,6 @@ export default {
     margin-left: 211px;
 }
 
-
 .get-consultation {
     display: flex;
     width: 480px;
@@ -173,7 +175,7 @@ export default {
     align-items: center;
     gap: 10px;
     padding: 8px 20px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     font-family: Unbounded;
     font-size: 18px;
     font-style: normal;
@@ -181,8 +183,8 @@ export default {
     line-height: 120%; /* 21.6px */
     text-transform: uppercase;
     border-radius: 40px;
-    border: 1px solid rgba(192, 228, 255, 0.60);
-    background: var(--gray-480, rgba(13, 13, 13, 0.80));
+    border: 1px solid rgba(192, 228, 255, 0.6);
+    background: var(--gray-480, rgba(13, 13, 13, 0.8));
     cursor: pointer;
 }
 

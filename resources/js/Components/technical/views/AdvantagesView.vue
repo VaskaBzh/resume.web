@@ -10,7 +10,7 @@
                     v-html="this.$t('hosting.get_block.text')"
                 ></p>
                 <blue-button class="button button-md button-reverce btn-consultation">
-                    <a class="all-link" href="https://t.me/allbtc_support">
+                    <a class="all-link" target="_blank" href="https://t.me/allbtc_support">
                         <svg
                             width="21"
                             height="18"

@@ -11,7 +11,7 @@
             </p>
         </div>
         <div class="facts-container">
-            <div class="help-button">?</div>
+            <a href="https://t.me/allbtc_support" target="_blank" class="help-button">?</a>
             <div class="fact-item" v-for="fact in facts">
                 <div class="item-content">
                     <div class="fact-row">

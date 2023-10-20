@@ -574,6 +574,7 @@
         </div>
         <a
             href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+            target="_blank"
             class="get-consultation"
         >{{ $t("personal_account.button[1]") }}</a
         >

@@ -8,7 +8,7 @@
                 <a href="#header" class="layout_button">
                     <arrow-up-icon class="layout_icon"/>
                 </a>
-                <a href="https://t.me/allbtc_support" class="layout_button">
+                <a href="https://t.me/allbtc_support" target="_blank" class="layout_button">
                     ?
                 </a>
             </div>
@@ -88,18 +88,9 @@ export default {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    max-width: 1920px;
-    width: 100%;
-    padding: 0 clamp(16px, 5vw, 100px);
-    margin: 0 auto;
     z-index: 10;
+    width: 100%;
+    max-width: 100%;
     transition: all 1.2s ease 0s;
-}
-
-@media (max-width: 1920px) {
-    .layout__container {
-        margin: 0;
-        width: auto;
-    }
 }
 </style>
