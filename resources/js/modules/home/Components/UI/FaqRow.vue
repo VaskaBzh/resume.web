@@ -125,6 +125,10 @@ export default {
     width: 100vw;
 }
 
+.remove_before .faq__wrap .faq__row:last-child::after {
+    display: none;
+}
+
 .faq__row::before {
     content: "";
     position: absolute;

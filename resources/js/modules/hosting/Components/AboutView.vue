@@ -209,6 +209,12 @@ export default {
     }
 }
 
+@media (max-width: 1200px) {
+    .hosting-content {
+        margin-bottom: 50px;
+    }
+}
+
 @media (max-width: 850px) {
 
     .who-are-we {
@@ -219,6 +225,7 @@ export default {
 @media (max-width: 768px) {
     .hosting-content {
         line-height: 120%; /* 43.2px */
+
     }
 
     .who-we-are-text {
