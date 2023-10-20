@@ -97,7 +97,6 @@
                 <tr>
                     @foreach ($outroLines as $line)
                         <td valign="top" style="border-collapse: collapse !important; border-spacing: 0; font-family: Verdana; font-size: 18px; font-style: normal; font-weight: 400; line-height: normal; color: #1D2939; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: 0; padding: 24px 56px;" class="paragraph">
-                            Данная ссылка действительна 24 часа с момента получения сообщения.
                                 {{ $line }}
                         </td>
                     @endforeach
