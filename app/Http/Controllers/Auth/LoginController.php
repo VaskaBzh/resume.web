@@ -147,12 +147,10 @@ class LoginController extends Controller
     ]
     public function logout(Request $request): JsonResponse
     {
-        dd(PersonalAccessToken::findToken($request->bearerToken()));
-        UserService::withUser(user: auth()->user())->deleteTokens();
+        PersonalAccessToken::findToken($request->bearerToken())->delete();
 
         return response()->json('Logged out');
     }
-
 
     #[
         OA\Put(
@@ -183,12 +181,10 @@ class LoginController extends Controller
             ]
         )
     ]
-    public function decreaseTokenTime(): void
+    public function decreaseTokenTime(Request $request): void
     {
-        auth()
-            ->user()
-            ->tokens()
-            ->first()
-            ->update(['expires_at' => now()->addHours(2)]);
+        PersonalAccessToken::findToken(
+            $request->bearerToken()
+        )->update(['expires_at' => now()->addHours(2)]);
     }
 }
