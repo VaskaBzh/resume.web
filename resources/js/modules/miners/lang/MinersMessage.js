@@ -5,7 +5,7 @@ export const MinersMessage = {
         who_are_we: {
             title: ['mining pool and', 'community for', 'miners'],
             column: {
-                num: ['>3', '4%', '>1.7'],
+                num: ['>3', '4%', '2.8'],
                 gray_text: ['years', '', 'EH /s'],
                 main_text: ['We work in the', 'crypto industry', 'maximum', 'commission', 'Total hashrate', 'of the pool']
             }
@@ -47,7 +47,7 @@ export const MinersMessage = {
             text: 'Leave your phone number, the client manager will contact you and answer all your questions.',
             button: 'contact us',
             form: {
-                placeholder: 'Enter a name',
+                placeholder: ["Enter a name", "Enter a phone number"],
                 button: ['request a call', 'TELEGRAM', 'what’s app'],
                 text: 'or'
             },
@@ -64,7 +64,7 @@ export const MinersMessage = {
         who_are_we: {
             title: ['майнинг пул и', 'комьюнити для', 'майнеров'],
             column: {
-                num: ['>3', '4%', '>1,7'],
+                num: ['>3', '4%', '2.8'],
                 gray_text: ['лет', '', 'EH /s'],
                 main_text: ['Работаем на рынке', 'цифровых активов', 'постоянная', 'комиссия', 'Общий хешрейт', 'Allbtc Pool']
             }
@@ -105,7 +105,7 @@ export const MinersMessage = {
             text: 'Оставьте ваш номер телефона, клиентский менеджер свяжется с вами и ответит на все возникшие вопросы.',
             button: 'свяжитесь с нами',
             form: {
-                placeholder: 'Введите имя',
+                placeholder: ["Введите имя", "Введите номер телефона"],
                 button: ['заказать звонок', 'TELEGRAM', 'what’s app'],
                 text: 'или'
             }

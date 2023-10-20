@@ -120,7 +120,7 @@ export default {
 svg {
     position: relative;
     z-index: 100;
-    top: 24px;
+    top: 20px;
 }
 
 .fadeIn-enter-active,

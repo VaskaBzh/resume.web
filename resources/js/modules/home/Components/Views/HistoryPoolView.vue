@@ -1,9 +1,8 @@
 <template>
     <div class="history history__section history__section-wrap" ref="view">
-        <landing-headline class="history-pool_headline"
-        >История нашего пула
-        </landing-headline
-        >
+        <landing-headline class="history-pool_headline">
+            {{ $t("history_pool.block_title") }}
+        </landing-headline>
         <Swiper
             class="history-pool__items"
             slidesPerView="auto"
