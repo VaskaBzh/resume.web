@@ -1,12 +1,12 @@
-APP=php
-COMPOSE=docker-compose exec
-ARTISAN=$(COMPOSE) $(APP) php artisan
-
 ifeq ($(CI),true)
 	TTY_FLAG=-T
 else
 	TTY_FLAG=
 endif
+
+APP=php
+COMPOSE=docker-compose exec $(TTY_FLAG)
+ARTISAN=$(COMPOSE) $(APP) php artisan
 
 kill:
 	docker kill $$(docker ps -a -q) || true
@@ -20,23 +20,23 @@ install:
 	docker-compose build
 	docker-compose up -d
 composer:
-	$(COMPOSE) $(TTY_FLAG) $(APP) composer install
+	$(COMPOSE) $(APP) composer install
 key:
-	$(ARTISAN) $(TTY_FLAG) key:gen --ansi
+	$(ARTISAN) key:gen --ansi
 npm:
-	$(COMPOSE) $(TTY_FLAG) $(APP) npm install
+	$(COMPOSE) $(APP) npm install
 dev:
 	$(COMPOSE) $(APP) npm run dev
 front:
-	$(COMPOSE) $(TTY_FLAG) $(APP) npm run build
+	$(COMPOSE) $(APP) npm run build
 update:
 	$(COMPOSE) $(APP) composer update
 migrate:
-	$(ARTISAN) $(TTY_FLAG) migrate
+	$(ARTISAN) migrate
 rollback:
-	$(ARTISAN) $(TTY_FLAG) migrate:rollback
+	$(ARTISAN) migrate:rollback
 seed:
-	$(ARTISAN) $(TTY_FLAG) db:seed
+	$(ARTISAN) db:seed
 optimize:
 	$(ARTISAN) optimize
 clear:
@@ -47,7 +47,7 @@ tinker:
 	$(ARTISAN) tinker
 test:
 	$(ARTISAN) config:clear
-	$(ARTISAN) $(TTY_FLAG) test --env=testing
+	$(ARTISAN) test --env=testing
 remote_test:
 	ssh mainuser@92.205.188.112
 docs:
