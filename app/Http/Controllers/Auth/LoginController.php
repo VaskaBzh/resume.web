@@ -181,10 +181,12 @@ class LoginController extends Controller
             ]
         )
     ]
-    public function decreaseTokenTime(Request $request): void
+    public function decreaseTokenTime(Request $request): JsonResponse
     {
         PersonalAccessToken::findToken(
             $request->bearerToken()
         )->update(['expires_at' => now()->addHours(2)]);
+
+        return response()->json('Ok');
     }
 }
