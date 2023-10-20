@@ -99,9 +99,7 @@ export default {
 
 .img-monitoring {
     max-width: 80%;
-    transform: translateX(-50%);
     left: 50%;
-    top: 34px;
 }
 
 .get-consultation {
@@ -136,12 +134,10 @@ export default {
     .system-card-img,
     .img-mac {
         width: 100%;
-        height: 423px;
     }
 
     .img-monitoring {
         width: 100%;
-        height: 365px;
     }
 
     .get-consultation {
@@ -166,11 +162,9 @@ export default {
     .system-card-img,
     .img-mac {
         width: 100%;
-        height: 497px;
     }
 
     .img-monitoring {
-        height: 482px;
         top: 50%;
         width: 65%;
     }

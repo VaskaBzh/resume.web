@@ -7,11 +7,12 @@
             <span class="text-income">{{ $t("hosting_title[3]") }} <br/></span>
             <span class="text-cvt">{{ $t("hosting_title[4]") }}</span>
         </div>
-        <a href="https://t.me/allbtc_support" target="_blank">
-            <landing-button class="get-consultation"
-            >
-                <template v-slot:text>{{ $t("hosting_button") }}</template>
-            </landing-button>
+        <a
+            href="https://t.me/allbtc_support"
+            target="_blank"
+            class="get-consultation"
+        >
+            {{ $t("button") }}
         </a>
     </article>
 </template>
@@ -37,11 +38,12 @@ export default {
     color: var(--gray-1100, #f5faff);
     font-feature-settings: "clig" off, "liga" off;
     font-family: Unbounded, serif;
-    font-size: clamp(14px, 2.8vw, 44px);
+    font-size: 44px;
     font-style: normal;
     font-weight: 600;
     line-height: 120%;
     text-transform: uppercase;
+
 }
 
 .text-income {
@@ -55,22 +57,67 @@ export default {
 }
 
 .get-consultation {
-    margin-top: clamp(70px, 5vw, 50px);
-    width: 100%;
-    max-width: 534px;
+    display: flex;
+    width: 480px;
+    height: 56px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 20px;
+    color: var(--gray-1100, #F5FAFF);
+    font-family: Unbounded;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120%; /* 21.6px */
+    text-transform: uppercase;
+    border-radius: 40px;
+    border: 1px solid rgba(192, 228, 255, 0.60);
+    background: var(--gray-480, rgba(13, 13, 13, 0.80));
+    cursor: pointer;
+    margin-top: 5em;
+}
+
+@media (max-width: 1200px) {
+    .hosting__content {
+        text-align: center;
+    }
+
+    .text-income {
+        display: block;
+    }
 }
 
 @media (max-width: 768px) {
+    .get-consultation {
+        width: 400px;
+    }
+
     .hosting__content {
-        line-height: 120%; /* 43.2px */
         max-width: 400px;
+        text-align: center;
+        font-size: 36px;
+        line-height: 120%;
+        width: 400px;
     }
 }
 
 @media (max-width: 450px) {
+    .get-consultation {
+        width: 90vw;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        margin-top: 70px;
+        line-height: 120%; /* 14.4px */
+        padding: 8px 20px;
+        height: 40px;
+    }
+
     .hosting__content {
         max-width: 244px;
         height: auto;
+        font-size: 22px;
     }
 }
 </style>

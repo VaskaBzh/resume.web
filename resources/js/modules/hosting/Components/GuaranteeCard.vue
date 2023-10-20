@@ -4,7 +4,7 @@
             <p class="title-card">{{ $t("guarantees.title") }}</p>
             <p class="text-card">{{ $t("guarantees.text") }}</p>
         </div>
-        <faq-view :faq="faq"></faq-view>
+        <faq-view :faq="faq" class="remove_before"></faq-view>
     </div>
 </template>
 <script>
@@ -199,4 +199,8 @@ export default {
         margin-top: 12px;
     }
 }
+
+
+
+
 </style>

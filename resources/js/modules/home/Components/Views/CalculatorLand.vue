@@ -78,15 +78,15 @@ export default {
 <style scoped lang="scss">
 .calculator {
     min-height: 100vh;
-    max-width: 860px;
     width: 100%;
-    margin: 0 auto;
 
     &__content {
         display: flex;
         flex-direction: column;
         width: 100%;
         align-items: center;
+        max-width: 860px;
+        margin: 0 auto;
     }
 
     &_title {
