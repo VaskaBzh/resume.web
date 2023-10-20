@@ -19,3 +19,11 @@ jobs:
       - name: Build and run Docker containers
         run: |
           docker-compose up -d
+
+      - name: Install Composer dependencies
+        run: |
+          docker-compose exec -T php composer install --no-progress --prefer-dist
+
+      - name: Install npm dependencies
+        run: |
+          docker-compose exec -T php npm install
