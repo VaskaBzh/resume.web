@@ -115,9 +115,9 @@ export default {
                     this.viewportWidth <= 767.98 &&
                     this.updatedColumns.status
                 ) {
-                    obj = obj.filter(
-                        (col) => col[0] !== "wallet" && col[0] !== "txid"
-                    );
+                    // obj = obj.filter(
+                    //     (col) => col[0] !== "wallet" && col[0] !== "txid"
+                    // );
                     obj.unshift(obj[5]);
                     obj.pop();
                 }
