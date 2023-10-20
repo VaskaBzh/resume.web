@@ -16,13 +16,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build and run Docker containers
-        run: |
-          docker-compose up -d
+      - name: App init
+        run: make install
 
       - name: Install Composer dependencies
-        run: |
-          docker-compose exec -T php composer install --no-progress --prefer-dist
+        run: make composer
+
+      - name: App key
+        run: make key
 
       - name: Pretend migrations
         run: |
@@ -33,5 +34,7 @@ jobs:
           docker-compose exec -T php php artisan migrate:rollback --pretend
 
       - name: Install npm dependencies
-        run: |
-          docker-compose exec -T php npm install
+        run: make npm
+
+      - name: Build front-end
+        run: make front
