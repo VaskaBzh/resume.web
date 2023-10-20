@@ -84,6 +84,7 @@ export default defineComponent({
     data() {
         return {
             service: new TabsService(this.$router, this.$route),
+            throttle: null,
         };
     },
     methods: {
@@ -96,13 +97,11 @@ export default defineComponent({
         },
     },
     mounted() {
-        this.service.dropLinks();
         this.$route?.query?.access_key
             ? this.service.setWatcherLinks()
             : this.service.setLinks(this.user);
     },
     beforeUpdate() {
-        this.service.dropLinks();
         this.$route?.query?.access_key
             ? this.service.setWatcherLinks()
             : this.service.setLinks(this.user);
