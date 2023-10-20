@@ -7,7 +7,9 @@
             <div
                 class="income-cards-container onboarding_block"
                 :class="{
-                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                    'onboarding_block-target':
+                        instructionService.isVisible &&
+                        instructionService.step === 1,
                 }"
             >
                 <AccrualsCard />
@@ -28,7 +30,9 @@
             <div
                 class="month-card-container onboarding_block"
                 :class="{
-                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
+                    'onboarding_block-target':
+                        instructionService.isVisible &&
+                        instructionService.step === 2,
                 }"
             >
                 <MonthIncome
@@ -73,8 +77,10 @@
         <main-slider
             class="income__slider onboarding_block"
             :class="{
-                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 3
-                }"
+                'onboarding_block-target':
+                    instructionService.isVisible &&
+                    instructionService.step === 3,
+            }"
             :wait="incomes.waitTable"
             :empty="incomes.emptyTable"
             rowsNum="1000"
@@ -181,7 +187,7 @@ export default {
         },
     },
     watch: {
-        '$i18n.locale'() {
+        "$i18n.locale"() {
             this.incomes.graphService.setTranslate(this.$t);
         },
         page() {
@@ -459,7 +465,7 @@ export default {
         font-size: 18px;
     }
     .tabs-active {
-        color: var(--buttons-tabs-text-focus, #2E90FA);
+        color: var(--buttons-tabs-text-focus, #2e90fa);
         background: var(--buttons-tabs-fill-border-focus);
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     }
