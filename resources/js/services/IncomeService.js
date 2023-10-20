@@ -20,12 +20,14 @@ export class IncomeService extends TableService {
 
     async fetchIncomes(page = 1, per_page = 1000) {
         return await ProfileApi.get(
-            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`);
+            `/incomes/${this.activeId}?page=${page}&per_page=${per_page}`
+        );
     }
 
     async fetchPayout(page = 1, per_page = 15) {
         return await ProfileApi.get(
-            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`);
+            `/payouts/${this.activeId}?page=${page}&per_page=${per_page}`
+        );
     }
 
     setMessage(message) {
@@ -99,7 +101,7 @@ export class IncomeService extends TableService {
                   income["amount"],
                   this.getCutted(wallet),
                   this.setStatus(income["status"]),
-                  this.setMessage(income["message"]),
+                  income["message"],
                   income["status"]
               );
     }
@@ -137,16 +139,19 @@ export class IncomeService extends TableService {
                     return this.setter(el, filter);
                 });
 
-                if (this.rows.filter(row => row.type === this.translate("income.types[0]")).length === 0) {
+                if (
+                    this.rows.filter(
+                        (row) => row.type === this.translate("income.types[0]")
+                    ).length === 0
+                ) {
                     this.rows = this.rows.map((item) => {
-                        delete item.type
-                        return item
+                        delete item.type;
+                        return item;
                     });
                     tableTitleIndexes = [...this.titleIndexes];
                     tableTitleIndexes.shift();
-                    this.titles = this.useTranslater(tableTitleIndexes)
+                    this.titles = this.useTranslater(tableTitleIndexes);
                 }
-
 
                 if (this.rows.length === 0) this.emptyTable = true;
 
@@ -183,9 +188,7 @@ export class IncomeService extends TableService {
             this.graphService.setDefaultKeys(60 * 60 * 1000 * 24);
 
             try {
-                const response = (
-                    await this.fetchIncomes(1, 30)
-                ).data.data;
+                const response = (await this.fetchIncomes(1, 30)).data.data;
 
                 this.graphService.records = response.map((el) => {
                     return new BarGraphData(el);
