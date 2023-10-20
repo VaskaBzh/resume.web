@@ -1,9 +1,13 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -27,7 +31,12 @@ class Handler extends ExceptionHandler
      * @var array<int, class-string<\Throwable>>
      */
     protected $dontReport = [
-        //
+        UnauthorizedException::class,
+        HttpException::class,
+        AuthenticationException::class,
+        ValidationException::class,
+        NotFoundHttpException::class,
+        BusinessException::class,
     ];
 
     /**
@@ -46,29 +55,30 @@ class Handler extends ExceptionHandler
      *
      * @return void
      */
-    public function register()
+
+    public function register(): void
     {
         $this->reportable(function (Throwable $e) {
             //
         });
 
         $this->renderable(static function (Throwable $e) {
-            if ($e instanceof NotFoundHttpException) {
 
+            if ($e instanceof BusinessException) {
                 return new JsonResponse([
-                    'errors' => ['message' => ['Requested resource not found']]
-                ], Response::HTTP_NOT_FOUND);
+                    'errors' => ['messages' => [$e->getClientMessage()]]
+                ], $e->getClientStatusCode());
             }
 
-            if ($e instanceof UnauthorizedException) {
+            if ($e instanceof UnauthorizedException || $e instanceof AuthenticationException) {
                 return new JsonResponse([
-                    'errors' => ['message' => [$e->getMessage()]]
+                    'errors' => ['messages' => [$e->getMessage()]]
                 ], Response::HTTP_UNAUTHORIZED);
             }
 
             if ($e instanceof HttpException) {
                 return new JsonResponse([
-                    'errors' => ['message' => [$e->getMessage()]]
+                    'errors' => ['messages' => [$e->getMessage()]]
                 ], Response::HTTP_FORBIDDEN);
             }
         });

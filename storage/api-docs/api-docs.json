@@ -36,26 +36,7 @@
                     "content": {
                         "application/json": {
                             "schema": {
-                                "required": [
-                                    "old_password",
-                                    "password",
-                                    "password_confirmation"
-                                ],
-                                "properties": {
-                                    "old_password": {
-                                        "description": "User's old password",
-                                        "type": "string"
-                                    },
-                                    "password": {
-                                        "description": "User's new password",
-                                        "type": "string"
-                                    },
-                                    "password_confirmation": {
-                                        "description": "Confirmation of the new password",
-                                        "type": "string"
-                                    }
-                                },
-                                "type": "object"
+                                "$ref": "#/components/schemas/ChangePasswordRequest"
                             }
                         }
                     }
@@ -66,19 +47,16 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "properties": {
-                                        "message": {
-                                            "description": "Success message",
-                                            "type": "string"
-                                        }
-                                    },
                                     "type": "object"
+                                },
+                                "example": {
+                                    "message": "success"
                                 }
                             }
                         }
                     },
                     "404": {
-                        "description": "Watcher not found"
+                        "description": "User not found"
                     },
                     "422": {
                         "description": "Unprocessable entity",
@@ -2806,6 +2784,25 @@
     },
     "components": {
         "schemas": {
+            "ChangePasswordRequest": {
+                "required": [
+                    "old_password",
+                    "password",
+                    "password_confirmation"
+                ],
+                "properties": {
+                    "old_password": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "password_confirmation": {
+                        "type": "string"
+                    }
+                },
+                "type": "object"
+            },
             "LoginRequest": {
                 "type": "object",
                 "example": {
