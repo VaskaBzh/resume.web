@@ -10,17 +10,17 @@
             <form class="connect-form">
                 <input
                     class="connect-input"
-                    :placeholder="$t('connect.form.placeholder')"
+                    :placeholder="$t('connect.form.placeholder[0]')"
                     v-model="form.message"
                 />
                 <input
                     class="connect-input"
-                    placeholder="+7"
+                    :placeholder="$t('connect.form.placeholder[1]')"
                     v-model="form.contacts"
                 />
                 <div class="buttons-connect-container">
                     <a
-                        href="https://t.me/allbtc_support"
+                        href="#"
                         class="connect-order"
                         type="submit"
                     >
@@ -59,7 +59,7 @@ export default {
         return {
             form: {
                 message: "",
-                contacts: "+7",
+                contacts: "",
             },
         };
     },

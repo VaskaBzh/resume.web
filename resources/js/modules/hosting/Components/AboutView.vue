@@ -1,17 +1,19 @@
 <template>
     <div class="about__section about__section-wrap" ref="view">
-        <landing-headline>{{ $t("who_are_we.button") }}</landing-headline>
+        <landing-headline>
+            {{ $t("who_are_we.button") }}
+        </landing-headline>
         <div class="hosting-content who-we-are-content">
             <p class="who-we-are-text">
                 {{ title[0] }} <br />
                 {{ title[1] }} <br />
                 {{ title[2] }} <br v-if="title.length > 3" />
                 {{ title[3] }} <br v-if="title.length > 3" />
-                {{ title[4] }} <br v-if="title.length > 3" />
+                {{ title[4] }} <br v-if="title.length > 3"  />
             </p>
         </div>
         <div class="facts-container">
-            <div class="help-button">?</div>
+
             <div class="fact-item" v-for="fact in facts">
                 <div class="item-content">
                     <div class="fact-row">
@@ -56,7 +58,7 @@ export default {
                     ],
                 },
                 {
-                    num: ">1,7",
+                    num: "2.8",
                     grayText: "EH /s",
                     mainText: [
                         this.$t("who_are_we.column.main_text[4]"),
@@ -163,28 +165,6 @@ export default {
     text-transform: uppercase;
 }
 
-.help-button {
-    border-radius: 40px;
-    border: 0.5px solid rgba(192, 228, 255, 0.6);
-    background: var(--gray-470, rgba(13, 13, 13, 0.7));
-    position: absolute;
-    color: var(--gray-2100, #e4e7ec);
-    font-family: Unbounded;
-    font-size: 27px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 120%; /* 32.4px */
-    text-transform: uppercase;
-    top: -76px;
-    right: -56px;
-    width: 60px;
-    height: 60px;
-    padding: 8px 20px;
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-}
-
 @media (max-width: 1800px) {
     .item-content {
         width: 400px;
@@ -230,9 +210,6 @@ export default {
 }
 
 @media (max-width: 850px) {
-    .help-button {
-        display: none;
-    }
 
     .who-are-we {
         font-size: 14px;
