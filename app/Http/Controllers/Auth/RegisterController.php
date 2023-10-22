@@ -122,7 +122,7 @@ class RegisterController extends Controller
         try {
             $user = $this->create(userData: $userData);
             auth()->login($user);
-            //$btcComService->createSub(userData: $userData);
+            $btcComService->createSub(userData: $userData);
 
 
             if ($request->referral_code) {
