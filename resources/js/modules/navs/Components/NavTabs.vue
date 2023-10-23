@@ -31,7 +31,7 @@
                         </nav>
                     </div>
                 </div>
-                <logout-link class="nav_logout"/>
+                <logout-link class="nav_logout" v-show="!$route?.query?.access_key"/>
             </div>
             <instruction-step
                 @next="instructionConfig.nextStep()"

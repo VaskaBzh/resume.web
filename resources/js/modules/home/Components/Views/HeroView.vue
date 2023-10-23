@@ -115,6 +115,7 @@ export default {
     padding-left: 10px;
     max-width: 406px;
     width: 100%;
+    margin: auto 0;
 }
 
 @media (max-width: 991.98px) {
@@ -133,7 +134,6 @@ export default {
 
 .hero_title_row {
     display: inline-flex;
-    align-items: center;
 }
 
 @media (max-width: 991.98px) {
