@@ -1,26 +1,28 @@
 <template>
-    <div class="about__section about__section-wrap" ref="view">
-        <landing-headline>{{ $t("who_are_we.button") }}</landing-headline>
-        <div class="hosting-content who-we-are-content">
-            <p class="who-we-are-text">
-                {{ title[0] }} <br />
-                {{ title[1] }} <br />
-                {{ title[2] }} <br v-if="title.length > 3" />
-                {{ title[3] }} <br v-if="title.length > 3" />
-                {{ title[4] }} <br v-if="title.length > 3" />
-            </p>
-        </div>
-        <div class="facts-container">
-            <a href="https://t.me/allbtc_support" target="_blank" class="help-button">?</a>
-            <div class="fact-item" v-for="fact in facts">
-                <div class="item-content">
-                    <div class="fact-row">
-                        <span class="fact-num">{{ fact.num }}</span>
-                        <span class="fact-gray-text">{{ fact.grayText }}</span>
-                    </div>
-                    <div>
-                        <p class="fact-main-text">{{ fact.mainText[0] }}</p>
-                        <p class="fact-main-text">{{ fact.mainText[1] }}</p>
+    <div class="about__section-wrap" ref="view">
+        <div class="about__section">
+            <landing-headline>{{ $t("who_are_we.button") }}</landing-headline>
+            <div class="hosting-content who-we-are-content">
+                <p class="who-we-are-text">
+                    {{ title[0] }} <br />
+                    {{ title[1] }} <br />
+                    {{ title[2] }} <br v-if="title.length > 3" />
+                    {{ title[3] }} <br v-if="title.length > 3" />
+                    {{ title[4] }} <br v-if="title.length > 3" />
+                </p>
+            </div>
+            <div class="facts-container">
+                <a href="https://t.me/allbtc_support" target="_blank" class="help-button">?</a>
+                <div class="fact-item" v-for="fact in facts">
+                    <div class="item-content">
+                        <div class="fact-row">
+                            <span class="fact-num">{{ fact.num }}</span>
+                            <span class="fact-gray-text">{{ fact.grayText }}</span>
+                        </div>
+                        <div>
+                            <p class="fact-main-text">{{ fact.mainText[0] }}</p>
+                            <p class="fact-main-text">{{ fact.mainText[1] }}</p>
+                        </div>
                     </div>
                 </div>
             </div>

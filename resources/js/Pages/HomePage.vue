@@ -7,7 +7,6 @@
     <security-view/>
     <app-mobile-view/>
     <payments-view/>
-    <miners-info-view/>
     <history-pool-view/>
     <connect-with-us-view/>
 </template>

@@ -161,7 +161,7 @@ svg {
 .burger_logo {
     position: absolute;
     left: 0;
-    top: 50px;
+    top: 16px;
     width: clamp(87px, 15vw, 129px);
     height: clamp(26px, 15vw, 40px);
 }
@@ -178,7 +178,7 @@ svg {
     width: 100vw;
     height: 100vh;
     right: 0px;
-    padding: 0px clamp(16px, 5vw, 50px);
+    padding: 0px clamp(16px, 5vw, 50px) 50px;
     z-index: 90;
 }
 

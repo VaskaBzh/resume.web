@@ -1,24 +1,26 @@
 <template>
-    <div class="support__section support__section-wrap" ref="view">
-        <div class="system-card-inf">
-            <p class="system-card-title">{{ $t("support.title") }}</p>
-            <p class="system-card-text">{{ $t("support.text") }}</p>
-        </div>
-        <div class="system-card-img">
-            <img
-                src="../assets/img/Mockup-iphone.png"
-                class="img-iphone img-system"
-            />
-            <img
-                src="../assets/img/Mockup-support.png"
-                class="img-support img-system"
-                v-if="$i18n.locale == 'ru'"
-            />
-            <img
-                src="../assets/img/Mockup-support-en.png"
-                class="img-support img-system"
-                v-else
-            />
+    <div class="support__section-wrap" ref="view">
+        <div class="support__section">
+            <div class="system-card-inf">
+                <p class="system-card-title">{{ $t("support.title") }}</p>
+                <p class="system-card-text">{{ $t("support.text") }}</p>
+            </div>
+            <div class="system-card-img">
+                <img
+                    src="../assets/img/Mockup-iphone.png"
+                    class="img-iphone img-system"
+                />
+                <img
+                    src="../assets/img/Mockup-support.png"
+                    class="img-support img-system"
+                    v-if="$i18n.locale == 'ru'"
+                />
+                <img
+                    src="../assets/img/Mockup-support-en.png"
+                    class="img-support img-system"
+                    v-else
+                />
+            </div>
         </div>
     </div>
 </template>

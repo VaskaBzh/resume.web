@@ -1,10 +1,12 @@
 <template>
-    <div class="guarantee__section guarantee__section-blue" ref="view">
-        <div class="guarantee-card">
-            <p class="title-card">{{ $t("guarantees.title") }}</p>
-            <p class="text-card">{{ $t("guarantees.text") }}</p>
+    <div class="guarantee__section-blue" ref="view">
+        <div class="guarantee__section">
+            <div class="guarantee-card">
+                <p class="title-card">{{ $t("guarantees.title") }}</p>
+                <p class="text-card">{{ $t("guarantees.text") }}</p>
+            </div>
+            <faq-view :faq="faq"></faq-view>
         </div>
-        <faq-view :faq="faq"></faq-view>
     </div>
 </template>
 <script>

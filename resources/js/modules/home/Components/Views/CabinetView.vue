@@ -1,5 +1,6 @@
 <template>
-    <div class="system__section system__section-wrap" ref="view">
+    <div class="system__section-wrap" ref="view">
+        <div class="system__section">
         <landing-title tag="h3" class="cabinet_title">
             <span
                 class="cabinet_title_elem cabinet_title_elem-right animation-up_line"
@@ -295,289 +296,290 @@
                             <feBlend
                                 mode="normal"
                                 in="SourceGraphic"
-                                in2="effect1_backgroundBlur_833_7493"
-                                result="shape"
-                            />
-                        </filter>
-                    </defs>
-                </svg>
-            </button>
-
-            <button
-                class="forecast-note-buttton note-button"
-                @mouseenter="changeShadow('forecast')"
-                @mouseleave="addOpacity = false"
-            >
-                <transition name="fade">
-                    <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[5]')"
-                        :secondRow="$t('personal_account.tooltip[6]')"
-                        position="up"
-                        v-if="currentShadow == 'forecast'"
-                    ></MockupTooltip>
-                </transition>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="34"
-                    height="34"
-                    viewBox="0 0 34 34"
-                    fill="none"
-                    class="svg-note"
+                                    in2="effect1_backgroundBlur_833_7493"
+                                    result="shape"
+                                />
+                            </filter>
+                        </defs>
+                    </svg>
+                </button>
+    
+                <button
+                    class="forecast-note-buttton note-button"
+                    @mouseenter="changeShadow('forecast')"
+                    @mouseleave="addOpacity = false"
                 >
-                    <g filter="url(#filter0_b_833_7493)">
-                        <circle
-                            cx="17"
-                            cy="17"
-                            r="17"
+                    <transition name="fade">
+                        <MockupTooltip
+                            :firstRow="$t('personal_account.tooltip[5]')"
+                            :secondRow="$t('personal_account.tooltip[6]')"
+                            position="up"
+                            v-if="currentShadow == 'forecast'"
+                        ></MockupTooltip>
+                    </transition>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="34"
+                        height="34"
+                        viewBox="0 0 34 34"
+                        fill="none"
+                        class="svg-note"
+                    >
+                        <g filter="url(#filter0_b_833_7493)">
+                            <circle
+                                cx="17"
+                                cy="17"
+                                r="17"
+                                :fill="[
+                                    currentShadow == 'forecast'
+                                        ? '#0D0D0D'
+                                        : '#175CD3',
+                                ]"
+                            />
+                        </g>
+                        <rect
+                            width="15.6923"
+                            height="0.980769"
+                            rx="0.490385"
+                            transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)"
                             :fill="[
-                                currentShadow == 'forecast'
-                                    ? '#0D0D0D'
-                                    : '#175CD3',
+                                currentShadow == 'forecast' ? '#2E90FA' : '#F5FAFF',
                             ]"
                         />
-                    </g>
-                    <rect
-                        width="15.6923"
-                        height="0.980769"
-                        rx="0.490385"
-                        transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)"
-                        :fill="[
-                            currentShadow == 'forecast' ? '#2E90FA' : '#F5FAFF',
-                        ]"
-                    />
-                    <rect
-                        width="15.6923"
-                        height="0.980769"
-                        rx="0.490385"
-                        transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)"
-                        :fill="[
-                            currentShadow == 'forecast' ? '#2E90FA' : '#F5FAFF',
-                        ]"
-                    />
-                    <defs>
-                        <filter
-                            id="filter0_b_833_7493"
-                            x="-20"
-                            y="-20"
-                            width="74"
-                            height="74"
-                            filterUnits="userSpaceOnUse"
-                            color-interpolation-filters="sRGB"
-                        >
-                            <feFlood
-                                flood-opacity="0"
-                                result="BackgroundImageFix"
-                            />
-                            <feGaussianBlur
-                                in="BackgroundImageFix"
-                                stdDeviation="10"
-                            />
-                            <feComposite
-                                in2="SourceAlpha"
-                                operator="in"
-                                result="effect1_backgroundBlur_833_7493"
-                            />
-                            <feBlend
-                                mode="normal"
-                                in="SourceGraphic"
-                                in2="effect1_backgroundBlur_833_7493"
-                                result="shape"
-                            />
-                        </filter>
-                    </defs>
-                </svg>
-            </button>
-
-            <button
-                class="accrued-note-buttton note-button"
-                @mouseenter="changeShadow('chart-accrued')"
-                @mouseleave="addOpacity = false"
-            >
-                <transition name="fade">
-                    <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[7]')"
-                        :secondRow="$t('personal_account.tooltip[8]')"
-                        position="up"
-                        v-if="currentShadow == 'chart-accrued'"
-                    ></MockupTooltip>
-                </transition>
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="34"
-                    height="34"
-                    viewBox="0 0 34 34"
-                    fill="none"
-                    class="svg-note"
+                        <rect
+                            width="15.6923"
+                            height="0.980769"
+                            rx="0.490385"
+                            transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)"
+                            :fill="[
+                                currentShadow == 'forecast' ? '#2E90FA' : '#F5FAFF',
+                            ]"
+                        />
+                        <defs>
+                            <filter
+                                id="filter0_b_833_7493"
+                                x="-20"
+                                y="-20"
+                                width="74"
+                                height="74"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feFlood
+                                    flood-opacity="0"
+                                    result="BackgroundImageFix"
+                                />
+                                <feGaussianBlur
+                                    in="BackgroundImageFix"
+                                    stdDeviation="10"
+                                />
+                                <feComposite
+                                    in2="SourceAlpha"
+                                    operator="in"
+                                    result="effect1_backgroundBlur_833_7493"
+                                />
+                                <feBlend
+                                    mode="normal"
+                                    in="SourceGraphic"
+                                    in2="effect1_backgroundBlur_833_7493"
+                                    result="shape"
+                                />
+                            </filter>
+                        </defs>
+                    </svg>
+                </button>
+    
+                <button
+                    class="accrued-note-buttton note-button"
+                    @mouseenter="changeShadow('chart-accrued')"
+                    @mouseleave="addOpacity = false"
                 >
-                    <g filter="url(#filter0_b_833_7493)">
-                        <circle
-                            cx="17"
-                            cy="17"
-                            r="17"
+                    <transition name="fade">
+                        <MockupTooltip
+                            :firstRow="$t('personal_account.tooltip[7]')"
+                            :secondRow="$t('personal_account.tooltip[8]')"
+                            position="up"
+                            v-if="currentShadow == 'chart-accrued'"
+                        ></MockupTooltip>
+                    </transition>
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="34"
+                        height="34"
+                        viewBox="0 0 34 34"
+                        fill="none"
+                        class="svg-note"
+                    >
+                        <g filter="url(#filter0_b_833_7493)">
+                            <circle
+                                cx="17"
+                                cy="17"
+                                r="17"
+                                :fill="[
+                                    currentShadow == 'chart-accrued'
+                                        ? '#0D0D0D'
+                                        : '#175CD3',
+                                ]"
+                            />
+                        </g>
+                        <rect
+                            width="15.6923"
+                            height="0.980769"
+                            rx="0.490385"
+                            transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)"
                             :fill="[
                                 currentShadow == 'chart-accrued'
-                                    ? '#0D0D0D'
-                                    : '#175CD3',
+                                    ? '#2E90FA'
+                                    : '#F5FAFF',
                             ]"
                         />
-                    </g>
-                    <rect
-                        width="15.6923"
-                        height="0.980769"
-                        rx="0.490385"
-                        transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)"
-                        :fill="[
-                            currentShadow == 'chart-accrued'
-                                ? '#2E90FA'
-                                : '#F5FAFF',
-                        ]"
-                    />
-                    <rect
-                        width="15.6923"
-                        height="0.980769"
-                        rx="0.490385"
-                        transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)"
-                        :fill="[
-                            currentShadow == 'chart-accrued'
-                                ? '#2E90FA'
-                                : '#F5FAFF',
-                        ]"
-                    />
-                    <defs>
-                        <filter
-                            id="filter0_b_833_7493"
-                            x="-20"
-                            y="-20"
-                            width="74"
-                            height="74"
-                            filterUnits="userSpaceOnUse"
-                            color-interpolation-filters="sRGB"
-                        >
-                            <feFlood
-                                flood-opacity="0"
-                                result="BackgroundImageFix"
-                            />
-                            <feGaussianBlur
-                                in="BackgroundImageFix"
-                                stdDeviation="10"
-                            />
-                            <feComposite
-                                in2="SourceAlpha"
-                                operator="in"
-                                result="effect1_backgroundBlur_833_7493"
-                            />
-                            <feBlend
-                                mode="normal"
-                                in="SourceGraphic"
-                                in2="effect1_backgroundBlur_833_7493"
-                                result="shape"
-                            />
-                        </filter>
-                    </defs>
-                </svg>
-            </button>
-
-            <button
-                class="header-note-buttton note-button"
-                @mouseenter="changeShadow('header')"
-                @mouseleave="addOpacity = false"
-            >
-                <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="34"
-                    height="34"
-                    viewBox="0 0 34 34"
-                    fill="none"
-                    class="svg-note"
-                >
-                    <g filter="url(#filter0_b_833_7493)">
-                        <circle
-                            cx="17"
-                            cy="17"
-                            r="17"
+                        <rect
+                            width="15.6923"
+                            height="0.980769"
+                            rx="0.490385"
+                            transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)"
                             :fill="[
-                                currentShadow == 'header'
-                                    ? '#0D0D0D'
-                                    : '#175CD3',
+                                currentShadow == 'chart-accrued'
+                                    ? '#2E90FA'
+                                    : '#F5FAFF',
                             ]"
                         />
-                    </g>
-                    <rect
-                        width="15.6923"
-                        height="0.980769"
-                        rx="0.490385"
-                        transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)"
-                        :fill="[
-                            currentShadow == 'header' ? '#2E90FA' : '#F5FAFF',
-                        ]"
-                    />
-                    <rect
-                        width="15.6923"
-                        height="0.980769"
-                        rx="0.490385"
-                        transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)"
-                        :fill="[
-                            currentShadow == 'header' ? '#2E90FA' : '#F5FAFF',
-                        ]"
-                    />
-                    <defs>
-                        <filter
-                            id="filter0_b_833_7493"
-                            x="-20"
-                            y="-20"
-                            width="74"
-                            height="74"
-                            filterUnits="userSpaceOnUse"
-                            color-interpolation-filters="sRGB"
-                        >
-                            <feFlood
-                                flood-opacity="0"
-                                result="BackgroundImageFix"
+                        <defs>
+                            <filter
+                                id="filter0_b_833_7493"
+                                x="-20"
+                                y="-20"
+                                width="74"
+                                height="74"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feFlood
+                                    flood-opacity="0"
+                                    result="BackgroundImageFix"
+                                />
+                                <feGaussianBlur
+                                    in="BackgroundImageFix"
+                                    stdDeviation="10"
+                                />
+                                <feComposite
+                                    in2="SourceAlpha"
+                                    operator="in"
+                                    result="effect1_backgroundBlur_833_7493"
+                                />
+                                <feBlend
+                                    mode="normal"
+                                    in="SourceGraphic"
+                                    in2="effect1_backgroundBlur_833_7493"
+                                    result="shape"
+                                />
+                            </filter>
+                        </defs>
+                    </svg>
+                </button>
+    
+                <button
+                    class="header-note-buttton note-button"
+                    @mouseenter="changeShadow('header')"
+                    @mouseleave="addOpacity = false"
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="34"
+                        height="34"
+                        viewBox="0 0 34 34"
+                        fill="none"
+                        class="svg-note"
+                    >
+                        <g filter="url(#filter0_b_833_7493)">
+                            <circle
+                                cx="17"
+                                cy="17"
+                                r="17"
+                                :fill="[
+                                    currentShadow == 'header'
+                                        ? '#0D0D0D'
+                                        : '#175CD3',
+                                ]"
                             />
-                            <feGaussianBlur
-                                in="BackgroundImageFix"
-                                stdDeviation="10"
-                            />
-                            <feComposite
-                                in2="SourceAlpha"
-                                operator="in"
-                                result="effect1_backgroundBlur_833_7493"
-                            />
-                            <feBlend
-                                mode="normal"
-                                in="SourceGraphic"
-                                in2="effect1_backgroundBlur_833_7493"
-                                result="shape"
-                            />
-                        </filter>
-                    </defs>
-                </svg>
-                <transition name="fade">
-                    <MockupTooltip
-                        :firstRow="$t('personal_account.tooltip[9]')"
-                        :secondRow="$t('personal_account.tooltip[10]')"
-                        position="down"
-                        v-if="currentShadow == 'header'"
-                    ></MockupTooltip>
-                </transition>
-            </button>
-
-            <!-- Mobile -->
-            <img
-                src="../../../hosting/assets/img/Mockup-iphone.png"
-                class="img-mac img-system mobile"
-            />
-            <img
-                src="../../../hosting/assets/img/Mockup-mobile-statistic.png"
-                class="img-monitoring img-system mobile"
-            />
+                        </g>
+                        <rect
+                            width="15.6923"
+                            height="0.980769"
+                            rx="0.490385"
+                            transform="matrix(0.00871668 -0.999962 0.999962 -0.00871668 16.3457 24.8477)"
+                            :fill="[
+                                currentShadow == 'header' ? '#2E90FA' : '#F5FAFF',
+                            ]"
+                        />
+                        <rect
+                            width="15.6923"
+                            height="0.980769"
+                            rx="0.490385"
+                            transform="matrix(0.999962 -0.00871668 -0.00871668 0.999962 9.1543 16.3477)"
+                            :fill="[
+                                currentShadow == 'header' ? '#2E90FA' : '#F5FAFF',
+                            ]"
+                        />
+                        <defs>
+                            <filter
+                                id="filter0_b_833_7493"
+                                x="-20"
+                                y="-20"
+                                width="74"
+                                height="74"
+                                filterUnits="userSpaceOnUse"
+                                color-interpolation-filters="sRGB"
+                            >
+                                <feFlood
+                                    flood-opacity="0"
+                                    result="BackgroundImageFix"
+                                />
+                                <feGaussianBlur
+                                    in="BackgroundImageFix"
+                                    stdDeviation="10"
+                                />
+                                <feComposite
+                                    in2="SourceAlpha"
+                                    operator="in"
+                                    result="effect1_backgroundBlur_833_7493"
+                                />
+                                <feBlend
+                                    mode="normal"
+                                    in="SourceGraphic"
+                                    in2="effect1_backgroundBlur_833_7493"
+                                    result="shape"
+                                />
+                            </filter>
+                        </defs>
+                    </svg>
+                    <transition name="fade">
+                        <MockupTooltip
+                            :firstRow="$t('personal_account.tooltip[9]')"
+                            :secondRow="$t('personal_account.tooltip[10]')"
+                            position="down"
+                            v-if="currentShadow == 'header'"
+                        ></MockupTooltip>
+                    </transition>
+                </button>
+    
+                <!-- Mobile -->
+                <img
+                    src="../../../hosting/assets/img/Mockup-iphone.png"
+                    class="img-mac img-system mobile"
+                />
+                <img
+                    src="../../../hosting/assets/img/Mockup-mobile-statistic.png"
+                    class="img-monitoring img-system mobile"
+                />
+            </div>
+            <a
+                href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+                target="_blank"
+                class="get-consultation"
+            >{{ $t("personal_account.button[1]") }}</a
+            >
         </div>
-        <a
-            href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
-            target="_blank"
-            class="get-consultation"
-        >{{ $t("personal_account.button[1]") }}</a
-        >
     </div>
 </template>
 <script>
