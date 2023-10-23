@@ -1,7 +1,7 @@
 <template>
-    <div class="hero" ref="view">
+    <div class="hero hero__section" ref="view">
         <div class="hero__content">
-            <logo-background/>
+            <logo-background />
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
@@ -144,7 +144,6 @@ export default {
     }
 }
 
-
 .hero_title_row-left {
     margin-left: -102px;
 }
@@ -164,5 +163,4 @@ export default {
 .hero_title_row-top {
     margin-top: 6px;
 }
-
 </style>
