@@ -210,11 +210,6 @@ export default defineComponent({
         left: 0;
         top: 71px;
     }
-
-    .open-bg {
-        display: inline-block;
-        transition: all 0.3s linear;
-    }
 }
 
 .nav_logo {
