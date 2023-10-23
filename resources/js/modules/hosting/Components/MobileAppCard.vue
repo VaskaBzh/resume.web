@@ -14,7 +14,7 @@
                     src="../assets/img/status-bar.png"
                     class="img-status-bar img-system"
                 />
-                <img :src="imgTabBar" class="img-tab-bar img-system"/>
+                <img :src="imgTabBar" class="img-tab-bar img-system" />
                 <swiper
                     :slides-per-view="1"
                     :space-between="0"
@@ -87,11 +87,11 @@
     </div>
 </template>
 <script>
-import {Swiper, SwiperSlide} from "swiper/vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import {Pagination} from "swiper";
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { Pagination } from "swiper";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     components: {

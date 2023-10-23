@@ -1,6 +1,12 @@
 <template>
     <div class="nav__links">
-        <router-link class="nav_link" v-for="item in link" :to="item.url">
+        <router-link
+            v-for="(item, i) in link"
+            :key="i"
+            active-class="nav_link-active"
+            class="nav_link"
+            :to="item.url"
+        >
             {{ item.name }}
         </router-link>
     </div>
@@ -89,12 +95,13 @@ export default {
         opacity: 0;
     }
 
-    &:hover {
+    &:hover,
+    &-active {
         color: white;
-    }
 
-    &:hover:before {
-        opacity: 1;
+        &:before {
+            opacity: 1;
+        }
     }
 }
 
@@ -121,14 +128,15 @@ export default {
 }
 
 .menu-container .nav_link {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 5px;
+    padding: 15px 0;
     border-bottom: 0.5px solid rgba(208, 213, 221, 0.6);
 }
 
 .menu-container .nav_link:before {
-    right: 0px;
+    right: 0;
     left: auto;
-    top: 20%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 </style>

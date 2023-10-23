@@ -2,17 +2,17 @@
     <div class="layout">
         <nav-tabs
             ref="tabs"
-            :isOpenBurger="isOpenBurger"
+            :is-open-burger="isOpenBurger"
+            :instruction-config="instructionService"
             @changeBurger="change($event)"
             @closeBurger="change(false)"
-            :instructionConfig="instructionService"
         />
         <div class="layout__content">
             <header-component-profile
                 class="header-container"
-                :isOpenBurger="isOpenBurger"
+                :is-open-burger="isOpenBurger"
+                :instruction-config="instructionService"
                 @changeBurger="change($event)"
-                :instructionConfig="instructionService"
             />
 
             <div
@@ -46,16 +46,16 @@ export default {
         NavTabs,
         HeaderComponentProfile,
     },
-    methods: {
-        change(event) {
-            this.isOpenBurger = event;
-        },
-    },
     data() {
         return {
             isOpenBurger: false,
             instructionService: new InstructionService(),
         };
+    },
+    methods: {
+        change(event) {
+            this.isOpenBurger = event;
+        },
     },
     computed: {
         ...mapGetters(["getActive", "user", "viewportWidth"]),

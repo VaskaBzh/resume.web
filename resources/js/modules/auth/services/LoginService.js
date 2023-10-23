@@ -35,7 +35,7 @@ export class LoginService {
     removeRouteQuery() {
         this.router.push({
             name: "login",
-        })
+        });
     }
 
     validateProcess(event) {
@@ -77,7 +77,10 @@ export class LoginService {
 
     async fetchPassword(form) {
         return (
-            await MainApi.put(`/password/restore/${this.route.query.user_id}`, form)
+            await MainApi.put(
+                `/password/restore/${this.route.query.user_id}`,
+                form
+            )
         ).data;
     }
 
@@ -117,12 +120,12 @@ export class LoginService {
             this.router.push({
                 name: "statistic",
                 query: {
-                    ...this.route.query?.action === "email" ?
-                        {
-                            onboarding: true
-                        } :
-                        {},
-                }
+                    ...(this.route.query?.action === "email"
+                        ? {
+                              onboarding: true,
+                          }
+                        : {}),
+                },
             });
 
             this.closeTwoFacPopup();
