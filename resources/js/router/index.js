@@ -9,12 +9,12 @@ import {VerifyMiddleware} from "@/router/middlewares/VerifyMiddleware";
 import {ActionValidateMiddleware} from "@/router/middlewares/ActionValidateMiddleware";
 
 import routes from "@/router/routes/rotes";
-import {apiService} from "@/api/api";
+import { apiService } from "@/api/api";
 
 export const router = createRouter({
     history: createWebHistory(),
-    scrollBehavior(to, from, savedPosition) {
-      document.body.scrollTo(0, 0)
+    scrollBehavior() {
+        document.body.scrollTo(0, 0);
     },
     routes,
 });

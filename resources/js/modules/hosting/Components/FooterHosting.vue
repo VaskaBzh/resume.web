@@ -1,22 +1,24 @@
 <template>
     <div class="footer-content footer__section">
-        <router-link to="login" class="footer-title">{{ $t("footer.button") }}</router-link>
+        <router-link to="login" class="footer-title"
+            >{{ $t("footer.button") }}
+        </router-link>
         <div class="footer-inf">
-            <nav-links/>
+            <nav-links />
             <div class="footer-location">
                 <p>
                     <a href="mailto:support@all-btc.com" target="_blank"
-                    >support@all-btc.com</a
+                        >support@all-btc.com</a
                     >
                 </p>
                 <p>
-                    BDubai Silicon Oasis, DDP, Building A2, <br/>
+                    BDubai Silicon Oasis, DDP, Building A2, <br />
                     Dubai, United Arab Eirates
                 </p>
                 <div class="connect-buttons">
                     <button class="connect-button">
                         <a href="https://t.me/allbtc_support" target="_blank"
-                        >TELEGRAM</a
+                            >TELEGRAM</a
                         >
                     </button>
                     <!--                    <button class="connect-button">-->
@@ -51,12 +53,11 @@
     </div>
 </template>
 <script>
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
 
 export default {
-    components: {NavLinks},
-
+    components: { NavLinks },
     i18n: {
         sharedMessages: HostingMessage,
     },

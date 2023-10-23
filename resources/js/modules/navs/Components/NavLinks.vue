@@ -1,17 +1,13 @@
 <template>
-    <ul class="nav__links">
-        <li
-            class="nav_link"
-            v-for="item in link"
-            @click="$router.push(item.url)"
-        >
+    <div class="nav__links">
+        <router-link class="nav_link" v-for="item in link" :to="item.url">
             {{ item.name }}
-        </li>
-    </ul>
+        </router-link>
+    </div>
 </template>
 
 <script>
-import {NavMessages} from "@/modules/navs/lang/NavMessages";
+import { NavMessages } from "@/modules/navs/lang/NavMessages";
 
 export default {
     i18n: {
@@ -60,6 +56,11 @@ export default {
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
+}
+
+.nav__links {
+    display: flex;
+    flex-direction: column;
 }
 
 .nav_link {
