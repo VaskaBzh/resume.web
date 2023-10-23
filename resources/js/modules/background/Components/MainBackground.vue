@@ -48,7 +48,6 @@ canvas {
     top: 0;
     left: 0;
     z-index: 0;
-    //-webkit-backdrop-filter:  brightness(0.3);
     pointer-events: none;
 }
 </style>

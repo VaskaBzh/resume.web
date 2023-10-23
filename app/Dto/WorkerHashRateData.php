@@ -4,12 +4,10 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-use App\Models\Worker;
-
 readonly final class WorkerHashRateData
 {
     public function __construct(
-        public Worker $worker,
+        public int $workerId,
         public int $hash,
         public string $unit,
     ) {
@@ -18,7 +16,7 @@ readonly final class WorkerHashRateData
     public static function fromRequest(array $requestData): WorkerHashrateData
     {
         return new self(
-            worker: $requestData['worker'],
+            workerId: $requestData['worker_id'],
             hash: $requestData['hash'],
             unit: $requestData['unit'],
         );

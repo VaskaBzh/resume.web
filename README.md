@@ -4,6 +4,8 @@
 </p>
 &nbsp;
 
+[![build](https://github.com/All-btc/all-btc.web/actions/workflows/docker-laravel-vue.yml/badge.svg)](https://github.com/All-btc/all-btc.web/actions/workflows/docker-laravel-vue.yml)
+
 Before starting the installation, make sure you have docker and docker-compose installed on your system
 &nbsp;
 ###### Ubuntu installation guides:

@@ -53,19 +53,18 @@ trait Tokenable
                     ]
                 ),
                 new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
+                    response: Response::HTTP_UNPROCESSABLE_ENTITY,
                     description: 'Bad request, token not exists or expired',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'status',
-                                    description: 'Error message',
-                                    type: 'string'
-                                )
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 ),
             ]
         )
@@ -75,7 +74,11 @@ trait Tokenable
         $user = User::find($id);
 
         if (!$this->checkIfTokenExpired($user->email)) {
-            return new JsonResponse(['status' => 'token not exists or expired'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse([
+                'errors' => [
+                    'auth' => ['token not exists or expired']
+                ]
+            ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $this->deleteToken($user);

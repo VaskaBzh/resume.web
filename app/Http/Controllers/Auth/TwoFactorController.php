@@ -54,15 +54,14 @@ class TwoFactorController extends Controller
                     description: 'Bad request',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'message',
-                                    description: 'Error message',
-                                    type: 'string'
-                                ),
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 ),
             ]
         )
@@ -73,16 +72,16 @@ class TwoFactorController extends Controller
             $secretKey = $googleTwoFactor->generateSecretKey();
 
             $QRImage = $googleTwoFactor->getQRCodeInline(
-                config('app.name'),
-                $user->email,
-                $secretKey
+                company: config('app.name'),
+                holder: $user->email,
+                secret: $secretKey
             );
 
         } catch (\Throwable $e) {
             report($e);
 
             return new JsonResponse([
-                'message' => __('actions.failed')
+                'errors' => ['auth' => [__('actions.failed')]]
             ], Response::HTTP_BAD_REQUEST);
         }
 
@@ -107,7 +106,7 @@ class TwoFactorController extends Controller
                             new OA\Property(
                                 property: 'code',
                                 description: 'Google authenticator code',
-                                type: 'integer',
+                                type: 'string',
                                 maxLength: 6,
                                 minLength: 6,
                             ),
@@ -145,28 +144,28 @@ class TwoFactorController extends Controller
                         )
                     ]
                 ),
+                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found'),
                 new OA\Response(
-                    response: Response::HTTP_BAD_REQUEST,
+                    response: Response::HTTP_FORBIDDEN,
                     description: 'Bad request',
                     content: [
                         new OA\JsonContent(
-                            properties: [
-                                new OA\Property(
-                                    property: 'error',
-                                    description: 'Error message',
-                                    type: 'string'
-                                ),
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
                             ]
-                        )
-                    ]
+                        ),
+                    ],
                 ),
             ]
         )
     ]
     public function enable(
         TwoFactorVerifyRequest $request,
-        User $user,
-        Google2FA $googleTwoFactor,
+        User                   $user,
+        Google2FA              $googleTwoFactor,
     ): JsonResponse
     {
         try {
@@ -174,13 +173,17 @@ class TwoFactorController extends Controller
 
             if (!$isValid) {
                 return new JsonResponse([
-                    'error' => 'Не верный код'
-                ], Response::HTTP_BAD_REQUEST);
+                    'errors' => [
+                        'auth' => ['Не верный код']
+                    ]
+                ], Response::HTTP_FORBIDDEN);
             }
 
             $user->update(['google2fa_secret' => $request->secret]);
 
-            return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
+            return new JsonResponse([
+                    'message' => __('actions.two_fa_enabled')]
+            );
         } catch (\Throwable $e) {
             report($e);
 
@@ -225,6 +228,20 @@ class TwoFactorController extends Controller
                             ]
                         )
                     ]
+                ),
+                new OA\Response(
+                    response: Response::HTTP_NOT_FOUND,
+                    description: 'Not found',
+                    content: [
+                        new OA\JsonContent(
+                            type: 'object',
+                            example: [
+                                'errors' => [
+                                    'property' => ['message']
+                                ]
+                            ]
+                        ),
+                    ],
                 ),
             ]
         )

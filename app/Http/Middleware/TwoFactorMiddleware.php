@@ -15,36 +15,34 @@ class TwoFactorMiddleware
 {
     public function handle(Request $request, Closure $next)
     {
-        $user = User::whereEmail($request->email)
-            ->firstOrFail();
+        try {
+            $user = User::whereEmail($request->email)
+                ->firstOrFail();
 
-        $request->merge(['user' => $user]);
+            $request->merge(['user' => $user]);
 
-        if ($user->google2fa_secret) {
-            if (!$request->two_fa_secret) {
-                return new JsonResponse([
-                    'error' => 'Pass two_fa_secret!'
-                ], Response::HTTP_UNPROCESSABLE_ENTITY);
-            }
-            try {
+            if ($user->google2fa_secret) {
+                if (!$request->google2fa_code) {
+                    return new JsonResponse([
+                        'errors' => ['2fa' => ['Pass google2fa_code!']]
+                    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                }
+
                 $isValid = resolve(Google2FA::class)
-                    ->verifyKey($user->google2fa_secret, $request->two_fa_secret);
+                    ->verifyKey($user->google2fa_secret, $request->google2fa_code);
 
                 if (!$isValid) {
                     return new JsonResponse([
-                        'error' => 'Не верный код'
-                    ], Response::HTTP_BAD_REQUEST);
+                        'errors' => ['2fa' => ['Не верный код']]
+                    ], Response::HTTP_UNPROCESSABLE_ENTITY);
                 }
 
                 return $next($request);
-
-            } catch (\Exception $e) {
-                report($e);
-
-                return new JsonResponse([
-                    'error' => __('auth.failed')
-                ], Response::HTTP_BAD_REQUEST);
             }
+        } catch (\Throwable) {
+            return new JsonResponse([
+                'errors' => ['auth' => [__('auth.failed')]]
+            ], Response::HTTP_NOT_FOUND);
         }
 
         return $next($request);

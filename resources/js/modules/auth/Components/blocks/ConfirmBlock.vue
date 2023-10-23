@@ -1,10 +1,10 @@
 <template>
     <div class="confirm">
         <main-title tag="h3" class="confirm_title title-base">
-            Подтверждение регистрации
+            {{ $t("confirm.title") }}
         </main-title>
         <main-description class="confirm_description description-base">
-            На почту {{ this.$route.query?.email }} было отправлено письмо со ссылкой для подтверждения регистрации. Проверьте папку “Спам“, если не обнаружили письмо в списке входящих.
+            {{ $t("confirm.text[0]") }} {{ $route.query?.email }} {{ $t("confirm.text[1]") }}
         </main-description>
         <verify-link
             v-show="countResend < 2"
@@ -13,7 +13,7 @@
             :verifyText="$t('re_send')"
             :sendVerification="sendVerification"
             :data="{
-                email: this.$route.query?.email,
+                email: $route.query?.email,
             }"
             @sendVerification="incrementCountResend"
         />
@@ -55,7 +55,7 @@ export default {
         },
         sendFirstVerification() {
             this.sendVerification = true;
-        }
+        },
     },
     mounted() {
         if (this.$route.query?.action !== "registration") {
@@ -64,10 +64,10 @@ export default {
         if (!this.$route.query?.email) {
             this.$router.push({
                 name: "home",
-            })
+            });
         }
-    }
-}
+    },
+};
 </script>
 
 <style scoped lang="scss">
@@ -102,7 +102,7 @@ export default {
         font-weight: 600;
         line-height: 20px;
         border-radius: 12px;
-        background: var(--primary-500, #2E90FA);
+        background: var(--primary-500, #2e90fa);
         box-shadow: 0 10px 10px -6px rgba(0, 0, 0, 0.1);
         width: fit-content;
     }

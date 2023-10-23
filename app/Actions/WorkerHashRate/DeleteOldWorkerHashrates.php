@@ -8,11 +8,11 @@ use App\Models\WorkerHashrate;
 
 class DeleteOldWorkerHashrates
 {
-    public static function execute(int $workerId, string $date): void
+    public static function execute(int $workerId): void
     {
         WorkerHashrate::oldestThan(
             workerId: $workerId,
-            date: $date
+            date: now()->subMonths(2)->toDateTimeString()
         )?->delete();
     }
 }

@@ -4,11 +4,8 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Actions\Worker\Update;
 use App\Actions\WorkerHashRate\DeleteOldWorkerHashrates;
-use App\Dto\WorkerData;
 use App\Models\Worker;
-use App\Models\WorkerHashrate;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -36,29 +33,16 @@ class MakeWorkerHashesCommand extends Command
         $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
             if (array_key_exists('worker_id', $btcComWorker)) {
 
-                $progressBar->advance();
-
-                $localWorker = Worker::where('worker_id', $btcComWorker['worker_id'])
-                    ->first();
-
-                if ($localWorker) {
-                    DeleteOldWorkerHashrates::execute(
-                        workerId: $localWorker->worker_id,
-                        date: now()->subMonths(2)->toDateTimeString()
-                    );
-
-                    WorkerHashrate::create([
-                        'worker_id' => $localWorker->worker_id,
-                        'hash' => $btcComWorker['shares_1m'] ?? 0,
-                        'unit' => $btcComWorker['shares_unit'] ?? 'T',
+                Worker::find($btcComWorker['worker_id'])
+                    ?->workerHashrates()
+                    ->create([
+                        'hash' => (int)$btcComWorker['shares_1m'],
+                        'unit' => $btcComWorker['shares_unit'],
                     ]);
 
-                    Update::execute($localWorker, workerData: WorkerData::fromRequest([
-                        'worker_id' => $localWorker->worker_id,
-                        'group_id' => $localWorker->group_id,
-                        'approximate_hash_rate' => $btcComWorker['shares_1d']
-                    ]));
-                }
+                DeleteOldWorkerHashrates::execute(workerId: (int) $btcComWorker['worker_id']);
+
+                $progressBar->advance();
             }
         });
 

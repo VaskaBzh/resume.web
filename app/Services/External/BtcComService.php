@@ -5,23 +5,27 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Actions\Sub\Create;
+use App\Actions\Worker\Update;
+use App\Actions\Worker\Create as WorkerCreate;
 use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
+use App\Dto\WorkerHashRateData;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
 class BtcComService
 {
     private PendingRequest $client;
-    private static $retryCount = 3;
-    private static $pendingTimeSec = 1;
+    private static int $retryCount = 3;
+    private static int $pendingTimeSec = 1;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
@@ -273,10 +277,15 @@ class BtcComService
             ->contains($userData->name);
     }
 
-    private function createLocalSub(UserData $userData, $groupId): string
+    /**
+     * Создать локального саба
+     *
+     * @throws \Exception
+     */
+    private function createLocalSub(UserData $userData, $groupId): void
     {
         try {
-            $sub = Create::execute(
+            Create::execute(
                 subData: SubData::fromRequest([
                     'user_id' => auth()->user()->id,
                     'group_id' => $groupId,
@@ -284,12 +293,108 @@ class BtcComService
                 ])
             );
 
-            return $sub->sub;
         } catch (\Exception $e) {
             report($e);
 
             throw new \Exception($e->getMessage());
         }
+    }
 
+    /**
+     * Привести список группированных воркеров бтс.ком в локальный вид
+     *
+     */
+    public function getGroupedWorkerCollection(): Collection
+    {
+        return $this
+            ->getWorkerList(0)
+            ->map(static function (array $btcComWorker) {
+                if (filled($btcComWorker)) {
+                    return WorkerData::fromRequest(requestData: [
+                        'group_id' => $btcComWorker['gid'],
+                        'worker_id' => $btcComWorker['worker_id'],
+                        'name' => $btcComWorker['worker_name'],
+                        'approximate_hash_rate' => $btcComWorker['shares_1d'],
+                        'status' => $btcComWorker['status'],
+                        'unit' => $btcComWorker['shares_unit'],
+                        'pool_data' => $btcComWorker
+                    ]);
+                }
+            });
+    }
+
+    /**
+     * Привести не разгруппированных воркеров бтс.ком в локальный вид
+     * Сформировать первый хеш рейт воркеров
+     *
+     */
+    public function getUngroupedWorkerCollection(): Collection
+    {
+        return $this
+            ->getWorkerList(-1)
+            ->map(static function (array $btcComWorker) {
+                $subName = head(explode('.', $btcComWorker['worker_name']));
+
+                if ($sub = Sub::where('sub', $subName)->first()) {
+
+                    return [
+                        'worker_hash_rate' => WorkerHashRateData::fromRequest(requestData: [
+                            'worker_id' => (int)$btcComWorker['worker_id'],
+                            'hash' => (int)$btcComWorker['shares_1m'],
+                            'unit' => $btcComWorker['shares_unit'],
+                        ]),
+                        'worker_data' => WorkerData::fromRequest(requestData: [
+                            'group_id' => $sub->group_id,
+                            'worker_id' => $btcComWorker['worker_id'],
+                            'name' => $btcComWorker['worker_name'],
+                            'approximate_hash_rate' => $btcComWorker['shares_1d'],
+                            'status' => $btcComWorker['status'],
+                            'unit' => $btcComWorker['shares_unit'],
+                            'pool_data' => $btcComWorker
+                        ]),
+                    ];
+                }
+            });
+    }
+
+    public function updateLocalWorkers(): void
+    {
+        $btcComWorkers = $this->getGroupedWorkerCollection();
+
+        $btcComWorkers->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData));
+
+        Log::channel('commands')->info('WORKERS UPDATE COMPLETE');
+
+        Worker::whereNotIn(
+            column: 'worker_id',
+            values: $btcComWorkers->pluck('worker_id')->toArray()
+        )->delete();
+    }
+
+    public function createLocalWorkers(): void
+    {
+        $btcComWorkers = $this->getUngroupedWorkerCollection();
+
+        if (!filled($btcComWorkers)) {
+            return;
+        }
+
+        $btcComWorkers
+            ->each(static function (array $firstWorkerData) {
+
+                WorkerCreate::execute($firstWorkerData['worker_data'])
+                    ->workerHashrates()
+                    ->create([
+                        'hash' => (int)$firstWorkerData['worker_hash_rate']['shares_1m'],
+                        'unit' => $firstWorkerData['worker_hash_rate']['unit'],
+                    ]);
+
+                resolve(BtcComService::class)
+                    ->updateWorker(workerData: $firstWorkerData['worker_data']);
+            });
+
+        Artisan::call('make:sub-hashes');
+
+        Log::channel('commands')->info('WORKERS IMPORT COMPLETE');
     }
 }

@@ -11,7 +11,7 @@ export class TabsService {
     }
 
     setLinks(user) {
-        this.links = [];
+        this.dropLinks();
         this.links = [
             ...this.links,
             {
@@ -68,19 +68,22 @@ export class TabsService {
         ];
 
         // if (user.roles)
-            if (user.roles && user.roles.find((role) => role.name === "referral"))
-                this.setReferralTab();
-            else this.setWithoutReferralTab();
+        if (user.roles && user.roles.find((role) => role.name === "referral"))
+            this.setReferralTab();
+        else this.setWithoutReferralTab();
     }
 
     async setAllowedRoutes() {
         try {
             this.allowedRoutes = (
-                await ProfileApi.get(`/allowed/${this.route?.query?.access_key}`, {
-                    headers: {
-                        "X-Access-Key": this.route?.query?.access_key,
-                    },
-                })
+                await ProfileApi.get(
+                    `/allowed/${this.route?.query?.access_key}`,
+                    {
+                        headers: {
+                            "X-Access-Key": this.route?.query?.access_key,
+                        },
+                    }
+                )
             ).data.data.allowed_routes;
         } catch (err) {
             console.error(err);
@@ -99,6 +102,7 @@ export class TabsService {
             }
         }
 
+        this.dropLinks();
         this.links = [
             ...this.links,
             {

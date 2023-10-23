@@ -70,6 +70,16 @@ use OpenApi\Attributes as OA;
             new OA\Response(
                 response: Response::HTTP_UNPROCESSABLE_ENTITY,
                 description: 'Error while generating a referral code',
+                content: [
+                    new OA\JsonContent(
+                        type: 'object',
+                        example: [
+                            'errors' => [
+                                'property' => ['message']
+                            ]
+                        ]
+                    ),
+                ],
             ),
         ],
     )
@@ -92,7 +102,9 @@ class CodeController extends Controller
         } catch (\Exception $e) {
             return new JsonResponse([
                 'success' => false,
-                'error' => $e->getMessage()
+                'errors' => [
+                    'message' => [__('actions.failed')]
+                ]
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
     }

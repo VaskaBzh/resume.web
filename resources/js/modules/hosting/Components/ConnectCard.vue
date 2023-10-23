@@ -10,12 +10,12 @@
             <form class="connect-form">
                 <input
                     class="connect-input"
-                    :placeholder="$t('connect.form.placeholder')"
+                    :placeholder="$t('connect.form.placeholder[0]')"
                     v-model="form.message"
                 />
                 <input
                     class="connect-input"
-                    placeholder="+7"
+                    :placeholder="$t('connect.form.placeholder[1]')"
                     v-model="form.contacts"
                 />
                 <div class="buttons-connect-container">
@@ -60,7 +60,7 @@ export default {
         return {
             form: {
                 message: "",
-                contacts: "+7",
+                contacts: "",
             },
         };
     },

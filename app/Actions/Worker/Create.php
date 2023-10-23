@@ -9,11 +9,19 @@ use App\Models\Worker;
 
 class Create
 {
-    public static function execute(WorkerData $workerData): void
+    public static function execute(
+        WorkerData $workerData,
+    ): Worker
     {
-        Worker::create([
+        return Worker::create([
+            'worker_id' => $workerData->worker_id,
             'group_id' => $workerData->group_id,
-            'worker_id' => $workerData->worker_id
+            'name' => $workerData->name,
+            'approximate_hash_rate' => $workerData->approximateHashRate,
+            'status' => $workerData->status,
+            'unit' => $workerData->unit,
+            'pool_data' => $workerData->poolData,
+            'deleted_at' => null,
         ]);
     }
 }

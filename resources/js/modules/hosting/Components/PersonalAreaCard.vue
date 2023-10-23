@@ -20,14 +20,14 @@
                     src="../assets/img/Mockup-statistic-en.png"
                     class="img-statistic img-system web"
                 />
-    
+
                 <!-- Наложение тени -->
                 <img
                     :src="img"
                     class="img-shadow"
                     :class="{ 'add-opacity': addOpacity }"
                 />
-    
+
                 <!-- Кнопки для смены -->
                 <button
                     class="navbar-note-buttton note-button"
@@ -196,7 +196,7 @@
                         </defs>
                     </svg>
                 </button>
-    
+
                 <button
                     class="hasrate-note-buttton note-button"
                     @mouseenter="changeShadow('chart-hasrate')"
@@ -285,7 +285,7 @@
                         </defs>
                     </svg>
                 </button>
-    
+
                 <button
                     class="forecast-note-buttton note-button"
                     @mouseenter="changeShadow('forecast')"
@@ -370,7 +370,7 @@
                         </defs>
                     </svg>
                 </button>
-    
+
                 <button
                     class="accrued-note-buttton note-button"
                     @mouseenter="changeShadow('chart-accrued')"
@@ -459,7 +459,7 @@
                         </defs>
                     </svg>
                 </button>
-    
+
                 <button
                     class="header-note-buttton note-button"
                     @mouseenter="changeShadow('header')"
@@ -544,7 +544,7 @@
                         ></MockupTooltip>
                     </transition>
                 </button>
-    
+
                 <!-- Mobile -->
                 <img
                     src="../assets/img/Mockup-iphone.png"

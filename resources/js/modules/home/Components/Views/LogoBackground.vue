@@ -48,10 +48,14 @@ export default {
     max-width: 1920px;
     margin: 0 auto;
     padding: 160px 100px 0;
-    @media (max-width: 1300px) {
+}
+@media (max-width: 1300px) {
+    .logo__content {
         padding: 20vh 100px 0;
     }
-    @media (max-width: 768px) {
+}
+@media (max-width: 768px) {
+    .logo__content {
         padding: 25vh 5vw 0px;
     }
 }
@@ -66,20 +70,25 @@ export default {
 }
 
 .logo_elem-first {
-//width: clamp(324px, 50vw, 1070px); //height: clamp(106px, 24vw, 348px); width: 1070px;
     height: 348px;
-    @media (max-width: 1300px) {
+}
+
+@media (max-width: 1300px) {
+    .logo_elem-first {
         width: 600px;
         height: 260px;
     }
-    @media (max-width: 768px) {
+}
+@media (max-width: 768px) {
+    .logo_elem-first {
         width: 450px;
         height: unset;
     }
-    @media (max-width: 470px) {
+}
+@media (max-width: 470px) {
+    .logo_elem-first {
         width: 320px;
     }
-
 }
 
 .logo_elem-last {
@@ -87,18 +96,22 @@ export default {
     margin-top: -46px;
     width: 778px;
     height: 348px;
-    @media (max-width: 1300px) {
+}
+
+@media (max-width: 1300px) {
+    .logo_elem-last {
         width: 500px;
         height: 260px;
     }
-    @media (max-width: 768px) {
+}
+@media (max-width: 768px) {
+    .logo_elem-last {
         width: 400px;
-    //height: unset;
     }
-    @media (max-width: 470px) {
+}
+@media (max-width: 470px) {
+    .logo_elem-last {
         width: 300px;
     }
-
 }
-
 </style>
