@@ -2,14 +2,17 @@
     <div class="mission-view mission__section" ref="view">
         <div class="mission__content">
             <landing-headline class="mission__headline"
-            >{{ $t("main.button") }}
+                >{{ $t("main.button") }}
             </landing-headline>
-            <landing-wrap
-                :title="$t('main.title[0]')"
-            >
-                <template v-slot:content>
+            <landing-wrap>
+                <template #title>
+                    {{ $t("main.title[0]") }}
+                </template>
+                <template #content>
                     <landing-text>
-                        <div class="mission__cards animation-up animation-opacity">
+                        <div
+                            class="mission__cards animation-up animation-opacity"
+                        >
                             <p class="mission-view_item_text">
                                 {{ $t("main.text[0]") }}
                             </p>
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
