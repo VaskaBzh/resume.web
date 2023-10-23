@@ -13,6 +13,9 @@ import { apiService } from "@/api/api";
 
 export const router = createRouter({
     history: createWebHistory(),
+    scrollBehavior() {
+        document.body.scrollTo(0, 0);
+    },
     routes,
 });
 

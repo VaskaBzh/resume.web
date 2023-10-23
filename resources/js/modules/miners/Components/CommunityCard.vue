@@ -3,15 +3,20 @@
         <div class="community__section">
             <div class="card-community">
                 <p class="card-title card-web">{{ $t("community.title") }}</p>
-                <p class="card-title card-mobile">{{ $t("community.title_mobile[0]") }} <br>
-                    {{ $t("community.title_mobile[1]") }} <br> {{ $t("community.title_mobile[2]") }} <br>
-                    {{ $t("community.title_mobile[3]") }}</p>
+                <p class="card-title card-mobile">
+                    {{ $t("community.title_mobile[0]") }} <br />
+                    {{ $t("community.title_mobile[1]") }} <br />
+                    {{ $t("community.title_mobile[2]") }} <br />
+                    {{ $t("community.title_mobile[3]") }}
+                </p>
 
                 <p class="card-text">{{ $t("community.text") }}</p>
             </div>
             <div class="lists">
                 <div>
-                    <p class="list-title">{{ $t("community.list.title[0]") }}</p>
+                    <p class="list-title">
+                        {{ $t("community.list.title[0]") }}
+                    </p>
                     <div class="list-items">
                         <button class="list-item-tg">
                             {{ $t("community.list.buttons[0]") }}
@@ -22,25 +27,49 @@
                     </div>
                 </div>
                 <div>
-                    <p class="list-title">{{ $t("community.list.title[1]") }}</p>
+                    <p class="list-title">
+                        {{ $t("community.list.title[1]") }}
+                    </p>
                     <div class="list-items">
                         <button class="list-item-blog">
-                            <img src="../assets/img/yandex.png" class="img-community-web">
-                            <img src="../assets/img/yandex-mini.png" class="img-community-mobile">
+                            <img
+                                src="../assets/img/yandex.png"
+                                class="img-community-web"
+                            />
+                            <img
+                                src="../assets/img/yandex-mini.png"
+                                class="img-community-mobile"
+                            />
                         </button>
                         <button class="list-item-blog">
-                            <img src="../assets/img/tinkoff.svg" class="img-community-web">
-                            <img src="../assets/img/tinkoff-mini.svg" class="img-community-mobile">
-
+                            <img
+                                src="../assets/img/tinkoff.svg"
+                                class="img-community-web"
+                            />
+                            <img
+                                src="../assets/img/tinkoff-mini.svg"
+                                class="img-community-mobile"
+                            />
                         </button>
                         <button class="list-item-blog">
-                            <img src="../assets/img/vc.svg" class="img-community-web">
-                            <img src="../assets/img/vc-mini.svg" class="img-community-mobile">
+                            <img
+                                src="../assets/img/vc.svg"
+                                class="img-community-web"
+                            />
+                            <img
+                                src="../assets/img/vc-mini.svg"
+                                class="img-community-mobile"
+                            />
                         </button>
                         <button class="list-item-blog">
-                            <img src="../assets/img/habr.svg" class="img-community-web">
-                            <img src="../assets/img/habr-mini.svg" class="img-community-mobile">
-
+                            <img
+                                src="../assets/img/habr.svg"
+                                class="img-community-web"
+                            />
+                            <img
+                                src="../assets/img/habr-mini.svg"
+                                class="img-community-mobile"
+                            />
                         </button>
                     </div>
                 </div>
@@ -49,121 +78,17 @@
     </div>
 </template>
 <script>
-import {MinersMessage} from "@/modules/miners/lang/MinersMessage";
+import { MinersMessage } from "@/modules/miners/lang/MinersMessage";
 
 export default {
     i18n: {
         sharedMessages: MinersMessage,
     },
-    data() {
-        return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
-        }
-
-    },
-
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
-    },
-}
+};
 </script>
 <style scoped>
 .card-title {
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     /* Text Web/Headline 5 */
     font-family: Unbounded;
     font-size: 36px;
@@ -175,7 +100,7 @@ export default {
 }
 
 .card-text {
-    color: var(--gray-170, rgba(245, 250, 255, 0.70));
+    color: var(--gray-170, rgba(245, 250, 255, 0.7));
     font-family: NunitoSans;
     font-size: 20px;
     font-style: normal;
@@ -189,7 +114,7 @@ export default {
 }
 
 .list-title {
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     /* Text Web/Subtitle 3 */
     font-family: Unbounded;
     font-size: 24px;
@@ -206,7 +131,7 @@ export default {
 }
 
 .list-item-tg {
-    color: var(--gray-3100, #D0D5DD);
+    color: var(--gray-3100, #d0d5dd);
     font-family: Unbounded;
     font-size: 18px;
     font-style: normal;
@@ -214,8 +139,8 @@ export default {
     line-height: 120%; /* 21.6px */
     text-transform: uppercase;
     border-radius: 30px;
-    border: 0.5px solid var(--gray-320, rgba(208, 213, 221, 0.20));
-    background: var(--gray-320, rgba(208, 213, 221, 0.20));
+    border: 0.5px solid var(--gray-320, rgba(208, 213, 221, 0.2));
+    background: var(--gray-320, rgba(208, 213, 221, 0.2));
     box-shadow: 0px 4px 7px 0px rgba(14, 14, 14, 0.05);
     padding: 10px 25px;
     cursor: pointer;
@@ -223,8 +148,8 @@ export default {
 
 .list-item-blog {
     border-radius: 30px;
-    border: 0.5px solid var(--gray-320, rgba(208, 213, 221, 0.20));
-    background: var(--gray-3100, #D0D5DD);
+    border: 0.5px solid var(--gray-320, rgba(208, 213, 221, 0.2));
+    background: var(--gray-3100, #d0d5dd);
     box-shadow: 0px 4px 7px 0px rgba(14, 14, 14, 0.05);
     padding: 10px 25px;
     cursor: pointer;
@@ -236,7 +161,8 @@ export default {
     gap: 100px;
 }
 
-.img-community-mobile, .card-mobile {
+.img-community-mobile,
+.card-mobile {
     display: none;
 }
 
@@ -268,7 +194,6 @@ export default {
     .list-item-blog {
         width: 122px;
         height: 40px;
-
     }
 
     .img-community-web {
