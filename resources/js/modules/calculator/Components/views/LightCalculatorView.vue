@@ -27,11 +27,11 @@
             <div class="calculator__form_complexity">
                 <div class="calculator__form_complexity_row">
                     <span class="calculator__form_complexity_title">{{
-                            $t("profitability_calculator.form_calculator.item[0]")
-                        }}</span>
+                        $t("profitability_calculator.form_calculator.item[0]")
+                    }}</span>
                     <span class="calculator__form_complexity_data">{{
-                            btcInfo.btc?.diff
-                        }}</span>
+                        btcInfo.btc?.diff
+                    }}</span>
                 </div>
                 <!--                <div class="calculator__form_complexity_row">-->
                 <!--                    <span class="calculator__form_complexity_title">{{-->
@@ -63,7 +63,7 @@
                 <!--                v-if="inputs.graph"-->
                 <!--            ></column-graph>-->
                 <div class="calculator__result">
-                    <converted-result :bitcoinValue="lightService.profit"/>
+                    <converted-result :bitcoinValue="lightService.profit" />
                 </div>
             </div>
         </transition>
@@ -80,11 +80,11 @@
 <script>
 import CalculatorTitle from "../UI/CalculatorTitle.vue";
 import CalculatorInput from "../UI/CalculatorInput.vue";
-import {mapGetters} from "vuex";
-import {LightCalculatorService} from "../../services/LightCalculatorService.js";
+import { mapGetters } from "vuex";
+import { LightCalculatorService } from "../../services/LightCalculatorService.js";
 import CalculatorTabs from "../UI/CalculatorTabs.vue";
 import ConvertedResult from "../UI/ConvertedResult.vue";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 // import ColumnGraph from "../graphs/ColumnGraph.vue";
 
@@ -122,13 +122,13 @@ export default {
                     name: this.$t(
                         "profitability_calculator.form_calculator.segment[1]"
                     ),
-                    value: 210,
+                    value: 720,
                 },
                 {
                     name: this.$t(
                         "profitability_calculator.form_calculator.segment[2]"
                     ),
-                    value: 720,
+                    value: 2160,
                 },
             ],
         };

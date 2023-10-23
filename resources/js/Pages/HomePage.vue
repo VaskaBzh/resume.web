@@ -1,15 +1,15 @@
 <template>
-    <hero-view/>
-    <about-view/>
-    <calculator-land/>
-    <miners-info-view/>
-    <cabinet-view/>
-    <security-view/>
-    <app-mobile-view/>
-    <payments-view/>
-    <miners-info-view/>
-    <history-pool-view/>
-    <connect-with-us-view/>
+    <hero-view />
+    <about-view />
+    <calculator-land />
+    <miners-info-view />
+    <cabinet-view />
+    <security-view />
+    <app-mobile-view />
+    <payments-view />
+    <mission-view />
+    <history-pool-view />
+    <connect-with-us-view />
 </template>
 
 <script>
@@ -27,7 +27,7 @@ import AboutView from "@/modules/home/Components/Views/AboutView.vue";
 import HeroView from "@/modules/home/Components/Views/HeroView.vue";
 
 export default {
-    name: "home-page",
+    name: "HomePage",
     components: {
         ConnectWithUsView,
         HistoryPoolView,
@@ -39,8 +39,8 @@ export default {
         MinersInfoView,
         CalculatorLand,
         AboutView,
-        HeroView
-    }
+        HeroView,
+    },
 };
 </script>
 

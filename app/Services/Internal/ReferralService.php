@@ -7,12 +7,14 @@ namespace App\Services\Internal;
 use App\Actions\User\AttachReferral;
 use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
+use App\Exceptions\BusinessException;
 use App\Models\Sub;
 use App\Models\User;
 use App\Repositories\IncomeRepository;
 use App\Services\External\BtcComService;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Symfony\Component\HttpFoundation\Response;
 
 class ReferralService
 {
@@ -81,11 +83,17 @@ class ReferralService
         $owner = User::where('referral_code', $code)->first();
 
         if (!$owner) {
-            throw new \Exception('Неверный код');
+            throw new BusinessException(
+                'Неверный код',
+                Response::HTTP_NOT_FOUND
+            );
         }
 
         if ($owner->id === $referral->id) {
-            throw new \Exception('Нельзя добавить собственный аккаунт');
+            throw new BusinessException(
+                'Нельзя добавить собственный аккаунт',
+                Response::HTTP_FORBIDDEN
+            );
         }
 
         $decryptedData = static::getReferralDataFromCode(code: $code);

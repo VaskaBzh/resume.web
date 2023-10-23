@@ -1,145 +1,147 @@
 <template>
-    <div class="mobile-view mobile__section mobile__section-wrap" ref="view">
-        <div class="mobile-view__block">
-            <landing-headline class="mobile-view__title"
-            >{{ $t("mobile_app.button") }}
-            </landing-headline>
-            <div class="mobile-view__wrapper">
-                <Swiper
-                    class="mobile-view_inner"
-                    :modules="[Controller, Navigation, Pagination]"
-                    :controller="{ control: secondSwiper }"
-                    :set-wrapper-size="true"
-                    :loop="true"
-                    :pagination="{
-                        clickable: true,
-                        el: '.pagination_bulets',
-                        type: 'bullets',
-                    }"
-                    :navigation="{ nextEl: '.next', prevEl: '.prev' }"
-                    :space-between="0"
-                    @swiper="setFirstSwiper"
-                >
-                    <swiper-slide class="mobile-view_item">
-                        <landing-title tag="h3" class="mobile-view_subtitle">
-                            {{ $t("mobile_app.title") }}
-                        </landing-title>
-                    </swiper-slide>
-                    <swiper-slide class="mobile-view_item">
-                        <landing-title tag="h3" class="mobile-view_subtitle">
-                            {{ $t("mobile_app.slides[0]") }}
-                        </landing-title>
-                    </swiper-slide>
-                    <swiper-slide class="mobile-view_item">
-                        <landing-title tag="h3" class="mobile-view_subtitle">
-                            {{ $t("mobile_app.slides[1]") }}
-                        </landing-title>
-                    </swiper-slide>
-                    <swiper-slide class="mobile-view_item">
-                        <landing-title tag="h3" class="mobile-view_subtitle">
-                            {{ $t("mobile_app.slides[2]") }}
-                        </landing-title>
-                    </swiper-slide>
-                    <swiper-slide class="mobile-view_item">
-                        <landing-title tag="h3" class="mobile-view_subtitle">
-                            {{ $t("mobile_app.slides[3]") }}
-                        </landing-title>
-                    </swiper-slide>
-                    <div class="mobile-view_prev_next">
-                        <button-blue
-                            class="mobile-view_prev prev"
-                            v-if="viewportWidth > 1200"
-                        ></button-blue>
-                        <button-blue
-                            class="mobile-view_prev next"
-                            v-if="viewportWidth > 1200"
-                        ></button-blue>
-                    </div>
-                </Swiper>
-                <div class="mobile-view__content">
-                    <img
-                        class="iphone"
-                        src="../../../../../assets/img/iPhone-14.png"
-                        alt=""
-                    />
+    <div class="mobile-view mobile__section-wrap" ref="view">
+        <div class="mobile__section">
+            <div class="mobile-view__block">
+                <landing-headline class="mobile-view__title"
+                >{{ $t("mobile_app.button") }}
+                </landing-headline>
+                <div class="mobile-view__wrapper">
                     <Swiper
-                        class="mobile-view_swiper-picture"
-                        :loop="true"
+                        class="mobile-view_inner"
                         :modules="[Controller, Navigation, Pagination]"
-                        :controller="{ control: firstSwiper }"
-                        :allowTouchMove="true"
-                        @swiper="setSecondSwiper"
+                        :controller="{ control: secondSwiper }"
+                        :set-wrapper-size="true"
+                        :loop="true"
+                        :pagination="{
+                            clickable: true,
+                            el: '.pagination_bulets',
+                            type: 'bullets',
+                        }"
+                        :navigation="{ nextEl: '.next', prevEl: '.prev' }"
+                        :space-between="0"
+                        @swiper="setFirstSwiper"
                     >
-                        <swiper-slide class="mobile-view_image">
-                            <!--                            <img-->
-                            <!--                                src="../../../../../assets/img/iphone-14-screen1-ru.png"-->
-                            <!--                                alt=""-->
-                            <!--                                v-show="$i18n.locale === 'ru'"-->
-                            <!--                            />-->
-                            <img
-                                src="../../../../../assets/img/iphone-14-screen1-en.png"
-                                alt=""
-                            />
+                        <swiper-slide class="mobile-view_item">
+                            <landing-title tag="h3" class="mobile-view_subtitle">
+                                {{ $t("mobile_app.title") }}
+                            </landing-title>
                         </swiper-slide>
-                        <swiper-slide class="mobile-view_image">
-                            <!--                            <img-->
-                            <!--                                src="../../../../../assets/img/iphone-14-screen2-ru.png"-->
-                            <!--                                alt=""-->
-                            <!--                                v-show="$i18n.locale === 'ru'"-->
-                            <!--                            />-->
-                            <img
-                                src="../../../../../assets/img/iphone-14-screen2-en.png"
-                                alt=""
-                            />
+                        <swiper-slide class="mobile-view_item">
+                            <landing-title tag="h3" class="mobile-view_subtitle">
+                                {{ $t("mobile_app.slides[0]") }}
+                            </landing-title>
                         </swiper-slide>
-                        <swiper-slide class="mobile-view_image">
-                            <!--                            <img-->
-                            <!--                                src="../../../../../assets/img/iphone-14-screen3-ru.png"-->
-                            <!--                                alt=""-->
-                            <!--                                v-show="$i18n.locale === 'ru'"-->
-                            <!--                            />-->
-                            <img
-                                src="../../../../../assets/img/iphone-14-screen3-en.png"
-                                alt=""
-                            />
+                        <swiper-slide class="mobile-view_item">
+                            <landing-title tag="h3" class="mobile-view_subtitle">
+                                {{ $t("mobile_app.slides[1]") }}
+                            </landing-title>
                         </swiper-slide>
-                        <swiper-slide class="mobile-view_image">
-                            <!--                            <img-->
-                            <!--                                src="../../../../../assets/img/iphone-14-screen4-ru.png"-->
-                            <!--                                alt=""-->
-                            <!--                                v-show="$i18n.locale === 'ru'"-->
-                            <!--                            />-->
-                            <img
-                                src="../../../../../assets/img/iphone-14-screen4-en.png"
-                                alt=""
-                            />
+                        <swiper-slide class="mobile-view_item">
+                            <landing-title tag="h3" class="mobile-view_subtitle">
+                                {{ $t("mobile_app.slides[2]") }}
+                            </landing-title>
                         </swiper-slide>
-                        <swiper-slide class="mobile-view_image">
-                            <!--                            <img-->
-                            <!--                                src="../../../../../assets/img/iphone-14-screen5-ru.png"-->
-                            <!--                                alt=""-->
-                            <!--                                v-show="$i18n.locale === 'ru'"-->
-                            <!--                            />-->
-                            <img
-                                src="../../../../../assets/img/iphone-14-screen5-en.png"
-                                alt=""
-                            />
+                        <swiper-slide class="mobile-view_item">
+                            <landing-title tag="h3" class="mobile-view_subtitle">
+                                {{ $t("mobile_app.slides[3]") }}
+                            </landing-title>
                         </swiper-slide>
+                        <div class="mobile-view_prev_next">
+                            <button-blue
+                                class="mobile-view_prev prev"
+                                v-if="viewportWidth > 1200"
+                            ></button-blue>
+                            <button-blue
+                                class="mobile-view_prev next"
+                                v-if="viewportWidth > 1200"
+                            ></button-blue>
+                        </div>
                     </Swiper>
+                    <div class="mobile-view__content">
+                        <img
+                            class="iphone"
+                            src="../../../../../assets/img/iPhone-14.png"
+                            alt=""
+                        />
+                        <Swiper
+                            class="mobile-view_swiper-picture"
+                            :loop="true"
+                            :modules="[Controller, Navigation, Pagination]"
+                            :controller="{ control: firstSwiper }"
+                            :allowTouchMove="true"
+                            @swiper="setSecondSwiper"
+                        >
+                            <swiper-slide class="mobile-view_image">
+                                <!--                            <img-->
+                                <!--                                src="../../../../../assets/img/iphone-14-screen1-ru.png"-->
+                                <!--                                alt=""-->
+                                <!--                                v-show="$i18n.locale === 'ru'"-->
+                                <!--                            />-->
+                                <img
+                                    src="../../../../../assets/img/iphone-14-screen1-en.png"
+                                    alt=""
+                                />
+                            </swiper-slide>
+                            <swiper-slide class="mobile-view_image">
+                                <!--                            <img-->
+                                <!--                                src="../../../../../assets/img/iphone-14-screen2-ru.png"-->
+                                <!--                                alt=""-->
+                                <!--                                v-show="$i18n.locale === 'ru'"-->
+                                <!--                            />-->
+                                <img
+                                    src="../../../../../assets/img/iphone-14-screen2-en.png"
+                                    alt=""
+                                />
+                            </swiper-slide>
+                            <swiper-slide class="mobile-view_image">
+                                <!--                            <img-->
+                                <!--                                src="../../../../../assets/img/iphone-14-screen3-ru.png"-->
+                                <!--                                alt=""-->
+                                <!--                                v-show="$i18n.locale === 'ru'"-->
+                                <!--                            />-->
+                                <img
+                                    src="../../../../../assets/img/iphone-14-screen3-en.png"
+                                    alt=""
+                                />
+                            </swiper-slide>
+                            <swiper-slide class="mobile-view_image">
+                                <!--                            <img-->
+                                <!--                                src="../../../../../assets/img/iphone-14-screen4-ru.png"-->
+                                <!--                                alt=""-->
+                                <!--                                v-show="$i18n.locale === 'ru'"-->
+                                <!--                            />-->
+                                <img
+                                    src="../../../../../assets/img/iphone-14-screen4-en.png"
+                                    alt=""
+                                />
+                            </swiper-slide>
+                            <swiper-slide class="mobile-view_image">
+                                <!--                            <img-->
+                                <!--                                src="../../../../../assets/img/iphone-14-screen5-ru.png"-->
+                                <!--                                alt=""-->
+                                <!--                                v-show="$i18n.locale === 'ru'"-->
+                                <!--                            />-->
+                                <img
+                                    src="../../../../../assets/img/iphone-14-screen5-en.png"
+                                    alt=""
+                                />
+                            </swiper-slide>
+                        </Swiper>
+                    </div>
+                    <div class="pagination_bulets" v-if="viewportWidth < 1200">
+                    </div>
+                    <div class="mobile-view__btn">{{ $t("mobile_app.note") }}</div>
                 </div>
-                <div class="pagination_bulets" v-if="viewportWidth < 1200">
-                </div>
-                <div class="mobile-view__btn">{{ $t("mobile_app.note") }}</div>
             </div>
-        </div>
-        <div class="mobile-view__run">
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
-            <logo-run-icon/>
+            <div class="mobile-view__run">
+                <logo-run-icon/>
+                <logo-run-icon/>
+                <logo-run-icon/>
+                <logo-run-icon/>
+                <logo-run-icon/>
+                <logo-run-icon/>
+                <logo-run-icon/>
+            </div>
         </div>
     </div>
 </template>

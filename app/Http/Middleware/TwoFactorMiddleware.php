@@ -22,7 +22,7 @@ class TwoFactorMiddleware
             $request->merge(['user' => $user]);
 
             if ($user->google2fa_secret) {
-                if (!$request->two_fa_secret) {
+                if (!$request->google2fa_code) {
                     return new JsonResponse([
                         'errors' => ['2fa' => ['Pass google2fa_code!']]
                     ], Response::HTTP_UNPROCESSABLE_ENTITY);
@@ -34,7 +34,7 @@ class TwoFactorMiddleware
                 if (!$isValid) {
                     return new JsonResponse([
                         'errors' => ['2fa' => ['Не верный код']]
-                    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                    ], Response::HTTP_FORBIDDEN);
                 }
 
                 return $next($request);

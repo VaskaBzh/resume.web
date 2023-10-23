@@ -1,17 +1,19 @@
 <template>
-    <ul class="nav__links">
-        <li
+    <div class="nav__links">
+        <router-link
+            v-for="(item, i) in link"
+            :key="i"
+            active-class="nav_link-active"
             class="nav_link"
-            v-for="item in link"
-            @click="$router.push(item.url)"
+            :to="item.url"
         >
             {{ item.name }}
-        </li>
-    </ul>
+        </router-link>
+    </div>
 </template>
 
 <script>
-import {NavMessages} from "@/modules/navs/lang/NavMessages";
+import { NavMessages } from "@/modules/navs/lang/NavMessages";
 
 export default {
     i18n: {
@@ -62,6 +64,11 @@ export default {
     opacity: 0;
 }
 
+.nav__links {
+    display: flex;
+    flex-direction: column;
+}
+
 .nav_link {
     color: rgba(228, 231, 236, 0.6);
     font-family: Unbounded, serif;
@@ -88,12 +95,13 @@ export default {
         opacity: 0;
     }
 
-    &:hover {
+    &:hover,
+    &-active {
         color: white;
-    }
 
-    &:hover:before {
-        opacity: 1;
+        &:before {
+            opacity: 1;
+        }
     }
 }
 
@@ -120,14 +128,15 @@ export default {
 }
 
 .menu-container .nav_link {
-    margin-bottom: 20px;
-    padding-bottom: 15px;
+    margin-bottom: 5px;
+    padding: 15px 0;
     border-bottom: 0.5px solid rgba(208, 213, 221, 0.6);
 }
 
 .menu-container .nav_link:before {
-    right: 0px;
+    right: 0;
     left: auto;
-    top: 20%;
+    top: 50%;
+    transform: translateY(-50%);
 }
 </style>

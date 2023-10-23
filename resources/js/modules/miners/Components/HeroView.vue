@@ -10,15 +10,14 @@
             href="https://t.me/allbtc_support"
             target="_blank"
             class="get-consultation"
+            >{{ $t("button") }}</a
         >
-            {{ $t("button") }}
-        </a>
     </article>
 </template>
 
 <script>
 import ButtonBlue from "../../common/Components/UI/ButtonBlue.vue";
-import {MinersMessage} from "../lang/MinersMessage";
+import { MinersMessage } from "../lang/MinersMessage";
 
 export default {
     name: "HeroView",
@@ -26,110 +25,6 @@ export default {
         sharedMessages: MinersMessage,
     },
     components: [ButtonBlue],
-    data() {
-        return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
-        }
-
-    },
-
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                                  this.$refs.view.offsetHeight -
-                                  document.scrollingElement.clientHeight
-                              }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
-    },
 }
 </script>
 
@@ -149,7 +44,7 @@ export default {
 .miners-content {
     width: 660px;
     height: 381px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     font-family: Unbounded;
     font-size: 55px;
     font-style: normal;
@@ -169,7 +64,6 @@ export default {
     margin-left: 211px;
 }
 
-
 .get-consultation {
     display: flex;
     width: 480px;
@@ -179,7 +73,7 @@ export default {
     align-items: center;
     gap: 10px;
     padding: 8px 20px;
-    color: var(--gray-1100, #F5FAFF);
+    color: var(--gray-1100, #f5faff);
     font-family: Unbounded;
     font-size: 18px;
     font-style: normal;
@@ -187,8 +81,8 @@ export default {
     line-height: 120%; /* 21.6px */
     text-transform: uppercase;
     border-radius: 40px;
-    border: 1px solid rgba(192, 228, 255, 0.60);
-    background: var(--gray-480, rgba(13, 13, 13, 0.80));
+    border: 1px solid rgba(192, 228, 255, 0.6);
+    background: var(--gray-480, rgba(13, 13, 13, 0.8));
     cursor: pointer;
 }
 

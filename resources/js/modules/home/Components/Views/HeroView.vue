@@ -1,7 +1,7 @@
 <template>
-    <div class="hero" ref="view">
+    <div ref="view" class="hero hero__section">
         <div class="hero__content">
-            <logo-background/>
+            <logo-background />
             <div class="hero__head">
                 <landing-title tag="h1" class="hero_title">
                     <span class="hero_title_row hero_title_row-first">
@@ -36,7 +36,7 @@
                 target="_blank"
             >
                 <landing-button class="hero_button">
-                    <template v-slot:text>
+                    <template #text>
                         {{ $t("button") }}
                     </template>
                 </landing-button>
@@ -46,14 +46,14 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingButton from "@/modules/common/Components/UI/LandingButton.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 import LogoBackground from "@/modules/home/Components/Views/LogoBackground.vue";
 
 export default {
-    name: "hero-view",
+    name: "HeroView",
     components: {
         LogoBackground,
         LandingText,
@@ -114,7 +114,9 @@ export default {
 .hero_text {
     padding-left: 10px;
     max-width: 406px;
+    min-width: 300px;
     width: 100%;
+    margin: auto 0;
 }
 
 @media (max-width: 991.98px) {
@@ -131,9 +133,12 @@ export default {
     }
 }
 
+.hero_title_elem {
+    white-space: nowrap;
+}
+
 .hero_title_row {
     display: inline-flex;
-    align-items: center;
 }
 
 @media (max-width: 991.98px) {
@@ -143,7 +148,6 @@ export default {
         justify-content: center;
     }
 }
-
 
 .hero_title_row-left {
     margin-left: -102px;
@@ -164,5 +168,4 @@ export default {
 .hero_title_row-top {
     margin-top: 6px;
 }
-
 </style>

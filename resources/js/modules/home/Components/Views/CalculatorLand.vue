@@ -1,54 +1,56 @@
 <template>
     <div
-        class="calculator alculator__section calculator__section-wrap"
+        class="calculator calculator__section-wrap"
         ref="view"
     >
-        <div class="calculator__content">
-            <landing-headline class="calculator_title_default"
-            >{{ $t("profitability_calculator.button[0]") }}
-            </landing-headline>
-            <landing-title
-                tag="h3"
-                class="calculator_title animation-destroy"
-                :class="{
-                    margin: progress === 1,
-                }"
-            >
-                <span class="calculator_title_elem calculator_title_base">
-                    <span class="animation-left">{{
-                            $t("profitability_calculator.title[0]")
-                        }}</span>
-                </span>
-                <span class="calculator_title_elem calculator_title_one">
-                    <span class="animation-right">{{
-                            $t("profitability_calculator.title[1]")
-                        }}</span>
-                </span>
-                <span class="calculator_title_elem calculator_title_two">
-                    <span class="animation-left">{{
-                            $t("profitability_calculator.title[2]")
-                        }}</span>
-                </span>
-                <span class="calculator_title_elem calculator_title_three">
-                    <span class="animation-right">{{
-                            $t("profitability_calculator.title[3]")
-                        }}</span>
-                </span>
-                <span class="calculator_title_elem calculator_title_four">
-                    <span class="animation-left">{{
-                            $t("profitability_calculator.title[4]")
-                        }}</span></span
+        <div class="calculator__section">
+            <div class="calculator__content">
+                <landing-headline class="calculator_title_default"
+                >{{ $t("profitability_calculator.button[0]") }}
+                </landing-headline>
+                <landing-title
+                    tag="h3"
+                    class="calculator_title animation-destroy"
+                    :class="{
+                        margin: progress === 1,
+                    }"
                 >
-            </landing-title>
-            <landing-text
-                class="calculator_text animation-destroy"
-                :class="{
-                    margin: progress === 1,
-                }"
-            >
-                {{ $t("profitability_calculator.text") }}
-            </landing-text>
-            <light-calculator-view class="calculator__block"/>
+                    <span class="calculator_title_elem calculator_title_base">
+                        <span class="animation-left">{{
+                                $t("profitability_calculator.title[0]")
+                            }}</span>
+                    </span>
+                    <span class="calculator_title_elem calculator_title_one">
+                        <span class="animation-right">{{
+                                $t("profitability_calculator.title[1]")
+                            }}</span>
+                    </span>
+                    <span class="calculator_title_elem calculator_title_two">
+                        <span class="animation-left">{{
+                                $t("profitability_calculator.title[2]")
+                            }}</span>
+                    </span>
+                    <span class="calculator_title_elem calculator_title_three">
+                        <span class="animation-right">{{
+                                $t("profitability_calculator.title[3]")
+                            }}</span>
+                    </span>
+                    <span class="calculator_title_elem calculator_title_four">
+                        <span class="animation-left">{{
+                                $t("profitability_calculator.title[4]")
+                            }}</span></span
+                    >
+                </landing-title>
+                <landing-text
+                    class="calculator_text animation-destroy"
+                    :class="{
+                        margin: progress === 1,
+                    }"
+                >
+                    {{ $t("profitability_calculator.text") }}
+                </landing-text>
+                <light-calculator-view class="calculator__block"/>
+            </div>
         </div>
     </div>
 </template>
@@ -109,12 +111,20 @@ export default {
             @media (max-width: 768.98px) {
                 left: -60px;
             }
+
+            @media (max-width: 360.98px) {
+                left: -45px;
+            }
         }
 
         &_two {
             position: relative;
             left: 50px;
             top: 0;
+
+            @media (max-width: 360.98px) {
+                left: 45px;
+            }
         }
 
         &_three {
