@@ -5,7 +5,9 @@
                 {{ $t("who_we_are.button") }}
             </landing-headline>
             <landing-wrap>
-                <template v-slot:title>{{ $t("who_we_are.card_private.title[0]") }}</template>
+                <template v-slot:title>{{
+                    $t("who_we_are.card_private.title[0]")
+                }}</template>
                 <template v-slot:content>
                     <div class="about__cards">
                         <about-info
@@ -27,11 +29,10 @@
                     </div>
                 </template>
 
-
                 <template v-slot:link>
                     <a href="#" class="about_link">
                         {{ $t("who_we_are.card_private.button[0]") }}
-                        <landing-arrow-right class="about_icon"/>
+                        <landing-arrow-right class="about_icon" />
                     </a>
                 </template>
             </landing-wrap>
@@ -49,7 +50,9 @@
         </div>
         <div class="about__wrapper">
             <landing-wrap>
-                <template v-slot:title>{{ $t("who_we_are.card_private.title[0]") }}</template>
+                <template v-slot:title>{{
+                    $t("who_we_are.card_community.title[0]")
+                }}</template>
                 <template v-slot:content>
                     <div class="about__cards">
                         <about-info
@@ -75,7 +78,7 @@
 </template>
 
 <script>
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import LandingHeadline from "@/modules/common/Components/UI/LandingHeadline.vue";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import AboutInfo from "@/modules/home/Components/blocks/AboutInfo.vue";

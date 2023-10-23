@@ -31,7 +31,7 @@
                         </nav>
                     </div>
                 </div>
-                <logout-link class="nav_logout"/>
+                <logout-link class="nav_logout" v-show="!$route?.query?.access_key"/>
             </div>
             <instruction-step
                 @next="instructionConfig.nextStep()"
@@ -209,11 +209,6 @@ export default defineComponent({
         background: rgba(0, 0, 0, 0.15);
         left: 0;
         top: 71px;
-    }
-
-    .open-bg {
-        display: inline-block;
-        transition: all 0.3s linear;
     }
 }
 

@@ -4,12 +4,11 @@
             <slot name="title"></slot>
         </landing-title>
         <div class="wrap__content">
-            <slot name="content"/>
+            <slot name="content" />
         </div>
 
-
         <div class="wrap_link" v-if="$slots.link">
-            <slot name="link"/>
+            <slot name="link" />
         </div>
     </div>
 </template>
@@ -18,7 +17,7 @@
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 
 export default {
-    name: "landing-wrap",
+    name: "LandingWrap",
     components: {
         LandingTitle,
     },
@@ -157,5 +156,4 @@ export default {
         padding: 0 clamp(16px, 10vw, 32px) 30px;
     }
 }
-
 </style>

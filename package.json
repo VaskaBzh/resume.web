@@ -43,7 +43,7 @@
         "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-vue": "^8.0.3",
+        "eslint-plugin-vue": "^8.7.1",
         "laravel-vite-plugin": "^0.7.2",
         "lint-staged": "^11.1.2",
         "lodash": "^4.17.19",
@@ -61,12 +61,20 @@
             "node": true
         },
         "extends": [
-            "plugin:vue/vue3-essential",
+            "plugin:vue/vue3-strongly-recommended",
             "eslint:recommended",
-            "plugin:prettier/recommended"
+            "plugin:prettier/recommended",
+            "prettier"
         ],
+        "parser": "vue-eslint-parser",
         "parserOptions": {
-            "parser": "@babel/eslint-parser"
+            "parser": "@babel/eslint-parser",
+            "ecmaVersion": "latest",
+            "sourceType": "module",
+            "vueFeatures": {
+                "filter": true,
+                "interpolationAsNonHTML": false
+            }
         },
         "rules": {},
         "overrides": [
