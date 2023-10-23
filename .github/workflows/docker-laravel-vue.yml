@@ -38,3 +38,6 @@ jobs:
 
       - name: Build front-end
         run: make front
+        
+      - name: Run tests
+        run: make test
