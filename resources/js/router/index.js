@@ -1,18 +1,21 @@
-import { createRouter, createWebHistory } from "vue-router";
+import {createRouter, createWebHistory} from "vue-router";
 
-import { LoadLayoutMiddleware } from "@/router/middlewares/LoadLayoutMiddleware";
-import { AuthCheckProfileMiddleware } from "@/router/middlewares/AuthCheckProfileMiddleware";
-import { AuthMiddleware } from "@/router/middlewares/AuthMiddleware";
-import { DropErrorsMiddleware } from "@/router/middlewares/DropErrorsMiddleware";
-import { DropSubsMiddleware } from "@/router/middlewares/DropSubsMiddleware";
-import { VerifyMiddleware } from "@/router/middlewares/VerifyMiddleware";
-import { ActionValidateMiddleware } from "@/router/middlewares/ActionValidateMiddleware";
+import {LoadLayoutMiddleware} from "@/router/middlewares/LoadLayoutMiddleware";
+import {AuthCheckProfileMiddleware} from "@/router/middlewares/AuthCheckProfileMiddleware";
+import {AuthMiddleware} from "@/router/middlewares/AuthMiddleware";
+import {DropErrorsMiddleware} from "@/router/middlewares/DropErrorsMiddleware";
+import {DropSubsMiddleware} from "@/router/middlewares/DropSubsMiddleware";
+import {VerifyMiddleware} from "@/router/middlewares/VerifyMiddleware";
+import {ActionValidateMiddleware} from "@/router/middlewares/ActionValidateMiddleware";
 
 import routes from "@/router/routes/rotes";
-import { apiService } from "@/api/api";
+import {apiService} from "@/api/api";
 
 export const router = createRouter({
     history: createWebHistory(),
+    scrollBehavior(to, from, savedPosition) {
+      document.body.scrollTo(0, 0)
+    },
     routes,
 });
 

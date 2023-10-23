@@ -68,7 +68,7 @@ export default {
     }
 
     .working-card {
-        width: 266px;
+        width: 303px;
         gap: 20px;
     }
 }

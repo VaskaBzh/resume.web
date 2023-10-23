@@ -50,7 +50,7 @@
 
 <script>
 export default {
-    name: "calculator-input",
+    name: "CalculatorInput",
     props: {
         inputName: String,
         inputLabel: String,
@@ -67,14 +67,12 @@ export default {
     },
     watch: {
         value(newVal, oldVal) {
-            let regExp = /[^+\d]/g
-            if(newVal.length > 9 || regExp.test(newVal)) {
-                this.value = oldVal
+            let regExp = /[^+\d]/g;
+            if (newVal.length > 9 || regExp.test(newVal)) {
+                this.value = oldVal;
                 return;
             }
             this.$emit("getValue", newVal);
-
-
         },
         inputValue(newVal) {
             this.value = newVal;
@@ -91,13 +89,14 @@ export default {
     position: relative;
     width: 100%;
     border-radius: 16px;
-    border: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.40));
+    border: 0.5px solid var(--gray-240, rgba(228, 231, 236, 0.4));
     padding: 0 16px;
     min-height: 48px;
     gap: 12px;
     cursor: text;
+
     &__label {
-        color: var(--gray-160, rgba(245, 250, 255, 0.60));
+        color: var(--gray-160, rgba(245, 250, 255, 0.6));
         text-align: justify;
         text-shadow: 0px 4px 7px rgba(14, 14, 14, 0.05);
         font-family: NunitoSans;
@@ -111,17 +110,19 @@ export default {
         margin-right: auto;
         cursor: text;
         white-space: nowrap;
-        @media(max-width:890px){
-         font-size: 18px;
+        @media (max-width: 890px) {
+            font-size: 18px;
         }
-        @media(max-width:450px){
-         font-size: 14px;
+        @media (max-width: 450px) {
+            font-size: 14px;
         }
+
         svg {
             margin-bottom: auto;
             cursor: pointer;
         }
     }
+
     &_unit {
         color: rgba(255, 255, 255, 0.7);
         text-align: right;
@@ -130,15 +131,16 @@ export default {
         line-height: 28px;
         letter-spacing: 0.35px;
         white-space: nowrap;
-        @media(max-width:890px){
-         font-size: 18px;
+        @media (max-width: 890px) {
+            font-size: 18px;
         }
-        @media(max-width:450px){
-         font-size: 14px;
+        @media (max-width: 450px) {
+            font-size: 14px;
         }
     }
+
     &__input {
-        color: var(--gray-3100, #D0D5DD);
+        color: var(--gray-3100, #d0d5dd);
         text-align: right;
         font-family: Unbounded;
         font-size: 18px;
@@ -151,12 +153,13 @@ export default {
         border: none;
         background: transparent;
         cursor: text;
-        @media(max-width:890px){
-         font-size: 16px;
+        @media (max-width: 890px) {
+            font-size: 16px;
         }
-        @media(max-width:450px){
-         font-size: 12px;
+        @media (max-width: 450px) {
+            font-size: 12px;
         }
+
         &::placeholder {
             color: #ffffff;
         }
