@@ -1,5 +1,5 @@
 <template>
-    <div class="hero hero__section" ref="view">
+    <div ref="view" class="hero hero__section">
         <div class="hero__content">
             <logo-background />
             <div class="hero__head">
@@ -36,7 +36,7 @@
                 target="_blank"
             >
                 <landing-button class="hero_button">
-                    <template v-slot:text>
+                    <template #text>
                         {{ $t("button") }}
                     </template>
                 </landing-button>
@@ -53,7 +53,7 @@ import LandingText from "@/modules/common/Components/UI/LandingText.vue";
 import LogoBackground from "@/modules/home/Components/Views/LogoBackground.vue";
 
 export default {
-    name: "hero-view",
+    name: "HeroView",
     components: {
         LogoBackground,
         LandingText,
@@ -114,6 +114,7 @@ export default {
 .hero_text {
     padding-left: 10px;
     max-width: 406px;
+    min-width: 300px;
     width: 100%;
     margin: auto 0;
 }
@@ -130,6 +131,10 @@ export default {
         max-width: 100%;
         padding: 70px 70px 0 40px;
     }
+}
+
+.hero_title_elem {
+    white-space: nowrap;
 }
 
 .hero_title_row {
