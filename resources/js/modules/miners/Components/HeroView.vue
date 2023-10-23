@@ -1,12 +1,18 @@
 <template>
     <article class="article-miners first-text miners__section" ref="view">
         <div class="miners-content">
-            <span class="">{{ $t("miners_title[0]") }} <br></span>
-            <span class="">{{ $t("miners_title[1]") }}<br></span>
-            <span class="text-mining">{{ $t("miners_title[2]") }} <br></span>
-            <span class="text-bitcoin">{{ $t("miners_title[3]") }} <br></span>
+            <span class="">{{ $t("miners_title[0]") }} <br /></span>
+            <span class="">{{ $t("miners_title[1]") }}<br /></span>
+            <span class="text-mining">{{ $t("miners_title[2]") }} <br /></span>
+            <span class="text-bitcoin">{{ $t("miners_title[3]") }} <br /></span>
         </div>
-        <a href="https://t.me/allbtc_support" target="_blank" class="get-consultation">{{ $t("button") }}</a>
+        <a
+            href="https://t.me/allbtc_support"
+            target="_blank"
+            class="get-consultation"
+        >
+            {{ $t("button") }}
+        </a>
     </article>
 </template>
 

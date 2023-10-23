@@ -574,13 +574,13 @@
         </div>
         <a
             href="https://all-btc.com/watcher/statistic?access_key=eyJuYW1lIjoiTWFpbkxpbmsiLCJncm91cF9pZCI6NjAwMTkxMn0=&puid=6001912"
+            target="_blank"
             class="get-consultation"
         >{{ $t("personal_account.button[1]") }}</a
         >
     </div>
 </template>
 <script>
-import {upLeft, upRight} from "@/modules/home/services/AnimationService";
 import LandingTitle from "@/modules/common/Components/UI/LandingTitle.vue";
 import MockupTooltip from "@/modules/hosting/Components/MockupTooltip.vue";
 import {HomeMessage} from "@/modules/home/lang/HomeMessage";
@@ -595,108 +595,15 @@ export default {
     },
     data() {
         return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
             currentShadow: "blank",
             addOpacity: false,
         };
-    },
-    props: {
-        start: Boolean,
     },
     methods: {
         changeShadow(name) {
             this.currentShadow = name;
             this.addOpacity = true;
         },
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    unmounted() {
-        this.remove();
     },
     computed: {
         img() {
@@ -707,20 +614,7 @@ export default {
             );
         },
     },
-    mounted() {
-        this.scroll();
-        // setTimeout(() => {
-        //     this.$refs.view.style.transform = `translateY(-${
-        //         (this.$refs.view.offsetHeight -
-        //             document.scrollingElement.clientHeight) /
-        //         2
-        //     }px)`;
-        // }, 1800);
-        setTimeout(() => {
-            upLeft();
-            upRight();
-        }, 1000);
-    },
+
 };
 </script>
 <style scoped>
@@ -858,6 +752,7 @@ export default {
     width: 100%;
     max-width: 400px;
     margin-top: clamp(40px, 5vw, 50px);
+    z-index: 7;
 }
 
 .img-mac {

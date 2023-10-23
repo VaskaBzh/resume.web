@@ -1,6 +1,7 @@
 export const HomeMessage = {
     en: {
         history_pool: {
+            block_title: "History of pool",
             texts: [
                 "We create sites for data centers, hosting, and mining hotels placement. We collaborate with contractors in Russia and the CIS. We create turnkey mining zones: from rent to commissioning the farm.",
                 "Halving occurred, mining difficulty increased. A team of developers appeared. Our goal is to create relevant solutions for the optimization of industrial miners and data centers.",
@@ -9,14 +10,14 @@ export const HomeMessage = {
                 "We ceased to operate only as a closed pool for data centers and entered the international market. By the end of 2023, we have ambitious plans.",
             ],
         },
-        title: ["Exp", "ert", "approach", "to min", "ing", "Bitcoin"],
+        title: ["Expert", "approach", "to mining", "Bitcoin"],
         text: "Allbtc pool is a private mining pool optimized for BTC mining, with transparent analytics and timely payments.",
         button: "try demo version",
         who_we_are: {
             button: "who we are",
             card_private: {
                 title: ["private pool for data-centers"],
-                num: ["7", "1.7", "30", "75%"],
+                num: [">3", "2.8", "30", "50%"],
                 text: [
                     "years in the crypto industry",
                     "EH/ s pool’s hashrate",
@@ -125,7 +126,7 @@ export const HomeMessage = {
         },
         payments: {
             button: "payouts",
-            main_title: ["fPPS+", "(msk) 09 am – 11 am", "comission 0%"],
+            main_title: ["fPPS+", "(gmt+3) 09 am – 11 am", "0% commission"],
             title: ["FPPS+", "autopayouts", "free funds transfer"],
             text: [
                 "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
@@ -161,6 +162,7 @@ export const HomeMessage = {
     },
     ru: {
         history_pool: {
+            block_title: "История нашего пула",
             texts: [
                 "Создаем площадки под размещение дата-центов, хостингов и майнинг-отелей. Сотрудничаем с подрядчиками в РФ и СНГ. Создаем зоны для майнинга «под ключ»: от аренды до введения фермы в эксплуатацию.",
                 "Произошел халвинг, сложность майнинга выросла. Появилась команда разработчиков. Наша цель – создание актуальных решений для оптимизации работы промышленных майнеров и дата-центров.",
@@ -169,14 +171,14 @@ export const HomeMessage = {
                 "Перестали работать только лишь как закрытый пул для дата-центров, вышли на международный рынок. К концу 2023 года у нас амбициозные планы.",
             ],
         },
-        title: ["Экспер", "тный", "подход", "к майн", "ингу", "Bitcoin "],
+        title: ["Экспертный", "подход", "к майнингу", "Bitcoin"],
         text: "Allbtc pool  — приватный майнинг-пул, оптимизированный для добычи BTC, с прозрачной аналитикой и своевременными выплатами.",
         button: "попробовать демо кабинет",
         who_we_are: {
             button: "кто мы",
             card_private: {
                 title: ["приватный пул для дата- центров"],
-                num: ["7", "1.7", "30", "75%"],
+                num: [">3", "2.8", "30", "50%"],
                 text: [
                     "лет в крипто индустрии",
                     "EH/ s хешрейт пула",
@@ -289,7 +291,7 @@ export const HomeMessage = {
         },
         payments: {
             button: "выплаты",
-            main_title: ["fPPS+", "(msk) 09 am – 11 am", "комиссия 0%"],
+            main_title: ["fPPS+", "(gmt+3) 09 am – 11 am", "комиссия 0%"],
             title: [
                 "метод вознаграждения",
                 "автовыплаты",

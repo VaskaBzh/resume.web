@@ -23,21 +23,11 @@ use Illuminate\Support\Facades\Log;
 
 class BtcComService
 {
-    private PendingRequest $client;
-    private static int $retryCount = 3;
     private static int $pendingTimeSec = 1;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
     public const FEE = 0.5;
-
-    public function __construct()
-    {
-        $this->client = Http::baseUrl(config('api.btc.uri'))
-            ->withHeaders([
-                'Authorization' => config('api.btc.token'),
-            ]);
-    }
 
     /* ------------------ Btc.com requests ------------------------ */
 
@@ -50,17 +40,22 @@ class BtcComService
      */
     public function call(array $segments, string $method = 'get', array $params = []): array
     {
-        while (self::$retryCount > 0) {
-            $response = $this
-                ->client
-                ->$method(implode('/', $segments), $params);
+        $client = Http::baseUrl(config('api.btc.uri'))
+            ->withHeaders([
+                'Authorization' => config('api.btc.token'),
+            ]);
+dump($segments, $method, $params);
+        $retryCount = 3;
+
+        while ($retryCount > 0) {
+            $response = $client->$method(implode('/', $segments), $params);
 
             if (filled($response['data'])) {
 
                 return $response['data'];
             }
 
-            self::$retryCount--;
+            $retryCount--;
 
             sleep(self::$pendingTimeSec);
         }
@@ -80,7 +75,7 @@ class BtcComService
                 "page_size" => self::DEFAULT_PAGE_SIZE,
             ]
         );
-
+dd($response);
         return collect($response['list'] ?? []);
     }
 
@@ -95,7 +90,7 @@ class BtcComService
     }
 
     /**
-     * Создать sub аккаунт по имени пользователя
+     * Создать sub аккаунт по имени пользователя на btc.com
      */
     public function createSub(UserData $userData): array
     {
@@ -117,7 +112,7 @@ class BtcComService
                 'puid' => self::PU_ID,
                 'group_name' => $userData->name
             ]);
-
+dd('w');
         $this->createLocalSub(userData: $userData, groupId: $response['gid']);
 
         return $response;

@@ -17,11 +17,12 @@ export default {
     border-radius: 30px;
     border: 0.5px solid var(--secondary-gray, #98a2b3);
     padding: 4px 24px;
-    min-height: clamp(48px, 1vw, 52px);
     width: fit-content;
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    font-size: clamp(12px, 1vw, 18px);
+    min-height: clamp(40px, 1vw, 56px);
     margin-bottom: clamp(50px, 1vw, 100px);
 }
 

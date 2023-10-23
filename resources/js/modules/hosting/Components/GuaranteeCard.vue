@@ -4,7 +4,7 @@
             <p class="title-card">{{ $t("guarantees.title") }}</p>
             <p class="text-card">{{ $t("guarantees.text") }}</p>
         </div>
-        <faq-view :faq="faq"></faq-view>
+        <faq-view :faq="faq" class="remove_before"></faq-view>
     </div>
 </template>
 <script>
@@ -21,9 +21,6 @@ export default {
     data() {
         return {
             isOpenAccordion: false,
-            validScroll: false,
-            startY: null,
-            touchY: null,
         };
     },
     computed: {
@@ -47,101 +44,6 @@ export default {
                 },
             ];
         },
-    },
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    !this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 650);
-
-                if (
-                    this.$refs.view.offsetHeight -
-                    document.scrollingElement.clientHeight >
-                    20 &&
-                    this.validScroll
-                ) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.focus();
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
     },
 };
 </script>
@@ -297,4 +199,8 @@ export default {
         margin-top: 12px;
     }
 }
+
+
+
+
 </style>

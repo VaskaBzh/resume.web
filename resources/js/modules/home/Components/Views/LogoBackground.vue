@@ -29,10 +29,16 @@ export default {
     width: 100vw;
     min-height: 400px;
     position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 50vh;
+    left: 50vw;
+    transform: translate(-50vw, -50vh);
     z-index: -1;
+}
+
+@media (max-width: 768.98px) {
+    .logo {
+        top: 38vh;
+    }
 }
 
 .logo__content {
@@ -41,7 +47,17 @@ export default {
     flex-direction: column;
     max-width: 1920px;
     margin: 0 auto;
-    padding: 0 clamp(16px, 10vw, 100px);
+    padding: 160px 100px 0;
+}
+@media (max-width: 1300px) {
+    .logo__content {
+        padding: 20vh 100px 0;
+    }
+}
+@media (max-width: 768px) {
+    .logo__content {
+        padding: 25vh 5vw 0px;
+    }
 }
 
 .logo_elem {
@@ -54,20 +70,48 @@ export default {
 }
 
 .logo_elem-first {
-    width: clamp(324px, 50vw, 1070px);
-    height: clamp(106px, 24vw, 348px);
+    height: 348px;
+}
+
+@media (max-width: 1300px) {
+    .logo_elem-first {
+        width: 600px;
+        height: 260px;
+    }
+}
+@media (max-width: 768px) {
+    .logo_elem-first {
+        width: 450px;
+        height: unset;
+    }
+}
+@media (max-width: 470px) {
+    .logo_elem-first {
+        width: 320px;
+    }
 }
 
 .logo_elem-last {
     margin-left: auto;
     margin-top: -46px;
-    width: clamp(237px, 50vw, 778px);
-    height: clamp(106px, 24vw, 348px);
+    width: 778px;
+    height: 348px;
 }
 
 @media (max-width: 1300px) {
     .logo_elem-last {
-        margin-top: 16px;
+        width: 500px;
+        height: 260px;
+    }
+}
+@media (max-width: 768px) {
+    .logo_elem-last {
+        width: 400px;
+    }
+}
+@media (max-width: 470px) {
+    .logo_elem-last {
+        width: 300px;
     }
 }
 </style>

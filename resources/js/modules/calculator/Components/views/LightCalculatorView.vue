@@ -30,7 +30,7 @@
                             $t("profitability_calculator.form_calculator.item[0]")
                         }}</span>
                     <span class="calculator__form_complexity_data">{{
-                            btcInfo.btc.diff
+                            btcInfo.btc?.diff
                         }}</span>
                 </div>
                 <!--                <div class="calculator__form_complexity_row">-->

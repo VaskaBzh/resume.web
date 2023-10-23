@@ -20,14 +20,14 @@ export default {
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     padding: 8px 20px;
-    min-height: 56px;
+    min-height: clamp(40px, 1vw, 56px);
     display: inline-flex;
     justify-content: center;
     align-items: center;
     outline: none;
     color: var(--gray-1100, #F5FAFF);
     font-family: Unbounded, serif;
-    font-size: clamp(12px, 5vw, 18px);
+    font-size: clamp(12px, 1vw, 18px);
     font-weight: 600;
     line-height: 120%;
     text-transform: uppercase;
