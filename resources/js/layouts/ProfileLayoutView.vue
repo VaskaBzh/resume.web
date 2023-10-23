@@ -15,12 +15,18 @@
                 :instructionConfig="instructionService"
             />
 
-            <div class="page-container" :style="{
-                'overflow-y': isOpenBurger && viewportWidth <= 900 ? 'hidden' : 'scroll'
-            }">
-                <notification-list/>
+            <div
+                class="page-container"
+                :style="{
+                    'overflow-y':
+                        isOpenBurger && viewportWidth <= 900
+                            ? 'hidden'
+                            : 'scroll',
+                }"
+            >
+                <notification-list />
                 <keep-alive>
-                    <slot/>
+                    <slot />
                 </keep-alive>
             </div>
         </div>
@@ -31,8 +37,8 @@ import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
 import NotificationList from "@/modules/notification/Components/NotificationList.vue";
 
-import {InstructionService} from "@/modules/instruction/services/InstructionService";
-import {mapGetters} from "vuex";
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
+import { mapGetters } from "vuex";
 
 export default {
     components: {
