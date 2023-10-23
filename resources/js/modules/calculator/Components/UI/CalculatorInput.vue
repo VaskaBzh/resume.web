@@ -66,8 +66,15 @@ export default {
         };
     },
     watch: {
-        value(newVal) {
+        value(newVal, oldVal) {
+            let regExp = /[^+\d]/g
+            if(newVal.length > 9 || regExp.test(newVal)) {
+                this.value = oldVal
+                return;
+            }
             this.$emit("getValue", newVal);
+
+
         },
         inputValue(newVal) {
             this.value = newVal;
