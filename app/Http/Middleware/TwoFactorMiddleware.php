@@ -34,7 +34,7 @@ class TwoFactorMiddleware
                 if (!$isValid) {
                     return new JsonResponse([
                         'errors' => ['2fa' => ['Не верный код']]
-                    ], Response::HTTP_UNPROCESSABLE_ENTITY);
+                    ], Response::HTTP_FORBIDDEN);
                 }
 
                 return $next($request);

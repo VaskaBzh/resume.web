@@ -65,6 +65,7 @@ class CreateController extends Controller
                     ],
                 ),
                 new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found'),
+                new OA\Response(response: Response::HTTP_BAD_REQUEST, description: 'Already exist'),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
                     description: 'Validation errors',
@@ -88,14 +89,11 @@ class CreateController extends Controller
         BtcComService    $btcComService,
     ): JsonResponse
     {
-
-        $result = $btcComService->createSub(
-            userData: UserData::fromRequest(requestData: $request->all())
+        $response = $btcComService->createSub(
+            userData: $userData = UserData::fromRequest(requestData: $request->all())
         );
 
-        if (isset($result['errors'])) {
-            return new JsonResponse(['error' => $result['errors']], Response::HTTP_UNPROCESSABLE_ENTITY);
-        }
+        $btcComService->createLocalSub($userData, $response['gid']);
 
         return new JsonResponse([
             'message' => __('actions.success_sub_create')
