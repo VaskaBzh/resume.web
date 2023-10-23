@@ -10,16 +10,10 @@ class AttachReferral
 {
     public static function execute(Sub $referralSub, Sub $ownerSub, $referralPercent): void
     {
-        try {
-            $ownerSub
-                ->referrals()
-                ->attach($referralSub, ['referral_percent' => $referralPercent]);
+        $ownerSub
+            ->referrals()
+            ->attach($referralSub, ['referral_percent' => $referralPercent]);
 
-            $referralSub->update(['percent' => $referralSub->percent - $referralPercent]);
-        } catch (\Exception $e) {
-            report($e);
-
-            throw new \Exception('Something went wrong');
-        }
+        $referralSub->update(['percent' => $referralSub->percent - $referralPercent]);
     }
 }

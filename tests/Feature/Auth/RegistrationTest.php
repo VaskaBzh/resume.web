@@ -2,22 +2,28 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Feature\Auth;
 
+use App\Dto\UserData;
+use App\Models\User;
+use App\Notifications\VerifyEmailNotification;
 use App\Services\External\BtcComService;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
 {
+
     /**
-     * @dataProvider registrationDataProvider
+     * @dataProvider registrationValidDataProvider
      *
      * @param string[] $signUpData
      * @param string|int|bool[] $signUpResponseStructure
      * @return void
      */
-    public function test_registration(
+    public function test_registration_if_valid_data(
         array $signUpData,
         array $signUpResponseStructure,
         array $btcComSubCreatingResponse,
@@ -25,45 +31,44 @@ class RegistrationTest extends TestCase
     {
         $this->partialMock(BtcComService::class,
             static function ($mock) use ($btcComSubCreatingResponse, $signUpData) {
-                $mock->shouldReceive('btcHasUser')
+                $mock->shouldReceive('createSub')
                     ->once()
-                    ->with([
-                        'userData' => 'ddd'
-                    ])
                     ->andReturn($btcComSubCreatingResponse);
             });
 
-        $this->partialMock(BtcComService::class,
-            static function ($mock) use ($btcComSubCreatingResponse, $signUpData) {
-                $mock->shouldReceive('call')
-                    ->once()
-                    ->with([
-                        'segments' => ['groups', 'create'],
-                        'method' => 'post',
-                        'params' => [
-                            'group_name' => $signUpData['name'],
-                        ]
-                    ])
-                    ->andReturn($btcComSubCreatingResponse);
-            });
-
+        Notification::fake();
 
         $this->postJson('/v1/register', $signUpData)
-            ->assertOk()
+            ->assertCreated()
             ->assertJsonStructure($signUpResponseStructure);
 
+        $this->assertDatabaseHas('users', [
+            'name' => $signUpData['name'],
+            'email' => $signUpData['email']
+            ]
+        );
 
-        $this->assertDatabaseHas('users', ['name' => 'MainTest666', 'email' => 'test@test.com']);
-        $this->assertDatabaseHas('subs', ['sub' => 'MainTest666', 'group_id' => 6003147]);
+        $user = User::whereEmail($signUpData['email'])->first();
+
+        $this->assertAuthenticatedAs($user);
+        $this->assertDatabaseHas('subs', [
+                'sub' => $btcComSubCreatingResponse['group_name'],
+                'group_id' => $btcComSubCreatingResponse['gid']
+            ]
+        );
+        Notification::assertSentTo(
+            $user,
+            VerifyEmailNotification::class
+        );
     }
 
-    public function registrationDataProvider(): array
+    public function registrationValidDataProvider(): array
     {
         return [
             [
                 'signUpData' => [
-                    'name' => 'MainTest666',
-                    'email' => 'test@test.com',
+                    'name' => 'MainTest',
+                    'email' => 'forest@gmail.com',
                     'password' => 'Password12345&',
                     'password_confirmation' => 'Password12345&',
                 ],
@@ -85,7 +90,7 @@ class RegistrationTest extends TestCase
                 'btcComSubCreatingResponse' => [
                     "status" => true,
                     "gid" => 6003147,
-                    "group_name" => "MainTest666",
+                    "group_name" => "MainTest",
                     "created_at" => 1698007819,
                     "updated_at" => 1698007819
                 ]

@@ -11,15 +11,16 @@ use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
+use App\Exceptions\BusinessException;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
-use Illuminate\Http\Client\PendingRequest;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class BtcComService
 {
@@ -44,7 +45,7 @@ class BtcComService
             ->withHeaders([
                 'Authorization' => config('api.btc.token'),
             ]);
-dump($segments, $method, $params);
+
         $retryCount = 3;
 
         while ($retryCount > 0) {
@@ -75,7 +76,7 @@ dump($segments, $method, $params);
                 "page_size" => self::DEFAULT_PAGE_SIZE,
             ]
         );
-dd($response);
+
         return collect($response['list'] ?? []);
     }
 
@@ -94,17 +95,6 @@ dd($response);
      */
     public function createSub(UserData $userData): array
     {
-        if ($this->btcHasUser(userData: $userData)) {
-
-            return [
-                'errors' => [
-                    'name' => __('validation.unique', [
-                        'attribute' => __('validation.attributes.subaccount')
-                    ])
-                ]
-            ];
-        }
-
         $response = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
@@ -112,8 +102,14 @@ dd($response);
                 'puid' => self::PU_ID,
                 'group_name' => $userData->name
             ]);
-dd('w');
-        $this->createLocalSub(userData: $userData, groupId: $response['gid']);
+
+        if (in_array('exist', $response)) {
+
+            throw new BusinessException(
+                __('actions.sub_account_already_exist'),
+                Response::HTTP_BAD_REQUEST
+            );
+        }
 
         return $response;
     }
@@ -137,15 +133,6 @@ dd('w');
                 'status' => $workerStatus
             ]
         );
-
-        return collect($response['data']);
-    }
-
-    public function getWorker($workerId): Collection
-    {
-        $response = $this->call(['worker', $workerId], params: [
-            'puid' => self::PU_ID,
-        ]);
 
         return collect($response['data']);
     }
@@ -221,23 +208,14 @@ dd('w');
 
     public function transformSubCollection(Collection $subs): Collection
     {
-        $stats = MinerStat::first();
-
         return $this
             ->filterUngrouped()
             ->whereIn('gid', $subs->pluck('group_id')->toArray())
-            ->map(function (array $btcComSub) use ($subs, $stats) {
+            ->map(function (array $btcComSub) use ($subs) {
                 foreach ($subs as $sub) {
-                    $hashPerDay = $this->getSubHashRate(sub: $sub);
-
                     if (in_array($sub->group_id, $btcComSub)) {
 
-                        return self::transform(
-                            stats: $stats,
-                            sub: $sub,
-                            hashPerDay: $hashPerDay,
-                            btcComSub: $btcComSub
-                        );
+                        return $this->transformSub($sub);
                     }
                 }
             });
@@ -261,38 +239,18 @@ dd('w');
     }
 
     /**
-     * Проверка наличия пользователя на стороне btc.com
-     *
-     * @return bool
-     */
-    public function btcHasUser(UserData $userData): bool
-    {
-        return $this->filterUngrouped()
-            ->pluck('name')
-            ->contains($userData->name);
-    }
-
-    /**
      * Создать локального саба
      *
-     * @throws \Exception
      */
-    private function createLocalSub(UserData $userData, $groupId): void
+    public function createLocalSub(UserData $userData, $groupId): void
     {
-        try {
-            Create::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => auth()->user()->id,
-                    'group_id' => $groupId,
-                    'group_name' => $userData->name,
-                ])
-            );
-
-        } catch (\Exception $e) {
-            report($e);
-
-            throw new \Exception($e->getMessage());
-        }
+        Create::execute(
+            subData: SubData::fromRequest([
+                'user_id' => auth()->user()->id,
+                'group_id' => $groupId,
+                'group_name' => $userData->name,
+            ])
+        );
     }
 
     /**

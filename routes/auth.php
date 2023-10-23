@@ -44,6 +44,7 @@ Route::group([
         ->middleware('signed')
         ->name('password.reset.verify');
     Route::put('/change/{user}', PasswordChangeController::class)
+        ->name('password-change')
         ->middleware('auth:sanctum');
 });
 
@@ -53,5 +54,5 @@ Route::group([
 ], function () {
     Route::get('/qrcode/{user}', [TwoFactorController::class, 'qrCode'])->name('2fa.qrcode');
     Route::put('/enable/{user}', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-    Route::put('/disable/{user}', [TwoFactorController::class, 'disable'])->name('2fa.verify');
+    Route::put('/disable/{user}', [TwoFactorController::class, 'disable'])->name('2fa.disable');
 });

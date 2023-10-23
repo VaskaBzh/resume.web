@@ -99,7 +99,7 @@ class LoginController extends Controller
         if (!$request->user()->hasVerifiedEmail()) {
             throw new BusinessException(
                 clientMessage: __('auth.email.not.verified', ['email' => $request->user->email]),
-                statusCode: Response::HTTP_NOT_FOUND);
+                statusCode: Response::HTTP_FORBIDDEN);
         }
 
         $token = UserService::withUser($request->user())

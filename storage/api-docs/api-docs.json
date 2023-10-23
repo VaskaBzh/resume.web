@@ -17,7 +17,7 @@
         "/password/change/{user}": {
             "put": {
                 "tags": [
-                    "Auth"
+                    "Account"
                 ],
                 "summary": "Change user's password",
                 "operationId": "f2330ec3079fdf32137febd2f6c7eafd",
@@ -969,6 +969,9 @@
                     },
                     "404": {
                         "description": "Not found"
+                    },
+                    "400": {
+                        "description": "Already exist"
                     },
                     "422": {
                         "description": "Validation errors",
@@ -2222,7 +2225,7 @@
                     }
                 },
                 "responses": {
-                    "200": {
+                    "201": {
                         "description": "User registered successfully",
                         "content": {
                             "application/json": {

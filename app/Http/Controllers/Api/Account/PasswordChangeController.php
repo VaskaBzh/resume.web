@@ -24,7 +24,7 @@ class PasswordChangeController
                     new OA\JsonContent(ref: '#/components/schemas/ChangePasswordRequest')
                 ]
             ),
-            tags: ['Auth'],
+            tags: ['Account'],
             parameters: [
                 new OA\Parameter(
                     name: 'user',

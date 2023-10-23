@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Dto\UserData;
 use App\Exceptions\BusinessException;
 use App\Mail\User\PasswordChangeConfirmationMail;
 use App\Models\User;
@@ -23,6 +24,24 @@ final readonly class UserService
     public static function withUser(User $user): UserService
     {
         return new self(user: $user);
+    }
+
+    public static function create(UserData $userData): User
+    {
+        $user = User::create([
+            'name' => $userData->name,
+            'email' => $userData->email,
+            'password' => Hash::make($userData->password),
+        ]);
+
+        if ($userData->referralCode) {
+            ReferralService::attach(
+                referral: $user,
+                code: $userData->referralCode
+            );
+        }
+
+        return $user;
     }
 
     public function changePassword(array $credentials): void
