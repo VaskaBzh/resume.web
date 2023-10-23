@@ -111,12 +111,20 @@ export default {
             @media (max-width: 768.98px) {
                 left: -60px;
             }
+
+            @media (max-width: 360.98px) {
+                left: -45px;
+            }
         }
 
         &_two {
             position: relative;
             left: 50px;
             top: 0;
+
+            @media (max-width: 360.98px) {
+                left: 45px;
+            }
         }
 
         &_three {
