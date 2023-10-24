@@ -273,7 +273,7 @@ class BtcComService
                         'pool_data' => $btcComWorker
                     ]);
                 }
-            });
+            })->filter();
     }
 
     /**
@@ -307,7 +307,7 @@ class BtcComService
                         ]),
                     ];
                 }
-            });
+            })->filter();
     }
 
     public function updateLocalWorkers(): void
@@ -328,7 +328,7 @@ class BtcComService
     {
         $btcComWorkers = $this->getUngroupedWorkerCollection();
 
-        if (!filled($btcComWorkers)) {
+        if ($btcComWorkers->isEmpty()) {
             return;
         }
 
