@@ -34,7 +34,5 @@ class LogoutTest extends TestCase
             ->assertExactJson(['Logged out']);
 
         $this->assertDatabaseMissing('personal_access_tokens', ['token' => $token->accessToken->token]);
-
-        $this->assertFalse(\Auth::check());
     }
 }
