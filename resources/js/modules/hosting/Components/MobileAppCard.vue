@@ -1,5 +1,5 @@
 <template>
-    <div class="system__section-wrap" ref="view">
+    <div ref="view" class="system__section-wrap">
         <div class="system__section">
             <div class="system-card-inf">
                 <p class="system-card-title">{{ $t("mobile_app.title") }}</p>
@@ -101,27 +101,16 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
+    setup() {
+        return {
+            modules: [Pagination],
+        };
+    },
     data() {
         return {
             slide: 1,
             tabBarName: "home",
         };
-    },
-    methods: {
-        currentSlide(e) {
-            this.slide = e.activeIndex;
-        },
-    },
-    watch: {
-        slide(newSlide) {
-            this.tabBarName = {
-                1: "home",
-                2: "statistic",
-                3: "income",
-                4: "worker",
-                5: "settings",
-            }[newSlide ?? 1];
-        },
     },
     computed: {
         imgTabBar() {
@@ -131,10 +120,23 @@ export default {
             );
         },
     },
-    setup() {
-        return {
-            modules: [Pagination],
-        };
+    watch: {
+        slide(newSlide) {
+            this.tabBarName = {
+                0: "settings",
+                1: "home",
+                2: "statistic",
+                3: "income",
+                4: "worker",
+                5: "settings",
+                6: "home",
+            }[newSlide ?? 0];
+        },
+    },
+    methods: {
+        currentSlide(e) {
+            this.slide = e.activeIndex;
+        },
     },
 };
 </script>

@@ -25,16 +25,16 @@ export class LightCalculatorService {
                 false,
                 false
             ),
-            // new InputData(
-            //     "electro",
-            //     "Затраты",
-            //     "0.89",
-            //     "0",
-            //     "руб/kWh",
-            //     null,
-            //     false,
-            //     false
-            // ),
+            new InputData(
+                "electrical energy",
+                "Сosts",
+                "0.18",
+                "1",
+                "USD/kW",
+                null,
+                false,
+                false
+            ),
             // new InputData(
             //     "power",
             //     "Мощность устройств",
@@ -55,16 +55,16 @@ export class LightCalculatorService {
             //     false,
             //     false
             // ),
-            new InputData(
-                "currency",
-                "currency",
-                btcInfo.price.toLocaleString("en-US"),
-                null,
-                "USD",
-                null,
-                true,
-                false
-            ),
+            // new InputData(
+            //     "currency",
+            //     "currency",
+            //     btcInfo.price.toLocaleString("en-US"),
+            //     null,
+            //     "USD",
+            //     null,
+            //     true,
+            //     false
+            // ),
         ];
     }
 
@@ -77,11 +77,10 @@ export class LightCalculatorService {
     }
 
     async getGraph(interval) {
-        this.profit = await this.getProfit(interval);
-        // const cost = await this.getCost(profit, interval);
-        // let clearProfit = profit - cost;
-        // clearProfit = clearProfit < 0 ? 0.0 : clearProfit;
-        // clearProfit = clearProfit.toFixed(8);
+        const profit = await this.getProfit(interval);
+        const cost = await this.getCost(profit, interval);
+        let clearProfit = profit - cost;
+        this.profit = clearProfit;
 
         // this.graph = [
         //     {
@@ -124,7 +123,7 @@ export class LightCalculatorService {
     }
 
     async getCost(profit, interval) {
-        const power = this.inputs[2].inputValue;
+        const power = this.inputs[0].inputValue * 15;
         const costPerKWh = this.inputs[1].inputValue;
         const kw = power / 1000;
 
