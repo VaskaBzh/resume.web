@@ -103,7 +103,7 @@ class BtcComService
                 'group_name' => $userData->name
             ]);
 
-        if (in_array('exist', $response)) {
+        if (in_array('exist', $response, true)) {
 
             throw new BusinessException(
                 __('actions.sub_account_already_exist'),
