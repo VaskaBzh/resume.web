@@ -1,12 +1,11 @@
 <template>
-    <div class="history history__section-wrap" ref="view">
+    <div ref="view" class="history history__section-wrap">
         <div class="history__section">
-            <landing-headline class="history-pool_headline"
-                >История нашего пула
+            <landing-headline class="history-pool_headline">
+                {{ $t("history_pool.block_title") }}
             </landing-headline>
             <Swiper
                 class="history-pool__items"
-                slides-per-view="auto"
                 :modules="modules"
                 :slides-per-view="
                     viewportWidth > 1200 ? 2.5 : viewportWidth > 800 ? 1.5 : 1
@@ -74,12 +73,12 @@
             </Swiper>
             <div class="history__buttons">
                 <button-blue
-                    class="mobile-view_prev prev"
                     v-if="viewportWidth > 1200"
+                    class="mobile-view_prev prev"
                 ></button-blue>
                 <button-blue
-                    class="mobile-view_prev next"
                     v-if="viewportWidth > 1200"
+                    class="mobile-view_prev next"
                 ></button-blue>
             </div>
         </div>
