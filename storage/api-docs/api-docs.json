@@ -3,9 +3,6 @@
     "info": {
         "title": "Allbtc API",
         "description": "Документация Allbtc API",
-        "contact": {
-            "email": "ognevoy.bima@gmail.com"
-        },
         "version": "1.0.0"
     },
     "servers": [
