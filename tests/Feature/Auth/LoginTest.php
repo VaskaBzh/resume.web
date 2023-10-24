@@ -42,6 +42,8 @@ class LoginTest extends TestCase
     {
         $this->user->markEmailAsVerified();
 
+        $this->assertFalse(Auth::check());
+
         $response = $this->postJson('/v1/login', $basicAuth)
             ->assertStatus(Response::HTTP_OK)
             ->assertJsonStructure($loginResponseStructure);
@@ -106,6 +108,8 @@ class LoginTest extends TestCase
         $this->user->markEmailAsVerified();
 
         $currentOtp = $this->enable2fa();
+
+        $this->assertFalse(Auth::check());
 
         $response = $this
             ->postJson('/v1/login', array_merge($basicAuth, ['google2fa_code' => $currentOtp]))

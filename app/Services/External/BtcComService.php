@@ -333,7 +333,7 @@ class BtcComService
         }
 
         $btcComWorkers
-            ->each(static function (array $firstWorkerData) {
+            ->each(function (array $firstWorkerData) {
 
                 WorkerCreate::execute($firstWorkerData['worker_data'])
                     ->workerHashrates()
@@ -342,8 +342,7 @@ class BtcComService
                         'unit' => $firstWorkerData['worker_hash_rate']['unit'],
                     ]);
 
-                resolve(BtcComService::class)
-                    ->updateWorker(workerData: $firstWorkerData['worker_data']);
+                $this->updateWorker(workerData: $firstWorkerData['worker_data']);
             });
 
         Artisan::call('make:sub-hashes');
