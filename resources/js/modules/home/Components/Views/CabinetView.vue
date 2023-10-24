@@ -1,5 +1,6 @@
 <template>
-    <div class="system__section system__section-wrap" ref="view">
+    <div class="system__section-wrap" ref="view">
+        <div class="system__section">
         <landing-title tag="h3" class="cabinet_title">
             <span
                 class="cabinet_title_elem cabinet_title_elem-right animation-up_line"
@@ -578,6 +579,7 @@
             class="get-consultation"
         >{{ $t("personal_account.button[1]") }}</a
         >
+        </div>
     </div>
 </template>
 <script>

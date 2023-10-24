@@ -20,7 +20,8 @@
                 />
                 <div class="buttons-connect-container">
                     <a
-                        href="#"
+                        href="https://t.me/allbtc_support"
+                        target="_blank"
                         class="connect-order"
                         type="submit"
                     >

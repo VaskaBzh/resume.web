@@ -14,7 +14,7 @@ class AttachReferralRequest extends FormRequest
         ];
     }
 
-    public function messages()
+    public function messages(): array
     {
         return [
             'exists' => 'Не верный код'

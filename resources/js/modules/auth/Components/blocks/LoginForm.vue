@@ -1,9 +1,10 @@
 <template>
     <form @submit.prevent="service.login" class="form-auth">
         <main-title tag="h3" class="form-auth_title">{{
-            this.$t("auth.login.title")
-        }}</main-title>
-        <auth-errors :errors="errors" />
+                this.$t("auth.login.title")
+            }}
+        </main-title>
+        <auth-errors :errors="errors"/>
         <div class="form-auth__content">
             <auth-input
                 :error="errorsExpired.error ?? errorsExpired.email"
@@ -66,7 +67,7 @@
             <span>{{ this.$t("auth.login.checkbox") }}</span>
         </label>
         <blue-button class="form-auth_button auth" type="submit"
-            ><a class="all-link">{{
+        ><a class="all-link">{{
                 this.$t("auth.login.button")
             }}</a></blue-button
         >
@@ -79,7 +80,8 @@
         <p class="text text-light form-auth_text">
             {{ this.$t("auth.login.link[0]") }}
             <router-link :to="{ name: 'registration' }" class="form-auth_link">
-                {{ this.$t("auth.login.link[1]") }}</router-link
+                {{ this.$t("auth.login.link[1]") }}
+            </router-link
             >
         </p>
     </form>
@@ -114,9 +116,9 @@ import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 
-import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
-import { LoginService } from "@/modules/auth/services/LoginService";
-import { mapGetters } from "vuex";
+import {AuthMessages} from "@/modules/auth/lang/AuthMessages";
+import {LoginService} from "@/modules/auth/services/LoginService";
+import {mapGetters} from "vuex";
 import VerifyPopup from "../../../verify/Components/VerifyPopup.vue";
 import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
 
@@ -147,7 +149,7 @@ export default {
     },
     methods: {
         async loginWithSecretCode(secret) {
-            this.service.form.two_fa_secret = secret;
+            this.service.form.google2fa_code = secret;
             await this.service.login();
         },
         async sendPassword(form) {
@@ -190,6 +192,7 @@ export default {
     @media (max-width: 991.98px) {
         padding: 0 clamp(16px, 5vw, 60px);
     }
+
     .form-auth_forgot-password {
         font-size: 20px;
         color: rgb(63, 123, 221);
@@ -203,6 +206,7 @@ export default {
             margin-left: 0;
         }
     }
+
     &__content {
         display: flex;
         flex-direction: column;
@@ -212,6 +216,7 @@ export default {
             max-width: 536px;
         }
     }
+
     &_title {
         margin-bottom: 32px;
         // @media (max-width: 1550px) {
@@ -224,6 +229,7 @@ export default {
             margin-bottom: 24px;
         }
     }
+
     &_button {
         padding: 0;
         margin: 0;
@@ -236,6 +242,7 @@ export default {
         @media (max-width: $mobileSmall) {
             min-width: 100%;
         }
+
         & .all-link {
             padding: 0;
             font-size: 20px;
@@ -243,6 +250,7 @@ export default {
             line-height: 135%;
             min-width: 300px;
         }
+
         @media (max-width: $tablet) {
             width: 100%;
             & .all-link {
@@ -256,6 +264,7 @@ export default {
             }
         }
     }
+
     &_text {
         font-size: 24px;
         font-family: AmpleSoftPro, serif;
@@ -279,11 +288,14 @@ export default {
             line-height: 130%;
         }
     }
+
     &_checkbox {
         display: none;
+
         &:checked + label .fake svg path {
             fill: #7c7c7c;
         }
+
         & + label {
             cursor: pointer;
             display: inline-flex;
@@ -296,11 +308,13 @@ export default {
             margin: 16px 0 40px;
             position: relative;
             width: 100%;
+
             .form-auth_link {
                 @media (max-width: $tablet) {
                     display: block;
                 }
             }
+
             @media (max-width: 1550px) {
                 margin: 16px 0 32px;
             }
@@ -316,21 +330,26 @@ export default {
                     line-height: 130%;
                 }
             }
+
             &.error {
                 color: #e5403f !important;
+
                 &:before {
                     border-color: #e5403f !important;
                 }
             }
+
             .fake {
                 width: 24px;
                 height: 24px;
+
                 & svg {
                     & path {
                         transition: all 0.3s ease 0s;
                         fill: rgba(0, 0, 0, 0);
                     }
                 }
+
                 @media (max-width: $mobileSmall) {
                     height: 16px;
                     width: 16px;
@@ -342,6 +361,7 @@ export default {
             }
         }
     }
+
     &_row {
         min-height: 56px;
         width: 100%;
@@ -350,6 +370,7 @@ export default {
             min-height: 40px;
         }
     }
+
     &_link {
         color: rgba(63, 123, 221, 1);
         font-size: 24px;

@@ -3,6 +3,7 @@
 return [
     'success_sub_create' => 'Subaccount successful created',
     'fail_sub_create' => 'Something wrong',
+    'sub_account_already_exist' => 'Subaccount already exist',
     'success_worker_create' => 'Worker successful created',
     'validation_percent_exceeded' => 'he total percentage of withdrawal is more than 100',
     'wallet_create' => 'Wallet successfully created',

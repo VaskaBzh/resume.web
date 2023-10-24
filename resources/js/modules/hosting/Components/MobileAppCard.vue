@@ -1,95 +1,97 @@
 <template>
-    <div class="system__section system__section-wrap" ref="view">
-        <div class="system-card-inf">
-            <p class="system-card-title">{{ $t("mobile_app.title") }}</p>
-            <p class="system-card-text">{{ $t("mobile_app.text") }}</p>
-        </div>
-        <div class="system-card-img">
-            <img
-                src="../assets/img/Mockup-iphone.png"
-                class="img-iphone img-system"
-            />
-            <img
-                src="../assets/img/status-bar.png"
-                class="img-status-bar img-system"
-            />
-            <img :src="imgTabBar" class="img-tab-bar img-system"/>
-            <swiper
-                :slides-per-view="1"
-                :space-between="0"
-                :pagination="{
-                    clickable: true,
-                }"
-                :loop="true"
-                :modules="modules"
-                class="img-support img-system"
-                @slideChange="currentSlide"
-            >
-                <swiper-slide>
-                    <!--                    <img-->
-                    <!--                        src="../../../../assets/img/iphone-14-screen1-ru.png"-->
-                    <!--                        class="img-content"-->
-                    <!--                        v-show="$i18n.locale === 'ru'"-->
-                    <!--                    />-->
-                    <img
-                        src="../../../../assets/img/iphone-14-screen1-en.png"
-                        class="img-content"
-                    />
-                </swiper-slide>
-                <swiper-slide>
-                    <!--                    <img-->
-                    <!--                        src="../../../../assets/img/iphone-14-screen2-ru.png"-->
-                    <!--                        class="img-content"-->
-                    <!--                        v-show="$i18n.locale === 'ru'"-->
-                    <!--                    />-->
-                    <img
-                        src="../../../../assets/img/iphone-14-screen2-en.png"
-                        class="img-content"
-                    />
-                </swiper-slide>
-                <swiper-slide>
-                    <!--                    <img-->
-                    <!--                        src="../../../../assets/img/iphone-14-screen3-ru.png"-->
-                    <!--                        class="img-content"-->
-                    <!--                        v-show="$i18n.locale === 'ru'"-->
-                    <!--                    />-->
-                    <img
-                        src="../../../../assets/img/iphone-14-screen3-en.png"
-                        class="img-content"
-                    />
-                </swiper-slide>
-                <swiper-slide>
-                    <!--                    <img-->
-                    <!--                        src="../../../../assets/img/iphone-14-screen4-ru.png"-->
-                    <!--                        class="img-content"-->
-                    <!--                        v-show="$i18n.locale === 'ru'"-->
-                    <!--                    />-->
-                    <img
-                        src="../../../../assets/img/iphone-14-screen4-en.png"
-                        class="img-content"
-                    />
-                </swiper-slide>
-                <swiper-slide>
-                    <!--                    <img-->
-                    <!--                        src="../../../../assets/img/iphone-14-screen5-ru.png"-->
-                    <!--                        class="img-content"-->
-                    <!--                        v-show="$i18n.locale === 'ru'"-->
-                    <!--                    />-->
-                    <img
-                        src="../../../../assets/img/iphone-14-screen5-en.png"
-                        class="img-content"
-                    />
-                </swiper-slide>
-            </swiper>
+    <div ref="view" class="system__section-wrap">
+        <div class="system__section">
+            <div class="system-card-inf">
+                <p class="system-card-title">{{ $t("mobile_app.title") }}</p>
+                <p class="system-card-text">{{ $t("mobile_app.text") }}</p>
+            </div>
+            <div class="system-card-img">
+                <img
+                    src="../assets/img/Mockup-iphone.png"
+                    class="img-iphone img-system"
+                />
+                <img
+                    src="../assets/img/status-bar.png"
+                    class="img-status-bar img-system"
+                />
+                <img :src="imgTabBar" class="img-tab-bar img-system" />
+                <swiper
+                    :slides-per-view="1"
+                    :space-between="0"
+                    :pagination="{
+                        clickable: true,
+                    }"
+                    :loop="true"
+                    :modules="modules"
+                    class="img-support img-system"
+                    @slideChange="currentSlide"
+                >
+                    <swiper-slide>
+                        <!--                    <img-->
+                        <!--                        src="../../../../assets/img/iphone-14-screen1-ru.png"-->
+                        <!--                        class="img-content"-->
+                        <!--                        v-show="$i18n.locale === 'ru'"-->
+                        <!--                    />-->
+                        <img
+                            src="../../../../assets/img/iphone-14-screen1-en.png"
+                            class="img-content"
+                        />
+                    </swiper-slide>
+                    <swiper-slide>
+                        <!--                    <img-->
+                        <!--                        src="../../../../assets/img/iphone-14-screen2-ru.png"-->
+                        <!--                        class="img-content"-->
+                        <!--                        v-show="$i18n.locale === 'ru'"-->
+                        <!--                    />-->
+                        <img
+                            src="../../../../assets/img/iphone-14-screen2-en.png"
+                            class="img-content"
+                        />
+                    </swiper-slide>
+                    <swiper-slide>
+                        <!--                    <img-->
+                        <!--                        src="../../../../assets/img/iphone-14-screen3-ru.png"-->
+                        <!--                        class="img-content"-->
+                        <!--                        v-show="$i18n.locale === 'ru'"-->
+                        <!--                    />-->
+                        <img
+                            src="../../../../assets/img/iphone-14-screen3-en.png"
+                            class="img-content"
+                        />
+                    </swiper-slide>
+                    <swiper-slide>
+                        <!--                    <img-->
+                        <!--                        src="../../../../assets/img/iphone-14-screen4-ru.png"-->
+                        <!--                        class="img-content"-->
+                        <!--                        v-show="$i18n.locale === 'ru'"-->
+                        <!--                    />-->
+                        <img
+                            src="../../../../assets/img/iphone-14-screen4-en.png"
+                            class="img-content"
+                        />
+                    </swiper-slide>
+                    <swiper-slide>
+                        <!--                    <img-->
+                        <!--                        src="../../../../assets/img/iphone-14-screen5-ru.png"-->
+                        <!--                        class="img-content"-->
+                        <!--                        v-show="$i18n.locale === 'ru'"-->
+                        <!--                    />-->
+                        <img
+                            src="../../../../assets/img/iphone-14-screen5-en.png"
+                            class="img-content"
+                        />
+                    </swiper-slide>
+                </swiper>
+            </div>
         </div>
     </div>
 </template>
 <script>
-import {Swiper, SwiperSlide} from "swiper/vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import {Pagination} from "swiper";
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
+import { Pagination } from "swiper";
+import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 
 export default {
     components: {
@@ -99,27 +101,16 @@ export default {
     i18n: {
         sharedMessages: HostingMessage,
     },
+    setup() {
+        return {
+            modules: [Pagination],
+        };
+    },
     data() {
         return {
             slide: 1,
             tabBarName: "home",
         };
-    },
-    methods: {
-        currentSlide(e) {
-            this.slide = e.activeIndex;
-        },
-    },
-    watch: {
-        slide(newSlide) {
-            this.tabBarName = {
-                1: "home",
-                2: "statistic",
-                3: "income",
-                4: "worker",
-                5: "settings",
-            }[newSlide ?? 1];
-        },
     },
     computed: {
         imgTabBar() {
@@ -129,10 +120,23 @@ export default {
             );
         },
     },
-    setup() {
-        return {
-            modules: [Pagination],
-        };
+    watch: {
+        slide(newSlide) {
+            this.tabBarName = {
+                0: "settings",
+                1: "home",
+                2: "statistic",
+                3: "income",
+                4: "worker",
+                5: "settings",
+                6: "home",
+            }[newSlide ?? 0];
+        },
+    },
+    methods: {
+        currentSlide(e) {
+            this.slide = e.activeIndex;
+        },
     },
 };
 </script>

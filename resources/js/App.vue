@@ -1,15 +1,15 @@
 <template>
     <component :is="$route.meta.layoutComponent">
-        <router-view/>
+        <router-view />
     </component>
 </template>
 
 <script>
-import {mapGetters} from "vuex";
-import {ProfileApi} from "@/api/api";
+import { mapGetters } from "vuex";
+import { ProfileApi } from "@/api/api";
 
 export default {
-    name: "app-layout-view",
+    name: "AppLayoutView",
     computed: {
         ...mapGetters(["isDark", "token", "user"]),
     },
@@ -39,7 +39,7 @@ export default {
 
         this.$store.dispatch("setToken");
         window.addEventListener("resize", this.handleResize);
-        document.addEventListener(
+        window.addEventListener(
             "visibilitychange",
             this.handleVisibilityChange
         );
@@ -47,7 +47,8 @@ export default {
         this.handleResize();
     },
     async unmounted() {
-        document.removeEventListener(
+        window.removeEventListener("resize", this.handleResize);
+        window.removeEventListener(
             "visibilitychange",
             this.handleVisibilityChange
         );

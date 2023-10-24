@@ -1,48 +1,50 @@
 <template>
-    <div class="system__section system__section-wrap" ref="view">
-        <div class="system-card-inf">
-            <p class="system-card-title">
-                {{ $t("system_monitoring.title[0]") }} <br/>
-                {{ $t("system_monitoring.title[1]") }} <br/>
-                {{ $t("system_monitoring.title[2]") }}
-            </p>
-            <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
+    <div class="system__section-wrap" ref="view">
+        <div class="system__section">
+            <div class="system-card-inf">
+                <p class="system-card-title">
+                    {{ $t("system_monitoring.title[0]") }} <br/>
+                    {{ $t("system_monitoring.title[1]") }} <br/>
+                    {{ $t("system_monitoring.title[2]") }}
+                </p>
+                <p class="system-card-text">{{ $t("system_monitoring.text") }}</p>
+            </div>
+            <div class="system-card-img">
+                <img
+                    src="../assets/img/Mockup-mac.png"
+                    class="img-mac img-system web"
+                />
+                <!--            <img-->
+                <!--                src="../assets/img/Mockup-monitoring-ru.png"-->
+                <!--                class="img-monitoring img-system web"-->
+                <!--                v-show="$i18n.locale === 'ru'"-->
+                <!--            />-->
+                <img
+                    src="../assets/img/Mockup-monitoring-en.png"
+                    class="img-monitoring img-system web"
+                />
+    
+                <img
+                    src="../assets/img/Mockup-iphone.png"
+                    class="img-mac img-system mobile"
+                />
+                <!--            <img-->
+                <!--                src="../assets/img/Mockup-monitoring-iphone-ru.png"-->
+                <!--                class="img-monitoring img-system mobile"-->
+                <!--                v-show="$i18n.locale === 'ru'"-->
+                <!--            />-->
+                <img
+                    src="../assets/img/Mockup-monitoring-iphone-en.png"
+                    class="img-monitoring img-system mobile"
+                />
+            </div>
+            <a
+                href="https://t.me/allbtc_support"
+                target="_blank"
+                class="get-consultation"
+            >{{ $t("system_monitoring.button") }}</a
+            >
         </div>
-        <div class="system-card-img">
-            <img
-                src="../assets/img/Mockup-mac.png"
-                class="img-mac img-system web"
-            />
-            <!--            <img-->
-            <!--                src="../assets/img/Mockup-monitoring-ru.png"-->
-            <!--                class="img-monitoring img-system web"-->
-            <!--                v-show="$i18n.locale === 'ru'"-->
-            <!--            />-->
-            <img
-                src="../assets/img/Mockup-monitoring-en.png"
-                class="img-monitoring img-system web"
-            />
-
-            <img
-                src="../assets/img/Mockup-iphone.png"
-                class="img-mac img-system mobile"
-            />
-            <!--            <img-->
-            <!--                src="../assets/img/Mockup-monitoring-iphone-ru.png"-->
-            <!--                class="img-monitoring img-system mobile"-->
-            <!--                v-show="$i18n.locale === 'ru'"-->
-            <!--            />-->
-            <img
-                src="../assets/img/Mockup-monitoring-iphone-en.png"
-                class="img-monitoring img-system mobile"
-            />
-        </div>
-        <a
-            href="https://t.me/allbtc_support"
-            target="_blank"
-            class="get-consultation"
-        >{{ $t("system_monitoring.button") }}</a
-        >
     </div>
 </template>
 <script>

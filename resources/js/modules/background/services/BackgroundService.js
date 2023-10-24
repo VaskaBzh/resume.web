@@ -2,7 +2,7 @@ export function BackgroundService(cvs) {
     let canvas = cvs;
     let ctx = canvas.getContext("2d");
     let particles = [];
-    let setWidth = window.innerWidth;
+    let setWidth = window.innerWidth - 15;
     let setHeight = window.innerHeight;
 
     // Создаем градиент один раз
@@ -12,7 +12,7 @@ export function BackgroundService(cvs) {
 
     const dist = (x1, y1, x2, y2) => {
         return Math.sqrt((x1 - x2) ** 2 + (y1 - y2) ** 2);
-    }
+    };
 
     const draw = () => {
         for (let particle of particles) {
@@ -24,18 +24,24 @@ export function BackgroundService(cvs) {
             particle.x += particle.vx;
             particle.y += particle.vy;
 
-            if (particle.x < particle.rad || particle.x + particle.rad > setWidth)
+            if (
+                particle.x < particle.rad ||
+                particle.x + particle.rad > setWidth
+            )
                 particle.vx = -particle.vx;
-            if (particle.y < particle.rad || particle.y + particle.rad > setHeight)
+            if (
+                particle.y < particle.rad ||
+                particle.y + particle.rad > setHeight
+            )
                 particle.vy = -particle.vy;
         }
-    }
+    };
 
     const getMultiplier = () => {
         if (setWidth <= 480) return 0.5;
         if (setWidth <= 768) return 0.75;
         return 1;
-    }
+    };
 
     const pushParticles = () => {
         const multiplier = getMultiplier();
@@ -51,15 +57,15 @@ export function BackgroundService(cvs) {
                 rad: Math.random() * maxParticleSize + 10,
             });
         }
-    }
+    };
     const render = () => {
         ctx.clearRect(0, 0, setWidth, setHeight);
         draw();
         requestAnimationFrame(render);
-    }
+    };
 
     const resizeEventProcess = () => {
-        setWidth = canvas.width = window.innerWidth;
+        setWidth = canvas.width = window.innerWidth - 15;
         setHeight = canvas.height = window.innerHeight;
 
         ctx.globalCompositeOperation = "lighter";

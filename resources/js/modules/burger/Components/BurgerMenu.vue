@@ -1,13 +1,13 @@
 <template>
-    <div @click="actionBurger">
+    <div class="burger" @click="actionBurger">
         <!-- <transition name="bounce"> -->
         <svg
+            v-if="isOpen"
             xmlns="http://www.w3.org/2000/svg"
             width="17"
             height="17"
             viewBox="0 0 17 17"
             fill="none"
-            v-if="isOpen"
             :class="{ 'close-cross': isOpen }"
         >
             <rect
@@ -30,40 +30,40 @@
             />
         </svg>
         <svg
+            v-else
             width="25"
             height="13"
             viewBox="0 0 25 13"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            v-else
             :class="{ 'open-cross': isOpen }"
         >
-            <rect x="10" width="15" height="1" rx="0.5" fill="#E4E7EC"/>
-            <rect y="6" width="25" height="1" rx="0.5" fill="#E4E7EC"/>
-            <rect y="12" width="25" height="1" rx="0.5" fill="#E4E7EC"/>
+            <rect x="10" width="15" height="1" rx="0.5" fill="#E4E7EC" />
+            <rect y="6" width="25" height="1" rx="0.5" fill="#E4E7EC" />
+            <rect y="12" width="25" height="1" rx="0.5" fill="#E4E7EC" />
         </svg>
         <!-- </transition> -->
     </div>
     <div
-        class="burger-background"
         v-if="isOpen"
+        class="burger-background"
         :class="{ 'open-burger': isOpen, 'close-burger': closeBurger }"
     >
         <div class="burger__content">
             <router-link to="/">
-                <header-logo-icon class="burger_logo"/>
+                <header-logo-icon class="burger_logo" />
             </router-link>
             <div
                 class="menu-container"
                 :class="{ 'start-opacity': isOpen, 'end-opacity': closeBurger }"
             >
-                <nav-links @click="actionBurger"/>
+                <nav-links @click="actionBurger" />
             </div>
             <div class="menu-footer">
                 <router-link to="login" class="headline-menu"
-                >{{ $t("footer.button") }}
+                    >{{ $t("footer.button") }}
                 </router-link>
-                <select-language-land/>
+                <select-language-land />
                 <button class="headline-menu link-tg">
                     <a target="_blank" href="https://t.me/allbtc_support">
                         ?
@@ -75,21 +75,21 @@
     <teleport to="body">
         <transition name="fadeIn">
             <div
+                v-show="isOpen"
                 class="burger__background"
                 @click="actionBurger"
-                v-show="isOpen"
             ></div>
         </transition>
     </teleport>
 </template>
 <script>
 import NavLinks from "../../navs/Components/NavLinks.vue";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
 import HeaderLogoIcon from "../../common/icons/HeaderLogoIcon.vue";
 
 export default {
-    components: {SelectLanguageLand, NavLinks, HeaderLogoIcon},
+    components: { SelectLanguageLand, NavLinks, HeaderLogoIcon },
     i18n: {
         sharedMessages: HomeMessage,
     },
@@ -117,6 +117,12 @@ export default {
 };
 </script>
 <style scoped>
+@media (min-width: 768.98px) {
+    .burger {
+        display: none;
+    }
+}
+
 svg {
     position: relative;
     z-index: 100;
@@ -161,7 +167,7 @@ svg {
 .burger_logo {
     position: absolute;
     left: 0;
-    top: 50px;
+    top: 16px;
     width: clamp(87px, 15vw, 129px);
     height: clamp(26px, 15vw, 40px);
 }
@@ -178,7 +184,7 @@ svg {
     width: 100vw;
     height: 100vh;
     right: 0px;
-    padding: 0px clamp(16px, 5vw, 50px);
+    padding: 0px clamp(16px, 5vw, 50px) 50px;
     z-index: 90;
 }
 

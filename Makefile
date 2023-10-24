@@ -1,5 +1,11 @@
+ifeq ($(CI),true)
+	TTY_FLAG=-T
+else
+	TTY_FLAG=
+endif
+
 APP=php
-COMPOSE=docker-compose exec
+COMPOSE=docker-compose exec $(TTY_FLAG)
 ARTISAN=$(COMPOSE) $(APP) php artisan
 
 kill:

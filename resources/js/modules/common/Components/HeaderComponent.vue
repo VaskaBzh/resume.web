@@ -77,14 +77,14 @@ export default {
     }
 
     &_lang {
-        @media (max-width: 760.98px) {
+        @media (max-width: 768.98px) {
             display: none;
         }
     }
 
     &__navigation {
         margin-left: clamp(30px, 32vw, 500px);
-        @media (max-width: 760.98px) {
+        @media (max-width: 768.98px) {
             display: none;
         }
     }
@@ -106,7 +106,7 @@ export default {
         background: transparent;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
-        @media (max-width: 760.98px) {
+        @media (max-width: 768.98px) {
             display: none;
         }
     }
@@ -132,7 +132,7 @@ export default {
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
 
-@media (min-width: 760px) {
+@media (min-width: 768px) {
     .burger-mobile {
         opacity: 0;
     }

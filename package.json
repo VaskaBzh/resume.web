@@ -9,7 +9,6 @@
         "@vueuse/core": "^10.1.2",
         "animejs": "^3.2.1",
         "axios": "^1.4.0",
-        "chart.js": "^3.9.1",
         "core-js": "^3.8.3",
         "d3": "^7.8.5",
         "dist": "^0.1.2",
@@ -17,17 +16,14 @@
         "tippy.js": "^6.3.7",
         "vue": "^3.2.13",
         "vue-animejs": "^2.1.1",
-        "vue-chartjs": "^4.1.2",
         "vue-i18n": "^9.4.1",
         "vue-router": "^4.2.4",
-        "vue3-perfect-scrollbar": "^1.6.1",
         "vuesax": "^3.12.2",
         "vuex": "^4.0.0"
     },
     "devDependencies": {
         "@babel/core": "^7.12.16",
         "@babel/eslint-parser": "^7.12.16",
-        "@inertiajs/vue3": "^1.0.0",
         "@intlify/vue-i18n-loader": "^4.2.0",
         "@vitejs/plugin-vue": "^4.3.4",
         "@vue/cli-plugin-babel": "~5.0.0",
@@ -43,7 +39,7 @@
         "eslint": "^7.32.0",
         "eslint-config-prettier": "^8.3.0",
         "eslint-plugin-prettier": "^4.0.0",
-        "eslint-plugin-vue": "^8.0.3",
+        "eslint-plugin-vue": "^8.7.1",
         "laravel-vite-plugin": "^0.7.2",
         "lint-staged": "^11.1.2",
         "lodash": "^4.17.19",
@@ -61,12 +57,20 @@
             "node": true
         },
         "extends": [
-            "plugin:vue/vue3-essential",
+            "plugin:vue/vue3-recommended",
             "eslint:recommended",
-            "plugin:prettier/recommended"
+            "plugin:prettier/recommended",
+            "prettier"
         ],
+        "parser": "vue-eslint-parser",
         "parserOptions": {
-            "parser": "@babel/eslint-parser"
+            "parser": "@babel/eslint-parser",
+            "ecmaVersion": "latest",
+            "sourceType": "module",
+            "vueFeatures": {
+                "filter": true,
+                "interpolationAsNonHTML": false
+            }
         },
         "rules": {},
         "overrides": [

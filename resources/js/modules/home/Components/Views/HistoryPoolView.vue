@@ -1,99 +1,98 @@
 <template>
-    <div class="history history__section history__section-wrap" ref="view">
-        <landing-headline class="history-pool_headline">
-            {{ $t("history_pool.block_title") }}
-        </landing-headline>
-        <Swiper
-            class="history-pool__items"
-            slidesPerView="auto"
-            :modules="modules"
-            :slides-per-view="
-                viewportWidth > 1200 ? 2.5 : viewportWidth > 800 ? 1.5 : 1
-            "
-            :pagination="{
-                clickable: true,
-            }"
-            :navigation="{ nextEl: '.next', prevEl: '.prev' }"
-        >
-            <swiper-slide class="history-pool__item-line">
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-info">
-                    <h3 class="history-pool__item-info-year">2019</h3>
-                    <p class="history-pool__item-info-discription">
-                        {{ $t("history_pool.texts[0]") }}
-                    </p>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="history-pool__item-line">
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-info">
-                    <h3 class="history-pool__item-info-year">2020</h3>
-                    <p class="history-pool__item-info-discription">
-                        {{ $t("history_pool.texts[1]") }}
-                    </p>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="history-pool__item-line">
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-info">
-                    <h3 class="history-pool__item-info-year">2021</h3>
-                    <p class="history-pool__item-info-discription">
-                        {{ $t("history_pool.texts[2]") }}
-                    </p>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="history-pool__item-line">
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-info">
-                    <h3 class="history-pool__item-info-year">2022</h3>
-                    <p class="history-pool__item-info-discription">
-                        {{ $t("history_pool.texts[3]") }}
-                    </p>
-                </div>
-            </swiper-slide>
-            <swiper-slide class="history-pool__item-line">
-                <div class="history-pool__item-line-block">
-                    <div class="history-pool__item-line_cycle"></div>
-                </div>
-                <div class="history-pool__item-info">
-                    <h3 class="history-pool__item-info-year">2023</h3>
-                    <p class="history-pool__item-info-discription">
-                        {{ $t("history_pool.texts[4]") }}
-                    </p>
-                </div>
-            </swiper-slide>
-        </Swiper>
-        <div class="history__buttons">
-            <button-blue
-                class="mobile-view_prev prev"
-                v-if="viewportWidth > 1200"
-            ></button-blue>
-            <button-blue
-                class="mobile-view_prev next"
-                v-if="viewportWidth > 1200"
-            ></button-blue>
+    <div ref="view" class="history history__section-wrap">
+        <div class="history__section">
+            <landing-headline class="history-pool_headline">
+                {{ $t("history_pool.block_title") }}
+            </landing-headline>
+            <Swiper
+                class="history-pool__items"
+                :modules="modules"
+                :slides-per-view="
+                    viewportWidth > 1200 ? 2.5 : viewportWidth > 800 ? 1.5 : 1
+                "
+                :pagination="{
+                    clickable: true,
+                }"
+                :navigation="{ nextEl: '.next', prevEl: '.prev' }"
+            >
+                <swiper-slide class="history-pool__item-line">
+                    <div class="history-pool__item-line-block">
+                        <div class="history-pool__item-line_cycle"></div>
+                    </div>
+                    <div class="history-pool__item-info">
+                        <h3 class="history-pool__item-info-year">2019</h3>
+                        <p class="history-pool__item-info-discription">
+                            {{ $t("history_pool.texts[0]") }}
+                        </p>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="history-pool__item-line">
+                    <div class="history-pool__item-line-block">
+                        <div class="history-pool__item-line_cycle"></div>
+                    </div>
+                    <div class="history-pool__item-info">
+                        <h3 class="history-pool__item-info-year">2020</h3>
+                        <p class="history-pool__item-info-discription">
+                            {{ $t("history_pool.texts[1]") }}
+                        </p>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="history-pool__item-line">
+                    <div class="history-pool__item-line-block">
+                        <div class="history-pool__item-line_cycle"></div>
+                    </div>
+                    <div class="history-pool__item-info">
+                        <h3 class="history-pool__item-info-year">2021</h3>
+                        <p class="history-pool__item-info-discription">
+                            {{ $t("history_pool.texts[2]") }}
+                        </p>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="history-pool__item-line">
+                    <div class="history-pool__item-line-block">
+                        <div class="history-pool__item-line_cycle"></div>
+                    </div>
+                    <div class="history-pool__item-info">
+                        <h3 class="history-pool__item-info-year">2022</h3>
+                        <p class="history-pool__item-info-discription">
+                            {{ $t("history_pool.texts[3]") }}
+                        </p>
+                    </div>
+                </swiper-slide>
+                <swiper-slide class="history-pool__item-line">
+                    <div class="history-pool__item-line-block">
+                        <div class="history-pool__item-line_cycle"></div>
+                    </div>
+                    <div class="history-pool__item-info">
+                        <h3 class="history-pool__item-info-year">2023</h3>
+                        <p class="history-pool__item-info-discription">
+                            {{ $t("history_pool.texts[4]") }}
+                        </p>
+                    </div>
+                </swiper-slide>
+            </Swiper>
+            <div class="history__buttons">
+                <button-blue
+                    v-if="viewportWidth > 1200"
+                    class="mobile-view_prev prev"
+                ></button-blue>
+                <button-blue
+                    v-if="viewportWidth > 1200"
+                    class="mobile-view_prev next"
+                ></button-blue>
+            </div>
         </div>
     </div>
-
-    <!--        <connect-with-us-view/>-->
 </template>
 
 <script>
 import LandingHeadline from "../../../common/Components/UI/LandingHeadline.vue";
-import {Swiper, SwiperSlide} from "swiper/vue";
-import {Navigation} from "swiper";
+import { Swiper, SwiperSlide } from "swiper/vue";
+import { Navigation } from "swiper";
 import "swiper/css";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import ButtonBlue from "../../../common/Components/UI/ButtonBlue.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
     name: "HistoryPoolView",
@@ -113,96 +112,6 @@ export default {
     },
     computed: {
         ...mapGetters(["viewportWidth"]),
-    },
-    data() {
-        return {
-            validScroll: false,
-            startY: null,
-            touchY: null,
-        };
-    },
-    props: {
-        start: Boolean,
-    },
-    methods: {
-        handleTouchStart(e) {
-            this.startY = e.touches[0].clientY;
-        },
-        handleTouchMove(e) {
-            this.touchY = e.touches[0].clientY;
-            this.handleWheel();
-        },
-        handleWheel(e) {
-            if (this.startY ? this.startY - this.touchY > 110 : e.deltaY > 10) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-                if (!this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(-${
-                        this.$refs.view.offsetHeight -
-                        document.scrollingElement.clientHeight
-                    }px)`;
-
-                    this.validScroll = true;
-                } else {
-                    this.$emit("next");
-                }
-            }
-            if (
-                this.startY ? this.touchY - this.startY > 110 : e.deltaY < -10
-            ) {
-                this.remove();
-                setTimeout(this.scroll, 300);
-
-                if (this.validScroll) {
-                    this.$refs.view.style.transform = `translateY(0px)`;
-
-                    this.validScroll = false;
-                } else {
-                    this.$emit("prev");
-                }
-            }
-        },
-        scroll() {
-            if (this.$refs.view) {
-                this.$refs.view.addEventListener("wheel", this.handleWheel);
-                this.$refs.view.addEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.addEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-        remove() {
-            if (this.$refs.view) {
-                this.$refs.view.removeEventListener("wheel", this.handleWheel);
-                this.$refs.view.removeEventListener(
-                    "touchstart",
-                    this.handleTouchStart
-                );
-                this.$refs.view.removeEventListener(
-                    "touchmove",
-                    this.handleTouchMove
-                );
-            }
-        },
-    },
-    watch: {
-        start(newStartState) {
-            if (newStartState) {
-                this.scroll();
-            } else {
-                this.remove();
-            }
-        },
-    },
-    mounted() {
-        setTimeout(this.scroll, 500);
-    },
-    unmounted() {
-        this.remove();
     },
 };
 </script>

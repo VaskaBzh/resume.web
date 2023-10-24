@@ -13,11 +13,11 @@
                 <calculator-input
                     v-for="(input, i) in lightService.inputs"
                     :key="i"
-                    :inputName="input.inputName"
-                    :inputLabel="input.inputLabel"
-                    :inputPlaceholder="input.inputPlaceholder"
-                    :inputValue="input.inputValue"
-                    :inputUnit="input.inputUnit"
+                    :input-name="input.inputName"
+                    :input-label="input.inputLabel"
+                    :input-placeholder="input.inputPlaceholder"
+                    :input-value="input.inputValue"
+                    :input-unit="input.inputUnit"
                     :disabled="input.disabled"
                     @getValue="setValue(input.inputName, $event)"
                 />
@@ -27,11 +27,19 @@
             <div class="calculator__form_complexity">
                 <div class="calculator__form_complexity_row">
                     <span class="calculator__form_complexity_title">{{
-                            $t("profitability_calculator.form_calculator.item[0]")
-                        }}</span>
+                        $t("profitability_calculator.form_calculator.item[0]")
+                    }}</span>
                     <span class="calculator__form_complexity_data">{{
-                            btcInfo.btc?.diff
-                        }}</span>
+                        btcInfo.btc?.diff
+                    }}</span>
+                </div>
+                <div class="calculator__form_complexity_row">
+                    <span class="calculator__form_complexity_title">{{
+                        $t("currency")
+                    }}</span>
+                    <span class="calculator__form_complexity_data">{{
+                        btcInfo.btc?.price.toLocaleString("en-US")
+                    }} USD</span>
                 </div>
                 <!--                <div class="calculator__form_complexity_row">-->
                 <!--                    <span class="calculator__form_complexity_title">{{-->
@@ -50,12 +58,12 @@
         </transition>
         <transition name="slide">
             <div
-                class="calculator__graph"
                 v-if="lightService.inputs.length > 0"
+                class="calculator__graph"
             >
                 <calculator-tabs
                     :tabs="graphTabs"
-                    :activeValue="graphValue"
+                    :active-value="graphValue"
                     @getDate="getDate"
                 ></calculator-tabs>
                 <!--            <column-graph-->
@@ -63,7 +71,7 @@
                 <!--                v-if="inputs.graph"-->
                 <!--            ></column-graph>-->
                 <div class="calculator__result">
-                    <converted-result :bitcoinValue="lightService.profit"/>
+                    <converted-result :bitcoin-value="lightService.profit" />
                 </div>
             </div>
         </transition>
@@ -80,16 +88,16 @@
 <script>
 import CalculatorTitle from "../UI/CalculatorTitle.vue";
 import CalculatorInput from "../UI/CalculatorInput.vue";
-import {mapGetters} from "vuex";
-import {LightCalculatorService} from "../../services/LightCalculatorService.js";
+import { mapGetters } from "vuex";
+import { LightCalculatorService } from "../../services/LightCalculatorService.js";
 import CalculatorTabs from "../UI/CalculatorTabs.vue";
 import ConvertedResult from "../UI/ConvertedResult.vue";
-import {HomeMessage} from "@/modules/home/lang/HomeMessage";
+import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 
 // import ColumnGraph from "../graphs/ColumnGraph.vue";
 
 export default {
-    name: "light-calculator-view",
+    name: "LightCalculatorView",
     components: {
         CalculatorInput,
         CalculatorTitle,
@@ -122,28 +130,16 @@ export default {
                     name: this.$t(
                         "profitability_calculator.form_calculator.segment[1]"
                     ),
-                    value: 210,
+                    value: 720,
                 },
                 {
                     name: this.$t(
                         "profitability_calculator.form_calculator.segment[2]"
                     ),
-                    value: 720,
+                    value: 2160,
                 },
             ],
         };
-    },
-    methods: {
-        getDate(tabValue) {
-            this.graphValue = tabValue;
-
-            this.lightService.getGraph(tabValue);
-        },
-        setValue(inputName, newValue) {
-            this.lightService.setItem(inputName, newValue);
-
-            this.lightService.getGraph(this.graphValue);
-        },
     },
     watch: {
         "btcInfo.btc"(newValue) {
@@ -160,6 +156,18 @@ export default {
 
             this.lightService.getGraph(this.graphValue);
         }
+    },
+    methods: {
+        getDate(tabValue) {
+            this.graphValue = tabValue;
+
+            this.lightService.getGraph(tabValue);
+        },
+        setValue(inputName, newValue) {
+            this.lightService.setItem(inputName, newValue);
+
+            this.lightService.getGraph(this.graphValue);
+        },
     },
 };
 </script>

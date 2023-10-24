@@ -1,8 +1,10 @@
 <template>
-    <div class="working__section working__section-blue" ref="view">
-        <div class="working-card animation-scale">
-            <p class="working-title">{{ inf.title }}</p>
-            <p class="working-text">{{ inf.text }}</p>
+    <div class="working__section-blue" ref="view">
+        <div class="working__section">
+            <div class="working-card animation-scale">
+                <p class="working-title">{{ inf.title }}</p>
+                <p class="working-text">{{ inf.text }}</p>
+            </div>
         </div>
     </div>
 </template>

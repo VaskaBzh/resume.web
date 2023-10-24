@@ -11,34 +11,24 @@ use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
+use App\Exceptions\BusinessException;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
-use Illuminate\Http\Client\PendingRequest;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Symfony\Component\HttpFoundation\Response;
 
 class BtcComService
 {
-    private PendingRequest $client;
-    private static int $retryCount = 3;
     private static int $pendingTimeSec = 1;
     private const DEFAULT_PAGE_SIZE = 1000;
     private const PU_ID = 781195;
     private const UNGROUPED_ID = -1;
     public const FEE = 0.5;
-
-    public function __construct()
-    {
-        $this->client = Http::baseUrl(config('api.btc.uri'))
-            ->withHeaders([
-                'Authorization' => config('api.btc.token'),
-            ]);
-    }
 
     /* ------------------ Btc.com requests ------------------------ */
 
@@ -51,17 +41,22 @@ class BtcComService
      */
     public function call(array $segments, string $method = 'get', array $params = []): array
     {
-        while (self::$retryCount > 0) {
-            $response = $this
-                ->client
-                ->$method(implode('/', $segments), $params);
+        $client = Http::baseUrl(config('api.btc.uri'))
+            ->withHeaders([
+                'Authorization' => config('api.btc.token'),
+            ]);
+
+        $retryCount = 3;
+
+        while ($retryCount > 0) {
+            $response = $client->$method(implode('/', $segments), $params);
 
             if (filled($response['data'])) {
 
                 return $response['data'];
             }
 
-            self::$retryCount--;
+            $retryCount--;
 
             sleep(self::$pendingTimeSec);
         }
@@ -96,21 +91,10 @@ class BtcComService
     }
 
     /**
-     * Создать sub аккаунт по имени пользователя
+     * Создать sub аккаунт по имени пользователя на btc.com
      */
     public function createSub(UserData $userData): array
     {
-        if ($this->btcHasUser(userData: $userData)) {
-
-            return [
-                'errors' => [
-                    'name' => __('validation.unique', [
-                        'attribute' => __('validation.attributes.subaccount')
-                    ])
-                ]
-            ];
-        }
-
         $response = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
@@ -119,7 +103,13 @@ class BtcComService
                 'group_name' => $userData->name
             ]);
 
-        $this->createLocalSub(userData: $userData, groupId: $response['gid']);
+        if (in_array('exist', $response)) {
+
+            throw new BusinessException(
+                __('actions.sub_account_already_exist'),
+                Response::HTTP_BAD_REQUEST
+            );
+        }
 
         return $response;
     }
@@ -143,15 +133,6 @@ class BtcComService
                 'status' => $workerStatus
             ]
         );
-
-        return collect($response['data']);
-    }
-
-    public function getWorker($workerId): Collection
-    {
-        $response = $this->call(['worker', $workerId], params: [
-            'puid' => self::PU_ID,
-        ]);
 
         return collect($response['data']);
     }
@@ -227,23 +208,14 @@ class BtcComService
 
     public function transformSubCollection(Collection $subs): Collection
     {
-        $stats = MinerStat::first();
-
         return $this
             ->filterUngrouped()
             ->whereIn('gid', $subs->pluck('group_id')->toArray())
-            ->map(function (array $btcComSub) use ($subs, $stats) {
+            ->map(function (array $btcComSub) use ($subs) {
                 foreach ($subs as $sub) {
-                    $hashPerDay = $this->getSubHashRate(sub: $sub);
-
                     if (in_array($sub->group_id, $btcComSub)) {
 
-                        return self::transform(
-                            stats: $stats,
-                            sub: $sub,
-                            hashPerDay: $hashPerDay,
-                            btcComSub: $btcComSub
-                        );
+                        return $this->transformSub($sub);
                     }
                 }
             });
@@ -267,38 +239,18 @@ class BtcComService
     }
 
     /**
-     * Проверка наличия пользователя на стороне btc.com
-     *
-     * @return bool
-     */
-    public function btcHasUser(UserData $userData): bool
-    {
-        return $this->filterUngrouped()
-            ->pluck('name')
-            ->contains($userData->name);
-    }
-
-    /**
      * Создать локального саба
      *
-     * @throws \Exception
      */
-    private function createLocalSub(UserData $userData, $groupId): void
+    public function createLocalSub(UserData $userData, $groupId): void
     {
-        try {
-            Create::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => auth()->user()->id,
-                    'group_id' => $groupId,
-                    'group_name' => $userData->name,
-                ])
-            );
-
-        } catch (\Exception $e) {
-            report($e);
-
-            throw new \Exception($e->getMessage());
-        }
+        Create::execute(
+            subData: SubData::fromRequest([
+                'user_id' => auth()->user()->id,
+                'group_id' => $groupId,
+                'group_name' => $userData->name,
+            ])
+        );
     }
 
     /**
@@ -377,12 +329,11 @@ class BtcComService
         $btcComWorkers = $this->getUngroupedWorkerCollection();
 
         if ($btcComWorkers->isEmpty()) {
-
             return;
         }
 
         $btcComWorkers
-            ->each(static function (array $firstWorkerData) {
+            ->each(function (array $firstWorkerData) {
 
                 WorkerCreate::execute($firstWorkerData['worker_data'])
                     ->workerHashrates()
@@ -391,8 +342,7 @@ class BtcComService
                         'unit' => $firstWorkerData['worker_hash_rate']['unit'],
                     ]);
 
-                resolve(BtcComService::class)
-                    ->updateWorker(workerData: $firstWorkerData['worker_data']);
+                $this->updateWorker(workerData: $firstWorkerData['worker_data']);
             });
 
         Artisan::call('make:sub-hashes');
