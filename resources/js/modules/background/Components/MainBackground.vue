@@ -1,17 +1,15 @@
 <template>
     <div class="background">
         <div class="background_filter"></div>
-        <canvas ref="canvas" width="100%" height="100%">
-        </canvas>
+        <canvas ref="canvas" width="100%" height="100%"></canvas>
     </div>
 </template>
 
 <script>
-
-import {BackgroundService} from "../services/BackgroundService";
+import { BackgroundService } from "../services/BackgroundService";
 
 export default {
-    name: "main-background",
+    name: "MainBackground",
 
     mounted() {
         this.initBackgroundService();
@@ -20,16 +18,15 @@ export default {
         initBackgroundService() {
             const canvas = this.$refs.canvas;
             BackgroundService(canvas);
-        }
-    }
-
+        },
+    },
 };
 </script>
 
 <style scoped>
 .background {
     position: fixed;
-    width: 100%;
+    width: calc(100% - 15px);
     height: 100%;
     top: 0;
     left: 0;
@@ -39,7 +36,6 @@ export default {
 canvas {
     filter: blur(70px) brightness(0.5);
 }
-
 
 .background_filter {
     position: absolute;
