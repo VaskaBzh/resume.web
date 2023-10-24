@@ -16,6 +16,7 @@ use App\Models\Sub;
 use App\Models\Worker;
 use App\Utils\Helper;
 use Illuminate\Http\Client\PendingRequest;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
@@ -320,7 +321,7 @@ class BtcComService
                         'pool_data' => $btcComWorker
                     ]);
                 }
-            });
+            })->filter();
     }
 
     /**
@@ -354,7 +355,7 @@ class BtcComService
                         ]),
                     ];
                 }
-            });
+            })->filter();
     }
 
     public function updateLocalWorkers(): void
@@ -375,7 +376,8 @@ class BtcComService
     {
         $btcComWorkers = $this->getUngroupedWorkerCollection();
 
-        if (!filled($btcComWorkers)) {
+        if ($btcComWorkers->isEmpty()) {
+
             return;
         }
 
