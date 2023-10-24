@@ -4,15 +4,18 @@
             <main-title class="subs_title" tag="h4">{{
                 $t("title")
             }}</main-title>
-            <div class="subs__wrapper" v-if="!service.waitSubs && !service.emptySubs">
+            <div
+                v-if="!service.waitSubs && !service.emptySubs"
+                class="subs__wrapper"
+            >
                 <sub-header
                     class="subs__header"
-                    :subsType="service.subsType"
+                    :subs-type="service.subsType"
                     @changeType="toggleIsTable"
                     @searched="service.searchSub($event)"
                 />
                 <sub-list
-                    :subsType="service.subsType"
+                    :subs-type="service.subsType"
                     :table="service.subsTable"
                     :empty="service.emptyTableSubs"
                 />
@@ -29,13 +32,9 @@
 </template>
 
 <script>
-import AccountProfile from "@/Components/technical/blocks/profile/AccountProfile.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import { mapGetters } from "vuex";
-import MainTable from "@/modules/table/Components/blocks/MainTable.vue";
 import SubHeader from "@/modules/subs/Components/SubHeader.vue";
 import SubList from "@/modules/subs/Components/SubList.vue";
 import { SubMessages } from "@/modules/subs/lang/SubMessages";
@@ -46,35 +45,33 @@ export default {
         SubList,
         SubHeader,
         MainTitle,
-        AccountProfile,
-        MainPopup,
-        BlueButton,
         MainPreloader,
-        MainTable,
     },
     i18n: {
         sharedMessages: SubMessages,
-    },
-    watch: {
-        allAccounts(newAccountsList) {
-            this.service.setSubList(newAccountsList)
-                .statesProcess()
-                .tableProcess()
-                .tableStatesProcess();
-        },
-        '$i18n.locale'() {
-            this.service.setDocumentTitle(this.$t("title"));
-
-            this.service.setSubList(this.allAccounts)
-                .statesProcess()
-                .tableProcess()
-                .tableStatesProcess();
-        },
     },
     data() {
         return {
             service: new SubService(),
         };
+    },
+    watch: {
+        allAccounts(newAccountsList) {
+            this.service
+                .setSubList(newAccountsList)
+                .statesProcess()
+                .tableProcess()
+                .tableStatesProcess();
+        },
+        "$i18n.locale"() {
+            this.service.setDocumentTitle(this.$t("title"));
+
+            this.service
+                .setSubList(this.allAccounts)
+                .statesProcess()
+                .tableProcess()
+                .tableStatesProcess();
+        },
     },
     computed: {
         ...mapGetters([
@@ -85,18 +82,19 @@ export default {
             "getAccount",
         ]),
     },
+    mounted() {
+        this.service.setDocumentTitle(this.$t("title"));
+
+        this.service
+            .setSubList(this.allAccounts)
+            .statesProcess()
+            .tableStatesProcess()
+            .tableProcess();
+    },
     methods: {
         toggleIsTable() {
             this.service.toggleSubsType();
         },
-    },
-    mounted() {
-        this.service.setDocumentTitle(this.$t("title"));
-
-        this.service.setSubList(this.allAccounts)
-            .statesProcess()
-            .tableStatesProcess()
-            .tableProcess();
     },
 };
 </script>
