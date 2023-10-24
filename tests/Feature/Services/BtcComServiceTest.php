@@ -12,30 +12,27 @@ use Tests\TestCase;
 
 class BtcComServiceTest extends TestCase
 {
+    /**
+     * @test
+     */
+    public function it_throw_exception_if_subaccount_already_exist()
+    {
+        Http::fake([
+            config('api.btc.uri') . '/groups/create' => Http::response(['data' => ['exist']])
+        ]);
 
-//    /**
-//     * @test
-//     */
-//    public function it_throw_exception_if_subaccount_already_exist()
-//    {
-//        $service = $this->partialMock(BtcComService::class, function ($mock) {
-//            $mock->shouldReceive('call')
-//                ->once()
-//                ->andReturn(['exist']);
-//        });
-//
-//        $this->expectException(BusinessException::class);
-//        $this->expectExceptionMessage(__('actions.sub_account_already_exist'));
-//
-//        $service->createSub(UserData::fromRequest([
-//            'name' => 'MainTest'
-//        ]));
-//    }
+        $this->expectException(BusinessException::class);
+        $this->expectExceptionMessage(__('actions.sub_account_already_exist'));
+
+        app(BtcComService::class)->createSub(UserData::fromRequest([
+            'name' => 'MainTest'
+        ]));
+    }
 
     /**
      * @test
      */
-    public function test_create_sub_successfully()
+    public function it_create_sub_successfully()
     {
         $userData = UserData::fromRequest([
             'name' => 'MainTest'
@@ -54,12 +51,11 @@ class BtcComServiceTest extends TestCase
         ];
 
         Http::fake([
-            '*' => Http::response($mockedResponse)
+            config('api.btc.uri') . '/groups/create' => Http::response($mockedResponse)
         ]);
 
         $actual = app(BtcComService::class)->createSub($userData);
 
         $this->assertEqualsCanonicalizing($actual, $expected);
     }
-
 }
