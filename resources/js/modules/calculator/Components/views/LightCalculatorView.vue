@@ -38,8 +38,8 @@
                         $t("currency")
                     }}</span>
                     <span class="calculator__form_complexity_data">{{
-                        btcInfo.btc?.price
-                    }}</span>
+                        btcInfo.btc?.price.toLocaleString("en-US")
+                    }} USD</span>
                 </div>
                 <!--                <div class="calculator__form_complexity_row">-->
                 <!--                    <span class="calculator__form_complexity_title">{{-->
