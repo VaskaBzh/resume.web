@@ -67,7 +67,7 @@ export default {
     },
     watch: {
         value(newVal, oldVal) {
-            let regExp = /[a-zа-яё|[()/*--+=_%$#@]/gi;
+            let regExp = /[a-zа-яё]|[!$()№";'@#&_%$*+,~`:=<>?[|\]/\-\\^{|}]/gi;
             if (newVal.length > 9 || regExp.test(newVal)) {
                 this.value = oldVal;
                 return;
