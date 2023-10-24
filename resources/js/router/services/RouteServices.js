@@ -57,6 +57,11 @@ export class RouteServices {
                 redirect: "/profile/statistic",
             },
             {
+                path: "/promo",
+                name: "promo",
+                redirect: "/"
+            },
+            {
                 path: "/profile/referral",
                 name: "referral",
                 component: () =>
