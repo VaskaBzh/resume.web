@@ -16,7 +16,6 @@ use OpenApi\Attributes as OA;
         description: "Документация Allbtc API",
         title: "Allbtc API"
     ),
-    OA\Contact(email: 'ognevoy.bima@gmail.com'),
 ]
 class Controller extends BaseController
 {
