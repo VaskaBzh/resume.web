@@ -13,11 +13,11 @@
                 <calculator-input
                     v-for="(input, i) in lightService.inputs"
                     :key="i"
-                    :inputName="input.inputName"
-                    :inputLabel="input.inputLabel"
-                    :inputPlaceholder="input.inputPlaceholder"
-                    :inputValue="input.inputValue"
-                    :inputUnit="input.inputUnit"
+                    :input-name="input.inputName"
+                    :input-label="input.inputLabel"
+                    :input-placeholder="input.inputPlaceholder"
+                    :input-value="input.inputValue"
+                    :input-unit="input.inputUnit"
                     :disabled="input.disabled"
                     @getValue="setValue(input.inputName, $event)"
                 />
@@ -32,6 +32,14 @@
                     <span class="calculator__form_complexity_data">{{
                         btcInfo.btc?.diff
                     }}</span>
+                </div>
+                <div class="calculator__form_complexity_row">
+                    <span class="calculator__form_complexity_title">{{
+                        $t("currency")
+                    }}</span>
+                    <span class="calculator__form_complexity_data">{{
+                        btcInfo.btc?.price.toLocaleString("en-US")
+                    }} USD</span>
                 </div>
                 <!--                <div class="calculator__form_complexity_row">-->
                 <!--                    <span class="calculator__form_complexity_title">{{-->
@@ -50,12 +58,12 @@
         </transition>
         <transition name="slide">
             <div
-                class="calculator__graph"
                 v-if="lightService.inputs.length > 0"
+                class="calculator__graph"
             >
                 <calculator-tabs
                     :tabs="graphTabs"
-                    :activeValue="graphValue"
+                    :active-value="graphValue"
                     @getDate="getDate"
                 ></calculator-tabs>
                 <!--            <column-graph-->
@@ -63,7 +71,7 @@
                 <!--                v-if="inputs.graph"-->
                 <!--            ></column-graph>-->
                 <div class="calculator__result">
-                    <converted-result :bitcoinValue="lightService.profit" />
+                    <converted-result :bitcoin-value="lightService.profit" />
                 </div>
             </div>
         </transition>
@@ -89,7 +97,7 @@ import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 // import ColumnGraph from "../graphs/ColumnGraph.vue";
 
 export default {
-    name: "light-calculator-view",
+    name: "LightCalculatorView",
     components: {
         CalculatorInput,
         CalculatorTitle,
@@ -133,18 +141,6 @@ export default {
             ],
         };
     },
-    methods: {
-        getDate(tabValue) {
-            this.graphValue = tabValue;
-
-            this.lightService.getGraph(tabValue);
-        },
-        setValue(inputName, newValue) {
-            this.lightService.setItem(inputName, newValue);
-
-            this.lightService.getGraph(this.graphValue);
-        },
-    },
     watch: {
         "btcInfo.btc"(newValue) {
             if (newValue) {
@@ -160,6 +156,18 @@ export default {
 
             this.lightService.getGraph(this.graphValue);
         }
+    },
+    methods: {
+        getDate(tabValue) {
+            this.graphValue = tabValue;
+
+            this.lightService.getGraph(tabValue);
+        },
+        setValue(inputName, newValue) {
+            this.lightService.setItem(inputName, newValue);
+
+            this.lightService.getGraph(this.graphValue);
+        },
     },
 };
 </script>
