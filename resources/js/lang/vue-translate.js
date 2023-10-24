@@ -266,7 +266,7 @@ const messages = {
         payments: {
             button: "payouts",
             main_title: ["fPPS+", "(msk) 09 am – 11 am", "comission 0%"],
-            title: ["FPPS+", "autopayouts", "free funds transfer"],
+            title: ["reward method", "autopayouts", "free funds transfer"],
             text: [
                 "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
                 "Automatic payments are made without any action on the part of the miner. Since payments are possible when predetermined conditions are met (reaching a given minimum threshold), funds are received without delay. Moreover, the possibility of an error (incorrectly entered wallet address or transaction amount) caused by a human factor is eliminated.",
