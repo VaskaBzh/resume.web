@@ -5,6 +5,7 @@ import {createI18n} from "vue-i18n";
 const messages = {
     en: {
         hash: "Hashrate",
+        costs: "Electricity cost",
         currency: "BTC Rate",
         miners_title: ["transparent", "and efficient", "mining", "of bitcoin"],
         miners_offer: {
@@ -1027,6 +1028,7 @@ const messages = {
         miners_title: ["прозрачный", "и эффективный", "майнинг", "bitcoin"],
         hash: "Хешрейт",
         currency: "Курст BTC",
+        costs: "Стоимость электроэнергии",
         miners_offer: {
             title: "что мы предлагаем",
             text: "Эффективный и стабильный майнинг-пул с персональной комиссией, оптимизированный под добычу Bitcoin. А также комплекс инструментов для прозрачного и удобного анализа ваших активов.",
