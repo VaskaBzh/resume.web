@@ -25,16 +25,11 @@ jobs:
       - name: App key
         run: make key
 
-      - name: Pretend migrations
-        run: |
-          docker-compose exec -T php php artisan migrate --pretend
-
-      - name: Pretend rollback migrations
-        run: |
-          docker-compose exec -T php php artisan migrate:rollback --pretend
-
       - name: Install npm dependencies
         run: make npm
 
       - name: Build front-end
         run: make front
+
+      - name: Run tests
+        run: make test

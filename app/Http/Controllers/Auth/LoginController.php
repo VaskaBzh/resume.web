@@ -4,12 +4,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
+use App\Services\Internal\UserService;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
 
@@ -86,35 +90,23 @@ class LoginController extends Controller
     public function login(LoginRequest $request): JsonResponse
     {
         if (!Auth::attempt($request->only('email', 'password'))) {
-            return new JsonResponse([
-                'errors' => [
-                    'auth' => [__('auth.failed')]
-                ]
-            ], Response::HTTP_NOT_FOUND);
-        }
-
-        if (!$request->user->hasVerifiedEmail()) {
-            return new JsonResponse([
-                'errors' => [
-                    'auth' => [__('auth.email.not.verified', ['email' => $request->user->email])]
-                ]
-            ], Response::HTTP_FORBIDDEN);
-        }
-
-        $request
-            ->user
-            ->tokens()
-            ->delete();
-
-        $token = $request
-            ->user
-            ->createToken($request->user->name,
-                ['*'],
-                now()->addMinutes(config('sanctum.expiration'))
+            throw new BusinessException(
+                clientMessage: __('auth.failed'),
+                statusCode: Response::HTTP_NOT_FOUND
             );
+        }
+
+        if (!$request->user()->hasVerifiedEmail()) {
+            throw new BusinessException(
+                clientMessage: __('auth.email.not.verified', ['email' => $request->user->email]),
+                statusCode: Response::HTTP_FORBIDDEN);
+        }
+
+        $token = UserService::withUser($request->user())
+            ->refreshToken();
 
         return new JsonResponse([
-            'user' => new UserResource($request->user),
+            'user' => new UserResource($request->user()),
             'token' => $token->plainTextToken,
             'expired_at' => $token->accessToken->expires_at,
         ]);
@@ -153,15 +145,12 @@ class LoginController extends Controller
             ]
         )
     ]
-    public function logout(): JsonResponse
+    public function logout(Request $request): JsonResponse
     {
-        auth()->user()
-            ?->tokens()
-            ->delete();
+        PersonalAccessToken::findToken($request->bearerToken())->delete();
 
         return response()->json('Logged out');
     }
-
 
     #[
         OA\Put(
@@ -192,12 +181,12 @@ class LoginController extends Controller
             ]
         )
     ]
-    public function decreaseTokenTime(): void
+    public function decreaseTokenTime(Request $request): JsonResponse
     {
-        auth()
-            ->user()
-            ->tokens()
-            ->first()
-            ->update(['expires_at' => now()->addHours(2)]);
+        PersonalAccessToken::findToken(
+            $request->bearerToken()
+        )->update(['expires_at' => now()->addHours(2)]);
+
+        return response()->json('Ok');
     }
 }

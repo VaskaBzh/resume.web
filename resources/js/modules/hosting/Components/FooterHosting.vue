@@ -47,7 +47,9 @@
             />
         </svg>
         <div class="police-conf">
-            <span class="pointer">{{ $t("footer.text") }}</span>
+            <a :href="pdf" target="_blank" class="pointer">{{
+                $t("footer.text")
+            }}</a>
             <span>© 2023 allbtc pool</span>
         </div>
     </div>
@@ -55,11 +57,17 @@
 <script>
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
 import NavLinks from "@/modules/navs/Components/NavLinks.vue";
+import pdf from "@/../assets/files/policy.pdf";
 
 export default {
     components: { NavLinks },
     i18n: {
         sharedMessages: HostingMessage,
+    },
+    data() {
+        return {
+            pdf,
+        };
     },
 };
 </script>

@@ -3,6 +3,7 @@
 return [
     'success_sub_create' => 'Сабаккаунт успешно создан',
     'fail_sub_create' => 'Что-то пошло не так',
+    'sub_account_already_exist' => 'Сабаккаунт с таким именем уже существует',
     'success_worker_create' => 'Воркер успешно создан',
     'validation_percent_exceeded' => 'Суммарный процент вывода больше 100',
     'wallet_create' => 'Кошелек успешно создан',
