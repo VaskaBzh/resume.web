@@ -27,7 +27,7 @@ export class LightCalculatorService {
             ),
             new InputData(
                 "electrical energy",
-                "Сosts",
+                "costs",
                 "0.18",
                 "1",
                 "USD/kW",
