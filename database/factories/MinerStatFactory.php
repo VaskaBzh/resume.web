@@ -13,17 +13,32 @@ class MinerStatFactory extends Factory
     public function definition(): array
     {
         return [
-            'network_hashrate' => $this->faker->randomFloat(),
-            'network_unit' => $this->faker->word(),
-            'network_difficulty' => $this->faker->randomNumber(),
-            'next_difficulty' => $this->faker->randomNumber(),
-            'change_difficulty' => $this->faker->word(),
-            'reward_block' => $this->faker->randomFloat(),
-            'price_USD' => $this->faker->randomNumber(),
-            'time_remain' => $this->faker->randomNumber(),
+            'network_hashrate' => 449.01,
+            'network_unit' => 'E',
+            'network_difficulty' => 61030681983175,
+            'next_difficulty' => 0,
+            'change_difficulty' => 0,
+            'reward_block' => 6.2500000,
+            'price_USD' => 34668,
+            'time_remain' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'fpps_rate' => $this->faker->randomFloat(),
+            'fpps_rate' => 4.77,
         ];
     }
 }
+
+/**
+ * id
+ * network_hashrate
+ * network_unit
+ * network_difficulty
+ * next_difficulty
+ * change_difficulty
+ * reward_block
+ * fpps_rate
+ * price_USD
+ * time_remain
+ * created_at
+ * updated_at
+ */

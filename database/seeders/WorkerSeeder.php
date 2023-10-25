@@ -18,7 +18,8 @@ class WorkerSeeder extends Seeder
                 [
                     'group_id' => (int)$worker['gid'],
                     'worker_id' => (int)$worker['worker_id'],
-                    'approximate_hash_rate' => (float)$worker['shares_1d']
+                    'approximate_hash_rate' => (float)$worker['shares_1d'],
+                    'pool_data' => $worker,
                 ])
         );
     }

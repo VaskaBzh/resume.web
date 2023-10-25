@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Builders\SubBuilder;
+use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -128,5 +129,21 @@ class Sub extends Model
                 ->first()
                 ?->daily_amount
         );
+    }
+
+    /**
+     * Прогноз дохода на сегодня
+     *
+     * @param float $hashPerDay
+     * @param float $fee
+     * @return string
+     */
+    public function todayForecast(float $hashPerDay, float $fee): string
+    {
+        return number_format(Helper::calculateEarn(
+            stats: MinerStat::first(),
+            hashRate: $hashPerDay,
+            fee: $fee
+        ), 8, '.', ' ');
     }
 }
