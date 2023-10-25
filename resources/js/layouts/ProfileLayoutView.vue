@@ -36,7 +36,6 @@
 import NavTabs from "@/modules/navs/Components/NavTabs.vue";
 import HeaderComponentProfile from "@/modules/common/Components/HeaderComponentProfile.vue";
 import NotificationList from "@/modules/notification/Components/NotificationList.vue";
-import MainIcon from "@/modules/common/icons/MainIcon.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { mapGetters } from "vuex";
@@ -46,7 +45,6 @@ export default {
         NotificationList,
         NavTabs,
         HeaderComponentProfile,
-        MainIcon,
     },
     data() {
         return {
