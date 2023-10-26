@@ -10,9 +10,8 @@ export class TabsService {
         this.route = route;
     }
 
-    setLinks() {
+    setLinks(user) {
         this.dropLinks();
-
         this.links = [
             ...this.links,
             {
@@ -68,17 +67,9 @@ export class TabsService {
             },
         ];
 
-        // if (user.roles)
-        let localStorageReferalKey = JSON.parse(localStorage.getItem("user"));
-        if (localStorageReferalKey["has_referral_role"]) {
+        if (user["has_referral_role"])
             this.setReferralTab();
-        } else {
-            this.setWithoutReferralTab();
-        }
-
-        // if (localStorage.getItem("user"))
-        //     this.setReferralTab();
-        // else this.setWithoutReferralTab();
+        else this.setWithoutReferralTab();
     }
 
     async setAllowedRoutes() {
