@@ -166,6 +166,12 @@ class BtcComService
 
     /* End requests */
 
+    /**
+     * Привести удаленный саб-аккаунт в локальный вид
+     *
+     * @param Sub $sub
+     * @return array
+     */
     public function transformSub(Sub $sub): array
     {
         return self::transform(
@@ -174,6 +180,12 @@ class BtcComService
         );
     }
 
+    /**
+     * Привести коллекцию удаленных саб-аккаунитов в локальный вид
+     *
+     * @param Collection $subs
+     * @return Collection
+     */
     public function transformSubCollection(Collection $subs): Collection
     {
         return $this
@@ -196,19 +208,23 @@ class BtcComService
      */
     public function filterUngrouped(): Collection
     {
-        return collect($this->getGroupList())
+        return $this
+            ->getGroupList()
             ->filter(static fn(array $groups, int $index) => $index > 1);
     }
 
     /**
      * Создать локального саба
      *
+     * @param UserData $userData
+     * @param $groupId
+     * @return void
      */
     public function createLocalSub(UserData $userData, $groupId): void
     {
         Create::execute(
             subData: SubData::fromRequest([
-                'user_id' => auth()->user()->id,
+                'user_id' => $userData->id,
                 'group_id' => $groupId,
                 'group_name' => $userData->name,
             ])
@@ -216,9 +232,10 @@ class BtcComService
     }
 
     /**
-     * Взять список групированных воркеров бтс.ком
-     * Привести локальный вид
+     * Взять список групированных удаленных воркеров
+     * Привести в локальный вид
      *
+     * @return Collection
      */
     public function getRemoteGroupedWorkerCollection(): Collection
     {
@@ -240,7 +257,7 @@ class BtcComService
     }
 
     /**
-     * Привести не разгруппированных воркеров бтс.ком в локальный вид
+     * Привести не разгруппированных удаленных воркеров в локальный вид
      * Сформировать первый хеш рейт воркеров
      *
      */
@@ -315,13 +332,20 @@ class BtcComService
         Log::channel('commands')->info('WORKERS IMPORT COMPLETE');
     }
 
+    /**
+     * Возвращает массив данных саб-аккаунта в локальном виде
+     *
+     * @param Sub $sub
+     * @param array $btcComSub
+     * @return array
+     */
     private static function transform(Sub $sub, array $btcComSub): array
     {
         $hashPerDay = $sub->total_hash_rate;
 
         return [
             'sub' => $sub->sub,
-            'user_id' => $sub->user->id,
+            'user_id' => $sub->user_id,
             'pending_amount' => $sub->pending_amount,
             'group_id' => $sub->group_id,
             'workers_count_active' => $btcComSub['workers_active'],

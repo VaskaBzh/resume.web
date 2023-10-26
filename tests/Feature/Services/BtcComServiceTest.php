@@ -8,8 +8,6 @@ use App\Dto\UserData;
 use App\Exceptions\BusinessException;
 use App\Models\MinerStat;
 use App\Models\Sub;
-use App\Models\User;
-use App\Models\Worker;
 use App\Services\External\BtcComService;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -18,15 +16,11 @@ use Tests\TestCase;
 
 class BtcComServiceTest extends TestCase
 {
-    private readonly User $user;
-
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
         MinerStat::factory()->create();
-        Worker::factory()->create();
     }
 
     /**
@@ -51,7 +45,7 @@ class BtcComServiceTest extends TestCase
      *
      * @dataProvider createRemoteSubDataProvider
      */
-    public function it_create_remote_ub_successfully(UserData $userData, array $expected)
+    public function it_create_remote_sub_successfully(UserData $userData, array $expected)
     {
 
         $mockedResponse = [
@@ -72,9 +66,10 @@ class BtcComServiceTest extends TestCase
      *
      * @dataProvider transformSubDataProvider
      */
-    public function it_transform_sub_correctly(
-        Collection $localSub,
-        array $btcComSubResponse
+    public function it_transform_sub_without_workers_correctly(
+        Collection $localSubs,
+        array      $btcComSubResponse,
+        array      $expected,
     )
     {
         $mockedResponse = [
@@ -85,10 +80,27 @@ class BtcComServiceTest extends TestCase
             '*' => Http::response($mockedResponse)
         ]);
 
-        $actual = app(BtcComService::class)->transformSubCollection($localSub);
+        $actual = app(BtcComService::class)->transformSubCollection($localSubs);
 
-        dd($actual);
+        $this->assertTrue($actual instanceof Collection);
+        $this->assertEquals(count($expected), $actual->count());
 
+        array_map(function ($expectedSub, $actualSub) {
+            $this->assertEquals($expectedSub['sub'], $actualSub['sub']);
+            $this->assertEquals($expectedSub['user_id'], $actualSub['user_id']);
+            $this->assertEquals($expectedSub['pending_amount'], $actualSub['pending_amount']);
+            $this->assertEquals($expectedSub['group_id'], $actualSub['group_id']);
+            $this->assertEquals($expectedSub['workers_count_active'], $actualSub['workers_count_active']);
+            $this->assertEquals($expectedSub['workers_count_in_active'], $actualSub['workers_count_in_active']);
+            $this->assertEquals($expectedSub['workers_count_unstable'], $actualSub['workers_count_unstable']);
+            $this->assertEquals($expectedSub['hash_per_min'], $actualSub['hash_per_min']);
+            $this->assertEquals($expectedSub['hash_per_day'], $actualSub['hash_per_day']);
+            $this->assertEquals($expectedSub['today_forecast'], $actualSub['today_forecast']);
+            $this->assertEquals($expectedSub['reject_percent'], $actualSub['reject_percent']);
+            $this->assertEquals($expectedSub['unit'], $actualSub['unit']);
+            $this->assertEquals($expectedSub['total_payout'], $actualSub['total_payout']);
+            $this->assertEquals($expectedSub['yesterday_amount'], $actualSub['yesterday_amount']);
+        }, $actual->toArray(), $expected);
     }
 
     public function createRemoteSubDataProvider(): array
@@ -116,7 +128,7 @@ class BtcComServiceTest extends TestCase
                 'localSubs' => collect([
                     new Sub([
                         'group_id' => 666666,
-                        'sub' => 'sub2',
+                        'sub' => 'MainTest',
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                         'percent' => 3.5,
@@ -126,7 +138,7 @@ class BtcComServiceTest extends TestCase
                     ]),
                     new Sub([
                         'group_id' => 777777,
-                        'sub' => 'sub1',
+                        'sub' => 'MainTest2',
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
                         'percent' => 3.5,
@@ -145,7 +157,7 @@ class BtcComServiceTest extends TestCase
                             "name" => "MainTest",
                             "created_at" => 1681501367,
                             "updated_at" => 1681501367,
-                            "workers_active" => 2,
+                            "workers_active" => 0,
                             "workers_inactive" => 0,
                             "workers_dead" => 3,
                             "shares_1m" => 105,
@@ -156,7 +168,7 @@ class BtcComServiceTest extends TestCase
                             "sort_id" => "6001912",
                             "shares_unit" => "T",
                             "shares_1h" => 0,
-                            "shares_1d" => 200,
+                            "shares_1d" => 0,
                             "shares_1m_pure" => "75061139114121",
                             "shares_5m_pure" => "75061139114121",
                             "shares_15m_pure" => "75061139114121",
@@ -166,8 +178,8 @@ class BtcComServiceTest extends TestCase
                         [
                             "workers_active" => 0,
                             "workers_inactive" => 0,
-                            "workers_dead" => 0,
-                            "shares_1m" => "0.00",
+                            "workers_dead" => 3,
+                            "shares_1m" => 108,
                             "shares_5m" => "0.00",
                             "shares_15m" => "0",
                             "workers_total" => 0,
@@ -175,7 +187,7 @@ class BtcComServiceTest extends TestCase
                             "shares_unit" => "T",
                             "gid" => 777777,
                             "sort_id" => 6002031,
-                            "name" => "MiltonFrost",
+                            "name" => "MainTest2",
                             "created_at" => 1682499803,
                             "updated_at" => 1682499803,
                         ],
@@ -195,6 +207,40 @@ class BtcComServiceTest extends TestCase
                             "created_at" => 1682673065,
                             "updated_at" => 1682673065,
                         ],
+                    ]
+                ],
+                'expected' => [
+                    [
+                        "sub" => "MainTest",
+                        "user_id" => 1,
+                        "pending_amount" => 0.0,
+                        "group_id" => 666666,
+                        "workers_count_active" => 0,
+                        "workers_count_in_active" => 0,
+                        "workers_count_unstable" => 3,
+                        "hash_per_min" => 105,
+                        "hash_per_day" => 0.0,
+                        "today_forecast" => "0.00000000",
+                        "reject_percent" => 0.0,
+                        "unit" => "T",
+                        "total_payout" => 0,
+                        "yesterday_amount" => 0.0,
+                    ],
+                    [
+                        "sub" => "MainTest2",
+                        "user_id" => 1,
+                        "pending_amount" => 0.0,
+                        "group_id" => 777777,
+                        "workers_count_active" => 0,
+                        "workers_count_in_active" => 0,
+                        "workers_count_unstable" => 3,
+                        "hash_per_min" => 108,
+                        "hash_per_day" => 0.0,
+                        "today_forecast" => "0.00000000",
+                        "reject_percent" => 0.0,
+                        "unit" => "T",
+                        "total_payout" => 0,
+                        "yesterday_amount" => 0.0,
                     ]
                 ]
             ]
