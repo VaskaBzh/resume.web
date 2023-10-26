@@ -90,7 +90,7 @@ class CreateController extends Controller
     ): JsonResponse
     {
         $response = $btcComService->createSub(
-            userData: $userData = UserData::fromRequest(requestData: $request->all())
+            userData: $userData = UserData::fromRequest(requestData: array_merge($request->all(), ['id' => $user->id]))
         );
 
         $btcComService->createLocalSub($userData, $response['gid']);

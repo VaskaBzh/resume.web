@@ -17,4 +17,15 @@ class WorkerBuilder extends BaseBuilder
     {
         return $this->where('status', 'ACTIVE');
     }
+
+    public function onlyInactive(): Builder
+    {
+        return $this->where('status', 'INACTIVE');
+    }
+
+    public function onlyDead(): Builder
+    {
+        return $this->where('status', 'DEAD');
+
+    }
 }

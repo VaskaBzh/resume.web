@@ -58,7 +58,10 @@ class ListController extends Controller
             ],
         )
     ]
-    public function __invoke(User $user, BtcComService $btcComService): ResourceCollection
+    public function __invoke(
+        User          $user,
+        BtcComService $btcComService
+    ): ResourceCollection
     {
         $this->authorize('viewAny', $user);
 

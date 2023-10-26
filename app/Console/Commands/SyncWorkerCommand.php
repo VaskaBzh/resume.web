@@ -18,7 +18,7 @@ class SyncWorkerCommand extends Command
      */
     public function handle(BtcComService $btcComService): void
     {
-        $btcComService->createLocalWorkers();
         $btcComService->updateLocalWorkers();
+        $btcComService->createLocalWorkers();
     }
 }
