@@ -61,6 +61,11 @@ class BtcComServiceTest extends TestCase
         $this->assertEqualsCanonicalizing($actual, $expected);
     }
 
+    public function it_create_local_sub_successfully()
+    {
+
+    }
+
     /**
      * @test
      *
@@ -109,6 +114,27 @@ class BtcComServiceTest extends TestCase
             [
                 'userData' => UserData::fromRequest([
                     'name' => 'MainTest'
+                ]),
+                'expected' => [
+                    "status" => true,
+                    "gid" => 6003166,
+                    "group_name" => "MainTest",
+                    "created_at" => 1698151086,
+                    "updated_at" => 1698151086,
+                ],
+            ]
+        ];
+    }
+
+    public function createLocalSubDataProvider(): array
+    {
+        return [
+            [
+                'userData' => UserData::fromRequest([
+                    'name' => 'MainTest',
+                    'id' => 1,
+                    'group_id' => 666666,
+                    'group_name' =>
                 ]),
                 'expected' => [
                     "status" => true,
