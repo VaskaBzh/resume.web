@@ -33,7 +33,8 @@ class MakeWorkerHashesCommand extends Command
         $btcWorkerList->each(static function (array $btcComWorker) use ($progressBar) {
             if (array_key_exists('worker_id', $btcComWorker)) {
 
-                Worker::find($btcComWorker['worker_id'])
+                Worker::where('worker_id', $btcComWorker['worker_id'])
+                    ->first()
                     ?->workerHashrates()
                     ->create([
                         'hash' => (int)$btcComWorker['shares_1m'],

@@ -117,7 +117,10 @@ class RegisterController extends Controller
 
         auth()->login($user = UserService::create(userData: $userData));
 
-        $btcComService->createLocalSub(userData: $userData, groupId: $response['gid']);
+        $btcComService->createLocalSub(
+            userData: UserData::fromRequest(requestData: array_merge($request->all(), ['id' => $user->id])),
+            groupId: $response['gid']
+        );
 
         event(new Registered(
             user: $user
