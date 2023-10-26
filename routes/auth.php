@@ -38,7 +38,7 @@ Route::group([
     'prefix' => 'password',
     'middleware' => 'throttle:6,1'
 ], function () {
-    Route::put('/restore/{user}', [ResetPasswordController::class, 'resetPassword']);
+    Route::put('/restore/{user}', [ResetPasswordController::class, 'restorePassword']);
     Route::post('/forgot', [ForgotPasswordController::class, 'sendLink']);
     Route::get('/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordReset'])
         ->middleware('signed')
