@@ -177,12 +177,6 @@ class BtcComServiceTest extends TestCase
     {
         return [
             [
-                'userData' => UserData::fromRequest([
-                    'name' => 'MainTest',
-                    'id' => 1,
-                    'group_id' => 666666,
-                    'group_name' =>
-                ]),
                 'expected' => [
                     "status" => true,
                     "gid" => 6003166,
