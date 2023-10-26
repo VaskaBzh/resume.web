@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Mail\User\PasswordChangeConfirmationMail;
 use App\Models\User;
 use App\Traits\Tokenable;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Symfony\Component\HttpFoundation\Response;
@@ -85,7 +85,7 @@ class ResetPasswordController extends Controller
             ]
         )
     ]
-    public function resetPassword(ChangePasswordRequest $request, User $user)
+    public function restorePassword(Request $request, User $user)
     {
         if (!hash_equals(hash('sha256', $user->getEmailForVerification()), $request->hash)) {
 

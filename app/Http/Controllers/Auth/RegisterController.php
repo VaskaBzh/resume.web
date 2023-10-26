@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Sub\Create;
+use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
@@ -111,13 +113,11 @@ class RegisterController extends Controller
         BtcComService   $btcComService
     ): JsonResponse
     {
-        $userData = UserData::fromRequest($request->all());
+        auth()->login($user = UserService::create(userData:
+            UserData::fromRequest($request->all())
+        ));
 
-        $response = $btcComService->createSub(userData: $userData);
-
-        auth()->login($user = UserService::create(userData: $userData));
-
-        $btcComService->createLocalSub(userData: $userData, groupId: $response['gid']);
+        $btcComService->createSub(user: $user);
 
         event(new Registered(
             user: $user

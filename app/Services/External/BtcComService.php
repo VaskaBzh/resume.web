@@ -12,10 +12,9 @@ use App\Dto\UserData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Exceptions\BusinessException;
-use App\Models\MinerStat;
 use App\Models\Sub;
+use App\Models\User;
 use App\Models\Worker;
-use App\Utils\Helper;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
@@ -41,10 +40,11 @@ class BtcComService
      */
     public function call(array $segments, string $method = 'get', array $params = []): array
     {
-        $client = Http::baseUrl(config('api.btc.uri'))
-            ->withHeaders([
-                'Authorization' => config('api.btc.token'),
-            ]);
+        $client = Http::baseUrl(
+            url: config('api.btc.uri')
+        )->withHeaders(
+            headers: ['Authorization' => config('api.btc.token')]
+        );
 
         $retryCount = 3;
 
@@ -91,20 +91,20 @@ class BtcComService
     }
 
     /**
-     * Создать sub аккаунт по имени пользователя на btc.com
+     * Создать удаленный sub аккаунт по имени пользователя
+     * Создать sub аккаунт локально получив удаленный group_id
      */
-    public function createSub(UserData $userData): array
+    public function createSub(User $user): void
     {
         $response = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
-                'group_name' => $userData->name
+                'group_name' => $user->name
             ]);
 
-
-        if (in_array('exist', $response , true)) {
+        if (in_array('exist', $response, true)) {
 
             throw new BusinessException(
                 __('actions.sub_account_already_exist'),
@@ -112,7 +112,13 @@ class BtcComService
             );
         }
 
-        return $response;
+        Create::execute(
+            subData: SubData::fromRequest([
+                'user_id' => $user->id,
+                'group_id' => $response['gid'],
+                'group_name' => $user->name,
+            ])
+        );
     }
 
     /**
@@ -121,7 +127,7 @@ class BtcComService
      * параметр group (не group_id)
      */
     public function getWorkerList(
-        ?int    $groupId = self::UNGROUPED_ID,
+        ?int    $groupId = 0,
         ?string $workerStatus = 'all'
     ): Collection
     {
@@ -168,64 +174,39 @@ class BtcComService
 
     /* End requests */
 
-    private static function transform(
-        MinerStat $stats,
-        Sub       $sub,
-        float     $hashPerDay,
-        array     $btcComSub
-    ): array
-    {
-        return [
-            'sub' => $sub->sub,
-            'user_id' => $sub->user->id,
-            'pending_amount' => $sub->pending_amount,
-            'group_id' => $sub->group_id,
-            'workers_count_active' => $btcComSub['workers_active'],
-            'workers_count_in_active' => $btcComSub['workers_inactive'],
-            'workers_count_unstable' => $btcComSub['workers_dead'],
-            'hash_per_min' => (float)$btcComSub['shares_1m'],
-            'hash_per_day' => $hashPerDay,
-            'today_forecast' => number_format(Helper::calculateEarn(
-                stats: $stats,
-                hashRate: $hashPerDay,
-                fee: BtcComService::FEE
-            ), 8, '.', ' '),
-            'reject_percent' => (float)$btcComSub['reject_percent'],
-            'unit' => $btcComSub['shares_unit'],
-            'total_payout' => $sub->total_payout,
-            'yesterday_amount' => (float)$sub->yesterday_amount,
-        ];
-    }
-
+    /**
+     * Привести удаленный саб-аккаунт в локальный вид
+     *
+     * @param Sub $sub
+     * @return array
+     */
     public function transformSub(Sub $sub): array
     {
         return self::transform(
-            stats: MinerStat::first(),
             sub: $sub,
-            hashPerDay: $this->getSubHashRate(sub: $sub),
             btcComSub: $this->getSub($sub->group_id)
         );
     }
 
+    /**
+     * Привести коллекцию саб-аккаунитов в локальный вид
+     *
+     * @param Collection $subs
+     * @return Collection
+     */
     public function transformSubCollection(Collection $subs): Collection
     {
         return $this
             ->filterUngrouped()
             ->whereIn('gid', $subs->pluck('group_id')->toArray())
-            ->map(function (array $btcComSub) use ($subs) {
+            ->map(static function (array $btcComSub) use ($subs) {
                 foreach ($subs as $sub) {
                     if (in_array($sub->group_id, $btcComSub)) {
 
-                        return $this->transformSub($sub);
+                        return self::transform($sub, $btcComSub);
                     }
                 }
-            });
-    }
-
-    public function getSubHashRate(Sub $sub): float
-    {
-        return Worker::getByGroupId($sub->group_id)
-            ->sum('approximate_hash_rate');
+            })->filter();
     }
 
     /**
@@ -235,33 +216,21 @@ class BtcComService
      */
     public function filterUngrouped(): Collection
     {
-        return collect($this->getGroupList())
+        return $this
+            ->getGroupList()
             ->filter(static fn(array $groups, int $index) => $index > 1);
     }
 
     /**
-     * Создать локального саба
+     * Взять список групированных удаленных воркеров
+     * Привести в локальный вид
      *
+     * @return Collection
      */
-    public function createLocalSub(UserData $userData, $groupId): void
-    {
-        Create::execute(
-            subData: SubData::fromRequest([
-                'user_id' => auth()->user()->id,
-                'group_id' => $groupId,
-                'group_name' => $userData->name,
-            ])
-        );
-    }
-
-    /**
-     * Привести список группированных воркеров бтс.ком в локальный вид
-     *
-     */
-    public function getGroupedWorkerCollection(): Collection
+    public function getRemoteGroupedWorkerCollection(): Collection
     {
         return $this
-            ->getWorkerList(0)
+            ->getWorkerList()
             ->map(static function (array $btcComWorker) {
                 if (filled($btcComWorker)) {
                     return WorkerData::fromRequest(requestData: [
@@ -278,16 +247,17 @@ class BtcComService
     }
 
     /**
-     * Привести не разгруппированных воркеров бтс.ком в локальный вид
+     * Привести не разгруппированных удаленных воркеров в локальный вид
      * Сформировать первый хеш рейт воркеров
      *
      */
-    public function getUngroupedWorkerCollection(): Collection
+    public function getRemoteUngroupedWorkerCollection(): Collection
     {
         return $this
-            ->getWorkerList(-1)
+            ->getWorkerList(self::UNGROUPED_ID)
             ->map(static function (array $btcComWorker) {
-                $subName = head(explode('.', $btcComWorker['worker_name']));
+
+                $subName = head(explode('.', $btcComWorker['worker_name'] ?? ''));
 
                 if ($sub = Sub::where('sub', $subName)->first()) {
 
@@ -301,7 +271,7 @@ class BtcComService
                             'group_id' => $sub->group_id,
                             'worker_id' => $btcComWorker['worker_id'],
                             'name' => $btcComWorker['worker_name'],
-                            'approximate_hash_rate' => $btcComWorker['shares_1d'],
+                            'approximate_hash_rate' => $btcComWorker['shares_1m'],
                             'status' => $btcComWorker['status'],
                             'unit' => $btcComWorker['shares_unit'],
                             'pool_data' => $btcComWorker
@@ -313,7 +283,7 @@ class BtcComService
 
     public function updateLocalWorkers(): void
     {
-        $btcComWorkers = $this->getGroupedWorkerCollection();
+        $btcComWorkers = $this->getRemoteGroupedWorkerCollection();
 
         $btcComWorkers->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData));
 
@@ -327,7 +297,7 @@ class BtcComService
 
     public function createLocalWorkers(): void
     {
-        $btcComWorkers = $this->getUngroupedWorkerCollection();
+        $btcComWorkers = $this->getRemoteUngroupedWorkerCollection();
 
         if ($btcComWorkers->isEmpty()) {
             return;
@@ -336,11 +306,12 @@ class BtcComService
         $btcComWorkers
             ->each(function (array $firstWorkerData) {
 
-                WorkerCreate::execute($firstWorkerData['worker_data'])
-                    ->workerHashrates()
+                $worker = WorkerCreate::execute($firstWorkerData['worker_data']);
+
+                $worker->workerHashrates()
                     ->create([
-                        'hash' => (int)$firstWorkerData['worker_hash_rate']['shares_1m'],
-                        'unit' => $firstWorkerData['worker_hash_rate']['unit'],
+                        'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
+                        'unit' => $firstWorkerData['worker_hash_rate']->unit,
                     ]);
 
                 $this->updateWorker(workerData: $firstWorkerData['worker_data']);
@@ -349,5 +320,34 @@ class BtcComService
         Artisan::call('make:sub-hashes');
 
         Log::channel('commands')->info('WORKERS IMPORT COMPLETE');
+    }
+
+    /**
+     * Возвращает массив данных саб-аккаунта в локальном виде
+     *
+     * @param Sub $sub
+     * @param array $btcComSub
+     * @return array
+     */
+    private static function transform(Sub $sub, array $btcComSub): array
+    {
+        $hashPerDay = $sub->total_hash_rate;
+
+        return [
+            'sub' => $sub->sub,
+            'user_id' => $sub->user_id,
+            'pending_amount' => $sub->pending_amount,
+            'group_id' => $sub->group_id,
+            'workers_count_active' => $btcComSub['workers_active'],
+            'workers_count_in_active' => $btcComSub['workers_inactive'],
+            'workers_count_unstable' => $btcComSub['workers_dead'],
+            'hash_per_min' => (float)$btcComSub['shares_1m'],
+            'hash_per_day' => $hashPerDay,
+            'today_forecast' => $sub->todayForecast($hashPerDay, self::FEE),
+            'reject_percent' => (float)$btcComSub['reject_percent'],
+            'unit' => $btcComSub['shares_unit'],
+            'total_payout' => $sub->total_payout,
+            'yesterday_amount' => (float)$sub->yesterday_amount,
+        ];
     }
 }
