@@ -79,7 +79,7 @@ export default {
     },
     mutations: {
         changeUser(state, user) {
-            state.user = {...user};
+            state.user = user;
         },
         changeToken(state, token) {
             state.token = token;

@@ -13,6 +13,7 @@ use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Exceptions\BusinessException;
 use App\Models\Sub;
+use App\Models\User;
 use App\Models\Worker;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
@@ -39,10 +40,11 @@ class BtcComService
      */
     public function call(array $segments, string $method = 'get', array $params = []): array
     {
-        $client = Http::baseUrl(config('api.btc.uri'))
-            ->withHeaders([
-                'Authorization' => config('api.btc.token'),
-            ]);
+        $client = Http::baseUrl(
+            url: config('api.btc.uri')
+        )->withHeaders(
+            headers: ['Authorization' => config('api.btc.token')]
+        );
 
         $retryCount = 3;
 
@@ -89,18 +91,18 @@ class BtcComService
     }
 
     /**
-     * Создать sub аккаунт по имени пользователя на btc.com
+     * Создать удаленный sub аккаунт по имени пользователя
+     * Создать sub аккаунт локально получив удаленный group_id
      */
-    public function createSub(UserData $userData): array
+    public function createSub(User $user): void
     {
         $response = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
-                'group_name' => $userData->name
+                'group_name' => $user->name
             ]);
-
 
         if (in_array('exist', $response, true)) {
 
@@ -110,7 +112,13 @@ class BtcComService
             );
         }
 
-        return $response;
+        Create::execute(
+            subData: SubData::fromRequest([
+                'user_id' => $user->id,
+                'group_id' => $response['gid'],
+                'group_name' => $user->name,
+            ])
+        );
     }
 
     /**
@@ -181,7 +189,7 @@ class BtcComService
     }
 
     /**
-     * Привести коллекцию удаленных саб-аккаунитов в локальный вид
+     * Привести коллекцию саб-аккаунитов в локальный вид
      *
      * @param Collection $subs
      * @return Collection
@@ -211,24 +219,6 @@ class BtcComService
         return $this
             ->getGroupList()
             ->filter(static fn(array $groups, int $index) => $index > 1);
-    }
-
-    /**
-     * Создать локального саба
-     *
-     * @param UserData $userData
-     * @param $groupId
-     * @return void
-     */
-    public function createLocalSub(UserData $userData, $groupId): void
-    {
-        Create::execute(
-            subData: SubData::fromRequest([
-                'user_id' => $userData->id,
-                'group_id' => $groupId,
-                'group_name' => $userData->name,
-            ])
-        );
     }
 
     /**
@@ -266,7 +256,8 @@ class BtcComService
         return $this
             ->getWorkerList(self::UNGROUPED_ID)
             ->map(static function (array $btcComWorker) {
-                $subName = head(explode('.', $btcComWorker['worker_name']));
+
+                $subName = head(explode('.', $btcComWorker['worker_name'] ?? ''));
 
                 if ($sub = Sub::where('sub', $subName)->first()) {
 
@@ -292,7 +283,6 @@ class BtcComService
 
     public function updateLocalWorkers(): void
     {
-
         $btcComWorkers = $this->getRemoteGroupedWorkerCollection();
 
         $btcComWorkers->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData));

@@ -2328,7 +2328,7 @@
                     "Auth"
                 ],
                 "summary": "Restore user password",
-                "operationId": "bdc371d3a4332cbf3ca2dd2eb39dc483",
+                "operationId": "16401baf2e7226abc9a3f1621e58b13b",
                 "parameters": [
                     {
                         "name": "user",
