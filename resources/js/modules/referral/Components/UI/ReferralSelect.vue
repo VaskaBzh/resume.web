@@ -56,6 +56,7 @@ export default {
         return {
             baseName: this.$t("incomes.base_value"),
             opened: false,
+            isClicked: true,
         };
     },
     computed: {
@@ -110,17 +111,29 @@ export default {
             this.closeSelect();
         },
         toggleSelect() {
-            this.opened = !this.opened;
+            if (this.isClicked) {
+                this.opened = !this.opened;
+                this.isClicked = false;
+            }
         },
         closeSelect() {
+            setTimeout(() => {
+                this.isClicked = true;
+            }, 3000);
             this.opened = false;
         },
         onDocumentClick(e) {
+            setTimeout(() => {
+                this.isClicked = false;
+            }, 3000);
             if (!this.$el.contains(e.target)) {
                 this.closeSelect();
             }
         },
         onEscapeKeydown(e) {
+            setTimeout(() => {
+                this.isClicked = false;
+            }, 3000);
             if (e.keyCode === 27) {
                 this.closeSelect();
             }
@@ -148,7 +161,7 @@ export default {
     height: 48px;
     width: 100%;
     cursor: pointer;
-    transition: all .3s;
+    transition: all 0.3s;
     &_name {
         position: relative;
         min-height: 48px;
