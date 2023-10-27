@@ -185,6 +185,7 @@ export default {
 
     .cabinet__block-grid {
         grid-column: 1/3;
+        border-radius: 24px;
     }
 
     .referal__general-profit {
@@ -221,6 +222,7 @@ export default {
 
     &__block {
         grid-column: 1/3;
+        border-radius: 24px;
         &:first-child {
             @media (max-width: $pc) {
                 grid-column: 1/3;
