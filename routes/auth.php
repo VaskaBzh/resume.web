@@ -19,7 +19,7 @@ Auth::routes([
 ]);
 
 Route::post('/login', [LoginController::class, 'login'])
-    ->middleware('two-factor');
+    ->middleware(['two-factor', 'throttle:6,1']);
 
 Route::post('/logout', [LoginController::class, 'logout'])
     ->middleware('auth:sanctum')
@@ -45,7 +45,7 @@ Route::group([
         ->name('password.reset.verify');
     Route::put('/change/{user}', PasswordChangeController::class)
         ->name('password-change')
-        ->middleware('auth:sanctum');
+        ->middleware(['auth:sanctum', 'throttle:3,1']);
 });
 
 Route::group([
@@ -53,6 +53,10 @@ Route::group([
     'middleware' => 'auth:sanctum',
 ], function () {
     Route::get('/qrcode/{user}', [TwoFactorController::class, 'qrCode'])->name('2fa.qrcode');
-    Route::put('/enable/{user}', [TwoFactorController::class, 'enable'])->name('2fa.enable');
-    Route::put('/disable/{user}', [TwoFactorController::class, 'disable'])->name('2fa.disable');
+    Route::put('/enable/{user}', [TwoFactorController::class, 'enable'])
+        ->middleware('throttle:6,1')
+        ->name('2fa.enable');
+    Route::put('/disable/{user}', [TwoFactorController::class, 'disable'])
+        ->middleware('throttle:6,1')
+        ->name('2fa.disable');
 });
