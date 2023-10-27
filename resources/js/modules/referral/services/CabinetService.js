@@ -104,13 +104,13 @@ export class CabinetService {
 
     transformCode(code) {
         const firstIndex = 1;
-        // const url = new URL(code)
-        // console.log(url)
+        const url = new URL(code)
+        console.log(url)
         const params = code.split("?")[firstIndex];
         console.log(params)
         const referralCodeParam = params.replace("referral_code=", "");
 
-        return `${window.location.host}/registration?referral_code=${referralCodeParam}`;
+        return `${window.location.host}/register?referral_code=${referralCodeParam}`;
     }
 
     async index() {
