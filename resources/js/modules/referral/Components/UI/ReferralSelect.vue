@@ -148,6 +148,7 @@ export default {
     height: 48px;
     width: 100%;
     cursor: pointer;
+    transition: all .3s;
     &_name {
         position: relative;
         min-height: 48px;
@@ -192,9 +193,10 @@ export default {
         z-index: 2;
         width: 100%;
         left: 0;
-        top: calc(100% + 8px);
+        top: calc(100% + 11px);
         box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05),
             0px 4px 12px -4px rgba(29, 41, 57, 0.05);
+        transition: all 0.5s ease 0s;
     }
     &_row {
         min-height: 48px;
@@ -209,6 +211,7 @@ export default {
                 --background-island-inner-1,
                 rgba(83, 177, 253, 0.07)
             );
+            transition: all 0.5s ease 0s;
         }
         &:not(:last-child) {
             border-bottom: 0.5px solid var(--background-graphic-line);
