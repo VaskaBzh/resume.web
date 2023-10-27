@@ -22,7 +22,27 @@ export class CabinetService {
 
     setUser(user) {
         this.user = user;
-        console.log(6666666)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -19,10 +19,9 @@ export default {
         };
     },
 
+
     async mounted() {
         this.$store.dispatch("setToken");
-    },
-    async created() {
         await this.$store.dispatch("setCurrency");
 
         window.addEventListener("resize", this.handleResize);
