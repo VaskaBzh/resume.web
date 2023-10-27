@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\User;
 
 use App\Models\User;
@@ -9,9 +11,9 @@ class UpdateConfirmationCode
 {
     public static function execute(User $user): string
     {
-        $code = $user->generateConfirmationCode();
-
-        $user->update(['confirmation_code' => Hash::make($code)]);
+        $user->update([
+            'confirmation_code' => Hash::make($code = $user->generateConfirmationCode())
+        ]);
 
         return $code;
     }

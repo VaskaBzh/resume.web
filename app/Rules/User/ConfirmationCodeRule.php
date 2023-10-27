@@ -11,14 +11,14 @@ readonly final class ConfirmationCodeRule implements InvokableRule
 {
     public function __invoke($attribute, $value, $fail)
     {
-        $hashedCode = auth()->user()?->confirmation_code;
+        $hashedCode = auth()->user()->confirmation_code;
 
         if (!$hashedCode) {
             $fail(__('auth.failed'));
-        } else {
-            if (!Hash::check($value, $hashedCode)) {
-                $fail(__('auth.failed'));
-            }
+        }
+
+        if (!Hash::check($value, $hashedCode)) {
+            $fail(__('auth.failed'));
         }
     }
 }

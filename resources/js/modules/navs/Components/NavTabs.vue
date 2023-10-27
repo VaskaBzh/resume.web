@@ -1,49 +1,53 @@
 <template>
     <transition name="burger">
         <div
+            v-show="isOpenBurger || viewportWidth >= 900 || !viewportWidth"
             class="nav onboarding_block"
             :class="{
-               'onboarding_block-target':
+                'onboarding_block-target':
                     instructionConfig.isVisible && instructionConfig.step === 1,
             }"
-            v-show="isOpenBurger || viewportWidth >= 900 || !viewportWidth"
         >
-            <div class="nav__content"
-                 :class="{
-                    'nav-untouchable': $route.query?.onboarding === 'true'
+            <div
+                class="nav__content"
+                :class="{
+                    'nav-untouchable': $route.query?.onboarding === 'true',
                 }"
             >
                 <div class="nav__block">
-                    <logo-block class="nav_logo"/>
+                    <logo-block class="nav_logo" />
                     <div class="header-select-container">
-                        <select-theme/>
-                        <select-language/>
+                        <select-theme />
+                        <select-language />
                     </div>
                     <div class="nav__tabs">
-                        <account-menu/>
+                        <account-menu />
                         <nav class="nav__column">
                             <nav-group
-                                @closeBurger="$emit('closeBurger')"
                                 v-for="(group, i) in service.links"
-                                :group="group"
                                 :key="i"
+                                :group="group"
+                                @closeBurger="$emit('closeBurger')"
                             />
                         </nav>
                     </div>
                 </div>
-                <logout-link class="nav_logout" v-show="!$route?.query?.access_key"/>
+                <logout-link
+                    v-show="!$route?.query?.access_key"
+                    class="nav_logout"
+                />
             </div>
             <instruction-step
-                @next="instructionConfig.nextStep()"
-                @prev="instructionConfig.prevStep()"
-                @close="endCommonInstruction"
                 :step_active="1"
                 :steps_count="instructionConfig.steps_count"
                 :step="instructionConfig.step"
-                :isVisible="instructionConfig.isVisible"
+                :is-visible="instructionConfig.isVisible"
                 text="texts.common[0]"
                 title="titles.common[0]"
-                className="onboarding__card-left"
+                class-name="onboarding__card-left"
+                @next="instructionConfig.nextStep()"
+                @prev="instructionConfig.prevStep()"
+                @close="endCommonInstruction"
             />
         </div>
     </transition>
@@ -54,10 +58,10 @@
     ></div>
 </template>
 <script>
-import {TabsService} from "@/modules/navs/services/TabsService";
-import {mapGetters} from "vuex";
+import { TabsService } from "@/modules/navs/services/TabsService";
+import { mapGetters } from "vuex";
 import AccountMenu from "@/modules/common/Components/UI/AccountMenu.vue";
-import {defineComponent} from "vue";
+import { defineComponent } from "vue";
 import LogoBlock from "@/modules/navs/Components/blocks/LogoBlock.vue";
 import LogoutLink from "@/modules/navs/Components/UI/LogoutLink.vue";
 import NavGroup from "@/modules/navs/Components/UI/NavGroup.vue";
@@ -85,16 +89,10 @@ export default defineComponent({
         return {
             service: new TabsService(this.$router, this.$route),
             throttle: null,
+            watchReferalTabs: JSON.parse(localStorage.getItem("user"))[
+                "has_referral_role"
+            ],
         };
-    },
-    methods: {
-        endCommonInstruction() {
-            this.instructionConfig.nextStep(6);
-
-            this.$router.push({
-                name: "statistic",
-            });
-        },
     },
     mounted() {
         this.$route?.query?.access_key
@@ -108,6 +106,15 @@ export default defineComponent({
     },
     unmounted() {
         this.service.dropLinks();
+    },
+    methods: {
+        endCommonInstruction() {
+            this.instructionConfig.nextStep(6);
+
+            this.$router.push({
+                name: "statistic",
+            });
+        },
     },
     computed: {
         ...mapGetters(["user", "viewportWidth"]),
@@ -135,7 +142,7 @@ export default defineComponent({
 }
 
 .nav::before {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 100%;
