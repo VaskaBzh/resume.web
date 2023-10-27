@@ -22,41 +22,6 @@ export class CabinetService {
 
     setUser(user) {
         this.user = user;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 
     getStatsCards(data) {
@@ -143,6 +108,7 @@ export class CabinetService {
             response = (
                 await ProfileApi.get(`/referrals/statistic/${this.user.id}`)
             ).data;
+
         } catch (err) {
             console.error(`FetchError: ${err}`);
         }

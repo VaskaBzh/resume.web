@@ -11,15 +11,15 @@
                         <img src="../../../../assets/img/percent-icon.png" />
                     </template>
                 </InfoCard>
-                <InfoCard
-                    class="referral__card-info"
-                    :title="$t('stats.cards[1]')"
-                    :value="percent"
-                >
-                    <template #svg>
-                        <img src="../../../../assets/img/hashrate-icon.png" />
-                    </template>
-                </InfoCard>
+<!--                <InfoCard-->
+<!--                    class="referral__card-info"-->
+<!--                    :title="$t('stats.cards[1]')"-->
+<!--                    :value="percent"-->
+<!--                >-->
+<!--                    <template #svg>-->
+<!--                        <img src="../../../../assets/img/hashrate-icon.png" />-->
+<!--                    </template>-->
+<!--                </InfoCard>-->
             </div>
             <InfoCard
                 class="referral__card-info referal__general-profit"
@@ -32,6 +32,20 @@
                     <img src="../../../../assets/img/income-icon.png" />
                 </template>
             </InfoCard>
+            <div class="cabinet__block cabinet__block-light referral__block">
+                <main-title tag="h4" class="title referral_title">
+                    {{ $t("incomes.title") }}
+                </main-title>
+                <p class="text text-gray referral_text">
+                    {{ $t("incomes.text") }}
+                </p>
+                <referral-select
+                    class="referral_select-cabinet"
+                    :rows="service.accounts"
+                    :active-sub-id="service.activeSubId"
+                    @changeSub="service.generateCode($event)"
+                />
+            </div>
             <div class="cabinet__block cabinet__block-light referral__block">
                 <main-title tag="h4" class="title referral_title">
                     {{ $t("referral.title") }}
@@ -47,20 +61,7 @@
                     />
                 </div>
             </div>
-            <div class="cabinet__block cabinet__block-light referral__block">
-                <main-title tag="h4" class="title referral_title">
-                    {{ $t("incomes.title") }}
-                </main-title>
-                <p class="text text-gray referral_text">
-                    {{ $t("incomes.text") }}
-                </p>
-                <referral-select
-                    class="referral_select-cabinet"
-                    :rows="service.accounts"
-                    :active-sub-id="service.activeSubId"
-                    @changeSub="service.generateCode($event)"
-                />
-            </div>
+
         </div>
         <div class="grid-column">
             <div class="card__block">
