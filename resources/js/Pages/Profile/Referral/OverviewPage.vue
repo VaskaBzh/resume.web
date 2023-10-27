@@ -139,9 +139,13 @@ export default {
         };
     },
     watch: {
-        user(newUser) {
-            this.service.setUser(newUser);
-            this.service.setCode();
+        user: {
+            async handler(newUser) {
+                this.service.setUser(newUser);
+                await this.service.index();
+                this.service.setCode();
+            },
+            deep: true,
         },
         async allAccounts(newValue) {
             if (newValue) {
@@ -153,12 +157,14 @@ export default {
         },
     },
     async mounted() {
-        this.service.setUser(this.user);
+        if (this.user.id) {
+            this.service.setUser(this.user);
+
+            await this.service.index();
+        }
         this.service.getGradeList();
 
         this.service.getStatsCards({});
-        this.service.setCode();
-        await this.service.index();
         if (this.allAccounts) this.service.getSelectAccounts(this.allAccounts);
     },
 };

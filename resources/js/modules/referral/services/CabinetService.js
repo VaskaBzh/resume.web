@@ -95,7 +95,6 @@ export class CabinetService {
             code ??
             (`${window.location.host}/registration?referral_code=${this.user.referral_code}` ||
                 "...");
-        console.log(this.code);
     }
 
     setActiveSub(group_id) {
@@ -103,14 +102,8 @@ export class CabinetService {
     }
 
     transformCode(code) {
-        const firstIndex = 1;
-        const url = new URL(code)
-        console.log(url)
-        const params = code.split("?")[firstIndex];
-        console.log(params)
-        const referralCodeParam = params.replace("referral_code=", "");
-
-        return `${window.location.host}/register?referral_code=${referralCodeParam}`;
+        const url = new URL(code);
+        return `${window.location.host}/registration${url.search}`;
     }
 
     async index() {
