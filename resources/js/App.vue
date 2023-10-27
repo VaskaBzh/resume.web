@@ -18,26 +18,13 @@ export default {
             isPageHidden: false,
         };
     },
-    methods: {
-        handleResize() {
-            this.$store.dispatch("getViewportWidth", window.innerWidth);
-        },
-        async onClose() {
-            try {
-                if (this.token && !this.$route?.query?.access_key)
-                    await ProfileApi.put("/decrease/token");
-            } catch (error) {
-                console.error("Error decreasing token:", error);
-            }
-        },
-        handleVisibilityChange() {
-            this.isPageHidden = document.hidden;
-        },
+
+    async mounted() {
+        this.$store.dispatch("setToken");
     },
     async created() {
         await this.$store.dispatch("setCurrency");
 
-        this.$store.dispatch("setToken");
         window.addEventListener("resize", this.handleResize);
         window.addEventListener(
             "visibilitychange",
@@ -53,6 +40,22 @@ export default {
             this.handleVisibilityChange
         );
         window.removeEventListener("beforeunload", this.onClose);
+    },
+    methods: {
+        handleResize() {
+            this.$store.dispatch("getViewportWidth", window.innerWidth);
+        },
+        async onClose() {
+            try {
+                if (this.token && !this.$route?.query?.access_key)
+                    await ProfileApi.put("/decrease/token");
+            } catch (error) {
+                console.error("Error decreasing token:", error);
+            }
+        },
+        handleVisibilityChange() {
+            this.isPageHidden = document.hidden;
+        },
     },
 };
 </script>

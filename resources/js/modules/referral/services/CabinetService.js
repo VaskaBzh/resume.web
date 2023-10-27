@@ -20,11 +20,22 @@ export class CabinetService {
         this.user = null;
     }
 
-
-
-
     setUser(user) {
         this.user = user;
+        console.log(6666666)
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -67,11 +78,6 @@ export class CabinetService {
                 `/referrals/generate/${this.user.id}`,
                 {
                     group_id: id,
-                },
-                {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
                 }
             );
             store.dispatch("setNotification", {
@@ -115,19 +121,13 @@ export class CabinetService {
 
         try {
             response = (
-                await ProfileApi.get(`/referrals/statistic/${this.user.id}`, {
-                    headers: {
-                        Authorization: `Bearer ${store.getters.token}`,
-                    },
-                })
+                await ProfileApi.get(`/referrals/statistic/${this.user.id}`)
             ).data;
         } catch (err) {
             console.error(`FetchError: ${err}`);
         }
 
-
         const result = response?.data || response;
-
 
         let code = this.transformCode(result.code);
         this.setCode(code || "...");
