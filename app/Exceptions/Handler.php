@@ -64,23 +64,19 @@ class Handler extends ExceptionHandler
 
         $this->renderable(static function (Throwable $e) {
 
-            if ($e instanceof BusinessException) {
-                return new JsonResponse([
+            return match (true) {
+                $e instanceof BusinessException => new JsonResponse([
                     'errors' => ['messages' => [$e->getClientMessage()]]
-                ], $e->getClientStatusCode());
-            }
-
-            if ($e instanceof UnauthorizedException || $e instanceof AuthenticationException) {
-                return new JsonResponse([
+                ], $e->getClientStatusCode()),
+                $e instanceof UnauthorizedException,
+                $e instanceof AuthenticationException =>  new JsonResponse([
                     'errors' => ['messages' => [$e->getMessage()]]
-                ], Response::HTTP_UNAUTHORIZED);
-            }
-
-            if ($e instanceof HttpException) {
-                return new JsonResponse([
+                ], Response::HTTP_UNAUTHORIZED),
+                $e instanceof ValidationException => $e->getMessage(),
+                default => new JsonResponse([
                     'errors' => ['messages' => ['Resource not found']]
-                ], Response::HTTP_NOT_FOUND);
-            }
+                ], Response::HTTP_NOT_FOUND),
+            };
         });
     }
 }
