@@ -10,6 +10,7 @@ use App\Dto\ReferralData;
 use App\Exceptions\BusinessException;
 use App\Models\Sub;
 use App\Models\User;
+use App\Models\Worker;
 use App\Repositories\IncomeRepository;
 use App\Services\External\BtcComService;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -44,19 +45,25 @@ class ReferralService
 
     public static function getOwnerStatistic(Collection $referrals): array
     {
+        $activeReferralSubs = Sub::getActiveSubs($referrals->pluck('id')->toArray())->get();
+
         return [
             'attached_referrals_count' => $referrals->count(),
             'referrals_total_amount' => resolve(IncomeRepository::class)
                 ->getReferralsTotalAmount(referralIds: $referrals->pluck('id')),
-            'active_referrals_count' => $referrals->reduce(
-                static fn(int $acc, User $user) => $acc += Sub::getActiveReferrals(user: $user)->count(),
-                0)
+            'active_referrals_count' => $activeReferralSubs->count(),
+            'total_referrals_hash_rate' => Worker::whereIn('group_id',
+                $activeReferralSubs->pluck('group_id')->toArray()
+            )
+                ->onlyActive()
+                ->sum('approximate_hash_rate')
         ];
     }
 
     public static function getReferralCollection(Sub $owner, BtcComService $btcComService): Collection
     {
         return $owner->referrals->map(function (User $user) use ($btcComService) {
+
             $referralSubCollection = $btcComService
                 ->transformSubCollection($user->subs);
 
