@@ -99,8 +99,13 @@ class ReferralService
         $decryptedData = static::getReferralDataFromCode(code: $code);
 
         AttachReferral::execute(
-            referralSub: $referral->subs()->first(),
-            ownerSub: Sub::with('user')->find($decryptedData['group_id']),
+            referralSub: $referral
+                ->subs()
+                ->get()
+                ->first(),
+            ownerSub: Sub::with('user')
+                ->find($decryptedData['group_id'])
+                ->first(),
             referralPercent: $decryptedData['referral_percent'],
         );
     }
