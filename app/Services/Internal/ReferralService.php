@@ -103,8 +103,8 @@ class ReferralService
                 ->subs()
                 ->get()
                 ->first(),
-            ownerSub: Sub::with('user')
-                ->find($decryptedData['group_id'])
+            ownerSub: Sub::getByGroupId($decryptedData['group_id'])
+                ->with('user')
                 ->first(),
             referralPercent: $decryptedData['referral_percent'],
         );
@@ -112,7 +112,10 @@ class ReferralService
 
     public static function generateReferralCode(int $subGroupId): string
     {
-        return base64_encode(json_encode(['group_id' => $subGroupId, 'referral_percent' => 0.8]));
+        return base64_encode(json_encode([
+            'group_id' => $subGroupId,
+            'referral_percent' => 0.8
+        ]));
     }
 
     public static function getReferralDataFromCode(string $code): array
