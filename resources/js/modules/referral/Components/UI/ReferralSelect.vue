@@ -6,6 +6,7 @@
             :class="{
                 'select_name-active': opened,
                 'select_name-selected': validateBaseName,
+                'select_name-opacity': isBlocked,
             }"
             @click="toggleSelect"
         >
@@ -57,6 +58,7 @@ export default {
             baseName: this.$t("incomes.base_value"),
             opened: false,
             isClicked: true,
+            isBlocked: false,
         };
     },
     computed: {
@@ -107,13 +109,16 @@ export default {
 
                 this.$emit("changeSub", id);
             }
+            this.isBlocked = true;
+            setTimeout(() => {
+                this.isBlocked = false;
+            }, 3000);
 
             this.closeSelect();
         },
         toggleSelect() {
             if (this.isClicked) {
                 this.opened = !this.opened;
-                this.isClicked = false;
             }
         },
         closeSelect() {
@@ -194,6 +199,11 @@ export default {
             svg {
                 transform: translateY(-50%) rotate(180deg);
             }
+        }
+
+        &-opacity {
+            opacity: 0.5;
+            pointer-events: none;
         }
     }
     &_list {
