@@ -20,8 +20,12 @@ export class CabinetService {
         this.user = null;
     }
 
+
+
+
     setUser(user) {
         this.user = user;
+
     }
 
     getStatsCards(data) {
@@ -121,10 +125,9 @@ export class CabinetService {
             console.error(`FetchError: ${err}`);
         }
 
-        console.log("Ответ", response);
 
         const result = response?.data || response;
-        console.log("Результат", result);
+
 
         let code = this.transformCode(result.code);
         this.setCode(code || "...");

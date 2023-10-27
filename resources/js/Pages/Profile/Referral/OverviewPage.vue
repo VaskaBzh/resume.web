@@ -156,11 +156,11 @@ export default {
             this.service.getGradeList();
         },
     },
-    async mounted() {
+     mounted() {
         if (this.user.id) {
             this.service.setUser(this.user);
 
-            await this.service.index();
+            this.service.index();
         }
         this.service.getGradeList();
 

@@ -100,10 +100,11 @@ export class ApiService {
         return this;
     }
 
-    dropUser() {
-        store.dispatch("dropUser");
-        store.dispatch("dropToken");
-    }
+    // dropUser() {
+    //     // store.dispatch("dropUser");
+    //     // console.log('user delete')
+    //     store.dispatch("dropToken");
+    // }
 
     setController() {
         this.controller = new AbortController();
