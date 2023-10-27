@@ -8,7 +8,6 @@ use App\Actions\Sub\Create;
 use App\Actions\Worker\Update;
 use App\Actions\Worker\Create as WorkerCreate;
 use App\Dto\SubData;
-use App\Dto\UserData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Exceptions\BusinessException;
@@ -16,7 +15,7 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
+use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +31,8 @@ class BtcComService
     /* ------------------ Btc.com requests ------------------------ */
 
     /**
+     * Call btc.com
+     *
      * @param array $segments
      * @param string $method
      * @param array $params
@@ -51,7 +52,7 @@ class BtcComService
         while ($retryCount > 0) {
             $response = $client->$method(implode('/', $segments), $params);
 
-            if (filled($response['data'])) {
+            if (isset($response['data'])) {
 
                 return $response['data'];
             }
@@ -65,7 +66,8 @@ class BtcComService
     }
 
     /**
-     * Получить коллекцию групп
+     * Get remote sub-account list
+     *
      */
     public function getGroupList(): Collection
     {
@@ -81,7 +83,8 @@ class BtcComService
     }
 
     /**
-     * Инвормация о сабаккаунте
+     * Get remote sub-account
+     *
      */
     public function getSub(int $groupId): ?array
     {
@@ -91,12 +94,14 @@ class BtcComService
     }
 
     /**
-     * Создать удаленный sub аккаунт по имени пользователя
-     * Создать sub аккаунт локально получив удаленный group_id
+     * Create remote sub-account by user name
+     * Create local sub based on remote sub-account group_id
+     *
+     * @throw BusinessException if remote sub-account exists
      */
     public function createSub(User $user): void
     {
-        $response = $this->call(
+        $btcComSub = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
             params: [
@@ -104,7 +109,7 @@ class BtcComService
                 'group_name' => $user->name
             ]);
 
-        if (in_array('exist', $response, true)) {
+        if (in_array('exist', $btcComSub, true)) {
 
             throw new BusinessException(
                 __('actions.sub_account_already_exist'),
@@ -115,16 +120,19 @@ class BtcComService
         Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $user->id,
-                'group_id' => $response['gid'],
+                'group_id' => $btcComSub['gid'],
                 'group_name' => $user->name,
             ])
         );
     }
 
     /**
-     * Получить список воркеров
-     * Следует обратить внимание, метод принимает в строке запроса
-     * параметр group (не group_id)
+     *  Get remote worker list by status
+     *
+     * @param int|null $groupId
+     * @param string|null $workerStatus
+     * @return Collection
+     * @throws \Exception
      */
     public function getWorkerList(
         ?int    $groupId = 0,
@@ -141,13 +149,14 @@ class BtcComService
             ]
         );
 
-        return collect($response['data']);
+        return collect($response['data'] ?? []);
     }
 
     /**
-     * Обновить воркер
+     * Update remote worker group
+     *
      */
-    public function updateWorker(WorkerData $workerData): void
+    public function updateRemoteWorker(WorkerData $workerData): void
     {
         $this->call(
             segments: [
@@ -162,6 +171,12 @@ class BtcComService
             ]);
     }
 
+    /**
+     * Get btc.com fpps rate
+     *
+     * @return float|int
+     * @throws \Exception
+     */
     public function getFppsRate(): float|int
     {
         $fppsRate = $this->call(['account', 'earn-history'], params: [
@@ -175,7 +190,7 @@ class BtcComService
     /* End requests */
 
     /**
-     * Привести удаленный саб-аккаунт в локальный вид
+     * Transform remote sub-account to local structure
      *
      * @param Sub $sub
      * @return array
@@ -189,7 +204,7 @@ class BtcComService
     }
 
     /**
-     * Привести коллекцию саб-аккаунитов в локальный вид
+     * Transform remote sub-account list to local structure
      *
      * @param Collection $subs
      * @return Collection
@@ -210,7 +225,7 @@ class BtcComService
     }
 
     /**
-     * Фильтровать -1 и 0 группы
+     * Get sub-account list and filter -1 & 0 groups
      *
      * @return Collection
      */
@@ -222,108 +237,114 @@ class BtcComService
     }
 
     /**
-     * Взять список групированных удаленных воркеров
-     * Привести в локальный вид
-     *
-     * @return Collection
-     */
-    public function getRemoteGroupedWorkerCollection(): Collection
-    {
-        return $this
-            ->getWorkerList()
-            ->map(static function (array $btcComWorker) {
-                if (filled($btcComWorker)) {
-                    return WorkerData::fromRequest(requestData: [
-                        'group_id' => $btcComWorker['gid'],
-                        'worker_id' => $btcComWorker['worker_id'],
-                        'name' => $btcComWorker['worker_name'],
-                        'approximate_hash_rate' => $btcComWorker['shares_1d'],
-                        'status' => $btcComWorker['status'],
-                        'unit' => $btcComWorker['shares_unit'],
-                        'pool_data' => $btcComWorker
-                    ]);
-                }
-            })->filter();
-    }
-
-    /**
-     * Привести не разгруппированных удаленных воркеров в локальный вид
-     * Сформировать первый хеш рейт воркеров
+     * Sync local worker state based on remote one
      *
      */
-    public function getRemoteUngroupedWorkerCollection(): Collection
-    {
-        return $this
-            ->getWorkerList(self::UNGROUPED_ID)
-            ->map(static function (array $btcComWorker) {
-
-                $subName = head(explode('.', $btcComWorker['worker_name'] ?? ''));
-
-                if ($sub = Sub::where('sub', $subName)->first()) {
-
-                    return [
-                        'worker_hash_rate' => WorkerHashRateData::fromRequest(requestData: [
-                            'worker_id' => (int)$btcComWorker['worker_id'],
-                            'hash' => (int)$btcComWorker['shares_1m'],
-                            'unit' => $btcComWorker['shares_unit'],
-                        ]),
-                        'worker_data' => WorkerData::fromRequest(requestData: [
-                            'group_id' => $sub->group_id,
-                            'worker_id' => $btcComWorker['worker_id'],
-                            'name' => $btcComWorker['worker_name'],
-                            'approximate_hash_rate' => $btcComWorker['shares_1m'],
-                            'status' => $btcComWorker['status'],
-                            'unit' => $btcComWorker['shares_unit'],
-                            'pool_data' => $btcComWorker
-                        ]),
-                    ];
-                }
-            })->filter();
-    }
-
     public function updateLocalWorkers(): void
     {
-        $btcComWorkers = $this->getRemoteGroupedWorkerCollection();
-
-        $btcComWorkers->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData));
-
-        Log::channel('commands')->info('WORKERS UPDATE COMPLETE');
+        $groupedWorkerIDs = $this->transformRemoteGroupedWorkers(
+            btcComWorkers: $this->getWorkerList()
+        )->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData))
+            ->pluck('worker_id')
+            ->toArray();
 
         Worker::whereNotIn(
             column: 'worker_id',
-            values: $btcComWorkers->pluck('worker_id')->toArray()
+            values: $groupedWorkerIDs
         )->delete();
+
+        Log::channel('commands')->info('WORKERS UPDATE COMPLETE');
     }
 
+    /**
+     * Get remote worker and create local
+     *
+     * @return void
+     * @throws \Exception
+     */
     public function createLocalWorkers(): void
     {
-        $btcComWorkers = $this->getRemoteUngroupedWorkerCollection();
+        $this->transformRemoteUngroupedWorkers(
+            subs: Sub::all(),
+            btcComWorkers: $this->getWorkerList(self::UNGROUPED_ID),
+        )->each(function (array $firstWorkerData) {
 
-        if ($btcComWorkers->isEmpty()) {
-            return;
-        }
+            $this->updateRemoteWorker(workerData: $firstWorkerData['worker_data']);
 
-        $btcComWorkers
-            ->each(function (array $firstWorkerData) {
-
-                $worker = WorkerCreate::execute($firstWorkerData['worker_data']);
-
-                $worker->workerHashrates()
-                    ->create([
-                        'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
-                        'unit' => $firstWorkerData['worker_hash_rate']->unit,
-                    ]);
-
-                $this->updateWorker(workerData: $firstWorkerData['worker_data']);
-            });
-
-        Artisan::call('make:sub-hashes');
+            WorkerCreate::execute($firstWorkerData['worker_data'])
+                ->workerHashrates()
+                ->create([
+                    'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
+                    'unit' => $firstWorkerData['worker_hash_rate']->unit,
+                ]);;
+        });
 
         Log::channel('commands')->info('WORKERS IMPORT COMPLETE');
     }
 
     /**
-     * Возвращает массив данных саб-аккаунта в локальном виде
+     * Transform remote workers to local structure
+     *
+     * @return Collection
+     */
+    public function transformRemoteGroupedWorkers(Collection $btcComWorkers): Collection
+    {
+        return $btcComWorkers->map(static function (array $btcComWorker) {
+            if (filled($btcComWorker)) {
+                return WorkerData::fromRequest(requestData: [
+                    'group_id' => $btcComWorker['gid'],
+                    'worker_id' => $btcComWorker['worker_id'],
+                    'name' => $btcComWorker['worker_name'],
+                    'approximate_hash_rate' => $btcComWorker['shares_1d'],
+                    'status' => $btcComWorker['status'],
+                    'unit' => $btcComWorker['shares_unit'],
+                    'pool_data' => $btcComWorker
+                ]);
+            }
+        })->filter();
+    }
+
+    /**
+     * Transform remote worker list to local structure with first hash rates
+     *
+     * @param EloquentCollection $subs
+     * @param Collection $btcComWorkers
+     * @return Collection
+     */
+    public function transformRemoteUngroupedWorkers(
+        EloquentCollection $subs,
+        Collection         $btcComWorkers
+    ): Collection
+    {
+        return $btcComWorkers->map(static function (array $btcComWorker) use ($subs) {
+
+            $subName = head(explode('.', $btcComWorker['worker_name'] ?? ''));
+
+            if ($groupId = $subs->firstWhere('sub', $subName)?->group_id) {
+
+                return [
+                    'worker_hash_rate' => WorkerHashRateData::fromRequest(requestData: [
+                        'worker_id' => $btcComWorker['worker_id'],
+                        'hash' => $btcComWorker['shares_1m'],
+                        'unit' => $btcComWorker['shares_unit'],
+                    ]),
+                    'worker_data' => WorkerData::fromRequest(requestData: [
+                        'group_id' => $groupId,
+                        'worker_id' => $btcComWorker['worker_id'],
+                        'name' => $btcComWorker['worker_name'],
+                        'approximate_hash_rate' => $btcComWorker['shares_1m'],
+                        'status' => $btcComWorker['status'],
+                        'unit' => $btcComWorker['shares_unit'],
+                        'pool_data' => $btcComWorker
+                    ]),
+                ];
+            }
+        })->filter();
+    }
+
+
+    /**
+     * Return transformed sub-account array structure
      *
      * @param Sub $sub
      * @param array $btcComSub
