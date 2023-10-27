@@ -1,6 +1,7 @@
 <template>
     <div class="select">
         <div
+            ref="select"
             class="select_name"
             :class="{
                 'select_name-active': opened,
@@ -25,11 +26,11 @@
             </svg>
         </div>
         <transition name="list">
-            <div class="select_list" v-show="opened">
+            <div v-show="opened" class="select_list">
                 <div
-                    class="select_row"
                     v-for="(row, i) in rows"
                     :key="i"
+                    class="select_row"
                     @click="changeValue(row.name, row.group_id)"
                 >
                     {{ row.name }}
@@ -43,7 +44,7 @@
 import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
-    name: "referral-select",
+    name: "ReferralSelect",
     props: {
         rows: Array,
         activeSubId: String,
@@ -56,6 +57,16 @@ export default {
             baseName: this.$t("incomes.base_value"),
             opened: false,
         };
+    },
+    computed: {
+        validateBaseName() {
+            return (
+                this.baseName ===
+                Object.values(this.rows).find(
+                    (el) => el.group_id === this.activeSubId ?? 0
+                )?.name
+            );
+        },
     },
     watch: {
         opened(value) {
@@ -77,15 +88,9 @@ export default {
     mounted() {
         this.setBaseName();
     },
-    computed: {
-        validateBaseName() {
-            return (
-                this.baseName ===
-                Object.values(this.rows).find(
-                    (el) => el.group_id === this.activeSubId ?? 0
-                )?.name
-            );
-        },
+    beforeUnmount() {
+        document.removeEventListener("click", this.onDocumentClick);
+        document.removeEventListener("keydown", this.onEscapeKeydown);
     },
     methods: {
         setBaseName() {
@@ -121,10 +126,6 @@ export default {
             }
         },
     },
-    beforeUnmount() {
-        document.removeEventListener("click", this.onDocumentClick);
-        document.removeEventListener("keydown", this.onEscapeKeydown);
-    },
 };
 </script>
 
@@ -147,6 +148,7 @@ export default {
     height: 48px;
     width: 100%;
     cursor: pointer;
+    transition: all .3s;
     &_name {
         position: relative;
         min-height: 48px;
@@ -191,9 +193,10 @@ export default {
         z-index: 2;
         width: 100%;
         left: 0;
-        top: calc(100% + 8px);
+        top: calc(100% + 11px);
         box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05),
             0px 4px 12px -4px rgba(29, 41, 57, 0.05);
+        transition: all 0.5s ease 0s;
     }
     &_row {
         min-height: 48px;
@@ -208,6 +211,7 @@ export default {
                 --background-island-inner-1,
                 rgba(83, 177, 253, 0.07)
             );
+            transition: all 0.5s ease 0s;
         }
         &:not(:last-child) {
             border-bottom: 0.5px solid var(--background-graphic-line);
