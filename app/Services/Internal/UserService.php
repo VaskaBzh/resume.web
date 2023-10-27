@@ -28,20 +28,11 @@ final readonly class UserService
 
     public static function create(UserData $userData): User
     {
-        $user = User::create([
+        return User::create([
             'name' => $userData->name,
             'email' => $userData->email,
             'password' => Hash::make($userData->password),
         ]);
-
-        if ($userData->referralCode) {
-            ReferralService::attach(
-                referral: $user,
-                code: $userData->referralCode
-            );
-        }
-
-        return $user;
     }
 
     public function changePassword(array $credentials): void
