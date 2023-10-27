@@ -7,28 +7,28 @@
                     :title="$t('stats.cards[0]')"
                     :value="percent"
                 >
-                    <template v-slot:svg>
+                    <template #svg>
                         <img src="../../../../assets/img/percent-icon.png" />
                     </template>
                 </InfoCard>
-                                <InfoCard
-                                    class="referral__card-info"
-                                    :title="$t('stats.cards[1]')"
-                                    :value="percent"
-                                >
-                                    <template v-slot:svg>
-                                        <img src="../../../../assets/img/hashrate-icon.png" />
-                                    </template>
-                                </InfoCard>
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[1]')"
+                    :value="percent"
+                >
+                    <template #svg>
+                        <img src="../../../../assets/img/hashrate-icon.png" />
+                    </template>
+                </InfoCard>
             </div>
             <InfoCard
                 class="referral__card-info referal__general-profit"
-                :currentPage="'worker'"
+                :current-page="'worker'"
                 :title="$t('stats.cards[4]')"
                 :value="service.statsCards[1]?.value ?? 0"
                 unit="BTC"
             >
-                <template v-slot:svg>
+                <template #svg>
                     <img src="../../../../assets/img/income-icon.png" />
                 </template>
             </InfoCard>
@@ -42,7 +42,7 @@
                 <div class="referral__row">
                     <main-copy
                         class="referral_code"
-                        :cutValue="50"
+                        :cut-value="50"
                         :code="service.code"
                     />
                 </div>
@@ -57,7 +57,7 @@
                 <referral-select
                     class="referral_select-cabinet"
                     :rows="service.accounts"
-                    :activeSubId="service.activeSubId"
+                    :active-sub-id="service.activeSubId"
                     @changeSub="service.generateCode($event)"
                 />
             </div>
@@ -69,7 +69,7 @@
                     :title="$t('stats.cards[2]')"
                     :value="service.statsCards[0]?.value ?? 0"
                 >
-                    <template v-slot:svg>
+                    <template #svg>
                         <img src="../../../../assets/img/invite-icon.png" />
                     </template>
                 </InfoCard>
@@ -78,7 +78,7 @@
                     :title="$t('stats.cards[3]')"
                     :value="service.statsCards[2]?.value ?? 0"
                 >
-                    <template v-slot:svg>
+                    <template #svg>
                         <img src="../../../../assets/img/active-icon.png" />
                     </template>
                 </InfoCard>
@@ -92,7 +92,7 @@
                 <p class="text text-gray referral_text">
                     {{ $t("grade.text") }}
                 </p>
-                <info-list :gradeList="service.gradeList" />
+                <info-list :grade-list="service.gradeList" />
             </div>
         </div>
     </div>
@@ -112,7 +112,7 @@ import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
 import InfoCard from "../../../modules/common/Components/UI/CabinetCard.vue";
 export default {
-    name: "cabinet-view",
+    name: "CabinetView",
     components: {
         MainTitle,
         MainCopy,
@@ -185,7 +185,6 @@ export default {
         grid-row: 2;
         grid-column: 1/3;
     }
-
 }
 .referral {
     &__content {

@@ -2,6 +2,7 @@ import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 import { ProfileApi } from "@/api/api";
+import loginForm from "../../auth/Components/blocks/LoginForm.vue";
 
 export class CabinetService {
     constructor(translate, route) {
@@ -59,7 +60,7 @@ export class CabinetService {
 
         try {
             result = await ProfileApi.post(
-                `/referrals/generate/`,
+                `/referrals/generate/${this.user.id}`,
                 {
                     group_id: id,
                 },
@@ -72,7 +73,7 @@ export class CabinetService {
             store.dispatch("setNotification", {
                 status: "success",
                 title: "success",
-                text: response.data.message,
+                text: result.data.message,
             });
 
             this.sendMessage(result.data.message);
@@ -90,7 +91,11 @@ export class CabinetService {
     }
 
     setCode(code = null) {
-        this.code = code ?? (this.user.referral_code?.code || "...");
+        this.code =
+            code ??
+            (`${window.location.host}/registration?referral_code=${this.user.referral_code}` ||
+                "...");
+        console.log(this.code);
     }
 
     setActiveSub(group_id) {
@@ -99,15 +104,13 @@ export class CabinetService {
 
     transformCode(code) {
         const firstIndex = 1;
-
+        // const url = new URL(code)
+        // console.log(url)
         const params = code.split("?")[firstIndex];
-        const referralCodeParam = params.split("referral_code")[1];
-        const referralCode = referralCodeParam.substr(
-            firstIndex,
-            referralCodeParam.length - firstIndex
-        );
+        console.log(params)
+        const referralCodeParam = params.replace("referral_code=", "");
 
-        return `${window.location.host}/registration?referral_code=${referralCode}`;
+        return `${window.location.host}/registration?referral_code=${referralCodeParam}`;
     }
 
     async index() {
@@ -115,7 +118,7 @@ export class CabinetService {
 
         try {
             response = (
-                await ProfileApi.get(`/referrals/statistic/`, {
+                await ProfileApi.get(`/referrals/statistic/${this.user.id}`, {
                     headers: {
                         Authorization: `Bearer ${store.getters.token}`,
                     },
@@ -125,7 +128,10 @@ export class CabinetService {
             console.error(`FetchError: ${err}`);
         }
 
+        console.log("Ответ", response);
+
         const result = response?.data || response;
+        console.log("Результат", result);
 
         let code = this.transformCode(result.code);
         this.setCode(code || "...");
