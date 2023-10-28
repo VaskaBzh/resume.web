@@ -2,13 +2,13 @@ export const CommonMessages = {
     en: {
         search: {
             placeholder: "",
-            drop: "Отменить",
-        }
+            drop: "Cancel",
+        },
     },
     ru: {
         search: {
             placeholder: "",
             drop: "Отменить",
-        }
-    }
-}
+        },
+    },
+};
