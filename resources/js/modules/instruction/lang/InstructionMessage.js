@@ -11,10 +11,7 @@ export const InstructionMessage = {
         },
         step: "Step",
         titles: {
-            common: [
-                "Convenient navigation",
-                "Header",
-            ],
+            common: ["Convenient navigation", "Header"],
             statistic: [
                 "Interactive chart",
                 "Worker metrics",
@@ -26,26 +23,12 @@ export const InstructionMessage = {
                 "Monthly income",
                 "History of accruals and payouts",
             ],
-            workers: [
-                "Worker hashrate",
-                "Worker table",
-            ],
-            connecting: [
-                "Connecting a worker",
-                "Worker connection",
-            ],
-            wallets: [
-                "Auto payout",
-                "Wallets",
-            ],
-            watchers: [
-                "Observer mode",
-                "Observer mode",
-            ],
-            settings: [
-                "Email",
-                "Security",
-            ],
+            workers: ["Worker hashrate", "Worker table"],
+            connecting: ["Connecting a worker", "Worker connection"],
+            wallets: ["Auto payout", "Wallets"],
+            watchers: ["Observer mode", "Observer mode"],
+            // "Email",
+            settings: ["Security"],
         },
         texts: {
             common: [
@@ -80,10 +63,10 @@ export const InstructionMessage = {
                 "Specify a name for the observer link in the popup window. Set access to pages for the observer and click the 'Add' button.",
             ],
             settings: [
-                "Here you can change your email by clicking the 'Change' button.",
+                // "Here you can change your email by clicking the 'Change' button.",
                 "Specify a name for the observer link in the popup window. Set access to pages for the observer and click the 'Add' button.",
             ],
-        }
+        },
     },
     ru: {
         button_titles: {
@@ -97,10 +80,7 @@ export const InstructionMessage = {
         },
         step: "Шаг",
         titles: {
-            common: [
-                "Удобная навигация",
-                "Хедер",
-            ],
+            common: ["Удобная навигация", "Хедер"],
             statistic: [
                 "Интерактивный график",
                 "Показатели воркеров",
@@ -112,26 +92,12 @@ export const InstructionMessage = {
                 "Дохода за месяц",
                 "История начислений и выплат",
             ],
-            workers: [
-                "Хешрейт воркеров",
-                "Таблица воркеров",
-            ],
-            connecting: [
-                "Подключение воркера",
-                "Подключение воркера",
-            ],
-            wallets: [
-                "Автовыплата",
-                "Кошельки",
-            ],
-            watchers: [
-                "Режим наблюдателя",
-                "Режим наблюдателя",
-            ],
-            settings: [
-                "Email",
-                "Безопасность",
-            ],
+            workers: ["Хешрейт воркеров", "Таблица воркеров"],
+            connecting: ["Подключение воркера", "Подключение воркера"],
+            wallets: ["Автовыплата", "Кошельки"],
+            watchers: ["Режим наблюдателя", "Режим наблюдателя"],
+            settings: ["Безопасность"],
+            // "Email",
         },
         texts: {
             common: [
@@ -207,11 +173,11 @@ export const InstructionMessage = {
                 Установите доступ к страницам у наблюдателя и нажмите кнопку «Добавить»`,
             ],
             settings: [
-                `Здесь вы можете сменить ваш email нажав на кнопку «Сменить»`,
+                // `Здесь вы можете сменить ваш email нажав на кнопку «Сменить»`,
                 `Укажите название для ссылки наблюдателя в появившемся окне.
 
                 Установите доступ к страницам у наблюдателя и нажмите кнопку «Добавить»`,
             ],
-        }
+        },
     },
-}
+};
