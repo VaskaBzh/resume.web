@@ -1,9 +1,9 @@
-import {ProfileApi} from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
-import {WalletData} from "@/modules/wallets/DTO/WalletData";
+import { WalletData } from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
-import {DefaultSubsService} from "@/modules/common/services/extends/DefaultSubsService";
-import {VerifyService} from "@/modules/verify/services/VerifyService";
+import { DefaultSubsService } from "@/modules/common/services/extends/DefaultSubsService";
+import { VerifyService } from "@/modules/verify/services/VerifyService";
 
 export class WalletsService extends DefaultSubsService {
     constructor(translate) {
