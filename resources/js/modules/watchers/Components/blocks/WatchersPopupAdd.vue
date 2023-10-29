@@ -80,7 +80,7 @@
 <script>
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";

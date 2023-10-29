@@ -29,7 +29,7 @@
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 

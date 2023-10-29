@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import PlusIcon from "@/modules/common/icons/PlusIcon.vue";

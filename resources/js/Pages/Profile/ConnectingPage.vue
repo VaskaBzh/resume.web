@@ -61,7 +61,7 @@ import CopyBlock from "@/Components/technical/blocks/profile/CopyBlock.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 import CopyRow from "@/modules/common/Components/UI/CopyRow.vue";
 import InstructionButton from "@/modules/instruction/Components/UI/InstructionButton.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import ConnectionIcon from "@/modules/connecting/icons/ConnectionIcon.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";

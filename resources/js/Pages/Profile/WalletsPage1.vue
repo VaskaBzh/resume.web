@@ -346,7 +346,7 @@ import WalletBlock from "@/Components/technical/blocks/profile/WalletBlock.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 import WarningBlock from "@/modules/common/Components/UI/WarningBlock.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";

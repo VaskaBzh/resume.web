@@ -35,10 +35,21 @@ export default defineComponent({
 
 .icon .icon_path {
     fill: var(--icons-primary, #98a2b3);
+    stroke: none;
 }
 
 .icon-stroke .icon_path {
     stroke: var(--icons-primary, #98a2b3);
+    fill: none;
+}
+
+.icon-warning .icon_path {
+    fill: var(--status-waiting, #ffb868);
+    stroke: none;
+}
+
+.icon-warning.icon-stroke .icon_path {
+    stroke: var(--status-waiting, #ffb868);
     fill: none;
 }
 

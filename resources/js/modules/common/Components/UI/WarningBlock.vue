@@ -1,47 +1,45 @@
 <template>
     <div class="warning">
-        <warning-icon class="warning_icon" />
-        <p class="warning_text">
-            <span class="warning_text-elem">{{ $t(text) }}</span>
-            <a
-                href="https://t.me/allbtc_support"
-                target="_blank"
-                class="warning_text-link"
-                v-if="!!link"
-            >
-                {{ $t(link) }}
-            </a>
-        </p>
+        <main-icon class="warning_icon icon-md icon-warning" name="warning" />
+        <main-description
+            v-i18n="$t(text, { time: time })"
+            class="warning_text text-warning text-md"
+        />
     </div>
 </template>
 
 <script>
-import WarningIcon from "@/modules/common/icons/WarningIcon.vue";
+import MainIcon from "@/modules/common/icons/MainIcon.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
 
 import { WarningMessages } from "@/modules/common/lang/WarningMessages";
 
 export default {
-    name: "warning-block",
+    name: "WarningBlock",
+    components: {
+        MainDescription,
+        MainIcon,
+    },
     props: {
-        text: String,
-        link: {
+        text: {
             type: String,
-            default: null,
+            default: "connecting_feedback",
+        },
+        time: {
+            type: String,
+            default: "24 часа.",
         },
     },
     i18n: {
         sharedMessages: WarningMessages,
     },
-    components: {
-        WarningIcon,
-    }
-}
+};
 </script>
 
 <style scoped>
 .warning {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-waiting, #37322D);
+    background: var(--background-waiting, #37322d);
     padding: 16px;
     display: flex;
     gap: 12px;
@@ -49,20 +47,5 @@ export default {
 }
 .warning_icon {
     min-width: 24px;
-    width: 24px;
-    height: 24px;
-}
-.warning_text {
-    color: var(--status-waiting, #FFB868);
-    font-family: NunitoSans, serif;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 20px;
-    display: inline-flex;
-    flex-direction: column;
-    gap: 4px;
-}
-.warning_text-link {
-    text-decoration: underline;
 }
 </style>

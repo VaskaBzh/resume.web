@@ -11,7 +11,7 @@
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDescription from "../../common/Components/UI/MainDescription.vue";
+import MainDescription from "../../common/Components/UI/MainDescriptionOld.vue";
 
 export default {
 	name: "watcher-card",

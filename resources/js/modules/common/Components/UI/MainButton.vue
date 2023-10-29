@@ -35,7 +35,7 @@ export default {
     color: var(--buttons-primary-text, var(--main-gohan, #fff));
     padding: 0 16px;
     font-family: NunitoSans, serif;
-    font-size: 18px;
+    font-size: clamp(16px, 3vw, 18px);
     line-height: 32px;
 }
 

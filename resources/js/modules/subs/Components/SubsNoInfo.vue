@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import { SubMessages } from "@/modules/subs/lang/SubMessages";
 
 export default {

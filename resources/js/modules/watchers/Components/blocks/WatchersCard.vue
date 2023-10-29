@@ -84,7 +84,7 @@
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
