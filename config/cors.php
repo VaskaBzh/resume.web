@@ -15,11 +15,11 @@ return [
     |
     */
 
-    'paths' => ['v1/*', 'sanctum/csrf-cookie', 'v1'],
+    'paths' => ['v1/*', 'sanctum/csrf-cookie'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [env('CORS_ALLOWED_ORIGINS', '*')],
 
     'allowed_origins_patterns' => ['*'],
 
@@ -29,6 +29,5 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
-
+    'supports_credentials' => env('CORS_SUPPORT_CREDENTIALS', false),
 ];

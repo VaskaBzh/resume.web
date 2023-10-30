@@ -34,12 +34,9 @@ class SubBuilder extends BaseBuilder
             ->where('pending_amount', '>=', Wallet::MIN_BITCOIN_WITHDRAWAL);
     }
 
-    public function getActiveReferrals(User $user): Builder
+    public function getActiveSubs(array $userIds): Builder
     {
-        return Sub::whereIn('group_id',
-            $user->subs()->pluck('group_id')
-        )
-            ->hasWorkerHashRate();
+        return Sub::whereIn('user_id', $userIds)->hasWorkerHashRate();
     }
 
     public function whereExpiredCustomPercent(): Builder
