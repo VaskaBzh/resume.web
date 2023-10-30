@@ -86,7 +86,7 @@ class BtcComService
      * Get remote sub-account
      *
      */
-    public function getSub(int $groupId): ?array
+    public function getRemoteSub(int $groupId): ?array
     {
         return $this->call(segments: ['groups', $groupId], params: [
             'puid' => self::PU_ID,
@@ -120,7 +120,7 @@ class BtcComService
         Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $user->id,
-                'group_id' => $btcComSub['gid'],
+                'group_id' => 66666,
                 'group_name' => $user->name,
             ])
         );
@@ -199,7 +199,7 @@ class BtcComService
     {
         return self::transform(
             sub: $sub,
-            btcComSub: $this->getSub($sub->group_id)
+            btcComSub: $this->getRemoteSub($sub->group_id)
         );
     }
 
