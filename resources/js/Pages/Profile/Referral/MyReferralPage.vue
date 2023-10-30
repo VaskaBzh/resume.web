@@ -53,19 +53,26 @@ export default {
         };
     },
     watch: {
-        user(newUser) {
-            this.service.setUser(newUser);
+        user: {
+            async handler(newUser) {
+                this.service.setUser(newUser);
+
+                await this.service.setTable();
+            },
+            deep: true,
         },
         "$i18n.locale"() {
             this.service.getGradeList();
         },
     },
     async mounted() {
-        this.service.setUser(this.user);
+        if (this.user?.id) {
+            this.service.setUser(this.user);
+
+            await this.service.setTable();
+        }
         this.service.getGradeList();
         this.service.getPercent();
-
-        await this.service.setTable();
     },
 };
 </script>

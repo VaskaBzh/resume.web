@@ -74,16 +74,12 @@ export class CabinetService {
                 title: "success",
                 text: result.data.message,
             });
-
-            this.sendMessage(result.data.message);
         } catch (err) {
-            this.sendMessage(err.response.data.message);
-
-            store.dispatch("setNotification", {
-                status: "error",
-                title: "error",
-                text: err.response.data.message,
-            });
+            // store.dispatch("setNotification", {
+            //     status: "error",
+            //     title: "error",
+            //     text: err.response.data.message,
+            // });
         }
 
         await this.index();
@@ -115,11 +111,15 @@ export class CabinetService {
         } catch (err) {
             console.error(`FetchError: ${err}`);
 
-            store.dispatch("setNotification", {
-                status: "error",
-                title: "error",
-                text: err.response.data.errors.message[0],
-            });
+            const canceledMessage = "ERR_CANCELED";
+
+            if (err.code !== canceledMessage) {
+                store.dispatch("setNotification", {
+                    status: "error",
+                    title: "error",
+                    text: err.response.data.errors.message[0],
+                });
+            }
         }
 
         const result = response.data;

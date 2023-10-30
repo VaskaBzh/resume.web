@@ -60,8 +60,13 @@ export default {
         };
     },
     watch: {
-        user(newUser) {
-            this.service.setUser(newUser);
+        user: {
+            async handler(newUser) {
+                this.service.setUser(newUser);
+
+                await this.initIncomes();
+            },
+            deep: true,
         },
         page() {
             this.initIncomes();
@@ -74,8 +79,8 @@ export default {
         },
     },
     methods: {
-        initIncomes() {
-            this.service.setTable(this.page, this.per_page);
+        async initIncomes() {
+            await this.service.setTable(this.page, this.per_page);
         },
         changePerPage($event) {
             this.per_page = $event;
@@ -85,9 +90,12 @@ export default {
             this.service.setUser(newUser);
         },
     },
-    mounted() {
-        this.service.setUser(this.user);
-        this.initIncomes();
+    async mounted() {
+        if (this.user?.id) {
+            this.service.setUser(this.user);
+
+            await this.initIncomes();
+        }
     },
 };
 </script>

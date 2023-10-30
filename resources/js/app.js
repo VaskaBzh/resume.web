@@ -7,7 +7,7 @@ import App from "@/App.vue";
 import i18n from "@/lang/vue-translate.js";
 import "virtual:svg-icons-register";
 
-import store from "./store/index.js";
+import store from "@/store/index.js";
 // import scrollAnimation from "@/Components/directives/animations/scrollAnimation.vue";
 // import scrollValueAnimation from "@/Components/directives/animations/scrollValueAnimation.vue";
 // import tippyAnimation from "@/Components/directives/tippyAnimation.vue";
