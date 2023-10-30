@@ -35,17 +35,17 @@ migrate:
 	$(ARTISAN) migrate
 seed:
 	$(ARTISAN) db:seed
-optimize:
-	$(ARTISAN) optimize
 clear:
 	$(COMPOSE) $(APP) composer cc
 	$(COMPOSE) $(APP) npm cache clean --force
 	$(ARTISAN) optimize:clear
+	$(ARTISAN) optimize
 tinker:
 	$(ARTISAN) tinker
 test:
 	$(ARTISAN) config:clear
 	$(ARTISAN) test --env=testing
+	$(ARTISAN) optimize
 remote_test:
 	ssh mainuser@92.205.188.112
 docs:
