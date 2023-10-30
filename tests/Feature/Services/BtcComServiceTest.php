@@ -65,6 +65,11 @@ class BtcComServiceTest extends TestCase
         );
     }
 
+    public function it_create_local_sub_successfully()
+    {
+
+    }
+
     /**
      * @test
      *
@@ -213,6 +218,21 @@ class BtcComServiceTest extends TestCase
         return [
             [
                 'btcComSubResponse' => [
+                    "status" => true,
+                    "gid" => 6003166,
+                    "group_name" => "MainTest",
+                    "created_at" => 1698151086,
+                    "updated_at" => 1698151086,
+                ],
+            ]
+        ];
+    }
+
+    public function createLocalSubDataProvider(): array
+    {
+        return [
+            [
+                'expected' => [
                     "status" => true,
                     "gid" => 6003166,
                     "group_name" => "MainTest",

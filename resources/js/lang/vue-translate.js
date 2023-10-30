@@ -5,6 +5,7 @@ import {createI18n} from "vue-i18n";
 const messages = {
     en: {
         hash: "Hashrate",
+        costs: "Electricity cost",
         currency: "BTC Rate",
         miners_title: ["transparent", "and efficient", "mining", "of bitcoin"],
         miners_offer: {
@@ -106,7 +107,8 @@ const messages = {
         },
         hosting_mobile_app: {
             title: "mobile application",
-            text: "Optimized and intuitive mobile application. Hashrate monitoring, notifications and access to income information at any time \n" +
+            text:
+                "Optimized and intuitive mobile application. Hashrate monitoring, notifications and access to income information at any time \n" +
                 "on your phone.",
             button: "coming soon to the appstore",
         },
@@ -264,7 +266,7 @@ const messages = {
         payments: {
             button: "payouts",
             main_title: ["fPPS+", "(msk) 09 am – 11 am", "comission 0%"],
-            title: ["FPPS+", "autopayouts", "free funds transfer"],
+            title: ["reward method", "autopayouts", "free funds transfer"],
             text: [
                 "A modernized reward system that eliminates the risk of reduced miner income due to fluctuations in transaction fees by combining the block reward and transaction fee payments into one value. It also guarantees a fair distribution of rewards among pool participants.",
                 "Automatic payments are made without any action on the part of the miner. Since payments are possible when predetermined conditions are met (reaching a given minimum threshold), funds are received without delay. Moreover, the possibility of an error (incorrectly entered wallet address or transaction amount) caused by a human factor is eliminated.",
@@ -1026,7 +1028,8 @@ const messages = {
     ru: {
         miners_title: ["прозрачный", "и эффективный", "майнинг", "bitcoin"],
         hash: "Хешрейт",
-        currency: "Курст BTC",
+        currency: "Курс BTC",
+        costs: "Стоимость электроэнергии",
         miners_offer: {
             title: "что мы предлагаем",
             text: "Эффективный и стабильный майнинг-пул с персональной комиссией, оптимизированный под добычу Bitcoin. А также комплекс инструментов для прозрачного и удобного анализа ваших активов.",
@@ -1254,7 +1257,8 @@ const messages = {
             button: "безопасность",
             encryption: {
                 title: "шифрование данных майнера",
-                text: "Шифрование данных, передаваемых между пользователями и сервером \n" +
+                text:
+                    "Шифрование данных, передаваемых между пользователями и сервером \n" +
                     "пула, помогает предотвратить подслушивание или перехват злоумышленниками. Используя безопасные каналы, такие как \n" +
                     "SSL/TLS, allbtc pool гарантирует, \n" +
                     "что данные остаются конфиденциальными и безопасными во время передачи и защищенными от несанкционированного доступа.",
@@ -1265,7 +1269,8 @@ const messages = {
             },
             DDoS: {
                 title: "защита от DDoS-атак",
-                text: "Когда майнинг-пул подвержен DDoS-атакам, это может привести \n" +
+                text:
+                    "Когда майнинг-пул подвержен DDoS-атакам, это может привести \n" +
                     "к перебоям в майнинг операциях, что приводит к снижению выплат клиентам пула. Защита от DDoS-атак гарантирует, что allbtc pool всегда будет работоспособным и обеспечит непрерывное надежное обслуживание своих пользователей.",
             },
         },
@@ -1284,11 +1289,7 @@ const messages = {
         payments: {
             button: "выплаты",
             main_title: ["fPPS+", "(msk) 09 am – 11 am", "комиссия 0%"],
-            title: [
-                "метод вознаграждения",
-                "автовыплаты",
-                "бесплатный вывод",
-            ],
+            title: ["метод вознаграждения", "автовыплаты", "бесплатный вывод"],
             text: [
                 "Модернизированная система вознаграждений, которая исключает риск снижения доходов майнеров из-за колебаний комиссий за транзакции, поскольку объединяет вознаграждение за блок и выплаты комиссий за транзакции в одно значение. Также гарантирует справедливое распределение вознаграждений между участниками пула.",
                 "Автоматические выплаты осуществляются без каких-либо действий со стороны майнера. \n" +
@@ -1910,7 +1911,7 @@ const messages = {
                 thead: [
                     "Тип операции",
                     "Дата начисления",
-                    "Дата вылпаты",
+                    "Дата выплаты",
                     "Хешрейт",
                     "Начисления",
                     "Выплаты",

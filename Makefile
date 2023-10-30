@@ -33,8 +33,6 @@ update:
 	$(COMPOSE) $(APP) composer update
 migrate:
 	$(ARTISAN) migrate
-rollback:
-	$(ARTISAN) migrate:rollback
 seed:
 	$(ARTISAN) db:seed
 clear:

@@ -3,9 +3,6 @@
     "info": {
         "title": "Allbtc API",
         "description": "Документация Allbtc API",
-        "contact": {
-            "email": "ognevoy.bima@gmail.com"
-        },
         "version": "1.0.0"
     },
     "servers": [
@@ -2331,7 +2328,7 @@
                     "Auth"
                 ],
                 "summary": "Restore user password",
-                "operationId": "bdc371d3a4332cbf3ca2dd2eb39dc483",
+                "operationId": "16401baf2e7226abc9a3f1621e58b13b",
                 "parameters": [
                     {
                         "name": "user",
@@ -2972,6 +2969,10 @@
                         "type": "integer"
                     },
                     "referrals_total_amount": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "total_referrals_hash_rate": {
                         "type": "number",
                         "format": "float"
                     },

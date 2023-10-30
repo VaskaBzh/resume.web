@@ -19,16 +19,15 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => [env('CORS_ALLOWED_ORIGINS')],
+    'allowed_origins' => [env('CORS_ALLOWED_ORIGINS', '*')],
 
-    'allowed_origins_patterns' => [],
+    'allowed_origins_patterns' => ['*'],
 
     'allowed_headers' => ['*'],
 
-    'exposed_headers' => [],
+    'exposed_headers' => false,
 
     'max_age' => 0,
 
-    'supports_credentials' => true,
-
+    'supports_credentials' => env('CORS_SUPPORT_CREDENTIALS', false),
 ];

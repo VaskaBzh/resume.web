@@ -1,10 +1,12 @@
 <template>
     <div class="select">
         <div
+            ref="select"
             class="select_name"
             :class="{
                 'select_name-active': opened,
                 'select_name-selected': validateBaseName,
+                'select_name-opacity': isBlocked,
             }"
             @click="toggleSelect"
         >
@@ -25,11 +27,11 @@
             </svg>
         </div>
         <transition name="list">
-            <div class="select_list" v-show="opened">
+            <div v-show="opened" class="select_list">
                 <div
-                    class="select_row"
                     v-for="(row, i) in rows"
                     :key="i"
+                    class="select_row"
                     @click="changeValue(row.name, row.group_id)"
                 >
                     {{ row.name }}
@@ -43,7 +45,7 @@
 import { ReferralsMessage } from "../../lang/ReferralsMessage";
 
 export default {
-    name: "referral-select",
+    name: "ReferralSelect",
     props: {
         rows: Array,
         activeSubId: String,
@@ -55,7 +57,19 @@ export default {
         return {
             baseName: this.$t("incomes.base_value"),
             opened: false,
+            isClicked: true,
+            isBlocked: false,
         };
+    },
+    computed: {
+        validateBaseName() {
+            return (
+                this.baseName ===
+                Object.values(this.rows).find(
+                    (el) => el.group_id === this.activeSubId ?? 0
+                )?.name
+            );
+        },
     },
     watch: {
         opened(value) {
@@ -77,15 +91,9 @@ export default {
     mounted() {
         this.setBaseName();
     },
-    computed: {
-        validateBaseName() {
-            return (
-                this.baseName ===
-                Object.values(this.rows).find(
-                    (el) => el.group_id === this.activeSubId ?? 0
-                )?.name
-            );
-        },
+    beforeUnmount() {
+        document.removeEventListener("click", this.onDocumentClick);
+        document.removeEventListener("keydown", this.onEscapeKeydown);
     },
     methods: {
         setBaseName() {
@@ -101,29 +109,40 @@ export default {
 
                 this.$emit("changeSub", id);
             }
+            this.isBlocked = true;
+            setTimeout(() => {
+                this.isBlocked = false;
+            }, 3000);
 
             this.closeSelect();
         },
         toggleSelect() {
-            this.opened = !this.opened;
+            if (this.isClicked) {
+                this.opened = !this.opened;
+            }
         },
         closeSelect() {
+            setTimeout(() => {
+                this.isClicked = true;
+            }, 3000);
             this.opened = false;
         },
         onDocumentClick(e) {
+            setTimeout(() => {
+                this.isClicked = false;
+            }, 3000);
             if (!this.$el.contains(e.target)) {
                 this.closeSelect();
             }
         },
         onEscapeKeydown(e) {
+            setTimeout(() => {
+                this.isClicked = false;
+            }, 3000);
             if (e.keyCode === 27) {
                 this.closeSelect();
             }
         },
-    },
-    beforeUnmount() {
-        document.removeEventListener("click", this.onDocumentClick);
-        document.removeEventListener("keydown", this.onEscapeKeydown);
     },
 };
 </script>
@@ -147,6 +166,7 @@ export default {
     height: 48px;
     width: 100%;
     cursor: pointer;
+    transition: all 0.3s;
     &_name {
         position: relative;
         min-height: 48px;
@@ -180,6 +200,11 @@ export default {
                 transform: translateY(-50%) rotate(180deg);
             }
         }
+
+        &-opacity {
+            opacity: 0.5;
+            pointer-events: none;
+        }
     }
     &_list {
         position: absolute;
@@ -191,9 +216,10 @@ export default {
         z-index: 2;
         width: 100%;
         left: 0;
-        top: calc(100% + 8px);
+        top: calc(100% + 11px);
         box-shadow: 2px 2px 4px -2px rgba(29, 41, 57, 0.05),
             0px 4px 12px -4px rgba(29, 41, 57, 0.05);
+        transition: all 0.5s ease 0s;
     }
     &_row {
         min-height: 48px;
@@ -208,6 +234,7 @@ export default {
                 --background-island-inner-1,
                 rgba(83, 177, 253, 0.07)
             );
+            transition: all 0.5s ease 0s;
         }
         &:not(:last-child) {
             border-bottom: 0.5px solid var(--background-graphic-line);
