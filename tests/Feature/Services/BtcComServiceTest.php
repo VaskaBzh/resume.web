@@ -41,7 +41,7 @@ class BtcComServiceTest extends TestCase
         $this->expectException(BusinessException::class);
         $this->expectExceptionMessage(__('actions.sub_account_already_exist'));
 
-        app(BtcComService::class)->createSub($this->user);
+        app(BtcComService::class)->createSub($this->user, 'MainTest');
 
         $this->assertDatabaseMissing('subs', ['user_id' => $this->user->id, 'sub' => $this->user->name]);
     }
@@ -55,7 +55,7 @@ class BtcComServiceTest extends TestCase
     {
         $this->makeFakeRequestToBtcCom(['data' => $btcComSubResponse]);
 
-        app(BtcComService::class)->createSub($this->user);
+        app(BtcComService::class)->createSub($this->user, 'MainTest');
 
         $this->assertDatabaseHas('subs', [
                 'user_id' => $this->user->id,

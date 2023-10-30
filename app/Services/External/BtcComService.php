@@ -86,7 +86,7 @@ class BtcComService
      * Get remote sub-account
      *
      */
-    public function getRemoteSub(int $groupId): ?array
+    public function getSub(int $groupId): ?array
     {
         return $this->call(segments: ['groups', $groupId], params: [
             'puid' => self::PU_ID,
@@ -95,18 +95,16 @@ class BtcComService
 
     /**
      * Create remote sub-account by user name
-     * Create local sub based on remote sub-account group_id
      *
-     * @throw BusinessException if remote sub-account exists
      */
-    public function createSub(User $user): void
+    public function createRemoteSub(string $subName): array
     {
         $btcComSub = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
-                'group_name' => $user->name
+                'group_name' => $subName
             ]);
 
         if (in_array('exist', $btcComSub, true)) {
@@ -117,11 +115,21 @@ class BtcComService
             );
         }
 
+        return $btcComSub;
+    }
+
+    /**
+     * Create local sub based on remote sub-account group_id
+     *
+     * @throw BusinessException if remote sub-account exists
+     */
+    public function createSub(int $userId, string $subName): void
+    {
         Create::execute(
             subData: SubData::fromRequest([
-                'user_id' => $user->id,
-                'group_id' => 66666,
-                'group_name' => $user->name,
+                'user_id' => $userId,
+                'group_id' => $this->createRemoteSub($subName)['gid'],
+                'group_name' => $subName,
             ])
         );
     }
@@ -199,7 +207,7 @@ class BtcComService
     {
         return self::transform(
             sub: $sub,
-            btcComSub: $this->getRemoteSub($sub->group_id)
+            btcComSub: $this->getSub($sub->group_id)
         );
     }
 

@@ -9,7 +9,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\External\BtcComService;
-use App\Services\Internal\ReferralService;
 use App\Services\Internal\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -114,20 +113,14 @@ class RegisterController extends Controller
         BtcComService   $btcComService
     ): JsonResponse
     {
-        $userData = UserData::fromRequest($request->all());
+        auth()->login($user = UserService::create(userData:
+            UserData::fromRequest($request->all())
+        ));
 
         $btcComService->createSub(
-            user: $user = UserService::create(userData: $userData)
+            userId: $user->id,
+            subName: $user->name
         );
-
-        if ($userData->referralCode) {
-            ReferralService::attach(
-                referral: $user,
-                code: $userData->referralCode
-            );
-        }
-
-        auth()->login($user);
 
         event(new Registered(
             user: $user
