@@ -15,11 +15,11 @@ export class ReferralsService extends TableService {
     }
 
     setter(referral) {
-        new ReferralsData(
+        return new ReferralsData(
             referral["email"],
-            referral["workers_active"],
-            referral["workers_inactive"],
-            referral["hash"],
+            referral["referral_active_workers_count"],
+            referral["referral_inactive_workers_count"],
+            referral["referral_hash_per_day"],
             "T",
             // this.dateFormatter(referral["created_at"]),
             referral["total_amount"] === 0
@@ -39,11 +39,7 @@ export class ReferralsService extends TableService {
     }
 
     async fetchReferrals(page, per_page) {
-        return await ProfileApi.get(`/referrals/${this.user.id}`, {
-            headers: {
-                Authorization: `Bearer ${store.getters.token}`,
-            },
-        });
+        return await ProfileApi.get(`/referrals/${this.user.id}`);
     }
 
     async index(page = 1, per_page = 15) {
@@ -55,9 +51,10 @@ export class ReferralsService extends TableService {
         try {
             response = await this.fetchReferrals(page, per_page);
 
-            this.meta = response.data;
+            // this.meta = response.data.data;
 
             this.rows = response.data.data.map((el) => {
+                console.log(el)
                 return this.setter(el);
             });
 

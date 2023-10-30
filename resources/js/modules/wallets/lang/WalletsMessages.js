@@ -2,7 +2,7 @@ export const WalletsMessages = {
     en: {
         no_wallets: {
             text: "For automatic payment of credited links, your wallet addresses",
-            warning: `You have recently verified your email. You can add a wallet after 23:59:01
+            warning: `You have recently verified your email. You can add a wallet after 23:59:01 //
 
                     You will receive mining rewards and make payments as soon as you add your wallet.`,
             button: "Add",
@@ -48,7 +48,7 @@ export const WalletsMessages = {
     ru: {
         no_wallets: {
             text: "Для автовыплаты начислений добавьте адрес вашего кошелька",
-            warning: `Вы недавно подтвердили почту. Вы сможете добавить кошелек через 23:59:01 <br> <br>
+            warning: `Вы недавно подтвердили почту. Вы сможете добавить кошелек через 23:59:01 //
 
                     Вы будете получать вознаграждения за майнинг и сможете совершить выплату как только добавите кошелек.`,
             button: "Добавить",
@@ -77,8 +77,8 @@ export const WalletsMessages = {
                 name: "Метка кошелька",
             },
             warning:
-                "В случае изменения адреса кошелька автовыплаты не будут работать в течении 48 часов. Вы будете получать вознаграждения за майнинг, но не сможете вывести их \n" +
-                "на свой кошелек в течении указанного времени.",
+               `В случае изменения адреса кошелька автовыплаты не будут работать в течении 48 часов. Вы будете получать вознаграждения за майнинг, но не сможете вывести их /
+                на свой кошелек в течении указанного времени.`,
             button: "Изменить",
             email_form: {
                 text: "Для подтверждения добавления кошелька введите код отправленный на почту {email}",
