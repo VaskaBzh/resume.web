@@ -16,7 +16,7 @@ class AttachReferral
     {
         $ownerSub
             ->referrals()
-            ->attach($referralSub->user()->id, ['referral_percent' => $referralPercent]);
+            ->attach($referralSub->user_id, ['referral_percent' => $referralPercent]);
 
         $referralSub->update(['percent' => $referralSub->percent - $referralPercent]);
     }
