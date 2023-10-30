@@ -195,7 +195,7 @@
         <form
             v-if="!wallets.isCodeSend"
             class="form form-popup popup__form"
-            @submit.prevent="wallets.changeWallet"
+            @submit.prevent="changeWallet()"
         >
             <main-title class="change-label_title">
                 {{ $t("wallets.popups.change.title") }}
@@ -270,7 +270,7 @@
         <form
             v-if="!wallets.isCodeSend"
             class="form form-popup popup__form"
-            @submit.prevent="wallets.addWallet"
+            @submit.prevent="createWallet()"
         >
             <main-title
                 >{{ $t("wallets.popups.add.title") }}
@@ -324,11 +324,11 @@
         </form>
         <verify-form
             v-if="wallets.isCodeSend"
-            title="form.wallets.title"
-            text="form.wallets.text"
+            title="form.wallets_add.title"
+            text="form.wallets_add.text"
             placeholder="form.wallets.placeholder"
             re_verify_text="form.wallets.re_verify_text"
-            button_text="form.wallets.button_text"
+            button_text="form.wallets_add.button_text"
             @sendForm="createWallet($event)"
             @back="wallets.back()"
         />
@@ -430,12 +430,12 @@ export default {
         }
     },
     methods: {
-        changeWallet(code) {
+        changeWallet(code = null) {
             this.setCode(code);
 
             this.wallets.changeWallet();
         },
-        createWallet(code) {
+        createWallet(code = null) {
             this.setCode(code);
 
             this.wallets.addWallet();

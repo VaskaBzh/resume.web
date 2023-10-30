@@ -14,7 +14,7 @@
                     >{{ $t("text") }}
                 </main-description>
             </div>
-            <main-button data-popup="#addWatcher">
+            <main-button class="button-md button-white button-stroke" data-popup="#addWatcher">
                 <template #svg>
                     <plus-icon />
                 </template>
