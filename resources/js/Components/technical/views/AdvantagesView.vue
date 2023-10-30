@@ -2,15 +2,21 @@
     <div class="advantages section">
         <div class="advantages__container">
             <div class="advantages__content">
-                <main-title tag="h2" class="advantages_title title-blue">{{
-                    this.$t("hosting.get_block.title")
-                }}</main-title>
+                <main-title class="advantages_title title-blue"
+                    >{{ $t("hosting.get_block.title") }}
+                </main-title>
                 <p
                     class="description"
-                    v-html="this.$t('hosting.get_block.text')"
+                    v-html="$t('hosting.get_block.text')"
                 ></p>
-                <blue-button class="button button-md button-reverce btn-consultation">
-                    <a class="all-link" target="_blank" href="https://t.me/allbtc_support">
+                <blue-button
+                    class="button button-md button-reverce btn-consultation"
+                >
+                    <a
+                        class="all-link"
+                        target="_blank"
+                        href="https://t.me/allbtc_support"
+                    >
                         <svg
                             width="21"
                             height="18"
@@ -36,7 +42,7 @@
                             </defs>
                         </svg>
 
-                        {{ this.$t("hosting.get_block.button") }}
+                        {{ $t("hosting.get_block.button") }}
                     </a>
                 </blue-button>
             </div>
@@ -49,7 +55,7 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 
 export default {
-    name: "advantages-view",
+    name: "AdvantagesView",
     components: {
         MainTitle,
         BlueButton,
@@ -62,6 +68,7 @@ export default {
     &__container {
         margin: 0 auto;
     }
+
     &__content {
         display: flex;
         flex-direction: column;
@@ -70,9 +77,11 @@ export default {
         @media (max-width: 479.98px) {
             gap: 16px;
         }
+
         .description {
             text-align: center;
         }
+
         .blue-button {
             margin-top: 40px;
             @media (max-width: 767.98px) {
@@ -84,10 +93,12 @@ export default {
             }
         }
     }
+
     &_title {
         max-width: 1216px;
         text-align: center;
     }
+
     .btn-consultation {
         margin-top: 20px;
     }

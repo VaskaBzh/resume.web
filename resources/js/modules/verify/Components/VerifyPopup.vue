@@ -1,13 +1,8 @@
 <template>
-    <main-popup
-        id="verify"
-        :wait="wait"
-        :closed="closed"
-        :opened="opened"
-    >
-        <slot/>
+    <main-popup id="verify" :wait="wait" :closed="closed" :opened="opened">
+        <slot />
         <!--		<div class="verify__head">-->
-        <!--			<main-title tag="h3">{{ $t("popup.title") }}</main-title>-->
+        <!--			<main-title>{{ $t("popup.title") }}</main-title>-->
         <!--			<main-description>{{ $t("popup.description") }}</main-description>-->
         <!--		</div>-->
         <!--		<div class="verify__content">-->
@@ -37,17 +32,11 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
-import {VerifyMessages} from "@/modules/verify/lang/VerifyMessages";
-import {VerifyService} from "@/modules/verify/services/VerifyService";
+import { VerifyMessages } from "@/modules/verify/lang/VerifyMessages";
+import { VerifyService } from "@/modules/verify/services/VerifyService";
 
 export default {
-    name: "verify-popup",
-    props: {
-        wait: Boolean,
-        closed: Boolean,
-        opened: Boolean,
-    },
-    i18n: VerifyMessages,
+    name: "VerifyPopup",
     components: {
         MainInput,
         MainValidate,
@@ -56,19 +45,21 @@ export default {
         MainDescription,
         MainButton,
     },
+    props: {
+        wait: Boolean,
+        closed: Boolean,
+        opened: Boolean,
+    },
+    i18n: VerifyMessages,
     data() {
         return {
             service: new VerifyService(),
         };
     },
     methods: {
-        sendEmailMessage() {
-
-        }
-    }
-}
+        sendEmailMessage() {},
+    },
+};
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

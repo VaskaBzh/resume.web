@@ -3,13 +3,11 @@
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers__head">
-                    <main-title tag="h3" class="watchers_title">{{
-                            $t("delete_card.title")
-                        }}
+                    <main-title class="watchers_title"
+                        >{{ $t("delete_card.title") }}
                     </main-title>
-                    <main-description>{{
-                            $t("delete_card.text")
-                        }}
+                    <main-description
+                        >{{ $t("delete_card.text") }}
                     </main-description>
                 </div>
                 <div
@@ -25,18 +23,18 @@
             </div>
             <div class="watchers__buttons">
                 <main-button
-                    @click.prevent="closePopup"
                     class="button-reverse button-full watchers_button"
+                    @click.prevent="closePopup"
                 >
-                    <template v-slot:text>
+                    <template #text>
                         {{ $t("delete_card.buttons[0]") }}
                     </template>
                 </main-button>
                 <main-button
-                    @click.prevent="removeWatcher"
                     class="button-red button-full watchers_button"
+                    @click.prevent="removeWatcher"
                 >
-                    <template v-slot:text>
+                    <template #text>
                         {{ $t("delete_card.buttons[1]") }}
                     </template>
                 </main-button>
@@ -50,10 +48,10 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
-    name: "watchers-popup-remove",
+    name: "WatchersPopupRemove",
     components: {
         MainButton,
         MainPopup,
@@ -68,6 +66,11 @@ export default {
     i18n: {
         sharedMessages: WatchersMessage,
     },
+    data() {
+        return {
+            closed: false,
+        };
+    },
     methods: {
         closePopup() {
             this.closed = true;
@@ -79,11 +82,6 @@ export default {
 
             this.closePopup();
         },
-    },
-    data() {
-        return {
-            closed: false,
-        };
     },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
     <form @submit.prevent="service.login" class="form-auth">
-        <main-title tag="h3" class="form-auth_title">{{
+        <main-title class="form-auth_title">{{
                 this.$t("auth.login.title")
             }}
         </main-title>

@@ -1,14 +1,14 @@
 <template>
     <blue-button
-        class="feedback"
         v-show="!route.fullPath.startsWith('/profile')"
+        class="feedback"
         data-popup="#feedback"
     >
         <span class="all-link">{{ $t("footer.feedback.button") }}</span>
     </blue-button>
     <blue-button
-        class="feedback"
         v-show="route.fullPath.startsWith('/profile')"
+        class="feedback"
     >
         <a
             class="all-link"
@@ -19,18 +19,18 @@
     </blue-button>
     <teleport to="body">
         <main-popup
-            id="feedback"
             v-show="!route.fullPath.startsWith('/profile')"
+            id="feedback"
             :wait="wait"
             :errors="errors"
         >
             <form
-                @submit.prevent="sendFeedback"
                 class="form form-popup popup__form"
+                @submit.prevent="sendFeedback"
             >
-                <main-title tag="h3">{{
-                    $t("footer.feedback.popup.title")
-                }}</main-title>
+                <main-title
+                    >{{ $t("footer.feedback.popup.title") }}
+                </main-title>
                 <input
                     v-model="form.contacts"
                     :placeholder="
@@ -65,8 +65,9 @@
                             />
                             <path
                                 d="M12 16.75C11.59 16.75 11.25 16.41 11.25 16C11.25 15.59 11.59 15.25 12 15.25C13.79 15.25 15.25 13.79 15.25 12C15.25 10.21 13.79 8.75 12 8.75C11.59 8.75 11.25 8.41 11.25 8C11.25 7.59 11.59 7.25 12 7.25C14.62 7.25 16.75 9.38 16.75 12C16.75 14.62 14.62 16.75 12 16.75Z"
-                            /></svg
-                        >{{ $t("footer.feedback.popup.button") }}
+                            />
+                        </svg>
+                        {{ $t("footer.feedback.popup.button") }}
                     </button>
                 </blue-button>
             </form>
@@ -78,14 +79,14 @@
                 <div class="footer__social_con">
                     <router-link :to="{ name: 'home' }">
                         <img
-                            class="nav__logo"
                             v-if="!isDark"
+                            class="nav__logo"
                             src="../../assets/img/logo_high_quality.svg"
                             alt="logo"
                         />
                         <img
-                            class="nav__logo"
                             v-else
+                            class="nav__logo"
                             src="../../assets/img/logo_high_quality-dark.svg"
                             alt="logo"
                         />
@@ -276,18 +277,13 @@ import { MainApi } from "@/api/api";
 import store from "@/store";
 
 export default {
-    name: "footer-component",
+    name: "FooterComponent",
     components: { MainTitle, MainPopup, BlueButton },
     computed: {
         ...mapGetters(["isDark", "errors"]),
         route() {
             return useRoute();
         },
-    },
-    data() {
-        return {
-            pdf,
-        };
     },
     setup() {
         let wait = ref(false);
@@ -318,12 +314,18 @@ export default {
             wait,
         };
     },
+    data() {
+        return {
+            pdf,
+        };
+    },
 };
 </script>
 
 <style lang="scss" scoped>
 .feedback {
     position: fixed;
+
     .all-link {
         min-height: 48px;
         display: inline-flex;
@@ -332,9 +334,11 @@ export default {
             min-height: 40px;
         }
     }
+
     &:before {
         box-shadow: 2px 4px 10px rgba(#000034, 0.5);
     }
+
     @media (min-width: 767.98px) {
         right: 60px;
         min-width: 200px;
@@ -347,11 +351,13 @@ export default {
     bottom: calc(30px);
     z-index: 99;
 }
+
 .footer {
     &__container {
         margin: 110px auto 0;
         z-index: 1;
     }
+
     // .footer__main
     &__main {
         text-align: center;

@@ -3,18 +3,12 @@
         <div class="control__container">
             <div class="control__content">
                 <div class="control__head">
-                    <main-title tag="h2" class="title-blue"
-                        >{{ this.$t("hosting.control.title") }}
+                    <main-title class="title-blue"
+                        >{{ $t("hosting.control.title") }}
                         <span class="title-span"
-                            ><span>{{
-                                this.$t("hosting.control.spans[0]")
-                            }}</span>
-                            <span>
-                                {{ this.$t("hosting.control.spans[1]") }}</span
-                            >
-                            <span>
-                                {{ this.$t("hosting.control.spans[2]") }}</span
-                            >
+                            ><span>{{ $t("hosting.control.spans[0]") }}</span>
+                            <span> {{ $t("hosting.control.spans[1]") }}</span>
+                            <span> {{ $t("hosting.control.spans[2]") }}</span>
                         </span></main-title
                     >
                     <transition name="sun-moon">
@@ -34,12 +28,12 @@
                         />
                     </transition>
                 </div>
-                <div class="control__asics" ref="asic_container">
+                <div ref="asic_container" class="control__asics">
                     <div
+                        v-for="(_, i) in [1, 1, 1, 1, 1, 1, 1]"
                         :key="i"
                         class="asic"
                         :class="{ 'asic-dark': isDark }"
-                        v-for="(_, i) in [1, 1, 1, 1, 1, 1, 1]"
                     >
                         <img
                             src="../../../../assets/img/ASIC.webp"
@@ -83,7 +77,7 @@ import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
 
 export default {
-    name: "control-view",
+    name: "ControlView",
     components: {
         MainTitle,
     },
@@ -190,6 +184,36 @@ export default {
             }
         },
     },
+    mounted() {
+        this.animationInit();
+        this.asics = this.$refs.asic_container.querySelectorAll(".asic");
+        this.leftPos = [
+            this.asics[0].offsetLeft,
+            this.asics[1].offsetLeft,
+            this.asics[2].offsetLeft,
+            this.asics[3].offsetLeft,
+            this.asics[4].offsetLeft,
+            this.asics[5].offsetLeft,
+            this.asics[6].offsetLeft,
+        ];
+        this.topPos = [
+            this.asics[0].offsetTop,
+            this.asics[1].offsetTop,
+            this.asics[2].offsetTop,
+            this.asics[3].offsetTop,
+            this.asics[4].offsetTop,
+            this.asics[5].offsetTop,
+            this.asics[6].offsetTop,
+        ];
+        this.asics.forEach((asic) => {
+            asic.style.transition = "all 0s ease 0s";
+            asic.style.position = "absolute";
+            asic.style.left = "50%";
+            // asic.style.top = this.topPos[3] + "px";
+            asic.style.marginTop = this.topPos[3] + "px";
+            asic.style.transform = "translateX(-50%)";
+        });
+    },
     methods: {
         animationInit() {
             let bool = true;
@@ -230,36 +254,6 @@ export default {
             this.timeouts = [];
         },
     },
-    mounted() {
-        this.animationInit();
-        this.asics = this.$refs.asic_container.querySelectorAll(".asic");
-        this.leftPos = [
-            this.asics[0].offsetLeft,
-            this.asics[1].offsetLeft,
-            this.asics[2].offsetLeft,
-            this.asics[3].offsetLeft,
-            this.asics[4].offsetLeft,
-            this.asics[5].offsetLeft,
-            this.asics[6].offsetLeft,
-        ];
-        this.topPos = [
-            this.asics[0].offsetTop,
-            this.asics[1].offsetTop,
-            this.asics[2].offsetTop,
-            this.asics[3].offsetTop,
-            this.asics[4].offsetTop,
-            this.asics[5].offsetTop,
-            this.asics[6].offsetTop,
-        ];
-        this.asics.forEach((asic) => {
-            asic.style.transition = "all 0s ease 0s";
-            asic.style.position = "absolute";
-            asic.style.left = "50%";
-            // asic.style.top = this.topPos[3] + "px";
-            asic.style.marginTop = this.topPos[3] + "px";
-            asic.style.transform = "translateX(-50%)";
-        });
-    },
 };
 </script>
 
@@ -268,18 +262,22 @@ export default {
 .asic-shadow-leave-active {
     transition: opacity 0.8s ease;
 }
+
 .asic-shadow-enter-from,
 .asic-shadow-leave-to {
     opacity: 0 !important;
 }
+
 .sun-moon {
     &-enter-active {
         animation: inAnim 2s ease forwards 0s, opacityIn 0.5s ease forwards 0s;
     }
+
     &-leave-active {
         animation: outAnim 2s ease forwards 0s, opacityOut 0.5s ease forwards 0s;
     }
 }
+
 @keyframes outAnim {
     from {
         transform: translate(-50%, 0);
@@ -290,6 +288,7 @@ export default {
         opacity: 0;
     }
 }
+
 @media (max-width: 767.98px) {
     @keyframes outAnim {
         from {
@@ -302,6 +301,7 @@ export default {
         }
     }
 }
+
 @keyframes opacityIn {
     from {
         opacity: 0;
@@ -310,6 +310,7 @@ export default {
         opacity: 1;
     }
 }
+
 @keyframes opacityOut {
     from {
         opacity: 1;
@@ -318,6 +319,7 @@ export default {
         opacity: 0;
     }
 }
+
 @keyframes inAnim {
     from {
         transform: translate(100vw, 385px);
@@ -328,6 +330,7 @@ export default {
         opacity: 1;
     }
 }
+
 @media (max-width: 767.98px) {
     @keyframes inAnim {
         from {
@@ -340,6 +343,7 @@ export default {
         }
     }
 }
+
 @keyframes fadeGreen {
     0% {
         opacity: 0;
@@ -354,6 +358,7 @@ export default {
         opacity: 0;
     }
 }
+
 @keyframes fadeRed {
     0% {
         opacity: 0;
@@ -371,6 +376,7 @@ export default {
         opacity: 0;
     }
 }
+
 @keyframes fade {
     0% {
         opacity: 0;
@@ -379,10 +385,12 @@ export default {
         opacity: 1;
     }
 }
+
 .control {
     &__container {
         margin: 0 auto;
     }
+
     &__content {
         display: flex;
         flex-direction: column;
@@ -392,22 +400,27 @@ export default {
             gap: 64px;
         }
     }
+
     .title.title-blue {
         opacity: 0;
         transform: translateX(-200px);
         transition: all 0.3s ease 0.3s;
+
         .title-span {
             display: inline-flex;
             gap: 12px;
+
             span {
                 opacity: 0;
             }
         }
     }
+
     &.animated {
         .title.title-blue {
             opacity: 1;
             transform: translateX(0);
+
             .title-span {
                 span {
                     animation: fade forwards 0.3s ease 1s;
@@ -422,6 +435,7 @@ export default {
                 }
             }
         }
+
         @media (min-width: 767.98px) {
             .asic {
                 .blinks {
@@ -433,6 +447,7 @@ export default {
                         animation: fadeRed linear forwards 2s 2.9s;
                     }
                 }
+
                 &:nth-child(2) {
                     .blinks {
                         .green {
@@ -444,6 +459,7 @@ export default {
                         }
                     }
                 }
+
                 &:nth-child(6) {
                     .blinks {
                         .green {
@@ -455,6 +471,7 @@ export default {
                         }
                     }
                 }
+
                 &:nth-child(3) {
                     .blinks {
                         .green {
@@ -466,6 +483,7 @@ export default {
                         }
                     }
                 }
+
                 &:nth-child(5) {
                     .blinks {
                         .green {
@@ -477,6 +495,7 @@ export default {
                         }
                     }
                 }
+
                 &:nth-child(4) {
                     .blinks {
                         .green {
@@ -488,6 +507,7 @@ export default {
                         }
                     }
                 }
+
                 &:nth-child(7) {
                     .blinks {
                         .green {
@@ -502,6 +522,7 @@ export default {
             }
         }
     }
+
     &__head {
         display: flex;
         flex-direction: column;
@@ -514,12 +535,14 @@ export default {
         @media (max-width: 479.98px) {
             padding-bottom: 88px;
         }
+
         .title {
             @media (min-width: 991.98px) {
                 margin-bottom: 16px;
             }
             text-align: center;
         }
+
         img {
             position: absolute;
             bottom: 0;
@@ -536,6 +559,7 @@ export default {
             }
         }
     }
+
     &__asics {
         display: flex;
         justify-content: space-between;
@@ -544,17 +568,21 @@ export default {
         @media (min-width: 1320.98px) {
             gap: 24px;
         }
+
         .asic {
             height: fit-content;
             width: 8%;
             position: relative;
             z-index: 0;
+
             &-dark {
                 box-shadow: none;
             }
+
             img {
                 width: 100%;
             }
+
             &-shadow {
                 position: absolute;
                 left: 0;
@@ -563,6 +591,7 @@ export default {
                 height: 100%;
                 opacity: 0.2;
             }
+
             .blinks {
                 position: absolute;
                 right: 4.6%;
@@ -572,6 +601,7 @@ export default {
                 flex-direction: column;
                 justify-content: space-between;
                 width: 4.6%;
+
                 div {
                     width: 100%;
                     height: 4.7px;
@@ -580,15 +610,18 @@ export default {
                     opacity: 0;
                     transition: all 0.3s ease 0s;
                 }
+
                 &-green {
                     right: 10.7%;
                 }
+
                 .green {
                     box-shadow: 0px 0px 65.5847px #4af2ba,
                         0px 0px 37.477px #4af2ba, 0px 0px 21.8616px #4af2ba,
                         0px 0px 10.9308px #4af2ba, 0px 0px 3.12308px #4af2ba,
                         0px 0px 1.56154px #4af2ba;
                 }
+
                 .red {
                     box-shadow: 0px 0px 65.5847px #eb0000,
                         0px 0px 37.477px #eb0000, 0px 0px 21.8616px #eb0000,
@@ -596,6 +629,7 @@ export default {
                         0px 0px 1.56154px #eb0000;
                 }
             }
+
             &:nth-child(2),
             &:nth-child(6) {
                 margin-top: 16px;
@@ -607,12 +641,14 @@ export default {
                 @media (max-width: 479.98px) {
                     margin-top: 8px;
                 }
+
                 .blinks {
                     div {
                         height: 6.5px;
                     }
                 }
             }
+
             &:nth-child(3),
             &:nth-child(5) {
                 margin-top: 43px;
@@ -624,12 +660,14 @@ export default {
                 @media (max-width: 479.98px) {
                     margin-top: 10px;
                 }
+
                 .blinks {
                     div {
                         height: 8.8px;
                     }
                 }
             }
+
             &:nth-child(4) {
                 margin-top: 65px;
                 width: 21%;
@@ -640,6 +678,7 @@ export default {
                 @media (max-width: 479.98px) {
                     margin-top: 16px;
                 }
+
                 .blinks {
                     div {
                         height: 12px;

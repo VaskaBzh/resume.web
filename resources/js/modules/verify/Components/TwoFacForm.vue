@@ -1,6 +1,6 @@
 <template>
     <div class="verify__head">
-        <main-title tag="h3">{{ $t(title) }}</main-title>
+        <main-title>{{ $t(title) }}</main-title>
         <main-description>{{ $t(text) }}</main-description>
     </div>
     <div class="verify__content">
@@ -11,9 +11,9 @@
         <!--	    />-->
         <main-input
             class="verify_input"
-            inputName="code"
-            :inputLabel="$t(placeholder)"
-            :inputValue="service.form.code"
+            input-name="code"
+            :input-label="$t(placeholder)"
+            :input-value="service.form.code"
             @getValue="service.form.code = $event"
         />
         <!--        <verify-link-->
@@ -34,7 +34,7 @@
             class="button-blue verify_button button-full"
             @click="sendFormWithCode"
         >
-            <template v-slot:text>
+            <template #text>
                 {{ $t(button_text) }}
             </template>
         </main-button>
@@ -49,12 +49,12 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import TwoFacInput from "@/modules/common/Components/inputs/TwoFacInput.vue";
 
-import {mapGetters} from "vuex";
-import {VerifyMessages} from "@/modules/verify/lang/VerifyMessages";
-import {VerifyService} from "@/modules/verify/services/VerifyService";
+import { mapGetters } from "vuex";
+import { VerifyMessages } from "@/modules/verify/lang/VerifyMessages";
+import { VerifyService } from "@/modules/verify/services/VerifyService";
 
 export default {
-    name: "two-fac-form",
+    name: "TwoFacForm",
     props: {
         title: Boolean,
         text: Boolean,
@@ -84,7 +84,7 @@ export default {
             this.$emit("sendForm", this.service.form.code);
         },
     },
-}
+};
 </script>
 
 <style scoped>

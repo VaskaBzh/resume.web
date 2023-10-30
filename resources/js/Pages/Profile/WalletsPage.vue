@@ -199,7 +199,7 @@
             class="form form-popup popup__form"
             @submit.prevent="wallets.changeWallet"
         >
-            <main-title tag="h3" class="change-label_title">
+            <main-title class="change-label_title">
                 {{ $t("wallets.popups.change.title") }}
             </main-title>
             <div class="autopayout-input_container">
@@ -274,7 +274,7 @@
             class="form form-popup popup__form"
             @submit.prevent="wallets.addWallet"
         >
-            <main-title tag="h3"
+            <main-title
                 >{{ $t("wallets.popups.add.title") }}
                 <p class="wallet-description">
                     {{ $t("wallets.popups.note") }}

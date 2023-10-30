@@ -1,7 +1,7 @@
 <template>
     <div class="faq">
         <div class="faq__main">
-            <main-title tag="h2" class="faq_title"> FAQ</main-title>
+            <main-title class="faq_title"> FAQ</main-title>
             <p class="description-text">
                 {{ $t("faq[0].description") }}
             </p>
@@ -37,13 +37,12 @@
             </div> -->
             <transition-group name="fade">
                 <div
-                    class="faq__list"
                     v-for="(accordion, i) in filteredFaq"
                     :key="i"
+                    class="faq__list"
                 >
-                    <main-title tag="h3" class="title-gray">{{
-                            accordion.title
-                        }}
+                    <main-title class="title-gray"
+                        >{{ accordion.title }}
                     </main-title>
                     <div class="section__block section__block-light">
                         <main-accordion
@@ -64,7 +63,7 @@ import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import MainAccordion from "@/modules/common/Components/UI/MainAccordion.vue";
 
 export default {
-    components: {MainTitle, BlueButton, MainAccordion},
+    components: { MainTitle, BlueButton, MainAccordion },
     data() {
         return {
             searchQuery: "",
@@ -194,7 +193,7 @@ export default {
     margin-left: 24px;
 }
 
-@media(max-width: 500px) {
+@media (max-width: 500px) {
     .title-gray {
         font-size: 12px;
         margin: 16px 16px 0;

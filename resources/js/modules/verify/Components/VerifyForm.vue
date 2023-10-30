@@ -1,27 +1,27 @@
 <template>
     <div class="verify__head">
-        <main-title tag="h3">{{ $t(title) }}</main-title>
+        <main-title>{{ $t(title) }}</main-title>
         <main-description>{{ $t(text) }}</main-description>
     </div>
     <div class="verify__content">
         <main-input
             class="verify_input"
-            inputName="code"
-            :inputLabel="$t(placeholder)"
-            :inputValue="service.form.code"
+            input-name="code"
+            :input-label="$t(placeholder)"
+            :input-value="service.form.code"
             @getValue="service.form.code = $event"
         />
         <verify-link
             class="verify_link"
-            :verifyText="$t(re_verify_text)"
-            :verifyUrl="`/send/code/${user.id}`"
+            :verify-text="$t(re_verify_text)"
+            :verify-url="`/send/code/${user.id}`"
         />
         <div class="verify__buttons">
             <main-button
                 class="button-reverse verify_button button-full"
                 @click="$emit('back')"
             >
-                <template v-slot:text>
+                <template #text>
                     {{ $t("back") }}
                 </template>
             </main-button>
@@ -29,7 +29,7 @@
                 class="button-blue verify_button button-full"
                 @click="sendFormWithCode"
             >
-                <template v-slot:text>
+                <template #text>
                     {{ $t(button_text) }}
                 </template>
             </main-button>
@@ -44,12 +44,12 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 
-import {mapGetters} from "vuex";
-import {VerifyMessages} from "@/modules/verify/lang/VerifyMessages";
-import {VerifyService} from "@/modules/verify/services/VerifyService";
+import { mapGetters } from "vuex";
+import { VerifyMessages } from "@/modules/verify/lang/VerifyMessages";
+import { VerifyService } from "@/modules/verify/services/VerifyService";
 
 export default {
-    name: "verify-form",
+    name: "VerifyForm",
     props: {
         title: Boolean,
         text: Boolean,
@@ -80,7 +80,7 @@ export default {
             this.$emit("sendForm", this.service.form.code);
         },
     },
-}
+};
 </script>
 
 <style scoped>

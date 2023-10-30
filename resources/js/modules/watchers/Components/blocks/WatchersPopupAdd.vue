@@ -4,31 +4,29 @@
         :wait="wait"
         :opened="opened"
         :closed="closed"
-        :instructionConfig="instructionConfig"
-        :className="
+        :instruction-config="instructionConfig"
+        :class-name="
             instructionConfig.isVisible && instructionConfig.step === 2
-              ? 'onboarding_block-target'
-              : ''
+                ? 'onboarding_block-target'
+                : ''
         "
         @closed="$emit('closed')"
     >
         <div class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers-add">
-                    <main-title tag="h3" class="watcher_title">{{
-                            $t("add_watcher_card.title")
-                        }}
+                    <main-title class="watcher_title"
+                        >{{ $t("add_watcher_card.title") }}
                     </main-title>
-                    <main-description>{{
-                            $t("add_watcher_card.text[0]")
-                        }}
+                    <main-description
+                        >{{ $t("add_watcher_card.text[0]") }}
                     </main-description>
                 </div>
                 <main-input
                     class="watchers_input"
-                    inputName="name"
-                    :inputLabel="$t('add_watcher_card.labels')"
-                    :inputValue="form.name"
+                    input-name="name"
+                    :input-label="$t('add_watcher_card.labels')"
+                    :input-value="form.name"
                     :error="errorsExpired.name"
                     @getValue="setFormName($event)"
                 />
@@ -52,26 +50,26 @@
             </div>
             <main-button
                 type="submit"
-                @click.prevent="setFormAllowedRoutes"
                 class="button-blue button-full watchers_button"
+                @click.prevent="setFormAllowedRoutes"
             >
-                <template v-slot:text>
+                <template #text>
                     {{ $t("add_watcher_card.buttons") }}
                 </template>
             </main-button>
         </div>
-        <template v-slot:instruction>
+        <template #instruction>
             <instruction-step
-                @next="instructionConfig.nextStep()"
-                @prev="instructionConfig.prevStep()"
-                @close="instructionConfig.nextStep(6)"
                 :step_active="2"
                 :steps_count="instructionConfig.steps_count"
                 :step="instructionConfig.step"
-                :isVisible="instructionConfig.isVisible"
+                :is-visible="instructionConfig.isVisible"
                 text="texts.watchers[1]"
                 title="titles.watchers[1]"
-                className="onboarding__card-right"
+                class-name="onboarding__card-right"
+                @next="instructionConfig.nextStep()"
+                @prev="instructionConfig.prevStep()"
+                @close="instructionConfig.nextStep(6)"
             />
         </template>
     </main-popup>
@@ -86,11 +84,11 @@ import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
-import {mapGetters} from "vuex";
-import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
+import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
-    name: "watchers-popup-add",
+    name: "WatchersPopupAdd",
     components: {
         MainCheckbox,
         MainInput,
@@ -108,6 +106,42 @@ export default {
     },
     i18n: {
         sharedMessages: WatchersMessage,
+    },
+    data() {
+        return {
+            form: {
+                name: "",
+                allowedRoutes: [],
+            },
+            allowedRoutes: [
+                {
+                    name: this.$t("tabs[0]"),
+                    checked: true,
+                    editable: false,
+                    routes: [
+                        "v1.sub.show",
+                        "v1.statistic.show",
+                        "v1.allowed-routes",
+                    ],
+                },
+                {
+                    name: this.$t("tabs[2]"),
+                    checked: false,
+                    editable: true,
+                    routes: [
+                        "v1.worker.show",
+                        "v1.worker.list",
+                        "v1.worker_hashrate.list",
+                    ],
+                },
+                {
+                    name: this.$t("tabs[1]"),
+                    checked: false,
+                    editable: true,
+                    routes: ["v1.income.list", "v1.payout.list"],
+                },
+            ],
+        };
     },
     watch: {
         "$i18n.locale"() {
@@ -178,42 +212,6 @@ export default {
         setAllowedRoutes(checkState, index) {
             this.allowedRoutes[index].checked = checkState;
         },
-    },
-    data() {
-        return {
-            form: {
-                name: "",
-                allowedRoutes: [],
-            },
-            allowedRoutes: [
-                {
-                    name: this.$t("tabs[0]"),
-                    checked: true,
-                    editable: false,
-                    routes: [
-                        "v1.sub.show",
-                        "v1.statistic.show",
-                        "v1.allowed-routes",
-                    ],
-                },
-                {
-                    name: this.$t("tabs[2]"),
-                    checked: false,
-                    editable: true,
-                    routes: [
-                        "v1.worker.show",
-                        "v1.worker.list",
-                        "v1.worker_hashrate.list",
-                    ],
-                },
-                {
-                    name: this.$t("tabs[1]"),
-                    checked: false,
-                    editable: true,
-                    routes: ["v1.income.list", "v1.payout.list"],
-                },
-            ],
-        };
     },
     computed: {
         ...mapGetters(["errorsExpired"]),

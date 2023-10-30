@@ -1,14 +1,13 @@
 <template>
     <div class="card">
-        <main-title tag="h3" class="card_title title-mobile">{{
-                $t("settings_card.title")
-            }}
+        <main-title class="card_title title-mobile"
+            >{{ $t("settings_card.title") }}
         </main-title>
         <div class="card__wrapper">
             <transition name="fade">
                 <div
-                    class="card__content card__content-empty"
                     v-if="!saveWatcher"
+                    class="card__content card__content-empty"
                 >
                     <img
                         class="card_img"
@@ -16,15 +15,15 @@
                         alt="chose-watcher"
                     />
                     <main-description class="card_description"
-                    >{{ $t("default_text") }}
+                        >{{ $t("default_text") }}
                     </main-description>
                 </div>
-                <div class="card__content" v-else>
+                <div v-else class="card__content">
                     <main-input
                         class="card_input"
-                        inputName="name"
-                        :inputLabel="$t('settings_card.labels[0]')"
-                        :inputValue="saveWatcher.name"
+                        input-name="name"
+                        :input-label="$t('settings_card.labels[0]')"
+                        :input-value="saveWatcher.name"
                         :editable="isEditable"
                         :error="errorsExpired.name"
                         @getValue="setFormName($event)"
@@ -39,7 +38,9 @@
                                 :key="i"
                                 :is_checked="route.checked"
                                 class="checkbox-sm"
-                                :editable="isEditable ? route.editable : isEditable"
+                                :editable="
+                                    isEditable ? route.editable : isEditable
+                                "
                                 @is_checked="setAllowedRoutes($event, i)"
                             >
                                 {{ route.name }}
@@ -48,7 +49,7 @@
                     </div>
                     <main-copy
                         class="card_copy"
-                        :cutValue="45"
+                        :cut-value="45"
                         :code="saveWatcher.link"
                         :label="$t('settings_card.labels[1]')"
                     />
@@ -59,22 +60,20 @@
                             :class="firstButtonClass"
                             @click="buttonProcess"
                         >
-                            <template v-slot:text>{{
-                                    firstButtonText
-                                }}
+                            <template #text
+                                >{{
+                                >{{ firstButtonText }}
                             </template>
-                        </main-button
-                        >
+                        </main-button>
                         <main-button
                             class="button-blue card_button"
                             @click="changeWatcher"
                         >
-                            <template v-slot:text>{{
-                                    secondButtonText
-                                }}
+                            <template #text
+                                >{{
+                                >{{ secondButtonText }}
                             </template>
-                        </main-button
-                        >
+                        </main-button>
                     </div>
                 </div>
             </transition>
@@ -89,11 +88,11 @@ import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainCheckbox from "@/modules/common/Components/UI/MainCheckbox.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import {mapGetters} from "vuex";
-import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
+import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 
 export default {
-    name: "watchers-card",
+    name: "WatchersCard",
     components: {
         MainTitle,
         MainDescription,
