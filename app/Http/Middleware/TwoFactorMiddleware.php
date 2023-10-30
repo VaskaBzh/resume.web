@@ -40,6 +40,7 @@ class TwoFactorMiddleware
                 return $next($request);
             }
         } catch (\Throwable) {
+
             return new JsonResponse([
                 'errors' => ['auth' => [__('auth.failed')]]
             ], Response::HTTP_NOT_FOUND);

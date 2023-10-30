@@ -18,12 +18,14 @@ Auth::routes([
     'login' => false
 ]);
 
-Route::post('/login', [LoginController::class, 'login'])
-    ->middleware(['two-factor', 'throttle:6,1']);
+Route::controller(LoginController::class)->group(function () {
+    Route::post('/login', 'login')
+        ->middleware(['two-factor', 'throttle:6,1']);
 
-Route::post('/logout', [LoginController::class, 'logout'])
-    ->middleware('auth:sanctum')
-    ->name('logout');
+    Route::post('/logout', 'logout')
+        ->middleware('auth:sanctum')
+        ->name('logout');
+});
 
 Route::get('/verify/{id}/{hash}', VerificationController::class)
     ->name('verification.verify')
