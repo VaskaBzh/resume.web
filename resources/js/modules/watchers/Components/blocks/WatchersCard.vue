@@ -60,19 +60,13 @@
                             :class="firstButtonClass"
                             @click="buttonProcess"
                         >
-                            <template #text
-                                >{{
-                                >{{ firstButtonText }}
-                            </template>
+                            <template #text>{{ firstButtonText }}</template>
                         </main-button>
                         <main-button
                             class="button-blue card_button"
                             @click="changeWatcher"
                         >
-                            <template #text
-                                >{{
-                                >{{ secondButtonText }}
-                            </template>
+                            <template #text>{{ secondButtonText }}</template>
                         </main-button>
                     </div>
                 </div>

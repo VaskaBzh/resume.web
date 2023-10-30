@@ -1,15 +1,14 @@
 <template>
-    <form @submit.prevent="service.login" class="form-auth">
-        <main-title class="form-auth_title">{{
-                this.$t("auth.login.title")
-            }}
+    <form class="form-auth" @submit.prevent="service.login">
+        <main-title class="form-auth_title"
+            >{{ $t("auth.login.title") }}
         </main-title>
-        <auth-errors :errors="errors"/>
+        <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
                 :error="errorsExpired.error ?? errorsExpired.email"
                 :model="service.form.email"
-                :placeholder="this.$t('auth.login.placeholders[0]')"
+                :placeholder="$t('auth.login.placeholders[0]')"
                 name="email"
                 type="text"
                 @change="
@@ -24,7 +23,7 @@
             >
                 <main-password
                     name="password"
-                    :placeholder="this.$t('auth.login.placeholders[1]')"
+                    :placeholder="$t('auth.login.placeholders[1]')"
                     :model="service.form.password"
                     :errors="errors"
                     @change="
@@ -36,10 +35,10 @@
             </div>
         </div>
         <input
-            class="form-auth_checkbox"
-            type="checkbox"
             id="checkbox"
             v-model="service.form.remember"
+            class="form-auth_checkbox"
+            type="checkbox"
         />
         <label for="checkbox">
             <div class="fake">
@@ -64,32 +63,29 @@
                     />
                 </svg>
             </div>
-            <span>{{ this.$t("auth.login.checkbox") }}</span>
+            <span>{{ $t("auth.login.checkbox") }}</span>
         </label>
         <blue-button class="form-auth_button auth" type="submit"
-        ><a class="all-link">{{
-                this.$t("auth.login.button")
-            }}</a></blue-button
+            ><a class="all-link">{{ $t("auth.login.button") }}</a></blue-button
         >
         <verify-link
             class="form-auth_forgot-password"
-            verifyUrl="/password/forgot"
-            :verifyText="$t('auth.login.reset')"
+            verify-url="/password/forgot"
+            :verify-text="$t('auth.login.reset')"
             :data="service.form"
         />
         <p class="text text-light form-auth_text">
-            {{ this.$t("auth.login.link[0]") }}
+            {{ $t("auth.login.link[0]") }}
             <router-link :to="{ name: 'registration' }" class="form-auth_link">
-                {{ this.$t("auth.login.link[1]") }}
-            </router-link
-            >
+                {{ $t("auth.login.link[1]") }}
+            </router-link>
         </p>
     </form>
     <password-popup
         :opened="service.openedPasswordPopup"
         :wait="service.waitAjax"
         :closed="service.closedPasswordPopup"
-        :validateService="service"
+        :validate-service="service"
         @sendPassword="sendPassword($event)"
     />
     <verify-popup
@@ -116,14 +112,14 @@ import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
 import PasswordPopup from "@/modules/common/Components/blocks/PasswordPopup.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 
-import {AuthMessages} from "@/modules/auth/lang/AuthMessages";
-import {LoginService} from "@/modules/auth/services/LoginService";
-import {mapGetters} from "vuex";
+import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
+import { LoginService } from "@/modules/auth/services/LoginService";
+import { mapGetters } from "vuex";
 import VerifyPopup from "../../../verify/Components/VerifyPopup.vue";
 import TwoFacForm from "../../../verify/Components/TwoFacForm.vue";
 
 export default {
-    name: "login-form",
+    name: "LoginForm",
     components: {
         TwoFacForm,
         VerifyPopup,
@@ -147,18 +143,6 @@ export default {
             service: new LoginService(this.$router, this.$route),
         };
     },
-    methods: {
-        async loginWithSecretCode(secret) {
-            this.service.form.google2fa_code = secret;
-            await this.service.login();
-        },
-        async sendPassword(form) {
-            await this.service.sendPassword(form);
-        },
-        async openPasswordPopup() {
-            await this.service.openPasswordPopup();
-        },
-    },
     watch: {
         "$i18n.locale"() {
             this.service.setTranslate(this.$t);
@@ -181,6 +165,18 @@ export default {
         if (this.$t) {
             this.service.setTranslate(this.$t);
         }
+    },
+    methods: {
+        async loginWithSecretCode(secret) {
+            this.service.form.google2fa_code = secret;
+            await this.service.login();
+        },
+        async sendPassword(form) {
+            await this.service.sendPassword(form);
+        },
+        async openPasswordPopup() {
+            await this.service.openPasswordPopup();
+        },
     },
 };
 </script>

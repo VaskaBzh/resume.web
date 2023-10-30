@@ -22,9 +22,7 @@
             >
                 <div class="autopayout-component">
                     <div class="header-component-wallet">
-                        <main-title class="" tag="h3"
-                            >{{ $t("wallets.title[0]") }}
-                        </main-title>
+                        <main-title>{{ $t("wallets.title[0]") }} </main-title>
                         <div class="tooltipe-container">
                             <tooltip-card
                                 :text="$t('wallets.tooltip')"
@@ -75,7 +73,7 @@
                         instructionService.step === 2,
                 }"
             >
-                <main-title class="header-component-wallet" tag="h3"
+                <main-title class="header-component-wallet"
                     >{{ $t("wallets.title[1]") }}
                 </main-title>
                 <div ref="wallets" class="wrap">

@@ -9,9 +9,9 @@
     >
         <div class="password__head">
             <main-title>{{ $t("password_popup.title") }}</main-title>
-            <main-description>{{
-                $t("password_popup.description")
-            }}</main-description>
+            <main-description
+                >{{ $t("password_popup.description") }}
+            </main-description>
         </div>
         <div class="password__content">
             <profile-password
@@ -35,10 +35,7 @@
                 class="button-blue password_button button-full"
                 @click="closePopup"
             >
-                <template #text
-                    >{{
-                    >{{ $t("password_popup.button") }}
-                </template>
+                <template #text>{{ $t("password_popup.button") }}</template>
             </main-button>
         </div>
     </main-popup>

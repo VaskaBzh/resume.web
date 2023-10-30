@@ -1,11 +1,9 @@
 <template>
     <div ref="page" class="settings">
-        <main-title class="title-settings" tag="h3"
-            >{{ $t("title[2]") }}
-        </main-title>
+        <main-title class="title-settings">{{ $t("title[2]") }} </main-title>
         <div class="settings__main">
             <div v-if="!user.email_verified_at" class="settings__card">
-                <main-title class="cabinet_title card_title" tag="h3"
+                <main-title class="cabinet_title card_title"
                     >{{ $t("title[0]") }}
                 </main-title>
                 <div class="settings__content">
@@ -23,7 +21,7 @@
                         instructionService.step === 1,
                 }"
             >
-                <main-title class="cabinet_title card_title" tag="h3"
+                <main-title class="cabinet_title card_title"
                     >{{ $t("title[1]") }}
                 </main-title>
                 <article class="card__article">
