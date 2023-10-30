@@ -26,7 +26,13 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'old_password' => 'required|string',
-            'password' => ['required', 'string', 'confirmed', Password::defaults()],
+            'password' => [
+                'required',
+                'string',
+                'confirmed',
+                Password::defaults(),
+                'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'
+            ],
         ];
     }
 

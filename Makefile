@@ -33,16 +33,15 @@ update:
 	$(COMPOSE) $(APP) composer update
 migrate:
 	$(ARTISAN) migrate
-rollback:
-	$(ARTISAN) migrate:rollback
 seed:
 	$(ARTISAN) db:seed
-optimize:
-	$(ARTISAN) optimize
 clear:
 	$(COMPOSE) $(APP) composer cc
 	$(COMPOSE) $(APP) npm cache clean --force
-	$(ARTISAN) optimize:clear
+	$(ARTISAN) config:clear
+	$(ARTISAN) cache:clear
+	$(ARTISAN) route:clear
+	$(ARTISAN) optimize
 tinker:
 	$(ARTISAN) tinker
 test:
