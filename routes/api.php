@@ -71,7 +71,8 @@ Route::group([
     'middleware' => ['auth:sanctum', 'verified']
 ], function () {
     Route::get('/user/{user}', UserController::class)->name('user.show');
-    Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime']);
+    Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime'])
+        ->middleware('throttle:6,1');
 
     Route::group([
         'prefix' => 'subs',
@@ -83,10 +84,15 @@ Route::group([
         'prefix' => 'wallets',
         'middleware' => ['verify-expiration']
     ], function () {
-        Route::put('/update/{wallet}', WalletUpdateController::class)->name('wallet.update');
+        Route::put('/update/{wallet}', WalletUpdateController::class)
+            ->middleware('throttle:6,1')
+            ->name('wallet.update');
         Route::put('/change/address/{wallet}', WalletChangeAddressController::class)
+            ->middleware('throttle:6,1')
             ->name('wallet.change.address');
-        Route::post('/create', WalletCreateController::class)->name('wallet.create');
+        Route::post('/create', WalletCreateController::class)
+            ->middleware('throttle:6,1')
+            ->name('wallet.create');
         Route::get('/{sub}', WalletListController::class)->name('wallet.list');
     });
 
@@ -95,7 +101,9 @@ Route::group([
         'middleware' => 'role:referral'
     ], function () {
         Route::get('/{user}', ReferralListController::class)->name('referral.list');
-        Route::post('/generate/{user}', ReferralCodeController::class)->name('code');
+        Route::post('/generate/{user}', ReferralCodeController::class)
+            ->middleware('throttle:6,1')
+            ->name('code');
         Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
     });
@@ -103,11 +111,16 @@ Route::group([
     Route::group(['prefix' => 'watchers'], function () {
         Route::get('/{watcher}', WatcherLinkShowController::class);
         Route::get('/{user}/{sub}', WatcherLinkListController::class);
-        Route::post('/create/{sub}', WatcherLinkCreateController::class);
-        Route::put('/update/{watcher}', WatcherLinkUpdateController::class);
-        Route::delete('/delete/{watcher}', WatcherLinkDeleteController::class);
+        Route::post('/create/{sub}', WatcherLinkCreateController::class)
+            ->middleware('throttle:6,1');
+        Route::put('/update/{watcher}', WatcherLinkUpdateController::class)
+            ->middleware('throttle:6,1');
+        Route::delete('/delete/{watcher}', WatcherLinkDeleteController::class)
+            ->middleware('throttle:6,1');
     });
 
-    Route::post('/send/code/{user}', SendCodeController::class)->name('send-code');
+    Route::post('/send/code/{user}', SendCodeController::class)
+        ->middleware('throttle:3,1')
+        ->name('send-code');
 });
 /* ________________ End protected routes ____________________ */

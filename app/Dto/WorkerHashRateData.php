@@ -8,7 +8,7 @@ readonly final class WorkerHashRateData
 {
     public function __construct(
         public int $workerId,
-        public int $hash,
+        public float $hash,
         public string $unit,
     ) {
     }
@@ -16,8 +16,8 @@ readonly final class WorkerHashRateData
     public static function fromRequest(array $requestData): WorkerHashrateData
     {
         return new self(
-            workerId: $requestData['worker_id'],
-            hash: $requestData['hash'],
+            workerId: (int) $requestData['worker_id'],
+            hash: (float) $requestData['hash'],
             unit: $requestData['unit'],
         );
     }

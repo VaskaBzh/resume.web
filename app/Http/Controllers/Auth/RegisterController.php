@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Actions\Sub\Create;
+use App\Dto\SubData;
 use App\Dto\UserData;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\External\BtcComService;
+use App\Services\Internal\ReferralService;
 use App\Services\Internal\UserService;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
@@ -113,14 +116,18 @@ class RegisterController extends Controller
     {
         $userData = UserData::fromRequest($request->all());
 
-        $response = $btcComService->createSub(userData: $userData);
-
-        auth()->login($user = UserService::create(userData: $userData));
-
-        $btcComService->createLocalSub(
-            userData: UserData::fromRequest(requestData: array_merge($request->all(), ['id' => $user->id])),
-            groupId: $response['gid']
+        $btcComService->createSub(
+            user: $user = UserService::create(userData: $userData)
         );
+
+        if ($userData->referralCode) {
+            ReferralService::attach(
+                referral: $user,
+                code: $userData->referralCode
+            );
+        }
+
+        auth()->login($user);
 
         event(new Registered(
             user: $user

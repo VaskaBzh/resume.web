@@ -2975,6 +2975,10 @@
                         "type": "number",
                         "format": "float"
                     },
+                    "total_referrals_hash_rate": {
+                        "type": "number",
+                        "format": "float"
+                    },
                     "code": {
                         "type": "string"
                     }

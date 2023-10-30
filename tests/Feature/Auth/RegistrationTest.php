@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
 use App\Services\External\BtcComService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
 use Tests\TestCase;
@@ -26,15 +27,16 @@ class RegistrationTest extends TestCase
     public function test_registration_if_valid_data(
         array $signUpData,
         array $signUpResponseStructure,
-        array $btcComSubCreatingResponse,
+        array $btcComSubResponse,
     )
     {
-        $this->partialMock(BtcComService::class,
-            static function ($mock) use ($btcComSubCreatingResponse, $signUpData) {
-                $mock->shouldReceive('createSub')
-                    ->once()
-                    ->andReturn($btcComSubCreatingResponse);
-            });
+        $mockedResponse = [
+            'data' => $btcComSubResponse,
+        ];
+
+        Http::fake([
+            config('api.btc.uri') . '/groups/create' => Http::response($mockedResponse)
+        ]);
 
         Notification::fake();
 
@@ -52,8 +54,8 @@ class RegistrationTest extends TestCase
 
         $this->assertAuthenticatedAs($user);
         $this->assertDatabaseHas('subs', [
-                'sub' => $btcComSubCreatingResponse['group_name'],
-                'group_id' => $btcComSubCreatingResponse['gid']
+                'sub' => $btcComSubResponse['group_name'],
+                'group_id' => $btcComSubResponse['gid']
             ]
         );
         Notification::assertSentTo(
