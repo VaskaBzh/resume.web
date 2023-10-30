@@ -150,6 +150,7 @@ export default {
     },
     mounted() {
         this.service.setForm();
+        console.log('loginForm', this.service)
 
         if (this.$route.query?.action === "password") {
             this.openPasswordPopup();

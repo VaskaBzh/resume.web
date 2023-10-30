@@ -53,7 +53,7 @@ export default {
             this.value = newModelValue;
         },
         value(newValue) {
-            this.$emit("change", newValue);
+            this.$emit("changeValue", newValue);
         },
     },
 };
