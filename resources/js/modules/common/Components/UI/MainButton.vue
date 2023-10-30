@@ -1,5 +1,6 @@
 <template>
     <button
+
         class="button"
         :class="{
             'button-icon': !$slots.text && $slots.svg,
