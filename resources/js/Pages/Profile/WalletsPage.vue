@@ -380,7 +380,7 @@ export default {
     },
     watch: {
         "wallets.form.name"(newValue, oldValue) {
-            if (newValue.length >= 16) {
+            if (newValue?.length >= 16) {
                 this.wallets.form.name = oldValue;
             }
         },

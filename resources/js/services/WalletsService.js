@@ -95,8 +95,7 @@ export class WalletsService extends DefaultSubsService {
                     this.wallets = response.map((el) => {
                         return new WalletData({
                             ...el,
-                            name: this.getName(el.name, el.wallet),
-                            fullName: el.name ?? el.wallet,
+                            fullName: el.name ?? null,
                         });
                     });
                 }
@@ -140,7 +139,8 @@ export class WalletsService extends DefaultSubsService {
     }
 
     validateName() {
-        if (this.form.name.length < 3) {
+        console.log(this.form)
+        if (this.form.name !== "" && this.form.name?.length < 3) {
             store.dispatch("setNotification", {
                 status: "error",
                 title: "error",
