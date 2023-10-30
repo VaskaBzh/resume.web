@@ -57,6 +57,7 @@ class ReferralService
     public static function getReferralCollection(Sub $owner, BtcComService $btcComService): Collection
     {
         return $owner->referrals->map(function (User $user) use ($btcComService) {
+
             $referralSubCollection = $btcComService
                 ->transformSubCollection($user->subs);
 
