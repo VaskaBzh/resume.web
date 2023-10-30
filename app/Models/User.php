@@ -22,8 +22,6 @@ class User extends Authenticatable implements MustVerifyEmail
         HasRoles,
         HasApiTokens;
 
-    protected $table = 'users';
-
     protected $fillable = [
         'name',
         'email',
