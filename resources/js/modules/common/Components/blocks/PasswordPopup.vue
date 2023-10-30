@@ -13,7 +13,7 @@
                 >{{ $t("password_popup.description") }}
             </main-description>
         </div>
-        <div class="password__content">
+        <form @submit="closePopup($event)" class="password__content">
             <profile-password
                 class="password_input"
                 name="password"
@@ -32,12 +32,13 @@
                 @change="changePasswordForm('password_confirmation', $event)"
             />
             <main-button
+
                 class="button-blue password_button button-full"
-                @click="closePopup"
+
             >
                 <template #text>{{ $t("password_popup.button") }}</template>
             </main-button>
-        </div>
+        </form>
     </main-popup>
 </template>
 
@@ -93,8 +94,10 @@ export default {
         MainButton,
     },
     methods: {
-        closePopup() {
+        closePopup(event) {
+            event.preventDefault()
             this.$emit("sendPassword", this.form);
+
         },
         changePasswordForm(formKey, event) {
             const formValue = event.target ? event.target.value : event;

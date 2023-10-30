@@ -12,7 +12,7 @@
         "
         @closed="$emit('closed')"
     >
-        <div class="watchers__form">
+        <form @submit.prevent="setFormAllowedRoutes" class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers-add">
                     <main-title class="watcher_title"
@@ -51,13 +51,13 @@
             <main-button
                 type="submit"
                 class="button-blue button-full watchers_button"
-                @click.prevent="setFormAllowedRoutes"
+
             >
                 <template #text>
                     {{ $t("add_watcher_card.buttons") }}
                 </template>
             </main-button>
-        </div>
+        </form>
         <template #instruction>
             <instruction-step
                 :step_active="2"

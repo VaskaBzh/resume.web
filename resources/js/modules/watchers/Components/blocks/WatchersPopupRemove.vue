@@ -1,6 +1,6 @@
 <template>
     <main-popup id="removeWatcher" :wait="wait" :closed="closed">
-        <div class="watchers__form">
+        <form class="watchers__form">
             <div class="watchers__column">
                 <div class="watchers__head">
                     <main-title class="watchers_title"
@@ -39,7 +39,7 @@
                     </template>
                 </main-button>
             </div>
-        </div>
+        </form>
     </main-popup>
 </template>
 
