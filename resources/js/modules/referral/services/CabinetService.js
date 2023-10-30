@@ -2,7 +2,6 @@ import store from "@/store";
 import { SelectData } from "@/modules/referral/DTO/SelectData";
 import { GradeData } from "@/modules/referral/DTO/GradeData";
 import { ProfileApi } from "@/api/api";
-import loginForm from "../../auth/Components/blocks/LoginForm.vue";
 
 export class CabinetService {
     constructor(translate, route) {
@@ -43,6 +42,11 @@ export class CabinetService {
                 "active",
                 this.translate("stats.cards[1]"),
                 data?.active_referrals_count || 0
+            ),
+            new SelectData(
+                "hashrate",
+                this.translate("stats.cards[1]"),
+                data?.total_referrals_hash_rate || 0
             ),
         ];
     }
@@ -108,12 +112,17 @@ export class CabinetService {
             response = (
                 await ProfileApi.get(`/referrals/statistic/${this.user.id}`)
             ).data;
-
         } catch (err) {
             console.error(`FetchError: ${err}`);
+
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: err.response.data.errors.message[0],
+            });
         }
 
-        const result = response?.data || response;
+        const result = response.data;
 
         let code = this.transformCode(result.code);
         this.setCode(code || "...");

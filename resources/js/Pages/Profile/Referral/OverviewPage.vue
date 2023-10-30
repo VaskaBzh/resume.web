@@ -11,18 +11,18 @@
                         <img src="../../../../assets/img/percent-icon.png" />
                     </template>
                 </InfoCard>
-                <!--                <InfoCard-->
-                <!--                    class="referral__card-info"-->
-                <!--                    :title="$t('stats.cards[1]')"-->
-                <!--                    :value="percent"-->
-                <!--                >-->
-                <!--                    <template #svg>-->
-                <!--                        <img src="../../../../assets/img/hashrate-icon.png" />-->
-                <!--                    </template>-->
-                <!--                </InfoCard>-->
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[1]')"
+                    :value="service.statsCards[3]?.value ?? 0"
+                >
+                    <template #svg>
+                        <img src="../../../../assets/img/hashrate-icon.png" />
+                    </template>
+                </InfoCard>
             </div>
             <InfoCard
-                class="referral__card-info referal__general-profit"
+                class="referral__card-info referral__general-profit"
                 :current-page="'worker'"
                 :title="$t('stats.cards[4]')"
                 :value="service.statsCards[1]?.value ?? 0"
@@ -189,14 +189,14 @@ export default {
         grid-column: 1/3;
         border-radius: 24px;
     }
-
-    .referal__general-profit {
-        grid-row: 2;
-        grid-column: 1/3;
-    }
 }
 
 .referral {
+    &__general-profit {
+        grid-row: 2;
+        grid-column: 1/3;
+    }
+
     &__content {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
