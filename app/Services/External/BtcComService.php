@@ -95,18 +95,16 @@ class BtcComService
 
     /**
      * Create remote sub-account by user name
-     * Create local sub based on remote sub-account group_id
      *
-     * @throw BusinessException if remote sub-account exists
      */
-    public function createSub(User $user): void
+    public function createRemoteSub(string $subName): array
     {
         $btcComSub = $this->call(
             segments: ['groups', 'create'],
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
-                'group_name' => $user->name
+                'group_name' => $subName
             ]);
 
         if (in_array('exist', $btcComSub, true)) {
@@ -117,11 +115,21 @@ class BtcComService
             );
         }
 
+        return $btcComSub;
+    }
+
+    /**
+     * Create local sub based on remote sub-account group_id
+     *
+     * @throw BusinessException if remote sub-account exists
+     */
+    public function createSub(int $userId, string $subName): void
+    {
         Create::execute(
             subData: SubData::fromRequest([
-                'user_id' => $user->id,
-                'group_id' => $btcComSub['gid'],
-                'group_name' => $user->name,
+                'user_id' => $userId,
+                'group_id' => $this->createRemoteSub($subName)['gid'],
+                'group_name' => $subName,
             ])
         );
     }

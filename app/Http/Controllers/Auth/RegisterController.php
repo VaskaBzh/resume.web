@@ -117,7 +117,10 @@ class RegisterController extends Controller
             UserData::fromRequest($request->all())
         ));
 
-        $btcComService->createSub(user: $user);
+        $btcComService->createSub(
+            userId: $user->id,
+            subName: $user->name
+        );
 
         event(new Registered(
             user: $user

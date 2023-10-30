@@ -82,7 +82,6 @@ Route::group([
 
     Route::group([
         'prefix' => 'wallets',
-        'middleware' => ['verify-expiration']
     ], function () {
         Route::put('/update/{wallet}', WalletUpdateController::class)
             ->middleware('throttle:6,1')
