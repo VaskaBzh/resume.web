@@ -91,7 +91,7 @@ class CreateController extends Controller
     {
         $btcComService->createSub(
             userId: $user->id,
-            subName: $user->name
+            subName: $request->name
         );
 
         return new JsonResponse([
