@@ -14,16 +14,17 @@
             </main-description>
         </div>
         <form @submit.prevent="closePopup" class="password__content">
-            <span class="password_error"
-                  v-if="validateInputs"
-                  :class="{'active-error': this.errorsValid.includes(this.errorMassage)}"
-            >
+            <transition name="error">
+                <span class="password_error"
+                      v-if="validateInputs"
+                      :class="{'active-error': errorMassage.length}"
+                >
                 {{ errorMassage }}
             </span>
+            </transition>
             <profile-password
                 class="password_input"
                 name="password"
-                ref="password"
                 :placeholder="$t('password_popup.placeholders.new_password')"
                 :model="form.password"
                 @changeValue="changePasswordForm('password', $event)"
@@ -43,6 +44,9 @@
             <main-button
                 type="submit"
                 class="button-blue password_button button-full"
+                :disabled="sendButton"
+                :class="{'active-disableed': sendButton}"
+
 
             >
                 <template #text>{{ $t("password_popup.button") }}</template>
@@ -82,11 +86,7 @@ export default {
             },
             makeResize: false,
             validateInputs: false,
-            errorsValid: [
-                'Заполните необходимые поля',
-                'Ваши пароли не совпадают',
-                'Введенные данные не корректны'
-            ],
+            sendButton: true,
             errorMassage: '',
         };
     },
@@ -96,10 +96,25 @@ export default {
                 this.makeResize = true;
                 setTimeout(() => (this.makeResize = false), 50);
             }, 355);
+
+            if(Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
+                this.validateInputs = false
+                this.sendButton = true
+            }
+
             if(this.validateInputs && newVal !== oldVal) {
                 this.validateInputs = false
             }
-            console.log(newVal, oldVal)
+
+        },
+        "form.password_confirmation"(newVal, oldVal) {
+            if(this.validateInputs && newVal !== oldVal) {
+                this.validateInputs = false
+            }
+            if(newVal && Object.keys(this.validateService.validate).length === 0) {
+                this.sendButton = false
+            }
+
         },
     },
     computed: {
@@ -116,26 +131,15 @@ export default {
     },
     methods: {
         closePopup() {
-            // let indexError;
-            // if(this.form.password.length === 0 && this.form["password_confirmation"].length === 0) {
-            //     indexError = 0
-            //     this.validateInputs = true
-            //     this.errorMassage = this.errorsValid[indexError]
-            //
-            // }
-            // if(this.form.password.length < this.form["password_confirmation"] || this.form.password.length > this.form["password_confirmation"]) {
-            //     indexError = 1
-            //     this.validateInputs = true
-            //     this.errorMassage = this.errorsValid[indexError]
-            //
-            // }
-            // if(Object.keys(this.validateService.validate).length !== 0) {
-            //     indexError = 2
-            //     this.validateInputs = true
-            //     this.errorMassage = this.errorsValid[indexError]
-            //
-            // }
-            if(this.form.password === this.form['password_confirmation'] && Object.keys(this.validateService.validate).length === 0 && this.form.password.length > 0) {
+
+
+            if(this.form.password !== this.form["password_confirmation"]) {
+                this.validateInputs = true
+                this.errorMassage = 'Ваши пароли не совпадают!'
+
+            }
+
+            if(this.form.password === this.form['password_confirmation'] && Object.keys(this.validateService.validate).length === 0 && this.form.password.length > 0 && !this.validateInputs) {
                 this.$emit("sendPassword", this.form);
             } else {
                 this.validateInputs = true
@@ -145,10 +149,7 @@ export default {
         changePasswordForm(formKey, event) {
             const formValue = event.target ? event.target.value : event;
 
-
-
             this.form[formKey] = formValue;
-
 
             this.$emit("changePassword", this.form);
             this.validateService.validateProcess(this.form.password);
@@ -160,6 +161,18 @@ export default {
 </script>
 
 <style scoped>
+.error-enter-active,
+.error-leave-active {
+    position: absolute;
+    transition: all .35s ease-in-out;
+}
+.error-enter-from,
+.error-leave-to {
+    opacity: 0;
+    transform: translateX(-30px);
+    max-height: 0;
+    padding-top: 0;
+}
 .password__head {
     display: flex;
     flex-direction: column;
@@ -171,8 +184,14 @@ export default {
     min-height: 56px;
 }
 
+.password__content {
+    position: relative;
+}
+
 .password_input {
     margin-bottom: 16px;
+    border: 2px solid transparent;
+
 }
 
 .password_input-last {
@@ -180,7 +199,7 @@ export default {
 }
 
 .not-validate {
-    border: 1px solid #F1404A;
+    border: 2px solid #F1404A;
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     border-radius: 12px;
     transition: all 0.5s ease 0s;
@@ -191,6 +210,9 @@ export default {
     max-height: 0;
     overflow: hidden;
     color: #F1404A;
+    position: absolute;
+    left: 0;
+    top: -10%;
     font-family: NunitoSans, serif;
     font-size: 12px;
     font-style: normal;
@@ -200,7 +222,12 @@ export default {
 }
 
 .active-error {
+    padding: 5px;
     max-height: 100%;
-    transition: all 1s ease-in;
+    transition: all .35s ease-in;
+}
+
+.active-disableed {
+    opacity: 0.6;
 }
 </style>
