@@ -5,17 +5,17 @@
         :opened="opened"
         :wait="wait"
         :closed="closed"
-        :makeResize="makeResize"
+        :make-resize="makeResize"
     >
         <div class="fac__head">
-            <main-title tag="h3">{{ $t("fac_popup.title") }}</main-title>
+            <main-title>{{ $t("fac_popup.title") }}</main-title>
             <main-description>{{ $t("popup.text[4]") }}</main-description>
         </div>
-        <div class="fac__content" v-show="!hasCode">
+        <div v-show="!hasCode" class="fac__content">
             <div class="fac_qrcode" v-html="qrCode"></div>
             <main-copy
                 class="fac_code"
-                :cutValue="-1"
+                :cut-value="-1"
                 :code="code"
                 :label="$t('fac_popup.label[0]')"
             />
@@ -23,15 +23,15 @@
                 class="button-blue fac_button button-full"
                 @click.prevent="hasCode = true"
             >
-                <template v-slot:text>{{ $t("fac_popup.button[0]") }}</template>
+                <template #text>{{ $t("fac_popup.button[0]") }}</template>
             </main-button>
         </div>
-        <div class="fac__content" v-show="hasCode">
+        <div v-show="hasCode" class="fac__content">
             <main-input
                 class="fac_input"
-                inputName="twoFactorSecret"
-                :inputLabel="$t('fac_popup.label[1]')"
-                :inputValue="form.code"
+                input-name="twoFactorSecret"
+                :input-label="$t('fac_popup.label[1]')"
+                :input-value="form.code"
                 :error="errorsExpired.error"
                 @getValue="form.code = $event"
             />
@@ -40,17 +40,13 @@
                     class="button-reverse fac_button button-full"
                     @click.prevent="hasCode = false"
                 >
-                    <template v-slot:text
-                    >{{ $t("fac_popup.button[1]") }}
-                    </template>
+                    <template #text>{{ $t("fac_popup.button[1]") }} </template>
                 </main-button>
                 <main-button
                     class="button-blue fac_button button-full"
                     @click="closePopup"
                 >
-                    <template v-slot:text
-                    >{{ $t("fac_popup.button[2]") }}
-                    </template>
+                    <template #text>{{ $t("fac_popup.button[2]") }} </template>
                 </main-button>
             </div>
         </div>
@@ -60,15 +56,15 @@
 <script>
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainCopy from "@/modules/common/Components/UI/MainCopy.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
-import {SettingsMessage} from "@/modules/settings/lang/SettingsMessage";
-import {mapGetters} from "vuex";
+import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
+import { mapGetters } from "vuex";
 
 export default {
-    name: "fac-popup",
+    name: "FacPopup",
     props: {
         opened: Boolean,
         closed: Boolean,
@@ -89,8 +85,7 @@ export default {
         };
     },
     watch: {
-        errorsExpired() {
-        },
+        errorsExpired() {},
         hasCode() {
             this.makeResize = true;
 

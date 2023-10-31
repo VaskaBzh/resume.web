@@ -50,15 +50,11 @@ Route::group([
         ->middleware(['auth:sanctum', 'throttle:3,1']);
 });
 
-Route::group([
-    'prefix' => '2fac',
-    'middleware' => 'auth:sanctum',
-], function () {
-    Route::get('/qrcode/{user}', [TwoFactorController::class, 'qrCode'])->name('2fa.qrcode');
-    Route::put('/enable/{user}', [TwoFactorController::class, 'enable'])
-        ->middleware('throttle:6,1')
-        ->name('2fa.enable');
-    Route::put('/disable/{user}', [TwoFactorController::class, 'disable'])
-        ->middleware('throttle:6,1')
-        ->name('2fa.disable');
-});
+Route::controller(TwoFactorController::class)
+    ->prefix('2fac')
+    ->middleware(['auth:sanctum', 'throttle:6,1'])
+    ->group(static function () {
+        Route::get('/qrcode/{user}', 'qrCode')->name('2fa.qrcode');
+        Route::put('/enable/{user}', 'enable')->name('2fa.enable');
+        Route::put('/disable/{user}', 'disable')->name('2fa.disable');
+    });

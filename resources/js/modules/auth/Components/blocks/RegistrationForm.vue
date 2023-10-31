@@ -1,14 +1,14 @@
 <template>
-    <form @submit.prevent="service.account_create" class="form-auth">
-        <main-title tag="h3" class="form-auth_title">{{
-            this.$t("auth.reg.title")
-        }}</main-title>
+    <form class="form-auth" @submit.prevent="service.account_create">
+        <main-title class="form-auth_title"
+            >{{ $t("auth.reg.title") }}
+        </main-title>
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
                 :error="errorsExpired.email"
                 :model="service.form.email"
-                :placeholder="this.$t('auth.reg.placeholders[0]')"
+                :placeholder="$t('auth.reg.placeholders[0]')"
                 name="email"
                 type="text"
                 @change="
@@ -20,7 +20,7 @@
             <auth-input
                 :error="errorsExpired.name"
                 :model="service.form.name"
-                :placeholder="this.$t('auth.reg.placeholders[1]')"
+                :placeholder="$t('auth.reg.placeholders[1]')"
                 name="name"
                 type="text"
                 @change="
@@ -35,7 +35,7 @@
             >
                 <main-password
                     name="password"
-                    :placeholder="this.$t('auth.reg.placeholders[2]')"
+                    :placeholder="$t('auth.reg.placeholders[2]')"
                     :model="service.form.password"
                     :errors="errorsExpired"
                     @change="
@@ -52,7 +52,7 @@
             >
                 <main-password
                     name="password_confirmation"
-                    :placeholder="this.$t('auth.reg.placeholders[3]')"
+                    :placeholder="$t('auth.reg.placeholders[3]')"
                     :model="service.form.password_confirmation"
                     @change="
                         service.form.password_confirmation = !!$event.target
@@ -75,10 +75,10 @@
             <!--            />-->
         </div>
         <input
-            class="form-auth_checkbox"
-            type="checkbox"
             id="checkbox"
             v-model="service.checkbox"
+            class="form-auth_checkbox"
+            type="checkbox"
         />
         <label for="checkbox" :class="{ error: service.checkboxState }">
             <div class="fake">
@@ -104,22 +104,20 @@
                 </svg>
             </div>
             <span
-                >{{ this.$t("auth.reg.checkbox[0]") }}
+                >{{ $t("auth.reg.checkbox[0]") }}
                 <a :href="pdf" class="form-auth_link">
-                    {{ this.$t("auth.reg.checkbox[1]") }}
+                    {{ $t("auth.reg.checkbox[1]") }}
                 </a>
             </span>
         </label>
         <blue-button class="form-auth_button auth" type="submit"
-            ><a class="all-link">{{
-                this.$t("auth.reg.button")
-            }}</a></blue-button
+            ><a class="all-link">{{ $t("auth.reg.button") }}</a></blue-button
         >
         <p class="text text-light form-auth_text">
-            {{ this.$t("auth.reg.link[0]") }}
-            <router-link :to="{ name: 'login' }" class="form-auth_link">{{
-                this.$t("auth.reg.link[1]")
-            }}</router-link>
+            {{ $t("auth.reg.link[0]") }}
+            <router-link :to="{ name: 'login' }" class="form-auth_link"
+                >{{ $t("auth.reg.link[1]") }}
+            </router-link>
         </p>
     </form>
 </template>
@@ -137,7 +135,7 @@ import { RegistrationService } from "@/modules/auth/services/RegistrationService
 import { mapGetters } from "vuex";
 
 export default {
-    name: "registration-form",
+    name: "RegistrationForm",
     components: {
         AuthInput,
         MainPassword,
@@ -167,6 +165,7 @@ export default {
     @media (max-width: 991.98px) {
         padding: 0 clamp(16px, 5vw, 60px);
     }
+
     &__content {
         display: flex;
         flex-direction: column;
@@ -174,6 +173,7 @@ export default {
         width: 100%;
         gap: 16px;
     }
+
     &_title {
         margin-bottom: 32px;
         // @media (max-width: 1550px) {
@@ -186,6 +186,7 @@ export default {
             margin-bottom: 24px;
         }
     }
+
     &_button {
         padding: 0;
         margin: 0;
@@ -199,6 +200,7 @@ export default {
         @media (max-width: $mobileSmall) {
             min-width: 100%;
         }
+
         & .all-link {
             padding: 0;
             font-size: 20px;
@@ -209,6 +211,7 @@ export default {
                 min-width: 100%;
             }
         }
+
         @media (max-width: $tablet) {
             width: 100%;
             & .all-link {
@@ -222,6 +225,7 @@ export default {
             }
         }
     }
+
     &_text {
         font-size: 24px;
         font-family: AmpleSoftPro, serif;
@@ -245,11 +249,14 @@ export default {
             line-height: 130%;
         }
     }
+
     &_checkbox {
         display: none;
+
         &:checked + label .fake svg path {
             fill: #7c7c7c;
         }
+
         & + label {
             cursor: pointer;
             display: inline-flex;
@@ -261,11 +268,13 @@ export default {
             line-height: 135%;
             margin: 16px 0 40px;
             position: relative;
+
             .form-auth_link {
                 @media (max-width: $tablet) {
                     display: block;
                 }
             }
+
             @media (max-width: 1550px) {
                 margin: 16px 0 32px;
             }
@@ -281,21 +290,26 @@ export default {
                     line-height: 130%;
                 }
             }
+
             &.error {
                 color: #e5403f !important;
+
                 &:before {
                     border-color: #e5403f !important;
                 }
             }
+
             .fake {
                 width: 24px;
                 height: 24px;
+
                 & svg {
                     & path {
                         transition: all 0.3s ease 0s;
                         fill: rgba(0, 0, 0, 0);
                     }
                 }
+
                 @media (max-width: $mobileSmall) {
                     height: 16px;
                     width: 16px;
@@ -307,6 +321,7 @@ export default {
             }
         }
     }
+
     &_row {
         min-height: 56px;
         width: 100%;
@@ -315,6 +330,7 @@ export default {
             min-height: 40px;
         }
     }
+
     &_link {
         color: rgba(63, 123, 221, 1);
         font-size: 24px;

@@ -11,7 +11,6 @@
     <connect-card/>
 </template>
 <script>
-import {HostingMessage} from "@/modules/hosting/lang/HostingMessage";
 import MonitoringSystemCard from "@/modules/hosting/Components/MonitoringSystemCard.vue";
 import SupportSystemCard from "@/modules/hosting/Components/SupportSystemCard.vue";
 import PersonalAreaCard from "@/modules/hosting/Components/PersonalAreaCard.vue";
@@ -23,12 +22,13 @@ import HeroView from "@/modules/hosting/Components/HeroView.vue";
 import WorkingView from "@/modules/hosting/Components/WorkingView.vue";
 import ClientsView from "@/modules/hosting/Components/ClientsView.vue";
 import OfferView from "@/modules/hosting/Components/OfferView.vue";
+import {NavMessages} from "@/modules/navs/lang/NavMessages";
 
 
 export default {
     name: "hosting-page",
     i18n: {
-        sharedMessages: HostingMessage,
+        sharedMessages: NavMessages,
     },
     components: {
         MonitoringSystemCard,
@@ -42,6 +42,14 @@ export default {
         WorkingView,
         HeroView,
         OfferView,
+    },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("nav_links.hosting");
+        },
+    },
+    mounted() {
+        document.title = this.$t("nav_links.hosting");
     }
 };
 </script>

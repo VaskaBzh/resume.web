@@ -1,9 +1,9 @@
 <template>
-    <div @click.prevent="toggleMenu" class="button">
+    <div class="button" @click.prevent="toggleMenu">
         <div
+            ref="name"
             class="button_name"
             :class="{ 'button_name-target': target }"
-            ref="name"
         >
             <div class="button_name_text">
                 <p class="user-name-text">{{ name }}</p>
@@ -27,17 +27,17 @@
             </svg>
         </div>
         <div
-            class="button__menu"
-            ref="menu"
-            :class="{ target: target }"
             v-show="accounts.length > 1"
+            ref="menu"
+            class="button__menu"
+            :class="{ target: target }"
         >
             <div class="button__row">
                 <main-radio
                     v-for="(option, i) in accounts"
                     :key="i"
                     :options="option"
-                    :getActive="getActive"
+                    :get-active="getActive"
                     @click="changeActiveAccount(option.value)"
                 ></main-radio>
             </div>
@@ -46,15 +46,14 @@
     <teleport to="body">
         <main-popup
             id="addAcc"
-            :openedOff="openedAddPopup"
+            :opened-off="openedAddPopup"
             :wait="wait"
             :closed="closed"
             :errors="errors"
         >
-            <form @submit.prevent="addAcc" class="form form-popup popup__form">
-                <main-title tag="h3" class="account-title">{{
-                        $t("accounts.popups.add.title")
-                    }}
+            <form class="form form-popup popup__form" @submit.prevent="addAcc">
+                <main-title class="account-title"
+                    >{{ $t("accounts.popups.add.title") }}
                 </main-title>
                 <p class="popup-text">
                     {{ $t("accounts.popups.add.text") }}
@@ -95,17 +94,17 @@
 
 <script>
 import BlueButton from "@/modules/common/Components/UI/ButtonBlue.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 import MainRadio from "@/modules/common/Components/UI/MainRadio.vue";
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import store from "../../../../store";
-import {ref} from "vue";
-import {ProfileApi} from "@/api/api";
+import { ref } from "vue";
+import { ProfileApi } from "@/api/api";
 import i18n from "@/lang/vue-translate";
 
 export default {
-    name: "account-menu",
+    name: "AccountMenu",
     components: {
         MainTitle,
         MainPopup,
@@ -125,25 +124,6 @@ export default {
             require: true,
         },
     },
-    data() {
-        return {
-            target: false,
-            open: false,
-            openedAddPopup: false,
-            linkAddClicked: false,
-            name: "...",
-        };
-    },
-    mounted() {
-        this.name = this.getAccount === {} ? "..." : this.getAccount.name;
-
-        document.addEventListener("click", this.hideMenuClick, true);
-        document.addEventListener("keydown", this.hideKey);
-    },
-    unmounted() {
-        document.removeEventListener("click", this.hideMenuClick, true);
-        document.removeEventListener("keydown", this.hideKey);
-    },
     setup() {
         let wait = ref(false);
         let closed = ref(false);
@@ -156,7 +136,10 @@ export default {
         const addAcc = async () => {
             wait.value = true;
             try {
-                const response = await ProfileApi.post(`/subs/create/${store.getters.user.id}`, form);
+                const response = await ProfileApi.post(
+                    `/subs/create/${store.getters.user.id}`,
+                    form
+                );
 
                 store.dispatch("setNotification", {
                     status: "success",
@@ -187,6 +170,25 @@ export default {
             wait,
             closed,
         };
+    },
+    data() {
+        return {
+            target: false,
+            open: false,
+            openedAddPopup: false,
+            linkAddClicked: false,
+            name: "...",
+        };
+    },
+    mounted() {
+        this.name = this.getAccount === {} ? "..." : this.getAccount.name;
+
+        document.addEventListener("click", this.hideMenuClick, true);
+        document.addEventListener("keydown", this.hideKey);
+    },
+    unmounted() {
+        document.removeEventListener("click", this.hideMenuClick, true);
+        document.removeEventListener("keydown", this.hideKey);
     },
     computed: {
         ...mapGetters([
@@ -240,11 +242,11 @@ export default {
     },
     methods: {
         changeActiveAccount(id) {
-            this.$store.dispatch("set_active", {index: id});
+            this.$store.dispatch("set_active", { index: id });
         },
         async openAddPopup() {
             if (this.$route.fullPath !== "/profile/accounts") {
-                await this.$router.push({name: "accounts"});
+                await this.$router.push({ name: "accounts" });
 
                 this.linkAddClicked = true;
 
@@ -350,9 +352,9 @@ export default {
 
 .popup__input {
     border-radius: var(--surface-border-radius-radius-s-md, 12px);
-    background: var(--background-modal-input, #FFF);
+    background: var(--background-modal-input, #fff);
     padding: var(--py-4, 16px) var(--px-4, 16px);
-    color: var(--select-text-no-value, #D0D5DD);
+    color: var(--select-text-no-value, #d0d5dd);
     font-family: NunitoSans, serif;
     font-size: 16px;
     font-weight: 400;
@@ -362,11 +364,11 @@ export default {
 }
 
 .popup__input:focus {
-    border: 1px solid #2E90FA;
+    border: 1px solid #2e90fa;
 }
 
 .popup__input::placeholder {
-    color: var(--select-text-no-value, var(--gray-3100, #D0D5DD));
+    color: var(--select-text-no-value, var(--gray-3100, #d0d5dd));
     font-family: NunitoSans;
     font-size: 16px;
     font-style: normal;
@@ -404,11 +406,11 @@ export default {
         transition: all 0.5s ease 0s;
         border-radius: 16px;
         background: var(
-                --gradient-v-1,
-                linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
+            --gradient-v-1,
+            linear-gradient(117deg, #024bc0 16.84%, #3597f9 103.73%)
         );
         box-shadow: 0px 0px 1px 0px rgba(0, 0, 0, 0.4),
-        0px 8px 24px -6px rgba(0, 0, 0, 0.16);
+            0px 8px 24px -6px rgba(0, 0, 0, 0.16);
         display: flex;
         padding: 16px;
         color: var(--background-island, #fff);

@@ -67,9 +67,7 @@ export class TabsService {
             },
         ];
 
-
-        let localStorageReferalKey = JSON.parse(localStorage.getItem("user"));
-        if (localStorageReferalKey["has_referral_role"]) {
+        if (user?.has_referral_role) {
             this.setReferralTab();
         } else {
             this.setWithoutReferralTab();

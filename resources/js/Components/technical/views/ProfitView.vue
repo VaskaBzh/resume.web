@@ -14,10 +14,10 @@
                     alt="img"
                     class="profit__image"
                 />
-                <main-title tag="h2" class="title-blue">{{
-                    this.$t("hosting.profit.title")
-                }}</main-title>
-                <p class="description">{{ this.$t("hosting.profit.text") }}</p>
+                <main-title class="title-blue"
+                    >{{ $t("hosting.profit.title") }}
+                </main-title>
+                <p class="description">{{ $t("hosting.profit.text") }}</p>
                 <!--                v-scroll="'left'"-->
             </div>
         </div>
@@ -27,8 +27,9 @@
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import { mapGetters } from "vuex";
+
 export default {
-    name: "profit-view",
+    name: "ProfitView",
     components: {
         MainTitle,
     },
@@ -42,6 +43,7 @@ export default {
 .profit {
     display: flex;
     flex-direction: column;
+
     .description {
         line-height: 140%;
         @media (max-width: 767.98px) {
@@ -51,6 +53,7 @@ export default {
             font-size: 14px;
         }
     }
+
     &__container {
         margin: 0 auto;
         position: relative;
@@ -58,6 +61,7 @@ export default {
             width: 100%;
         }
     }
+
     &__main {
         display: flex;
         align-items: center;
@@ -96,6 +100,7 @@ export default {
             }
         }
     }
+
     // .profit__title
     &__title {
         font-family: "AmpleSoftPro", serif;
@@ -114,6 +119,7 @@ export default {
             margin-bottom: 16px;
         }
     }
+
     // .profit__image
     img {
         max-width: 486px;

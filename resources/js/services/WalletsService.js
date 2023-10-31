@@ -1,9 +1,9 @@
-import {ProfileApi} from "@/api/api";
+import { ProfileApi } from "@/api/api";
 
-import {WalletData} from "@/modules/wallets/DTO/WalletData";
+import { WalletData } from "@/modules/wallets/DTO/WalletData";
 import store from "@/store";
-import {DefaultSubsService} from "@/modules/common/services/extends/DefaultSubsService";
-import {VerifyService} from "@/modules/verify/services/VerifyService";
+import { DefaultSubsService } from "@/modules/common/services/extends/DefaultSubsService";
+import { VerifyService } from "@/modules/verify/services/VerifyService";
 
 export class WalletsService extends DefaultSubsService {
     constructor(translate) {
@@ -91,13 +91,11 @@ export class WalletsService extends DefaultSubsService {
             try {
                 const response = await this.fetch();
 
-                console.log(response);
                 if (response) {
                     this.wallets = response.map((el) => {
                         return new WalletData({
                             ...el,
-                            name: this.getName(el.name, el.wallet),
-                            fullName: el.name ?? el.wallet,
+                            fullName: el.name ?? null,
                         });
                     });
                 }
@@ -108,21 +106,57 @@ export class WalletsService extends DefaultSubsService {
             } catch (err) {
                 console.error(err);
 
-                console.log(err);
-
-                store.dispatch("setNotification", {
-                    status: "warning",
-                    title: "warning",
-                    text: err.response?.data?.message,
-                });
+                // store.dispatch("setNotification", {
+                //     status: "warning",
+                //     title: "warning",
+                //     text: err.response?.data?.message,
+                // });
             }
 
             this.waitWallets = false;
         }
     }
 
+    validateAddress() {
+        if (this.form.wallet.length < 20) {
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: "text.wallet_address_minlength",
+            });
+
+            return true;
+        }
+        if (this.form.wallet.length > 191) {
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: "text.wallet_address_maxlength",
+            });
+
+            return true;
+        }
+    }
+
+    validateName() {
+        console.log(this.form)
+        if (this.form.name !== "" && this.form.name?.length < 3) {
+            store.dispatch("setNotification", {
+                status: "error",
+                title: "error",
+                text: "text.name_minlength",
+            });
+
+            return true;
+        }
+    }
+
     async addWallet() {
         if (this.group_id !== -1) {
+            if (this.validateAddress() || this.validateName()) {
+                return this;
+            }
+
             this.wait = true;
 
             if (!this.form.code) {
@@ -210,6 +244,10 @@ export class WalletsService extends DefaultSubsService {
 
     async changeWallet() {
         if (this.group_id !== -1) {
+            if (this.validateAddress() || this.validateName()) {
+                return this;
+            }
+
             this.wait = true;
 
             let requestCount = 0;
@@ -366,13 +404,13 @@ export class WalletsService extends DefaultSubsService {
                 response = (await ProfileApi.get(`/wallets/${this.group_id}`))
                     .data.data;
             } catch (err) {
-                store.dispatch("setFullErrors", err?.response?.data?.errors);
-
-                store.dispatch("setNotification", {
-                    status: "warning",
-                    title: "warning",
-                    text: err.response.data.message,
-                });
+                // store.dispatch("setFullErrors", err?.response?.data?.errors);
+                //
+                // store.dispatch("setNotification", {
+                //     status: "warning",
+                //     title: "warning",
+                //     text: err.response.data.message,
+                // });
 
                 this.emptyTable = true;
                 this.waitWallets = false;

@@ -15,38 +15,41 @@
             :end="!!lineChartService"
         />
         <div
-            v-scroll="'opacity transition--fast'"
-            class="cabinet statistic__cabinet"
             v-if="
                 !lineChartService.waitGraph &&
                 lineChartService.records?.filter((a) => a.hashrate > 0)
                     .length !== 0
             "
+            v-scroll="'opacity transition--fast'"
+            class="cabinet statistic__cabinet"
         >
-            <main-title class="title-statistic" tag="h4">{{
-                $t("statistic.title")
-            }}</main-title>
+            <main-title class="title-statistic"
+                >{{ $t("statistic.title") }}
+            </main-title>
             <statistic-line-graph
                 class="statistic_graph"
-                @getValue="lineChartService.setOffset($event)"
-                :waitGraphChange="lineChartService.waitGraphChange"
+                :wait-graph-change="lineChartService.waitGraphChange"
                 :offset="lineChartService.offset"
                 :graph="lineChartService.graph"
                 :buttons="lineChartService.buttons"
-                :instructionConfig="instructionService"
+                :instruction-config="instructionService"
+                @getValue="lineChartService.setOffset($event)"
             />
             <div
                 class="statistic__cards onboarding_block"
                 :class="{
-                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
-                }">
+                    'onboarding_block-target':
+                        instructionService.isVisible &&
+                        instructionService.step === 2,
+                }"
+            >
                 <cabinet-card
                     class="statistic__card-first"
                     :title="$t('statistic.info_blocks.hash.titles[0]')"
                     :value="Number(getAccount.hash_per_min).toFixed(2)"
                     unit="TH/s"
                 >
-                    <template v-slot:svg>
+                    <template #svg>
                         <minute-hashrate-icon />
                     </template>
                 </cabinet-card>
@@ -56,7 +59,7 @@
                     :value="Number(getAccount.hash_per_day).toFixed(2)"
                     unit="TH/s"
                 >
-                    <template v-slot:svg>
+                    <template #svg>
                         <day-hashrate-icon />
                     </template>
                 </cabinet-card>
@@ -71,42 +74,42 @@
                     :value="String(getAccount.workers_count_in_active)"
                 />
                 <instruction-step
-                    @next="instructionService.nextStep()"
-                    @prev="instructionService.prevStep()"
-                            @close="instructionService.nextStep(6)"
                     :step_active="2"
                     :steps_count="instructionService.steps_count"
                     :step="instructionService.step"
-                    :isVisible="instructionService.isVisible"
+                    :is-visible="instructionService.isVisible"
                     text="texts.statistic[1]"
                     title="titles.statistic[1]"
-                    className="onboarding__card-bottom"
+                    class-name="onboarding__card-bottom"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
                 />
             </div>
             <info-block
                 class="statistic__info"
-                :instructionConfig="instructionService"
+                :instruction-config="instructionService"
             />
             <statistic-column-graph
-                :instructionConfig="instructionService"
-                :waitGraphChange="barChartService.waitGraphChange"
+                :instruction-config="instructionService"
+                :wait-graph-change="barChartService.waitGraphChange"
                 :graph="barChartService.graph"
                 class="statistic_graph-column"
             />
         </div>
         <no-information
-            v-scroll="'opacity transition--fast'"
-            class="cabinet__preloader-bg"
             v-if="
                 !lineChartService.waitGraph &&
                 lineChartService.records?.filter((a) => a.hashrate > 0)
                     .length === 0
             "
+            v-scroll="'opacity transition--fast'"
+            class="cabinet__preloader-bg"
         />
     </div>
     <instruction-button
-        @openInstruction="instructionService.setStep().setVisible()"
         hint="statistic"
+        @openInstruction="instructionService.setStep().setVisible()"
     />
 </template>
 <script>
@@ -142,17 +145,14 @@ export default {
     },
     data() {
         return {
-            lineChartService: new StatisticService(
-                this.offset,
-                this.$route
-            ),
+            lineChartService: new StatisticService(this.offset, this.$route),
             barChartService: new StatisticService(30),
             instructionService: new InstructionService(),
         };
     },
     watch: {
         "$i18n.locale"() {
-            document.title = this.$t("header.links.statistic")
+            document.title = this.$t("header.links.statistic");
 
             // this.lineChartService.setTranslate(this.$t);
             // this.barChartService.setTranslate(this.$t);
@@ -194,12 +194,15 @@ export default {
 .onboarding_block {
     transition: none;
 }
+
 .onboarding_block-target {
     background: var(--background-globe);
 }
+
 .title-statistic {
     display: none;
 }
+
 @media (max-width: 500px) {
     .title-statistic {
         display: inline-block;
@@ -212,6 +215,7 @@ export default {
         line-height: 32px; /* 160% */
     }
 }
+
 .statistic {
     width: 100%;
     padding: 24px;
@@ -220,6 +224,7 @@ export default {
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
+
     &__cards {
         width: 100%;
         grid-column: 1 / 5;
@@ -239,6 +244,7 @@ export default {
             flex-direction: column;
         }
     }
+
     &__cabinet {
         display: grid;
         grid-template-rows: repeat(3, auto);
@@ -251,6 +257,7 @@ export default {
             flex-direction: column;
         }
     }
+
     &_graph {
         grid-column: 1 / 5;
         position: relative;
@@ -263,12 +270,14 @@ export default {
         @media (max-width: 2100px) {
             grid-column: 1 / 7;
         }
+
         .y-axis-container {
             @media (max-width: 500px) {
                 top: 18px;
-                left: 16px
+                left: 16px;
             }
         }
+
         @media (max-width: 500px) {
             flex-direction: column-reverse;
             padding: 16px;
@@ -276,6 +285,7 @@ export default {
         @media (max-width: 900px) {
             gap: 32px;
         }
+
         &-column {
             grid-column: 3 / 5;
             @media (max-width: 2100px) {
@@ -283,17 +293,20 @@ export default {
             }
         }
     }
+
     &-center {
         display: flex;
         align-items: center;
         justify-content: center;
     }
+
     &__info {
         grid-column: 1 / 3;
         @media (max-width: 2100px) {
             grid-column: 1 / 4;
         }
     }
+
     &__card {
         &-first {
             grid-column: 1 / 2;
@@ -304,6 +317,7 @@ export default {
                 grid-column: 1 / 2;
             }
         }
+
         &-second {
             grid-column: 2 / 3;
             @media (max-width: 2100px) {
@@ -313,6 +327,7 @@ export default {
                 grid-column: 2 / 3;
             }
         }
+
         &-third {
             grid-column: 3 / 4;
             @media (max-width: 2100px) {
@@ -323,6 +338,7 @@ export default {
                 grid-row: 2 / 3;
             }
         }
+
         &-fourth {
             grid-column: 4 / 5;
             @media (max-width: 2100px) {

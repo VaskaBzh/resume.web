@@ -2,7 +2,7 @@
     <div class="wallets__block wallets__block-wallet" @click="changeWalletObj(wallet)">
         <div class="wallets__block_name">
             <div class="wallet-inf">
-                <span class="wallet-fullname">{{ wallet.fullName}}</span>
+                <span class="wallet-fullname">{{ wallet.fullName || wallet.wallet_address }}</span>
                 <span class="wallet-wallet_address">{{ wallet.wallet_address }}</span>
             </div>
             <div class="wallets__block_doths">
@@ -70,6 +70,7 @@ export default {
     font-size: 16px;
     font-weight: 400;
     line-height: 150%;
+    word-break: break-all;
 }
 .wallets {
     // .wallets__block

@@ -1,6 +1,6 @@
 <template>
-    <div class="income" ref="page">
-        <main-title class="title-income" tag="h4">
+    <div ref="page" class="income">
+        <main-title class="title-income">
             {{ $t("income.title") }}
         </main-title>
         <article class="income-cards-article">
@@ -15,16 +15,16 @@
                 <AccrualsCard />
                 <YesterdayIncomeCard />
                 <instruction-step
-                    @next="instructionService.nextStep()"
-                    @prev="instructionService.prevStep()"
-                    @close="instructionService.nextStep(6)"
                     :step_active="1"
                     :steps_count="instructionService.steps_count"
                     :step="instructionService.step"
-                    :isVisible="instructionService.isVisible"
+                    :is-visible="instructionService.isVisible"
                     text="texts.income[0]"
                     title="titles.income[0]"
-                    className="onboarding__card-top"
+                    class-name="onboarding__card-top"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
                 />
             </div>
             <div
@@ -40,16 +40,16 @@
                     :graph="incomes.incomeBarGraph"
                 />
                 <instruction-step
-                    @next="instructionService.nextStep()"
-                    @prev="instructionService.prevStep()"
-                    @close="instructionService.nextStep(6)"
                     :step_active="2"
                     :steps_count="instructionService.steps_count"
                     :step="instructionService.step"
-                    :isVisible="instructionService.isVisible"
+                    :is-visible="instructionService.isVisible"
                     text="texts.income[1]"
                     title="titles.income[1]"
-                    className="onboarding__card-right"
+                    class-name="onboarding__card-right"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
                 />
             </div>
         </article>
@@ -83,29 +83,29 @@
             }"
             :wait="incomes.waitTable"
             :empty="incomes.emptyTable"
-            rowsNum="1000"
-            :haveNav="false"
+            rows-num="1000"
+            :have-nav="false"
         >
-            <template v-slot:instruction>
+            <template #instruction>
                 <instruction-step
-                    @next="instructionService.nextStep()"
-                    @prev="instructionService.prevStep()"
-                    @close="instructionService.nextStep(6)"
                     :step_active="3"
                     :steps_count="instructionService.steps_count"
                     :step="instructionService.step"
-                    :isVisible="instructionService.isVisible"
+                    :is-visible="instructionService.isVisible"
                     text="texts.income[2]"
                     title="titles.income[2]"
-                    className="onboarding__card-bottom"
+                    class-name="onboarding__card-bottom"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
                 />
             </template>
             <main-table :table="incomes.table"></main-table>
         </main-slider>
     </div>
     <instruction-button
-        @openInstruction="instructionService.setStep().setVisible()"
         hint="incomes"
+        @openInstruction="instructionService.setStep().setVisible()"
     />
 </template>
 <script>
@@ -211,6 +211,24 @@ export default {
             document.title = this.$t("header.links.income");
         },
     },
+    async created() {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    async mounted() {
+        this.instructionService.setStepsCount(3);
+
+        document.title = this.$t("header.links.income");
+        this.$refs.page.style.opacity = 1;
+        if (this.$t) {
+            this.incomes.graphService.setTranslate(this.$t);
+        }
+        if (this.getActive !== -1) {
+            this.incomes.setActive(this.getActive);
+            await this.initIncomes();
+            await this.incomes.barGraphIndex();
+        }
+    },
     methods: {
         async initIncomes() {
             await this.incomes.setTable(this.filter, this.page, this.per_page);
@@ -237,24 +255,6 @@ export default {
             }
         },
     },
-    async created() {
-        window.addEventListener("resize", this.handleResize);
-        this.handleResize();
-    },
-    async mounted() {
-        this.instructionService.setStepsCount(3);
-
-        document.title = this.$t("header.links.income");
-        this.$refs.page.style.opacity = 1;
-        if (this.$t) {
-            this.incomes.graphService.setTranslate(this.$t);
-        }
-        if (this.getActive !== -1) {
-            this.incomes.setActive(this.getActive);
-            await this.initIncomes();
-            await this.incomes.barGraphIndex();
-        }
-    },
 };
 </script>
 <style lang="scss" scoped>
@@ -268,17 +268,20 @@ export default {
     gap: 12px;
     width: 100%;
 }
+
 .income-cards-article {
     width: 100%;
     display: flex;
     gap: 12px;
 }
+
 @media (max-width: 1100px) {
     .income-cards-article {
         flex-direction: column;
         gap: 12px;
     }
 }
+
 @media (max-width: 500px) {
     .title-income {
         display: inline-block;
@@ -294,9 +297,11 @@ export default {
         gap: 8px;
     }
 }
+
 .month-card-container {
     width: 100%;
 }
+
 .income {
     padding: 24px;
     width: 100%;
@@ -311,6 +316,7 @@ export default {
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
+
     &__slider {
         height: fit-content;
         flex: 1 1 auto;
@@ -322,16 +328,19 @@ export default {
         gap: 24px;
         margin-bottom: 40px;
     }
+
     &__row {
         display: flex;
         align-items: center;
         gap: 16px;
+
         .cabinet__block {
             display: flex;
             flex-direction: column;
             gap: 4px;
             width: 100%;
         }
+
         @media (max-width: 767.98px) {
             flex-wrap: wrap;
         }
@@ -423,14 +432,17 @@ export default {
             }
         }
     }
+
     .wrap {
         height: fit-content;
+
         &__row {
             height: fit-content;
             @media (max-width: 767.98px) {
                 flex-direction: column;
             }
         }
+
         &__block {
             gap: 6px;
             @media (max-width: 991.98px) {
@@ -445,6 +457,7 @@ export default {
                     line-height: 30px;
                 }
             }
+
             .text {
                 font-weight: 500;
                 font-size: 18px;
@@ -456,6 +469,7 @@ export default {
             }
         }
     }
+
     .btn-table {
         // padding: 12px 49.8px;
         padding: 12px;
@@ -464,22 +478,26 @@ export default {
         color: var(--buttons-tabs-text-default);
         font-size: 18px;
     }
+
     .tabs-active {
         color: var(--buttons-tabs-text-focus, #2e90fa);
         background: var(--buttons-tabs-fill-border-focus);
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
     }
+
     .filter_block {
         width: 100%;
         box-shadow: 0px 4px 10px 0px rgba(85, 85, 85, 0.1);
         border-radius: 8px;
     }
+
     .income-table-block {
         display: flex;
         justify-content: space-between;
         align-items: center;
         margin: 24px 0 8px;
     }
+
     .filter-block-container {
         width: 32%;
         border: none;
@@ -490,6 +508,7 @@ export default {
             width: 45%;
         }
     }
+
     .tabs-block-container {
         width: 28%;
         display: flex;
@@ -497,10 +516,12 @@ export default {
         gap: 10px;
         align-items: center;
     }
+
     .main-header-container {
         display: flex;
         align-items: baseline;
     }
+
     @media (max-width: 760px) {
         .main-header-container {
             flex-direction: column;

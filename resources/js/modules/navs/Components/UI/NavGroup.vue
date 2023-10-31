@@ -67,6 +67,9 @@ export default {
 	},
 	mounted() {
 		this.change_height(this.isOpen);
+	},
+	updated() {
+		this.change_height(this.isOpen);
 	}
 }
 </script>

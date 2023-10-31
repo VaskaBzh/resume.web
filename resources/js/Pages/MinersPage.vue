@@ -17,6 +17,7 @@ import MobileAppCard from "@/modules/hosting/Components/MobileAppCard.vue";
 import GuaranteeCard from "@/modules/hosting/Components/GuaranteeCard.vue";
 import CommunityCard from "@/modules/miners/Components/CommunityCard.vue";
 import ConnectCard from "@/modules/hosting/Components/ConnectCard.vue";
+import {NavMessages} from "@/modules/navs/lang/NavMessages";
 
 export default {
     name: "miners-page",
@@ -29,6 +30,17 @@ export default {
         GuaranteeCard,
         CommunityCard,
         ConnectCard,
+    },
+    i18n: {
+        sharedMessages: NavMessages,
+    },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("nav_links.miners");
+        },
+    },
+    mounted() {
+        document.title = this.$t("nav_links.miners");
     }
 };
 </script>

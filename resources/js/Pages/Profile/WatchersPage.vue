@@ -3,32 +3,33 @@
         <div
             class="watchers__head onboarding_block"
             :class="{
-                'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                'onboarding_block-target':
+                    instructionService.isVisible &&
+                    instructionService.step === 1,
             }"
         >
             <div class="watchers__head__block">
-                <main-title tag="h4">{{ $t("title") }}</main-title>
-                <main-description class="is-vis-text-mobile">{{
-                        $t("text")
-                    }}
+                <main-title>{{ $t("title") }}</main-title>
+                <main-description class="is-vis-text-mobile"
+                    >{{ $t("text") }}
                 </main-description>
             </div>
-            <main-button data-popup="#addWatcher">
-                <template v-slot:svg>
-                    <plus-icon/>
+            <main-button class="button-md button-white button-stroke" data-popup="#addWatcher">
+                <template #svg>
+                    <plus-icon />
                 </template>
             </main-button>
             <instruction-step
-                @next="instructionService.nextStep()"
-                @prev="instructionService.prevStep()"
-                @close="instructionService.nextStep(6)"
                 :step_active="1"
                 :steps_count="instructionService.steps_count"
                 :step="instructionService.step"
-                :isVisible="instructionService.isVisible"
+                :is-visible="instructionService.isVisible"
                 text="texts.watchers[0]"
                 title="titles.watchers[0]"
-                className="onboarding__card-top"
+                class-name="onboarding__card-top"
+                @next="instructionService.nextStep()"
+                @prev="instructionService.prevStep()"
+                @close="instructionService.nextStep(6)"
             />
         </div>
         <div class="cabinet watchers__wrapper">
@@ -41,18 +42,18 @@
             />
             <transition name="fade">
                 <main-slider
+                    v-show="!service.waitTable && !service.emptyTable"
                     :wait="service.waitTable"
                     :empty="service.emptyTable"
-                    v-show="!service.waitTable && !service.emptyTable"
-                    rowsNum="1000"
-                    :haveNav="false"
-                    :havePreloader="false"
+                    rows-num="1000"
+                    :have-nav="false"
+                    :have-preloader="false"
                     :meta="service.meta"
                 >
                     <watchers-list
-                        @getWatcher="service.getCard($event)"
                         :blocks="service.table.get('rows')"
-                        :activeWatcher="activeCard"
+                        :active-watcher="activeCard"
+                        @getWatcher="service.getCard($event)"
                     />
                 </main-slider>
             </transition>
@@ -75,15 +76,15 @@
         :wait="service.wait"
         :opened="openOnBoardingPopup"
         :closed="service.popupClosed || closeOnBoardingPopup"
-        :instructionConfig="instructionService"
+        :instruction-config="instructionService"
         @createWatcher="createWatcher($event)"
         @closed="instructionService.nextStep()"
     />
     <watchers-popup-remove
+        :id="activeCard?.id"
         :wait="service.wait"
         :closed="service.popupClosed"
         :name="name"
-        :id="activeCard?.id"
         @removeWatcher="removeWatcher($event)"
     />
     <watchers-popup-card
@@ -101,13 +102,13 @@
         />
     </watchers-popup-card>
     <instruction-button
-        @openInstruction="instructionService.setStep().setVisible()"
         hint="watchers"
+        @openInstruction="instructionService.setStep().setVisible()"
     />
 </template>
 
 <script>
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import PlusIcon from "@/modules/common/icons/PlusIcon.vue";
@@ -120,14 +121,14 @@ import MainPreloader from "@/modules/preloader/Components/MainPreloader.vue";
 import WatchersPopupCard from "@/modules/watchers/Components/blocks/WatchersPopupCard.vue";
 import InstructionStep from "@/modules/instruction/Components/InstructionStep.vue";
 
-import {InstructionService} from "@/modules/instruction/services/InstructionService";
-import {WatchersService} from "@/modules/watchers/services/WatchersService";
-import {mapGetters} from "vuex";
-import {WatchersMessage} from "@/modules/watchers/lang/WatchersMessages";
+import { InstructionService } from "@/modules/instruction/services/InstructionService";
+import { WatchersService } from "@/modules/watchers/services/WatchersService";
+import { mapGetters } from "vuex";
+import { WatchersMessage } from "@/modules/watchers/lang/WatchersMessages";
 import InstructionButton from "../../modules/instruction/Components/UI/InstructionButton.vue";
 
 export default {
-    name: "watchers-page",
+    name: "WatchersPage",
     components: {
         InstructionButton,
         WatchersList,
@@ -163,6 +164,40 @@ export default {
             return this.service.card;
         },
     },
+    watch: {
+        async getActive(newActiveId) {
+            this.service.setGroupId(newActiveId);
+
+            await this.service.index();
+        },
+        async getAccount() {
+            await this.service.index();
+        },
+        "$i18n.locale"() {
+            document.title = this.$t("header.links.watchers");
+        },
+        "instructionService.step"(newStepValue) {
+            if (newStepValue === 2) {
+                this.openOnBoardingPopup = true;
+
+                setTimeout(() => (this.openOnBoardingPopup = false), 300);
+            }
+            if (newStepValue === 3) {
+                this.closeOnBoardingPopup = true;
+
+                setTimeout(() => (this.closeOnBoardingPopup = false), 300);
+            }
+        },
+    },
+    async mounted() {
+        this.instructionService.setStepsCount(2);
+
+        document.title = this.$t("header.links.watchers");
+        this.service.setGroupId(this.getActive);
+        this.service.setForm();
+
+        await this.service.index();
+    },
     methods: {
         dropWatcher() {
             this.service.dropCard();
@@ -182,40 +217,6 @@ export default {
             this.service.dropCard();
             await this.service.index();
         },
-    },
-    watch: {
-        async getActive(newActiveId) {
-            this.service.setGroupId(newActiveId);
-
-            await this.service.index();
-        },
-        async getAccount() {
-            await this.service.index();
-        },
-        "$i18n.locale"() {
-            document.title = this.$t("header.links.watchers");
-        },
-        "instructionService.step"(newStepValue) {
-            if (newStepValue === 2) {
-                this.openOnBoardingPopup = true;
-
-                setTimeout(() => this.openOnBoardingPopup = false, 300);
-            }
-            if (newStepValue === 3) {
-                this.closeOnBoardingPopup = true;
-
-                setTimeout(() => this.closeOnBoardingPopup = false, 300);
-            }
-        }
-    },
-    async mounted() {
-        this.instructionService.setStepsCount(2);
-
-        document.title = this.$t("header.links.watchers");
-        this.service.setGroupId(this.getActive);
-        this.service.setForm();
-
-        await this.service.index();
     },
 };
 </script>

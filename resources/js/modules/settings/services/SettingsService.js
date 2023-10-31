@@ -1,11 +1,11 @@
-import {FormData} from "@/modules/settings/DTO/FormData";
+import { FormData } from "@/modules/settings/DTO/FormData";
 
-import {ValidateService} from "@/modules/validate/services/ValidateService";
-import {RowData} from "@/modules/settings/DTO/RowData";
-import {ProfileApi} from "@/api/api";
+import { ValidateService } from "@/modules/validate/services/ValidateService";
+import { RowData } from "@/modules/settings/DTO/RowData";
+import { ProfileApi } from "@/api/api";
 import store from "@/store";
-import {SettingsUserData} from "../DTO/SettingsUserData";
-import {BlockData} from "../DTO/BlockData";
+import { SettingsUserData } from "../DTO/SettingsUserData";
+import { BlockData } from "../DTO/BlockData";
 
 export class SettingsService {
     constructor(translate, router) {

@@ -94,6 +94,16 @@ export default defineComponent({
             ],
         };
     },
+    watch: {
+        user: {
+            handler(newUserData) {
+                this.$route?.query?.access_key
+                    ? this.service.setWatcherLinks()
+                    : this.service.setLinks(newUserData);
+            },
+            deep: true,
+        },
+    },
     mounted() {
         this.$route?.query?.access_key
             ? this.service.setWatcherLinks()

@@ -15,6 +15,7 @@ use OpenApi\Attributes as OA;
             new OA\Property(property: 'active_referrals_count', type: 'integer'),
             new OA\Property(property: 'referrals_total_amount', type: 'float'),
             new OA\Property(property: 'total_referrals_hash_rate', type: 'float'),
+            new OA\Property(property: 'referral_percent', type: 'float'),
             new OA\Property(property: 'code', type: 'string'),
         ],
         type: 'object'
@@ -37,6 +38,7 @@ class ReferralStatisticResource extends JsonResource
             'group_id' => $this->referralCodeData['group_id'],
             'code' => route('v1.register', 'referral_code=' . $this->referral_code),
             ...$this->statistic,
+            'referral_percent' => $this->referralCodeData['referral_percent']
         ];
     }
 }

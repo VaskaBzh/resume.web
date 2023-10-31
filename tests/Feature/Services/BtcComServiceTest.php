@@ -11,9 +11,9 @@ use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
-use DB;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
 use Tests\TestCase;
 
@@ -219,7 +219,7 @@ class BtcComServiceTest extends TestCase
             [
                 'btcComSubResponse' => [
                     "status" => true,
-                    "gid" => 6003166,
+                    "gid" => 666666,
                     "group_name" => "MainTest",
                     "created_at" => 1698151086,
                     "updated_at" => 1698151086,
@@ -234,7 +234,7 @@ class BtcComServiceTest extends TestCase
             [
                 'expected' => [
                     "status" => true,
-                    "gid" => 6003166,
+                    "gid" => 666666,
                     "group_name" => "MainTest",
                     "created_at" => 1698151086,
                     "updated_at" => 1698151086,
@@ -666,7 +666,7 @@ class BtcComServiceTest extends TestCase
     private function makeFakeRequestToBtcCom($shouldResponse): void
     {
         Http::fake([
-            config('api.btc.uri') . '/*' => Http::response($shouldResponse)
+            '*' => Http::response($shouldResponse)
         ]);
     }
 }

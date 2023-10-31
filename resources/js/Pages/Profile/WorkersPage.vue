@@ -8,30 +8,32 @@
             :empty="worker_service.emptyWorkers"
         />
         <div
-            class="workers__wrapper"
             v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
+            class="workers__wrapper"
         >
-            <main-title class="title-worker" tag="h4">{{
-                $t("workers.title")
-            }}</main-title>
+            <main-title class="title-worker"
+                >{{ $t("workers.title") }}
+            </main-title>
             <div
                 class="cards-container onboarding_block"
                 :class="{
-                    'onboarding_block-target': instructionService.isVisible && instructionService.step === 1
+                    'onboarding_block-target':
+                        instructionService.isVisible &&
+                        instructionService.step === 1,
                 }"
             >
                 <main-hashrate-cards />
                 <instruction-step
-                    @next="instructionService.nextStep()"
-                    @prev="instructionService.prevStep()"
-                    @close="instructionService.nextStep(6)"
                     :step_active="1"
                     :steps_count="instructionService.steps_count"
                     :step="instructionService.step"
-                    :isVisible="instructionService.isVisible"
+                    :is-visible="instructionService.isVisible"
                     text="texts.workers[0]"
                     title="titles.workers[0]"
-                    className="onboarding__card-top"
+                    class-name="onboarding__card-top"
+                    @next="instructionService.nextStep()"
+                    @prev="instructionService.prevStep()"
+                    @close="instructionService.nextStep(6)"
                 />
             </div>
             <div class="workers__content">
@@ -40,52 +42,55 @@
                     :active_tab="worker_service.status"
                     @changeStatus="setStatus"
                 />
-	            <div class="workers__table">
-		            <main-slider
-			            class="onboarding_block"
-			            :class="{
-                        'onboarding_block-target': instructionService.isVisible && instructionService.step === 2
-                    }"
-			            :wait="worker_service.waitWorkers"
-			            :empty="worker_service.emptyWorkers"
-			            rowsNum="1000"
-			            :haveNav="false"
-		            >
-			            <template v-slot:instruction>
-				            <instruction-step
-					            @next="instructionService.nextStep()"
-					            @prev="instructionService.prevStep()"
-					            @close="instructionService.nextStep(6)"
-					            :step_active="2"
-					            :steps_count="instructionService.steps_count"
-					            :step="instructionService.step"
-					            :isVisible="instructionService.isVisible"
-					            text="texts.workers[1]"
-					            title="titles.workers[1]"
-					            className="onboarding__card-bottom"
-				            />
-			            </template>
-			            <main-table
-				            :table="worker_service.table"
-				            :removePercent="removePercent"
-				            :empty="worker_service.emptyTableWorkers"
-				            :wait="worker_service.waitWorkers"
-				            @getData="getTargetWorker($event)"
-			            ></main-table>
-		            </main-slider>
-		            <transition name="slide">
-			            <worker-card
-				            class="workers__card"
-				            v-if="
-                            viewportWidth > 1200 && worker_service.visibleCard
-                        "
-				            :wait="worker_service.waitTargetWorker"
-				            :target_worker="worker_service.target_worker"
-				            :graph="worker_service.workers_graph"
-				            @closeCard="dropWorkers"
-			            />
-		            </transition>
-	            </div>
+                <div class="workers__table">
+                    <main-slider
+                        class="onboarding_block"
+                        :class="{
+                            'onboarding_block-target':
+                                instructionService.isVisible &&
+                                instructionService.step === 2,
+                        }"
+                        :wait="worker_service.waitWorkers"
+                        :empty="worker_service.emptyWorkers"
+                        rows-num="1000"
+                        :have-nav="false"
+                    >
+                        <template #instruction>
+                            <instruction-step
+                                :step_active="2"
+                                :steps_count="instructionService.steps_count"
+                                :step="instructionService.step"
+                                :is-visible="instructionService.isVisible"
+                                text="texts.workers[1]"
+                                title="titles.workers[1]"
+                                class-name="onboarding__card-bottom"
+                                @next="instructionService.nextStep()"
+                                @prev="instructionService.prevStep()"
+                                @close="instructionService.nextStep(6)"
+                            />
+                        </template>
+                        <main-table
+                            :table="worker_service.table"
+                            :remove-percent="removePercent"
+                            :empty="worker_service.emptyTableWorkers"
+                            :wait="worker_service.waitWorkers"
+                            @getData="getTargetWorker($event)"
+                        ></main-table>
+                    </main-slider>
+                    <transition name="slide">
+                        <worker-card
+                            v-if="
+                                viewportWidth > 1200 &&
+                                worker_service.visibleCard
+                            "
+                            class="workers__card"
+                            :wait="worker_service.waitTargetWorker"
+                            :target_worker="worker_service.target_worker"
+                            :graph="worker_service.workers_graph"
+                            @closeCard="dropWorkers"
+                        />
+                    </transition>
+                </div>
             </div>
         </div>
     </div>
@@ -97,17 +102,17 @@
         @dropWatcher="dropWorkers"
     >
         <worker-card
-            class="workers__card"
             v-if="Object.entries(worker_service.target_worker).length > 0"
+            class="workers__card"
             :target_worker="worker_service.target_worker"
             :graph="worker_service.workers_graph"
             :wait="worker_service.waitTargetWorker"
             @closeCard="dropWorkers"
-    />
+        />
     </workers-popup-card>
     <instruction-button
-        @openInstruction="instructionService.setStep().setVisible()"
         hint="workers"
+        @openInstruction="instructionService.setStep().setVisible()"
     />
 </template>
 <script>
@@ -175,11 +180,11 @@ export default {
         },
         async getTargetWorker(data) {
             if (this.viewportWidth > 1200) {
-                this.removePercent = true
+                this.removePercent = true;
             }
 
             await this.worker_service.getPopup(data.id);
-            this.worker_service.openPopupCard()
+            this.worker_service.openPopupCard();
         },
         dropWorkers() {
             this.worker_service.dropWorker();
@@ -222,6 +227,7 @@ export default {
 .title-worker {
     display: none;
 }
+
 @media (max-width: 500px) {
     .title-worker {
         display: inline-block;
@@ -234,11 +240,13 @@ export default {
         line-height: 32px; /* 160% */
     }
 }
+
 .cards-container {
     display: flex;
     justify-content: space-between;
     margin-bottom: 32px;
 }
+
 @media (max-width: 900px) {
     .cards-container {
         flex-direction: column;
@@ -254,6 +262,7 @@ export default {
         margin-bottom: 24px;
     }
 }
+
 .workers {
     padding: 24px;
     flex: 1 1 auto;
@@ -262,18 +271,22 @@ export default {
     @media (max-width: 900px) {
         padding: 24px 12px 24px;
     }
+
     .form .title {
         margin-bottom: 0;
     }
+
     &__content {
         display: flex;
         gap: 12px;
         flex-direction: column;
     }
-	&__table {
-		display: flex;
-		gap: 12px;
-	}
+
+    &__table {
+        display: flex;
+        gap: 12px;
+    }
+
     &__card {
         min-width: calc(50% - 6px);
         min-height: 440px;
@@ -298,6 +311,7 @@ export default {
             min-height: 490px;
         }
     }
+
     &__button {
         min-width: 60px;
         min-height: 44px;
@@ -317,11 +331,13 @@ export default {
                 transform: translateY(-50%);
             }
         }
+
         svg {
             width: 14px;
             height: 14px;
             fill: #fff;
         }
+
         @media (max-width: 479.89px) {
             background: transparent;
             min-width: 40px;
@@ -334,6 +350,7 @@ export default {
             }
         }
     }
+
     &__filter {
         margin: 16px 0 24px;
         display: flex;
@@ -346,11 +363,13 @@ export default {
             justify-content: space-between;
             position: relative;
         }
+
         &_wrapper {
             display: flex;
             gap: 16px;
             width: 100%;
         }
+
         &_block {
             max-width: 230px;
             width: 100%;
@@ -358,6 +377,7 @@ export default {
                 max-width: 100%;
             }
         }
+
         &_label {
             font-weight: 400;
             font-size: 16px;
@@ -372,6 +392,7 @@ export default {
             }
         }
     }
+
     &__select {
         height: 48px;
         @media (max-width: 767.98px) {
@@ -380,6 +401,7 @@ export default {
         @media (max-width: 479.98px) {
             height: 28px;
         }
+
         .select_title {
             font-weight: 500;
             font-size: 18px;
@@ -389,10 +411,12 @@ export default {
         }
     }
 }
+
 .slide-enter-active,
 .slide-leave-active {
     transition: all 0.5s ease-out;
 }
+
 .slide-enter-from,
 .slide-leave-to {
     @media (min-width: 1300px) {
