@@ -4,13 +4,14 @@
         <div class="wallets__block">
             <no-wallets-block
                 time="23.32.33"
-                @addWallet="service.openAddPopup()"
+                @addWallet="openAddPopup"
             />
         </div>
         <add-wallet-popup
-            :is-opened="service.isAddPopupOpened.state"
+            :is-opened="isAddPopupOpened"
+            :is-closed="isAddPopupClosed"
             @closed="closeAddPopup"
-            @addWallet="console.log(123)"
+            @addWallet="addWallet"
         />
     </div>
 </template>
@@ -34,9 +35,33 @@ export default {
             service: new WalletsService(),
         };
     },
+    computed: {
+        isAddPopupOpened() {
+            return this.service.addPopup.isPopupOpened.state;
+        },
+        isAddPopupClosed() {
+            return this.service.addPopup.isPopupClosed.state;
+        },
+    },
     methods: {
+        addWallet() {
+            console.log(123)
+        },
         closeAddPopup() {
-            this.service.closeAddPopup().setForm().closeAddEmailForm();
+            this.service.addPopup.closePopup();
+            this.service.addVerifyForm.closeVerifyForm();
+            this.service.setForm();
+        },
+        closeChangePopup() {
+            this.service.changePopup.closePopup();
+            this.service.changeVerifyForm.closeVerifyForm();
+            this.service.setForm();
+        },
+        openAddPopup() {
+            this.service.addPopup.openPopup();
+        },
+        openChangePopup() {
+            this.service.changePopup.openPopup();
         },
     },
 };

@@ -44,6 +44,7 @@ export class LoginService {
             this.form,
             this.validate
         );
+
     }
 
     async sendPassword(form) {
