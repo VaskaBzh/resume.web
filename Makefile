@@ -41,11 +41,11 @@ clear:
 	$(ARTISAN) config:clear
 	$(ARTISAN) cache:clear
 	$(ARTISAN) route:clear
+optimize:
 	$(ARTISAN) optimize
 tinker:
 	$(ARTISAN) tinker
 test:
-	$(ARTISAN) config:clear
 	$(ARTISAN) test --env=testing
 remote_test:
 	ssh mainuser@92.205.188.112
