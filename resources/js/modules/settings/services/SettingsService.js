@@ -90,21 +90,7 @@ export class SettingsService {
                 text: err.response.data.message || err.response.data.error,
             });
         }
-        // try {
-        //     const response = await this.fetchVerifyFac(form);
-        //
-        //     this.closeFacPopup();
-        //
-        //     store.dispatch("setNotification", {
-        //         status: "success",
-        //         title: "connected",
-        //         text: response.data.message,
-        //     });
-        // } catch (err) {
-        //     console.error(err);
-        //
-        //     store.dispatch("setFullErrors", err.response.data);
-        // }
+
     }
 
     removeRouteQuery() {
@@ -362,6 +348,7 @@ export class SettingsService {
     }
 
     ajaxChange = (data) => {
+
         this.setValue(data.value);
 
         if (data.bool) {
