@@ -24,7 +24,6 @@ class IncomeService
     private Sub $sub;
     private ?Sub $owner;
     private float $dailyEarn;
-    private float $fee;
 
     private array $params = [
         'status' => Status::REJECTED->value,
@@ -60,7 +59,6 @@ class IncomeService
         }
 
         $this->setNetworkDifficulty();
-        $this->setFee();
         $this->setDailyEarn();
         $this->setDailyAmount();
         $this->setPendingAmount();
@@ -90,7 +88,7 @@ class IncomeService
         $this->dailyEarn = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: BtcComService::FEE
+            fee: 0
         );
     }
 
@@ -99,17 +97,8 @@ class IncomeService
         $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: $this->fee
+            fee: BtcComService::FEE + $this->sub->percent
         );
-    }
-
-    private function setFee(): void
-    {
-        $this->fee = $this->sub->percent;
-
-        if ($this->owner) {
-            $this->fee -= $this->owner->pivot->referral_percent;
-        }
     }
 
     public function sumTotalAmount(): void
@@ -262,8 +251,8 @@ class IncomeService
             'group_id' => $this->sub->group_id,
             'earn' => $this->dailyEarn,
             'user_total' => $this->params['dailyAmount'],
-            'percent' => $this->fee,
-            'profit' => $this->dailyEarn * ($this->sub->percent / 100),
+            'percent' => $this->sub->percent,
+            'profit' => $this->dailyEarn * (($this->sub->percent + BtcComService::FEE) / 100),
         ]));
     }
 }

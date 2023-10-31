@@ -13,11 +13,11 @@
             </main-description>
         </div>
         <div class="no-wallets__block">
-            <warning-block
-                v-show="!timerService.timerState.state"
-                text="wallets_add"
-                :time="timerService.overTime.value"
-            />
+<!--            <warning-block-->
+<!--                v-show="!timerService.timerState.state"-->
+<!--                text="wallets_add"-->
+<!--                :time="timerService.overTime.value"-->
+<!--            />-->
             <main-button
                 class="no-wallets_button button-blue button-lg button-full"
                 @click="addWallet"
@@ -46,13 +46,13 @@ export default {
     i18n: {
         sharedMessages: WalletsMessages,
     },
-    props: {
-        time: String,
-        isEmailConfirm: {
-            type: Boolean,
-            default: false,
-        },
-    },
+    // props: {
+    //     time: String,
+    //     isEmailConfirm: {
+    //         type: Boolean,
+    //         default: false,
+    //     },
+    // },
     emits: ["addWallet"],
     data() {
         return {

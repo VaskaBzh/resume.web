@@ -18,7 +18,6 @@ export default {
                 );
 
                 commit("updateActive", data.index);
-
                 commit("updateActiveAccount", sub);
             }
         },

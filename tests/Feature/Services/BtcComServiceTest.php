@@ -65,11 +65,6 @@ class BtcComServiceTest extends TestCase
         );
     }
 
-    public function it_create_local_sub_successfully()
-    {
-
-    }
-
     /**
      * @test
      *
