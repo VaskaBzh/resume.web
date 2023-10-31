@@ -67,6 +67,7 @@ export default {
     i18n: {
         sharedMessages: ValidateMessage,
     },
+
 };
 </script>
 
