@@ -88,6 +88,7 @@ export default {
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
+
         },
     },
     state: {
