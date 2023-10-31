@@ -45,7 +45,7 @@ export default {
     },
     methods: {
         addWallet() {
-            console.log(123)
+            // console.log(123)
         },
         closeAddPopup() {
             this.service.addPopup.closePopup();

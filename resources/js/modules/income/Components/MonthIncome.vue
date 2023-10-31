@@ -69,6 +69,15 @@ export default {
     border-radius: 24px;
     background: var(--background-island, #fff);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+
+
+}
+
+@media (max-width: 1400px) {
+    .month-income-card {
+        height: auto;
+    }
+
 }
 .income-card {
     display: flex;

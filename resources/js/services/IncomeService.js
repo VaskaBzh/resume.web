@@ -160,10 +160,13 @@ export class IncomeService extends TableService {
                 this.emptyTable = true;
             }
 
+            if (filter) {
+                this.titles = this.useTranslater([1, 4, 6, 7]);
+
+                return this;
+            }
             if (!tableTitleIndexes) {
-                if (filter) {
-                    this.titles = this.useTranslater([1, 4, 5, 6]);
-                } else {
+                if (!filter) {
                     this.titles = this.useTranslater([0, 1, 2, 3, 4, 7, 8]);
                 }
             }
