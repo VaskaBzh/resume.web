@@ -11,7 +11,7 @@ class BusinessException extends \RuntimeException
         private readonly int $statusCode,
     )
     {
-        parent::__construct("Client exception");
+        parent::__construct($this->clientMessage);
     }
 
     public function getClientMessage(): string
