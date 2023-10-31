@@ -2979,6 +2979,10 @@
                         "type": "number",
                         "format": "float"
                     },
+                    "referral_percent": {
+                        "type": "number",
+                        "format": "float"
+                    },
                     "code": {
                         "type": "string"
                     }

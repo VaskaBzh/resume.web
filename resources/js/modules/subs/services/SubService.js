@@ -92,6 +92,7 @@ export class SubService extends DefaultSubsService {
 
         const newSubsArray = store.getters.allAccounts
             .map((sub) => {
+
                 const filteredSubsList = sub.name.toLowerCase().includes(query);
 
                 return filteredSubsList ? sub : null;
@@ -101,6 +102,7 @@ export class SubService extends DefaultSubsService {
         this.setSubList(newSubsArray)
             .tableStatesProcess()
             .tableProcess();
+
     }
 
     setSubList(newSubList = store.getters.allAccounts) {

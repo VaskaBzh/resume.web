@@ -28,7 +28,7 @@ export class RegistrationService {
     async account_create() {
         if (this.checkbox) {
             let validEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim
-            console.log(validEmail.test(this.form.email))
+
             if (Object.entries(this.validate).length === 0 && validEmail.test(this.form.email)) {
                 try {
                     const response = await ProfileApi.post(
