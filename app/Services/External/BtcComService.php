@@ -123,12 +123,12 @@ class BtcComService
      *
      * @throw BusinessException if remote sub-account exists
      */
-    public function createSub(int $userId, string $subName): void
+    public function createSub(int $userId, string $subName): Sub
     {
-        Create::execute(
+        return Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $userId,
-                'group_id' => $this->createRemoteSub($subName)['gid'],
+                'group_id' => 777777,
                 'group_name' => $subName,
             ])
         );
@@ -164,7 +164,7 @@ class BtcComService
      * Update remote worker group
      *
      */
-    public function updateRemoteWorker(WorkerData $workerData): void
+    public function updateRemoteWorker(int $workerId, int $groupId): void
     {
         $this->call(
             segments: [
@@ -174,8 +174,8 @@ class BtcComService
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
-                'group_id' => $workerData->group_id,
-                'worker_id' => (string)$workerData->worker_id
+                'group_id' => $groupId,
+                'worker_id' => (string)$workerId
             ]);
     }
 
@@ -277,14 +277,17 @@ class BtcComService
             btcComWorkers: $this->getWorkerList(self::UNGROUPED_ID),
         )->each(function (array $firstWorkerData) {
 
-            $this->updateRemoteWorker(workerData: $firstWorkerData['worker_data']);
-
             WorkerCreate::execute($firstWorkerData['worker_data'])
                 ->workerHashrates()
                 ->create([
                     'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
                     'unit' => $firstWorkerData['worker_hash_rate']->unit,
                 ]);;
+
+            $this->updateRemoteWorker(
+                workerId: $firstWorkerData['worker_data']->worker_id,
+                groupId: $firstWorkerData['worker_data']->group_id
+            );
         });
 
         Log::channel('commands')->info('WORKERS IMPORT COMPLETE');

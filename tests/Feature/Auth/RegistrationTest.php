@@ -69,32 +69,41 @@ class RegistrationTest extends TestCase
         );
     }
 
-//    /**
-//     * @test
-//     *
-//     * @dataProvider referralRegistrationDataProvider
-//     */
-//    public function it_register_if_has_referral_code(
-//        $signUpData,
-//        $signUpResponseStructure,
-//        $btcComSubResponse,
-//    )
-//    {
-//        User::factory()->create();
-//        $sub = Sub::factory()->create();
-//
-//        $code = app(ReferralService::class)->generateReferralCode($sub->group_id);
-//        dd(User::first());
-//        $mockedResponse = [
-//            'data' => $btcComSubResponse,
-//        ];
-//
-//
-//
-//        $this->postJson('/v1/register', $signUpData)
-//            ->assertCreated()
-//            ->assertJsonStructure($signUpResponseStructure);
-//    }
+    /**
+     * @test
+     *
+     * @dataProvider referralRegistrationDataProvider
+     */
+    public function it_register_with_referral_code(
+        $signUpData,
+        $signUpResponseStructure,
+        $btcComSubResponse,
+    )
+    {
+        User::factory()->create();
+        $sub = Sub::factory()->create();
+
+        $mockedResponse = [
+            'data' => $btcComSubResponse,
+        ];
+
+        $signUpData['referral_code'] = app(ReferralService::class)->generateReferralCode($sub->group_id);
+
+        Http::fake([
+            config('api.btc.uri') . '/groups/create' => Http::response($mockedResponse)
+        ]);
+
+        Notification::fake();
+
+        $mockedResponse = [
+            'data' => $btcComSubResponse,
+        ];
+
+
+        $this->postJson('/v1/register', $signUpData)
+            ->assertCreated()
+            ->assertJsonStructure($signUpResponseStructure);
+    }
 
     public function registrationValidDataProvider(): array
     {
