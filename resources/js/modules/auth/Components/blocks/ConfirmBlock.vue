@@ -88,6 +88,7 @@ export default {
 
     &_description {
         margin-bottom: 24px;
+        max-width: 500px;
         @media (max-width: $mobile) {
             margin-bottom: 16px;
         }
