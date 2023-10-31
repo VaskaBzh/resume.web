@@ -45,7 +45,7 @@ class ResendVerifyEmailController extends Controller
                         ),
                     ],
                 ),
-                new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Resource not found'),
+                new OA\Response(response: Response::HTTP_BAD_REQUEST, description: 'Resource not found'),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
                     description: 'Validation error',
@@ -67,27 +67,18 @@ class ResendVerifyEmailController extends Controller
     {
         $this->validateEmail($request);
 
-        try {
-            $user = User::whereEmail($request->email)
-                ->firstOrFail();
+        $user = User::whereEmail($request->email)
+            ->firstOrFail();
 
-            if ($user->hasVerifiedEmail()) {
-                return new JsonResponse([
-                    'errors' => [
-                        'auth' => [__('auth.email.already_verify')]
-                    ]
-                ]);
-            }
-
-            $user->sendEmailVerificationNotification();
-        } catch (\Throwable) {
+        if ($user->hasVerifiedEmail()) {
             return new JsonResponse([
                 'errors' => [
-                    'auth' => ['Something went wrong']
+                    'auth' => [__('auth.email.already_verify', ['value' => 'email', 'date' => $user->email_verified_at])]
                 ]
-            ]);
+            ], Response::HTTP_BAD_REQUEST);
         }
 
+        $user->sendEmailVerificationNotification();
 
         return new JsonResponse([
                 'message' => __('auth.email.verify', [
