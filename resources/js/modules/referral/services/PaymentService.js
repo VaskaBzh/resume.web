@@ -16,12 +16,11 @@ export class PaymentService extends TableService {
     }
 
     setter(referral) {
-        console.log(referral)
+        // referral["worker_count"],
         return new PaymentData(
             this.dateFormatter(referral["created_at"]),
             referral["email"],
             referral["daily_amount"],
-            referral["worker_count"],
             referral["hash"],
             "T",
         );
@@ -66,7 +65,7 @@ export class PaymentService extends TableService {
                 this.emptyTable = true;
             }
 
-            this.titles = this.useTranslater([0, 1, 2, 3, 4]);
+            this.titles = this.useTranslater([0, 1, 2, 4]);
         } catch (err) {
             console.error(`FetchError: ${err}`);
 

@@ -25,11 +25,11 @@ jobs:
       - name: App key
         run: make key
 
+      - name: Run tests
+        run: make test
+
       - name: Install npm dependencies
         run: make npm
 
       - name: Build front-end
         run: make front
-
-      - name: Run tests
-        run: make test

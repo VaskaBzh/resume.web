@@ -48,6 +48,11 @@ export class CabinetService {
                 this.translate("stats.cards[1]"),
                 data?.total_referrals_hash_rate || 0
             ),
+            new SelectData(
+                "hashrate",
+                this.translate("stats.cards[1]"),
+                data?.referral_percent || 0
+            ),
         ];
     }
 

@@ -9,4 +9,24 @@ export class PopupControllService {
     createStatesService() {
         return new StatesService();
     }
+
+    openPopup() {
+        this.isPopupOpened.setTemporaryState(true);
+
+        return this;
+    }
+
+    closePopup() {
+        this.isPopupClosed.setTemporaryState(false);
+
+        return this;
+    }
+
+    popupOpenedState() {
+        return this.isPopupOpened.state;
+    }
+
+    popupClosedState() {
+        return this.isPopupClosed.state;
+    }
 }
