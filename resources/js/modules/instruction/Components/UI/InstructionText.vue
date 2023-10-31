@@ -1,7 +1,5 @@
 <template>
-	<div class="text">
-		{{ text }}
-	</div>
+	<div class="text" v-i18n="text"></div>
 </template>
 
 <script>

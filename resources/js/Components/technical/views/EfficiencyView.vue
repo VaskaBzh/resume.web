@@ -2,12 +2,15 @@
     <div class="efficiency section">
         <div class="efficiency__container">
             <div class="efficiency__main">
-                <main-title tag="h2" class="title-blue">{{
-                    this.$t("hosting.eff.title")
-                }}</main-title>
-                <img src="../../../../assets/img/efficiency_img-1.webp" alt="" />
+                <main-title class="title-blue"
+                    >{{ $t("hosting.eff.title") }}
+                </main-title>
+                <img
+                    src="../../../../assets/img/efficiency_img-1.webp"
+                    alt=""
+                />
                 <p class="description">
-                    {{ this.$t("hosting.eff.text") }}
+                    {{ $t("hosting.eff.text") }}
                 </p>
             </div>
         </div>
@@ -18,7 +21,7 @@
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
-    name: "efficiency-view",
+    name: "EfficiencyView",
     components: {
         MainTitle,
     },
@@ -43,6 +46,7 @@ export default {
             gap: 40px;
             max-width: 100%;
         }
+
         img {
             filter: drop-shadow(0px 10px 50px rgba(112, 165, 236, 0.25));
             max-width: 300px;
@@ -63,6 +67,7 @@ export default {
             }
         }
     }
+
     &__container {
         margin: 0 auto;
         @media (min-width: 479.98px) {

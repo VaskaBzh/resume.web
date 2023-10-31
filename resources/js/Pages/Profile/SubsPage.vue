@@ -1,9 +1,7 @@
 <template>
     <div class="subs">
         <div class="subs__wrapper">
-            <main-title class="subs_title" tag="h4">{{
-                $t("title")
-            }}</main-title>
+            <main-title class="subs_title">{{ $t("title") }} </main-title>
             <div
                 v-if="!service.waitSubs && !service.emptySubs"
                 class="subs__wrapper"
@@ -106,19 +104,23 @@ export default {
     flex: 1 1 auto;
     flex-direction: column;
 }
+
 @media (max-width: 900px) {
     .subs {
         padding: 24px 12px 24px;
     }
 }
+
 .subs_title {
     display: none;
 }
+
 @media (max-width: 500px) {
     .subs_title {
         display: inline-flex;
     }
 }
+
 .subs__wrapper {
     width: 100%;
     flex: 1 1 auto;

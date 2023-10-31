@@ -113,6 +113,7 @@ export default {
     width: 100%;
     flex: 1 1 auto;
     height: calc(100vh - 72px);
+    padding: clamp(12px, 2vw, 24px);
 }
 
 @media (max-width: 900px) {

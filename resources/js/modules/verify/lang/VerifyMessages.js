@@ -11,6 +11,14 @@ export const VerifyMessages = {
                 re_verify_text: "Resend Code",
                 button_text: "Change",
             },
+            wallets_add: {
+                title: "Add Wallet",
+                // test@gmail.com
+                text: "To confirm the wallet addition, enter the code sent to your email",
+                placeholder: "Confirmation Code",
+                re_verify_text: "Resend Code",
+                button_text: "Add",
+            },
             fac: {
                 title: "Login Confirmation",
                 text: "Enter the temporary code from Google Authenticator",
@@ -31,6 +39,14 @@ export const VerifyMessages = {
                 placeholder: "Код подтверждения",
                 re_verify_text: "Отправить код повторно",
                 button_text: "Изменить",
+            },
+            wallets_add: {
+                title: "Добавление кошелька",
+                // test@gmail.com
+                text: "Для подтверждения добавления кошелька введите код отправленный на почту",
+                placeholder: "Код подтверждения",
+                re_verify_text: "Отправить код повторно",
+                button_text: "Добавить",
             },
             fac: {
                 title: "Подтверждение входа",

@@ -4,18 +4,23 @@
             <img src=../../../../assets/img/img_no-statistic.png
             class="no-information_img" alt="no-statistic-info">
             <p class="no-information_text">
-                Чтобы появилась статистика необходимо подключить воркеры
+                {{ $t("no_info.text") }}
             </p>
         </div>
-        <router-link to="connecting" class="button button-blue button-full"
-            >Подключить</router-link
+        <router-link to="connecting" class="button button-blue button-full">
+            {{ $t("no_info.button") }}</router-link
         >
     </div>
 </template>
 
 <script>
+import { StatisticMessage } from "@/modules/statistic/lang/StatisticMessage";
+
 export default {
-    name: "no-information",
+    name: "NoInformation",
+    i18n: {
+        sharedMessages: StatisticMessage,
+    },
 };
 </script>
 

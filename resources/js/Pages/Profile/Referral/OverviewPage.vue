@@ -11,18 +11,18 @@
                         <img src="../../../../assets/img/percent-icon.png" />
                     </template>
                 </InfoCard>
-<!--                <InfoCard-->
-<!--                    class="referral__card-info"-->
-<!--                    :title="$t('stats.cards[1]')"-->
-<!--                    :value="percent"-->
-<!--                >-->
-<!--                    <template #svg>-->
-<!--                        <img src="../../../../assets/img/hashrate-icon.png" />-->
-<!--                    </template>-->
-<!--                </InfoCard>-->
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[1]')"
+                    :value="service.statsCards[3]?.value ?? 0"
+                >
+                    <template #svg>
+                        <img src="../../../../assets/img/hashrate-icon.png" />
+                    </template>
+                </InfoCard>
             </div>
             <InfoCard
-                class="referral__card-info referal__general-profit"
+                class="referral__card-info referral__general-profit"
                 :current-page="'worker'"
                 :title="$t('stats.cards[4]')"
                 :value="service.statsCards[1]?.value ?? 0"
@@ -33,7 +33,7 @@
                 </template>
             </InfoCard>
             <div class="cabinet__block cabinet__block-light referral__block">
-                <main-title tag="h4" class="title referral_title">
+                <main-title class="title referral_title">
                     {{ $t("incomes.title") }}
                 </main-title>
                 <p class="text text-gray referral_text">
@@ -47,7 +47,7 @@
                 />
             </div>
             <div class="cabinet__block cabinet__block-light referral__block">
-                <main-title tag="h4" class="title referral_title">
+                <main-title class="title referral_title">
                     {{ $t("referral.title") }}
                 </main-title>
                 <p class="text text-gray referral_text referral_text-mb">
@@ -61,7 +61,6 @@
                     />
                 </div>
             </div>
-
         </div>
         <div class="grid-column">
             <div class="card__block">
@@ -87,7 +86,7 @@
             <div
                 class="cabinet__block cabinet__block-grid cabinet__block-light referral__block referral__block-full"
             >
-                <main-title tag="h4" class="title referral_title">
+                <main-title class="title referral_title">
                     {{ $t("grade.title") }}
                 </main-title>
                 <p class="text text-gray referral_text">
@@ -112,6 +111,7 @@ import { mapGetters } from "vuex";
 import { ReferralsMessage } from "@/modules/referral/lang/ReferralsMessage";
 import ReferralsLayoutView from "@/layouts/ReferralsLayoutView.vue";
 import InfoCard from "../../../modules/common/Components/UI/CabinetCard.vue";
+
 export default {
     name: "CabinetView",
     components: {
@@ -157,7 +157,7 @@ export default {
             this.service.getGradeList();
         },
     },
-     async mounted() {
+    async mounted() {
         if (this.user.id) {
             this.service.setUser(this.user);
 
@@ -179,6 +179,7 @@ export default {
     gap: 16px;
     max-height: 108px;
 }
+
 .grid-column {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -188,13 +189,14 @@ export default {
         grid-column: 1/3;
         border-radius: 24px;
     }
+}
 
-    .referal__general-profit {
+.referral {
+    &__general-profit {
         grid-row: 2;
         grid-column: 1/3;
     }
-}
-.referral {
+
     &__content {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
@@ -224,21 +226,25 @@ export default {
     &__block {
         grid-column: 1/3;
         border-radius: 24px;
+
         &:first-child {
             @media (max-width: $pc) {
                 grid-column: 1/3;
             }
         }
+
         &:nth-child(2) {
             @media (max-width: $pc) {
             }
         }
+
         &:nth-child(3) {
             @media (max-width: $pc) {
                 grid-row: 4/5;
                 grid-column: 1/3;
             }
         }
+
         &-full {
             grid-row: 2/20;
             @media (max-width: $pc) {
@@ -246,19 +252,23 @@ export default {
             }
         }
     }
+
     &_title {
         margin-bottom: 12px;
         @media (max-width: $pc) {
             margin-bottom: 24px;
         }
     }
+
     &_text {
         margin-bottom: 24px;
         font-size: 14px;
+
         &-mb {
             margin-bottom: 32px;
         }
     }
+
     &_code {
         @media (max-width: $pc) {
             max-width: 394px;
@@ -271,6 +281,7 @@ export default {
             min-width: 0;
         }
     }
+
     &__row {
         display: flex;
         align-items: center;
@@ -279,6 +290,7 @@ export default {
         @media (max-width: $mobileSmall) {
             flex-direction: column;
         }
+
         &-bet {
             justify-content: space-around;
             flex-wrap: wrap;

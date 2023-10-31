@@ -9,17 +9,17 @@
                         alt=""
                     />
                 </div>
-                <main-title tag="h3" class="platform-c__title title-blue">
+                <main-title class="platform-c__title title-blue">
                     {{ $t("platform.title") }}
                 </main-title>
                 <ul v-if="viewportWidth >= 767.98" class="platform-c__list">
                     <li class="platform-c__item">
                         <div class="platform-c__item_image_con">
                             <img
+                                v-scroll="'left delay'"
                                 class="platform-c__item_image n-1"
                                 src="../../../../assets/img/platform-img-1.webp"
                                 alt=""
-                                v-scroll="'left delay'"
                             />
                         </div>
                         <div class="platform-c__item_title">
@@ -32,10 +32,10 @@
                     <li class="platform-c__item">
                         <div class="platform-c__item_image_con">
                             <img
+                                v-scroll="'left delay--md'"
                                 class="platform-c__item_image n-2"
                                 src="../../../../assets/img/platform-img-2.webp"
                                 alt=""
-                                v-scroll="'left delay--md'"
                             />
                         </div>
                         <div class="platform-c__item_title">
@@ -48,10 +48,10 @@
                     <li class="platform-c__item">
                         <div class="platform-c__item_image_con">
                             <img
+                                v-scroll="'left delay--lg'"
                                 class="platform-c__item_image n-3"
                                 src="../../../../assets/img/platform-img-3.webp"
                                 alt=""
-                                v-scroll="'left delay--lg'"
                             />
                         </div>
                         <div class="platform-c__item_title">
@@ -63,8 +63,8 @@
                     </li>
                 </ul>
                 <swiper
-                    class="sjj"
                     v-else
+                    class="sjj"
                     :modules="modules"
                     :slides-per-view="1"
                     :space-between="15"
@@ -130,20 +130,6 @@ import "swiper/css/pagination";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
-    data() {
-        return {
-            viewportWidth: 0,
-        };
-    },
-    created() {
-        window.addEventListener("resize", this.handleResize);
-        this.handleResize();
-    },
-    methods: {
-        handleResize() {
-            this.viewportWidth = window.innerWidth;
-        },
-    },
     components: {
         Swiper,
         SwiperSlide,
@@ -160,6 +146,20 @@ export default {
             modules: [Pagination],
         };
     },
+    data() {
+        return {
+            viewportWidth: 0,
+        };
+    },
+    created() {
+        window.addEventListener("resize", this.handleResize);
+        this.handleResize();
+    },
+    methods: {
+        handleResize() {
+            this.viewportWidth = window.innerWidth;
+        },
+    },
 };
 </script>
 
@@ -169,6 +169,7 @@ export default {
     &__main {
         margin-bottom: 48px;
     }
+
     // .platform-c__logo
     &__logo {
         max-width: 95px;
@@ -177,11 +178,13 @@ export default {
             max-width: 67px;
             margin-bottom: 32px;
         }
+
         &_con {
             display: flex;
             justify-content: center;
         }
     }
+
     // .platform-c__title
     &__title {
         font-weight: 500;
@@ -195,6 +198,7 @@ export default {
             margin-bottom: 19px;
         }
     }
+
     // .platform-c__list
     &__list {
         display: grid;
@@ -204,6 +208,7 @@ export default {
             gap: 36px;
         }
     }
+
     // .platform-c__item
     &__item {
         display: flex;
@@ -216,16 +221,20 @@ export default {
                 display: flex;
                 align-items: end;
             }
+
             &.n-1 {
                 max-height: 190px;
             }
+
             &.n-2 {
                 max-height: 145px;
             }
+
             &.n-3 {
                 max-height: 137px;
             }
         }
+
         // .platform-c__item_title
         &_title {
             margin-bottom: 24px;
@@ -243,6 +252,7 @@ export default {
                 margin-bottom: 20px;
             }
         }
+
         // .platform-c__item_text
         .text {
             text-align: center;

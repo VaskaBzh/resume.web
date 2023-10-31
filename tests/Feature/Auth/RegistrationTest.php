@@ -74,7 +74,7 @@ class RegistrationTest extends TestCase
 //     *
 //     * @dataProvider referralRegistrationDataProvider
 //     */
-//    public function it_register_if_has_referral_code(
+//    public function it_register_with_referral_code(
 //        $signUpData,
 //        $signUpResponseStructure,
 //        $btcComSubResponse,
@@ -83,12 +83,21 @@ class RegistrationTest extends TestCase
 //        User::factory()->create();
 //        $sub = Sub::factory()->create();
 //
-//        $code = app(ReferralService::class)->generateReferralCode($sub->group_id);
-//        dd(User::first());
 //        $mockedResponse = [
 //            'data' => $btcComSubResponse,
 //        ];
 //
+//        $signUpData['referral_code'] = app(ReferralService::class)->generateReferralCode($sub->group_id);
+//
+//        Http::fake([
+//            config('api.btc.uri') . '/groups/create' => Http::response($mockedResponse)
+//        ]);
+//
+//        Notification::fake();
+//
+//        $mockedResponse = [
+//            'data' => $btcComSubResponse,
+//        ];
 //
 //
 //        $this->postJson('/v1/register', $signUpData)

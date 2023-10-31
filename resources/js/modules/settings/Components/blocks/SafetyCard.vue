@@ -1,6 +1,6 @@
 <template>
     <div class="card__subcontainer">
-        <img :src="img" alt="image" class="img-safety-card"/>
+        <img :src="img" alt="image" class="img-safety-card" />
         <div class="card_inf_block">
             <p class="card__title">{{ card.title }}</p>
             <p class="card__text">{{ card.text }}</p>
@@ -14,13 +14,13 @@
         >
             {{ card.button }}
         </button>
-<!--        v-if="card.name !== 'verify_password' && !!user.email_verified_at"-->
-<!--        <verify-link-->
-<!--            v-else-->
-<!--            class="btn_content"-->
-<!--            :verifyText="card.button"-->
-<!--            verifyUrl="/password/reset"-->
-<!--        />-->
+        <!--        v-if="card.name !== 'verify_password' && !!user.email_verified_at"-->
+        <!--        <verify-link-->
+        <!--            v-else-->
+        <!--            class="btn_content"-->
+        <!--            :verifyText="card.button"-->
+        <!--            verifyUrl="/password/reset"-->
+        <!--        />-->
     </div>
 </template>
 <script>
@@ -29,15 +29,15 @@ import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import { mapGetters } from "vuex";
 
 export default {
-    name: "safety-card",
+    name: "SafetyCard",
     i18n: {
         sharedMessages: SettingsMessage,
     },
-    props: {
-        card: Object,
-    },
     components: {
         VerifyLink,
+    },
+    props: {
+        card: Object,
     },
     computed: {
         ...mapGetters(["user"]),
@@ -51,7 +51,7 @@ export default {
 };
 </script>
 <style scoped>
-.img-safety-card{
+.img-safety-card {
     width: 72px;
     height: 72px;
 }
@@ -63,14 +63,14 @@ export default {
     font-weight: 400;
     line-height: 145%; /* 20.3px */
 }
-.card_inf_block{
+.card_inf_block {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    gap:2px;
+    gap: 2px;
 }
-@media(max-width: 900px){
-    .card_inf_block{
+@media (max-width: 900px) {
+    .card_inf_block {
         width: 100%;
     }
 }
@@ -81,6 +81,11 @@ export default {
     font-style: normal;
     font-weight: 400;
     line-height: 150%; /* 24px */
+}
+@media (min-width: 768.98px) {
+    .card__title {
+        white-space: nowrap;
+    }
 }
 .card__subcontainer {
     display: flex;
@@ -106,7 +111,7 @@ export default {
     font-size: 18px;
     font-style: normal;
     font-weight: 600;
-    color: var(--buttons-primary-text, var(--main-gohan, #FFF));
+    color: var(--buttons-primary-text, var(--main-gohan, #fff));
     line-height: 175%; /* 31.5px */
     display: inline-flex;
     justify-content: center;
