@@ -12,7 +12,6 @@ use Illuminate\Console\Command;
 
 class IncomeCommand extends Command
 {
-
     protected $signature = 'income';
 
     protected $description = 'Обновление базы доходов в 5:00';
