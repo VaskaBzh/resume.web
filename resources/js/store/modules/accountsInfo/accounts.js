@@ -16,10 +16,12 @@ export default {
                         await MainApi.get(`/subs/sub/${data.index}`)
                     ).data.data
                 );
+                console.log('какой то саб непонятный',sub)
 
                 commit("updateActive", data.index);
-
+                console.log('что-то из даты индекса', data.index)
                 commit("updateActiveAccount", sub);
+                console.log('обновление активного аккаунта',sub)
             }
         },
         async accounts_all({ commit, state }, user_id) {
@@ -89,6 +91,7 @@ export default {
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
+            console.log('состояние активного аккаунта', state.activeAccount)
         },
     },
     state: {
