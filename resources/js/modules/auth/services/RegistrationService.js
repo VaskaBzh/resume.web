@@ -27,9 +27,10 @@ export class RegistrationService {
 
     async account_create() {
         if (this.checkbox) {
-            // let validEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim
-            // console.log(validEmail.test(this.form.email))
-            // if (Object.entries(this.validate).length === 0 && validEmail.test(this.form.email)) {
+            // let validEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim;
+            // console.log(Object.entries(this.validate).length === 0 && validEmail.test(this.form.email))
+            // && validEmail.test(this.form.email)
+            if (Object.entries(this.validate).length === 0) {
                 try {
                     const response = await ProfileApi.post(
                         "/register",
@@ -53,7 +54,7 @@ export class RegistrationService {
 
                     store.dispatch("setFullErrors", err.response.data.errors);
                 }
-            // }
+            }
         } else {
             this.checkboxState = true;
 
