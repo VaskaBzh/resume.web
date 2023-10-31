@@ -10,5 +10,23 @@ export class VerifyFormControllService {
         return new StatesService();
     }
 
+    openVerifyForm() {
+        this.isVerifyFormOpened.setState(true);
 
+        return this;
+    }
+
+    closeVerifyForm() {
+        this.isVerifyFormClosed.setState(false);
+
+        return this;
+    }
+
+    verifyFormOpenedState() {
+        return this.isVerifyFormOpened.state;
+    }
+
+    verifyFormClosedState() {
+        return this.isVerifyFormClosed.state;
+    }
 }

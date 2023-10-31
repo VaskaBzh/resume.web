@@ -139,7 +139,6 @@ export class WalletsService extends DefaultSubsService {
     }
 
     validateName() {
-        console.log(this.form)
         if (this.form.name !== "" && this.form.name?.length < 3) {
             store.dispatch("setNotification", {
                 status: "error",

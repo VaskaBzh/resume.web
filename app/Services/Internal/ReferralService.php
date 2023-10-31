@@ -85,20 +85,20 @@ class ReferralService
             ->paginate($perPage);
     }
 
-    public static function attach(User $referral, string $code): void
+    public static function attach(Sub $referralSub, string $code): void
     {
         $owner = User::where('referral_code', $code)->first();
 
         if (!$owner) {
             throw new BusinessException(
-                'Неверный код',
+                __('actions.referral.code.exists'),
                 Response::HTTP_NOT_FOUND
             );
         }
 
-        if ($owner->id === $referral->id) {
+        if ($owner->id === $referralSub->user_id) {
             throw new BusinessException(
-                'Нельзя добавить собственный аккаунт',
+            __('auth.failed'),
                 Response::HTTP_FORBIDDEN
             );
         }
@@ -106,13 +106,8 @@ class ReferralService
         $decryptedData = static::getReferralDataFromCode(code: $code);
 
         AttachReferral::execute(
-            referralSub: $referral
-                ->subs()
-                ->get()
-                ->first(),
-            ownerSub: Sub::getByGroupId($decryptedData['group_id'])
-                ->with('user')
-                ->first(),
+            referralSub: $referralSub,
+            ownerSub: Sub::find($decryptedData['group_id']),
             referralPercent: $decryptedData['referral_percent'],
         );
     }

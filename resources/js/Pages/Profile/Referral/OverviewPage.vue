@@ -5,7 +5,7 @@
                 <InfoCard
                     class="referral__card-info"
                     :title="$t('stats.cards[0]')"
-                    :value="percent"
+                    :value="service.statsCards[4]?.value ?? 0"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/percent-icon.png" />
@@ -157,11 +157,11 @@ export default {
             this.service.getGradeList();
         },
     },
-    mounted() {
+    async mounted() {
         if (this.user.id) {
             this.service.setUser(this.user);
 
-            this.service.index();
+             this.service.index();
         }
         this.service.getGradeList();
 

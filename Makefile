@@ -38,14 +38,15 @@ seed:
 clear:
 	$(COMPOSE) $(APP) composer cc
 	$(COMPOSE) $(APP) npm cache clean --force
-	$(ARTISAN) optimize:clear
+	$(ARTISAN) config:clear
+	$(ARTISAN) cache:clear
+	$(ARTISAN) route:clear
+optimize:
 	$(ARTISAN) optimize
 tinker:
 	$(ARTISAN) tinker
 test:
-	$(ARTISAN) config:clear
 	$(ARTISAN) test --env=testing
-	$(ARTISAN) optimize
 remote_test:
 	ssh mainuser@92.205.188.112
 docs:
