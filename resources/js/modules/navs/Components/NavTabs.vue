@@ -89,9 +89,6 @@ export default defineComponent({
         return {
             service: new TabsService(this.$router, this.$route),
             throttle: null,
-            watchReferalTabs: JSON.parse(localStorage.getItem("user"))[
-                "has_referral_role"
-            ],
         };
     },
     watch: {
