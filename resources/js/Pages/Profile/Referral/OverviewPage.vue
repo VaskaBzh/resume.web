@@ -2,15 +2,15 @@
     <div class="referral__content">
         <div class="grid-column">
             <div class="card__block">
-                <InfoCard
-                    class="referral__card-info"
-                    :title="$t('stats.cards[0]')"
-                    :value="service.statsCards[4]?.value ?? 0"
-                >
-                    <template #svg>
-                        <img src="../../../../assets/img/percent-icon.png" />
-                    </template>
-                </InfoCard>
+<!--                <InfoCard-->
+<!--                    class="referral__card-info"-->
+<!--                    :title="$t('stats.cards[0]')"-->
+<!--                    :value="service.statsCards[4]?.value ?? 0"-->
+<!--                >-->
+<!--                    <template #svg>-->
+<!--                        <img src="../../../../assets/img/percent-icon.png" />-->
+<!--                    </template>-->
+<!--                </InfoCard>-->
                 <InfoCard
                     class="referral__card-info"
                     :title="$t('stats.cards[1]')"
