@@ -99,7 +99,6 @@ export default {
             if(this.validateInputs && newVal !== oldVal) {
                 this.validateInputs = false
             }
-            console.log(newVal, oldVal)
         },
     },
     computed: {

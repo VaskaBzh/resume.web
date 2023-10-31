@@ -71,13 +71,11 @@ export default {
 
       if (data.index !== this.sections.length - 1) {
         this.form.two_fa_secret += data.value;
-        console.log(this.form.two_fa_secret)
       }
     }
 	},
 	watch: {
 		two_fa_secret(newValue) {
-      console.log(newValue)
 			this.$emit("getSecret", newValue);
 		},
 	},

@@ -54,7 +54,6 @@ export class ReferralsService extends TableService {
             // this.meta = response.data.data;
 
             this.rows = response.data.data.map((el) => {
-                console.log(el)
                 return this.setter(el);
             });
 
