@@ -2302,7 +2302,7 @@
                             }
                         }
                     },
-                    "404": {
+                    "400": {
                         "description": "Resource not found"
                     },
                     "422": {
