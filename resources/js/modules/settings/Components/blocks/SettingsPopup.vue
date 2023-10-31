@@ -1,21 +1,22 @@
 <template>
     <main-popup
         id="changes"
+        :key="form.key"
         class="popup-changes"
         :wait="wait"
         :closed="closed"
-        :key="form.key"
     >
         <form
+            class="form form-popup popup__form"
             @submit.prevent="
                 form.type === $t('inputs.password')
                     ? getValue(true)
                     : getValue(false)
             "
-            class="form form-popup popup__form"
         >
             <div class="header_card">
-                <main-title tag="h3">{{
+                <main-title
+                    >{{
                         `${
                             form.type !== "почту"
                                 ? $t("popup.title")
@@ -39,14 +40,15 @@
                 <!--                </p>-->
             </div>
             <input
+                v-if="form.key !== 'phone'"
+                v-model="inputValue"
                 :placeholder="placeholder"
                 class="input popup__input"
-                v-model="inputValue"
-                v-if="form.key !== 'phone'"
             />
             <div v-if="form.key == 'phone'">
                 <!--                <SelectCountry />-->
                 <input
+                    id="inputTel"
                     v-model="inputValue"
                     autofocus
                     :type="
@@ -56,11 +58,10 @@
                     "
                     class="input popup__input"
                     :placeholder="placeholder"
-                    @input="phoneInput"
                     maxlength="18"
+                    @input="phoneInput"
                     @keydown="phoneKeyDown"
                     @paste="phonePaste"
-                    id="inputTel"
                 />
             </div>
             <!--            :placeholder="`${$t(-->
@@ -116,13 +117,13 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import MainValidate from "@/modules/validate/Components/MainValidate.vue";
 import PopupLoadingIcon from "@/modules/common/icons/PopupLoadingIcon.vue";
 import SettingsPassword from "@/modules/settings/Components/SettingsPassword.vue";
-import {SettingsMessage} from "@/modules/settings/lang/SettingsMessage";
+import { SettingsMessage } from "@/modules/settings/lang/SettingsMessage";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import SelectCountry from "@/modules/settings/Components/SelectCountry.vue";
-import {mapGetters} from "vuex";
+import { mapGetters } from "vuex";
 
 export default {
-    name: "settings-popup",
+    name: "SettingsPopup",
     i18n: {
         sharedMessages: SettingsMessage,
     },
@@ -154,6 +155,11 @@ export default {
             stepTwo: false,
             inputValue: "",
         };
+    },
+    watch: {
+        "form.item"(newValue) {
+            this.placeholder = newValue;
+        },
     },
     methods: {
         getValue(bool) {
@@ -215,11 +221,6 @@ export default {
                     inputTel.value = inputNumbersValue;
                 }
             }
-        },
-    },
-    watch: {
-        "form.item"(newValue) {
-            this.placeholder = newValue;
         },
     },
 };

@@ -3,16 +3,16 @@
         <div class="interface__container">
             <div class="interface__main">
                 <div class="interface__content">
-                    <main-title tag="h2" class="title-blue">{{
-                        this.$t("hosting.interface.title")
-                    }}</main-title>
+                    <main-title class="title-blue"
+                        >{{ $t("hosting.interface.title") }}
+                    </main-title>
                     <img
                         src="../../../../assets/img/interface_img-back.svg"
                         alt="interface"
                     />
                     <div class="list">
                         <p class="description">
-                            {{ this.$t("hosting.interface.text") }}
+                            {{ $t("hosting.interface.text") }}
                         </p>
                         <p class="description list_item">
                             <span class="list_icon">
@@ -30,7 +30,7 @@
                                 </svg>
                             </span>
                             <span
-                                v-html="this.$t('hosting.interface.list[0]')"
+                                v-html="$t('hosting.interface.list[0]')"
                             ></span>
                         </p>
                         <p class="description list_item">
@@ -48,7 +48,7 @@
                                     />
                                 </svg>
                             </span>
-                            <span v-html="this.$t('hosting.interface.list[1]')">
+                            <span v-html="$t('hosting.interface.list[1]')">
                             </span>
                         </p>
                         <p class="description list_item">
@@ -66,7 +66,7 @@
                                     />
                                 </svg>
                             </span>
-                            <span v-html="this.$t('hosting.interface.list[2]')">
+                            <span v-html="$t('hosting.interface.list[2]')">
                             </span>
                         </p>
                         <p class="description list_item">
@@ -84,7 +84,7 @@
                                     />
                                 </svg>
                             </span>
-                            <span v-html="this.$t('hosting.interface.list[3]')">
+                            <span v-html="$t('hosting.interface.list[3]')">
                             </span>
                         </p>
                     </div>
@@ -98,7 +98,7 @@
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 
 export default {
-    name: "interface-view",
+    name: "InterfaceView",
     components: {
         MainTitle,
     },
@@ -107,7 +107,6 @@ export default {
 
 <style scoped lang="scss">
 .interface {
-
     &__container {
         margin: 0 auto;
     }
@@ -118,6 +117,7 @@ export default {
         flex-direction: column;
         align-items: center;
         gap: 40px;
+
         .list,
         .title {
             max-width: 740px;
@@ -129,9 +129,11 @@ export default {
                 max-width: 100%;
             }
         }
+
         .title {
             margin-bottom: 24px;
         }
+
         img {
             max-width: 400px;
             position: absolute;
@@ -149,15 +151,18 @@ export default {
                 max-width: 270px;
             }
         }
+
         .list {
             display: flex;
             flex-direction: column;
             gap: 24px;
+
             &_item {
                 display: inline-flex;
                 gap: 24px;
                 align-items: center;
             }
+
             &_icon {
                 width: 56px;
                 min-width: 56px;
@@ -170,6 +175,7 @@ export default {
             }
         }
     }
+
     &__main {
         position: relative;
     }

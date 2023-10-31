@@ -16,15 +16,14 @@ export class PaymentService extends TableService {
     }
 
     setter(referral) {
-        new PaymentData(
+        console.log(referral)
+        return new PaymentData(
             this.dateFormatter(referral["created_at"]),
             referral["email"],
-            referral["workers_active"],
-            referral["workers_inactive"],
+            referral["daily_amount"],
+            referral["worker_count"],
             referral["hash"],
             "T",
-            this.dateFormatter(referral["created_at"]),
-            referral["amount"]
         );
     }
 

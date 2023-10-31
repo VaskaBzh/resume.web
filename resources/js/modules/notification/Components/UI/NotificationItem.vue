@@ -10,7 +10,7 @@
 			</span>
 		</div>
 		<span class="notification_text">
-			{{ notification.text }}
+			{{ $t(notification.text ?? "") }}
 		</span>
 	</div>
 </template>

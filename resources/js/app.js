@@ -5,13 +5,20 @@ import { createApp } from "vue";
 import App from "@/App.vue";
 
 import i18n from "@/lang/vue-translate.js";
+import "virtual:svg-icons-register";
 
-import store from "./store/index.js";
-import scrollAnimation from "@/Components/directives/animations/scrollAnimation.vue";
-import scrollValueAnimation from "@/Components/directives/animations/scrollValueAnimation.vue";
-import tippyAnimation from "@/Components/directives/tippyAnimation.vue";
-import hideAnimation from "@/Components/directives/hideAnimation.vue";
-import hashRender from "@/Components/directives/HashRender.vue";
+import store from "@/store/index.js";
+// import scrollAnimation from "@/Components/directives/animations/scrollAnimation.vue";
+// import scrollValueAnimation from "@/Components/directives/animations/scrollValueAnimation.vue";
+// import tippyAnimation from "@/Components/directives/tippyAnimation.vue";
+// import hideAnimation from "@/Components/directives/hideAnimation.vue";
+// import hashRender from "@/Components/directives/HashRender.vue";
+// .directive("scroll", scrollAnimation)
+//     .directive("value-scroll", scrollValueAnimation)
+//     .directive("tooltip", tippyAnimation)
+//     .directive("hide", hideAnimation)
+//     .directive("hash", hashRender)
+import TranslateTabulation from "@/directives/TranslateTabulation.vue";
 
 const app = createApp(App);
 
@@ -19,9 +26,5 @@ app.use(store)
     .use(router)
     .use(i18n)
     .mixin({ methods: { route: window.route } })
-    .directive("scroll", scrollAnimation)
-    .directive("value-scroll", scrollValueAnimation)
-    .directive("tooltip", tippyAnimation)
-    .directive("hide", hideAnimation)
-    .directive("hash", hashRender)
+    .directive("i18n", TranslateTabulation)
     .mount("#app");

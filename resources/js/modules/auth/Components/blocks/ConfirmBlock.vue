@@ -1,17 +1,18 @@
 <template>
     <div class="confirm">
-        <main-title tag="h3" class="confirm_title title-base">
+        <main-title class="confirm_title title-base">
             {{ $t("confirm.title") }}
         </main-title>
         <main-description class="confirm_description description-base">
-            {{ $t("confirm.text[0]") }} {{ $route.query?.email }} {{ $t("confirm.text[1]") }}
+            {{ $t("confirm.text[0]") }} {{ $route.query?.email }}
+            {{ $t("confirm.text[1]") }}
         </main-description>
         <verify-link
             v-show="countResend < 2"
             class="confirm_link"
-            verifyUrl="/email/verify"
-            :verifyText="$t('re_send')"
-            :sendVerification="sendVerification"
+            verify-url="/email/verify"
+            :verify-text="$t('re_send')"
+            :send-verification="sendVerification"
             :data="{
                 email: $route.query?.email,
             }"
@@ -29,12 +30,12 @@
 
 <script>
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainDescription from "@/modules/common/Components/UI/MainDescription.vue";
+import MainDescription from "@/modules/common/Components/UI/MainDescriptionOld.vue";
 import VerifyLink from "@/modules/verify/Components/UI/VerifyLink.vue";
 import { AuthMessages } from "@/modules/auth/lang/AuthMessages";
 
 export default {
-    name: "confirm-block",
+    name: "ConfirmBlock",
     components: {
         VerifyLink,
         MainTitle,
@@ -49,14 +50,6 @@ export default {
             sendVerification: false,
         };
     },
-    methods: {
-        incrementCountResend() {
-            this.countResend++;
-        },
-        sendFirstVerification() {
-            this.sendVerification = true;
-        },
-    },
     mounted() {
         if (this.$route.query?.action !== "registration") {
             this.sendFirstVerification();
@@ -67,6 +60,14 @@ export default {
             });
         }
     },
+    methods: {
+        incrementCountResend() {
+            this.countResend++;
+        },
+        sendFirstVerification() {
+            this.sendVerification = true;
+        },
+    },
 };
 </script>
 
@@ -74,6 +75,7 @@ export default {
 .confirm {
     display: flex;
     flex-direction: column;
+
     &_title {
         margin-bottom: 32px;
         @media (max-width: $pc) {
@@ -83,12 +85,14 @@ export default {
             margin-bottom: 16px;
         }
     }
+
     &_description {
         margin-bottom: 24px;
         @media (max-width: $mobile) {
             margin-bottom: 16px;
         }
     }
+
     &_link {
         min-width: 300px;
         display: inline-flex;

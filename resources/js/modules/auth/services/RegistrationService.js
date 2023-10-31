@@ -29,12 +29,15 @@ export class RegistrationService {
         if (this.checkbox) {
             if (Object.entries(this.validate).length === 0) {
                 try {
-                    const response = await ProfileApi.post("/register", this.form);
+                    const response = await ProfileApi.post(
+                        "/register",
+                        this.form
+                    );
 
                     const user = response.data.user;
-                    const token = response.data.token;
-                    store.dispatch("setToken", token);
-                    store.dispatch("setUser", user);
+                    // const token = response.data.token;
+                    // store.dispatch("setToken", token);
+                    // store.dispatch("setUser", user);
 
                     this.router.push({
                         name: "confirm",
@@ -52,7 +55,7 @@ export class RegistrationService {
         } else {
             this.checkboxState = true;
 
-            setTimeout(() => this.checkboxState = false, 1500)
+            setTimeout(() => (this.checkboxState = false), 1500);
         }
     }
 

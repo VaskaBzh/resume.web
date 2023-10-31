@@ -25,6 +25,7 @@ import MinersInfoView from "@/modules/home/Components/Views/MinersInfoView.vue";
 import CalculatorLand from "@/modules/home/Components/Views/CalculatorLand.vue";
 import AboutView from "@/modules/home/Components/Views/AboutView.vue";
 import HeroView from "@/modules/home/Components/Views/HeroView.vue";
+import {NavMessages} from "@/modules/navs/lang/NavMessages";
 
 export default {
     name: "HomePage",
@@ -41,6 +42,17 @@ export default {
         AboutView,
         HeroView,
     },
+    i18n: {
+        sharedMessages: NavMessages,
+    },
+    watch: {
+        "$i18n.locale"() {
+            document.title = this.$t("nav_links.home");
+        },
+    },
+    mounted() {
+        document.title = this.$t("nav_links.home");
+    }
 };
 </script>
 

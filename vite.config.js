@@ -1,8 +1,8 @@
 import { defineConfig, loadEnv } from "vite";
 import laravel from "laravel-vite-plugin";
 import vue from "@vitejs/plugin-vue";
+import { createSvgIconsPlugin } from "vite-plugin-svg-icons";
 import path from "path";
-
 
 export default defineConfig(({ command, mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
@@ -25,6 +25,11 @@ export default defineConfig(({ command, mode }) => {
     }
     return {
         plugins: [
+            createSvgIconsPlugin({
+                iconDirs: [path.resolve(__dirname, "./resources/assets/icons")],
+                // Specify symbolId format
+                symbolId: "icon-[dir]-[name]",
+            }),
             laravel({
                 input: ["resources/scss/app.scss", "resources/js/app.js"],
                 refresh: true,
