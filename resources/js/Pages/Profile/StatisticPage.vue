@@ -218,6 +218,7 @@ export default {
 
 .statistic {
     width: 100%;
+    padding: 24px;
     position: relative;
     flex: 1 1 auto;
     @media (max-width: 900px) {

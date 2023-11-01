@@ -1,33 +1,29 @@
 <template>
     <main-popup :closed="isClosed" :opened="isOpened" @closed="$emit('closed')">
-        <form-popup @submitEvent="$emit('addWallet', form)">
-            <template #head>
-                <main-title class="title-popup">
-                    {{ $t("add_popup.title") }}
-                </main-title>
-            </template>
-            <template #content>
+        <form class="popup__form" @submit.prevent="$emit('addWallet', form)">
+            <main-title class="title-popup">{{
+                $t("add_popup.title")
+            }}</main-title>
+            <div class="form__content">
                 <main-input
                     class="form_input"
                     input-name="code"
-                    :input-label="$t('add_popup.labels.address')"
+                    :input-label="$t('add_popup.placeholders.address')"
                     :input-value="form.wallet_address"
                     @getValue="form.wallet_address = $event"
                 />
                 <main-input
                     class="form_input"
                     input-name="code"
-                    :input-label="$t('add_popup.labels.name')"
+                    :input-label="$t('add_popup.placeholders.name')"
                     :input-value="form.name"
                     @getValue="form.name = $event"
                 />
-            </template>
-            <template #buttons>
-                <main-button type="submit">
-                    <template #text>{{ $t("add_popup.button") }}</template>
-                </main-button>
-            </template>
-        </form-popup>
+            </div>
+            <main-button type="submit">
+                <template #text>{{ $t("add_popup.button") }}</template>
+            </main-button>
+        </form>
     </main-popup>
 </template>
 
@@ -36,14 +32,12 @@ import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
 import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
-import FormPopup from "@/modules/form/Components/FormPopup.vue";
 
 import { WalletsMessages } from "@/modules/wallets/lang/WalletsMessages";
 
 export default {
     name: "AddWalletPopup",
     components: {
-        FormPopup,
         MainPopup,
         MainTitle,
         MainInput,
