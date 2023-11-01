@@ -153,18 +153,25 @@ export default {
             service: new RegistrationService(this.$router, this.$route),
         };
     },
+
     mounted() {
         this.service.setForm();
     },
+
+
+
+
 };
 </script>
 
 <style scoped lang="scss">
+
 .form-auth {
     gap: 0;
     @media (max-width: 991.98px) {
         padding: 0 clamp(16px, 5vw, 60px);
     }
+
 
     &__content {
         display: flex;

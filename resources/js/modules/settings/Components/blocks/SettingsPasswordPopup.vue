@@ -13,7 +13,7 @@
                 >{{ $t("password_popup.description") }}
             </main-description>
         </div>
-        <form @submit.prevent="closePopup" class="password__content">
+        <form  @submit.prevent="closePopup" class="password__content">
             <profile-password
                 class="password_input"
                 name="old_password"
@@ -21,7 +21,7 @@
                     $t('password_popup.placeholders.current_password')
                 "
                 :model="form.old_password"
-                @change="changePasswordForm('old_password', $event)"
+                @changeValue="changePasswordForm('old_password', $event)"
             />
             <profile-password
                 class="password_input"
@@ -41,7 +41,10 @@
                 @changeValue="changePasswordForm('password_confirmation', $event)"
             />
             <main-button
+                type="submit"
                 class="button-blue password_button button-full"
+                :disabled="sendButton"
+                :class="{'active-disabled': sendButton}"
             >
                 <template #text>{{ $t("password_popup.button") }} </template>
             </main-button>
@@ -76,14 +79,25 @@ export default {
         return {
             form: this.formData,
             makeResize: false,
+            sendButton: true
         };
     },
     watch: {
-        "form.password"() {
+        "form.password"(newVal, oldVal) {
             setTimeout(() => {
                 this.makeResize = true;
                 setTimeout(() => (this.makeResize = false), 50);
             }, 355);
+            if(Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
+
+                this.sendButton = true
+            }
+
+        },
+        "form.password_confirmation"(newVal, oldVal) {
+            if(newVal && Object.keys(this.validateService.validate).length === 0) {
+                this.sendButton = false
+            }
         },
         formData(newFormData) {
             this.form = {
@@ -106,8 +120,11 @@ export default {
     },
     methods: {
         closePopup() {
+           if (this.form.password === this.form['password_confirmation']) {
 
-            this.$emit("sendPassword", this.form)
+               this.$emit("sendPassword", this.form)
+           }
+
 
         },
         changePasswordForm(formKey, event) {
@@ -140,5 +157,10 @@ export default {
 
 .password_input-last {
     margin-bottom: 80px;
+}
+
+.active-disabled {
+    opacity: 0.6;
+    pointer-events: none;
 }
 </style>
