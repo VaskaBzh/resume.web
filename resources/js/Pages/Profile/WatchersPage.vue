@@ -242,6 +242,7 @@ export default {
 
 .watchers {
     flex: 1 1 auto;
+    padding: 24px;
     width: 100%;
     display: flex;
     flex-direction: column;

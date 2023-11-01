@@ -257,6 +257,7 @@ export default {
 }
 
 .settings {
+    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     transition: all 0.3s linear 0.2s;

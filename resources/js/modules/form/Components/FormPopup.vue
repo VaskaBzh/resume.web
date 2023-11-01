@@ -1,5 +1,5 @@
 <template>
-    <form class="form" @submit.prevent="$emit('submitEvent')">
+    <form class="form">
         <div class="form__head" v-show="$slots.head">
             <slot name="head" />
         </div>
@@ -17,24 +17,18 @@
 
 <script>
 export default {
-    slots: ["head", "content", "info", "buttons"],
+
 }
 </script>
 
 <style scoped lang="scss">
 .form {
-    @include columnMixin;
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: auto;
     &__head {
-        margin-bottom: adaptive-value(24px, 40px);
-    }
-    &__content {
-        @include columnMixin(adaptive-value(8px, 16px));
-        margin-bottom: adaptive-value(48px, 80px);
-    }
-    &__info {
-        margin-bottom: adaptive-value(48px, 80px);
+
     }
 }
 </style>
