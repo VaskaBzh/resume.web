@@ -1,5 +1,5 @@
 <template>
-	<div class="buttons">
+	<div class="buttons" v-if="viewportWidth > 520">
 		<button
 			class="buttons_button"
 			:class="{
@@ -24,6 +24,7 @@
 <script>
 import BlockIcon from "@/modules/subs/icons/BlockIcon.vue";
 import TableIcon from "@/modules/subs/icons/TableIcon.vue";
+import {mapGetters} from "vuex";
 
 export default {
 	name: "sub-type-buttons",
@@ -34,6 +35,9 @@ export default {
 	props: {
 		subsType: Boolean,
 	},
+    computed: {
+        ...mapGetters(["viewportWidth"]),
+    }
 }
 </script>
 

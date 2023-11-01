@@ -86,11 +86,11 @@
     </div>
     <div class="header-select-container">
       <select-theme
-          v-if="viewportWidth >= 991.78"
+          v-if="viewportWidth >= 900"
           :viewportWidth="viewportWidth"
       ></select-theme>
       <select-language
-          v-if="viewportWidth >= 991.78"
+          v-if="viewportWidth >= 900"
           :viewportWidth="viewportWidth"
       ></select-language>
     </div>

@@ -117,6 +117,13 @@ export default {
             font-size: 14px;
         }
 
+        @media (max-width: 400px) {
+            display: block;
+            min-width: 120px;
+            text-overflow: ellipsis;
+            overflow: hidden;
+        }
+
         svg {
             margin-bottom: auto;
             cursor: pointer;
