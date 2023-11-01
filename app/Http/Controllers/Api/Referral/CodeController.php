@@ -88,10 +88,11 @@ class CodeController extends Controller
 {
     public function __invoke(User $user, Request $request): JsonResponse
     {
+        $this->authorize('viewAny', $user);
+
         try {
             $code = ReferralService::generateCode(
-                user: $user,
-                sub: Sub::findOrFail($request->group_id)
+                referrerSub: Sub::findOrFail($request->group_id)
             );
 
             return new JsonResponse([

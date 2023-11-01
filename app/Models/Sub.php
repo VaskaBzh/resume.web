@@ -18,15 +18,21 @@ class Sub extends Model
     use HasFactory;
 
     protected $primaryKey = 'group_id';
+    public $incrementing = false;
 
     protected $fillable = [
         'user_id',
         'group_id',
+        'referrer_id',
         'sub',
         'pending_amount',
         'total_amount',
-        'percent',
-        'custom_percent_expired_at'
+        'allbtc_fee',
+        'referrer_percent',
+        'referral_percent',
+        'custom_percent_expired_at',
+        'created_at',
+        'updated_at',
     ];
 
     protected $casts = [
@@ -42,28 +48,22 @@ class Sub extends Model
     /* Relations */
     public function finances(): HasMany
     {
-        return $this->hasMany(Finance::class, 'group_id', 'group_id');
+        return $this->hasMany(Finance::class, 'group_id');
+    }
+
+    public function referrer(): BelongsTo
+    {
+        return $this->belongsTo(Sub::class, 'referrer_id');
+    }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(Sub::class, 'referrer_id');
     }
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
-    }
-
-    public function referrals(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            User::class,
-            'referrals',
-            'group_id',
-            'user_id'
-        )
-            ->withPivot(
-                'id',
-                'user_id',
-                'group_id',
-                'referral_percent',
-            )->withTimestamps();
     }
 
     public function workers(): HasMany

@@ -59,22 +59,6 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Sub::class);
     }
 
-    public function owners(): BelongsToMany
-    {
-        return $this->belongsToMany(
-            Sub::class,
-            'referrals',
-            'user_id',
-            'group_id'
-        )
-            ->withPivot(
-                'id',
-                'user_id',
-                'group_id',
-                'referral_percent'
-            )->withTimestamps();
-    }
-
     public function watcherLinks(): HasMany
     {
         return $this->hasMany(WatcherLink::class);
@@ -83,13 +67,6 @@ class User extends Authenticatable implements MustVerifyEmail
     /* End relations */
 
     /* Attributes */
-
-    public function owner(): Attribute
-    {
-        return Attribute::make(
-            get: fn(): ?Sub => $this->owners()->first()
-        );
-    }
 
     public function generateConfirmationCode(): string
     {

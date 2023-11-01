@@ -97,7 +97,7 @@ Route::group([
 
     Route::group([
         'prefix' => 'referrals',
-        'middleware' => 'role:referral'
+        'middleware' => 'role:referrer'
     ], function () {
         Route::get('/{user}', ReferralListController::class)->name('referral.list');
         Route::post('/generate/{user}', ReferralCodeController::class)

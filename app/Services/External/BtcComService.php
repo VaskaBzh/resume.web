@@ -128,7 +128,7 @@ class BtcComService
         return Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $userId,
-                'group_id' => $this->createRemoteSub($subName)['gid'],
+                'group_id' => 6666666,//$this->createRemoteSub($subName)['gid'],
                 'group_name' => $subName,
             ])
         );

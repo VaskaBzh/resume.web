@@ -20,19 +20,21 @@ use Symfony\Component\HttpFoundation\Response;
 class ReferralService
 {
     /**
-     * @param User $user
-     * @param Sub $sub
-     * @return string
+     * Сгенерируем на основе group_id строковый код
+     * Сохраним его связанному пользователю
+     *
+     * @param Sub $referrerSub
+     * @return string $code
      * @throws \Exception
      */
-    public static function generateCode(User $user, Sub $sub): string
+    public static function generateCode(Sub $referrerSub): string
     {
         try {
-            $code = static::generateReferralCode(subGroupId: $sub->group_id);
+            $code = static::generateReferralCode(subGroupId: $referrerSub->group_id);
 
             GenerateReferralCode::execute(
                 referralData: ReferralData::fromRequest([
-                    'user' => $user,
+                    'user' => $referrerSub->user,
                     'code' => $code,
                 ])
             );
@@ -87,37 +89,21 @@ class ReferralService
 
     public static function attach(Sub $referralSub, string $code): void
     {
-        $owner = User::where('referral_code', $code)->first();
+        $decryptedData = self::getReferralDataFromCode(code: $code);
 
-        if (!$owner) {
-            throw new BusinessException(
-                __('actions.referral.code.exists'),
-                Response::HTTP_NOT_FOUND
+        try {
+            AttachReferral::execute(
+                referrerSub: Sub::find($decryptedData['group_id']),
+                referralSub: $referralSub,
             );
+        } catch (\Throwable $e) {
+            throw new BusinessException(__('actions.failed'), Response::HTTP_BAD_REQUEST);
         }
-
-        if ($owner->id === $referralSub->user_id) {
-            throw new BusinessException(
-            __('auth.failed'),
-                Response::HTTP_FORBIDDEN
-            );
-        }
-
-        $decryptedData = static::getReferralDataFromCode(code: $code);
-
-        AttachReferral::execute(
-            referralSub: $referralSub,
-            ownerSub: Sub::find($decryptedData['group_id']),
-            referralPercent: $decryptedData['referral_percent'],
-        );
     }
 
     public static function generateReferralCode(int $subGroupId): string
     {
-        return base64_encode(json_encode([
-            'group_id' => $subGroupId,
-            'referral_percent' => 0.8
-        ]));
+        return base64_encode(json_encode(['group_id' => $subGroupId]));
     }
 
     public static function getReferralDataFromCode(string $code): array

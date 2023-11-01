@@ -11,7 +11,7 @@ class WorkerSeeder extends Seeder
 {
     public function run(BtcComService $btcComService): void
     {
-        $workers = $btcComService->getWorkerList(Sub::where('group_id', 6001912)->first()->group_id);
+        $workers = $btcComService->getWorkerList(6001912);
 
         $workers->each(
             static fn(array $worker) => Worker::updateOrCreate(['worker_id' => (int)$worker['worker_id']],

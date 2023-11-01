@@ -12,8 +12,8 @@ class RoleAndPermissionsSeeder extends Seeder
 {
     public function run(): void
     {
-        $role = Role::firstOrCreate(['name' => 'referral']);
-        $permission = Permission::firstOrCreate(['name' => 'can be a referral']);
+        $role = Role::firstOrCreate(['name' => 'referrer']);
+        $permission = Permission::firstOrCreate(['name' => 'can attach referrals']);
         $permission->assignRole($role);
     }
 }

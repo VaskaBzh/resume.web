@@ -8,16 +8,8 @@ use App\Models\Sub;
 
 class AttachReferral
 {
-    public static function execute(
-        Sub $referralSub,
-        Sub $ownerSub,
-        $referralPercent
-    ): void
+    public static function execute(Sub $referrerSub, Sub $referralSub): void
     {
-        $ownerSub
-            ->referrals()
-            ->attach($referralSub->user_id, ['referral_percent' => $referralPercent]);
-
-        $referralSub->update(['percent' => $referralSub->percent - $referralPercent]);
+        $referralSub->update(['referrer_id' => $referrerSub->group_id]);
     }
 }
