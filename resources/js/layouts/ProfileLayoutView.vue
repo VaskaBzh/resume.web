@@ -102,7 +102,6 @@ export default {
 }
 
 .page-container {
-    /* padding: 24px; */
     overflow-x: hidden;
     display: flex;
     flex-direction: column;

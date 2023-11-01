@@ -109,12 +109,11 @@
                     </td>
                 </tr>
 
-
                 <tr>
-                    <td align="center" valign="top" style="border-collapse: collapse !important; border-spacing: 0; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: 0; padding: 0 56px 16px;" class="button">
+                    <td align="center" valign="top" style="border-collapse: collapse !important; border-spacing: 0; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: 0; padding: 0 56px 32px;" class="button">
                         <a target="_blank" style="text-decoration: none; color: #98A2B3; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%;" href="mailto:support@all-btc.com">
                             <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: collapse !important; border-spacing: 0; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;"><tbody><tr><td valign="middle" style="padding-right: 8px; border-collapse: collapse !important; border-spacing: 0; -webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; margin: 0;">
-                                        <img src="https://app.makemail.ru/content/ec87f50ac6decb255b2e4b667c127ec4.png" alt="mail.png" style="line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: 0;">
+                                        <img align="center" src="https://app.makemail.ru/content/ec87f50ac6decb255b2e4b667c127ec4.png" alt="mail.png" style="line-height: 100%; outline: none; text-decoration: none; -ms-interpolation-mode: bicubic; border: 0;">
                                     </td>
                                     <td valign="middle" style="-webkit-font-smoothing: antialiased; text-size-adjust: 100%; -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; line-height: 100%; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse !important; border-spacing: 0; color: #98A2B3; font-size: 14px; font-weight: 400; text-align: center; font-family: Verdana;" align="center"> support@all-btc.com </td></tr></tbody></table>
                         </a>

@@ -303,7 +303,6 @@ export default {
 }
 
 .income {
-    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     display: flex;

@@ -5,7 +5,7 @@
 			'table__row-active': getActive === columns.group_id,
 			'table__row-cursor': !!columns.group_id,
 		}"
-		@click="$store.dispatch('set_active', { index: service.group_id[1] })"
+		@click="$store.dispatch('set_active_in_list', { index: service.group_id[1] })"
 	>
 		<row-column
 			v-for="(column, i) in service.filteredColumns"
