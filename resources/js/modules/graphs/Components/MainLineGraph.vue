@@ -60,40 +60,67 @@ export default {
         return {
             graph: this.graphData,
             service: new LineGraphService(this.graphData, this.$t),
+            throttle: null,
+            resizeObserver: null,
         };
     },
     computed: {
         ...mapGetters(["isDark", "viewportWidth"]),
     },
     watch: {
-        "$refs.chart.offsetWidth"(newChartHtml) {
-            this.service.setChartHtml(newChartHtml).dropGraph();
-            this.graphInit();
+        "$refs.chart"(newChartHtml) {
+            this.service.setChartHtml(newChartHtml);
+            this.rerenderGraph();
         },
         "$refs.tooltip"(newTooltipHtml) {
-            this.service.setTooltipHtml(newTooltipHtml).dropGraph();
-            this.graphInit();
+            this.service.setTooltipHtml(newTooltipHtml);
+            this.rerenderGraph();
         },
         graphData(newGraphData) {
-            this.service.setGraphData(newGraphData).dropGraph();
-            this.graphInit();
+            this.service.setGraphData(newGraphData);
+            this.rerenderGraph();
         },
         height() {
+            this.rerenderGraph();
+        },
+        isDark(newIsDarkState) {
+            this.service.setDarkState(newIsDarkState);
+            this.rerenderGraph();
+        },
+        // viewportWidth(newViewportWidth) {
+        //     this.service.setIsMobileState(newViewportWidth);
+        //     this.rerenderGraph();
+        // },
+    },
+    methods: {
+        throttledRenderGraph() {
+            clearTimeout(this.throttle);
+            this.throttle = setTimeout(() => {
+                this.rerenderGraph();
+                this.disconnectObserver();
+            }, 100);
+        },
+        disconnectObserver() {
+            if (this.resizeObserver) {
+                this.resizeObserver.disconnect();
+            }
+        },
+        rerenderGraph() {
             this.service.dropGraph();
             this.graphInit();
         },
-        isDark(newIsDarkState) {
-            this.service.setDarkState(newIsDarkState).dropGraph();
-            this.graphInit();
+        initResizeObserver() {
+            if (this.$refs.chart) {
+                this.disconnectObserver();
+                this.resizeObserver = new window.ResizeObserver(this.throttledRenderGraph)
+
+                this.resizeObserver.observe(this.$refs.chart);
+            }
         },
-        viewportWidth(newViewportWidth) {
-            this.service.setIsMobileState(newViewportWidth).dropGraph();
-            this.graphInit();
-        },
-    },
-    methods: {
         graphInit() {
             if (this.graphData) {
+                this.initResizeObserver();
+
                 const colors = {
                     circle: this.isDark ? "#212327" : "#ffffff",
                     bands: this.isDark ? "rgba(47, 47, 47, 0.95)" : "rgba(208, 213, 221, 0.2)",
@@ -138,6 +165,7 @@ export default {
     },
     unmounted() {
         this.service.dropGraph();
+        this.disconnectObserver();
     },
 };
 </script>

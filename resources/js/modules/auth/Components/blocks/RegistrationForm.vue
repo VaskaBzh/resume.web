@@ -10,7 +10,7 @@
                 :model="service.form.email"
                 :placeholder="$t('auth.reg.placeholders[0]')"
                 name="email"
-                type="text"
+                type="email"
                 @change="
                     service.form.email = !!$event.target
                         ? $event.target.value

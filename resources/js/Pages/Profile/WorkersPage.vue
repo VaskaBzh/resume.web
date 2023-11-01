@@ -264,7 +264,6 @@ export default {
 }
 
 .workers {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;

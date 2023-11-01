@@ -12,7 +12,8 @@ export default {
     },
 };
 </script>
-<style scoped>
+<style scoped lang="scss">
+
 .title {
     color: var(--text-primary, #1d2939);
     font-family: Unbounded, serif;
@@ -22,8 +23,8 @@ export default {
 }
 
 .title-popup {
-    font-size: clamp(16px, 5vw, 20px);
-    line-height: clamp(24px, 5vw, 32px);
+    font-size: adaptive-value(16px, 20px);
+    line-height: adaptive-value(24px, 32px);
 }
 
 .title-mobile {
@@ -40,8 +41,8 @@ export default {
 .title-headline {
     color: var(--text-teritary, #98a2b3);
     font-family: NunitoSans, serif;
-    font-size: clamp(12px, 5vw, 14px);
+    font-size: adaptive-value(12px, 14px);
     font-weight: 600;
-    line-height: clamp(16px, 5vw, 20px);
+    line-height: adaptive-value(16px, 20px);
 }
 </style>
