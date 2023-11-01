@@ -17,6 +17,7 @@ export default {
                     ).data.data
                 );
 
+
                 commit("updateActive", data.index);
                 commit("updateActiveAccount", sub);
             }
@@ -79,6 +80,7 @@ export default {
         },
         updateActive(state, index) {
             state.active = index;
+
         },
         setValid(state, validState) {
             state.valid = validState;
@@ -88,6 +90,7 @@ export default {
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
+
 
         },
     },
