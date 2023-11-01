@@ -134,11 +134,7 @@ class RegisterController extends Controller
         return new JsonResponse([
             'message' => 'success',
             'user' => new UserResource($user),
-            'token' => $user->createToken(
-                $user->name,
-                ['*'],
-                now()->addMinutes(config('sanctum.expiration'))
-            )->plainTextToken
+            'token' => $user->createAuthToken()
         ], Response::HTTP_CREATED);
     }
 }

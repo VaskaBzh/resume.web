@@ -76,6 +76,17 @@ class User extends Authenticatable implements MustVerifyEmail
         return (string) mt_rand($min, $max);
     }
 
+    public function createAuthToken(): string
+    {
+        $token = $this->createToken(
+            $this->name,
+            ['*'],
+            now()->addMinutes(config('sanctum.expiration'))
+        );
+
+        return $token->plainTextToken;
+    }
+
     public function confirmationCode(): Attribute
     {
         return Attribute::make(
