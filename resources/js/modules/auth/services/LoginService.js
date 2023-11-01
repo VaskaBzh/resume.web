@@ -145,7 +145,7 @@ export class LoginService {
                 }
 
                 store.dispatch("setFullErrors", {
-                    ...err.response.data,
+                    ...err.response.data.errors,
                 });
             }
             // store.dispatch("setFullErrors", {
