@@ -798,7 +798,7 @@ const messages = {
                     types: ["Active", "Unstable", "Inactive"],
                 },
                 tooltip: [
-                    "On your subaccount",
+                    "On your subaccount ",
                     "Autopayment occurs when the balance is >",
                 ],
             },

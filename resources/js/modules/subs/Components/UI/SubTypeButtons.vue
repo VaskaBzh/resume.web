@@ -1,5 +1,5 @@
 <template>
-	<div class="buttons" v-if="viewportWidth > 520">
+	<div class="buttons" v-if="viewportWidth > 768">
 		<button
 			class="buttons_button"
 			:class="{
@@ -17,6 +17,7 @@
 			@click.prevent="$emit('changeType', false)"
 		>
 			<table-icon class="button_icon" />
+
 		</button>
 	</div>
 </template>
@@ -37,6 +38,13 @@ export default {
 	},
     computed: {
         ...mapGetters(["viewportWidth"]),
+    },
+    watch: {
+       viewportWidth(newVal, newOld) {
+           if(newVal <= 768) {
+               this.$emit('changeType', true)
+           }
+       }
     }
 }
 </script>

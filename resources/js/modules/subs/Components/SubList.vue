@@ -93,6 +93,7 @@ export default {
     .sub__list {
         display: flex;
         grid-template-columns: unset;
+        flex-flow: row wrap;
     }
 }
 
