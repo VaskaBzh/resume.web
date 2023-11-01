@@ -124,7 +124,6 @@ export default {
         opacity: 1;
     }
 }
-
 .card {
     border-radius: 24px;
     background: var(--background-island, #fff);
