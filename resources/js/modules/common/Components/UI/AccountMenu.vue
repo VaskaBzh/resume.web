@@ -260,7 +260,7 @@ export default {
     },
     methods: {
         changeActiveAccount(id) {
-            this.$store.dispatch("set_active", { index: id });
+            this.$store.dispatch("set_active_in_list", { index: id });
         },
         async openAddPopup() {
             if (this.$route.fullPath !== "/profile/accounts") {
@@ -300,7 +300,7 @@ export default {
             }
         },
         change_index(data) {
-            this.$store.dispatch("set_active", data);
+            this.$store.dispatch("set_active_in_list", data);
         },
         hideKey(e) {
             if (e.keyCode === 27) {

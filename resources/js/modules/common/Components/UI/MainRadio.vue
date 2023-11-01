@@ -20,7 +20,7 @@ export default {
     methods: {
         ...mapGetters(["getActive"]),
         checked() {
-            this.$store.dispatch("set_active", this.options.value);
+            this.$store.dispatch("set_active_in_list", this.options.value);
         },
     },
 };
