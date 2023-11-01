@@ -28,7 +28,7 @@
                 name="password"
                 :placeholder="$t('password_popup.placeholders.new_password')"
                 :model="form.password"
-                @change="changePasswordForm('password', $event)"
+                @changeValue="changePasswordForm('password', $event)"
             />
             <main-validate :validate="validateService.validate" />
             <profile-password
@@ -38,7 +38,7 @@
                     $t('password_popup.placeholders.confirm_password')
                 "
                 :model="form['password_confirmation']"
-                @change="changePasswordForm('password_confirmation', $event)"
+                @changeValue="changePasswordForm('password_confirmation', $event)"
             />
             <main-button
                 class="button-blue password_button button-full"
