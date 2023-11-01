@@ -102,10 +102,14 @@ export default {
     computed: {
         ...mapGetters(["viewportWidth"]),
         hashPerDay() {
-            return this.wait ? null : Number(this.target_worker.hashrate.split(" ")[0]).toFixed(2);
+            if (this.target_worker.hashrate) {
+                return this.wait ? null : Number(this.target_worker.hashrate.split(" ")[0]).toFixed(2);
+            }
         },
         hashPerMin() {
-            return this.wait ? null : Number(this.target_worker.hashrate_per_day.split(" ")[0]).toFixed(2);
+            if (this.target_worker.hashrate_per_day) {
+                return this.wait ? null : Number(this.target_worker.hashrate_per_day.split(" ")[0]).toFixed(2);
+            }
         },
     },
 };
