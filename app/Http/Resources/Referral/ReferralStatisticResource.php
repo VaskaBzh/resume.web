@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Referral;
 
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -34,7 +34,6 @@ class ReferralStatisticResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'group_id' => $this->referralCodeData['group_id'],
             'code' => route('v1.register', 'referral_code=' . $this->referral_code),
             ...$this->statistic,
         ];

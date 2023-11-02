@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ReferralStatisticResource;
-use App\Models\Sub;
+use App\Http\Resources\Referral\ReferralStatisticResource;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class StatisticController extends Controller
 {
@@ -68,7 +66,7 @@ class StatisticController extends Controller
         $statistic = ReferralService::getReferrerStatistic(
             referrerSub: $user->subs()->first()
         );
-dd($statistic);
+
         return new ReferralStatisticResource($user, $statistic);
     }
 }

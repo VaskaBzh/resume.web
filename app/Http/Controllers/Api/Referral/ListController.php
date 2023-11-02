@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ReferralResourceCollection;
-use App\Models\Sub;
+use App\Http\Resources\Referral\ReferralResourceCollection;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListController extends Controller
 {

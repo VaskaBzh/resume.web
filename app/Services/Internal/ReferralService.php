@@ -70,25 +70,27 @@ class ReferralService
 
     public static function getReferralCollection(User $user): Collection
     {
-        $referrerSubs = Sub::whereIn('group_id', $user->subs()->pluck('group_id'))->get();
-
-        return Sub::with('user')
-            ->with('workers')
-            ->whereIn('referrer_id', $referrerSubs->pluck('group_id'))
+        return $user->subs()
             ->get()
-            ->map(static function (Sub $referralSub) {
+            ->load([
+                'referrals',
+                'referrals.user',
+                'referrals.workers',
+            ])
+            ->flatMap(fn($referrerSubAccount) => $referrerSubAccount->referrals)
+            ->groupBy('user_id')
+            ->map(function (Collection $referralSubs) {
+
+                $referralUser = $referralSubs->pluck('user')->first();
+                $workers = $referralSubs->pluck('workers')->flatMap;
 
                 return [
-                    'email' => $referralSub->user->email,
-                    'referral_active_workers_count' => $referralSub->workers
-                        ->where('status', 'ACTIVE')
-                        ->count(),
-                    'referral_inactive_workers_count' => $referralSub->workers
-                        ->where('status', 'INACTIVE')
-                        ->count(),
-                    'referral_hash_per_day' => $referralSub->workers->sum('approximate_hash_rate'),
+                    'email' => $referralUser->email,
+                    'referral_active_workers_count' => $workers->where('status', 'ACTIVE')->count(),
+                    'referral_inactive_workers_count' => $workers->where('status', 'INACTIVE')->count(),
+                    'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
                     'total_amount' => Income::whereIn('group_id',
-                        Sub::where('user_id', $referralSub->user_id)->pluck('group_id')
+                        Sub::where('user_id', $referralUser->id)->pluck('group_id')
                     )
                         ->where('type', 'referral')
                         ->sum('daily_amount')

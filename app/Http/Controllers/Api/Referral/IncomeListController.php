@@ -5,13 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Referral\ReferralIncomeResource;
 use App\Models\Income;
 use App\Models\User;
-use App\Services\Internal\ReferralService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class IncomeListController extends Controller
 {
@@ -98,15 +96,16 @@ class IncomeListController extends Controller
     ]
     public function __invoke(User $user)
     {
-        return Income::whereIn('group_id',
-            $user
-                ->subs()
+        $referralsIncomeCollection = Income::with(['sub.user'])
+            ->whereIn('group_id', $user->subs()
                 ->first()
                 ->referrals()
                 ->pluck('group_id')
-        )
+            )
             ->where('type', 'referral')
             ->latest()
             ->paginate();
+
+        return ReferralIncomeResource::collection($referralsIncomeCollection);
     }
 }
