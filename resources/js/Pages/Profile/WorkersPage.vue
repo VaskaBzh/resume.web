@@ -22,7 +22,7 @@
                         instructionService.step === 1,
                 }"
             >
-                <main-hashrate-cards />
+                <main-hashrate-cards class="workers-header-cards" />
                 <instruction-step
                     :step_active="1"
                     :steps_count="instructionService.steps_count"
@@ -239,6 +239,10 @@ export default {
         font-weight: 400;
         line-height: 32px; /* 160% */
     }
+
+    .workers-header-cards {
+        align-items: unset;
+    }
 }
 
 .cards-container {
@@ -264,6 +268,7 @@ export default {
 }
 
 .workers {
+    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
@@ -289,8 +294,12 @@ export default {
     &__card {
         min-width: calc(50% - 6px);
         min-height: 440px;
-        @media (max-width: 1300px) {
-            min-height: 437px;
+
+        @media (max-width: 1340px) {
+            min-height: 480px;
+        }
+        @media (max-width: 1200px) {
+            min-height: unset;
         }
         @media (max-width: 900px) {
             min-height: 450px;

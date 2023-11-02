@@ -177,7 +177,6 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
-    min-width: 496px;
 }
 .popup_close {
     position: absolute;

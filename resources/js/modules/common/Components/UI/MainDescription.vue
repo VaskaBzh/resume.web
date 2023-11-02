@@ -10,13 +10,13 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style scoped>
 .text {
     color: var(--text-teritary, #6f7682);
     font-family: NunitoSans, serif;
-    font-size: adaptive-value(12px, 16px);
+    font-size: clamp(12px, 5vw, 16px);
     font-weight: 400;
-    line-height: adaptive-value(16px, 18px);
+    line-height: clamp(16px, 2vw, 24px);
 }
 
 .text-warning {
@@ -24,7 +24,7 @@ export default {
 }
 
 .text-md {
-    font-size: adaptive-value(12px, 14px);
-    line-height: adaptive-value(16px, 20px);
+    font-size: clamp(12px, 1vw, 14px);
+    line-height: clamp(16px, 1vw, 20px);
 }
 </style>

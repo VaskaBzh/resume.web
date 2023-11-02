@@ -234,6 +234,8 @@ export default {
 .card__container {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
 @media (max-width: 900px) {
@@ -257,6 +259,7 @@ export default {
 }
 
 .settings {
+    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     transition: all 0.3s linear 0.2s;
@@ -323,9 +326,9 @@ export default {
         background: var(--background-island, #fff);
         padding: 24px;
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-        width: 711px;
+        max-width: 711px;
+        width: 100%;
         @media (max-width: 900px) {
-            width: 90vw;
             padding: 16px;
         }
     }
