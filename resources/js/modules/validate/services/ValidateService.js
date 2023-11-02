@@ -1,4 +1,4 @@
-import { ValidateEnums } from "@/modules/validate/enums/ValidateEnums";
+import { ValidateEnum } from "@/modules/validate/enums/ValidateEnum";
 
 export class ValidateService {
     validateProcess(password, form, validate) {
@@ -8,16 +8,16 @@ export class ValidateService {
         if (form.password?.length <= 10 || form.password?.length >= 50)
             validate = { ...validate, length: true };
 
-        if (!ValidateEnums.strokeLetters.test(form.password))
+        if (!ValidateEnum.strokeLetters.test(form.password))
             validate = { ...validate, lower: true };
 
-        if (!ValidateEnums.highLetters.test(form.password))
+        if (!ValidateEnum.highLetters.test(form.password))
             validate = { ...validate, upper: true };
 
-        if (!ValidateEnums.numbers.test(form.password))
+        if (!ValidateEnum.numbers.test(form.password))
             validate = { ...validate, number: true };
 
-        if (!ValidateEnums.symbols.test(form.password))
+        if (!ValidateEnum.symbols.test(form.password))
             validate = { ...validate, symbol: true };
 
         if (form.password.length === 0) validate = {};

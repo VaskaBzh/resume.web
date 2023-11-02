@@ -1,0 +1,16 @@
+export const ValidationErrorKeysEnum = {
+    email: "email",
+    max_length: "max_length",
+    min_length: "min_length",
+    limit_length: "limit_length",
+    limit_length_and_letters_and_numbers: "limit_length_and_letters_and_numbers",
+    letters: "letters",
+    upper_letters: "upper_letters",
+    lower_letters: "lower_letters",
+    numbers: "numbers",
+    letters_and_numbers: "letters_and_numbers",
+    upper_letters_and_numbers: "upper_letters_and_numbers",
+    lower_letters_and_numbers: 'lower_letters_and_numbers',
+    match: 'match',
+    empty: 'empty',
+}

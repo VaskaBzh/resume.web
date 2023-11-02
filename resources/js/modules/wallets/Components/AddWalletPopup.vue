@@ -7,23 +7,23 @@
                 </main-title>
             </template>
             <template #content>
-                <main-input
+                <form-popup-input
                     class="form_input"
-                    input-name="code"
+                    input-name="walletAddress"
                     :input-label="$t('add_popup.labels.address')"
-                    :input-value="form.wallet_address"
-                    @getValue="form.wallet_address = $event"
+                    :input-value="form.walletAddress"
+                    @inputChange="form.walletAddress = $event"
                 />
-                <main-input
+                <form-popup-input
                     class="form_input"
-                    input-name="code"
+                    input-name="name"
                     :input-label="$t('add_popup.labels.name')"
                     :input-value="form.name"
-                    @getValue="form.name = $event"
+                    @inputChange="form.name = $event"
                 />
             </template>
             <template #buttons>
-                <main-button type="submit">
+                <main-button type="submit" class="button-full button-xl">
                     <template #text>{{ $t("add_popup.button") }}</template>
                 </main-button>
             </template>
@@ -34,19 +34,20 @@
 <script>
 import MainPopup from "@/modules/popup/Components/MainPopup.vue";
 import MainTitle from "@/modules/common/Components/UI/MainTitle.vue";
-import MainInput from "@/modules/common/Components/inputs/MainInput.vue";
+import FormPopupInput from "@/modules/form/Components/UI/FormPopupInput.vue";
 import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import FormPopup from "@/modules/form/Components/FormPopup.vue";
 
 import { WalletsMessages } from "@/modules/wallets/lang/WalletsMessages";
+import { ValidationInputService } from "@/modules/validate/services/ValidationInputService";
 
 export default {
     name: "AddWalletPopup",
     components: {
+        FormPopupInput,
         FormPopup,
         MainPopup,
         MainTitle,
-        MainInput,
         MainButton,
     },
     i18n: {
@@ -77,7 +78,17 @@ export default {
     data() {
         return {
             form: this.addForm,
+            validationInputService: new ValidationInputService(),
         };
+    },
+    watch: {
+        "form.walletAddress"(newValue) {
+            this.validationInputService.setErrorName("walletAddress").setValidationInputValue(newValue).checkInLimit(20, 255);
+
+            if (!newValue) {
+                this.validationInputService.dropErrors();
+            }
+        }
     },
 };
 </script>
