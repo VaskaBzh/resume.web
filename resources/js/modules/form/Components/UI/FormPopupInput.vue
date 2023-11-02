@@ -20,7 +20,6 @@ export default {
 .form {
 	&__row {
 		@include columnMixin($gap: 8);
-
 	}
 }
 </style>
