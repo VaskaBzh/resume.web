@@ -9,7 +9,7 @@
                 :name="inputName"
                 v-model="modelValue"
                 :class="{
-                    'form_input-error': errors[inputName] && errors[inputName].length > 0,
+                    'form_input-error': errors[inputName],
                 }"
                 class="form_input"
             >
@@ -21,8 +21,6 @@
                 :key="i"
                 v-t="error"
             >
-<!--                {{ error }}-->
-<!--                {{ $t(error) }}-->
             </span>
 		</div>
 	</div>
@@ -68,6 +66,11 @@ export default {
         };
     },
     emits: ["inputChange"],
+    watch: {
+        modelValue(newModelValue) {
+            this.$emit("inputChange", newModelValue);
+        },
+    },
 }
 </script>
 

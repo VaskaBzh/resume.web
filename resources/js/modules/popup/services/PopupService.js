@@ -94,9 +94,7 @@ export class PopupService {
             opacity: 1,
             easing: "easeOutCubic",
             duration: 150,
-            complete: () => {
-                this.dropAnimate();
-            },
+            complete: this.dropAnimate,
         });
     }
 
@@ -124,8 +122,7 @@ export class PopupService {
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
         const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
-        console.dir(this.popupContentHtml.scrollHeight)
-        console.dir(this.popupContentHtml)
+
         return newHeightValue;
     }
 

@@ -7,7 +7,7 @@ export const ValidationRulesEnum = {
     LETTERS_AND_NUMBERS: "/^[a-z,A-Z,0-9]/",
     UPPER_LETTERS_AND_NUMBERS: "/^[A-Z,0-9]/",
     LOWER_LETTERS_AND_NUMBERS: "/^[a-z,0-9]/",
-    MAX_LENGTH: ">=",
-    MIN_LENGTH: "<=",
-    EQUAL: "===",
+    // MAX_LENGTH: ">=",
+    // MIN_LENGTH: "<=",
+    // EQUAL: "===",
 }

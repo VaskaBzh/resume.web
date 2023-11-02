@@ -16,48 +16,32 @@ export class ValidationModel {
     // Validation
 
     isEqual(equalValue) {
-        return eval(
-            `${this.inputValue} ${ValidationRulesEnum.EQUAL} ${equalValue}`
-        );
+        return this.inputValue === equalValue
     }
 
     isInMaxLimit(maxValue) {
-        return eval(
-            `${this.getInputLength()} ${ValidationRulesEnum.MIN_LENGTH} ${maxValue}`
-        );
+        return this.getInputLength() <= maxValue
     }
 
     isInMinLimit(minValue) {
-        return eval(
-            `${this.getInputLength()} ${ValidationRulesEnum.MAX_LENGTH} ${minValue}`
-        );
+        return this.getInputLength() >= minValue
     }
 
     isInLimit(minValue, maxValue) {
-        return eval(
-            `${this.getInputLength()} ${ValidationRulesEnum.MAX_LENGTH} ${minValue} &&
-            ${this.getInputLength()} ${ValidationRulesEnum.MIN_LENGTH} ${maxValue}`
-        );
+        return this.getInputLength() >= minValue &&
+            this.getInputLength() <= maxValue
     }
 
     isInLimitAndNumbersAndLetters(minValue, maxValue) {
-        return eval(
-            `
-                ${this.getInputLength()} ${ValidationRulesEnum.MAX_LENGTH} ${minValue} &&
-                ${this.getInputLength()} ${ValidationRulesEnum.MIN_LENGTH} ${maxValue} &&
-                ${ValidationRulesEnum.LETTERS_AND_NUMBERS.test(this.inputValue)}
-            `
-        );
+        return this.getInputLength() >= minValue &&
+            this.getInputLength() <= maxValue &&
+            ValidationRulesEnum.LETTERS_AND_NUMBERS.test(this.inputValue)
     }
 
     isEmpty() {
         const emptyValue = 0;
 
-        return eval(
-            `
-                ${this.getInputLength()} ${ValidationRulesEnum.EQUAL} ${emptyValue}
-            `
-        );
+        return this.getInputLength() === emptyValue
     }
 
     isEmailValid() {
