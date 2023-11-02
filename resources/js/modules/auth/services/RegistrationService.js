@@ -27,39 +27,40 @@ export class RegistrationService {
 
     async account_create() {
         if (this.checkbox) {
-            let validEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/gim
-            console.log(validEmail.test(this.form.email))
-            if (Object.entries(this.validate).length === 0 && validEmail.test(this.form.email)) {
-                try {
-                    const response = await ProfileApi.post(
-                        "/register",
-                        this.form
-                    );
+                let validEmail = /^((?!\.)[\w-_.]*[^.])(@\w+)(\.\w+(\.\w+)?[^.\W])$/;
 
-                    const user = response.data.user;
-                    // const token = response.data.token;
-                    // store.dispatch("setToken", token);
-                    // store.dispatch("setUser", user);
+                if (Object.entries(this.validate).length === 0 && validEmail.test(this.form.email)) {
+                    try {
 
-                    this.router.push({
-                        name: "confirm",
-                        query: {
-                            email: user.email,
-                            action: "registration",
-                        },
-                    });
-                } catch (err) {
-                    console.error("Error with: " + err);
+                        const response = await ProfileApi.post(
+                            "/register",
+                            this.form
+                        );
 
-                    store.dispatch("setFullErrors", err.response.data.errors);
+                        const user = response.data.user;
+
+
+                        this.router.push({
+                            name: "confirm",
+                            query: {
+                                email: user.email,
+                                action: "registration",
+                            },
+                        });
+                    } catch (err) {
+                        console.error("Error with: " + err);
+
+                        store.dispatch("setFullErrors", err.response.data.errors);
+                    }
+
                 }
-            }
+
         } else {
             this.checkboxState = true;
-
             setTimeout(() => (this.checkboxState = false), 1500);
         }
     }
+
 
     validateProcess(event) {
         this.validate = this.validateService.validateProcess(
@@ -68,4 +69,5 @@ export class RegistrationService {
             this.validate
         );
     }
+
 }

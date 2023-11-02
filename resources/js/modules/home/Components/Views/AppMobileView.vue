@@ -63,6 +63,11 @@
                             src="../../../../../assets/img/iPhone-14.png"
                             alt=""
                         />
+                        <img
+                            class="status-bar"
+                            src="../../../hosting/assets/img/status-bar.png"
+                            alt=""
+                        />
                         <Swiper
                             class="mobile-view_swiper-picture"
                             :loop="true"
@@ -472,4 +477,56 @@ export default {
 .active-bullet {
     background: #2e90fa;
 }
+
+.status-bar {
+    position: absolute;
+    width: 397px;
+    height: 45px;
+    top: 15px;
+    left: 15px;
+    z-index: 2;
+}
+
+@media(max-width: 1900px) {
+    .status-bar {
+        width: 397px;
+        height: 54px;
+        top: 15px;
+        left: 15px;
+    }
+}
+
+
+
+@media(max-width: 1600px) {
+    .status-bar {
+        width: 269px;
+        height: 37px;
+        top: 15px;
+        left: 27px;
+    }
+}
+
+
+
+@media(max-width: 768px) {
+    .status-bar {
+        width: 212px;
+        height: 30px;
+        top: 15px;
+        left: 5px;
+    }
+}
+
+@media(max-width: 340px) {
+    .status-bar {
+        width: 198px;
+        height: 23px;
+        top: 15px;
+        left: 5px;
+    }
+}
+
+
+
 </style>

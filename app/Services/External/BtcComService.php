@@ -266,7 +266,7 @@ class BtcComService
                 ->create([
                     'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
                     'unit' => $firstWorkerData['worker_hash_rate']->unit,
-                ]);;
+                ]);
 
             $this->updateRemoteWorker(
                 workerId: $firstWorkerData['worker_data']->worker_id,
@@ -336,7 +336,6 @@ class BtcComService
             }
         })->filter();
     }
-
 
     /**
      * Return transformed sub-account array structure

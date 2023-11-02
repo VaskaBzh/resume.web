@@ -21,6 +21,12 @@ export default {
                 commit("updateActiveAccount", sub);
             }
         },
+        set_active_in_list({ commit, state }, data) {
+            if (data.index) {
+                commit("updateActive", data.index);
+                commit("updateActiveAccountInList", data.index);
+            }
+        },
         async accounts_all({ commit, state }, user_id) {
             let subsList = (
                 await MainApi.get(`/subs/${user_id}`, {
@@ -34,7 +40,7 @@ export default {
 
             commit("updateAccounts", subsList);
             if (state.active === -1) {
-                this.dispatch("set_active", {
+                this.dispatch("set_active_in_list", {
                     index: Object.values(subsList)[firstSubIndex].group_id,
                 });
             }
@@ -88,6 +94,9 @@ export default {
         },
         updateActiveAccount(state, account) {
             state.activeAccount = { ...account };
+        },
+        updateActiveAccountInList(state, index) {
+            state.activeAccount = state.accounts.filter(sub => sub.group_id === index)[0];
         },
     },
     state: {

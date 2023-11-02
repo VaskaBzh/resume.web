@@ -63,6 +63,7 @@ export default {
     font-weight: 400;
     line-height: 145%; /* 20.3px */
 }
+
 .card_inf_block {
     display: flex;
     flex-direction: column;
@@ -91,7 +92,9 @@ export default {
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 62%;
+    max-width: 62%;
+    width: 100%;
+    min-width: 300px;
 }
 
 .btn_container {

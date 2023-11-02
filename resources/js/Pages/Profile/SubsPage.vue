@@ -9,7 +9,7 @@
                 <sub-header
                     class="subs__header"
                     :subs-type="service.subsType"
-                    @changeType="toggleIsTable"
+                    @changeType="toggleIsTable($event)"
                     @searched="service.searchSub($event)"
                 />
                 <sub-list
@@ -90,8 +90,8 @@ export default {
             .tableProcess();
     },
     methods: {
-        toggleIsTable() {
-            this.service.toggleSubsType();
+        toggleIsTable(subsTypeState = null) {
+            this.service.toggleSubsType(subsTypeState);
         },
     },
 };
