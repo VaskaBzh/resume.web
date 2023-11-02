@@ -1,5 +1,5 @@
 <template>
-	<div class="buttons">
+	<div class="buttons" v-if="viewportWidth > 768">
 		<button
 			class="buttons_button"
 			:class="{
@@ -17,6 +17,7 @@
 			@click.prevent="$emit('changeType', false)"
 		>
 			<table-icon class="button_icon" />
+
 		</button>
 	</div>
 </template>
@@ -24,6 +25,7 @@
 <script>
 import BlockIcon from "@/modules/subs/icons/BlockIcon.vue";
 import TableIcon from "@/modules/subs/icons/TableIcon.vue";
+import {mapGetters} from "vuex";
 
 export default {
 	name: "sub-type-buttons",
@@ -34,6 +36,16 @@ export default {
 	props: {
 		subsType: Boolean,
 	},
+    computed: {
+        ...mapGetters(["viewportWidth"]),
+    },
+    watch: {
+       viewportWidth(newVal, newOld) {
+           if(newVal <= 768) {
+               this.$emit('changeType', true)
+           }
+       }
+    }
 }
 </script>
 

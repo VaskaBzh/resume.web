@@ -119,6 +119,20 @@ export default {
         font-weight: 400;
         line-height: 24px;
         color: var(--text-secondary, #475467);
+
+        @media (max-width: 500px) {
+            width: 85%;
+            text-wrap: nowrap;
+            overflow: hidden;
+        }
+
+        @media (min-width: 500px) {
+            width: 95%;
+            text-wrap: nowrap;
+            overflow: hidden;
+
+
+        }
     }
     &_tick {
         stroke: #4182ec;

@@ -81,4 +81,21 @@ export default {
     width: 100%;
     flex: 1 1 auto;
 }
+
+@media(max-width: 1000px) {
+    .sub__list {
+        display: flex;
+        flex-flow: column nowrap;
+    }
+}
+
+@media(max-width: 1200px) {
+    .sub__list {
+        display: flex;
+        grid-template-columns: unset;
+        flex-flow: row wrap;
+    }
+}
+
+
 </style>

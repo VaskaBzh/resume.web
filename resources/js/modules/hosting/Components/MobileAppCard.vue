@@ -251,14 +251,16 @@ export default {
 
     .img-support {
         width: 224px;
-        left: 35px;
+        left: 30px;
         top: 9px;
-        margin: auto;
+        margin: 0 auto;
     }
 
     .img-content {
-        width: 208px;
-        height: auto;
+        width: 100%;
+        margin: 0 auto;
+        display: inline-block;
+        height: 450px;
     }
 
     .img-status-bar {
@@ -268,9 +270,9 @@ export default {
     }
 
     .img-tab-bar {
-        width: 208px;
+        width: 222px;
         bottom: 18px;
-        left: 36px;
+        left: 30px;
     }
 }
 </style>

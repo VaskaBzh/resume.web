@@ -294,6 +294,12 @@ export default {
     position: relative;
 }
 
+@media (max-width: 1256px) {
+    .watchers__wrapper {
+        grid-template-rows: 1fr auto;
+        grid-template-columns: unset;
+    }
+
 @media (max-width: 900px) {
     .watchers {
         padding: 24px 12px 24px;
@@ -321,5 +327,8 @@ export default {
         justify-content: center;
         width: 100%;
     }
+}
+
+
 }
 </style>

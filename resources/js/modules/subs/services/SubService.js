@@ -122,9 +122,10 @@ export class SubService extends DefaultSubsService {
         return this;
     }
 
-    toggleSubsType() {
-        this.subsType = !this.subsType;
-    }
+    toggleSubsType(subsTypeState = null) {
+            this.subsType = subsTypeState ?? !this.subsType;
+        }
+
 
     setDocumentTitle(title) {
         this.page.titleProcess(title);
