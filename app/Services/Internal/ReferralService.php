@@ -4,18 +4,12 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Actions\User\AttachReferral;
 use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
-use App\Exceptions\BusinessException;
+use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
-use App\Models\Worker;
-use App\Repositories\IncomeRepository;
-use App\Services\External\BtcComService;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response;
 
 class ReferralService
 {
@@ -45,67 +39,91 @@ class ReferralService
         }
     }
 
-    public static function getOwnerStatistic(Collection $referrals): array
+    public static function getReferrerStatistic(Sub $referrerSub): array
     {
-        $activeReferralSubs = Sub::getActiveSubs($referrals->pluck('id')->toArray())->get();
+        $activeReferralSubs = $referrerSub
+            ->referrals()
+            ->with('user')
+            ->hasWorkerHashRate()
+            ->get();
+
+        $referralSubs = $referrerSub
+            ->referrals()
+            ->with('incomes', static function ($query) {
+                $query->where('type', 'referral');
+            })
+            ->get();
 
         return [
-            'attached_referrals_count' => $referrals->count(),
-            'referrals_total_amount' => resolve(IncomeRepository::class)
-                ->getReferralsTotalAmount(referralIds: $referrals->pluck('id')),
-            'active_referrals_count' => $activeReferralSubs->count(),
-            'total_referrals_hash_rate' => Worker::whereIn('group_id',
-                $activeReferralSubs->pluck('group_id')->toArray()
-            )
-                ->onlyActive()
-                ->sum('approximate_hash_rate')
+            'attached_referrals_count' => $referralSubs
+                ->unique('user.id')
+                ->count(),
+            'referrals_total_amount' => $referralSubs->flatMap(
+                static fn(Sub $referralSub) => $referralSub->incomes->pluck('daily_amount'))
+                ->sum(),
+            'active_referrals_count' => $activeReferralSubs
+                ->unique('user.id')
+                ->count(),
+            'total_referrals_hash_rate' => $activeReferralSubs->sum('total_hash_rate')
         ];
     }
 
-    public static function getReferralCollection(Sub $owner, BtcComService $btcComService): Collection
+    public static function getReferralCollection(User $user): Collection
     {
-        return $owner->referrals->map(function (User $user) use ($btcComService) {
+        $referrerSubs = Sub::whereIn('group_id', $user->subs()->pluck('group_id'))->get();
 
-            $referralSubCollection = $btcComService
-                ->transformSubCollection($user->subs);
+        return Sub::with('user')
+            ->with('workers')
+            ->whereIn('referrer_id', $referrerSubs->pluck('group_id'))
+            ->get()
+            ->map(static function (Sub $referralSub) {
 
-            return [
-                'email' => $user->email,
-                'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
-                'referral_inactive_workers_count' => $referralSubCollection->sum('workers_count_in_active'),
-                'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
-                'total_amount' => resolve(IncomeRepository::class)
-                    ->getReferralTotalAmount(referralId: $user->pivot->id)
-            ];
-        });
+                return [
+                    'email' => $referralSub->user->email,
+                    'referral_active_workers_count' => $referralSub->workers
+                        ->where('status', 'ACTIVE')
+                        ->count(),
+                    'referral_inactive_workers_count' => $referralSub->workers
+                        ->where('status', 'INACTIVE')
+                        ->count(),
+                    'referral_hash_per_day' => $referralSub->workers->sum('approximate_hash_rate'),
+                    'total_amount' => Income::whereIn('group_id',
+                        Sub::where('user_id', $referralSub->user_id)->pluck('group_id')
+                    )
+                        ->where('type', 'referral')
+                        ->sum('daily_amount')
+                ];
+            });
     }
 
-    public static function getReferralIncomes(int $groupId, int $perPage): LengthAwarePaginator
+    /**
+     * Return referrer sub-account
+     *
+     * @param string $code
+     * @return Sub
+     */
+    public static function getReferrer(string $code): Sub
     {
-        return resolve(IncomeRepository::class)
-            ->getReferralIncomeCollection(groupId: $groupId,)
-            ->paginate($perPage);
+        return Sub::find(self::getReferralDataFromCode(code: $code)['group_id']);
     }
 
-    public static function attach(Sub $referralSub, string $code): void
-    {
-        $decryptedData = self::getReferralDataFromCode(code: $code);
-
-        try {
-            AttachReferral::execute(
-                referrerSub: Sub::find($decryptedData['group_id']),
-                referralSub: $referralSub,
-            );
-        } catch (\Throwable $e) {
-            throw new BusinessException(__('actions.failed'), Response::HTTP_BAD_REQUEST);
-        }
-    }
-
+    /**
+     * Encode sub-account group_id to string
+     *
+     * @param int $subGroupId
+     * @return string
+     */
     public static function generateReferralCode(int $subGroupId): string
     {
         return base64_encode(json_encode(['group_id' => $subGroupId]));
     }
 
+    /**
+     * Decode sub-account group_id from code
+     *
+     * @param string $code
+     * @return array
+     */
     public static function getReferralDataFromCode(string $code): array
     {
         return json_decode(base64_decode($code), true);

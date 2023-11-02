@@ -119,22 +119,6 @@ class BtcComService
     }
 
     /**
-     * Create local sub based on remote sub-account group_id
-     *
-     * @throw BusinessException if remote sub-account exists
-     */
-    public function createSub(int $userId, string $subName): Sub
-    {
-        return Create::execute(
-            subData: SubData::fromRequest([
-                'user_id' => $userId,
-                'group_id' => $this->createRemoteSub($subName)['gid'],
-                'group_name' => $subName,
-            ])
-        );
-    }
-
-    /**
      *  Get remote worker list by status
      *
      * @param int|null $groupId

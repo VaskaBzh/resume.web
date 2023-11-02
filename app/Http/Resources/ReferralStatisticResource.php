@@ -26,7 +26,6 @@ class ReferralStatisticResource extends JsonResource
     public function __construct(
         User                   $resource,
         private readonly array $statistic,
-        private readonly array $referralCodeData
     )
     {
         parent::__construct($resource);
@@ -38,7 +37,6 @@ class ReferralStatisticResource extends JsonResource
             'group_id' => $this->referralCodeData['group_id'],
             'code' => route('v1.register', 'referral_code=' . $this->referral_code),
             ...$this->statistic,
-            'referral_percent' => $this->referralCodeData['referral_percent']
         ];
     }
 }

@@ -11,11 +11,11 @@ return new class extends Migration {
             $table->unsignedBigInteger('referrer_id')
                 ->after('group_id')
                 ->nullable();
-            $table->unsignedDecimal('referrer_percent')
+            $table->unsignedDecimal('referral_percent')
                 ->after('percent')
                 ->nullable();
-            $table->unsignedDecimal('referral_percent')
-                ->after('referrer_percent')
+            $table->unsignedDecimal('referral_discount')
+                ->after('referral_percent')
                 ->nullable();
             $table->renameColumn('percent', 'allbtc_fee');
         });

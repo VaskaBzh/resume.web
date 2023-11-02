@@ -2,16 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Actions\Sub\Create;
-use App\Dto\SubData;
 use App\Dto\UserData;
+use App\Events\Registered;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Http\Resources\UserResource;
 use App\Services\External\BtcComService;
-use App\Services\Internal\ReferralService;
 use App\Services\Internal\UserService;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -118,17 +115,9 @@ class RegisterController extends Controller
             UserData::fromRequest($request->all())
         ));
 
-        $sub = $btcComService->createSub(
-            userId: $user->id,
-            subName: $user->name
-        );
-
-        if ($request->referral_code) {
-            ReferralService::attach(referralSub: $sub, code: $request->referral_code);
-        }
-
         event(new Registered(
-            user: $user
+            user: $user,
+            referralCode: $request->referral_code,
         ));
 
         return new JsonResponse([

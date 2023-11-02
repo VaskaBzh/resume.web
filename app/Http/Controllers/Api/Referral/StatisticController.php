@@ -65,30 +65,10 @@ class StatisticController extends Controller
     ]
     public function __invoke(User $user)
     {
-        if (!$user?->referral_code) {
-            return new JsonResponse([
-                'errors' => [
-                    'message' => [__('actions.referral.code.exists')]
-                ]
-            ], Response::HTTP_NOT_FOUND);
-        }
-
-        $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
-
-        $owner = Sub::find($referralCodeData['group_id']);
-
-        if (!$owner) {
-            return new JsonResponse([
-                'errors' => [
-                    'message' => [__('actions.referral.exists')]
-                ]
-            ], Response::HTTP_NOT_FOUND);
-        }
-
-        $statistic = ReferralService::getOwnerStatistic(
-            referrals: $owner->referrals()->get()
+        $statistic = ReferralService::getReferrerStatistic(
+            referrerSub: $user->subs()->first()
         );
-
-        return new ReferralStatisticResource($user, $statistic, $referralCodeData);
+dd($statistic);
+        return new ReferralStatisticResource($user, $statistic);
     }
 }

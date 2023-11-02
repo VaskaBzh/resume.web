@@ -69,19 +69,9 @@ class ListController extends Controller
     ]
     public function __invoke(User $user, BtcComService $btcComService)
     {
-        if (!$user?->referral_code) {
-            return new JsonResponse([
-                'errors' => [
-                    'message' => [__('actions.referral.code.exists')]
-                ]
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $this->authorize('viewAny', $user);
 
-        $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
-
-        $owner = Sub::getByGroupId($referralCodeData['group_id'])->first();
-
-        $referralSubs = ReferralService::getReferralCollection(owner: $owner, btcComService: $btcComService);
+        $referralSubs = ReferralService::getReferralCollection(user: $user);
 
         return new ReferralResourceCollection($referralSubs);
     }

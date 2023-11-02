@@ -10,6 +10,9 @@ class AttachReferral
 {
     public static function execute(Sub $referrerSub, Sub $referralSub): void
     {
-        $referralSub->update(['referrer_id' => $referrerSub->group_id]);
+        $referralSub->update([
+            'referrer_id' => $referrerSub->group_id,
+            'referral_discount' => $referrerSub->referral_discount,
+        ]);
     }
 }
