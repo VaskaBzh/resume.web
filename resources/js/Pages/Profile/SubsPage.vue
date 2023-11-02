@@ -99,6 +99,7 @@ export default {
 
 <style scoped>
 .subs {
+    padding: 24px;
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
