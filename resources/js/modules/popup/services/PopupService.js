@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import anime from "animejs";
 
+
 export class PopupService {
     constructor(id, emit) {
         this.isOpened = ref(false);
@@ -116,7 +117,9 @@ export class PopupService {
     animateHeight() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.popupContentHtml.scrollHeight + 64}px`,
+            height: ()=> {
+                return `${this.popupContentHtml.scrollHeight + 64}px`
+            },
             easing: "easeInCubic",
             duration: 350,
             complete: () => {
