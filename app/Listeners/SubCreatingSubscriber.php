@@ -31,12 +31,12 @@ readonly class SubCreatingSubscriber
      */
     public function handleRegistered(Registered $event): void
     {
-        $remoteSub = $this->btcComService->createRemoteSub(subName: $event->user->name);
+        //$remoteSub = $this->btcComService->createRemoteSub(subName: $event->user->name);
 
-        $localSub = Create::execute(
+        Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $event->user->id,
-                'group_id' => $remoteSub['gid'],
+                'group_id' => 8888888,
                 'group_name' => $event->user->name,
             ])
         );
@@ -44,8 +44,8 @@ readonly class SubCreatingSubscriber
         if (!$event->user->hasRole(Roles::REFERRAL->value) && $event->referralCode) {
 
             AttachReferral::execute(
-                referrerSub: ReferralService::getReferrer($event->referralCode),
-                referralSub: $localSub,
+                referrer: ReferralService::getReferrer($event->referralCode),
+                referral: $event->user,
             );
 
             $event->user->assignRole(Roles::REFERRAL->value);
@@ -63,33 +63,15 @@ readonly class SubCreatingSubscriber
      */
     public function handleSubCreated(SubCreatedEvent $event): void
     {
-        $remoteSub = $this->btcComService->createRemoteSub(subName: $event->subName);
+       // $remoteSub = $this->btcComService->createRemoteSub(subName: $event->subName);
 
-        $localSub = Create::execute(
+        Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $event->user->id,
-                'group_id' => $remoteSub['gid'],
+                'group_id' => 9999999,
                 'group_name' => $event->user->name,
             ])
         );
-
-        $firstSub = $event->user->subs()->first();
-
-        if ($event->user->hasRole(Roles::REFERRAL->value)) {
-
-            AttachReferral::execute(
-                referrerSub: $firstSub->referrer,
-                referralSub: $localSub,
-            );
-        }
-
-        if ($event->user->hasRole(Roles::REFERRER->value)) {
-
-            $localSub->update([
-                'referral_percent' => $firstSub->referral_percent,
-                'referral_discount' => $firstSub->referral_discount,
-            ]);
-        }
     }
 
     public function subscribe(Dispatcher $events): void

@@ -34,10 +34,10 @@ use OpenApi\Attributes as OA;
 class ReferralResourceCollection extends ResourceCollection
 {
 
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
-            'data' => $this->collection->values()
+            'data' => $this->collection
         ];
     }
 }

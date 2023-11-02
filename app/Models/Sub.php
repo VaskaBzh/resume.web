@@ -23,13 +23,10 @@ class Sub extends Model
     protected $fillable = [
         'user_id',
         'group_id',
-        'referrer_id',
         'sub',
         'pending_amount',
         'total_amount',
         'allbtc_fee',
-        'referral_percent',
-        'referral_discount',
         'custom_percent_expired_at',
         'created_at',
         'updated_at',
@@ -49,16 +46,6 @@ class Sub extends Model
     public function finances(): HasMany
     {
         return $this->hasMany(Finance::class, 'group_id');
-    }
-
-    public function referrer(): BelongsTo
-    {
-        return $this->belongsTo(Sub::class, 'referrer_id');
-    }
-
-    public function referrals(): HasMany
-    {
-        return $this->hasMany(Sub::class, 'referrer_id');
     }
 
     public function user(): BelongsTo

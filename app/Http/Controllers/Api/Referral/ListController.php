@@ -65,12 +65,12 @@ class ListController extends Controller
             ],
         )
     ]
-    public function __invoke(User $user, BtcComService $btcComService)
+    public function __invoke(User $user)
     {
         $this->authorize('viewAny', $user);
 
-        $referralSubs = ReferralService::getReferralCollection(user: $user);
+        $referralCollection = ReferralService::getReferralCollection(user: $user);
 
-        return new ReferralResourceCollection($referralSubs);
+        return new ReferralResourceCollection($referralCollection);
     }
 }

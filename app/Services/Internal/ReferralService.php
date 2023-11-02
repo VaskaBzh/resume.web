@@ -17,18 +17,18 @@ class ReferralService
      * Сгенерируем на основе group_id строковый код
      * Сохраним его связанному пользователю
      *
-     * @param Sub $referrerSub
+     * @param User $referrer
      * @return string $code
      * @throws \Exception
      */
-    public static function generateCode(Sub $referrerSub): string
+    public static function generateCode(User $referrer): string
     {
         try {
-            $code = static::generateReferralCode(subGroupId: $referrerSub->group_id);
+            $code = static::generateReferralCode(referrer: $referrer);
 
             GenerateReferralCode::execute(
                 referralData: ReferralData::fromRequest([
-                    'user' => $referrerSub->user,
+                    'user' => $referrer,
                     'code' => $code,
                 ])
             );
@@ -39,85 +39,76 @@ class ReferralService
         }
     }
 
-    public static function getReferrerStatistic(Sub $referrerSub): array
+    public static function getReferrerStatistic(User $referrer): array
     {
-        $activeReferralSubs = $referrerSub
-            ->referrals()
-            ->with('user')
-            ->hasWorkerHashRate()
-            ->get();
+        $referrer->load([
+            'referrals',
+            'referrals.subs'
+        ]);
 
-        $referralSubs = $referrerSub
-            ->referrals()
-            ->with('incomes', static function ($query) {
-                $query->where('type', 'referral');
-            })
-            ->get();
+        $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
 
         return [
-            'attached_referrals_count' => $referralSubs
-                ->unique('user.id')
-                ->count(),
-            'referrals_total_amount' => $referralSubs->flatMap(
-                static fn(Sub $referralSub) => $referralSub->incomes->pluck('daily_amount'))
-                ->sum(),
+            'attached_referrals_count' => $referrer->referrals->count(),
             'active_referrals_count' => $activeReferralSubs
-                ->unique('user.id')
+                ->unique('user_id')
                 ->count(),
-            'total_referrals_hash_rate' => $activeReferralSubs->sum('total_hash_rate')
+            'referrals_total_amount' => Income::getReferralIncomes($referrer->referrals
+                ->flatMap
+                ->subs
+                ->pluck('group_id')
+            )->sum('daily_amount'),
+            'total_referrals_hash_rate' =>  $activeReferralSubs->map->total_hash_rate->sum()
         ];
     }
 
     public static function getReferralCollection(User $user): Collection
     {
-        return $user->subs()
-            ->get()
-            ->load([
-                'referrals',
-                'referrals.user',
-                'referrals.workers',
-            ])
-            ->flatMap(fn($referrerSubAccount) => $referrerSubAccount->referrals)
-            ->groupBy('user_id')
-            ->map(function (Collection $referralSubs) {
+        $referrals = $user->referrals()
+            ->with('subs')
+            ->with('subs.workers')
+            ->get();
 
-                $referralUser = $referralSubs->pluck('user')->first();
-                $workers = $referralSubs->pluck('workers')->flatMap;
+        return $referrals->map(function (User $referral) {
 
-                return [
-                    'email' => $referralUser->email,
-                    'referral_active_workers_count' => $workers->where('status', 'ACTIVE')->count(),
-                    'referral_inactive_workers_count' => $workers->where('status', 'INACTIVE')->count(),
-                    'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
-                    'total_amount' => Income::whereIn('group_id',
-                        Sub::where('user_id', $referralUser->id)->pluck('group_id')
-                    )
-                        ->where('type', 'referral')
-                        ->sum('daily_amount')
-                ];
-            });
+            $referralWorkers = $referral->subs->pluck('workers')->flatMap;
+            $referralSubs = $referral->subs;
+
+            return [
+                'email' => $referral->email,
+                'referral_active_workers_count' => $referralWorkers
+                    ->where('status', 'ACTIVE')
+                    ->count(),
+                'referral_inactive_workers_count' => $referralWorkers
+                    ->where('status', 'INACTIVE')
+                    ->count(),
+                'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
+                'total_amount' => Income::getReferralIncomes($referralSubs->pluck('group_id'))
+                    ->sum('daily_amount')
+            ];
+        });
     }
 
     /**
      * Return referrer sub-account
      *
      * @param string $code
-     * @return Sub
+     * @return User
      */
-    public static function getReferrer(string $code): Sub
+    public static function getReferrer(string $code): User
     {
-        return Sub::find(self::getReferralDataFromCode(code: $code)['group_id']);
+        return User::find(self::getReferralDataFromCode(code: $code)['user_id']);
     }
 
     /**
      * Encode sub-account group_id to string
      *
-     * @param int $subGroupId
+     * @param User $user
      * @return string
      */
-    public static function generateReferralCode(int $subGroupId): string
+    public static function generateReferralCode(User $referrer): string
     {
-        return base64_encode(json_encode(['group_id' => $subGroupId]));
+        return base64_encode(json_encode(['user_id' => $referrer->id]));
     }
 
     /**

@@ -51,7 +51,7 @@ class GiveRoleCommand extends Command
 
                 $user->assignRole($roleName);
 
-                $user->subs()->update([
+                $user->update([
                     'referral_percent' => $referralPercent,
                     'referral_discount' => $referralDiscount,
                 ]);

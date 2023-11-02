@@ -35,9 +35,9 @@ class SubBuilder extends BaseBuilder
             ->where('pending_amount', '>=', Wallet::MIN_BITCOIN_WITHDRAWAL);
     }
 
-    public function getActiveSubs(Collection $userIds): Builder
+    public function getActive(Collection $userIds): Builder
     {
-        return Sub::whereIn('group_id', $userIds)->hasWorkerHashRate();
+        return Sub::whereIn('user_id', $userIds)->hasWorkerHashRate();
     }
 
     public function whereExpiredCustomPercent(): Builder

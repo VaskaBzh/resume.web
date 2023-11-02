@@ -63,9 +63,7 @@ class StatisticController extends Controller
     ]
     public function __invoke(User $user)
     {
-        $statistic = ReferralService::getReferrerStatistic(
-            referrerSub: $user->subs()->first()
-        );
+        $statistic = ReferralService::getReferrerStatistic(referrer: $user);
 
         return new ReferralStatisticResource($user, $statistic);
     }

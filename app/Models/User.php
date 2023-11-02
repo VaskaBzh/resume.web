@@ -7,6 +7,7 @@ use App\Builders\UserBuilder;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'referrer_id',
+        'referral_percent',
+        'referral_discount',
         'password',
         'referral_code',
         'phone',
@@ -57,6 +61,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function subs(): HasMany
     {
         return $this->hasMany(Sub::class);
+    }
+
+    public function referrer(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'referrer_id');
+    }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(User::class, 'referrer_id');
     }
 
     public function watcherLinks(): HasMany

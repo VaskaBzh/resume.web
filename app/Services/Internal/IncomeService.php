@@ -71,6 +71,11 @@ class IncomeService
         return true;
     }
 
+    private function calculateFee()
+    {
+
+    }
+
     private function setHashRate(): void
     {
         $this->params['hash'] = $this

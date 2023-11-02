@@ -5,14 +5,15 @@ declare(strict_types=1);
 namespace App\Actions\User;
 
 use App\Models\Sub;
+use App\Models\User;
 
 class AttachReferral
 {
-    public static function execute(Sub $referrerSub, Sub $referralSub): void
+    public static function execute(User $referrer, User $referral): void
     {
-        $referralSub->update([
-            'referrer_id' => $referrerSub->group_id,
-            'referral_discount' => $referrerSub->referral_discount,
+        $referral->update([
+            'referrer_id' => $referrer->id,
+            'referral_discount' => $referrer->referral_discount,
         ]);
     }
 }

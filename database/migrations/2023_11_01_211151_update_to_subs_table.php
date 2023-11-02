@@ -7,16 +7,19 @@ use Illuminate\Support\Facades\Schema;
 return new class extends Migration {
     public function up(): void
     {
-        Schema::table('subs', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->unsignedBigInteger('referrer_id')
-                ->after('group_id')
+                ->after('email')
                 ->nullable();
             $table->unsignedDecimal('referral_percent')
-                ->after('percent')
+                ->after('referrer_id')
                 ->nullable();
             $table->unsignedDecimal('referral_discount')
                 ->after('referral_percent')
                 ->nullable();
+        });
+
+        Schema::table('subs', function (Blueprint $table) {
             $table->renameColumn('percent', 'allbtc_fee');
         });
 
@@ -33,11 +36,13 @@ return new class extends Migration {
 
     public function down(): void
     {
-        Schema::table('subs', function (Blueprint $table) {
+        Schema::table('users', function (Blueprint $table) {
             $table->dropColumn('referrer_id');
-            $table->renameColumn('allbtc_fee', 'percent');
-            $table->dropColumn('referrer_percent');
+            $table->dropColumn('referral_discount');
             $table->dropColumn('referral_percent');
+        });
+        Schema::table('subs', function (Blueprint $table) {
+            $table->renameColumn('allbtc_fee', 'percent');
         });
 
         Schema::create('referrals', function (Blueprint $table) {
