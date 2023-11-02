@@ -109,11 +109,11 @@ export default {
             left: -100px;
             top: 0;
             @media (max-width: 768.98px) {
-                left: -60px;
+                left: -50px;
             }
 
             @media (max-width: 360.98px) {
-                left: -45px;
+                left: -35px;
             }
         }
 
@@ -123,7 +123,7 @@ export default {
             top: 0;
 
             @media (max-width: 360.98px) {
-                left: 45px;
+                left: 35px;
             }
         }
 
