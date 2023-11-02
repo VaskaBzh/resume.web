@@ -14,6 +14,7 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Models\MinerStat;
 use App\Models\Sub;
+use App\Models\User;
 use App\Models\Wallet;
 use App\Services\External\BtcComService;
 use App\Utils\Helper;
@@ -22,8 +23,9 @@ use Illuminate\Support\Facades\Log;
 class IncomeService
 {
     private Sub $sub;
-    private ?Sub $owner;
+    private ?User $referrer;
     private float $dailyEarn;
+    private float $fee;
 
     private array $params = [
         'status' => Status::REJECTED->value,
@@ -50,13 +52,15 @@ class IncomeService
     public function init(Sub $sub): bool
     {
         $this->sub = $sub;
-        $this->owner = $sub->user->owner;
+        $this->referrer = $sub->user->referrer;
 
         $this->setHashRate();
 
         if ($this->params['hash'] <= 0) {
             return false;
         }
+
+        $this->calculateFee();
 
         $this->setNetworkDifficulty();
         $this->setDailyEarn();
@@ -71,9 +75,11 @@ class IncomeService
         return true;
     }
 
-    private function calculateFee()
+    private function calculateFee(): void
     {
-
+        $this->fee = $this->referrer
+            ? $this->sub->allbtc_fee - $this->referrer->discount_percent
+            : $this->sub->allbtc_fee;
     }
 
     private function setHashRate(): void
@@ -102,7 +108,7 @@ class IncomeService
         $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
-            fee: BtcComService::FEE + $this->sub->percent
+            fee: BtcComService::FEE + $this->fee
         );
     }
 
@@ -139,8 +145,8 @@ class IncomeService
      */
     public function calculateOwnerProfit(): void
     {
-        if ($this->owner) {
-            $this->params['ownerProfit'] = $this->dailyEarn * ($this->owner->pivot->referral_percent / 100);
+        if ($this->referrer) {
+            $this->params['referrerProfit'] = $this->dailyEarn * ($this->referrer->referral_percent / 100);
         }
     }
 
@@ -160,9 +166,9 @@ class IncomeService
      *
      * @return bool
      */
-    private function isLessThenMinWithdrawOwner(): bool
+    private function isLessThenMinWithdrawReferrer(): bool
     {
-        return ($this->owner->pending_amount + $this->params['ownerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
+        return ($this->referrer->pending_amount + $this->params['referrerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
     private function buildDto(?Wallet $wallet): IncomeCreateData
