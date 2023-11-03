@@ -71,6 +71,7 @@ export default {
 .wallets {
     flex: 1 1 auto;
     display: flex;
+    padding: 24px;
     align-items: center;
     justify-content: center;
 }
