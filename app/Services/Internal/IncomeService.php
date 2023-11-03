@@ -190,7 +190,7 @@ class IncomeService
             subData: SubData::fromRequest([
                 'user_id' => $this->sub->user_id,
                 'group_id' => $this->sub->group_id,
-                'group_name' => $this->sub->sub,
+                'sub_name' => $this->sub->sub,
                 'pending_amount' => $this->params['pendingAmount'],
                 'total_amount' => $this->params['totalAmount'],
             ]),
@@ -202,7 +202,7 @@ class IncomeService
                 subData: SubData::fromRequest([
                     'user_id' => $this->owner->user_id,
                     'group_id' => $this->owner->group_id,
-                    'group_name' => $this->owner->sub,
+                    'sub_name' => $this->owner->sub,
                     'pending_amount' => $this->owner->pending_amount + $this->params['ownerProfit'],
                     'total_amount' => $this->owner->total_amount + $this->params['ownerProfit'],
                 ]),

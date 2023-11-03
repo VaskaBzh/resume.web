@@ -159,7 +159,7 @@ class LoginTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_code',
-                        'has_referral_role'
+                        'has_referrer_role'
                     ],
                     'token',
                     'expired_at',

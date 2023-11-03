@@ -22,6 +22,8 @@ class UserFactory extends Factory
             'name' => "MainTest",
             'email' => 'forest@gmail.com',
             'password' => bcrypt('password'),
+            'referral_percent' => 1,
+            'referral_discount' => 1,
         ];
     }
 

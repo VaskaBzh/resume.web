@@ -11,14 +11,14 @@ readonly final class SubData
     /**
      * @param int $userId - id пользователя allbtc.com
      * @param int $groupId - id сабаккаунта
-     * @param string $groupName - имя сабаккаунта
+     * @param string $subName - имя сабаккаунта
      * @param float|null $pendingAmount - доход не превысивший допстимый порог вывода средств и удержанный на балансе
      * @param float|null $totalAmount - сумма добычи за все время
      */
     public function __construct(
         public int $userId,
         public int $groupId,
-        public string $groupName,
+        public string $subName,
         public ?float $pendingAmount,
         public ?float $totalAmount,
     )
@@ -30,7 +30,7 @@ readonly final class SubData
         return new self(
             userId: $requestData['user_id'],
             groupId: $requestData['group_id'],
-            groupName: $requestData['group_name'],
+            subName: $requestData['sub_name'],
             pendingAmount: Arr::get($requestData, 'pending_amount', 0),
             totalAmount: Arr::get($requestData, 'total_amount', 0),
         );
