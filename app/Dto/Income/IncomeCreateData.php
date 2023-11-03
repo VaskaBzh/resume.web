@@ -6,6 +6,7 @@ namespace App\Dto\Income;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
+use App\Enums\Income\Type;
 use Illuminate\Support\Arr;
 
 readonly final class IncomeCreateData
@@ -14,9 +15,9 @@ readonly final class IncomeCreateData
      * @param int $groupId - id сабаккаунта
      * @param int|null $walletId - кошелек
      * @param float $dailyAmount - доход пользователя за сутки
-     * @param string $type - тип начисления
-     * @param string $status - статус транзакции
-     * @param string $message - сообщение транзакции
+     * @param Type $type - тип начисления
+     * @param Status $status - статус транзакции
+     * @param Message $message - сообщение транзакции
      * @param float $hashrate - хэщрейт
      * @param int $difficulty - сложность сети
      */
@@ -24,9 +25,9 @@ readonly final class IncomeCreateData
         public int $groupId,
         public ?int $walletId,
         public float $dailyAmount,
-        public string $type,
-        public string $status,
-        public string $message,
+        public Type $type,
+        public Status $status,
+        public Message $message,
         public float $hashrate,
         public int $difficulty,
 
@@ -39,8 +40,8 @@ readonly final class IncomeCreateData
             walletId: $requestData['wallet_id'],
             dailyAmount: $requestData['dailyAmount'],
             type: $requestData['type'],
-            status: Arr::get($requestData, 'status', Status::REJECTED->value),
-            message: Arr::get($requestData, 'message', Message::NO_WALLET->value),
+            status: $requestData['status'],
+            message: $requestData['message'],
             hashrate: $requestData['hash'],
             difficulty: $requestData['diff'],
         );

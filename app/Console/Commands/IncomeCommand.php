@@ -23,8 +23,7 @@ class IncomeCommand extends Command
     public function handle(): void
     {
         Sub::hasWorkerHashRate()
-            ->with('user')
-            ->with('wallets')
+            ->with(['user', 'wallets', 'workers'])
             ->each(static function (Sub $sub) {
                 $sub->refresh();
                 self::process(
@@ -55,7 +54,7 @@ class IncomeCommand extends Command
                     ->setMessage(message: Message::LESS_MIN_WITHDRAWAL)
                     ->setStatus(status: Status::PENDING);
 
-                $incomeService->createLocalIncome(wallet: $wallet);
+                $incomeService->createIncome(wallet: $wallet);
                 $incomeService->createFinance();
                 $incomeService->updateLocalSub();
 
@@ -66,13 +65,13 @@ class IncomeCommand extends Command
                 ->setMessage(message: Message::READY_TO_PAYOUT)
                 ->setStatus(status: Status::READY_TO_PAYOUT);
 
-            $incomeService->createLocalIncome(wallet: $wallet);
+            $incomeService->createIncome(wallet: $wallet);
         } else {
             $incomeService
                 ->setMessage(message: Message::NO_WALLET)
                 ->setStatus(status: Status::PENDING);
 
-            $incomeService->createLocalIncome(wallet: null);
+            $incomeService->createIncome(wallet: null);
         }
 
         $incomeService->createFinance();
