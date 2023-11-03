@@ -5,7 +5,7 @@ export class ValidateService {
         form.password = password;
         validate = {};
 
-        if (form.password?.length <= 10 || form.password?.length >= 50)
+        if (form.password?.length < 10 || form.password?.length > 50)
             validate = { ...validate, length: true };
 
         if (!ValidateEnum.strokeLetters.test(form.password))

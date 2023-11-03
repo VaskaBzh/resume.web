@@ -1,17 +1,10 @@
-import { ValidationModel } from "@/modules/validate/model/ValidationModel";
+import { Validator } from "@/modules/validate/model/Validator";
 import { ValidationErrorsService } from "@/modules/validate/services/ValidationErrorsService";
-import { TranslateService } from "@/modules/common/services/extends/TranslateService";
+import { Injectable } from "@/DI/Injectable";
 
-export class ValidationInputService extends TranslateService {
-    constructor() {
-        super();
-
-        this.validationModel = this.createValidationModel();
-        this.validationErrorsService = this.createValidationErrorsService();
-    }
-
-    createValidationModel() {
-        return new ValidationModel();
+export class ValidationInputService extends Injectable {
+    constructor(validationModule = Validator, validationErrorsService = ValidationErrorsService) {
+        super(validationModule, validationErrorsService);
     }
 
     createValidationErrorsService() {
@@ -36,7 +29,7 @@ export class ValidationInputService extends TranslateService {
         return this;
     }
 
-    checkEqual(equalValue, name = this.translate("passwords")) {
+    checkEqual(equalValue, name = "passwords") {
         if (!this.validationModel.isEqual(equalValue)) {
             this.validationErrorsService.setError("match", { inputsName: name });
         }
@@ -49,15 +42,15 @@ export class ValidationInputService extends TranslateService {
     }
 
     checkInLimit(minValue = 3, maxValue = 15) {
-        if (!this.validationModel.isInLimit(minValue, maxValue)) {
-            this.validationErrorsService.setError(
-                "limit_length",
-                {
-                    min_length: minValue,
-                    max_length: maxValue
-                }
-            );
-        }
+        // if (!this.validationModel.isInLimit(minValue, maxValue)) {
+        //     this.validationErrorsService.setError(
+        //         "limit_length",
+        //         {
+        //             min_length: minValue,
+        //             max_length: maxValue
+        //         }
+        //     );
+        // }
     }
 
     checkInMaxLimit(maxValue = 15) {

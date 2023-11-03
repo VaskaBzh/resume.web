@@ -39,7 +39,7 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import FormPopup from "@/modules/form/Components/FormPopup.vue";
 
 import { WalletsMessages } from "@/modules/wallets/lang/WalletsMessages";
-import { ValidationInputService } from "@/modules/validate/services/ValidationInputService";
+import { Validator } from "@/modules/validate/model/Validator";
 
 export default {
     name: "AddWalletPopup",
@@ -78,16 +78,16 @@ export default {
     data() {
         return {
             form: this.addForm,
-            validationInputService: new ValidationInputService(),
+            validator: new Validator(),
         };
     },
     watch: {
         "form.walletAddress"(newValue) {
-            this.validationInputService.setErrorName("walletAddress").setValidationInputValue(newValue).checkInLimit(20, 255);
+            this.validator.validate(newValue, "walletAddress", "email|required|max:15|min:3");
 
-            if (!newValue) {
-                this.validationInputService.dropErrors();
-            }
+            // if (!newValue) {
+            //     this.validationInputService.dropErrors();
+            // }
         }
     },
 };

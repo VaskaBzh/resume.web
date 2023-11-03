@@ -84,15 +84,17 @@ export default {
     },
     watch: {
         "form.password"(newVal, oldVal) {
-            setTimeout(() => {
-                this.makeResize = true;
-                setTimeout(() => (this.makeResize = false), 50);
-            }, 355);
-            if(Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
+            if (newVal || oldVal) {
+                setTimeout(() => {
+                    this.makeResize = true;
+                    setTimeout(() => (this.makeResize = false), 50);
+                }, 355);
 
-                this.sendButton = true
+                if (Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
+
+                    this.sendButton = true
+                }
             }
-
         },
         "form.password_confirmation"(newVal, oldVal) {
             if(newVal && Object.keys(this.validateService.validate).length === 0) {
