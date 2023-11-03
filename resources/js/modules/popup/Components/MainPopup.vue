@@ -89,10 +89,11 @@ export default {
             }
         },
         makeResize(newResizeState) {
-            if (newResizeState)
+            if (newResizeState) {
                 setTimeout(() => {
                     this.service.animateOnUpdate();
                 }, 150);
+            }
         },
     },
     computed: {

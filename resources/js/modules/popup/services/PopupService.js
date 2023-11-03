@@ -18,21 +18,15 @@ export class PopupService {
     }
 
     setPopupContentHtml(newPopupContentHtml) {
-
         this.popupContentHtml = newPopupContentHtml;
-
     }
 
     setPopupBlockHtml(newPopupBlockHtml) {
-
         this.popupBlockHtml = newPopupBlockHtml;
-
     }
 
     setPopupLogoHtml(newPopupLogoHtml) {
-
         this.popupLogoHtml = newPopupLogoHtml;
-
     }
 
     setBodyHidden() {
@@ -100,9 +94,7 @@ export class PopupService {
             opacity: 1,
             easing: "easeOutCubic",
             duration: 150,
-            complete: () => {
-                this.dropAnimate();
-            },
+            complete: this.dropAnimate,
         });
     }
 
@@ -129,7 +121,10 @@ export class PopupService {
         const sidesPaddingValue = paddingWithoutUnit * 2;
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
-        return this.popupContentHtml.offsetHeight + sidesPaddingValue + sidesBorderWidthValue;
+        const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
+
+        return newHeightValue;
+
     }
 
     getStyle(element, property) {
@@ -147,7 +142,6 @@ export class PopupService {
             easing: "easeInCubic",
             duration: 350,
             complete: () => {
-                console.log('Jnhf,jnfkj')
                 this.dropAnimate();
 
                 this.animateLogoOpacity();
