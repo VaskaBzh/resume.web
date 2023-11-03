@@ -94,7 +94,6 @@ export default {
     },
     watch: {
         "form.password"(newVal, oldVal) {
-            if(newVal || oldVal) {
                 setTimeout(() => {
                     this.makeResize = true;
                     setTimeout(() => (this.makeResize = false), 50);
@@ -108,7 +107,7 @@ export default {
                 if(this.validateInputs && newVal !== oldVal) {
                     this.validateInputs = false
                 }
-            }
+
         },
         "form.password_confirmation"(newVal, oldVal) {
             if(this.validateInputs && newVal !== oldVal) {
