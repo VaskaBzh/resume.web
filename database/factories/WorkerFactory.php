@@ -19,8 +19,8 @@ class WorkerFactory extends Factory
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
             'approximate_hash_rate' => 100,
-
-            'group_id' => 666666,
+            'status' => 'ACTIVE',
+            'group_id' => 6666666,
         ];
     }
 }

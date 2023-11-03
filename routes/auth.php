@@ -20,7 +20,7 @@ Auth::routes([
 
 Route::controller(LoginController::class)->group(function () {
     Route::post('/login', 'login')
-        ->middleware(['two-factor', 'throttle:6,1']);
+        ->middleware(['two-factor']);
 
     Route::post('/logout', 'logout')
         ->middleware('auth:sanctum')
@@ -29,16 +29,13 @@ Route::controller(LoginController::class)->group(function () {
 
 Route::get('/verify/{id}/{hash}', VerificationController::class)
     ->name('verification.verify')
-    ->middleware('throttle:6,1')
     ->middleware('signed');
 
 Route::post('/email/verify', ResendVerifyEmailController::class)
-    ->name('resend-verify-email')
-    ->middleware('throttle:3,1');
+    ->name('resend-verify-email');
 
 Route::group([
     'prefix' => 'password',
-    'middleware' => 'throttle:6,1'
 ], function () {
     Route::put('/restore/{user}', [ResetPasswordController::class, 'restorePassword']);
     Route::post('/forgot', [ForgotPasswordController::class, 'sendLink']);
@@ -47,12 +44,12 @@ Route::group([
         ->name('password.reset.verify');
     Route::put('/change/{user}', PasswordChangeController::class)
         ->name('password-change')
-        ->middleware(['auth:sanctum', 'throttle:3,1']);
+        ->middleware('auth:sanctum');
 });
 
 Route::controller(TwoFactorController::class)
     ->prefix('2fac')
-    ->middleware(['auth:sanctum', 'throttle:6,1'])
+    ->middleware(['auth:sanctum'])
     ->group(static function () {
         Route::get('/qrcode/{user}', 'qrCode')->name('2fa.qrcode');
         Route::put('/enable/{user}', 'enable')->name('2fa.enable');

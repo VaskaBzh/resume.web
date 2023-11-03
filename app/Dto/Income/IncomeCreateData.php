@@ -13,8 +13,8 @@ readonly final class IncomeCreateData
     /**
      * @param int $groupId - id сабаккаунта
      * @param int|null $walletId - кошелек
-     * @param int|null $referralId - айди реферальной программы (хранение связи реферала с овнером)
      * @param float $dailyAmount - доход пользователя за сутки
+     * @param string $type - тип начисления
      * @param string $status - статус транзакции
      * @param string $message - сообщение транзакции
      * @param float $hashrate - хэщрейт
@@ -23,8 +23,8 @@ readonly final class IncomeCreateData
     public function __construct(
         public int $groupId,
         public ?int $walletId,
-        public ?int $referralId,
         public float $dailyAmount,
+        public string $type,
         public string $status,
         public string $message,
         public float $hashrate,
@@ -37,8 +37,8 @@ readonly final class IncomeCreateData
         return new self(
             groupId: $requestData['group_id'],
             walletId: $requestData['wallet_id'],
-            referralId: Arr::get($requestData, 'referral_id'),
             dailyAmount: $requestData['dailyAmount'],
+            type: $requestData['type'],
             status: Arr::get($requestData, 'status', Status::REJECTED->value),
             message: Arr::get($requestData, 'message', Message::NO_WALLET->value),
             hashrate: $requestData['hash'],

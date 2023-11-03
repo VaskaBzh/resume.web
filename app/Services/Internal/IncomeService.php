@@ -20,9 +20,10 @@ use App\Services\External\BtcComService;
 use App\Utils\Helper;
 use Illuminate\Support\Facades\Log;
 
-class IncomeService
+final class IncomeService
 {
     private Sub $sub;
+    private MinerStat $stat;
     private ?User $referrer;
     private float $dailyEarn;
     private float $fee;
@@ -32,13 +33,6 @@ class IncomeService
         'unit' => 'T',
         'totalPayment' => null,
     ];
-
-    public function __construct(
-        private MinerStat $stat,
-    )
-    {
-        $this->stat = MinerStat::first();
-    }
 
     /**
      * Устанавливаем хеш-рейт сабаккаунта
@@ -53,6 +47,7 @@ class IncomeService
     {
         $this->sub = $sub;
         $this->referrer = $sub->user->referrer;
+        $this->stat = MinerStat::first();
 
         $this->setHashRate();
 
@@ -171,9 +166,10 @@ class IncomeService
         return ($this->referrer->pending_amount + $this->params['referrerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
-    private function buildDto(?Wallet $wallet): IncomeCreateData
+    private function buildDto(?Wallet $wallet, string $incomeType): IncomeCreateData
     {
         return IncomeCreateData::fromRequest(requestData: array_merge([
+            'type' => $incomeType,
             'group_id' => $this->sub->group_id,
             'wallet_id' => $wallet?->id,
         ], $this->params));
@@ -231,7 +227,6 @@ class IncomeService
                         ->wallets()
                         ->first()
                         ?->id,
-                    'referral_id' => $this->owner->pivot->id,
                     'dailyAmount' => $this->params['ownerProfit'],
                     'status' => $this->params['status'],
                     'message' => $this->params['message'],
