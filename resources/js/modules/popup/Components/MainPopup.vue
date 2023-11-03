@@ -85,7 +85,7 @@ export default {
         },
         opened(newBool) {
             if (newBool) {
-                this.service.popupOpen(this.$refs.popup_block.scrollHeight);
+                this.service.popupOpen();
             }
         },
         makeResize(newResizeState) {
@@ -103,6 +103,7 @@ export default {
         this.service.setPopupBlockHtml(this.$refs.popup_block);
         this.service.setPopupLogoHtml(this.$refs.popup_logo);
         this.service.initFunc();
+
     },
     beforeUnmount() {
         this.service.destroyFunc();

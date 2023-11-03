@@ -1,10 +1,10 @@
-import { ref } from "vue";
+import {ref} from "vue";
 import anime from "animejs";
 
 
 export class PopupService {
     constructor(id, emit) {
-        this.isOpened = ref(false);
+        this.isOpened = ref(null);
         this.id = id;
         this.emit = emit;
         this.popupContentHtml = null;
@@ -18,15 +18,21 @@ export class PopupService {
     }
 
     setPopupContentHtml(newPopupContentHtml) {
+
         this.popupContentHtml = newPopupContentHtml;
+
     }
 
     setPopupBlockHtml(newPopupBlockHtml) {
+
         this.popupBlockHtml = newPopupBlockHtml;
+
     }
 
     setPopupLogoHtml(newPopupLogoHtml) {
+
         this.popupLogoHtml = newPopupLogoHtml;
+
     }
 
     setBodyHidden() {
@@ -123,10 +129,7 @@ export class PopupService {
         const sidesPaddingValue = paddingWithoutUnit * 2;
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
-        const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
-        console.dir(this.popupContentHtml.scrollHeight)
-        console.dir(this.popupContentHtml)
-        return newHeightValue;
+        return this.popupContentHtml.offsetHeight + sidesPaddingValue + sidesBorderWidthValue;
     }
 
     getStyle(element, property) {
@@ -144,6 +147,7 @@ export class PopupService {
             easing: "easeInCubic",
             duration: 350,
             complete: () => {
+                console.log('Jnhf,jnfkj')
                 this.dropAnimate();
 
                 this.animateLogoOpacity();
