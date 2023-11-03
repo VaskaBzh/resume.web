@@ -4,7 +4,7 @@ import anime from "animejs";
 
 export class PopupService {
     constructor(id, emit) {
-        this.isOpened = ref(null);
+        this.isOpened = ref(false);
         this.id = id;
         this.emit = emit;
         this.popupContentHtml = null;
@@ -52,7 +52,7 @@ export class PopupService {
     animateOnUpdate() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.getClearScrollHeight()}px`,
+            height: this.getClearScrollHeight()+'px',
             easing: "easeInCubic",
             duration: 500,
             complete: () => {
@@ -94,7 +94,7 @@ export class PopupService {
             opacity: 1,
             easing: "easeOutCubic",
             duration: 150,
-            complete: this.dropAnimate,
+            complete:() =>  this.dropAnimate(),
         });
     }
 
@@ -121,9 +121,7 @@ export class PopupService {
         const sidesPaddingValue = paddingWithoutUnit * 2;
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
-        const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
-
-        return newHeightValue;
+        return this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
 
     }
 

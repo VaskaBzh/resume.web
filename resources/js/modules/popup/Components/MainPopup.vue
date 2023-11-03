@@ -59,11 +59,11 @@ export default {
         id: String,
         opened: {
             type: Boolean,
-            default: false,
+
         },
         closed: {
             type: Boolean,
-            default: false,
+
         },
         makeResize: {
             type: Boolean,
