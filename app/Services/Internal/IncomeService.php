@@ -74,7 +74,6 @@ final class IncomeService
      * Init service
      * Set sub-account
      *
-     *
      * @param Sub $sub
      * @return bool
      */
@@ -118,12 +117,12 @@ final class IncomeService
      */
     private function setParams(): void
     {
-        $this->setFee();
-        $this->setNetworkDifficulty();
-        $this->setDailyEarn();
-        $this->setDailyAmount();
-        $this->setPendingAmount();
-        $this->setTotalAmount();
+        $this->setFee()
+            ->setNetworkDifficulty()
+            ->setDailyEarn()
+            ->setDailyAmount()
+            ->setPendingAmount()
+            ->setTotalAmount();
 
         if ($this->referrer) {
             $this->setReferrerProfit();
@@ -132,12 +131,16 @@ final class IncomeService
 
     /**
      * Set allbtc fee, decrease them if referrer exists
+     *
+     * @return IncomeService
      */
-    private function setFee(): void
+    private function setFee(): IncomeService
     {
         $this->fee = $this->referrer
             ? $this->sub->allbtc_fee - $this->referrer->discount_percent
             : $this->sub->allbtc_fee;
+
+        return $this;
     }
 
     /**
@@ -152,70 +155,73 @@ final class IncomeService
         return $this->params['hash'] > 0;
     }
 
-    private function setNetworkDifficulty(): void
+    /**
+     * @return IncomeService
+     */
+    private function setNetworkDifficulty(): IncomeService
     {
         $this->params['diff'] = $this->stat->network_difficulty;
+
+        return $this;
     }
 
     /**
      * Set pure mining daily earn
      *
-     * @return void
+     * @return IncomeService
      */
-    private function setDailyEarn(): void
+    private function setDailyEarn(): IncomeService
     {
         $this->dailyEarn = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: 0
         );
+
+        return $this;
     }
 
     /**
      * Set the daily earn after deducting the commission of allbtc and remote pool
      *
-     * @return void
+     * @return IncomeService
      */
-    private function setDailyAmount(): void
+    private function setDailyAmount(): IncomeService
     {
         $this->params['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: BtcComService::FEE + $this->fee
         );
-    }
-
-    /**
-     * Set total amount
-     *
-     * @return void
-     */
-    public function setTotalAmount(): void
-    {
-        $this->params['totalAmount'] = $this->params['dailyAmount'] + $this->sub->total_amount;
-    }
-
-    /**
-     * Set income message
-     *
-     * @param Message $message
-     * @return IncomeService
-     */
-    public function setMessage(Message $message): IncomeService
-    {
-        $this->params['message'] = $message->value;
 
         return $this;
     }
 
     /**
-     * Set income status
+     * Set total amount
      *
-     * @param Status $status
      * @return IncomeService
      */
-    public function setStatus(Status $status): IncomeService
+    public function setTotalAmount(): IncomeService
     {
+        $this->params['totalAmount'] = $this->params['dailyAmount'] + $this->sub->total_amount;
+
+        return $this;
+    }
+
+    /**
+     * Set income message and status
+     *
+     * @param Message $message
+     * @param Status  $status
+     * @return IncomeService
+     */
+    public function setInfo(
+        Message $message,
+        Status  $status
+    ): IncomeService
+    {
+        $this->params['message'] = $message->value;
         $this->params['status'] = $status->value;
 
         return $this;
@@ -236,11 +242,13 @@ final class IncomeService
     /**
      * Set referrer profit if exits
      *
-     * @return void
+     * @return IncomeService
      */
-    public function setReferrerProfit(): void
+    public function setReferrerProfit(): IncomeService
     {
         $this->params['referrerProfit'] = $this->dailyEarn * ($this->referrer->referral_percent / 100);
+
+        return $this;
     }
 
     /**
@@ -248,9 +256,9 @@ final class IncomeService
      *
      * @return bool
      */
-    public function isLessThenMinWithdraw(): bool
+    public function isReadyToPayOut(): bool
     {
-        return ($this->sub->pending_amount + $this->params['dailyAmount']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
+        return ($this->sub->pending_amount + $this->params['dailyAmount']) >= Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
     /**
@@ -263,16 +271,6 @@ final class IncomeService
         return ($this->referrer->pending_amount + $this->params['referrerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
-    private function buildDto(?Wallet $wallet, Type $incomeType): IncomeCreateData
-    {
-        return IncomeCreateData::fromRequest(requestData: [
-            'type' => $incomeType,
-            'group_id' => $this->sub->group_id,
-            'wallet_id' => $wallet?->id,
-
-        ]);
-    }
-
     /**
      * Create income
      * Create referrer income if exists
@@ -282,42 +280,30 @@ final class IncomeService
      */
     public function createIncome(?Wallet $wallet): void
     {
-
         $income = IncomeCreate::execute(
-            incomeCreateData: IncomeCreateData::fromRequest([
-                'group_id' => $this->sub->group_id,
-                'wallet_id' => $wallet?->id,
-                'dailyAmount' => $this->params['dailyAmount'],
-                'type' => Type::MINING,
-                'status' => $this->params['status'],
-                'message' => $this->params['message'],
-                'hashrate' => $this->params['hash'],
-                'difficulty' => $this->params['diff'],
-            ])
+            incomeCreateData: $this->buildMiningTypeDto($wallet)
         );
 
         if ($this->referrer) {
+
+            $referrerSub = $this->referrer->subs->first();
+
             $referralIncome = IncomeCreate::execute(
                 incomeCreateData: IncomeCreateData::fromRequest([
-                    'group_id' => $this->owner->group_id,
-                    'wallet_id' => $this->referrer
-                        ->subs
-                        ->flatMap
-                        ->wallets
-                        ->first()
-                        ?->id,
+                    'group_id' => $referrerSub->group_id,
+                    'wallet_id' => $referrerSub->wallets->first()?->id,
                     'dailyAmount' => $this->params['referrerProfit'],
                     'type' => Type::REFERRAL,
                     'status' => $this->params['status'],
                     'message' => $this->params['message'],
                     'hash' => $this->params['hash'],
-                    'diff' => $this->params['diff']
+                    'diff' => $this->params['diff'],
                 ])
             );
 
             Log::channel('incomes')
                 ->info(
-                    message: "REFERRAL INCOME CREATE FROM {$this->sub->sub} to {$this->referrer->sub->sub}",
+                    message: "REFERRAL INCOME CREATE FROM {$this->sub->sub} to {$referrerSub->sub}",
                     context: $referralIncome->toArray()
                 );
         }
@@ -376,5 +362,24 @@ final class IncomeService
             'percent' => $this->sub->percent,
             'profit' => $this->dailyEarn * (($this->sub->percent + BtcComService::FEE) / 100),
         ]));
+    }
+
+    private function buildMiningTypeDto(?Wallet $wallet): IncomeCreateData
+    {
+        return IncomeCreateData::fromRequest([
+            'group_id' => $this->sub->group_id,
+            'wallet_id' => $wallet?->id,
+            'dailyAmount' => $this->params['dailyAmount'],
+            'type' => Type::MINING,
+            'status' => $this->params['status'],
+            'message' => $this->params['message'],
+            'hashrate' => $this->params['hash'],
+            'difficulty' => $this->params['diff'],
+        ]);
+    }
+
+    private function buildReferralTypeDto()
+    {
+
     }
 }
