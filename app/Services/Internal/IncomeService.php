@@ -100,7 +100,7 @@ final class IncomeService
         $this->sub = $sub;
         $this->referrerSub = $referrerSub;
         $this->referralPercent = (float)$referrerSub?->user->referral_percent;
-        $this->referralDiscount = (float)$referrerSub?->user->referral_dicsount;
+        $this->referralDiscount = (float)$sub->referral_dicsount;
 
         if (!$this->setHashRate()) {
             throw new IncomeCreatingException(sprintf('Sub-account %s hasn\'t a hash rate!', $sub->sub));
