@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Referral;
 
 use Illuminate\Http\Resources\Json\ResourceCollection;
 use OpenApi\Attributes as OA;
@@ -34,7 +34,7 @@ use OpenApi\Attributes as OA;
 class ReferralResourceCollection extends ResourceCollection
 {
 
-    public function toArray($request)
+    public function toArray($request): array
     {
         return [
             'data' => $this->collection

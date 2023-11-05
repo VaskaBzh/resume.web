@@ -1,5 +1,8 @@
 export const SettingsMessage = {
     en: {
+        error: {
+            'password-confirmation': 'Your passwords don`t match '
+        },
         title: ["Personal Information", "Safety", "Account"],
         labels: {
             login: "Login",
@@ -38,7 +41,7 @@ export const SettingsMessage = {
                 "An SMS with a confirmation code will be sent to the specified number.",
                 "Sent a code to the number",
                 "Link your account to Google Authenticator using a QR code or setup key",
-                "To confirm, enter the temporary code from the Google Authenticator app",
+                "To confirm enter the temporary code from the Google Authenticator app",
                 "Resend code",
             ],
             button: ["Back", "Change", "Send code"],
@@ -65,8 +68,8 @@ export const SettingsMessage = {
         },
         password_popup: {
             title: "Change Password",
-            description:
-                "To change the password, you need to remember the current one",
+            description: "To change the password you need to remember the current one",
+            'description-two': "Enter a new password for your account",
             placeholders: {
                 current_password: "Current Password",
                 new_password: "New Password",
@@ -76,6 +79,9 @@ export const SettingsMessage = {
         },
     },
     ru: {
+        error: {
+            'password-confirmation': 'Ваши пароли не совпадают'
+        },
         title: ["Персональные данные", "Безопасность", "Аккаунт"],
         labels: {
             login: "Логин",
@@ -141,7 +147,8 @@ export const SettingsMessage = {
         },
         password_popup: {
             title: "Смена пароля",
-            description: "Чтобы сменить пароль нужно помнить текущий",
+            description: "Чтобы сменить пароль, нужно помнить текущий",
+            'description-two': "Введите новый пароль для аккаунта",
             placeholders: {
                 current_password: "Текущий пароль",
                 new_password: "Новый пароль",

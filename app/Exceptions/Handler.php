@@ -37,6 +37,7 @@ class Handler extends ExceptionHandler
         ValidationException::class,
         NotFoundHttpException::class,
         BusinessException::class,
+        IncomeCreatingException::class,
     ];
 
     /**

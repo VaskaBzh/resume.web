@@ -111,7 +111,7 @@ export default {
     },
     methods: {
         change_index(data) {
-            this.$store.dispatch("set_active", data);
+            this.$store.dispatch("set_active_in_list", data);
         },
         async logout() {
             this.$store.dispatch("logout");

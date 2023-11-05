@@ -516,22 +516,6 @@
                         }
                     }
                 ],
-                "requestBody": {
-                    "description": "Request body for generating a referral code",
-                    "required": false,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "properties": {
-                                    "group_id": {
-                                        "type": "integer"
-                                    }
-                                },
-                                "type": "object"
-                            }
-                        }
-                    }
-                },
                 "responses": {
                     "200": {
                         "description": "Referral code generated successfully",
@@ -623,9 +607,6 @@
                                                     },
                                                     "created_at": {
                                                         "type": "string"
-                                                    },
-                                                    "worker_count": {
-                                                        "type": "integer"
                                                     }
                                                 },
                                                 "type": "object"

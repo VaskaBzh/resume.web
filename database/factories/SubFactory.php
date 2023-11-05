@@ -16,11 +16,11 @@ class SubFactory extends Factory
         $user = User::whereEmail('forest@gmail.com')->first();
 
         return [
-            'group_id' => 666666,
+            'group_id' => $this->faker->randomNumber(),
             'sub' => $this->faker->name,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'percent' => 3.5,
+            'allbtc_fee' => 3.5,
             'pending_amount' => 0,
             'total_amount' => 0,
 

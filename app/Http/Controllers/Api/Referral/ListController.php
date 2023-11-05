@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ReferralResourceCollection;
-use App\Models\Sub;
+use App\Http\Resources\Referral\ReferralResourceCollection;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ListController extends Controller
 {
@@ -67,22 +65,12 @@ class ListController extends Controller
             ],
         )
     ]
-    public function __invoke(User $user, BtcComService $btcComService)
+    public function __invoke(User $user)
     {
-        if (!$user?->referral_code) {
-            return new JsonResponse([
-                'errors' => [
-                    'message' => [__('actions.referral.code.exists')]
-                ]
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $this->authorize('viewAny', $user);
 
-        $referralCodeData = ReferralService::getReferralDataFromCode($user->referral_code);
+        $referralCollection = ReferralService::getReferralCollection(user: $user);
 
-        $owner = Sub::getByGroupId($referralCodeData['group_id'])->first();
-
-        $referralSubs = ReferralService::getReferralCollection(owner: $owner, btcComService: $btcComService);
-
-        return new ReferralResourceCollection($referralSubs);
+        return new ReferralResourceCollection($referralCollection);
     }
 }

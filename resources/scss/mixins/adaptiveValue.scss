@@ -1,0 +1,14 @@
+@use "sass:math";
+
+@function adaptive-value($fontMin, $fontMax, $viewportWidthMin: 479.98px, $viewportWidthMax: 1920px) {
+    $fontDifference: $fontMax - $fontMin;
+    $viewportWidthDifference: $viewportWidthMax - $viewportWidthMin;
+
+    $coefficient: math.div($fontDifference, $viewportWidthDifference) ;
+
+    $bDoth: $fontMin - ($coefficient * $viewportWidthMin);
+
+    $bWithUnit: $bDoth * 1px;
+
+    @return calc( #{$coefficient} * 100vw + #{$bDoth} );
+}

@@ -10,6 +10,7 @@ use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
+use Database\Seeders\RoleAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -81,9 +82,9 @@ class RegistrationTest extends TestCase
     )
     {
         $user = User::factory()->create();
-        Sub::factory()->create();
+        app(RoleAndPermissionsSeeder::class)->run();
 
-        $code = app(ReferralService::class)->generateReferralCode(666666);
+        $code = app(ReferralService::class)->generateReferralCode($user);
         $user->update(['referral_code' => $code]);
         $mockedResponse = [
             'data' => $btcComSubResponse,
@@ -101,9 +102,11 @@ class RegistrationTest extends TestCase
             ->assertCreated()
             ->assertJsonStructure($signUpResponseStructure);
 
+        $referral = $user->referrals()->first();
+
         $this->assertDatabaseHas('users', ['name' => $signUpData['name'], 'email' => $signUpData['email']]);
-        $referral = User::whereEmail($signUpData['email'])->first();
-        $this->assertDatabaseHas('referrals', ['user_id' => $referral->id, 'group_id' => 666666]);
+        $this->assertEquals($referral->email, $signUpData['email']);
+        $this->assertEquals($referral->referral_discount, $user->referral_discount);
 
         Notification::assertSentTo(
             $referral,
@@ -132,7 +135,7 @@ class RegistrationTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_code',
-                        'has_referral_role'
+                        'has_referrer_role'
                     ],
                     'token',
                 ],
@@ -168,7 +171,7 @@ class RegistrationTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_code',
-                        'has_referral_role'
+                        'has_referrer_role'
                     ],
                     'token',
                 ],

@@ -1,7 +1,7 @@
 <template>
     <transition name="burger">
         <div
-            v-show="isOpenBurger || viewportWidth >= 900 || !viewportWidth"
+            v-show="isOpenBurger || viewportWidth > 900 || !viewportWidth"
             class="nav onboarding_block"
             :class="{
                 'onboarding_block-target':
