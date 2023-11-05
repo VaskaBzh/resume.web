@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
+use App\Models\Income;
 use App\Actions\Finance\Create;
+use App\Exceptions\IncomeCreatingException;
 use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
@@ -15,7 +17,6 @@ use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Models\MinerStat;
 use App\Models\Sub;
-use App\Models\User;
 use App\Models\Wallet;
 use App\Services\External\BtcComService;
 use App\Utils\Helper;
@@ -24,13 +25,6 @@ use Illuminate\Support\Facades\Log;
 final class IncomeService
 {
     /**
-     * Local sub-account
-     *
-     * @var Sub
-     */
-    private Sub $sub;
-
-    /**
      * Global mining stats (net difficulty, reward block, etc)
      *
      * @var MinerStat
@@ -38,12 +32,32 @@ final class IncomeService
     private MinerStat $stat;
 
     /**
-     * Sub-account referrer
-     * He makes profit from the sub-account
+     * Local sub-account
      *
-     * @var User|null
+     * @var Sub
      */
-    private ?User $referrer;
+    private Sub $sub;
+
+    /**
+     * Referrer sub-account
+     *
+     * @var Sub|null
+     */
+    private ?Sub $referrerSub;
+
+    /**
+     * Referral percent
+     *
+     * @var float
+     */
+    private float $referralPercent;
+
+    /**
+     * Referral discount
+     *
+     * @var float
+     */
+    private float $referralDiscount;
 
     /**
      * Pure sub-account coin earning
@@ -60,54 +74,43 @@ final class IncomeService
     private float $fee;
 
     /**
-     * Default params
+     * Income parameters.
      *
-     * @var array
+     * @var array<string, array[]>
      */
     private array $params = [
-        'status' => Status::REJECTED->value,
-        'unit' => 'T',
-        'totalPayment' => null,
+        'mining' => [],
+        'referral' => [],
+        'hash' => null,
+        'diff' => null,
     ];
 
     /**
      * Init service
      * Set sub-account
      *
-     * @param Sub $sub
-     * @return bool
+     * @param Sub      $sub
+     * @param Sub|null $referrerSub
+     * @return IncomeService
+     * @throws IncomeCreatingException
      */
-    public function init(Sub $sub): bool
+    public function init(Sub $sub, ?Sub $referrerSub): IncomeService
     {
+        $this->stat = MinerStat::first();
         $this->sub = $sub;
-        $this->setDependencies();
+        $this->referrerSub = $referrerSub;
+        $this->referralPercent = (float)$referrerSub?->user->referral_percent;
+        $this->referralDiscount = (float)$referrerSub?->user->referral_dicsount;
 
         if (!$this->setHashRate()) {
-            return false;
+            throw new IncomeCreatingException(sprintf('Sub-account %s hasn\'t a hash rate!', $sub->sub));
         }
 
         $this->setParams();
 
-        Log::channel('incomes')
-            ->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+        Log::channel('incomes')->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
 
-        return true;
-    }
-
-    /**
-     * Set referrer
-     * Set mining stats
-     *
-     * @return void
-     */
-    private function setDependencies(): void
-    {
-        $this->referrer = $this->sub
-            ->user
-            ->referrer
-            ?->load(['subs.wallets']);
-
-        $this->stat = MinerStat::first();
+        return $this;
     }
 
     /**
@@ -117,15 +120,21 @@ final class IncomeService
      */
     private function setParams(): void
     {
-        $this->setFee()
+        $this
+            ->setFee()
             ->setNetworkDifficulty()
             ->setDailyEarn()
             ->setDailyAmount()
-            ->setPendingAmount()
-            ->setTotalAmount();
+            ->setPendingAmount($this->sub, Type::MINING)
+            ->setTotalAmount($this->sub, Type::MINING)
+            ->setInfo($this->sub, Type::MINING);
 
-        if ($this->referrer) {
-            $this->setReferrerProfit();
+        if ($this->referrerSub) {
+            $this
+                ->setReferrerProfit()
+                ->setPendingAmount($this->referrerSub, Type::REFERRAL)
+                ->setTotalAmount($this->referrerSub, Type::REFERRAL)
+                ->setInfo($this->referrerSub, Type::REFERRAL);
         }
     }
 
@@ -136,9 +145,7 @@ final class IncomeService
      */
     private function setFee(): IncomeService
     {
-        $this->fee = $this->referrer
-            ? $this->sub->allbtc_fee - $this->referrer->discount_percent
-            : $this->sub->allbtc_fee;
+        $this->fee = $this->sub->allbtc_fee - $this->referralDiscount;
 
         return $this;
     }
@@ -188,7 +195,7 @@ final class IncomeService
      */
     private function setDailyAmount(): IncomeService
     {
-        $this->params['dailyAmount'] = Helper::calculateEarn(
+        $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: BtcComService::FEE + $this->fee
@@ -198,43 +205,33 @@ final class IncomeService
     }
 
     /**
-     * Set total amount
+     * Set sub-account daily amount until withdrawal limit
      *
+     * @param Sub  $sub
+     * @param Type $incomeType
      * @return IncomeService
      */
-    public function setTotalAmount(): IncomeService
+    public function setPendingAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params['totalAmount'] = $this->params['dailyAmount'] + $this->sub->total_amount;
+        $this->params
+        [$incomeType->value]
+        ['pendingAmount'] = $sub->pending_amount + $this->params[$incomeType->value]['dailyAmount'];
 
         return $this;
     }
 
     /**
-     * Set income message and status
+     * Set sub-account total amount for all time
      *
-     * @param Message $message
-     * @param Status  $status
+     * @param Sub  $sub
+     * @param Type $incomeType
      * @return IncomeService
      */
-    public function setInfo(
-        Message $message,
-        Status  $status
-    ): IncomeService
+    public function setTotalAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params['message'] = $message->value;
-        $this->params['status'] = $status->value;
-
-        return $this;
-    }
-
-    /**
-     * Set daily amount until withdrawal limit
-     *
-     * @return IncomeService
-     */
-    public function setPendingAmount(): IncomeService
-    {
-        $this->params['pendingAmount'] = $this->sub->pending_amount + $this->params['dailyAmount'];
+        $this->params
+        [$incomeType->value]
+        ['totalAmount'] = $this->params[$incomeType->value]['dailyAmount'] + $sub->total_amount;
 
         return $this;
     }
@@ -246,7 +243,9 @@ final class IncomeService
      */
     public function setReferrerProfit(): IncomeService
     {
-        $this->params['referrerProfit'] = $this->dailyEarn * ($this->referrer->referral_percent / 100);
+        $this->params
+        [Type::REFERRAL->value]
+        ['dailyAmount'] = $this->dailyEarn * ($this->referralPercent / 100);
 
         return $this;
     }
@@ -254,98 +253,86 @@ final class IncomeService
     /**
      * Checking if pending limit has been reached
      *
+     * @param Sub  $sub
+     * @param Type $incomeType
      * @return bool
      */
-    public function isReadyToPayOut(): bool
+    public function isReadyToPayOut(Sub $sub, Type $incomeType): bool
     {
-        return ($this->sub->pending_amount + $this->params['dailyAmount']) >= Wallet::MIN_BITCOIN_WITHDRAWAL;
+        $dailyAmount = $this->params[$incomeType->value]['dailyAmount'];
+
+        return ($sub->pending_amount + $dailyAmount) >= Wallet::MIN_BITCOIN_WITHDRAWAL;
     }
 
     /**
-     * Checking if pending limit for referrer has been reached
+     * Set income message and status
      *
-     * @return bool
+     * @param Sub  $sub
+     * @param Type $incomeType
+     * @return IncomeService
      */
-    private function isLessThenMinWithdrawReferrer(): bool
+    public function setInfo(
+        Sub  $sub,
+        Type $incomeType
+    ): IncomeService
     {
-        return ($this->referrer->pending_amount + $this->params['referrerProfit']) < Wallet::MIN_BITCOIN_WITHDRAWAL;
+        if ($this->isReadyToPayOut($sub, $incomeType)) {
+
+            $this->params[$incomeType->value]['message'] = Message::READY_TO_PAYOUT;
+            $this->params[$incomeType->value]['status'] = Status::READY_TO_PAYOUT;
+        } else {
+
+            $this->params[$incomeType->value]['message'] = Message::LESS_MIN_WITHDRAWAL;
+            $this->params[$incomeType->value]['status'] = Status::PENDING;
+        }
+
+        return $this;
     }
 
     /**
      * Create income
      * Create referrer income if exists
      *
-     * @param Wallet|null $wallet
-     * @return void
+     * @param Sub  $sub
+     * @param Type $incomeType
+     * @return Income
      */
-    public function createIncome(?Wallet $wallet): void
+    public function createIncome(Sub $sub, Type $incomeType): Income
     {
-        $income = IncomeCreate::execute(
-            incomeCreateData: $this->buildMiningTypeDto($wallet)
+        return IncomeCreate::execute(
+            incomeCreateData: IncomeCreateData::fromRequest([
+                'group_id' => $sub->group_id,
+                'dailyAmount' => $this->params[$incomeType->value]['dailyAmount'],
+                'type' => $incomeType,
+                'status' => $this->params[$incomeType->value]['status'],
+                'message' => $this->params[$incomeType->value]['message'],
+                'hash' => $this->params['hash'],
+                'diff' => $this->params['diff'],
+            ])
         );
-
-        if ($this->referrer) {
-
-            $referrerSub = $this->referrer->subs->first();
-
-            $referralIncome = IncomeCreate::execute(
-                incomeCreateData: IncomeCreateData::fromRequest([
-                    'group_id' => $referrerSub->group_id,
-                    'wallet_id' => $referrerSub->wallets->first()?->id,
-                    'dailyAmount' => $this->params['referrerProfit'],
-                    'type' => Type::REFERRAL,
-                    'status' => $this->params['status'],
-                    'message' => $this->params['message'],
-                    'hash' => $this->params['hash'],
-                    'diff' => $this->params['diff'],
-                ])
-            );
-
-            Log::channel('incomes')
-                ->info(
-                    message: "REFERRAL INCOME CREATE FROM {$this->sub->sub} to {$referrerSub->sub}",
-                    context: $referralIncome->toArray()
-                );
-        }
-
-        Log::channel('incomes')
-            ->info(message: 'INCOME CREATE', context: $income->toArray());
     }
 
     /**
      * Update local sub-account
      * Update local referrer sub-account if exists
      *
+     * @param Sub  $sub
+     * @param Type $incomeType
      * @return void
      */
-    public function updateLocalSub(): void
+    public function updateLocalSub(Sub $sub, Type $incomeType): void
     {
+        dump($this->params, $incomeType, $sub);
         Update::execute(
             subData: SubData::fromRequest([
-                'user_id' => $this->sub->user_id,
-                'group_id' => $this->sub->group_id,
-                'sub_name' => $this->sub->sub,
-                'pending_amount' => $this->params['pendingAmount'],
-                'total_amount' => $this->params['totalAmount'],
+                'user_id' => $sub->user_id,
+                'group_id' => $sub->group_id,
+                'sub_name' => $sub->sub,
+                'pending_amount' => $this->params[$incomeType->value]['pendingAmount'],
+                'total_amount' => $this->params[$incomeType->value]['totalAmount'],
             ]),
             sub: $this->sub
         );
-
-        if ($this->referrer) {
-
-            $referrerFirstSub = $this->referrer->subs->first();
-
-            Update::execute(
-                subData: SubData::fromRequest([
-                    'user_id' => $this->referrer->id,
-                    'group_id' => $referrerFirstSub->group_id,
-                    'sub_name' => $referrerFirstSub->sub,
-                    'pending_amount' => $referrerFirstSub->pending_amount + $this->params['referrerProfit'],
-                    'total_amount' => $referrerFirstSub->total_amount + $this->params['referrerProfit'],
-                ]),
-                sub: $referrerFirstSub
-            );
-        }
     }
 
     /**
@@ -358,28 +345,9 @@ final class IncomeService
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
             'earn' => $this->dailyEarn,
-            'user_total' => $this->params['dailyAmount'],
-            'percent' => $this->sub->percent,
-            'profit' => $this->dailyEarn * (($this->sub->percent + BtcComService::FEE) / 100),
+            'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
+            'percent' => $this->fee,
+            'profit' => $this->dailyEarn * (($this->fee + BtcComService::FEE) / 100),
         ]));
-    }
-
-    private function buildMiningTypeDto(?Wallet $wallet): IncomeCreateData
-    {
-        return IncomeCreateData::fromRequest([
-            'group_id' => $this->sub->group_id,
-            'wallet_id' => $wallet?->id,
-            'dailyAmount' => $this->params['dailyAmount'],
-            'type' => Type::MINING,
-            'status' => $this->params['status'],
-            'message' => $this->params['message'],
-            'hashrate' => $this->params['hash'],
-            'difficulty' => $this->params['diff'],
-        ]);
-    }
-
-    private function buildReferralTypeDto()
-    {
-
     }
 }

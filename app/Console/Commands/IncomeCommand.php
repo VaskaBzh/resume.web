@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
+use App\Enums\Income\Type;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Models\Sub;
+use Illuminate\Support\Facades\Log;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
+use App\Exceptions\IncomeCreatingException;
 
 class IncomeCommand extends Command
 {
@@ -23,29 +26,28 @@ class IncomeCommand extends Command
     public function handle(): void
     {
         Sub::hasWorkerHashRate()
-            ->with(['user', 'wallets', 'workers'])
+            ->with(['user', 'workers'])
             ->each(static function (Sub $sub) {
                 $sub->refresh();
 
-                $service = new IncomeService();
+                try {
+                    $referrerSub = $sub->user->referrer?->subs->first();
 
-                if (!$service->init(sub: $sub)) {
+                    $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerSub);
+                    $income = $service->createIncome($sub, Type::MINING);
+                    $service->updateLocalSub($sub, Type::MINING);
+                    $service->createFinance();
+
+                    if ($referrerSub) {
+                        $service->createIncome($referrerSub, Type::REFERRAL);
+                        $service->updateLocalSub($referrerSub, Type::REFERRAL);
+                    }
+
+                    Log::channel('incomes')
+                        ->info(message: 'INCOME CREATE', context: $income->toArray());
+                } catch (IncomeCreatingException) {
                     return;
                 }
-
-                $service->isReadyToPayOut()
-                    ? $service->setInfo(
-                    message: Message::READY_TO_PAYOUT,
-                    status: Status::READY_TO_PAYOUT
-                )
-                    : $service->setInfo(
-                    message: Message::LESS_MIN_WITHDRAWAL,
-                    status: Status::PENDING
-                );
-
-                $service->createIncome();
-                $service->createFinance();
-                $service->updateLocalSub();
             });
 
         if (config('app.production_env')) {

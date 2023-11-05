@@ -33,7 +33,6 @@ class Sub extends Model
     ];
 
     protected $casts = [
-        'pending_amount' => 'float',
         'total_amount' => 'float',
     ];
 

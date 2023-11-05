@@ -9,6 +9,7 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
 use App\Services\Internal\IncomeService;
+use App\Exceptions\IncomeCreatingException;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\TestCase;
 
@@ -59,7 +60,8 @@ class IncomeServiceTest extends TestCase
      */
     public function it_failed_if_sub_without_hash_rate()
     {
-        $this->assertFalse($this->service->init($this->subWithoutHashRate));
+        $this->service->init($this->subWithoutHashRate);
+        $this->expectException(IncomeCreatingException::class);
     }
 
     /**

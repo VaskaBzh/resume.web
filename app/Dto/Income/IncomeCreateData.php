@@ -13,7 +13,6 @@ readonly final class IncomeCreateData
 {
     /**
      * @param int $groupId - id сабаккаунта
-     * @param int|null $walletId - кошелек
      * @param float $dailyAmount - доход пользователя за сутки
      * @param Type $type - тип начисления
      * @param Status $status - статус транзакции
@@ -23,21 +22,18 @@ readonly final class IncomeCreateData
      */
     public function __construct(
         public int $groupId,
-        public ?int $walletId,
         public float $dailyAmount,
         public Type $type,
         public Status $status,
         public Message $message,
         public float $hashrate,
         public int $difficulty,
-
     ){}
 
     public static function fromRequest(array $requestData): IncomeCreateData
     {
         return new self(
             groupId: $requestData['group_id'],
-            walletId: $requestData['wallet_id'],
             dailyAmount: $requestData['dailyAmount'],
             type: $requestData['type'],
             status: $requestData['status'],

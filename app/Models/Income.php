@@ -22,8 +22,7 @@ class Income extends Model
 
     protected $fillable = [
         'group_id',
-        'referral_id',
-        'wallet_id',
+        'type',
         'daily_amount',
         'diff',
         'hash',
