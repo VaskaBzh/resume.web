@@ -14,6 +14,8 @@ return [
     */
 
     'failed' => 'These credentials do not match our records.',
+    'two_fa' => 'Wrong code',
+    'two_fa_empty' => 'Pass 2fa code!',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
     'email.verify' => 'Verify mail send to email address :value',
