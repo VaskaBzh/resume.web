@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Enums\Income\Type;
-use App\Enums\Income\Message;
-use App\Enums\Income\Status;
 use App\Models\Sub;
 use Illuminate\Support\Facades\Log;
 use App\Services\Internal\IncomeService;
@@ -34,6 +32,7 @@ class IncomeCommand extends Command
                     $referrerSub = $sub->user->referrer?->subs->first();
 
                     $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerSub);
+
                     $income = $service->createIncome($sub, Type::MINING);
                     $service->updateLocalSub($sub, Type::MINING);
                     $service->createFinance();

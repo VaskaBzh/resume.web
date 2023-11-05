@@ -126,12 +126,12 @@ class BtcComService
      */
     public function createLocalSub(User $user, string $subName): void
     {
-        $remoteSub = $this->createRemoteSub(subName: $subName);
+        //$remoteSub = $this->createRemoteSub(subName: $subName);
 
         Create::execute(
             subData: SubData::fromRequest([
                 'user_id' => $user->id,
-                'group_id' => $remoteSub['gid'],
+                'group_id' => 6666666,
                 'sub_name' => $subName,
             ])
         );

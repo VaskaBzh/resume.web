@@ -16,19 +16,14 @@ readonly class SubCreatingSubscriber
     /**
      * Create remote sub-account
      * Create local sub-account based on remote sub-account group_id
-     * Attach referral program on created local sub-account if referral_code
-     * Assign referral role to registered user if referral_code
+     * Attach referral program on user if referral_code exists
+     * Assign referral role to registered user if referral_code exists
      *
      * @param Registered $event
      * @return void
      */
     public function handleRegistered(Registered $event): void
     {
-        app(BtcComService::class)->createLocalSub(
-            user: $event->user,
-            subName: $event->user->name
-        );
-
         if (!$event->user->hasRole(Roles::REFERRAL->value) && $event->referralCode) {
 
             AttachReferral::execute(
@@ -38,6 +33,11 @@ readonly class SubCreatingSubscriber
 
             $event->user->assignRole(Roles::REFERRAL->value);
         }
+
+        app(BtcComService::class)->createLocalSub(
+            user: $event->user,
+            subName: $event->user->name
+        );
     }
 
     public function subscribe(Dispatcher $events): void

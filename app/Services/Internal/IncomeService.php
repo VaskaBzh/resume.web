@@ -179,11 +179,13 @@ final class IncomeService
      */
     private function setDailyEarn(): IncomeService
     {
-        $this->dailyEarn = Helper::calculateEarn(
+        $dailyEarn = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: 0
         );
+
+        $this->dailyEarn = (float) number_format($dailyEarn, 8);
 
         return $this;
     }
@@ -195,11 +197,13 @@ final class IncomeService
      */
     private function setDailyAmount(): IncomeService
     {
-        $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
+        $dailyAmount = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: BtcComService::FEE + $this->fee
         );
+
+        $this->params[Type::MINING->value]['dailyAmount'] = (float) number_format($dailyAmount, 8);
 
         return $this;
     }
@@ -243,9 +247,7 @@ final class IncomeService
      */
     public function setReferrerProfit(): IncomeService
     {
-        $this->params
-        [Type::REFERRAL->value]
-        ['dailyAmount'] = $this->dailyEarn * ($this->referralPercent / 100);
+        $this->params[Type::REFERRAL->value]['dailyAmount'] = $this->dailyEarn * ($this->referralPercent / 100);
 
         return $this;
     }
@@ -322,7 +324,6 @@ final class IncomeService
      */
     public function updateLocalSub(Sub $sub, Type $incomeType): void
     {
-        dump($this->params, $incomeType, $sub);
         Update::execute(
             subData: SubData::fromRequest([
                 'user_id' => $sub->user_id,
@@ -331,7 +332,7 @@ final class IncomeService
                 'pending_amount' => $this->params[$incomeType->value]['pendingAmount'],
                 'total_amount' => $this->params[$incomeType->value]['totalAmount'],
             ]),
-            sub: $this->sub
+            sub: $sub
         );
     }
 

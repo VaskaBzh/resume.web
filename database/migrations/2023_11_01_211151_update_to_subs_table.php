@@ -13,10 +13,10 @@ return new class extends Migration {
                 ->nullable();
             $table->unsignedDecimal('referral_percent')
                 ->after('referrer_id')
-                ->nullable();
+                ->default(0);
             $table->unsignedDecimal('referral_discount')
                 ->after('referral_percent')
-                ->nullable();
+                ->default(0);
         });
 
         Schema::table('subs', function (Blueprint $table) {
