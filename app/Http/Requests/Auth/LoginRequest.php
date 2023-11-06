@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => 'required|email|string|max:254',
             'password' => 'required',
-            'google2fa_code' => 'string|numeric|digits:6'
+            'google2fa_code' => 'string|digits:6'
         ];
     }
 

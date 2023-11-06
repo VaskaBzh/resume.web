@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TwoFactorVerifyRequest;
 use App\Models\User;
+use App\Traits\HasVerify;
 use Illuminate\Http\JsonResponse;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
@@ -14,6 +16,8 @@ use OpenApi\Attributes as OA;
 
 class TwoFactorController extends Controller
 {
+    use HasVerify;
+
     #[
         OA\Get(
             path: '/2fac/qrcode/{user}',
@@ -165,32 +169,27 @@ class TwoFactorController extends Controller
     public function enable(
         TwoFactorVerifyRequest $request,
         User                   $user,
-        Google2FA              $googleTwoFactor,
+        Google2FA $google2FA,
     ): JsonResponse
     {
-        try {
-            $isValid = $googleTwoFactor->verifyKey($request->secret, $request->code);
+        $isValid = $google2FA->verifyKey(
+            $request->secret,
+            $request->code
+        );
 
-            if (!$isValid) {
-                return new JsonResponse([
-                    'errors' => [
-                        'auth' => ['Не верный код']
-                    ]
-                ], Response::HTTP_FORBIDDEN);
-            }
+        if (!$isValid) {
 
-            $user->update(['google2fa_secret' => $request->secret]);
+            auth()->guard('web')->logout();
 
-            return new JsonResponse([
-                    'message' => __('actions.two_fa_enabled')]
+            throw new BusinessException(
+                clientMessage: __('auth.two_fa'),
+                statusCode: Response::HTTP_FORBIDDEN,
             );
-        } catch (\Throwable $e) {
-            report($e);
-
-            return new JsonResponse([
-                'message' => 'Something went wrong'
-            ], Response::HTTP_BAD_REQUEST);
         }
+
+        auth()->user()->update(['google2fa_secret' => $request->secret]);
+
+        return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
     }
 
 

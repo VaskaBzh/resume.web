@@ -11,18 +11,25 @@ use Symfony\Component\HttpFoundation\Response;
 
 trait HasVerify
 {
-    public function verifyTwoFa(Request $request): void
+    public function verifyTwoFa(?string $google2fa_code): void
     {
-        if (!$request->google2fa_code) {
+        if (!$google2fa_code) {
+
+            auth()->guard('web')->logout();
+
             throw new BusinessException(
                 clientMessage: __('auth.two_fa_empty'),
                 statusCode: Response::HTTP_FORBIDDEN,
             );
         }
+
         $isValid = resolve(Google2FA::class)
-            ->verifyKey(auth()->user()->google2fa_secret, $request->google2fa_code);
+            ->verifyKey(auth()->user()->google2fa_secret, $google2fa_code);
 
         if (!$isValid) {
+
+            auth()->guard('web')->logout();
+
             throw new BusinessException(
                 clientMessage: __('auth.two_fa'),
                 statusCode: Response::HTTP_FORBIDDEN,
@@ -33,8 +40,11 @@ trait HasVerify
     public function checkEmailVerification(Request $request): void
     {
         if (!$request->user()->hasVerifiedEmail()) {
+
+            auth()->guard('web')->logout();
+
             throw new BusinessException(
-                clientMessage: __('auth.email.not.verified', ['email' => $request->user()->email]),
+                clientMessage: __('auth.email.not.verified', ['email' => $request->email]),
                 statusCode: Response::HTTP_FORBIDDEN,
             );
         }

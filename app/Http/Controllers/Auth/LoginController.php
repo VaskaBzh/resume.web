@@ -93,7 +93,6 @@ class LoginController extends Controller
     ]
     public function login(LoginRequest $request): JsonResponse
     {
-
         if (!Auth::attempt($request->only('email', 'password'))) {
             throw new BusinessException(
                 clientMessage: __('auth.failed'),
@@ -104,7 +103,7 @@ class LoginController extends Controller
         $this->checkEmailVerification($request);
 
         if ($request->user()->google2fa_secret) {
-            $this->verifyTwoFa($request);
+            $this->verifyTwoFa($request->google2fa_code);
         }
 
         $token = UserService::withUser($request->user())
@@ -153,6 +152,7 @@ class LoginController extends Controller
     public function logout(Request $request): JsonResponse
     {
         PersonalAccessToken::findToken($request->bearerToken())->delete();
+        Auth::guard('web')->logout();
 
         return response()->json('Logged out');
     }

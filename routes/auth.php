@@ -19,7 +19,8 @@ Auth::routes([
 ]);
 
 Route::controller(LoginController::class)->group(function () {
-    Route::post('/login', 'login');
+    Route::post('/login', 'login')
+        ->name('login');
 
     Route::post('/logout', 'logout')
         ->middleware('auth:sanctum')
@@ -36,8 +37,10 @@ Route::post('/email/verify', ResendVerifyEmailController::class)
 Route::group([
     'prefix' => 'password',
 ], function () {
-    Route::put('/restore/{user}', [ResetPasswordController::class, 'restorePassword']);
-    Route::post('/forgot', [ForgotPasswordController::class, 'sendLink']);
+    Route::put('/restore/{user}', [ResetPasswordController::class, 'restorePassword'])
+        ->name('restore.password');
+    Route::post('/forgot', [ForgotPasswordController::class, 'sendLink'])
+        ->name('password.reset.link');
     Route::get('/reset/verify/{id}/{hash}', [ResetPasswordController::class, 'verifyPasswordReset'])
         ->middleware('signed')
         ->name('password.reset.verify');
