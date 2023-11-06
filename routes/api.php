@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\Incomes\ListController;
 use App\Http\Controllers\Api\MinerStatController;
 use App\Http\Controllers\Api\Payout\ListController as PayoutListController;
-use App\Http\Controllers\Api\Referral\CodeController as ReferralCodeController;
 use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
 use App\Http\Controllers\Api\Referral\StatisticController as ReferralStatisticController;
@@ -100,9 +99,6 @@ Route::group([
         'middleware' => 'role:referrer'
     ], function () {
         Route::get('/{user}', ReferralListController::class)->name('referral.list');
-        Route::post('/generate/{user}', ReferralCodeController::class)
-            ->middleware('throttle:6,1')
-            ->name('code');
         Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
     });

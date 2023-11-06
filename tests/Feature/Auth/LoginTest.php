@@ -158,7 +158,7 @@ class LoginTest extends TestCase
                         'phone',
                         'sms',
                         '2fa',
-                        'referral_code',
+                        'referral_url',
                         'has_referrer_role'
                     ],
                     'token',
