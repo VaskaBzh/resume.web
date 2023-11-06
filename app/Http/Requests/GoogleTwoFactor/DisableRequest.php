@@ -2,17 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\GoogleTwoFactor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class TwoFactorVerifyRequest extends FormRequest
+class DisableRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'code' => 'required|string|digits:6',
-            'secret' => 'required|string'
+            'code' => 'required|digits:6'
         ];
     }
 

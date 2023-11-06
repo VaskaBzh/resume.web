@@ -52,7 +52,9 @@ class TwoFacTest extends TestCase
 
         $this->user->update(['google2fa_secret' => $secretKey]);
         $this
-            ->putJson(route('v1.2fa.disable', $this->user))
+            ->actingAs($this->user)->putJson(route('v1.2fa.disable', $this->user), [
+                'code' => $googleAuth->getCurrentOtp($secretKey)
+            ])
             ->assertOk()
             ->assertJson([
                 'status' => true,

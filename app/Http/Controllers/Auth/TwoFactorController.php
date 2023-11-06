@@ -6,13 +6,14 @@ namespace App\Http\Controllers\Auth;
 
 use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TwoFactorVerifyRequest;
+use App\Http\Requests\GoogleTwoFactor\DisableRequest;
+use App\Http\Requests\GoogleTwoFactor\EnableRequest;
 use App\Models\User;
 use App\Traits\HasVerify;
 use Illuminate\Http\JsonResponse;
+use OpenApi\Attributes as OA;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
-use OpenApi\Attributes as OA;
 
 class TwoFactorController extends Controller
 {
@@ -167,9 +168,9 @@ class TwoFactorController extends Controller
         )
     ]
     public function enable(
-        TwoFactorVerifyRequest $request,
-        User                   $user,
-        Google2FA $google2FA,
+        EnableRequest $request,
+        User          $user,
+        Google2FA     $google2FA,
     ): JsonResponse
     {
         $isValid = $google2FA->verifyKey(
@@ -198,6 +199,23 @@ class TwoFactorController extends Controller
             path: '/2fac/disable/{user}',
             summary: 'Disable two-factor authentication',
             security: [['bearer' => []]],
+            requestBody: new OA\RequestBody(
+                required: true,
+                content: [
+                    new OA\JsonContent(
+                        required: ['code', 'secret'],
+                        properties: [
+                            new OA\Property(
+                                property: 'code',
+                                description: 'Google authenticator code',
+                                type: 'string',
+                                maxLength: 6,
+                                minLength: 6,
+                            ),
+                        ]
+                    )
+                ]
+            ),
             tags: ['Auth'],
             parameters: [
                 new OA\Parameter(
@@ -245,8 +263,10 @@ class TwoFactorController extends Controller
             ]
         )
     ]
-    public function disable(User $user): JsonResponse
+    public function disable(DisableRequest $request, User $user): JsonResponse
     {
+        $this->verifyTwoFa($request->code);
+
         return new JsonResponse([
             'status' => $user->update(['google2fa_secret' => null]),
             'message' => __('actions.two_fa_disabled')
