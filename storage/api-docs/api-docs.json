@@ -2922,7 +2922,7 @@
                         "type": "number",
                         "format": "float"
                     },
-                    "code": {
+                    "referral_url": {
                         "type": "string"
                     }
                 },
