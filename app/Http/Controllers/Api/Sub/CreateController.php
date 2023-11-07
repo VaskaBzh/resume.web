@@ -90,10 +90,7 @@ class CreateController extends Controller
         BtcComService    $btcComService,
     ): JsonResponse
     {
-        event(new SubCreatedEvent(
-            user: $user,
-            subName: $request->name
-        ));
+        $btcComService->createLocalSub($user, $request->name);
 
         return new JsonResponse([
             'message' => __('actions.success_sub_create')
