@@ -94,8 +94,6 @@ class GiveRoleCommand extends Command
 
                 break;
             }
-
-            $this->error('ERROR: USER NOT FOUND');
         }
     }
 }
