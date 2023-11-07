@@ -15,19 +15,21 @@ readonly final class IncomeCreateData
      * @param int $groupId - id сабаккаунта
      * @param float $dailyAmount - доход пользователя за сутки
      * @param Type $type - тип начисления
+     * @param ?int $referralId - id рефовода
      * @param Status $status - статус транзакции
      * @param Message $message - сообщение транзакции
      * @param float $hashrate - хэщрейт
      * @param int $difficulty - сложность сети
      */
     public function __construct(
-        public int $groupId,
-        public float $dailyAmount,
-        public Type $type,
-        public Status $status,
+        public int     $groupId,
+        public float   $dailyAmount,
+        public Type    $type,
+        public ?int     $referralId,
+        public Status  $status,
         public Message $message,
-        public float $hashrate,
-        public int $difficulty,
+        public float   $hashrate,
+        public int     $difficulty,
     ){}
 
     public static function fromRequest(array $requestData): IncomeCreateData
@@ -36,6 +38,7 @@ readonly final class IncomeCreateData
             groupId: $requestData['group_id'],
             dailyAmount: $requestData['dailyAmount'],
             type: $requestData['type'],
+            referralId: $requestData['referral_id'],
             status: $requestData['status'],
             message: $requestData['message'],
             hashrate: $requestData['hash'],
