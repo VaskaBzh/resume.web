@@ -96,12 +96,13 @@ class IncomeListController extends Controller
     ]
     public function __invoke(User $user)
     {
-        $referralsIncomeCollection = Income::with(['sub.user'])
-            ->whereIn('group_id', $user->subs()
-                ->first()
-                ->referrals()
+        $referralsIncomeCollection = Income::whereIn('group_id',
+            $user->load(['referrals.subs'])
+                ->referrals
+                ->flatMap
+                ->subs
                 ->pluck('group_id')
-            )
+        )
             ->where('type', 'referral')
             ->latest()
             ->paginate();

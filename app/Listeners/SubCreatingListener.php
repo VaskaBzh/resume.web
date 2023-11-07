@@ -9,9 +9,8 @@ use App\Enums\User\Roles;
 use App\Events\Registered;
 use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
-use Illuminate\Events\Dispatcher;
 
-readonly class SubCreatingSubscriber
+final readonly class SubCreatingListener
 {
     /**
      * Create remote sub-account
@@ -22,7 +21,7 @@ readonly class SubCreatingSubscriber
      * @param Registered $event
      * @return void
      */
-    public function handleRegistered(Registered $event): void
+    public function handle(Registered $event): void
     {
         if (!$event->user->hasRole(Roles::REFERRAL->value) && $event->referralCode) {
 
@@ -37,14 +36,6 @@ readonly class SubCreatingSubscriber
         app(BtcComService::class)->createLocalSub(
             user: $event->user,
             subName: $event->user->name
-        );
-    }
-
-    public function subscribe(Dispatcher $events): void
-    {
-        $events->listen(
-            Registered::class,
-            [SubCreatingSubscriber::class, 'handleRegistered']
         );
     }
 }
