@@ -103,6 +103,24 @@ export class CabinetService {
         return `${window.location.host}/registration${url.search}`;
     }
 
+    async setReferrerSub(group_id) {
+        try {
+            const response = await this.fetchActiveSub(group_id);
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.data.message,
+            });
+        } catch (err) {
+            console.error(`Error with: ${err}`);
+        }
+    }
+
+    async fetchActiveSub(group_id) {
+        return await ProfileApi.get(`/referrals/set_sub/${group_id}`);
+    }
+
     async index() {
         let response = {};
 

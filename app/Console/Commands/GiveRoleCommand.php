@@ -76,7 +76,7 @@ class GiveRoleCommand extends Command
             );
 
             $userCredential = $this->ask(question: 'Please type referral name or email');
-            $user = User::where('email', $userCredential)
+            $user = User::whereEmail($userCredential)
                 ->firstOrFail();
 
             $referralProgram = [
