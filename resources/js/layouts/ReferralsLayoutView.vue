@@ -10,9 +10,7 @@
                         :active="viewService.view"
                     />
                 </div>
-                <transition name="page">
-                    <router-view />
-                </transition>
+                <router-view />
             </div>
         </div>
     </div>

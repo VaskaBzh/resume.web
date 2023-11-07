@@ -144,7 +144,7 @@ export class CabinetService {
 
         const result = response.data;
 
-        let code = this.transformCode(result.code);
+        let code = this.transformCode(result.referral_url);
         this.setCode(code || "...");
 
         this.setActiveSub(result.group_id);
