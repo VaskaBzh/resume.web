@@ -35,33 +35,31 @@ export default {
     data() {
         return {
             currentValue: this.value,
-            currentUnit: "TH/s",
+            currentUnit: this.unit,
         };
     },
     watch: {
-        value(newValue) {
-            this.currentValue = newValue;
-            this.currentUnit = "TH/s"
-            if (this.getUnitLetter() === "T" && newValue >= 1000) {
-                this.currentValue = (this.currentValue / 1000).toFixed(2);
-                this.currentUnit = "PH/s"
-            }
+        value() {
+            this.setConvertedValue();
         },
     },
     mounted() {
-        this.currentValue = this.value;
-        this.currentUnit = "TH/s"
-        if (this.getUnitLetter() === "T" && this.value >= 1000) {
-            this.currentValue = (this.currentValue / 1000).toFixed(2);
-            this.currentUnit = "PH/s"
-        }
+        this.setConvertedValue();
     },
     methods: {
         getUnitLetter() {
             const MAIN_UNIT_LETTER_INDEX = 0;
             return this.currentUnit.split("")[MAIN_UNIT_LETTER_INDEX];
-        }
-    }
+        },
+        setConvertedValue() {
+            this.currentValue = this.value;
+            this.currentUnit = this.unit;
+            if (!!this.currentUnit && this.getUnitLetter() === "T" && this.value >= 1000) {
+                this.currentValue = (this.currentValue / 1000).toFixed(2);
+                this.currentUnit = "PH/s"
+            }
+        },
+    },
 };
 </script>
 <style scoped>

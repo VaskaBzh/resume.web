@@ -83,7 +83,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen1-en.png"
+                                    src="@img/iphone-14-screen1-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -94,7 +94,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen2-en.png"
+                                    src="@img/iphone-14-screen2-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -105,7 +105,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen3-en.png"
+                                    src="@img/iphone-14-screen3-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -116,7 +116,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen4-en.png"
+                                    src="@img/iphone-14-screen4-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -127,7 +127,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen5-en.png"
+                                    src="@img/iphone-14-screen5-en.png"
                                     alt=""
                                 />
                             </swiper-slide>

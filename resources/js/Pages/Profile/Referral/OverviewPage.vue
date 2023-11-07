@@ -15,6 +15,7 @@
                     class="referral__card-info"
                     :title="$t('stats.cards[1]')"
                     :value="service.statsCards[3]?.value ?? 0"
+                    unit="TH/s"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/hashrate-icon.png" />
