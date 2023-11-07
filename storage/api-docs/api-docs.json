@@ -2552,6 +2552,28 @@
                         }
                     }
                 ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "code",
+                                    "secret"
+                                ],
+                                "properties": {
+                                    "code": {
+                                        "description": "Google authenticator code",
+                                        "type": "string",
+                                        "maxLength": 6,
+                                        "minLength": 6
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "202": {
                         "description": "Two-factor authentication disabled successfully",

@@ -105,9 +105,9 @@ export const InstructionMessage = {
             ],
             settings: [
                 // `Here you can change your email by clicking the "Change" button.`,
-                `Specify the name for the watcher link in the pop-up window. //
+                `Add two-factor authentication to your account by clicking on the "Connect" button and follow the instructions. //
 
-                Set access to the pages for the watcher and press the "Add" button.`,
+                To change your password, click the "Change" button and follow the instructions.`,
             ],
         },
 
@@ -218,9 +218,9 @@ export const InstructionMessage = {
             ],
             settings: [
                 // `Здесь вы можете сменить ваш email нажав на кнопку «Сменить»`,
-                `Укажите название для ссылки наблюдателя в появившемся окне. //
+                `Чтобы обезапосить аккаунт добавьте двух-факторную аутентификацию нажав на кнопку «Подключить» и следуйте инструкции. //
 
-                Установите доступ к страницам у наблюдателя и нажмите кнопку «Добавить»`,
+                Чтобы сменить пароль нажмите на кнопку «Сменить» и следуйте инструкции.`,
             ],
         },
     },
