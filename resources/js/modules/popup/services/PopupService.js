@@ -124,8 +124,6 @@ export class PopupService {
         const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
 
         const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
-        console.dir(this.popupContentHtml.scrollHeight)
-        console.dir(this.popupContentHtml)
         return newHeightValue;
     }
 

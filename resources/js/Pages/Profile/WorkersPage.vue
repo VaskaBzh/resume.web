@@ -184,7 +184,6 @@ export default {
             }
 
             await this.worker_service.getPopup(data.id);
-            this.worker_service.openPopupCard();
         },
         dropWorkers() {
             this.worker_service.dropWorker();
