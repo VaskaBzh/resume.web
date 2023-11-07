@@ -52,7 +52,7 @@ class UserResource extends JsonResource
             'sms' => (bool) $this->sms,
             '2fa' => !is_null($this->google2fa_secret),
             'referral_code' => $this->referral_code,
-            'has_referral_role' => $this->hasRole('referral')
+            'has_referrer_role' => $this->hasRole('referrer')
         ];
     }
 }

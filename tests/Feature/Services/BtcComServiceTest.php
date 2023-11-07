@@ -41,7 +41,7 @@ class BtcComServiceTest extends TestCase
         $this->expectException(BusinessException::class);
         $this->expectExceptionMessage(__('actions.sub_account_already_exist'));
 
-        app(BtcComService::class)->createSub($this->user->id, 'MainTest');
+        app(BtcComService::class)->createLocalSub($this->user, 'MainTest');
 
         $this->assertDatabaseMissing('subs', ['user_id' => $this->user->id, 'sub' => $this->user->name]);
     }
@@ -55,7 +55,7 @@ class BtcComServiceTest extends TestCase
     {
         $this->makeFakeRequestToBtcCom(['data' => $btcComSubResponse]);
 
-        app(BtcComService::class)->createSub($this->user->id, 'MainTest');
+        app(BtcComService::class)->createLocalSub($this->user, 'MainTest');
 
         $this->assertDatabaseHas('subs', [
                 'user_id' => $this->user->id,
@@ -78,7 +78,8 @@ class BtcComServiceTest extends TestCase
     {
         $this->makeFakeRequestToBtcCom(['data' => $btcComSubResponse]);
 
-        $actualSubCollection = app(BtcComService::class)->transformSubCollection($localSubs);
+        $actualSubCollection = app(BtcComService::class)
+            ->transformSubCollection($localSubs->map(fn(array $localSub) => new Sub($localSub)));
 
         $this->assertTrue($actualSubCollection instanceof Collection);
         $this->assertEquals(count($expectedSubCollection), $actualSubCollection->count());
@@ -243,27 +244,26 @@ class BtcComServiceTest extends TestCase
         return [
             [
                 'localSubs' => collect([
-                    new Sub([
+                    [
                         'group_id' => 666666,
                         'sub' => 'MainTest',
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
-                        'percent' => 3.5,
+                        'allbtc_fee' => 3.5,
                         'pending_amount' => 0,
                         'total_amount' => 0,
                         'user_id' => 1,
-                    ]),
-                    new Sub([
+                    ],
+                    [
                         'group_id' => 777777,
                         'sub' => 'MainTest2',
                         'created_at' => Carbon::now(),
                         'updated_at' => Carbon::now(),
-                        'percent' => 3.5,
+                        'allbtc_fee' => 3.5,
                         'pending_amount' => 0,
                         'total_amount' => 0,
-
                         'user_id' => 1,
-                    ])
+                    ]
                 ]),
                 'btcComSubResponse' => [
                     'list' => [

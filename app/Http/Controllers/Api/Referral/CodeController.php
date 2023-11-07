@@ -18,21 +18,6 @@ use OpenApi\Attributes as OA;
         path: '/referrals/generate/{user}',
         summary: 'Generate a referral code for a user',
         security: [['bearer' => []]],
-        requestBody: new OA\RequestBody(
-            description: 'Request body for generating a referral code',
-            required: false,
-            content: [
-                new OA\JsonContent(
-                    properties: [
-                        new OA\Property(
-                            property: 'group_id',
-                            type: 'integer',
-                        ),
-                    ],
-                    type: 'object',
-                ),
-            ],
-        ),
         tags: ['Referral'],
         parameters: [
             new OA\Parameter(
@@ -88,11 +73,10 @@ class CodeController extends Controller
 {
     public function __invoke(User $user, Request $request): JsonResponse
     {
+        $this->authorize('viewAny', $user);
+
         try {
-            $code = ReferralService::generateCode(
-                user: $user,
-                sub: Sub::findOrFail($request->group_id)
-            );
+            $code = ReferralService::generateCode(referrer: $user);
 
             return new JsonResponse([
                 'success' => true,

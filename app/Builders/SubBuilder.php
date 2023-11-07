@@ -8,6 +8,7 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Collection;
 
 class SubBuilder extends BaseBuilder
 {
@@ -22,7 +23,7 @@ class SubBuilder extends BaseBuilder
     public function hasWorkerHashRate(): Builder
     {
         return $this->whereHas('workers', fn(Builder $query) => $query
-            ->where('approximate_hash_rate', '>', 0)
+            ->where('status', 'ACTIVE')
         );
     }
 
@@ -34,7 +35,7 @@ class SubBuilder extends BaseBuilder
             ->where('pending_amount', '>=', Wallet::MIN_BITCOIN_WITHDRAWAL);
     }
 
-    public function getActiveSubs(array $userIds): Builder
+    public function getActive(Collection $userIds): Builder
     {
         return Sub::whereIn('user_id', $userIds)->hasWorkerHashRate();
     }

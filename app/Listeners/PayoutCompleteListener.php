@@ -10,10 +10,6 @@ use Illuminate\Support\Facades\Log;
 
 class PayoutCompleteListener
 {
-    public function __construct()
-    {
-    }
-
     public function handle($event): void
     {
         $payout = Create::execute(payoutData: PayoutData::fromRequest([

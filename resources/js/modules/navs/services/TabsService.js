@@ -67,7 +67,7 @@ export class TabsService {
             },
         ];
 
-        if (user?.has_referral_role) {
+        if (user?.has_referrer_role) {
             this.setReferralTab();
         } else {
             this.setWithoutReferralTab();

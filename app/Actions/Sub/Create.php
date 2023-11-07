@@ -14,7 +14,7 @@ class Create
         return Sub::create([
             'user_id' => $subData->userId,
             'group_id' => $subData->groupId,
-            'sub' => $subData->groupName,
+            'sub' => $subData->subName,
             'pending_amount' => $subData->pendingAmount,
             'total_amount' => $subData->totalAmount,
         ]);

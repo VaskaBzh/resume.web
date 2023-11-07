@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
+use App\Models\User;
+use App\Traits\HasVerify;
 use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Internal\UserService;
+use PragmaRX\Google2FALaravel\Google2FA;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -31,6 +34,7 @@ class LoginController extends Controller
     */
 
     use AuthenticatesUsers;
+    use HasVerify;
 
     #[
         OA\Post(
@@ -78,12 +82,12 @@ class LoginController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]
@@ -96,10 +100,10 @@ class LoginController extends Controller
             );
         }
 
-        if (!$request->user()->hasVerifiedEmail()) {
-            throw new BusinessException(
-                clientMessage: __('auth.email.not.verified', ['email' => $request->user->email]),
-                statusCode: Response::HTTP_FORBIDDEN);
+        $this->checkEmailVerification($request);
+
+        if ($request->user()->google2fa_secret) {
+            $this->verifyTwoFa($request->google2fa_code);
         }
 
         $token = UserService::withUser($request->user())
@@ -136,18 +140,19 @@ class LoginController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]
     public function logout(Request $request): JsonResponse
     {
         PersonalAccessToken::findToken($request->bearerToken())->delete();
+        Auth::guard('web')->logout();
 
         return response()->json('Logged out');
     }
@@ -173,11 +178,11 @@ class LoginController extends Controller
                                     property: 'error',
                                     description: 'Error message',
                                     type: 'string'
-                                )
+                                ),
                             ]
-                        )
+                        ),
                     ]
-                )
+                ),
             ]
         )
     ]

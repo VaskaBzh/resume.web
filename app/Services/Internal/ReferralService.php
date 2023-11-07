@@ -4,35 +4,31 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Actions\User\AttachReferral;
 use App\Actions\User\GenerateReferralCode;
 use App\Dto\ReferralData;
-use App\Exceptions\BusinessException;
+use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
-use App\Models\Worker;
-use App\Repositories\IncomeRepository;
-use App\Services\External\BtcComService;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
-use Symfony\Component\HttpFoundation\Response;
 
 class ReferralService
 {
     /**
-     * @param User $user
-     * @param Sub $sub
-     * @return string
+     * Сгенерируем на основе group_id строковый код
+     * Сохраним его связанному пользователю
+     *
+     * @param User $referrer
+     * @return string $code
      * @throws \Exception
      */
-    public static function generateCode(User $user, Sub $sub): string
+    public static function generateCode(User $referrer): string
     {
         try {
-            $code = static::generateReferralCode(subGroupId: $sub->group_id);
+            $code = static::generateReferralCode(referrer: $referrer);
 
             GenerateReferralCode::execute(
                 referralData: ReferralData::fromRequest([
-                    'user' => $user,
+                    'user' => $referrer,
                     'code' => $code,
                 ])
             );
@@ -43,83 +39,84 @@ class ReferralService
         }
     }
 
-    public static function getOwnerStatistic(Collection $referrals): array
+    public static function getReferrerStatistic(User $referrer): array
     {
-        $activeReferralSubs = Sub::getActiveSubs($referrals->pluck('id')->toArray())->get();
+        $referrer->load([
+            'referrals',
+            'referrals.subs'
+        ]);
+
+        $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
 
         return [
-            'attached_referrals_count' => $referrals->count(),
-            'referrals_total_amount' => resolve(IncomeRepository::class)
-                ->getReferralsTotalAmount(referralIds: $referrals->pluck('id')),
-            'active_referrals_count' => $activeReferralSubs->count(),
-            'total_referrals_hash_rate' => Worker::whereIn('group_id',
-                $activeReferralSubs->pluck('group_id')->toArray()
-            )
-                ->onlyActive()
-                ->sum('approximate_hash_rate')
+            'attached_referrals_count' => $referrer->referrals->count(),
+            'active_referrals_count' => $activeReferralSubs
+                ->unique('user_id')
+                ->count(),
+            'referrals_total_amount' => Income::getReferralIncomes($referrer->referrals
+                ->flatMap
+                ->subs
+                ->pluck('group_id')
+            )->sum('daily_amount'),
+            'total_referrals_hash_rate' =>  $activeReferralSubs->map->total_hash_rate->sum()
         ];
     }
 
-    public static function getReferralCollection(Sub $owner, BtcComService $btcComService): Collection
+    public static function getReferralCollection(User $user): Collection
     {
-        return $owner->referrals->map(function (User $user) use ($btcComService) {
+        $referrals = $user->referrals()
+            ->with('subs')
+            ->with('subs.workers')
+            ->get();
 
-            $referralSubCollection = $btcComService
-                ->transformSubCollection($user->subs);
+        return $referrals->map(function (User $referral) {
+
+            $referralWorkers = $referral->subs->pluck('workers')->flatMap;
+            $referralSubs = $referral->subs;
 
             return [
-                'email' => $user->email,
-                'referral_active_workers_count' => $referralSubCollection->sum('workers_count_active'),
-                'referral_inactive_workers_count' => $referralSubCollection->sum('workers_count_in_active'),
-                'referral_hash_per_day' => $referralSubCollection->sum('hash_per_day'),
-                'total_amount' => resolve(IncomeRepository::class)
-                    ->getReferralTotalAmount(referralId: $user->pivot->id)
+                'email' => $referral->email,
+                'referral_active_workers_count' => $referralWorkers
+                    ->where('status', 'ACTIVE')
+                    ->count(),
+                'referral_inactive_workers_count' => $referralWorkers
+                    ->where('status', 'INACTIVE')
+                    ->count(),
+                'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
+                'total_amount' => Income::getReferralIncomes($referralSubs->pluck('group_id'))
+                    ->sum('daily_amount')
             ];
         });
     }
 
-    public static function getReferralIncomes(int $groupId, int $perPage): LengthAwarePaginator
+    /**
+     * Return referrer sub-account
+     *
+     * @param string $code
+     * @return User
+     */
+    public static function getReferrer(string $code): User
     {
-        return resolve(IncomeRepository::class)
-            ->getReferralIncomeCollection(groupId: $groupId,)
-            ->paginate($perPage);
+        return User::find(self::getReferralDataFromCode(code: $code)['user_id']);
     }
 
-    public static function attach(Sub $referralSub, string $code): void
+    /**
+     * Encode sub-account group_id to string
+     *
+     * @param User $user
+     * @return string
+     */
+    public static function generateReferralCode(User $referrer): string
     {
-        $owner = User::where('referral_code', $code)->first();
-
-        if (!$owner) {
-            throw new BusinessException(
-                __('actions.referral.code.exists'),
-                Response::HTTP_NOT_FOUND
-            );
-        }
-
-        if ($owner->id === $referralSub->user_id) {
-            throw new BusinessException(
-            __('auth.failed'),
-                Response::HTTP_FORBIDDEN
-            );
-        }
-
-        $decryptedData = static::getReferralDataFromCode(code: $code);
-
-        AttachReferral::execute(
-            referralSub: $referralSub,
-            ownerSub: Sub::find($decryptedData['group_id']),
-            referralPercent: $decryptedData['referral_percent'],
-        );
+        return base64_encode(json_encode(['user_id' => $referrer->id]));
     }
 
-    public static function generateReferralCode(int $subGroupId): string
-    {
-        return base64_encode(json_encode([
-            'group_id' => $subGroupId,
-            'referral_percent' => 0.8
-        ]));
-    }
-
+    /**
+     * Decode sub-account group_id from code
+     *
+     * @param string $code
+     * @return array
+     */
     public static function getReferralDataFromCode(string $code): array
     {
         return json_decode(base64_decode($code), true);

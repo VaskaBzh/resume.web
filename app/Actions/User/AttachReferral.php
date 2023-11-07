@@ -5,19 +5,15 @@ declare(strict_types=1);
 namespace App\Actions\User;
 
 use App\Models\Sub;
+use App\Models\User;
 
 class AttachReferral
 {
-    public static function execute(
-        Sub $referralSub,
-        Sub $ownerSub,
-        $referralPercent
-    ): void
+    public static function execute(User $referrer, User $referral): void
     {
-        $ownerSub
-            ->referrals()
-            ->attach($referralSub->user_id, ['referral_percent' => $referralPercent]);
-
-        $referralSub->update(['percent' => $referralSub->percent - $referralPercent]);
+        $referral->update([
+            'referrer_id' => $referrer->id,
+            'referral_discount' => $referrer->referral_discount,
+        ]);
     }
 }

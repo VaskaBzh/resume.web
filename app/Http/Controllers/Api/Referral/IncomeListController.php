@@ -5,12 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Referral;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Referral\ReferralIncomeResource;
+use App\Models\Income;
 use App\Models\User;
-use App\Services\Internal\ReferralService;
-use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class IncomeListController extends Controller
 {
@@ -46,7 +45,6 @@ class IncomeListController extends Controller
                                             new OA\Property(property: "daily_amount", type: "string"),
                                             new OA\Property(property: "hash", type: "float"),
                                             new OA\Property(property: "created_at", type: "string"),
-                                            new OA\Property(property: "worker_count", type: "integer"),
                                         ],
                                         type: "object"
                                     ),
@@ -96,16 +94,18 @@ class IncomeListController extends Controller
             ]
         )
     ]
-    public function __invoke(User $user, Request $request)
+    public function __invoke(User $user)
     {
-        if (!$user?->referral_code) {
-            return new JsonResponse([
-                'errors' => [
-                    'message' => [__('actions.referral.exists')]
-                ]
-            ], Response::HTTP_NOT_FOUND);
-        }
+        $referralsIncomeCollection = Income::with(['sub.user'])
+            ->whereIn('group_id', $user->subs()
+                ->first()
+                ->referrals()
+                ->pluck('group_id')
+            )
+            ->where('type', 'referral')
+            ->latest()
+            ->paginate();
 
-        return ReferralService::getReferralIncomes($user->subs()->first()->group_id, 15);
+        return ReferralIncomeResource::collection($referralsIncomeCollection);
     }
 }
