@@ -1,4 +1,4 @@
-import { Validator } from "@/modules/validate/model/Validator";
+import { Validator } from "@/modules/validate/models/Validator";
 import { ValidationErrorsService } from "@/modules/validate/services/ValidationErrorsService";
 import { Injectable } from "@/DI/Injectable";
 

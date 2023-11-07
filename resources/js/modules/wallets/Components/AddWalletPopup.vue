@@ -39,7 +39,6 @@ import MainButton from "@/modules/common/Components/UI/MainButton.vue";
 import FormPopup from "@/modules/form/Components/FormPopup.vue";
 
 import { WalletsMessages } from "@/modules/wallets/lang/WalletsMessages";
-import { Validator } from "@/modules/validate/model/Validator";
 
 export default {
     name: "AddWalletPopup",
@@ -78,17 +77,7 @@ export default {
     data() {
         return {
             form: this.addForm,
-            validator: new Validator(),
         };
-    },
-    watch: {
-        "form.walletAddress"(newValue) {
-            this.validator.validate(newValue, "walletAddress", "email|required|max:15|min:3");
-
-            // if (!newValue) {
-            //     this.validationInputService.dropErrors();
-            // }
-        }
     },
 };
 </script>

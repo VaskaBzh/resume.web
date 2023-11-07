@@ -14,26 +14,18 @@
                 class="form_input"
             >
 		</div>
-		<div class="form__list-errors" v-show="errors[inputName]">
-			<span
-                class="form_error"
-                v-for="(error, i) in errors[inputName]"
-                :key="i"
-                v-t="error"
-            >
-            </span>
-		</div>
+        <validation-errors class="form__list-errors" :error_list="errors" :list_name="inputName" />
 	</div>
 </template>
 
 <script>
 import { mapGetters } from "vuex";
-import { ValidationErrorMessages } from "@/modules/validate/lang/ValidationErrorMessages";
+import ValidationErrors from "@/modules/validate/Components/ValidationErrors.vue";
 
 export default {
 	name: "FormPopupInput",
-    i18n: {
-        sharedMessages: ValidationErrorMessages,
+    components: {
+        ValidationErrors
     },
     props: {
         inputValue: {
@@ -113,17 +105,6 @@ export default {
         line-height: adaptive-value(12px, 16px);
         width: inherit;
         cursor: inherit;
-    }
-    &__list {
-        &-errors {
-            @include columnMixin($gap: 8);
-            padding: 0 adaptive-value(12px, 16px);
-        }
-    }
-    &_error {
-        color: var(--status-failed, #F1404A);
-        font-size: 12px;
-        line-height: 16px;
     }
 }
 </style>

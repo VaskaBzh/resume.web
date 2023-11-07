@@ -63,7 +63,7 @@
             </div>
             <!--            <auth-input-->
             <!--                :error="service.errors.referral_code"-->
-            <!--                :model="service.form.referral_code"-->
+            <!--                :models="service.form.referral_code"-->
             <!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
             <!--                name="email"-->
             <!--                type="text"-->
