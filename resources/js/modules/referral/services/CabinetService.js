@@ -90,8 +90,8 @@ export class CabinetService {
     //     await this.index();
     // }
 
-    setCode() {
-        this.code = `${window.location.host}/registration?referral_code=${this.user.referral_code}` || "...";
+    setCode(code = null) {
+        this.code = code || "...";
     }
 
     setActiveSub(group_id) {

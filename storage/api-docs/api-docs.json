@@ -499,70 +499,6 @@
                 ]
             }
         },
-        "/referrals/generate/{user}": {
-            "post": {
-                "tags": [
-                    "Referral"
-                ],
-                "summary": "Generate a referral code for a user",
-                "parameters": [
-                    {
-                        "name": "user",
-                        "in": "path",
-                        "description": "User's ID",
-                        "required": true,
-                        "schema": {
-                            "type": "integer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "Referral code generated successfully",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "properties": {
-                                        "success": {
-                                            "type": "boolean"
-                                        },
-                                        "message": {
-                                            "type": "string"
-                                        },
-                                        "referral_url": {
-                                            "type": "string"
-                                        }
-                                    },
-                                    "type": "object"
-                                }
-                            }
-                        }
-                    },
-                    "422": {
-                        "description": "Error while generating a referral code",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object"
-                                },
-                                "example": {
-                                    "errors": {
-                                        "property": [
-                                            "message"
-                                        ]
-                                    }
-                                }
-                            }
-                        }
-                    }
-                },
-                "security": [
-                    {
-                        "bearer": []
-                    }
-                ]
-            }
-        },
         "/referrals/incomes/{user}": {
             "get": {
                 "tags": [
@@ -3079,7 +3015,7 @@
                     "2fa": {
                         "type": "boolean"
                     },
-                    "referral_code": {
+                    "referral_url": {
                         "type": "string"
                     },
                     "has_referral_role": {

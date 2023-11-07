@@ -143,7 +143,6 @@ export default {
         user: {
             async handler(newUser) {
                 this.service.setUser(newUser);
-                this.service.setCode();
                 await this.service.index();
             },
             deep: true,
@@ -160,7 +159,6 @@ export default {
     async mounted() {
         if (this.user.id) {
             this.service.setUser(this.user);
-            this.service.setCode();
 
              this.service.index();
         }
