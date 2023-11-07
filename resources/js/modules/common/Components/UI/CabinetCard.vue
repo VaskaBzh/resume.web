@@ -11,9 +11,9 @@
                 {{ title }}
             </main-title>
             <p class="card_num">
-                {{ value }}
+                {{ currentValue }}
                 <span class="card_unit" v-show="unit">
-                    {{ unit }}
+                    {{ currentUnit }}
                 </span>
             </p>
         </div>
@@ -31,6 +31,36 @@ export default {
     },
     components: {
         MainTitle,
+    },
+    data() {
+        return {
+            currentValue: this.value,
+            currentUnit: "TH/s",
+        };
+    },
+    watch: {
+        value(newValue) {
+            this.currentValue = newValue;
+            this.currentUnit = "TH/s"
+            if (this.getUnitLetter() === "T" && newValue >= 1000) {
+                this.currentValue = (this.currentValue / 1000).toFixed(2);
+                this.currentUnit = "PH/s"
+            }
+        },
+    },
+    mounted() {
+        this.currentValue = this.value;
+        this.currentUnit = "TH/s"
+        if (this.getUnitLetter() === "T" && this.value >= 1000) {
+            this.currentValue = (this.currentValue / 1000).toFixed(2);
+            this.currentUnit = "PH/s"
+        }
+    },
+    methods: {
+        getUnitLetter() {
+            const MAIN_UNIT_LETTER_INDEX = 0;
+            return this.currentUnit.split("")[MAIN_UNIT_LETTER_INDEX];
+        }
     }
 };
 </script>

@@ -9,7 +9,7 @@
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="accountsStatistic.hash_per_min"
+                    :value="accountsStatistic.hash_per_min.toFixed(2)"
                     unit="TH/s"
                 >
                     <template #svg>
@@ -19,7 +19,7 @@
                 <cabinet-card
                     class="subs__card-second"
                     :title="$t('info_blocks.hash.titles[1]')"
-                    :value="accountsStatistic.hash_per_day"
+                    :value="accountsStatistic.hash_per_day.toFixed(2)"
                     unit="TH/s"
                 >
                     <template #svg>
@@ -122,8 +122,8 @@ export default {
         ]),
         accountsStatistic() {
             const accountsStatistic = {
-                hash_per_min: this.getSumAccountsStatistic("hash_per_min") ?? "0.00",
-                hash_per_day: this.getSumAccountsStatistic("hash_per_day") ?? "0.00",
+                hash_per_min: this.getSumAccountsStatistic("hash_per_min") ?? 0,
+                hash_per_day: this.getSumAccountsStatistic("hash_per_day") ?? 0,
                 workers_count_active: this.getSumAccountsStatistic("workers_count_active") ?? 0,
                 workers_count_in_active: this.getSumAccountsStatistic("workers_count_in_active") ?? 0,
             };
@@ -143,6 +143,7 @@ export default {
     methods: {
         getSumAccountsStatistic(accountStatisticKey) {
             const initialValue = 0;
+
             return this.allAccounts.reduce((accumulator, currentAccount) => accumulator + currentAccount[accountStatisticKey], initialValue);
         },
         toggleIsTable(subsTypeState = null) {
@@ -187,6 +188,64 @@ export default {
     .subs__cards {
         display: flex;
         flex-direction: column;
+    }
+}
+
+.subs__card-first {
+    grid-column: 1 / 2;
+}
+@media (max-width: 2100px) {
+    .subs__card-first {
+        grid-column: 1 / 3;
+    }
+}
+@media (max-width: 1100px) {
+    .subs__card-first {
+        grid-column: 1 / 2;
+    }
+}
+
+.subs__card-second {
+    grid-column: 2 / 3;
+}
+@media (max-width: 2100px) {
+    .subs__card-second {
+        grid-column: 3 / 5;
+    }
+}
+@media (max-width: 1100px) {
+    .subs__card-second {
+        grid-column: 2 / 3;
+    }
+}
+
+.subs__card-third {
+    grid-column: 3 / 4;
+}
+@media (max-width: 2100px) {
+    .subs__card-third {
+        grid-column: 5 / 6;
+    }
+}
+@media (max-width: 1100px) {
+    .subs__card-third {
+        grid-column: 1 / 2;
+        grid-row: 2 / 3;
+    }
+}
+
+.subs__card-fourth {
+    grid-column: 4 / 5;
+}
+@media (max-width: 2100px) {
+    .subs__card-fourth {
+        grid-column: 6 / 7;
+    }
+}
+@media (max-width: 1100px) {
+    .subs__card-fourth {
+        grid-column: 2 / 3;
+        grid-row: 2 / 3;
     }
 }
 
