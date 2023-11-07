@@ -1,7 +1,7 @@
 <template>
     <transition name="burger">
         <div
-            v-show="isOpenBurger || viewportWidth > 900 || !viewportWidth"
+            v-show="isOpenBurger || viewportWidth > 998 || !viewportWidth"
             class="nav onboarding_block"
             :class="{
                 'onboarding_block-target':
@@ -181,7 +181,7 @@ export default defineComponent({
     height: 0;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .nav__content {
         padding: 0 16px 112px;
     }
@@ -197,7 +197,7 @@ export default defineComponent({
     }
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .nav {
         position: fixed;
         right: 0;

@@ -207,11 +207,10 @@ export default {
 }
 
 .faq {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
     }
 
@@ -255,7 +254,7 @@ export default {
         flex-direction: column;
         gap: 12px;
         width: 100%;
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             margin-bottom: 40px;
             width: 100%;
         }

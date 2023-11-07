@@ -71,7 +71,6 @@ export default {
     opacity: 0;
 }
 .referral {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;

@@ -303,7 +303,6 @@ export default {
 }
 
 .income {
-    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     display: flex;
@@ -313,7 +312,7 @@ export default {
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
     }
 

@@ -18,8 +18,8 @@ export class LightCalculatorService {
             new InputData(
                 "hash",
                 "hash",
-                "100",
-                "0",
+                "",
+                "",
                 "Th/ s",
                 null,
                 false,
@@ -28,8 +28,8 @@ export class LightCalculatorService {
             new InputData(
                 "electrical energy",
                 "costs",
-                "0.18",
-                "1",
+                "",
+                "",
                 "USD/kW",
                 null,
                 false,

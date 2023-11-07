@@ -39,7 +39,7 @@ export default {
     background: var(--background-island, #ffffff);
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    //align-items: center;
     gap: 24px;
     width: 100%;
 }
@@ -119,7 +119,7 @@ export default {
         font-size: 14px;
     }
 }
-@media(max-width: 900px){
+@media(max-width: 998px){
     .card_num {
         font-size: 27px;
     }

@@ -1028,7 +1028,7 @@ const messages = {
     ru: {
         miners_title: ["прозрачный", "и эффективный", "майнинг", "bitcoin"],
         hash: "Хешрейт",
-        currency: "Курст BTC",
+        currency: "Курс BTC",
         costs: "Стоимость электроэнергии",
         miners_offer: {
             title: "что мы предлагаем",

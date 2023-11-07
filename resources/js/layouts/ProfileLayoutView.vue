@@ -116,7 +116,7 @@ export default {
     padding: clamp(12px, 2vw, 24px);
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .page-container {
         border-radius: 0;
     }
