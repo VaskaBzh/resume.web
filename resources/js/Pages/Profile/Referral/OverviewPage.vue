@@ -43,8 +43,8 @@
                     class="referral_select-cabinet"
                     :rows="service.accounts"
                     :active-sub-id="service.activeSubId"
-                    @changeSub="service.generateCode($event)"
                 />
+                <!--                    @changeSub="service.generateCode($event)"-->
             </div>
             <div class="cabinet__block cabinet__block-light referral__block">
                 <main-title class="title referral_title">
@@ -143,8 +143,8 @@ export default {
         user: {
             async handler(newUser) {
                 this.service.setUser(newUser);
-                await this.service.index();
                 this.service.setCode();
+                await this.service.index();
             },
             deep: true,
         },
@@ -160,6 +160,7 @@ export default {
     async mounted() {
         if (this.user.id) {
             this.service.setUser(this.user);
+            this.service.setCode();
 
              this.service.index();
         }
