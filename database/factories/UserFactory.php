@@ -22,7 +22,7 @@ class UserFactory extends Factory
             'email' => 'forest@gmail.com',
             'password' => bcrypt('password'),
             'referral_percent' => 1,
-            'referral_discount' => 1,
+            'referral_discount' => 0,
         ];
     }
 

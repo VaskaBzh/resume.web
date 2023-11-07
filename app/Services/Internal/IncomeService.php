@@ -99,8 +99,8 @@ final class IncomeService
         $this->stat = MinerStat::first();
         $this->sub = $sub;
         $this->referrerSub = $referrerSub;
-        $this->referralPercent = (float)$referrerSub?->user->referral_percent;
-        $this->referralDiscount = (float)$sub->referral_dicsount;
+        $this->referralPercent = (float) $sub->user->referral_percent ?? $referrerSub->user->referral_percent;
+        $this->referralDiscount = (float) $sub->user->referral_discount;
 
         if (!$this->setHashRate()) {
             throw new IncomeCreatingException(sprintf('Sub-account %s hasn\'t a hash rate!', $sub->sub));
@@ -306,6 +306,7 @@ final class IncomeService
                 'group_id' => $sub->group_id,
                 'dailyAmount' => $this->params[$incomeType->value]['dailyAmount'],
                 'type' => $incomeType,
+                'referral_id' => $incomeType->value === 'referral' ? $this->sub->user->id : null,
                 'status' => $this->params[$incomeType->value]['status'],
                 'message' => $this->params[$incomeType->value]['message'],
                 'hash' => $this->params['hash'],

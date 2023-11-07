@@ -38,7 +38,7 @@ class IncomeCommand extends Command
                     $service->createFinance();
 
                     if ($referrerSub) {
-                        $service->createIncome($sub, Type::REFERRAL);
+                        $service->createIncome($referrerSub, Type::REFERRAL);
                         $service->updateLocalSub($referrerSub, Type::REFERRAL);
                     }
 
