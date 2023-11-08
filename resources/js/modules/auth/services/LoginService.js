@@ -148,9 +148,7 @@ export class LoginService {
                     ...err.response.data.errors,
                 });
             }
-            // store.dispatch("setFullErrors", {
-            //     email: err.response.data.message,
-            // });
+
         }
     }
 }

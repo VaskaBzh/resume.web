@@ -128,7 +128,7 @@ export default {
             // .page__image
             &__image {
                 position: fixed;
-                left: 47vw;
+                left: 50vw;
                 top: 50%;
                 transform: translate(0, -50%);
                 & img {

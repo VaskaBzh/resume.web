@@ -6,6 +6,7 @@
             :type="type"
             class="row_input"
             :placeholder="placeholder"
+            autocomplete="off"
         />
     </div>
 </template>

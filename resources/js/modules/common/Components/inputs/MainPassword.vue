@@ -5,6 +5,7 @@
             class="row_input input"
             v-model="value"
             :placeholder="placeholder"
+            autocomplete="off"
         />
         <transition name="fade">
             <svg
