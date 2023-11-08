@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\SendCodeController;
 use App\Http\Controllers\Api\Sub\CreateController as SubCreateController;
 use App\Http\Controllers\Api\Sub\ListController as SubListController;
 use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
+use App\Http\Controllers\Api\Sub\ActivateController as SubActivateController;
 use App\Http\Controllers\Api\StatisticController as SubStatisticController;
 use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
@@ -49,6 +50,7 @@ Route::group([
     ], function () {
         Route::get('/{user}', SubListController::class)->name('sub.list');
         Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
+        Route::put('/sub/activate/{sub}', SubActivateController::class)->name('sub.activate');
     });
 
     Route::group([

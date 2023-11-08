@@ -4,46 +4,25 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Sub;
 
-use App\Dto\UserData;
-use App\Events\SubCreatedEvent;
+use App\Actions\Sub\Activate;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\SubCreateRequest;
-use App\Models\User;
-use App\Services\External\BtcComService;
+use App\Models\Sub;
 use Illuminate\Http\JsonResponse;
-use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
+use OpenApi\Attributes as OA;
 
-class CreateController extends Controller
+class ActivateController extends Controller
 {
     #[
-        OA\Post(
-            path: '/subs/create/{user}',
-            summary: 'Create a sub',
+        OA\Put(
+            path: '/subs/sub/activate/{sub}',
+            summary: 'Mark sub as active',
             security: [['bearer' => []]],
-            requestBody: new OA\RequestBody(
-                description: 'Request body for creating a sub',
-                required: true,
-                content: [
-                    new OA\JsonContent(
-                        required: ['name'],
-                        properties: [
-                            new OA\Property(
-                                property: 'name',
-                                type: 'string',
-                                maxLength: 255,
-                                minLength: 3
-                            ),
-                        ],
-                        type: 'object',
-                    ),
-                ],
-            ),
             tags: ['Subaccount'],
             parameters: [
                 new OA\Parameter(
-                    name: 'user',
-                    description: "User's ID",
+                    name: 'Sub',
+                    description: "Sub's group_id",
                     in: 'path',
                     required: true,
                     schema: new OA\Schema(type: 'integer')
@@ -52,7 +31,7 @@ class CreateController extends Controller
             responses: [
                 new OA\Response(
                     response: Response::HTTP_CREATED,
-                    description: 'Sub created successfully',
+                    description: 'Sub activated successfully',
                     content: [
                         new OA\JsonContent(
                             properties: [
@@ -66,7 +45,6 @@ class CreateController extends Controller
                     ],
                 ),
                 new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found'),
-                new OA\Response(response: Response::HTTP_BAD_REQUEST, description: 'Already exist'),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
                     description: 'Validation errors',
@@ -84,16 +62,12 @@ class CreateController extends Controller
             ],
         )
     ]
-    public function __invoke(
-        SubCreateRequest $request,
-        User             $user,
-        BtcComService    $btcComService,
-    ): JsonResponse
+    public function __invoke(Sub $sub): JsonResponse
     {
-        $btcComService->createLocalSub($user, $request->name, false);
+        $this->authorize('viewOrChange', $sub);
 
-        return new JsonResponse([
-            'message' => __('actions.success_sub_create')
-        ], Response::HTTP_CREATED);
+        Activate::execute(sub: $sub);
+
+        return new JsonResponse(['message' => 'success']);
     }
 }

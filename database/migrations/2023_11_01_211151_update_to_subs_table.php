@@ -21,6 +21,9 @@ return new class extends Migration {
 
         Schema::table('subs', function (Blueprint $table) {
             $table->renameColumn('percent', 'allbtc_fee');
+            $table->boolean('is_active')
+                ->after('percent')
+                ->default(true);
 
         });
 
@@ -40,6 +43,7 @@ return new class extends Migration {
         });
         Schema::table('subs', function (Blueprint $table) {
             $table->renameColumn('allbtc_fee', 'percent');
+            $table->dropColumn('is_active');
         });
 
         Schema::create('referrals', function (Blueprint $table) {
