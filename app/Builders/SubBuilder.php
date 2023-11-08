@@ -46,4 +46,9 @@ class SubBuilder extends BaseBuilder
             ->whereNotNull('custom_percent_expired_at')
             ->where('custom_percent_expired_at', '<=', now());
     }
+
+    public function main(): Builder
+    {
+        return $this->where('is_active', true);
+    }
 }
