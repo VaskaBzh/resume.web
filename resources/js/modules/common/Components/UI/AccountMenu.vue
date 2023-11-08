@@ -59,7 +59,7 @@
                     {{ $t("accounts.popups.add.text") }}
                 </p>
                 <transition name="error">
-                    <span class="error-message" :class="{'error-message-active': errorMassage }">Введите не менее 3 символов</span>
+                    <span class="error-message" v-if="errorMassage" :class="{'error-message-active': errorMassage }">{{$t("accounts.popups.add.error")}}</span>
                 </transition>
                 <input
                     ref="input"
@@ -157,6 +157,7 @@ export default {
                     closed.value = true;
 
                     store.dispatch("accounts_all", store.getters.user.id);
+                    form.name = ""
                 } catch (err) {
                     console.error("Error with: " + err);
 
@@ -334,6 +335,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.form {
+    display: flex;
+    flex-flow: column nowrap;
+}
 .popup-text {
     color: var(--text-teritary);
     font-family: NunitoSans;
