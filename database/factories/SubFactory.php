@@ -13,18 +13,7 @@ class SubFactory extends Factory
 
     public function definition(): array
     {
-        $user = User::whereEmail('forest@gmail.com')->first();
-
         return [
-            'group_id' => $this->faker->randomNumber(),
-            'sub' => $this->faker->name,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-            'allbtc_fee' => 3.5,
-            'pending_amount' => 0,
-            'total_amount' => 0,
-
-            'user_id' => $user->id,
         ];
     }
 }

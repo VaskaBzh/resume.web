@@ -50,6 +50,9 @@ class ReferralService
         $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
 
         return [
+            'group_id' => $referrer->active()
+                ->first()
+                ->group_id,
             'attached_referrals_count' => $referrer->referrals->count(),
             'active_referrals_count' => $activeReferralSubs
                 ->unique('user_id')
