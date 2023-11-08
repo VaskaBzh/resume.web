@@ -8,6 +8,7 @@ use App\Models\Sub;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Collection;
 
 class SubBuilder extends BaseBuilder
@@ -50,5 +51,10 @@ class SubBuilder extends BaseBuilder
     public function main(): Builder
     {
         return $this->where('is_active', true);
+    }
+
+    public function lastMonthIncomes(): HasMany
+    {
+        return $this->model->incomes()->where('created_at', '>=', now()->subMonth());
     }
 }
