@@ -99,7 +99,7 @@ class Sub extends Model
         );
     }
 
-    public function totalIncomes(): Attribute
+    public function totalAmount(): Attribute
     {
         return Attribute::make(
             get: fn() => $this->incomes()->sum('daily_amount')

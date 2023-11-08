@@ -3030,6 +3030,12 @@
                     },
                     "pending_amount": {
                         "type": "number"
+                    },
+                    "last_month_amount": {
+                        "type": "number"
+                    },
+                    "total_amount": {
+                        "type": "number"
                     }
                 },
                 "type": "object"

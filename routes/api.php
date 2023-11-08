@@ -50,7 +50,9 @@ Route::group([
     ], function () {
         Route::get('/{user}', SubListController::class)->name('sub.list');
         Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
-        Route::put('/sub/activate/{sub}', SubActivateController::class)->name('sub.activate');
+        Route::put('/sub/activate/{sub}', SubActivateController::class)
+            ->middleware('throttle:6,1')
+            ->name('sub.activate');
     });
 
     Route::group([
