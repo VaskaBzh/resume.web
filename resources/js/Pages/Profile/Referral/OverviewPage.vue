@@ -44,8 +44,8 @@
                     class="referral_select-cabinet"
                     :rows="service.accounts"
                     :active-sub-id="service.activeSubId"
+                    @changeSub="service.changeActiveSub($event)"
                 />
-                <!--                    @changeSub="service.generateCode($event)"-->
             </div>
             <div class="cabinet__block cabinet__block-light referral__block">
                 <main-title class="title referral_title">
@@ -57,7 +57,6 @@
                 <div class="referral__row">
                     <main-copy
                         class="referral_code"
-                        :cut-value="50"
                         :code="service.code"
                     />
                 </div>

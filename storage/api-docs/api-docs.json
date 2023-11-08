@@ -834,7 +834,7 @@
                 "tags": [
                     "Subaccount"
                 ],
-                "summary": "Select sub as active",
+                "summary": "Mark sub as active",
                 "operationId": "25ff62dffdce43779e5a8a98a60129ad",
                 "parameters": [
                     {
