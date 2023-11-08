@@ -60,12 +60,12 @@
                     <div class="mobile-view__content">
                         <img
                             class="iphone"
-                            src="../../../../../assets/img/iPhone-14.png"
+                            src="@img/iPhone-14.png"
                             alt=""
                         />
                         <img
                             class="status-bar"
-                            src="../../../hosting/assets/img/status-bar.png"
+                            src="@img/status-bar.png"
                             alt=""
                         />
                         <Swiper
@@ -289,8 +289,7 @@ export default {
         max-width: 429px;
         height: 875px;
         position: absolute;
-        padding: 15px;
-        max-height: 875px;
+        padding: 18px 24px 23px;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -372,24 +371,13 @@ export default {
         height: 100%;
         max-width: 100%;
         margin: 0 auto;
-        border-radius: 70px;
         overflow: hidden;
         z-index: 1;
         justify-content: center;
 
-        @media (max-width: 768px) {
-            border-radius: 25px;
-        }
-
         img {
             width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 30px;
-
-            @media (max-width: 768px) {
-                border-radius: 20px;
-            }
+            height: 100%;
         }
 
         svg {
@@ -480,10 +468,11 @@ export default {
 
 .status-bar {
     position: absolute;
-    width: 397px;
+    width: 380px;
     height: 45px;
-    top: 15px;
-    left: 15px;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 2;
 }
 
