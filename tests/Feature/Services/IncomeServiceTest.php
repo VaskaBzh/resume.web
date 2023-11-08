@@ -16,6 +16,7 @@ use App\Services\Internal\IncomeService;
 use App\Services\External\BtcComService;
 use App\Exceptions\IncomeCreatingException;
 use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Support\Carbon;
 use Tests\TestCase;
 
 class IncomeServiceTest extends TestCase
@@ -30,39 +31,8 @@ class IncomeServiceTest extends TestCase
     {
         parent::setUp();
 
-        User::factory()->create()->count();
-        $this->referrer = User::create([
-            'name' => 'Referrer',
-            'email' => 'referrer@referrer.com',
-            'password' => bcrypt(123),
-            'referral_percent' => 1,
-            'referral_discount' => 0,
-        ]);
-
-        $this->subWithHashRate = Sub::factory()->create();
-        $this->subWithoutHashRate = Sub::factory()->create();
         $this->stat = MinerStat::factory()->create();
-        Worker::factory()
-            ->count(2)
-            ->state(new Sequence(
-                    [
-                        'status' => 'ACTIVE',
-                        'approximate_hash_rate' => 100,
-                        'group_id' => $this->subWithHashRate->group_id,
-                    ],
-                    [
-                        'status' => 'INACTIVE',
-                        'approximate_hash_rate' => 100,
-                        'group_id' => $this->subWithHashRate->group_id,
-                    ],
-                    [
-                        'status' => 'INACTIVE',
-                        'approximate_hash_rate' => 0,
-                        'group_id' => $this->subWithoutHashRate->group_id,
-                    ]
-                )
-            )
-            ->create();
+
     }
 
     /**
@@ -243,6 +213,102 @@ class IncomeServiceTest extends TestCase
             hashRate: $hashRate,
             fee: $fee
         ), 8);
+    }
+
+    public function seedSequence(): void
+    {
+        User::factory()
+            ->count(2)
+            ->state(new Sequence(
+                    [
+                        'id' => 1,
+                        'name' => "Referrer",
+                        'email' => 'first@gmail.com',
+                        'password' => bcrypt('password'),
+                        'referral_percent' => 1,
+                        'referral_discount' => 0,
+                    ],
+                    [
+                        'id' => 2,
+                        'name' => "Referral",
+                        'email' => 'second@gmail.com',
+                        'password' => bcrypt('password'),
+                        'referral_percent' => 1,
+                        'referral_discount' => 0,
+                    ]
+                )
+            )->create();
+
+        Sub::factory()
+            ->count(4)
+            ->state(new Sequence(
+                    [
+                        'group_id' => 1,
+                        'sub' => 'Referrer',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                        'allbtc_fee' => 3.5,
+                        'pending_amount' => 0,
+                        'is_active' => true,
+                        'total_amount' => 0,
+                        'user_id' => 1,
+                    ],
+                    [
+                        'group_id' => 2,
+                        'sub' => 'Referrer2',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                        'allbtc_fee' => 3.5,
+                        'is_active' => false,
+                        'pending_amount' => 0,
+                        'total_amount' => 0,
+                        'user_id' => 1,
+                    ],
+                    [
+                        'group_id' => 3,
+                        'sub' => 'Referral',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                        'allbtc_fee' => 3.5,
+                        'is_active' => true,
+                        'pending_amount' => 0,
+                        'total_amount' => 0,
+                        'user_id' => 2,
+                    ],
+                    [
+                        'group_id' => 4,
+                        'sub' => 'Referral2',
+                        'created_at' => now(),
+                        'updated_at' => now(),
+                        'allbtc_fee' => 3.5,
+                        'is_active' => false,
+                        'pending_amount' => 0,
+                        'total_amount' => 0,
+                        'user_id' => 2,
+                    ],
+                )
+            )->create();
+
+        Worker::factory()
+            ->count(2)
+            ->state(new Sequence(
+                    [
+                        'status' => 'ACTIVE',
+                        'approximate_hash_rate' => 100,
+                        'group_id' => 3,
+                    ],
+                    [
+                        'status' => 'INACTIVE',
+                        'approximate_hash_rate' => 100,
+                        'group_id' => 3,
+                    ],
+                    [
+                        'status' => 'INACTIVE',
+                        'approximate_hash_rate' => 0,
+                        'group_id' => 4,
+                    ]
+                )
+            )->create();
     }
 
     public function createAdditionalWorkers(): void

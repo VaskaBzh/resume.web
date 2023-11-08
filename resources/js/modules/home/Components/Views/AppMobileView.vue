@@ -13,7 +13,7 @@
                         :set-wrapper-size="true"
                         :loop="true"
                         :pagination="{
-                            clickable: true,
+                            clickable: false,
                             el: '.pagination_bulets',
                             type: 'bullets',
                         }"

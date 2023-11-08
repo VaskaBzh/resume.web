@@ -11,14 +11,28 @@
                     class="img-iphone img-system"
                 />
                 <img :src="imgTabBar" class="img-tab-bar img-system" />
+                <div class="system__buttons">
+                    <div
+                        class="system_button system_button-prev"
+                    >
+                        <main-icon name="landing-arrow_left" class="system_icon" />
+                    </div>
+                    <div
+                        class="system_button system_button-next"
+                    >
+                        <main-icon name="landing-arrow_right" class="system_icon" />
+                    </div>
+                </div>
                 <swiper
                     :slides-per-view="1"
                     :space-between="0"
                     :pagination="{
-                        clickable: true,
+                        clickable: false,
+                        el: '.system__pagination',
                     }"
-                    :loop="true"
+                    loop
                     :modules="modules"
+                    :navigation="{ nextEl: '.system_button-next', prevEl: '.system_button-prev' }"
                     class="img-support img-system"
                     @slideChange="currentSlide"
                 >
@@ -78,6 +92,7 @@
                         />
                     </swiper-slide>
                 </swiper>
+                <div class="system__pagination swiper swiper-pagination"></div>
             </div>
         </div>
     </div>
@@ -86,11 +101,13 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import "swiper/css";
 import "swiper/css/pagination";
-import { Pagination } from "swiper";
+import { Navigation, Pagination } from "swiper";
 import { HostingMessage } from "@/modules/hosting/lang/HostingMessage";
+import MainIcon from "@/modules/common/icons/MainIcon.vue";
 
 export default {
     components: {
+        MainIcon,
         Swiper,
         SwiperSlide,
     },
@@ -99,7 +116,10 @@ export default {
     },
     setup() {
         return {
-            modules: [Pagination],
+            modules: [
+                Pagination,
+                Navigation,
+            ],
         };
     },
     data() {
@@ -136,12 +156,38 @@ export default {
     },
 };
 </script>
-<style scoped>
-.swiper {
-    padding-bottom: 72px !important;
-}
+<style scoped lang="scss">
 .img-content {
     width: 100%;
+}
+
+.system {
+    &__buttons {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        min-width: adaptive-value(688px, 785px, 768.98px);
+        transform: translate(-50%, -50%);
+        display: flex;
+        justify-content: space-between;
+        @media (max-width: 768.98px) {
+            display: none;
+        }
+    }
+    &_button {
+        cursor: pointer;
+    }
+    &__pagination {
+        position: absolute;
+        bottom: -32px;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        justify-content: center;
+        @media (min-width: 768.98px) {
+            display: none;
+        }
+    }
 }
 
 .system-card-inf {
@@ -175,6 +221,10 @@ export default {
     left: 50%;
     transform: translateX(-50%);
     width: calc(100% - 48px);
+    @media (max-width: 470.98px) {
+        bottom: 18px;
+        width: calc(100% - 34px);
+    }
 }
 
 .system-card-img {
@@ -182,6 +232,10 @@ export default {
     max-width: 429px;
     width: 100%;
     min-height: 875px;
+    @media (max-width: 470.98px) {
+        height: adaptive-value(590px, 875px, 320px, 470.98px);
+        min-height: 0;
+    }
 }
 
 .img-system {
@@ -191,11 +245,20 @@ export default {
 .img-support {
     min-height: 100%;
     width: calc(100% - 48px);
-    left: 24px;
+    top: 18px;
+    left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+    @media (max-width: 470.98px) {
+        top: adaptive-value(10px, 18px, 320px, 470.98px);
+        width: calc(100% - 34px);
+    }
 }
 
 .img-iphone {
     z-index: 10;
+    pointer-events: none;
+    width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -217,36 +280,10 @@ export default {
         width: 244px;
     }
 
-    .system-card-img,
-    .img-iphone {
-        width: 281px;
-        height: 497px;
-    }
-
-    .img-support {
-        width: 224px;
-        left: 30px;
-        top: 9px;
-        margin: 0 auto;
-    }
-
-    .img-content {
-        width: 100%;
-        margin: 0 auto;
-        display: inline-block;
-        height: 450px;
-    }
-
     .img-status-bar {
         width: 208px;
         top: 13px;
         left: 34px;
-    }
-
-    .img-tab-bar {
-        width: 222px;
-        bottom: 18px;
-        left: 30px;
     }
 }
 </style>

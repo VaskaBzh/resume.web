@@ -388,7 +388,7 @@ class BtcComService
             'total_payout' => $sub->total_payout,
             'yesterday_amount' => $sub->yesterday_amount,
             'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),
-            'total_incomes' => $sub->total_incomes,
+            'total_amount' => $sub->total_amount,
         ];
     }
 }
