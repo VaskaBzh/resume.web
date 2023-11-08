@@ -88,7 +88,7 @@ export default {
             font-size: 16px;
             font-family: Ubuntu, serif;
             line-height: 130%;
-            min-height: 40px;
+            min-height: 48px;
         }
         &:active,
         &:focus {

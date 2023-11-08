@@ -13,22 +13,19 @@ return new class extends Migration {
                 ->nullable();
             $table->unsignedDecimal('referral_percent')
                 ->after('referrer_id')
-                ->default(0);
+                ->nullable();
             $table->unsignedDecimal('referral_discount')
                 ->after('referral_percent')
-                ->default(0);
+                ->nullable();
         });
 
         Schema::table('subs', function (Blueprint $table) {
             $table->renameColumn('percent', 'allbtc_fee');
+
         });
 
         Schema::table('incomes', function (Blueprint $table) {
-            $table->string('referral_id')->change();
-        });
-
-        Schema::table('incomes', function (Blueprint $table) {
-            $table->renameColumn('referral_id', 'type');
+            $table->string('type')->after('group_id');
         });
 
         Schema::drop('referrals');
@@ -56,11 +53,7 @@ return new class extends Migration {
         });
 
         Schema::table('incomes', function (Blueprint $table) {
-            $table->renameColumn('type', 'referral_id');
-        });
-
-        Schema::table('incomes', function (Blueprint $table) {
-            $table->unsignedInteger('referral_id')->change();
+            $table->dropColumn('type');
         });
     }
 };

@@ -153,17 +153,36 @@ class IncomeServiceTest extends TestCase
             referrerSub: $this->referrerSub
         );
 
-        $service->createIncome($this->referrerSub, Type::REFERRAL);
-        $service->updateLocalSub($this->referrerSub, Type::REFERRAL);
+        $service->createIncome($this->subWithHashRate, Type::MINING);
+        $service->updateLocalSub($this->subWithHashRate, Type::MINING);
         $service->createFinance();
 
-        $hashrate = $this->subWithHashRate->total_hash_rate;
-        $expectReferrerDailyAmount = number_format($this->getDailyAmount($hashrate, 0)
-            * ($this->referrer->referral_percent / 100), 8, '.', '');
+        $service->createIncome($this->referrerSub, Type::REFERRAL);
+        $service->updateLocalSub($this->referrerSub, Type::REFERRAL);
 
+        $hashrate = $this->subWithHashRate->total_hash_rate;
+
+        $expectReferralDayAmount = $this->getDailyAmount($hashrate, BtcComService::FEE + 3.5);
+        $expectReferrerDailyAmount = number_format(
+            $this->getDailyAmount($hashrate, 0) * ($this->subWithHashRate->referral_percent ?? $this->referrer->referral_percent / 100),
+            8,
+            '.',
+            ''
+        );
+
+
+        $this->assertDatabaseHas('incomes', [
+            'group_id' => $this->subWithHashRate->group_id,
+            'type' => Type::MINING->value,
+            'daily_amount' => $expectReferralDayAmount,
+            'status' => Status::PENDING->value,
+            'message' => Message::LESS_MIN_WITHDRAWAL->value,
+            'hash' => $hashrate,
+        ]);
         $this->assertDatabaseHas('incomes', [
             'group_id' => $this->referrerSub->group_id,
             'type' => Type::REFERRAL->value,
+            'referral_id' => $this->subWithHashRate->user->id,
             'daily_amount' => $expectReferrerDailyAmount,
             'status' => Status::PENDING->value,
             'message' => Message::LESS_MIN_WITHDRAWAL->value,
@@ -186,7 +205,7 @@ class IncomeServiceTest extends TestCase
     {
         $this->subWithHashRate->user->update([
             'referrer_id' => $this->referrer->id,
-            'referral_discount' => $this->referrer->referral_discount,
+            'referral_discount' => 1,
         ]);
 
         $service = resolve(IncomeService::class)->init(
@@ -197,7 +216,7 @@ class IncomeServiceTest extends TestCase
         $hashrate = $this->subWithHashRate->total_hash_rate;
         $expectedDailyAmount = $this->getDailyAmount(
             $hashrate,
-            (3.5 - $this->subWithHashRate->referral_percent) + BtcComService::FEE,
+            (3.5 - $this->subWithHashRate->user->referral_discount) + BtcComService::FEE,
         );
 
         $service->createIncome($this->subWithHashRate, Type::MINING);

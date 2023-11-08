@@ -178,6 +178,7 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
+    min-width: 492px;
 }
 .popup_close {
     position: absolute;
@@ -188,7 +189,7 @@ export default {
     height: 44px;
     width: 44px;
 }
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .popup__wrapper {
         padding: 16px;
     }
@@ -197,6 +198,11 @@ export default {
     }
     .popup__block {
         min-width: auto;
+    }
+}
+@media (max-width: 595.98px) {
+    .popup__block {
+        min-width: calc(100vw - 64px);
     }
 }
 </style>

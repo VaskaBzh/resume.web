@@ -1,24 +1,43 @@
 import { WalletFormData } from "@/modules/wallets/DTO/WalletFormData";
 import { PopupControllService } from "@/modules/popup/services/PopupControllService";
 import { VerifyFormControllService } from "@/modules/verify/services/VerifyFormControllService";
+import { Form } from "@/modules/form/models/Form";
+import { ProfileApi } from "@/api/api";
 
 export class WalletsService {
     constructor() {
-        this.addPopup = new PopupControllService();
-        this.changePopup = new PopupControllService();
+        this.addPopup = this.createPopupControllService();
+        this.changePopup = this.createPopupControllService();
 
-        this.addVerifyForm = new VerifyFormControllService();
-        this.changeVerifyForm = new VerifyFormControllService();
+        this.addVerifyForm = this.createVerifyFormControllService();
+        this.changeVerifyForm = this.createVerifyFormControllService();
 
-        this.form = {};
+        this.form = this.createFormModel();
     }
 
-    setForm(form = {}) {
-        this.form = {
-            ...new WalletFormData(),
-            ...form,
-        };
+    createFormModel() {
+        return new Form();
+    }
+
+    createPopupControllService() {
+        return new PopupControllService();
+    }
+
+    createVerifyFormControllService() {
+        return new VerifyFormControllService();
+    }
+
+    setFormData(formData = new WalletFormData()) {
+        this.form.setFormData(formData).initForm();
 
         return this;
+    }
+
+    index() {
+
+    }
+
+    async fetchWallets() {
+        await ProfileApi.get(`/wallets/${this.group_id}`);
     }
 }

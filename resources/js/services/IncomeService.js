@@ -91,7 +91,7 @@ export class IncomeService extends TableService {
                   this.getCutted(income["txid"])
               )
             : new incomeData(
-                  income["referral_id"]
+                  income["type"] === "referral"
                       ? this.translate("income.types[0]")
                       : this.translate("income.types[1]"),
                   this.dateFormatter(income["created_at"]),
@@ -153,7 +153,9 @@ export class IncomeService extends TableService {
                     this.titles = this.useTranslater(tableTitleIndexes);
                 }
 
-                if (this.rows.length === 0) this.emptyTable = true;
+                if (this.rows.length === 0) {
+                    this.emptyTable = true;
+                }
 
                 this.waitTable = false;
             } catch (err) {

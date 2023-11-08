@@ -103,7 +103,7 @@ export default {
     line-height: 147%; /* 39.69px */
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .data-num {
         font-size: 20px;
     }
@@ -140,7 +140,7 @@ export default {
     line-height: 20px; /* 142.857% */
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .rub-counter-text {
         font-size: 10px;
     }

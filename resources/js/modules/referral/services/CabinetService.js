@@ -64,37 +64,34 @@ export class CabinetService {
         store.dispatch("getMessage", message);
     }
 
-    async generateCode(id) {
-        let result = {};
-
-        try {
-            result = await ProfileApi.post(
-                `/referrals/generate/${this.user.id}`,
-                {
-                    group_id: id,
-                }
-            );
-            store.dispatch("setNotification", {
-                status: "success",
-                title: "success",
-                text: result.data.message,
-            });
-        } catch (err) {
-            // store.dispatch("setNotification", {
-            //     status: "error",
-            //     title: "error",
-            //     text: err.response.data.message,
-            // });
-        }
-
-        await this.index();
-    }
+    // async generateCode(id) {
+    //     let result = {};
+    //
+    //     try {
+    //         result = await ProfileApi.post(
+    //             `/referrals/generate/${this.user.id}`,
+    //             {
+    //                 group_id: id,
+    //             }
+    //         );
+    //         store.dispatch("setNotification", {
+    //             status: "success",
+    //             title: "success",
+    //             text: result.data.message,
+    //         });
+    //     } catch (err) {
+    //         // store.dispatch("setNotification", {
+    //         //     status: "error",
+    //         //     title: "error",
+    //         //     text: err.response.data.message,
+    //         // });
+    //     }
+    //
+    //     await this.index();
+    // }
 
     setCode(code = null) {
-        this.code =
-            code ??
-            (`${window.location.host}/registration?referral_code=${this.user.referral_code}` ||
-                "...");
+        this.code = code || "...";
     }
 
     setActiveSub(group_id) {
@@ -104,6 +101,24 @@ export class CabinetService {
     transformCode(code) {
         const url = new URL(code);
         return `${window.location.host}/registration${url.search}`;
+    }
+
+    async setReferrerSub(group_id) {
+        try {
+            const response = await this.fetchActiveSub(group_id);
+
+            store.dispatch("setNotification", {
+                status: "success",
+                title: "success",
+                text: response.data.message,
+            });
+        } catch (err) {
+            console.error(`Error with: ${err}`);
+        }
+    }
+
+    async fetchActiveSub(group_id) {
+        return await ProfileApi.get(`/referrals/set_sub/${group_id}`);
     }
 
     async index() {
@@ -129,7 +144,7 @@ export class CabinetService {
 
         const result = response.data;
 
-        let code = this.transformCode(result.code);
+        let code = this.transformCode(result.referral_url);
         this.setCode(code || "...");
 
         this.setActiveSub(result.group_id);

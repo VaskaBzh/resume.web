@@ -184,7 +184,6 @@ export default {
             }
 
             await this.worker_service.getPopup(data.id);
-            this.worker_service.openPopupCard();
         },
         dropWorkers() {
             this.worker_service.dropWorker();
@@ -251,7 +250,7 @@ export default {
     margin-bottom: 32px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .cards-container {
         flex-direction: column;
         gap: 16px;
@@ -268,11 +267,10 @@ export default {
 }
 
 .workers {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
     }
 
@@ -301,7 +299,7 @@ export default {
         @media (max-width: 1200px) {
             min-height: unset;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             min-height: 450px;
             position: absolute;
             width: calc(100% - 20px);

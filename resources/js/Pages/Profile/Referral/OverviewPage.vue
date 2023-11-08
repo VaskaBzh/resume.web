@@ -2,19 +2,20 @@
     <div class="referral__content">
         <div class="grid-column">
             <div class="card__block">
-<!--                <InfoCard-->
-<!--                    class="referral__card-info"-->
-<!--                    :title="$t('stats.cards[0]')"-->
-<!--                    :value="service.statsCards[4]?.value ?? 0"-->
-<!--                >-->
-<!--                    <template #svg>-->
-<!--                        <img src="../../../../assets/img/percent-icon.png" />-->
-<!--                    </template>-->
-<!--                </InfoCard>-->
+                <InfoCard
+                    class="referral__card-info"
+                    :title="$t('stats.cards[0]')"
+                    :value="service.statsCards[4]?.value ?? 0"
+                >
+                    <template #svg>
+                        <img src="../../../../assets/img/percent-icon.png" />
+                    </template>
+                </InfoCard>
                 <InfoCard
                     class="referral__card-info"
                     :title="$t('stats.cards[1]')"
                     :value="service.statsCards[3]?.value ?? 0"
+                    unit="TH/s"
                 >
                     <template #svg>
                         <img src="../../../../assets/img/hashrate-icon.png" />
@@ -43,8 +44,8 @@
                     class="referral_select-cabinet"
                     :rows="service.accounts"
                     :active-sub-id="service.activeSubId"
-                    @changeSub="service.generateCode($event)"
                 />
+                <!--                    @changeSub="service.generateCode($event)"-->
             </div>
             <div class="cabinet__block cabinet__block-light referral__block">
                 <main-title class="title referral_title">
@@ -144,7 +145,6 @@ export default {
             async handler(newUser) {
                 this.service.setUser(newUser);
                 await this.service.index();
-                this.service.setCode();
             },
             deep: true,
         },

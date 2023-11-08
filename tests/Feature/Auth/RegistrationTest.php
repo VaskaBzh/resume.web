@@ -134,7 +134,7 @@ class RegistrationTest extends TestCase
                         'phone',
                         'sms',
                         '2fa',
-                        'referral_code',
+                        'referral_url',
                         'has_referrer_role'
                     ],
                     'token',
@@ -170,7 +170,7 @@ class RegistrationTest extends TestCase
                         'phone',
                         'sms',
                         '2fa',
-                        'referral_code',
+                        'referral_url',
                         'has_referrer_role'
                     ],
                     'token',

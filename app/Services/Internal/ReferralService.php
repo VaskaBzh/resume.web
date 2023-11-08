@@ -42,6 +42,7 @@ class ReferralService
     public static function getReferrerStatistic(User $referrer): array
     {
         $referrer->load([
+            'subs',
             'referrals',
             'referrals.subs'
         ]);
@@ -53,11 +54,9 @@ class ReferralService
             'active_referrals_count' => $activeReferralSubs
                 ->unique('user_id')
                 ->count(),
-            'referrals_total_amount' => Income::getReferralIncomes($referrer->referrals
-                ->flatMap
-                ->subs
-                ->pluck('group_id')
-            )->sum('daily_amount'),
+            'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
+                ->where('type', 'referral')
+                ->sum('daily_amount'),
             'total_referrals_hash_rate' =>  $activeReferralSubs->map->total_hash_rate->sum()
         ];
     }

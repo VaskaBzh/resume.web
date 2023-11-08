@@ -155,6 +155,7 @@ export default {
         top: unset;
         left: unset;
         padding: 0;
+        min-height: 390px;
     }
 }
 .card__content {

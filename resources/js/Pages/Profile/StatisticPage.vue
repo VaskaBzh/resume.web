@@ -218,10 +218,9 @@ export default {
 
 .statistic {
     width: 100%;
-    padding: 24px;
     position: relative;
     flex: 1 1 auto;
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
     }
 
@@ -239,7 +238,7 @@ export default {
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: repeat(2, 1fr);
         }
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             display: flex;
             flex-direction: column;
         }
@@ -252,7 +251,7 @@ export default {
         @media (max-width: 2100px) {
             grid-template-columns: repeat(6, 1fr);
         }
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             display: flex;
             flex-direction: column;
         }
@@ -282,7 +281,7 @@ export default {
             flex-direction: column-reverse;
             padding: 16px;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             gap: 32px;
         }
 

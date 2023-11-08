@@ -10,6 +10,8 @@ export class Form {
 
     setFormData(newFormData) {
         this.formData = newFormData;
+
+        return this;
     }
 
     initForm() {

@@ -140,6 +140,8 @@ export default {
 
         const addAcc = async () => {
             wait.value = true;
+            closed.value = false;
+
             if (form.name.length >= 3) {
                 try {
                     const response = await ProfileApi.post(

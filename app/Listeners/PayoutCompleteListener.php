@@ -8,7 +8,7 @@ use App\Actions\Payout\Create;
 use App\Dto\PayoutData;
 use Illuminate\Support\Facades\Log;
 
-class PayoutCompleteListener
+final readonly class PayoutCompleteListener
 {
     public function handle($event): void
     {
