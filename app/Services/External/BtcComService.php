@@ -125,9 +125,9 @@ class BtcComService
      * @return void
      */
     public function createLocalSub(
-        User $user,
+        User   $user,
         string $subName,
-        bool $isActive = true
+        bool   $isActive = true
     ): void
     {
         $remoteSub = $this->createRemoteSub(subName: $subName);
@@ -380,13 +380,15 @@ class BtcComService
             'workers_count_active' => $btcComSub['workers_active'],
             'workers_count_in_active' => $btcComSub['workers_inactive'],
             'workers_count_unstable' => $btcComSub['workers_dead'],
-            'hash_per_min' => (float)$btcComSub['shares_1m'],
+            'hash_per_min' => $btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay,
             'today_forecast' => $sub->todayForecast($hashPerDay, self::FEE),
-            'reject_percent' => (float)$btcComSub['reject_percent'],
+            'reject_percent' => $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
             'total_payout' => $sub->total_payout,
-            'yesterday_amount' => (float)$sub->yesterday_amount,
+            'yesterday_amount' => $sub->yesterday_amount,
+            'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),
+            'total_incomes' => $sub->total_incomes,
         ];
     }
 }
