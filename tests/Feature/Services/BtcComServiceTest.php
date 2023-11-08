@@ -342,6 +342,8 @@ class BtcComServiceTest extends TestCase
                         "unit" => "T",
                         "total_payout" => 0,
                         "yesterday_amount" => 0.0,
+                        "last_month_amount" => 0.0,
+                        "total_amount" => 0.0,
                     ],
                     [
                         "sub" => "MainTest2",
@@ -358,6 +360,8 @@ class BtcComServiceTest extends TestCase
                         "unit" => "T",
                         "total_payout" => 0,
                         "yesterday_amount" => 0.0,
+                        "last_month_amount" => 0.0,
+                        "total_amount" => 0.0,
                     ]
                 ]
             ]
