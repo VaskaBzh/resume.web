@@ -24,22 +24,26 @@ class IncomeCommand extends Command
     public function handle(): void
     {
         Sub::hasWorkerHashRate()
-            ->with(['user', 'workers'])
+            ->with(['user.referrer', 'workers'])
             ->each(static function (Sub $sub) {
                 $sub->refresh();
 
                 try {
-                    $referrerSub = $sub->user->referrer?->subs->first();
 
-                    $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerSub);
+                    $referrerActiveSub = $sub->user
+                        ->referrer
+                        ?->active()
+                        ->first();
+
+                    $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerActiveSub);
 
                     $income = $service->createIncome($sub, Type::MINING);
                     $service->updateLocalSub($sub, Type::MINING);
                     $service->createFinance();
 
-                    if ($referrerSub) {
-                        $service->createIncome($referrerSub, Type::REFERRAL);
-                        $service->updateLocalSub($referrerSub, Type::REFERRAL);
+                    if ($referrerActiveSub) {
+                        $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                        $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
                     }
 
                     Log::channel('incomes')

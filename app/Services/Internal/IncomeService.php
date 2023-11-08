@@ -332,6 +332,7 @@ final class IncomeService
                 'sub_name' => $sub->sub,
                 'pending_amount' => $this->params[$incomeType->value]['pendingAmount'],
                 'total_amount' => $this->params[$incomeType->value]['totalAmount'],
+                'is_active' => $sub->is_active,
             ]),
             sub: $sub
         );

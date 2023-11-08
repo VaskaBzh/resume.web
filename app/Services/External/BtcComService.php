@@ -124,7 +124,11 @@ class BtcComService
      *
      * @return void
      */
-    public function createLocalSub(User $user, string $subName): void
+    public function createLocalSub(
+        User $user,
+        string $subName,
+        bool $isActive = true
+    ): void
     {
         $remoteSub = $this->createRemoteSub(subName: $subName);
 
@@ -133,6 +137,7 @@ class BtcComService
                 'user_id' => $user->id,
                 'group_id' => $remoteSub['gid'],
                 'sub_name' => $subName,
+                'is_active' => $isActive,
             ])
         );
     }
