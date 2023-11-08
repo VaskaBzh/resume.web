@@ -32,7 +32,7 @@ class IncomeServiceTest extends TestCase
         parent::setUp();
 
         $this->stat = MinerStat::factory()->create();
-
+        $this->seedSequence();
     }
 
     /**
@@ -50,6 +50,9 @@ class IncomeServiceTest extends TestCase
      */
     public function it_create_mining_income_and_update_sub_accounts()
     {
+
+        $subWithHashRate = Sub::hasWorkerHashRate()->first();
+        dd($subWithHashRate);
         $service = resolve(IncomeService::class)->init($this->subWithHashRate, null);
 
         $service->createIncome($this->subWithHashRate, Type::MINING);
