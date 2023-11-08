@@ -38,11 +38,7 @@ class IncomeServiceTest extends TestCase
             'referral_percent' => 1,
             'referral_discount' => 0,
         ]);
-        $this->referrerSub = Sub::create([
-            'sub' => $this->referrer->name,
-            'group_id' => 9999999,
-            'user_id' => $this->referrer->id,
-        ]);
+
         $this->subWithHashRate = Sub::factory()->create();
         $this->subWithoutHashRate = Sub::factory()->create();
         $this->stat = MinerStat::factory()->create();
