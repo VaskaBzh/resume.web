@@ -63,11 +63,6 @@
                             src="@img/iPhone-14.png"
                             alt=""
                         />
-                        <img
-                            class="status-bar"
-                            src="@img/status-bar.png"
-                            alt=""
-                        />
                         <Swiper
                             class="mobile-view_swiper-picture"
                             :loop="true"
@@ -300,7 +295,7 @@ export default {
             height: 100%;
             object-fit: unset;
             left: 50%;
-            //z-index: 10;
+            z-index: 10;
             top: 50%;
             transform: translate(-50%, -50%);
         }
@@ -308,7 +303,7 @@ export default {
         @media (max-width: 1600px) {
             max-width: 330px;
             height: 655px;
-            padding: 15px;
+            padding: 10px;
             max-height: 655px;
             margin: 0 auto;
             position: relative;
@@ -321,7 +316,7 @@ export default {
         }
 
         @media (max-width: 768px) {
-            max-width: 70%;
+            max-width: 225px;
             height: 430px;
         }
     }
@@ -334,10 +329,8 @@ export default {
         height: 100%;
         position: relative;
         max-width: 479px;
-        border-radius: 50px;
 
         @media (max-width: 768px) {
-            border-radius: 25px;
             max-width: 195px;
         }
     }
@@ -465,57 +458,4 @@ export default {
 .active-bullet {
     background: #2e90fa;
 }
-
-.status-bar {
-    position: absolute;
-    width: 380px;
-    height: 45px;
-    top: 18px;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 2;
-}
-
-@media(max-width: 1900px) {
-    .status-bar {
-        width: 397px;
-        height: 54px;
-        top: 15px;
-        left: 15px;
-    }
-}
-
-
-
-@media(max-width: 1600px) {
-    .status-bar {
-        width: 269px;
-        height: 37px;
-        top: 15px;
-        left: 27px;
-    }
-}
-
-
-
-@media(max-width: 768px) {
-    .status-bar {
-        width: 212px;
-        height: 30px;
-        top: 15px;
-        left: 5px;
-    }
-}
-
-@media(max-width: 340px) {
-    .status-bar {
-        width: 198px;
-        height: 23px;
-        top: 15px;
-        left: 5px;
-    }
-}
-
-
-
 </style>

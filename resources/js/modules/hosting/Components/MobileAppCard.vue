@@ -7,12 +7,8 @@
             </div>
             <div class="system-card-img">
                 <img
-                    src="../assets/img/Mockup-iphone.png"
+                    src="@img/Iphone-14.png"
                     class="img-iphone img-system"
-                />
-                <img
-                    src="../assets/img/status-bar.png"
-                    class="img-status-bar img-system"
                 />
                 <img :src="imgTabBar" class="img-tab-bar img-system" />
                 <swiper
@@ -142,23 +138,10 @@ export default {
 </script>
 <style scoped>
 .swiper {
-    padding-bottom: 150px;
+    padding-bottom: 72px !important;
 }
-
-@media (max-width: 991.98px) {
-    .swiper {
-        padding-bottom: 100px !important;
-    }
-}
-
 .img-content {
     width: 100%;
-}
-
-@media (max-width: 767.98px) {
-    .swiper {
-        padding-bottom: 62px !important;
-    }
 }
 
 .system-card-inf {
@@ -186,24 +169,19 @@ export default {
     line-height: 110%; /* 19.8px */
 }
 
-.img-status-bar {
-    z-index: 2;
-    top: 24px;
-    left: 42px;
-}
-
 .img-tab-bar {
     z-index: 2;
     bottom: 20px;
-    left: 47px;
-    width: 77%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 48px);
 }
 
 .system-card-img {
     position: relative;
-    width: 408px;
-    height: 722px;
-    margin-bottom: clamp(20px, 6vw, 50px);
+    max-width: 429px;
+    width: 100%;
+    min-height: 875px;
 }
 
 .img-system {
@@ -211,17 +189,13 @@ export default {
 }
 
 .img-support {
-    left: 39px;
-    top: 24px;
-    height: auto;
-    width: 310px;
-    border: 1px solid rgba(255, 0, 0, 0);
-    border-radius: 30px;
-    margin: 0 10px;
+    min-height: 100%;
+    width: calc(100% - 48px);
+    left: 24px;
 }
 
 .img-iphone {
-    /* z-index: 10; */
+    z-index: 10;
 }
 
 @media (max-width: 768px) {

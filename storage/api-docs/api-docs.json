@@ -2822,8 +2822,8 @@
                         "type": "array",
                         "items": {
                             "properties": {
-                                "referral_id": {
-                                    "type": "integer"
+                                "type": {
+                                    "type": "string"
                                 },
                                 "amount": {
                                     "type": "number"
