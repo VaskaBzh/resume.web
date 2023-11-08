@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class WorkerBuilder extends BaseBuilder
 {
@@ -26,6 +27,10 @@ class WorkerBuilder extends BaseBuilder
     public function onlyDead(): Builder
     {
         return $this->where('status', 'DEAD');
+    }
 
+    public function byStatus(?string $status): HasMany|Builder
+    {dd($this->model->pluck('group_id'));
+       return $status ? $this->model->where('status', $status) : $this->model;
     }
 }
