@@ -13,32 +13,17 @@ class MinerStatFactory extends Factory
     public function definition(): array
     {
         return [
-            'network_hashrate' => 449.01,
+            'network_hashrate' => 546.49,
             'network_unit' => 'E',
-            'network_difficulty' => 61030681983175,
+            'network_difficulty' => 62463471666732,
             'next_difficulty' => 0,
             'change_difficulty' => 0,
             'reward_block' => 6.2500000,
-            'price_USD' => 34668,
+            'price_USD' => 35120,
             'time_remain' => 0,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
-            'fpps_rate' => 4.77,
+            'fpps_rate' => 7.49,
         ];
     }
 }
-
-/**
- * id
- * network_hashrate
- * network_unit
- * network_difficulty
- * next_difficulty
- * change_difficulty
- * reward_block
- * fpps_rate
- * price_USD
- * time_remain
- * created_at
- * updated_at
- */

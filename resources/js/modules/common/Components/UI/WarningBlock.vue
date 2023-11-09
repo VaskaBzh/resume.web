@@ -1,11 +1,13 @@
 <template>
-    <div class="warning">
-        <main-icon class="warning_icon icon-md icon-warning" name="warning" />
+    <a @click="openSupport"  class="warning">
+        <main-icon class="warning_icon icon-md icon-warning" name="cabinet-help" />
         <main-description
-            v-i18n="$t(text, { time: time })"
             class="warning_text text-warning text-md"
-        />
-    </div>
+        >
+            <p class="warning_text">{{$t("connecting_text")}}</p>
+            <p class="warning_link">{{$t("connecting_feedback")}}</p>
+        </main-description>
+    </a>
 </template>
 
 <script>
@@ -23,7 +25,7 @@ export default {
     props: {
         text: {
             type: String,
-            default: "connecting_feedback",
+            default: "connecting_text",
         },
         time: {
             type: String,
@@ -33,6 +35,11 @@ export default {
     i18n: {
         sharedMessages: WarningMessages,
     },
+    computed: {
+        openSupport() {
+            window.open('https://t.me/allbtc_support')
+        }
+    }
 };
 </script>
 
@@ -47,5 +54,9 @@ export default {
 }
 .warning_icon {
     min-width: 24px;
+}
+
+.warning_link {
+    border-bottom: .5px solid #ffb26b;
 }
 </style>

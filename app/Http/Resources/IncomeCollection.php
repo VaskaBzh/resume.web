@@ -21,7 +21,7 @@ use OpenApi\Attributes as OA;
                 type: "array",
                 items: new OA\Items(
                     properties: [
-                        new OA\Property(property: "referral_id", type: "integer"),
+                        new OA\Property(property: "type", type: "string"),
                         new OA\Property(property: "amount", type: "number"),
                         new OA\Property(property: "hash", type: "integer"),
                         new OA\Property(property: "status", type: "string"),
@@ -43,7 +43,7 @@ class IncomeCollection extends ResourceCollection
     {
         return [
             'data' => $this->collection->map(static fn(Income $income) => [
-                    'referral_id' => $income->referral_id,
+                    'type' => $income->type,
                     'amount' => $income->daily_amount,
                     'hash' => $income->hash,
                     'status' => $income->status,

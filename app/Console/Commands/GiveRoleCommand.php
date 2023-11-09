@@ -2,9 +2,11 @@
 
 namespace App\Console\Commands;
 
+use App\Enums\User\Roles;
 use App\Models\User;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
+use App\Services\Internal\ReferralService;
 
 class GiveRoleCommand extends Command
 {
@@ -14,36 +16,88 @@ class GiveRoleCommand extends Command
 
     public function handle(): void
     {
-
-        $roles = Role::all();
-
         $roleName = $this
             ->choice(
                 question: 'What role would you like to assign to the user?',
-                choices: $roles->pluck('name')->toArray()
+                choices: Role::all()->pluck('name')->toArray()
             );
 
+        match ($roleName) {
+            Roles::REFERRER->value => $this->createReferralProgram($roleName),
+            Roles::REFERRAL->value => $this->createSpecialReferralOffer($roleName),
+            default => $this->error('Wrong role')
+        };
+    }
+
+    private function createReferralProgram(string $roleName)
+    {
         while (true) {
-            $userCredential = $this->ask(question: 'To which user would you like to assign this role? Please type a name or email');
+            $userCredential = $this->ask(question: 'Please type referrer name or email');
             $user = User::where('name', $userCredential)
                 ->orWhere('email', $userCredential)
-                ->first();
+                ->firstOrFail();
 
-            if ($user) {
-                if ($user->hasRole($roleName)) {
-                    $this->error('ERROR: This user already assigned to role!');
+            if ($user->hasRole($roleName)) {
+                $this->error('ERROR: This user already assigned to role!');
 
-                    break;
-                }
-                if ($this->confirm('Are your sure? Y-y\N-n')) {
-                    $user->assignRole($roleName);
+                break;
+            }
 
-                    $this->info('Referral role has assigned to ' . $user->name . '!');
+            $referralProgram = [
+                'referral_percent' => $this->ask('Referral percent'),
+                'referral_discount' => $this->ask('Referral discount'),
+                'referral_code' => ReferralService::generateReferralCode($user)
+            ];
 
-                    break;
-                }
-            } else {
-                $this->error('ERROR: USER NOT FOUND');
+            if ($this->confirm('Are your sure?')) {
+
+                $user->assignRole($roleName);
+
+                $user->update($referralProgram);
+
+                $this->info('Referrer role has assigned to ' . $user->name . '!');
+
+                break;
+            }
+
+            $this->error('ERROR: USER NOT FOUND');
+        }
+    }
+
+    public function createSpecialReferralOffer(string $roleName): void
+    {
+        while (true) {
+
+            $referrers = User::role('referrer')->get();
+
+            $referrerEmail = $this->choice(
+                question: 'Please choice referrer',
+                choices: $referrers->pluck('email')->toArray()
+            );
+
+            $referrer = $referrers->where('email', $referrerEmail)->first();
+
+            $userCredential = $this->ask(question: 'Please type referral name or email');
+            $user = User::whereEmail($userCredential)
+                ->firstOrFail();
+
+            $customReferralPercent = $this->ask('Enter the special referral percent');
+
+            $referralProgram = [
+                'referrer_id' => $referrer->id,
+                'referral_percent' => $customReferralPercent ?? $referrer->referral_percent,
+                'referral_discount' => $this->ask('Referral discount') ?? 0,
+            ];
+
+            if ($this->confirm('Are your sure?')) {
+
+                $user->assignRole($roleName);
+
+                $user->update($referralProgram);
+
+                $this->info('Referral special offer created for ' . $user->name . '!');
+
+                break;
             }
         }
     }

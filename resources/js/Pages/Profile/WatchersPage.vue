@@ -242,7 +242,6 @@ export default {
 
 .watchers {
     flex: 1 1 auto;
-    padding: 24px;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -294,7 +293,13 @@ export default {
     position: relative;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 1256px) {
+    .watchers__wrapper {
+        grid-template-rows: 1fr auto;
+        grid-template-columns: unset;
+    }
+
+@media (max-width: 998px) {
     .watchers {
         padding: 24px 12px 24px;
     }
@@ -321,5 +326,8 @@ export default {
         justify-content: center;
         width: 100%;
     }
+}
+
+
 }
 </style>

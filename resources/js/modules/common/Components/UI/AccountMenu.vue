@@ -59,7 +59,7 @@
                     {{ $t("accounts.popups.add.text") }}
                 </p>
                 <transition name="error">
-                    <span class="error-message" :class="{'error-message-active': errorMassage }">Введите не менее 3 символов</span>
+                    <span class="error-message" v-if="errorMassage" :class="{'error-message-active': errorMassage }">{{$t("accounts.popups.add.error")}}</span>
                 </transition>
                 <input
                     ref="input"
@@ -68,6 +68,7 @@
                     autofocus
                     type="text"
                     class="input popup__input"
+                    :class="{'popup__input-error': errorMassage}"
                     :placeholder="$t('accounts.popups.add.placeholders.name')"
                 />
                 <button type="submit" class="all-link blue-button">
@@ -140,6 +141,8 @@ export default {
 
         const addAcc = async () => {
             wait.value = true;
+            closed.value = false;
+
             if (form.name.length >= 3) {
                 try {
                     const response = await ProfileApi.post(
@@ -155,6 +158,7 @@ export default {
                     closed.value = true;
 
                     store.dispatch("accounts_all", store.getters.user.id);
+                    form.name = ""
                 } catch (err) {
                     console.error("Error with: " + err);
 
@@ -260,7 +264,7 @@ export default {
     },
     methods: {
         changeActiveAccount(id) {
-            this.$store.dispatch("set_active", { index: id });
+            this.$store.dispatch("set_active_in_list", { index: id });
         },
         async openAddPopup() {
             if (this.$route.fullPath !== "/profile/accounts") {
@@ -300,7 +304,7 @@ export default {
             }
         },
         change_index(data) {
-            this.$store.dispatch("set_active", data);
+            this.$store.dispatch("set_active_in_list", data);
         },
         hideKey(e) {
             if (e.keyCode === 27) {
@@ -332,6 +336,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.form {
+    display: flex;
+    flex-flow: column nowrap;
+}
 .popup-text {
     color: var(--text-teritary);
     font-family: NunitoSans;
@@ -401,6 +409,7 @@ export default {
     }
 
     .popup__input {
+        border: 1px solid transparent;
         border-radius: var(--surface-border-radius-radius-s-md, 12px);
         background: var(--background-modal-input, #fff);
         padding: var(--py-4, 16px) var(--px-4, 16px);
@@ -411,6 +420,14 @@ export default {
         outline: none;
         border: 1px solid transparent;
         line-height: 24px;
+    }
+
+    .popup__input-error {
+        border: 1px solid #F1404A;
+        box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
+        border-radius: 12px;
+        transition: all 0.5s ease 0s;
+        outline: none;
     }
 
     .popup__input:focus {

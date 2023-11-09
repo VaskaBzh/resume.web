@@ -234,14 +234,18 @@ export default {
 .card__container {
     display: flex;
     justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 767.98px) {
     .card__container {
         flex-direction: column;
         gap: 16px;
         padding: 0;
     }
+}
+@media (max-width: 998px) {
     .card_title {
         font-size: 16px;
         line-height: 24px; /* 150% */
@@ -257,7 +261,6 @@ export default {
 }
 
 .settings {
-    padding: 24px;
     width: 100%;
     flex: 1 1 auto;
     transition: all 0.3s linear 0.2s;
@@ -265,7 +268,7 @@ export default {
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
     }
 
@@ -324,9 +327,9 @@ export default {
         background: var(--background-island, #fff);
         padding: 24px;
         box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-        width: 711px;
-        @media (max-width: 900px) {
-            width: 90vw;
+        max-width: 711px;
+        width: 100%;
+        @media (max-width: 998px) {
             padding: 16px;
         }
     }

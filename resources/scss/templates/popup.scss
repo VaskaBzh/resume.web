@@ -256,11 +256,11 @@ body::after {
             }
         }
         &-opened {
-            .form {
-                &_message {
-                    animation: fadeIn forwards 0.3s ease 0s;
-                }
-            }
+            //.form {
+            //    &_message {
+            //        animation: fadeIn forwards 0.3s ease 0s;
+            //    }
+            //}
             .popup__content {
                 &_block {
                     width: 100%;
@@ -280,14 +280,14 @@ body::after {
             @media (max-width: $mobile) {
                 padding: 16px 0;
             }
-            .form {
-                .form {
-                    padding-left: 0;
-                }
-                .title {
-                    max-width: calc(100% - 30px);
-                }
-            }
+            //.form {
+            //    .form {
+            //        padding-left: 0;
+            //    }
+            //    .title {
+            //        max-width: calc(100% - 30px);
+            //    }
+            //}
         }
     }
     &__close {

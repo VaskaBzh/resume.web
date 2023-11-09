@@ -63,13 +63,14 @@ export default {
     font-weight: 400;
     line-height: 145%; /* 20.3px */
 }
+
 .card_inf_block {
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 2px;
 }
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .card_inf_block {
         width: 100%;
     }
@@ -82,16 +83,22 @@ export default {
     font-weight: 400;
     line-height: 150%; /* 24px */
 }
-@media (min-width: 768.98px) {
+@media (min-width: 767.98px) {
     .card__title {
         white-space: nowrap;
+    }
+}
+@media (min-width: 767.98px) {
+    .card__subcontainer {
+        max-width: 62%;
     }
 }
 .card__subcontainer {
     display: flex;
     align-items: center;
     gap: 12px;
-    width: 62%;
+    width: 100%;
+    min-width: 300px;
 }
 
 .btn_container {
@@ -110,14 +117,14 @@ export default {
     font-family: NunitoSans, serif;
     font-size: 18px;
     font-style: normal;
-    font-weight: 600;
+    font-weight: 767;
     color: var(--buttons-primary-text, var(--main-gohan, #fff));
     line-height: 175%; /* 31.5px */
     display: inline-flex;
     justify-content: center;
     align-items: center;
 }
-@media (max-width: 900px) {
+@media (max-width: 767.98px) {
     .card__subcontainer {
         width: 100%;
         flex-direction: column;

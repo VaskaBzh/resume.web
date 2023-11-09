@@ -104,7 +104,7 @@ class PayoutService
             subData: SubData::fromRequest([
                 'user_id' => $this->sub->user_id,
                 'group_id' => $this->sub->group_id,
-                'group_name' => $this->sub->sub,
+                'sub_name' => $this->sub->sub,
                 'pending_amount' => 0,
             ]),
             sub: $this->sub

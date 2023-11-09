@@ -13,11 +13,11 @@ class Create
     {
         return Income::create([
             'group_id' => $incomeCreateData->groupId,
-            'wallet_id' => $incomeCreateData->walletId,
+            'type' => $incomeCreateData->type->value,
             'referral_id' => $incomeCreateData->referralId,
             'daily_amount' => $incomeCreateData->dailyAmount,
-            'status' => $incomeCreateData->status,
-            'message' => $incomeCreateData->message,
+            'status' => $incomeCreateData->status->value,
+            'message' => $incomeCreateData->message->value,
             'hash' => $incomeCreateData->hashrate,
             'diff' => $incomeCreateData->difficulty,
         ]);

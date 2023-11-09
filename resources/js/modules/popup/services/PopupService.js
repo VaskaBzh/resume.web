@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import anime from "animejs";
 
+
 export class PopupService {
     constructor(id, emit) {
         this.isOpened = ref(false);
@@ -51,7 +52,7 @@ export class PopupService {
     animateOnUpdate() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.popupContentHtml.scrollHeight + 64}px`,
+            height: `${this.getClearScrollHeight()}px`,
             easing: "easeInCubic",
             duration: 500,
             complete: () => {
@@ -113,10 +114,31 @@ export class PopupService {
         });
     }
 
+    getClearScrollHeight() {
+        const padding = this.getStyle(this.popupBlockHtml, "padding");
+        const borderWidth = this.getStyle(this.popupBlockHtml, "borderWidth");
+        const paddingWithoutUnit = this.removeLetters(padding);
+        const borderWidthWithoutUnit = this.removeLetters(borderWidth);
+
+        const sidesPaddingValue = paddingWithoutUnit * 2;
+        const sidesBorderWidthValue = borderWidthWithoutUnit * 2;
+
+        const newHeightValue = this.popupContentHtml.scrollHeight + sidesPaddingValue + sidesBorderWidthValue;
+        return newHeightValue;
+    }
+
+    getStyle(element, property) {
+        return window.getComputedStyle(element)[property];
+    }
+
+    removeLetters(string, letters = "px") {
+        return string.replace(letters, "")
+    }
+
     animateHeight() {
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: `${this.popupContentHtml.scrollHeight + 64}px`,
+            height: `${this.getClearScrollHeight()}px`,
             easing: "easeInCubic",
             duration: 350,
             complete: () => {

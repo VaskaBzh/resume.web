@@ -4,7 +4,7 @@
         :class="{
             'sub-active': subData.group_id === getActive,
         }"
-        @click="$store.dispatch('set_active', { index: subData.group_id })"
+        @click="$store.dispatch('set_active_in_list', { index: subData.group_id })"
     >
 		<div class="sub__head">
 			<span class="sub_name">
@@ -34,7 +34,7 @@
 <!--                        {{ subData.workers_count_in_active }}-->
 <!--                    </span>-->
                     <span class="sub_worker sub_worker-unstable">
-                        {{ subData.workers_count_unstable }}
+                        {{ subData.workers_count_in_active }}
                     </span>
 				</template>
 			</info-block>

@@ -1,14 +1,6 @@
 <template>
     <div class="workers">
-        <main-preloader
-            class="cabinet__preloader"
-            :wait="worker_service.waitWorkers"
-            :interval="35"
-            :end="!worker_service.waitWorkers"
-            :empty="worker_service.emptyWorkers"
-        />
         <div
-            v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
             class="workers__wrapper"
         >
             <main-title class="title-worker"
@@ -22,7 +14,7 @@
                         instructionService.step === 1,
                 }"
             >
-                <main-hashrate-cards />
+                <main-hashrate-cards class="workers-header-cards" />
                 <instruction-step
                     :step_active="1"
                     :steps_count="instructionService.steps_count"
@@ -184,7 +176,6 @@ export default {
             }
 
             await this.worker_service.getPopup(data.id);
-            this.worker_service.openPopupCard();
         },
         dropWorkers() {
             this.worker_service.dropWorker();
@@ -239,6 +230,10 @@ export default {
         font-weight: 400;
         line-height: 32px; /* 160% */
     }
+
+    .workers-header-cards {
+        align-items: unset;
+    }
 }
 
 .cards-container {
@@ -247,7 +242,7 @@ export default {
     margin-bottom: 32px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .cards-container {
         flex-direction: column;
         gap: 16px;
@@ -264,12 +259,17 @@ export default {
 }
 
 .workers {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
+    }
+
+    &__wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
     }
 
     .form .title {
@@ -280,20 +280,26 @@ export default {
         display: flex;
         gap: 12px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
 
     &__table {
         display: flex;
         gap: 12px;
+        flex: 1 1 auto;
     }
 
     &__card {
         min-width: calc(50% - 6px);
         min-height: 440px;
-        @media (max-width: 1300px) {
-            min-height: 437px;
+
+        @media (max-width: 1340px) {
+            min-height: 480px;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 1200px) {
+            min-height: unset;
+        }
+        @media (max-width: 998px) {
             min-height: 450px;
             position: absolute;
             width: calc(100% - 20px);

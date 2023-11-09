@@ -13,7 +13,7 @@
                         :set-wrapper-size="true"
                         :loop="true"
                         :pagination="{
-                            clickable: true,
+                            clickable: false,
                             el: '.pagination_bulets',
                             type: 'bullets',
                         }"
@@ -60,7 +60,7 @@
                     <div class="mobile-view__content">
                         <img
                             class="iphone"
-                            src="../../../../../assets/img/iPhone-14.png"
+                            src="@img/iPhone-14.png"
                             alt=""
                         />
                         <Swiper
@@ -78,7 +78,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen1-en.png"
+                                    src="@img/iphone-14-screen1-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -89,7 +89,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen2-en.png"
+                                    src="@img/iphone-14-screen2-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -100,7 +100,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen3-en.png"
+                                    src="@img/iphone-14-screen3-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -111,7 +111,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen4-en.png"
+                                    src="@img/iphone-14-screen4-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -122,7 +122,7 @@
                                 <!--                                v-show="$i18n.locale === 'ru'"-->
                                 <!--                            />-->
                                 <img
-                                    src="../../../../../assets/img/iphone-14-screen5-en.png"
+                                    src="@img/iphone-14-screen5-en.png"
                                     alt=""
                                 />
                             </swiper-slide>
@@ -284,8 +284,7 @@ export default {
         max-width: 429px;
         height: 875px;
         position: absolute;
-        padding: 15px;
-        max-height: 875px;
+        padding: 18px 24px 23px;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
@@ -296,7 +295,7 @@ export default {
             height: 100%;
             object-fit: unset;
             left: 50%;
-            //z-index: 10;
+            z-index: 10;
             top: 50%;
             transform: translate(-50%, -50%);
         }
@@ -304,7 +303,7 @@ export default {
         @media (max-width: 1600px) {
             max-width: 330px;
             height: 655px;
-            padding: 15px;
+            padding: 10px;
             max-height: 655px;
             margin: 0 auto;
             position: relative;
@@ -317,7 +316,7 @@ export default {
         }
 
         @media (max-width: 768px) {
-            max-width: 70%;
+            max-width: 225px;
             height: 430px;
         }
     }
@@ -330,10 +329,8 @@ export default {
         height: 100%;
         position: relative;
         max-width: 479px;
-        border-radius: 50px;
 
         @media (max-width: 768px) {
-            border-radius: 25px;
             max-width: 195px;
         }
     }
@@ -367,24 +364,13 @@ export default {
         height: 100%;
         max-width: 100%;
         margin: 0 auto;
-        border-radius: 70px;
         overflow: hidden;
         z-index: 1;
         justify-content: center;
 
-        @media (max-width: 768px) {
-            border-radius: 25px;
-        }
-
         img {
             width: 100%;
-            height: auto;
-            object-fit: cover;
-            border-radius: 30px;
-
-            @media (max-width: 768px) {
-                border-radius: 20px;
-            }
+            height: 100%;
         }
 
         svg {

@@ -33,7 +33,7 @@ use OpenApi\Attributes as OA;
             new OA\Property(property: "phone", type: "integer"),
             new OA\Property(property: "sms", type: "boolean"),
             new OA\Property(property: "2fa", type: "boolean"),
-            new OA\Property(property: "referral_code", type: "string"),
+            new OA\Property(property: "referral_url", type: "string"),
             new OA\Property(property: "has_referral_role", type: "bool"),
         ],
         type: "object"
@@ -51,8 +51,8 @@ class UserResource extends JsonResource
             'phone' => $this->phone,
             'sms' => (bool) $this->sms,
             '2fa' => !is_null($this->google2fa_secret),
-            'referral_code' => $this->referral_code,
-            'has_referral_role' => $this->hasRole('referral')
+            'referral_url' => route('v1.register', 'referral_code=' . $this->referral_code),
+            'has_referrer_role' => $this->hasRole('referrer')
         ];
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api\Sub;
 
 use App\Dto\UserData;
+use App\Events\SubCreatedEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SubCreateRequest;
 use App\Models\User;
@@ -89,10 +90,7 @@ class CreateController extends Controller
         BtcComService    $btcComService,
     ): JsonResponse
     {
-        $btcComService->createSub(
-            userId: $user->id,
-            subName: $request->name
-        );
+        $btcComService->createLocalSub($user, $request->name, false);
 
         return new JsonResponse([
             'message' => __('actions.success_sub_create')

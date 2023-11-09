@@ -6,7 +6,7 @@ export class SubService extends DefaultSubsService {
     constructor(titleIndexes = [0, 1, 2, 3, 4]) {
         super();
 
-        this.subsType = true;
+        this.subsType = false;
 
         this.subList = null;
 
@@ -122,9 +122,10 @@ export class SubService extends DefaultSubsService {
         return this;
     }
 
-    toggleSubsType() {
-        this.subsType = !this.subsType;
-    }
+    toggleSubsType(subsTypeState = null) {
+            this.subsType = subsTypeState ?? !this.subsType;
+        }
+
 
     setDocumentTitle(title) {
         this.page.titleProcess(title);

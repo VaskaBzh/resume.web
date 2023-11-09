@@ -3,7 +3,6 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Str;
 
 /**
  * @default \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
@@ -18,10 +17,11 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'id' => 1,
             'name' => "MainTest",
             'email' => 'forest@gmail.com',
-            'password' => bcrypt('password'),
+            'password' => '123',
+            'referral_percent' => 1,
+            'referral_discount' => 0,
         ];
     }
 

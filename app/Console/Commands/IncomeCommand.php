@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace App\Console\Commands;
 
-use App\Enums\Income\Message;
-use App\Enums\Income\Status;
+use App\Enums\Income\Type;
 use App\Models\Sub;
+use Illuminate\Support\Facades\Log;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
+use App\Exceptions\IncomeCreatingException;
 
 class IncomeCommand extends Command
 {
@@ -23,59 +24,37 @@ class IncomeCommand extends Command
     public function handle(): void
     {
         Sub::hasWorkerHashRate()
-            ->with('user')
-            ->with('wallets')
+            ->with(['user.referrer', 'workers'])
             ->each(static function (Sub $sub) {
                 $sub->refresh();
-                self::process(
-                    incomeService: resolve(IncomeService::class),
-                    sub: $sub
-                );
+
+                try {
+
+                    $referrerActiveSub = $sub->user
+                        ->referrer
+                        ?->active()
+                        ->first();
+
+                    $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerActiveSub);
+
+                    $income = $service->createIncome($sub, Type::MINING);
+                    $service->updateLocalSub($sub, Type::MINING);
+                    $service->createFinance();
+
+                    if ($referrerActiveSub) {
+                        $service->createIncome($referrerActiveSub, Type::REFERRAL);
+                        $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
+                    }
+
+                    Log::channel('incomes')
+                        ->info(message: 'INCOME CREATE', context: $income->toArray());
+                } catch (IncomeCreatingException) {
+                    return;
+                }
             });
 
-        if (config('app.env') === 'production') {
+        if (config('app.production_env')) {
             $this->call('payout');
         }
-    }
-
-    private static function process(
-        IncomeService $incomeService,
-        Sub           $sub
-    ): void
-    {
-        if (!$incomeService->init(sub: $sub)) {
-            return;
-        }
-
-        $wallet = $sub->wallets?->first();
-
-        if ($wallet) {
-            if ($incomeService->isLessThenMinWithdraw()) {
-                $incomeService
-                    ->setMessage(message: Message::LESS_MIN_WITHDRAWAL)
-                    ->setStatus(status: Status::PENDING);
-
-                $incomeService->createLocalIncome(wallet: $wallet);
-                $incomeService->createFinance();
-                $incomeService->updateLocalSub();
-
-                return;
-            }
-
-            $incomeService
-                ->setMessage(message: Message::READY_TO_PAYOUT)
-                ->setStatus(status: Status::READY_TO_PAYOUT);
-
-            $incomeService->createLocalIncome(wallet: $wallet);
-        } else {
-            $incomeService
-                ->setMessage(message: Message::NO_WALLET)
-                ->setStatus(status: Status::PENDING);
-
-            $incomeService->createLocalIncome(wallet: null);
-        }
-
-        $incomeService->createFinance();
-        $incomeService->updateLocalSub();
     }
 }

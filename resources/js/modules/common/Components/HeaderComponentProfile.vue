@@ -86,11 +86,11 @@
     </div>
     <div class="header-select-container">
       <select-theme
-          v-if="viewportWidth >= 991.78"
+          v-if="viewportWidth >= 900"
           :viewportWidth="viewportWidth"
       ></select-theme>
       <select-language
-          v-if="viewportWidth >= 991.78"
+          v-if="viewportWidth >= 900"
           :viewportWidth="viewportWidth"
       ></select-language>
     </div>
@@ -371,7 +371,7 @@ export default defineComponent({
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
   .svg-mobile {
     display: inline-block;
   }

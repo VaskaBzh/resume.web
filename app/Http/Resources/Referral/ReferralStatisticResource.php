@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Referral;
 
 use App\Models\User;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +16,7 @@ use OpenApi\Attributes as OA;
             new OA\Property(property: 'referrals_total_amount', type: 'float'),
             new OA\Property(property: 'total_referrals_hash_rate', type: 'float'),
             new OA\Property(property: 'referral_percent', type: 'float'),
-            new OA\Property(property: 'code', type: 'string'),
+            new OA\Property(property: 'referral_url', type: 'string'),
         ],
         type: 'object'
     )
@@ -26,7 +26,6 @@ class ReferralStatisticResource extends JsonResource
     public function __construct(
         User                   $resource,
         private readonly array $statistic,
-        private readonly array $referralCodeData
     )
     {
         parent::__construct($resource);
@@ -35,10 +34,9 @@ class ReferralStatisticResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'group_id' => $this->referralCodeData['group_id'],
-            'code' => route('v1.register', 'referral_code=' . $this->referral_code),
+            'referral_url' => route('v1.register', 'referral_code=' . $this->referral_code),
+            'referral_percent' => $this->referral_percent,
             ...$this->statistic,
-            'referral_percent' => $this->referralCodeData['referral_percent']
         ];
     }
 }

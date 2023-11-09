@@ -5,7 +5,6 @@ use App\Http\Controllers\Api\ChartController;
 use App\Http\Controllers\Api\Incomes\ListController;
 use App\Http\Controllers\Api\MinerStatController;
 use App\Http\Controllers\Api\Payout\ListController as PayoutListController;
-use App\Http\Controllers\Api\Referral\CodeController as ReferralCodeController;
 use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeListController;
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
 use App\Http\Controllers\Api\Referral\StatisticController as ReferralStatisticController;
@@ -13,6 +12,7 @@ use App\Http\Controllers\Api\SendCodeController;
 use App\Http\Controllers\Api\Sub\CreateController as SubCreateController;
 use App\Http\Controllers\Api\Sub\ListController as SubListController;
 use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
+use App\Http\Controllers\Api\Sub\ActivateController as SubActivateController;
 use App\Http\Controllers\Api\StatisticController as SubStatisticController;
 use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
@@ -50,6 +50,9 @@ Route::group([
     ], function () {
         Route::get('/{user}', SubListController::class)->name('sub.list');
         Route::get('/sub/{sub}', SubShowController::class)->name('sub.show');
+        Route::put('/sub/activate/{sub}', SubActivateController::class)
+            ->middleware('throttle:6,1')
+            ->name('sub.activate');
     });
 
     Route::group([
@@ -97,12 +100,9 @@ Route::group([
 
     Route::group([
         'prefix' => 'referrals',
-        'middleware' => 'role:referral'
+        'middleware' => 'role:referrer'
     ], function () {
         Route::get('/{user}', ReferralListController::class)->name('referral.list');
-        Route::post('/generate/{user}', ReferralCodeController::class)
-            ->middleware('throttle:6,1')
-            ->name('code');
         Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');
         Route::get('/incomes/{user}', ReferralIncomeListController::class)->name('referral.income.list');
     });

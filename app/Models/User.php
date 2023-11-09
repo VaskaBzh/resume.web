@@ -7,6 +7,7 @@ use App\Builders\UserBuilder;
 use App\Notifications\VerifyEmailNotification;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -25,6 +26,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $fillable = [
         'name',
         'email',
+        'referrer_id',
+        'referral_percent',
+        'referral_discount',
         'password',
         'referral_code',
         'phone',
@@ -59,20 +63,14 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Sub::class);
     }
 
-    public function owners(): BelongsToMany
+    public function referrer(): BelongsTo
     {
-        return $this->belongsToMany(
-            Sub::class,
-            'referrals',
-            'user_id',
-            'group_id'
-        )
-            ->withPivot(
-                'id',
-                'user_id',
-                'group_id',
-                'referral_percent'
-            )->withTimestamps();
+        return $this->belongsTo(User::class, 'referrer_id');
+    }
+
+    public function referrals(): HasMany
+    {
+        return $this->hasMany(User::class, 'referrer_id');
     }
 
     public function watcherLinks(): HasMany
@@ -84,19 +82,23 @@ class User extends Authenticatable implements MustVerifyEmail
 
     /* Attributes */
 
-    public function owner(): Attribute
-    {
-        return Attribute::make(
-            get: fn(): ?Sub => $this->owners()->first()
-        );
-    }
-
     public function generateConfirmationCode(): string
     {
         $min = pow(10, 5 - 1);
         $max = pow(10, 5) - 1;
 
         return (string) mt_rand($min, $max);
+    }
+
+    public function createAuthToken(): string
+    {
+        $token = $this->createToken(
+            $this->name,
+            ['*'],
+            now()->addMinutes(config('sanctum.expiration'))
+        );
+
+        return $token->plainTextToken;
     }
 
     public function confirmationCode(): Attribute
@@ -107,6 +109,15 @@ class User extends Authenticatable implements MustVerifyEmail
                 DeleteConfirmationCode::execute($this);
 
                 return $confirmationCode;
+            }
+        );
+    }
+
+    public function referralPercentage(): Attribute
+    {
+        return Attribute::make(
+            get: function (): ?float {
+                return $this->referral_percent ?? $this->referrer->referral_percent;
             }
         );
     }

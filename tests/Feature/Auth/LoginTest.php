@@ -69,7 +69,7 @@ class LoginTest extends TestCase
 
         $this->enable2fa();
 
-        $this->postJson('/v1/login', array_merge($basicAuth, ['google2fa_code' => 'wrong!']))
+        $this->postJson('/v1/login', array_merge($basicAuth, ['google2fa_code' => '666666']))
             ->assertStatus(Response::HTTP_FORBIDDEN)
             ->assertJson($google2faAuth['wrong_code_error']);
 
@@ -91,7 +91,7 @@ class LoginTest extends TestCase
 
         $this->postJson('/v1/login', $basicAuth)
             ->assertExactJson($google2faAuth['code_required_error'])
-            ->assertStatus(Response::HTTP_UNPROCESSABLE_ENTITY);
+            ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertFalse(Auth::check());
     }
@@ -158,8 +158,8 @@ class LoginTest extends TestCase
                         'phone',
                         'sms',
                         '2fa',
-                        'referral_code',
-                        'has_referral_role'
+                        'referral_url',
+                        'has_referrer_role'
                     ],
                     'token',
                     'expired_at',
@@ -167,12 +167,12 @@ class LoginTest extends TestCase
                 'google2faAuth' => [
                     'code_required_error' => [
                         "errors" => [
-                            "2fa" => ["Pass google2fa_code!"]
+                            "messages" => ["Pass 2fa code!"]
                         ]
                     ],
                     'wrong_code_error' => [
                         'errors' => [
-                            '2fa' => ['Не верный код']
+                            'messages' => ['Wrong code']
                         ]
                     ],
                     'validation_error' => [

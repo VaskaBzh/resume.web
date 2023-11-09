@@ -228,6 +228,7 @@ export default {
 }
 
 .watcher_title {
+    width: 90%;
     margin-bottom: 4px;
 }
 

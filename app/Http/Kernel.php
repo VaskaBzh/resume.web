@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Listeners;
+namespace App\Http;
 
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
@@ -72,6 +72,5 @@ class Kernel extends HttpKernel
         'watcher-link' => \App\Http\Middleware\WatcherLinkMiddleware::class,
         'verify-expiration' => \App\Http\Middleware\EmailVerificationExpirationMiddleware::class,
         'verify-confirm' => \App\Http\Middleware\VerifyEmailConfirmationMiddleware::class,
-        'two-factor' => \App\Http\Middleware\TwoFactorMiddleware::class,
     ];
 }

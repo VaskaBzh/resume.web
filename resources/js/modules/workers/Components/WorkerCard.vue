@@ -147,8 +147,15 @@ export default {
     .card_close {
         display: none;
     }
+    .card__block {
+        min-height: unset;
+    }
     .card__wrapper {
+        position: unset;
+        top: unset;
+        left: unset;
         padding: 0;
+        min-height: 390px;
     }
 }
 .card__content {

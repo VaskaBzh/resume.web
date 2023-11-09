@@ -1,7 +1,7 @@
 <template>
     <div class="copy" :class="{ 'copy-active': hasCopy }" @click="copy">
         <p class="copy_label" v-show="label">{{ label }}</p>
-        <p class="copy_text">{{ cuttedCode }}</p>
+        <p class="copy_text">{{ code }}</p>
         <transition name="copy">
             <copy-icon class="copy_icon" v-show="!hasCopy" />
         </transition>
@@ -34,17 +34,17 @@ export default {
             hasCopy: false,
         };
     },
-    computed: {
-        cuttedCode() {
-            if (this.code)
-                if (this.cutValue !== -1)
-                    return this.code.length >= this.cutValue
-                        ? `${this.code.substr(0, this.cutValue)}...`
-                        : this.code;
-                else return this.code;
-            return "...";
-        },
-    },
+    // computed: {
+    //     cuttedCode() {
+    //         if (this.code)
+    //             if (this.cutValue !== -1)
+    //                 return this.code.length >= this.cutValue
+    //                     ? `${this.code.substr(0, this.cutValue)}...`
+    //                     : this.code;
+    //             else return this.code;
+    //         return "...";
+    //     },
+    // },
     methods: {
         copy() {
             if (this.code && this.code !== "...") {
@@ -118,7 +118,14 @@ export default {
         font-size: 16px;
         font-weight: 400;
         line-height: 24px;
+        white-space: nowrap;
+        overflow: hidden;
         color: var(--text-secondary, #475467);
+        width: 95%;
+
+        @media (max-width: 500px) {
+            width: 85%;
+        }
     }
     &_tick {
         stroke: #4182ec;

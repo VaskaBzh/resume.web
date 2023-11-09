@@ -13,7 +13,7 @@ class Update
     {
         $sub->update(
             [
-                'sub' => $subData->groupName,
+                'sub' => $subData->subName,
                 'pending_amount' => $subData->pendingAmount ?? $sub->pending_amount,
                 'total_amount' => $subData->totalAmount ?? $sub->total_amount,
             ]

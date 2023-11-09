@@ -5,6 +5,7 @@
             class="row_input input"
             v-model="value"
             :placeholder="placeholder"
+            autocomplete="off"
         />
         <transition name="fade">
             <svg
@@ -142,11 +143,11 @@ export default {
             #e8ecf2 100%
         );
         @media (max-width: 479.98px) {
-            color: rgba(124, 124, 124, 0.7);
-            font-size: 14px;
+            color: #000000;
+            font-size: 16px;
             font-family: Ubuntu, serif;
             line-height: 130%;
-            min-height: 40px;
+            min-height: 48px;
         }
 
         &::placeholder {

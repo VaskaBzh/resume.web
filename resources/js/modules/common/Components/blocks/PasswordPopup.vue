@@ -10,18 +10,11 @@
         <div class="password__head">
             <main-title>{{ $t("password_popup.title") }}</main-title>
             <main-description
-                >{{ $t("password_popup.description") }}
+                >{{ $t("password_popup.description-two") }}
             </main-description>
         </div>
         <form @submit.prevent="closePopup" class="password__content">
-            <transition name="error">
-                <span class="password_error"
-                      v-if="validateInputs"
-                      :class="{'active-error': errorMassage.length}"
-                >
-                {{ errorMassage }}
-            </span>
-            </transition>
+
             <profile-password
                 class="password_input"
                 name="password"
@@ -39,8 +32,17 @@
                     $t('password_popup.placeholders.confirm_password')
                 "
                 :model="form['password_confirmation']"
+                :class="{'not-validate' : validateInputs}"
                 @changeValue="changePasswordForm('password_confirmation', $event)"
             />
+            <transition name="error">
+                <span class="password_error"
+                      v-if="validateInputs"
+                      :class="{'active-error': errorMassage.length}"
+                >
+                {{ $t('error.password-confirmation') }}
+            </span>
+            </transition>
             <main-button
                 type="submit"
                 class="button-blue password_button button-full"
@@ -92,19 +94,19 @@ export default {
     },
     watch: {
         "form.password"(newVal, oldVal) {
-            setTimeout(() => {
-                this.makeResize = true;
-                setTimeout(() => (this.makeResize = false), 50);
-            }, 355);
+                setTimeout(() => {
+                    this.makeResize = true;
+                    setTimeout(() => (this.makeResize = false), 50);
+                }, 355);
 
-            if(Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
-                this.validateInputs = false
-                this.sendButton = true
-            }
+                if(Object.keys(this.validateService.validate).length !== 0 && newVal !== oldVal) {
+                    this.validateInputs = false
+                    this.sendButton = true
+                }
 
-            if(this.validateInputs && newVal !== oldVal) {
-                this.validateInputs = false
-            }
+                if(this.validateInputs && newVal !== oldVal) {
+                    this.validateInputs = false
+                }
 
         },
         "form.password_confirmation"(newVal, oldVal) {
@@ -135,7 +137,7 @@ export default {
 
             if(this.form.password !== this.form["password_confirmation"]) {
                 this.validateInputs = true
-                this.errorMassage = 'Ваши пароли не совпадают!'
+                this.errorMassage = this.$t('error.password-confirmation')
 
             }
 
@@ -155,7 +157,6 @@ export default {
             this.validateService.validateProcess(this.form.password);
         },
     },
-
 
 };
 </script>
@@ -212,7 +213,7 @@ export default {
     color: #F1404A;
     position: absolute;
     left: 0;
-    top: -10%;
+    bottom: 38%;
     font-family: NunitoSans, serif;
     font-size: 12px;
     font-style: normal;
