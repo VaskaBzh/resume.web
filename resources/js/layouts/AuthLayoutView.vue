@@ -1,5 +1,5 @@
 <template>
-    <div class="app_back app_back-auth">
+    <div class="app_back" :class="{'app_back-auth': !isDark}">
         <header-component-auth :errors="errors" :is_auth="auth_user" />
         <div class="page auth">
             <teleport to="body">
@@ -75,6 +75,9 @@ export default {
     padding: 0;
     position: relative;
 }
+.app_back-auth {
+    background: #F6F6F6;
+}
 .auth {
     display: flex;
     justify-content: center;
@@ -128,7 +131,7 @@ export default {
             // .page__image
             &__image {
                 position: fixed;
-                left: 47vw;
+                left: 50vw;
                 top: 50%;
                 transform: translate(0, -50%);
                 & img {

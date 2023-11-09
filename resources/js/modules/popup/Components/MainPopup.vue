@@ -59,11 +59,11 @@ export default {
         id: String,
         opened: {
             type: Boolean,
-            default: false,
+
         },
         closed: {
             type: Boolean,
-            default: false,
+
         },
         makeResize: {
             type: Boolean,
@@ -85,14 +85,15 @@ export default {
         },
         opened(newBool) {
             if (newBool) {
-                this.service.popupOpen(this.$refs.popup_block.scrollHeight);
+                this.service.popupOpen();
             }
         },
         makeResize(newResizeState) {
-            if (newResizeState)
+            if (newResizeState) {
                 setTimeout(() => {
                     this.service.animateOnUpdate();
                 }, 150);
+            }
         },
     },
     computed: {
@@ -103,6 +104,7 @@ export default {
         this.service.setPopupBlockHtml(this.$refs.popup_block);
         this.service.setPopupLogoHtml(this.$refs.popup_logo);
         this.service.initFunc();
+
     },
     beforeUnmount() {
         this.service.destroyFunc();

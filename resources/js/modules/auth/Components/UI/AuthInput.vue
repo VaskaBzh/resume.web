@@ -6,6 +6,7 @@
             :type="type"
             class="row_input"
             :placeholder="placeholder"
+
         />
     </div>
 </template>

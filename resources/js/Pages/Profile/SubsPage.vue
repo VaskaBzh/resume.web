@@ -9,7 +9,7 @@
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="accountsStatistic.hash_per_min.toFixed(2)"
+                    :value="Number(accountsStatistic.hash_per_min).toFixed(2)"
                     unit="TH/s"
                 >
                     <template #svg>
@@ -19,7 +19,7 @@
                 <cabinet-card
                     class="subs__card-second"
                     :title="$t('info_blocks.hash.titles[1]')"
-                    :value="accountsStatistic.hash_per_day.toFixed(2)"
+                    :value="Number(accountsStatistic.hash_per_day).toFixed(2)"
                     unit="TH/s"
                 >
                     <template #svg>

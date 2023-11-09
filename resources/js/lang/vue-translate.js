@@ -825,6 +825,7 @@ const messages = {
                         name: "Please enter the name",
                     },
                     button: "+ Add",
+                    error: 'Enter at least 3 characters'
                 },
                 change: {
                     title: "Change the sub-account name",
@@ -1862,6 +1863,7 @@ const messages = {
                         name: "Введите имя",
                     },
                     button: "Добавить",
+                    error: 'Введите не менее 3 символов'
                 },
                 change: {
                     title: "Измените имя субаккаунта",

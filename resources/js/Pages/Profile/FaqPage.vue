@@ -7,7 +7,7 @@
             </p>
             <!-- <div class="search">
                 <input
-                    v-model="searchQuery"
+                    v-models="searchQuery"
                     type="text"
                     class="input input-lg input-white"
                     placeholder="Search"

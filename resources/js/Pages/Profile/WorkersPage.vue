@@ -1,14 +1,6 @@
 <template>
     <div class="workers">
-        <main-preloader
-            class="cabinet__preloader"
-            :wait="worker_service.waitWorkers"
-            :interval="35"
-            :end="!worker_service.waitWorkers"
-            :empty="worker_service.emptyWorkers"
-        />
         <div
-            v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
             class="workers__wrapper"
         >
             <main-title class="title-worker"
@@ -274,6 +266,12 @@ export default {
         padding: 24px 12px 24px;
     }
 
+    &__wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
+    }
+
     .form .title {
         margin-bottom: 0;
     }
@@ -282,11 +280,13 @@ export default {
         display: flex;
         gap: 12px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
 
     &__table {
         display: flex;
         gap: 12px;
+        flex: 1 1 auto;
     }
 
     &__card {

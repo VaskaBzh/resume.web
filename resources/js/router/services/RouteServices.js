@@ -77,23 +77,52 @@ export class RouteServices {
                     new RouteReferralData("earn-rewards", "earn-rewards"),
                 ],
             },
-            // {
-            //     path: "/v1/verify",
-            //     name: "verify",
-            //     meta: {
-            //         middleware: ["VerifyMiddleware"],
-            //     },
-            // },
-            // {
-            //     path: "/v1/password/reset/verify/",
-            //     name: "password_reset",
-            //     meta: {
-            //         middleware: ["VerifyMiddleware"],
-            //     },
-            // },
             {
                 path: "/watcher",
                 name: "watcher",
+                children: [
+                    {
+                        path: "/statistic",
+                        name: "watcher_statistic",
+                        component: () =>
+                            import("../../Pages/Profile/StatisticPage.vue"),
+                        meta: {
+                            middleware: [
+                                "LoadLayoutMiddleware",
+                                "DropErrorsMiddleware",
+                                "AuthCheckProfileMiddleware",
+                            ],
+                            layout: "ProfileLayoutView",
+                        },
+                    },
+                    {
+                        path: "/workers",
+                        name: "watcher_workers",
+                        component: () => import("../../Pages/Profile/WorkersPage.vue"),
+                        meta: {
+                            middleware: [
+                                "LoadLayoutMiddleware",
+                                "DropErrorsMiddleware",
+                                "AuthCheckProfileMiddleware",
+                            ],
+                            layout: "ProfileLayoutView",
+                        },
+                    },
+                    {
+                        path: "/income",
+                        name: "watcher_income",
+                        component: () => import("../../Pages/Profile/IncomePage.vue"),
+                        meta: {
+                            middleware: [
+                                "LoadLayoutMiddleware",
+                                "DropErrorsMiddleware",
+                                "AuthCheckProfileMiddleware",
+                            ],
+                            layout: "ProfileLayoutView",
+                        },
+                    },
+
+                ],
                 redirect: (to) => {
                     return {
                         name: "watcher_statistic",
@@ -103,46 +132,7 @@ export class RouteServices {
                         },
                     };
                 },
-            },
-            {
-                path: "/watcher/statistic",
-                name: "watcher_statistic",
-                component: () =>
-                    import("../../Pages/Profile/StatisticPage.vue"),
-                meta: {
-                    middleware: [
-                        "LoadLayoutMiddleware",
-                        "DropErrorsMiddleware",
-                        "AuthCheckProfileMiddleware",
-                    ],
-                    layout: "ProfileLayoutView",
-                },
-            },
-            {
-                path: "/watcher/workers",
-                name: "watcher_workers",
-                component: () => import("../../Pages/Profile/WorkersPage.vue"),
-                meta: {
-                    middleware: [
-                        "LoadLayoutMiddleware",
-                        "DropErrorsMiddleware",
-                        "AuthCheckProfileMiddleware",
-                    ],
-                    layout: "ProfileLayoutView",
-                },
-            },
-            {
-                path: "/watcher/income",
-                name: "watcher_income",
-                component: () => import("../../Pages/Profile/IncomePage.vue"),
-                meta: {
-                    middleware: [
-                        "LoadLayoutMiddleware",
-                        "DropErrorsMiddleware",
-                        "AuthCheckProfileMiddleware",
-                    ],
-                    layout: "ProfileLayoutView",
-                },
+
             },
         ];
     }
