@@ -248,6 +248,7 @@ export default {
     top: 18px;
     left: 50%;
     transform: translateX(-50%);
+    border-radius: 50px;
     overflow: hidden;
     @media (max-width: 470.98px) {
         top: adaptive-value(10px, 18px, 320px, 470.98px);
