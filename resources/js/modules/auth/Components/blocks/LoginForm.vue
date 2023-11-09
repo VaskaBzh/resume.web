@@ -149,6 +149,8 @@ export default {
         },
     },
     mounted() {
+        console.log(this.service)
+
         this.service.setForm();
 
         if (this.$route.query?.action === "password") {
