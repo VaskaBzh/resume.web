@@ -297,6 +297,7 @@ export default {
             left: 50%;
             z-index: 10;
             top: 50%;
+            pointer-events: none;
             transform: translate(-50%, -50%);
         }
 
@@ -329,6 +330,8 @@ export default {
         height: 100%;
         position: relative;
         max-width: 479px;
+        overflow: hidden;
+        border-radius: 50px;
 
         @media (max-width: 768px) {
             max-width: 195px;
