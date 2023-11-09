@@ -60,7 +60,7 @@
                     <div class="mobile-view__content">
                         <img
                             class="iphone"
-                            src="@img/iPhone-14.png"
+                            src="@img/iphone-14.png"
                             alt=""
                         />
                         <Swiper
