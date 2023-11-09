@@ -117,9 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return Attribute::make(
             get: function (): ?float {
-                return $this->referral_discount
-                    ?? $this->referral_percent
-                    ?? $this->referrer->referral_percent;
+                return $this->referral_percent ?? $this->referrer->referral_percent;
             }
         );
     }
