@@ -67,7 +67,6 @@ export default {
     background: var(--background-island, #ffffff);
     display: flex;
     flex-wrap: nowrap;
-    //align-items: center;
     gap: 24px;
     width: 100%;
 }
