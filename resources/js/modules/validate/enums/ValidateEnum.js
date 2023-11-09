@@ -1,4 +1,4 @@
-export const ValidateEnums = {
+export const ValidateEnum = {
     strokeLetters: /[a-z]/,
     highLetters: /[A-Z]/,
     numbers: /[0-9]/,

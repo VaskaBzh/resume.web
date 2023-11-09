@@ -6,4 +6,8 @@ export class ValuesService {
     setValue(value = null) {
         this.value = value;
     }
+
+    getValue() {
+        return this.value;
+    }
 }

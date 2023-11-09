@@ -657,8 +657,8 @@ export default {
 .img-shadow {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 15px;
+    transform: translateX(-50%);
     width: calc(100% - 200px);
 }
 
@@ -711,8 +711,8 @@ export default {
 .img-system {
     position: absolute;
     left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
+    top: 15px;
+    transform: translateX(-50%);
     width: 100%;
 }
 
@@ -740,6 +740,9 @@ export default {
 
 .img-mac {
     z-index: 10;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .mobile {
@@ -809,6 +812,7 @@ export default {
         width: 100%;
         max-width: 224px;
         height: 482px;
+        top: 8px;
     }
 
     .note-button {

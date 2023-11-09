@@ -7,6 +7,10 @@ export class StatesService {
         this.state = newState;
     }
 
+    getState() {
+        return this.state;
+    }
+
     setTemporaryState(newState = true, timeout = 1000) {
         const oldValue = this.state;
 

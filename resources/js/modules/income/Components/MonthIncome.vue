@@ -1,9 +1,8 @@
 <template>
     <div class="month-income-card">
         <div class="income-card">
-            <MainIncomeCardRow>
+            <MainIncomeCardRow :bitcoinValue="last_month_amount">
                 <template v-slot:title>{{ $t('month_earn') }}</template>
-                <template v-slot:num>{{ this.yesterdayProfit }}</template>
             </MainIncomeCardRow>
         </div>
         <div class="month__content">
@@ -44,10 +43,10 @@ export default {
     },
     computed: {
         ...mapGetters(["getAccount"]),
-        yesterdayProfit() {
+        last_month_amount() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
-                sum = this.getAccount.yesterday_amount;
+                sum = this.getAccount.last_month_amount;
             }
             return Number(sum).toFixed(8);
         },

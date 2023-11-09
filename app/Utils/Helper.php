@@ -29,11 +29,13 @@ class Helper
 
         $secondsPerDay = 86400;
 
-        $earnTime = ($stats->network_difficulty * pow("2", "32"))
-            / (($hashRate * pow("10", "12")) * $secondsPerDay);
+        $earnTime = ($stats->network_difficulty * pow(2, 32))
+            / (($hashRate * pow(10, 12)) * $secondsPerDay);
 
         $total = $stats->reward_block / $earnTime;
 
-        return $total + $total * (($stats->fpps_rate - $fee) / 100);
+        $totalWithFpps = $total + ($total * ($stats->fpps_rate / 100));
+
+        return $totalWithFpps - ($totalWithFpps * ($fee / 100));
     }
 }

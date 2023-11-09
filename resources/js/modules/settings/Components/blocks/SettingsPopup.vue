@@ -73,7 +73,7 @@
             <!--                :placeholder="`${$t('popup.placeholders.password_new')} ${-->
             <!--                    form.type-->
             <!--                }`"-->
-            <!--                :model="password"-->
+            <!--                :models="password"-->
             <!--                :errors="errors"-->
             <!--                @change="$emit('validate', $event)"-->
             <!--            />-->
@@ -84,7 +84,7 @@
             <!--                :placeholder="`${$t(-->
             <!--                    'popup.placeholders.password_confirmation'-->
             <!--                )} ${form.type}`"-->
-            <!--                :model="password_confirmation"-->
+            <!--                :models="password_confirmation"-->
             <!--                :errors="errors"-->
             <!--                @change="password_confirmation = $event"-->
             <!--            />-->

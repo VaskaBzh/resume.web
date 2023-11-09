@@ -1,7 +1,7 @@
 <template>
-    <p class="text">
+    <div class="text">
         <slot />
-    </p>
+    </div>
 </template>
 
 <script>
@@ -16,6 +16,9 @@ export default {
     font-family: NunitoSans, serif;
     font-size: clamp(12px, 5vw, 16px);
     font-weight: 400;
+    display: flex;
+    flex-flow: column;
+    gap: 4px;
     line-height: clamp(16px, 2vw, 24px);
 }
 

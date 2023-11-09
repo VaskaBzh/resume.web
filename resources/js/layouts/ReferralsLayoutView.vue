@@ -10,9 +10,7 @@
                         :active="viewService.view"
                     />
                 </div>
-                <transition name="page">
-                    <router-view />
-                </transition>
+                <router-view />
             </div>
         </div>
     </div>
@@ -73,7 +71,6 @@ export default {
     opacity: 0;
 }
 .referral {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;

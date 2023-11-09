@@ -162,7 +162,7 @@ export default {
     gap: 16px;
     align-items: center;
 }
-@media(max-width: 900px){
+@media(max-width: 998px){
     .change-text {
         font-size: 12px;
         line-height: 16px; /* 133.333% */

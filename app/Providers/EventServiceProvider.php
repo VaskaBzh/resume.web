@@ -5,7 +5,7 @@ namespace App\Providers;
 use App\Events\PayoutCompleteEvent;
 use App\Events\Registered;
 use App\Listeners\PayoutCompleteListener;
-use App\Listeners\SubCreatingSubscriber;
+use App\Listeners\SubCreatingListener;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
@@ -19,14 +19,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+            SubCreatingListener::class
         ],
         PayoutCompleteEvent::class => [
             PayoutCompleteListener::class
         ]
-    ];
-
-    protected $subscribe = [
-        SubCreatingSubscriber::class
     ];
 
     /**

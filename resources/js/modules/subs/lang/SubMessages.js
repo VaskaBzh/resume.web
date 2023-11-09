@@ -12,6 +12,15 @@ export const SubMessages = {
             ]
         },
         no_information: "No results found for your query",
+        info_blocks: {
+            hash: {
+                titles: ["Current hashrate", "Wed.hashrate / 24"],
+            },
+            workers: {
+                titles: "Workers",
+                types: ["Active", "Unstable", "Inactive"],
+            }
+        },
     },
     ru: {
         title: "Субаккаунты",
@@ -26,5 +35,14 @@ export const SubMessages = {
             ]
         },
         no_information: "По вашему запросу ничего не найдено",
+        info_blocks: {
+            hash: {
+                titles: ["Текущий хешрейт", "Ср.Хешрейт / 24"],
+            },
+            workers: {
+                title: "Воркеры",
+                types: ["Активные", "Нестабильные", "Неактивные"],
+            },
+        }
     }
 }

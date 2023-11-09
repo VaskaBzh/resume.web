@@ -371,7 +371,7 @@ export default defineComponent({
   display: none;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
   .svg-mobile {
     display: inline-block;
   }

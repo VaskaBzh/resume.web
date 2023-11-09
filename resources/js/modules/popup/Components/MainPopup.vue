@@ -59,11 +59,11 @@ export default {
         id: String,
         opened: {
             type: Boolean,
-            default: false,
+
         },
         closed: {
             type: Boolean,
-            default: false,
+
         },
         makeResize: {
             type: Boolean,
@@ -85,14 +85,15 @@ export default {
         },
         opened(newBool) {
             if (newBool) {
-                this.service.popupOpen(this.$refs.popup_block.scrollHeight);
+                this.service.popupOpen();
             }
         },
         makeResize(newResizeState) {
-            if (newResizeState)
+            if (newResizeState) {
                 setTimeout(() => {
                     this.service.animateOnUpdate();
                 }, 150);
+            }
         },
     },
     computed: {
@@ -103,6 +104,7 @@ export default {
         this.service.setPopupBlockHtml(this.$refs.popup_block);
         this.service.setPopupLogoHtml(this.$refs.popup_logo);
         this.service.initFunc();
+
     },
     beforeUnmount() {
         this.service.destroyFunc();
@@ -176,6 +178,7 @@ export default {
     flex-direction: column;
     position: relative;
     opacity: 0;
+    min-width: 492px;
 }
 .popup_close {
     position: absolute;
@@ -186,7 +189,7 @@ export default {
     height: 44px;
     width: 44px;
 }
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .popup__wrapper {
         padding: 16px;
     }
@@ -195,6 +198,11 @@ export default {
     }
     .popup__block {
         min-width: auto;
+    }
+}
+@media (max-width: 595.98px) {
+    .popup__block {
+        min-width: calc(100vw - 64px);
     }
 }
 </style>

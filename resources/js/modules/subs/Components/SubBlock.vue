@@ -34,7 +34,7 @@
 <!--                        {{ subData.workers_count_in_active }}-->
 <!--                    </span>-->
                     <span class="sub_worker sub_worker-unstable">
-                        {{ subData.workers_count_unstable }}
+                        {{ subData.workers_count_in_active }}
                     </span>
 				</template>
 			</info-block>

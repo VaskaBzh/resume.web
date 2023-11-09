@@ -113,6 +113,15 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function referralPercentage(): Attribute
+    {
+        return Attribute::make(
+            get: function (): ?float {
+                return $this->referral_percent ?? $this->referrer->referral_percent;
+            }
+        );
+    }
+
     public function isEmailAllowed(): bool
     {
         return now()->gt($this->email_verified_at->addHours(48));

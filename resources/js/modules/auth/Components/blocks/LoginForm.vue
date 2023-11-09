@@ -10,7 +10,7 @@
                 :model="service.form.email"
                 :placeholder="$t('auth.login.placeholders[0]')"
                 name="email"
-                type="text"
+                :type="'email'"
                 @change="
                     service.form.email = !!$event.target
                         ? $event.target.value
@@ -149,6 +149,8 @@ export default {
         },
     },
     mounted() {
+        console.log(this.service)
+
         this.service.setForm();
 
         if (this.$route.query?.action === "password") {

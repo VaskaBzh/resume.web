@@ -42,6 +42,7 @@ class ReferralService
     public static function getReferrerStatistic(User $referrer): array
     {
         $referrer->load([
+            'subs',
             'referrals',
             'referrals.subs'
         ]);
@@ -49,16 +50,21 @@ class ReferralService
         $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
 
         return [
-            'attached_referrals_count' => $referrer->referrals->count(),
+            'group_id' => $referrer->active()
+                ->first()
+                ?->group_id,
+            'attached_referrals_count' => $referrer->referrals
+                ->count(),
             'active_referrals_count' => $activeReferralSubs
                 ->unique('user_id')
                 ->count(),
-            'referrals_total_amount' => Income::getReferralIncomes($referrer->referrals
-                ->flatMap
-                ->subs
-                ->pluck('group_id')
-            )->sum('daily_amount'),
-            'total_referrals_hash_rate' =>  $activeReferralSubs->map->total_hash_rate->sum()
+            'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
+                ->where('type', 'referral')
+                ->sum('daily_amount'),
+            'total_referrals_hash_rate' =>  $activeReferralSubs
+                ->map
+                ->total_hash_rate
+                ->sum()
         ];
     }
 
@@ -84,7 +90,8 @@ class ReferralService
                     ->count(),
                 'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
                 'total_amount' => Income::getReferralIncomes($referralSubs->pluck('group_id'))
-                    ->sum('daily_amount')
+                    ->sum('daily_amount'),
+                'referral_percent' => $referral->referral_percentage
             ];
         });
     }

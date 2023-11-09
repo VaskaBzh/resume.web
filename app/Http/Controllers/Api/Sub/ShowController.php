@@ -13,7 +13,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
-
 class ShowController extends Controller
 {
     #[

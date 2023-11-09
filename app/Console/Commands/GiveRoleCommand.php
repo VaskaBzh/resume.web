@@ -75,13 +75,18 @@ class GiveRoleCommand extends Command
                 choices: $referrers->pluck('email')->toArray()
             );
 
+            $referrer = $referrers->where('email', $referrerEmail)->first();
+
             $userCredential = $this->ask(question: 'Please type referral name or email');
-            $user = User::where('email', $userCredential)
+            $user = User::whereEmail($userCredential)
                 ->firstOrFail();
 
+            $customReferralPercent = $this->ask('Enter the special referral percent');
+
             $referralProgram = [
-                'referrer_id' => $referrers->where('email', $referrerEmail)->first()->id,
-                'referral_discount' => $this->ask('Referral discount'),
+                'referrer_id' => $referrer->id,
+                'referral_percent' => $customReferralPercent ?? $referrer->referral_percent,
+                'referral_discount' => $this->ask('Referral discount') ?? 0,
             ];
 
             if ($this->confirm('Are your sure?')) {
@@ -94,8 +99,6 @@ class GiveRoleCommand extends Command
 
                 break;
             }
-
-            $this->error('ERROR: USER NOT FOUND');
         }
     }
 }

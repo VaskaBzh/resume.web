@@ -21,6 +21,7 @@ readonly final class SubData
         public string $subName,
         public ?float $pendingAmount,
         public ?float $totalAmount,
+        public ?bool $isActive,
     )
     {
     }
@@ -33,6 +34,7 @@ readonly final class SubData
             subName: $requestData['sub_name'],
             pendingAmount: Arr::get($requestData, 'pending_amount', 0),
             totalAmount: Arr::get($requestData, 'total_amount', 0),
+            isActive: $requestData['is_active']
         );
     }
 }
