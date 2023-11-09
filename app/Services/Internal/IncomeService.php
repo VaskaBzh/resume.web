@@ -179,13 +179,11 @@ final class IncomeService
      */
     private function setDailyEarn(): IncomeService
     {
-        $dailyEarn = Helper::calculateEarn(
+        $this->dailyEarn = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: 0
         );
-
-        $this->dailyEarn = (float) number_format($dailyEarn, 8);
 
         return $this;
     }
@@ -197,13 +195,11 @@ final class IncomeService
      */
     private function setDailyAmount(): IncomeService
     {
-        $dailyAmount = Helper::calculateEarn(
+        $this->params[Type::MINING->value]['dailyAmount'] = Helper::calculateEarn(
             stats: $this->stat,
             hashRate: $this->params['hash'],
             fee: BtcComService::FEE + $this->fee
         );
-
-        $this->params[Type::MINING->value]['dailyAmount'] = (float) number_format($dailyAmount, 8);
 
         return $this;
     }
@@ -347,10 +343,10 @@ final class IncomeService
     {
         Create::execute(financeData: FinanceData::fromRequest([
             'group_id' => $this->sub->group_id,
-            'earn' => $this->dailyEarn,
+            'earn' => $this->dailyEarn - $this->dailyEarn * (BtcComService::FEE / 100),
             'user_total' => $this->params[Type::MINING->value]['dailyAmount'],
             'percent' => $this->fee,
-            'profit' => $this->dailyEarn * (($this->fee + BtcComService::FEE) / 100),
+            'profit' => $this->dailyEarn * ($this->fee / 100),
         ]));
     }
 }

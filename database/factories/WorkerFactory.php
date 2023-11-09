@@ -16,8 +16,6 @@ class WorkerFactory extends Factory
     {
         return [
             'worker_id' => $this->faker->randomNumber(),
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
         ];
     }
 }

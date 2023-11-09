@@ -52,15 +52,19 @@ class ReferralService
         return [
             'group_id' => $referrer->active()
                 ->first()
-                ->group_id,
-            'attached_referrals_count' => $referrer->referrals->count(),
+                ?->group_id,
+            'attached_referrals_count' => $referrer->referrals
+                ->count(),
             'active_referrals_count' => $activeReferralSubs
                 ->unique('user_id')
                 ->count(),
             'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
                 ->where('type', 'referral')
                 ->sum('daily_amount'),
-            'total_referrals_hash_rate' =>  $activeReferralSubs->map->total_hash_rate->sum()
+            'total_referrals_hash_rate' =>  $activeReferralSubs
+                ->map
+                ->total_hash_rate
+                ->sum()
         ];
     }
 
