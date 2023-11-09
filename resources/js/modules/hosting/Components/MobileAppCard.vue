@@ -7,7 +7,7 @@
             </div>
             <div class="system-card-img">
                 <img
-                    src="@img/Iphone-14.png"
+                    src="@img/iphone-14.png"
                     class="img-iphone img-system"
                 />
                 <img :src="imgTabBar" class="img-tab-bar img-system" />
