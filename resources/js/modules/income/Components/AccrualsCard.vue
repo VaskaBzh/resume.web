@@ -1,7 +1,7 @@
 <template>
     <div class="accrual-card">
         <div class="accrual-all-time">
-            <MainIncomeCardRow :bitcoinValue="total_incomes">
+            <MainIncomeCardRow :bitcoinValue="total_amount">
                 <template v-slot:title>{{ $t("income.income_info.card[0]") }}</template>
             </MainIncomeCardRow>
         </div>
@@ -36,10 +36,10 @@ export default {
             }
             return Number(sum).toFixed(8);
         },
-        total_incomes() {
+        total_amount() {
             let sum = 0;
             if (Object.values(this.getAccount).length > 0) {
-                sum = this.getAccount.total_incomes;
+                sum = this.getAccount.total_amount;
             }
             return Number(sum).toFixed(8);
         },

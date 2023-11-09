@@ -12,7 +12,7 @@ export class accountData {
         this.yesterday_amount = accountRecord.yesterday_amount;
         this.total_payout = accountRecord.total_payout;
         this.last_month_amount = accountRecord.last_month_amount;
-        this.total_incomes = accountRecord.total_incomes;
+        this.total_amount = accountRecord.total_amount;
         this.pending_amount = accountRecord.pending_amount;
         this.reject_percent = accountRecord.reject_percent;
     }
