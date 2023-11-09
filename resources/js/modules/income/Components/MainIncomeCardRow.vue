@@ -50,12 +50,9 @@ export default {
             await this.converter.convert();
         },
     },
-    mounted() {
-        this.updateConversion();
-    },
     watch: {
         btcInfo: {
-            immediate: true,
+            deep: true,
             handler() {
                 this.updateConversion();
             },
