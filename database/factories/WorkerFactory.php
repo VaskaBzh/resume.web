@@ -15,7 +15,7 @@ class WorkerFactory extends Factory
     public function definition(): array
     {
         return [
-            'worker_id' => $this->faker->randomNumber(),
+            'worker_id' => $this->faker->randomNumber(5),
         ];
     }
 }

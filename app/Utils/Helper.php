@@ -21,7 +21,7 @@ class Helper
      * $this->>network_difficulty - сложность сети биткоина
      * $this->>fpps_rate - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
      */
-    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee): float
+    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee = 0): float
     {
         if ($hashRate <= 0) {
             return 0;
