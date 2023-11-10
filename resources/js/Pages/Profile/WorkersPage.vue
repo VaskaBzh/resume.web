@@ -43,7 +43,7 @@
                                 instructionService.step === 2,
                         }"
                         :wait="worker_service.waitWorkers"
-                        :empty="worker_service.emptyWorkers"
+                        :empty="worker_service.emptyTableWorkers"
                         rows-num="1000"
                         :have-nav="false"
                     >

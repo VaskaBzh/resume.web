@@ -15,12 +15,11 @@ export class WorkerService {
         this.workers_graph = {};
         this.records = [];
         this.filterButtons = [];
-        this.status = "all";
+        this.status = null;
 
         this.table = new Map();
 
         this.waitWorkers = true;
-        this.emptyWorkers = false;
         this.emptyTableWorkers = false;
 
         this.popupCardOpened = false;
@@ -38,24 +37,6 @@ export class WorkerService {
             this.translate(`workers.table.thead[${index}]`)
         );
     }
-
-    // setFirstRow() {
-    //     return {
-    //         class: "main",
-    //         name: this.translate("workers.table.sub_thead"),
-    //         hashrate:
-    //             store.getters.getAccount.hash_per_min +
-    //             store.getters.getAccount.unit +
-    //             "h/s",
-    //         // unit: store.getters.getAccount.unit,
-    //         hashRate24:
-    //             store.getters.getAccount.hash_per_day +
-    //             store.getters.getAccount.unit +
-    //             "h/s",
-    //         // unit24: store.getters.getAccount.unit,
-    //         rejectRate: store.getters.getAccount.reject_percent + " %",
-    //     };
-    // }
 
     updateGroup_id() {
         this.group_id = store.getters.getActive;
@@ -85,12 +66,15 @@ export class WorkerService {
         this.filterButtons = [
             {
                 name: "all",
+                value: null,
             },
             {
                 name: "active",
+                value: "active",
             },
             {
                 name: "inactive",
+                value: "inactive",
             },
         ]
 
@@ -98,7 +82,7 @@ export class WorkerService {
     }
 
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
+        return await ProfileApi.get(`/workers/${this.group_id}${this.status ? `?status=${this.status}` : ""}`);
     }
 
     async fetchWorker() {
@@ -115,10 +99,7 @@ export class WorkerService {
 
     async getList() {
         if (this.group_id !== -1) {
-
-
             this.useTranslater(this.titleIndexes);
-            this.emptyWorkers = false;
             this.emptyTableWorkers = false;
             this.waitWorkers = true;
 
@@ -131,17 +112,12 @@ export class WorkerService {
 
                 // this.rows.unshift(this.setFirstRow());
                 if (this.rows.length === 0) {
-                    if (this.status === "all") {
-                        this.emptyWorkers = true;
-                    }
                     this.emptyTableWorkers = true;
                 }
 
                 this.waitWorkers = false;
             } catch (e) {
                 console.error(`Error with: ${e}`);
-
-                this.emptyWorkers = true;
             }
         }
     }
