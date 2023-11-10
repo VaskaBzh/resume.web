@@ -99,13 +99,6 @@ class Sub extends Model
         );
     }
 
-    public function totalAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => $this->incomes()->sum('daily_amount')
-        );
-    }
-
     public function totalHashRate(): Attribute
     {
         return Attribute::make(

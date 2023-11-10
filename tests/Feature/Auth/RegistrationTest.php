@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Feature\Auth;
 
-use App\Dto\UserData;
-use App\Models\Sub;
 use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
-use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
 use Database\Seeders\RoleAndPermissionsSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -25,12 +18,13 @@ class RegistrationTest extends TestCase
      * @test
      *
      * @dataProvider registrationValidDataProvider
+     * @testdox register with valid data and send confirmation notification to user email
      *
      * @param string[] $signUpData
      * @param string|int|bool[] $signUpResponseStructure
      * @return void
      */
-    public function it_register_if_valid_data(
+    public function successfulRegistration(
         array $signUpData,
         array $signUpResponseStructure,
         array $btcComSubResponse,
@@ -74,8 +68,9 @@ class RegistrationTest extends TestCase
      * @test
      *
      * @dataProvider referralRegistrationDataProvider
+     * @testdox registration with referral code
      */
-    public function it_register_with_referral_code(
+    public function referralRegistration(
         $signUpData,
         $signUpResponseStructure,
         $btcComSubResponse,
@@ -114,6 +109,11 @@ class RegistrationTest extends TestCase
         );
     }
 
+    /**
+     * Pass data to tests
+     *
+     * @return array[]
+     */
     public function registrationValidDataProvider(): array
     {
         return [
@@ -150,6 +150,11 @@ class RegistrationTest extends TestCase
         ];
     }
 
+    /**
+     * Pass data to tests
+     *
+     * @return array[]
+     */
     public function referralRegistrationDataProvider(): array
     {
         return [

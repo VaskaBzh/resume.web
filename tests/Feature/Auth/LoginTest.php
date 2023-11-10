@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Feature\Auth;
 
 use App\Models\User;
@@ -23,9 +25,12 @@ class LoginTest extends TestCase
     }
 
     /**
+     * @test
+     *
      * @dataProvider authDataProvider
+     * @testdox failed login if email not verified
      */
-    public function test_login_if_email_not_verified(array $basicAuth)
+    public function isNotVerified(array $basicAuth)
     {
         $this->postJson('/v1/login', $basicAuth)
             ->assertStatus(Response::HTTP_FORBIDDEN)
@@ -33,9 +38,11 @@ class LoginTest extends TestCase
     }
 
     /**
+     * @test
+     * @testdox success login if email verified
      * @dataProvider authDataProvider
      */
-    public function test_login_if_email_verified(
+    public function isVerified(
         array $basicAuth,
         array $loginResponseStructure
     )
@@ -57,9 +64,11 @@ class LoginTest extends TestCase
     }
 
     /**
+     * @test
+     * @testdox failed login if 2fa enabled and pass wrong code
      * @dataProvider authDataProvider
      */
-    public function test_login_if_2fa_enabled_with_wrong_code(
+    public function twoFaWongCode(
         array $basicAuth,
         array $loginResponseStructure,
         array $google2faAuth
@@ -77,9 +86,11 @@ class LoginTest extends TestCase
     }
 
     /**
+     * @test
+     * @testdox it show code require error when 2fa enabled
      * @dataProvider authDataProvider
      */
-    public function test_login_if_2fa_enabled_notification(
+    public function showTwoFaRequireError(
         array $basicAuth,
         array $loginResponseStructure,
         array $google2faAuth
@@ -97,9 +108,11 @@ class LoginTest extends TestCase
     }
 
     /**
+     * @test
+     * @testdox login with 2fa
      * @dataProvider authDataProvider
      */
-    public function test_login_if_2fa_enable(
+    public function twoFaLogin(
         array $basicAuth,
         array $loginResponseStructure,
         array $google2faAuth,
@@ -124,6 +137,7 @@ class LoginTest extends TestCase
     }
 
     /**
+     * Enable 2fa for tests
      *
      * @return string
      * @throws IncompatibleWithGoogleAuthenticatorException
@@ -141,13 +155,18 @@ class LoginTest extends TestCase
         return $googleAuth->getCurrentOtp($secretKey);
     }
 
+    /**
+     * Pass data for tests
+     *
+     * @return array[]
+     */
     public function authDataProvider(): array
     {
         return [
             [
                 'basicAuth' => [
                     'email' => 'forest@gmail.com',
-                    'password' => 'password'
+                    'password' => '123'
                 ],
                 'loginResponseStructure' => [
                     'user' => [
