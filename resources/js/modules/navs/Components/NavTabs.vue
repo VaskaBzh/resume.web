@@ -93,28 +93,27 @@ export default defineComponent({
     },
     watch: {
         user: {
-            handler(newUserData) {
-                this.$route?.query?.access_key
-                    ? this.service.setWatcherLinks()
-                    : this.service.setLinks(newUserData);
+            handler() {
+                this.setLinks();
             },
             deep: true,
         },
     },
     mounted() {
-        this.$route?.query?.access_key
-            ? this.service.setWatcherLinks()
-            : this.service.setLinks(this.user);
+        this.setLinks();
     },
     beforeUpdate() {
-        this.$route?.query?.access_key
-            ? this.service.setWatcherLinks()
-            : this.service.setLinks(this.user);
+        this.setLinks();
     },
     unmounted() {
         this.service.dropLinks();
     },
     methods: {
+        setLinks() {
+            this.$route?.query?.access_key
+                ? this.service.setWatcherLinks()
+                : this.service.setLinks(this.user);
+        },
         endCommonInstruction() {
             this.instructionConfig.nextStep(6);
 

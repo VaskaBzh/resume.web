@@ -30,6 +30,7 @@ export default {
 .income-card{
   display: flex;
   padding: 16px 24px;
+  height: 100%;
   flex-direction: column;
   align-items: flex-start;
   gap: 16px;

@@ -64,7 +64,6 @@ export default {
         if (!this.$route?.query.access_key) {
             await this.$store.dispatch("setUser");
         }
-        this.$store.dispatch("setToken");
 
         this.$store.dispatch("set_accounts", {
             route: this.$route,
