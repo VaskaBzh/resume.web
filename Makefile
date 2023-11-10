@@ -46,7 +46,7 @@ optimize:
 tinker:
 	$(ARTISAN) tinker
 test:
-	$(ARTISAN) test --env=testing
+	$(ARTISAN) test --testdox --env=testing
 remote_test:
 	ssh mainuser@92.205.188.112
 docs:
