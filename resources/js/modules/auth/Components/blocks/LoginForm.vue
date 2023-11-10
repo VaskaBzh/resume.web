@@ -6,11 +6,12 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="errorsExpired.error ?? errorsExpired.email"
+                :error="errorsExpired.messages ?? errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="$t('auth.login.placeholders[0]')"
                 name="email"
-                :type="'email'"
+                type="email"
+                autocomplete="email"
                 @change="
                     service.form.email = !!$event.target
                         ? $event.target.value
@@ -25,7 +26,8 @@
                     name="password"
                     :placeholder="$t('auth.login.placeholders[1]')"
                     :model="service.form.password"
-                    :errors="errors"
+                    :error="errorsExpired.messages ?? errorsExpired.password"
+                    autocomplete="current-password"
                     @change="
                         service.form.password = !!$event.target
                             ? $event.target.value
@@ -149,8 +151,6 @@ export default {
         },
     },
     mounted() {
-        console.log(this.service)
-
         this.service.setForm();
 
         if (this.$route.query?.action === "password") {

@@ -9,8 +9,9 @@
                 :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="$t('auth.reg.placeholders[0]')"
-                :name="'email'"
-                :type="'email'"
+                name="email"
+                type="email"
+                autocomplete="email"
                 @change="
                     service.form.email = !!$event.target
                         ? $event.target.value
@@ -21,8 +22,9 @@
                 :error="errorsExpired.name"
                 :model="service.form.name"
                 :placeholder="$t('auth.reg.placeholders[1]')"
-                :name="'name'"
-                :type="'text'"
+                name="username"
+                type="text"
+                autocomplete="username"
                 @change="
                     service.form.name = !!$event.target
                         ? $event.target.value
@@ -39,6 +41,7 @@
                     :placeholder="$t('auth.reg.placeholders[2]')"
                     :model="service.form.password"
                     :errors="errorsExpired"
+                    autocomplete="new-password"
                     @change="
                         service.validateProcess(
                             !!$event.target ? $event.target.value : $event
@@ -55,6 +58,7 @@
                     name="password_confirmation"
                     :placeholder="$t('auth.reg.placeholders[3]')"
                     :model="service.form.password_confirmation"
+                    autocomplete="new-password"
                     @change="
                         service.form.password_confirmation = !!$event.target
                             ? $event.target.value
@@ -142,9 +146,7 @@ export default {
             service: new RegistrationService(this.$router, this.$route),
         };
     },
-
     mounted() {
-        console.log(this.service)
         this.service.setForm();
     },
 

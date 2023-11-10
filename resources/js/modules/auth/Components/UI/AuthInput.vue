@@ -6,7 +6,7 @@
             :type="type"
             class="row_input"
             :placeholder="placeholder"
-
+            :autocomplete="autocomplete"
         />
     </div>
 </template>
@@ -20,6 +20,7 @@ export default {
         placeholder: String,
         name: String,
         type: String,
+        autocomplete: String,
     },
     data() {
         return {
