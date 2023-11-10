@@ -76,6 +76,10 @@ export class WorkerService {
                 name: "inactive",
                 value: "inactive",
             },
+            {
+                name: "dead",
+                value: "dead",
+            },
         ]
 
         return this;
