@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Worker;
 
+use App\Enums\Worker\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkerResource;
 use App\Models\Sub;
@@ -36,7 +37,7 @@ use Symfony\Component\HttpFoundation\Response;
                 required: false,
                 schema: new OA\Schema(
                     type: 'string',
-                    enum: ["all", "active", "inactive"]
+                    enum: ["active", "inactive"]
                 )
             ),
         ],
@@ -73,6 +74,10 @@ class ListController extends Controller
 {
     public function __invoke(Request $request, Sub $sub, BtcComService $btcComService): AnonymousResourceCollection
     {
-        return WorkerResource::collection($sub->workers()->get());
+        $workers = $request->status
+            ? $sub->workers()->where('status', $request->status)
+            : $sub->workers();
+
+        return WorkerResource::collection($workers->get());
     }
 }
