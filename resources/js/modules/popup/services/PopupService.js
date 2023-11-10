@@ -73,7 +73,7 @@ export class PopupService {
 
         this.animate = anime({
             targets: this.popupBlockHtml,
-            height: "122px",
+            height: [`${this.getClearScrollHeight()}px`, "122px"],
             width: "280px",
             translateY: 120,
             easing: "easeInCubic",
@@ -135,6 +135,10 @@ export class PopupService {
         return string.replace(letters, "")
     }
 
+    dropContentHeight() {
+        this.popupBlockHtml.style.height = "auto";
+    }
+
     animateHeight() {
         this.animate = anime({
             targets: this.popupBlockHtml,
@@ -143,6 +147,8 @@ export class PopupService {
             duration: 350,
             complete: () => {
                 this.dropAnimate();
+
+                setTimeout(this.dropContentHeight.bind(this), 500);
 
                 this.animateLogoOpacity();
             },

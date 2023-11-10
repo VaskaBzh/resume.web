@@ -32,7 +32,7 @@
                         <safety-card
                             :card="card"
                             @openFacForm="sendFac"
-                            @dropFac="dropFac"
+                            @dropFac="openFacDisablePopup"
                             @openPasswordForm="openPasswordPopup"
                         />
                     </div>
@@ -73,6 +73,11 @@
         :code="settingsService.code"
         @sendVerify="sendVerify($event)"
     />
+    <fac-disable-popup
+        :opened="settingsService.facDisabledPopup.getOpenedState()"
+        :closed="settingsService.facDisabledPopup.getClosedState()"
+        @sendDisable="sendDisable($event)"
+    />
     <settings-password-popup
         :opened="settingsService.openedPasswordPopup"
         :wait="settingsService.waitAjax"
@@ -95,6 +100,7 @@ import InstructionButton from "@/modules/instruction/Components/UI/InstructionBu
 import SafetyCard from "@/modules/settings/Components/blocks/SafetyCard.vue";
 import FacPopup from "@/modules/settings/Components/blocks/FacPopup.vue";
 import SettingsPasswordPopup from "@/modules/settings/Components/blocks/SettingsPasswordPopup.vue";
+import FacDisablePopup from "@/modules/settings/Components/blocks/FacDisablePopup.vue";
 
 import { InstructionService } from "@/modules/instruction/services/InstructionService";
 import { SettingsService } from "@/modules/settings/services/SettingsService";
@@ -106,6 +112,7 @@ export default {
         sharedMessages: SettingsMessage,
     },
     components: {
+        FacDisablePopup,
         SettingsPasswordPopup,
         MainTitle,
         SettingsList,
@@ -166,6 +173,18 @@ export default {
         this.settingsProcess();
     },
     methods: {
+        openFacDisablePopup() {
+            this.settingsService.facDisabledPopup.openPopup();
+        },
+        async sendDisable(form) {
+            this.settingsService.disableFacForm.setForm(form);
+
+
+            await this.settingsService.sendDisableFac();
+
+            this.$store.dispatch("setUser");
+            this.settingsService.setBlocks();
+        },
         setPasswordForm(form = null) {
             this.settingsService.setPasswordForm(form);
         },
@@ -174,13 +193,6 @@ export default {
         },
         async sendFac() {
             await this.settingsService.sendFac();
-        },
-        async dropFac() {
-            await this.settingsService.dropFac();
-
-            this.$store.dispatch("setUser");
-
-            this.settingsService.setBlocks();
         },
         async sendPassword(form = null) {
             this.settingsService.setPasswordForm(form);

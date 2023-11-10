@@ -43,8 +43,8 @@ import { WalletsMessages } from "@/modules/wallets/lang/WalletsMessages";
 export default {
     name: "AddWalletPopup",
     components: {
-        FormPopupInput,
         FormPopup,
+        FormPopupInput,
         MainPopup,
         MainTitle,
         MainButton,
