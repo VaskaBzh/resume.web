@@ -12,9 +12,9 @@ use OpenApi\Attributes as OA;
 
 #[
     OA\Info(
-        version: "1.0.0",
-        description: "Документация Allbtc API",
-        title: "Allbtc API"
+        version: '1.0.0',
+        description: 'Документация Allbtc API',
+        title: 'Allbtc API'
     ),
     OA\Contact(email: 'ognevoy.bima@gmail.com'),
 ]

@@ -75,20 +75,19 @@ class CreateController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ],
         )
     ]
     public function __invoke(
         CreateLinkRequest $request,
-        Sub               $sub,
-    ): WatcherLinkResource
-    {
+        Sub $sub,
+    ): WatcherLinkResource {
         $watcherLink = WatcherLinkService::withParams(
             watcherLinkData: WatcherLinkData::fromRequest([
                 'name' => $request->name,

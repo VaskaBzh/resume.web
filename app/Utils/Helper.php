@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace App\Utils;
 
 use App\Models\MinerStat;
-use App\Models\User;
-use App\Services\External\BtcComService;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Str;
 
 class Helper
 {

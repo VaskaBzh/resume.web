@@ -12,8 +12,8 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ResetPasswordController extends Controller
 {
@@ -38,9 +38,9 @@ class ResetPasswordController extends Controller
                                 property: 'password',
                                 description: "User's new password",
                                 type: 'string'
-                            )
+                            ),
                         ]
-                    )
+                    ),
                 ]
             ),
             tags: ['Auth'],
@@ -63,9 +63,9 @@ class ResetPasswordController extends Controller
                                     property: 'message',
                                     description: 'Success message',
                                     type: 'string'
-                                )
+                                ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -76,22 +76,22 @@ class ResetPasswordController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]
     public function restorePassword(Request $request, User $user)
     {
-        if (!hash_equals(hash('sha256', $user->getEmailForVerification()), $request->hash)) {
+        if (! hash_equals(hash('sha256', $user->getEmailForVerification()), $request->hash)) {
 
             return new JsonResponse([
                 'errors' => [
-                    'auth' => [__('auth.email.verify.link.expired')]
+                    'auth' => [__('auth.email.verify.link.expired')],
                 ],
             ], Response::HTTP_FORBIDDEN);
         }
@@ -105,8 +105,8 @@ class ResetPasswordController extends Controller
 
         return new JsonResponse([
             'errors' => [
-                'auth' => ['Something went wrong']
-            ]
+                'auth' => ['Something went wrong'],
+            ],
         ], Response::HTTP_BAD_REQUEST);
     }
 }

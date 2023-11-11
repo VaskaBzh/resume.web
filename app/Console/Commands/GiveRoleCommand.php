@@ -4,15 +4,15 @@ namespace App\Console\Commands;
 
 use App\Enums\User\Roles;
 use App\Models\User;
+use App\Services\Internal\ReferralService;
 use Illuminate\Console\Command;
 use Spatie\Permission\Models\Role;
-use App\Services\Internal\ReferralService;
 
 class GiveRoleCommand extends Command
 {
     protected $signature = 'give:role';
 
-    protected $description = 'Command description';
+    protected $description = 'Assign role by name';
 
     public function handle(): void
     {
@@ -46,7 +46,7 @@ class GiveRoleCommand extends Command
             $referralProgram = [
                 'referral_percent' => $this->ask('Referral percent'),
                 'referral_discount' => $this->ask('Referral discount'),
-                'referral_code' => ReferralService::generateReferralCode($user)
+                'referral_code' => ReferralService::generateReferralCode($user),
             ];
 
             if ($this->confirm('Are your sure?')) {
@@ -55,7 +55,7 @@ class GiveRoleCommand extends Command
 
                 $user->update($referralProgram);
 
-                $this->info('Referrer role has assigned to ' . $user->name . '!');
+                $this->info('Referrer role has assigned to '.$user->name.'!');
 
                 break;
             }
@@ -95,7 +95,7 @@ class GiveRoleCommand extends Command
 
                 $user->update($referralProgram);
 
-                $this->info('Referral special offer created for ' . $user->name . '!');
+                $this->info('Referral special offer created for '.$user->name.'!');
 
                 break;
             }

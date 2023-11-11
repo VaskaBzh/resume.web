@@ -18,7 +18,7 @@ trait CreatesApplication
         $app->make(Kernel::class)->bootstrap();
 
         if (app()->environment() !== 'testing') {
-            die('Not testing environment');
+            exit('Not testing environment');
         }
 
         return $app;

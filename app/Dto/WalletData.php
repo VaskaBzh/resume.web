@@ -6,15 +6,15 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly final class WalletData
+final readonly class WalletData
 {
     /**
-     * @param string|null $name - имя кошелшька
-     * @param string|null $walletAddress - адрес кошелька
-     * @param int $groupId - id сабаккаунта
-     * @param int|null $percent - процент кошелька
-     * @param float|null $minWithdrawal - минимальая сумма вывода средств
-     * @param float|null $payment - сумма выплаты на кошелек за все время
+     * @param  string|null  $name - имя кошелшька
+     * @param  string|null  $walletAddress - адрес кошелька
+     * @param  int  $groupId - id сабаккаунта
+     * @param  int|null  $percent - процент кошелька
+     * @param  float|null  $minWithdrawal - минимальая сумма вывода средств
+     * @param  float|null  $payment - сумма выплаты на кошелек за все время
      */
     public function __construct(
         public ?string $name,
@@ -23,8 +23,7 @@ readonly final class WalletData
         public ?int $percent,
         public ?float $minWithdrawal,
         public ?float $payment,
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): WalletData

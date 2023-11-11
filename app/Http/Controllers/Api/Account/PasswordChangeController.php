@@ -8,8 +8,8 @@ use App\Http\Requests\Auth\ChangePasswordRequest;
 use App\Models\User;
 use App\Services\Internal\UserService;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class PasswordChangeController
 {
@@ -21,7 +21,7 @@ class PasswordChangeController
             requestBody: new OA\RequestBody(
                 required: true,
                 content: [
-                    new OA\JsonContent(ref: '#/components/schemas/ChangePasswordRequest')
+                    new OA\JsonContent(ref: '#/components/schemas/ChangePasswordRequest'),
                 ]
             ),
             tags: ['Account'],
@@ -41,7 +41,7 @@ class PasswordChangeController
                         new OA\JsonContent(
                             type: 'object',
                             example: ['message' => 'success']
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'User not found'),
@@ -53,8 +53,8 @@ class PasswordChangeController
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],

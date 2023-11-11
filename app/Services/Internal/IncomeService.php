@@ -4,9 +4,7 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Models\Income;
 use App\Actions\Finance\Create;
-use App\Exceptions\IncomeCreatingException;
 use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
@@ -15,6 +13,8 @@ use App\Dto\SubData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
+use App\Exceptions\IncomeCreatingException;
+use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\Wallet;
@@ -26,50 +26,36 @@ final class IncomeService
 {
     /**
      * Global mining stats (net difficulty, reward block, etc)
-     *
-     * @var MinerStat
      */
     private MinerStat $stat;
 
     /**
      * Local sub-account
-     *
-     * @var Sub
      */
     private Sub $sub;
 
     /**
      * Referrer sub-account
-     *
-     * @var Sub|null
      */
     private ?Sub $referrerSub;
 
     /**
      * Referral percent
-     *
-     * @var float
      */
     private float $referralPercent;
 
     /**
      * Referral discount
-     *
-     * @var float
      */
     private float $referralDiscount;
 
     /**
      * Pure sub-account coin earning
-     *
-     * @var float
      */
     private float $dailyEarn;
 
     /**
      * AllBtc commission
-     *
-     * @var float
      */
     private float $fee;
 
@@ -89,9 +75,6 @@ final class IncomeService
      * Init service
      * Set sub-account
      *
-     * @param Sub      $sub
-     * @param Sub|null $referrerSub
-     * @return IncomeService
      * @throws IncomeCreatingException
      */
     public function init(Sub $sub, ?Sub $referrerSub): IncomeService
@@ -102,21 +85,19 @@ final class IncomeService
         $this->referralPercent = (float) $sub->user->referral_percent ?? $referrerSub->user->referral_percent;
         $this->referralDiscount = (float) $sub->user->referral_discount;
 
-        if (!$this->setHashRate()) {
+        if (! $this->setHashRate()) {
             throw new IncomeCreatingException(sprintf('Sub-account %s hasn\'t a hash rate!', $sub->sub));
         }
 
         $this->setParams();
 
-        Log::channel('incomes')->info('INIT UPDATE INCOME PROCESS ' . $sub->sub);
+        Log::channel('incomes')->info('INIT UPDATE INCOME PROCESS '.$sub->sub);
 
         return $this;
     }
 
     /**
      * Set sub-account params
-     *
-     * @return void
      */
     private function setParams(): void
     {
@@ -140,8 +121,6 @@ final class IncomeService
 
     /**
      * Set allbtc fee, decrease them if referrer exists
-     *
-     * @return IncomeService
      */
     private function setFee(): IncomeService
     {
@@ -152,8 +131,6 @@ final class IncomeService
 
     /**
      * Set total hash rate
-     *
-     * @return bool
      */
     private function setHashRate(): bool
     {
@@ -162,9 +139,6 @@ final class IncomeService
         return $this->params['hash'] > 0;
     }
 
-    /**
-     * @return IncomeService
-     */
     private function setNetworkDifficulty(): IncomeService
     {
         $this->params['diff'] = $this->stat->network_difficulty;
@@ -174,8 +148,6 @@ final class IncomeService
 
     /**
      * Set pure mining daily earn
-     *
-     * @return IncomeService
      */
     private function setDailyEarn(): IncomeService
     {
@@ -190,8 +162,6 @@ final class IncomeService
 
     /**
      * Set the daily earn after deducting the commission of allbtc and remote pool
-     *
-     * @return IncomeService
      */
     private function setDailyAmount(): IncomeService
     {
@@ -206,40 +176,26 @@ final class IncomeService
 
     /**
      * Set sub-account daily amount until withdrawal limit
-     *
-     * @param Sub  $sub
-     * @param Type $incomeType
-     * @return IncomeService
      */
     public function setPendingAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params
-        [$incomeType->value]
-        ['pendingAmount'] = $sub->pending_amount + $this->params[$incomeType->value]['dailyAmount'];
+        $this->params[$incomeType->value]['pendingAmount'] = $sub->pending_amount + $this->params[$incomeType->value]['dailyAmount'];
 
         return $this;
     }
 
     /**
      * Set sub-account total amount for all time
-     *
-     * @param Sub  $sub
-     * @param Type $incomeType
-     * @return IncomeService
      */
     public function setTotalAmount(Sub $sub, Type $incomeType): IncomeService
     {
-        $this->params
-        [$incomeType->value]
-        ['totalAmount'] = $this->params[$incomeType->value]['dailyAmount'] + $sub->total_amount;
+        $this->params[$incomeType->value]['totalAmount'] = $this->params[$incomeType->value]['dailyAmount'] + $sub->total_amount;
 
         return $this;
     }
 
     /**
      * Set referrer profit if exits
-     *
-     * @return IncomeService
      */
     public function setReferrerProfit(): IncomeService
     {
@@ -250,10 +206,6 @@ final class IncomeService
 
     /**
      * Checking if pending limit has been reached
-     *
-     * @param Sub  $sub
-     * @param Type $incomeType
-     * @return bool
      */
     public function isReadyToPayOut(Sub $sub, Type $incomeType): bool
     {
@@ -264,16 +216,11 @@ final class IncomeService
 
     /**
      * Set income message and status
-     *
-     * @param Sub  $sub
-     * @param Type $incomeType
-     * @return IncomeService
      */
     public function setInfo(
-        Sub  $sub,
+        Sub $sub,
         Type $incomeType
-    ): IncomeService
-    {
+    ): IncomeService {
         if ($this->isReadyToPayOut($sub, $incomeType)) {
 
             $this->params[$incomeType->value]['message'] = Message::READY_TO_PAYOUT;
@@ -290,10 +237,6 @@ final class IncomeService
     /**
      * Create income
      * Create referrer income if exists
-     *
-     * @param Sub  $sub
-     * @param Type $incomeType
-     * @return Income
      */
     public function createIncome(Sub $sub, Type $incomeType): Income
     {
@@ -314,10 +257,6 @@ final class IncomeService
     /**
      * Update local sub-account
      * Update local referrer sub-account if exists
-     *
-     * @param Sub  $sub
-     * @param Type $incomeType
-     * @return void
      */
     public function updateLocalSub(Sub $sub, Type $incomeType): void
     {
@@ -336,8 +275,6 @@ final class IncomeService
 
     /**
      * Create finance record
-     *
-     * @return void
      */
     public function createFinance(): void
     {

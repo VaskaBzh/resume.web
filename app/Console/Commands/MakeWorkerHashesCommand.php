@@ -20,8 +20,6 @@ class MakeWorkerHashesCommand extends Command
     /**
      * Записываать данные воркера в таблицу хешррейт_воркера
      * старые (храним за два месяца) удалить
-     *
-     * @return void
      */
     public function handle(BtcComService $btcComService): void
     {
@@ -37,7 +35,7 @@ class MakeWorkerHashesCommand extends Command
                     ->first()
                     ?->workerHashrates()
                     ->create([
-                        'hash' => (int)$btcComWorker['shares_1m'],
+                        'hash' => (int) $btcComWorker['shares_1m'],
                         'unit' => $btcComWorker['shares_unit'],
                     ]);
 
@@ -49,7 +47,7 @@ class MakeWorkerHashesCommand extends Command
 
         $progressBar->finish();
 
-        Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE: ' . $progressBar->getProgress());
+        Log::channel('commands')->info('WORKER HASHRATE IMPORT COMPLETE: '.$progressBar->getProgress());
 
         Artisan::call('make:sub-hashes');
     }

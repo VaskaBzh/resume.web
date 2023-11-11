@@ -4,5 +4,4 @@ namespace App\Utils;
 
 class Paginator
 {
-
 }

@@ -17,7 +17,7 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'name' => "MainTest",
+            'name' => 'MainTest',
             'email' => 'forest@gmail.com',
             'password' => bcrypt('123'),
             'referral_percent' => 1,
