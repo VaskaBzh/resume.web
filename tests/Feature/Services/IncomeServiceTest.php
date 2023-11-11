@@ -4,17 +4,18 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Services;
 
-use App\Utils\Helper;
+use App\Enums\Income\Message;
+use App\Enums\Income\Status;
+use App\Enums\Income\Type;
+use App\Exceptions\IncomeCreatingException;
+use App\Models\Income;
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
-use App\Enums\Income\Type;
-use App\Enums\Income\Status;
-use App\Enums\Income\Message;
-use App\Services\Internal\IncomeService;
 use App\Services\External\BtcComService;
-use App\Exceptions\IncomeCreatingException;
+use App\Services\Internal\IncomeService;
+use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Factories\Sequence;
 use Tests\TestCase;
 
@@ -32,6 +33,7 @@ class IncomeServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it throw exception if sub account hasn't a hash rate
      */
     public function hasNotHashRate(): void
@@ -46,12 +48,13 @@ class IncomeServiceTest extends TestCase
         $this->assertDatabaseHas('subs', [
             'group_id' => $subWithoutHashRate->group_id,
             'pending_amount' => 0,
-            'total_amount' => 0
+            'total_amount' => 0,
         ]);
     }
 
     /**
      * @test
+     *
      * @testdox it create mining type income and update sub account amounts
      */
     public function miningIncomeCase(): void
@@ -107,6 +110,7 @@ class IncomeServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it increment sub account amounts
      */
     public function updatedSubAmountsCase()
@@ -144,6 +148,7 @@ class IncomeServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it create referral income without referral discount based on default referral percent
      */
     public function referralIncomeCommonCase()
@@ -163,7 +168,6 @@ class IncomeServiceTest extends TestCase
 
         $service->createIncome($referrerActiveSub, Type::REFERRAL);
         $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
-
 
         $hashrate = $referralSub->total_hash_rate;
 
@@ -185,9 +189,9 @@ class IncomeServiceTest extends TestCase
         ]);
     }
 
-
     /**
      * @test
+     *
      * @testdox It create income with referral discount
      */
     public function referralDiscountCase()
@@ -263,7 +267,7 @@ class IncomeServiceTest extends TestCase
             ->sequence(
                 [
                     'id' => 1,
-                    'name' => "Referrer",
+                    'name' => 'Referrer',
                     'email' => 'first@gmail.com',
                     'password' => '123',
                     'referral_percent' => 1,
@@ -271,7 +275,7 @@ class IncomeServiceTest extends TestCase
                 ],
                 [
                     'id' => 2,
-                    'name' => "Referral",
+                    'name' => 'Referral',
                     'email' => 'second@gmail.com',
                     'password' => '123',
                     'referrer_id' => 1,
@@ -280,7 +284,7 @@ class IncomeServiceTest extends TestCase
                 ],
                 [
                     'id' => 3,
-                    'name' => "CommonSub",
+                    'name' => 'CommonSub',
                     'email' => 'third@gmail.com',
                     'password' => '123',
                     'referral_percent' => 0,
@@ -288,7 +292,7 @@ class IncomeServiceTest extends TestCase
                 ]
             )->afterCreating(function ($user) {
                 match ($user->name) {
-                    "Referrer" => Sub::factory()
+                    'Referrer' => Sub::factory()
                         ->count(2)
                         ->state(new Sequence(
                             [
@@ -310,7 +314,7 @@ class IncomeServiceTest extends TestCase
                                 'user_id' => $user->id,
                             ]
                         ))->create(),
-                    "Referral" => Sub::factory()
+                    'Referral' => Sub::factory()
                         ->count(2)
                         ->state(new Sequence(
                             [
@@ -346,7 +350,7 @@ class IncomeServiceTest extends TestCase
                     default => throw new \Exception('Wrong sub'),
                 };
             })
-            ->create();;
+            ->create();
 
         Worker::factory()
             ->count(6)

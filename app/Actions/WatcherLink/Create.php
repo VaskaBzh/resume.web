@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Actions\WatcherLink;
 
 use App\Dto\WatcherLinkData;
@@ -14,7 +16,7 @@ class Create
             'user_id' => $watcherLinkData->user->id,
             'group_id' => $watcherLinkData->sub->group_id,
             'token' => $token,
-            'allowed_routes' => $watcherLinkData->allowedRoutes
+            'allowed_routes' => $watcherLinkData->allowedRoutes,
         ]);
     }
 }

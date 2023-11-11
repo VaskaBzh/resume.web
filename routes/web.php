@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\Auth\VerificationController;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\SendMessage\SendMessageConroller;
 use Illuminate\Support\Facades\Route;
 
 /*

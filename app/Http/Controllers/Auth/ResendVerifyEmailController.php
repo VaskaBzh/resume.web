@@ -25,7 +25,7 @@ class ResendVerifyEmailController extends Controller
                 content: new OA\JsonContent(
                     type: 'object',
                     example: [
-                        "email" => "user@example.com",
+                        'email' => 'user@example.com',
                     ]
                 )
             ),
@@ -39,8 +39,8 @@ class ResendVerifyEmailController extends Controller
                             type: 'object',
                             example: [
                                 'message' => [
-                                    'email' => 'string'
-                                ]
+                                    'email' => 'string',
+                                ],
                             ]
                         ),
                     ],
@@ -54,12 +54,12 @@ class ResendVerifyEmailController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]
@@ -73,17 +73,17 @@ class ResendVerifyEmailController extends Controller
         if ($user->hasVerifiedEmail()) {
             return new JsonResponse([
                 'errors' => [
-                    'auth' => [__('auth.email.already_verify', ['value' => 'email', 'date' => $user->email_verified_at])]
-                ]
+                    'auth' => [__('auth.email.already_verify', ['value' => 'email', 'date' => $user->email_verified_at])],
+                ],
             ], Response::HTTP_BAD_REQUEST);
         }
 
         $user->sendEmailVerificationNotification();
 
         return new JsonResponse([
-                'message' => __('auth.email.verify', [
-                    'value' => $user->email
-                ])]
+            'message' => __('auth.email.verify', [
+                'value' => $user->email,
+            ])]
         );
     }
 }

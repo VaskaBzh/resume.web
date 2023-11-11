@@ -23,7 +23,7 @@ class PayoutCommand extends Command
             ->with('wallets')
             ->get();
 
-        if (!filled($readyToPayoutSubs)) {
+        if (! filled($readyToPayoutSubs)) {
             return;
         }
 
@@ -37,14 +37,13 @@ class PayoutCommand extends Command
 
     public static function process(
         PayoutService $payoutService,
-        Sub           $sub
-    ): void
-    {
+        Sub $sub
+    ): void {
         $payoutService->init(sub: $sub);
         $payoutService->unlockRemoteWallet();
         $txId = $payoutService->payOut();
 
-        if (!$txId) {
+        if (! $txId) {
             Log::channel('payouts')->info('TXID IS EMPTY', [
                 'sub' => $sub->group_id,
             ]);

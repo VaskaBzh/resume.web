@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Builders;
 
 use App\Models\Sub;
-use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -15,7 +14,7 @@ class SubBuilder extends BaseBuilder
 {
     public function getIncomes(?bool $hasTxId): Builder
     {
-        return $this->whereHas('incomes', fn(Builder $query) => $hasTxId
+        return $this->whereHas('incomes', fn (Builder $query) => $hasTxId
             ? $query->whereNotNull('txid')
             : $query
         );
@@ -23,7 +22,7 @@ class SubBuilder extends BaseBuilder
 
     public function hasWorkerHashRate(): Builder
     {
-        return $this->whereHas('workers', fn(Builder $query) => $query
+        return $this->whereHas('workers', fn (Builder $query) => $query
             ->where('status', 'ACTIVE')
         );
     }

@@ -4,21 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Auth;
 
-use App\Models\User;
-use App\Traits\HasVerify;
 use App\Exceptions\BusinessException;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Resources\UserResource;
 use App\Services\Internal\UserService;
-use PragmaRX\Google2FALaravel\Google2FA;
+use App\Traits\HasVerify;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\PersonalAccessToken;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends Controller
 {
@@ -51,23 +49,23 @@ class LoginController extends Controller
             responses: [
                 new OA\Response(
                     response: Response::HTTP_OK,
-                    description: "Successful login",
+                    description: 'Successful login',
                     content: new OA\JsonContent(
                         properties: [
                             new OA\Property(
-                                property: "user",
-                                ref: "#/components/schemas/UserResource"
+                                property: 'user',
+                                ref: '#/components/schemas/UserResource'
                             ),
                             new OA\Property(
-                                property: "token",
-                                description: "User access token",
-                                type: "string"
+                                property: 'token',
+                                description: 'User access token',
+                                type: 'string'
                             ),
                             new OA\Property(
-                                property: "expired_at",
-                                description: "Token expiration date",
-                                type: "string",
-                                format: "date-time"
+                                property: 'expired_at',
+                                description: 'Token expiration date',
+                                type: 'string',
+                                format: 'date-time'
                             ),
                         ],
                         type: 'object'
@@ -93,7 +91,7 @@ class LoginController extends Controller
     ]
     public function login(LoginRequest $request): JsonResponse
     {
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        if (! Auth::attempt($request->only('email', 'password'))) {
             throw new BusinessException(
                 clientMessage: __('auth.failed'),
                 statusCode: Response::HTTP_NOT_FOUND
@@ -115,7 +113,6 @@ class LoginController extends Controller
             'expired_at' => $token->accessToken->expires_at,
         ]);
     }
-
 
     #[
         OA\Post(

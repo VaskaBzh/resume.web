@@ -12,5 +12,6 @@ class WorkerCreatedEvent
     use Dispatchable;
 
     public function __construct(public WorkerData $workerData)
-    {}
+    {
+    }
 }

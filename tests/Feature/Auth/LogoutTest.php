@@ -21,7 +21,9 @@ class LogoutTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox logout
+     *
      * @return void
      */
     public function logout()
@@ -32,7 +34,7 @@ class LogoutTest extends TestCase
         $this->assertAuthenticatedAs($this->user);
 
         $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token->plainTextToken,
+            'Authorization' => 'Bearer '.$token->plainTextToken,
         ])
             ->postJson(route('v1.logout'))
             ->assertOk()

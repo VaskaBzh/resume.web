@@ -17,8 +17,8 @@ class BaseBuilder extends Builder
     public function between(string $column, ?string $from, ?string $to): Builder
     {
         return $this
-            ->when($from, static fn($query, $from) => $query->where($column, '>=', $from))
-            ->when($to, static fn($query, $to) => $query->where(
+            ->when($from, static fn ($query, $from) => $query->where($column, '>=', $from))
+            ->when($to, static fn ($query, $to) => $query->where(
                 $column,
                 '<=',
                 Carbon::createFromFormat('Y-m-d', $to)->endOfDay()

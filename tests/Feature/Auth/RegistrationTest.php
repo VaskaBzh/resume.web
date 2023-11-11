@@ -18,24 +18,24 @@ class RegistrationTest extends TestCase
      * @test
      *
      * @dataProvider registrationValidDataProvider
+     *
      * @testdox register with valid data and send confirmation notification to user email
      *
-     * @param string[] $signUpData
-     * @param string|int|bool[] $signUpResponseStructure
+     * @param  string[]  $signUpData
+     * @param  string|int|bool[]  $signUpResponseStructure
      * @return void
      */
     public function successfulRegistration(
         array $signUpData,
         array $signUpResponseStructure,
         array $btcComSubResponse,
-    )
-    {
+    ) {
         $mockedResponse = [
             'data' => $btcComSubResponse,
         ];
 
         Http::fake([
-           '*' => Http::response($mockedResponse)
+            '*' => Http::response($mockedResponse),
         ]);
 
         Notification::fake();
@@ -45,18 +45,18 @@ class RegistrationTest extends TestCase
             ->assertJsonStructure($signUpResponseStructure);
 
         $this->assertDatabaseHas('users', [
-                'name' => $signUpData['name'],
-                'email' => $signUpData['email']
-            ]
+            'name' => $signUpData['name'],
+            'email' => $signUpData['email'],
+        ]
         );
 
         $user = User::whereEmail($signUpData['email'])->first();
 
         $this->assertAuthenticatedAs($user);
         $this->assertDatabaseHas('subs', [
-                'sub' => $btcComSubResponse['group_name'],
-                'group_id' => $btcComSubResponse['gid']
-            ]
+            'sub' => $btcComSubResponse['group_name'],
+            'group_id' => $btcComSubResponse['gid'],
+        ]
         );
         Notification::assertSentTo(
             $user,
@@ -68,14 +68,14 @@ class RegistrationTest extends TestCase
      * @test
      *
      * @dataProvider referralRegistrationDataProvider
+     *
      * @testdox registration with referral code
      */
     public function referralRegistration(
         $signUpData,
         $signUpResponseStructure,
         $btcComSubResponse,
-    )
-    {
+    ) {
         $user = User::factory()->create();
         app(RoleAndPermissionsSeeder::class)->run();
 
@@ -88,7 +88,7 @@ class RegistrationTest extends TestCase
         $signUpData['referral_code'] = $code;
 
         Http::fake([
-            '*' => Http::response($mockedResponse)
+            '*' => Http::response($mockedResponse),
         ]);
 
         Notification::fake();
@@ -135,18 +135,18 @@ class RegistrationTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_url',
-                        'has_referrer_role'
+                        'has_referrer_role',
                     ],
                     'token',
                 ],
                 'btcComSubCreatingResponse' => [
-                    "status" => true,
-                    "gid" => 6003147,
-                    "group_name" => "MainTest",
-                    "created_at" => 1698007819,
-                    "updated_at" => 1698007819
-                ]
-            ]
+                    'status' => true,
+                    'gid' => 6003147,
+                    'group_name' => 'MainTest',
+                    'created_at' => 1698007819,
+                    'updated_at' => 1698007819,
+                ],
+            ],
         ];
     }
 
@@ -176,18 +176,18 @@ class RegistrationTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_url',
-                        'has_referrer_role'
+                        'has_referrer_role',
                     ],
                     'token',
                 ],
                 'btcComSubCreatingResponse' => [
-                    "status" => true,
-                    "gid" => 6003147,
-                    "group_name" => "MainTest2",
-                    "created_at" => 1698007819,
-                    "updated_at" => 1698007819
-                ]
-            ]
+                    'status' => true,
+                    'gid' => 6003147,
+                    'group_name' => 'MainTest2',
+                    'created_at' => 1698007819,
+                    'updated_at' => 1698007819,
+                ],
+            ],
         ];
     }
 }

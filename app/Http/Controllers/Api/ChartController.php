@@ -23,7 +23,7 @@ use Symfony\Component\HttpFoundation\Response;
                 content: [
                     new OA\JsonContent(
                         ref: '#/components/schemas/ChartResource'
-                    )
+                    ),
                 ],
             ),
         ],

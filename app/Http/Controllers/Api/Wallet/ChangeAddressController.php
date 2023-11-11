@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallet\ChangeAddressRequest;
 use App\Models\Wallet;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ChangeAddressController extends Controller
 {

@@ -7,7 +7,6 @@ namespace App\Http\Controllers\Api\Referral;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Referral\ReferralResourceCollection;
 use App\Models\User;
-use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
@@ -42,7 +41,7 @@ class ListController extends Controller
                                     items: new OA\Items(
                                         ref: '#/components/schemas/ReferralResourceCollection'
                                     )
-                                )
+                                ),
                             ],
                             type: 'object',
                         ),
@@ -56,12 +55,12 @@ class ListController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ],
         )
     ]

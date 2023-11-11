@@ -2,7 +2,6 @@
 
 namespace App\Http\Requests;
 
-use App\Rules\Referral\SelfAttachRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AttachReferralRequest extends FormRequest
@@ -17,7 +16,7 @@ class AttachReferralRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'exists' => 'Не верный код'
+            'exists' => 'Не верный код',
         ];
     }
 

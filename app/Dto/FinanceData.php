@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-readonly final class FinanceData
+final readonly class FinanceData
 {
     /**
-     * @param int $groupId - id сабаккаунта
-     * @param float $earn - общая добыча
-     * @param float $userTotal доход сабаккаунта после вычета таксы
-     * @param float $percent - величина таксы
-     * @param float $profit - доход allbtc
+     * @param  int  $groupId - id сабаккаунта
+     * @param  float  $earn - общая добыча
+     * @param  float  $userTotal доход сабаккаунта после вычета таксы
+     * @param  float  $percent - величина таксы
+     * @param  float  $profit - доход allbtc
      */
     public function __construct(
         public int $groupId,
@@ -19,8 +19,7 @@ readonly final class FinanceData
         public float $userTotal,
         public float $percent,
         public float $profit,
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): FinanceData
