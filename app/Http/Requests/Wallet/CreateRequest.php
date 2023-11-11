@@ -20,7 +20,7 @@ class CreateRequest extends FormRequest
             'wallet_address' => 'required|string|min:20|max:191',
             'group_id' => 'required|unique:wallets',
             'name' => 'string|min:3|nullable',
-            'confirmation_code' => ['required', 'digits:5', 'numeric', new ConfirmationCodeRule]
+            'confirmation_code' => ['required', 'digits:5', 'numeric', new ConfirmationCodeRule],
         ];
     }
 
@@ -28,21 +28,21 @@ class CreateRequest extends FormRequest
     {
         return [
             'wallet_address.required' => __('validation.required', [
-                'attribute' => __('validation.attributes.wallet_address')
+                'attribute' => __('validation.attributes.wallet_address'),
             ]),
             'wallet_address.min' => __('validation.min.string', [
-                'attribute' => __('validation.attributes.wallet_address')
+                'attribute' => __('validation.attributes.wallet_address'),
             ]),
             'wallet_address.max' => __('validation.max.string', [
-                'attribute' => __('validation.attributes.wallet_address')
+                'attribute' => __('validation.attributes.wallet_address'),
             ]),
             'wallet_address.unique' => __('validation.unique', [
-                'attribute' => __('validation.attributes.wallet_address')
+                'attribute' => __('validation.attributes.wallet_address'),
             ]),
             'name.min' => __('validation.min.string', ['attribute' => __('validation.attributes.wallet_name')]),
             'group_id.unique' => __('validation.custom.attribute-name.group_id_unique',
                 ['attribute' => __('validation.attributes.wallet_address')]
-            )
+            ),
         ];
     }
 }

@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use OpenApi\Attributes as OA;
 use App\Models\Wallet;
 use Illuminate\Http\Resources\Json\JsonResource;
+use OpenApi\Attributes as OA;
 
 /** @see Wallet */
-
 #[
     OA\Schema(
         schema: 'WalletResource',

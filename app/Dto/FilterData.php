@@ -1,16 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly final class FilterData
+final readonly class FilterData
 {
     public function __construct(
         public ?bool $hasTxId,
         public ?int $perPage,
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): FilterData

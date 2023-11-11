@@ -25,6 +25,7 @@ class TwoFacTest extends TestCase
      * @test
      *
      * @testdox generate 2fa qr code and secret key
+     *
      * @return void
      */
     public function generateTwoFaQrCode()
@@ -32,7 +33,7 @@ class TwoFacTest extends TestCase
         $this->getJson(route('v1.2fa.qrcode', $this->user))
             ->assertOk()
             ->assertJsonStructure([
-                'qrCode', 'secret'
+                'qrCode', 'secret',
             ]);
     }
 
@@ -40,6 +41,7 @@ class TwoFacTest extends TestCase
      * @test
      *
      * @testdox Enabling 2fa
+     *
      * @return void
      */
     public function TwoFaEnabling()
@@ -61,6 +63,7 @@ class TwoFacTest extends TestCase
      * @test
      *
      * @testdox 2fa disabling
+     *
      * @return void
      */
     public function twoFaDisabling()
@@ -71,7 +74,7 @@ class TwoFacTest extends TestCase
         $this->user->update(['google2fa_secret' => $secretKey]);
         $this
             ->actingAs($this->user)->putJson(route('v1.2fa.disable', $this->user), [
-                'code' => $googleAuth->getCurrentOtp($secretKey)
+                'code' => $googleAuth->getCurrentOtp($secretKey),
             ])
             ->assertOk()
             ->assertJson([

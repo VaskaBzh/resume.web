@@ -14,9 +14,9 @@ return new class extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->bigInteger("phone")->nullable();
-            $table->boolean("sms")->default(false);
-            $table->boolean("auth_2fac")->default(false);
+            $table->bigInteger('phone')->nullable();
+            $table->boolean('sms')->default(false);
+            $table->boolean('auth_2fac')->default(false);
         });
     }
 

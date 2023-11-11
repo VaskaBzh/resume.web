@@ -28,7 +28,7 @@ class Worker extends Model
     ];
 
     protected $casts = [
-        'pool_data' => 'array'
+        'pool_data' => 'array',
     ];
 
     public function getRouteKeyName(): string

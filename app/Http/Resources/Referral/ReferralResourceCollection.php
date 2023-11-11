@@ -8,7 +8,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use OpenApi\Attributes as OA;
 
 /** @see Sub */
-
 #[
     OA\Schema(
         schema: 'ReferralResourceCollection',
@@ -27,18 +26,17 @@ use OpenApi\Attributes as OA;
                     ],
                     type: 'object'
                 )
-            )
+            ),
         ],
         type: 'object'
     )
 ]
 class ReferralResourceCollection extends ResourceCollection
 {
-
     public function toArray($request): array
     {
         return [
-            'data' => $this->collection
+            'data' => $this->collection,
         ];
     }
 }

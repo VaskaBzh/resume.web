@@ -24,17 +24,16 @@ use OpenApi\Attributes as OA;
 class ReferralStatisticResource extends JsonResource
 {
     public function __construct(
-        User                   $resource,
+        User $resource,
         private readonly array $statistic,
-    )
-    {
+    ) {
         parent::__construct($resource);
     }
 
     public function toArray($request): array
     {
         return [
-            'referral_url' => route('v1.register', 'referral_code=' . $this->referral_code),
+            'referral_url' => route('v1.register', 'referral_code='.$this->referral_code),
             'referral_percent' => $this->referral_percent,
             ...$this->statistic,
         ];

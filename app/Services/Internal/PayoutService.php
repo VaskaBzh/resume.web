@@ -20,11 +20,14 @@ use Illuminate\Support\Facades\Log;
 class PayoutService
 {
     private Sub $sub;
+
     public readonly ?Wallet $wallet;
+
     private array $params = [
         'status' => Status::REJECTED->value,
-        'message' => Message::ERROR_PAYOUT->value
+        'message' => Message::ERROR_PAYOUT->value,
     ];
+
     private readonly WalletService $remoteWallet;
 
     public function init(Sub $sub): void
@@ -57,8 +60,6 @@ class PayoutService
 
     /**
      * Запрос на открытие удаленного кошелька
-     *
-     * @return void
      */
     public function unlockRemoteWallet(): void
     {
@@ -66,7 +67,7 @@ class PayoutService
             $this->remoteWallet->unlock();
 
             Log::channel('payouts')->info('WALLET UNLOCKED', [
-                'sub' => $this->sub->id
+                'sub' => $this->sub->id,
             ]);
 
         } catch (\Exception $e) {
@@ -76,8 +77,6 @@ class PayoutService
 
     /**
      * Вывод средств в удаленный кошелек
-     *
-     * @return string|null
      */
     public function payOut(): ?string
     {
@@ -127,13 +126,13 @@ class PayoutService
                 incomes: $incomes,
                 incomeCompleteData: IncomeCompleteData::fromRequest([
                     'status' => $this->params['status'],
-                    'message' => $this->params['message']
+                    'message' => $this->params['message'],
                 ])
             );
 
             Log::channel('payouts')->info('INCOMES STATUSES CHANGE TO COMPLETE', [
                 'sub' => $this->sub->id,
-                'wallet' => $this->wallet->id
+                'wallet' => $this->wallet->id,
             ]);
         }
 
@@ -163,11 +162,9 @@ class PayoutService
 
     /**
      * Проверяем локальный кошелек на существование и блокировку
-     *
-     * @return bool
      */
     private function isAllowedTransaction(): bool
     {
-        return !is_null($this->wallet) && $this->wallet->isUnlocked();
+        return ! is_null($this->wallet) && $this->wallet->isUnlocked();
     }
 }

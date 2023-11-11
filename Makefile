@@ -51,6 +51,10 @@ remote_test:
 	ssh mainuser@92.205.188.112
 docs:
 	$(ARTISAN) l5-swagger:generate
+lint-test:
+	$(COMPOSE) $(APP) ./vendor/bin/pint --test
+lint:
+	$(COMPOSE) $(APP) ./vendor/bin/pint -v
 
 # app commands
 worker-hashes:

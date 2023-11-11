@@ -5,9 +5,7 @@ declare(strict_types=1);
 namespace App\Services\Internal;
 
 use App\Dto\UserData;
-use Illuminate\Http\JsonResponse;
 use App\Exceptions\BusinessException;
-use PragmaRX\Google2FALaravel\Google2FA;
 use App\Mail\User\PasswordChangeConfirmationMail;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -19,8 +17,7 @@ final readonly class UserService
 {
     private function __construct(
         private User $user,
-    )
-    {
+    ) {
     }
 
     public static function withUser(User $user): UserService
@@ -39,7 +36,7 @@ final readonly class UserService
 
     public function changePassword(array $credentials): void
     {
-        if (!Hash::check($credentials['old_password'], $this->user->password)) {
+        if (! Hash::check($credentials['old_password'], $this->user->password)) {
             throw new BusinessException('Wrong credentials', Response::HTTP_FORBIDDEN);
         }
 

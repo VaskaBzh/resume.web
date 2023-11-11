@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\External;
 
 use App\Actions\Sub\Create;
-use App\Actions\Worker\Update;
 use App\Actions\Worker\Create as WorkerCreate;
+use App\Actions\Worker\Update;
 use App\Dto\SubData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
@@ -14,8 +14,8 @@ use App\Exceptions\BusinessException;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
-use Illuminate\Support\Collection;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,9 +23,13 @@ use Symfony\Component\HttpFoundation\Response;
 class BtcComService
 {
     private static int $pendingTimeSec = 1;
+
     private const DEFAULT_PAGE_SIZE = 1000;
+
     private const PU_ID = 781195;
+
     private const UNGROUPED_ID = -1;
+
     public const FEE = 0.5;
 
     /* ------------------ Btc.com requests ------------------------ */
@@ -33,10 +37,8 @@ class BtcComService
     /**
      * Call btc.com
      *
-     * @param array $segments
-     * @param string $method
-     * @param array $params
      * @return mixed
+     *
      * @throws \Exception
      */
     public function call(array $segments, string $method = 'get', array $params = []): array
@@ -67,7 +69,6 @@ class BtcComService
 
     /**
      * Get remote sub-account list
-     *
      */
     public function getGroupList(): Collection
     {
@@ -75,7 +76,7 @@ class BtcComService
             segments: ['worker', 'groups'],
             params: [
                 'puid' => self::PU_ID,
-                "page_size" => self::DEFAULT_PAGE_SIZE,
+                'page_size' => self::DEFAULT_PAGE_SIZE,
             ]
         );
 
@@ -84,7 +85,6 @@ class BtcComService
 
     /**
      * Get remote sub-account
-     *
      */
     public function getSub(int $groupId): ?array
     {
@@ -95,7 +95,6 @@ class BtcComService
 
     /**
      * Create remote sub-account by user name
-     *
      */
     public function createRemoteSub(string $subName): array
     {
@@ -104,7 +103,7 @@ class BtcComService
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
-                'group_name' => $subName
+                'group_name' => $subName,
             ]);
 
         if (in_array('exist', $btcComSub, true)) {
@@ -121,15 +120,12 @@ class BtcComService
     /**
      * Create remote sub-account
      * Create local sub-account based on remote sub-account group_id
-     *
-     * @return void
      */
     public function createLocalSub(
-        User   $user,
+        User $user,
         string $subName,
-        bool   $isActive = true
-    ): void
-    {
+        bool $isActive = true
+    ): void {
         $remoteSub = $this->createRemoteSub(subName: $subName);
 
         Create::execute(
@@ -145,23 +141,19 @@ class BtcComService
     /**
      *  Get remote worker list by status
      *
-     * @param int|null $groupId
-     * @param string|null $workerStatus
-     * @return Collection
      * @throws \Exception
      */
     public function getWorkerList(
-        ?int    $groupId = 0,
+        ?int $groupId = 0,
         ?string $workerStatus = 'all'
-    ): Collection
-    {
+    ): Collection {
         $response = $this->call(
             segments: ['worker'],
             params: [
                 'puid' => self::PU_ID,
                 'group' => $groupId,
                 'page_size' => self::DEFAULT_PAGE_SIZE,
-                'status' => $workerStatus
+                'status' => $workerStatus,
             ]
         );
 
@@ -170,34 +162,32 @@ class BtcComService
 
     /**
      * Update remote worker group
-     *
      */
     public function updateRemoteWorker(int $workerId, int $groupId): void
     {
         $this->call(
             segments: [
                 'worker',
-                'update'
+                'update',
             ],
             method: 'post',
             params: [
                 'puid' => self::PU_ID,
                 'group_id' => $groupId,
-                'worker_id' => (string)$workerId
+                'worker_id' => (string) $workerId,
             ]);
     }
 
     /**
      * Get btc.com fpps rate
      *
-     * @return float|int
      * @throws \Exception
      */
     public function getFppsRate(): float|int
     {
         $fppsRate = $this->call(['account', 'earn-history'], params: [
             'puid' => self::PU_ID,
-            "page_size" => "1",
+            'page_size' => '1',
         ])['list'];
 
         return collect($fppsRate)->first()['more_than_pps96_rate'];
@@ -207,9 +197,6 @@ class BtcComService
 
     /**
      * Transform remote sub-account to local structure
-     *
-     * @param Sub $sub
-     * @return array
      */
     public function transformSub(Sub $sub): array
     {
@@ -221,9 +208,6 @@ class BtcComService
 
     /**
      * Transform remote sub-account list to local structure
-     *
-     * @param Collection $subs
-     * @return Collection
      */
     public function transformSubCollection(Collection $subs): Collection
     {
@@ -242,25 +226,22 @@ class BtcComService
 
     /**
      * Get sub-account list and filter -1 & 0 groups
-     *
-     * @return Collection
      */
     public function filterUngrouped(): Collection
     {
         return $this
             ->getGroupList()
-            ->filter(static fn(array $groups, int $index) => $index > 1);
+            ->filter(static fn (array $groups, int $index) => $index > 1);
     }
 
     /**
      * Sync local worker state based on remote one
-     *
      */
     public function updateLocalWorkers(): void
     {
         $groupedWorkerIDs = $this->transformRemoteGroupedWorkers(
             btcComWorkers: $this->getWorkerList()
-        )->each(static fn(WorkerData $workerData) => Update::execute(workerData: $workerData))
+        )->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData))
             ->pluck('worker_id')
             ->toArray();
 
@@ -275,7 +256,6 @@ class BtcComService
     /**
      * Get remote worker and create local
      *
-     * @return void
      * @throws \Exception
      */
     public function createLocalWorkers(): void
@@ -288,7 +268,7 @@ class BtcComService
             WorkerCreate::execute($firstWorkerData['worker_data'])
                 ->workerHashrates()
                 ->create([
-                    'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
+                    'hash' => (int) $firstWorkerData['worker_hash_rate']->hash,
                     'unit' => $firstWorkerData['worker_hash_rate']->unit,
                 ]);
 
@@ -303,8 +283,6 @@ class BtcComService
 
     /**
      * Transform remote workers to local structure
-     *
-     * @return Collection
      */
     public function transformRemoteGroupedWorkers(Collection $btcComWorkers): Collection
     {
@@ -317,7 +295,7 @@ class BtcComService
                     'approximate_hash_rate' => $btcComWorker['shares_1d'],
                     'status' => $btcComWorker['status'],
                     'unit' => $btcComWorker['shares_unit'],
-                    'pool_data' => $btcComWorker
+                    'pool_data' => $btcComWorker,
                 ]);
             }
         })->filter();
@@ -325,16 +303,11 @@ class BtcComService
 
     /**
      * Transform remote worker list to local structure with first hash rates
-     *
-     * @param EloquentCollection $subs
-     * @param Collection $btcComWorkers
-     * @return Collection
      */
     public function transformRemoteUngroupedWorkers(
         EloquentCollection $subs,
-        Collection         $btcComWorkers
-    ): Collection
-    {
+        Collection $btcComWorkers
+    ): Collection {
         return $btcComWorkers->map(static function (array $btcComWorker) use ($subs) {
 
             $subName = head(explode('.', $btcComWorker['worker_name'] ?? ''));
@@ -354,7 +327,7 @@ class BtcComService
                         'approximate_hash_rate' => $btcComWorker['shares_1m'],
                         'status' => $btcComWorker['status'],
                         'unit' => $btcComWorker['shares_unit'],
-                        'pool_data' => $btcComWorker
+                        'pool_data' => $btcComWorker,
                     ]),
                 ];
             }
@@ -363,10 +336,6 @@ class BtcComService
 
     /**
      * Return transformed sub-account array structure
-     *
-     * @param Sub $sub
-     * @param array $btcComSub
-     * @return array
      */
     private static function transform(Sub $sub, array $btcComSub): array
     {

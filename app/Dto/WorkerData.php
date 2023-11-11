@@ -6,7 +6,7 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly final class WorkerData
+final readonly class WorkerData
 {
     public function __construct(
         public int $group_id,
@@ -16,8 +16,7 @@ readonly final class WorkerData
         public string $status,
         public string $unit,
         public array $poolData,
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): WorkerData

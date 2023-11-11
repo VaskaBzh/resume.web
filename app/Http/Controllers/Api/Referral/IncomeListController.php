@@ -15,15 +15,15 @@ class IncomeListController extends Controller
 {
     #[
         OA\Get(
-            path: "/referrals/incomes/{user}",
-            summary: "Get referral incomes list for a user",
+            path: '/referrals/incomes/{user}',
+            summary: 'Get referral incomes list for a user',
             security: [['bearer' => []]],
-            tags: ["Referral"],
+            tags: ['Referral'],
             parameters: [
                 new OA\Parameter(
-                    name: "user",
+                    name: 'user',
                     description: "User's ID",
-                    in: "path",
+                    in: 'path',
                     required: true,
                     schema: new OA\Schema(type: 'integer')
                 ),
@@ -31,52 +31,52 @@ class IncomeListController extends Controller
             responses: [
                 new OA\Response(
                     response: 200,
-                    description: "Successful response",
+                    description: 'Successful response',
                     content: [
                         new OA\JsonContent(
                             properties: [
-                                new OA\Property(property: "current_page", type: "integer"),
+                                new OA\Property(property: 'current_page', type: 'integer'),
                                 new OA\Property(
-                                    property: "data",
-                                    type: "array",
+                                    property: 'data',
+                                    type: 'array',
                                     items: new OA\Items(
                                         properties: [
-                                            new OA\Property(property: "email", type: "string"),
-                                            new OA\Property(property: "daily_amount", type: "string"),
-                                            new OA\Property(property: "hash", type: "float"),
-                                            new OA\Property(property: "created_at", type: "string"),
+                                            new OA\Property(property: 'email', type: 'string'),
+                                            new OA\Property(property: 'daily_amount', type: 'string'),
+                                            new OA\Property(property: 'hash', type: 'float'),
+                                            new OA\Property(property: 'created_at', type: 'string'),
                                         ],
-                                        type: "object"
+                                        type: 'object'
                                     ),
                                 ),
-                                new OA\Property(property: "first_page_url", type: "string"),
-                                new OA\Property(property: "from", type: "integer"),
-                                new OA\Property(property: "last_page", type: "integer"),
-                                new OA\Property(property: "last_page_url", type: "string"),
+                                new OA\Property(property: 'first_page_url', type: 'string'),
+                                new OA\Property(property: 'from', type: 'integer'),
+                                new OA\Property(property: 'last_page', type: 'integer'),
+                                new OA\Property(property: 'last_page_url', type: 'string'),
                                 new OA\Property(
-                                    property: "links",
-                                    type: "array",
+                                    property: 'links',
+                                    type: 'array',
                                     items: new OA\Items(
                                         properties: [
-                                            new OA\Property(property: "url", type: "string"),
-                                            new OA\Property(property: "label", type: "string"),
-                                            new OA\Property(property: "active", type: "boolean"),
+                                            new OA\Property(property: 'url', type: 'string'),
+                                            new OA\Property(property: 'label', type: 'string'),
+                                            new OA\Property(property: 'active', type: 'boolean'),
                                         ],
-                                        type: "object"
+                                        type: 'object'
                                     ),
                                 ),
-                                new OA\Property(property: "next_page_url", type: "string"),
-                                new OA\Property(property: "path", type: "string"),
-                                new OA\Property(property: "per_page", type: "integer"),
-                                new OA\Property(property: "prev_page_url", type: "string"),
-                                new OA\Property(property: "to", type: "integer"),
-                                new OA\Property(property: "total", type: "integer"),
+                                new OA\Property(property: 'next_page_url', type: 'string'),
+                                new OA\Property(property: 'path', type: 'string'),
+                                new OA\Property(property: 'per_page', type: 'integer'),
+                                new OA\Property(property: 'prev_page_url', type: 'string'),
+                                new OA\Property(property: 'to', type: 'integer'),
+                                new OA\Property(property: 'total', type: 'integer'),
                             ],
-                            type: "object"
+                            type: 'object'
                         ),
                     ]
                 ),
-                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: "Unauthorized"),
+                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
                 new OA\Response(
                     response: Response::HTTP_NOT_FOUND,
                     description: 'Not found',
@@ -85,12 +85,12 @@ class IncomeListController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]

@@ -9,7 +9,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
 /** @see WorkerHashrate */
-
 #[
     OA\Schema(
         schema: 'WorkerHashRateResource',

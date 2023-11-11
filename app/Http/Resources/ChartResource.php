@@ -33,7 +33,7 @@ class ChartResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            'values' => $this['values']
+            'values' => $this['values'],
         ];
     }
 }

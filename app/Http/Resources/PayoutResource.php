@@ -11,7 +11,6 @@ use OpenApi\Attributes as OA;
 /**
  * @see Payout
  */
-
 #[
     OA\Schema(
         schema: 'PayoutResource',

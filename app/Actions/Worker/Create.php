@@ -11,8 +11,7 @@ class Create
 {
     public static function execute(
         WorkerData $workerData,
-    ): Worker
-    {
+    ): Worker {
         return Worker::create([
             'worker_id' => $workerData->worker_id,
             'group_id' => $workerData->group_id,

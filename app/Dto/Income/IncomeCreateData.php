@@ -7,30 +7,30 @@ namespace App\Dto\Income;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
-use Illuminate\Support\Arr;
 
-readonly final class IncomeCreateData
+final readonly class IncomeCreateData
 {
     /**
-     * @param int $groupId - id сабаккаунта
-     * @param float $dailyAmount - доход пользователя за сутки
-     * @param Type $type - тип начисления
-     * @param ?int $referralId - id рефовода
-     * @param Status $status - статус транзакции
-     * @param Message $message - сообщение транзакции
-     * @param float $hashrate - хэщрейт
-     * @param int $difficulty - сложность сети
+     * @param  int  $groupId - id сабаккаунта
+     * @param  float  $dailyAmount - доход пользователя за сутки
+     * @param  Type  $type - тип начисления
+     * @param  ?int  $referralId - id рефовода
+     * @param  Status  $status - статус транзакции
+     * @param  Message  $message - сообщение транзакции
+     * @param  float  $hashrate - хэщрейт
+     * @param  int  $difficulty - сложность сети
      */
     public function __construct(
-        public int     $groupId,
-        public float   $dailyAmount,
-        public Type    $type,
-        public ?int     $referralId,
-        public Status  $status,
+        public int $groupId,
+        public float $dailyAmount,
+        public Type $type,
+        public ?int $referralId,
+        public Status $status,
         public Message $message,
-        public float   $hashrate,
-        public int     $difficulty,
-    ){}
+        public float $hashrate,
+        public int $difficulty,
+    ) {
+    }
 
     public static function fromRequest(array $requestData): IncomeCreateData
     {

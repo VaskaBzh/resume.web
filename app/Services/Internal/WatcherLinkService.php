@@ -12,12 +12,12 @@ class WatcherLinkService
 {
     private function __construct(
         private WatcherLinkData $watcherLinkData,
-    )
-    {}
+    ) {
+    }
 
     public static function withParams(WatcherLinkData $watcherLinkData): WatcherLinkService
     {
-       return new self(watcherLinkData: $watcherLinkData);
+        return new self(watcherLinkData: $watcherLinkData);
     }
 
     private function createToken(): string

@@ -28,6 +28,7 @@ class LoginTest extends TestCase
      * @test
      *
      * @dataProvider authDataProvider
+     *
      * @testdox failed login if email not verified
      */
     public function isNotVerified(array $basicAuth)
@@ -39,14 +40,15 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox success login if email verified
+     *
      * @dataProvider authDataProvider
      */
     public function isVerified(
         array $basicAuth,
         array $loginResponseStructure
-    )
-    {
+    ) {
         $this->user->markEmailAsVerified();
 
         $this->assertFalse(Auth::check());
@@ -65,15 +67,16 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox failed login if 2fa enabled and pass wrong code
+     *
      * @dataProvider authDataProvider
      */
     public function twoFaWongCode(
         array $basicAuth,
         array $loginResponseStructure,
         array $google2faAuth
-    )
-    {
+    ) {
         $this->user->markEmailAsVerified();
 
         $this->enable2fa();
@@ -87,15 +90,16 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it show code require error when 2fa enabled
+     *
      * @dataProvider authDataProvider
      */
     public function showTwoFaRequireError(
         array $basicAuth,
         array $loginResponseStructure,
         array $google2faAuth
-    )
-    {
+    ) {
         $this->user->markEmailAsVerified();
 
         $this->enable2fa();
@@ -109,15 +113,16 @@ class LoginTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox login with 2fa
+     *
      * @dataProvider authDataProvider
      */
     public function twoFaLogin(
         array $basicAuth,
         array $loginResponseStructure,
         array $google2faAuth,
-    )
-    {
+    ) {
         $this->user->markEmailAsVerified();
 
         $currentOtp = $this->enable2fa();
@@ -139,7 +144,6 @@ class LoginTest extends TestCase
     /**
      * Enable 2fa for tests
      *
-     * @return string
      * @throws IncompatibleWithGoogleAuthenticatorException
      * @throws InvalidCharactersException
      * @throws SecretKeyTooShortException
@@ -149,7 +153,7 @@ class LoginTest extends TestCase
         $googleAuth = app(Google2FA::class);
 
         $this->user->update([
-            'google2fa_secret' => $secretKey = $googleAuth->generateSecretKey()
+            'google2fa_secret' => $secretKey = $googleAuth->generateSecretKey(),
         ]);
 
         return $googleAuth->getCurrentOtp($secretKey);
@@ -166,7 +170,7 @@ class LoginTest extends TestCase
             [
                 'basicAuth' => [
                     'email' => 'forest@gmail.com',
-                    'password' => '123'
+                    'password' => '123',
                 ],
                 'loginResponseStructure' => [
                     'user' => [
@@ -178,32 +182,32 @@ class LoginTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_url',
-                        'has_referrer_role'
+                        'has_referrer_role',
                     ],
                     'token',
                     'expired_at',
                 ],
                 'google2faAuth' => [
                     'code_required_error' => [
-                        "errors" => [
-                            "messages" => ["Pass 2fa code!"]
-                        ]
+                        'errors' => [
+                            'messages' => ['Pass 2fa code!'],
+                        ],
                     ],
                     'wrong_code_error' => [
                         'errors' => [
-                            'messages' => ['Wrong code']
-                        ]
+                            'messages' => ['Wrong code'],
+                        ],
                     ],
                     'validation_error' => [
                         'message' => 'The google2fa code must be a number. (and 1 more error)',
                         'errors' => [
                             'google2fa_code' => [
                                 'The google2fa code must be a number.',
-                                'The google2fa code must be 6 digits.'
-                            ]
+                                'The google2fa code must be 6 digits.',
+                            ],
                         ],
 
-                    ]
+                    ],
                 ],
             ],
         ];

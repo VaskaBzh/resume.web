@@ -9,11 +9,11 @@ use App\Http\Controllers\Api\Referral\IncomeListController as ReferralIncomeList
 use App\Http\Controllers\Api\Referral\ListController as ReferralListController;
 use App\Http\Controllers\Api\Referral\StatisticController as ReferralStatisticController;
 use App\Http\Controllers\Api\SendCodeController;
+use App\Http\Controllers\Api\StatisticController as SubStatisticController;
+use App\Http\Controllers\Api\Sub\ActivateController as SubActivateController;
 use App\Http\Controllers\Api\Sub\CreateController as SubCreateController;
 use App\Http\Controllers\Api\Sub\ListController as SubListController;
 use App\Http\Controllers\Api\Sub\ShowController as SubShowController;
-use App\Http\Controllers\Api\Sub\ActivateController as SubActivateController;
-use App\Http\Controllers\Api\StatisticController as SubStatisticController;
 use App\Http\Controllers\Api\Wallet\ChangeAddressController as WalletChangeAddressController;
 use App\Http\Controllers\Api\Wallet\CreateController as WalletCreateController;
 use App\Http\Controllers\Api\Wallet\ListController as WalletListController;
@@ -30,7 +30,6 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-
 /* _________________ Public routes ____________________ */
 
 Route::get('/minerstats', MinerStatController::class)->name('miner_stat');
@@ -38,12 +37,11 @@ Route::get('/chart', ChartController::class)->name('chart');
 
 /* _________________ End public routes ____________________ */
 
-
 /* ________________ Protected routes ____________________ */
 
 /* Can be allowed */
 Route::group([
-    'middleware' => ['watcher-link', 'auth:sanctum']
+    'middleware' => ['watcher-link', 'auth:sanctum'],
 ], function () {
     Route::group([
         'prefix' => 'subs',
@@ -71,7 +69,7 @@ Route::group([
 /* End allowable routes  */
 
 Route::group([
-    'middleware' => ['auth:sanctum', 'verified']
+    'middleware' => ['auth:sanctum', 'verified'],
 ], function () {
     Route::get('/user/{user}', UserController::class)->name('user.show');
     Route::put('/decrease/token', [LoginController::class, 'decreaseTokenTime'])
@@ -100,7 +98,7 @@ Route::group([
 
     Route::group([
         'prefix' => 'referrals',
-        'middleware' => 'role:referrer'
+        'middleware' => 'role:referrer',
     ], function () {
         Route::get('/{user}', ReferralListController::class)->name('referral.list');
         Route::get('/statistic/{user}', ReferralStatisticController::class)->name('referral.show');

@@ -17,8 +17,8 @@ class ReferralService
      * Сгенерируем на основе group_id строковый код
      * Сохраним его связанному пользователю
      *
-     * @param User $referrer
      * @return string $code
+     *
      * @throws \Exception
      */
     public static function generateCode(User $referrer): string
@@ -44,7 +44,7 @@ class ReferralService
         $referrer->load([
             'subs',
             'referrals',
-            'referrals.subs'
+            'referrals.subs',
         ]);
 
         $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
@@ -61,10 +61,10 @@ class ReferralService
             'referrals_total_amount' => Income::whereIn('group_id', $referrer->subs->pluck('group_id'))
                 ->where('type', 'referral')
                 ->sum('daily_amount'),
-            'total_referrals_hash_rate' =>  $activeReferralSubs
+            'total_referrals_hash_rate' => $activeReferralSubs
                 ->map
                 ->total_hash_rate
-                ->sum()
+                ->sum(),
         ];
     }
 
@@ -91,16 +91,13 @@ class ReferralService
                 'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
                 'total_amount' => Income::getReferralIncomes($referralSubs->pluck('group_id'))
                     ->sum('daily_amount'),
-                'referral_percent' => $referral->referral_percentage
+                'referral_percent' => $referral->referral_percentage,
             ];
         });
     }
 
     /**
      * Return referrer sub-account
-     *
-     * @param string $code
-     * @return User
      */
     public static function getReferrer(string $code): User
     {
@@ -110,8 +107,7 @@ class ReferralService
     /**
      * Encode sub-account group_id to string
      *
-     * @param User $user
-     * @return string
+     * @param  User  $user
      */
     public static function generateReferralCode(User $referrer): string
     {
@@ -120,9 +116,6 @@ class ReferralService
 
     /**
      * Decode sub-account group_id from code
-     *
-     * @param string $code
-     * @return array
      */
     public static function getReferralDataFromCode(string $code): array
     {

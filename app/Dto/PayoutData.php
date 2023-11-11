@@ -4,19 +4,18 @@ declare(strict_types=1);
 
 namespace App\Dto;
 
-readonly final class PayoutData
+final readonly class PayoutData
 {
     /**
-     *
-     * @param string $txId - id транзакции при выводе сердств с кошелька allbtc на внешний сервис
+     * @param  string  $txId - id транзакции при выводе сердств с кошелька allbtc на внешний сервис
      */
     public function __construct(
         public int $groupId,
         public int $walletId,
         public float $payout,
         public string $txId,
-    )
-    {}
+    ) {
+    }
 
     public static function fromRequest(array $requestData): PayoutData
     {
