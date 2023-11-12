@@ -34,8 +34,8 @@ export default {
         ...mapGetters(["btcInfo"]),
     },
     watch: {
-        bitcoinValue(newValue) {
-            if (newValue) this.initConverter();
+        bitcoinValue() {
+            this.initConverter();
         },
     },
     methods: {
@@ -52,7 +52,7 @@ export default {
         },
     },
     mounted() {
-        if (this.bitcoinValue) this.initConverter();
+        this.initConverter();
     },
 };
 </script>

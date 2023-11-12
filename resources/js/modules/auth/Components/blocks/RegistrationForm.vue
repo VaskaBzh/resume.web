@@ -1,5 +1,5 @@
 <template>
-    <form class="form-auth" @submit.prevent="service.account_create">
+    <form class="form-auth" @submit.prevent="service.account_create" autocomplete="off">
         <main-title class="form-auth_title"
             >{{ $t("auth.reg.title") }}
         </main-title>
@@ -9,8 +9,8 @@
                 :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="$t('auth.reg.placeholders[0]')"
-                name="email"
-                type="text"
+                :name="'email'"
+                :type="'email'"
                 @change="
                     service.form.email = !!$event.target
                         ? $event.target.value
@@ -21,13 +21,14 @@
                 :error="errorsExpired.name"
                 :model="service.form.name"
                 :placeholder="$t('auth.reg.placeholders[1]')"
-                name="name"
-                type="text"
+                :name="'name'"
+                :type="'text'"
                 @change="
                     service.form.name = !!$event.target
                         ? $event.target.value
                         : $event
                 "
+
             />
             <div
                 class="form-auth_row password_row"
@@ -61,18 +62,6 @@
                     "
                 />
             </div>
-            <!--            <auth-input-->
-            <!--                :error="service.errors.referral_code"-->
-            <!--                :model="service.form.referral_code"-->
-            <!--                :placeholder="this.$t('auth.reg.placeholders[4]')"-->
-            <!--                name="email"-->
-            <!--                type="text"-->
-            <!--                @change="-->
-            <!--                    service.form.referral_code = !!$event.target-->
-            <!--                        ? $event.target.value-->
-            <!--                        : $event-->
-            <!--                "-->
-            <!--            />-->
         </div>
         <input
             id="checkbox"
@@ -155,6 +144,7 @@ export default {
     },
 
     mounted() {
+        console.log(this.service)
         this.service.setForm();
     },
 

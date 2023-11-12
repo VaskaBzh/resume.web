@@ -31,6 +31,8 @@ export default {
         );
         window.addEventListener("beforeunload", this.onClose);
         this.handleResize();
+
+        document.addEventListener("validationError", (event) => this.$store.dispatch("setFullErrors", event.detail));
     },
     async unmounted() {
         window.removeEventListener("resize", this.handleResize);
@@ -39,6 +41,8 @@ export default {
             this.handleVisibilityChange
         );
         window.removeEventListener("beforeunload", this.onClose);
+
+        document.removeEventListener("validationError", (event) => this.$store.dispatch("setFullErrors", event.detail));
     },
     methods: {
         handleResize() {

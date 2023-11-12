@@ -33,10 +33,11 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it throw exception if remote subaccount already exist
      *
      * @dataProvider createRemoteSubDataProvider
      */
-    public function it_throw_exception_if_remote_subaccount_already_exist()
+    public function itThrowException(): void
     {
         $this->makeFakeRequestToBtcCom(['data' => ['exist']]);
 
@@ -50,10 +51,11 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it create remote sub successfully
      *
      * @dataProvider createRemoteSubDataProvider
      */
-    public function it_create_remote_sub_successfully(array $btcComSubResponse)
+    public function successfulRemoteSubCreating(array $btcComSubResponse): void
     {
         $this->makeFakeRequestToBtcCom(['data' => $btcComSubResponse]);
 
@@ -69,14 +71,15 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it transform sub without workers correctly
      *
      * @dataProvider transformSubDataProvider
      */
-    public function it_transform_sub_without_workers_correctly(
+    public function subHasNotWorkersTransform(
         Collection $localSubs,
         array $btcComSubResponse,
         array $expectedSubCollection,
-    ) {
+    ): void {
         $this->makeFakeRequestToBtcCom(['data' => $btcComSubResponse]);
 
         $actualSubCollection = app(BtcComService::class)
@@ -94,8 +97,9 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it return empty collection if remote grouped worker list is empty
      */
-    public function it_transform_remote_grouped_empty_worker_list()
+    public function isEmptyGroupedWorkerList(): void
     {
         $actual = app(BtcComService::class)->transformRemoteGroupedWorkers(collect());
 
@@ -105,13 +109,14 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox transform filled remote groped worker list
      *
      * @dataProvider groupedWorkerListDataProvider
      */
-    public function it_transform_remote_grouped_worker_list_correctly(
+    public function transformFilledWorkerList(
         array $btcComWorkerListResponse,
         array $expectedTransform,
-    ) {
+    ): void {
         $actual = app(BtcComService::class)
             ->transformRemoteGroupedWorkers(collect($btcComWorkerListResponse['data']));
 
@@ -136,8 +141,9 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it return empty collection if remote ungrouped worker list is empty
      */
-    public function it_return_empty_collection_if_remote_worker_list_is_empty()
+    public function isEmptyUngroupedWorkerList()
     {
         $actual = app(BtcComService::class)->transformRemoteUngroupedWorkers(Sub::all(), collect());
 
@@ -147,10 +153,11 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it return empty collection if not matched by sub name
      *
      * @dataProvider ungroupedWorkerListDataProvider
      */
-    public function it_return_empty_collection_if_not_matched_by_sub_name(array $ungroupedRemoteWorkerList)
+    public function isEmptyIfSubNotExists(array $ungroupedRemoteWorkerList)
     {
         $actual = app(BtcComService::class)
             ->transformRemoteUngroupedWorkers(Sub::all(), collect($ungroupedRemoteWorkerList['data']));
@@ -161,10 +168,11 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     * @testdox it transform remote ungrouped worker list correctly
      *
      * @dataProvider ungroupedWorkerListDataProvider
      */
-    public function it_transform_remote_ungrouped_worker_list_correctly(
+    public function transformRemoteUngroupedWorkers(
         array $ungroupedRemoteWorkerList,
         array $expectedTransform,
     ) {
@@ -209,7 +217,7 @@ class BtcComServiceTest extends TestCase
     public function createRemoteSubDataProvider(): array
     {
         return [
-            [
+            'Mocked btc.com sub response' => [
                 'btcComSubResponse' => [
                     'status' => true,
                     'gid' => 666666,
@@ -224,7 +232,7 @@ class BtcComServiceTest extends TestCase
     public function createLocalSubDataProvider(): array
     {
         return [
-            [
+            'Mocked btc.com sub response' => [
                 'expected' => [
                     'status' => true,
                     'gid' => 666666,
@@ -239,7 +247,7 @@ class BtcComServiceTest extends TestCase
     public function transformSubDataProvider(): array
     {
         return [
-            [
+            'Transform mocked btc.com sub-account response' => [
                 'localSubs' => collect([
                     [
                         'group_id' => 666666,
@@ -368,7 +376,7 @@ class BtcComServiceTest extends TestCase
     public function groupedWorkerListDataProvider(): array
     {
         return [
-            [
+            'Transform mocked btc.com grouped worker response' => [
                 'btcComWorkerListResponse' => [
                     'data' => [
                         [
@@ -510,7 +518,7 @@ class BtcComServiceTest extends TestCase
     public function ungroupedWorkerListDataProvider(): array
     {
         return [
-            [
+            'Transform mocked btc.com ungrouped worker response' => [
                 'ungroupedRemoteWorkerList' => [
                     'data' => [
                         [

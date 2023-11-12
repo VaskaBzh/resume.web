@@ -21,13 +21,13 @@ class RegistrationTest extends TestCase
      *
      * @testdox register with valid data and send confirmation notification to user email
      *
-     * @param  string[]  $signUpData
-     * @param  string|int|bool[]  $signUpResponseStructure
+     * @param  string[]  $credentials
+     * @param  string|int|bool[]  $expectedRegistrationResponse
      * @return void
      */
     public function successfulRegistration(
-        array $signUpData,
-        array $signUpResponseStructure,
+        array $credentials,
+        array $expectedRegistrationResponse,
         array $btcComSubResponse,
     ) {
         $mockedResponse = [
@@ -40,17 +40,17 @@ class RegistrationTest extends TestCase
 
         Notification::fake();
 
-        $this->postJson('/v1/register', $signUpData)
+        $this->postJson('/v1/register', $credentials)
             ->assertCreated()
-            ->assertJsonStructure($signUpResponseStructure);
+            ->assertJsonStructure($expectedRegistrationResponse);
 
         $this->assertDatabaseHas('users', [
-            'name' => $signUpData['name'],
-            'email' => $signUpData['email'],
+            'name' => $credentials['name'],
+            'email' => $credentials['email'],
         ]
         );
 
-        $user = User::whereEmail($signUpData['email'])->first();
+        $user = User::whereEmail($credentials['email'])->first();
 
         $this->assertAuthenticatedAs($user);
         $this->assertDatabaseHas('subs', [
@@ -72,20 +72,21 @@ class RegistrationTest extends TestCase
      * @testdox registration with referral code
      */
     public function referralRegistration(
-        $signUpData,
-        $signUpResponseStructure,
+        $credentials,
+        $expectedRegistrationResponse,
         $btcComSubResponse,
     ) {
         $user = User::factory()->create();
         app(RoleAndPermissionsSeeder::class)->run();
 
         $code = app(ReferralService::class)->generateReferralCode($user);
+
         $user->update(['referral_code' => $code]);
         $mockedResponse = [
             'data' => $btcComSubResponse,
         ];
 
-        $signUpData['referral_code'] = $code;
+        $credentials['referral_code'] = $code;
 
         Http::fake([
             '*' => Http::response($mockedResponse),
@@ -93,14 +94,14 @@ class RegistrationTest extends TestCase
 
         Notification::fake();
 
-        $this->postJson('/v1/register', $signUpData)
+        $this->postJson('/v1/register', $credentials)
             ->assertCreated()
-            ->assertJsonStructure($signUpResponseStructure);
+            ->assertJsonStructure($expectedRegistrationResponse);
 
         $referral = $user->referrals()->first();
 
-        $this->assertDatabaseHas('users', ['name' => $signUpData['name'], 'email' => $signUpData['email']]);
-        $this->assertEquals($referral->email, $signUpData['email']);
+        $this->assertDatabaseHas('users', ['name' => $credentials['name'], 'email' => $credentials['email']]);
+        $this->assertEquals($referral->email, $credentials['email']);
         $this->assertEquals($referral->referral_discount, $user->referral_discount);
 
         Notification::assertSentTo(
@@ -117,14 +118,14 @@ class RegistrationTest extends TestCase
     public function registrationValidDataProvider(): array
     {
         return [
-            [
-                'signUpData' => [
+            'Common registration' => [
+                'credentials' => [
                     'name' => 'MainTest',
                     'email' => 'forest@gmail.com',
                     'password' => 'Password12345&',
                     'password_confirmation' => 'Password12345&',
                 ],
-                'signUpResponseStructure' => [
+                'expectedRegistrationResponse' => [
                     'message',
                     'user' => [
                         'id',
@@ -158,14 +159,14 @@ class RegistrationTest extends TestCase
     public function referralRegistrationDataProvider(): array
     {
         return [
-            [
-                'signUpData' => [
+            'Referral registration' => [
+                'credentials' => [
                     'name' => 'MainTest2',
                     'email' => 'test@gmail.com',
                     'password' => 'Password12345&',
                     'password_confirmation' => 'Password12345&',
                 ],
-                'signUpResponseStructure' => [
+                'expectedRegistrationResponse' => [
                     'message',
                     'user' => [
                         'id',

@@ -2953,6 +2953,10 @@
                                 "total_amount": {
                                     "type": "number",
                                     "format": "float"
+                                },
+                                "referral_percent": {
+                                    "type": "number",
+                                    "format": "float"
                                 }
                             },
                             "type": "object"

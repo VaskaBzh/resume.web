@@ -11,9 +11,9 @@
                 {{ title }}
             </main-title>
             <p class="card_num">
-                {{ value }}
+                {{ currentValue }}
                 <span class="card_unit" v-show="unit">
-                    {{ unit }}
+                    {{ currentUnit }}
                 </span>
             </p>
         </div>
@@ -31,7 +31,35 @@ export default {
     },
     components: {
         MainTitle,
-    }
+    },
+    data() {
+        return {
+            currentValue: this.value,
+            currentUnit: this.unit,
+        };
+    },
+    watch: {
+        value() {
+            this.setConvertedValue();
+        },
+    },
+    mounted() {
+        this.setConvertedValue();
+    },
+    methods: {
+        getUnitLetter() {
+            const MAIN_UNIT_LETTER_INDEX = 0;
+            return this.currentUnit.split("")[MAIN_UNIT_LETTER_INDEX];
+        },
+        setConvertedValue() {
+            this.currentValue = this.value;
+            this.currentUnit = this.unit;
+            if (!!this.currentUnit && this.getUnitLetter() === "T" && this.value >= 1000) {
+                this.currentValue = (this.currentValue / 1000).toFixed(2);
+                this.currentUnit = "PH/s"
+            }
+        },
+    },
 };
 </script>
 <style scoped>
@@ -39,7 +67,6 @@ export default {
     background: var(--background-island, #ffffff);
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
     gap: 24px;
     width: 100%;
 }
@@ -119,7 +146,7 @@ export default {
         font-size: 14px;
     }
 }
-@media(max-width: 900px){
+@media(max-width: 998px){
     .card_num {
         font-size: 27px;
     }

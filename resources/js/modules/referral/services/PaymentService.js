@@ -27,14 +27,7 @@ export class PaymentService extends TableService {
     }
 
     async fetchIncomes(page, per_page) {
-        return await ProfileApi.get(
-            `/referrals/incomes/${this.user.id}?page=${page}&per_page=${per_page}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${store.getters.token}`,
-                },
-            }
-        );
+        return await ProfileApi.get(`/referrals/incomes/${this.user.id}?page=${1}&per_page=${1000}`);
     }
 
     useTranslater(indexes) {

@@ -825,6 +825,7 @@ const messages = {
                         name: "Please enter the name",
                     },
                     button: "+ Add",
+                    error: 'Enter at least 3 characters'
                 },
                 change: {
                     title: "Change the sub-account name",
@@ -1028,7 +1029,7 @@ const messages = {
     ru: {
         miners_title: ["прозрачный", "и эффективный", "майнинг", "bitcoin"],
         hash: "Хешрейт",
-        currency: "Курст BTC",
+        currency: "Курс BTC",
         costs: "Стоимость электроэнергии",
         miners_offer: {
             title: "что мы предлагаем",
@@ -1862,6 +1863,7 @@ const messages = {
                         name: "Введите имя",
                     },
                     button: "Добавить",
+                    error: 'Введите не менее 3 символов'
                 },
                 change: {
                     title: "Измените имя субаккаунта",

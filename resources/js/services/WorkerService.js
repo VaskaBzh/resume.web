@@ -243,7 +243,9 @@ export class WorkerService {
         this.updateGroup_id();
 
         this.worker_id = worker_id;
+
         await this.setDefaultKeys();
+        this.openPopupCard();
 
         await this.getWorkerGraph();
 

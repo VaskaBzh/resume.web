@@ -1,14 +1,6 @@
 <template>
     <div class="workers">
-        <main-preloader
-            class="cabinet__preloader"
-            :wait="worker_service.waitWorkers"
-            :interval="35"
-            :end="!worker_service.waitWorkers"
-            :empty="worker_service.emptyWorkers"
-        />
         <div
-            v-if="!worker_service.waitWorkers && !worker_service.emptyWorkers"
             class="workers__wrapper"
         >
             <main-title class="title-worker"
@@ -184,7 +176,6 @@ export default {
             }
 
             await this.worker_service.getPopup(data.id);
-            this.worker_service.openPopupCard();
         },
         dropWorkers() {
             this.worker_service.dropWorker();
@@ -251,7 +242,7 @@ export default {
     margin-bottom: 32px;
 }
 
-@media (max-width: 900px) {
+@media (max-width: 998px) {
     .cards-container {
         flex-direction: column;
         gap: 16px;
@@ -268,12 +259,17 @@ export default {
 }
 
 .workers {
-    padding: 24px;
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 900px) {
+    @media (max-width: 998px) {
         padding: 24px 12px 24px;
+    }
+
+    &__wrapper {
+        flex: 1 1 auto;
+        display: flex;
+        flex-direction: column;
     }
 
     .form .title {
@@ -284,11 +280,13 @@ export default {
         display: flex;
         gap: 12px;
         flex-direction: column;
+        flex: 1 1 auto;
     }
 
     &__table {
         display: flex;
         gap: 12px;
+        flex: 1 1 auto;
     }
 
     &__card {
@@ -301,7 +299,7 @@ export default {
         @media (max-width: 1200px) {
             min-height: unset;
         }
-        @media (max-width: 900px) {
+        @media (max-width: 998px) {
             min-height: 450px;
             position: absolute;
             width: calc(100% - 20px);

@@ -62,7 +62,7 @@ final class IncomeService
     /**
      * Income parameters.
      *
-     * @var array<string, array[]>
+     * @var array<string, string|float[]>
      */
     private array $params = [
         'mining' => [],

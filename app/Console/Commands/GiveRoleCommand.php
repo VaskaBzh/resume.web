@@ -78,7 +78,7 @@ class GiveRoleCommand extends Command
             $referrer = $referrers->where('email', $referrerEmail)->first();
 
             $userCredential = $this->ask(question: 'Please type referral name or email');
-            $user = User::where('email', $userCredential)
+            $user = User::whereEmail($userCredential)
                 ->firstOrFail();
 
             $customReferralPercent = $this->ask('Enter the special referral percent');

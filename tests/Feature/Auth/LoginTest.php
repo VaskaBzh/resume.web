@@ -27,13 +27,13 @@ class LoginTest extends TestCase
     /**
      * @test
      *
-     * @dataProvider authDataProvider
+     * @dataProvider basicAuthDataProvider
      *
      * @testdox failed login if email not verified
      */
-    public function isNotVerified(array $basicAuth)
+    public function isNotVerified(array $credentials)
     {
-        $this->postJson('/v1/login', $basicAuth)
+        $this->postJson('/v1/login', $credentials)
             ->assertStatus(Response::HTTP_FORBIDDEN)
             ->assertJsonStructure(['errors' => ['messages']]);
     }
@@ -43,19 +43,22 @@ class LoginTest extends TestCase
      *
      * @testdox success login if email verified
      *
-     * @dataProvider authDataProvider
+     * @dataProvider basicAuthDataProvider
+     *
+     * @param  string[]  $credentials
      */
     public function isVerified(
-        array $basicAuth,
-        array $loginResponseStructure
+        array $credentials,
+        array $expectLoginResponse
     ) {
+
         $this->user->markEmailAsVerified();
 
         $this->assertFalse(Auth::check());
 
-        $response = $this->postJson('/v1/login', $basicAuth)
+        $response = $this->postJson('/v1/login', $credentials)
             ->assertStatus(Response::HTTP_OK)
-            ->assertJsonStructure($loginResponseStructure);
+            ->assertJsonStructure($expectLoginResponse);
 
         $this->assertDatabaseHas('personal_access_tokens', ['name' => $this->user->name]);
         $this->assertAuthenticatedAs($this->user);
@@ -70,20 +73,19 @@ class LoginTest extends TestCase
      *
      * @testdox failed login if 2fa enabled and pass wrong code
      *
-     * @dataProvider authDataProvider
+     * @dataProvider twoFacAuthDataProvider
      */
     public function twoFaWongCode(
-        array $basicAuth,
-        array $loginResponseStructure,
-        array $google2faAuth
+        array $credentials,
+        array $expectErrors
     ) {
         $this->user->markEmailAsVerified();
 
         $this->enable2fa();
 
-        $this->postJson('/v1/login', array_merge($basicAuth, ['google2fa_code' => '666666']))
+        $this->postJson('/v1/login', array_merge($credentials, ['google2fa_code' => '666666']))
             ->assertStatus(Response::HTTP_FORBIDDEN)
-            ->assertJson($google2faAuth['wrong_code_error']);
+            ->assertJson($expectErrors['wrong_code_error']);
 
         $this->assertFalse(Auth::check());
     }
@@ -93,19 +95,18 @@ class LoginTest extends TestCase
      *
      * @testdox it show code require error when 2fa enabled
      *
-     * @dataProvider authDataProvider
+     * @dataProvider twoFacAuthDataProvider
      */
     public function showTwoFaRequireError(
-        array $basicAuth,
-        array $loginResponseStructure,
-        array $google2faAuth
+        array $credentials,
+        array $expectErrors,
     ) {
         $this->user->markEmailAsVerified();
 
         $this->enable2fa();
 
-        $this->postJson('/v1/login', $basicAuth)
-            ->assertExactJson($google2faAuth['code_required_error'])
+        $this->postJson('/v1/login', $credentials)
+            ->assertExactJson($expectErrors['code_required_error'])
             ->assertStatus(Response::HTTP_FORBIDDEN);
 
         $this->assertFalse(Auth::check());
@@ -116,12 +117,12 @@ class LoginTest extends TestCase
      *
      * @testdox login with 2fa
      *
-     * @dataProvider authDataProvider
+     * @dataProvider twoFacAuthDataProvider
      */
     public function twoFaLogin(
-        array $basicAuth,
-        array $loginResponseStructure,
-        array $google2faAuth,
+        array $credentials,
+        array $expectErrors,
+        array $expectLoginResponse,
     ) {
         $this->user->markEmailAsVerified();
 
@@ -130,9 +131,9 @@ class LoginTest extends TestCase
         $this->assertFalse(Auth::check());
 
         $response = $this
-            ->postJson('/v1/login', array_merge($basicAuth, ['google2fa_code' => $currentOtp]))
+            ->postJson('/v1/login', array_merge($credentials, ['google2fa_code' => $currentOtp]))
             ->assertStatus(Response::HTTP_OK)
-            ->assertJsonStructure($loginResponseStructure);
+            ->assertJsonStructure($expectLoginResponse);
 
         $this->assertDatabaseHas('personal_access_tokens', ['name' => $this->user->name]);
         $this->assertAuthenticatedAs($this->user);
@@ -159,20 +160,15 @@ class LoginTest extends TestCase
         return $googleAuth->getCurrentOtp($secretKey);
     }
 
-    /**
-     * Pass data for tests
-     *
-     * @return array[]
-     */
-    public function authDataProvider(): array
+    public function basicAuthDataProvider(): array
     {
         return [
-            [
-                'basicAuth' => [
+            'Basic auth' => [
+                'credentials' => [
                     'email' => 'forest@gmail.com',
                     'password' => '123',
                 ],
-                'loginResponseStructure' => [
+                'expectLoginResponse' => [
                     'user' => [
                         'id',
                         'name',
@@ -187,7 +183,22 @@ class LoginTest extends TestCase
                     'token',
                     'expired_at',
                 ],
-                'google2faAuth' => [
+            ],
+        ];
+    }
+
+    /**
+     * @return array[]
+     */
+    public function twoFacAuthDataProvider(): array
+    {
+        return [
+            'Google auth' => [
+                'credentials' => [
+                    'email' => 'forest@gmail.com',
+                    'password' => '123',
+                ],
+                'expectedErrors' => [
                     'code_required_error' => [
                         'errors' => [
                             'messages' => ['Pass 2fa code!'],
@@ -206,8 +217,22 @@ class LoginTest extends TestCase
                                 'The google2fa code must be 6 digits.',
                             ],
                         ],
-
                     ],
+                ],
+                'expectLoginResponse' => [
+                    'user' => [
+                        'id',
+                        'name',
+                        'email',
+                        'email_verified_at',
+                        'phone',
+                        'sms',
+                        '2fa',
+                        'referral_url',
+                        'has_referrer_role',
+                    ],
+                    'token',
+                    'expired_at',
                 ],
             ],
         ];

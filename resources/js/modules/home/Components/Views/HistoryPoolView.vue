@@ -11,7 +11,7 @@
                     viewportWidth > 1200 ? 2.5 : viewportWidth > 800 ? 1.5 : 1
                 "
                 :pagination="{
-                    clickable: true,
+                    clickable: false,
                 }"
                 :navigation="{ nextEl: '.next', prevEl: '.prev' }"
             >

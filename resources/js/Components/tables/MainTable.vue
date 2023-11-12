@@ -210,7 +210,7 @@ export default {
             right: 40px;
             margin-top: 25px;
             transform: translateY(-50%);
-            @media (max-width: 900px) {
+            @media (max-width: 998px) {
                 display: none;
             }
         }

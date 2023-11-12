@@ -10,7 +10,7 @@ export class ColumnService {
             </span>
             <span class="column_value column_value-worker">/</span>
             <span class="column_value-worker column_value-worker-unstable">
-                ${value.workers_count_unstable}
+                ${value.workers_count_in_active}
             </span>`;
     }
 

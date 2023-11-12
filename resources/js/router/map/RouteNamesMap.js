@@ -4,7 +4,6 @@ export const RouteNamesMap = {
         home: "HomePage",
         calculator: "CalculatorPage",
         complexity: "ComplexityPage",
-        // help: "FaqPage",
         hosting: "HostingPage",
         miners: "MinersPage",
         login: "LoginPage",
