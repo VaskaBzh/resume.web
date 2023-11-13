@@ -1,5 +1,6 @@
 import { ref } from "vue";
 import anime from "animejs";
+import store from "@/store";
 
 
 export class PopupService {
@@ -30,7 +31,7 @@ export class PopupService {
     }
 
     setBodyHidden() {
-        if (this.pageContainer) {
+        if (this.pageContainer && store.getters("viewportWidth") >= 998) {
             this.pageContainer.style.overflowY = "hidden";
         }
     }

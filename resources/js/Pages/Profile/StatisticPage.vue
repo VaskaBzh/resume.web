@@ -220,9 +220,6 @@ export default {
     width: 100%;
     position: relative;
     flex: 1 1 auto;
-    @media (max-width: 998px) {
-        padding: 24px 12px 24px;
-    }
 
     &__cards {
         width: 100%;

@@ -182,7 +182,7 @@ export default defineComponent({
 
 @media (max-width: 998px) {
     .nav__content {
-        padding: 0 16px 112px;
+        padding: 0 clamp(12px, 2vw, 24px) 112px;
     }
 }
 
@@ -201,7 +201,7 @@ export default defineComponent({
         position: fixed;
         right: 0;
         top: 71px;
-        padding: 20px 24px 24px;
+        padding: 20px 0 24px;
         z-index: 100;
         background: var(--background-island);
         box-shadow: 0 2px 12px -5px rgba(16, 24, 40, 0.02);

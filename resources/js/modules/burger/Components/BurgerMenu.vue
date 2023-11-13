@@ -87,6 +87,7 @@ import NavLinks from "../../navs/Components/NavLinks.vue";
 import { HomeMessage } from "@/modules/home/lang/HomeMessage";
 import SelectLanguageLand from "../../HomeMainPage/SelectLanguageLand.vue";
 import HeaderLogoIcon from "../../common/icons/HeaderLogoIcon.vue";
+import {mapGetters} from "vuex";
 
 export default {
     components: { SelectLanguageLand, NavLinks, HeaderLogoIcon },
@@ -99,6 +100,9 @@ export default {
             closeBurger: false,
         };
     },
+    computed: {
+        ...mapGetters(["viewportWidth"]),
+    },
     methods: {
         actionBurger() {
             if (this.isOpen) {
@@ -109,7 +113,9 @@ export default {
                     this.closeBurger = false;
                 }, 400);
             } else {
-                document.body.style.overflow = "hidden";
+                if (this.viewportWidth >= 988) {
+                    document.body.style.overflow = "hidden";
+                }
                 this.isOpen = true;
             }
         },

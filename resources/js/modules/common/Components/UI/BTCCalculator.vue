@@ -5,18 +5,18 @@
         </main-title>
         <div class="btc__value btc-calc-num">
             <div class="btc_num">
-                {{ converter.btc }}
+                {{ converter?.btc }}
                 <div class="btc_unit">
                     BTC
                 </div>
             </div>
             <div class="convertor-container is-web">
-                <span class="convertor-calc">$ {{ converter.usd }} </span>
-                <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter.rub }} ₽</span>
+                <span class="convertor-calc">$ {{ converter?.usd }} </span>
+                <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter?.rub }} ₽</span>
             </div>
             <tooltip-card
                 class="is-mobile"
-                :text="'$' + converter.usd + ' ≈ ' + converter.rub + ' ₽'"
+                :text="'$' + converter?.usd + ' ≈ ' + converter?.rub + ' ₽'"
             />
         </div>
     </div>
@@ -57,21 +57,18 @@ export default {
             await this.converter.convert();
         },
     },
-    created() {
+    mounted() {
         this.updateConversion();
     },
     watch: {
         btcInfo: {
-            immediate: true,
+            deep: true,
             handler() {
                 this.updateConversion();
             },
         },
-        BTC: {
-            immediate: true,
-            handler() {
-                this.updateConversion();
-            },
+        BTC() {
+            this.updateConversion();
         },
     },
 };

@@ -144,7 +144,7 @@ export default {
         getSumAccountsStatistic(accountStatisticKey) {
             const initialValue = 0;
 
-            return this.allAccounts.reduce((accumulator, currentAccount) => accumulator + currentAccount[accountStatisticKey], initialValue);
+            return this.allAccounts.reduce((accumulator, currentAccount) => accumulator + Number(currentAccount[accountStatisticKey]), initialValue);
         },
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
