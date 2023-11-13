@@ -12,11 +12,7 @@
                 name="email"
                 type="email"
                 autocomplete="email"
-                @change="
-                    service.form.email = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
+                @changeInput="service.form.email = $event"
             />
             <div
                 class="form-auth_row password_row"
@@ -28,11 +24,7 @@
                     :model="service.form.password"
                     :error="errorsExpired.messages ?? errorsExpired.password"
                     autocomplete="current-password"
-                    @change="
-                        service.form.password = !!$event.target
-                            ? $event.target.value
-                            : $event
-                    "
+                    @changeInput="service.form.password = $event"
                 />
             </div>
         </div>
@@ -162,6 +154,8 @@ export default {
                 title: "success",
                 text: this.$t("validate_messages.verify_message"),
             });
+
+            this.$router.push({ name: "login" });
         }
 
         if (this.$t) {

@@ -1,14 +1,15 @@
 <template>
-    <div class="row" :class="{ error: error }">
+    <label :for="name" class="row" :class="{ error: error }">
         <input
             :name="name"
-            v-model="value"
+            :id="name"
             :type="type"
+            :autocomplete="autocomplete"
+            v-model="value"
             class="row_input"
             :placeholder="placeholder"
-            :autocomplete="autocomplete"
         />
-    </div>
+    </label>
 </template>
 
 <script>
@@ -29,7 +30,7 @@ export default {
     },
     watch: {
         value() {
-            this.$emit("change", this.value);
+            this.$emit("changeInput", this.value);
         },
     },
 };
