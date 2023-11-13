@@ -61,8 +61,7 @@ class ReferralService
                     ->where('status', 'INACTIVE')
                     ->count(),
                 'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
-                'total_amount' => Income::getReferralIncomes($referralSubs->pluck('group_id'))
-                    ->sum('daily_amount'),
+                'total_amount' => $referralSubs->sum('total_amount'),
                 'referral_percent' => $referral->referral_percentage,
             ];
         });

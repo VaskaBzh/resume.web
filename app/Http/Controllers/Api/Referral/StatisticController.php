@@ -63,6 +63,8 @@ class StatisticController extends Controller
     ]
     public function __invoke(User $user)
     {
+        $this->authorize('viewAny', $user);
+
         $statistic = ReferralService::getReferrerStatistic(referrer: $user);
 
         return new ReferralStatisticResource($user, $statistic);
