@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Builders;
 
-use App\Enums\Worker\Status;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Support\Str;
 
 class WorkerBuilder extends BaseBuilder
 {
@@ -32,7 +32,7 @@ class WorkerBuilder extends BaseBuilder
     public function byStatus(?string $status): Builder
     {
         return $this->when($status, function (Builder $query) use ($status) {
-            $query->where('status', $status);
+            $query->where('status', Str::upper($status));
         });
     }
 }
