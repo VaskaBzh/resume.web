@@ -38,6 +38,20 @@ use Symfony\Component\HttpFoundation\Response;
                     enum: ['active', 'inactive']
                 )
             ),
+            new OA\Parameter(
+                name: 'page',
+                description: 'Page number',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'integer')
+            ),
+            new OA\Parameter(
+                name: 'per_page',
+                description: 'Items per page (default: 15)',
+                in: 'query',
+                required: false,
+                schema: new OA\Schema(type: 'integer')
+            ),
         ],
         responses: [
             new OA\Response(
