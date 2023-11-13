@@ -1,6 +1,7 @@
 import { TabData } from "@/modules/referral/DTO/TabData";
 import { useRouter } from "vue-router";
 
+
 export class ViewsService {
     constructor(translate) {
         this.tabs = [];
@@ -14,12 +15,8 @@ export class ViewsService {
             ...this.tabs,
             new TabData(this.translate("tabs[0]"), ["referral", "overview"]),
             new TabData(this.translate("tabs[1]"), ["referral", "my-referral"]),
-            new TabData(this.translate("tabs[2]"), [
-                "referral",
-                "earn-rewards",
-            ]),
+            new TabData(this.translate("tabs[2]"), ["referral", "earn-rewards",]),
         ];
-
         return this;
     }
 
