@@ -160,11 +160,6 @@ export default {
     flex-direction: column;
 }
 
-@media (max-width: 998px) {
-    .subs {
-        padding: 24px 12px 24px;
-    }
-}
 .subs__cards {
     width: 100%;
     grid-column: 1 / 5;
