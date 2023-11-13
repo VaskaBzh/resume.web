@@ -6,19 +6,10 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
-use Tests\TestCase;
+use Tests\Feature\BaseFeatureTest;
 
-class LogoutTest extends TestCase
+class LogoutTest extends BaseFeatureTest
 {
-    public User $user;
-
-    protected function setUp(): void
-    {
-        parent::setUp();
-
-        $this->user = User::factory()->create();
-    }
-
     /**
      * @test
      *
@@ -28,10 +19,11 @@ class LogoutTest extends TestCase
      */
     public function logout()
     {
-        Sanctum::actingAs($this->user);
-        $token = $this->user->createToken('test-token');
+        $user = User::first();
+        Sanctum::actingAs($user);
+        $token = $user->createToken('test-token');
 
-        $this->assertAuthenticatedAs($this->user);
+        $this->assertAuthenticatedAs($user);
 
         $this->withHeaders([
             'Authorization' => 'Bearer '.$token->plainTextToken,
