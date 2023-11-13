@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Builders\SubBuilder;
+use App\Enums\Worker\Status;
 use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -104,7 +105,7 @@ class Sub extends Model
         return Attribute::make(
             get: fn () => $this
                 ->workers()
-                ->onlyActive()
+                ->byStatus(Status::ACTIVE->value)
                 ->sum('approximate_hash_rate')
         );
     }
