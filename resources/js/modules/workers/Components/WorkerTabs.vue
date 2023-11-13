@@ -5,9 +5,9 @@
             v-for="(tab, i) in tabs"
             :key="i"
             :class="{
-                'tab-active': tab.name === active_tab
+                'tab-active': tab.value === active_tab
             }"
-            @click="$emit('changeStatus', tab.name)"
+            @click="$emit('changeStatus', tab.value)"
         >
             {{ $t(tab.name) }}
         </div>

@@ -1,5 +1,5 @@
 <template>
-    <form class="form">
+    <form class="form" @submit.prevent="$emit('submitForm')">
         <div class="form__head" v-show="$slots.head">
             <slot name="head" />
         </div>

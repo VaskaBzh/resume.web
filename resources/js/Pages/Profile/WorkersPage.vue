@@ -43,7 +43,7 @@
                                 instructionService.step === 2,
                         }"
                         :wait="worker_service.waitWorkers"
-                        :empty="worker_service.emptyWorkers"
+                        :empty="worker_service.emptyTableWorkers"
                         rows-num="1000"
                         :have-nav="false"
                     >
@@ -262,9 +262,6 @@ export default {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 998px) {
-        padding: 24px 12px 24px;
-    }
 
     &__wrapper {
         flex: 1 1 auto;

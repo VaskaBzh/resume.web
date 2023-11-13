@@ -6,16 +6,13 @@
         <auth-errors :errors="errors" />
         <div class="form-auth__content">
             <auth-input
-                :error="errorsExpired.error ?? errorsExpired.email"
+                :error="errorsExpired.messages ?? errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="$t('auth.login.placeholders[0]')"
                 name="email"
-                :type="'email'"
-                @change="
-                    service.form.email = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
+                type="email"
+                autocomplete="username"
+                @changeInput="service.form.email = $event"
             />
             <div
                 class="form-auth_row password_row"
@@ -25,12 +22,9 @@
                     name="password"
                     :placeholder="$t('auth.login.placeholders[1]')"
                     :model="service.form.password"
-                    :errors="errors"
-                    @change="
-                        service.form.password = !!$event.target
-                            ? $event.target.value
-                            : $event
-                    "
+                    :error="errorsExpired.messages ?? errorsExpired.password"
+                    autocomplete="current-password"
+                    @changeInput="service.form.password = $event"
                 />
             </div>
         </div>
@@ -149,8 +143,6 @@ export default {
         },
     },
     mounted() {
-        console.log(this.service)
-
         this.service.setForm();
 
         if (this.$route.query?.action === "password") {
@@ -162,6 +154,8 @@ export default {
                 title: "success",
                 text: this.$t("validate_messages.verify_message"),
             });
+
+            this.$router.push({ name: "login" });
         }
 
         if (this.$t) {

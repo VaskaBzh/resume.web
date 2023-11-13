@@ -12,6 +12,7 @@ export class TabsService {
 
     setLinks(user) {
         this.dropLinks();
+
         this.links = [
             ...this.links,
             {
@@ -77,14 +78,7 @@ export class TabsService {
     async setAllowedRoutes() {
         try {
             this.allowedRoutes = (
-                await ProfileApi.get(
-                    `/allowed/${this.route?.query?.access_key}`,
-                    {
-                        headers: {
-                            "X-Access-Key": this.route?.query?.access_key,
-                        },
-                    }
-                )
+                await ProfileApi.get(`/allowed/${this.route?.query?.access_key}`)
             ).data.data.allowed_routes;
         } catch (err) {
             console.error(err);
@@ -104,6 +98,7 @@ export class TabsService {
         }
 
         this.dropLinks();
+
         this.links = [
             ...this.links,
             {
@@ -161,7 +156,6 @@ export class TabsService {
                         "referral"
                     ),
                     new TabsData("/profile/faq", "faq", "faq", "faq"),
-                    // new TabsData("/profile/watchers", "support", "support", "support"),
                 ],
             },
         ];

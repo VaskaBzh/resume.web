@@ -1,7 +1,11 @@
 <template>
     <div class="head">
-        <main-title :class="titleClass" />
-        <main-description />
+        <main-title :class="titleClass">
+            <slot name="title" />
+        </main-title>
+        <main-description>
+            <slot name="text" />
+        </main-description>
     </div>
 </template>
 

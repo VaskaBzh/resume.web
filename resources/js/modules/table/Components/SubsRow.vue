@@ -10,7 +10,7 @@
 		<row-column
 			v-for="(column, i) in service.filteredColumns"
 			:value="column[1]"
-			:title="service.filteredTitles[i]"
+
 			:columnKey="column[0]"
 			:unit="service.unit[1]"
 		/>

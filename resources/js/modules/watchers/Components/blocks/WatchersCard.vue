@@ -249,6 +249,7 @@ export default {
     padding: 32px;
     display: flex;
     flex-direction: column;
+    grid-column: 2/4;
 }
 
 .title-mobile {
