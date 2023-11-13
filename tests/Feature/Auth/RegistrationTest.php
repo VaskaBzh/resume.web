@@ -10,9 +10,9 @@ use App\Services\Internal\ReferralService;
 use Database\Seeders\RoleAndPermissionsSeeder;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Notification;
-use Tests\TestCase;
+use Tests\Feature\BaseFeatureTest;
 
-class RegistrationTest extends TestCase
+class RegistrationTest extends BaseFeatureTest
 {
     /**
      * @test

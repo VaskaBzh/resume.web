@@ -7,7 +7,6 @@ namespace Tests\Feature\Services;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Exceptions\BusinessException;
-use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
@@ -15,20 +14,16 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Tests\TestCase;
+use Tests\Feature\BaseFeatureTest;
 
-class BtcComServiceTest extends TestCase
+class BtcComServiceTest extends BaseFeatureTest
 {
-    private readonly User $user;
-
-    // TODO: Rename test cased and add @testdox tags
+    public User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->user = User::factory()->create();
-        MinerStat::factory()->create();
+        $this->user = User::first();
     }
 
     /**
