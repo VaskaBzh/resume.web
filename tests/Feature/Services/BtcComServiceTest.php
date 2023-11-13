@@ -33,6 +33,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it throw exception if remote subaccount already exist
      *
      * @dataProvider createRemoteSubDataProvider
@@ -51,6 +52,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it create remote sub successfully
      *
      * @dataProvider createRemoteSubDataProvider
@@ -71,6 +73,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it transform sub without workers correctly
      *
      * @dataProvider transformSubDataProvider
@@ -97,6 +100,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it return empty collection if remote grouped worker list is empty
      */
     public function isEmptyGroupedWorkerList(): void
@@ -109,6 +113,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox transform filled remote groped worker list
      *
      * @dataProvider groupedWorkerListDataProvider
@@ -141,6 +146,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it return empty collection if remote ungrouped worker list is empty
      */
     public function isEmptyUngroupedWorkerList()
@@ -153,6 +159,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it return empty collection if not matched by sub name
      *
      * @dataProvider ungroupedWorkerListDataProvider
@@ -168,6 +175,7 @@ class BtcComServiceTest extends TestCase
 
     /**
      * @test
+     *
      * @testdox it transform remote ungrouped worker list correctly
      *
      * @dataProvider ungroupedWorkerListDataProvider
