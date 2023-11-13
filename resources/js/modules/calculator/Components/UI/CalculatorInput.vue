@@ -29,16 +29,21 @@ export default {
     data() {
         return {
             value: this.inputValue,
+            throttle: null,
         };
     },
     watch: {
         value(newVal, oldVal) {
-            let regExp = /[a-zа-яё]|[!$()№";'@#&_%$*+,~`:=<>?[|\]/\-\\^{|}]/gi;
-            if (newVal.length > 9 || regExp.test(newVal)) {
-                this.value = oldVal;
-                return;
-            }
-            this.$emit("getValue", newVal);
+            clearTimeout(this.throttle);
+
+            this.throttle = setTimeout(() => {
+                let regExp = /[a-zа-яё]|[!$()№";'@#&_%$*+,~`:=<>?[|\]/\-\\^{|}]/gi;
+                if (newVal.length > 9 || regExp.test(newVal)) {
+                    this.value = oldVal;
+                    return;
+                }
+                this.$emit("getValue", newVal);
+            }, 500);
         },
         inputValue(newVal) {
             this.value = newVal;
