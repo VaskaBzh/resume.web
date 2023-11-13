@@ -292,18 +292,6 @@ export default {
     position: relative;
 }
 
-@media (max-width: 1256px) {
-    .watchers__wrapper {
-
-    }
-}
-
-@media (max-width: 998px) {
-    .watchers {
-        padding: 24px 12px 24px;
-    }
-}
-
 @media (max-width: 700px) {
     .watchers__wrapper {
         display: flex;
