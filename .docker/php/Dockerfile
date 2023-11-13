@@ -19,7 +19,7 @@ RUN set -ex \
         && apk --no-cache add yarn nodejs npm libpng freetype-dev  \
                            libjpeg-turbo-dev libpng-dev libzip-dev \
         && docker-php-ext-configure gd --with-freetype --with-jpeg \
-        && docker-php-ext-install pdo mysqli pdo_mysql gd zip exif \
+        && docker-php-ext-install pdo mysqli pdo_mysql gd zip exif bcmath \
         && docker-php-ext-enable pdo_mysql \
         && apk del libpng-dev
 

@@ -9,13 +9,13 @@ use Illuminate\Database\Eloquent\Collection;
 
 class Complete
 {
-    public static function execute(Collection $incomes, IncomeCompleteData $incomeCompleteData): void
-    {
-        foreach ($incomes as $income) {
-            $income->update([
-                'message' => $incomeCompleteData->message,
-                'status' => $incomeCompleteData->status,
-            ]);
-        }
+    public static function execute(
+        Collection $incomes,
+        IncomeCompleteData $incomeCompleteData
+    ): void {
+        $incomes->each(static fn ($income) => $income->update([
+            'message' => $incomeCompleteData->message,
+            'status' => $incomeCompleteData->status,
+        ]));
     }
 }

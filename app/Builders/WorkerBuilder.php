@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class WorkerBuilder extends BaseBuilder
 {
@@ -29,8 +29,10 @@ class WorkerBuilder extends BaseBuilder
         return $this->where('status', 'DEAD');
     }
 
-    public function byStatus(?string $status): HasMany|Builder
+    public function byStatus(?string $status): Builder
     {
-        return $status ? $this->model->where('status', $status) : $this->model;
+        return $this->when($status, function (Builder $query) use ($status) {
+            $query->where('status', Str::upper($status));
+        });
     }
 }

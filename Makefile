@@ -55,6 +55,8 @@ lint-test:
 	$(COMPOSE) $(APP) ./vendor/bin/pint --test
 lint:
 	$(COMPOSE) $(APP) ./vendor/bin/pint -v
+analyze:
+	$(COMPOSE) $(APP) ./vendor/bin/phpstan analyse --memory-limit=2G
 
 # app commands
 worker-hashes:
