@@ -11,6 +11,7 @@
 <script>
 import { SubsCustomFunctions } from "@/modules/table/functionsMap/SubsCustomFunctions";
 import { ColumnService } from "@/modules/table/services/ColumnService";
+import loginForm from "../../../auth/Components/blocks/LoginForm.vue";
 
 export default {
     name: "row-column",
@@ -40,7 +41,6 @@ export default {
     methods: {
         initRenderFunctions() {
             const functionName = SubsCustomFunctions[this.columnKey];
-
             if (functionName) {
                 this.service[functionName](this.value, this.unit);
             } else {

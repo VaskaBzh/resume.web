@@ -51,6 +51,14 @@ export default {
     justify-content: space-between;
     gap: 12px;
     align-items: center;
+    margin: 24px 0 16px;
+}
+
+@media (max-width: 475px) {
+    .head {
+        margin: 16px 0 16px;
+    }
+
 }
 
 .head__buttons {

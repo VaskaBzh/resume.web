@@ -126,6 +126,7 @@ export default {
 .slider {
     height: 100%;
     width: 100%;
+    grid-column: 1/2;
     &__content {
         width: 100%;
     }
