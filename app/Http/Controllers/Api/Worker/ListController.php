@@ -79,7 +79,7 @@ class ListController extends Controller
         return WorkerResource::collection(
             resource: $sub->workers()
                 ->byStatus(Status::tryFromInsensitive($request->status)?->value)
-                ->get()
+                ->paginate()
         );
     }
 }

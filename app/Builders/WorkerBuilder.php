@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Builders;
 
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Support\Str;
 
 class WorkerBuilder extends BaseBuilder
 {
