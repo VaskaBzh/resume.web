@@ -19,8 +19,7 @@ class CodeEmail extends Mailable
      */
     public function __construct(
         private readonly string $code
-    )
-    {
+    ) {
     }
 
     /**
@@ -45,7 +44,7 @@ class CodeEmail extends Mailable
         return new Content(
             markdown: 'mail.user.code-email',
             with: [
-                'code' => $this->code
+                'code' => $this->code,
             ]
         );
     }

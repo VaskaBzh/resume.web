@@ -1,13 +1,13 @@
 <template>
     <transition name="newResult">
         <div class="result" v-if="setted">
-            <p class="result_value"> {{ converter.btc }} BTC</p>
+            <p class="result_value"> {{ converter?.btc }} BTC</p>
             <div>
                 <span class="result_value result_value-converted">
-                    ≈ ${{ converter.usd }}
+                    ≈ ${{ converter?.usd }}
                 </span>
                 <span class="result_value result_value-converted">
-                    ≈ ₽{{ converter.rub }}
+                    ≈ ₽{{ converter?.rub }}
                 </span>
             </div>
 
@@ -43,7 +43,7 @@ export default {
             this.setted = false;
             this.converter = new Converter(
                 this.bitcoinValue,
-                this.btcInfo.btc.price
+                this.btcInfo?.btc?.price ?? 0
             );
 
             await this.converter.convert();

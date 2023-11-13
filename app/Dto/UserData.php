@@ -6,15 +6,14 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly final class UserData
+final readonly class UserData
 {
     public function __construct(
         public string $name,
         public ?string $email,
         public ?string $password,
         public ?string $referralCode
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): UserData

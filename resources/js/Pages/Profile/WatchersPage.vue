@@ -288,16 +288,15 @@ export default {
     flex: 1 1 auto;
     display: grid;
     gap: 12px;
-    grid-template-rows: 1fr;
     grid-template-columns: repeat(2, 1fr);
     position: relative;
 }
 
 @media (max-width: 1256px) {
     .watchers__wrapper {
-        grid-template-rows: 1fr auto;
-        grid-template-columns: unset;
+
     }
+}
 
 @media (max-width: 998px) {
     .watchers {
@@ -328,6 +327,4 @@ export default {
     }
 }
 
-
-}
 </style>

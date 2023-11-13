@@ -1776,7 +1776,6 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "all",
                                 "active",
                                 "inactive"
                             ]

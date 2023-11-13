@@ -8,8 +8,8 @@ use App\Actions\Sub\Activate;
 use App\Http\Controllers\Controller;
 use App\Models\Sub;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class ActivateController extends Controller
 {
@@ -53,8 +53,8 @@ class ActivateController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],

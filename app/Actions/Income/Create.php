@@ -11,6 +11,9 @@ class Create
 {
     public static function execute(IncomeCreateData $incomeCreateData): Income
     {
+        /**
+         * @var Income
+         */
         return Income::create([
             'group_id' => $incomeCreateData->groupId,
             'type' => $incomeCreateData->type->value,

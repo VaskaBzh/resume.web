@@ -22,12 +22,11 @@ class EmailVerifyNotificationCommand extends Command
         if ($user->hasVerifiedEmail()) {
             $this->error('ERROR: This user already verified!');
 
-            die();
+            exit();
         }
 
         $user->sendEmailVerificationNotification();
 
-        $this->info('email send to ' . $user->email . '!');
+        $this->info('email send to '.$user->email.'!');
     }
-
 }

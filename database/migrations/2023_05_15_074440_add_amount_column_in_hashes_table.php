@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('hashes', function (Blueprint $table) {
-            $table->integer("amount")->nullable();
+            $table->integer('amount')->nullable();
         });
     }
 
@@ -26,7 +26,7 @@ return new class extends Migration
     public function down()
     {
         Schema::table('hashes', function (Blueprint $table) {
-            $table->dropColumn("amount");
+            $table->dropColumn('amount');
         });
     }
 };

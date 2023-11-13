@@ -15,14 +15,14 @@ class DeleteRequest extends FormRequest
     {
         return [
             'wallet' => 'required|string',
-            'group_id' => 'required'
+            'group_id' => 'required',
         ];
     }
 
     public function messages()
     {
         return [
-            ''
+            '',
         ];
     }
 }

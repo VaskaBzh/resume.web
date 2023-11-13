@@ -1,5 +1,6 @@
 import { ColumnBlackListEnum } from "@/modules/table/enums/ColumnBlackListEnum";
 import {WorkersKeysEnum} from "../enums/WorkersKeysEnum";
+import loginForm from "../../auth/Components/blocks/LoginForm.vue";
 
 export class RowService {
     constructor() {
@@ -37,13 +38,13 @@ export class RowService {
 
     filterColumns() {
         this.filteredColumns = Object.entries(this.columns).filter(elem => !ColumnBlackListEnum[elem[0]]);
-
+        console.log(this.columns, 'это каламны')
+        console.log(this.filteredColumns, 'а это то что получилось')
         return this;
     }
 
     getUnit() {
         this.unit = Object.entries(this.columns).filter(elem => elem[0] === 'unit')[0];
-
         return this;
     }
 

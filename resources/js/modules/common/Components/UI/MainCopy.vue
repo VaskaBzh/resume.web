@@ -121,7 +121,7 @@ export default {
         white-space: nowrap;
         overflow: hidden;
         color: var(--text-secondary, #475467);
-        width: 95%;
+        width: 90%;
 
         @media (max-width: 500px) {
             width: 85%;

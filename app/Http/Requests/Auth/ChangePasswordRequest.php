@@ -31,7 +31,7 @@ class ChangePasswordRequest extends FormRequest
                 'string',
                 'confirmed',
                 Password::defaults(),
-                'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/'
+                'regex:/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W)/',
             ],
         ];
     }
@@ -45,11 +45,11 @@ class ChangePasswordRequest extends FormRequest
     {
         return [
             'password.required' => __('validation.required', [
-                'attribute' => __('validation.attributes.password')
+                'attribute' => __('validation.attributes.password'),
             ]),
             'password.confirmed' => __('validation.confirmed', [
-                'attribute' => __('validation.attributes.password')
-            ])
+                'attribute' => __('validation.attributes.password'),
+            ]),
         ];
     }
 }

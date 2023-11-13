@@ -210,9 +210,6 @@ export default {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    @media (max-width: 998px) {
-        padding: 24px 12px 24px;
-    }
 
     &__main {
         flex: 1 1 auto;

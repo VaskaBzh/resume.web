@@ -31,7 +31,7 @@ class SetSubCustomPercentCommand extends Command
         if ($confirmed) {
             $sub->update([
                 'percent' => (float) $this->validateNumber($percent),
-                'custom_percent_expired_at' => now()->addDays((int) $this->validateNumber($customPercentExpiredAt))
+                'custom_percent_expired_at' => now()->addDays((int) $this->validateNumber($customPercentExpiredAt)),
             ]);
         }
     }
@@ -52,7 +52,7 @@ class SetSubCustomPercentCommand extends Command
                 explode(':', $this->choice(
                     question: 'Select sub',
                     choices: $subs->map(
-                        static fn($sub) => implode(':', [$sub->sub, $sub->group_id, $sub->percent . '%'])
+                        static fn ($sub) => implode(':', [$sub->sub, $sub->group_id, $sub->percent.'%'])
                     )->all(),
                     attempts: 2))[1]
             );
@@ -74,17 +74,16 @@ class SetSubCustomPercentCommand extends Command
         Sub $sub,
         string $percent,
         string $days
-    ): bool
-    {
-        return $this->confirm('You set ' . $percent . '% to sub: ' . $sub->group_id . ' for ' . $days . ' day/s');
+    ): bool {
+        return $this->confirm('You set '.$percent.'% to sub: '.$sub->group_id.' for '.$days.' day/s');
     }
 
     private function validateNumber(string $number): string
     {
-        if (!is_numeric($number) || $number < 0) {
+        if (! is_numeric($number) || $number < 0) {
             $this->error('Percent value must be unsigned int or float!');
 
-            die();
+            exit();
         }
 
         return $number;

@@ -9,8 +9,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\WatcherLinks\UpdateLinkRequest;
 use App\Models\WatcherLink;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class UpdateController extends Controller
 {
@@ -56,7 +56,7 @@ class UpdateController extends Controller
                 response: Response::HTTP_OK,
                 description: 'Watcher link updated successfully',
             ),
-                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized',),
+                new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
                 new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Watcher link not found'),
                 new OA\Response(
                     response: Response::HTTP_UNPROCESSABLE_ENTITY,
@@ -66,8 +66,8 @@ class UpdateController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -76,10 +76,9 @@ class UpdateController extends Controller
         )
     ]
     public function __invoke(
-        WatcherLink       $watcher,
+        WatcherLink $watcher,
         UpdateLinkRequest $request
-    )
-    {
+    ) {
         $this->authorize('viewOrChange', $watcher);
 
         ToggleRoute::execute(

@@ -9,8 +9,7 @@ class BusinessException extends \RuntimeException
     public function __construct(
         private readonly string $clientMessage,
         private readonly int $statusCode,
-    )
-    {
+    ) {
         parent::__construct($this->clientMessage);
     }
 

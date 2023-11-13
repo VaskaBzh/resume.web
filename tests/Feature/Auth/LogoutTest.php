@@ -19,7 +19,14 @@ class LogoutTest extends TestCase
         $this->user = User::factory()->create();
     }
 
-    public function test_logout()
+    /**
+     * @test
+     *
+     * @testdox logout
+     *
+     * @return void
+     */
+    public function logout()
     {
         Sanctum::actingAs($this->user);
         $token = $this->user->createToken('test-token');
@@ -27,7 +34,7 @@ class LogoutTest extends TestCase
         $this->assertAuthenticatedAs($this->user);
 
         $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token->plainTextToken,
+            'Authorization' => 'Bearer '.$token->plainTextToken,
         ])
             ->postJson(route('v1.logout'))
             ->assertOk()

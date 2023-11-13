@@ -4,10 +4,8 @@ declare(strict_types=1);
 
 namespace App\Events;
 
-use App\Dto\FinanceData;
 use App\Models\Sub;
 use App\Models\Wallet;
-use App\Services\Internal\IncomeService;
 use Illuminate\Foundation\Events\Dispatchable;
 
 class PayoutCompleteEvent
@@ -19,5 +17,6 @@ class PayoutCompleteEvent
         public readonly Wallet $wallet,
         public readonly float $payout,
         public readonly string $txId,
-    ) {}
+    ) {
+    }
 }

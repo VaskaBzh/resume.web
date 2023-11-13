@@ -14,8 +14,7 @@ class VerifyEmailNotification extends VerifyEmail
 {
     public function __construct(
         private readonly string $actionRoute,
-    )
-    {
+    ) {
     }
 
     public function via($notifiable): array
@@ -28,12 +27,10 @@ class VerifyEmailNotification extends VerifyEmail
         return $this->buildMail($notifiable);
     }
 
-
     protected function verificationEmailUrl(
         $notifiable,
         int $expiredAt,
-    ): string
-    {
+    ): string {
         return URL::temporarySignedRoute(
             $this->actionRoute,
             Carbon::now()->addMinutes($expiredAt),
@@ -55,7 +52,7 @@ class VerifyEmailNotification extends VerifyEmail
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
             'v1.password.reset.verify' => $this->getPasswordChangeMailMessage($mail, $notifiable)
                 ->line(__('notifications.email.expired_at.text', ['value' => config('auth.verification.expire') / 60])),
-            default => throw new \Exception('Wrong route action ' . $this->actionRoute)
+            default => throw new \Exception('Wrong route action '.$this->actionRoute)
         };
     }
 
@@ -84,7 +81,6 @@ class VerifyEmailNotification extends VerifyEmail
                 )
             );
     }
-
 
     public function toArray($notifiable): array
     {

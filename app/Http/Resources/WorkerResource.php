@@ -49,7 +49,7 @@ class WorkerResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            ...$this->pool_data
+            ...$this->pool_data,
         ];
     }
 }

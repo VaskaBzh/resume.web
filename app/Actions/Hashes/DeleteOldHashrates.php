@@ -10,9 +10,6 @@ class DeleteOldHashrates
 {
     public static function execute(int $groupId, string $date): void
     {
-        Hash::oldestThan(
-            groupId: $groupId,
-            date: $date
-        )?->delete();
+        Hash::oldestThan(groupId: $groupId, date: $date)->delete();
     }
 }

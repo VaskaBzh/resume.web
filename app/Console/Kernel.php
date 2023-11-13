@@ -7,14 +7,14 @@ namespace App\Console;
 use App\Console\Commands\EmailVerifyNotificationCommand;
 use App\Console\Commands\GiveRoleCommand;
 use App\Console\Commands\IncomeCommand;
-use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\MakeHashesCommand;
+use App\Console\Commands\MakeWorkerHashesCommand;
 use App\Console\Commands\ObserveCustomPercentTimeCommand;
 use App\Console\Commands\PayoutCommand;
 use App\Console\Commands\SetSubCustomPercentCommand;
+use App\Console\Commands\UpdateMinerStatCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use App\Console\Commands\UpdateMinerStatCommand;
 
 class Kernel extends ConsoleKernel
 {
@@ -32,7 +32,6 @@ class Kernel extends ConsoleKernel
 
     /**
      * Define the application's command schedule.
-     *
      */
     protected function schedule(Schedule $schedule): void
     {
@@ -45,8 +44,6 @@ class Kernel extends ConsoleKernel
 
     /**
      * Register the commands for the application.
-     *
-     * @return void
      */
     protected function commands(): void
     {

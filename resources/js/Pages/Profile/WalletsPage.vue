@@ -690,9 +690,6 @@ input:focus {
     width: 100%;
     transition: all 0.3s linear 0.2s;
     opacity: 0;
-    @media (max-width: 998px) {
-        padding: 24px 12px 24px;
-    }
 
     .no-info.no-bg {
         padding: 0;

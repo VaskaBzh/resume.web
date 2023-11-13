@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Traits;
 
-use Illuminate\Http\Request;
 use App\Exceptions\BusinessException;
+use Illuminate\Http\Request;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -13,7 +13,7 @@ trait HasVerify
 {
     public function verifyTwoFa(?string $google2fa_code): void
     {
-        if (!$google2fa_code) {
+        if (! $google2fa_code) {
 
             auth()->guard('web')->logout();
 
@@ -26,7 +26,7 @@ trait HasVerify
         $isValid = resolve(Google2FA::class)
             ->verifyKey(auth()->user()->google2fa_secret, $google2fa_code);
 
-        if (!$isValid) {
+        if (! $isValid) {
 
             auth()->guard('web')->logout();
 
@@ -39,7 +39,7 @@ trait HasVerify
 
     public function checkEmailVerification(Request $request): void
     {
-        if (!$request->user()->hasVerifiedEmail()) {
+        if (! $request->user()->hasVerifiedEmail()) {
 
             auth()->guard('web')->logout();
 

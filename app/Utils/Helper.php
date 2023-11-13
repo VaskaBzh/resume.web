@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace App\Utils;
 
 use App\Models\MinerStat;
-use App\Models\User;
-use App\Services\External\BtcComService;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Str;
 
 class Helper
 {
@@ -21,7 +17,7 @@ class Helper
      * $this->>network_difficulty - сложность сети биткоина
      * $this->>fpps_rate - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
      */
-    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee): float
+    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee = 0): float
     {
         if ($hashRate <= 0) {
             return 0;
@@ -29,13 +25,31 @@ class Helper
 
         $secondsPerDay = 86400;
 
-        $earnTime = ($stats->network_difficulty * pow(2, 32))
-            / (($hashRate * pow(10, 12)) * $secondsPerDay);
+        /*
+         * Target difficulty
+         */
+        $targetDifficulty = $stats->network_difficulty * pow(2, 32);
 
+        $teraHashesPerSeconds = $hashRate * pow(10, 12);
+
+        /**
+         * Block earning time based on current hash rate, seconds per day and target
+         */
+        $earnTime = $targetDifficulty / ($teraHashesPerSeconds * $secondsPerDay);
+
+        /**
+         * User total earn based on block reward and calculating earning time
+         */
         $total = $stats->reward_block / $earnTime;
 
+        /**
+         * User total earn plus ffps
+         */
         $totalWithFpps = $total + ($total * ($stats->fpps_rate / 100));
 
+        /**
+         * User total with ffps minus tax percent
+         */
         return $totalWithFpps - ($totalWithFpps * ($fee / 100));
     }
 }

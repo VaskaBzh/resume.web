@@ -23,7 +23,6 @@ class ForgotPasswordController extends Controller
 
     use SendsPasswordResetEmails;
 
-
     #[
         OA\Post(
             path: '/password/forgot',
@@ -38,9 +37,9 @@ class ForgotPasswordController extends Controller
                                 description: "User's email",
                                 type: 'string',
                                 format: 'email'
-                            )
+                            ),
                         ]
-                    )
+                    ),
                 ]
             ),
             tags: ['Auth'],
@@ -55,9 +54,9 @@ class ForgotPasswordController extends Controller
                                     property: 'message',
                                     description: 'Success message',
                                     type: 'string'
-                                )
+                                ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -68,12 +67,12 @@ class ForgotPasswordController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ]
         )
     ]

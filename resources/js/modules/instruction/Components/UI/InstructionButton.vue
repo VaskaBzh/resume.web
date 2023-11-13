@@ -41,14 +41,20 @@ export default {
     height: 48px;
     right: 32px;
     bottom: 16px;
-    display: none;
+    display: flex;
     border-radius: 50%;
     cursor: pointer;
 }
 
-@media (min-width: 1279.98px) {
+@media (max-width: 1279.98px) {
     .button {
-        display: flex;
+        display: none;
+    }
+}
+
+@media (max-height: 1000px) {
+    .button {
+        display: none;
     }
 }
 

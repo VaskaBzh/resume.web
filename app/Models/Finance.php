@@ -20,7 +20,7 @@ class Finance extends Model
     public function sub(): BelongsTo
     {
         return $this->belongsTo(
-            Sub::class, 
+            Sub::class,
             'group_id',
             'group_id'
         );

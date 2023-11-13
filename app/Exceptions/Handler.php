@@ -19,7 +19,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of exception types with their corresponding custom log levels.
      *
-     * @var array<class-string<\Throwable>, \Psr\Log\LogLevel::*>
+     * @var array<class-string<Throwable>, \Psr\Log\LogLevel::*>
      */
     protected $levels = [
         //
@@ -28,7 +28,7 @@ class Handler extends ExceptionHandler
     /**
      * A list of the exception types that are not reported.
      *
-     * @var array<int, class-string<\Throwable>>
+     * @var array<int, class-string<Throwable>>
      */
     protected $dontReport = [
         UnauthorizedException::class,
@@ -53,10 +53,7 @@ class Handler extends ExceptionHandler
 
     /**
      * Register the exception handling callbacks for the application.
-     *
-     * @return void
      */
-
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
@@ -67,13 +64,13 @@ class Handler extends ExceptionHandler
 
             if ($e instanceof BusinessException) {
                 return new JsonResponse([
-                    'errors' => ['messages' => [$e->getClientMessage()]]
+                    'errors' => ['messages' => [$e->getClientMessage()]],
                 ], $e->getClientStatusCode());
             }
 
             if ($e instanceof UnauthorizedException || $e instanceof AuthenticationException) {
                 return new JsonResponse([
-                    'errors' => ['messages' => [$e->getMessage()]]
+                    'errors' => ['messages' => [$e->getMessage()]],
                 ], Response::HTTP_UNAUTHORIZED);
             }
         });
