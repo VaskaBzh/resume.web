@@ -7,7 +7,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
 /** @see WatcherLink */
-
 #[
     OA\Schema(
         schema: 'WatcherLinkResource',
@@ -37,11 +36,11 @@ class WatcherLinkResource extends JsonResource
             'allowed_routes' => $this->allowed_routes,
             'access_count' => $this->access_count,
             'url' => config('app.url')
-                . '/watcher?access_key='
-                . $this->token
-                . '&'
-                . 'puid='
-                . $this->group_id,
+                .'/watcher?access_key='
+                .$this->token
+                .'&'
+                .'puid='
+                .$this->group_id,
         ];
     }
 }

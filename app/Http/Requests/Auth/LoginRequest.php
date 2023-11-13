@@ -10,25 +10,25 @@ use OpenApi\Attributes as OA;
         schema: 'LoginRequest',
         type: 'object',
         example: [
-            "email" => "user@example.com",
-            "password" => "password",
+            'email' => 'user@example.com',
+            'password' => 'password',
         ],
         oneOf: [
             new OA\Property(
-                property: "email",
+                property: 'email',
                 description: "User's email",
-                type: "string",
-                format: "email",
+                type: 'string',
+                format: 'email',
             ),
             new OA\Property(
-                property: "password",
+                property: 'password',
                 description: "User's password",
-                type: "string",
+                type: 'string',
             ),
             new OA\Property(
-                property: "google2fa_code",
-                description: "Google Authenticator code",
-                type: "string",
+                property: 'google2fa_code',
+                description: 'Google Authenticator code',
+                type: 'string',
                 maxLength: 6,
                 minLength: 6
             ),
@@ -42,7 +42,7 @@ class LoginRequest extends FormRequest
         return [
             'email' => 'required|email|string|max:254',
             'password' => 'required',
-            'google2fa_code' => 'string|digits:6'
+            'google2fa_code' => 'string|digits:6',
         ];
     }
 
@@ -57,7 +57,7 @@ class LoginRequest extends FormRequest
             'email.required' => __('validation.required', ['attribute' => 'email']),
             'email.email' => __('validation.email', ['attribute' => 'email']),
             'email.max' => __('validation.max.string', ['attribute' => 'email', 'max' => 254]),
-            'password.required' => __('validation.required', ['attribute' => __('validation.attributes.password')])
+            'password.required' => __('validation.required', ['attribute' => __('validation.attributes.password')]),
         ];
     }
 }

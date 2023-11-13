@@ -55,8 +55,8 @@ use Symfony\Component\HttpFoundation\Response;
                         type: 'object',
                         example: [
                             'errors' => [
-                                'property' => ['message']
-                            ]
+                                'property' => ['message'],
+                            ],
                         ]
                     ),
                 ],

@@ -51,7 +51,7 @@ class TwoFactorController extends Controller
                                     type: 'string'
                                 ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -62,8 +62,8 @@ class TwoFactorController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -86,16 +86,15 @@ class TwoFactorController extends Controller
             report($e);
 
             return new JsonResponse([
-                'errors' => ['auth' => [__('actions.failed')]]
+                'errors' => ['auth' => [__('actions.failed')]],
             ], Response::HTTP_BAD_REQUEST);
         }
 
         return new JsonResponse([
             'qrCode' => $QRImage,
-            'secret' => $secretKey
+            'secret' => $secretKey,
         ]);
     }
-
 
     #[
         OA\Put(
@@ -121,7 +120,7 @@ class TwoFactorController extends Controller
                                 type: 'string',
                             ),
                         ]
-                    )
+                    ),
                 ]
             ),
             tags: ['Auth'],
@@ -146,7 +145,7 @@ class TwoFactorController extends Controller
                                     type: 'string'
                                 ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(response: Response::HTTP_NOT_FOUND, description: 'Not found'),
@@ -158,8 +157,8 @@ class TwoFactorController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -169,16 +168,15 @@ class TwoFactorController extends Controller
     ]
     public function enable(
         EnableRequest $request,
-        User          $user,
-        Google2FA     $google2FA,
-    ): JsonResponse
-    {
+        User $user,
+        Google2FA $google2FA,
+    ): JsonResponse {
         $isValid = $google2FA->verifyKey(
             $request->secret,
             $request->code
         );
 
-        if (!$isValid) {
+        if (! $isValid) {
 
             auth()->guard('web')->logout();
 
@@ -192,7 +190,6 @@ class TwoFactorController extends Controller
 
         return new JsonResponse(['message' => __('actions.two_fa_enabled')]);
     }
-
 
     #[
         OA\Put(
@@ -213,7 +210,7 @@ class TwoFactorController extends Controller
                                 minLength: 6,
                             ),
                         ]
-                    )
+                    ),
                 ]
             ),
             tags: ['Auth'],
@@ -243,7 +240,7 @@ class TwoFactorController extends Controller
                                     type: 'string'
                                 ),
                             ]
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -254,8 +251,8 @@ class TwoFactorController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -269,7 +266,7 @@ class TwoFactorController extends Controller
 
         return new JsonResponse([
             'status' => $user->update(['google2fa_secret' => null]),
-            'message' => __('actions.two_fa_disabled')
+            'message' => __('actions.two_fa_disabled'),
         ]);
     }
 }

@@ -52,7 +52,7 @@ export default {
         async updateConversion() {
             this.converter = new Converter(
                 this.BTC,
-                this.btcInfo?.btc ? this.btcInfo.btc.price : 0
+                this.btcInfo?.btc?.price ?? 0
             );
             await this.converter.convert();
         },

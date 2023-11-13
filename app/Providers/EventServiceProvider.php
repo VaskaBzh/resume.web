@@ -19,11 +19,11 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
-            SubCreatingListener::class
+            SubCreatingListener::class,
         ],
         PayoutCompleteEvent::class => [
-            PayoutCompleteListener::class
-        ]
+            PayoutCompleteListener::class,
+        ],
     ];
 
     /**

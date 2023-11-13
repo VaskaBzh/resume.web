@@ -14,14 +14,13 @@ class UpdateMinerStatCommand extends Command
 
     public function handle(
         MinerStatService $minerStatService,
-    )
-    {
+    ) {
         try {
             $stats = $minerStatService->store();
 
-            if (!is_null($stats)) {
+            if (! is_null($stats)) {
                 Log::channel('commands')->info('MINER STATS COMMAND', [
-                    'minerstats' => $stats
+                    'minerstats' => $stats,
                 ]);
 
                 $this->info('Stats updated');

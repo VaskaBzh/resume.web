@@ -33,7 +33,7 @@ class UserController extends Controller
                     content: [
                         new OA\JsonContent(
                             ref: '#/components/schemas/UserResource'
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -45,8 +45,8 @@ class UserController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],

@@ -37,7 +37,7 @@ class ShowController extends Controller
                     content: [
                         new OA\JsonContent(
                             ref: '#/components/schemas/SubResource'
-                        )
+                        ),
                     ],
                 ),
                 new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -49,8 +49,8 @@ class ShowController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -59,12 +59,11 @@ class ShowController extends Controller
         )
     ]
     public function __invoke(
-        Request       $request,
-        Sub           $sub,
+        Request $request,
+        Sub $sub,
         BtcComService $btcComService,
-    ): JsonResource
-    {
-        if (!$request->attributes->get('access_key_valid')) {
+    ): JsonResource {
+        if (! $request->attributes->get('access_key_valid')) {
 
             $this->authorize('viewOrChange', $sub);
         }

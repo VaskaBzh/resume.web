@@ -15,7 +15,7 @@ export class WorkerService {
         this.workers_graph = {};
         this.records = [];
         this.filterButtons = [];
-        this.status = null;
+        this.status = "all";
 
         this.table = new Map();
 
@@ -66,7 +66,7 @@ export class WorkerService {
         this.filterButtons = [
             {
                 name: "all",
-                value: null,
+                value: "all",
             },
             {
                 name: "active",
@@ -86,7 +86,7 @@ export class WorkerService {
     }
 
     async fetchList() {
-        return await ProfileApi.get(`/workers/${this.group_id}${this.status ? `?status=${this.status}` : ""}`);
+        return await ProfileApi.get(`/workers/${this.group_id}?status=${this.status}`);
     }
 
     async fetchWorker() {

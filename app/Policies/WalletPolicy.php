@@ -2,7 +2,6 @@
 
 namespace App\Policies;
 
-use App\Models\Sub;
 use App\Models\User;
 use App\Models\Wallet;
 use Illuminate\Auth\Access\HandlesAuthorization;

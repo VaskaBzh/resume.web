@@ -30,8 +30,8 @@ class WalletService
             'jsonrpc' => '1.0',
             'id' => 'unlock',
             'method' => 'walletpassphrase',
-            'params' => [config('api.wallet.walletpassphrase'), 10]
-        ])->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
+            'params' => [config('api.wallet.walletpassphrase'), 10],
+        ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса разблокировки кошелька')
         );
     }
@@ -42,14 +42,15 @@ class WalletService
             'jsonrpc' => '1.0',
             'id' => 'lock',
             'method' => 'walletlock',
-        ])->throwIf(static fn(Response $response) => $response->clientError() || $response->serverError(),
+        ])->throwIf(static fn (Response $response) => $response->clientError() || $response->serverError(),
             new \Exception('Ошибка при выполнении запроса блокировки кошелька')
         );
     }
 
     /**
      * Отправить баланс в сервис кошелька
-     * @param float $balance - баланс кошелька
+     *
+     * @param  float  $balance - баланс кошелька
      */
     public function sendBalance(Wallet $wallet, float $balance): ?string
     {
@@ -59,13 +60,13 @@ class WalletService
             'method' => 'sendtoaddress',
             'params' => [
                 $wallet->wallet,
-                (float) number_format($balance, 8, '.', ' ')
-            ]
+                (float) number_format($balance, 8, '.', ' '),
+            ],
         ]);
 
         info('WALLET RESPONSE', [
             'wallet' => $wallet->id,
-            'response' => $response
+            'response' => $response,
         ]);
 
         return $response['result'];

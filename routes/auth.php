@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes([
     'logout' => false,
     'reset' => false,
-    'login' => false
+    'login' => false,
 ]);
 
 Route::controller(LoginController::class)->group(function () {

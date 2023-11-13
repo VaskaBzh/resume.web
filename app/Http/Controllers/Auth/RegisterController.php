@@ -11,8 +11,8 @@ use App\Services\External\BtcComService;
 use App\Services\Internal\UserService;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 class RegisterController extends Controller
 {
@@ -97,22 +97,20 @@ class RegisterController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
-                )
+                ),
             ],
         )
     ]
     public function register(
         RegisterRequest $request,
-        BtcComService   $btcComService
-    ): JsonResponse
-    {
-        auth()->login($user = UserService::create(userData:
-            UserData::fromRequest($request->all())
+        BtcComService $btcComService
+    ): JsonResponse {
+        auth()->login($user = UserService::create(userData: UserData::fromRequest($request->all())
         ));
 
         event(new Registered(
@@ -123,7 +121,7 @@ class RegisterController extends Controller
         return new JsonResponse([
             'message' => 'success',
             'user' => new UserResource($user),
-            'token' => $user->createAuthToken()
+            'token' => $user->createAuthToken(),
         ], Response::HTTP_CREATED);
     }
 }

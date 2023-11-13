@@ -1,5 +1,5 @@
 <template>
-    <form class="form-auth" @submit.prevent="service.account_create" autocomplete="off">
+    <form class="form-auth" @submit.prevent="service.account_create">
         <main-title class="form-auth_title"
             >{{ $t("auth.reg.title") }}
         </main-title>
@@ -11,12 +11,8 @@
                 :placeholder="$t('auth.reg.placeholders[0]')"
                 name="email"
                 type="email"
-                autocomplete="email"
-                @change="
-                    service.form.email = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
+                autocomplete="username"
+                @changeInput="service.form.email = $event"
             />
             <auth-input
                 :error="errorsExpired.name"
@@ -24,13 +20,8 @@
                 :placeholder="$t('auth.reg.placeholders[1]')"
                 name="username"
                 type="text"
-                autocomplete="username"
-                @change="
-                    service.form.name = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
-
+                autocomplete="email"
+                @changeInput="service.form.name = $event"
             />
             <div
                 class="form-auth_row password_row"
@@ -41,12 +32,8 @@
                     :placeholder="$t('auth.reg.placeholders[2]')"
                     :model="service.form.password"
                     :errors="errorsExpired"
-                    autocomplete="new-password"
-                    @change="
-                        service.validateProcess(
-                            !!$event.target ? $event.target.value : $event
-                        )
-                    "
+                    autocomplete="current-password"
+                    @changeInput="service.validateProcess($event)"
                 />
             </div>
             <main-validate :validate="service.validate" />
@@ -59,11 +46,7 @@
                     :placeholder="$t('auth.reg.placeholders[3]')"
                     :model="service.form.password_confirmation"
                     autocomplete="new-password"
-                    @change="
-                        service.form.password_confirmation = !!$event.target
-                            ? $event.target.value
-                            : $event
-                    "
+                    @changeInput="service.form.password_confirmation = $event"
                 />
             </div>
         </div>

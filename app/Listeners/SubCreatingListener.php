@@ -17,13 +17,10 @@ final readonly class SubCreatingListener
      * Create local sub-account based on remote sub-account group_id
      * Attach referral program on user if referral_code exists
      * Assign referral role to registered user if referral_code exists
-     *
-     * @param Registered $event
-     * @return void
      */
     public function handle(Registered $event): void
     {
-        if (!$event->user->hasRole(Roles::REFERRAL->value) && $event->referralCode) {
+        if (! $event->user->hasRole(Roles::REFERRAL->value) && $event->referralCode) {
 
             AttachReferral::execute(
                 referrer: ReferralService::getReferrer($event->referralCode),

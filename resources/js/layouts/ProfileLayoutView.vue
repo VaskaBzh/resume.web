@@ -114,8 +114,10 @@ export default {
 }
 
 @media (min-width: 998px) {
-    overflow-y: scroll;
-    height: calc(100vh - 72px);
+    .page-container {
+        overflow-y: scroll;
+        height: calc(100vh - 72px);
+    }
 }
 
 @media (max-width: 998px) {

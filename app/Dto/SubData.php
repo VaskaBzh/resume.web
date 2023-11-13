@@ -6,14 +6,14 @@ namespace App\Dto;
 
 use Illuminate\Support\Arr;
 
-readonly final class SubData
+final readonly class SubData
 {
     /**
-     * @param int $userId - id пользователя allbtc.com
-     * @param int $groupId - id сабаккаунта
-     * @param string $subName - имя сабаккаунта
-     * @param float|null $pendingAmount - доход не превысивший допстимый порог вывода средств и удержанный на балансе
-     * @param float|null $totalAmount - сумма добычи за все время
+     * @param  int  $userId - id пользователя allbtc.com
+     * @param  int  $groupId - id сабаккаунта
+     * @param  string  $subName - имя сабаккаунта
+     * @param  float|null  $pendingAmount - доход не превысивший допстимый порог вывода средств и удержанный на балансе
+     * @param  float|null  $totalAmount - сумма добычи за все время
      */
     public function __construct(
         public int $userId,
@@ -22,8 +22,7 @@ readonly final class SubData
         public ?float $pendingAmount,
         public ?float $totalAmount,
         public ?bool $isActive,
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): SubData

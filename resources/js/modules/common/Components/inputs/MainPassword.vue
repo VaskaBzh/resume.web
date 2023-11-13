@@ -91,7 +91,7 @@ export default {
     },
     watch: {
         value(newValue) {
-            this.$emit("change", newValue);
+            this.$emit("changeInput", newValue);
         },
     },
 };

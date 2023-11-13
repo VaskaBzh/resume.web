@@ -37,7 +37,7 @@ class ListController extends Controller
                         new OA\JsonContent(
                             type: 'array',
                             items: new OA\Items(ref: '#/components/schemas/SubResource')
-                        )
+                        ),
                     ],
                 ),
                 new OA\Response(response: 401, description: 'Unauthorized'),
@@ -49,8 +49,8 @@ class ListController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -59,10 +59,9 @@ class ListController extends Controller
         )
     ]
     public function __invoke(
-        User          $user,
+        User $user,
         BtcComService $btcComService
-    ): ResourceCollection
-    {
+    ): ResourceCollection {
         $this->authorize('viewAny', $user);
 
         $subCollection = $btcComService->transformSubCollection(subs: $user->subs()->get());

@@ -19,7 +19,6 @@ class Update
                 'status' => $workerData->status,
                 'unit' => $workerData->unit,
                 'pool_data' => $workerData->poolData,
-                'deleted_at' => null,
             ]);
     }
 }

@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Enums\Income\Type;
+use App\Exceptions\IncomeCreatingException;
 use App\Models\Sub;
-use Illuminate\Support\Facades\Log;
 use App\Services\Internal\IncomeService;
 use Illuminate\Console\Command;
-use App\Exceptions\IncomeCreatingException;
+use Illuminate\Support\Facades\Log;
 
 class IncomeCommand extends Command
 {
@@ -19,7 +19,6 @@ class IncomeCommand extends Command
 
     /**
      * Execute the console command.
-     *
      */
     public function handle(): void
     {

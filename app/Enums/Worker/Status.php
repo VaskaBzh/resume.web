@@ -1,19 +1,19 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Enums\Worker;
 
-enum Status
-{
-    case ACTIVE;
-    case INACTIVE;
-    case DEAD;
+use Illuminate\Support\Str;
 
-    public function status(): string
+enum Status: string
+{
+    case ACTIVE = 'ACTIVE';
+    case INACTIVE = 'INACTIVE';
+    case DEAD = 'DEAD';
+
+    public static function tryFromInsensitive(string $value): ?self
     {
-        return match ($this) {
-            Status::ACTIVE => 'ACTIVE',
-            Status::INACTIVE => 'INACTIVE',
-            Status::DEAD => 'DEAD',
-        };
+        return self::tryFrom(Str::upper($value));
     }
 }
