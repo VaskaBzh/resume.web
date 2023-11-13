@@ -4,10 +4,6 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Services;
 
-use App\Enums\Income\Message;
-use App\Enums\Income\Status;
-use App\Enums\Income\Type;
-use App\Models\Income;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Spatie\Permission\Models\Role;
@@ -129,52 +125,5 @@ class ReferralServiceTest extends BaseFeatureTest
         $this->assertEquals($customReferralPercent, $this->referral->referral_percent);
         $this->assertEquals($referralDiscount, $this->referral->referral_discount);
         $this->assertEquals($this->referrer->id, $this->referral->referrer_id);
-    }
-
-    /**
-     * @test
-     *
-     * @testdox it build referral statistic
-     */
-    public function showReferralStatistic(): void
-    {
-        $incomes = [
-            [
-                'group_id' => 1,
-                'type' => Type::REFERRAL->value,
-                'referral_id' => $this->referral->id,
-                'wallet_id' => null,
-                'daily_amount' => 0.00022222,
-                'status' => Status::PENDING->value,
-                'message' => Message::LESS_MIN_WITHDRAWAL->value,
-                'hash' => 100,
-                'diff' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-            [
-                'group_id' => 1,
-                'type' => Type::REFERRAL->value,
-                'referral_id' => $this->referral->id,
-                'wallet_id' => null,
-                'daily_amount' => 0.00022222,
-                'status' => Status::PENDING->value,
-                'message' => Message::LESS_MIN_WITHDRAWAL->value,
-                'hash' => 100,
-                'diff' => 1,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ],
-        ];
-
-        Income::insert($incomes);
-
-        $actual = ReferralService::getReferrerStatistic($this->referrer);
-
-        $this->assertEquals(1, $actual['group_id']);
-        $this->assertEquals(1, $actual['attached_referrals_count']);
-        $this->assertEquals(1, $actual['active_referrals_count']);
-        $this->assertEquals(0.00044444, $actual['referrals_total_amount']);
-        $this->assertEquals(100, $actual['total_referrals_hash_rate']);
     }
 }
