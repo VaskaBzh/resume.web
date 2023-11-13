@@ -124,11 +124,22 @@ export default {
     }
 }
 .slider {
-    height: 100%;
+    height: 977px;
     width: 100%;
     grid-column: 1/2;
+    overflow: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
     &__content {
         width: 100%;
+    }
+    @media (max-width: 768px) {
+        max-height: 500px;
+        height: unset;
     }
     @media(max-width: 500px){
         height: auto;
