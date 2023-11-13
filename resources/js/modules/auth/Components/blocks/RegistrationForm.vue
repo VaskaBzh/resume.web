@@ -1,5 +1,5 @@
 <template>
-    <form class="form-auth" @submit.prevent="service.account_create">
+    <form class="form-auth" @submit.prevent="service.account_create" autocomplete="off">
         <main-title class="form-auth_title"
             >{{ $t("auth.reg.title") }}
         </main-title>
@@ -20,7 +20,7 @@
                 :placeholder="$t('auth.reg.placeholders[1]')"
                 name="username"
                 type="text"
-                autocomplete="email"
+                autocomplete="off"
                 @changeInput="service.form.name = $event"
             />
             <div

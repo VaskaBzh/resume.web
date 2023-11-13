@@ -11,7 +11,7 @@
                 :placeholder="$t('auth.login.placeholders[0]')"
                 name="email"
                 type="email"
-                autocomplete="email"
+                autocomplete="username"
                 @changeInput="service.form.email = $event"
             />
             <div
