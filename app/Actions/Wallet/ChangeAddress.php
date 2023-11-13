@@ -12,7 +12,7 @@ class ChangeAddress
     {
         return $wallet->update([
             'wallet' => $address,
-            'wallet_updated_at' => now()
+            'wallet_updated_at' => now(),
         ]);
     }
 }

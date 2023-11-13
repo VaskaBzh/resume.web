@@ -4,19 +4,12 @@ declare(strict_types=1);
 
 namespace Feature\Auth;
 
-use App\Dto\UserData;
-use App\Models\Sub;
 use App\Models\User;
 use App\Notifications\VerifyEmailNotification;
-use App\Services\External\BtcComService;
 use App\Services\Internal\ReferralService;
 use Database\Seeders\RoleAndPermissionsSeeder;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Notification;
-use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class RegistrationTest extends TestCase
@@ -26,43 +19,44 @@ class RegistrationTest extends TestCase
      *
      * @dataProvider registrationValidDataProvider
      *
-     * @param string[] $signUpData
-     * @param string|int|bool[] $signUpResponseStructure
+     * @testdox register with valid data and send confirmation notification to user email
+     *
+     * @param  string[]  $credentials
+     * @param  string|int|bool[]  $expectedRegistrationResponse
      * @return void
      */
-    public function it_register_if_valid_data(
-        array $signUpData,
-        array $signUpResponseStructure,
+    public function successfulRegistration(
+        array $credentials,
+        array $expectedRegistrationResponse,
         array $btcComSubResponse,
-    )
-    {
+    ) {
         $mockedResponse = [
             'data' => $btcComSubResponse,
         ];
 
         Http::fake([
-           '*' => Http::response($mockedResponse)
+            '*' => Http::response($mockedResponse),
         ]);
 
         Notification::fake();
 
-        $this->postJson('/v1/register', $signUpData)
+        $this->postJson('/v1/register', $credentials)
             ->assertCreated()
-            ->assertJsonStructure($signUpResponseStructure);
+            ->assertJsonStructure($expectedRegistrationResponse);
 
         $this->assertDatabaseHas('users', [
-                'name' => $signUpData['name'],
-                'email' => $signUpData['email']
-            ]
+            'name' => $credentials['name'],
+            'email' => $credentials['email'],
+        ]
         );
 
-        $user = User::whereEmail($signUpData['email'])->first();
+        $user = User::whereEmail($credentials['email'])->first();
 
         $this->assertAuthenticatedAs($user);
         $this->assertDatabaseHas('subs', [
-                'sub' => $btcComSubResponse['group_name'],
-                'group_id' => $btcComSubResponse['gid']
-            ]
+            'sub' => $btcComSubResponse['group_name'],
+            'group_id' => $btcComSubResponse['gid'],
+        ]
         );
         Notification::assertSentTo(
             $user,
@@ -74,38 +68,40 @@ class RegistrationTest extends TestCase
      * @test
      *
      * @dataProvider referralRegistrationDataProvider
+     *
+     * @testdox registration with referral code
      */
-    public function it_register_with_referral_code(
-        $signUpData,
-        $signUpResponseStructure,
+    public function referralRegistration(
+        $credentials,
+        $expectedRegistrationResponse,
         $btcComSubResponse,
-    )
-    {
+    ) {
         $user = User::factory()->create();
         app(RoleAndPermissionsSeeder::class)->run();
 
         $code = app(ReferralService::class)->generateReferralCode($user);
+
         $user->update(['referral_code' => $code]);
         $mockedResponse = [
             'data' => $btcComSubResponse,
         ];
 
-        $signUpData['referral_code'] = $code;
+        $credentials['referral_code'] = $code;
 
         Http::fake([
-            '*' => Http::response($mockedResponse)
+            '*' => Http::response($mockedResponse),
         ]);
 
         Notification::fake();
 
-        $this->postJson('/v1/register', $signUpData)
+        $this->postJson('/v1/register', $credentials)
             ->assertCreated()
-            ->assertJsonStructure($signUpResponseStructure);
+            ->assertJsonStructure($expectedRegistrationResponse);
 
         $referral = $user->referrals()->first();
 
-        $this->assertDatabaseHas('users', ['name' => $signUpData['name'], 'email' => $signUpData['email']]);
-        $this->assertEquals($referral->email, $signUpData['email']);
+        $this->assertDatabaseHas('users', ['name' => $credentials['name'], 'email' => $credentials['email']]);
+        $this->assertEquals($referral->email, $credentials['email']);
         $this->assertEquals($referral->referral_discount, $user->referral_discount);
 
         Notification::assertSentTo(
@@ -114,17 +110,22 @@ class RegistrationTest extends TestCase
         );
     }
 
+    /**
+     * Pass data to tests
+     *
+     * @return array[]
+     */
     public function registrationValidDataProvider(): array
     {
         return [
-            [
-                'signUpData' => [
+            'Common registration' => [
+                'credentials' => [
                     'name' => 'MainTest',
                     'email' => 'forest@gmail.com',
                     'password' => 'Password12345&',
                     'password_confirmation' => 'Password12345&',
                 ],
-                'signUpResponseStructure' => [
+                'expectedRegistrationResponse' => [
                     'message',
                     'user' => [
                         'id',
@@ -135,32 +136,37 @@ class RegistrationTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_url',
-                        'has_referrer_role'
+                        'has_referrer_role',
                     ],
                     'token',
                 ],
                 'btcComSubCreatingResponse' => [
-                    "status" => true,
-                    "gid" => 6003147,
-                    "group_name" => "MainTest",
-                    "created_at" => 1698007819,
-                    "updated_at" => 1698007819
-                ]
-            ]
+                    'status' => true,
+                    'gid' => 6003147,
+                    'group_name' => 'MainTest',
+                    'created_at' => 1698007819,
+                    'updated_at' => 1698007819,
+                ],
+            ],
         ];
     }
 
+    /**
+     * Pass data to tests
+     *
+     * @return array[]
+     */
     public function referralRegistrationDataProvider(): array
     {
         return [
-            [
-                'signUpData' => [
+            'Referral registration' => [
+                'credentials' => [
                     'name' => 'MainTest2',
                     'email' => 'test@gmail.com',
                     'password' => 'Password12345&',
                     'password_confirmation' => 'Password12345&',
                 ],
-                'signUpResponseStructure' => [
+                'expectedRegistrationResponse' => [
                     'message',
                     'user' => [
                         'id',
@@ -171,18 +177,18 @@ class RegistrationTest extends TestCase
                         'sms',
                         '2fa',
                         'referral_url',
-                        'has_referrer_role'
+                        'has_referrer_role',
                     ],
                     'token',
                 ],
                 'btcComSubCreatingResponse' => [
-                    "status" => true,
-                    "gid" => 6003147,
-                    "group_name" => "MainTest2",
-                    "created_at" => 1698007819,
-                    "updated_at" => 1698007819
-                ]
-            ]
+                    'status' => true,
+                    'gid' => 6003147,
+                    'group_name' => 'MainTest2',
+                    'created_at' => 1698007819,
+                    'updated_at' => 1698007819,
+                ],
+            ],
         ];
     }
 }

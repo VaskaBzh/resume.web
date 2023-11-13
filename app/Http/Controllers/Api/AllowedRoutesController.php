@@ -7,9 +7,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\AllowedRouteResource;
 use App\Models\WatcherLink;
-use Illuminate\Http\JsonResponse;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 #[
     OA\Get(
@@ -39,7 +38,7 @@ use OpenApi\Attributes as OA;
                             ),
                         ],
                         type: 'object'
-                    )
+                    ),
                 ],
             ),
             new OA\Response(
@@ -50,12 +49,12 @@ use OpenApi\Attributes as OA;
                         type: 'object',
                         example: [
                             'errors' => [
-                                'property' => ['message']
-                            ]
+                                'property' => ['message'],
+                            ],
                         ]
                     ),
                 ],
-            )
+            ),
         ],
     )
 ]

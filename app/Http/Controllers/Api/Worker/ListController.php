@@ -4,13 +4,10 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Worker;
 
-use App\Enums\Worker\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkerResource;
 use App\Models\Sub;
-use App\Models\Worker;
 use App\Services\External\BtcComService;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 use OpenApi\Attributes as OA;
@@ -32,12 +29,12 @@ use Symfony\Component\HttpFoundation\Response;
             ),
             new OA\Parameter(
                 name: 'status',
-                description: "Filter workers by status (all, active, inactive)",
+                description: 'Filter workers by status (all, active, inactive)',
                 in: 'query',
                 required: false,
                 schema: new OA\Schema(
                     type: 'string',
-                    enum: ["active", "inactive"]
+                    enum: ['active', 'inactive']
                 )
             ),
         ],
@@ -49,7 +46,7 @@ use Symfony\Component\HttpFoundation\Response;
                     new OA\JsonContent(
                         type: 'array',
                         items: new OA\Items(ref: '#/components/schemas/WorkerResource')
-                    )
+                    ),
                 ],
             ),
             new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -61,8 +58,8 @@ use Symfony\Component\HttpFoundation\Response;
                         type: 'object',
                         example: [
                             'errors' => [
-                                'property' => ['message']
-                            ]
+                                'property' => ['message'],
+                            ],
                         ]
                     ),
                 ],

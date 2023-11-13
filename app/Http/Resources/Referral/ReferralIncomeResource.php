@@ -11,10 +11,10 @@ class ReferralIncomeResource extends JsonResource
     public function toArray($request): array
     {
         return [
-            "email" => $this->email,
-            "daily_amount" => $this->daily_amount,
-            "hash" => $this->hash,
-            "created_at" => $this->created_at,
+            'email' => $this->email,
+            'daily_amount' => $this->daily_amount,
+            'hash' => $this->hash,
+            'created_at' => $this->created_at,
         ];
     }
 }

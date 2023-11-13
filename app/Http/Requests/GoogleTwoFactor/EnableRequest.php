@@ -12,7 +12,7 @@ class EnableRequest extends FormRequest
     {
         return [
             'code' => 'required|string|digits:6',
-            'secret' => 'required|string'
+            'secret' => 'required|string',
         ];
     }
 

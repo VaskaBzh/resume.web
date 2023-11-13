@@ -28,7 +28,7 @@ class Wallet extends Model
     ];
 
     protected $casts = [
-        'wallet_updated_at' => 'date'
+        'wallet_updated_at' => 'date',
     ];
 
     public function getRouteKeyName(): string
@@ -66,7 +66,7 @@ class Wallet extends Model
     public function totalPayout(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->payouts()->sum('payout')
+            get: fn () => $this->payouts()->sum('payout')
         );
     }
 

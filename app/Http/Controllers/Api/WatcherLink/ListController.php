@@ -12,7 +12,6 @@ use Illuminate\Http\Resources\Json\ResourceCollection;
 use OpenApi\Attributes as OA;
 use Symfony\Component\HttpFoundation\Response;
 
-
 #[
     OA\Get(
         path: '/watchers/{user}/{sub}',
@@ -45,7 +44,7 @@ use Symfony\Component\HttpFoundation\Response;
                         items: new OA\Items(
                             ref: '#/components/schemas/WatcherLinkResource'
                         )
-                    )
+                    ),
                 ],
             ),
             new OA\Response(response: Response::HTTP_UNAUTHORIZED, description: 'Unauthorized'),
@@ -57,12 +56,12 @@ use Symfony\Component\HttpFoundation\Response;
                         type: 'object',
                         example: [
                             'errors' => [
-                                'property' => ['message']
-                            ]
+                                'property' => ['message'],
+                            ],
                         ]
                     ),
                 ],
-            )
+            ),
         ],
     )
 ]

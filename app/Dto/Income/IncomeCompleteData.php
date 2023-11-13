@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace App\Dto\Income;
 
-readonly final class IncomeCompleteData
+final readonly class IncomeCompleteData
 {
     public function __construct(
         public string $status,
         public string $message
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): IncomeCompleteData

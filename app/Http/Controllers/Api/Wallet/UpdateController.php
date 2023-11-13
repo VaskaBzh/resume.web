@@ -10,9 +10,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Wallet\UpdateRequest;
 use App\Models\Wallet;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
-
+use Symfony\Component\HttpFoundation\Response;
 
 class UpdateController extends Controller
 {
@@ -31,7 +30,7 @@ class UpdateController extends Controller
                             'group_id',
                             'confirmation_code',
                         ],
-                        properties: array(
+                        properties: [
                             new OA\Property(
                                 property: 'group_id',
                                 type: 'string',
@@ -41,7 +40,7 @@ class UpdateController extends Controller
                                 type: 'string',
                                 minLength: 3,
                             ),
-                        ),
+                        ],
                         type: 'object',
                     ),
                 ],
@@ -82,8 +81,8 @@ class UpdateController extends Controller
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],

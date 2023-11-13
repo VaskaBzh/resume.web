@@ -6,13 +6,12 @@ namespace App\Dto;
 
 use App\Models\User;
 
-readonly final class ReferralData
+final readonly class ReferralData
 {
     public function __construct(
         public User $user,
         public string $code,
-    )
-    {
+    ) {
     }
 
     public static function fromRequest(array $requestData): ReferralData

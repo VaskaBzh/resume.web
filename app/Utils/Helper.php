@@ -5,10 +5,6 @@ declare(strict_types=1);
 namespace App\Utils;
 
 use App\Models\MinerStat;
-use App\Models\User;
-use App\Services\External\BtcComService;
-use Illuminate\Support\Facades\Crypt;
-use Illuminate\Support\Str;
 
 class Helper
 {
@@ -21,7 +17,7 @@ class Helper
      * $this->>network_difficulty - сложность сети биткоина
      * $this->>fpps_rate - F(доход от транзакционных комиссий) + PPS (вознаграждение за блок)
      */
-    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee): float
+    public static function calculateEarn(MinerStat $stats, float $hashRate, float $fee = 0): float
     {
         if ($hashRate <= 0) {
             return 0;

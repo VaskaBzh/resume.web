@@ -16,11 +16,11 @@ return new class extends Migration
         Schema::create('subs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->unsignedBigInteger("group_id")->unique();
-            $table->string("sub");
+            $table->unsignedBigInteger('group_id')->unique();
+            $table->string('sub');
             $table->bigInteger('payments')->nullable();
             $table->bigInteger('unPayments')->nullable();
-            $table->bigInteger('accruals')->nullable();;
+            $table->bigInteger('accruals')->nullable();
             $table->timestamps();
 
             $table->foreign('user_id')

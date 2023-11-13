@@ -6,7 +6,6 @@ namespace Database\Factories;
 
 use App\Models\Worker;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Carbon;
 
 class WorkerFactory extends Factory
 {
@@ -15,7 +14,7 @@ class WorkerFactory extends Factory
     public function definition(): array
     {
         return [
-            'worker_id' => $this->faker->randomNumber(),
+            'worker_id' => $this->faker->randomNumber(5),
         ];
     }
 }

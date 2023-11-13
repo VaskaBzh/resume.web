@@ -8,8 +8,8 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
-use Symfony\Component\HttpFoundation\Response;
 use OpenApi\Attributes as OA;
+use Symfony\Component\HttpFoundation\Response;
 
 trait Tokenable
 {
@@ -36,7 +36,7 @@ trait Tokenable
                     schema: new OA\Schema(
                         type: 'string'
                     )
-                )
+                ),
             ],
             responses: [
                 new OA\Response(
@@ -49,7 +49,7 @@ trait Tokenable
                             schema: new OA\Schema(
                                 type: 'string'
                             )
-                        )
+                        ),
                     ]
                 ),
                 new OA\Response(
@@ -60,8 +60,8 @@ trait Tokenable
                             type: 'object',
                             example: [
                                 'errors' => [
-                                    'property' => ['message']
-                                ]
+                                    'property' => ['message'],
+                                ],
                             ]
                         ),
                     ],
@@ -73,17 +73,17 @@ trait Tokenable
     {
         $user = User::find($id);
 
-        if (!$this->checkIfTokenExpired($user->email)) {
+        if (! $this->checkIfTokenExpired($user->email)) {
             return new JsonResponse([
                 'errors' => [
-                    'auth' => ['token not exists or expired']
-                ]
+                    'auth' => ['token not exists or expired'],
+                ],
             ], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         $this->deleteToken($user);
 
-        return redirect('/' . '?action=password&user_id=' . $user->id . '&hash=' . $hash);
+        return redirect('/'.'?action=password&user_id='.$user->id.'&hash='.$hash);
     }
 
     public function checkIfTokenExpired(string $email): bool
@@ -92,7 +92,7 @@ trait Tokenable
             ->where('email', $email)
             ->first();
 
-        if (!$token) {
+        if (! $token) {
             return false;
         }
 

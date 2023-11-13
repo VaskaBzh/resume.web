@@ -21,16 +21,30 @@ class TwoFacTest extends TestCase
         Sanctum::actingAs($this->user);
     }
 
-    public function test_generate_2fa_qrCode_and_secret_key()
+    /**
+     * @test
+     *
+     * @testdox generate 2fa qr code and secret key
+     *
+     * @return void
+     */
+    public function generateTwoFaQrCode()
     {
         $this->getJson(route('v1.2fa.qrcode', $this->user))
             ->assertOk()
             ->assertJsonStructure([
-                'qrCode', 'secret'
+                'qrCode', 'secret',
             ]);
     }
 
-    public function test_2fa_enable()
+    /**
+     * @test
+     *
+     * @testdox Enabling 2fa
+     *
+     * @return void
+     */
+    public function TwoFaEnabling()
     {
         $googleAuth = app(Google2FA::class);
         $secretKey = $googleAuth->generateSecretKey();
@@ -45,7 +59,14 @@ class TwoFacTest extends TestCase
         $this->assertDatabaseHas('users', ['id' => $this->user->id, 'google2fa_secret' => $secretKey]);
     }
 
-    public function test_2fa_disable()
+    /**
+     * @test
+     *
+     * @testdox 2fa disabling
+     *
+     * @return void
+     */
+    public function twoFaDisabling()
     {
         $googleAuth = app(Google2FA::class);
         $secretKey = $googleAuth->generateSecretKey();
@@ -53,7 +74,7 @@ class TwoFacTest extends TestCase
         $this->user->update(['google2fa_secret' => $secretKey]);
         $this
             ->actingAs($this->user)->putJson(route('v1.2fa.disable', $this->user), [
-                'code' => $googleAuth->getCurrentOtp($secretKey)
+                'code' => $googleAuth->getCurrentOtp($secretKey),
             ])
             ->assertOk()
             ->assertJson([

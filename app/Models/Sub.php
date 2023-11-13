@@ -10,7 +10,6 @@ use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Sub extends Model
@@ -18,6 +17,7 @@ class Sub extends Model
     use HasFactory;
 
     protected $primaryKey = 'group_id';
+
     public $incrementing = false;
 
     protected $fillable = [
@@ -95,21 +95,14 @@ class Sub extends Model
     public function totalPayout(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this->payouts()->sum('payout')
-        );
-    }
-
-    public function totalAmount(): Attribute
-    {
-        return Attribute::make(
-            get: fn() => $this->incomes()->sum('daily_amount')
+            get: fn () => $this->payouts()->sum('payout')
         );
     }
 
     public function totalHashRate(): Attribute
     {
         return Attribute::make(
-            get: fn() => $this
+            get: fn () => $this
                 ->workers()
                 ->onlyActive()
                 ->sum('approximate_hash_rate')
@@ -119,7 +112,7 @@ class Sub extends Model
     public function yesterdayAmount(): Attribute
     {
         return Attribute::make(
-            get: fn() => Income::getYesterDayIncome($this->group_id)
+            get: fn () => Income::getYesterDayIncome($this->group_id)
                 ->latest()
                 ->first()
                 ?->daily_amount
@@ -128,10 +121,6 @@ class Sub extends Model
 
     /**
      * Прогноз дохода на сегодня
-     *
-     * @param float $hashPerDay
-     * @param float $fee
-     * @return string
      */
     public function todayForecast(float $hashPerDay, float $fee): string
     {

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace App\Console\Commands;
 
 use App\Actions\Hashes\DeleteOldHashrates;
-use App\Models\Hash;
 use App\Models\Sub;
 use App\Services\External\BtcComService;
 use Illuminate\Console\Command;
@@ -21,12 +20,10 @@ class MakeHashesCommand extends Command
     /**
      * Записывать данные хеша
      * старые (период два месяца) удалять
-     *
      */
     public function handle(
         BtcComService $btcComService
-    ): void
-    {
+    ): void {
         $btcSubList = $btcComService->filterUngrouped();
         $progress = $this->output->createProgressBar($btcSubList->count());
 
@@ -37,7 +34,7 @@ class MakeHashesCommand extends Command
             if (filled($btcSub)) {
                 $localSub = Sub::find($btcSub['gid']);
 
-                if (!is_null($localSub) && $btcSub['workers_active'] > 0) {
+                if (! is_null($localSub) && $btcSub['workers_active'] > 0) {
 
                     $progress->advance();
 
@@ -52,7 +49,7 @@ class MakeHashesCommand extends Command
                             'group_id' => $localSub->group_id,
                             'hash' => Arr::get($btcSub, 'shares_1m', 0),
                             'unit' => Arr::get($btcSub, 'shares_unit', 'T'),
-                            'worker_count' => Arr::get($btcSub, 'workers_active', 0)
+                            'worker_count' => Arr::get($btcSub, 'workers_active', 0),
                         ]);
                 }
             }
@@ -60,6 +57,6 @@ class MakeHashesCommand extends Command
 
         $progress->finish();
 
-        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE: ' . $progress->getProgress());
+        Log::channel('commands')->info('SUB HASHRATE IMPORT COMPLETE: '.$progress->getProgress());
     }
 }

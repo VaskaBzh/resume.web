@@ -25,5 +25,5 @@ return [
         'username' => env('WALLET_USERNAME'),
         'password' => env('WALLET_PASSWORD'),
         'walletpassphrase' => env('WALLET_PASSPHRASE'),
-    ]
+    ],
 ];

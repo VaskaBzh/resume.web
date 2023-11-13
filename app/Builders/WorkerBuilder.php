@@ -30,7 +30,7 @@ class WorkerBuilder extends BaseBuilder
     }
 
     public function byStatus(?string $status): HasMany|Builder
-    {dd($this->model->pluck('group_id'));
-       return $status ? $this->model->where('status', $status) : $this->model;
+    {
+        return $status ? $this->model->where('status', $status) : $this->model;
     }
 }
