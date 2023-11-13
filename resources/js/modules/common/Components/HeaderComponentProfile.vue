@@ -351,12 +351,12 @@ export default defineComponent({
 }
 
 .header-content {
-  padding: 0 24px;
+  padding: 0 clamp(12px, 2vw, 24px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  z-index: 100;
+  z-index: 99;
 }
 
 .header-select-container {

@@ -12,6 +12,7 @@
             ref="input"
             class="input"
             :readonly="!editable"
+            :autocomplete="autocomplete"
         />
     </div>
 </template>
@@ -24,6 +25,7 @@ export default {
         inputLabel: String,
         inputValue: String,
         error: String,
+        autocomplete: String,
         editable: {
             type: Boolean,
             default: true,

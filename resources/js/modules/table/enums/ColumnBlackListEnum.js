@@ -14,4 +14,6 @@ export const ColumnBlackListEnum = {
     workers_count_active: true,
     workers_count_in_active: true,
     workers_count_unstable: true,
+    last_month_amount: true,
+    total_amount: true
 }

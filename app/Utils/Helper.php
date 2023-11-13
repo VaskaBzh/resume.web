@@ -25,13 +25,31 @@ class Helper
 
         $secondsPerDay = 86400;
 
-        $earnTime = ($stats->network_difficulty * pow(2, 32))
-            / (($hashRate * pow(10, 12)) * $secondsPerDay);
+        /*
+         * Target difficulty
+         */
+        $targetDifficulty = $stats->network_difficulty * pow(2, 32);
 
+        $teraHashesPerSeconds = $hashRate * pow(10, 12);
+
+        /**
+         * Block earning time based on current hash rate, seconds per day and target
+         */
+        $earnTime = $targetDifficulty / ($teraHashesPerSeconds * $secondsPerDay);
+
+        /**
+         * User total earn based on block reward and calculating earning time
+         */
         $total = $stats->reward_block / $earnTime;
 
+        /**
+         * User total earn plus ffps
+         */
         $totalWithFpps = $total + ($total * ($stats->fpps_rate / 100));
 
+        /**
+         * User total with ffps minus tax percent
+         */
         return $totalWithFpps - ($totalWithFpps * ($fee / 100));
     }
 }

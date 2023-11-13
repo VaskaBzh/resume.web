@@ -17,16 +17,16 @@ export class PopupControllService {
     }
 
     closePopup() {
-        this.isPopupClosed.setTemporaryState(false);
+        this.isPopupClosed.setTemporaryState(true);
 
         return this;
     }
 
-    popupOpenedState() {
+    getOpenedState() {
         return this.isPopupOpened.state;
     }
 
-    popupClosedState() {
+    getClosedState() {
         return this.isPopupClosed.state;
     }
 }

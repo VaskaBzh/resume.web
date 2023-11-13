@@ -9,26 +9,19 @@
                 :error="errorsExpired.email"
                 :model="service.form.email"
                 :placeholder="$t('auth.reg.placeholders[0]')"
-                :name="'email'"
-                :type="'email'"
-                @change="
-                    service.form.email = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
+                name="email"
+                type="email"
+                autocomplete="username"
+                @changeInput="service.form.email = $event"
             />
             <auth-input
                 :error="errorsExpired.name"
                 :model="service.form.name"
                 :placeholder="$t('auth.reg.placeholders[1]')"
-                :name="'name'"
-                :type="'text'"
-                @change="
-                    service.form.name = !!$event.target
-                        ? $event.target.value
-                        : $event
-                "
-
+                name="username"
+                type="text"
+                autocomplete="off"
+                @changeInput="service.form.name = $event"
             />
             <div
                 class="form-auth_row password_row"
@@ -39,11 +32,8 @@
                     :placeholder="$t('auth.reg.placeholders[2]')"
                     :model="service.form.password"
                     :errors="errorsExpired"
-                    @change="
-                        service.validateProcess(
-                            !!$event.target ? $event.target.value : $event
-                        )
-                    "
+                    autocomplete="current-password"
+                    @changeInput="service.validateProcess($event)"
                 />
             </div>
             <main-validate :validate="service.validate" />
@@ -55,11 +45,8 @@
                     name="password_confirmation"
                     :placeholder="$t('auth.reg.placeholders[3]')"
                     :model="service.form.password_confirmation"
-                    @change="
-                        service.form.password_confirmation = !!$event.target
-                            ? $event.target.value
-                            : $event
-                    "
+                    autocomplete="new-password"
+                    @changeInput="service.form.password_confirmation = $event"
                 />
             </div>
         </div>
@@ -142,9 +129,7 @@ export default {
             service: new RegistrationService(this.$router, this.$route),
         };
     },
-
     mounted() {
-        console.log(this.service)
         this.service.setForm();
     },
 

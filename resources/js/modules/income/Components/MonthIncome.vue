@@ -59,7 +59,8 @@ export default {
 }
 .month-income-card {
     display: flex;
-    height: 300px;
+    height: 100%;
+    justify-content: space-between;
     padding: 16px 24px 24px 24px;
     flex-direction: column;
     align-items: flex-start;
@@ -72,12 +73,6 @@ export default {
 
 }
 
-@media (max-width: 1400px) {
-    .month-income-card {
-        height: auto;
-    }
-
-}
 .income-card {
     display: flex;
     flex-direction: column;

@@ -13,6 +13,6 @@ class DeleteOldWorkerHashrates
         WorkerHashrate::oldestThan(
             workerId: $workerId,
             date: now()->subMonths(2)->toDateTimeString()
-        )?->delete();
+        )->delete();
     }
 }

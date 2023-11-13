@@ -106,8 +106,6 @@ class ReferralService
 
     /**
      * Encode sub-account group_id to string
-     *
-     * @param  User  $user
      */
     public static function generateReferralCode(User $referrer): string
     {

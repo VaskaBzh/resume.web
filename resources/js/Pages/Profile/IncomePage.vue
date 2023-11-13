@@ -312,9 +312,6 @@ export default {
     @media (max-width: 1271.98px) {
         transition: all 0.3s ease 0s;
     }
-    @media (max-width: 998px) {
-        padding: 24px 12px 24px;
-    }
 
     &__slider {
         height: fit-content;

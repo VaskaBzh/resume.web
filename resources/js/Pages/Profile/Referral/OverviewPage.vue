@@ -268,19 +268,6 @@ export default {
         }
     }
 
-    &_code {
-        @media (max-width: $pc) {
-            max-width: 394px;
-        }
-        @media (max-width: $tablet) {
-            min-width: 394px;
-        }
-        @media (max-width: $mobile) {
-            max-width: 100%;
-            min-width: 0;
-        }
-    }
-
     &__row {
         display: flex;
         align-items: center;

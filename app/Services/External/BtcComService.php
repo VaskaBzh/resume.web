@@ -239,16 +239,15 @@ class BtcComService
      */
     public function updateLocalWorkers(): void
     {
-        $groupedWorkerIDs = $this->transformRemoteGroupedWorkers(
-            btcComWorkers: $this->getWorkerList()
-        )->each(static fn (WorkerData $workerData) => Update::execute(workerData: $workerData))
-            ->pluck('worker_id')
-            ->toArray();
+        $onlineWorkers = $this->getWorkerList();
+        $deadWorkers = $this->getWorkerList(0, 'dead');
 
-        Worker::whereNotIn(
-            column: 'worker_id',
-            values: $groupedWorkerIDs
-        )->delete();
+        $this->transformRemoteGroupedWorkers(
+            btcComWorkers: collect([...$deadWorkers, ...$onlineWorkers])
+        )->each(static function (WorkerData $workerData) {
+
+            Update::execute(workerData: $workerData);
+        });
 
         Log::channel('commands')->info('WORKERS UPDATE COMPLETE');
     }
@@ -351,7 +350,7 @@ class BtcComService
             'workers_count_unstable' => $btcComSub['workers_dead'],
             'hash_per_min' => $btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay,
-            'today_forecast' => $sub->todayForecast($hashPerDay, self::FEE),
+            'today_forecast' => $sub->todayForecast($hashPerDay, self::FEE + $sub->allbtc_fee),
             'reject_percent' => $btcComSub['reject_percent'],
             'unit' => $btcComSub['shares_unit'],
             'total_payout' => $sub->total_payout,

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers\Api\Worker;
 
+use App\Enums\Worker\Status;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\WorkerResource;
 use App\Models\Sub;
@@ -69,12 +70,16 @@ use Symfony\Component\HttpFoundation\Response;
 ]
 class ListController extends Controller
 {
-    public function __invoke(Request $request, Sub $sub, BtcComService $btcComService): AnonymousResourceCollection
-    {
-        $workers = $request->status
-            ? $sub->workers()->where('status', $request->status)
-            : $sub->workers();
+    public function __invoke(
+        Request $request,
+        Sub $sub,
+        BtcComService $btcComService
+    ): AnonymousResourceCollection {
 
-        return WorkerResource::collection($workers->get());
+        return WorkerResource::collection(
+            resource: $sub->workers()
+                ->byStatus(Status::tryFromInsensitive($request->status)?->value)
+                ->paginate()
+        );
     }
 }
