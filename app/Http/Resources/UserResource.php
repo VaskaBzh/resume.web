@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Models\User;
+use App\ValueObjects\HashRate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
@@ -42,16 +43,20 @@ class UserResource extends JsonResource
 {
     public function toArray($request): array
     {
+        $hashRate = HashRate::from($this->total_hash_rate);
+
         return [
             'id' => $this->id,
             'name' => $this->name,
             'email' => $this->email,
             'email_verified_at' => $this->hasVerifiedEmail(),
             'phone' => $this->phone,
-            'sms' => (bool) $this->sms,
+            'sms' => $this->sms,
             '2fa' => ! is_null($this->google2fa_secret),
             'referral_url' => route('v1.register', 'referral_code='.$this->referral_code),
             'has_referrer_role' => $this->hasRole('referrer'),
+            'total_hash_rate' => $hashRate->value,
+            'unit' => $hashRate->unit,
         ];
     }
 }

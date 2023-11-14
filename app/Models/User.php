@@ -112,6 +112,15 @@ class User extends Authenticatable implements MustVerifyEmail
         );
     }
 
+    public function totalHashRate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->subs->sum(function (Sub $sub) {
+                return $sub->total_hash_rate;
+            })
+        );
+    }
+
     public function referralPercentage(): Attribute
     {
         return Attribute::make(

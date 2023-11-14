@@ -1,7 +1,5 @@
 <?php
 
-/** @noinspection PhpArgumentWithoutNamedIdentifierInspection */
-
 declare(strict_types=1);
 
 namespace Tests\Feature\Referrals;
@@ -63,7 +61,6 @@ class ReferralTest extends BaseFeatureTest
         $this->getJson(route('v1.referral.list', $this->referrer))
             ->assertExactJson(['errors' => ['messages' => ['This action is unauthorized.']]])
             ->assertStatus(Response::HTTP_FORBIDDEN);
-
     }
 
     /**
