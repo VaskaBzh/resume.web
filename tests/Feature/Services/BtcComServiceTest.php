@@ -14,9 +14,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class BtcComServiceTest extends BaseFeatureTest
+class BtcComServiceTest extends TestCase
 {
     public User $user;
 
@@ -62,8 +62,7 @@ class BtcComServiceTest extends BaseFeatureTest
             'user_id' => $this->user->id,
             'group_id' => $btcComSubResponse['gid'],
             'sub' => $btcComSubResponse['group_name'],
-        ]
-        );
+        ]);
     }
 
     /**
@@ -347,7 +346,8 @@ class BtcComServiceTest extends BaseFeatureTest
                         'hash_per_day' => 0.0,
                         'today_forecast' => '0.00000000',
                         'reject_percent' => 0.0,
-                        'unit' => 'T',
+                        'hash_per_day_unit' => 'G',
+                        'hash_per_min_unit' => 'T',
                         'total_payout' => 0,
                         'yesterday_amount' => 0.0,
                         'last_month_amount' => 0.0,
@@ -365,7 +365,8 @@ class BtcComServiceTest extends BaseFeatureTest
                         'hash_per_day' => 0.0,
                         'today_forecast' => '0.00000000',
                         'reject_percent' => 0.0,
-                        'unit' => 'T',
+                        'hash_per_day_unit' => 'G',
+                        'hash_per_min_unit' => 'T',
                         'total_payout' => 0,
                         'yesterday_amount' => 0.0,
                         'last_month_amount' => 0.0,

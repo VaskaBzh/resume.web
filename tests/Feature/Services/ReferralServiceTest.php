@@ -7,9 +7,9 @@ namespace Tests\Feature\Services;
 use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Spatie\Permission\Models\Role;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class ReferralServiceTest extends BaseFeatureTest
+class ReferralServiceTest extends TestCase
 {
     public User $referrer;
 

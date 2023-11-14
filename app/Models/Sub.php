@@ -28,7 +28,6 @@ class Sub extends Model
         'pending_amount',
         'total_amount',
         'allbtc_fee',
-        'is_active',
         'custom_percent_expired_at',
         'created_at',
         'updated_at',
@@ -36,7 +35,6 @@ class Sub extends Model
 
     protected $casts = [
         'total_amount' => 'float',
-        'is_active' => 'bool',
     ];
 
     public function getRouteKeyName(): string
