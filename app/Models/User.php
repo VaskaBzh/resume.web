@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use App\Actions\User\DeleteConfirmationCode;
@@ -28,6 +30,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'referrer_id',
         'referral_percent',
         'referral_discount',
+        'active_sub',
         'password',
         'referral_code',
         'phone',
@@ -54,6 +57,8 @@ class User extends Authenticatable implements MustVerifyEmail
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'referral_discount' => 'float',
+        'referral_percent' => 'float',
     ];
 
     /* Relations */
@@ -109,6 +114,15 @@ class User extends Authenticatable implements MustVerifyEmail
 
                 return $confirmationCode;
             }
+        );
+    }
+
+    public function totalHashRate(): Attribute
+    {
+        return Attribute::make(
+            get: fn () => $this->subs->sum(function (Sub $sub) {
+                return $sub->total_hash_rate;
+            })
         );
     }
 

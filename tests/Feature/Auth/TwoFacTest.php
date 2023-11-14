@@ -17,7 +17,7 @@ class TwoFacTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        $this->user = User::first();
         Sanctum::actingAs($this->user);
     }
 

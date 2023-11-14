@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Services\Internal;
 
-use App\Actions\User\GenerateReferralCode;
-use App\Dto\ReferralData;
 use App\Models\Income;
 use App\Models\Sub;
 use App\Models\User;
@@ -13,32 +11,6 @@ use Illuminate\Support\Collection;
 
 class ReferralService
 {
-    /**
-     * Сгенерируем на основе group_id строковый код
-     * Сохраним его связанному пользователю
-     *
-     * @return string $code
-     *
-     * @throws \Exception
-     */
-    public static function generateCode(User $referrer): string
-    {
-        try {
-            $code = static::generateReferralCode(referrer: $referrer);
-
-            GenerateReferralCode::execute(
-                referralData: ReferralData::fromRequest([
-                    'user' => $referrer,
-                    'code' => $code,
-                ])
-            );
-
-            return $code;
-        } catch (\Exception) {
-            throw new \Exception('Something went wrong..');
-        }
-    }
-
     public static function getReferrerStatistic(User $referrer): array
     {
         $referrer->load([
@@ -50,9 +22,7 @@ class ReferralService
         $activeReferralSubs = Sub::getActive($referrer->referrals->pluck('id'))->get();
 
         return [
-            'group_id' => $referrer->active()
-                ->first()
-                ?->group_id,
+            'group_id' => $referrer->active_sub,
             'attached_referrals_count' => $referrer->referrals
                 ->count(),
             'active_referrals_count' => $activeReferralSubs
@@ -89,8 +59,7 @@ class ReferralService
                     ->where('status', 'INACTIVE')
                     ->count(),
                 'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
-                'total_amount' => Income::getReferralIncomes($referralSubs->pluck('group_id'))
-                    ->sum('daily_amount'),
+                'total_amount' => $referralSubs->sum('total_amount'),
                 'referral_percent' => $referral->referral_percentage,
             ];
         });

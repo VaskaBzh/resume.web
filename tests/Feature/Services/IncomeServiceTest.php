@@ -8,27 +8,24 @@ use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;
 use App\Exceptions\IncomeCreatingException;
-use App\Models\Income;
-use App\Models\MinerStat;
 use App\Models\Sub;
-use App\Models\User;
-use App\Models\Worker;
 use App\Services\External\BtcComService;
 use App\Services\Internal\IncomeService;
 use App\Utils\Helper;
-use Illuminate\Database\Eloquent\Factories\Sequence;
+use Illuminate\Database\Eloquent\Collection;
 use Tests\TestCase;
 
 class IncomeServiceTest extends TestCase
 {
-    public MinerStat $stat;
+    public Collection $subsWithHashRate;
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->stat = MinerStat::factory()->create();
-        $this->seedSequence();
+        $this->subsWithHashRate = Sub::hasWorkerHashRate()
+            ->with(['user', 'user.referrer'])
+            ->get();
     }
 
     /**
@@ -59,9 +56,9 @@ class IncomeServiceTest extends TestCase
      */
     public function miningIncomeCase(): void
     {
-        $subsCollection = Sub::hasWorkerHashRate()->get();
-
-        $subWithHashRate = $subsCollection->where('group_id', 1)->first();
+        $subWithHashRate = $this->subsWithHashRate
+            ->where('group_id', 1)
+            ->first();
 
         $service = resolve(IncomeService::class)->init($subWithHashRate, null);
 
@@ -115,9 +112,10 @@ class IncomeServiceTest extends TestCase
      */
     public function updatedSubAmountsCase()
     {
-        $subsCollection = Sub::hasWorkerHashRate()->get();
+        $subWithHashRate = $this->subsWithHashRate
+            ->where('group_id', 1)
+            ->first();
 
-        $subWithHashRate = $subsCollection->where('group_id', 1)->first();
         $subWithHashRate->update(['pending_amount' => 1, 'total_amount' => 1]);
         $subWithHashRate->save();
 
@@ -153,16 +151,18 @@ class IncomeServiceTest extends TestCase
      */
     public function referralIncomeCommonCase()
     {
-        $subsCollection = Sub::hasWorkerHashRate()->with(['user', 'user.referrer'])->get();
 
-        $referralSub = $subsCollection->where('group_id', 3)->first();
-
-        $referrerActiveSub = $referralSub->user
-            ->referrer
-            ->active()
+        $referralSub = $this->subsWithHashRate
+            ->where('group_id', 3)
             ->first();
 
-        $this->assertTrue($referrerActiveSub->is_active);
+        $referrer = $referralSub->user->referrer;
+
+        $referrerActiveSub = $referrer
+            ->activeSub()
+            ->first();
+
+        $this->assertEquals($referrerActiveSub->group_id, $referrer->active_sub);
 
         $service = resolve(IncomeService::class)->init($referralSub, $referralSub);
 
@@ -196,9 +196,7 @@ class IncomeServiceTest extends TestCase
      */
     public function referralDiscountCase()
     {
-        $subsCollection = Sub::hasWorkerHashRate()->get();
-
-        $referralSub = $subsCollection->where('group_id', 3)->first();
+        $referralSub = $this->subsWithHashRate->where('group_id', 3)->first();
         $referralSub->user->update(['referral_discount' => 1]);
 
         $service = resolve(IncomeService::class)->init($referralSub, null);
@@ -258,133 +256,5 @@ class IncomeServiceTest extends TestCase
             hashRate: $hashRate,
             fee: $fee
         );
-    }
-
-    public function seedSequence(): void
-    {
-        User::factory()
-            ->count(3)
-            ->sequence(
-                [
-                    'id' => 1,
-                    'name' => 'Referrer',
-                    'email' => 'first@gmail.com',
-                    'password' => '123',
-                    'referral_percent' => 1,
-                    'referral_discount' => 0,
-                ],
-                [
-                    'id' => 2,
-                    'name' => 'Referral',
-                    'email' => 'second@gmail.com',
-                    'password' => '123',
-                    'referrer_id' => 1,
-                    'referral_percent' => 1,
-                    'referral_discount' => 0,
-                ],
-                [
-                    'id' => 3,
-                    'name' => 'CommonSub',
-                    'email' => 'third@gmail.com',
-                    'password' => '123',
-                    'referral_percent' => 0,
-                    'referral_discount' => 0,
-                ]
-            )->afterCreating(function ($user) {
-                match ($user->name) {
-                    'Referrer' => Sub::factory()
-                        ->count(2)
-                        ->state(new Sequence(
-                            [
-                                'group_id' => 1,
-                                'sub' => $user->name,
-                                'allbtc_fee' => 3.5,
-                                'pending_amount' => 0,
-                                'is_active' => true,
-                                'total_amount' => 0,
-                                'user_id' => $user->id,
-                            ],
-                            [
-                                'group_id' => 2,
-                                'sub' => 'Referrer2',
-                                'allbtc_fee' => 3.5,
-                                'is_active' => false,
-                                'pending_amount' => 0,
-                                'total_amount' => 0,
-                                'user_id' => $user->id,
-                            ]
-                        ))->create(),
-                    'Referral' => Sub::factory()
-                        ->count(2)
-                        ->state(new Sequence(
-                            [
-                                'group_id' => 3,
-                                'sub' => $user->name,
-                                'allbtc_fee' => 3.5,
-                                'is_active' => true,
-                                'pending_amount' => 0,
-                                'total_amount' => 0,
-                                'user_id' => $user->id,
-                            ],
-                            [
-                                'group_id' => 4,
-                                'sub' => 'Referral2',
-                                'allbtc_fee' => 3.5,
-                                'is_active' => false,
-                                'pending_amount' => 0,
-                                'total_amount' => 0,
-                                'user_id' => $user->id,
-                            ],
-                        ))->create(),
-                    'CommonSub' => Sub::factory()->create(
-                        [
-                            'group_id' => 5,
-                            'sub' => $user->name,
-                            'allbtc_fee' => 3.5,
-                            'pending_amount' => 0,
-                            'is_active' => true,
-                            'total_amount' => 0,
-                            'user_id' => $user->id,
-                        ]
-                    ),
-                    default => throw new \Exception('Wrong sub'),
-                };
-            })
-            ->create();
-
-        Worker::factory()
-            ->count(6)
-            ->sequence(
-                [
-                    'status' => 'INACTIVE',
-                    'approximate_hash_rate' => 100,
-                    'group_id' => 1,
-                ],
-                [
-                    'status' => 'ACTIVE',
-                    'approximate_hash_rate' => 100,
-                    'group_id' => 1,
-                ],
-                [
-                    'status' => 'INACTIVE',
-                    'approximate_hash_rate' => 100,
-                    'group_id' => 2,
-                ],
-                [
-                    'status' => 'ACTIVE',
-                    'approximate_hash_rate' => 100,
-                    'group_id' => 3,
-                ],
-                [
-                    'status' => 'INACTIVE',
-                    'approximate_hash_rate' => 100,
-                    'group_id' => 3,
-                ],
-                [
-                    'status' => 'ACTIVE',
-                    'approximate_hash_rate' => 100,
-                    'group_id' => 5,
-                ]
-            )->create();
     }
 }

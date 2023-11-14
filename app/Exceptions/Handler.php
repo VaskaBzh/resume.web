@@ -10,6 +10,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\ValidationException;
 use Spatie\Permission\Exceptions\UnauthorizedException;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Throwable;
@@ -72,6 +73,12 @@ class Handler extends ExceptionHandler
                 return new JsonResponse([
                     'errors' => ['messages' => [$e->getMessage()]],
                 ], Response::HTTP_UNAUTHORIZED);
+            }
+
+            if ($e instanceof AccessDeniedHttpException) {
+                return new JsonResponse([
+                    'errors' => ['messages' => [$e->getMessage()]],
+                ], Response::HTTP_FORBIDDEN);
             }
         });
     }

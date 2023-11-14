@@ -7,7 +7,6 @@ namespace Tests\Feature\Services;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
 use App\Exceptions\BusinessException;
-use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Services\External\BtcComService;
@@ -19,16 +18,12 @@ use Tests\TestCase;
 
 class BtcComServiceTest extends TestCase
 {
-    private readonly User $user;
-
-    // TODO: Rename test cased and add @testdox tags
+    public User $user;
 
     protected function setUp(): void
     {
         parent::setUp();
-
-        $this->user = User::factory()->create();
-        MinerStat::factory()->create();
+        $this->user = User::first();
     }
 
     /**
@@ -67,8 +62,7 @@ class BtcComServiceTest extends TestCase
             'user_id' => $this->user->id,
             'group_id' => $btcComSubResponse['gid'],
             'sub' => $btcComSubResponse['group_name'],
-        ]
-        );
+        ]);
     }
 
     /**
@@ -352,7 +346,8 @@ class BtcComServiceTest extends TestCase
                         'hash_per_day' => 0.0,
                         'today_forecast' => '0.00000000',
                         'reject_percent' => 0.0,
-                        'unit' => 'T',
+                        'hash_per_day_unit' => 'G',
+                        'hash_per_min_unit' => 'T',
                         'total_payout' => 0,
                         'yesterday_amount' => 0.0,
                         'last_month_amount' => 0.0,
@@ -370,7 +365,8 @@ class BtcComServiceTest extends TestCase
                         'hash_per_day' => 0.0,
                         'today_forecast' => '0.00000000',
                         'reject_percent' => 0.0,
-                        'unit' => 'T',
+                        'hash_per_day_unit' => 'G',
+                        'hash_per_min_unit' => 'T',
                         'total_payout' => 0,
                         'yesterday_amount' => 0.0,
                         'last_month_amount' => 0.0,

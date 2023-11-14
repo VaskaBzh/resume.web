@@ -13,6 +13,7 @@ use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
 use Tests\TestCase;
 
+
 class LoginTest extends TestCase
 {
     public User $user;
@@ -21,7 +22,7 @@ class LoginTest extends TestCase
     {
         parent::setUp();
 
-        $this->user = User::factory()->create();
+        $this->user = User::first();
     }
 
     /**
@@ -53,7 +54,6 @@ class LoginTest extends TestCase
     ) {
 
         $this->user->markEmailAsVerified();
-
         $this->assertFalse(Auth::check());
 
         $response = $this->postJson('/v1/login', $credentials)
@@ -165,7 +165,7 @@ class LoginTest extends TestCase
         return [
             'Basic auth' => [
                 'credentials' => [
-                    'email' => 'forest@gmail.com',
+                    'email' => 'first@gmail.com',
                     'password' => '123',
                 ],
                 'expectLoginResponse' => [
@@ -195,7 +195,7 @@ class LoginTest extends TestCase
         return [
             'Google auth' => [
                 'credentials' => [
-                    'email' => 'forest@gmail.com',
+                    'email' => 'first@gmail.com',
                     'password' => '123',
                 ],
                 'expectedErrors' => [
