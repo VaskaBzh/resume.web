@@ -156,12 +156,13 @@ class IncomeServiceTest extends BaseFeatureTest
             ->where('group_id', 3)
             ->first();
 
-        $referrerActiveSub = $referralSub->user
-            ->referrer
+        $referrer = $referralSub->user->referrer;
+
+        $referrerActiveSub = $referrer
             ->active()
             ->first();
 
-        $this->assertTrue($referrerActiveSub->is_active);
+        $this->assertEquals($referrerActiveSub->group_id, $referrer->active_sub);
 
         $service = resolve(IncomeService::class)->init($referralSub, $referralSub);
 

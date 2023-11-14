@@ -18,13 +18,13 @@ return new class extends Migration
             $table->unsignedDecimal('referral_discount')
                 ->after('referral_percent')
                 ->nullable();
+            $table->unsignedBigInteger('active_sub')
+                ->after('referral_discount')
+                ->nullable();
         });
 
         Schema::table('subs', function (Blueprint $table) {
             $table->renameColumn('percent', 'allbtc_fee');
-            $table->boolean('is_active')
-                ->after('percent')
-                ->default(true);
 
         });
 
@@ -41,10 +41,10 @@ return new class extends Migration
             $table->dropColumn('referrer_id');
             $table->dropColumn('referral_discount');
             $table->dropColumn('referral_percent');
+            $table->dropColumn('active_sub');
         });
         Schema::table('subs', function (Blueprint $table) {
             $table->renameColumn('allbtc_fee', 'percent');
-            $table->dropColumn('is_active');
         });
 
         Schema::create('referrals', function (Blueprint $table) {
