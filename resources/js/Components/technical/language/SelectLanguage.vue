@@ -88,6 +88,7 @@ export default {
         },
         toggle() {
             this.opened = !this.opened;
+            return this.opened
         },
         async setLanguage() {
             if (localStorage.getItem("location")) {
@@ -108,6 +109,7 @@ export default {
         }
     },
     mounted() {
+        console.log(this.active.value)
         this.setLanguage();
     },
 };

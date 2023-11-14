@@ -3,13 +3,13 @@
         <transition name="shadow">
             <div
                 class="shadow_container"
-                v-show="open && viewportWidth <= 767.98"
+                v-show="opened && viewportWidth <= 767.98"
             ></div>
         </transition>
     </teleport>
     <teleport to="body" :disabled="viewportWidth >= 767.98">
         <transition name="options">
-            <div class="menu" :class="className" v-show="open">
+            <div class="menu" :class="className" v-show="opened">
                 <button
                     @mousedown="
                         option.class === 'remove'
