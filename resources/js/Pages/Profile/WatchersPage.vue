@@ -49,6 +49,7 @@
                     :have-nav="false"
                     :have-preloader="false"
                     :meta="service.meta"
+                    class="watcher_slider"
                 >
                     <watchers-list
                         :blocks="service.table.get('rows')"
@@ -290,6 +291,28 @@ export default {
     gap: 12px;
     grid-template-columns: repeat(2, 1fr);
     position: relative;
+}
+
+.watcher_slider {
+    height: 977px;
+    width: 100%;
+    grid-column: 1/2;
+    overflow: hidden;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+@media (max-width: 768px) {
+   .watcher_slider {
+       max-height: 500px;
+       height: unset;
+   }
+}
+@media(max-width: 500px) {
+   .watcher_slider {
+       height: auto;
+   }
 }
 
 @media (max-width: 700px) {
