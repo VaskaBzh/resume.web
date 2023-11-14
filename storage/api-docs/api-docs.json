@@ -1776,10 +1776,27 @@
                         "schema": {
                             "type": "string",
                             "enum": [
-                                "all",
                                 "active",
                                 "inactive"
                             ]
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Page number",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Items per page (default: 15)",
+                        "required": false,
+                        "schema": {
+                            "type": "integer"
                         }
                     }
                 ],
