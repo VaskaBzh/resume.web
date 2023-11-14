@@ -59,23 +59,6 @@ export default {
                 (el) => el.value === this.$i18n.locale
             )[0];
         },
-        activeImg() {
-            if (this.active) {
-                return new URL(
-                    `/resources/assets/img/${this.active.img}`,
-                    import.meta.url
-                );
-            }
-        },
-        imgs() {
-            let arr = [];
-            this.options.forEach((el) =>
-                arr.push(
-                    new URL(`/resources/assets/img/${el.img}`, import.meta.url)
-                )
-            );
-            return arr;
-        },
     },
     methods: {
         async changeActive(lang) {
@@ -88,10 +71,9 @@ export default {
             this.opened = !this.opened;
         },
         closeSelect(event) {
-                if (this.$refs.selectLanguage && !this.$refs.selectLanguage.contains(event.target)) {
-                    this.opened = false;
-                }
-
+            if (this.$refs.selectLanguage && !this.$refs.selectLanguage.contains(event.target)) {
+                this.opened = false;
+            }
         },
         async setLanguage() {
             if (localStorage.getItem("location")) {
