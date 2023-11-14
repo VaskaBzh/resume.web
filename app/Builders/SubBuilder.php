@@ -47,11 +47,6 @@ class SubBuilder extends BaseBuilder
             ->where('custom_percent_expired_at', '<=', now());
     }
 
-    public function main(): Builder
-    {
-        return $this->where('is_active', true);
-    }
-
     public function lastMonthIncomes(): HasMany
     {
         return $this->model->incomes()->where('created_at', '>=', now()->subMonth());

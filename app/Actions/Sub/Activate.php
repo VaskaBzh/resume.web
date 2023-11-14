@@ -10,9 +10,6 @@ class Activate
 {
     public static function execute(Sub $sub): void
     {
-        Sub::where('user_id', $sub->user_id)
-            ->whereNot('group_id', $sub->group_id)
-            ->update(['is_active' => false]);
-        $sub->update(['is_active' => true]);
+        $sub->user()->update(['active_sub' => $sub->group_id]);
     }
 }

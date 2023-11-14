@@ -43,8 +43,6 @@ class UserResource extends JsonResource
 {
     public function toArray($request): array
     {
-        $hashRate = HashRate::from($this->total_hash_rate);
-
         return [
             'id' => $this->id,
             'name' => $this->name,
@@ -55,8 +53,6 @@ class UserResource extends JsonResource
             '2fa' => ! is_null($this->google2fa_secret),
             'referral_url' => route('v1.register', 'referral_code='.$this->referral_code),
             'has_referrer_role' => $this->hasRole('referrer'),
-            'total_hash_rate' => $hashRate->value,
-            'unit' => $hashRate->unit,
         ];
     }
 }
