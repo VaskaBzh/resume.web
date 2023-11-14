@@ -301,7 +301,11 @@ export default {
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
+    &::-webkit-scrollbar {
+        display: none;
+    }
 }
+
 
 @media (max-width: 768px) {
    .watcher_slider {
