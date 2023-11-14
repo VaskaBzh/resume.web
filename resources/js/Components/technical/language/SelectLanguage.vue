@@ -38,14 +38,7 @@ export default {
     data() {
         return {
             opened: false,
-        };
-    },
-    components: {
-        MainMenu,
-    },
-    computed: {
-        options() {
-            return [
+            options: [
                 {
                     img: "ru.svg",
                     value: "ru",
@@ -54,29 +47,17 @@ export default {
                     img: "en.svg",
                     value: "en",
                 },
-            ];
-        },
+            ],
+        };
+    },
+    components: {
+        MainMenu,
+    },
+    computed: {
         active() {
             return this.options.filter(
                 (el) => el.value === this.$i18n.locale
             )[0];
-        },
-        activeImg() {
-            if (this.active) {
-                return new URL(
-                    `/resources/assets/img/${this.active.img}`,
-                    import.meta.url
-                );
-            }
-        },
-        imgs() {
-            let arr = [];
-            this.options.forEach((el) =>
-                arr.push(
-                    new URL(`/resources/assets/img/${el.img}`, import.meta.url)
-                )
-            );
-            return arr;
         },
     },
     methods: {
@@ -88,18 +69,10 @@ export default {
         },
         toggle() {
             this.opened = !this.opened;
-            return this.opened
         },
         async setLanguage() {
             if (localStorage.getItem("location")) {
                 this.$i18n.locale = localStorage.getItem("location");
-                // await axios.post(
-                //     "/v1/set_location",
-                //     {
-                //         location: this.$i18n.locale,
-                //     },
-                //     {}
-                // );
             }
         },
     },
@@ -109,7 +82,6 @@ export default {
         }
     },
     mounted() {
-        console.log(this.active.value)
         this.setLanguage();
     },
 };
