@@ -2,36 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Database\Seeders;
 
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
-use Database\Seeders\RoleAndPermissionsSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Database\Seeder;
 
-class BaseFeatureTest extends TestCase
+class TestingSeeder extends Seeder
 {
-    use RefreshDatabase;
-
-    /**
-     * Mining global params
-     */
-    public MinerStat $stat;
-
-    /**
-     * Prepare test db state
-     * Create Users, Subs, Workers
-     */
-    protected function setUp(): void
+    public function run(): void
     {
-        parent::setUp();
+        if (config('app.env') !== 'testing') {
+            exit('Not testing environment');
+        }
 
-        $this->seed(RoleAndPermissionsSeeder::class);
-        $this->stat = MinerStat::factory()->create();
+        MinerStat::factory()
+            ->create();
+
         User::factory()
             ->count(3)
             ->sequence(

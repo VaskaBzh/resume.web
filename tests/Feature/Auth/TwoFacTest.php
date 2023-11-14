@@ -7,9 +7,9 @@ namespace Tests\Feature\Auth;
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
 use PragmaRX\Google2FALaravel\Google2FA;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class TwoFacTest extends BaseFeatureTest
+class TwoFacTest extends TestCase
 {
     public User $user;
 
