@@ -39,7 +39,7 @@
             </div>
             <div
                 v-if="!service.waitSubs && !service.emptySubs"
-                class="subs__wrapper"
+                class="subs__wrapper_two"
             >
                 <sub-header
                     class="subs__header"
@@ -262,9 +262,21 @@ export default {
     gap: 24px;
 }
 
+.subs__wrapper_two {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
 @media (max-width: 767.98px) {
     .subs__wrapper {
         gap: 16px;
+    }
+
+    .subs__wrapper_two {
+        gap: 12px;
     }
 }
 </style>
