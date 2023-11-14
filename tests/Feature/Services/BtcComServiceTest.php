@@ -14,9 +14,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class BtcComServiceTest extends BaseFeatureTest
+class BtcComServiceTest extends TestCase
 {
     public User $user;
 

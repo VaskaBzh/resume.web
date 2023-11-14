@@ -6,9 +6,9 @@ namespace Tests\Feature\Auth;
 
 use App\Models\User;
 use Laravel\Sanctum\Sanctum;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class LogoutTest extends BaseFeatureTest
+class LogoutTest extends TestCase
 {
     /**
      * @test
