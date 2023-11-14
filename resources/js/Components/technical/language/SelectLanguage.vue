@@ -55,9 +55,6 @@ export default {
     },
     computed: {
         active() {
-            console.log(this.options.filter(
-                (el) => el.value === this.$i18n.locale
-            )[0])
             return this.options.filter(
                 (el) => el.value === this.$i18n.locale
             )[0];
@@ -99,13 +96,6 @@ export default {
         async setLanguage() {
             if (localStorage.getItem("location")) {
                 this.$i18n.locale = localStorage.getItem("location");
-                // await axios.post(
-                //     "/v1/set_location",
-                //     {
-                //         location: this.$i18n.locale,
-                //     },
-                //     {}
-                // );
             }
         },
     },
