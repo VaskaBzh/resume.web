@@ -11,7 +11,6 @@
 <script>
 import { SubsCustomFunctions } from "@/modules/table/functionsMap/SubsCustomFunctions";
 import { ColumnService } from "@/modules/table/services/ColumnService";
-import loginForm from "../../../auth/Components/blocks/LoginForm.vue";
 
 export default {
     name: "row-column",

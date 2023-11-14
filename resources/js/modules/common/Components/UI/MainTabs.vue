@@ -29,9 +29,6 @@ export default {
     i18n: {
         sharedMessages: ReferralsMessage,
     },
-    mounted() {
-        console.log(this.tabs)
-    }
 };
 </script>
 
