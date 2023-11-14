@@ -20,10 +20,6 @@ export class InstructionService {
 
     nextStep(step = 1) {
         this.step = this.step + step;
-
-        if (this.step > this.steps_count.length) {
-            this.dropVisible();
-        }
     }
 
     prevStep() {
@@ -32,14 +28,12 @@ export class InstructionService {
 
     setVisible() {
         this.isVisible = true;
-        document.querySelector(".page-container").style.overflow = "visible";
 
         return this;
     }
 
     dropVisible() {
         this.isVisible = false;
-        document.querySelector(".page-container").style.overflowY = "scroll";
 
         return this;
     }

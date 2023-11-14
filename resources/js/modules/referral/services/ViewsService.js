@@ -11,6 +11,8 @@ export class ViewsService {
     }
 
     setTabs() {
+        this.tabs = [];
+
         this.tabs = [
             ...this.tabs,
             new TabData(this.translate("tabs[0]"), ["referral", "overview"]),

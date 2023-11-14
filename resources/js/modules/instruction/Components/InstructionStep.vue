@@ -123,13 +123,6 @@ export default {
             top: 50%;
             transform: translateY(-50%);
             left: calc(100% + 12px);
-
-            @media (max-width: 1780.98px) {
-                top: auto;
-                bottom: calc(100% + 12px);
-                transform: translateX(-50%);
-                left: 50%;
-            }
         }
 
         &-top {
@@ -142,13 +135,6 @@ export default {
             top: 50%;
             transform: translateY(-50%);
             right: calc(100% + 12px);
-
-            @media (max-width: 1780.98px) {
-                top: auto;
-                bottom: calc(100% + 12px);
-                transform: translateX(-50%);
-                left: 50%;
-            }
         }
 
         &-bottom {

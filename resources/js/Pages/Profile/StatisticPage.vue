@@ -154,6 +154,8 @@ export default {
         "$i18n.locale"() {
             document.title = this.$t("header.links.statistic");
 
+            this.lineChartService.setButtons();
+
             // this.lineChartService.setTranslate(this.$t);
             // this.barChartService.setTranslate(this.$t);
         },

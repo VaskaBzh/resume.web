@@ -46,6 +46,7 @@ export default {
             this.viewService.setView(newRoute);
         },
         "$i18n.locale"() {
+            this.viewService.setTabs()
             document.title = this.$t("header.links.referral");
         },
 

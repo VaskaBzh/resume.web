@@ -3,7 +3,7 @@
         <button
             class="cabinet_button referal-btns"
             v-for="(tab, i) in tabs"
-            :key="i"
+            :key="tab.title"
             :class="{
                 active:
                     (tab.value?.length
@@ -12,22 +12,18 @@
             }"
             @click="$emit('getValue', tab.value)"
         >
-            {{ this.$t(`tabs[${i}]`) }}
+            {{ tab.title }}
         </button>
     </div>
 </template>
 
 <script>
-import {ReferralsMessage} from "../../../referral/lang/ReferralsMessage";
 
 export default {
     name: "main-tabs",
     props: {
         tabs: Array,
         active: Number,
-    },
-    i18n: {
-        sharedMessages: ReferralsMessage,
     },
 };
 </script>
