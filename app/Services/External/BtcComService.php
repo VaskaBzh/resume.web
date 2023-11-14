@@ -14,6 +14,7 @@ use App\Exceptions\BusinessException;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
+use App\ValueObjects\HashRate;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -338,7 +339,7 @@ class BtcComService
      */
     private static function transform(Sub $sub, array $btcComSub): array
     {
-        $hashPerDay = $sub->total_hash_rate;
+        $hashPerDay = HashRate::from($sub->total_hash_rate);
 
         return [
             'sub' => $sub->sub,
@@ -349,10 +350,10 @@ class BtcComService
             'workers_count_in_active' => $btcComSub['workers_inactive'],
             'workers_count_unstable' => $btcComSub['workers_dead'],
             'hash_per_min' => $btcComSub['shares_1m'],
-            'hash_per_day' => $hashPerDay,
-            'today_forecast' => $sub->todayForecast($hashPerDay, self::FEE + $sub->allbtc_fee),
+            'hash_per_day' => $hashPerDay->value,
+            'today_forecast' => $sub->todayForecast($hashPerDay->value, self::FEE + $sub->allbtc_fee),
             'reject_percent' => $btcComSub['reject_percent'],
-            'unit' => $btcComSub['shares_unit'],
+            'unit' => $hashPerDay->unit,
             'total_payout' => $sub->total_payout,
             'yesterday_amount' => $sub->yesterday_amount,
             'last_month_amount' => $sub->lastMonthIncomes()->sum('daily_amount'),

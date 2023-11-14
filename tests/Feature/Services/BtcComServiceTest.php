@@ -62,8 +62,7 @@ class BtcComServiceTest extends BaseFeatureTest
             'user_id' => $this->user->id,
             'group_id' => $btcComSubResponse['gid'],
             'sub' => $btcComSubResponse['group_name'],
-        ]
-        );
+        ]);
     }
 
     /**
