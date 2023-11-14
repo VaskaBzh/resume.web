@@ -90,6 +90,14 @@ export default {
             border-color: var(--text-focus, #2E90FA);
             z-index: 1001;
             position: relative;
+
+            @media (max-height: 1000px) {
+                border-color: transparent;
+            }
+
+            @media (max-width: 1279.98px) {
+                border-color: transparent;
+            }
         }
     }
 
@@ -115,6 +123,13 @@ export default {
             top: 50%;
             transform: translateY(-50%);
             left: calc(100% + 12px);
+
+            @media (max-width: 1780.98px) {
+                top: auto;
+                bottom: calc(100% + 12px);
+                transform: translateX(-50%);
+                left: 50%;
+            }
         }
 
         &-top {
@@ -127,6 +142,13 @@ export default {
             top: 50%;
             transform: translateY(-50%);
             right: calc(100% + 12px);
+
+            @media (max-width: 1780.98px) {
+                top: auto;
+                bottom: calc(100% + 12px);
+                transform: translateX(-50%);
+                left: 50%;
+            }
         }
 
         &-bottom {

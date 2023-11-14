@@ -47,7 +47,7 @@
                     class="statistic__card-first"
                     :title="$t('statistic.info_blocks.hash.titles[0]')"
                     :value="Number(getAccount.hash_per_min).toFixed(2)"
-                    unit="TH/s"
+                    :unit="`${getAccount.unit ?? 'T'}H/s`"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
