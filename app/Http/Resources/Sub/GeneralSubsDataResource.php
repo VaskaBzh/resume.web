@@ -35,7 +35,7 @@ class GeneralSubsDataResource extends JsonResource
                 ->where('status', 'ACTIVE')
                 ->count(),
             'total_inactive_workers' => $workers
-                ->where('status', 'ACTIVE')
+                ->where('status', 'INACTIVE')
                 ->count(),
         ];
     }
