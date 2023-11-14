@@ -294,7 +294,7 @@ export default {
 }
 
 .watcher_slider {
-    height: 977px;
+    height: 680px;
     width: 100%;
     grid-column: 1/2;
     overflow: hidden;
