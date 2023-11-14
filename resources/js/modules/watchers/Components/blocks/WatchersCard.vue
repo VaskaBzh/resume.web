@@ -245,7 +245,7 @@ export default {
     border-radius: 24px;
     background: var(--background-island);
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
-    min-height: 680px;
+    max-height: 680px;
     padding: 32px;
     display: flex;
     flex-direction: column;
