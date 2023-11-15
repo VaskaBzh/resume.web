@@ -5,13 +5,13 @@
 
             <div
                 class="subs__cards"
-                v-if="!!user.general_subs_data"
+                v-if="!!overall.total_hash_per_day"
             >
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="user.general_subs_data.total_hash_rate"
-                    :unit="`${user.general_subs_data.total_hash_rate_unit}H/s`"
+                    :value="overall.total_hash_per_day"
+                    :unit="`${overall.per_day_unit}H/s`"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
@@ -20,8 +20,8 @@
                 <cabinet-card
                     class="subs__card-second"
                     :title="$t('info_blocks.hash.titles[1]')"
-                    :value="user.general_subs_data.total_hash_rate"
-                    :unit="`${user.general_subs_data.total_hash_rate_unit}H/s`"
+                    :value="overall.total_hash_per_day"
+                    :unit="`${overall.per_day_unit}H/s`"
                 >
                     <template #svg>
                         <day-hashrate-icon />
@@ -30,12 +30,12 @@
                 <cabinet-card
                     class="card-active subs__card-third"
                     :title="$t('info_blocks.workers.types[0]')"
-                    :value="user.general_subs_data.total_active_workers"
+                    :value="overall.total_active_workers"
                 />
                 <cabinet-card
                     class="card-in-active subs__card-fourth"
                     :title="$t('info_blocks.workers.types[2]')"
-                    :value="user.general_subs_data.total_inactive_workers"
+                    :value="overall.total_inactive_workers"
                 />
             </div>
             <div
@@ -120,7 +120,7 @@ export default {
             "btcInfo",
             "getActive",
             "getAccount",
-            "user",
+            "overall",
         ]),
     },
     mounted() {
