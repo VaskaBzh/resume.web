@@ -33,7 +33,7 @@ class ReferralService
                 ->sum('daily_amount'),
             'total_referrals_hash_rate' => $activeReferralSubs
                 ->map
-                ->total_hash_rate
+                ->hash_rate
                 ->sum(),
         ];
     }
@@ -58,7 +58,7 @@ class ReferralService
                 'referral_inactive_workers_count' => $referralWorkers
                     ->where('status', 'INACTIVE')
                     ->count(),
-                'referral_hash_per_day' => $referralSubs->map->total_hash_rate->sum(),
+                'referral_hash_per_day' => $referralSubs->map->hash_rate->sum(),
                 'total_amount' => $referralSubs->sum('total_amount'),
                 'referral_percent' => $referral->referral_percentage,
             ];

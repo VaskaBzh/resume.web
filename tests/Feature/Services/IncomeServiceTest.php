@@ -66,7 +66,7 @@ class IncomeServiceTest extends TestCase
         $service->updateLocalSub($subWithHashRate, Type::MINING);
         $service->createFinance();
 
-        $hashrate = $subWithHashRate->total_hash_rate;
+        $hashrate = $subWithHashRate->hash_rate;
 
         $getPureDailyEarning = $this->calculate($hashrate);
         $expectDailyAmount = $this->calculate($hashrate, BtcComService::FEE + 3.5);
@@ -119,7 +119,7 @@ class IncomeServiceTest extends TestCase
         $subWithHashRate->update(['pending_amount' => 1, 'total_amount' => 1]);
         $subWithHashRate->save();
 
-        $expectDailyAmount = $this->calculate($subWithHashRate->total_hash_rate, BtcComService::FEE + 3.5);
+        $expectDailyAmount = $this->calculate($subWithHashRate->hash_rate, BtcComService::FEE + 3.5);
 
         $service = resolve(IncomeService::class)->init($subWithHashRate, null);
 
@@ -169,7 +169,7 @@ class IncomeServiceTest extends TestCase
         $service->createIncome($referrerActiveSub, Type::REFERRAL);
         $service->updateLocalSub($referrerActiveSub, Type::REFERRAL);
 
-        $hashrate = $referralSub->total_hash_rate;
+        $hashrate = $referralSub->hash_rate;
 
         $expectReferrerDailyAmount = number_format(
             $this->calculate($hashrate) * ($referralSub->user->referral_percent / 100),
@@ -201,7 +201,7 @@ class IncomeServiceTest extends TestCase
 
         $service = resolve(IncomeService::class)->init($referralSub, null);
 
-        $hashrate = $referralSub->total_hash_rate;
+        $hashrate = $referralSub->hash_rate;
 
         $subDiscountedFee = $referralSub->allbtc_fee - $referralSub->user->referral_discount;
         $resultFee = BtcComService::FEE + $subDiscountedFee;

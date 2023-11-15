@@ -134,7 +134,7 @@ final class IncomeService
      */
     private function setHashRate(): bool
     {
-        $this->params['hash'] = $this->sub->total_hash_rate;
+        $this->params['hash'] = $this->sub->hash_rate;
 
         return $this->params['hash'] > 0;
     }

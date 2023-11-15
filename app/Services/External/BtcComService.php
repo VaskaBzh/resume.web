@@ -124,11 +124,10 @@ class BtcComService
      * Create local sub-account based on remote sub-account group_id
      */
     public function createLocalSub(
-        User   $user,
+        User $user,
         string $subName,
-        bool   $isActive = true
-    ): void
-    {
+        bool $isActive = true
+    ): void {
         $remoteSub = $this->createRemoteSub(subName: $subName);
 
         Create::execute(
@@ -147,10 +146,9 @@ class BtcComService
      * @throws \Exception
      */
     public function getWorkerList(
-        ?int    $groupId = 0,
+        ?int $groupId = 0,
         ?string $workerStatus = 'all'
-    ): Collection
-    {
+    ): Collection {
         $response = $this->call(
             segments: ['worker'],
             params: [
@@ -178,7 +176,7 @@ class BtcComService
             params: [
                 'puid' => self::PU_ID,
                 'group_id' => $groupId,
-                'worker_id' => (string)$workerId,
+                'worker_id' => (string) $workerId,
             ]);
     }
 
@@ -235,7 +233,7 @@ class BtcComService
     {
         return $this
             ->getGroupList()
-            ->filter(static fn(array $groups, int $index) => $index > 1);
+            ->filter(static fn (array $groups, int $index) => $index > 1);
     }
 
     /**
@@ -271,7 +269,7 @@ class BtcComService
             WorkerCreate::execute($firstWorkerData['worker_data'])
                 ->workerHashrates()
                 ->create([
-                    'hash' => (int)$firstWorkerData['worker_hash_rate']->hash,
+                    'hash' => (int) $firstWorkerData['worker_hash_rate']->hash,
                     'unit' => $firstWorkerData['worker_hash_rate']->unit,
                 ]);
 
@@ -309,9 +307,8 @@ class BtcComService
      */
     public function transformRemoteUngroupedWorkers(
         EloquentCollection $subs,
-        Collection         $btcComWorkers
-    ): Collection
-    {
+        Collection $btcComWorkers
+    ): Collection {
         return $btcComWorkers->map(static function (array $btcComWorker) use ($subs) {
 
             $subName = head(explode('.', $btcComWorker['worker_name'] ?? ''));
@@ -343,7 +340,7 @@ class BtcComService
      */
     private static function transform(Sub $sub, array $btcComSub): array
     {
-        $hashPerDay = HashRate::from($sub->total_hash_rate);
+        $hashPerDay = $sub->converted_hash_rate;
         $workers = $sub->workers;
 
         return [
@@ -360,9 +357,9 @@ class BtcComService
             'workers_count_unstable' => $workers
                 ->where('status', 'DEAD')
                 ->count(),
-            'hash_per_min' => (float)$btcComSub['shares_1m'],
+            'hash_per_min' => (float) $btcComSub['shares_1m'],
             'hash_per_day' => $hashPerDay->value,
-            'today_forecast' => $sub->todayForecast($hashPerDay->value, self::FEE + $sub->allbtc_fee),
+            'today_forecast' => $sub->todayForecast($sub->hash_rate, self::FEE + $sub->allbtc_fee),
             'reject_percent' => $btcComSub['reject_percent'],
             'hash_per_day_unit' => $hashPerDay->unit,
             'hash_per_min_unit' => $btcComSub['shares_unit'],
