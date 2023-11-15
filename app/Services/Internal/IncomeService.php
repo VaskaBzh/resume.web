@@ -9,7 +9,7 @@ use App\Actions\Income\Create as IncomeCreate;
 use App\Actions\Sub\Update;
 use App\Dto\FinanceData;
 use App\Dto\Income\IncomeCreateData;
-use App\Dto\SubData;
+use App\Dto\Sub\SubData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Enums\Income\Type;

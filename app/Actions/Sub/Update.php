@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Actions\Sub;
 
-use App\Dto\SubData;
+use App\Dto\Sub\SubData;
 use App\Models\Sub;
 
 class Update

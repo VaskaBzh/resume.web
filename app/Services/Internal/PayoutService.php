@@ -7,7 +7,7 @@ namespace App\Services\Internal;
 use App\Actions\Income\Complete;
 use App\Actions\Sub\Update;
 use App\Dto\Income\IncomeCompleteData;
-use App\Dto\SubData;
+use App\Dto\Sub\SubData;
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
 use App\Events\PayoutCompleteEvent;

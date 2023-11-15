@@ -7,15 +7,12 @@ namespace App\Services\External;
 use App\Actions\Sub\Create;
 use App\Actions\Worker\Create as WorkerCreate;
 use App\Actions\Worker\Update;
-use App\Dto\SubData;
+use App\Dto\Sub\SubData;
 use App\Dto\WorkerData;
 use App\Dto\WorkerHashRateData;
-use App\Enums\Worker\Status;
 use App\Exceptions\BusinessException;
 use App\Models\Sub;
 use App\Models\User;
-use App\Models\Worker;
-use App\ValueObjects\HashRate;
 use Illuminate\Database\Eloquent\Collection as EloquentCollection;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Http;
@@ -39,14 +36,13 @@ class BtcComService
     /**
      * Call btc.com
      *
-     * @return mixed
      *
      * @throws \Exception
      */
     public function call(array $segments, string $method = 'get', array $params = []): array
     {
         $client = Http::baseUrl(
-            url: config('api.btc.uri')
+            url: config('api.btc.url')
         )->withHeaders(
             headers: ['Authorization' => config('api.btc.token')]
         );
