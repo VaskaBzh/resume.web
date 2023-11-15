@@ -90,6 +90,14 @@ export default {
             border-color: var(--text-focus, #2E90FA);
             z-index: 1001;
             position: relative;
+
+            @media (max-height: 1000px) {
+                border-color: transparent;
+            }
+
+            @media (max-width: 1279.98px) {
+                border-color: transparent;
+            }
         }
     }
 

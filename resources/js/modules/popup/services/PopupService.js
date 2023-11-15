@@ -31,7 +31,7 @@ export class PopupService {
     }
 
     setBodyHidden() {
-        if (this.pageContainer && store.getters("viewportWidth") >= 998) {
+        if (this.pageContainer && store.getters.viewportWidth >= 998) {
             this.pageContainer.style.overflowY = "hidden";
         }
     }

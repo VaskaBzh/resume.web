@@ -41,6 +41,7 @@ export const ReferralsMessage = {
             "Workers",
             "Hashrate/24h",
         ],
+
     },
     ru: {
         title: "Рефаральный кабинет",

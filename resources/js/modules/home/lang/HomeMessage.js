@@ -52,7 +52,7 @@ export const HomeMessage = {
             ],
             text: "Allows you to evaluate and predict possible approximate income for a certain period. Actual earnings may vary slightly. ",
             form_calculator: {
-                title: "Calculator Light",
+                title: "Profitability Calculator",
                 placeholder: ["Total hashrate", "Commission"],
                 tooltip: [
                     "Average hashrate of all devices",
@@ -213,7 +213,7 @@ export const HomeMessage = {
             ],
             text: "Позволяет оценить и спрогнозировать возможный приблизительный доход за определенный период. Фактические доходы могут незначительно отличаться. ",
             form_calculator: {
-                title: "Калькулятор Light",
+                title: "Калькулятор Доходности",
                 placeholder: ["Общий хешрейт", "Комиссия"],
                 tooltip: [
                     "Средний хешрейт всех устройств",

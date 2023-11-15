@@ -55,6 +55,8 @@ export default {
     methods: {
         change(event) {
             this.isOpenBurger = event;
+
+            document.body.style.overflowY = !!event ? "hidden" : "scroll";
         },
     },
     computed: {
