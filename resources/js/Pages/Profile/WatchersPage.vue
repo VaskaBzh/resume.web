@@ -330,6 +330,7 @@ export default {
 @media(max-width: 500px) {
    .watcher_slider {
        height: auto;
+       max-height: none;
    }
 }
 
