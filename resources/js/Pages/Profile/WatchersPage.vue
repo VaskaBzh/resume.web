@@ -14,7 +14,10 @@
                     >{{ $t("text") }}
                 </main-description>
             </div>
-            <main-button class="button-md button-white button-stroke" data-popup="#addWatcher">
+            <main-button
+                class="button-md button-white button-stroke"
+                data-popup="#addWatcher"
+            >
                 <template #svg>
                     <plus-icon />
                 </template>
@@ -295,15 +298,19 @@ export default {
 
 /*  */
 .watcher_slider {
-    height: calc(100vh - 72px - clamp(12px, 2vw, 24px) - clamp(12px, 2vw, 24px) - 60px - 32px);
+    height: calc(
+        100vh - 72px - clamp(12px, 2vw, 24px) - clamp(12px, 2vw, 24px) - 60px -
+            32px
+    );
     grid-column: 1/2;
     overflow: hidden;
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none;
-    &::-webkit-scrollbar {
-        display: none;
-    }
+}
+
+.watcher_slider::-webkit-scrollbar {
+    display: none;
 }
 
 @media (max-height: 900px) {
@@ -322,16 +329,16 @@ export default {
 }
 
 @media (max-width: 768px) {
-   .watcher_slider {
-       max-height: 500px;
-       height: unset;
-   }
+    .watcher_slider {
+        max-height: 500px;
+        height: unset;
+    }
 }
-@media(max-width: 500px) {
-   .watcher_slider {
-       height: auto;
-       max-height: none;
-   }
+@media (max-width: 500px) {
+    .watcher_slider {
+        height: auto;
+        max-height: none;
+    }
 }
 
 @media (max-width: 700px) {
@@ -356,5 +363,4 @@ export default {
         width: 100%;
     }
 }
-
 </style>
