@@ -6,13 +6,13 @@
         <div class="btc__value btc-calc-num">
             <div class="btc_num">
                 {{ converter?.btc }}
-                <div class="btc_unit">
-                    BTC
-                </div>
+                <div class="btc_unit">BTC</div>
             </div>
             <div class="convertor-container is-web">
                 <span class="convertor-calc">$ {{ converter?.usd }} </span>
-                <span class="convertor-calc" v-if="$i18n.locale === 'ru'">{{ converter?.rub }} ₽</span>
+                <span v-if="$i18n.locale === 'ru'" class="convertor-calc"
+                    >{{ converter?.rub }} ₽</span
+                >
             </div>
             <tooltip-card
                 class="is-mobile"
@@ -25,12 +25,12 @@
 import { Converter } from "@/Scripts/converter";
 import { mapGetters } from "vuex";
 import MainTitle from "./MainTitle.vue";
-import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue"
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 export default {
-    name: "btc-calculator",
+    name: "BtcCalculator",
     components: {
         MainTitle,
-        TooltipCard
+        TooltipCard,
     },
     props: {
         BTC: {
@@ -48,18 +48,6 @@ export default {
             converter: null,
         };
     },
-    methods: {
-        async updateConversion() {
-            this.converter = new Converter(
-                this.BTC,
-                this.btcInfo?.btc?.price ?? 0
-            );
-            await this.converter.convert();
-        },
-    },
-    mounted() {
-        this.updateConversion();
-    },
     watch: {
         btcInfo: {
             deep: true,
@@ -71,29 +59,41 @@ export default {
             this.updateConversion();
         },
     },
+    mounted() {
+        this.updateConversion();
+    },
+    methods: {
+        async updateConversion() {
+            this.converter = new Converter(
+                this.BTC,
+                this.btcInfo?.btc?.price ?? 0
+            );
+            await this.converter.convert();
+        },
+    },
 };
 </script>
 <style lang="scss" scoped>
-.is-web{
+.is-web {
     display: inline-flex;
     gap: 4px;
 }
-.is-mobile{
+.is-mobile {
     display: none !important;
 }
-@media(max-width:500px) {
-    .is-web{
-        display: none
+@media (max-width: 500px) {
+    .is-web {
+        display: none;
     }
     .is-mobile {
-        display: inline-block
+        display: inline-block;
     }
 }
-.btn-about{
+.btn-about {
     margin-left: 8px;
     height: fit-content;
 }
-.btc-calc-num{
+.btc-calc-num {
     color: var(--text-primary-80);
     font-family: Unbounded, serif;
     font-size: 27px;
@@ -101,7 +101,7 @@ export default {
     font-weight: 400;
     line-height: 147%;
 }
-.convertor-calc{
+.convertor-calc {
     color: var(--text-fourth);
     font-family: Unbounded, serif;
     font-size: 14px;
@@ -121,19 +121,19 @@ export default {
     }
 
     &_unit {
-        color: var(--text-fourth, #D0D5DD);
+        color: var(--text-fourth, #d0d5dd);
         font-family: Unbounded, serif;
         font-size: 20px;
         font-weight: 400;
         line-height: 32px;
-        @media(max-width: 500px){
+        @media (max-width: 500px) {
             line-height: 34px;
             font-family: Unbounded, serif;
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
         }
-        @media(max-width: 998px){
+        @media (max-width: 998px) {
             line-height: 39px;
         }
     }
@@ -147,13 +147,13 @@ export default {
         font-weight: 400;
         line-height: 40px;
         align-items: flex-end;
-        @media(max-width: 1450px){
-         font-size: 25x;
+        @media (max-width: 1450px) {
+            font-size: 25x;
         }
-        @media(max-width: 1350px){
-                font-size: 23px;
-            }
-        @media(max-width:1200px){
+        @media (max-width: 1350px) {
+            font-size: 23px;
+        }
+        @media (max-width: 1200px) {
             font-size: 20px;
         }
     }
