@@ -5,12 +5,13 @@
 
             <div
                 class="subs__cards"
+                v-if="!!overall.total_hash_per_day"
             >
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="Number(accountsStatistic.hash_per_min).toFixed(2)"
-                    unit="TH/s"
+                    :value="overall.total_hash_per_day"
+                    :unit="`${overall.per_day_unit}H/s`"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
@@ -19,8 +20,8 @@
                 <cabinet-card
                     class="subs__card-second"
                     :title="$t('info_blocks.hash.titles[1]')"
-                    :value="Number(accountsStatistic.hash_per_day).toFixed(2)"
-                    unit="TH/s"
+                    :value="overall.total_hash_per_day"
+                    :unit="`${overall.per_day_unit}H/s`"
                 >
                     <template #svg>
                         <day-hashrate-icon />
@@ -29,17 +30,17 @@
                 <cabinet-card
                     class="card-active subs__card-third"
                     :title="$t('info_blocks.workers.types[0]')"
-                    :value="accountsStatistic.workers_count_active"
+                    :value="overall.total_active_workers"
                 />
                 <cabinet-card
                     class="card-in-active subs__card-fourth"
                     :title="$t('info_blocks.workers.types[2]')"
-                    :value="accountsStatistic.workers_count_in_active"
+                    :value="overall.total_inactive_workers"
                 />
             </div>
             <div
                 v-if="!service.waitSubs && !service.emptySubs"
-                class="subs__wrapper"
+                class="subs__wrapper_two"
             >
                 <sub-header
                     class="subs__header"
@@ -119,17 +120,8 @@ export default {
             "btcInfo",
             "getActive",
             "getAccount",
+            "overall",
         ]),
-        accountsStatistic() {
-            const accountsStatistic = {
-                hash_per_min: this.getSumAccountsStatistic("hash_per_min") ?? 0,
-                hash_per_day: this.getSumAccountsStatistic("hash_per_day") ?? 0,
-                workers_count_active: this.getSumAccountsStatistic("workers_count_active") ?? 0,
-                workers_count_in_active: this.getSumAccountsStatistic("workers_count_in_active") ?? 0,
-            };
-
-            return accountsStatistic;
-        },
     },
     mounted() {
         this.service.setDocumentTitle(this.$t("title"));
@@ -141,11 +133,6 @@ export default {
             .tableProcess();
     },
     methods: {
-        getSumAccountsStatistic(accountStatisticKey) {
-            const initialValue = 0;
-
-            return this.allAccounts.reduce((accumulator, currentAccount) => accumulator + Number(currentAccount[accountStatisticKey]), initialValue);
-        },
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
         },
@@ -160,11 +147,6 @@ export default {
     flex-direction: column;
 }
 
-@media (max-width: 998px) {
-    .subs {
-        padding: 24px 12px 24px;
-    }
-}
 .subs__cards {
     width: 100%;
     grid-column: 1 / 5;
@@ -264,6 +246,24 @@ export default {
     flex: 1 1 auto;
     display: flex;
     flex-direction: column;
-    gap: 0;
+    gap: 24px;
+}
+
+.subs__wrapper_two {
+    width: 100%;
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+@media (max-width: 767.98px) {
+    .subs__wrapper {
+        gap: 16px;
+    }
+
+    .subs__wrapper_two {
+        gap: 12px;
+    }
 }
 </style>

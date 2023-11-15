@@ -49,7 +49,7 @@ export default {
     watch: {
         searchValue(newValue) {
             clearTimeout(this.timeOut);
-            this.timeOut = setTimeout(() => this.$emit("searched", newValue), 1000);
+            this.timeOut = setTimeout(() => this.$emit("searched", newValue), 200);
         },
     },
     methods: {

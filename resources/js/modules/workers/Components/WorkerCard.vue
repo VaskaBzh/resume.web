@@ -126,6 +126,7 @@ export default {
     box-shadow: 0px 2px 12px -5px rgba(16, 24, 40, 0.02);
     overflow: hidden;
     position: relative;
+    height: fit-content;
 }
 .card_preloader {
     position: absolute;

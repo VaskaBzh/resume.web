@@ -3,11 +3,16 @@ export class accountData {
         this.group_id = accountRecord.group_id;
         this.name = accountRecord.sub;
         this.workers_count_active = accountRecord.workers_count_active;
-        this.workers_count_in_active = accountRecord.workers_count_in_active;
+        this.workers_count_in_active = accountRecord.workers_count_inactive;
         this.workers_count_unstable = accountRecord.workers_count_unstable;
         this.hash_per_min = accountRecord.hash_per_min;
         this.hash_per_day = accountRecord.hash_per_day;
-        this.unit = accountRecord.unit;
+        this.hash_per_day_unit = accountRecord.hash_per_day_unit;
+        this.hash_per_min_unit = accountRecord.hash_per_min_unit;
+
+        this.hash_per_min_format = `${this.hash_per_min} ${this.hash_per_min_unit}H/s`;
+        this.hash_per_day_format = `${this.hash_per_day} ${this.hash_per_day_unit}H/s`;
+
         this.today_forecast = accountRecord.today_forecast;
         this.yesterday_amount = accountRecord.yesterday_amount;
         this.total_payout = accountRecord.total_payout;
