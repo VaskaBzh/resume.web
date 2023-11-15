@@ -10,9 +10,7 @@ use App\Http\Resources\Sub\SubResource;
 use App\Models\User;
 use App\Services\External\BtcComService;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Resources\Json\ResourceCollection;
 use OpenApi\Attributes as OA;
-use phpseclib3\Crypt\AES;
 use Symfony\Component\HttpFoundation\Response;
 
 class ListController extends Controller
@@ -79,7 +77,7 @@ class ListController extends Controller
         $this->authorize('viewAny', $user);
 
         $subs = $user->subs()
-            ->with('workers')
+            ->with(['workers'])
             ->get();
 
         $subCollection = $btcComService->transformSubCollection(subs: $subs);
