@@ -12,6 +12,8 @@
                     :title="$t('info_blocks.hash.titles[0]')"
                     :value="overall.total_hash_per_day"
                     :unit="`${overall.per_day_unit}H/s`"
+                    hint_position="right"
+                    :hint="$t('info_blocks.hash.hints[0]')"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
@@ -22,6 +24,8 @@
                     :title="$t('info_blocks.hash.titles[1]')"
                     :value="overall.total_hash_per_day"
                     :unit="`${overall.per_day_unit}H/s`"
+                    hint_position="right"
+                    :hint="$t('info_blocks.hash.hints[1]')"
                 >
                     <template #svg>
                         <day-hashrate-icon />
@@ -31,11 +35,13 @@
                     class="card-active subs__card-third"
                     :title="$t('info_blocks.workers.types[0]')"
                     :value="overall.total_active_workers"
+                    :hint="$t('info_blocks.workers.hints.active')"
                 />
                 <cabinet-card
                     class="card-in-active subs__card-fourth"
                     :title="$t('info_blocks.workers.types[2]')"
                     :value="overall.total_inactive_workers"
+                    :hint="$t('info_blocks.workers.hints.inactive')"
                 />
             </div>
             <div
