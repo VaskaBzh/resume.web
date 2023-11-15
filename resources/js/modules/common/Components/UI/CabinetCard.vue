@@ -3,16 +3,17 @@
         class="cabinet__block cabinet__block-light cabinet__block-card card"
         :class="[page == 'worker' ? 'max-width' : '']"
     >
-        <div class="card_icon" v-show="this.$slots.svg">
+        <div v-show="$slots.svg" class="card_icon">
             <slot name="svg" />
         </div>
         <div class="card__content">
-            <main-title class="headline">
+            <main-title class="headline card_title">
                 {{ title }}
+                <tooltip-card v-show="hint" :text="hint" :position="hint_position" />
             </main-title>
             <p class="card_num">
                 {{ currentValue }}
-                <span class="card_unit" v-show="unit">
+                <span v-show="unit" class="card_unit">
                     {{ currentUnit }}
                 </span>
             </p>
@@ -21,16 +22,26 @@
 </template>
 <script>
 import MainTitle from "./MainTitle.vue";
+import TooltipCard from "@/modules/common/Components/UI/TooltipCard.vue";
 
 export default {
+    components: {
+        TooltipCard,
+        MainTitle,
+    },
     props: {
         title: String,
         value: String,
         unit: String,
         page: String,
-    },
-    components: {
-        MainTitle,
+        hint: {
+            type: String,
+            default: "",
+        },
+        hint_position: {
+            type: String,
+            default: "left",
+        },
     },
     data() {
         return {
@@ -54,9 +65,13 @@ export default {
         setConvertedValue() {
             this.currentValue = this.value;
             this.currentUnit = this.unit;
-            if (!!this.currentUnit && this.getUnitLetter() === "T" && this.value >= 1000) {
+            if (
+                !!this.currentUnit &&
+                this.getUnitLetter() === "T" &&
+                this.value >= 1000
+            ) {
                 this.currentValue = (this.currentValue / 1000).toFixed(2);
-                this.currentUnit = "PH/s"
+                this.currentUnit = "PH/s";
             }
         },
     },
@@ -69,6 +84,10 @@ export default {
     flex-wrap: nowrap;
     gap: 24px;
     width: 100%;
+}
+.card_title {
+    display: flex;
+    gap: 6px;
 }
 
 .card_icon {
@@ -107,7 +126,7 @@ export default {
     opacity: 0.8;
     flex-wrap: wrap;
 }
-.workers__card .card_num{
+.workers__card .card_num {
     font-size: 27px;
     line-height: 40px; /* 148.148% */
 }
@@ -119,7 +138,7 @@ export default {
     font-weight: 400;
     line-height: 147%;
 }
-.workers__card .card_unit{
+.workers__card .card_unit {
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -146,12 +165,12 @@ export default {
         font-size: 14px;
     }
 }
-@media(max-width: 998px){
+@media (max-width: 998px) {
     .card_num {
         font-size: 27px;
     }
     .card_unit {
-        color: var(--text-fourth, #595E68);
+        color: var(--text-fourth, #595e68);
         font-family: Unbounded;
         font-size: 18px;
         font-style: normal;
@@ -164,10 +183,10 @@ export default {
         display: none;
     }
     /* Почему не работает?? */
-    .workers__card .card_unit{
+    .workers__card .card_unit {
         font-size: 12px;
     }
-    .workers__card .card_num{
+    .workers__card .card_num {
         font-size: 20px;
     }
 }
