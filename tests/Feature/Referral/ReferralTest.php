@@ -12,9 +12,9 @@ use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class ReferralTest extends BaseFeatureTest
+class ReferralTest extends TestCase
 {
     public User $referrer;
 

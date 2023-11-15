@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class UserBuilder extends BaseBuilder
 {
-    public function active(): HasMany
+    public function activeSub(): HasMany
     {
         return $this->model
             ->subs()

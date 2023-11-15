@@ -19,9 +19,9 @@ class HashRate
         }
 
         match (true) {
-            $value < 1 => $this->set($value * 1000, Unit::G->value),
-            $value >= 1000 && $value < 100000 => $this->set($value / 1000, Unit::P->value),
-            default => $this->set($value, Unit::T->value)
+            $value < 1 => $this->set($value * 1000, Unit::GIGA_HASH->value),
+            $value >= 1000 && $value < 100000 => $this->set($value / 1000, Unit::PETA_HASH->value),
+            default => $this->set($value, Unit::TERA_HASH->value)
         };
 
         $this->value = (float) number_format($this->value, 2);

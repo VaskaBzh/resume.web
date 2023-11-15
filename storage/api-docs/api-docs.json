@@ -1001,10 +1001,21 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "type": "array",
-                                    "items": {
-                                        "$ref": "#/components/schemas/SubResource"
-                                    }
+                                    "properties": {
+                                        "list": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/SubResource"
+                                            }
+                                        },
+                                        "general_subs_data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/GeneralSubsDataResource"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
                                 }
                             }
                         }
@@ -3011,6 +3022,27 @@
                 },
                 "type": "object"
             },
+            "GeneralSubsDataResource": {
+                "properties": {
+                    "total_hash_rate": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_hash_rate_unit": {
+                        "type": "string"
+                    },
+                    "total_active_workers": {
+                        "type": "integer"
+                    },
+                    "total_inactive_workers": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "SubResource": {
                 "properties": {
                     "name": {
@@ -3022,7 +3054,7 @@
                     "workers_count_active": {
                         "type": "integer"
                     },
-                    "workers_count_in_active": {
+                    "workers_count_inactive": {
                         "type": "integer"
                     },
                     "workers_count_unstable": {
@@ -3040,7 +3072,10 @@
                     "reject_percent": {
                         "type": "number"
                     },
-                    "unit": {
+                    "hash_per_day_unit": {
+                        "type": "string"
+                    },
+                    "hash_per_min_unit": {
                         "type": "string"
                     },
                     "total_payout": {
@@ -3057,26 +3092,6 @@
                     },
                     "total_amount": {
                         "type": "number"
-                    }
-                },
-                "type": "object"
-            },
-            "Role": {
-                "properties": {
-                    "id": {
-                        "type": "integer"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "guard_name": {
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string"
                     }
                 },
                 "type": "object"

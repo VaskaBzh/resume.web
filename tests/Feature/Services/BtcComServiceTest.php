@@ -14,9 +14,9 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class BtcComServiceTest extends BaseFeatureTest
+class BtcComServiceTest extends TestCase
 {
     public User $user;
 
@@ -340,8 +340,8 @@ class BtcComServiceTest extends BaseFeatureTest
                         'pending_amount' => 0.0,
                         'group_id' => 666666,
                         'workers_count_active' => 0,
-                        'workers_count_in_active' => 0,
-                        'workers_count_unstable' => 3,
+                        'workers_count_inactive' => 0,
+                        'workers_count_unstable' => 0,
                         'hash_per_min' => 105,
                         'hash_per_day' => 0.0,
                         'today_forecast' => '0.00000000',
@@ -359,8 +359,8 @@ class BtcComServiceTest extends BaseFeatureTest
                         'pending_amount' => 0.0,
                         'group_id' => 777777,
                         'workers_count_active' => 0,
-                        'workers_count_in_active' => 0,
-                        'workers_count_unstable' => 3,
+                        'workers_count_inactive' => 0,
+                        'workers_count_unstable' => 0,
                         'hash_per_min' => 108,
                         'hash_per_day' => 0.0,
                         'today_forecast' => '0.00000000',

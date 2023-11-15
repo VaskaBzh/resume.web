@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Tests\Feature\Sub;
 
 use App\Models\User;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class SubTest extends BaseFeatureTest
+class SubTest extends TestCase
 {
     public User $user;
 

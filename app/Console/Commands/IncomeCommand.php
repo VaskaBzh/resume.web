@@ -31,7 +31,7 @@ class IncomeCommand extends Command
 
                     $referrerActiveSub = $sub->user
                         ->referrer
-                        ?->active()
+                        ?->activeSub()
                         ->first();
 
                     $service = (new IncomeService())->init(sub: $sub, referrerSub: $referrerActiveSub);

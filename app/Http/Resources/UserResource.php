@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Sub\GeneralSubsDataResource;
 use App\Models\User;
-use App\ValueObjects\HashRate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use OpenApi\Attributes as OA;
 
@@ -13,16 +13,6 @@ use OpenApi\Attributes as OA;
  * @mixin User
  */
 #[
-    OA\Schema(
-        schema: 'Role',
-        properties: [
-            new OA\Property(property: 'id', type: 'integer'),
-            new OA\Property(property: 'name', type: 'string'),
-            new OA\Property(property: 'guard_name', type: 'string'),
-            new OA\Property(property: 'created_at', type: 'string'),
-            new OA\Property(property: 'updated_at', type: 'string'),
-        ]
-    ),
     OA\Schema(
         schema: 'UserResource',
         properties: [

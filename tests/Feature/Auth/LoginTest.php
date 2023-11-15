@@ -11,9 +11,9 @@ use PragmaRX\Google2FA\Exceptions\InvalidCharactersException;
 use PragmaRX\Google2FA\Exceptions\SecretKeyTooShortException;
 use PragmaRX\Google2FALaravel\Google2FA;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class LoginTest extends BaseFeatureTest
+class LoginTest extends TestCase
 {
     public User $user;
 

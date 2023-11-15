@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Sub;
 
 use App\Models\Sub;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,7 +16,7 @@ use OpenApi\Attributes as OA;
             new OA\Property(property: 'name', type: 'string'),
             new OA\Property(property: 'group_id', type: 'integer'),
             new OA\Property(property: 'workers_count_active', type: 'integer'),
-            new OA\Property(property: 'workers_count_in_active', type: 'integer'),
+            new OA\Property(property: 'workers_count_inactive', type: 'integer'),
             new OA\Property(property: 'workers_count_unstable', type: 'integer'),
             new OA\Property(property: 'hash_per_min', type: 'integer'),
             new OA\Property(property: 'hash_per_day', type: 'integer'),
@@ -35,6 +35,8 @@ use OpenApi\Attributes as OA;
 ]
 class SubResource extends JsonResource
 {
+    public static $wrap = null;
+
     public function toArray($request): array
     {
         return $this->resource;

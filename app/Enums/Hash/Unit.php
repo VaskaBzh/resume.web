@@ -6,8 +6,8 @@ namespace App\Enums\Hash;
 
 enum Unit: string
 {
-    case T = 'T';
-    case P = 'P';
-    case G = 'G';
-    case E = 'E';
+    case TERA_HASH = 'T';
+    case PETA_HASH = 'P';
+    case GIGA_HASH = 'G';
+    case EXA_HASH = 'E';
 }
