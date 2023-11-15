@@ -6,9 +6,7 @@
             v-for="(column, i) in service.filteredColumns"
             :value="column"
             :title="service.filteredTitles[i]"
-        >
-
-        </row-column>
+        />
     </tr>
 </template>
 

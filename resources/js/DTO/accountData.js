@@ -7,7 +7,12 @@ export class accountData {
         this.workers_count_unstable = accountRecord.workers_count_unstable;
         this.hash_per_min = accountRecord.hash_per_min;
         this.hash_per_day = accountRecord.hash_per_day;
-        this.unit = accountRecord.unit;
+        this.hash_per_day_unit = accountRecord.hash_per_day_unit;
+        this.hash_per_min_unit = accountRecord.hash_per_min_unit;
+
+        this.hash_per_min_format = `${this.hash_per_min} ${this.hash_per_min_unit}H/s`;
+        this.hash_per_day_format = `${this.hash_per_day} ${this.hash_per_day_unit}H/s`;
+
         this.today_forecast = accountRecord.today_forecast;
         this.yesterday_amount = accountRecord.yesterday_amount;
         this.total_payout = accountRecord.total_payout;

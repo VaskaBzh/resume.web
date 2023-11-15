@@ -17,8 +17,4 @@ export class ColumnService {
     bitcoinFormat(value) {
         this.renderedValue = `${Number(value).toFixed(8)} BTC`;
     }
-
-    hashrateFormat(value, unit) {
-        this.renderedValue = `${Number(value).toFixed(2)} ${unit}H/s`;
-    }
 }

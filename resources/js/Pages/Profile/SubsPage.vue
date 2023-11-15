@@ -5,12 +5,13 @@
 
             <div
                 class="subs__cards"
+                v-if="!!user.general_subs_data"
             >
                 <cabinet-card
                     class="subs__card-first"
                     :title="$t('info_blocks.hash.titles[0]')"
-                    :value="Number(accountsStatistic.hash_per_min).toFixed(2)"
-                    unit="TH/s"
+                    :value="user.general_subs_data.total_hash_rate"
+                    :unit="`${user.general_subs_data.total_hash_rate_unit}H/s`"
                 >
                     <template #svg>
                         <minute-hashrate-icon />
@@ -19,8 +20,8 @@
                 <cabinet-card
                     class="subs__card-second"
                     :title="$t('info_blocks.hash.titles[1]')"
-                    :value="Number(accountsStatistic.hash_per_day).toFixed(2)"
-                    unit="TH/s"
+                    :value="user.general_subs_data.total_hash_rate"
+                    :unit="`${user.general_subs_data.total_hash_rate_unit}H/s`"
                 >
                     <template #svg>
                         <day-hashrate-icon />
@@ -29,12 +30,12 @@
                 <cabinet-card
                     class="card-active subs__card-third"
                     :title="$t('info_blocks.workers.types[0]')"
-                    :value="accountsStatistic.workers_count_active"
+                    :value="user.general_subs_data.total_active_workers"
                 />
                 <cabinet-card
                     class="card-in-active subs__card-fourth"
                     :title="$t('info_blocks.workers.types[2]')"
-                    :value="accountsStatistic.workers_count_in_active"
+                    :value="user.general_subs_data.total_inactive_workers"
                 />
             </div>
             <div
@@ -119,17 +120,8 @@ export default {
             "btcInfo",
             "getActive",
             "getAccount",
+            "user",
         ]),
-        accountsStatistic() {
-            const accountsStatistic = {
-                hash_per_min: this.getSumAccountsStatistic("hash_per_min") ?? 0,
-                hash_per_day: this.getSumAccountsStatistic("hash_per_day") ?? 0,
-                workers_count_active: this.getSumAccountsStatistic("workers_count_active") ?? 0,
-                workers_count_in_active: this.getSumAccountsStatistic("workers_count_in_active") ?? 0,
-            };
-
-            return accountsStatistic;
-        },
     },
     mounted() {
         this.service.setDocumentTitle(this.$t("title"));
@@ -141,11 +133,6 @@ export default {
             .tableProcess();
     },
     methods: {
-        getSumAccountsStatistic(accountStatisticKey) {
-            const initialValue = 0;
-
-            return this.allAccounts.reduce((accumulator, currentAccount) => accumulator + Number(currentAccount[accountStatisticKey]), initialValue);
-        },
         toggleIsTable(subsTypeState = null) {
             this.service.toggleSubsType(subsTypeState);
         },

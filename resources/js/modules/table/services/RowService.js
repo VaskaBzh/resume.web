@@ -11,7 +11,6 @@ export class RowService {
 
         this.workers = [];
 
-        this.unit = null;
         this.group_id = null;
 
         this.viewportWidth = null;
@@ -41,11 +40,6 @@ export class RowService {
         return this;
     }
 
-    getUnit() {
-        this.unit = Object.entries(this.columns).filter(elem => elem[0] === 'unit')[0];
-        return this;
-    }
-
     getGroupId() {
         this.group_id = Object.entries(this.columns).filter(elem => elem[0] === 'group_id')[0];
 
@@ -68,7 +62,6 @@ export class RowService {
             .filterColumns()
             .filterTitles()
             .getWorkers()
-            .getUnit()
             .getGroupId();
     }
 
