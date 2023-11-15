@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Referrals;
+namespace Tests\Feature\Referral;
 
 use App\Enums\Income\Message;
 use App\Enums\Income\Status;
@@ -12,9 +12,9 @@ use App\Models\User;
 use App\Services\Internal\ReferralService;
 use Laravel\Sanctum\Sanctum;
 use Symfony\Component\HttpFoundation\Response;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class ReferralTest extends BaseFeatureTest
+class ReferralTest extends TestCase
 {
     public User $referrer;
 
@@ -83,7 +83,7 @@ class ReferralTest extends BaseFeatureTest
                     'active_referrals_count' => 1.00,
                     'attached_referrals_count' => 1,
                     'group_id' => 1,
-                    'referral_percent' => '1.00',
+                    'referral_percent' => 1,
                     'referrals_total_amount' => '0.00044444',
                     'referral_url' => route('v1.register', 'referral_code='.$this->referrer->referral_code),
                     'total_referrals_hash_rate' => 100,
@@ -104,8 +104,8 @@ class ReferralTest extends BaseFeatureTest
         Income::insert($incomes);
 
         $this->referral
-            ->active()
-            ->first()
+            ->subs()
+            ->hasWorkerHashRate()
             ->update(['total_amount' => 0.00044444]);
 
         Sanctum::actingAs($this->referrer);

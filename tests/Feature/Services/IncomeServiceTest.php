@@ -13,9 +13,9 @@ use App\Services\External\BtcComService;
 use App\Services\Internal\IncomeService;
 use App\Utils\Helper;
 use Illuminate\Database\Eloquent\Collection;
-use Tests\Feature\BaseFeatureTest;
+use Tests\TestCase;
 
-class IncomeServiceTest extends BaseFeatureTest
+class IncomeServiceTest extends TestCase
 {
     public Collection $subsWithHashRate;
 
@@ -156,12 +156,13 @@ class IncomeServiceTest extends BaseFeatureTest
             ->where('group_id', 3)
             ->first();
 
-        $referrerActiveSub = $referralSub->user
-            ->referrer
-            ->active()
+        $referrer = $referralSub->user->referrer;
+
+        $referrerActiveSub = $referrer
+            ->activeSub()
             ->first();
 
-        $this->assertTrue($referrerActiveSub->is_active);
+        $this->assertEquals($referrerActiveSub->group_id, $referrer->active_sub);
 
         $service = resolve(IncomeService::class)->init($referralSub, $referralSub);
 

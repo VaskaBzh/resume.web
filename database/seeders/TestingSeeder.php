@@ -2,36 +2,26 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature;
+namespace Database\Seeders;
 
 use App\Models\MinerStat;
 use App\Models\Sub;
 use App\Models\User;
 use App\Models\Worker;
-use Database\Seeders\RoleAndPermissionsSeeder;
 use Illuminate\Database\Eloquent\Factories\Sequence;
-use Illuminate\Foundation\Testing\RefreshDatabase;
-use Tests\TestCase;
+use Illuminate\Database\Seeder;
 
-class BaseFeatureTest extends TestCase
+class TestingSeeder extends Seeder
 {
-    use RefreshDatabase;
-
-    /**
-     * Mining global params
-     */
-    public MinerStat $stat;
-
-    /**
-     * Prepare test db state
-     * Create Users, Subs, Workers
-     */
-    protected function setUp(): void
+    public function run(): void
     {
-        parent::setUp();
+        if (config('app.env') !== 'testing') {
+            exit('Not testing environment');
+        }
 
-        $this->seed(RoleAndPermissionsSeeder::class);
-        $this->stat = MinerStat::factory()->create();
+        MinerStat::factory()
+            ->create();
+
         User::factory()
             ->count(3)
             ->sequence(
@@ -42,6 +32,7 @@ class BaseFeatureTest extends TestCase
                     'password' => bcrypt('123'),
                     'referral_percent' => 1,
                     'referral_discount' => 0,
+                    'active_sub' => 1,
                 ],
                 [
                     'id' => 2,
@@ -70,7 +61,6 @@ class BaseFeatureTest extends TestCase
                                 'sub' => $user->name,
                                 'allbtc_fee' => 3.5,
                                 'pending_amount' => 0,
-                                'is_active' => true,
                                 'total_amount' => 0,
                                 'user_id' => $user->id,
                             ],
@@ -78,7 +68,6 @@ class BaseFeatureTest extends TestCase
                                 'group_id' => 2,
                                 'sub' => 'Referrer2',
                                 'allbtc_fee' => 3.5,
-                                'is_active' => false,
                                 'pending_amount' => 0,
                                 'total_amount' => 0,
                                 'user_id' => $user->id,
@@ -91,7 +80,6 @@ class BaseFeatureTest extends TestCase
                                 'group_id' => 3,
                                 'sub' => $user->name,
                                 'allbtc_fee' => 3.5,
-                                'is_active' => true,
                                 'pending_amount' => 0,
                                 'total_amount' => 0,
                                 'user_id' => $user->id,
@@ -100,7 +88,6 @@ class BaseFeatureTest extends TestCase
                                 'group_id' => 4,
                                 'sub' => 'Referral2',
                                 'allbtc_fee' => 3.5,
-                                'is_active' => false,
                                 'pending_amount' => 0,
                                 'total_amount' => 0,
                                 'user_id' => $user->id,
@@ -112,7 +99,6 @@ class BaseFeatureTest extends TestCase
                             'sub' => $user->name,
                             'allbtc_fee' => 3.5,
                             'pending_amount' => 0,
-                            'is_active' => true,
                             'total_amount' => 0,
                             'user_id' => $user->id,
                         ]

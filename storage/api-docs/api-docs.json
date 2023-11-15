@@ -3011,6 +3011,27 @@
                 },
                 "type": "object"
             },
+            "GeneralSubsDataResource": {
+                "properties": {
+                    "total_hash_rate": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "total_hash_rate_unit": {
+                        "type": "string"
+                    },
+                    "total_active_workers": {
+                        "type": "integer"
+                    },
+                    "total_inactive_workers": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object"
+            },
             "SubResource": {
                 "properties": {
                     "name": {
@@ -3040,7 +3061,10 @@
                     "reject_percent": {
                         "type": "number"
                     },
-                    "unit": {
+                    "hash_per_day_unit": {
+                        "type": "string"
+                    },
+                    "hash_per_min_unit": {
                         "type": "string"
                     },
                     "total_payout": {
@@ -3057,26 +3081,6 @@
                     },
                     "total_amount": {
                         "type": "number"
-                    }
-                },
-                "type": "object"
-            },
-            "Role": {
-                "properties": {
-                    "id": {
-                        "type": "integer"
-                    },
-                    "name": {
-                        "type": "string"
-                    },
-                    "guard_name": {
-                        "type": "string"
-                    },
-                    "created_at": {
-                        "type": "string"
-                    },
-                    "updated_at": {
-                        "type": "string"
                     }
                 },
                 "type": "object"
@@ -3109,6 +3113,18 @@
                     },
                     "has_referral_role": {
                         "type": "boolean"
+                    },
+                    "general_subs_data": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/GeneralSubsDataResource"
+                        }
+                    },
+                    "token": {
+                        "type": "string"
+                    },
+                    "expired_at": {
+                        "type": "string"
                     }
                 },
                 "type": "object"
