@@ -14,12 +14,12 @@
 		<div class="sub__content">
 			<info-block :label="$t('table.titles[2]')">
 				<template v-slot:value>
-					{{ subData.hash_per_min }}
+					{{ subData.hash_per_min }} {{ subData.hash_per_min_unit }}H/s
 				</template>
 			</info-block>
 			<info-block :label="$t('table.titles[3]')">
 				<template v-slot:value>
-					{{ subData.hash_per_day }}
+					{{ subData.hash_per_day }} {{ subData.hash_per_day_unit }}H/s
 				</template>
 			</info-block>
 			<info-block :label="$t('table.titles[1]')">
