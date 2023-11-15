@@ -3119,12 +3119,6 @@
                         "items": {
                             "$ref": "#/components/schemas/GeneralSubsDataResource"
                         }
-                    },
-                    "token": {
-                        "type": "string"
-                    },
-                    "expired_at": {
-                        "type": "string"
                     }
                 },
                 "type": "object"
